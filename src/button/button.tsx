@@ -6,6 +6,43 @@ import * as styles from "./button.styles";
 import { hasValidChildren } from "./button-helper";
 import type { ButtonProps, ButtonRef } from "./types";
 
+const styleClassMap: Record<string, Record<string, string>> = {
+    disabled: { base: styles.mainStyleDisabled },
+    default: {
+        base: styles.mainStyleDefault,
+        danger: styles.mainStyleDefaultDanger,
+    },
+    secondary: {
+        base: styles.mainStyleSecondary,
+        danger: styles.mainStyleSecondaryDanger,
+    },
+    light: { base: styles.mainStyleLight, danger: styles.mainStyleLightDanger },
+    link: { base: styles.mainStyleLink, danger: styles.mainStyleLinkDanger },
+};
+
+const sizeClassMap: Record<string, { base: string; iconOnly: string }> = {
+    default: {
+        base: styles.mainSizeDefault,
+        iconOnly: styles.mainSizeDefaultIconOnly,
+    },
+    small: {
+        base: styles.mainSizeSmall,
+        iconOnly: styles.mainSizeSmallIconOnly,
+    },
+    large: {
+        base: styles.mainSizeLarge,
+        iconOnly: styles.mainSizeLargeIconOnly,
+    },
+};
+
+const getStyleClass = (effectiveStyle: string, danger: boolean) =>
+    danger
+        ? styleClassMap[effectiveStyle]?.danger
+        : styleClassMap[effectiveStyle]?.base;
+
+const getSizeClass = (sizeType: string, iconOnly: boolean) =>
+    iconOnly ? sizeClassMap[sizeType]?.iconOnly : sizeClassMap[sizeType]?.base;
+
 const Component = (props: ButtonProps, ref: ButtonRef) => {
     const {
         children,
@@ -40,39 +77,8 @@ const Component = (props: ButtonProps, ref: ButtonRef) => {
                     iconPosition === "right" &&
                     styles.mainIconPositionRight,
                 !iconOnly && styles.mainHasMinWidth,
-                effectiveStyle === "disabled" && styles.mainStyleDisabled,
-                effectiveStyle === "default" &&
-                    !danger &&
-                    styles.mainStyleDefault,
-                effectiveStyle === "default" &&
-                    danger &&
-                    styles.mainStyleDefaultDanger,
-                effectiveStyle === "secondary" &&
-                    !danger &&
-                    styles.mainStyleSecondary,
-                effectiveStyle === "secondary" &&
-                    danger &&
-                    styles.mainStyleSecondaryDanger,
-                effectiveStyle === "light" && !danger && styles.mainStyleLight,
-                effectiveStyle === "light" &&
-                    danger &&
-                    styles.mainStyleLightDanger,
-                effectiveStyle === "link" && !danger && styles.mainStyleLink,
-                effectiveStyle === "link" &&
-                    danger &&
-                    styles.mainStyleLinkDanger,
-                sizeType === "default" && styles.mainSizeDefault,
-                sizeType === "default" &&
-                    iconOnly &&
-                    styles.mainSizeDefaultIconOnly,
-                sizeType === "small" && styles.mainSizeSmall,
-                sizeType === "small" &&
-                    iconOnly &&
-                    styles.mainSizeSmallIconOnly,
-                sizeType === "large" && styles.mainSizeLarge,
-                sizeType === "large" &&
-                    iconOnly &&
-                    styles.mainSizeLargeIconOnly,
+                getStyleClass(effectiveStyle, danger),
+                getSizeClass(sizeType, iconOnly),
                 className
             )}
             {...otherProps}
