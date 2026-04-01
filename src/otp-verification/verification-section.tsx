@@ -14,6 +14,7 @@ import {
     VerifyButton,
     VerifyInputWrapper,
 } from "./verification-section-styles";
+import { concatIds } from "../shared/accessibility";
 
 export const VerificationSection = ({
     id,
@@ -37,12 +38,15 @@ export const VerificationSection = ({
     });
     const thumbnailSize = isMobile ? 64 : 120;
 
+    const titleId = id ? `${id}-title` : undefined;
+    const messageId = id ? `${id}-message` : undefined;
+    const otpAddonId = id ? `${id}-verify-input-addon` : undefined;
+
     const renderThumbnail = () => {
         if (!showVerifyOtpThumbnail) return null;
-        const iconLabel =
-            type === "email" ? "Email verification" : "Phone verification";
+
         return (
-            <div aria-label={iconLabel} role="img">
+            <div aria-hidden="true">
                 {type === "email" ? (
                     <EmailThumbnail
                         width={thumbnailSize}
@@ -63,14 +67,13 @@ export const VerificationSection = ({
             id={id}
             data-testid={dataTestId}
             role="group"
-            aria-labelledby={id ? `${id}-title` : undefined}
         >
             {renderThumbnail()}
             <SectionContainer>
                 <div>
                     <Typography.BodyMD
                         weight="semibold"
-                        id={id ? `${id}-title` : undefined}
+                        id={titleId}
                         data-testid={
                             dataTestId ? `${dataTestId}-title` : undefined
                         }
@@ -79,7 +82,7 @@ export const VerificationSection = ({
                     </Typography.BodyMD>
                     <Typography.BodyMD
                         weight="regular"
-                        id={id ? `${id}-message` : undefined}
+                        id={messageId}
                         data-testid={
                             dataTestId ? `${dataTestId}-message` : undefined
                         }
@@ -109,7 +112,8 @@ export const VerificationSection = ({
                             }}
                             type="number"
                             error={!!verifyOtpError}
-                            aria-label="Enter OTP code"
+                            aria-labelledby={titleId}
+                            aria-describedby={concatIds(messageId, otpAddonId)}
                             aria-invalid={!!verifyOtpError}
                             aria-required={true}
                         />
