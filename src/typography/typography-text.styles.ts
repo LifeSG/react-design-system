@@ -4,7 +4,10 @@ import { Font } from "../theme";
 import { createFontSizeStyles, createFontWeightStyles } from "./helper";
 import type { TypographySize, TypographyWeight } from "./types";
 
-const typographySizeSpec = {
+const typographySizeSpec: Record<
+    TypographySize,
+    { size: string; lineHeight: string; letterSpacing: string }
+> = {
     "heading-xxl": {
         size: Font.Spec["heading-size-xxl"],
         lineHeight: Font.Spec["heading-lh-xxl"],
@@ -55,12 +58,9 @@ const typographySizeSpec = {
         lineHeight: Font.Spec["body-lh-xs"],
         letterSpacing: Font.Spec["body-ls-xs"],
     },
-} as const satisfies Record<
-    TypographySize,
-    { size: string; lineHeight: string; letterSpacing: string }
->;
+};
 
-export const typographySize = {
+export const typographySize: Record<TypographySize, string> = {
     "heading-xxl": css`
         ${createFontSizeStyles(typographySizeSpec["heading-xxl"])}
     `,
@@ -91,9 +91,9 @@ export const typographySize = {
     "body-xs": css`
         ${createFontSizeStyles(typographySizeSpec["body-xs"])}
     `,
-} as const satisfies Record<TypographySize, string>;
+};
 
-export const typographyWeight = {
+export const typographyWeight: Record<TypographyWeight, string> = {
     light: css`
         ${createFontWeightStyles(Font.Spec["weight-light"])}
     `,
@@ -106,4 +106,4 @@ export const typographyWeight = {
     bold: css`
         ${createFontWeightStyles(Font.Spec["weight-bold"])}
     `,
-} as const satisfies Record<TypographyWeight, string>;
+};
