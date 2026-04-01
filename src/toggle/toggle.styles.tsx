@@ -240,6 +240,7 @@ export const TextContainer = styled.div<StyleProps>`
     overflow-wrap: anywhere;
     width: 100%;
     overflow: hidden;
+    z-index: 1;
 
     // apply header container text color
     ${(props) => {
