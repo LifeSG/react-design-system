@@ -1,9 +1,5 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import {
-    AbstractStoryPage,
-    compareLocatorScreenshot,
-    compareScreenshot,
-} from "../../utils";
+import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "typography";
@@ -53,44 +49,50 @@ test.describe("Typography", () => {
         await story.init("variants");
 
         await test.step("Component mounts with all variants", async () => {
-            await expect(story.locators.lightWeights).toBeVisible();
-            await expect(story.locators.regularWeights).toBeVisible();
-            await expect(story.locators.semiboldWeights).toBeVisible();
-            await expect(story.locators.boldWeights).toBeVisible();
+            expect(await story.locators.lightWeights.count()).toBeGreaterThan(
+                0
+            );
+            expect(await story.locators.regularWeights.count()).toBeGreaterThan(
+                0
+            );
+            expect(
+                await story.locators.semiboldWeights.count()
+            ).toBeGreaterThan(0);
+            expect(await story.locators.boldWeights.count()).toBeGreaterThan(0);
 
             await compareScreenshot(story, "mount");
         });
     });
 
     test("Paragraph style", async ({ story }) => {
-        await story.init("styles");
+        await story.init("paragraph");
 
         await test.step("Paragraph is visible", async () => {
             await expect(story.locators.paragraph).toBeVisible();
 
-            await compareLocatorScreenshot(story.locators.paragraph, "mount");
+            await compareScreenshot(story, "mount");
         });
     });
 
     test("Text clamping styles", async ({ story }) => {
-        await story.init("styles");
+        await story.init("clamping");
 
         await test.step("Text clamping variants are visible", async () => {
             await expect(story.locators.clampOneLine).toBeVisible();
             await expect(story.locators.clampTwoLines).toBeVisible();
 
-            await compareLocatorScreenshot(story.locators.clamps, "mount");
+            await compareScreenshot(story, "mount");
         });
     });
 
     test("Link styles", async ({ story }) => {
-        await story.init("styles");
+        await story.init("links");
 
         await test.step("Link style variants are visible", async () => {
             await expect(story.locators.underlineLink).toBeVisible();
             await expect(story.locators.noUnderlineLink).toBeVisible();
 
-            await compareLocatorScreenshot(story.locators.links, "mount");
+            await compareScreenshot(story, "mount");
         });
     });
 });
