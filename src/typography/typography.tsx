@@ -44,106 +44,31 @@ const shouldLineClamp = (
     paragraph: boolean | undefined
 ) => !!maxLines && (paragraph || !inline);
 
-const createHeading = (
-    tag: keyof JSX.IntrinsicElements,
+const createTypographyText = <TElement extends HTMLElement>(
+    tag: React.ElementType,
     textStyle: TypographySize,
     displayName: string
 ) => {
-    const Header = React.forwardRef<HTMLHeadingElement, TypographyProps>(
-        function TypographyHeading(
+    const TypographyText = React.forwardRef<TElement, TypographyProps>(
+        function TypographyTextComponent(
             { weight, inline, paragraph, maxLines, className, ...props },
             ref
         ) {
             const textWeight = getTextWeight(weight);
-            const headingRef = React.useRef<HTMLHeadingElement>(null);
-            const mergedRef = mergeRefs(headingRef, ref);
+            const textRef = React.useRef<TElement>(null);
+            const mergedRef = mergeRefs(textRef, ref);
             const shouldClamp = shouldLineClamp(maxLines, inline, paragraph);
 
-            useApplyStyle(headingRef, {
+            useApplyStyle(textRef, {
                 [styles.tokens.typographyBase.maxLines]: shouldClamp
                     ? maxLines
                     : null,
             });
 
-            if (inline) {
-                return (
-                    <span
-                        ref={mergedRef as React.Ref<HTMLSpanElement>}
-                        className={clsx(
-                            styles.typographyBase,
-                            getTypographyTextClassName(textStyle),
-                            getTypographyWeightClassName(textWeight),
-                            getTypographyDisplayClassName(inline, paragraph),
-                            shouldClamp && styles.lineClamp,
-                            className
-                        )}
-                        {...props}
-                    />
-                );
-            }
-
-            return React.createElement(tag, {
-                ...props,
-                ref: mergedRef,
-                className: clsx(
-                    styles.typographyBase,
-                    getTypographyTextClassName(textStyle),
-                    getTypographyWeightClassName(textWeight),
-                    getTypographyDisplayClassName(inline, paragraph),
-                    shouldClamp && styles.lineClamp,
-                    className
-                ),
-            });
-        }
-    );
-
-    (Header as NamedExoticComponent).displayName = `Typography.${displayName}`;
-    return Header;
-};
-
-export const HeadingXXL = createHeading("h1", "heading-xxl", "HeadingXXL");
-export const HeadingXL = createHeading("h2", "heading-xl", "HeadingXL");
-export const HeadingLG = createHeading("h3", "heading-lg", "HeadingLG");
-export const HeadingMD = createHeading("h4", "heading-md", "HeadingMD");
-export const HeadingSM = createHeading("h5", "heading-sm", "HeadingSM");
-export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
-
-const createBody = (textStyle: TypographySize, displayName: string) => {
-    const Body = React.forwardRef<HTMLParagraphElement, TypographyProps>(
-        function TypographyBody(
-            { weight, inline, paragraph, maxLines, className, ...props },
-            ref
-        ) {
-            const textWeight = getTextWeight(weight);
-            const paragraphRef = React.useRef<HTMLParagraphElement>(null);
-            const mergedRef = mergeRefs(paragraphRef, ref);
-            const shouldClamp = shouldLineClamp(maxLines, inline, paragraph);
-
-            useApplyStyle(paragraphRef, {
-                [styles.tokens.typographyBase.maxLines]: shouldClamp
-                    ? maxLines
-                    : null,
-            });
-
-            if (inline) {
-                return (
-                    <span
-                        ref={mergedRef}
-                        className={clsx(
-                            styles.typographyBase,
-                            getTypographyTextClassName(textStyle),
-                            getTypographyWeightClassName(textWeight),
-                            getTypographyDisplayClassName(inline, paragraph),
-                            shouldClamp && styles.lineClamp,
-                            className
-                        )}
-                        {...props}
-                    />
-                );
-            }
+            const Element = inline ? "span" : tag;
 
             return (
-                <p
+                <Element
                     ref={mergedRef}
                     className={clsx(
                         styles.typographyBase,
@@ -159,8 +84,37 @@ const createBody = (textStyle: TypographySize, displayName: string) => {
         }
     );
 
-    (Body as NamedExoticComponent).displayName = `Typography.${displayName}`;
-    return Body;
+    (
+        TypographyText as NamedExoticComponent
+    ).displayName = `Typography.${displayName}`;
+    return TypographyText;
+};
+
+const createHeading = (
+    tag: "h1" | "h2" | "h3" | "h4" | "h5" | "h6",
+    textStyle: TypographySize,
+    displayName: string
+) => {
+    return createTypographyText<HTMLHeadingElement>(
+        tag,
+        textStyle,
+        displayName
+    );
+};
+
+export const HeadingXXL = createHeading("h1", "heading-xxl", "HeadingXXL");
+export const HeadingXL = createHeading("h2", "heading-xl", "HeadingXL");
+export const HeadingLG = createHeading("h3", "heading-lg", "HeadingLG");
+export const HeadingMD = createHeading("h4", "heading-md", "HeadingMD");
+export const HeadingSM = createHeading("h5", "heading-sm", "HeadingSM");
+export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
+
+const createBody = (textStyle: TypographySize, displayName: string) => {
+    return createTypographyText<HTMLParagraphElement>(
+        "p",
+        textStyle,
+        displayName
+    );
 };
 
 export const BodyBL = createBody("body-baseline", "BodyBL");
