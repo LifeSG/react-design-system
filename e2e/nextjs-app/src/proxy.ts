@@ -10,13 +10,12 @@ export function proxy(request: NextRequest) {
         style-src 'self' ${
             isDev ? "'unsafe-inline'" : ""
         } https://assets.life.gov.sg;
-        img-src 'self' blob: data:;
+        img-src 'self' https://assets.life.gov.sg blob: data:;
         font-src 'self' https://assets.life.gov.sg;
         object-src 'none';
         base-uri 'self';
         form-action 'self';
         frame-ancestors 'none';
-        upgrade-insecure-requests;
     `;
 
     // Replace newline characters and spaces
