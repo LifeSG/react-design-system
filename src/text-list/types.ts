@@ -1,9 +1,11 @@
-import type { V3_TypographySizeType } from "../v3_theme/font/types";
+import type { FontSize } from "../theme";
+
+export type TextListSize = Exclude<FontSize, "form-label" | "form-description">;
 
 interface BaseListProps {
     children: JSX.Element | JSX.Element[];
     bottomMargin?: number | undefined;
-    size?: V3_TypographySizeType | undefined;
+    size?: TextListSize | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;

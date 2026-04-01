@@ -1,15 +1,14 @@
 import styled, { css } from "styled-components";
 
-import { V3_Colour, V3_Font, V3_MediaQuery } from "../v3_theme";
-import type { V3_TypographySizeType } from "../v3_theme/font/types";
-import type { BulletType, CounterType } from "./types";
+import { Colour, Font, MediaQuery } from "../theme";
+import type { BulletType, CounterType, TextListSize } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
 interface ListStyleProps {
     $bottomMargin: number | undefined;
-    $size: V3_TypographySizeType | undefined;
+    $size: TextListSize | undefined;
 }
 
 interface OrderedListStyleProps extends ListStyleProps {
@@ -31,9 +30,9 @@ const baseStyle = css<ListStyleProps>`
     // Counter matters
     counter-reset: list;
 
-    ${(props) => props.$size && V3_Font[`${props.$size}-regular`]}
-    font-weight: ${V3_Font.Spec["weight-regular"]};
-    color: ${V3_Colour.text};
+    ${(props) => props.$size && Font[`${props.$size}-regular`]}
+    font-weight: ${Font.Spec["weight-regular"]};
+    color: ${Colour.text};
 
     // nested lists styling
     ol,
@@ -48,7 +47,7 @@ export const StyledOrderedList = styled.ol<OrderedListStyleProps>`
 
     margin-left: 3em;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-left: 2.5em;
     }
 
