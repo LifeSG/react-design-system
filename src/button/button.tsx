@@ -24,6 +24,7 @@ const Component = (props: ButtonProps, ref: ButtonRef) => {
 
     const hasChildren = hasValidChildren(children);
     const iconOnly = !!icon && !hasChildren;
+    const effectiveStyle = disabled ? "disabled" : styleType;
 
     return (
         <button
@@ -39,21 +40,27 @@ const Component = (props: ButtonProps, ref: ButtonRef) => {
                     iconPosition === "right" &&
                     styles.mainIconPositionRight,
                 !iconOnly && styles.mainHasMinWidth,
-                disabled && styles.mainStyleDisabled,
-                styleType === "default" && !danger && styles.mainStyleDefault,
-                styleType === "default" &&
+                effectiveStyle === "disabled" && styles.mainStyleDisabled,
+                effectiveStyle === "default" &&
+                    !danger &&
+                    styles.mainStyleDefault,
+                effectiveStyle === "default" &&
                     danger &&
                     styles.mainStyleDefaultDanger,
-                styleType === "secondary" &&
+                effectiveStyle === "secondary" &&
                     !danger &&
                     styles.mainStyleSecondary,
-                styleType === "secondary" &&
+                effectiveStyle === "secondary" &&
                     danger &&
                     styles.mainStyleSecondaryDanger,
-                styleType === "light" && !danger && styles.mainStyleLight,
-                styleType === "light" && danger && styles.mainStyleLightDanger,
-                styleType === "link" && !danger && styles.mainStyleLink,
-                styleType === "link" && danger && styles.mainStyleLinkDanger,
+                effectiveStyle === "light" && !danger && styles.mainStyleLight,
+                effectiveStyle === "light" &&
+                    danger &&
+                    styles.mainStyleLightDanger,
+                effectiveStyle === "link" && !danger && styles.mainStyleLink,
+                effectiveStyle === "link" &&
+                    danger &&
+                    styles.mainStyleLinkDanger,
                 sizeType === "default" && styles.mainSizeDefault,
                 sizeType === "default" &&
                     iconOnly &&
