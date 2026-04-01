@@ -144,8 +144,8 @@ const createLinkComponent = (
                 <a
                     ref={ref}
                     className={clsx(
-                        styles.hyperlinkBase,
                         styles.typographyBase,
+                        styles.hyperlinkBase,
                         getTypographyTextClassName(textStyle),
                         getTypographyWeightClassName(textWeight),
                         underlineStyle === "none"
