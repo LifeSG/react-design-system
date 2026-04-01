@@ -19,7 +19,7 @@ import {
     PlaceholderLabel,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { InputBox } from "../shared/input-wrapper";
 import { SimpleIdGenerator, StringHelper } from "../util";
 import type { SelectedItem } from "./helpers";
 import { getSelectedItems, getSelectedSubItems } from "./helpers";
@@ -282,10 +282,10 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}

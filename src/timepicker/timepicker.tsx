@@ -2,7 +2,7 @@ import { useCallback, useRef, useState } from "react";
 
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import { InputWrapper } from "../shared/input-wrapper";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { TimeHelper } from "../util/time-helper";
 import { InputSelectorElement } from "./timepicker.styles";
@@ -105,10 +105,10 @@ export const Timepicker = ({
         <InputWrapper
             ref={wrapperRef}
             role="group"
-            $readOnly={readOnly}
-            $disabled={disabled}
-            $focused={isOpen}
-            $error={error}
+            readOnly={readOnly}
+            disabled={disabled}
+            focused={isOpen}
+            error={error}
             {...otherProps}
         >
             <InputSelectorElement

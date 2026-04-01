@@ -25,7 +25,7 @@ const Component = (
     return (
         <Container key="search">
             <SearchIcon $variant={props.variant} />
-            <SearchInput ref={ref} $variant={props.variant} {...otherProps} />
+            <SearchInput ref={ref} variant={props.variant} {...otherProps} />
             {otherProps.value && (
                 <CancelButton
                     aria-label="Clear search"

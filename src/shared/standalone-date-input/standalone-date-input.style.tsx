@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { V3_Colour, V3_Font, V3_Spacing } from "../../v3_theme";
-import { BasicInput } from "../input-wrapper/input-wrapper";
+import { BasicInput } from "../input-wrapper";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $

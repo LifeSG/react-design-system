@@ -377,9 +377,9 @@ export const ComboboxPicker = ({
     const renderElement = () => (
         <TimeFieldContainer
             ref={nodeRef}
-            $disabled={disabled}
-            $error={error || !!validationError}
-            $readOnly={readOnly}
+            disabled={disabled}
+            error={error || !!validationError}
+            readOnly={readOnly}
             onBlur={handleBlur}
             role="group"
         >

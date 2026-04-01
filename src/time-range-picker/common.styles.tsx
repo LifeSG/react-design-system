@@ -1,9 +1,6 @@
 import styled from "styled-components";
 
-import {
-    BasicInput,
-    InputWrapper,
-} from "../shared/input-wrapper/input-wrapper";
+import { BasicInput, InputWrapper } from "../shared/input-wrapper";
 import { V3_Spacing } from "../v3_theme";
 
 // =============================================================================

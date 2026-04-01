@@ -28,7 +28,7 @@ const Component = (
                 <SearchInput
                     ref={ref}
                     value={value}
-                    $variant={variant}
+                    variant={variant}
                     {...otherProps}
                 />
             </SearchBox>

@@ -328,10 +328,10 @@ export const InputRangeSelect = <T, V>({
             <StyledInputWrapper
                 className={className}
                 data-testid={testId}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
-                $focused={isOpen}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
+                focused={isOpen}
             >
                 <VisuallyHidden id={fromLabelId}>
                     {placeholders?.from || "Select From"}

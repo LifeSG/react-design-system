@@ -7,7 +7,7 @@ import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import type { ItemsLoadStateType } from "../shared/dropdown-list/types";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import { InputWrapper } from "../shared/input-wrapper";
 import { SimpleIdGenerator } from "../util";
 import type { PredictiveTextInputProps } from "./types";
 
@@ -281,10 +281,10 @@ export const PredictiveTextInput = <T, V>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={isFocused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={isFocused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <VisuallyHidden id={instructionId} aria-hidden>
                     Type in {minimumCharacters} or more characters for suggested

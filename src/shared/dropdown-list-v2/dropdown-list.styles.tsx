@@ -16,7 +16,7 @@ import {
     V3_Spacing,
 } from "../../v3_theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
-import { BasicButton } from "../input-wrapper/input-wrapper";
+import { BasicButton } from "../input-wrapper";
 import type { DropdownVariantType } from "./types";
 
 // =============================================================================

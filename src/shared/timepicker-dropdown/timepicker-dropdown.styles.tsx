@@ -11,7 +11,7 @@ import {
     V3_Spacing,
 } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
-import { BasicInput, InputBox } from "../input-wrapper/input-wrapper";
+import { BasicInput, InputBox } from "../input-wrapper";
 
 // =============================================================================
 // STYLING

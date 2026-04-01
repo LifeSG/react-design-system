@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 import { Input } from "../input/input";
-import type { InputWrapperStyleProps } from "../shared/input-wrapper";
 import { InputBox } from "../shared/input-wrapper";
 import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
 import type { InputGroupAddonPosition } from "./types";
@@ -23,7 +22,7 @@ export interface AddonStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const AddonWrapper = styled(InputBox)<InputWrapperStyleProps>`
+export const AddonWrapper = styled(InputBox)<AddonStyleProps>`
     display: flex;
     align-items: center;
     width: 100%;

@@ -286,15 +286,16 @@ export const Component = <T, V>(
     return (
         <DropdownListState>
             <FieldWrapper
-                $focused={focused}
-                $disabled={disabled}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
                 $readOnly={readOnly}
-                $error={error}
+                error={error}
                 $position={position}
                 ref={nodeRef}
                 className={className}
                 data-testid={testId}
-                $noBorder={noBorder}
+                noBorder={noBorder}
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}

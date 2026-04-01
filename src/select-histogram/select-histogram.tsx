@@ -8,7 +8,7 @@ import {
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { LabelContainer } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { InputBox } from "../shared/input-wrapper";
 import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
 import {
@@ -176,10 +176,10 @@ export const SelectHistogram = ({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}

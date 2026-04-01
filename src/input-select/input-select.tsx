@@ -13,7 +13,7 @@ import {
     PlaceholderLabel,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { InputBox } from "../shared/input-wrapper";
 import { SimpleIdGenerator } from "../util";
 import { StringHelper } from "../util/string-helper";
 import type { InputSelectProps } from "./types";
@@ -220,10 +220,10 @@ export const InputSelect = <T, V>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}
