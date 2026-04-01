@@ -50,5 +50,18 @@ describe("Typography Components", () => {
 
             expect(getByText("Hello World")).toBeInTheDocument();
         });
+
+        it("renders HeadingSM as forwarded heading element", () => {
+            const { getByText } = render(
+                <ThemeProvider theme={MOCK_THEME}>
+                    <Typography.HeadingSM forwardedAs="h2">
+                        Heading Semantics Override
+                    </Typography.HeadingSM>
+                </ThemeProvider>
+            );
+
+            const heading = getByText("Heading Semantics Override");
+            expect(heading.tagName).toBe("H2");
+        });
     });
 });

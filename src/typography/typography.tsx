@@ -51,7 +51,15 @@ const createTypographyText = <TElement extends HTMLElement>(
 ) => {
     const TypographyText = React.forwardRef<TElement, TypographyProps>(
         function TypographyTextComponent(
-            { weight, inline, paragraph, maxLines, className, ...props },
+            {
+                className,
+                forwardedAs,
+                inline,
+                maxLines,
+                paragraph,
+                weight,
+                ...restProps
+            },
             ref
         ) {
             const textWeight = getTextWeight(weight);
@@ -65,7 +73,7 @@ const createTypographyText = <TElement extends HTMLElement>(
                     : null,
             });
 
-            const Element = inline ? "span" : tag;
+            const Element = inline ? "span" : forwardedAs || tag;
 
             return (
                 <Element
@@ -78,7 +86,7 @@ const createTypographyText = <TElement extends HTMLElement>(
                         shouldClamp && styles.lineClamp,
                         className
                     )}
-                    {...props}
+                    {...restProps}
                 />
             );
         }

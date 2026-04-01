@@ -1,13 +1,13 @@
 import { useState } from "react";
 
 import { VisuallyHidden } from "../shared/accessibility";
+import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
 import {
     ChildContainer,
     Image,
     MainContainer,
     SubmitButton,
-    Title,
 } from "./feedback-rating.styles";
 import { FeedbackRatingData } from "./feedback-rating-data";
 import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
@@ -52,7 +52,13 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 />
             )}
             <ChildContainer>
-                <Title id={internalId}>{componentDescription}</Title>
+                <Typography.HeadingSM
+                    forwardedAs="h2"
+                    id={internalId}
+                    weight="semibold"
+                >
+                    {componentDescription}
+                </Typography.HeadingSM>
                 <FeedbackRatingStarsContainer
                     ariaLabelledBy={internalId}
                     ariaDescribedBy={descriptionId}

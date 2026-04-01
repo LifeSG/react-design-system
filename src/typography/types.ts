@@ -15,6 +15,8 @@ export interface TypographyProps extends React.HTMLAttributes<HTMLElement> {
     paragraph?: boolean | undefined;
     /** Specify the number of lines visible, the additional lines will be truncated */
     maxLines?: number | undefined;
+    /** Overrides rendered element, e.g. `h2` for semantic hierarchy */
+    forwardedAs?: React.ElementType | undefined;
 }
 
 export type TypographyUnderlineStyle = "none" | "underline";
