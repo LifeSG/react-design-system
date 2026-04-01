@@ -130,7 +130,7 @@ const createBody = (textStyle: TypographySize, displayName: string) => {
             if (inline) {
                 return (
                     <span
-                        ref={mergedRef as React.Ref<HTMLSpanElement>}
+                        ref={mergedRef}
                         className={clsx(
                             styles.typographyBase,
                             getTypographyTextClassName(textStyle),
