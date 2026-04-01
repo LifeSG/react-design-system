@@ -3,36 +3,84 @@ import styled, { css } from "styled-components";
 import { Colour, Font, MediaQuery } from "../theme";
 import type { BulletType, CounterType, TextListSize } from "./types";
 
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface ListStyleProps {
-    $bottomMargin: number | undefined;
-    $size: TextListSize | undefined;
-}
+export const tokens = {
+    listBottomMargin: "--fds-internal-textList-list-bottomMargin",
+    orderedListCounterSeparator:
+        "--fds-internal-textList-orderedList-counterSeparator",
+    orderedListStartValue: "--fds-internal-textList-orderedList-startValue",
+};
 
-interface OrderedListStyleProps extends ListStyleProps {
-    $counterType: CounterType | undefined;
-    $counterSeparator: string | undefined;
-}
+export const listSizeClassNames: Record<TextListSize, string> = {
+    "heading-xxl": "textListSizeHeadingXxl",
+    "heading-xl": "textListSizeHeadingXl",
+    "heading-lg": "textListSizeHeadingLg",
+    "heading-md": "textListSizeHeadingMd",
+    "heading-sm": "textListSizeHeadingSm",
+    "heading-xs": "textListSizeHeadingXs",
+    "body-baseline": "textListSizeBodyBaseline",
+    "body-md": "textListSizeBodyMd",
+    "body-sm": "textListSizeBodySm",
+    "body-xs": "textListSizeBodyXs",
+};
 
-interface UnorderedListStyleProps extends ListStyleProps {
-    $bulletType: BulletType | undefined;
-    $hasCustomIcon: boolean | undefined;
-}
+export const counterTypeClassNames: Record<CounterType, string> = {
+    decimal: "textListCounterTypeDecimal",
+    "lower-alpha": "textListCounterTypeLowerAlpha",
+    "lower-roman": "textListCounterTypeLowerRoman",
+};
 
-// =============================================================================
-// STYLING
-// =============================================================================
-const baseStyle = css<ListStyleProps>`
-    margin-bottom: ${(props) => props.$bottomMargin || 0}rem;
+export const bulletTypeClassNames: Record<BulletType, string> = {
+    disc: "textListBulletTypeDisc",
+    circle: "textListBulletTypeCircle",
+    square: "textListBulletTypeSquare",
+    none: "textListBulletTypeNone",
+};
+
+export const orderedListReversedClassName = "textListOrderedListReversed";
+export const orderedListCustomStartClassName = "textListOrderedListCustomStart";
+export const unorderedListCustomIconClassName =
+    "textListUnorderedListCustomIcon";
+
+const baseStyle = css`
+    ${tokens.listBottomMargin}: 0rem;
+    margin-bottom: var(${tokens.listBottomMargin});
 
     // Counter matters
     counter-reset: list;
 
-    ${(props) => props.$size && Font[`${props.$size}-regular`]}
     font-weight: ${Font.Spec["weight-regular"]};
     color: ${Colour.text};
+
+    &.${listSizeClassNames["heading-xxl"]} {
+        ${Font["heading-xxl-regular"]}
+    }
+    &.${listSizeClassNames["heading-xl"]} {
+        ${Font["heading-xl-regular"]}
+    }
+    &.${listSizeClassNames["heading-lg"]} {
+        ${Font["heading-lg-regular"]}
+    }
+    &.${listSizeClassNames["heading-md"]} {
+        ${Font["heading-md-regular"]}
+    }
+    &.${listSizeClassNames["heading-sm"]} {
+        ${Font["heading-sm-regular"]}
+    }
+    &.${listSizeClassNames["heading-xs"]} {
+        ${Font["heading-xs-regular"]}
+    }
+    &.${listSizeClassNames["body-baseline"]} {
+        ${Font["body-baseline-regular"]}
+    }
+    &.${listSizeClassNames["body-md"]} {
+        ${Font["body-md-regular"]}
+    }
+    &.${listSizeClassNames["body-sm"]} {
+        ${Font["body-sm-regular"]}
+    }
+    &.${listSizeClassNames["body-xs"]} {
+        ${Font["body-xs-regular"]}
+    }
 
     // nested lists styling
     ol,
@@ -42,10 +90,13 @@ const baseStyle = css<ListStyleProps>`
     }
 `;
 
-export const StyledOrderedList = styled.ol<OrderedListStyleProps>`
+export const StyledOrderedList = styled.ol`
     ${baseStyle}
+    ${tokens.orderedListCounterSeparator}: ")";
 
     margin-left: 3em;
+    list-style-position: outside;
+    list-style-type: none;
 
     ${MediaQuery.MaxWidth.lg} {
         margin-left: 2.5em;
@@ -55,54 +106,70 @@ export const StyledOrderedList = styled.ol<OrderedListStyleProps>`
         position: relative;
     }
 
-    ${(props) => {
-        const { reversed } = props;
-        const counterType = props.$counterType || "decimal";
-        const counterSeparator = props.$counterSeparator || ")";
+    li:before {
+        counter-increment: list;
+        position: absolute;
+        left: -2em;
+    }
 
-        return css`
-            li:before {
-                content: counter(list, ${counterType}) "${counterSeparator}";
-                counter-increment: ${reversed ? "list -1" : "list"};
-                position: absolute;
-                left: -2em;
-            }
-        `;
-    }}
+    &.${counterTypeClassNames.decimal} li:before {
+        content: counter(list, decimal)
+            var(${tokens.orderedListCounterSeparator});
+    }
 
-    ${(props) => {
-        const { reversed, start } = props;
+    &.${counterTypeClassNames["lower-alpha"]} li:before {
+        content: counter(list, lower-alpha)
+            var(${tokens.orderedListCounterSeparator});
+    }
 
-        if (start) {
-            const resetValue = reversed ? start + 1 : start - 1;
-            return css`
-                counter-reset: list ${resetValue};
-            `;
-        }
-    }}
+    &.${counterTypeClassNames["lower-roman"]} li:before {
+        content: counter(list, lower-roman)
+            var(${tokens.orderedListCounterSeparator});
+    }
 
-    list-style-position: outside;
-    list-style-type: none;
+    &.${orderedListReversedClassName} li:before {
+        counter-increment: list -1;
+    }
+
+    &.${orderedListCustomStartClassName} {
+        counter-reset: list var(${tokens.orderedListStartValue});
+    }
 
     ul > li:before {
         content: "";
     }
 `;
 
-export const StyledUnorderedList = styled.ul<UnorderedListStyleProps>`
+export const StyledUnorderedList = styled.ul`
     ${baseStyle}
 
-    margin-left: ${(props) => (props.$hasCustomIcon ? 0 : "2.5em")};
-    list-style-type: ${(props) =>
-        props.$hasCustomIcon ? "none" : props.$bulletType || "disc"};
+    margin-left: 2.5em;
+    list-style-type: disc;
 
-    ${(props) =>
-        props.$hasCustomIcon &&
-        css`
-            & > li {
-                display: flex;
-                align-items: flex-start;
-                gap: 0.5em;
-            }
-        `}
+    &.${bulletTypeClassNames.disc} {
+        list-style-type: disc;
+    }
+
+    &.${bulletTypeClassNames.circle} {
+        list-style-type: circle;
+    }
+
+    &.${bulletTypeClassNames.square} {
+        list-style-type: square;
+    }
+
+    &.${bulletTypeClassNames.none} {
+        list-style-type: none;
+    }
+
+    &.${unorderedListCustomIconClassName} {
+        margin-left: 0;
+        list-style-type: none;
+
+        & > li {
+            display: flex;
+            align-items: flex-start;
+            gap: 0.5em;
+        }
+    }
 `;

@@ -24,8 +24,9 @@ export interface OrderedListProps extends BaseListProps {
 }
 
 export type BulletType = "disc" | "circle" | "square" | "none";
+type CustomBulletIcon = Exclude<React.ReactNode, string>;
 
 export interface UnorderedListProps extends BaseListProps {
     /** Values: "disc" | "circle" | "square" | "none" or custom React.ReactNode icon */
-    bulletType?: BulletType | React.ReactNode | undefined;
+    bulletType?: BulletType | CustomBulletIcon | undefined;
 }
