@@ -4,7 +4,7 @@ import { Colour } from "../theme";
 
 export const tokens = {
     global: {
-        scrollY: "--fds-internal-overlay-body-scroll-y",
+        scrollY: "--fds-internal-overlay-body-scrollY",
         scrollbarWidth: "--fds-internal-overlay-body-scrollbarWidth",
         overlayOpenClass: "lifesg-ds-overlay-open",
         overlayScrollLockClass: "lifesg-ds-overlay-scroll-lock",
