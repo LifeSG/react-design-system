@@ -8,8 +8,8 @@ export default function Story() {
         <InputSelect
             data-testid="select"
             options={OPTIONS}
-            placeholder="Select"
-            enableSearch
+            optionsLoadState="fail"
+            onRetry={() => undefined}
             valueExtractor={(item) => item.value}
             listExtractor={(item) => item.label}
             displayValueExtractor={(item) => item.label}

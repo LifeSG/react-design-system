@@ -1,14 +1,14 @@
 "use client";
 
 import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-select";
-import { OPTIONS } from "./mock";
 
 export default function Story() {
     return (
         <InputNestedSelect
+            options={[]}
             data-testid="nested-select"
-            options={OPTIONS}
-            enableSearch
+            optionsLoadState="loading"
+            onRetry={() => undefined}
         />
     );
 }

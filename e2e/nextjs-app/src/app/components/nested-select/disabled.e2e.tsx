@@ -8,7 +8,7 @@ export default function Story() {
         <InputNestedSelect
             data-testid="nested-select"
             options={OPTIONS}
-            enableSearch
+            disabled
         />
     );
 }

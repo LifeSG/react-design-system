@@ -49,6 +49,12 @@ export const Default: StoryObj<Component> = {
                     readOnly
                 />
                 <Form.NestedSelect
+                    label="This is the loading state"
+                    options={options}
+                    optionsLoadState="loading"
+                    onRetry={() => undefined}
+                />
+                <Form.NestedSelect
                     label="This is the error state"
                     options={options}
                     errorMessage="Selection is required"

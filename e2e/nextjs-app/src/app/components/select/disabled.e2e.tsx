@@ -9,7 +9,7 @@ export default function Story() {
             data-testid="select"
             options={OPTIONS}
             placeholder="Select"
-            enableSearch
+            disabled
             valueExtractor={(item) => item.value}
             listExtractor={(item) => item.label}
             displayValueExtractor={(item) => item.label}
