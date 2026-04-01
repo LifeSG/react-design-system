@@ -1,13 +1,15 @@
+import clsx from "clsx";
 import React from "react";
 
-import type { MainStyleProps } from "./button.style";
-import { Main, Spinner } from "./button.style";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
+import * as styles from "./button.styles";
 import { hasValidChildren } from "./button-helper";
 import type { ButtonProps, ButtonRef } from "./types";
 
 const Component = (props: ButtonProps, ref: ButtonRef) => {
     const {
         children,
+        className,
         disabled = false,
         loading = false,
         styleType = "default",
@@ -23,33 +25,60 @@ const Component = (props: ButtonProps, ref: ButtonRef) => {
     const hasChildren = hasValidChildren(children);
     const iconOnly = !!icon && !hasChildren;
 
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSize: sizeType,
-        $buttonIsDanger: danger,
-        $hasIcon: !!icon,
-        $iconOnly: iconOnly,
-        $iconPosition: icon ? iconPosition : undefined,
-    };
-
     return (
-        <Main
+        <button
             ref={ref}
             data-testid={otherProps["data-testid"] || "button"}
             disabled={disabled && !focusableWhenDisabled}
             aria-disabled={disabled}
             aria-busy={loading}
             onClick={disabled ? undefined : onClick}
-            {...mainStyle}
+            className={clsx(
+                styles.main,
+                icon &&
+                    iconPosition === "right" &&
+                    styles.mainIconPositionRight,
+                !iconOnly && styles.mainHasMinWidth,
+                disabled && styles.mainStyleDisabled,
+                styleType === "default" && !danger && styles.mainStyleDefault,
+                styleType === "default" &&
+                    danger &&
+                    styles.mainStyleDefaultDanger,
+                styleType === "secondary" &&
+                    !danger &&
+                    styles.mainStyleSecondary,
+                styleType === "secondary" &&
+                    danger &&
+                    styles.mainStyleSecondaryDanger,
+                styleType === "light" && !danger && styles.mainStyleLight,
+                styleType === "light" && danger && styles.mainStyleLightDanger,
+                styleType === "link" && !danger && styles.mainStyleLink,
+                styleType === "link" && danger && styles.mainStyleLinkDanger,
+                sizeType === "default" && styles.mainSizeDefault,
+                sizeType === "default" &&
+                    iconOnly &&
+                    styles.mainSizeDefaultIconOnly,
+                sizeType === "small" && styles.mainSizeSmall,
+                sizeType === "small" &&
+                    iconOnly &&
+                    styles.mainSizeSmallIconOnly,
+                sizeType === "large" && styles.mainSizeLarge,
+                sizeType === "large" &&
+                    iconOnly &&
+                    styles.mainSizeLargeIconOnly,
+                className
+            )}
             {...otherProps}
         >
             {loading ? (
-                <Spinner $hasChildren={hasChildren} />
+                <ComponentLoadingSpinner
+                    className={clsx(hasChildren && styles.spinnerHasChildren)}
+                />
             ) : icon ? (
                 React.cloneElement(icon, { "aria-hidden": true })
             ) : null}
             {hasChildren && <span>{children}</span>}
-        </Main>
+        </button>
     );
 };
 
