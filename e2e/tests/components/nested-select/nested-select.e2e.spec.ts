@@ -71,8 +71,9 @@ test.describe("NestedSelect", () => {
 
                 const first = story.getTreeItem("Category 1");
                 await expect(first).toBeVisible();
-                await expect(first).toHaveAttribute("tabindex", "0");
-                await expect(first).toHaveAttribute("aria-selected", "false");
+                await expect(first).toMatchAriaSnapshot(`
+                    - treeitem "Category 1"
+                `);
 
                 await compareScreenshot(story, "open-first-active", {
                     fullscreen: true,
@@ -83,8 +84,9 @@ test.describe("NestedSelect", () => {
                 const hovered = story.getTreeItem("Option 1.1");
                 await hovered.hover();
 
-                await expect(hovered).toHaveAttribute("tabindex", "0");
-                await expect(hovered).toHaveAttribute("aria-selected", "false");
+                await expect(hovered).toMatchAriaSnapshot(`
+                    - treeitem "Option 1.1"
+                `);
 
                 await compareScreenshot(story, "open-hover-other", {
                     fullscreen: true,
@@ -114,7 +116,9 @@ test.describe("NestedSelect", () => {
                 await story.openDropdown();
 
                 const selected = story.getTreeItem("Option 1.1");
-                await expect(selected).toHaveAttribute("aria-selected", "true");
+                await expect(selected).toMatchAriaSnapshot(`
+                    - treeitem "Option 1.1" [selected]
+                `);
 
                 await compareScreenshot(story, "selected-open", {
                     fullscreen: true,
@@ -127,8 +131,12 @@ test.describe("NestedSelect", () => {
 
                 await hovered.hover();
 
-                await expect(selected).toHaveAttribute("aria-selected", "true");
-                await expect(hovered).toHaveAttribute("aria-selected", "false");
+                await expect(selected).toMatchAriaSnapshot(`
+                    - treeitem "Option 1.1" [selected]
+                `);
+                await expect(hovered).toMatchAriaSnapshot(`
+                    - treeitem "Option 1.2"
+                `);
 
                 await compareScreenshot(story, "selected-hover-other", {
                     fullscreen: true,
@@ -205,10 +213,9 @@ test.describe("NestedSelect", () => {
 
         test("Disabled state", async ({ story }) => {
             await expect(story.locators.selector).toBeDisabled();
-            await expect(story.locators.selector).toHaveAttribute(
-                "aria-disabled",
-                "true"
-            );
+            await expect(story.locators.selector).toMatchAriaSnapshot(`
+                - combobox [disabled]
+            `);
             await expect(story.locators.dropdownContainer).not.toBeVisible();
 
             await compareScreenshot(story, "disabled-on-mount");

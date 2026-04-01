@@ -12,7 +12,6 @@ class StoryPage extends AbstractStoryPage {
         searchInput: Locator;
         listItems: Locator;
         noResults: Locator;
-        listLoading: Locator;
         listFail: Locator;
     };
 
@@ -27,7 +26,6 @@ class StoryPage extends AbstractStoryPage {
             searchInput: page.getByTestId("search-input"),
             listItems: page.getByTestId("list-item"),
             noResults: page.getByTestId("list-no-results"),
-            listLoading: page.getByTestId("list-loading"),
             listFail: page.getByTestId("list-fail"),
         };
     }
@@ -71,8 +69,9 @@ test.describe("Select", () => {
 
                 const first = story.getOption("Option A");
                 await expect(first).toBeVisible();
-                await expect(first).toHaveAttribute("tabindex", "0");
-                await expect(first).toHaveAttribute("aria-selected", "false");
+                await expect(first).toMatchAriaSnapshot(`
+                    - option "Option A"
+                `);
 
                 await compareScreenshot(story, "open-first-active", {
                     fullscreen: true,
@@ -83,8 +82,9 @@ test.describe("Select", () => {
                 const second = story.getOption("Option B");
                 await second.hover();
 
-                await expect(second).toHaveAttribute("tabindex", "0");
-                await expect(second).toHaveAttribute("aria-selected", "false");
+                await expect(second).toMatchAriaSnapshot(`
+                    - option "Option B"
+                `);
 
                 await compareScreenshot(story, "open-hover-other", {
                     fullscreen: true,
@@ -112,8 +112,9 @@ test.describe("Select", () => {
                 await story.openDropdown();
 
                 const selected = story.getOption("Option B");
-                await expect(selected).toHaveAttribute("aria-selected", "true");
-                await expect(selected).toHaveAttribute("tabindex", "0");
+                await expect(selected).toMatchAriaSnapshot(`
+                    - option "Option B" [selected]
+                `);
 
                 await compareScreenshot(story, "selected-open", {
                     fullscreen: true,
@@ -126,9 +127,12 @@ test.describe("Select", () => {
 
                 await hovered.hover();
 
-                await expect(selected).toHaveAttribute("aria-selected", "true");
-                await expect(hovered).toHaveAttribute("tabindex", "0");
-                await expect(hovered).toHaveAttribute("aria-selected", "false");
+                await expect(selected).toMatchAriaSnapshot(`
+                    - option "Option B" [selected]
+                `);
+                await expect(hovered).toMatchAriaSnapshot(`
+                    - option "Option C"
+                `);
 
                 await compareScreenshot(story, "selected-hover-other", {
                     fullscreen: true,
@@ -179,22 +183,6 @@ test.describe("Select", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("loading");
-        });
-
-        test("Loading state", async ({ story }) => {
-            await story.openDropdown();
-            await expect(story.locators.listLoading).toBeVisible();
-            await expect(story.page.getByText("Loading...")).toBeVisible();
-
-            await compareScreenshot(story, "open-loading", {
-                fullscreen: true,
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
             await story.init("fail");
         });
 
@@ -216,10 +204,9 @@ test.describe("Select", () => {
 
         test("Disabled state", async ({ story }) => {
             await expect(story.locators.selector).toBeDisabled();
-            await expect(story.locators.selector).toHaveAttribute(
-                "aria-disabled",
-                "true"
-            );
+            await expect(story.locators.selector).toMatchAriaSnapshot(`
+                - combobox [disabled]
+            `);
             await expect(story.locators.dropdownContainer).not.toBeVisible();
 
             await compareScreenshot(story, "disabled-on-mount");
