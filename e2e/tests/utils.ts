@@ -80,3 +80,13 @@ export const compareScreenshot = async (
         threshold: 0, // Strict colour matching
     });
 };
+
+export const compareLocatorScreenshot = async (
+    locator: ReturnType<Page["locator"]>,
+    name: string,
+    options?: { threshold?: number }
+) => {
+    await expect(locator).toHaveScreenshot(`${name}.png`, {
+        threshold: options?.threshold ?? 0, // Strict colour matching by default
+    });
+};

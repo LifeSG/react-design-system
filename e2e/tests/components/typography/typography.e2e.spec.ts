@@ -1,5 +1,9 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import {
+    AbstractStoryPage,
+    compareLocatorScreenshot,
+    compareScreenshot,
+} from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "typography";
@@ -10,8 +14,10 @@ class StoryPage extends AbstractStoryPage {
         semiboldWeights: Locator;
         boldWeights: Locator;
         paragraph: Locator;
+        clamps: Locator;
         clampOneLine: Locator;
         clampTwoLines: Locator;
+        links: Locator;
         underlineLink: Locator;
         noUnderlineLink: Locator;
     };
@@ -25,8 +31,10 @@ class StoryPage extends AbstractStoryPage {
             semiboldWeights: page.locator("[data-testid$='-weight-semibold']"),
             boldWeights: page.locator("[data-testid$='-weight-bold']"),
             paragraph: page.getByTestId("typography-paragraph"),
+            clamps: page.getByTestId("typography-clamps"),
             clampOneLine: page.getByTestId("typography-clamp-1"),
             clampTwoLines: page.getByTestId("typography-clamp-2"),
+            links: page.locator("[data-testid^='typography-links']"),
             underlineLink: page.getByTestId("typography-link-underline"),
             noUnderlineLink: page.getByTestId("typography-link-no-underline"),
         };
@@ -54,17 +62,35 @@ test.describe("Typography", () => {
         });
     });
 
-    test("Styles", async ({ story }) => {
+    test("Paragraph style", async ({ story }) => {
         await story.init("styles");
 
-        await test.step("Component mounts with style variants", async () => {
+        await test.step("Paragraph is visible", async () => {
             await expect(story.locators.paragraph).toBeVisible();
+
+            await compareLocatorScreenshot(story.locators.paragraph, "mount");
+        });
+    });
+
+    test("Text clamping styles", async ({ story }) => {
+        await story.init("styles");
+
+        await test.step("Text clamping variants are visible", async () => {
             await expect(story.locators.clampOneLine).toBeVisible();
             await expect(story.locators.clampTwoLines).toBeVisible();
+
+            await compareLocatorScreenshot(story.locators.clamps, "mount");
+        });
+    });
+
+    test("Link styles", async ({ story }) => {
+        await story.init("styles");
+
+        await test.step("Link style variants are visible", async () => {
             await expect(story.locators.underlineLink).toBeVisible();
             await expect(story.locators.noUnderlineLink).toBeVisible();
 
-            await compareScreenshot(story, "mount");
+            await compareLocatorScreenshot(story.locators.links, "mount");
         });
     });
 });

@@ -12,29 +12,52 @@ Donec nulla nisi, fermentum eget lorem at, feugiat ultricies ex. Aliquam volutpa
 export default function Story() {
     return (
         <div>
-            <Typography.BodyBL data-testid="typography-paragraph" paragraph>
-                This is paragraph text with additional bottom spacing.
-            </Typography.BodyBL>
+            <div data-testid="typography-paragraph">
+                <Typography.BodyBL paragraph>
+                    This is paragraph text with additional bottom spacing.
+                </Typography.BodyBL>
 
-            <Typography.BodyBL data-testid="typography-clamp-1" maxLines={1}>
-                This is paragraph text with max 1 line. {longText}
-            </Typography.BodyBL>
+                <Typography.BodyBL paragraph>
+                    This is paragraph text with additional bottom spacing.
+                </Typography.BodyBL>
 
-            <Typography.BodyBL data-testid="typography-clamp-2" maxLines={2}>
-                This is paragraph text with max 2 lines. {longText}
-            </Typography.BodyBL>
+                <Typography.BodyBL paragraph>
+                    This is paragraph text with additional bottom spacing.
+                </Typography.BodyBL>
+            </div>
 
-            <Typography.LinkBL data-testid="typography-link-underline" href="#">
-                Underline link
-            </Typography.LinkBL>
+            <div data-testid="typography-clamps">
+                <Typography.BodyBL
+                    data-testid="typography-clamp-1"
+                    maxLines={1}
+                >
+                    This is paragraph text with max 1 line. {longText}
+                </Typography.BodyBL>
 
-            <Typography.LinkBL
-                data-testid="typography-link-no-underline"
-                href="#"
-                underlineStyle="none"
-            >
-                No underline link
-            </Typography.LinkBL>
+                <Typography.BodyBL
+                    data-testid="typography-clamp-2"
+                    maxLines={2}
+                >
+                    This is paragraph text with max 2 lines. {longText}
+                </Typography.BodyBL>
+            </div>
+
+            <div data-testid="typography-links">
+                <Typography.LinkBL
+                    data-testid="typography-link-underline"
+                    href="#"
+                >
+                    Underline link
+                </Typography.LinkBL>
+
+                <Typography.LinkBL
+                    data-testid="typography-link-no-underline"
+                    href="#"
+                    underlineStyle="none"
+                >
+                    No underline link
+                </Typography.LinkBL>
+            </div>
         </div>
     );
 }
