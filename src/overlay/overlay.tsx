@@ -3,13 +3,14 @@ import {
     FloatingTree,
     useFloatingNodeId,
 } from "@floating-ui/react";
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
-import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
+import { useApplyStyle, useInheritedThemeScope } from "../theme";
 import { SimpleIdGenerator } from "../util";
-import { Root, Wrapper } from "./overlay.styles";
+import * as styles from "./overlay.styles";
 import type { OverlayProps } from "./types";
 import { useFloatingParent } from "./use-floating-context";
 
@@ -37,6 +38,7 @@ const OverlayComponent = ({
     const stacked = useRef<boolean>();
     // Track where mousedown started to prevent closing drawer during text selection drag
     const mouseDownInsideModalRef = useRef(false);
+    const rootRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     const overlayRootId = id
@@ -47,11 +49,13 @@ const OverlayComponent = ({
 
     useFloatingParent(zIndex);
 
+    useApplyStyle(rootRef, { [styles.tokens.root.zIndex]: zIndex });
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        addStylesheetForDocumentBody();
+        initialiseStylesForDocumentBody();
         setRootElement(getRootElement());
 
         return () => {
@@ -145,39 +149,15 @@ const OverlayComponent = ({
         return getOverlayOrder().length > 0;
     };
 
-    const addStylesheetForDocumentBody = () => {
-        /**
-         * This stylesheet is to manipulate the <body>. We only add once
-         */
-        if (!document.getElementById(STYLESHEET_ID)) {
-            const overlayStyleSheet = document.createElement("style");
-            overlayStyleSheet.id = STYLESHEET_ID;
+    const initialiseStylesForDocumentBody = () => {
+        const documentWidth = document.documentElement.clientWidth;
+        const windowWidth = window.innerWidth;
+        const scrollBarWidth = windowWidth - documentWidth;
 
-            const documentWidth = document.documentElement.clientWidth;
-            const windowWidth = window.innerWidth;
-            const scrollBarWidth = windowWidth - documentWidth;
-
-            overlayStyleSheet.innerHTML = `
-				.${OVERLAY_OPEN_CLASSNAME} {
-					overflow: hidden;
-					padding-right: ${scrollBarWidth}px !important;
-					-ms-overflow-style: none;
-					scrollbar-width: none;
-				}
-
-				.${OVERLAY_OPEN_CLASSNAME}::-webkit-scrollbar {
-					display: none;
-				}
-
-				.${OVERLAY_SCROLL_LOCK_CLASSNAME} {
-					position: fixed;
-					top: var(${SCROLL_POSITION_VAR}, 0);
-					bottom: 0;
-				}
-			`;
-
-            document.body.appendChild(overlayStyleSheet);
-        }
+        document.documentElement.style.setProperty(
+            styles.tokens.global.scrollbarWidth,
+            `${scrollBarWidth}px`
+        );
     };
 
     /**
@@ -185,13 +165,15 @@ const OverlayComponent = ({
      */
     const applyBodyStyleClass = (action: "add" | "remove") => {
         const isOverlayStyleClassApplied = document.body.classList.contains(
-            OVERLAY_OPEN_CLASSNAME
+            styles.tokens.global.overlayOpenClass
         );
 
         if (action === "add" && !isOverlayStyleClassApplied) {
-            document.body.classList.add(OVERLAY_OPEN_CLASSNAME);
+            document.body.classList.add(styles.tokens.global.overlayOpenClass);
         } else if (action === "remove" && isOverlayStyleClassApplied) {
-            document.body.classList.remove(OVERLAY_OPEN_CLASSNAME);
+            document.body.classList.remove(
+                styles.tokens.global.overlayOpenClass
+            );
         }
     };
 
@@ -228,13 +210,17 @@ const OverlayComponent = ({
         }
 
         const isClassApplied = document.body.classList.contains(
-            OVERLAY_SCROLL_LOCK_CLASSNAME
+            styles.tokens.global.overlayScrollLockClass
         );
 
         if (action === "add" && !isClassApplied) {
-            document.body.classList.add(OVERLAY_SCROLL_LOCK_CLASSNAME);
+            document.body.classList.add(
+                styles.tokens.global.overlayScrollLockClass
+            );
         } else if (action === "remove" && isClassApplied) {
-            document.body.classList.remove(OVERLAY_SCROLL_LOCK_CLASSNAME);
+            document.body.classList.remove(
+                styles.tokens.global.overlayScrollLockClass
+            );
         }
     };
 
@@ -242,7 +228,7 @@ const OverlayComponent = ({
         const bodyStyle = document.body.style;
         const scrollY = bodyStyle.top ? bodyStyle.top : window.scrollY + "px";
 
-        document.body.style.setProperty(SCROLL_POSITION_VAR, scrollY);
+        document.body.style.setProperty(styles.tokens.global.scrollY, scrollY);
     };
 
     const scrollToLastScrollPositionForIOS = () => {
@@ -250,8 +236,9 @@ const OverlayComponent = ({
             return;
         }
 
-        const scrollY =
-            document.body.style.getPropertyValue(SCROLL_POSITION_VAR);
+        const scrollY = document.body.style.getPropertyValue(
+            styles.tokens.global.scrollY
+        );
         requestAnimationFrame(() => {
             window.scrollTo({
                 top: parseFloat(scrollY),
@@ -313,31 +300,34 @@ const OverlayComponent = ({
     // =============================================================================
     const renderWrapper = () => (
         <FloatingNode id={nodeId}>
-            <Wrapper
+            <div
                 ref={wrapperRef}
                 data-testid="overlay-wrapper"
-                $show={show}
-                $stacked={isStacked}
-                $backgroundBlur={backgroundBlur}
-                $disableTransition={disableTransition}
+                className={clsx(
+                    styles.wrapper,
+                    show ? styles.wrapperShow : styles.wrapperHide,
+                    isStacked && styles.wrapperStacked,
+                    backgroundBlur && styles.wrapperBackgroundBlur,
+                    disableTransition && styles.wrapperDisableTransition
+                )}
                 onClick={handleWrapperClick}
             >
                 {children}
-            </Wrapper>
+            </div>
         </FloatingNode>
     );
 
     const renderComponent = () => (
-        <Root
+        <div
+            ref={rootRef}
             id={overlayRootId}
             data-testid={overlayRootId}
-            $show={show}
-            $zIndex={zIndex}
+            className={clsx(styles.root, show && styles.rootShow)}
             {...themeProps}
             style={themeStyle}
         >
             {children && renderWrapper()}
-        </Root>
+        </div>
     );
 
     return rootElement
@@ -352,11 +342,3 @@ export const Overlay = (props: OverlayProps) => {
         </FloatingTree>
     );
 };
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-const STYLESHEET_ID = "lifesg-ds-overlay-stylesheet";
-const OVERLAY_OPEN_CLASSNAME = "lifesg-ds-overlay-open";
-const OVERLAY_SCROLL_LOCK_CLASSNAME = "lifesg-ds-overlay-scroll-lock";
-const SCROLL_POSITION_VAR = "--lifesg-ds-overlay-scroll-y";
