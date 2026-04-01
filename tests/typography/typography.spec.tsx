@@ -53,11 +53,9 @@ describe("Typography Components", () => {
 
         it("renders HeadingSM as forwarded heading element", () => {
             const { getByText } = render(
-                <ThemeProvider theme={MOCK_THEME}>
-                    <Typography.HeadingSM forwardedAs="h2">
-                        Heading Semantics Override
-                    </Typography.HeadingSM>
-                </ThemeProvider>
+                <Typography.HeadingSM as="h2">
+                    Heading Semantics Override
+                </Typography.HeadingSM>
             );
 
             const heading = getByText("Heading Semantics Override");

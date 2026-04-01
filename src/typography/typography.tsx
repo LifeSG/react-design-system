@@ -53,7 +53,7 @@ const createTypographyText = <TElement extends HTMLElement>(
         function TypographyTextComponent(
             {
                 className,
-                forwardedAs,
+                as: asProp,
                 inline,
                 maxLines,
                 paragraph,
@@ -73,7 +73,7 @@ const createTypographyText = <TElement extends HTMLElement>(
                     : null,
             });
 
-            const Element = inline ? "span" : forwardedAs || tag;
+            const Element = inline ? "span" : asProp || tag;
 
             return (
                 <Element

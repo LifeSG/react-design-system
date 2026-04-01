@@ -321,7 +321,7 @@ export const ComposingFromScratch: StoryObj<Component> = {
                             marginBottom: "2rem",
                         }}
                     >
-                        <Typography.HeadingSM forwardedAs="h3" weight="bold">
+                        <Typography.HeadingSM as="h3" weight="bold">
                             My custom content
                         </Typography.HeadingSM>
                         <Button.Default styleType="light">
@@ -357,7 +357,7 @@ export const ComposingFromScratch: StoryObj<Component> = {
                         />
                     </UneditableSection.ItemSection>
                     <Typography.HeadingSM
-                        forwardedAs="h3"
+                        as="h3"
                         weight="bold"
                         style={{ marginBottom: "2rem" }}
                     >

@@ -52,11 +52,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 />
             )}
             <ChildContainer>
-                <Typography.HeadingSM
-                    forwardedAs="h2"
-                    id={internalId}
-                    weight="semibold"
-                >
+                <Typography.HeadingSM as="h2" id={internalId} weight="semibold">
                     {componentDescription}
                 </Typography.HeadingSM>
                 <FeedbackRatingStarsContainer
