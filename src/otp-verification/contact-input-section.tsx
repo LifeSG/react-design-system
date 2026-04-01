@@ -92,6 +92,7 @@ export const ContactInputSection = ({
                 noBorder
                 aria-invalid={!!sendOtpError}
                 aria-required={true}
+                aria-label="Enter your email address to receive a verification OTP"
                 disabled={disabled}
                 readOnly={readOnly}
             />
