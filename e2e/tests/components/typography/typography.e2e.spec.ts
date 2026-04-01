@@ -6,6 +6,7 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         lightWeights: Locator;
+        regularWeights: Locator;
         semiboldWeights: Locator;
         boldWeights: Locator;
         paragraph: Locator;
@@ -20,6 +21,7 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             lightWeights: page.locator("[data-testid$='-weight-light']"),
+            regularWeights: page.locator("[data-testid$='-weight-regular']"),
             semiboldWeights: page.locator("[data-testid$='-weight-semibold']"),
             boldWeights: page.locator("[data-testid$='-weight-bold']"),
             paragraph: page.getByTestId("typography-paragraph"),
@@ -40,10 +42,11 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Typography", () => {
     test("Variants", async ({ story }) => {
-        await story.init("basic");
+        await story.init("variants");
 
         await test.step("Component mounts with all variants", async () => {
             await expect(story.locators.lightWeights).toHaveCount(12);
+            await expect(story.locators.regularWeights).toHaveCount(12);
             await expect(story.locators.semiboldWeights).toHaveCount(12);
             await expect(story.locators.boldWeights).toHaveCount(12);
 

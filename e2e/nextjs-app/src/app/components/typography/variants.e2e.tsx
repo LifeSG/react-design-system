@@ -28,6 +28,12 @@ export default function Story() {
                         {label} light
                     </Component>
                     <Component
+                        data-testid={`${label}-weight-regular`}
+                        weight="regular"
+                    >
+                        {label} regular
+                    </Component>
+                    <Component
                         data-testid={`${label}-weight-semibold`}
                         weight="semibold"
                     >
