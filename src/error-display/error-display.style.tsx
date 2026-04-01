@@ -40,9 +40,7 @@ export const TextContainer = styled.div`
     white-space: pre-wrap;
 `;
 
-export const Title = styled(Typography.HeadingMD).attrs(() => ({
-    forwardedAs: "h2",
-}))`
+export const Title = styled(Typography.HeadingMD)`
     margin: ${V3_Spacing["spacing-32"]} 0 ${V3_Spacing["spacing-16"]};
     text-align: center;
 `;

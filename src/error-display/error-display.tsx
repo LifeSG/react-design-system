@@ -104,6 +104,7 @@ export const ErrorDisplay = ({
                             <Title
                                 data-testid={`${testId}--title`}
                                 data-id="error-display-title"
+                                forwardedAs="h2"
                                 weight="semibold"
                             >
                                 {updatedAssets.title}
