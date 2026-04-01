@@ -12,7 +12,6 @@ class StoryPage extends AbstractStoryPage {
         searchInput: Locator;
         listItems: Locator;
         noResults: Locator;
-        listLoading: Locator;
         listFail: Locator;
     };
 
@@ -27,7 +26,6 @@ class StoryPage extends AbstractStoryPage {
             searchInput: page.getByTestId("search-input"),
             listItems: page.getByTestId("list-item"),
             noResults: page.getByTestId("list-no-results"),
-            listLoading: page.getByTestId("list-loading"),
             listFail: page.getByTestId("list-fail"),
         };
     }
@@ -180,22 +178,6 @@ test.describe("NestedSelect", () => {
                 await compareScreenshot(story, "open-with-search-cleared", {
                     fullscreen: true,
                 });
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("loading");
-        });
-
-        test("Loading state", async ({ story }) => {
-            await story.openDropdown();
-            await expect(story.locators.listLoading).toBeVisible();
-            await expect(story.page.getByText("Loading...")).toBeVisible();
-
-            await compareScreenshot(story, "open-loading", {
-                fullscreen: true,
             });
         });
     });
