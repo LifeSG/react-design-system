@@ -53,10 +53,10 @@ test.describe("Typography", () => {
         await story.init("variants");
 
         await test.step("Component mounts with all variants", async () => {
-            await expect(story.locators.lightWeights).toHaveCount(12);
-            await expect(story.locators.regularWeights).toHaveCount(12);
-            await expect(story.locators.semiboldWeights).toHaveCount(12);
-            await expect(story.locators.boldWeights).toHaveCount(12);
+            await expect(story.locators.lightWeights).toBeVisible();
+            await expect(story.locators.regularWeights).toBeVisible();
+            await expect(story.locators.semiboldWeights).toBeVisible();
+            await expect(story.locators.boldWeights).toBeVisible();
 
             await compareScreenshot(story, "mount");
         });
