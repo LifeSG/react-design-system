@@ -33,7 +33,6 @@ interface LabelStyleProps {
 
 interface ExpandButtonStyleProps extends StyleProps {
     $paddingTopRequired?: boolean;
-    $disabledVisual?: boolean;
 }
 
 interface ChildrenStyleProps extends StyleProps {
@@ -349,13 +348,14 @@ export const ExpandButton = styled.button<ExpandButtonStyleProps>`
         margin-left: 0.5rem;
     }
 `;
-export const ErrorContainer = styled.div<InteractiveStyleProps>`
+
+export const ErrorContainer = styled.div<StyleProps>`
     width: 100%;
     color: ${(props) =>
-        props.$disabledVisual ? Colour["text-disabled"] : Colour["text-error"]};
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
     border: none;
     background: ${Colour.bg};
-    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     padding: 0.6875rem 1rem 0.5rem 1rem;
 `;
 

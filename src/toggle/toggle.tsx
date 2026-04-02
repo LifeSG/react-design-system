@@ -332,7 +332,7 @@ export const Toggle = ({
             !expanded &&
             hasCompositeSectionError && (
                 <ErrorContainer
-                    $disabledVisual={disabled}
+                    $disabled={disabled}
                     onClick={handleExpandCollapseClick}
                     id={`${generatedId}-error-alert`}
                 >
