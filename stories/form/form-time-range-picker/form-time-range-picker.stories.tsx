@@ -115,6 +115,10 @@ export const ComboboxVariant: StoryObj<Component> = {
         const [time3, setTime3] = useState({ start: "00:00", end: "" });
         const [time4, setTime4] = useState(emptyTime);
         const [time5, setTime5] = useState({ start: "2:00pm", end: "1:00pm" });
+        const [time6, setTime6] = useState({
+            start: "",
+            end: "",
+        });
 
         return (
             <>
@@ -161,6 +165,14 @@ export const ComboboxVariant: StoryObj<Component> = {
                     label="This is the readonly state"
                     variant="combobox"
                     readOnly
+                />
+                <Form.TimeRangePicker
+                    label="With initial dropdown time of 9:00am to 3:00pm"
+                    value={time6}
+                    onChange={(value) => setTime6(value)}
+                    variant="combobox"
+                    initialStartTime="9:00am"
+                    initialEndTime="3:00pm"
                 />
             </>
         );

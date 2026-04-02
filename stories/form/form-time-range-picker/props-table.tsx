@@ -161,6 +161,18 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The ending time for the dropdown options",
                 propTypes: ["string"],
             },
+            {
+                name: "initialStartTime",
+                description:
+                    "The initial time that the start dropdown scrolls to when the start field is empty",
+                propTypes: ["string"],
+            },
+            {
+                name: "initialEndTime",
+                description:
+                    "The initial time that the end dropdown scrolls to when the end field is empty",
+                propTypes: ["string"],
+            },
         ],
     },
     {
