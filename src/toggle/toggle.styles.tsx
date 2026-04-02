@@ -223,6 +223,7 @@ export const Input = styled.input<InteractiveStyleProps>`
     cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
     top: 0;
     left: 0;
+    opacity: 0;
 
     /* Hide appearance but keep it focusable using keyboard interactions */
     appearance: none;
