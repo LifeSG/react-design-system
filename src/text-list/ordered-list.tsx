@@ -5,8 +5,10 @@ import { useApplyStyle } from "../theme";
 import * as styles from "./text-list.styles";
 import type { CounterType, OrderedListProps } from "./types";
 
-const toCssString = (value: string) =>
-    `"${value.replace(/\\/g, "\\\\").replace(/"/g, '\\"')}"`;
+// CSS `content` expects a quoted string literal, so we escape backslashes and
+// double quotes to keep user-provided separators valid (e.g. `"` or `\`).
+const toCssContentStringLiteral = (value: string) =>
+    `"${value.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`;
 
 const counterTypeToCssValue: Record<CounterType, string> = {
     decimal: "counter(list, decimal)",
@@ -33,7 +35,7 @@ export const OrderedList = ({
         [styles.tokens.listBottomMargin]: `${bottomMargin ?? 0}rem`,
         [styles.tokens.orderedListCounterContent]:
             counterTypeToCssValue[counterTypeToUse],
-        [styles.tokens.orderedListCounterSeparator]: toCssString(
+        [styles.tokens.orderedListCounterSeparator]: toCssContentStringLiteral(
             counterSeparator ?? ")"
         ),
         [styles.tokens.orderedListStartValue]: hasCustomStart
