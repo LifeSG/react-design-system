@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { forwardRef } from "react";
 
 import {
@@ -19,16 +20,26 @@ import type {
  */
 export const InputBox = forwardRef<HTMLDivElement, InputBoxProps>(
     function InputBox(props, ref) {
-        const { disabled, error, readOnly, focused, noBorder, ...otherProps } =
-            props;
+        const {
+            disabled,
+            error,
+            readOnly,
+            focused,
+            noBorder,
+            className,
+            ...otherProps
+        } = props;
         return (
             <InputBoxStyled
                 ref={ref}
-                $disabled={disabled}
-                $error={error}
-                $readOnly={readOnly}
-                $focused={focused}
-                $noBorder={noBorder}
+                className={clsx(
+                    disabled && "inputBoxDisabled",
+                    error && "inputBoxError",
+                    readOnly && "inputBoxReadOnly",
+                    focused && "inputBoxFocused",
+                    noBorder && "inputBoxNoBorder",
+                    className
+                )}
                 {...otherProps}
             />
         );
@@ -47,17 +58,22 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
             focused,
             noBorder,
             position,
+            className,
             ...otherProps
         } = props;
         return (
             <InputWrapperStyled
                 ref={ref}
-                $disabled={disabled}
-                $error={error}
-                $readOnly={readOnly}
-                $focused={focused}
-                $noBorder={noBorder}
-                $position={position}
+                className={clsx(
+                    disabled && "inputBoxDisabled",
+                    error && "inputBoxError",
+                    readOnly && "inputBoxReadOnly",
+                    focused && "inputBoxFocused",
+                    noBorder && "inputBoxNoBorder",
+                    readOnly && "inputWrapperReadOnly",
+                    position === "right" && "inputWrapperPositionRight",
+                    className
+                )}
                 {...otherProps}
             />
         );
@@ -70,9 +86,16 @@ export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
  */
 export const BasicInput = forwardRef<HTMLInputElement, BasicInputProps>(
     function BasicInput(props, ref) {
-        const { variant, ...otherProps } = props;
+        const { variant, className, ...otherProps } = props;
         return (
-            <BasicInputStyled ref={ref} $variant={variant} {...otherProps} />
+            <BasicInputStyled
+                ref={ref}
+                className={clsx(
+                    variant === "small" && "basicInputSmall",
+                    className
+                )}
+                {...otherProps}
+            />
         );
     }
 );
