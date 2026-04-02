@@ -18,11 +18,18 @@ export default function Story() {
                 <li>
                     Item C
                     <TextList.Ol className={styles["custom-ordered-list"]}>
-                        <li>Custom nested 1</li>
-                        <li>Custom nested 2</li>
+                        <li>Nested with custom counter 1</li>
+                        <li>Nested with custom counter 2</li>
                     </TextList.Ol>
                 </li>
                 <li>Item D</li>
+                <li>
+                    Item E
+                    <TextList.Ol counterSeparator="--">
+                        <li>Nested with counter separator 1</li>
+                        <li>Nested with counter separator 2</li>
+                    </TextList.Ol>
+                </li>
             </TextList.Ol>
         </div>
     );
