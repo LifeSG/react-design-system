@@ -30,7 +30,7 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"default"`,
             },
             {
-                name: "size",
+                name: "sizeType",
                 description: "The size of the button",
                 propTypes: [`"large"`, `"default"`, `"small"`],
                 defaultValue: `"default"`,
