@@ -1,4 +1,5 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import clsx from "clsx";
 import type React from "react";
 import type { NamedExoticComponent } from "react";
 import { forwardRef } from "react";
@@ -12,6 +13,7 @@ function ModalBoxInner(
         children,
         onClose,
         showCloseButton = true,
+        className,
         ...otherProps
     }: ModalBoxProps,
     ref: React.ForwardedRef<HTMLDivElement>
@@ -40,7 +42,13 @@ function ModalBoxInner(
     };
 
     return (
-        <Box ref={ref} data-testid={id} {...otherProps} onClick={handleOnClick}>
+        <Box
+            ref={ref}
+            data-testid={id}
+            {...otherProps}
+            onClick={handleOnClick}
+            className={clsx(className)}
+        >
             {showCloseButton && renderCloseButton()}
             {children}
         </Box>

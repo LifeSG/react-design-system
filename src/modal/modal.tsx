@@ -1,10 +1,20 @@
+import clsx from "clsx";
 import React, { useEffect, useRef } from "react";
 
+import type { ModalAnimationDirection } from "../modal-v2/types";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
+import { useApplyStyle } from "../theme";
 import { useEvent } from "../util";
-import { Container } from "./modal.styles";
+import { Container, tokens } from "./modal.styles";
 import type { ModalProps } from "./types";
+
+const ANIMATION_FROM_CLASS_MAP: Record<ModalAnimationDirection, string> = {
+    top: "modalContainerFromTop",
+    bottom: "modalContainerFromBottom",
+    left: "modalContainerFromLeft",
+    right: "modalContainerFromRight",
+};
 
 export const Modal = ({
     id = "modal",
@@ -16,6 +26,7 @@ export const Modal = ({
     zIndex,
     onOverlayClick,
     dismissKeyboardOnShow = true,
+    className,
     ...otherProps
 }: ModalProps): JSX.Element => {
     // =============================================================================
@@ -23,9 +34,17 @@ export const Modal = ({
     // =============================================================================
     const { verticalHeight, offsetTop } = useViewport();
     const childRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const childWithRef =
         children &&
         React.cloneElement(children as React.ReactElement, { ref: childRef });
+
+    useApplyStyle(containerRef, {
+        [tokens.container.verticalHeight]:
+            verticalHeight == null ? null : `${verticalHeight}px`,
+        [tokens.container.offsetTop]:
+            offsetTop == null ? null : `${offsetTop}px`,
+    });
 
     // =============================================================================
     // EFFECTS
@@ -57,12 +76,14 @@ export const Modal = ({
             zIndex={zIndex}
         >
             <Container
-                $show={show}
-                $animationFrom={animationFrom}
+                ref={containerRef}
                 data-testid={id}
-                $verticalHeight={verticalHeight}
-                $offsetTop={offsetTop}
                 {...otherProps}
+                className={clsx(
+                    ANIMATION_FROM_CLASS_MAP[animationFrom],
+                    show ? "modalContainerShow" : "modalContainerHide",
+                    className
+                )}
             >
                 {childWithRef}
             </Container>
