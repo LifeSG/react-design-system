@@ -2,10 +2,6 @@ import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 
-/**
- * basic wrapper for input fields that provides the border style but does not
- * prescibe any layout for content
- */
 export const inputBox = css`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
@@ -76,10 +72,6 @@ export const inputWrapperPositionRight = css`
     flex-direction: row-reverse;
 `;
 
-/**
- * standalone native input with stripped-down styles, intended to be used in
- * combination with `InputWrapper` or other wrappers to build composite widgets
- */
 export const basicInput = css`
     ${Font["body-baseline-regular"]}
     color: ${Colour["text"]};
@@ -122,9 +114,6 @@ export const basicInputSmall = css`
     ${Font["body-md-regular"]}
 `;
 
-/**
- * standalone native button with stripped-down styles
- */
 export const basicButton = css`
     background: transparent;
     border: none;

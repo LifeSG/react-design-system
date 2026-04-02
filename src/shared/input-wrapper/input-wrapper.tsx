@@ -11,7 +11,7 @@ import type {
 
 /**
  * Basic wrapper for input fields that provides the border style but does not
- * prescibe any layout for content
+ * prescribe any layout for content
  */
 export const InputBox = forwardRef<HTMLDivElement, InputBoxProps>(
     function InputBox(props, ref) {
