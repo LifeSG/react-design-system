@@ -18,6 +18,8 @@ const Component = (
     }: ImageButtonProps,
     ref: ButtonRef
 ) => {
+    const isNativeDisabled = !!disabled && !focusableWhenDisabled;
+
     return (
         <Main
             ref={ref}
@@ -26,7 +28,7 @@ const Component = (
             $error={error}
             type={type}
             aria-disabled={disabled}
-            disabled={disabled && !focusableWhenDisabled}
+            disabled={isNativeDisabled}
             onClick={disabled ? undefined : onClick}
             {...otherProps}
         >

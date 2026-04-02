@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { RadioButtonProps, RadioButtonSize } from "./types";
+import { RadioButtonSize } from "./types";
 import { Colour, Motion } from "../theme";
 import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
 
@@ -11,6 +11,10 @@ interface StyleProps {
     $selected?: boolean;
     $disabled?: boolean;
     $displaySize?: RadioButtonSize | undefined;
+}
+
+interface InputStyleProps {
+    $disabledVisual?: boolean | undefined;
 }
 
 // =============================================================================
@@ -58,11 +62,11 @@ export const StyledCheckedIcon = styled(CircleDotIcon)<StyleProps>`
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
-export const Input = styled.input<RadioButtonProps>`
+export const Input = styled.input<InputStyleProps>`
     position: absolute;
     height: 100%;
     width: 100%;
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
     z-index: 1;
 
     appearance: none;
@@ -71,7 +75,8 @@ export const Input = styled.input<RadioButtonProps>`
 
     &:hover + ${StyledUnCheckedIcon}, &:hover + ${StyledCheckedIcon} {
         @media (pointer: fine) {
-            color: ${(props) => !props.disabled && Colour["icon-hover"](props)};
+            color: ${(props) =>
+                !props.$disabledVisual && Colour["icon-hover"](props)};
         }
     }
 `;

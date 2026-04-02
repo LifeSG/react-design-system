@@ -39,6 +39,10 @@ interface ChildrenStyleProps extends StyleProps {
     $isFinalItem?: boolean;
 }
 
+interface InteractiveStyleProps {
+    $disabledVisual?: boolean;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -212,11 +216,11 @@ export const Container = styled.div<ContainerStyleProps>`
     }}
 `;
 
-export const Input = styled.input`
+export const Input = styled.input<InteractiveStyleProps>`
     position: absolute;
     height: 100%;
     width: 100%;
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
     top: 0;
     left: 0;
 
@@ -225,6 +229,7 @@ export const Input = styled.input`
     background: transparent;
     border: none;
 `;
+
 export const InputContainer = styled.div`
     display: flex;
 `;

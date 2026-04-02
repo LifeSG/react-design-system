@@ -20,6 +20,12 @@ const DATA: ApiTableSectionProps[] = [
                     "The state in which an action is allowed to be executed",
                 propTypes: ["boolean"],
             },
+            {
+                name: "focusableWhenDisabled",
+                description:
+                    "Allows the component to remain focusable when disabled while preventing all user interaction.",
+                propTypes: ["boolean"],
+            },
         ],
     },
 ];
