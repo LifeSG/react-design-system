@@ -342,7 +342,7 @@ export namespace TimeHelper {
 
     // Return undefined = invalid field, "" = empty field, else returns h:mma
     export const parseInput = (
-        input: string,
+        input: string | undefined,
         format: TimeFormat = "12hr" // Returned format
     ): string | undefined => {
         if (input === "" || input === undefined) return input;
