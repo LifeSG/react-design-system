@@ -125,6 +125,20 @@ test.describe("NestedSelect", () => {
                 });
             });
 
+            await test.step("Selected + open - selected item is hovered", async () => {
+                const selected = story.getTreeItem("Option 1.1");
+
+                await selected.hover();
+
+                await expect(selected).toMatchAriaSnapshot(`
+                    - treeitem "Option 1.1" [selected]
+                `);
+
+                await compareScreenshot(story, "selected-hover", {
+                    fullscreen: true,
+                });
+            });
+
             await test.step("Selected + hover other item - selected remains selected and hovered is active", async () => {
                 const selected = story.getTreeItem("Option 1.1");
                 const hovered = story.getTreeItem("Option 1.2");
