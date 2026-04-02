@@ -4,7 +4,8 @@ import type React from "react";
 import type { NamedExoticComponent } from "react";
 import { forwardRef } from "react";
 
-import { Box, CloseButton } from "./modal-box.styles";
+import { ClickableIcon } from "../shared/clickable-icon";
+import * as styles from "./modal-box.styles";
 import type { ModalBoxProps } from "./types";
 
 function ModalBoxInner(
@@ -30,28 +31,29 @@ function ModalBoxInner(
     // =============================================================================
     const renderCloseButton = () => {
         return (
-            <CloseButton
+            <ClickableIcon
                 onClick={onClose}
                 data-testid="close-button"
                 focusHighlight={false}
                 focusOutline="browser"
+                className={styles.closeButton}
             >
                 <CrossIcon />
-            </CloseButton>
+            </ClickableIcon>
         );
     };
 
     return (
-        <Box
+        <div
             ref={ref}
             data-testid={id}
             {...otherProps}
             onClick={handleOnClick}
-            className={clsx(className)}
+            className={clsx(styles.box, className)}
         >
             {showCloseButton && renderCloseButton()}
             {children}
-        </Box>
+        </div>
     );
 }
 

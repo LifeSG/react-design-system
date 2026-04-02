@@ -6,14 +6,21 @@ import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
 import { useApplyStyle } from "../theme";
 import { useEvent } from "../util";
-import { Container, tokens } from "./modal.styles";
+import * as styles from "./modal.styles";
 import type { ModalProps } from "./types";
 
 const ANIMATION_FROM_CLASS_MAP: Record<ModalAnimationDirection, string> = {
-    top: "modalContainerFromTop",
-    bottom: "modalContainerFromBottom",
-    left: "modalContainerFromLeft",
-    right: "modalContainerFromRight",
+    top: styles.containerFromTop,
+    bottom: styles.containerFromBottom,
+    left: styles.containerFromLeft,
+    right: styles.containerFromRight,
+};
+
+const ANIMATION_FROM_SHOW_CLASS_MAP: Record<ModalAnimationDirection, string> = {
+    top: styles.containerFromTopShow,
+    bottom: styles.containerFromBottomShow,
+    left: styles.containerFromLeftShow,
+    right: styles.containerFromRightShow,
 };
 
 export const Modal = ({
@@ -40,9 +47,9 @@ export const Modal = ({
         React.cloneElement(children as React.ReactElement, { ref: childRef });
 
     useApplyStyle(containerRef, {
-        [tokens.container.verticalHeight]:
+        [styles.tokens.container.verticalHeight]:
             verticalHeight == null ? null : `${verticalHeight}px`,
-        [tokens.container.offsetTop]:
+        [styles.tokens.container.offsetTop]:
             offsetTop == null ? null : `${offsetTop}px`,
     });
 
@@ -75,18 +82,20 @@ export const Modal = ({
             containerRef={childRef}
             zIndex={zIndex}
         >
-            <Container
+            <div
                 ref={containerRef}
                 data-testid={id}
                 {...otherProps}
                 className={clsx(
+                    styles.container,
                     ANIMATION_FROM_CLASS_MAP[animationFrom],
-                    show ? "modalContainerShow" : "modalContainerHide",
+                    show && ANIMATION_FROM_SHOW_CLASS_MAP[animationFrom],
+                    show ? styles.containerShow : styles.containerHide,
                     className
                 )}
             >
                 {childWithRef}
-            </Container>
+            </div>
         </Overlay>
     );
 };

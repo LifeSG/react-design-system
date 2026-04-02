@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { MediaQuery } from "../theme";
 
@@ -9,7 +9,7 @@ export const tokens = {
     },
 } as const;
 
-export const Container = styled.div`
+export const container = css`
     position: relative;
     display: flex;
     justify-content: center;
@@ -21,51 +21,51 @@ export const Container = styled.div`
     ${tokens.container.verticalHeight}: initial;
     ${tokens.container.offsetTop}: initial;
 
-    &.modalContainerFromTop {
-        top: -3%;
-    }
-
-    &.modalContainerFromBottom {
-        bottom: -3%;
-    }
-
-    &.modalContainerFromLeft {
-        left: -3%;
-    }
-
-    &.modalContainerFromRight {
-        right: -3%;
-    }
-
-    &.modalContainerShow {
-        opacity: 1;
-        transition: all 300ms cubic-bezier(0.21, 0.79, 0.53, 1);
-        transition-delay: 200ms;
-    }
-
-    &.modalContainerHide {
-        opacity: 0;
-        transition: all 300ms cubic-bezier(0.4, 0.34, 0.38, 1);
-    }
-
-    &.modalContainerFromTop.modalContainerShow {
-        top: 0;
-    }
-
-    &.modalContainerFromBottom.modalContainerShow {
-        bottom: 0;
-    }
-
-    &.modalContainerFromLeft.modalContainerShow {
-        left: 0;
-    }
-
-    &.modalContainerFromRight.modalContainerShow {
-        right: 0;
-    }
-
     ${MediaQuery.MaxWidth.sm} {
         height: calc(var(${tokens.container.verticalHeight}, 1vh) * 100);
         top: var(${tokens.container.offsetTop}, 0px);
     }
+`;
+
+export const containerFromTop = css`
+    top: -3%;
+`;
+
+export const containerFromBottom = css`
+    bottom: -3%;
+`;
+
+export const containerFromLeft = css`
+    left: -3%;
+`;
+
+export const containerFromRight = css`
+    right: -3%;
+`;
+
+export const containerShow = css`
+    opacity: 1;
+    transition: all 300ms cubic-bezier(0.21, 0.79, 0.53, 1);
+    transition-delay: 200ms;
+`;
+
+export const containerHide = css`
+    opacity: 0;
+    transition: all 300ms cubic-bezier(0.4, 0.34, 0.38, 1);
+`;
+
+export const containerFromTopShow = css`
+    top: 0;
+`;
+
+export const containerFromBottomShow = css`
+    bottom: 0;
+`;
+
+export const containerFromLeftShow = css`
+    left: 0;
+`;
+
+export const containerFromRightShow = css`
+    right: 0;
 `;

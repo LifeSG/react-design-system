@@ -1,20 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface CloseButtonProps {
-    $insetTop?: string | undefined;
-    $insetRight?: string | undefined;
-}
-
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Box = styled.div`
+export const box = css`
     position: relative;
     display: flex;
     flex-direction: column;
@@ -31,7 +19,7 @@ export const Box = styled.div`
     }
 `;
 
-export const CloseButton = styled(ClickableIcon)<CloseButtonProps>`
+export const closeButton = css`
     position: absolute;
     top: var(--close-button-top-inset, ${Spacing["spacing-16"]});
     right: var(--close-button-right-inset, ${Spacing["spacing-16"]});
