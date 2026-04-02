@@ -4,7 +4,7 @@ import { TextList } from "@lifesg/react-design-system/text-list";
 
 export default function Story() {
     return (
-        <div data-testid="text-list-ordered-reversed-start">
+        <div data-testid="text-list-ordered-reversed">
             <TextList.Ol reversed start={3}>
                 <li>Item A</li>
                 <li>Item B</li>

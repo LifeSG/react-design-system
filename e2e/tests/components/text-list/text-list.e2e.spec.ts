@@ -7,7 +7,8 @@ class StoryPage extends AbstractStoryPage {
     public readonly locators: {
         unorderedDefault: Locator;
         orderedDefault: Locator;
-        orderedReversedStart: Locator;
+        orderedReversed: Locator;
+        orderedStart: Locator;
         unorderedCustomBullet: Locator;
         advancedNestedCounter: Locator;
     };
@@ -18,9 +19,8 @@ class StoryPage extends AbstractStoryPage {
         this.locators = {
             unorderedDefault: page.getByTestId("text-list-unordered-default"),
             orderedDefault: page.getByTestId("text-list-ordered-default"),
-            orderedReversedStart: page.getByTestId(
-                "text-list-ordered-reversed-start"
-            ),
+            orderedReversed: page.getByTestId("text-list-ordered-reversed"),
+            orderedStart: page.getByTestId("text-list-ordered-start"),
             unorderedCustomBullet: page.getByTestId(
                 "text-list-unordered-custom-bullet"
             ),
@@ -51,9 +51,15 @@ test.describe("TextList", () => {
         await compareScreenshot(story, "mount");
     });
 
-    test("Ordered reversed with custom start", async ({ story }) => {
-        await story.init("ordered-reversed-start");
-        await expect(story.locators.orderedReversedStart).toBeVisible();
+    test("Ordered reversed", async ({ story }) => {
+        await story.init("ordered-reversed");
+        await expect(story.locators.orderedReversed).toBeVisible();
+        await compareScreenshot(story, "mount");
+    });
+
+    test("Ordered custom start", async ({ story }) => {
+        await story.init("ordered-start");
+        await expect(story.locators.orderedStart).toBeVisible();
         await compareScreenshot(story, "mount");
     });
 
