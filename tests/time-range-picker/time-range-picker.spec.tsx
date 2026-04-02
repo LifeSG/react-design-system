@@ -77,6 +77,66 @@ describe("TimeRangePicker", () => {
         });
 
         describe("generated dropdown options", () => {
+            it("should scroll the start dropdown to the initial start time", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        initialStartTime="9:00am"
+                        startLimit="8:00am"
+                        endLimit="10:00am"
+                        interval={60}
+                    />
+                );
+
+                await user.click(screen.getByLabelText(START_LABEL));
+
+                await waitFor(() => {
+                    expect(
+                        screen.getByRole("option", { name: "9:00am" })
+                    ).toHaveAttribute("tabindex", "0");
+                    expect(
+                        screen.queryAllByRole("option").map((option) => {
+                            return option.textContent;
+                        })
+                    ).toEqual(["8:00am", "9:00am", "10:00am"]);
+                });
+            });
+
+            it("should scroll the end dropdown to the initial end time", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        initialEndTime="3:00pm"
+                        startLimit="1:00pm"
+                        endLimit="5:00pm"
+                        interval={60}
+                    />
+                );
+
+                await user.click(screen.getByLabelText(END_LABEL));
+
+                await waitFor(() => {
+                    expect(
+                        screen.getByRole("option", { name: "3:00pm" })
+                    ).toHaveAttribute("tabindex", "0");
+                    expect(
+                        screen.queryAllByRole("option").map((option) => {
+                            return option.textContent;
+                        })
+                    ).toEqual([
+                        "1:00pm",
+                        "2:00pm",
+                        "3:00pm",
+                        "4:00pm",
+                        "5:00pm",
+                    ]);
+                });
+            });
+
             it("should have end first option be after start time", async () => {
                 render(
                     <TimeRangePicker

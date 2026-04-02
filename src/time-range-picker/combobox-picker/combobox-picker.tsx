@@ -38,6 +38,8 @@ export const ComboboxPicker = ({
     dropdownZIndex,
     startLimit,
     endLimit,
+    initialStartTime,
+    initialEndTime,
     interval = 15,
     dropdownRootNode,
     "aria-labelledby": ariaLabelledBy,
@@ -89,10 +91,20 @@ export const ComboboxPicker = ({
     // EFFECTS
     // =========================================================================
     const parseInput = useCallback(
-        (input: string): string | undefined => {
+        (input: string | undefined): string | undefined => {
             return TimeHelper.parseInput(input, format);
         },
         [format]
+    );
+
+    const initialStartScrollTime = useMemo(
+        () => parseInput(initialStartTime) ?? "",
+        [initialStartTime, parseInput]
+    );
+
+    const initialEndScrollTime = useMemo(
+        () => parseInput(initialEndTime) ?? "",
+        [initialEndTime, parseInput]
     );
 
     useEffect(() => {
@@ -339,13 +351,18 @@ export const ComboboxPicker = ({
 
     const renderDropdown = () => {
         if (activeTimeSelector === "start") {
+            // Prioritise start time value. If non existent, use initial scroll time
+            // If both is non existent, DropdownList will default to first option
+            const startScrollTime =
+                parseInput(startTimeVal) || initialStartScrollTime;
+
             return (
                 <DropdownList
                     listItems={startOptions}
                     onSelectItem={handleStartTime}
                     selectedItems={[startTimeVal]}
                     topScrollItem={TimeHelper.findClosestFlooredTime(
-                        parseInput(startTimeVal),
+                        startScrollTime,
                         startOptions
                     )}
                     listboxId={listboxId}
@@ -355,13 +372,16 @@ export const ComboboxPicker = ({
                 />
             );
         } else {
+            const endScrollTime =
+                parseInput(endTimeVal) || initialEndScrollTime;
+
             return (
                 <DropdownList
                     listItems={endOptions}
                     onSelectItem={handleEndTime}
                     selectedItems={[endTimeVal]}
                     topScrollItem={TimeHelper.findClosestFlooredTime(
-                        parseInput(endTimeVal),
+                        endScrollTime,
                         endOptions
                     )}
                     listboxId={listboxId}
