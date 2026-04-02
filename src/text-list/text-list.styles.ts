@@ -1,10 +1,12 @@
 import { css } from "@linaria/core";
 
 import { Colour, Font, MediaQuery } from "../theme";
-import type { BulletType, CounterType, TextListSize } from "./types";
+import type { BulletType, TextListSize } from "./types";
 
 export const tokens = {
     listBottomMargin: "--fds-internal-textList-list-bottomMargin",
+    orderedListCounterContent:
+        "--fds-internal-textList-orderedList-counterContent",
     orderedListCounterSeparator:
         "--fds-internal-textList-orderedList-counterSeparator",
     orderedListStartValue: "--fds-internal-textList-orderedList-startValue",
@@ -62,6 +64,7 @@ export const listSize: Record<TextListSize, string> = {
 };
 
 export const orderedList = css`
+    ${tokens.orderedListCounterContent}: counter(list, decimal);
     ${tokens.orderedListCounterSeparator}: ")";
 
     margin-left: 3em;
@@ -78,6 +81,8 @@ export const orderedList = css`
 
     li:before {
         counter-increment: list;
+        content: var(${tokens.orderedListCounterContent})
+            var(${tokens.orderedListCounterSeparator});
         position: absolute;
         left: -2em;
     }
@@ -86,27 +91,6 @@ export const orderedList = css`
         content: "";
     }
 `;
-
-export const orderedListCounterType: Record<CounterType, string> = {
-    decimal: css`
-        li:before {
-            content: counter(list, decimal)
-                var(${tokens.orderedListCounterSeparator});
-        }
-    `,
-    "lower-alpha": css`
-        li:before {
-            content: counter(list, lower-alpha)
-                var(${tokens.orderedListCounterSeparator});
-        }
-    `,
-    "lower-roman": css`
-        li:before {
-            content: counter(list, lower-roman)
-                var(${tokens.orderedListCounterSeparator});
-        }
-    `,
-};
 
 export const orderedListReversed = css`
     li:before {
