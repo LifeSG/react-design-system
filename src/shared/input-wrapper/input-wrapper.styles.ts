@@ -53,7 +53,8 @@ export const inputBoxNoBorder = css`
     border-color: transparent;
     background: transparent;
 
-    &:focus-within {
+    &:focus-within,
+    &[data-focused="true"] {
         outline: none;
     }
 `;
