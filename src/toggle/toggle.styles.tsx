@@ -223,6 +223,7 @@ export const Input = styled.input<InteractiveStyleProps>`
     cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
     top: 0;
     left: 0;
+    opacity: 0;
 
     /* Hide appearance but keep it focusable using keyboard interactions */
     appearance: none;
@@ -240,7 +241,6 @@ export const TextContainer = styled.div<StyleProps>`
     overflow-wrap: anywhere;
     width: 100%;
     overflow: hidden;
-    z-index: 1;
 
     // apply header container text color
     ${(props) => {
