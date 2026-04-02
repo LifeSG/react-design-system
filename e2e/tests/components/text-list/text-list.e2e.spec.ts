@@ -6,7 +6,7 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         unorderedDefault: Locator;
-        orderedLowerAlpha: Locator;
+        orderedDefault: Locator;
         orderedReversedStart: Locator;
         unorderedCustomBullet: Locator;
         advancedNestedCounter: Locator;
@@ -17,9 +17,7 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             unorderedDefault: page.getByTestId("text-list-unordered-default"),
-            orderedLowerAlpha: page.getByTestId(
-                "text-list-ordered-lower-alpha"
-            ),
+            orderedDefault: page.getByTestId("text-list-ordered-default"),
             orderedReversedStart: page.getByTestId(
                 "text-list-ordered-reversed-start"
             ),
@@ -47,9 +45,9 @@ test.describe("TextList", () => {
         await compareScreenshot(story, "mount");
     });
 
-    test("Ordered lower-alpha", async ({ story }) => {
-        await story.init("ordered-lower-alpha");
-        await expect(story.locators.orderedLowerAlpha).toBeVisible();
+    test("Ordered default", async ({ story }) => {
+        await story.init("ordered-default");
+        await expect(story.locators.orderedDefault).toBeVisible();
         await compareScreenshot(story, "mount");
     });
 
