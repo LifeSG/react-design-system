@@ -67,9 +67,6 @@ use case.
 You can do so by overriding the default styling.
 
 ```tsx
-import { css } from "@linaria/core";
-import clsx from "clsx";
-
 const customOrderedList = css`
     margin-left: 2em;
 
@@ -77,18 +74,30 @@ const customOrderedList = css`
         margin-left: 1em;
     }
 
-    li:before {
+    li::before {
         content: counters(list, ".") ".";
         left: -3em;
     }
 `;
 
-export const CustomOrderedList = ({ className, ...otherProps }) => (
-    <TextList.Ol
-        className={clsx(customOrderedList, className)}
-        {...otherProps}
-    />
-);
+<TextList.Ol className={customOrderedList}>
+    <li>Item A</li>
+    <li>
+        Item B
+        <TextList.Ol className={customOrderedList}>
+            <li>Nested 1</li>
+            <li>Nested 2</li>
+        </TextList.Ol>
+    </li>
+    <li>
+        Item C
+        <TextList.Ol className={customOrderedList}>
+            <li>Nested 1</li>
+            <li>Nested 2</li>
+        </TextList.Ol>
+    </li>
+    <li>Item D</li>
+</TextList.Ol>;
 ```
 
 ## Component API

@@ -10,7 +10,7 @@ const customOrderedList = css`
         margin-left: 1em;
     }
 
-    li:before {
+    li::before {
         content: counters(list, ".") ".";
         left: -3em;
     }
