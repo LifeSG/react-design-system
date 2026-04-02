@@ -1,13 +1,3 @@
-/* stylelint-disable selector-class-pattern */
-.customOrderedList {
-    margin-left: 2em;
-}
-
-.customOrderedList li {
-    margin-left: 1em;
-}
-
-.customOrderedList li::before {
-    left: -3em;
+.custom-ordered-list li::before {
     content: counters(list, ".") ".";
 }
