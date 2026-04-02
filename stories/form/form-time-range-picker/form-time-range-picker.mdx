@@ -47,6 +47,11 @@ hh:mm for `24hr`).
 This variant comes in built-in validation for unrecognised time format or
 invalid time range (start is greater than end).
 
+Use `initialStartTime` and `initialEndTime` when you want each combobox
+dropdown to open at a specific time before the user has made a selection. This
+does not prefill the input values. It only controls the initial dropdown scroll
+position while the corresponding field is empty.
+
 <Canvas of={FormTimeRangePickerStories.ComboboxVariant} />
 
 ## Component API
