@@ -1,6 +1,12 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DateHelper } from "src/util";
+import { DateHelper, StringHelper } from "src/util";
+import { TimeHelper } from "../util/time-helper";
+import {
+    ESlotStateLabel,
+    TimeSlot as TTimeSlot,
+    TimeSlotBarVariant,
+} from "./types";
 // Load plugins
 dayjs.extend(customParseFormat);
 
@@ -81,5 +87,82 @@ export namespace TimeSlotBarHelper {
                 return time;
         }
         return time;
+    };
+
+    export const getSlotAriaLabel = (
+        slotStartTime: string,
+        slotEndTime: string,
+        isAvail?: boolean,
+        label?: string
+    ) =>
+        StringHelper.joinNonEmptyStrings([
+            TimeHelper.formatTimeRange(slotStartTime, slotEndTime),
+            isAvail ? ESlotStateLabel.avail : ESlotStateLabel.unavail,
+            label,
+        ]);
+
+    export const processSlots = (
+        slots: TTimeSlot[],
+        variant: TimeSlotBarVariant
+    ) => {
+        const summaryParts: string[] = ["Time slot bar"];
+        // Slots including real and phantom slots, all with aria labels
+        const computedSlots: (TTimeSlot & {
+            ariaLabel?: string;
+        })[] = [];
+
+        slots.forEach((slot, index, self) => {
+            const {
+                startTime: slotStartTime,
+                endTime: slotEndTime,
+                clickable = true,
+                label,
+            } = slot;
+
+            const slotAriaLabel = TimeSlotBarHelper.getSlotAriaLabel(
+                slotStartTime,
+                slotEndTime,
+                clickable,
+                label
+            );
+
+            if (variant === "minified") summaryParts.push(slotAriaLabel);
+
+            computedSlots.push({
+                ...slot,
+                ariaLabel: variant === "default" ? slotAriaLabel : undefined,
+            });
+
+            // Check and create phantom slots if a gap follows current slot
+            const { startTime: nextSlotStartTime } = self[index + 1] ?? {};
+            const hasGapAfter =
+                nextSlotStartTime &&
+                !TimeHelper.isSameTime(slotEndTime, nextSlotStartTime);
+
+            if (hasGapAfter) {
+                const gapAriaLabel = TimeSlotBarHelper.getSlotAriaLabel(
+                    slotEndTime,
+                    nextSlotStartTime,
+                    false
+                );
+
+                if (variant === "minified") summaryParts.push(gapAriaLabel);
+
+                computedSlots.push({
+                    id: `${slot.id}-gap`,
+                    startTime: slotEndTime,
+                    endTime: nextSlotStartTime,
+                    clickable: false,
+                    ariaLabel: variant === "default" ? gapAriaLabel : undefined,
+                    label: undefined,
+                    styleAttributes: { backgroundColor: "#00000000" },
+                });
+            }
+        });
+
+        return {
+            summary: StringHelper.joinNonEmptyStrings(summaryParts),
+            computedSlots,
+        };
     };
 }

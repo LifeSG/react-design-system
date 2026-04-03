@@ -4,6 +4,7 @@ import {
     forwardRef,
     useEffect,
     useImperativeHandle,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -27,10 +28,12 @@ import {
 } from "./time-slot-bar.styles";
 import {
     Direction,
+    TimeSlot as TTimeSlot,
     TimeSlotBarProps,
     TimeSlotBarRef,
     TimeSlotBarVariant,
 } from "./types";
+import { VisuallyHidden } from "../shared/accessibility";
 
 const CELL_DURATION = 30; // In minutes
 
@@ -71,6 +74,10 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     useImperativeHandle(ref, () => ({
         resetScroll,
     }));
+
+    const { summary: slotsSummary, computedSlots: allSlots } = useMemo(() => {
+        return TimeSlotBarHelper.processSlots(slots, variant);
+    }, [variant, slots]);
 
     // =============================================================================
     // EFFECTS
@@ -119,6 +126,22 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     const handleResize = () => {
         if (barRef.current) {
             setClientWidth(barRef.current.clientWidth);
+        }
+    };
+
+    const handleOnKeyDown = (
+        key: string,
+        slot: TTimeSlot,
+        allowClick?: boolean
+    ) => {
+        if (!allowClick) return;
+
+        switch (key) {
+            case "Enter":
+            case " ": // space bar
+                onSlotClick(slot);
+                break;
+            default:
         }
     };
 
@@ -190,6 +213,11 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         }
     };
 
+    const isVariant = (v: TimeSlotBarVariant) => {
+        if (variant === v) return true;
+        return false;
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -249,7 +277,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             cellWidth
         );
 
-        const isClickable = !!onClick && variant === "default";
+        const isClickable = !!onClick && isVariant("default");
 
         return (
             <>
@@ -272,7 +300,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
 
     // Render time slots
     const renderTimeSlots = () => {
-        return slots.map((slot) => {
+        return allSlots.map((slot) => {
             const {
                 id,
                 startTime: slotStartTime,
@@ -280,6 +308,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 label,
                 clickable = true,
                 styleAttributes,
+                ariaLabel,
             } = slot;
 
             const {
@@ -301,10 +330,12 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             );
 
             const isClickable = clickable && variant === "default";
+            const showLabel = isVariant("default") && label;
 
             return (
-                <div key={id}>
+                <div key={id} role="gridcell">
                     <TimeSlotBorder
+                        data-testid="start-border"
                         $variant={variant}
                         style={{
                             left: `${slotOffset}px`,
@@ -319,13 +350,27 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         $bgColor={backgroundColor}
                         $bgColor2={backgroundColor2}
                         $clickable={isClickable}
+                        onKeyDown={(evt) =>
+                            handleOnKeyDown(evt.key, slot, isClickable)
+                        }
                         onClick={() => isClickable && onSlotClick(slot)}
                     >
-                        {label && variant === "default" && (
+                        {!!ariaLabel && (
+                            <VisuallyHidden>
+                                <button
+                                    aria-disabled={isClickable ? false : true}
+                                    aria-label={ariaLabel}
+                                    tabIndex={0}
+                                />
+                            </VisuallyHidden>
+                        )}
+
+                        {showLabel && (
                             <CellText
                                 $slotWidth={slotWidth}
                                 $color={color}
                                 weight={"semibold"}
+                                aria-hidden={ariaLabel ? undefined : true}
                             >
                                 {showFullEllipsis(slotWidth) ? "..." : label}
                             </CellText>
@@ -333,6 +378,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     </TimeSlot>
                     {endTime !== slotEndTime && (
                         <TimeSlotBorder
+                            data-testid="end-border"
                             $variant={variant}
                             style={{
                                 left: `${slotOffset + slotWidth}px`,
@@ -351,6 +397,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 {scrollPosition > 0 && (
                     <ArrowButton
                         data-testid={getDataTestId("arrow-left")}
+                        aria-hidden="true"
+                        tabIndex={-1}
                         $direction={"left"}
                         $variant={variant}
                         focusHighlight={false}
@@ -379,6 +427,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             return (
                 <ArrowButton
                     data-testid={getDataTestId("arrow-right")}
+                    aria-hidden="true"
+                    tabIndex={-1}
                     $direction={"right"}
                     $variant={variant}
                     focusHighlight={false}
@@ -396,11 +446,12 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     };
 
     return (
-        <Container className={className}>
+        <Container className={className} aria-label={slotsSummary}>
             <TimeSlotBarContainer
                 data-testid={testId}
                 ref={barRef}
                 $variant={variant}
+                role="grid"
             >
                 <TimeMarkerWrapper
                     data-testid={getDataTestId("time-marker-wrapper")}
@@ -411,6 +462,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 <TimeSlotWrapper
                     data-testid={getDataTestId("time-slot-wrapper")}
                     data-id="slot-wrapper"
+                    role="row"
                 >
                     {renderDefaultTimeSlots()}
                     {renderTimeSlots()}
