@@ -59,3 +59,8 @@ export interface TimeSlot {
     clickable?: boolean | undefined;
     styleAttributes: TimeSlotBarStyleAttributes;
 }
+
+export enum ESlotStateLabel {
+    avail = "Available",
+    unavail = "Unavailable",
+}
