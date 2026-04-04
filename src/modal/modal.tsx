@@ -1,10 +1,27 @@
+import clsx from "clsx";
 import React, { useEffect, useRef } from "react";
 
+import type { ModalAnimationDirection } from "../modal-v2/types";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
+import { useApplyStyle } from "../theme";
 import { useEvent } from "../util";
-import { Container } from "./modal.styles";
+import * as styles from "./modal.styles";
 import type { ModalProps } from "./types";
+
+const ANIMATION_FROM_CLASS_MAP: Record<ModalAnimationDirection, string> = {
+    top: styles.containerFromTop,
+    bottom: styles.containerFromBottom,
+    left: styles.containerFromLeft,
+    right: styles.containerFromRight,
+};
+
+const ANIMATION_FROM_SHOW_CLASS_MAP: Record<ModalAnimationDirection, string> = {
+    top: styles.containerFromTopShow,
+    bottom: styles.containerFromBottomShow,
+    left: styles.containerFromLeftShow,
+    right: styles.containerFromRightShow,
+};
 
 export const Modal = ({
     id = "modal",
@@ -16,6 +33,7 @@ export const Modal = ({
     zIndex,
     onOverlayClick,
     dismissKeyboardOnShow = true,
+    className,
     ...otherProps
 }: ModalProps): JSX.Element => {
     // =============================================================================
@@ -23,9 +41,17 @@ export const Modal = ({
     // =============================================================================
     const { verticalHeight, offsetTop } = useViewport();
     const childRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const childWithRef =
         children &&
         React.cloneElement(children as React.ReactElement, { ref: childRef });
+
+    useApplyStyle(containerRef, {
+        [styles.tokens.container.verticalHeight]:
+            verticalHeight == null ? null : `${verticalHeight}px`,
+        [styles.tokens.container.offsetTop]:
+            offsetTop == null ? null : `${offsetTop}px`,
+    });
 
     // =============================================================================
     // EFFECTS
@@ -56,16 +82,20 @@ export const Modal = ({
             containerRef={childRef}
             zIndex={zIndex}
         >
-            <Container
-                $show={show}
-                $animationFrom={animationFrom}
+            <div
+                ref={containerRef}
                 data-testid={id}
-                $verticalHeight={verticalHeight}
-                $offsetTop={offsetTop}
                 {...otherProps}
+                className={clsx(
+                    styles.container,
+                    ANIMATION_FROM_CLASS_MAP[animationFrom],
+                    show && ANIMATION_FROM_SHOW_CLASS_MAP[animationFrom],
+                    show ? styles.containerShow : styles.containerHide,
+                    className
+                )}
             >
                 {childWithRef}
-            </Container>
+            </div>
         </Overlay>
     );
 };

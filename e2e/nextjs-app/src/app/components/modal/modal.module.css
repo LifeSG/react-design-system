@@ -1,0 +1,32 @@
+.modal-content {
+    box-sizing: border-box;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 9rem;
+    text-align: center;
+    background: white;
+    border: 2px solid #D9D9D9;
+    border-radius: 0.5rem;
+}
+
+.modal-box-recommended-spacing {
+    padding: 4rem;
+}
+
+.modal-content-stacked-primary {
+    height: 24rem;
+    background: #8CB0FF;
+}
+
+.modal-content-stacked-secondary {
+    background: #F5A2A2;
+}
+
+.modal-content-custom-visual {
+    width: 55rem;
+    height: 24rem;
+    padding: 4rem;
+    text-align: center;
+    background: #FFEF8A;
+}
