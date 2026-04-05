@@ -16,6 +16,7 @@ export interface BaseOtpVerificationProps {
     onSendOtp?: (() => Promise<void>) | undefined;
     sendOtpError?: string | undefined;
     sendOtpPlaceholder?: string | undefined;
+    otpReminderInterval?: number | undefined;
 }
 
 // Email input specific props

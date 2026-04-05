@@ -5,6 +5,8 @@ export interface UseCountdownOptions {
     duration: number;
     /** Called when countdown ends */
     onComplete?: () => void;
+    /** Time in seconds between reminder announcements */
+    reminderInterval?: number;
 }
 
 export interface UseCountdownReturn {
@@ -12,6 +14,8 @@ export interface UseCountdownReturn {
     timeLeft: number;
     /** Whether countdown is currently running */
     isRunning: boolean;
+    /** Hidden live region text */
+    liveReminderText: string;
     /** Start the countdown */
     start: () => void;
     /** Stop the countdown */
@@ -28,11 +32,41 @@ export interface UseCountdownReturn {
 export const useCountdown = ({
     duration,
     onComplete,
+    reminderInterval,
 }: UseCountdownOptions): UseCountdownReturn => {
     const [timeLeft, setTimeLeft] = useState(duration);
     const [isRunning, setIsRunning] = useState(false);
-    const intervalRef = useRef<NodeJS.Timeout | null>(null);
+    const [liveReminderText, setLiveReminderText] = useState("");
+
+    const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
+    const announceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
+        null
+    );
     const startTimeRef = useRef<number | null>(null);
+    const hasAnnouncedCompletionRef = useRef(false);
+
+    const clearTimer = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    };
+
+    const clearAnnounceTimeout = () => {
+        if (announceTimeoutRef.current) {
+            clearTimeout(announceTimeoutRef.current);
+            announceTimeoutRef.current = null;
+        }
+    };
+
+    const announce = (message: string) => {
+        clearAnnounceTimeout();
+        setLiveReminderText("");
+
+        announceTimeoutRef.current = setTimeout(() => {
+            setLiveReminderText(message);
+        }, 50);
+    };
 
     const formatTime = (time?: number) => {
         const t = time ?? timeLeft;
@@ -42,8 +76,16 @@ export const useCountdown = ({
     const start = () => {
         if (isRunning) return;
 
-        startTimeRef.current = Date.now();
+        clearTimer();
+        clearAnnounceTimeout();
+
+        setTimeLeft(duration);
         setIsRunning(true);
+        startTimeRef.current = Date.now();
+        hasAnnouncedCompletionRef.current = false;
+
+        // First resend reminder message
+        announce(`You can resend the OTP in ${duration} seconds`);
 
         intervalRef.current = setInterval(() => {
             const elapsed = Math.floor(
@@ -53,12 +95,27 @@ export const useCountdown = ({
 
             setTimeLeft(remaining);
 
+            if (
+                typeof reminderInterval === "number" &&
+                reminderInterval > 0 &&
+                remaining > 0 &&
+                remaining < duration &&
+                remaining % reminderInterval === 0
+            ) {
+                // second resend reminder message in intervals
+                announce(`${remaining} seconds remaining`);
+            }
+
             if (remaining <= 0) {
                 setIsRunning(false);
-                if (intervalRef.current) {
-                    clearInterval(intervalRef.current);
-                    intervalRef.current = null;
+                clearTimer();
+
+                if (!hasAnnouncedCompletionRef.current) {
+                    hasAnnouncedCompletionRef.current = true;
+                    // final reminder message
+                    announce("You can now resend the OTP");
                 }
+
                 onComplete?.();
             }
         }, 1000);
@@ -66,16 +123,16 @@ export const useCountdown = ({
 
     const stop = () => {
         setIsRunning(false);
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-        }
+        clearTimer();
     };
 
     const reset = () => {
         stop();
+        clearAnnounceTimeout();
         setTimeLeft(duration);
+        setLiveReminderText("");
         startTimeRef.current = null;
+        hasAnnouncedCompletionRef.current = false;
     };
 
     // Update timeLeft when duration changes
@@ -85,9 +142,17 @@ export const useCountdown = ({
         }
     }, [duration, isRunning]);
 
+    useEffect(() => {
+        return () => {
+            clearTimer();
+            clearAnnounceTimeout();
+        };
+    }, []);
+
     return {
         timeLeft,
         isRunning,
+        liveReminderText,
         start,
         stop,
         reset,

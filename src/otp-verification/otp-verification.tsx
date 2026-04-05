@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { VisuallyHidden } from "../shared/accessibility";
 import { useCountdown } from "../util";
 import { ContactInputSection } from "./contact-input-section";
 import { OTPInputWrapper } from "./otp-verification-styles";
@@ -23,6 +24,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
         onOtpChange,
         otpState,
         onOtpStateChange,
+        otpReminderInterval = 120,
     } = props;
 
     const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +32,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
 
     const countdown = useCountdown({
         duration: verifyOtpCountdownTimer,
+        reminderInterval: otpReminderInterval,
     });
 
     // =============================================================================
@@ -84,6 +87,10 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     // =============================================================================
     return (
         <OTPInputWrapper id={id} data-testid={dataTestId} className={className}>
+            <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
+                {countdown.liveReminderText}
+            </VisuallyHidden>
+
             <ContactInputSection
                 {...props}
                 inputId={inputId}
