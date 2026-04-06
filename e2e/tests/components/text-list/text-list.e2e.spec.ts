@@ -4,30 +4,8 @@ import { AbstractStoryPage, compareScreenshot } from "../../utils";
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "text-list";
 
-    public readonly locators: {
-        unorderedDefault: Locator;
-        orderedDefault: Locator;
-        orderedReversed: Locator;
-        orderedStart: Locator;
-        unorderedCustomBullet: Locator;
-        advancedNestedCounter: Locator;
-    };
-
     constructor(page: Page) {
         super(page);
-
-        this.locators = {
-            unorderedDefault: page.getByTestId("text-list-unordered-default"),
-            orderedDefault: page.getByTestId("text-list-ordered-default"),
-            orderedReversed: page.getByTestId("text-list-ordered-reversed"),
-            orderedStart: page.getByTestId("text-list-ordered-start"),
-            unorderedCustomBullet: page.getByTestId(
-                "text-list-unordered-custom-bullet"
-            ),
-            advancedNestedCounter: page.getByTestId(
-                "text-list-advanced-nested-counter"
-            ),
-        };
     }
 }
 
