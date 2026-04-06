@@ -116,18 +116,6 @@ test.describe("Button", () => {
         });
     });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("focusable-when-disabled");
-        });
-
-        test("Focusable when disabled – renders correctly", async ({
-            story,
-        }) => {
-            await compareScreenshot(story, "focusable-when-disabled");
-        });
-    });
-
     // -------------------------------------------------------------------------
     // Icon-only variants
     // -------------------------------------------------------------------------

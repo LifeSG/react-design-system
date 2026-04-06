@@ -153,6 +153,7 @@ export const mainSizeDefault = css`
 `;
 
 export const mainSizeDefaultIconOnly = css`
+    height: 3rem;
     width: 3rem;
 `;
 
@@ -165,6 +166,7 @@ export const mainSizeSmall = css`
 `;
 
 export const mainSizeSmallIconOnly = css`
+    height: 2.5rem;
     width: 2.5rem;
 `;
 
@@ -177,6 +179,7 @@ export const mainSizeLarge = css`
 `;
 
 export const mainSizeLargeIconOnly = css`
+    height: 4rem;
     width: 4rem;
 `;
 
