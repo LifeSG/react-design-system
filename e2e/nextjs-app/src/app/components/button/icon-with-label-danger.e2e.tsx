@@ -21,6 +21,14 @@ export default function Story() {
                             </Button>
                         )
                     )}
+                    <Button
+                        sizeType={size}
+                        disabled
+                        icon={<PlaceholderIcon />}
+                        danger
+                    >
+                        {size} disabled
+                    </Button>
                 </div>
             ))}
         </div>

@@ -8,7 +8,7 @@ export default function Story() {
         <div className="story-column-container">
             {(["large", "default", "small"] as const).map((size) => (
                 <div key={size} className="story-row-container">
-                    {(["default", "secondary", "light"] as const).map(
+                    {(["default", "secondary", "light", "link"] as const).map(
                         (style) => (
                             <Button
                                 key={style}

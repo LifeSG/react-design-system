@@ -61,7 +61,7 @@ test.describe("Button", () => {
     // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("loading-state");
+            await story.init("base-loading");
         });
 
         test("Loading state – all size and style combinations", async ({
@@ -69,20 +69,20 @@ test.describe("Button", () => {
         }) => {
             await test.step("All loading variants render", async () => {
                 await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "loading-state");
+                await compareScreenshot(story, "base-loading");
             });
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("loading-state", { mode: "dark" });
+            await story.init("base-loading", { mode: "dark" });
         });
 
         test("Loading state – dark mode", async ({ story }) => {
             await test.step("All loading variants render in dark mode", async () => {
                 await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "loading-state-dark");
+                await compareScreenshot(story, "base-loading-dark");
             });
         });
     });
@@ -123,7 +123,7 @@ test.describe("Button", () => {
     // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("danger-loading-state");
+            await story.init("base-danger-loading");
         });
 
         test("Danger loading state – all size and style combinations", async ({
@@ -131,20 +131,20 @@ test.describe("Button", () => {
         }) => {
             await test.step("All danger loading variants render", async () => {
                 await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "danger-loading-state");
+                await compareScreenshot(story, "base-danger-loading");
             });
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("danger-loading-state", { mode: "dark" });
+            await story.init("base-danger-loading", { mode: "dark" });
         });
 
         test("Danger loading state – dark mode", async ({ story }) => {
             await test.step("All danger loading variants render in dark mode", async () => {
                 await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "danger-loading-state-dark");
+                await compareScreenshot(story, "base-danger-loading-dark");
             });
         });
     });
