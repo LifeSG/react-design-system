@@ -2,7 +2,7 @@ import clsx from "clsx";
 import { useTheme } from "styled-components";
 
 import { Typography } from "../typography";
-import { StyledCard } from "./card.styles";
+import * as styles from "./card.styles";
 import type { CardProps } from "./types";
 
 export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
@@ -25,15 +25,16 @@ export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
         );
 
     return (
-        <StyledCard
+        <div
             {...restProps}
             data-testid={testId}
             className={clsx(
-                isDarkMode ? "cardDarkMode" : "cardLightMode",
+                styles.card,
+                isDarkMode ? styles.cardDarkMode : styles.cardLightMode,
                 className
             )}
         >
             {renderContent()}
-        </StyledCard>
+        </div>
     );
 };
