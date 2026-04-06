@@ -1,21 +1,24 @@
+import clsx from "clsx";
 import { lazy, Suspense } from "react";
-import styled from "styled-components";
 
-import { Spacing } from "../../theme";
 import type { BaseAnimationProps } from "../types";
+import * as styles from "./loading-spinner.styles";
 
 // lazy load to fix next.js SSR errors
 const LottieSpinner = lazy(async () => ({
     default: (await import("./lottie-animation")).LottieSpinner,
 }));
 
-export const LoadingSpinner = (props: BaseAnimationProps) => {
+export const LoadingSpinner = ({
+    className,
+    ...otherProps
+}: BaseAnimationProps) => {
     return (
-        <Container {...props}>
+        <div {...otherProps} className={clsx(styles.container, className)}>
             <Suspense fallback={<Placeholder />}>
                 <LottieSpinner />
             </Suspense>
-        </Container>
+        </div>
     );
 };
 
@@ -29,12 +32,3 @@ const Placeholder = () => {
         />
     );
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-
-const Container = styled.div`
-    margin: 0 auto;
-    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]};
-`;

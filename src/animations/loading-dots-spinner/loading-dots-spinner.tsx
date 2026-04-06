@@ -1,8 +1,9 @@
+import clsx from "clsx";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
-import styled from "styled-components";
 
 import { ComponentToken, parseCSSVariableValue } from "../../theme";
 import type { CustomisableAnimationProps } from "../types";
+import * as styles from "./loading-dots-spinner.styles";
 
 // lazy load to fix next.js SSR errors
 const LottieLoadingDotsSpinner = lazy(async () => ({
@@ -10,6 +11,7 @@ const LottieLoadingDotsSpinner = lazy(async () => ({
 }));
 
 export const LoadingDotsSpinner = ({
+    className,
     color,
     ...otherProps
 }: CustomisableAnimationProps) => {
@@ -33,11 +35,15 @@ export const LoadingDotsSpinner = ({
 
     const animationColor = color || resolvedTokenColor;
     return (
-        <Container ref={containerRef} {...otherProps}>
+        <div
+            ref={containerRef}
+            {...otherProps}
+            className={clsx(styles.container, className)}
+        >
             <Suspense fallback={<Placeholder />}>
                 <LottieLoadingDotsSpinner color={animationColor} />
             </Suspense>
-        </Container>
+        </div>
     );
 };
 
@@ -51,10 +57,3 @@ const Placeholder = () => {
         />
     );
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const Container = styled.div`
-    margin: 0 auto;
-`;
