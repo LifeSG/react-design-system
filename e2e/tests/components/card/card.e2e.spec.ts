@@ -36,11 +36,36 @@ test.describe("Card", () => {
             await story.init("basic");
         });
 
-        test("Default and custom content render (light mode)", async ({
-            story,
-        }) => {
+        test("Default content renders (light mode)", async ({ story }) => {
             await test.step("Component mounts", async () => {
                 await expect(story.locators.defaultTextCard).toBeVisible();
+
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("basic", { mode: "dark" });
+        });
+
+        test("Default content renders (dark mode)", async ({ story }) => {
+            await test.step("Component mounts in dark mode", async () => {
+                await expect(story.locators.defaultTextCard).toBeVisible();
+
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-content");
+        });
+
+        test("Custom content interaction works", async ({ story }) => {
+            await test.step("Component mounts", async () => {
                 await expect(story.locators.customContentCard).toBeVisible();
                 await expect(story.locators.customCount).toHaveText("Count: 0");
 
@@ -53,24 +78,6 @@ test.describe("Card", () => {
                 await expect(story.locators.customCount).toHaveText("Count: 1");
 
                 await compareScreenshot(story, "after-click");
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("basic", { mode: "dark" });
-        });
-
-        test("Default and custom content render (dark mode)", async ({
-            story,
-        }) => {
-            await test.step("Component mounts in dark mode", async () => {
-                await expect(story.locators.defaultTextCard).toBeVisible();
-                await expect(story.locators.customContentCard).toBeVisible();
-                await expect(story.locators.customCount).toHaveText("Count: 0");
-
-                await compareScreenshot(story, "mount");
             });
         });
     });
