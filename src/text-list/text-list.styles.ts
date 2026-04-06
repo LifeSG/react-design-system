@@ -5,8 +5,7 @@ import type { BulletType, TextListSize } from "./types";
 
 export const tokens = {
     listBottomMargin: "--fds-internal-textList-list-bottomMargin",
-    orderedListCounterContent:
-        "--fds-internal-textList-orderedList-counterContent",
+    orderedListCounterStyle: "--fds-internal-textList-orderedList-counterStyle",
     orderedListCounterSeparator:
         "--fds-internal-textList-orderedList-counterSeparator",
     orderedListStartValue: "--fds-internal-textList-orderedList-startValue",
@@ -64,7 +63,6 @@ export const listSize: Record<TextListSize, string> = {
 };
 
 export const orderedList = css`
-    ${tokens.orderedListCounterContent}: counter(list, decimal);
     ${tokens.orderedListCounterSeparator}: ")";
 
     margin-left: 3em;
@@ -81,7 +79,7 @@ export const orderedList = css`
 
     li:before {
         counter-increment: list;
-        content: var(${tokens.orderedListCounterContent})
+        content: counter(list, var(${tokens.orderedListCounterStyle}, decimal))
             var(${tokens.orderedListCounterSeparator});
         position: absolute;
         left: -2em;
