@@ -1,9 +1,11 @@
-import type { V3_TypographySizeType } from "../v3_theme/font/types";
+import type { FontSize } from "../theme";
+
+export type TextListSize = Exclude<FontSize, "form-label" | "form-description">;
 
 interface BaseListProps {
     children: JSX.Element | JSX.Element[];
     bottomMargin?: number | undefined;
-    size?: V3_TypographySizeType | undefined;
+    size?: TextListSize | undefined;
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
@@ -22,8 +24,9 @@ export interface OrderedListProps extends BaseListProps {
 }
 
 export type BulletType = "disc" | "circle" | "square" | "none";
+type CustomBulletIcon = Exclude<React.ReactNode, string>;
 
 export interface UnorderedListProps extends BaseListProps {
     /** Values: "disc" | "circle" | "square" | "none" or custom React.ReactNode icon */
-    bulletType?: BulletType | React.ReactNode | undefined;
+    bulletType?: BulletType | CustomBulletIcon | undefined;
 }

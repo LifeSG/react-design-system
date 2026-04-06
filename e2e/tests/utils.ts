@@ -37,6 +37,8 @@ export abstract class AbstractStoryPage {
         await this.page.goto(
             `/components/${this.component}/${story}${modeQuery}`
         );
+
+        await expect(this.layout).toBeVisible();
     }
 }
 
