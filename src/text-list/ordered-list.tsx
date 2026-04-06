@@ -5,10 +5,7 @@ import { useApplyStyle } from "../theme";
 import * as styles from "./text-list.styles";
 import type { OrderedListProps } from "./types";
 
-// CSS `content` expects a quoted string literal, so we escape backslashes and
-// double quotes to keep user-provided separators valid (e.g. `"` or `\`).
-const toCssContentStringLiteral = (value: string) =>
-    `"${value.replaceAll("\\", "\\\\").replaceAll('"', '\\"')}"`;
+const escapeDoubleQuotes = (value: string) => `"${value.replace(/"/g, '\\"')}"`;
 
 export const OrderedList = ({
     className,
@@ -27,7 +24,7 @@ export const OrderedList = ({
     useApplyStyle(listRef, {
         [styles.tokens.listBottomMargin]: `${bottomMargin ?? 0}rem`,
         [styles.tokens.orderedListCounterStyle]: counterType ?? null,
-        [styles.tokens.orderedListCounterSeparator]: toCssContentStringLiteral(
+        [styles.tokens.orderedListCounterSeparator]: escapeDoubleQuotes(
             counterSeparator ?? ")"
         ),
         [styles.tokens.orderedListStartValue]: hasCustomStart
