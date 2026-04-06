@@ -279,6 +279,32 @@ PRIMITIVES COLORS
     /* focus ring */
     --fds-colour-focus-ring: var(--fds-colour-primary-50);
     --fds-colour-focus-ring-inverse: var(--fds-colour-white);
+
+    /* 
+    ========================================================================
+    SHADOW
+    ========================================================================
+    */
+    --fds-shadow-xs-subtle: 0 0 4px 1px
+        rgb(from var(--fds-colour-neutral-50) r g b / 24%);
+    --fds-shadow-xs-strong: 0 0 4px 1px
+        rgb(from var(--fds-colour-neutral-50) r g b / 50%);
+    --fds-shadow-xs-focus-strong: 0 0 4px 1px
+        rgb(from var(--fds-colour-border-focus) r g b / 50%);
+    --fds-shadow-xs-error-strong: 0 0 4px 1px
+        rgb(from var(--fds-colour-border-error) r g b / 50%);
+    --fds-shadow-sm-subtle: 0 2px 4px 0
+        rgb(from var(--fds-colour-neutral-50) r g b / 24%);
+    --fds-shadow-sm-strong: 0 2px 4px 0
+        rgb(from var(--fds-colour-neutral-50) r g b / 50%);
+    --fds-shadow-md-subtle: 0 2px 8px 0
+        rgb(from var(--fds-colour-neutral-50) r g b / 24%);
+    --fds-shadow-md-strong: 0 2px 8px 0
+        rgb(from var(--fds-colour-neutral-50) r g b / 50%);
+    --fds-shadow-lg-subtle: 0 2px 12px 1px
+        rgb(from var(--fds-colour-neutral-50) r g b / 24%);
+    --fds-shadow-lg-strong: 0 2px 12px 1px
+        rgb(from var(--fds-colour-neutral-50) r g b / 50%);
 }
 
 /*
