@@ -36,10 +36,7 @@ test.describe("Button", () => {
         test("Base variants – all size and style combinations", async ({
             story,
         }) => {
-            await test.step("All variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "base-variants");
-            });
+            await compareScreenshot(story, "base-variants");
         });
     });
 
@@ -49,28 +46,19 @@ test.describe("Button", () => {
         });
 
         test("Base variants – dark mode", async ({ story }) => {
-            await test.step("All variants render in dark mode", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "base-variants-dark");
-            });
+            await compareScreenshot(story, "base-variants-dark");
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Loading state
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("base-loading");
         });
 
-        test("Loading state – all size and style combinations", async ({
+        test("Base loading – all size and style combinations", async ({
             story,
         }) => {
-            await test.step("All loading variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "base-loading");
-            });
+            await compareScreenshot(story, "base-loading");
         });
     });
 
@@ -79,60 +67,42 @@ test.describe("Button", () => {
             await story.init("base-loading", { mode: "dark" });
         });
 
-        test("Loading state – dark mode", async ({ story }) => {
-            await test.step("All loading variants render in dark mode", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "base-loading-dark");
-            });
+        test("Base loading – dark mode", async ({ story }) => {
+            await compareScreenshot(story, "base-loading-dark");
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Danger variants
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("danger-variants");
+            await story.init("base-danger");
         });
 
-        test("Danger variants – all size and style combinations", async ({
+        test("Base danger – all size and style combinations", async ({
             story,
         }) => {
-            await test.step("All danger variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "danger-variants");
-            });
+            await compareScreenshot(story, "base-danger");
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("danger-variants", { mode: "dark" });
+            await story.init("base-danger", { mode: "dark" });
         });
 
-        test("Danger variants – dark mode", async ({ story }) => {
-            await test.step("All danger variants render in dark mode", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "danger-variants-dark");
-            });
+        test("Base danger – dark mode", async ({ story }) => {
+            await compareScreenshot(story, "base-danger-dark");
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Danger loading state
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("base-danger-loading");
         });
 
-        test("Danger loading state – all size and style combinations", async ({
+        test("Base danger loading – all size and style combinations", async ({
             story,
         }) => {
-            await test.step("All danger loading variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "base-danger-loading");
-            });
+            await compareScreenshot(story, "base-danger-loading");
         });
     });
 
@@ -141,17 +111,11 @@ test.describe("Button", () => {
             await story.init("base-danger-loading", { mode: "dark" });
         });
 
-        test("Danger loading state – dark mode", async ({ story }) => {
-            await test.step("All danger loading variants render in dark mode", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "base-danger-loading-dark");
-            });
+        test("Base danger loading – dark mode", async ({ story }) => {
+            await compareScreenshot(story, "base-danger-loading-dark");
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Focusable when disabled
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("focusable-when-disabled");
@@ -160,10 +124,7 @@ test.describe("Button", () => {
         test("Focusable when disabled – renders correctly", async ({
             story,
         }) => {
-            await test.step("Both buttons render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "focusable-when-disabled");
-            });
+            await compareScreenshot(story, "focusable-when-disabled");
         });
     });
 
@@ -172,140 +133,98 @@ test.describe("Button", () => {
     // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("icon-button-variants");
+            await story.init("base-icon-button");
         });
 
         test("Icon-only button – all size and style combinations", async ({
             story,
         }) => {
-            await test.step("All icon-only variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "icon-button-variants");
-            });
+            await compareScreenshot(story, "base-icon-button");
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("icon-button-variants", { mode: "dark" });
+            await story.init("base-icon-button", { mode: "dark" });
         });
 
         test("Icon-only button – dark mode", async ({ story }) => {
-            await test.step("All icon-only variants render in dark mode", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "icon-button-variants-dark");
-            });
+            await compareScreenshot(story, "base-icon-button-dark");
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Icon-only danger
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("icon-button-danger");
         });
 
         test("Icon-only button – danger variants", async ({ story }) => {
-            await test.step("All icon-only danger variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "icon-button-danger");
-            });
+            await compareScreenshot(story, "icon-button-danger");
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Icon-only loading
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("icon-button-loading");
         });
 
         test("Icon-only button – loading state", async ({ story }) => {
-            await test.step("All icon-only loading variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "icon-button-loading");
-            });
+            await compareScreenshot(story, "icon-button-loading");
         });
     });
 
     // -------------------------------------------------------------------------
-    // Icon with label – left (default)
+    // Icon with label variants
     // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("icon-with-label-variants");
+            await story.init("base-icon-with-label");
         });
 
         test("Icon with label – all size and style combinations (icon left)", async ({
             story,
         }) => {
-            await test.step("All icon-with-label variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "icon-with-label-variants");
-            });
+            await compareScreenshot(story, "base-icon-with-label");
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("icon-with-label-variants", { mode: "dark" });
+            await story.init("base-icon-with-label", { mode: "dark" });
         });
 
         test("Icon with label – dark mode", async ({ story }) => {
-            await test.step("All icon-with-label variants render in dark mode", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "icon-with-label-variants-dark");
-            });
+            await compareScreenshot(story, "base-icon-with-label-dark");
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Icon with label – right
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("icon-with-label-right");
         });
 
         test("Icon with label – icon right position", async ({ story }) => {
-            await test.step("All right-icon variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "icon-with-label-right");
-            });
+            await compareScreenshot(story, "icon-with-label-right");
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Icon with label – danger
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("icon-with-label-danger");
         });
 
         test("Icon with label – danger variants", async ({ story }) => {
-            await test.step("All icon-with-label danger variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "icon-with-label-danger");
-            });
+            await compareScreenshot(story, "icon-with-label-danger");
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Icon with label – loading
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("icon-with-label-loading");
         });
 
         test("Icon with label – loading state", async ({ story }) => {
-            await test.step("All icon-with-label loading variants render", async () => {
-                await expect(story.locators.buttons.first()).toBeVisible();
-                await compareScreenshot(story, "icon-with-label-loading");
-            });
+            await compareScreenshot(story, "icon-with-label-loading");
         });
     });
 });

@@ -7,7 +7,10 @@ import { hasValidChildren } from "./button-helper";
 import type { ButtonProps, ButtonRef } from "./types";
 
 const styleClassMap: Record<string, Record<string, string>> = {
-    disabled: { base: styles.mainStyleDisabled },
+    disabled: {
+        base: styles.mainStyleDisabled,
+        danger: styles.mainStyleDisabled,
+    },
     default: {
         base: styles.mainStyleDefault,
         danger: styles.mainStyleDefaultDanger,
