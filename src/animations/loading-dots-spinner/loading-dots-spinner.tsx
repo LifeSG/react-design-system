@@ -1,7 +1,7 @@
-import { lazy, Suspense, useContext } from "react";
-import styled, { ThemeContext } from "styled-components";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+import styled from "styled-components";
 
-import { V3_ThemeAnimation } from "../../v3_theme/components/theme-helper";
+import { ComponentToken, parseCSSVariableValue } from "../../theme";
 import type { CustomisableAnimationProps } from "../types";
 
 // lazy load to fix next.js SSR errors
@@ -13,11 +13,27 @@ export const LoadingDotsSpinner = ({
     color,
     ...otherProps
 }: CustomisableAnimationProps) => {
-    const theme = useContext(ThemeContext);
-    const animationColor =
-        color || V3_ThemeAnimation["loading-dots-spinner-colour"]({ theme });
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [resolvedTokenColor, setResolvedTokenColor] = useState<
+        string | undefined
+    >(undefined);
+
+    useEffect(() => {
+        if (color) {
+            setResolvedTokenColor(undefined);
+            return;
+        }
+
+        const tokenColor = parseCSSVariableValue(
+            ComponentToken.Animation["loading-dots-spinner-colour"],
+            containerRef.current
+        );
+        setResolvedTokenColor(tokenColor || undefined);
+    }, [color]);
+
+    const animationColor = color || resolvedTokenColor;
     return (
-        <Container {...otherProps}>
+        <Container ref={containerRef} {...otherProps}>
             <Suspense fallback={<Placeholder />}>
                 <LottieLoadingDotsSpinner color={animationColor} />
             </Suspense>
