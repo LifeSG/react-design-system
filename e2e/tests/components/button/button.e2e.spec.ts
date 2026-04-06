@@ -1,4 +1,4 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
+import { test as base, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -37,6 +37,25 @@ test.describe("Button", () => {
             story,
         }) => {
             await compareScreenshot(story, "base-variants");
+
+            const buttons = story.locators.buttons;
+            const count = await buttons.count();
+            for (let i = 0; i < count; i++) {
+                const button = buttons.nth(i);
+                const label =
+                    (await button.getAttribute("aria-label")) ??
+                    (await button.innerText());
+                await button.hover();
+                await compareScreenshot(
+                    story,
+                    `base-variants-hover-${label
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`,
+                    {
+                        locator: button,
+                    }
+                );
+            }
         });
     });
 
@@ -128,6 +147,24 @@ test.describe("Button", () => {
             story,
         }) => {
             await compareScreenshot(story, "base-icon-button");
+
+            const buttons = story.locators.buttons;
+            const count = await buttons.count();
+            for (let i = 0; i < count; i++) {
+                const button = buttons.nth(i);
+                const label =
+                    (await button.getAttribute("aria-label")) ?? `button-${i}`;
+                await button.hover();
+                await compareScreenshot(
+                    story,
+                    `base-icon-button-hover-${label
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`,
+                    {
+                        locator: button,
+                    }
+                );
+            }
         });
     });
 
@@ -173,6 +210,23 @@ test.describe("Button", () => {
             story,
         }) => {
             await compareScreenshot(story, "base-icon-with-label");
+
+            const buttons = story.locators.buttons;
+            const count = await buttons.count();
+            for (let i = 0; i < count; i++) {
+                const button = buttons.nth(i);
+                const label = await button.innerText();
+                await button.hover();
+                await compareScreenshot(
+                    story,
+                    `base-icon-with-label-hover-${label
+                        .toLowerCase()
+                        .replace(/\s+/g, "-")}`,
+                    {
+                        locator: button,
+                    }
+                );
+            }
         });
     });
 
