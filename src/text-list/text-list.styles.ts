@@ -1,7 +1,7 @@
 import { css } from "@linaria/core";
 
 import { Colour, Font, MediaQuery } from "../theme";
-import type { BulletType, TextListSize } from "./types";
+import type { TextListSize } from "./types";
 
 export const tokens = {
     listBottomMargin: "--fds-internal-textList-list-bottomMargin",
@@ -9,6 +9,7 @@ export const tokens = {
     orderedListCounterSeparator:
         "--fds-internal-textList-orderedList-counterSeparator",
     orderedListStartValue: "--fds-internal-textList-orderedList-startValue",
+    unorderedListBulletType: "--fds-internal-textList-unorderedList-bulletType",
 };
 
 export const listBase = css`
@@ -102,23 +103,8 @@ export const orderedListCustomStart = css`
 
 export const unorderedList = css`
     margin-left: 2.5em;
-    list-style-type: disc;
+    list-style-type: var(${tokens.unorderedListBulletType}, disc);
 `;
-
-export const unorderedListBulletType: Record<BulletType, string> = {
-    disc: css`
-        list-style-type: disc;
-    `,
-    circle: css`
-        list-style-type: circle;
-    `,
-    square: css`
-        list-style-type: square;
-    `,
-    none: css`
-        list-style-type: none;
-    `,
-};
 
 export const unorderedListCustomIcon = css`
     margin-left: 0;

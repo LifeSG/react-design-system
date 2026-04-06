@@ -21,12 +21,12 @@ export const UnorderedList = ({
 }: UnorderedListProps) => {
     const listRef = useRef<HTMLUListElement>(null);
     const isCustomIcon = bulletType !== undefined && !isBulletType(bulletType);
-    const bulletTypeClassName = isBulletType(bulletType)
-        ? styles.unorderedListBulletType[bulletType]
-        : styles.unorderedListBulletType.disc;
 
     useApplyStyle(listRef, {
         [styles.tokens.listBottomMargin]: `${bottomMargin ?? 0}rem`,
+        [styles.tokens.unorderedListBulletType]: isBulletType(bulletType)
+            ? bulletType
+            : null,
     });
 
     const renderChildren = () => {
@@ -57,7 +57,6 @@ export const UnorderedList = ({
                 styles.listBase,
                 styles.unorderedList,
                 size && styles.listSize[size],
-                bulletTypeClassName,
                 isCustomIcon && styles.unorderedListCustomIcon,
                 className
             )}
