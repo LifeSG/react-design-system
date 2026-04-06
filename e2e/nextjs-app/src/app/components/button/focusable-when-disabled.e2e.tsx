@@ -4,7 +4,7 @@ import { Button } from "@lifesg/react-design-system/button";
 
 export default function Story() {
     return (
-        <div style={{ display: "flex", gap: "1rem", padding: "2rem" }}>
+        <div className="story-row-container">
             <Button disabled focusableWhenDisabled>
                 Focusable disabled
             </Button>

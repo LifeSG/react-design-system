@@ -4,19 +4,9 @@ import { Button } from "@lifesg/react-design-system/button";
 
 export default function Story() {
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "1.5rem",
-                padding: "2rem",
-            }}
-        >
+        <div className="story-column-container">
             {(["large", "default", "small"] as const).map((size) => (
-                <div
-                    key={size}
-                    style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}
-                >
+                <div key={size} className="story-row-container">
                     {(["default", "secondary", "light", "link"] as const).map(
                         (style) => (
                             <Button
@@ -30,6 +20,9 @@ export default function Story() {
                             </Button>
                         )
                     )}
+                    <Button sizeType={size} danger disabled loading>
+                        {size} disabled
+                    </Button>
                 </div>
             ))}
         </div>
