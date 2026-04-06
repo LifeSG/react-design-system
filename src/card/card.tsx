@@ -1,6 +1,7 @@
 import clsx from "clsx";
-import { useTheme } from "styled-components";
+import { useContext } from "react";
 
+import { ThemeContext } from "../theme/theme-provider/context";
 import { Typography } from "../typography";
 import * as styles from "./card.styles";
 import type { CardProps } from "./types";
@@ -11,8 +12,8 @@ export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
     // =============================================================================
     const { className, ...restProps } = otherProps;
     const testId = otherProps["data-testid"] || "card";
-    const theme = useTheme();
-    const isDarkMode = theme?.colourMode === "dark";
+    const theme = useContext(ThemeContext);
+    const isDarkMode = theme?.mode === "dark";
 
     // =============================================================================
     // RENDER FUNCTIONS
