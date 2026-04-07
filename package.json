@@ -178,6 +178,9 @@
         "react-resize-detector": {
             "react": "$react",
             "react-dom": "$react-dom"
+        },
+        "lottie-react": {
+            "lottie-web": "5.13.0"
         }
     },
     "lint-staged": {

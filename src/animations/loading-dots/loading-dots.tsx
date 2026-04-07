@@ -23,12 +23,5 @@ export const LoadingDots = ({
 };
 
 const Placeholder = () => {
-    return (
-        <div
-            style={{
-                height: "16px",
-                width: "64px",
-            }}
-        />
-    );
+    return <div className={styles.placeholder} />;
 };
