@@ -41,6 +41,7 @@ export const VerificationSection = ({
     const titleId = id ? `${id}-title` : undefined;
     const messageId = id ? `${id}-message` : undefined;
     const otpAddonId = id ? `${id}-verify-input-addon` : undefined;
+    const verifyErrorId = id ? `${id}-verify-error` : undefined;
 
     const renderThumbnail = () => {
         if (!showVerifyOtpThumbnail) return null;
@@ -113,7 +114,11 @@ export const VerificationSection = ({
                             type="number"
                             error={!!verifyOtpError}
                             aria-labelledby={titleId}
-                            aria-describedby={concatIds(messageId, otpAddonId)}
+                            aria-describedby={concatIds(
+                                messageId,
+                                otpAddonId,
+                                verifyOtpError ? verifyErrorId : undefined
+                            )}                            
                             aria-invalid={!!verifyOtpError}
                             aria-required={true}
                         />
@@ -135,7 +140,7 @@ export const VerificationSection = ({
                     </VerifyInputWrapper>
                     {verifyOtpError && (
                         <FormErrorMessage
-                            id={id ? `${id}-verify-error` : undefined}
+                            id={id ? verifyErrorId : undefined}
                             data-testid={
                                 dataTestId
                                     ? `${dataTestId}-verify-error`
