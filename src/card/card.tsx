@@ -10,7 +10,7 @@ export const Card = ({
     children,
     className,
     "data-testid": dataTestId = "card",
-    ...restProps
+    ...otherProps
 }: CardProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
@@ -30,7 +30,7 @@ export const Card = ({
 
     return (
         <div
-            {...restProps}
+            {...otherProps}
             data-testid={dataTestId}
             className={clsx(
                 styles.card,
