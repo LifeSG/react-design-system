@@ -17,37 +17,59 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Modal", () => {
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("stacked");
-        });
-
+    test.describe("stacked modal", () => {
         test("Stacked modals", async ({ story }) => {
-            await compareScreenshot(story, "stacked", {
+            await story.init("stacked");
+            await compareScreenshot(story, "desktop", {
+                fullscreen: true,
+            });
+        });
+
+        test("Stacked modals (mobile)", async ({ story }) => {
+            await story.init("stacked", { size: "mobile" });
+
+            await compareScreenshot(story, "mobile", {
                 fullscreen: true,
             });
         });
     });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
+    test.describe("default modal", () => {
+        test("Default", async ({ story }) => {
             await story.init("default");
+            await compareScreenshot(story, "desktop", {
+                fullscreen: true,
+            });
         });
 
-        test("Default modal", async ({ story }) => {
-            await compareScreenshot(story, "visual-default", {
+        test("Default (mobile)", async ({ story }) => {
+            await story.init("default", { size: "mobile" });
+            await compareScreenshot(story, "mobile", {
+                fullscreen: true,
+            });
+        });
+
+        test("Default (dark)", async ({ story }) => {
+            await story.init("default", { mode: "dark" });
+            await compareScreenshot(story, "dark", {
                 fullscreen: true,
             });
         });
     });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
+    test.describe("custom-content modal", () => {
+        test("Custom content modal", async ({ story }) => {
             await story.init("custom-content");
+
+            await compareScreenshot(story, "desktop", {
+                fullscreen: true,
+            });
         });
 
-        test("Custom content modal", async ({ story }) => {
-            await compareScreenshot(story, "visual-custom-content", {
+        test("Custom content modal (mobile)", async ({ story }) => {
+            await story.init("custom-content", { size: "mobile" });
+
+            await compareScreenshot(story, "mobile", {
                 fullscreen: true,
             });
         });

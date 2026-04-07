@@ -10,7 +10,9 @@ export default function Story() {
                 data-testid="visual-custom-content"
                 className={styles["modal-content-custom-visual"]}
             >
-                Custom modal content visual state
+                lorem ipsum dolor sit amet, consectetur adipiscing elit. Donec
+                suscipit auctor dui, sed efficitur ipsum. Donec a semper odio.
+                Donec eget ligula ac nunc efficitur efficitur. Donec in
             </div>
         </Modal>
     );

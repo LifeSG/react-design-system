@@ -6,7 +6,7 @@ import styles from "./modal.module.css";
 export default function Story() {
     return (
         <div>
-            <Modal id="first-modal" show zIndex={99998}>
+            <Modal id="first-modal" show>
                 <Modal.Box showCloseButton={false}>
                     <div
                         data-testid="first-modal-content"
@@ -17,7 +17,7 @@ export default function Story() {
                 </Modal.Box>
             </Modal>
 
-            <Modal id="second-modal" show zIndex={99999}>
+            <Modal id="second-modal" show>
                 <Modal.Box showCloseButton={false}>
                     <div
                         data-testid="second-modal-content"

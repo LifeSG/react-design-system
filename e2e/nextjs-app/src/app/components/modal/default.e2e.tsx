@@ -2,6 +2,7 @@
 
 import { Modal } from "@lifesg/react-design-system/modal";
 import styles from "./modal.module.css";
+import { Typography } from "@lifesg/react-design-system";
 
 export default function Story() {
     return (
@@ -9,9 +10,11 @@ export default function Story() {
             <Modal.Box>
                 <div
                     data-testid="visual-default-content"
-                    className={`${styles["modal-content"]} ${styles["modal-box-recommended-spacing"]}`}
+                    className={`${styles["modal-box-recommended-spacing"]}`}
                 >
-                    Default modal visual state
+                    <Typography.BodyBL>
+                        Default modal visual state
+                    </Typography.BodyBL>
                 </div>
             </Modal.Box>
         </Modal>
