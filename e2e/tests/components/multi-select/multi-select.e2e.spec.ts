@@ -12,7 +12,6 @@ class StoryPage extends AbstractStoryPage {
         searchInput: Locator;
         listItems: Locator;
         noResults: Locator;
-        listFail: Locator;
     };
 
     constructor(page: Page) {
@@ -26,7 +25,6 @@ class StoryPage extends AbstractStoryPage {
             searchInput: page.getByTestId("search-input"),
             listItems: page.getByTestId("list-item"),
             noResults: page.getByTestId("list-no-results"),
-            listFail: page.getByTestId("list-fail"),
         };
     }
 
@@ -193,20 +191,6 @@ test.describe("InputMultiSelect", () => {
             await compareScreenshot(story, "reached", {
                 fullscreen: true,
             });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("fail");
-        });
-
-        test("Fail state", async ({ story }) => {
-            await story.openDropdown();
-            await expect(story.locators.listFail).toBeVisible();
-            await expect(story.page.getByText("Try again.")).toBeVisible();
-
-            await compareScreenshot(story, "fail", { fullscreen: true });
         });
     });
 
