@@ -1,23 +1,19 @@
+import { ChevronDownIcon } from "@lifesg/react-icons";
 import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { ExclamationTriangleFillIcon } from "@lifesg/react-icons/exclamation-triangle-fill";
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
-import { useCallback, useEffect, useState } from "react";
+import clsx from "clsx";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { Markup } from "../markup";
 import { inertValue } from "../shared/accessibility";
+import { useApplyStyle } from "../theme";
+import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
-import {
-    ActionLinkText,
-    AlertIconWrapper,
-    ChevronIcon,
-    ContentContainer,
-    ShowMoreButton,
-    TextWrapper,
-    TextWrapperContainer,
-    Wrapper,
-} from "./alert.style";
+import * as styles from "./alert.styles";
 import type { AlertProps } from "./types";
 
 export const Alert = ({
@@ -92,23 +88,32 @@ export const Alert = ({
     // =============================================================================
 
     const renderShowMoreButton = () => (
-        <ShowMoreButton
-            $sizeType={sizeType}
-            $type={type}
+        <button
+            className={clsx(
+                styles.showMoreButton,
+                sizeType === "small"
+                    ? styles.showMoreButtonSmall
+                    : styles.showMoreButtonDefault
+            )}
             type="button"
             aria-expanded={showHiddenContent}
             aria-controls={contentId}
             onClick={() => setShowHiddenContent(!showHiddenContent)}
         >
             Show {showHiddenContent ? "less" : "more"}
-            <ChevronIcon $expanded={showHiddenContent} />
-        </ShowMoreButton>
+            <ChevronDownIcon
+                className={clsx(
+                    styles.chevronIcon,
+                    showHiddenContent
+                        ? styles.chevronIconExpanded
+                        : styles.chevronIconCollapsed
+                )}
+            />
+        </button>
     );
 
     const renderLinkType = () => {
-        if (actionLinkIcon) {
-            return actionLinkIcon;
-        }
+        if (actionLinkIcon) return actionLinkIcon;
         return <ArrowRightIcon />;
     };
 
@@ -116,16 +121,20 @@ export const Alert = ({
         if (!actionLink) return null;
 
         return (
-            <ActionLinkText
+            <Typography.LinkSM
                 data-testid="action-link"
-                $type={type}
-                $sizeType={sizeType}
+                className={clsx(
+                    styles.actionLinkText,
+                    sizeType === "small"
+                        ? styles.actionLinkTextSmall
+                        : styles.actionLinkTextDefault
+                )}
                 underlineStyle="none"
                 {...actionLink}
             >
                 {actionLink.children}
                 {renderLinkType()}
-            </ActionLinkText>
+            </Typography.LinkSM>
         );
     };
 
@@ -147,51 +156,87 @@ export const Alert = ({
         }
     };
 
-    const renderContent = () => (
-        <TextWrapperContainer
-            id={contentId}
-            $maxCollapsedHeight={
-                isContentOutsideCollapsibleZone()
-                    ? maxCollapsedHeight
-                    : undefined
-            }
-            $showMore={showHiddenContent}
-            $hasActionLink={!!actionLink}
-            inert={inertValue(isInert())}
-        >
-            <TextWrapper
-                ref={contentRef}
-                baseTextSize={sizeType === "small" ? "body-sm" : "body-md"}
+    const isCollapsed = isContentOutsideCollapsibleZone();
+
+    const renderContent = () => {
+        const containerRef = useRef<HTMLDivElement>(null);
+
+        useApplyStyle(containerRef, {
+            [styles.maxCollapsedHeightVar]:
+                !showHiddenContent && isCollapsed && maxCollapsedHeight
+                    ? `${maxCollapsedHeight}px`
+                    : null,
+        });
+
+        return (
+            <div
+                id={contentId}
+                className={clsx(
+                    styles.textWrapperContainer,
+                    showHiddenContent &&
+                        actionLink &&
+                        styles.textWrapperContainerShowMoreWithLink,
+                    !showHiddenContent &&
+                        isCollapsed &&
+                        styles.textWrapperContainerCollapsed
+                )}
+                inert={inertValue(isInert())}
+                ref={containerRef}
             >
-                {children}
-            </TextWrapper>
-            {renderLink()}
-        </TextWrapperContainer>
-    );
+                <Markup
+                    ref={contentRef}
+                    className={styles.textWrapper}
+                    baseTextSize={sizeType === "small" ? "body-sm" : "body-md"}
+                >
+                    {children}
+                </Markup>
+                {renderLink()}
+            </div>
+        );
+    };
+
+    const wrapperTypeClass =
+        {
+            error: styles.wrapperError,
+            success: styles.wrapperSuccess,
+            warning: styles.wrapperWarning,
+            info: styles.wrapperInfo,
+            description: styles.wrapperDescription,
+        }[type] ?? styles.wrapperWarning;
+
+    const iconColorClass =
+        {
+            error: styles.alertIconError,
+            success: styles.alertIconSuccess,
+            warning: styles.alertIconWarning,
+            info: styles.alertIconInfo,
+            description: styles.alertIconDescription,
+        }[type] ?? styles.alertIconWarning;
 
     return (
-        <Wrapper
-            className={className}
-            $type={type}
-            $sizeType={sizeType}
+        <div
+            className={clsx(styles.wrapper, wrapperTypeClass, className)}
             aria-label={`${getAlertLabel()}`}
             data-testid={otherProps["data-testid"]}
             role={role}
         >
             {showIcon && (
-                <AlertIconWrapper $sizeType={sizeType} $type={type}>
+                <div
+                    className={clsx(
+                        styles.alertIconWrapper,
+                        sizeType === "small"
+                            ? styles.alertIconWrapperSmall
+                            : styles.alertIconWrapperDefault,
+                        iconColorClass
+                    )}
+                >
                     {renderIcon()}
-                </AlertIconWrapper>
+                </div>
             )}
-            <ContentContainer>
-                {/* 
-                    CSS-BASED TAB ORDER IMPLEMENTATION:
-                    - DOM order: button → link → content (natural tab order)
-                    - Visual order: content → button (via CSS order property)
-                */}
+            <div className={styles.contentContainer}>
                 {renderShowMore && renderShowMoreButton()}
                 {renderContent()}
-            </ContentContainer>
-        </Wrapper>
+            </div>
+        </div>
     );
 };
