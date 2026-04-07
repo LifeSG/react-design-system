@@ -101,14 +101,14 @@ test.describe("InputNestedMultiSelect", () => {
             await compareScreenshot(story, "selected-on-mount");
 
             await story.openDropdown();
-            await expect(story.getTreeItem("Option 1.1")).toMatchAriaSnapshot(`
-                - treeitem "Option 1.1" [selected]
-            `);
-            await expect(story.getTreeItem("Option 2.1")).toMatchAriaSnapshot(`
-                - treeitem "Option 2.1" [selected]
-            `);
-            await expect(story.getTreeItem("Category 1")).toMatchAriaSnapshot(`
-                - treeitem "Category 1" [checked]
+            await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                - tree:
+                  - treeitem "Category 1" [checked]
+                  - treeitem "Option 1.1" [selected]
+                  - treeitem "Option 1.2"
+                  - treeitem "Category 2"
+                  - treeitem "Option 2.1" [selected]
+                  - treeitem "Option 2.2"
             `);
             await compareScreenshot(story, "selected-open", {
                 fullscreen: true,
@@ -133,8 +133,14 @@ test.describe("InputNestedMultiSelect", () => {
 
         test("Single selected state", async ({ story }) => {
             await story.openDropdown();
-            await expect(story.getTreeItem("Category 1")).toMatchAriaSnapshot(`
-                - treeitem "Category 1" [checked=mixed]
+            await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                - tree:
+                  - treeitem "Category 1" [checked=mixed]
+                  - treeitem "Option 1.1" [selected]
+                  - treeitem "Option 1.2"
+                  - treeitem "Category 2"
+                  - treeitem "Option 2.1"
+                  - treeitem "Option 2.2"
             `);
 
             await compareScreenshot(story, "single-selected", {

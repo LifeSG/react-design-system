@@ -113,9 +113,12 @@ test.describe("NestedSelect", () => {
             await test.step("Selected + open - selected item should be selected and active", async () => {
                 await story.openDropdown();
 
-                const selected = story.getTreeItem("Option 1.1");
-                await expect(selected).toMatchAriaSnapshot(`
-                    - treeitem "Option 1.1" [selected]
+                await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                    - tree:
+                      - treeitem "Category 1"
+                      - treeitem "Option 1.1" [selected]
+                      - treeitem "Option 1.2"
+                      - treeitem "Category 2"
                 `);
 
                 await compareScreenshot(story, "selected-open", {
@@ -128,8 +131,12 @@ test.describe("NestedSelect", () => {
 
                 await selected.hover();
 
-                await expect(selected).toMatchAriaSnapshot(`
-                    - treeitem "Option 1.1" [selected]
+                await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                    - tree:
+                      - treeitem "Category 1"
+                      - treeitem "Option 1.1" [selected]
+                      - treeitem "Option 1.2"
+                      - treeitem "Category 2"
                 `);
 
                 await compareScreenshot(story, "selected-hover", {
@@ -138,16 +145,16 @@ test.describe("NestedSelect", () => {
             });
 
             await test.step("Selected + hover other item - selected remains selected and hovered is active", async () => {
-                const selected = story.getTreeItem("Option 1.1");
                 const hovered = story.getTreeItem("Option 1.2");
 
                 await hovered.hover();
 
-                await expect(selected).toMatchAriaSnapshot(`
-                    - treeitem "Option 1.1" [selected]
-                `);
-                await expect(hovered).toMatchAriaSnapshot(`
-                    - treeitem "Option 1.2"
+                await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                    - tree:
+                      - treeitem "Category 1"
+                      - treeitem "Option 1.1" [selected]
+                      - treeitem "Option 1.2"
+                      - treeitem "Category 2"
                 `);
 
                 await compareScreenshot(story, "selected-hover-other", {

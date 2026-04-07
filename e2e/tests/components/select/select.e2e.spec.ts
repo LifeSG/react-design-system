@@ -109,9 +109,12 @@ test.describe("Select", () => {
             await test.step("Selected + open - selected option should be selected and active", async () => {
                 await story.openDropdown();
 
-                const selected = story.getOption("Option B");
-                await expect(selected).toMatchAriaSnapshot(`
-                    - option "Option B" [selected]
+                await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                    - listbox:
+                      - option "Option A"
+                      - option "Option B" [selected]
+                      - option "Option C"
+                      - option "Option D"
                 `);
 
                 await compareScreenshot(story, "selected-open", {
@@ -120,16 +123,16 @@ test.describe("Select", () => {
             });
 
             await test.step("Selected + hover other option - selected remains selected and hovered is active", async () => {
-                const selected = story.getOption("Option B");
                 const hovered = story.getOption("Option C");
 
                 await hovered.hover();
 
-                await expect(selected).toMatchAriaSnapshot(`
-                    - option "Option B" [selected]
-                `);
-                await expect(hovered).toMatchAriaSnapshot(`
-                    - option "Option C"
+                await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                    - listbox:
+                      - option "Option A"
+                      - option "Option B" [selected]
+                      - option "Option C"
+                      - option "Option D"
                 `);
 
                 await compareScreenshot(story, "selected-hover-other", {
