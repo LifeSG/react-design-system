@@ -6,6 +6,7 @@
         "no-descending-specificity": true,
         "selector-max-id": 0,
         "custom-property-empty-line-before": "never",
+        "color-hex-length": "long",
 
         "@stylistic/color-hex-case": "upper",
         "@stylistic/indentation": 4,

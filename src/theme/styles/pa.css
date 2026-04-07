@@ -17,17 +17,17 @@ PRIMITIVE COLORS
     --fds-colour-brand-90: #F3CCCF;
     --fds-colour-brand-95: #F9E6E7;
     --fds-colour-brand-100: #FCF2F3;
-    --fds-colour-primary-10: #000;
+    --fds-colour-primary-10: #000000;
     --fds-colour-primary-20: #191919;
-    --fds-colour-primary-30: #333;
+    --fds-colour-primary-30: #333333;
     --fds-colour-primary-40: #4D4D4D;
-    --fds-colour-primary-50: #666;
+    --fds-colour-primary-50: #666666;
     --fds-colour-primary-60: #808080;
-    --fds-colour-primary-70: #999;
+    --fds-colour-primary-70: #999999;
     --fds-colour-primary-80: #B3B3B3;
     --fds-colour-primary-90: #E6E6E6;
     --fds-colour-primary-95: #F7F7F7;
-    --fds-colour-primary-100: #FFF;
+    --fds-colour-primary-100: #FFFFFF;
     --fds-colour-secondary-10: #19151D;
     --fds-colour-secondary-20: #2B2533;
     --fds-colour-secondary-30: #3E3649;
@@ -39,17 +39,17 @@ PRIMITIVE COLORS
     --fds-colour-secondary-90: #E1DEE4;
     --fds-colour-secondary-95: #EFEEF1;
     --fds-colour-secondary-100: #F9F8F9;
-    --fds-colour-neutral-10: #000;
+    --fds-colour-neutral-10: #000000;
     --fds-colour-neutral-20: #191919;
-    --fds-colour-neutral-30: #333;
+    --fds-colour-neutral-30: #333333;
     --fds-colour-neutral-40: #4D4D4D;
-    --fds-colour-neutral-50: #666;
+    --fds-colour-neutral-50: #666666;
     --fds-colour-neutral-60: #808080;
-    --fds-colour-neutral-70: #999;
+    --fds-colour-neutral-70: #999999;
     --fds-colour-neutral-80: #B3B3B3;
     --fds-colour-neutral-90: #E6E6E6;
     --fds-colour-neutral-95: #F7F7F7;
-    --fds-colour-neutral-100: #FFF;
+    --fds-colour-neutral-100: #FFFFFF;
     --fds-colour-success-10: #081A0F;
     --fds-colour-success-20: #0E2D1B;
     --fds-colour-success-30: #154126;
@@ -94,8 +94,8 @@ PRIMITIVE COLORS
     --fds-colour-info-90: #CCE3F1;
     --fds-colour-info-95: #E3F1F8;
     --fds-colour-info-100: #F4FAFD;
-    --fds-colour-white: #FFF;
-    --fds-colour-black: #000;
+    --fds-colour-white: #FFFFFF;
+    --fds-colour-black: #000000;
     --fds-colour-primary-inverse: #FEAB10;
 
     /*

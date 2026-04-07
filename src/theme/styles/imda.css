@@ -40,7 +40,7 @@ PRIMITIVE COLOURS
     --fds-colour-secondary-95: #FFE9EE;
     --fds-colour-secondary-100: #FFF7F9;
     --fds-colour-neutral-10: #161616;
-    --fds-colour-neutral-20: #222;
+    --fds-colour-neutral-20: #222222;
     --fds-colour-neutral-30: #2D2D2D;
     --fds-colour-neutral-40: #3F3F3F;
     --fds-colour-neutral-50: #4B4B4B;
@@ -94,8 +94,8 @@ PRIMITIVE COLOURS
     --fds-colour-info-90: #CCE3F1;
     --fds-colour-info-95: #E3F1F8;
     --fds-colour-info-100: #F4FAFD;
-    --fds-colour-white: #FFF;
-    --fds-colour-black: #000;
+    --fds-colour-white: #FFFFFF;
+    --fds-colour-black: #000000;
     --fds-colour-primary-inverse: #FEAB10;
 
     /*
@@ -231,6 +231,9 @@ PRIMITIVE COLOURS
     /* focus ring */
     --fds-colour-focus-ring: var(--fds-colour-primary-50);
     --fds-colour-focus-ring-inverse: var(--fds-colour-white);
+
+    /* Animation */
+    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 
     /* 
     ========================================================================

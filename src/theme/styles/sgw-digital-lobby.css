@@ -94,8 +94,8 @@ PRIMITIVES COLORS
     --fds-colour-info-90: #CCE3F1;
     --fds-colour-info-95: #E3F1F8;
     --fds-colour-info-100: #F4FAFD;
-    --fds-colour-white: #FFF;
-    --fds-colour-black: #000;
+    --fds-colour-white: #FFFFFF;
+    --fds-colour-black: #000000;
     --fds-colour-primary-inverse: #FEAB10;
 
     /*
@@ -231,6 +231,9 @@ PRIMITIVES COLORS
     /* focus ring */
     --fds-colour-focus-ring: var(--fds-colour-primary-50);
     --fds-colour-focus-ring-inverse: var(--fds-colour-white);
+
+    /* Animation */
+    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 
     /* 
     ========================================================================
