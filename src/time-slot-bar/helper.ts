@@ -1,14 +1,48 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DateHelper, StringHelper } from "src/util";
+import { DateHelper, SimpleIdGenerator, StringHelper } from "src/util";
 import { TimeHelper } from "../util/time-helper";
-import {
-    ESlotStateLabel,
-    TimeSlot as TTimeSlot,
-    TimeSlotBarVariant,
-} from "./types";
+import { TimeSlot as TTimeSlot, TimeSlotBarVariant } from "./types";
 // Load plugins
 dayjs.extend(customParseFormat);
+
+// ===========================================================================
+// INTERNAL TYPES
+// ===========================================================================
+
+enum ESlotStateLabel {
+    avail = "Available",
+    unavail = "Unavailable",
+}
+
+// ===========================================================================
+// INTERNAL HELPERS
+// ===========================================================================
+
+const getSlotAriaLabel = (
+    slotStartTime: string,
+    slotEndTime: string,
+    isAvail?: boolean,
+    label?: string
+) =>
+    StringHelper.joinNonEmptyStrings([
+        TimeHelper.formatTimeRange(slotStartTime, slotEndTime),
+        isAvail ? ESlotStateLabel.avail : ESlotStateLabel.unavail,
+        label,
+    ]);
+
+const buildUnavailableSlot = (
+    startTime: string,
+    endTime: string,
+    id: string
+): TTimeSlot & { ariaLabel?: string } => ({
+    id,
+    startTime,
+    endTime,
+    clickable: false,
+    label: undefined,
+    styleAttributes: { backgroundColor: "transparent" },
+});
 
 // ===========================================================================
 // HELPER FUNCTIONS
@@ -89,76 +123,100 @@ export namespace TimeSlotBarHelper {
         return time;
     };
 
-    export const getSlotAriaLabel = (
-        slotStartTime: string,
-        slotEndTime: string,
-        isAvail?: boolean,
-        label?: string
-    ) =>
-        StringHelper.joinNonEmptyStrings([
-            TimeHelper.formatTimeRange(slotStartTime, slotEndTime),
-            isAvail ? ESlotStateLabel.avail : ESlotStateLabel.unavail,
-            label,
-        ]);
-
+    /**
+     * Process raw slots and any gaps in the given time range.
+     *
+     * Builds a summary string and a list of slots that includes:
+     * - original slots,
+     * - leading/trailing unavailable time gaps,
+     * - gap slots inserted between non-contiguous slots.
+     *
+     * @param range - start/end bounds for the timeslot bar.
+     * @param slots - user-provided slots to render.
+     * @param variant - display variant controlling summary and aria label behavior.
+     * @returns summary for container aria-label and computed slots ready for rendering.
+     */
     export const processSlots = (
+        range: { start: string; end: string },
         slots: TTimeSlot[],
         variant: TimeSlotBarVariant
     ) => {
         const summaryParts: string[] = ["Time slot bar"];
-        // Slots including real and phantom slots, all with aria labels
+        // Build visible slots plus any unavailable gaps
         const computedSlots: (TTimeSlot & {
             ariaLabel?: string;
         })[] = [];
 
-        slots.forEach((slot, index, self) => {
-            const {
-                startTime: slotStartTime,
-                endTime: slotEndTime,
-                clickable = true,
-                label,
-            } = slot;
-
-            const slotAriaLabel = TimeSlotBarHelper.getSlotAriaLabel(
-                slotStartTime,
-                slotEndTime,
-                clickable,
-                label
+        const createAriaLabelAndPushSlot = (slot: TTimeSlot) => {
+            const ariaLabel = getSlotAriaLabel(
+                slot.startTime,
+                slot.endTime,
+                slot.clickable ?? true,
+                slot.label
             );
 
-            if (variant === "minified") summaryParts.push(slotAriaLabel);
-
+            if (variant === "minified") summaryParts.push(ariaLabel);
             computedSlots.push({
                 ...slot,
-                ariaLabel: variant === "default" ? slotAriaLabel : undefined,
+                ariaLabel: variant === "default" ? ariaLabel : undefined,
             });
+        };
 
-            // Check and create phantom slots if a gap follows current slot
+        if (slots.length < 1) {
+            // No real slots: represent the whole range as unavailable
+            const fullUnavailSlot = buildUnavailableSlot(
+                range.start,
+                range.end,
+                SimpleIdGenerator.generate()
+            );
+            createAriaLabelAndPushSlot(fullUnavailSlot);
+
+            return {
+                summary: StringHelper.joinNonEmptyStrings(summaryParts),
+                computedSlots,
+            };
+        }
+
+        if (!TimeHelper.isSameTime(range.start, slots[0].startTime)) {
+            // Add leading unavailable gap before the first slot
+            const leadingUnavailSlot = buildUnavailableSlot(
+                range.start,
+                slots[0].startTime,
+                SimpleIdGenerator.generate()
+            );
+            createAriaLabelAndPushSlot(leadingUnavailSlot);
+        }
+
+        slots.forEach((slot, index, self) => {
+            createAriaLabelAndPushSlot(slot);
+
+            const { endTime: slotEndTime } = slot;
             const { startTime: nextSlotStartTime } = self[index + 1] ?? {};
             const hasGapAfter =
                 nextSlotStartTime &&
                 !TimeHelper.isSameTime(slotEndTime, nextSlotStartTime);
 
             if (hasGapAfter) {
-                const gapAriaLabel = TimeSlotBarHelper.getSlotAriaLabel(
+                // Add a gap slot between consecutive slots if non-contiguous
+                const unavailSlot = buildUnavailableSlot(
                     slotEndTime,
                     nextSlotStartTime,
-                    false
+                    SimpleIdGenerator.generate()
                 );
-
-                if (variant === "minified") summaryParts.push(gapAriaLabel);
-
-                computedSlots.push({
-                    id: `${slot.id}-gap`,
-                    startTime: slotEndTime,
-                    endTime: nextSlotStartTime,
-                    clickable: false,
-                    ariaLabel: variant === "default" ? gapAriaLabel : undefined,
-                    label: undefined,
-                    styleAttributes: { backgroundColor: "#00000000" },
-                });
+                createAriaLabelAndPushSlot(unavailSlot);
             }
         });
+
+        const lastSlot = slots[slots.length - 1];
+        if (!TimeHelper.isSameTime(range.end, lastSlot.endTime)) {
+            // Add trailing unavailable gap after the last slot
+            const trailingUnavailSlot = buildUnavailableSlot(
+                lastSlot.endTime,
+                range.end,
+                SimpleIdGenerator.generate()
+            );
+            createAriaLabelAndPushSlot(trailingUnavailSlot);
+        }
 
         return {
             summary: StringHelper.joinNonEmptyStrings(summaryParts),

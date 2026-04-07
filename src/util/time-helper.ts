@@ -265,8 +265,8 @@ export namespace TimeHelper {
     };
 
     export const isSameTime = (a: string, b: string) => {
-    return dayjs(a, "H:mm").isSame(dayjs(b, "H:mm"), "minute");
-};
+        return dayjs(a, "H:mm").isSame(dayjs(b, "H:mm"), "minute");
+    };
 
     export const formatDisplayValue = (
         value: string | undefined,

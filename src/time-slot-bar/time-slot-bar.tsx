@@ -1,6 +1,7 @@
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import {
+    type MouseEvent,
     forwardRef,
     useEffect,
     useImperativeHandle,
@@ -76,8 +77,12 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     }));
 
     const { summary: slotsSummary, computedSlots: allSlots } = useMemo(() => {
-        return TimeSlotBarHelper.processSlots(slots, variant);
-    }, [variant, slots]);
+        return TimeSlotBarHelper.processSlots(
+            { start: adjustedStartTime, end: adjustedEndTime },
+            slots,
+            variant
+        );
+    }, [adjustedStartTime, adjustedEndTime, slots, variant]);
 
     // =============================================================================
     // EFFECTS
@@ -126,22 +131,6 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     const handleResize = () => {
         if (barRef.current) {
             setClientWidth(barRef.current.clientWidth);
-        }
-    };
-
-    const handleOnKeyDown = (
-        key: string,
-        slot: TTimeSlot,
-        allowClick?: boolean
-    ) => {
-        if (!allowClick) return;
-
-        switch (key) {
-            case "Enter":
-            case " ": // space bar
-                onSlotClick(slot);
-                break;
-            default:
         }
     };
 
@@ -332,6 +321,12 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             const isClickable = clickable && variant === "default";
             const showLabel = isVariant("default") && label;
 
+            const handleSlotClick =
+                (evt: MouseEvent<HTMLElement>) => (clickedSlot: TTimeSlot) => {
+                    evt.stopPropagation();
+                    if (isClickable) onSlotClick(clickedSlot);
+                };
+
             return (
                 <div key={id} role="gridcell">
                     <TimeSlotBorder
@@ -350,17 +345,15 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         $bgColor={backgroundColor}
                         $bgColor2={backgroundColor2}
                         $clickable={isClickable}
-                        onKeyDown={(evt) =>
-                            handleOnKeyDown(evt.key, slot, isClickable)
-                        }
-                        onClick={() => isClickable && onSlotClick(slot)}
+                        onClick={handleSlotClick}
                     >
                         {!!ariaLabel && (
                             <VisuallyHidden>
                                 <button
-                                    aria-disabled={isClickable ? false : true}
+                                    type="button" // overrides default type="submit" when used with <form>
+                                    aria-disabled={!isClickable}
                                     aria-label={ariaLabel}
-                                    tabIndex={0}
+                                    onClick={handleSlotClick} // use `button` element native keyboard activation handling
                                 />
                             </VisuallyHidden>
                         )}
@@ -397,7 +390,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 {scrollPosition > 0 && (
                     <ArrowButton
                         data-testid={getDataTestId("arrow-left")}
-                        aria-hidden="true"
+                        aria-hidden
                         tabIndex={-1}
                         $direction={"left"}
                         $variant={variant}
@@ -427,7 +420,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             return (
                 <ArrowButton
                     data-testid={getDataTestId("arrow-right")}
-                    aria-hidden="true"
+                    aria-hidden
                     tabIndex={-1}
                     $direction={"right"}
                     $variant={variant}
@@ -446,16 +439,19 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     };
 
     return (
-        <Container className={className} aria-label={slotsSummary}>
+        <Container className={className}>
             <TimeSlotBarContainer
                 data-testid={testId}
                 ref={barRef}
                 $variant={variant}
                 role="grid"
+                aria-label={slotsSummary}
+                tabIndex={0}
             >
                 <TimeMarkerWrapper
                     data-testid={getDataTestId("time-marker-wrapper")}
                     data-id="marker-wrapper"
+                    aria-hidden
                 >
                     {renderTimeMarkers()}
                 </TimeMarkerWrapper>
