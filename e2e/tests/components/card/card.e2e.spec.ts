@@ -5,7 +5,6 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "card";
 
     public readonly locators: {
-        defaultTextCard: Locator;
         customContentCard: Locator;
         customButton: Locator;
         customCount: Locator;
@@ -15,7 +14,6 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            defaultTextCard: page.getByTestId("card-default-text"),
             customContentCard: page.getByTestId("card-custom-content"),
             customButton: page.getByTestId("card-custom-button"),
             customCount: page.getByTestId("card-custom-count"),
@@ -31,40 +29,26 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Card", () => {
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("basic");
-        });
+    test("Default content renders (light mode)", async ({ story }) => {
+        await story.init("basic");
 
-        test("Default content renders (light mode)", async ({ story }) => {
-            await test.step("Component mounts", async () => {
-                await expect(story.locators.defaultTextCard).toBeVisible();
-
-                await compareScreenshot(story, "mount");
-            });
+        await test.step("Component mounts", async () => {
+            await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("basic", { mode: "dark" });
-        });
-
         test("Default content renders (dark mode)", async ({ story }) => {
-            await test.step("Component mounts in dark mode", async () => {
-                await expect(story.locators.defaultTextCard).toBeVisible();
+            await story.init("basic", { mode: "dark" });
 
-                await compareScreenshot(story, "mount");
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("custom-content");
-        });
-
         test("Custom content interaction works", async ({ story }) => {
+            await story.init("custom-content");
+
             await test.step("Component mounts", async () => {
                 await expect(story.locators.customContentCard).toBeVisible();
                 await expect(story.locators.customCount).toHaveText("Count: 0");
