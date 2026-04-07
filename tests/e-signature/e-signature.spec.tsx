@@ -89,6 +89,8 @@ describe("ESignature", () => {
         drawSignature();
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
+        // TODO: Test linaria css
+        // expect(getSignatureModal()).not.toBeVisible();
         expect(queryAddSignatureButton()).not.toBeInTheDocument();
         expect(getEditSignatureButton()).toBeInTheDocument();
         expect(changeFn).toHaveBeenCalled();
@@ -116,6 +118,8 @@ describe("ESignature", () => {
         fireEvent.click(screen.getByRole("button", { name: "Clear" }));
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
+        // TODO: Test linaria css
+        // expect(getSignatureModal()).not.toBeVisible();
         expect(getAddSignatureButton()).toBeInTheDocument();
     });
 });
