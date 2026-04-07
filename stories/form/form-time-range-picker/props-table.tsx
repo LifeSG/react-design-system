@@ -162,13 +162,13 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "initialStartTime",
+                name: "initialScrollStartTime",
                 description:
                     "The initial time that the start dropdown scrolls to when the start field is empty",
                 propTypes: ["string"],
             },
             {
-                name: "initialEndTime",
+                name: "initialScrollEndTime",
                 description:
                     "The initial time that the end dropdown scrolls to when the end field is empty",
                 propTypes: ["string"],

@@ -83,7 +83,7 @@ describe("TimeRangePicker", () => {
                 render(
                     <TimeRangePicker
                         variant={"combobox"}
-                        initialStartTime="9:00am"
+                        initialScrollStartTime="9:00am"
                         startLimit="8:00am"
                         endLimit="10:00am"
                         interval={60}
@@ -110,7 +110,7 @@ describe("TimeRangePicker", () => {
                 render(
                     <TimeRangePicker
                         variant={"combobox"}
-                        initialEndTime="3:00pm"
+                        initialScrollEndTime="3:00pm"
                         startLimit="1:00pm"
                         endLimit="5:00pm"
                         interval={60}
@@ -134,6 +134,47 @@ describe("TimeRangePicker", () => {
                         "4:00pm",
                         "5:00pm",
                     ]);
+                });
+            });
+
+            it("should scroll the start dropdown to the selected value instead of the initial start time", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        initialScrollStartTime="9:00am"
+                        startLimit="8:00am"
+                        endLimit="11:00am"
+                        interval={60}
+                    />
+                );
+
+                await user.click(screen.getByLabelText(START_LABEL));
+
+                await waitFor(() => {
+                    expect(
+                        screen.getByRole("option", { name: "9:00am" })
+                    ).toHaveAttribute("tabindex", "0");
+                });
+
+                await user.click(
+                    screen.getByRole("option", { name: "10:00am" })
+                );
+
+                expect(screen.getByLabelText(START_LABEL)).toHaveValue(
+                    "10:00am"
+                );
+
+                await user.click(screen.getByLabelText(START_LABEL));
+
+                await waitFor(() => {
+                    expect(
+                        screen.getByRole("option", { name: "10:00am" })
+                    ).toHaveAttribute("tabindex", "0");
+                    expect(
+                        screen.getByRole("option", { name: "9:00am" })
+                    ).toHaveAttribute("tabindex", "-1");
                 });
             });
 

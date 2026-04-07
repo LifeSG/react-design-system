@@ -52,9 +52,9 @@ export interface TimeRangePickerProps {
     /** Specifies the ending time for the dropdown options */
     endLimit?: string | undefined;
     /** Specifies the initial start time to scroll to when the start dropdown opens */
-    initialStartTime?: string | undefined;
+    initialScrollStartTime?: string | undefined;
     /** Specifies the initial end time to scroll to when the end dropdown opens */
-    initialEndTime?: string | undefined;
+    initialScrollEndTime?: string | undefined;
     /** Specifies the alignment of the dropdown to the left or right of the reference element */
     alignment?: DropdownAlignmentType | undefined;
     /** Specifies the z-index of the dropdown element */

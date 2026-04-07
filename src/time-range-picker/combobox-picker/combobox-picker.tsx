@@ -38,8 +38,8 @@ export const ComboboxPicker = ({
     dropdownZIndex,
     startLimit,
     endLimit,
-    initialStartTime,
-    initialEndTime,
+    initialScrollStartTime,
+    initialScrollEndTime,
     interval = 15,
     dropdownRootNode,
     "aria-labelledby": ariaLabelledBy,
@@ -97,14 +97,14 @@ export const ComboboxPicker = ({
         [format]
     );
 
-    const initialStartScrollTime = useMemo(
-        () => parseInput(initialStartTime) ?? "",
-        [initialStartTime, parseInput]
+    const parsedInitialStartScrollTime = useMemo(
+        () => parseInput(initialScrollStartTime) ?? "",
+        [initialScrollStartTime, parseInput]
     );
 
-    const initialEndScrollTime = useMemo(
-        () => parseInput(initialEndTime) ?? "",
-        [initialEndTime, parseInput]
+    const parsedInitialEndScrollTime = useMemo(
+        () => parseInput(initialScrollEndTime) ?? "",
+        [initialScrollEndTime, parseInput]
     );
 
     useEffect(() => {
@@ -352,9 +352,9 @@ export const ComboboxPicker = ({
     const renderDropdown = () => {
         if (activeTimeSelector === "start") {
             // Prioritise start time value. If non existent, use initial scroll time
-            // If both is non existent, DropdownList will default to first option
+            // If both are non existent, DropdownList will default to first option
             const startScrollTime =
-                parseInput(startTimeVal) || initialStartScrollTime;
+                parseInput(startTimeVal) || parsedInitialStartScrollTime;
 
             return (
                 <DropdownList
@@ -373,7 +373,7 @@ export const ComboboxPicker = ({
             );
         } else {
             const endScrollTime =
-                parseInput(endTimeVal) || initialEndScrollTime;
+                parseInput(endTimeVal) || parsedInitialEndScrollTime;
 
             return (
                 <DropdownList
