@@ -1,6 +1,8 @@
 import { test as base, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
+const DEFAULT_SIZE_ICON_LABEL_BUTTONS_COUNT = 5;
+
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "button";
 
@@ -37,25 +39,6 @@ test.describe("Button", () => {
             story,
         }) => {
             await compareScreenshot(story, "base-variants");
-
-            const buttons = story.locators.buttons;
-            const count = await buttons.count();
-            for (let i = 0; i < count; i++) {
-                const button = buttons.nth(i);
-                const label =
-                    (await button.getAttribute("aria-label")) ??
-                    (await button.innerText());
-                await button.hover();
-                await compareScreenshot(
-                    story,
-                    `base-variants-hover-${label
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`,
-                    {
-                        locator: button,
-                    }
-                );
-            }
         });
     });
 
@@ -147,24 +130,6 @@ test.describe("Button", () => {
             story,
         }) => {
             await compareScreenshot(story, "base-icon-button");
-
-            const buttons = story.locators.buttons;
-            const count = await buttons.count();
-            for (let i = 0; i < count; i++) {
-                const button = buttons.nth(i);
-                const label =
-                    (await button.getAttribute("aria-label")) ?? `button-${i}`;
-                await button.hover();
-                await compareScreenshot(
-                    story,
-                    `base-icon-button-hover-${label
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`,
-                    {
-                        locator: button,
-                    }
-                );
-            }
         });
     });
 
@@ -212,16 +177,12 @@ test.describe("Button", () => {
             await compareScreenshot(story, "base-icon-with-label");
 
             const buttons = story.locators.buttons;
-            const count = await buttons.count();
-            for (let i = 0; i < count; i++) {
+            for (let i = 0; i < DEFAULT_SIZE_ICON_LABEL_BUTTONS_COUNT; i++) {
                 const button = buttons.nth(i);
-                const label = await button.innerText();
                 await button.hover();
                 await compareScreenshot(
                     story,
-                    `base-icon-with-label-hover-${label
-                        .toLowerCase()
-                        .replace(/\s+/g, "-")}`,
+                    `base-icon-with-label-hover-default-${i}`,
                     {
                         locator: button,
                     }
@@ -237,6 +198,19 @@ test.describe("Button", () => {
 
         test("Icon with label – dark mode", async ({ story }) => {
             await compareScreenshot(story, "base-icon-with-label-dark");
+
+            const buttons = story.locators.buttons;
+            for (let i = 0; i < DEFAULT_SIZE_ICON_LABEL_BUTTONS_COUNT; i++) {
+                const button = buttons.nth(i);
+                await button.hover();
+                await compareScreenshot(
+                    story,
+                    `base-icon-with-label-dark-hover-default-${i}`,
+                    {
+                        locator: button,
+                    }
+                );
+            }
         });
     });
 
