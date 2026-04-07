@@ -1,13 +1,57 @@
+import clsx from "clsx";
 import React from "react";
 
-import type { MainStyleProps } from "./button.style";
-import { Main, Spinner } from "./button.style";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
+import * as styles from "./button.styles";
 import { hasValidChildren } from "./button-helper";
 import type { ButtonProps, ButtonRef } from "./types";
+
+const styleClassMap: Record<string, Record<string, string>> = {
+    disabled: {
+        base: styles.mainStyleDisabled,
+        danger: styles.mainStyleDisabled,
+    },
+    default: {
+        base: styles.mainStyleDefault,
+        danger: styles.mainStyleDefaultDanger,
+    },
+    secondary: {
+        base: styles.mainStyleSecondary,
+        danger: styles.mainStyleSecondaryDanger,
+    },
+    light: { base: styles.mainStyleLight, danger: styles.mainStyleLightDanger },
+    link: { base: styles.mainStyleLink, danger: styles.mainStyleLinkDanger },
+};
+
+const sizeClassMap: Record<string, { base: string; iconOnly: string }> = {
+    default: {
+        base: styles.mainSizeDefault,
+        iconOnly: styles.mainSizeDefaultIconOnly,
+    },
+    small: {
+        base: styles.mainSizeSmall,
+        iconOnly: styles.mainSizeSmallIconOnly,
+    },
+    large: {
+        base: styles.mainSizeLarge,
+        iconOnly: styles.mainSizeLargeIconOnly,
+    },
+};
+
+const getStyleClass = (effectiveStyle: string, danger: boolean) =>
+    danger
+        ? styleClassMap[effectiveStyle]?.danger
+        : styleClassMap[effectiveStyle]?.base;
+
+const getSizeClass = (sizeType: string, iconOnly: boolean) =>
+    iconOnly
+        ? clsx(sizeClassMap[sizeType]?.base, sizeClassMap[sizeType]?.iconOnly)
+        : sizeClassMap[sizeType]?.base;
 
 const Component = (props: ButtonProps, ref: ButtonRef) => {
     const {
         children,
+        className,
         disabled = false,
         loading = false,
         styleType = "default",
@@ -22,34 +66,37 @@ const Component = (props: ButtonProps, ref: ButtonRef) => {
 
     const hasChildren = hasValidChildren(children);
     const iconOnly = !!icon && !hasChildren;
-
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSize: sizeType,
-        $buttonIsDanger: danger,
-        $hasIcon: !!icon,
-        $iconOnly: iconOnly,
-        $iconPosition: icon ? iconPosition : undefined,
-    };
+    const effectiveStyle = disabled ? "disabled" : styleType;
 
     return (
-        <Main
+        <button
             ref={ref}
             data-testid={otherProps["data-testid"] || "button"}
             disabled={disabled && !focusableWhenDisabled}
             aria-disabled={disabled}
             aria-busy={loading}
             onClick={disabled ? undefined : onClick}
-            {...mainStyle}
+            className={clsx(
+                styles.main,
+                icon &&
+                    iconPosition === "right" &&
+                    styles.mainIconPositionRight,
+                !iconOnly && styles.mainHasMinWidth,
+                getStyleClass(effectiveStyle, danger),
+                getSizeClass(sizeType, iconOnly),
+                className
+            )}
             {...otherProps}
         >
             {loading ? (
-                <Spinner $hasChildren={hasChildren} />
+                <ComponentLoadingSpinner
+                    className={clsx(hasChildren && styles.spinnerHasChildren)}
+                />
             ) : icon ? (
                 React.cloneElement(icon, { "aria-hidden": true })
             ) : null}
             {hasChildren && <span>{children}</span>}
-        </Main>
+        </button>
     );
 };
 
