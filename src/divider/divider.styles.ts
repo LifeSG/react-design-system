@@ -1,5 +1,5 @@
 import styled, { css } from "styled-components";
-import { V3_Colour } from "../v3_theme";
+import { Colour } from "../theme";
 import type { V3_StyledComponentProps } from "../v3_theme/helpers";
 import type { V3_ThemeStyleProps } from "../v3_theme/types";
 import type { DividerLineStyleType } from "./types";
@@ -22,7 +22,7 @@ const dashedLineStyle = () => (props: StyleProps & V3_StyledComponentProps) => {
     if (typeof props.$color === "function") {
         color = props.$color(props);
     } else {
-        color = props.$color || V3_Colour.border(props);
+        color = props.$color || Colour.border;
     }
 
     const encodedColor = encodeURIComponent(color);
@@ -48,7 +48,7 @@ export const Line = styled.hr<StyleProps>`
             case "solid":
                 return css`
                     height: ${props.$thickness}px;
-                    background-color: ${props.$color || V3_Colour.border};
+                    background-color: ${props.$color || Colour.border};
                 `;
         }
     }}
