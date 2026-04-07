@@ -6,12 +6,15 @@ import { Typography } from "../typography";
 import * as styles from "./card.styles";
 import type { CardProps } from "./types";
 
-export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
+export const Card = ({
+    children,
+    className,
+    "data-testid": dataTestId = "card",
+    ...restProps
+}: CardProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { className, ...restProps } = otherProps;
-    const testId = otherProps["data-testid"] || "card";
     const theme = useContext(ThemeContext);
     const isDarkMode = theme?.mode === "dark";
 
@@ -28,7 +31,7 @@ export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
     return (
         <div
             {...restProps}
-            data-testid={testId}
+            data-testid={dataTestId}
             className={clsx(
                 styles.card,
                 isDarkMode ? styles.cardDarkMode : styles.cardLightMode,
