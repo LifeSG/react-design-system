@@ -16,10 +16,7 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
         props;
 
     const containerRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
-    const mergedRef = mergeRefs(
-        containerRef,
-        ref as React.Ref<HTMLDivElement | HTMLSpanElement>
-    );
+    const mergedRef = useMemo(() => mergeRefs(containerRef, ref), [ref]);
 
     const fontDeclarations = useMemo(() => {
         if (!baseTextSize) {
@@ -44,6 +41,9 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
         baseTextSize && styles.sizedMarkup,
         className
     );
+
+    console.log("appliedStyles", className);
+
     const ElementTag = inline ? "span" : "div";
 
     return (
