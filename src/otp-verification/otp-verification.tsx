@@ -29,6 +29,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [isVerifyLoading, setIsVerifyLoading] = useState(false);
+    const [successAnnouncement, setSuccessAnnouncement] = useState("");
 
     const countdown = useCountdown({
         duration: verifyOtpCountdownTimer,
@@ -63,6 +64,14 @@ export const OtpVerification = (props: OtpVerificationProps) => {
             setIsVerifyLoading(true);
             await onVerifyOtp(otpValue.value);
             onOtpStateChange("verified");
+
+            setSuccessAnnouncement("");
+            setTimeout(() => {
+                setSuccessAnnouncement(
+                    "Success. Your email or mobile number has been verified.",
+                );
+            }, 50);
+
             // Reset the countdown and clear the OTP code in case user enter new OTP later
             countdown.reset();
             onOtpChange?.("");
@@ -89,6 +98,9 @@ export const OtpVerification = (props: OtpVerificationProps) => {
         <OTPInputWrapper id={id} data-testid={dataTestId} className={className}>
             <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
                 {countdown.liveReminderText}
+            </VisuallyHidden>
+            <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
+                {successAnnouncement}
             </VisuallyHidden>
 
             <ContactInputSection
