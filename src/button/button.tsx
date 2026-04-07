@@ -44,7 +44,9 @@ const getStyleClass = (effectiveStyle: string, danger: boolean) =>
         : styleClassMap[effectiveStyle]?.base;
 
 const getSizeClass = (sizeType: string, iconOnly: boolean) =>
-    iconOnly ? sizeClassMap[sizeType]?.iconOnly : sizeClassMap[sizeType]?.base;
+    iconOnly
+        ? clsx(sizeClassMap[sizeType]?.base, sizeClassMap[sizeType]?.iconOnly)
+        : sizeClassMap[sizeType]?.base;
 
 const Component = (props: ButtonProps, ref: ButtonRef) => {
     const {
