@@ -1,25 +1,11 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
+import { test as base, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "modal";
 
-    public readonly locators: {
-        firstModalContent: Locator;
-        secondModalContent: Locator;
-        visualDefaultContent: Locator;
-        visualCustomContent: Locator;
-    };
-
     constructor(page: Page) {
         super(page);
-
-        this.locators = {
-            firstModalContent: page.getByTestId("first-modal-content"),
-            secondModalContent: page.getByTestId("second-modal-content"),
-            visualDefaultContent: page.getByTestId("visual-default-content"),
-            visualCustomContent: page.getByTestId("visual-custom-content"),
-        };
     }
 }
 
