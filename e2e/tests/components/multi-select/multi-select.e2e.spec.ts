@@ -117,11 +117,12 @@ test.describe("InputMultiSelect", () => {
             await compareScreenshot(story, "selected-on-mount");
 
             await story.openDropdown();
-            await expect(story.getOption("Option A")).toMatchAriaSnapshot(`
-                - option "Option A" [selected]
-            `);
-            await expect(story.getOption("Option B")).toMatchAriaSnapshot(`
-                - option "Option B" [selected]
+            await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                - listbox:
+                  - option "Option A" [selected]
+                  - option "Option B" [selected]
+                  - option "Option C"
+                  - option "Option D"
             `);
 
             await compareScreenshot(story, "selected-open", {
@@ -178,14 +179,12 @@ test.describe("InputMultiSelect", () => {
 
         test("Max selectable", async ({ story }) => {
             await story.openDropdown();
-            await expect(story.getOption("Option A")).toMatchAriaSnapshot(`
-                - option "Option A" [selected]
-            `);
-            await expect(story.getOption("Option B")).toMatchAriaSnapshot(`
-                - option "Option B" [selected]
-            `);
-            await expect(story.getOption("Option C")).toMatchAriaSnapshot(`
-                - option "Option C" [disabled]
+            await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                - listbox:
+                  - option "Option A" [selected]
+                  - option "Option B" [selected]
+                  - option "Option C" [disabled]
+                  - option "Option D"
             `);
 
             await compareScreenshot(story, "reached", {
