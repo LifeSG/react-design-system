@@ -1,55 +1,24 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 import { Colour } from "../theme";
-import type { V3_StyledComponentProps } from "../v3_theme/helpers";
-import type { V3_ThemeStyleProps } from "../v3_theme/types";
-import type { DividerLineStyleType } from "./types";
-
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface StyleProps {
-    $thickness: number;
-    $color?: string | ((props: V3_ThemeStyleProps) => string);
-    $lineStyle?: DividerLineStyleType;
-}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const dashedLineStyle = () => (props: StyleProps & V3_StyledComponentProps) => {
-    let color: string;
 
-    if (typeof props.$color === "function") {
-        color = props.$color(props);
-    } else {
-        color = props.$color || Colour.border;
-    }
-
-    const encodedColor = encodeURIComponent(color);
-    const thickness = props.$thickness || 1;
-    const strokeWidth = thickness + 1; // best fit
-
-    return css`
-        background-color: transparent;
-        height: ${thickness}px;
-        background-repeat: repeat-x;
-        background-image: url('data:image/svg+xml,<svg width="8" height="${thickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${encodedColor}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>');
-    `;
-};
-
-export const Line = styled.hr<StyleProps>`
+export const lineBase = css`
     width: 100%;
     margin: 0;
     border: none;
-    ${(props) => {
-        switch (props.$lineStyle) {
-            case "dashed":
-                return dashedLineStyle();
-            case "solid":
-                return css`
-                    height: ${props.$thickness}px;
-                    background-color: ${props.$color || Colour.border};
-                `;
-        }
-    }}
+`;
+
+export const solidLine = css`
+    height: var(--thickness, 1px);
+    background-color: var(--color, ${Colour.border});
+`;
+
+export const dashedLine = css`
+    background-color: transparent;
+    height: var(--thickness, 1px);
+    background-repeat: repeat-x;
+    background-image: url('data:image/svg+xml,<svg width="8" height="1" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="var(--color, ${Colour.border})" stroke-width="2" stroke-dasharray="4 4" /></svg>');
 `;
