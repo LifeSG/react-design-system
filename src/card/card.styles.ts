@@ -2,9 +2,6 @@ import { css } from "@linaria/core";
 
 import { Border, Colour, Radius, Shadow, Spacing } from "../theme";
 
-// =============================================================================
-// STYLING
-// =============================================================================
 export const card = css`
     border-radius: ${Radius["md"]};
     background: ${Colour.bg};
