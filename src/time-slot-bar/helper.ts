@@ -147,6 +147,7 @@ export namespace TimeSlotBarHelper {
             ariaLabel?: string;
         })[] = [];
 
+        // define a method for reusable aria-label generation and push logic
         const createAriaLabelAndPushSlot = (slot: TTimeSlot) => {
             const ariaLabel = getSlotAriaLabel(
                 slot.startTime,
@@ -177,17 +178,25 @@ export namespace TimeSlotBarHelper {
             };
         }
 
-        if (!TimeHelper.isSameTime(range.start, slots[0].startTime)) {
+        const sortedSlots = [...slots].sort((a, b) => {
+            const timeA = dayjs(a.startTime, "HH:mm");
+            const timeB = dayjs(b.startTime, "HH:mm");
+            if (timeA.isBefore(timeB)) return -1;
+            if (timeA.isAfter(timeB)) return 1;
+            return 0;
+        });
+
+        if (!TimeHelper.isSameTime(range.start, sortedSlots[0].startTime)) {
             // Add leading unavailable gap before the first slot
             const leadingUnavailSlot = buildUnavailableSlot(
                 range.start,
-                slots[0].startTime,
+                sortedSlots[0].startTime,
                 SimpleIdGenerator.generate()
             );
             createAriaLabelAndPushSlot(leadingUnavailSlot);
         }
 
-        slots.forEach((slot, index, self) => {
+        sortedSlots.forEach((slot, index, self) => {
             createAriaLabelAndPushSlot(slot);
 
             const { endTime: slotEndTime } = slot;
@@ -207,7 +216,7 @@ export namespace TimeSlotBarHelper {
             }
         });
 
-        const lastSlot = slots[slots.length - 1];
+        const lastSlot = sortedSlots[sortedSlots.length - 1];
         if (!TimeHelper.isSameTime(range.end, lastSlot.endTime)) {
             // Add trailing unavailable gap after the last slot
             const trailingUnavailSlot = buildUnavailableSlot(

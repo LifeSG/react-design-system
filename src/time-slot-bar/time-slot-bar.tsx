@@ -322,7 +322,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             const showLabel = isVariant("default") && label;
 
             const handleSlotClick =
-                (evt: MouseEvent<HTMLElement>) => (clickedSlot: TTimeSlot) => {
+                (clickedSlot: TTimeSlot) => (evt: MouseEvent<HTMLElement>) => {
                     evt.stopPropagation();
                     if (isClickable) onSlotClick(clickedSlot);
                 };
@@ -345,7 +345,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         $bgColor={backgroundColor}
                         $bgColor2={backgroundColor2}
                         $clickable={isClickable}
-                        onClick={handleSlotClick}
+                        onClick={handleSlotClick(slot)}
                     >
                         {!!ariaLabel && (
                             <VisuallyHidden>
@@ -353,7 +353,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                                     type="button" // overrides default type="submit" when used with <form>
                                     aria-disabled={!isClickable}
                                     aria-label={ariaLabel}
-                                    onClick={handleSlotClick} // use `button` element native keyboard activation handling
+                                    onClick={handleSlotClick(slot)} // use `button` element native keyboard activation handling
                                 />
                             </VisuallyHidden>
                         )}
@@ -363,7 +363,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                                 $slotWidth={slotWidth}
                                 $color={color}
                                 weight={"semibold"}
-                                aria-hidden={ariaLabel ? undefined : true}
+                                aria-hidden={!ariaLabel}
                             >
                                 {showFullEllipsis(slotWidth) ? "..." : label}
                             </CellText>

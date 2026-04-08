@@ -158,7 +158,7 @@ describe("TimeSlotBarHelper", () => {
                         summary: "Time slot bar",
                         computedSlot: [
                             {
-                                id: "slot1",
+                                id: expect.any(String),
                                 startTime: "08:00",
                                 endTime: "09:00",
                                 clickable: false,
@@ -168,7 +168,7 @@ describe("TimeSlotBarHelper", () => {
                                 ariaLabel: "8:00AM to 9:00AM, Unavailable",
                             },
                             {
-                                id: "slot2",
+                                id: "slot1",
                                 startTime: "09:00",
                                 endTime: "10:00",
                                 clickable: true,
@@ -201,6 +201,7 @@ describe("TimeSlotBarHelper", () => {
                         summary: "Time slot bar",
                         computedSlot: [
                             {
+                                id: "slot1",
                                 startTime: "09:00",
                                 endTime: "10:00",
                                 clickable: true,
@@ -210,6 +211,7 @@ describe("TimeSlotBarHelper", () => {
                                     "9:00AM to 10:00AM, Available, Morning slot",
                             },
                             {
+                                id: expect.any(String),
                                 startTime: "10:00",
                                 endTime: "17:00",
                                 clickable: false,
@@ -250,6 +252,7 @@ describe("TimeSlotBarHelper", () => {
                         summary: "Time slot bar",
                         computedSlot: [
                             {
+                                id: "slot1",
                                 startTime: "09:00",
                                 endTime: "10:00",
                                 clickable: true,
@@ -261,6 +264,7 @@ describe("TimeSlotBarHelper", () => {
                                     "9:00AM to 10:00AM, Available, Morning slot",
                             },
                             {
+                                id: expect.any(String),
                                 startTime: "10:00",
                                 endTime: "16:00",
                                 clickable: false,
@@ -271,6 +275,7 @@ describe("TimeSlotBarHelper", () => {
                                 ariaLabel: "10:00AM to 4:00PM, Unavailable",
                             },
                             {
+                                id: "slot2",
                                 startTime: "16:00",
                                 endTime: "17:00",
                                 clickable: true,
@@ -301,29 +306,8 @@ describe("TimeSlotBarHelper", () => {
                 );
 
                 result.computedSlots.forEach((computedSlot, i) => {
-                    const expectedSlot = expected.computedSlot[i];
-
-                    expect(typeof computedSlot.id).toBe("string");
-                    expect(computedSlot.startTime).toBe(expectedSlot.startTime);
-                    expect(computedSlot.endTime).toBe(expectedSlot.endTime);
-                    expect(computedSlot.clickable).toBe(expectedSlot.clickable);
-                    expect(computedSlot.styleAttributes).toEqual(
-                        expectedSlot.styleAttributes
-                    );
-
-                    if (expectedSlot.ariaLabel) {
-                        expect(computedSlot.ariaLabel).toBe(
-                            expectedSlot.ariaLabel
-                        );
-                    } else {
-                        expect(computedSlot.ariaLabel).toBeUndefined();
-                    }
-
-                    if (expectedSlot.label) {
-                        expect(computedSlot.label).toBe(expectedSlot.label);
-                    } else {
-                        expect(computedSlot.label).toBeUndefined();
-                    }
+                    const expectedSlot = expected.computedSlot[i]; // expect same order
+                    expect(computedSlot).toEqual(expectedSlot);
                 });
             });
         });
@@ -448,28 +432,84 @@ describe("TimeSlotBarHelper", () => {
                 );
 
                 result.computedSlots.forEach((computedSlot, i) => {
-                    const expectedSlot = expected.computedSlot[i];
-                    expect(computedSlot.id).toBe(expectedSlot.id);
-                    expect(computedSlot.startTime).toBe(expectedSlot.startTime);
-                    expect(computedSlot.endTime).toBe(expectedSlot.endTime);
-                    expect(computedSlot.clickable).toBe(expectedSlot.clickable);
-                    expect(computedSlot.styleAttributes).toEqual(
-                        expectedSlot.styleAttributes
-                    );
+                    const expectedSlot = expected.computedSlot[i]; // expect same order
+                    expect(computedSlot).toEqual(expectedSlot);
+                });
+            });
+        });
 
-                    if (expectedSlot.ariaLabel) {
-                        expect(computedSlot.ariaLabel).toBe(
-                            expectedSlot.ariaLabel
-                        );
-                    } else {
-                        expect(computedSlot.ariaLabel).toBeUndefined();
-                    }
+        describe("slot sorting behavior", () => {
+            const testCases = [
+                {
+                    testName:
+                        "should return computedSlots that are sorted by startTime, given an unsorted slots input",
+                    input: {
+                        variant: "default",
+                        range: { start: "08:00", end: "10:00" },
+                        slots: [
+                            {
+                                id: "slot2",
+                                startTime: "09:00",
+                                endTime: "10:00",
+                                clickable: true,
+                                label: "Morning slot 2",
+                                styleAttributes: { backgroundColor: "blue" },
+                            },
+                            {
+                                id: "slot1",
+                                startTime: "08:00",
+                                endTime: "09:00",
+                                clickable: true,
+                                label: "Morning slot 1",
+                                styleAttributes: { backgroundColor: "blue" },
+                            },
+                        ],
+                    },
+                    expected: {
+                        summary: "Time slot bar",
+                        computedSlot: [
+                            {
+                                id: "slot1",
+                                startTime: "08:00",
+                                endTime: "09:00",
+                                clickable: true,
+                                label: "Morning slot 1",
+                                styleAttributes: { backgroundColor: "blue" },
+                                ariaLabel:
+                                    "8:00AM to 9:00AM, Available, Morning slot 1",
+                            },
+                            {
+                                id: "slot2",
+                                startTime: "09:00",
+                                endTime: "10:00",
+                                clickable: true,
+                                label: "Morning slot 2",
+                                styleAttributes: { backgroundColor: "blue" },
+                                ariaLabel:
+                                    "9:00AM to 10:00AM, Available, Morning slot 2",
+                            },
+                        ],
+                    },
+                },
+            ];
 
-                    if (expectedSlot.label) {
-                        expect(computedSlot.label).toBe(expectedSlot.label);
-                    } else {
-                        expect(computedSlot.label).toBeUndefined();
-                    }
+            it.each(testCases)("$testName", ({ input, expected }) => {
+                const { variant, range, slots } = input;
+
+                const result = TimeSlotBarHelper.processSlots(
+                    range,
+                    slots,
+                    variant as TimeSlotBarVariant
+                );
+
+                expect(result.summary).toBe(expected.summary);
+                expect(result.computedSlots).toHaveLength(
+                    expected.computedSlot.length
+                );
+
+                result.computedSlots.forEach((computedSlot, i) => {
+                    const expectedSlot = expected.computedSlot[i]; // expect same order
+                    expect(computedSlot).toEqual(expectedSlot);
                 });
             });
         });
