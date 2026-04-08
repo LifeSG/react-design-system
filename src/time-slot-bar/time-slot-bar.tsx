@@ -322,9 +322,11 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             const showLabel = isVariant("default") && label;
 
             const handleSlotClick =
-                (clickedSlot: TTimeSlot) => (evt: MouseEvent<HTMLElement>) => {
+                (clickedSlot: TTimeSlot & { ariaLabel?: string }) =>
+                (evt: MouseEvent<HTMLElement>) => {
                     evt.stopPropagation();
-                    if (isClickable) onSlotClick(clickedSlot);
+                    const { ariaLabel: _, ...slot } = clickedSlot;
+                    if (isClickable) onSlotClick(slot);
                 };
 
             return (
