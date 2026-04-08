@@ -409,6 +409,7 @@ export const Component = (
                     <MagnifierButton
                         aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
                         onClick={handleMagnifier}
+                        $hasDeleteAction={!!onDelete}
                         $insetTop={insets?.top}
                         $insetRight={insets?.right}
                     >

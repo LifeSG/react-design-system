@@ -17,6 +17,10 @@ interface ThumbnailItemStyleProps {
     $active?: boolean;
 }
 
+interface TopActionButtonStyleProps extends InsetStyleProps {
+    $hasDeleteAction?: boolean;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -86,16 +90,20 @@ export const DeleteButton = styled(IconButton)<InsetStyleProps>`
     }
 `;
 
-export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
+export const MagnifierButton = styled(IconButton)<TopActionButtonStyleProps>`
     position: absolute;
     top: ${(props) =>
         css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
     right: ${(props) =>
-        css`calc(5rem + ${Spacing["spacing-48"]} + ${
-            Spacing["spacing-16"]
-        } * 2 + ${
-            props.$insetRight || 0
-        }px)`}; // close button + delete button + gaps + space from screen
+        props.$hasDeleteAction
+            ? css`calc(5rem + ${Spacing["spacing-48"]} + ${
+                  Spacing["spacing-16"]
+              } * 2 + ${props.$insetRight || 0}px)`
+            : css`calc(2.5rem + ${Spacing["spacing-48"]} + ${
+                  Spacing["spacing-16"]
+              } + ${
+                  props.$insetRight || 0
+              }px)`}; // close button + optional delete button + gaps + space from screen
 
     z-index: 5;
 
@@ -103,11 +111,15 @@ export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
         top: ${(props) =>
             css`calc(${Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
         right: ${(props) =>
-            css`calc(5rem + ${Spacing["spacing-20"]} + ${
-                Spacing["spacing-16"]
-            } * 2 + ${
-                props.$insetRight || 0
-            }px)`}; // close button + delete button + gaps + space from screen
+            props.$hasDeleteAction
+                ? css`calc(5rem + ${Spacing["spacing-20"]} + ${
+                      Spacing["spacing-16"]
+                  } * 2 + ${props.$insetRight || 0}px)`
+                : css`calc(2.5rem + ${Spacing["spacing-20"]} + ${
+                      Spacing["spacing-16"]
+                  } + ${
+                      props.$insetRight || 0
+                  }px)`}; // close button + optional delete button + gaps + space from screen
     }
 `;
 
