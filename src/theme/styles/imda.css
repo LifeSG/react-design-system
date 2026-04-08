@@ -232,6 +232,12 @@ PRIMITIVE COLOURS
     --fds-colour-focus-ring: var(--fds-colour-primary-50);
     --fds-colour-focus-ring-inverse: var(--fds-colour-white);
 
+    /* 
+    ========================================================================
+    COMPONENT TOKENS
+    ========================================================================
+    */
+
     /* Animation */
     --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 

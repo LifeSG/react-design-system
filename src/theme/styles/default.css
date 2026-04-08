@@ -66,9 +66,6 @@
     --fds-button-light-colour-text: var(--fds-colour-text-primary);
     --fds-button-link-colour-text: var(--fds-colour-text-primary);
 
-    /* Animation */
-    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
-
     /* Navbar */
     --fds-navbar-full-height: 6rem;
     --fds-navbar-full-logo-height: 2rem;
