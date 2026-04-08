@@ -2,9 +2,9 @@ import dynamic from "next/dynamic";
 
 export default async function Page({
     params,
-}: {
+}: Readonly<{
     params: Promise<{ component: string; story: string }>;
-}) {
+}>) {
     const { component, story } = await params;
 
     const Story = dynamic(
