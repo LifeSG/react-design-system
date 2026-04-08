@@ -5,6 +5,7 @@ import {
     MagnifierMinusIcon,
     MagnifierPlusIcon,
 } from "@lifesg/react-icons";
+import { BinIcon } from "@lifesg/react-icons/bin";
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import {
     forwardRef,
@@ -21,6 +22,7 @@ import {
     TransformWrapper,
 } from "react-zoom-pan-pinch";
 import { ModalV2 } from "../modal-v2";
+import { useStateCallback } from "../shared/hooks";
 import { useEventListener } from "../util";
 import {
     ArrowButton,
@@ -28,6 +30,7 @@ import {
     CarouselModalContent,
     Chip,
     CloseButton,
+    DeleteButton,
     FocusableImageRegion,
     ImageGalleryContainer,
     ImageGallerySlide,
@@ -48,7 +51,6 @@ import {
     FullscreenImageCarouselRef,
     ImageDimension,
 } from "./types";
-import { useStateCallback } from "../shared/hooks";
 
 export const Component = (
     {
@@ -58,6 +60,7 @@ export const Component = (
         hideNavigation = false,
         hideCounter = false,
         hideMagnifier = false,
+        onDelete,
         onClose,
         insets,
         show,
@@ -82,6 +85,7 @@ export const Component = (
     const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
     const imageRef = useRef<HTMLDivElement>(null);
     const diff = startX && endX ? startX - endX : 0;
+    const currentItem = items[currentSlide];
 
     const getImageAriaLabel = useCallback(
         (index: number) => {
@@ -112,6 +116,17 @@ export const Component = (
             imageRef.current?.focus();
         }
     }, [show]);
+
+    useEffect(() => {
+        if (items.length === 0) {
+            setCurrentSlide(0);
+            return;
+        }
+
+        if (currentSlide > items.length - 1) {
+            setCurrentSlide(items.length - 1);
+        }
+    }, [currentSlide, items.length, setCurrentSlide]);
 
     useEffect(() => {
         thumbnailRefs.current?.[currentSlide]?.scrollIntoView({
@@ -150,6 +165,12 @@ export const Component = (
         setZoom(e.state.scale);
     };
 
+    const handleDelete = () => {
+        if (currentItem && onDelete) {
+            onDelete(currentItem, currentSlide);
+        }
+    };
+
     function handleKeyDown(e: KeyboardEvent) {
         if (e.key === "ArrowRight") {
             goToNextSlide();
@@ -186,7 +207,11 @@ export const Component = (
     };
 
     const getZoomRatio = () => {
-        const imageDimension = imagesDimension[items[currentSlide].src];
+        if (!currentItem) {
+            return;
+        }
+
+        const imageDimension = imagesDimension[currentItem.src];
 
         if (containerRef.current && !!imageDimension) {
             const { clientHeight, clientWidth } = containerRef.current;
@@ -393,6 +418,18 @@ export const Component = (
                             <MagnifierMinusIcon aria-hidden />
                         )}
                     </MagnifierButton>
+                )}
+
+                {onDelete && currentItem && (
+                    <DeleteButton
+                        aria-label="Delete image"
+                        data-testid="delete-btn"
+                        onClick={handleDelete}
+                        $insetTop={insets?.top}
+                        $insetRight={insets?.right}
+                    >
+                        <BinIcon aria-hidden />
+                    </DeleteButton>
                 )}
 
                 <CloseButton

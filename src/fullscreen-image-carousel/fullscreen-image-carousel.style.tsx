@@ -60,7 +60,7 @@ export const CloseButton = styled(IconButton)<InsetStyleProps>`
     }
 `;
 
-export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
+export const DeleteButton = styled(IconButton)<InsetStyleProps>`
     position: absolute;
     top: ${(props) =>
         css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
@@ -69,7 +69,8 @@ export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
             Spacing["spacing-16"]
         } + ${
             props.$insetRight || 0
-        }px)`}; // close button + space from screen + gap between buttons
+        }px)`}; // close button + gap + space from screen
+    color: ${Colour["icon-error"]};
 
     z-index: 5;
 
@@ -81,7 +82,32 @@ export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
                 Spacing["spacing-16"]
             } + ${
                 props.$insetRight || 0
-            }px)`}; // close button + space from screen + gap between buttons
+            }px)`}; // close button + gap + space from screen
+    }
+`;
+
+export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
+    position: absolute;
+    top: ${(props) =>
+        css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
+    right: ${(props) =>
+        css`calc(5rem + ${Spacing["spacing-48"]} + ${
+            Spacing["spacing-16"]
+        } * 2 + ${
+            props.$insetRight || 0
+        }px)`}; // close button + delete button + gaps + space from screen
+
+    z-index: 5;
+
+    ${MediaQuery.MaxWidth.sm} {
+        top: ${(props) =>
+            css`calc(${Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
+        right: ${(props) =>
+            css`calc(5rem + ${Spacing["spacing-20"]} + ${
+                Spacing["spacing-16"]
+            } * 2 + ${
+                props.$insetRight || 0
+            }px)`}; // close button + delete button + gaps + space from screen
     }
 `;
 

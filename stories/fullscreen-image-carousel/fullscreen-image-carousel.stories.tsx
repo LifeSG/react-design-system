@@ -87,6 +87,29 @@ export const WithManyImages: StoryObj<Component> = {
     },
 };
 
+export const WithDeleteButton: StoryObj<Component> = {
+    render: (_args) => {
+        const [show, setShow] = useState(false);
+        return (
+            <>
+                <Button.Default
+                    onClick={() => {
+                        setShow((old) => !old);
+                    }}
+                >
+                    Show carousel
+                </Button.Default>
+                <FullscreenImageCarousel
+                    items={getImages(4)}
+                    show={show}
+                    onDelete={() => undefined}
+                    onClose={() => setShow(false)}
+                />
+            </>
+        );
+    },
+};
+
 export const Configurable: StoryObj<Component> = {
     render: (_args) => {
         const [show, setShow] = useState(false);
