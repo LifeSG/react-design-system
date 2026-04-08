@@ -7,7 +7,7 @@ describe("DateNavigator", () => {
     const onLeftArrowClick = jest.fn();
 
     beforeAll(() => {
-        jest.useFakeTimers().setSystemTime(new Date(today));
+        jest.useFakeTimers().setSystemTime(new Date(today).getTime());
     });
 
     afterAll(() => {

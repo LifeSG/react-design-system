@@ -31,7 +31,7 @@ describe("Schedule", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        jest.useFakeTimers().setSystemTime(new Date("2024-09-11"));
+        jest.useFakeTimers().setSystemTime(new Date("2024-09-11").getTime());
 
         (useMediaQuery as jest.Mock).mockReturnValue(false);
     });

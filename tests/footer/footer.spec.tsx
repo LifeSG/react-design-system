@@ -25,7 +25,7 @@ describe("Footer", () => {
     beforeEach(() => {
         jest.resetAllMocks();
         jest.useFakeTimers();
-        jest.setSystemTime(new Date(2023, 0, 1));
+        jest.setSystemTime(new Date(2023, 0, 1).getTime());
     });
 
     afterEach(() => {

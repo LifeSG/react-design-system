@@ -6,7 +6,7 @@ import { Calendar } from "src/calendar";
 describe("Calendar", () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date("2024-02-01T12:00:00"));
+        jest.setSystemTime(new Date("2024-02-01T12:00:00").getTime());
     });
 
     afterAll(() => {
