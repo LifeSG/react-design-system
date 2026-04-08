@@ -44,7 +44,7 @@ describe("Input", () => {
                 });
 
                 expect(input).toHaveValue("12 34 65");
-                expect(inputSpy).toBeCalledWith(7, 7);
+                expect(inputSpy).toHaveBeenCalledWith(7, 7);
             });
 
             it("should remove non-numeric characters and preserve caret position", async () => {
@@ -62,7 +62,7 @@ describe("Input", () => {
                 });
 
                 expect(input).toHaveValue("12 34");
-                expect(inputSpy).toBeCalledWith(4, 4);
+                expect(inputSpy).toHaveBeenCalledWith(4, 4);
             });
         });
     });

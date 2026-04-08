@@ -8,7 +8,7 @@ describe("TimeSlotWeekCalendar", () => {
 
     beforeEach(() => {
         jest.resetAllMocks();
-        jest.useFakeTimers().setSystemTime(new Date("2023-03-01"));
+        jest.useFakeTimers().setSystemTime(new Date("2023-03-01").getTime());
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
@@ -143,7 +143,7 @@ describe("TimeSlotWeekCalendar", () => {
                 );
                 const rightArrowButton = screen.getByTestId("right-arrow-btn");
                 fireEvent.click(rightArrowButton);
-                expect(onWeekDisplayChange).toBeCalledTimes(1);
+                expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
             });
 
             it("should not be able to navigate above given minDate", () => {
@@ -158,7 +158,7 @@ describe("TimeSlotWeekCalendar", () => {
                 );
                 const leftArrowButton = screen.getByTestId("left-arrow-btn");
                 fireEvent.click(leftArrowButton);
-                expect(onWeekDisplayChange).toBeCalledTimes(1);
+                expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
             });
         });
     });

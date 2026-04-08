@@ -96,7 +96,9 @@ describe("Filter", () => {
             render(<Filter.Item>{mockRender}</Filter.Item>);
 
             expect(screen.getByTestId("item1")).toBeInTheDocument();
-            expect(mockRender).toBeCalledWith("default", { minimised: false });
+            expect(mockRender).toHaveBeenCalledWith("default", {
+                minimised: false,
+            });
         });
 
         describe("initialExpanded", () => {
