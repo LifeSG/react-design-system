@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { FormErrorMessage } from "../form/form-label";
@@ -15,6 +15,7 @@ import {
     VerifyInputWrapper,
 } from "./verification-section-styles";
 import { concatIds } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 export const VerificationSection = ({
     id,
@@ -37,17 +38,18 @@ export const VerificationSection = ({
         maxWidth: Breakpoint["sm-max"]({ theme }),
     });
     const thumbnailSize = isMobile ? 64 : 120;
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
 
-    const titleId = id ? `${id}-title` : undefined;
-    const messageId = id ? `${id}-message` : undefined;
-    const otpAddonId = id ? `${id}-verify-input-addon` : undefined;
-    const verifyErrorId = id ? `${id}-verify-error` : undefined;
+    const titleId = `${internalId}-title`;
+    const messageId = `${internalId}-message`;
+    const otpAddonId = `${internalId}-verify-input-addon`;
+    const verifyErrorId = `${internalId}-title`;
 
     const renderThumbnail = () => {
         if (!showVerifyOtpThumbnail) return null;
 
         return (
-            <div aria-hidden="true">
+            <div aria-hidden>
                 {type === "email" ? (
                     <EmailThumbnail
                         width={thumbnailSize}
@@ -118,7 +120,7 @@ export const VerificationSection = ({
                                 messageId,
                                 otpAddonId,
                                 verifyOtpError ? verifyErrorId : undefined
-                            )}                            
+                            )}
                             aria-invalid={!!verifyOtpError}
                             aria-required={true}
                         />

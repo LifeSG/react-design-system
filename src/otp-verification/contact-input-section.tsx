@@ -73,9 +73,7 @@ export const ContactInputSection = ({
     const getMobileAriaLabel = (country?: CountryValue) =>
         `Enter your ${
             country?.name ?? ""
-        } mobile number to receive a verification OTP`
-            .replace(/\s+/g, " ")
-            .trim();
+        } mobile number to receive a verification OTP`.replace(/\s+/g, " ");
 
     // =============================================================================
     // RENDER FUNCTIONS
