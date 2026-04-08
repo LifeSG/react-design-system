@@ -8,7 +8,9 @@ export default async function Page({
     const { component, story } = await params;
 
     const Story = dynamic(
-        () => import(`@/app/components/${component}/${story}.e2e`)
+        () => import(`@/app/components/${component}/${story}.e2e`),
+        // TODO: Remove when date-range-input have stable hydation support
+        { ssr: component !== "date-range-input" }
     );
     return <Story />;
 }
