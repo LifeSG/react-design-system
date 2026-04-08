@@ -451,7 +451,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 <TimeMarkerWrapper
                     data-testid={getDataTestId("time-marker-wrapper")}
                     data-id="marker-wrapper"
-                    aria-hidden
+                    role="row"
                 >
                     {renderTimeMarkers()}
                 </TimeMarkerWrapper>
