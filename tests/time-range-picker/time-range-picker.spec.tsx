@@ -77,6 +77,142 @@ describe("TimeRangePicker", () => {
         });
 
         describe("generated dropdown options", () => {
+            it("should scroll the start dropdown to the initial start time", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        initialScrollStartTime="9:00am"
+                        startLimit="8:00am"
+                        endLimit="10:00am"
+                        interval={60}
+                    />
+                );
+
+                await user.click(screen.getByLabelText(START_LABEL));
+
+                await waitFor(() => {
+                    expect(
+                        screen.getByRole("option", { name: "9:00am" })
+                    ).toHaveAttribute("tabindex", "0");
+                    expect(
+                        screen.queryAllByRole("option").map((option) => {
+                            return option.textContent;
+                        })
+                    ).toEqual(["8:00am", "9:00am", "10:00am"]);
+                });
+            });
+
+            it("should scroll the end dropdown to the initial end time", async () => {
+                const user = userEvent.setup();
+
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        initialScrollEndTime="3:00pm"
+                        startLimit="1:00pm"
+                        endLimit="5:00pm"
+                        interval={60}
+                    />
+                );
+
+                await user.click(screen.getByLabelText(END_LABEL));
+
+                await waitFor(() => {
+                    expect(
+                        screen.getByRole("option", { name: "3:00pm" })
+                    ).toHaveAttribute("tabindex", "0");
+                    expect(
+                        screen.queryAllByRole("option").map((option) => {
+                            return option.textContent;
+                        })
+                    ).toEqual([
+                        "1:00pm",
+                        "2:00pm",
+                        "3:00pm",
+                        "4:00pm",
+                        "5:00pm",
+                    ]);
+                });
+            });
+
+            it("should scroll the start dropdown to the initialised value instead of the initial start time", async () => {
+                const user = userEvent.setup();
+
+                // Time range picker with start value of 10:00am
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        initialScrollStartTime="9:00am"
+                        startLimit="8:00am"
+                        value={{ start: "10:00am", end: "11:00am" }}
+                        endLimit="11:00am"
+                        interval={60}
+                    />
+                );
+
+                expect(screen.getByLabelText(START_LABEL)).toHaveValue(
+                    "10:00am"
+                );
+
+                await user.click(screen.getByLabelText(START_LABEL));
+
+                // Scroll start should be 10:00am (from the initialised value)
+                await waitFor(() => {
+                    expect(
+                        screen.getByRole("option", { name: "10:00am" })
+                    ).toHaveAttribute("tabindex", "0");
+                    expect(
+                        screen.getByRole("option", { name: "9:00am" })
+                    ).toHaveAttribute("tabindex", "-1");
+                });
+            });
+
+            it("should scroll the start dropdown to the selected value instead of the initial start time", async () => {
+                const user = userEvent.setup();
+
+                // Time range picker without start value
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        initialScrollStartTime="9:00am"
+                        startLimit="8:00am"
+                        endLimit="11:00am"
+                        interval={60}
+                    />
+                );
+
+                await user.click(screen.getByLabelText(START_LABEL));
+
+                // Assert that scroll time is as expected (from initialScrollStartTime)
+                await waitFor(() => {
+                    expect(
+                        screen.getByRole("option", { name: "9:00am" })
+                    ).toHaveAttribute("tabindex", "0");
+                });
+
+                // After clicking on 10:00am selection and reopening the dropdown, first option should be 10:00am instead
+                await user.click(
+                    screen.getByRole("option", { name: "10:00am" })
+                );
+
+                expect(screen.getByLabelText(START_LABEL)).toHaveValue(
+                    "10:00am"
+                );
+
+                await user.click(screen.getByLabelText(START_LABEL));
+
+                await waitFor(() => {
+                    expect(
+                        screen.getByRole("option", { name: "10:00am" })
+                    ).toHaveAttribute("tabindex", "0");
+                    expect(
+                        screen.getByRole("option", { name: "9:00am" })
+                    ).toHaveAttribute("tabindex", "-1");
+                });
+            });
+
             it("should have end first option be after start time", async () => {
                 render(
                     <TimeRangePicker
