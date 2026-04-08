@@ -1,5 +1,5 @@
+import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import { useState } from "react";
-import { VisuallyHidden } from "../shared/accessibility";
 import { useCountdown } from "../util";
 import { ContactInputSection } from "./contact-input-section";
 import { OTPInputWrapper } from "./otp-verification-styles";
@@ -29,7 +29,6 @@ export const OtpVerification = (props: OtpVerificationProps) => {
 
     const [isLoading, setIsLoading] = useState(false);
     const [isVerifyLoading, setIsVerifyLoading] = useState(false);
-    const [successAnnouncement, setSuccessAnnouncement] = useState("");
 
     const countdown = useCountdown({
         duration: verifyOtpCountdownTimer,
@@ -57,30 +56,29 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     };
 
     // Verify OTP
-    const handleVerifyOtp = async () => {
-        if (!onVerifyOtp || !otpValue?.value) return;
+   const handleVerifyOtp = async () => {
+    if (!onVerifyOtp || !otpValue?.value) return;
 
-        try {
-            setIsVerifyLoading(true);
-            await onVerifyOtp(otpValue.value);
-            onOtpStateChange("verified");
+    try {
+        setIsVerifyLoading(true);
+        await onVerifyOtp(otpValue.value);
 
-            setSuccessAnnouncement("");
-            setTimeout(() => {
-                setSuccessAnnouncement(
-                    "Success. Your email or mobile number has been verified.",
-                );
-            }, 50);
+        onOtpStateChange("verified");
 
-            // Reset the countdown and clear the OTP code in case user enter new OTP later
-            countdown.reset();
-            onOtpChange?.("");
-        } catch {
-            // do nothing
-        } finally {
-            setIsVerifyLoading(false);
-        }
-    };
+        clearAnnouncer("polite");
+        announce(
+            "Success. Your email or mobile number has been verified.",
+            "polite",
+        );
+
+        countdown.reset();
+        onOtpChange?.("");
+    } catch {
+        // do nothing
+    } finally {
+        setIsVerifyLoading(false);
+    }
+};
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -96,13 +94,6 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     // =============================================================================
     return (
         <OTPInputWrapper id={id} data-testid={dataTestId} className={className}>
-            <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
-                {countdown.liveReminderText}
-            </VisuallyHidden>
-            <VisuallyHidden role="status" aria-live="polite" aria-atomic="true">
-                {successAnnouncement}
-            </VisuallyHidden>
-
             <ContactInputSection
                 {...props}
                 inputId={inputId}

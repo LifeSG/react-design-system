@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from "react";
+import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 
 export interface UseCountdownOptions {
     /** Duration in seconds */
@@ -14,8 +15,6 @@ export interface UseCountdownReturn {
     timeLeft: number;
     /** Whether countdown is currently running */
     isRunning: boolean;
-    /** Hidden live region text */
-    liveReminderText: string;
     /** Start the countdown */
     start: () => void;
     /** Stop the countdown */
@@ -36,48 +35,20 @@ export const useCountdown = ({
 }: UseCountdownOptions): UseCountdownReturn => {
     const [timeLeft, setTimeLeft] = useState(duration);
     const [isRunning, setIsRunning] = useState(false);
-    const [liveReminderText, setLiveReminderText] = useState("");
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
-    const announceTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
-        null
-    );
     const startTimeRef = useRef<number | null>(null);
     const hasAnnouncedCompletionRef = useRef(false);
 
-    const clearTimer = () => {
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-        }
-    };
-
-    const clearAnnounceTimeout = () => {
-        if (announceTimeoutRef.current) {
-            clearTimeout(announceTimeoutRef.current);
-            announceTimeoutRef.current = null;
-        }
-    };
-
-    const announce = (message: string) => {
-        clearAnnounceTimeout();
-        setLiveReminderText("");
-
-        announceTimeoutRef.current = setTimeout(() => {
-            setLiveReminderText(message);
-        }, 50);
-    };
-
-    const formatTime = (time?: number) => {
-        const t = time ?? timeLeft;
-        return `${t} second${t === 1 ? "" : "s"}`;
+    const handleAnnounce = (message: string) => {
+        clearAnnouncer("polite");
+        announce(message, "polite");
     };
 
     const start = () => {
         if (isRunning) return;
 
-        clearTimer();
-        clearAnnounceTimeout();
+        if (intervalRef.current) clearInterval(intervalRef.current);
 
         setTimeLeft(duration);
         setIsRunning(true);
@@ -85,7 +56,7 @@ export const useCountdown = ({
         hasAnnouncedCompletionRef.current = false;
 
         // First resend reminder message
-        announce(`You can resend the OTP in ${duration} seconds`);
+        handleAnnounce(`You can resend the OTP in ${duration} seconds`);
 
         intervalRef.current = setInterval(() => {
             const elapsed = Math.floor(
@@ -103,17 +74,17 @@ export const useCountdown = ({
                 remaining % reminderInterval === 0
             ) {
                 // second resend reminder message in intervals
-                announce(`${remaining} seconds remaining`);
+                handleAnnounce(`${remaining} seconds remaining`);
             }
 
             if (remaining <= 0) {
                 setIsRunning(false);
-                clearTimer();
+                clearInterval(intervalRef.current!);
 
                 if (!hasAnnouncedCompletionRef.current) {
                     hasAnnouncedCompletionRef.current = true;
                     // final reminder message
-                    announce("You can now resend the OTP");
+                    handleAnnounce("You can now resend the OTP");
                 }
 
                 onComplete?.();
@@ -123,39 +94,31 @@ export const useCountdown = ({
 
     const stop = () => {
         setIsRunning(false);
-        clearTimer();
+        if (intervalRef.current) clearInterval(intervalRef.current);
     };
 
     const reset = () => {
         stop();
-        clearAnnounceTimeout();
         setTimeLeft(duration);
-        setLiveReminderText("");
         startTimeRef.current = null;
         hasAnnouncedCompletionRef.current = false;
     };
 
-    // Update timeLeft when duration changes
-    useEffect(() => {
-        if (!isRunning) {
-            setTimeLeft(duration);
-        }
-    }, [duration, isRunning]);
-
     useEffect(() => {
         return () => {
-            clearTimer();
-            clearAnnounceTimeout();
+            if (intervalRef.current) clearInterval(intervalRef.current);
         };
     }, []);
 
     return {
         timeLeft,
         isRunning,
-        liveReminderText,
         start,
         stop,
         reset,
-        formatTime,
+        formatTime: (time?: number) =>
+            `${time ?? timeLeft} second${
+                (time ?? timeLeft) === 1 ? "" : "s"
+            }`,
     };
 };
