@@ -23,6 +23,11 @@ interface TimeSlotBarStyleAttributes {
         | string
         | ((props: ThemeStyleProps) => string)
         | undefined;
+    /** The background color on hover */
+    hoverBackgroundColor?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
 }
 
 export interface TimeSlotBarProps {

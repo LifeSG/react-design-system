@@ -49,6 +49,7 @@ export interface TimeSlotStyleProps {
     $styleType: SlotStyle;
     $bgColor: string | ((props: ThemeStyleProps) => string);
     $bgColor2?: string | ((props: ThemeStyleProps) => string);
+    $hoverBgColor?: string | ((props: ThemeStyleProps) => string);
     $clickable?: boolean;
 }
 
@@ -190,6 +191,14 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
     }}
     background-color: ${({ $bgColor }) => $bgColor};
     cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
+    ${({ $hoverBgColor, $clickable }) =>
+        $hoverBgColor &&
+        $clickable &&
+        css`
+            &:hover {
+                background-color: ${$hoverBgColor};
+            }
+        `}
 
     ${(props) =>
         props.$styleType === "stripes" &&
