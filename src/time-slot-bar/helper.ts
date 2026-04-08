@@ -147,7 +147,6 @@ export namespace TimeSlotBarHelper {
             ariaLabel?: string;
         })[] = [];
 
-        // define a method for reusable aria-label generation and push logic
         const createAriaLabelAndPushSlot = (slot: TTimeSlot) => {
             const ariaLabel = getSlotAriaLabel(
                 slot.startTime,
