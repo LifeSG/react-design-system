@@ -85,8 +85,8 @@ describe("MaskedInput", () => {
             );
 
             fireEvent.focus(screen.getByTestId("input"));
-            expect(unmaskFn).toBeCalled();
-            expect(focusFn).toBeCalled();
+            expect(unmaskFn).toHaveBeenCalled();
+            expect(focusFn).toHaveBeenCalled();
         });
 
         it("should fire the onMask callback and the onBlur callback if specified, when the input is blurred", () => {
@@ -103,8 +103,8 @@ describe("MaskedInput", () => {
 
             fireEvent.focus(screen.getByTestId("input"));
             fireEvent.blur(screen.getByTestId("input"));
-            expect(maskFn).toBeCalled();
-            expect(blurFn).toBeCalled();
+            expect(maskFn).toHaveBeenCalled();
+            expect(blurFn).toHaveBeenCalled();
         });
 
         it("should fire onMask and onUnmask when readonly button is clicked", () => {
@@ -161,7 +161,7 @@ describe("MaskedInput", () => {
             );
 
             fireEvent.click(screen.getByTestId("try-again-button"));
-            expect(tryAgainFn).toBeCalled();
+            expect(tryAgainFn).toHaveBeenCalled();
         });
     });
 });
