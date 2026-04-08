@@ -102,6 +102,7 @@ describe("TimeSlotBar", () => {
         const styleAttributes = {
             backgroundColor: "#CCCCCC",
             styleType: "default" as const,
+            hoverBackgroundColor: "#AAAAAA",
         };
 
         render(
@@ -114,6 +115,34 @@ describe("TimeSlotBar", () => {
 
         expect(
             screen.getByTestId("time-slot-bar-default-timeslot")
+        ).toBeInTheDocument();
+    });
+
+    it("should render clickable slot with hoverBackgroundColor", () => {
+        const slotsWithHover: TimeSlot[] = [
+            {
+                id: "slot-hover",
+                startTime: "09:00",
+                endTime: "10:00",
+                label: "Hoverable Slot",
+                clickable: true,
+                styleAttributes: {
+                    backgroundColor: "#EF413D",
+                    hoverBackgroundColor: "#ff00e1fb",
+                },
+            },
+        ];
+
+        render(
+            <TimeSlotBar
+                {...defaultProps}
+                slots={slotsWithHover}
+                data-testid="time-slot-bar"
+            />
+        );
+
+        expect(
+            screen.getByTestId("time-slot-bar-slot-hover-timeslot")
         ).toBeInTheDocument();
     });
 

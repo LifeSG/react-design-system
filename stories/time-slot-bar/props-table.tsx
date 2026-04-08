@@ -191,6 +191,16 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: ["string"],
             },
+            {
+                name: "hoverBackgroundColor",
+                description: (
+                    <>
+                        The background color of the slot on hover. Only applies
+                        when the slot is <code>clickable</code>
+                    </>
+                ),
+                propTypes: ["string"],
+            },
         ],
     },
 ];

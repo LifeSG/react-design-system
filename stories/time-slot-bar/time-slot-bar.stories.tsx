@@ -155,6 +155,7 @@ export const DifferentIndicators: StoryObj<Component> = {
                         styleAttributes: {
                             backgroundColor: "#EF413D",
                             color: "#FFFFFF",
+                            hoverBackgroundColor: "#00f746",
                         },
                         label: "Event 1",
                     },
