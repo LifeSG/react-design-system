@@ -1,0 +1,78 @@
+import styled, { css } from "styled-components";
+import { Border, Colour, Font, Motion, Radius, Spacing } from "../theme";
+
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface LinkItemStyleProps {
+    $active?: boolean;
+}
+
+// =============================================================================
+// LINK CONTAINER STYLES
+// =============================================================================
+export const LinkContainerWrapper = styled.div`
+    display: inline-flex;
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    align-items: center;
+    border-radius: ${Radius["sm"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    background: ${Colour["bg"]};
+`;
+
+export const LinkList = styled.ul`
+    display: flex;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    align-items: center;
+    gap: 0 ${Spacing["spacing-8"]};
+    flex-wrap: wrap;
+`;
+
+export const LinkListItem = styled.li`
+    display: flex;
+    align-items: center;
+`;
+
+export const LinkDivider = styled.span`
+    width: ${Border["width-010"]};
+    height: 1rem;
+    background: ${Colour["border-strong"]};
+    flex-shrink: 0;
+`;
+
+export const LinkItem = styled.button<LinkItemStyleProps>`
+    display: flex;
+    padding: 0.125rem 0.25rem;
+    justify-content: center;
+    align-items: center;
+    gap: 0.625rem;
+    border: none;
+    border-radius: ${Radius["md"]};
+    ${Font["body-md-semibold"]}
+    color: ${Colour["text-primary"]};
+    text-align: center;
+    transition: background-color ${Motion["duration-150"]}
+        ${Motion["ease-default"]};
+
+    ${({ $active }) =>
+        $active
+            ? css`
+                  background: ${Colour["bg-primary-subtler"]};
+                  cursor: default;
+              `
+            : css`
+                  background: none;
+                  cursor: pointer;
+
+                  &:hover {
+                      background: ${Colour["bg-hover"]};
+                  }
+              `}
+
+    &:focus-visible {
+        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
+        outline-offset: -2px;
+    }
+`;
