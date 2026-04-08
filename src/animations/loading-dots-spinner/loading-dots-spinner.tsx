@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
-import { ComponentToken, parseCSSVariableValue } from "../../theme";
+import { ComponentToken, useApplyStyle } from "../../theme";
 import type { CustomisableAnimationProps } from "../types";
 import * as styles from "./loading-dots-spinner.styles";
 
@@ -16,24 +16,26 @@ export const LoadingDotsSpinner = ({
     ...otherProps
 }: CustomisableAnimationProps) => {
     const containerRef = useRef<HTMLDivElement>(null);
-    const [resolvedTokenColor, setResolvedTokenColor] = useState<
-        string | undefined
-    >(undefined);
+    const [resolvedColor, setResolvedColor] = useState<string | undefined>(
+        undefined
+    );
+
+    useApplyStyle(containerRef, {
+        [styles.tokens.containerColor]:
+            color || ComponentToken.Animation["loading-dots-spinner-colour"],
+    });
 
     useEffect(() => {
-        if (color) {
-            setResolvedTokenColor(undefined);
-            return;
-        }
+        const element = containerRef.current;
+        if (!element) return;
 
-        const tokenColor = parseCSSVariableValue(
-            ComponentToken.Animation["loading-dots-spinner-colour"],
-            containerRef.current
-        );
-        setResolvedTokenColor(tokenColor || undefined);
+        const computedColor = getComputedStyle(element)
+            .getPropertyValue(styles.tokens.containerColor)
+            .trim();
+
+        setResolvedColor(computedColor || undefined);
     }, [color]);
 
-    const animationColor = color || resolvedTokenColor;
     return (
         <div
             ref={containerRef}
@@ -41,7 +43,7 @@ export const LoadingDotsSpinner = ({
             className={clsx(styles.container, className)}
         >
             <Suspense fallback={<Placeholder />}>
-                <LottieLoadingDotsSpinner color={animationColor} />
+                <LottieLoadingDotsSpinner color={resolvedColor} />
             </Suspense>
         </div>
     );

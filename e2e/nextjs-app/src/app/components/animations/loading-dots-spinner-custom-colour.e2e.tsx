@@ -5,7 +5,7 @@ export default function Story() {
     return (
         <LoadingDotsSpinner
             data-testid="loading-dots-spinner-custom-colour"
-            color="#cd3434"
+            color="#34cd34"
         />
     );
 }

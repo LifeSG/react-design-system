@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { LoadingDotsSpinner } from "src/animations";
-import { Colour, useDesignToken } from "src/theme";
+import { Colour } from "src/theme";
 
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
 import { TokensTable } from "./tokens-table";
@@ -10,12 +10,6 @@ const meta: Meta = {
 };
 
 export default meta;
-
-const TokenColourLoadingDotsSpinner = () => {
-    const tokenColour = useDesignToken(Colour["icon-primary-subtlest"]);
-
-    return <LoadingDotsSpinner id="custom-2" color={tokenColour} />;
-};
 
 export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
     name: "LoadingDotsSpinner",
@@ -29,7 +23,10 @@ export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
                     <LoadingDotsSpinner id="custom-1" color="#EF413D" />
                 </AnimationItem>
                 <AnimationItem>
-                    <TokenColourLoadingDotsSpinner />
+                    <LoadingDotsSpinner
+                        id="custom-2"
+                        color={Colour["icon-primary-subtlest"]}
+                    />
                 </AnimationItem>
             </AnimationDisplay>
         );
