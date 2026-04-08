@@ -1,8 +1,8 @@
 .page {
     --background: #FAFAFA;
-    --foreground: #FFF;
-    --text-primary: #000;
-    --text-secondary: #666;
+    --foreground: #FFFFFF;
+    --text-primary: #000000;
+    --text-secondary: #666666;
     --button-primary-hover: #383838;
     --button-secondary-hover: #F2F2F2;
     --button-secondary-border: #EBEBEB;

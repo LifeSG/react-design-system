@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { LoadingDotsSpinner } from "src/animations";
-import { V3_Colour, V3_LifeSGTheme } from "src/v3_theme";
+import { Colour } from "src/theme";
 
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
 import { TokensTable } from "./tokens-table";
@@ -25,9 +25,7 @@ export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
                 <AnimationItem>
                     <LoadingDotsSpinner
                         id="custom-2"
-                        color={V3_Colour["icon-primary-subtlest"]({
-                            theme: V3_LifeSGTheme,
-                        })}
+                        color={Colour["icon-primary-subtlest"]}
                     />
                 </AnimationItem>
             </AnimationDisplay>

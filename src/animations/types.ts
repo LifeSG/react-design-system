@@ -1,3 +1,8 @@
+import type {
+    ColourCSSVariableString,
+    ComponentTokenCSSVariableString,
+} from "../theme";
+
 export interface BaseAnimationProps {
     id?: string;
     "data-testid"?: string | undefined;
@@ -5,7 +10,11 @@ export interface BaseAnimationProps {
 }
 
 export interface CustomisedProps {
-    color?: string | undefined;
+    color?:
+        | string
+        | ColourCSSVariableString
+        | ComponentTokenCSSVariableString
+        | undefined;
 }
 
 export interface CustomisableAnimationProps

@@ -1,38 +1,27 @@
+import clsx from "clsx";
 import { lazy, Suspense } from "react";
-import styled from "styled-components";
 
 import type { BaseAnimationProps } from "../types";
+import * as styles from "./loading-dots.styles";
 
 // lazy load to fix next.js SSR errors
 const LottieLoadingDots = lazy(async () => ({
     default: (await import("./lottie-animation")).LottieLoadingDots,
 }));
 
-export const LoadingDots = (props: BaseAnimationProps) => {
+export const LoadingDots = ({
+    className,
+    ...otherProps
+}: BaseAnimationProps) => {
     return (
-        <Container {...props}>
+        <div {...otherProps} className={clsx(styles.container, className)}>
             <Suspense fallback={<Placeholder />}>
                 <LottieLoadingDots />
             </Suspense>
-        </Container>
+        </div>
     );
 };
 
 const Placeholder = () => {
-    return (
-        <div
-            style={{
-                height: "16px",
-                width: "64px",
-            }}
-        />
-    );
+    return <div className={styles.placeholder} />;
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-
-const Container = styled.div`
-    margin: 0 auto;
-`;

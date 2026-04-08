@@ -11,7 +11,7 @@ PRIMITIVE COLOURS
     --fds-colour-brand-30: #4E2C53;
     --fds-colour-brand-40: #6B3E73;
     --fds-colour-brand-50: #8D5197;
-    --fds-colour-brand-60: #F39;
+    --fds-colour-brand-60: #FF3399;
     --fds-colour-brand-70: #FF88C4;
     --fds-colour-brand-80: #FFB3D9;
     --fds-colour-brand-90: #FFD4E9;
@@ -94,8 +94,8 @@ PRIMITIVE COLOURS
     --fds-colour-info-90: #CCE3F1;
     --fds-colour-info-95: #E3F1F8;
     --fds-colour-info-100: #F4FAFD;
-    --fds-colour-white: #FFF;
-    --fds-colour-black: #000;
+    --fds-colour-white: #FFFFFF;
+    --fds-colour-black: #000000;
     --fds-colour-primary-inverse: #FEAB10;
 
     /*
@@ -231,6 +231,15 @@ PRIMITIVE COLOURS
     /* focus ring */
     --fds-colour-focus-ring: var(--fds-colour-primary-50);
     --fds-colour-focus-ring-inverse: var(--fds-colour-white);
+
+    /* 
+    ========================================================================
+    COMPONENT TOKENS
+    ========================================================================
+    */
+
+    /* Animation */
+    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 
     /* 
     ========================================================================

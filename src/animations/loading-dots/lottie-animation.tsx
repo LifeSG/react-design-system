@@ -1,16 +1,15 @@
+import type { LottieOptions } from "lottie-react";
 import { useLottie } from "lottie-react";
 
 import animationData from "./data.json";
+import * as styles from "./lottie-animation.styles";
 
 export const LottieLoadingDots = () => {
-    const options = {
+    const options: LottieOptions = {
         animationData,
         loop: true,
         autoplay: true,
-        style: {
-            height: "16px",
-            width: "64px",
-        },
+        className: styles.view,
     };
 
     const { View } = useLottie(options);

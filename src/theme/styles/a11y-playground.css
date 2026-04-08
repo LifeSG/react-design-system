@@ -94,8 +94,8 @@ PRIMITIVE COLOURS
     --fds-colour-info-90: #D3DFFF;
     --fds-colour-info-95: #E9EFFF;
     --fds-colour-info-100: #F5F8FF;
-    --fds-colour-white: #FFF;
-    --fds-colour-black: #000;
+    --fds-colour-white: #FFFFFF;
+    --fds-colour-black: #000000;
     --fds-colour-primary-inverse: #FEAB10;
 
     /*
@@ -231,6 +231,15 @@ PRIMITIVE COLOURS
     /* focus ring */
     --fds-colour-focus-ring: var(--fds-colour-primary-50);
     --fds-colour-focus-ring-inverse: var(--fds-colour-white);
+
+    /* 
+    ========================================================================
+    COMPONENT TOKENS
+    ========================================================================
+    */
+
+    /* Animation */
+    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 
     /* 
     ========================================================================
@@ -408,9 +417,6 @@ SEMANTIC COLOURS - DARK MODE
     --fds-button-secondary-colour-text: var(--fds-colour-text-primary);
     --fds-button-light-colour-text: var(--fds-colour-text-primary);
     --fds-button-link-colour-text: var(--fds-colour-text-primary);
-
-    /* Animation */
-    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 
     /* Navbar */
     --fds-navbar-full-height: 6rem;
