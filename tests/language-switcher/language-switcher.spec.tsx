@@ -2,6 +2,19 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { LanguageSwitcher } from "../../src/language-switcher";
 
 // =============================================================================
+// SETUP
+// =============================================================================
+beforeEach(() => {
+    jest.resetAllMocks();
+
+    global.ResizeObserver = jest.fn().mockImplementation(() => ({
+        observe: jest.fn(),
+        unobserve: jest.fn(),
+        disconnect: jest.fn(),
+    }));
+});
+
+// =============================================================================
 // DROPDOWN TESTS
 // =============================================================================
 describe("LanguageSwitcher (dropdown)", () => {
@@ -217,14 +230,13 @@ describe("LanguageSwitcher (link-container)", () => {
         expect(screen.getByText("தமிழ்")).toBeInTheDocument();
     });
 
-    it("should have group role and aria-label on wrapper", () => {
+    it("should have group role and aria-label on the link list", () => {
         render(
             <LanguageSwitcher variant="link-container" selectedLanguage="en" />
         );
 
-        const wrapper = screen.getByTestId("language-switcher");
-        expect(wrapper).toHaveAttribute("role", "group");
-        expect(wrapper).toHaveAttribute("aria-label");
+        const group = screen.getByRole("group");
+        expect(group).toHaveAttribute("aria-label");
     });
 
     it("should render with default language (English) when no selection provided", () => {
