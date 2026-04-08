@@ -8,6 +8,10 @@ export interface UseCountdownOptions {
     onComplete?: () => void;
     /** Time in seconds between reminder announcements */
     reminderInterval?: number;
+    /** announcement messages */
+    getStartMessage?: (duration: number) => string;
+    getIntervalMessage?: (remaining: number) => string;
+    getCompletionMessage?: () => string;
 }
 
 export interface UseCountdownReturn {
@@ -32,6 +36,9 @@ export const useCountdown = ({
     duration,
     onComplete,
     reminderInterval,
+    getStartMessage,
+    getIntervalMessage,
+    getCompletionMessage,
 }: UseCountdownOptions): UseCountdownReturn => {
     const [timeLeft, setTimeLeft] = useState(duration);
     const [isRunning, setIsRunning] = useState(false);
@@ -56,7 +63,9 @@ export const useCountdown = ({
         hasAnnouncedCompletionRef.current = false;
 
         // First resend reminder message
-        handleAnnounce(`You can resend the OTP in ${duration} seconds`);
+        if (getStartMessage) {
+            handleAnnounce(getStartMessage(duration));
+        }
 
         intervalRef.current = setInterval(() => {
             const elapsed = Math.floor(
@@ -74,7 +83,9 @@ export const useCountdown = ({
                 remaining % reminderInterval === 0
             ) {
                 // second resend reminder message in intervals
-                handleAnnounce(`${remaining} seconds remaining`);
+                if (getIntervalMessage) {
+                    handleAnnounce(getIntervalMessage(remaining));
+                }
             }
 
             if (remaining <= 0) {
@@ -84,7 +95,9 @@ export const useCountdown = ({
                 if (!hasAnnouncedCompletionRef.current) {
                     hasAnnouncedCompletionRef.current = true;
                     // final reminder message
-                    handleAnnounce("You can now resend the OTP");
+                    if (getCompletionMessage) {
+                        handleAnnounce(getCompletionMessage());
+                    }
                 }
 
                 onComplete?.();
@@ -117,8 +130,6 @@ export const useCountdown = ({
         stop,
         reset,
         formatTime: (time?: number) =>
-            `${time ?? timeLeft} second${
-                (time ?? timeLeft) === 1 ? "" : "s"
-            }`,
+            `${time ?? timeLeft} second${(time ?? timeLeft) === 1 ? "" : "s"}`,
     };
 };

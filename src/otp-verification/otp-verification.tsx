@@ -33,6 +33,10 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     const countdown = useCountdown({
         duration: verifyOtpCountdownTimer,
         reminderInterval: otpReminderInterval,
+        getStartMessage: (duration) =>
+            `You can resend the OTP in ${duration} seconds`,
+        getIntervalMessage: (remaining) => `${remaining} seconds remaining`,
+        getCompletionMessage: () => "You can now resend the OTP",
     });
 
     // =============================================================================
@@ -56,29 +60,29 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     };
 
     // Verify OTP
-   const handleVerifyOtp = async () => {
-    if (!onVerifyOtp || !otpValue?.value) return;
+    const handleVerifyOtp = async () => {
+        if (!onVerifyOtp || !otpValue?.value) return;
 
-    try {
-        setIsVerifyLoading(true);
-        await onVerifyOtp(otpValue.value);
+        try {
+            setIsVerifyLoading(true);
+            await onVerifyOtp(otpValue.value);
 
-        onOtpStateChange("verified");
+            onOtpStateChange("verified");
 
-        clearAnnouncer("polite");
-        announce(
-            "Success. Your email or mobile number has been verified.",
-            "polite",
-        );
+            clearAnnouncer("polite");
+            announce(
+                "Success. Your email or mobile number has been verified.",
+                "polite"
+            );
 
-        countdown.reset();
-        onOtpChange?.("");
-    } catch {
-        // do nothing
-    } finally {
-        setIsVerifyLoading(false);
-    }
-};
+            countdown.reset();
+            onOtpChange?.("");
+        } catch {
+            // do nothing
+        } finally {
+            setIsVerifyLoading(false);
+        }
+    };
 
     // =============================================================================
     // HELPER FUNCTIONS
