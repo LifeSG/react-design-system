@@ -2,7 +2,6 @@ import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { LanguageSwitcher } from "src/language-switcher";
 import { LanguageCode } from "src/language-switcher/types";
-import { StackDecorator } from "../storybook-common";
 
 type Component = typeof LanguageSwitcher;
 
@@ -28,7 +27,6 @@ export const Dropdown: StoryObj<Component> = {
             />
         );
     },
-    decorators: [StackDecorator()],
 };
 
 export const DropdownPreselected: StoryObj<Component> = {
@@ -43,7 +41,6 @@ export const DropdownPreselected: StoryObj<Component> = {
             />
         );
     },
-    decorators: [StackDecorator()],
 };
 
 // =============================================================================
@@ -61,7 +58,6 @@ export const LinkContainer: StoryObj<Component> = {
             />
         );
     },
-    decorators: [StackDecorator()],
 };
 
 export const LinkContainerPreselected: StoryObj<Component> = {
@@ -76,5 +72,4 @@ export const LinkContainerPreselected: StoryObj<Component> = {
             />
         );
     },
-    decorators: [StackDecorator()],
 };
