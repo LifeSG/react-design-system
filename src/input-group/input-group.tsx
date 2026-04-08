@@ -7,11 +7,22 @@ import {
     NoAddonWrapper,
 } from "./input-group.style";
 import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
+import { concatIds } from "../shared/accessibility";
 
 const Component = <T, V>(
-    { addon, error, className, id, ...otherProps }: InputGroupProps<T, V>,
+    {
+        addon,
+        error,
+        className,
+        id,
+        "aria-label": ariaLabel,
+        "aria-labelledby": ariaLabelledBy,
+        ...otherProps
+    }: InputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ) => {
+    const addonId = id ? `${id}-addon` : undefined;
+
     const renderNoAddons = () => (
         <NoAddonWrapper
             $disabled={otherProps.disabled}
@@ -52,6 +63,7 @@ const Component = <T, V>(
                     return renderNoAddons();
                 }
             }
+
             case "custom": {
                 const customAddon = addon.attributes as CustomAddon;
                 if (customAddon.children) {
@@ -67,7 +79,7 @@ const Component = <T, V>(
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
-                                id={id ? `${id}-addon` : undefined}
+                                id={addonId}
                                 $disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
                                 $position={position}
@@ -77,6 +89,11 @@ const Component = <T, V>(
                             <MainInput
                                 ref={ref}
                                 {...otherProps}
+                                aria-labelledby={concatIds(
+                                    ariaLabel,
+                                    ariaLabelledBy,
+                                    addonId
+                                )}
                                 allowClear={allowClear && position !== "right"}
                                 error={error}
                                 data-testid="input"
@@ -103,7 +120,7 @@ const Component = <T, V>(
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
-                                id={id ? `${id}-addon` : undefined}
+                                id={addonId}
                                 $disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
                                 $position={position}
@@ -113,6 +130,11 @@ const Component = <T, V>(
                             <MainInput
                                 ref={ref}
                                 {...otherProps}
+                                aria-labelledby={concatIds(
+                                    ariaLabel,
+                                    ariaLabelledBy,
+                                    addonId
+                                )}
                                 allowClear={allowClear && position !== "right"}
                                 error={error}
                                 data-testid="input"

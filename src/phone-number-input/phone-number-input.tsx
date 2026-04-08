@@ -4,6 +4,7 @@ import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { useNextInputState } from "../util";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import { CountryValue, PhoneNumberInputProps } from "./types";
+import { VisuallyHidden } from "../shared/accessibility";
 
 export const PhoneNumberInput = ({
     id,
@@ -50,7 +51,7 @@ export const PhoneNumberInput = ({
 
     const resolvedAriaLabel =
         getAriaLabel?.(selectedCountry) ?? "Enter phone number";
-    const countryCodeId = id ? `${id}-addon` : undefined;
+    const resolvedAriaLabelId = `${id}-aria-label`;
 
     // =============================================================================
     // EFFECTS
@@ -162,24 +163,29 @@ export const PhoneNumberInput = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <InputGroup
-            id={id}
-            ref={nodeRef}
-            value={inputValue}
-            onChange={handleInputChange}
-            allowClear={allowClear && !!inputValue}
-            onClear={handleClear}
-            onBlur={onBlur}
-            error={error}
-            placeholder={placeholder}
-            addon={getAddonProps()}
-            inputMode="numeric"
-            autoComplete={autoComplete}
-            noBorder={noBorder}
-            aria-describedby={countryCodeId}
-            aria-label={resolvedAriaLabel}
-            {...otherProps}
-        />
+        <>
+            <VisuallyHidden aria-hidden id={resolvedAriaLabelId}>
+                {resolvedAriaLabel}
+            </VisuallyHidden>
+
+            <InputGroup
+                id={id}
+                ref={nodeRef}
+                value={inputValue}
+                onChange={handleInputChange}
+                allowClear={allowClear && !!inputValue}
+                onClear={handleClear}
+                onBlur={onBlur}
+                error={error}
+                placeholder={placeholder}
+                addon={getAddonProps()}
+                inputMode="numeric"
+                autoComplete={autoComplete}
+                noBorder={noBorder}
+                aria-label={resolvedAriaLabelId}
+                {...otherProps}
+            />
+        </>
     );
 };
 
