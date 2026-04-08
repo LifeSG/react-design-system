@@ -118,6 +118,6 @@ describe("Tab", () => {
             fireEvent.click(button);
         });
 
-        expect(mockFn).toBeCalledWith("Section B", 1);
+        expect(mockFn).toHaveBeenCalledWith("Section B", 1);
     });
 });
