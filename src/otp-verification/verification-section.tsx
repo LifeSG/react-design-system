@@ -43,7 +43,7 @@ export const VerificationSection = ({
     const titleId = `${internalId}-title`;
     const messageId = `${internalId}-message`;
     const otpAddonId = `${internalId}-verify-input-addon`;
-    const verifyErrorId = `${internalId}-title`;
+    const verifyErrorId = `${internalId}-verify-error`;
 
     const renderThumbnail = () => {
         if (!showVerifyOtpThumbnail) return null;
@@ -142,7 +142,7 @@ export const VerificationSection = ({
                     </VerifyInputWrapper>
                     {verifyOtpError && (
                         <FormErrorMessage
-                            id={id ? verifyErrorId : undefined}
+                            id={verifyErrorId}
                             data-testid={
                                 dataTestId
                                     ? `${dataTestId}-verify-error`

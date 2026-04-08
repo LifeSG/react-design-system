@@ -8,9 +8,11 @@ export interface UseCountdownOptions {
     onComplete?: () => void;
     /** Time in seconds between reminder announcements */
     reminderInterval?: number;
-    /** announcement messages */
+    /** Build the message announced when countdown timer starts */
     getStartMessage?: (duration: number) => string;
+    /** Build the message announced when countdown reaches each interval based on `reminderInterval` */
     getIntervalMessage?: (remaining: number) => string;
+    /** Build the message announced when countdown timer completes */
     getCompletionMessage?: () => string;
 }
 
@@ -45,7 +47,18 @@ export const useCountdown = ({
 
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const startTimeRef = useRef<number | null>(null);
-    const hasAnnouncedCompletionRef = useRef(false);
+
+    const clearTimer = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    };
+
+    const formatTime = (time?: number) => {
+        const t = time ?? timeLeft;
+        return `${t} second${t === 1 ? "" : "s"}`;
+    };
 
     const handleAnnounce = (message: string) => {
         clearAnnouncer("polite");
@@ -55,12 +68,11 @@ export const useCountdown = ({
     const start = () => {
         if (isRunning) return;
 
-        if (intervalRef.current) clearInterval(intervalRef.current);
+        clearTimer();
 
         setTimeLeft(duration);
         setIsRunning(true);
         startTimeRef.current = Date.now();
-        hasAnnouncedCompletionRef.current = false;
 
         // First resend reminder message
         if (getStartMessage) {
@@ -68,6 +80,8 @@ export const useCountdown = ({
         }
 
         intervalRef.current = setInterval(() => {
+            if (startTimeRef.current == null) return;
+
             const elapsed = Math.floor(
                 (Date.now() - startTimeRef.current!) / 1000
             );
@@ -90,14 +104,11 @@ export const useCountdown = ({
 
             if (remaining <= 0) {
                 setIsRunning(false);
-                clearInterval(intervalRef.current!);
+                clearTimer();
 
-                if (!hasAnnouncedCompletionRef.current) {
-                    hasAnnouncedCompletionRef.current = true;
-                    // final reminder message
-                    if (getCompletionMessage) {
-                        handleAnnounce(getCompletionMessage());
-                    }
+                // final reminder message
+                if (getCompletionMessage) {
+                    handleAnnounce(getCompletionMessage());
                 }
 
                 onComplete?.();
@@ -107,19 +118,24 @@ export const useCountdown = ({
 
     const stop = () => {
         setIsRunning(false);
-        if (intervalRef.current) clearInterval(intervalRef.current);
+        clearTimer();
     };
 
     const reset = () => {
         stop();
         setTimeLeft(duration);
         startTimeRef.current = null;
-        hasAnnouncedCompletionRef.current = false;
     };
 
     useEffect(() => {
+        if (!isRunning) {
+            setTimeLeft(duration);
+        }
+    }, [duration, isRunning]);
+
+    useEffect(() => {
         return () => {
-            if (intervalRef.current) clearInterval(intervalRef.current);
+            clearTimer();
         };
     }, []);
 
@@ -129,7 +145,6 @@ export const useCountdown = ({
         start,
         stop,
         reset,
-        formatTime: (time?: number) =>
-            `${time ?? timeLeft} second${(time ?? timeLeft) === 1 ? "" : "s"}`,
+        formatTime,
     };
 };

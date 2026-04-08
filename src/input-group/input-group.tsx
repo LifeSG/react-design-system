@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { InputGroupListAddon } from "./input-group-list-addon";
 import {
     AddonWrapper,
@@ -7,22 +7,30 @@ import {
     NoAddonWrapper,
 } from "./input-group.style";
 import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
-import { concatIds } from "../shared/accessibility";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 const Component = <T, V>(
     {
         addon,
         error,
         className,
-        id,
         "aria-label": ariaLabel,
         "aria-labelledby": ariaLabelledBy,
         ...otherProps
     }: InputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ) => {
-    const addonId = id ? `${id}-addon` : undefined;
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const addonId = `${internalId}-addon`;
+    const ariaLabelId = `${internalId}-ariaLabelId`;
 
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
     const renderNoAddons = () => (
         <NoAddonWrapper
             $disabled={otherProps.disabled}
@@ -86,11 +94,14 @@ const Component = <T, V>(
                             >
                                 {customAddon.children}
                             </LabelAddonContainer>
+                            <VisuallyHidden aria-hidden id={ariaLabelId}>
+                                {ariaLabel}
+                            </VisuallyHidden>
                             <MainInput
                                 ref={ref}
                                 {...otherProps}
                                 aria-labelledby={concatIds(
-                                    ariaLabel,
+                                    ariaLabelId,
                                     ariaLabelledBy,
                                     addonId
                                 )}
@@ -127,11 +138,14 @@ const Component = <T, V>(
                             >
                                 {labelAddon.value}
                             </LabelAddonContainer>
+                            <VisuallyHidden aria-hidden id={ariaLabelId}>
+                                {ariaLabel}
+                            </VisuallyHidden>
                             <MainInput
                                 ref={ref}
                                 {...otherProps}
                                 aria-labelledby={concatIds(
-                                    ariaLabel,
+                                    ariaLabelId,
                                     ariaLabelledBy,
                                     addonId
                                 )}

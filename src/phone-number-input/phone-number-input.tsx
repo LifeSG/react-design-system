@@ -4,7 +4,6 @@ import { AddonProps, LabelAddon, ListAddon } from "../input-group/types";
 import { useNextInputState } from "../util";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import { CountryValue, PhoneNumberInputProps } from "./types";
-import { VisuallyHidden } from "../shared/accessibility";
 
 export const PhoneNumberInput = ({
     id,
@@ -51,7 +50,6 @@ export const PhoneNumberInput = ({
 
     const resolvedAriaLabel =
         getAriaLabel?.(selectedCountry) ?? "Enter phone number";
-    const resolvedAriaLabelId = `${id}-aria-label`;
 
     // =============================================================================
     // EFFECTS
@@ -164,10 +162,6 @@ export const PhoneNumberInput = ({
     // =========================================================================
     return (
         <>
-            <VisuallyHidden aria-hidden id={resolvedAriaLabelId}>
-                {resolvedAriaLabel}
-            </VisuallyHidden>
-
             <InputGroup
                 id={id}
                 ref={nodeRef}
@@ -182,7 +176,7 @@ export const PhoneNumberInput = ({
                 inputMode="numeric"
                 autoComplete={autoComplete}
                 noBorder={noBorder}
-                aria-label={resolvedAriaLabelId}
+                aria-label={resolvedAriaLabel}
                 {...otherProps}
             />
         </>
