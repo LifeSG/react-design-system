@@ -53,8 +53,7 @@ export const LinkItem = styled.button<LinkItemStyleProps>`
     ${Font["body-md-semibold"]}
     color: ${Colour["text-primary"]};
     text-align: center;
-    transition: background-color ${Motion["duration-150"]}
-        ${Motion["ease-default"]};
+    transition: color ${Motion["duration-150"]} ${Motion["ease-default"]};
 
     ${({ $active }) =>
         $active
@@ -67,7 +66,8 @@ export const LinkItem = styled.button<LinkItemStyleProps>`
                   cursor: pointer;
 
                   &:hover {
-                      background: ${Colour["bg-hover"]};
+                      color: ${Colour["text-hover"]};
+                      text-decoration: underline;
                   }
               `}
 
