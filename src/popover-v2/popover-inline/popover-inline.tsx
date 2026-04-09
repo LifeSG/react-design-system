@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import { PopoverTrigger } from "../popover-trigger";
 import type { PopoverInlineProps } from "../types";
 import { StyledIcon, StyledText } from "./popover-inline.styles";
@@ -22,12 +24,18 @@ export const PopoverInline = ({
                 role="button"
                 aria-haspopup="dialog"
                 tabIndex={0}
-                $defaultStyle={underlineStyle}
-                $hoverStyle={underlineHoverStyle}
+                data-underline-style={underlineStyle}
+                data-underline-hover-style={underlineHoverStyle}
             >
                 {content}
                 {icon && (
-                    <StyledIcon $standalone={!hasContent}>{icon}</StyledIcon>
+                    <StyledIcon
+                        className={clsx(
+                            hasContent && "popoverInlineIconWithContent"
+                        )}
+                    >
+                        {icon}
+                    </StyledIcon>
                 )}
             </StyledText>
         </PopoverTrigger>

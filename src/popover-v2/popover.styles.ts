@@ -2,14 +2,13 @@ import styled from "styled-components";
 
 import { Card } from "../card";
 import { Colour, MediaQuery, Radius } from "../theme";
-import type { PopoverOverflowType } from "./types";
-// =============================================================================
-// STYLES INTERFACE
-// =============================================================================
-interface PopoverCardStyleProps {
-    $overflow?: PopoverOverflowType | undefined;
-    $maxHeight?: number | undefined;
-}
+
+export const tokens = {
+    popoverCard: {
+        maxHeight: "--fds-internal-popoverV2-popoverCard-maxHeight",
+        overflowY: "--fds-internal-popoverV2-popoverCard-overflowY",
+    },
+} as const;
 
 // =============================================================================
 // STYLING
@@ -21,24 +20,20 @@ export const PopoverContainer = styled.div`
     outline: none;
 `;
 
-export const PopoverCard = styled(Card)<PopoverCardStyleProps>`
+export const PopoverCard = styled(Card)`
     color: ${Colour.text};
 
     ${MediaQuery.MaxWidth.sm} {
         display: none;
     }
 
-    ${({ $maxHeight }) =>
-        $maxHeight !== undefined &&
-        `
-        max-height: ${$maxHeight}px;
-    `}
+    &.popoverV2CardWithMaxHeight {
+        max-height: var(${tokens.popoverCard.maxHeight});
+    }
 
-    ${({ $overflow }) =>
-        $overflow &&
-        `
-        overflow-y: ${$overflow};
-    `}
+    &.popoverV2CardWithOverflow {
+        overflow-y: var(${tokens.popoverCard.overflowY});
+    }
 
     &::-webkit-scrollbar {
         width: 14px;

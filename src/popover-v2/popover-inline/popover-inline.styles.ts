@@ -1,44 +1,36 @@
 import styled from "styled-components";
 
 import { Colour } from "../../theme";
-import type { PopoverInlineStyle } from "../types";
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-
-interface StyledTextProps {
-    $defaultStyle: PopoverInlineStyle;
-    $hoverStyle: PopoverInlineStyle;
-}
-
-interface StyledIconProps {
-    $standalone: boolean;
-}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const getTextStyle = (style: PopoverInlineStyle) => {
-    switch (style) {
-        case "underline":
-            return "text-decoration: underline 1px;";
-        case "underline-dashed":
-            return "text-decoration: underline dashed 1px;";
-    }
-};
-
-export const StyledText = styled.span<StyledTextProps>`
+export const StyledText = styled.span`
     color: ${Colour["text-primary"]};
     font-weight: 600;
     text-underline-position: under;
 
-    ${({ $defaultStyle }) => getTextStyle($defaultStyle)}
+    &[data-underline-style="underline"] {
+        text-decoration: underline 1px;
+    }
+
+    &[data-underline-style="underline-dashed"] {
+        text-decoration: underline dashed 1px;
+    }
 
     &:hover,
     &:focus-visible {
         color: ${Colour["text-hover"]};
-        ${({ $hoverStyle }) => getTextStyle($hoverStyle)}
+    }
+
+    &[data-underline-hover-style="underline"]:hover,
+    &[data-underline-hover-style="underline"]:focus-visible {
+        text-decoration: underline 1px;
+    }
+
+    &[data-underline-hover-style="underline-dashed"]:hover,
+    &[data-underline-hover-style="underline-dashed"]:focus-visible {
+        text-decoration: underline dashed 1px;
     }
 
     svg {
@@ -48,6 +40,8 @@ export const StyledText = styled.span<StyledTextProps>`
     }
 `;
 
-export const StyledIcon = styled.span<StyledIconProps>`
-    ${(props) => !props.$standalone && "margin-left: 0.25rem;"}
+export const StyledIcon = styled.span`
+    &.popoverInlineIconWithContent {
+        margin-left: 0.25rem;
+    }
 `;
