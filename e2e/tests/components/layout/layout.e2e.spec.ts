@@ -1,5 +1,5 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage } from "../../utils";
+import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "layout";
@@ -80,6 +80,10 @@ test.describe("Layout", () => {
         }) => {
             await expect(story.locators.section).toHaveClass(/custom-section/);
         });
+
+        test("Section visual appearance", async ({ story }) => {
+            await compareScreenshot(story, "section");
+        });
     });
 
     // =============================================================================
@@ -134,6 +138,10 @@ test.describe("Layout", () => {
                 "max-width",
                 "none"
             );
+        });
+
+        test("Container visual appearance", async ({ story }) => {
+            await compareScreenshot(story, "container");
         });
     });
 
@@ -206,6 +214,90 @@ test.describe("Layout", () => {
             expect(start).toBe("1");
             expect(span).toBe("");
         });
+
+        test("ColDiv visual appearance", async ({ story }) => {
+            await compareScreenshot(story, "col-div");
+        });
+    });
+
+    // =============================================================================
+    // ColDiv viewport breakpoints
+    // =============================================================================
+    test.describe("ColDiv viewport breakpoints", () => {
+        test("applies xs breakpoint span at mobile viewport (375px)", async ({
+            story,
+        }) => {
+            await story.init("col-div", { size: "mobile" });
+            await expect(story.locators.colDivSpan).toHaveCSS(
+                "grid-column-end",
+                "span 3"
+            );
+            await compareScreenshot(story, "col-div-mobile");
+        });
+
+        test("applies md breakpoint span at tablet viewport (768px)", async ({
+            story,
+        }) => {
+            await story.init("col-div", { size: "tablet" });
+            await expect(story.locators.colDivSpan).toHaveCSS(
+                "grid-column-end",
+                "span 4"
+            );
+            await compareScreenshot(story, "col-div-tablet");
+        });
+
+        test("applies xl breakpoint span at desktop viewport (1280px)", async ({
+            story,
+        }) => {
+            await story.init("col-div", { size: "desktop" });
+            await expect(story.locators.colDivSpan).toHaveCSS(
+                "grid-column-end",
+                "span 4"
+            );
+            await compareScreenshot(story, "col-div-desktop");
+        });
+
+        test("full-width child spans to grid end at mobile viewport", async ({
+            story,
+        }) => {
+            await story.init("col-div", { size: "mobile" });
+            await expect(story.locators.colDivEndMinusOne).toHaveCSS(
+                "grid-column-start",
+                "1"
+            );
+            await expect(story.locators.colDivEndMinusOne).toHaveCSS(
+                "grid-column-end",
+                "-1"
+            );
+        });
+
+        test("full-width child spans to grid end at tablet viewport", async ({
+            story,
+        }) => {
+            await story.init("col-div", { size: "tablet" });
+            await expect(story.locators.colDivEndMinusOne).toHaveCSS(
+                "grid-column-start",
+                "1"
+            );
+            await expect(story.locators.colDivEndMinusOne).toHaveCSS(
+                "grid-column-end",
+                "-1"
+            );
+        });
+
+        test("full-width child spans to grid end at desktop viewport", async ({
+            story,
+        }) => {
+            await story.init("col-div", { size: "desktop" });
+            await expect(story.locators.colDivEndMinusOne).toHaveCSS(
+                "grid-column-start",
+                "1"
+            );
+            await expect(story.locators.colDivEndMinusOne).toHaveCSS(
+                "grid-column-end",
+                "-1"
+            );
+        });
     });
 
     // =============================================================================
@@ -261,6 +353,10 @@ test.describe("Layout", () => {
             await expect(
                 story.locators.contentContainer.locator("p")
             ).toHaveText("Content child");
+        });
+
+        test("Content visual appearance", async ({ story }) => {
+            await compareScreenshot(story, "content");
         });
     });
 });
