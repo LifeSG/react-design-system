@@ -21,18 +21,3 @@ export interface VariantInternalProps {
     testId: string;
     otherProps: React.HTMLAttributes<HTMLDivElement>;
 }
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-export const ARIA_LABEL =
-    "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும்";
-
-export const LANGUAGE_DISPLAY_MAP: Record<LanguageCode, string> = {
-    en: "English",
-    zh: "中文",
-    ms: "Melayu",
-    ta: "தமிழ்",
-};
-
-export const LANGUAGE_CODES: LanguageCode[] = ["en", "zh", "ms", "ta"];

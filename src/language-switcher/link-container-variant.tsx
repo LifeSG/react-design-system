@@ -6,12 +6,8 @@ import {
     LinkList,
     LinkListItem,
 } from "./link-container-variant.style";
-import {
-    ARIA_LABEL,
-    LANGUAGE_CODES,
-    LANGUAGE_DISPLAY_MAP,
-    VariantInternalProps,
-} from "./types";
+import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
+import { VariantInternalProps } from "./types";
 
 export const LinkContainerVariant = ({
     selectedLanguage,

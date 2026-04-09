@@ -13,13 +13,8 @@ import {
     TickIconWrapper,
     TriggerButton,
 } from "./dropdown-variant.style";
-import {
-    ARIA_LABEL,
-    LANGUAGE_CODES,
-    LANGUAGE_DISPLAY_MAP,
-    LanguageCode,
-    VariantInternalProps,
-} from "./types";
+import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
+import { LanguageCode, VariantInternalProps } from "./types";
 
 export const DropdownVariant = ({
     selectedLanguage,
