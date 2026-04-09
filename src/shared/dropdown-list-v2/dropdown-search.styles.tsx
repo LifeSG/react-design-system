@@ -2,7 +2,7 @@ import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled, { css } from "styled-components";
 import { Colour, Font, Radius, Spacing } from "../../theme";
 import { ClickableIcon } from "../clickable-icon";
-import { DropdownVariantType } from "../dropdown-list/types";
+import { DropdownVariantType } from "./types";
 import { BasicInput, InputStyleProps } from "../input-wrapper/input-wrapper";
 
 //=============================================================================

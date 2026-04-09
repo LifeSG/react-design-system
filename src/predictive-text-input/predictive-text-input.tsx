@@ -6,7 +6,7 @@ import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { Input } from "../input";
 import { SimpleIdGenerator } from "../util";
 import { PredictiveTextInputProps } from "./types";
-import { ItemsLoadStateType } from "../shared/dropdown-list/types";
+import { ItemsLoadStateType } from "../shared/dropdown-list-v2/types";
 import { VisuallyHidden, concatIds } from "src/shared/accessibility";
 
 export const PredictiveTextInput = <T, V>({
