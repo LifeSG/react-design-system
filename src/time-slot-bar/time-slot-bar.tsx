@@ -454,25 +454,23 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 data-testid={testId}
                 ref={barRef}
                 $variant={variant}
-                role="grid"
-                aria-label={slotsSummary}
-                tabIndex={0}
             >
                 <TimeMarkerWrapper
                     data-testid={getDataTestId("time-marker-wrapper")}
                     data-id="marker-wrapper"
-                    role="row"
                 >
                     {renderTimeMarkers()}
                 </TimeMarkerWrapper>
-                <TimeSlotWrapper
-                    data-testid={getDataTestId("time-slot-wrapper")}
-                    data-id="slot-wrapper"
-                    role="row"
-                >
-                    {renderDefaultTimeSlots()}
-                    {renderTimeSlots()}
-                </TimeSlotWrapper>
+                <div role="grid" aria-label={slotsSummary} tabIndex={0}>
+                    <TimeSlotWrapper
+                        data-testid={getDataTestId("time-slot-wrapper")}
+                        data-id="slot-wrapper"
+                        role="row"
+                    >
+                        {renderDefaultTimeSlots()}
+                        {renderTimeSlots()}
+                    </TimeSlotWrapper>
+                </div>
             </TimeSlotBarContainer>
             {renderArrowButtonLeft()}
             {renderArrowButtonRight()}
