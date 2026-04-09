@@ -27,8 +27,8 @@ export const SupportGoWhereFontSpecSet: FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Libre Franklin",
-    "heading-font-family": "Open Sans",
-    "body-font-family": "Open Sans",
+    "heading-font-family": "Libre Franklin",
+    "body-font-family": "Libre Franklin",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",

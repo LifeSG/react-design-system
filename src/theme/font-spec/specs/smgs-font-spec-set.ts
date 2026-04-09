@@ -46,7 +46,7 @@ export const SMGSFontSpecSet: FontSpecSet = {
     "body-ls-xs": "0.008rem",
 
     "form-label-size": "1rem",
-    "form-description-size": "1rem",
+    "form-description-size": "0.875rem",
 
     "form-label-lh": "1.5rem",
     "form-description-lh": "1.625rem",

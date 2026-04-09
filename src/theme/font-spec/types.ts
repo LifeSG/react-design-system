@@ -37,7 +37,10 @@ export type FontSpecSet = {
     "weight-semibold": string;
     "weight-bold": string;
 
-    // Font family
+    // Font family (legacy)
+    /**
+     * @deprecated Use `heading-font-family` and `body-font-family` instead. This key will be removed in v4.
+     */
     "font-family": string;
     "heading-font-family": string;
     "body-font-family": string;
