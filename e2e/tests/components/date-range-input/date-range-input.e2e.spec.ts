@@ -73,12 +73,12 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("DateRangeInput", () => {
-    test.describe(() => {
+    test.describe("Range", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("default", { mockedTimestamp: fixedTimestamp });
         });
 
-        test("Range no selection", async ({ story }) => {
+        test("Without selected dates", async ({ story }) => {
             await expect(story.locators.calendarContainer).not.toBeVisible();
 
             await story.openCalendar();
@@ -90,7 +90,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range end selected and start hovered", async ({ story }) => {
+        test("End selected and start hovered", async ({ story }) => {
             await story.openCalendar();
             await story.locators.endField.click();
             await story.getDayCell(20).click();
@@ -101,7 +101,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range start selected and end hovered", async ({ story }) => {
+        test("Start selected and end hovered", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).hover();
@@ -111,7 +111,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range start and end selected", async ({ story }) => {
+        test("Start and end selected", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -121,7 +121,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range hover end in-between", async ({ story }) => {
+        test("Hover end in-between", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -133,7 +133,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range hover end on end", async ({ story }) => {
+        test("Hover end on end", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -145,7 +145,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range hover end after end", async ({ story }) => {
+        test("Hover end after end", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -157,7 +157,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range hover end before start", async ({ story }) => {
+        test("Hover end before start", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -169,7 +169,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range hover start in-between", async ({ story }) => {
+        test("Hover start in-between", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -181,7 +181,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range hover start on start", async ({ story }) => {
+        test("Hover start on start", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -193,7 +193,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range hover start before start", async ({ story }) => {
+        test("Hover start before start", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -205,7 +205,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range hover start after end", async ({ story }) => {
+        test("Hover start after end", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -217,7 +217,7 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Range commit with Done", async ({ story }) => {
+        test("Commit with Done", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
@@ -231,113 +231,117 @@ test.describe("DateRangeInput", () => {
         });
     });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("week-default", {
-                mockedTimestamp: fixedTimestamp,
+    test.describe("Week", () => {
+        test.describe("Default", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("week-default", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Hover", async ({ story }) => {
+                await story.openCalendar();
+                await story.getWeekCell(1).hover();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
         });
 
-        test("Week range with hover", async ({ story }) => {
-            await story.openCalendar();
-            await story.getWeekCell(1).hover();
-
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+        test.describe("Selected", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("week-selected", {
+                    mockedTimestamp: fixedTimestamp,
+                });
             });
-        });
-    });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("week-selected", {
-                mockedTimestamp: fixedTimestamp,
+            test("State", async ({ story }) => {
+                await story.openCalendar();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
-        });
 
-        test("Week selected", async ({ story }) => {
-            await story.openCalendar();
-
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+            test("And hover other", async ({ story }) => {
+                await story.openCalendar();
+                await story.getWeekCell(2).hover();
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
-        });
 
-        test("Week selected and hover other", async ({ story }) => {
-            await story.openCalendar();
-            await story.getWeekCell(2).hover();
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
-            });
-        });
-
-        test("Week selected and hover same", async ({ story }) => {
-            await story.openCalendar();
-            await story.getWeekCell(1).hover();
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("fixed-range-default", {
-                mockedTimestamp: fixedTimestamp,
-            });
-        });
-
-        test("Fixed range with hover", async ({ story }) => {
-            await story.openCalendar();
-            await story.getFixedRangeCell(10).hover();
-
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+            test("And hover same", async ({ story }) => {
+                await story.openCalendar();
+                await story.getWeekCell(1).hover();
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
         });
     });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("fixed-range-selected", {
-                mockedTimestamp: fixedTimestamp,
+    test.describe("Fixed Range", () => {
+        test.describe("Default", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("fixed-range-default", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Hover", async ({ story }) => {
+                await story.openCalendar();
+                await story.getFixedRangeCell(10).hover();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
         });
 
-        test("Fixed range selected", async ({ story }) => {
-            await story.openCalendar();
-
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+        test.describe("Selected", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("fixed-range-selected", {
+                    mockedTimestamp: fixedTimestamp,
+                });
             });
-        });
 
-        test("Fixed range hover overlap before", async ({ story }) => {
-            await story.openCalendar();
-            await story.getFixedRangeCell(8).hover();
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+            test("State", async ({ story }) => {
+                await story.openCalendar();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
-        });
 
-        test("Fixed range hover overlap after", async ({ story }) => {
-            await story.openCalendar();
-            await story.getFixedRangeCell(12).hover();
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+            test("And hover overlap before", async ({ story }) => {
+                await story.openCalendar();
+                await story.getFixedRangeCell(8).hover();
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
-        });
 
-        test("Fixed range hover same date", async ({ story }) => {
-            await story.openCalendar();
-            await story.getFixedRangeCell(10).hover();
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+            test("And hover overlap after", async ({ story }) => {
+                await story.openCalendar();
+                await story.getFixedRangeCell(12).hover();
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
+            });
+
+            test("And hover same date", async ({ story }) => {
+                await story.openCalendar();
+                await story.getFixedRangeCell(10).hover();
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
         });
     });
 
-    test.describe(() => {
+    test.describe("Disabled", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("disabled", { mockedTimestamp: fixedTimestamp });
         });
