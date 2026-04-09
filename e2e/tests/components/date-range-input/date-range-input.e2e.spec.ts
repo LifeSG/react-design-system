@@ -78,127 +78,156 @@ test.describe("DateRangeInput", () => {
             await story.init("default", { mockedTimestamp: fixedTimestamp });
         });
 
-        test("Range calendar states", async ({ story }) => {
-            await test.step("Range calendar without selected dates", async () => {
-                await expect(
-                    story.locators.calendarContainer
-                ).not.toBeVisible();
+        test("Range no selection", async ({ story }) => {
+            await expect(story.locators.calendarContainer).not.toBeVisible();
 
-                await story.openCalendar();
-                await expect(story.locators.selectedStart).toHaveText("none");
-                await expect(story.locators.selectedEnd).toHaveText("none");
+            await story.openCalendar();
+            await expect(story.locators.selectedStart).toHaveText("none");
+            await expect(story.locators.selectedEnd).toHaveText("none");
 
-                await compareScreenshot(story, "range-no-selection", {
-                    fullscreen: true,
-                });
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
             });
+        });
 
-            await test.step("Range with selected end date and hovered start date", async () => {
-                await story.init("default", {
-                    mockedTimestamp: fixedTimestamp,
-                });
-                await story.openCalendar();
+        test("Range end selected and start hovered", async ({ story }) => {
+            await story.openCalendar();
+            await story.locators.endField.click();
+            await story.getDayCell(20).click();
+            await story.getDayCell(15).hover();
 
-                await story.locators.endField.click();
-                await story.getDayCell(20).click();
-                await story.getDayCell(15).hover();
-
-                await compareScreenshot(
-                    story,
-                    "range-end-selected-start-hover",
-                    {
-                        fullscreen: true,
-                    }
-                );
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
             });
+        });
 
-            await test.step("Range with selected start date and hovered end date", async () => {
-                await story.init("default", {
-                    mockedTimestamp: fixedTimestamp,
-                });
-                await story.openCalendar();
+        test("Range start selected and end hovered", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).hover();
 
-                await story.getDayCell(10).click();
-                await story.getDayCell(15).hover();
-
-                await compareScreenshot(
-                    story,
-                    "range-start-selected-end-hover",
-                    {
-                        fullscreen: true,
-                    }
-                );
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
             });
+        });
 
-            await test.step("Range with selected start and end dates", async () => {
-                await story.getDayCell(15).click();
+        test("Range start and end selected", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
 
-                await compareScreenshot(story, "range-start-end-selected", {
-                    fullscreen: true,
-                });
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
             });
+        });
 
-            await test.step("Range with selected start and end dates, hovered end date", async () => {
-                await story.locators.endField.click();
+        test("Range hover end in-between", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
+            await story.locators.endField.click();
+            await story.getDayCell(12).hover();
 
-                await story.getDayCell(12).hover();
-                await compareScreenshot(story, "range-hover-end-in-between", {
-                    fullscreen: true,
-                });
-
-                await story.getDayCell(15).hover();
-                await compareScreenshot(story, "range-hover-end-on-end", {
-                    fullscreen: true,
-                });
-
-                await story.getDayCell(20).hover();
-                await compareScreenshot(story, "range-hover-end-after-end", {
-                    fullscreen: true,
-                });
-
-                await story.getDayCell(8).hover();
-                await compareScreenshot(story, "range-hover-end-before-start", {
-                    fullscreen: true,
-                });
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
             });
+        });
 
-            await test.step("Range with selected start and end dates, hovered start date", async () => {
-                await story.locators.startField.click();
+        test("Range hover end on end", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
+            await story.locators.endField.click();
+            await story.getDayCell(15).hover();
 
-                await story.getDayCell(12).hover();
-                await compareScreenshot(story, "range-hover-start-in-between", {
-                    fullscreen: true,
-                });
-
-                await story.getDayCell(10).hover();
-                await compareScreenshot(story, "range-hover-start-on-start", {
-                    fullscreen: true,
-                });
-
-                await story.getDayCell(8).hover();
-                await compareScreenshot(
-                    story,
-                    "range-hover-start-before-start",
-                    {
-                        fullscreen: true,
-                    }
-                );
-
-                await story.getDayCell(18).hover();
-                await compareScreenshot(story, "range-hover-start-after-end", {
-                    fullscreen: true,
-                });
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
             });
+        });
 
-            await test.step("Commit selected range", async () => {
-                await story.locators.doneButton.click();
-                await expect(story.locators.selectedStart).toHaveText(
-                    /^\d{4}-\d{2}-\d{2}$/
-                );
-                await expect(story.locators.selectedEnd).toHaveText(
-                    /^\d{4}-\d{2}-\d{2}$/
-                );
+        test("Range hover end after end", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
+            await story.locators.endField.click();
+            await story.getDayCell(20).hover();
+
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
             });
+        });
+
+        test("Range hover end before start", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
+            await story.locators.endField.click();
+            await story.getDayCell(8).hover();
+
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+        });
+
+        test("Range hover start in-between", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
+            await story.locators.startField.click();
+            await story.getDayCell(12).hover();
+
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+        });
+
+        test("Range hover start on start", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
+            await story.locators.startField.click();
+            await story.getDayCell(10).hover();
+
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+        });
+
+        test("Range hover start before start", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
+            await story.locators.startField.click();
+            await story.getDayCell(8).hover();
+
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+        });
+
+        test("Range hover start after end", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
+            await story.locators.startField.click();
+            await story.getDayCell(18).hover();
+
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+        });
+
+        test("Range commit with Done", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(15).click();
+            await story.locators.doneButton.click();
+            await expect(story.locators.selectedStart).toHaveText(
+                /^\d{4}-\d{2}-\d{2}$/
+            );
+            await expect(story.locators.selectedEnd).toHaveText(
+                /^\d{4}-\d{2}-\d{2}$/
+            );
         });
     });
 
@@ -213,7 +242,7 @@ test.describe("DateRangeInput", () => {
             await story.openCalendar();
             await story.getWeekCell(1).hover();
 
-            await compareScreenshot(story, "week-hover", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -226,20 +255,26 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Week range selected and hover states", async ({ story }) => {
+        test("Week selected", async ({ story }) => {
             await story.openCalendar();
 
-            await compareScreenshot(story, "week-selected", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
+        });
 
+        test("Week selected and hover other", async ({ story }) => {
+            await story.openCalendar();
             await story.getWeekCell(2).hover();
-            await compareScreenshot(story, "week-selected-hover-other", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
+        });
 
+        test("Week selected and hover same", async ({ story }) => {
+            await story.openCalendar();
             await story.getWeekCell(1).hover();
-            await compareScreenshot(story, "week-selected-hover-same", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -256,7 +291,7 @@ test.describe("DateRangeInput", () => {
             await story.openCalendar();
             await story.getFixedRangeCell(10).hover();
 
-            await compareScreenshot(story, "day-hover", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -269,27 +304,34 @@ test.describe("DateRangeInput", () => {
             });
         });
 
-        test("Fixed range selected and hover overlap states", async ({
-            story,
-        }) => {
+        test("Fixed range selected", async ({ story }) => {
             await story.openCalendar();
 
-            await compareScreenshot(story, "fixed-range-selected", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
+        });
 
+        test("Fixed range hover overlap before", async ({ story }) => {
+            await story.openCalendar();
             await story.getFixedRangeCell(8).hover();
-            await compareScreenshot(story, "fixed-range-hover-overlap-before", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
+        });
 
+        test("Fixed range hover overlap after", async ({ story }) => {
+            await story.openCalendar();
             await story.getFixedRangeCell(12).hover();
-            await compareScreenshot(story, "fixed-range-hover-overlap-after", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
+        });
 
+        test("Fixed range hover same date", async ({ story }) => {
+            await story.openCalendar();
             await story.getFixedRangeCell(10).hover();
-            await compareScreenshot(story, "fixed-range-hover-same-date", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -301,13 +343,12 @@ test.describe("DateRangeInput", () => {
         });
 
         test("Disabled state", async ({ story }) => {
-            await expect(story.locators.dateRangeInput).toHaveAttribute(
-                "aria-disabled",
-                "true"
-            );
+            await expect(story.locators.dateRangeInput).toMatchAriaSnapshot(`
+                - group [disabled]
+            `);
             await expect(story.locators.calendarContainer).not.toBeVisible();
 
-            await compareScreenshot(story, "disabled-on-mount");
+            await compareScreenshot(story, "state");
 
             await story.locators.dateRangeInput.click({ force: true });
             await expect(story.locators.calendarContainer).not.toBeVisible();
