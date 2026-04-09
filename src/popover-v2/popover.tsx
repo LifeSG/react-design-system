@@ -74,7 +74,9 @@ export const PopoverV2 = ({
                     aria-label={ariaLabel ?? "More information"}
                 >
                     <ModalV2.Card>
-                        <ModalV2.Content>{renderContent()}</ModalV2.Content>
+                        <ModalV2.Content>
+                            <Markup>{renderContent()}</Markup>
+                        </ModalV2.Content>
                         <ModalV2.CloseButton />
                     </ModalV2.Card>
                 </ModalV2>
