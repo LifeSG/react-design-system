@@ -1,10 +1,10 @@
 import { TickIcon } from "@lifesg/react-icons/tick";
+import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { ModalV2 } from "src/modal-v2";
 import { Typography } from "src/typography";
-import styled from "styled-components";
 
 import { SlotPlayground } from "./doc-elements";
 
@@ -106,17 +106,17 @@ export const Footer: StoryObj<Component> = {
     },
 };
 
-const StyledCloseButton = styled(ModalV2.CloseButton)`
+const closeButton = css`
     margin: 0;
     padding: 8px;
 `;
 
-const StyledContent = styled(ModalV2.Content)`
+const content = css`
     margin: 0;
     padding: 16px 32px;
 `;
 
-const StyledFooter = styled(ModalV2.Footer)`
+const footer = css`
     margin: 0;
     padding: 16px;
 `;
@@ -129,20 +129,19 @@ export const StyledSlots: StoryObj<Component> = {
 
         return (
             <>
-                <Button.Default onClick={openModal}>
-                    Click to open
-                </Button.Default>
+                <Button onClick={openModal}>Click to open</Button>
                 <ModalV2
                     show={show}
                     onOverlayClick={closeModal}
                     onClose={closeModal}
                 >
                     <ModalV2.Card>
-                        <StyledCloseButton />
-                        <StyledContent>
+                        <ModalV2.CloseButton className={closeButton} />
+                        <ModalV2.Content className={content}>
                             Content with custom spacing
-                        </StyledContent>
-                        <StyledFooter
+                        </ModalV2.Content>
+                        <ModalV2.Footer
+                            className={footer}
                             primaryButton={
                                 <Button.Default styleType="light">
                                     Continue

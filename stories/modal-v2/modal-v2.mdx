@@ -46,10 +46,13 @@ The footer can accept any `<button>` element.
 ## Styling slots
 
 Slots come with default margins, but if custom spacing is required, the styles
-can be overridden.
+can be overridden using the `className` prop with a Linaria `css` class.
 
 ```tsx
-const StyledContent = styled(ModalV2.Content)`
+import { css } from "@linaria/core";
+import { Spacing } from "@lifesg/react-design-system/theme";
+
+const customContent = css`
     /* replace the margins */
     margin: ${Spacing["spacing-16"]};
 
@@ -57,6 +60,10 @@ const StyledContent = styled(ModalV2.Content)`
     margin: 0;
     padding-inline: ${Spacing["spacing-16"]};
 `;
+
+<ModalV2.Content className={customContent}>
+    ...
+</ModalV2.Content>
 ```
 
 <Canvas of={ModalV2Stories.StyledSlots} />
