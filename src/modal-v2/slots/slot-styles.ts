@@ -1,6 +1,5 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { ClickableIcon } from "../../shared/clickable-icon";
 import {
     Breakpoint,
     Colour,
@@ -13,7 +12,7 @@ import {
 // =============================================================================
 // Card
 // =============================================================================
-export const ModalCard = styled.div`
+export const modalCard = css`
     width: 40rem;
     margin: ${Spacing["spacing-64"]} auto;
     background: ${Colour.bg};
@@ -23,48 +22,48 @@ export const ModalCard = styled.div`
     display: flex;
     flex-direction: column-reverse;
 
-    max-width: calc(100% - ${Breakpoint["xxl-margin"]}px * 2);
+    max-width: calc(100% - ${Breakpoint["xxl-margin"]} * 2);
 
-    ${MediaQuery.MaxWidth.xxs} {
-        max-width: calc(100% - ${Breakpoint["xxs-margin"]}px * 2);
-    }
-
-    ${MediaQuery.MaxWidth.xs} {
-        max-width: calc(100% - ${Breakpoint["xs-margin"]}px * 2);
-    }
-
-    ${MediaQuery.MaxWidth.sm} {
-        max-width: calc(100% - ${Breakpoint["sm-margin"]}px * 2);
-    }
-
-    ${MediaQuery.MaxWidth.md} {
-        max-width: calc(100% - ${Breakpoint["md-margin"]}px * 2);
+    ${MediaQuery.MaxWidth.xl} {
+        max-width: calc(100% - ${Breakpoint["xl-margin"]} * 2);
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        max-width: calc(100% - ${Breakpoint["lg-margin"]}px * 2);
+        max-width: calc(100% - ${Breakpoint["lg-margin"]} * 2);
     }
 
-    ${MediaQuery.MaxWidth.xl} {
-        max-width: calc(100% - ${Breakpoint["xl-margin"]}px * 2);
+    ${MediaQuery.MaxWidth.md} {
+        max-width: calc(100% - ${Breakpoint["md-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.sm} {
+        max-width: calc(100% - ${Breakpoint["sm-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.xs} {
+        max-width: calc(100% - ${Breakpoint["xs-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.xxs} {
+        max-width: calc(100% - ${Breakpoint["xxs-margin"]} * 2);
     }
 `;
 
 // =============================================================================
 // Header
 // =============================================================================
-export const CloseButtonContainer = styled.div`
+export const closeButtonContainer = css`
     margin-right: ${Spacing["spacing-16"]};
     margin-left: auto;
     margin-top: ${Spacing["spacing-16"]};
     margin-bottom: ${Spacing["spacing-16"]};
 `;
 
-export const StyledClickableIcon = styled(ClickableIcon)`
+export const styledClickableIcon = css`
     padding: 0;
     color: ${Colour.icon};
 
-    svg {
+    & svg {
         height: 2rem;
         width: 2rem;
     }
@@ -73,7 +72,7 @@ export const StyledClickableIcon = styled(ClickableIcon)`
 // =============================================================================
 // Content
 // =============================================================================
-export const ContentContainer = styled.div`
+export const contentContainer = css`
     margin-right: ${Spacing["spacing-64"]};
     margin-left: ${Spacing["spacing-64"]};
 
@@ -86,7 +85,7 @@ export const ContentContainer = styled.div`
 // =============================================================================
 // Footer
 // =============================================================================
-export const FooterContainer = styled.div`
+export const footerContainer = css`
     margin-right: ${Spacing["spacing-64"]};
     margin-left: ${Spacing["spacing-64"]};
 
@@ -115,29 +114,29 @@ export const FooterContainer = styled.div`
 export const slotSpacerHasCloseButton = "modalV2SlotSpacerHasCloseButton";
 export const slotSpacerNoCloseButton = "modalV2SlotSpacerNoCloseButton";
 
-export const SlotSpacer = styled.div`
-    :where(& > ${ContentContainer}:last-child) {
+export const slotSpacer = css`
+    :where(& > .${contentContainer}:last-child) {
         margin-bottom: ${Spacing["spacing-64"]};
     }
 
-    :where(& > ${FooterContainer}:not(:first-child)) {
+    :where(& > .${footerContainer}:not(:first-child)) {
         margin-top: ${Spacing["spacing-32"]};
     }
 
-    :where(& > ${FooterContainer}:last-child) {
+    :where(& > .${footerContainer}:last-child) {
         margin-bottom: ${Spacing["spacing-64"]};
     }
 
     &.${slotSpacerHasCloseButton} {
-        :where(& > ${ContentContainer}:first-child),
-        :where(& > ${FooterContainer}:first-child) {
+        :where(& > .${contentContainer}:first-child),
+        :where(& > .${footerContainer}:first-child) {
             margin-top: 0;
         }
     }
 
     &.${slotSpacerNoCloseButton} {
-        :where(& > ${ContentContainer}:first-child),
-        :where(& > ${FooterContainer}:first-child) {
+        :where(& > .${contentContainer}:first-child),
+        :where(& > .${footerContainer}:first-child) {
             margin-top: ${Spacing["spacing-64"]};
         }
     }

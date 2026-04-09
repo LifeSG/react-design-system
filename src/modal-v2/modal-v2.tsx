@@ -109,12 +109,13 @@ export const ModalV2 = ({
             containerRef={childRef}
             zIndex={zIndex}
         >
-            <styles.Container
+            <div
                 ref={containerRef}
                 data-testid={testId}
                 data-status={status}
                 {...otherProps}
                 className={clsx(
+                    styles.container,
                     ANIMATION_FROM_CLASS_MAP[animationFrom],
                     className
                 )}
@@ -127,22 +128,23 @@ export const ModalV2 = ({
                                 disableInitialFocus ? -1 : refs.floating
                             }
                         >
-                            <styles.ScrollContainer>
-                                <styles.ModalContainer
+                            <div className={styles.scrollContainer}>
+                                <div
                                     ref={refs.setFloating}
                                     {...getFloatingProps()}
                                     role="dialog"
                                     aria-label={ariaLabel}
                                     aria-labelledby={ariaLabelledBy}
                                     aria-describedby={ariaDescribedBy}
+                                    className={styles.modalContainer}
                                 >
                                     {childWithRef}
-                                </styles.ModalContainer>
-                            </styles.ScrollContainer>
+                                </div>
+                            </div>
                         </FloatingFocusManager>
                     )}
                 </ModalContext.Provider>
-            </styles.Container>
+            </div>
         </Overlay>
     );
 };

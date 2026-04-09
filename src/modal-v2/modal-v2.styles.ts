@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { MediaQuery, Motion } from "../theme";
 
@@ -14,7 +14,7 @@ export const containerFromBottom = "modalV2ContainerFromBottom";
 export const containerFromLeft = "modalV2ContainerFromLeft";
 export const containerFromRight = "modalV2ContainerFromRight";
 
-export const Container = styled.div`
+export const container = css`
     position: relative;
     width: 100%;
     height: 100%;
@@ -81,7 +81,7 @@ export const Container = styled.div`
     }
 `;
 
-export const ScrollContainer = styled.div`
+export const scrollContainer = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -89,7 +89,7 @@ export const ScrollContainer = styled.div`
     pointer-events: none;
 `;
 
-export const ModalContainer = styled.div`
+export const modalContainer = css`
     pointer-events: auto;
     width: 100%;
     outline: none;
