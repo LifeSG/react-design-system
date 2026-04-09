@@ -116,6 +116,8 @@ test.describe("DateRangeInput", () => {
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
 
+            await story.getDayCell(15).blur();
+
             await compareScreenshot(story, "state", {
                 fullscreen: true,
             });

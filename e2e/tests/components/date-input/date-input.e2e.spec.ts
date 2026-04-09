@@ -89,10 +89,7 @@ test.describe("DateInput", () => {
             await story.openCalendar();
             await story.getDayCell(10).click();
 
-            // Moving the focus to the container to avoid the hover state
-            // from interfering with the screenshot. Blur is not working
-            // as expected, so using hover on the container as a workaround.
-            await story.locators.dateInput.hover();
+            await story.getDayCell(10).blur();
 
             await compareScreenshot(story, "state", {
                 fullscreen: true,
