@@ -239,7 +239,7 @@ PRIMITIVE COLORS
     */
 
     /* Button */
-    --fds-button-radius: var(--fds-colour-radius-full);
+    --fds-button-radius: var(--fds-radius-full);
     --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
     --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
     --fds-button-default-colour-text: var(--fds-colour-text-inverse);
@@ -247,9 +247,6 @@ PRIMITIVE COLORS
     --fds-button-secondary-colour-text: var(--fds-colour-text-primary);
     --fds-button-light-colour-text: var(--fds-colour-text-primary);
     --fds-button-link-colour-text: var(--fds-colour-text-primary);
-
-    /* Animation */
-    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 
     /* Navbar */
     --fds-navbar-full-height: 6rem;
@@ -275,6 +272,9 @@ PRIMITIVE COLORS
     --fds-footer-disclaimer-link-colour-text-hover: var(
         --fds-colour-text-subtler
     );
+
+    /* Animation */
+    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 
     /*
     ============================================================================

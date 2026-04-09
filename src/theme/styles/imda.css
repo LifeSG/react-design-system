@@ -1,11 +1,11 @@
 @import url("./default.css");
 
-/*
-============================================================================
-PRIMITIVE COLOURS
-============================================================================
-*/
 [data-fds-theme="imda"] {
+    /*
+    ============================================================================
+    PRIMITIVE COLOURS
+    ============================================================================
+    */
     --fds-colour-brand-10: #370009;
     --fds-colour-brand-20: #4E000D;
     --fds-colour-brand-30: #640011;
@@ -238,6 +238,41 @@ PRIMITIVE COLOURS
     ========================================================================
     */
 
+    /* Button */
+    --fds-button-radius: var(--fds-radius-sm);
+    --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
+    --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
+    --fds-button-default-colour-text: var(--fds-colour-text-inverse);
+    --fds-button-secondary-colour-border: var(--fds-colour-border-primary);
+    --fds-button-secondary-colour-text: var(--fds-colour-text-primary);
+    --fds-button-light-colour-text: var(--fds-colour-text-primary);
+    --fds-button-link-colour-text: var(--fds-colour-text-primary);
+
+    /* Navbar */
+    --fds-navbar-full-height: 6rem;
+    --fds-navbar-full-logo-height: 2rem;
+    --fds-navbar-compressed-height: 4rem;
+    --fds-navbar-compressed-logo-height: 1.5rem;
+    --fds-navbar-mobile-height: 3.5rem;
+    --fds-navbar-mobile-logo-height: 1.5rem;
+    --fds-navbar-colour-bg: var(--fds-colour-bg);
+    --fds-navbar-colour-icon: var(--fds-colour-icon);
+    --fds-navbar-link-colour-text: var(--fds-colour-text);
+    --fds-navbar-link-colour-text-hover: var(--fds-colour-text-hover);
+    --fds-navbar-link-colour-text-selected-hover: var(
+        --fds-colour-text-selected-hover
+    );
+
+    /* Footer */
+    --fds-footer-colour-bg: var(--fds-colour-bg-strong);
+    --fds-footer-colour-text: var(--fds-colour-text);
+    --fds-footer-link-colour-text: var(--fds-colour-text);
+    --fds-footer-link-colour-text-hover: var(--fds-colour-text-hover);
+    --fds-footer-disclaimer-link-colour-text: var(--fds-colour-text);
+    --fds-footer-disclaimer-link-colour-text-hover: var(
+        --fds-colour-text-subtler
+    );
+
     /* Animation */
     --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 
@@ -266,6 +301,54 @@ PRIMITIVE COLOURS
         rgb(from var(--fds-colour-neutral-50) r g b / 24%);
     --fds-shadow-lg-strong: 0 2px 12px 1px
         rgb(from var(--fds-colour-neutral-50) r g b / 50%);
+
+    /*
+    ============================================================================
+    FONT
+    ============================================================================
+    */
+    --fds-font-variant: no-common-ligatures;
+    --fds-font-heading-size-xxl: 3rem;
+    --fds-font-heading-size-xl: 2.5rem;
+    --fds-font-heading-size-lg: 2rem;
+    --fds-font-heading-size-md: 1.625rem;
+    --fds-font-heading-size-sm: 1.375rem;
+    --fds-font-heading-size-xs: 1.125rem;
+    --fds-font-heading-lh-xxl: 3.5rem;
+    --fds-font-heading-lh-xl: 3rem;
+    --fds-font-heading-lh-lg: 2.5rem;
+    --fds-font-heading-lh-md: 2.25rem;
+    --fds-font-heading-lh-sm: 1.75rem;
+    --fds-font-heading-lh-xs: 1.625rem;
+    --fds-font-heading-ls-xxl: -0.035rem;
+    --fds-font-heading-ls-xl: -0.02rem;
+    --fds-font-heading-ls-lg: -0.02rem;
+    --fds-font-heading-ls-md: 0rem;
+    --fds-font-heading-ls-sm: 0rem;
+    --fds-font-heading-ls-xs: 0rem;
+    --fds-font-weight-light: 300;
+    --fds-font-weight-regular: 400;
+    --fds-font-weight-semibold: 600;
+    --fds-font-weight-bold: 700;
+    --fds-font-family: "Montserrat";
+    --fds-font-body-size-baseline: 1.125rem;
+    --fds-font-body-size-md: 1rem;
+    --fds-font-body-size-sm: 0.875rem;
+    --fds-font-body-size-xs: 0.75rem;
+    --fds-font-body-lh-baseline: 1.625rem;
+    --fds-font-body-lh-md: 1.5rem;
+    --fds-font-body-lh-sm: 1.625rem;
+    --fds-font-body-lh-xs: 1.25rem;
+    --fds-font-body-ls-baseline: 0rem;
+    --fds-font-body-ls-md: 0.009rem;
+    --fds-font-body-ls-sm: 0.008rem;
+    --fds-font-body-ls-xs: 0.008rem;
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
+    --fds-font-form-label-lh: 1.5rem;
+    --fds-font-form-description-lh: 1.625rem;
+    --fds-font-form-label-ls: 0.009rem;
+    --fds-font-form-description-ls: 0.008rem;
 }
 
 /*
@@ -401,52 +484,4 @@ SEMANTIC COLOURS - DARK MODE
     /* focus ring - adjusted for dark mode */
     --fds-colour-focus-ring: var(--fds-colour-primary-60);
     --fds-colour-focus-ring-inverse: var(--fds-colour-black);
-
-    /*
-    ============================================================================
-    FONT
-    ============================================================================
-    */
-    --fds-font-variant: no-common-ligatures;
-    --fds-font-heading-size-xxl: 3rem;
-    --fds-font-heading-size-xl: 2.5rem;
-    --fds-font-heading-size-lg: 2rem;
-    --fds-font-heading-size-md: 1.625rem;
-    --fds-font-heading-size-sm: 1.375rem;
-    --fds-font-heading-size-xs: 1.125rem;
-    --fds-font-heading-lh-xxl: 3.5rem;
-    --fds-font-heading-lh-xl: 3rem;
-    --fds-font-heading-lh-lg: 2.5rem;
-    --fds-font-heading-lh-md: 2.25rem;
-    --fds-font-heading-lh-sm: 1.75rem;
-    --fds-font-heading-lh-xs: 1.625rem;
-    --fds-font-heading-ls-xxl: -0.035rem;
-    --fds-font-heading-ls-xl: -0.02rem;
-    --fds-font-heading-ls-lg: -0.02rem;
-    --fds-font-heading-ls-md: 0rem;
-    --fds-font-heading-ls-sm: 0rem;
-    --fds-font-heading-ls-xs: 0rem;
-    --fds-font-weight-light: 300;
-    --fds-font-weight-regular: 400;
-    --fds-font-weight-semibold: 600;
-    --fds-font-weight-bold: 700;
-    --fds-font-family: "Montserrat";
-    --fds-font-body-size-baseline: 1.125rem;
-    --fds-font-body-size-md: 1rem;
-    --fds-font-body-size-sm: 0.875rem;
-    --fds-font-body-size-xs: 0.75rem;
-    --fds-font-body-lh-baseline: 1.625rem;
-    --fds-font-body-lh-md: 1.5rem;
-    --fds-font-body-lh-sm: 1.625rem;
-    --fds-font-body-lh-xs: 1.25rem;
-    --fds-font-body-ls-baseline: 0rem;
-    --fds-font-body-ls-md: 0.009rem;
-    --fds-font-body-ls-sm: 0.008rem;
-    --fds-font-body-ls-xs: 0.008rem;
-    --fds-font-form-label-size: 1rem;
-    --fds-font-form-description-size: 0.875rem;
-    --fds-font-form-label-lh: 1.5rem;
-    --fds-font-form-description-lh: 1.625rem;
-    --fds-font-form-label-ls: 0.009rem;
-    --fds-font-form-description-ls: 0.008rem;
 }
