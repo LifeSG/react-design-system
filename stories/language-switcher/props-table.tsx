@@ -30,7 +30,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "onSelectLanguage",
                 description: "Called when a language is selected",
-                propTypes: ["(language: LanguageCode) => void"],
+                propTypes: ["(language: LanguageSwitcherCode) => void"],
             },
         ],
     },

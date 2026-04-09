@@ -1,5 +1,4 @@
 import { LanguageIcon } from "@lifesg/react-icons/language";
-import { TickIcon } from "@lifesg/react-icons/tick";
 import React, { useEffect, useRef, useState } from "react";
 import { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
@@ -164,13 +163,12 @@ export const DropdownVariant = ({
                             tabIndex={isFocused ? 0 : -1}
                             $active={isFocused}
                             $selected={isSelected}
+                            $disabled={false}
                             onClick={() => handleItemSelect(code)}
                             data-testid={`${testId}--item-${code}`}
                         >
                             {isSelected ? (
-                                <SelectedIndicator aria-hidden="true">
-                                    <TickIcon />
-                                </SelectedIndicator>
+                                <SelectedIndicator aria-hidden="true" />
                             ) : (
                                 <UnselectedIndicator />
                             )}

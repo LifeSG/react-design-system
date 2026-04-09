@@ -1,15 +1,12 @@
 import styled, { css } from "styled-components";
 import { ExpandableElement } from "../shared/dropdown-list-v2";
 import { IconContainer } from "../shared/dropdown-list-v2/expandable-element.styles";
+import {
+    ListItem,
+    SelectedIndicator,
+    UnselectedIndicator,
+} from "../shared/dropdown-list-v2/dropdown-list.styles";
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
-
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface DropdownItemStyleProps {
-    $active?: boolean;
-    $selected?: boolean;
-}
 
 // =============================================================================
 // TRIGGER STYLES
@@ -70,41 +67,14 @@ export const DropdownList = styled.ul`
     padding: ${Spacing["spacing-8"]};
 `;
 
-export const SelectedIndicator = styled.span`
-    ${IconWrapper}
-    color: ${Colour["icon-selected"]};
-`;
+export { SelectedIndicator, UnselectedIndicator };
 
-export const UnselectedIndicator = styled.span`
-    display: flex;
-    width: 1rem;
-    flex-shrink: 0;
-`;
-
-export const DropdownItem = styled.li<DropdownItemStyleProps>`
-    display: flex;
+export const DropdownItem = styled(ListItem)`
     align-items: center;
-    gap: ${Spacing["spacing-8"]};
-    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
-    cursor: pointer;
-    border: none;
-    border-radius: ${Radius["none"]};
-    outline: none;
 
-    ${(props) => {
-        if (props.$active && props.$selected) {
-            return css`
-                background: ${Colour["bg-hover"]};
-                color: ${Colour["text-selected"]};
-            `;
-        } else if (props.$selected) {
-            return css`
-                color: ${Colour["text-selected"]};
-            `;
-        } else if (props.$active) {
-            return css`
-                background: ${Colour["bg-hover-subtle"]};
-            `;
-        }
-    }}
+    ${(props) =>
+        props.$selected &&
+        css`
+            color: ${Colour["text-selected"]};
+        `}
 `;
