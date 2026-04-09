@@ -50,7 +50,6 @@ export const OtpVerification = (props: OtpVerificationProps) => {
             setIsLoading(true);
             await onSendOtp();
             onOtpStateChange("sent");
-            // Reset the countdown and clear the OTP code in case user enter new OTP later
             countdown.reset();
             countdown.start();
         } catch {
@@ -76,6 +75,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
                 "polite"
             );
 
+            // Reset the countdown and clear the OTP code in case user enter new OTP later
             countdown.reset();
             onOtpChange?.("");
         } catch {

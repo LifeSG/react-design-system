@@ -127,6 +127,7 @@ export const useCountdown = ({
         startTimeRef.current = null;
     };
 
+    // Update timeLeft when duration changes
     useEffect(() => {
         if (!isRunning) {
             setTimeLeft(duration);
