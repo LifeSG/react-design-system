@@ -27,13 +27,12 @@ export const PopoverV2 = ({
     // =============================================================================
     const testId = _testId || "popover";
     const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint ?? "480px" });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint || "480px" });
     const popoverContainerRef = useRef<HTMLDivElement>(null);
     const popoverCardStyle = useMemo(
         () => ({
-            [styles.tokens.popoverCard.maxHeight]: maxHeight
-                ? `${maxHeight}px`
-                : null,
+            [styles.tokens.popoverCard.maxHeight]:
+                maxHeight === undefined ? null : `${maxHeight}px`,
             [styles.tokens.popoverCard.overflowY]: overflow ?? null,
         }),
         [maxHeight, overflow]
@@ -61,7 +60,7 @@ export const PopoverV2 = ({
 
     return (
         <>
-            {visible && (
+            {visible && !isMobile && (
                 <div
                     ref={popoverContainerRef}
                     tabIndex={0}
