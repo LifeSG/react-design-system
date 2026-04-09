@@ -1,17 +1,16 @@
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { LanguageIcon } from "@lifesg/react-icons/language";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import React, { useEffect, useRef, useState } from "react";
 import { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
-    ChevronWrapper,
     DropdownItem,
     DropdownList,
     DropdownPanel,
     LanguageIconWrapper,
-    TickIconWrapper,
-    TriggerButton,
+    SelectedIndicator,
+    StyledExpandableElement,
+    UnselectedIndicator,
 } from "./dropdown-variant.style";
 import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
 import { LanguageCode, VariantInternalProps } from "./types";
@@ -115,12 +114,13 @@ export const DropdownVariant = ({
     // RENDER FUNCTIONS
     // =========================================================================
     const renderElement = () => (
-        <TriggerButton
+        <StyledExpandableElement
             ref={triggerRef}
-            type="button"
-            role="combobox"
-            aria-expanded={isOpen}
-            aria-haspopup="listbox"
+            disabled={false}
+            expanded={isOpen}
+            listboxId={`${testId}--listbox`}
+            popupRole="listbox"
+            readOnly={false}
             aria-label={`${ARIA_LABEL}, ${LANGUAGE_DISPLAY_MAP[selectedLanguage]}`}
             data-testid={`${testId}--trigger`}
         >
@@ -128,10 +128,7 @@ export const DropdownVariant = ({
                 <LanguageIcon />
             </LanguageIconWrapper>
             {LANGUAGE_DISPLAY_MAP[selectedLanguage]}
-            <ChevronWrapper $expanded={isOpen} aria-hidden="true">
-                <ChevronDownIcon />
-            </ChevronWrapper>
-        </TriggerButton>
+        </StyledExpandableElement>
     );
 
     const renderDropdown = ({
@@ -148,6 +145,7 @@ export const DropdownVariant = ({
         >
             <DropdownList
                 role="listbox"
+                id={`${testId}--listbox`}
                 aria-label={ARIA_LABEL}
                 onKeyDown={handleListKeyDown}
             >
@@ -164,14 +162,17 @@ export const DropdownVariant = ({
                             lang={code}
                             aria-selected={isSelected}
                             tabIndex={isFocused ? 0 : -1}
+                            $active={isFocused}
                             $selected={isSelected}
                             onClick={() => handleItemSelect(code)}
                             data-testid={`${testId}--item-${code}`}
                         >
-                            {isSelected && (
-                                <TickIconWrapper aria-hidden="true">
+                            {isSelected ? (
+                                <SelectedIndicator aria-hidden="true">
                                     <TickIcon />
-                                </TickIconWrapper>
+                                </SelectedIndicator>
+                            ) : (
+                                <UnselectedIndicator />
                             )}
                             {LANGUAGE_DISPLAY_MAP[code]}
                         </DropdownItem>

@@ -1,41 +1,40 @@
 import styled, { css } from "styled-components";
-import { Border, Colour, Font, Motion, Radius, Spacing } from "../theme";
+import { ExpandableElement } from "../shared/dropdown-list-v2";
+import { IconContainer } from "../shared/dropdown-list-v2/expandable-element.styles";
+import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
-interface ChevronStyleProps {
-    $expanded?: boolean;
-}
-
 interface DropdownItemStyleProps {
+    $active?: boolean;
     $selected?: boolean;
 }
 
 // =============================================================================
 // TRIGGER STYLES
 // =============================================================================
-export const TriggerButton = styled.button`
-    display: flex;
-    height: 2.5rem;
+export const StyledExpandableElement = styled(ExpandableElement)`
     min-width: 9rem;
-    padding: 0 ${Spacing["spacing-16"]};
-    align-items: center;
-    gap: ${Spacing["spacing-8"]};
-    flex-shrink: 0;
-    cursor: pointer;
+    width: auto;
     ${Font["body-md-semibold"]}
     color: ${Colour["text-primary"]};
+    height: 2.5rem;
+    padding: 0 ${Spacing["spacing-16"]};
     border-radius: ${Radius["sm"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     background: ${Colour["bg"]};
+
+    ${IconContainer} {
+        margin-left: auto;
+    }
 
     &:hover {
         background: ${Colour["bg-hover"]};
     }
 
     &:focus-visible {
-        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
+        outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: -2px;
     }
 `;
@@ -55,24 +54,6 @@ export const LanguageIconWrapper = styled.span`
     color: ${Colour["icon-primary"]};
 `;
 
-export const ChevronWrapper = styled.span<ChevronStyleProps>`
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-    transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
-
-    svg {
-        height: 1rem;
-        width: 1rem;
-    }
-
-    ${({ $expanded }) =>
-        $expanded &&
-        css`
-            transform: rotate(180deg);
-        `}
-`;
-
 // =============================================================================
 // DROPDOWN STYLES
 // =============================================================================
@@ -80,52 +61,50 @@ export const DropdownPanel = styled.div`
     border-radius: ${Radius["sm"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     background: ${Colour["bg"]};
+    overflow: hidden;
 `;
 
 export const DropdownList = styled.ul`
     list-style: none;
     margin: 0;
-    padding: 0;
+    padding: ${Spacing["spacing-8"]};
 `;
 
-export const TickIconWrapper = styled.span`
+export const SelectedIndicator = styled.span`
     ${IconWrapper}
-    color: ${Colour["icon-primary"]};
+    color: ${Colour["icon-selected"]};
+`;
+
+export const UnselectedIndicator = styled.span`
+    display: flex;
+    width: 1rem;
+    flex-shrink: 0;
 `;
 
 export const DropdownItem = styled.li<DropdownItemStyleProps>`
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-8"]};
-    width: 100%;
-    height: 2.5rem;
-    background: none;
-    border: none;
-    padding: 0 ${Spacing["spacing-16"]};
-    ${({ $selected }) =>
-        !$selected &&
-        css`
-            padding-left: calc(
-                ${Spacing["spacing-16"]} + 1rem + ${Spacing["spacing-8"]}
-            );
-        `}
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
     cursor: pointer;
-    ${Font["body-md-regular"]}
-    color: ${Colour["text"]};
+    border: none;
+    border-radius: ${Radius["none"]};
+    outline: none;
 
-    &:hover {
-        background: ${Colour["bg-hover"]};
-    }
-
-    &:focus-visible {
-        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
-        outline-offset: -2px;
-    }
-
-    ${({ $selected }) =>
-        $selected &&
-        css`
-            background: ${Colour["bg-primary-subtlest"]};
-            color: ${Colour["text-primary"]};
-        `}
+    ${(props) => {
+        if (props.$active && props.$selected) {
+            return css`
+                background: ${Colour["bg-hover"]};
+                color: ${Colour["text-selected"]};
+            `;
+        } else if (props.$selected) {
+            return css`
+                color: ${Colour["text-selected"]};
+            `;
+        } else if (props.$active) {
+            return css`
+                background: ${Colour["bg-hover-subtle"]};
+            `;
+        }
+    }}
 `;
