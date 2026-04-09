@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { V3_MediaQuery, V3_Motion } from "../v3_theme";
+import { MediaQuery, Motion } from "../theme";
 import type { ModalAnimationDirection } from "./types";
 
 interface Props {
@@ -17,7 +17,7 @@ export const Container = styled.div<Props>`
 
     overflow: auto;
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         ${(props) => {
             return css`
                 height: calc(
@@ -40,16 +40,14 @@ export const Container = styled.div<Props>`
         &[data-status="open"] {
             opacity: 1;
             ${props.$animationFrom}: 0;
-            transition: all ${V3_Motion["duration-250"]}
-                ${V3_Motion["ease-entrance"]};
-            transition-delay: ${V3_Motion["duration-150"]};
+            transition: all ${Motion["duration-250"]} ${Motion["ease-entrance"]};
+            transition-delay: ${Motion["duration-150"]};
         }
 
         &[data-status="close"] {
             opacity: 0;
             ${props.$animationFrom}: -3%;
-            transition: all ${V3_Motion["duration-250"]}
-                ${V3_Motion["ease-exit"]};
+            transition: all ${Motion["duration-250"]} ${Motion["ease-exit"]};
         }
     `}
 `;
