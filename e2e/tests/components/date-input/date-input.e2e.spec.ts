@@ -71,61 +71,40 @@ test.describe("DateInput", () => {
             await story.init("default", { mockedTimestamp: fixedTimestamp });
         });
 
-        test("Single date calendar states", async ({ story }) => {
-            await test.step("Mount - calendar closed", async () => {
-                await expect(
-                    story.locators.calendarContainer
-                ).not.toBeVisible();
-                await expect(story.locators.selectedValue).toHaveText("none");
-                await compareScreenshot(story, "mount-closed");
+        test("Mount closed", async ({ story }) => {
+            await expect(story.locators.calendarContainer).not.toBeVisible();
+            await expect(story.locators.selectedValue).toHaveText("none");
+            await compareScreenshot(story, "mount-closed");
+        });
+
+        test("Hovered date", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(15).hover();
+            await compareScreenshot(story, "single-hovered", {
+                fullscreen: true,
             });
+        });
 
-            await test.step("Open + hovered date", async () => {
-                await story.openCalendar();
-                await story.getDayCell(15).hover();
-                await compareScreenshot(story, "single-hovered", {
-                    fullscreen: true,
-                });
+        test("Selected date", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+
+            // Moving the focus to the container to avoid the hover state
+            // from interfering with the screenshot. Blur is not working
+            // as expected, so using hover on the container as a workaround.
+            await story.locators.dateInput.hover();
+
+            await compareScreenshot(story, "single-selected", {
+                fullscreen: true,
             });
+        });
 
-            await test.step("Selected date", async () => {
-                await story.getDayCell(10).click();
-
-                // Moving the focus to the container to avoid the hover state
-                // from interfering with the screenshot. Blur is not working
-                // as expected, so using hover on the container as a workaround.
-                await story.locators.dateInput.hover();
-
-                await compareScreenshot(story, "single-selected", {
-                    fullscreen: true,
-                });
-            });
-
-            await test.step("Selected + hovered date", async () => {
-                await story.getDayCell(10).hover();
-                await compareScreenshot(story, "single-selected-hovered", {
-                    fullscreen: true,
-                });
-            });
-
-            await test.step("Commit with Done", async () => {
-                await story.locators.doneButton.click();
-                await expect(story.locators.selectedValue).toHaveText(
-                    /^\d{4}-\d{2}-\d{2}$/
-                );
-            });
-
-            await test.step("Cancel restores initial value", async () => {
-                const previousValue =
-                    (await story.locators.selectedValue.textContent()) ?? "";
-
-                await story.openCalendar();
-                await story.getDayCell(20).click();
-                await story.locators.cancelButton.click();
-
-                await expect(story.locators.selectedValue).toHaveText(
-                    previousValue
-                );
+        test("Selected and hovered date", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.getDayCell(10).hover();
+            await compareScreenshot(story, "single-selected-hovered", {
+                fullscreen: true,
             });
         });
     });
@@ -135,7 +114,7 @@ test.describe("DateInput", () => {
             await story.init("selected", { mockedTimestamp: fixedTimestamp });
         });
 
-        test("Single date month and year views", async ({ story }) => {
+        test("Month view", async ({ story }) => {
             await story.openCalendar();
 
             await story.monthButton.click();
@@ -143,14 +122,55 @@ test.describe("DateInput", () => {
             await compareScreenshot(story, "single-month-view", {
                 fullscreen: true,
             });
+        });
+    });
 
-            await story.locators.cancelButton.click();
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("selected", { mockedTimestamp: fixedTimestamp });
+        });
 
+        test("Year view", async ({ story }) => {
+            await story.openCalendar();
             await story.yearButton.click();
             await expect(story.getYearOption("2026")).toBeVisible();
             await compareScreenshot(story, "single-year-view", {
                 fullscreen: true,
             });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { mockedTimestamp: fixedTimestamp });
+        });
+
+        test("Commit with Done", async ({ story }) => {
+            await story.openCalendar();
+            await story.getDayCell(10).click();
+            await story.locators.doneButton.click();
+            await expect(story.locators.selectedValue).toHaveText(
+                /^\d{4}-\d{2}-\d{2}$/
+            );
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { mockedTimestamp: fixedTimestamp });
+        });
+
+        test("Cancel restores initial value", async ({ story }) => {
+            const previousValue =
+                (await story.locators.selectedValue.textContent()) ?? "";
+
+            await story.openCalendar();
+            await story.getDayCell(20).click();
+            await story.locators.cancelButton.click();
+
+            await expect(story.locators.selectedValue).toHaveText(
+                previousValue
+            );
         });
     });
 
