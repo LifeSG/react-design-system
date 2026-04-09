@@ -1,7 +1,7 @@
 import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { LanguageSwitcher } from "src/language-switcher";
-import { LanguageCode } from "src/language-switcher/types";
+import { LanguageSwitcherCode } from "src/language-switcher/types";
 
 type Component = typeof LanguageSwitcher;
 
@@ -17,7 +17,7 @@ export default meta;
 // =============================================================================
 export const Dropdown: StoryObj<Component> = {
     render: (_args) => {
-        const [language, setLanguage] = useState<LanguageCode>("en");
+        const [language, setLanguage] = useState<LanguageSwitcherCode>("en");
 
         return (
             <LanguageSwitcher
@@ -31,7 +31,7 @@ export const Dropdown: StoryObj<Component> = {
 
 export const DropdownPreselected: StoryObj<Component> = {
     render: (_args) => {
-        const [language, setLanguage] = useState<LanguageCode>("zh");
+        const [language, setLanguage] = useState<LanguageSwitcherCode>("zh");
 
         return (
             <LanguageSwitcher
@@ -48,7 +48,7 @@ export const DropdownPreselected: StoryObj<Component> = {
 // =============================================================================
 export const LinkContainer: StoryObj<Component> = {
     render: (_args) => {
-        const [language, setLanguage] = useState<LanguageCode>("en");
+        const [language, setLanguage] = useState<LanguageSwitcherCode>("en");
 
         return (
             <LanguageSwitcher
@@ -62,7 +62,7 @@ export const LinkContainer: StoryObj<Component> = {
 
 export const LinkContainerPreselected: StoryObj<Component> = {
     render: (_args) => {
-        const [language, setLanguage] = useState<LanguageCode>("ta");
+        const [language, setLanguage] = useState<LanguageSwitcherCode>("ta");
 
         return (
             <LanguageSwitcher

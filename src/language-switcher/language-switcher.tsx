@@ -2,7 +2,7 @@ import { announce } from "@react-aria/live-announcer";
 import { DropdownVariant } from "./dropdown-variant";
 import { LinkContainerVariant } from "./link-container-variant";
 import { LANGUAGE_DISPLAY_MAP } from "./data";
-import { LanguageCode, LanguageSwitcherProps } from "./types";
+import { LanguageSwitcherCode, LanguageSwitcherProps } from "./types";
 
 export const LanguageSwitcher = ({
     variant = "dropdown",
@@ -14,7 +14,7 @@ export const LanguageSwitcher = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleSelectLanguage = (code: LanguageCode) => {
+    const handleSelectLanguage = (code: LanguageSwitcherCode) => {
         if (code !== selectedLanguage && onSelectLanguage) {
             onSelectLanguage(code);
             announce(`${LANGUAGE_DISPLAY_MAP[code]} selected`, "polite");

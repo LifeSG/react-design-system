@@ -13,7 +13,7 @@ import {
     UnselectedIndicator,
 } from "./dropdown-variant.style";
 import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
-import { LanguageCode, VariantInternalProps } from "./types";
+import { LanguageSwitcherCode, VariantInternalProps } from "./types";
 
 export const DropdownVariant = ({
     selectedLanguage,
@@ -61,7 +61,7 @@ export const DropdownVariant = ({
         triggerRef.current?.focus();
     };
 
-    const handleItemSelect = (code: LanguageCode) => {
+    const handleItemSelect = (code: LanguageSwitcherCode) => {
         onSelectLanguage(code);
         setIsOpen(false);
         triggerRef.current?.focus();
