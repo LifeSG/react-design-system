@@ -83,7 +83,6 @@ export type ResourceScheme =
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
-    | "sgwdigitallobby"
     | "imda"
     | "spf";
 
