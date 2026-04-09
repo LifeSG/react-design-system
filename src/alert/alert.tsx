@@ -38,6 +38,7 @@ export const Alert = ({
         useResizeDetector<HTMLDivElement>();
     const [contentId] = useState(() => SimpleIdGenerator.generate());
     const containerRef = useRef<HTMLDivElement>(null);
+    const isCollapsed = isContentOutsideCollapsibleZone();
 
     // =============================================================================
     // HELPERS
@@ -65,18 +66,16 @@ export const Alert = ({
         setRenderShowMore(isContentOutsideCollapsibleZone());
     }, [maxCollapsedHeight, contentHeight]);
 
-    const isContentOutsideCollapsibleZone = () => {
+    function isContentOutsideCollapsibleZone() {
         if (contentHeight && maxCollapsedHeight) {
             return contentHeight > maxCollapsedHeight;
         }
         return false;
-    };
+    }
 
     const isInert = () => {
         return !!maxCollapsedHeight && !showHiddenContent;
     };
-
-    const isCollapsed = isContentOutsideCollapsibleZone();
 
     // =============================================================================
     // EFFECTS
@@ -87,7 +86,7 @@ export const Alert = ({
     }, [maxCollapsedHeight, contentHeight, setCollapsedState]);
 
     useApplyStyle(containerRef, {
-        [styles.maxCollapsedHeightVar]:
+        [styles.tokens.maxCollapsedHeight]:
             !showHiddenContent && isCollapsed && maxCollapsedHeight
                 ? `${maxCollapsedHeight}px`
                 : null,
@@ -194,23 +193,33 @@ export const Alert = ({
         );
     };
 
-    const wrapperTypeClass =
-        {
-            error: styles.wrapperError,
-            success: styles.wrapperSuccess,
-            warning: styles.wrapperWarning,
-            info: styles.wrapperInfo,
-            description: styles.wrapperDescription,
-        }[type] ?? styles.wrapperWarning;
+    const typeClassMap = {
+        error: {
+            wrapperTypeClass: styles.wrapperError,
+            iconColorClass: styles.alertIconError,
+        },
+        success: {
+            wrapperTypeClass: styles.wrapperSuccess,
+            iconColorClass: styles.alertIconSuccess,
+        },
+        warning: {
+            wrapperTypeClass: styles.wrapperWarning,
+            iconColorClass: styles.alertIconWarning,
+        },
+        info: {
+            wrapperTypeClass: styles.wrapperInfo,
+            iconColorClass: styles.alertIconInfo,
+        },
+        description: {
+            wrapperTypeClass: styles.wrapperDescription,
+            iconColorClass: styles.alertIconDescription,
+        },
+    };
 
-    const iconColorClass =
-        {
-            error: styles.alertIconError,
-            success: styles.alertIconSuccess,
-            warning: styles.alertIconWarning,
-            info: styles.alertIconInfo,
-            description: styles.alertIconDescription,
-        }[type] ?? styles.alertIconWarning;
+    const {
+        wrapperTypeClass = styles.wrapperWarning,
+        iconColorClass = styles.alertIconWarning,
+    } = typeClassMap[type] || {};
 
     return (
         <div
@@ -232,6 +241,11 @@ export const Alert = ({
                     {renderIcon()}
                 </div>
             )}
+            {/* 
+                CSS-BASED TAB ORDER IMPLEMENTATION:
+                - DOM order: button → link → content (natural tab order)
+                - Visual order: content → button (via CSS order property)
+            */}
             <div className={styles.contentContainer}>
                 {renderShowMore && renderShowMoreButton()}
                 {renderContent()}

@@ -2,9 +2,10 @@ import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Motion, Spacing } from "../theme/tokens";
 
-// CSS variable for max-height injection
-export const maxCollapsedHeightVar =
-    "--fds-internal-alert-textWrapperContainer-maxCollapsedHeight";
+export const tokens = {
+    maxCollapsedHeight:
+        "--fds-internal-alert-textWrapperContainer-maxCollapsedHeight",
+};
 
 // =============================================================================
 // WRAPPER
@@ -12,35 +13,31 @@ export const maxCollapsedHeightVar =
 export const wrapper = css`
     padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     display: flex;
+    border-left: ${Border["width-020"]} ${Border["solid"]};
 `;
 
 export const wrapperError = css`
     background: ${Colour["bg-error"]};
-    border-left: ${Border["width-020"]} ${Border["solid"]};
     border-left-color: ${Colour["border-error"]};
 `;
 
 export const wrapperSuccess = css`
     background: ${Colour["bg-success"]};
-    border-left: ${Border["width-020"]} ${Border["solid"]};
     border-left-color: ${Colour["border-success"]};
 `;
 
 export const wrapperWarning = css`
     background: ${Colour["bg-warning"]};
-    border-left: ${Border["width-020"]} ${Border["solid"]};
     border-left-color: ${Colour["border-warning"]};
 `;
 
 export const wrapperInfo = css`
     background: ${Colour["bg-info"]};
-    border-left: ${Border["width-020"]} ${Border["solid"]};
     border-left-color: ${Colour["border-info"]};
 `;
 
 export const wrapperDescription = css`
     background: ${Colour["bg-strong"]};
-    border-left: ${Border["width-020"]} ${Border["solid"]};
     border-left-color: ${Colour["border-strong"]};
 `;
 
@@ -148,7 +145,7 @@ export const textWrapperContainerShowMoreWithLink = css`
 `;
 
 export const textWrapperContainerCollapsed = css`
-    max-height: var(${maxCollapsedHeightVar});
+    max-height: var(${tokens.maxCollapsedHeight});
     overflow: hidden;
     -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
