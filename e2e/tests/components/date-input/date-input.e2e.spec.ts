@@ -74,13 +74,13 @@ test.describe("DateInput", () => {
         test("Mount closed", async ({ story }) => {
             await expect(story.locators.calendarContainer).not.toBeVisible();
             await expect(story.locators.selectedValue).toHaveText("none");
-            await compareScreenshot(story, "mount-closed");
+            await compareScreenshot(story, "state");
         });
 
         test("Hovered date", async ({ story }) => {
             await story.openCalendar();
             await story.getDayCell(15).hover();
-            await compareScreenshot(story, "single-hovered", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -94,7 +94,7 @@ test.describe("DateInput", () => {
             // as expected, so using hover on the container as a workaround.
             await story.locators.dateInput.hover();
 
-            await compareScreenshot(story, "single-selected", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -103,7 +103,7 @@ test.describe("DateInput", () => {
             await story.openCalendar();
             await story.getDayCell(10).click();
             await story.getDayCell(10).hover();
-            await compareScreenshot(story, "single-selected-hovered", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -119,7 +119,7 @@ test.describe("DateInput", () => {
 
             await story.monthButton.click();
             await expect(story.getMonthOption("January")).toBeVisible();
-            await compareScreenshot(story, "single-month-view", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -134,7 +134,7 @@ test.describe("DateInput", () => {
             await story.openCalendar();
             await story.yearButton.click();
             await expect(story.getYearOption("2026")).toBeVisible();
-            await compareScreenshot(story, "single-year-view", {
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -180,13 +180,12 @@ test.describe("DateInput", () => {
         });
 
         test("Disabled state", async ({ story }) => {
-            await expect(story.locators.dateInput).toHaveAttribute(
-                "aria-disabled",
-                "true"
-            );
+            await expect(story.locators.dateInput).toMatchAriaSnapshot(`
+                - group [disabled]
+            `);
             await expect(story.locators.calendarContainer).not.toBeVisible();
 
-            await compareScreenshot(story, "disabled-on-mount");
+            await compareScreenshot(story, "state");
 
             await story.locators.dateInput.click({ force: true });
             await expect(story.locators.calendarContainer).not.toBeVisible();
