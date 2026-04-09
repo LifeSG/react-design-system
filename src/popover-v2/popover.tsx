@@ -27,7 +27,7 @@ export const PopoverV2 = ({
     // =============================================================================
     const testId = _testId || "popover";
     const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint ?? "480px" });
     const popoverContainerRef = useRef<HTMLDivElement>(null);
     const popoverCardStyle = useMemo(
         () => ({
