@@ -1,4 +1,4 @@
-import { DropdownVariantType } from "../dropdown-list-v2/types";
+import { DropdownVariantType } from "../dropdown-list/types";
 
 export interface DropdownSelectorProps {
     children: React.ReactNode;

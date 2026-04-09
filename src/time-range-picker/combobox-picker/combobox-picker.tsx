@@ -7,8 +7,8 @@ import {
 } from "../../form/form-label.style";
 import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { ClearIcon } from "../../input/input.style";
-import { DropdownListState } from "../../shared/dropdown-list-v2";
-import { DropdownList } from "../../shared/dropdown-list-v2/dropdown-list";
+import { DropdownListState } from "../../shared/dropdown-list";
+import { DropdownList } from "../../shared/dropdown-list/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { SimpleIdGenerator } from "../../util";
