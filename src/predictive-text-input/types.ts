@@ -1,6 +1,6 @@
 import type { RefObject } from "react";
 
-import type { ListItemDisplayProps } from "../shared/dropdown-list/types";
+import type { ListItemDisplayProps } from "../shared/dropdown-list-v2/types";
 import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export interface PredictiveTextInputProps<T, V> extends React.AriaAttributes {

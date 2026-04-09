@@ -4,10 +4,6 @@ import { ThemeContext } from "styled-components";
 
 import { StringHelper } from "../../util/string-helper";
 import { V3_Font } from "../../v3_theme";
-import type {
-    DropdownVariantType,
-    LabelDisplayType,
-} from "../dropdown-list/types";
 import {
     Label,
     MatchedText,
@@ -16,6 +12,7 @@ import {
     TruncateFirstLine,
     TruncateSecondLine,
 } from "./dropdown-label.styles";
+import type { DropdownVariantType, LabelDisplayType } from "./types";
 
 interface DropdownLabelProps {
     bold?: boolean | undefined;

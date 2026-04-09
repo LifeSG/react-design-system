@@ -1,7 +1,10 @@
 import styled, { css } from "styled-components";
 
 import { V3_Colour, V3_Font } from "../../v3_theme";
-import type { DropdownVariantType, TruncateType } from "../dropdown-list/types";
+import type {
+    DropdownVariantType,
+    TruncateType,
+} from "../dropdown-list-v2/types";
 import { lineClampCss } from "../styles";
 
 // =============================================================================

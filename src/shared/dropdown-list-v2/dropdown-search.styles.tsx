@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 
 import { V3_Colour, V3_Font, V3_Radius, V3_Spacing } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
-import type { DropdownVariantType } from "../dropdown-list/types";
 import { BasicInput } from "../input-wrapper";
+import type { DropdownVariantType } from "./types";
 
 //=============================================================================
 // STYLE INTERFACE
