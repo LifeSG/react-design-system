@@ -12,6 +12,7 @@ import { SGWDigitalLobbyFontSpecSet } from "./specs/sgw-digital-lobby-font-spec-
 import { SPFFontSpecSet } from "./specs/spf-font-spec-set";
 import { SupportGoWhereFontSpecSet } from "./specs/supportgowhere-font-spec-set";
 import { FontSpecCollectionMap, FontSpecSet } from "./types";
+import { SMGSFontSpecSet } from "./specs/smgs-font-spec-set";
 
 const FontSpec: ThemeCollectionSpec<FontSpecCollectionMap, FontScheme> = {
     collections: {
@@ -25,6 +26,7 @@ const FontSpec: ThemeCollectionSpec<FontSpecCollectionMap, FontScheme> = {
         imda: IMDAFontSpecSet,
         spf: SPFFontSpecSet,
         oneservice: OneServiceFontSpecSet,
+        smgs: SMGSFontSpecSet,
     },
     defaultValue: "default",
 };
@@ -74,6 +76,8 @@ export const FontSpecValues: {
     "weight-semibold": getFontSpec("weight-semibold"),
     "weight-bold": getFontSpec("weight-bold"),
     "font-family": getFontSpec("font-family"),
+    "heading-font-family": getFontSpec("heading-font-family"),
+    "body-font-family": getFontSpec("body-font-family"),
 
     "body-size-baseline": getFontSpec("body-size-baseline"),
     "body-size-md": getFontSpec("body-size-md"),

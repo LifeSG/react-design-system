@@ -48,7 +48,8 @@ export type ColourScheme =
     | "a11yplayground"
     | "supportgowhere"
     | "imda"
-    | "spf";
+    | "spf"
+    | "smgs";
 export type FontScheme =
     | "default"
     | "bookingsg"
@@ -59,7 +60,8 @@ export type FontScheme =
     | "sgwdigitallobby"
     | "imda"
     | "spf"
-    | "oneservice";
+    | "oneservice"
+    | "smgs";
 export type MotionScheme = "default";
 export type BorderScheme = "default";
 export type SpacingScheme = "default";
@@ -71,7 +73,8 @@ export type ComponentScheme =
     | "pa"
     | "a11yplayground"
     | "lifesg"
-    | "spf";
+    | "spf"
+    | "smgs";
 export type ResourceScheme =
     | "lifesg"
     | "bookingsg"
@@ -83,7 +86,8 @@ export type ResourceScheme =
     | "a11yplayground"
     | "supportgowhere"
     | "imda"
-    | "spf";
+    | "spf"
+    | "smgs";
 
 export type ColourMode = "light" | "dark";
 

@@ -12,6 +12,7 @@ import { A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
 import { SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
 import { IMDAColourSet } from "./specs/imda-colour-set";
 import { SPFColourSet } from "./specs/spf-colour-set";
+import { SMGSColourSet } from "./specs/smgs-colour-set";
 import { ColourCollectionsMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -30,6 +31,7 @@ export const ColourSpec: ThemeCollectionSpec<
         supportgowhere: SupportGoWhereColourSet,
         imda: IMDAColourSet,
         spf: SPFColourSet,
+        smgs: SMGSColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -54,6 +56,7 @@ export const DarkColourSpec: ThemeCollectionSpec<
         supportgowhere: SupportGoWhereColourSet,
         imda: IMDAColourSet,
         spf: SPFColourSet,
+        smgs: SMGSColourSet,
     },
     defaultValue: "lifesg",
 };

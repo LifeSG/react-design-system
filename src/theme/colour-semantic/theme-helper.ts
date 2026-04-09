@@ -28,6 +28,7 @@ export const ColourSpec: ThemeCollectionSpec<
         supportgowhere: LifeSGColourSet,
         imda: LifeSGColourSet,
         spf: LifeSGColourSet,
+        smgs: LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -48,6 +49,7 @@ export const DarkColourSpec: ThemeCollectionSpec<
         supportgowhere: LifeSGDarkColourSet,
         imda: LifeSGDarkColourSet,
         spf: LifeSGDarkColourSet,
+        smgs: LifeSGDarkColourSet,
     },
     defaultValue: "lifesg",
 };

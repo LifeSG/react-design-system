@@ -14,6 +14,7 @@ import {
     SPFTheme,
     SupportGoWhereTheme,
     SGWDigitalLobbyTheme,
+    SMGSTheme,
 } from "../src/theme";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
@@ -33,6 +34,7 @@ const preview: Preview = {
                 IMDA: IMDATheme,
                 RBS: RBSTheme,
                 SPF: SPFTheme,
+                SMGS: SMGSTheme,
             },
             Provider: ThemeProvider,
         }),

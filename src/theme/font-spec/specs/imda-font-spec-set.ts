@@ -27,6 +27,8 @@ export const IMDAFontSpecSet: FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Montserrat",
+    "heading-font-family": "Montserrat",
+    "body-font-family": "Montserrat",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",
