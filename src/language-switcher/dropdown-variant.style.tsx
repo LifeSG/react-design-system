@@ -24,6 +24,10 @@ export const StyledExpandableElement = styled(ExpandableElement)`
 
     ${IconContainer} {
         margin-left: auto;
+
+        svg {
+            color: ${Colour["text-selected"]};
+        }
     }
 
     &:hover {
