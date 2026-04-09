@@ -239,7 +239,7 @@ PRIMITIVE COLORS
     */
 
     /* Button */
-    --fds-button-radius: var(--fds-colour-radius-full);
+    --fds-button-radius: var(--fds-radius-full);
     --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
     --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
     --fds-button-default-colour-text: var(--fds-colour-text-inverse);
