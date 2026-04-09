@@ -186,10 +186,10 @@ export const DifferentIndicators: StoryObj<Component> = {
                         endTime: "18:15",
                         styleAttributes: {
                             styleType: "stripes",
-                            backgroundColor: "#f2df16",
-                            backgroundColor2: "#f8ef88",
-                            hoverBackgroundColor: "#fe8f17",
-                            hoverBackgroundColor2: "#f8b975",
+                            backgroundColor: "#F2DF16",
+                            backgroundColor2: "#F8EF88",
+                            hoverBackgroundColor: "#FE8F17",
+                            hoverBackgroundColor2: "#F8B975",
                         },
                     },
                 ]}
