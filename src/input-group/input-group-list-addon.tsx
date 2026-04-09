@@ -1,8 +1,8 @@
 import type { OpenChangeReason } from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 
-import { concatIds, VisuallyHidden } from "../shared/accessibility";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
+import { concatIds,VisuallyHidden } from "../shared/accessibility";
+import { DropdownList, DropdownListState } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,

@@ -4,8 +4,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Input } from "../input";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
-import type { ItemsLoadStateType } from "../shared/dropdown-list-v2/types";
+import { DropdownList, DropdownListState } from "../shared/dropdown-list";
+import type { ItemsLoadStateType } from "../shared/dropdown-list/types";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { InputWrapper } from "../shared/input-wrapper";
 import { SimpleIdGenerator } from "../util";

@@ -1,10 +1,7 @@
 import { useEffect, useRef, useState } from "react";
 
 import { HistogramSlider } from "../histogram-slider";
-import {
-    DropdownListState,
-    ExpandableElement,
-} from "../shared/dropdown-list-v2";
+import { DropdownListState, ExpandableElement } from "../shared/dropdown-list";
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { LabelContainer } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";

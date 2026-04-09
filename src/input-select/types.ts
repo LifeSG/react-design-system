@@ -7,7 +7,7 @@ import type {
     DropdownVariantType,
     ItemsLoadStateType,
     TruncateType,
-} from "../shared/dropdown-list-v2/types";
+} from "../shared/dropdown-list/types";
 import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 // =============================================================================

@@ -3,8 +3,8 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { ClearIcon } from "../input/input.style";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
-import type { DropdownListApi } from "../shared/dropdown-list-v2";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
+import type { DropdownListApi } from "../shared/dropdown-list";
+import { DropdownList, DropdownListState } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     PlaceholderLabel,
