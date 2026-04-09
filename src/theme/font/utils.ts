@@ -4,6 +4,7 @@ import { getFontSpec } from "../font-spec/theme-helper";
 import { FontSetAdditionalOptions } from "./types";
 
 export const generateFontCSS = (
+    fontFamilyKey: keyof FontSpecSet,
     fontSizeKey: keyof FontSpecSet,
     fontWeightKey: keyof FontSpecSet,
     lineHeightKey: keyof FontSpecSet,
@@ -13,7 +14,7 @@ export const generateFontCSS = (
     const { disableLigatures } = options || {};
 
     return css`
-        font-family: ${getFontSpec("font-family")};
+        font-family: ${getFontSpec(fontFamilyKey)};
         font-size: ${getFontSpec(fontSizeKey)};
         font-weight: ${getFontSpec(fontWeightKey)};
         line-height: ${getFontSpec(lineHeightKey)};
@@ -27,6 +28,7 @@ export const getFontSet = (
     options: FontSetAdditionalOptions = {}
 ): FontSet => ({
     "heading-xxl-light": generateFontCSS(
+        "heading-font-family",
         "heading-size-xxl",
         "weight-light",
         "heading-lh-xxl",
@@ -34,6 +36,7 @@ export const getFontSet = (
         options
     ),
     "heading-xxl-regular": generateFontCSS(
+        "heading-font-family",
         "heading-size-xxl",
         "weight-regular",
         "heading-lh-xxl",
@@ -41,6 +44,7 @@ export const getFontSet = (
         options
     ),
     "heading-xxl-semibold": generateFontCSS(
+        "heading-font-family",
         "heading-size-xxl",
         "weight-semibold",
         "heading-lh-xxl",
@@ -48,6 +52,7 @@ export const getFontSet = (
         options
     ),
     "heading-xxl-bold": generateFontCSS(
+        "heading-font-family",
         "heading-size-xxl",
         "weight-bold",
         "heading-lh-xxl",
@@ -55,6 +60,7 @@ export const getFontSet = (
         options
     ),
     "heading-xl-light": generateFontCSS(
+        "heading-font-family",
         "heading-size-xl",
         "weight-light",
         "heading-lh-xl",
@@ -62,6 +68,7 @@ export const getFontSet = (
         options
     ),
     "heading-xl-regular": generateFontCSS(
+        "heading-font-family",
         "heading-size-xl",
         "weight-regular",
         "heading-lh-xl",
@@ -69,6 +76,7 @@ export const getFontSet = (
         options
     ),
     "heading-xl-semibold": generateFontCSS(
+        "heading-font-family",
         "heading-size-xl",
         "weight-semibold",
         "heading-lh-xl",
@@ -76,6 +84,7 @@ export const getFontSet = (
         options
     ),
     "heading-xl-bold": generateFontCSS(
+        "heading-font-family",
         "heading-size-xl",
         "weight-bold",
         "heading-lh-xl",
@@ -83,6 +92,7 @@ export const getFontSet = (
         options
     ),
     "heading-lg-light": generateFontCSS(
+        "heading-font-family",
         "heading-size-lg",
         "weight-light",
         "heading-lh-lg",
@@ -90,6 +100,7 @@ export const getFontSet = (
         options
     ),
     "heading-lg-regular": generateFontCSS(
+        "heading-font-family",
         "heading-size-lg",
         "weight-regular",
         "heading-lh-lg",
@@ -97,6 +108,7 @@ export const getFontSet = (
         options
     ),
     "heading-lg-semibold": generateFontCSS(
+        "heading-font-family",
         "heading-size-lg",
         "weight-semibold",
         "heading-lh-lg",
@@ -104,6 +116,7 @@ export const getFontSet = (
         options
     ),
     "heading-lg-bold": generateFontCSS(
+        "heading-font-family",
         "heading-size-lg",
         "weight-bold",
         "heading-lh-lg",
@@ -111,6 +124,7 @@ export const getFontSet = (
         options
     ),
     "heading-md-light": generateFontCSS(
+        "heading-font-family",
         "heading-size-md",
         "weight-light",
         "heading-lh-md",
@@ -118,6 +132,7 @@ export const getFontSet = (
         options
     ),
     "heading-md-regular": generateFontCSS(
+        "heading-font-family",
         "heading-size-md",
         "weight-regular",
         "heading-lh-md",
@@ -125,6 +140,7 @@ export const getFontSet = (
         options
     ),
     "heading-md-semibold": generateFontCSS(
+        "heading-font-family",
         "heading-size-md",
         "weight-semibold",
         "heading-lh-md",
@@ -132,6 +148,7 @@ export const getFontSet = (
         options
     ),
     "heading-md-bold": generateFontCSS(
+        "heading-font-family",
         "heading-size-md",
         "weight-bold",
         "heading-lh-md",
@@ -139,6 +156,7 @@ export const getFontSet = (
         options
     ),
     "heading-sm-light": generateFontCSS(
+        "heading-font-family",
         "heading-size-sm",
         "weight-light",
         "heading-lh-sm",
@@ -146,6 +164,7 @@ export const getFontSet = (
         options
     ),
     "heading-sm-regular": generateFontCSS(
+        "heading-font-family",
         "heading-size-sm",
         "weight-regular",
         "heading-lh-sm",
@@ -153,6 +172,7 @@ export const getFontSet = (
         options
     ),
     "heading-sm-semibold": generateFontCSS(
+        "heading-font-family",
         "heading-size-sm",
         "weight-semibold",
         "heading-lh-sm",
@@ -160,6 +180,7 @@ export const getFontSet = (
         options
     ),
     "heading-sm-bold": generateFontCSS(
+        "heading-font-family",
         "heading-size-sm",
         "weight-bold",
         "heading-lh-sm",
@@ -167,6 +188,7 @@ export const getFontSet = (
         options
     ),
     "heading-xs-light": generateFontCSS(
+        "heading-font-family",
         "heading-size-xs",
         "weight-light",
         "heading-lh-xs",
@@ -174,6 +196,7 @@ export const getFontSet = (
         options
     ),
     "heading-xs-regular": generateFontCSS(
+        "heading-font-family",
         "heading-size-xs",
         "weight-regular",
         "heading-lh-xs",
@@ -181,6 +204,7 @@ export const getFontSet = (
         options
     ),
     "heading-xs-semibold": generateFontCSS(
+        "heading-font-family",
         "heading-size-xs",
         "weight-semibold",
         "heading-lh-xs",
@@ -188,6 +212,7 @@ export const getFontSet = (
         options
     ),
     "heading-xs-bold": generateFontCSS(
+        "heading-font-family",
         "heading-size-xs",
         "weight-bold",
         "heading-lh-xs",
@@ -195,6 +220,7 @@ export const getFontSet = (
         options
     ),
     "body-baseline-light": generateFontCSS(
+        "body-font-family",
         "body-size-baseline",
         "weight-light",
         "body-lh-baseline",
@@ -202,6 +228,7 @@ export const getFontSet = (
         options
     ),
     "body-baseline-regular": generateFontCSS(
+        "body-font-family",
         "body-size-baseline",
         "weight-regular",
         "body-lh-baseline",
@@ -209,6 +236,7 @@ export const getFontSet = (
         options
     ),
     "body-baseline-semibold": generateFontCSS(
+        "body-font-family",
         "body-size-baseline",
         "weight-semibold",
         "body-lh-baseline",
@@ -216,6 +244,7 @@ export const getFontSet = (
         options
     ),
     "body-baseline-bold": generateFontCSS(
+        "body-font-family",
         "body-size-baseline",
         "weight-bold",
         "body-lh-baseline",
@@ -223,6 +252,7 @@ export const getFontSet = (
         options
     ),
     "body-md-light": generateFontCSS(
+        "body-font-family",
         "body-size-md",
         "weight-light",
         "body-lh-md",
@@ -230,6 +260,7 @@ export const getFontSet = (
         options
     ),
     "body-md-regular": generateFontCSS(
+        "body-font-family",
         "body-size-md",
         "weight-regular",
         "body-lh-md",
@@ -237,6 +268,7 @@ export const getFontSet = (
         options
     ),
     "body-md-semibold": generateFontCSS(
+        "body-font-family",
         "body-size-md",
         "weight-semibold",
         "body-lh-md",
@@ -244,6 +276,7 @@ export const getFontSet = (
         options
     ),
     "body-md-bold": generateFontCSS(
+        "body-font-family",
         "body-size-md",
         "weight-bold",
         "body-lh-md",
@@ -251,6 +284,7 @@ export const getFontSet = (
         options
     ),
     "body-sm-light": generateFontCSS(
+        "body-font-family",
         "body-size-sm",
         "weight-light",
         "body-lh-sm",
@@ -258,6 +292,7 @@ export const getFontSet = (
         options
     ),
     "body-sm-regular": generateFontCSS(
+        "body-font-family",
         "body-size-sm",
         "weight-regular",
         "body-lh-sm",
@@ -265,6 +300,7 @@ export const getFontSet = (
         options
     ),
     "body-sm-semibold": generateFontCSS(
+        "body-font-family",
         "body-size-sm",
         "weight-semibold",
         "body-lh-sm",
@@ -272,6 +308,7 @@ export const getFontSet = (
         options
     ),
     "body-sm-bold": generateFontCSS(
+        "body-font-family",
         "body-size-sm",
         "weight-bold",
         "body-lh-sm",
@@ -279,6 +316,7 @@ export const getFontSet = (
         options
     ),
     "body-xs-light": generateFontCSS(
+        "body-font-family",
         "body-size-xs",
         "weight-light",
         "body-lh-xs",
@@ -286,6 +324,7 @@ export const getFontSet = (
         options
     ),
     "body-xs-regular": generateFontCSS(
+        "body-font-family",
         "body-size-xs",
         "weight-regular",
         "body-lh-xs",
@@ -293,6 +332,7 @@ export const getFontSet = (
         options
     ),
     "body-xs-semibold": generateFontCSS(
+        "body-font-family",
         "body-size-xs",
         "weight-semibold",
         "body-lh-xs",
@@ -300,6 +340,7 @@ export const getFontSet = (
         options
     ),
     "body-xs-bold": generateFontCSS(
+        "body-font-family",
         "body-size-xs",
         "weight-bold",
         "body-lh-xs",
@@ -307,6 +348,7 @@ export const getFontSet = (
         options
     ),
     "form-label": generateFontCSS(
+        "body-font-family",
         "form-label-size",
         "weight-semibold",
         "form-label-lh",
@@ -314,6 +356,7 @@ export const getFontSet = (
         options
     ),
     "form-description": generateFontCSS(
+        "body-font-family",
         "form-description-size",
         "weight-regular",
         "form-description-lh",

@@ -39,6 +39,8 @@ export type FontSpecSet = {
 
     // Font family
     "font-family": string;
+    "heading-font-family": string;
+    "body-font-family": string;
 
     // Body sizes
     "body-size-baseline": string;

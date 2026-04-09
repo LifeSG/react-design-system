@@ -11,6 +11,7 @@ import { IMDAFontSet } from "./specs/imda-font-set";
 import { SPFFontSet } from "./specs/spf-font-set";
 import { FontCollectionMap, FontSet } from "./types";
 import { OneServiceFontSet } from "./specs/oneservice-font-set";
+import { SMGSFontSet } from "./specs/smgs-font-set";
 
 const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
     collections: {
@@ -24,6 +25,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
         imda: IMDAFontSet,
         spf: SPFFontSet,
         oneservice: OneServiceFontSet,
+        smgs: SMGSFontSet,
     },
     defaultValue: "default",
 };

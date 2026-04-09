@@ -27,6 +27,8 @@ export const A11yPlaygroundFontSpecSet: FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Atkinson Hyperlegible Next",
+    "heading-font-family": "Atkinson Hyperlegible Next",
+    "body-font-family": "Atkinson Hyperlegible Next",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",

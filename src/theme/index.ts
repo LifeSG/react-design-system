@@ -240,6 +240,19 @@ const SPFThemeBase: ThemeSpec = {
     componentScheme: "spf",
 };
 
+const SMGSThemeBase: ThemeSpec = {
+    colourScheme: "smgs",
+    fontScheme: "smgs",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "smgs",
+    componentScheme: "smgs",
+};
+
 // =============================================================================
 // THEME COLLECTIONS
 // =============================================================================
@@ -315,4 +328,10 @@ export const SPFTheme = {
     ...SPFThemeBase,
     light: createThemeWithColourMode(SPFThemeBase, "light"),
     dark: createThemeWithColourMode(SPFThemeBase, "dark"),
+};
+
+export const SMGSTheme = {
+    ...SMGSThemeBase,
+    light: createThemeWithColourMode(SMGSThemeBase, "light"),
+    dark: createThemeWithColourMode(SMGSThemeBase, "dark"),
 };
