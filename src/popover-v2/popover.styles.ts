@@ -1,8 +1,7 @@
 import styled from "styled-components";
 
 import { Card } from "../card";
-import { Colour } from "../theme";
-import { V3_Colour, V3_MediaQuery, V3_Radius } from "../v3_theme";
+import { Colour, MediaQuery, Radius } from "../theme";
 import type { PopoverOverflowType } from "./types";
 // =============================================================================
 // STYLES INTERFACE
@@ -25,7 +24,7 @@ export const PopoverContainer = styled.div`
 export const PopoverCard = styled(Card)<PopoverCardStyleProps>`
     color: ${Colour.text};
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         display: none;
     }
 
@@ -50,9 +49,9 @@ export const PopoverCard = styled(Card)<PopoverCardStyleProps>`
     }
 
     &::-webkit-scrollbar-thumb {
-        background: ${V3_Colour["bg-inverse-subtlest"]};
+        background: ${Colour["bg-inverse-subtlest"]};
         border: 5px solid transparent;
-        border-radius: ${V3_Radius["full"]};
+        border-radius: ${Radius.full};
         background-clip: padding-box;
     }
 `;

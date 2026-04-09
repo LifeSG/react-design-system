@@ -15,14 +15,12 @@ import {
     useInteractions,
 } from "@floating-ui/react";
 import type React from "react";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
-import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
+import { Breakpoint, useDesignToken, useInheritedThemeScope } from "../theme";
 import { SimpleIdGenerator } from "../util";
-import { V3_Breakpoint } from "../v3_theme";
 import { PopoverV2 } from "./popover";
 import { TriggerContainer } from "./popover-trigger.styles";
 import type { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
@@ -52,9 +50,8 @@ export const PopoverTrigger = ({
     const [visible, setVisible] = useState<boolean>(false);
     const nodeRef = useRef<HTMLElement | null>(null);
     const popoverRef = useRef<HTMLElement | null>(null);
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint || "480px" });
     const [availableHeight, setAvailableHeight] = useState(0);
     const internalId = useRef(SimpleIdGenerator.generate());
     const popoverContainerId = `${internalId.current}-popover`;
