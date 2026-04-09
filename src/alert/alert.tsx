@@ -37,6 +37,7 @@ export const Alert = ({
     const { height: contentHeight, ref: contentRef } =
         useResizeDetector<HTMLDivElement>();
     const [contentId] = useState(() => SimpleIdGenerator.generate());
+    const containerRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // HELPERS
@@ -75,6 +76,8 @@ export const Alert = ({
         return !!maxCollapsedHeight && !showHiddenContent;
     };
 
+    const isCollapsed = isContentOutsideCollapsibleZone();
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -82,6 +85,13 @@ export const Alert = ({
     useEffect(() => {
         setCollapsedState();
     }, [maxCollapsedHeight, contentHeight, setCollapsedState]);
+
+    useApplyStyle(containerRef, {
+        [styles.maxCollapsedHeightVar]:
+            !showHiddenContent && isCollapsed && maxCollapsedHeight
+                ? `${maxCollapsedHeight}px`
+                : null,
+    });
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -156,18 +166,7 @@ export const Alert = ({
         }
     };
 
-    const isCollapsed = isContentOutsideCollapsibleZone();
-
     const renderContent = () => {
-        const containerRef = useRef<HTMLDivElement>(null);
-
-        useApplyStyle(containerRef, {
-            [styles.maxCollapsedHeightVar]:
-                !showHiddenContent && isCollapsed && maxCollapsedHeight
-                    ? `${maxCollapsedHeight}px`
-                    : null,
-        });
-
         return (
             <div
                 id={contentId}

@@ -42,8 +42,6 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
         className
     );
 
-    console.log("appliedStyles", className);
-
     const ElementTag = inline ? "span" : "div";
 
     return (

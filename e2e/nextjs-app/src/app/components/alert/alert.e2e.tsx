@@ -6,14 +6,7 @@ import { Alert } from "@lifesg/react-design-system/alert";
 // STORY: All type variants
 // =============================================================================
 export const AlertTypeVariants = () => (
-    <div
-        style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            padding: "1rem",
-        }}
-    >
+    <div className="alert-story-container">
         <Alert type="success">This is a success alert.</Alert>
         <Alert type="warning">This is a warning alert.</Alert>
         <Alert type="error">This is an error alert.</Alert>
@@ -26,14 +19,7 @@ export const AlertTypeVariants = () => (
 // STORY: With icons
 // =============================================================================
 export const AlertWithIcons = () => (
-    <div
-        style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            padding: "1rem",
-        }}
-    >
+    <div className="alert-story-container">
         <Alert type="success" showIcon>
             This is a success alert with icon.
         </Alert>
@@ -56,14 +42,7 @@ export const AlertWithIcons = () => (
 // STORY: Size variants
 // =============================================================================
 export const AlertSizeVariants = () => (
-    <div
-        style={{
-            display: "flex",
-            flexDirection: "column",
-            gap: "1rem",
-            padding: "1rem",
-        }}
-    >
+    <div className="alert-story-container">
         <Alert type="info" showIcon sizeType="default">
             Default size alert.
         </Alert>
@@ -105,7 +84,7 @@ export const AlertWithShowMore = () => (
 // STORY: Keyboard navigation
 // =============================================================================
 export const AlertKeyboardNav = () => (
-    <div style={{ padding: "1rem" }}>
+    <div className="alert-keyboard-nav-container">
         <button data-testid="before-alert">Before alert</button>
         <Alert
             type="info"
