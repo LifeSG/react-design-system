@@ -262,27 +262,27 @@ PRIMITIVE COLOURS
 
     /* Navbar */
     --fds-navbar-full-height: 6rem;
-    --fds-navbar-full-logo-height: 2rem;
-    --fds-navbar-compressed-height: 4rem;
-    --fds-navbar-compressed-logo-height: 1.5rem;
-    --fds-navbar-mobile-height: 3.5rem;
-    --fds-navbar-mobile-logo-height: 1.5rem;
+    --fds-navbar-full-logo-height: 3rem;
+    --fds-navbar-compressed-height: 5rem;
+    --fds-navbar-compressed-logo-height: 2rem;
+    --fds-navbar-mobile-height: 4rem;
+    --fds-navbar-mobile-logo-height: 2rem;
     --fds-navbar-colour-bg: var(--fds-colour-bg);
     --fds-navbar-colour-icon: var(--fds-colour-icon);
-    --fds-navbar-link-colour-text: var(--fds-colour-text);
-    --fds-navbar-link-colour-text-hover: var(--fds-colour-text-hover);
+    --fds-navbar-link-colour-text: var(--fds-colour-text-primary-strongest);
+    --fds-navbar-link-colour-text-hover: var(--fds-colour-text-subtler);
     --fds-navbar-link-colour-text-selected-hover: var(
-        --fds-colour-text-selected-hover
+        --fds-colour-text-subtler
     );
 
     /* Footer */
-    --fds-footer-colour-bg: var(--fds-colour-bg-strong);
-    --fds-footer-colour-text: var(--fds-colour-text);
-    --fds-footer-link-colour-text: var(--fds-colour-text);
-    --fds-footer-link-colour-text-hover: var(--fds-colour-text-hover);
-    --fds-footer-disclaimer-link-colour-text: var(--fds-colour-text);
+    --fds-footer-colour-bg: var(--fds-colour-bg-inverse);
+    --fds-footer-colour-text: var(--fds-colour-text-inverse);
+    --fds-footer-link-colour-text: var(--fds-colour-text-inverse);
+    --fds-footer-link-colour-text-hover: var(--fds-colour-text-inverse);
+    --fds-footer-disclaimer-link-colour-text: var(--fds-colour-text-inverse);
     --fds-footer-disclaimer-link-colour-text-hover: var(
-        --fds-colour-text-subtler
+        --fds-colour-text-inverse
     );
 
     /* Animation */
@@ -448,47 +448,6 @@ SEMANTIC COLOURS - DARK MODE
     /* focus ring - adjusted for dark mode */
     --fds-colour-focus-ring: var(--fds-colour-primary-60);
     --fds-colour-focus-ring-inverse: var(--fds-colour-black);
-
-    /*
-    ============================================================================
-    COMPONENT TOKENS
-    ============================================================================
-    */
-
-    /* Button */
-    --fds-button-radius: var(--fds-radius-md);
-    --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
-    --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
-    --fds-button-default-colour-text: var(--fds-colour-text-inverse);
-    --fds-button-secondary-colour-border: var(--fds-colour-border-primary);
-    --fds-button-secondary-colour-text: var(--fds-colour-text-primary);
-    --fds-button-light-colour-text: var(--fds-colour-text-primary);
-    --fds-button-link-colour-text: var(--fds-colour-text-primary);
-
-    /* Navbar */
-    --fds-navbar-full-height: 6rem;
-    --fds-navbar-full-logo-height: 3rem;
-    --fds-navbar-compressed-height: 5rem;
-    --fds-navbar-compressed-logo-height: 2rem;
-    --fds-navbar-mobile-height: 4rem;
-    --fds-navbar-mobile-logo-height: 2rem;
-    --fds-navbar-colour-bg: var(--fds-colour-bg);
-    --fds-navbar-colour-icon: var(--fds-colour-icon);
-    --fds-navbar-link-colour-text: var(--fds-colour-text-primary-strongest);
-    --fds-navbar-link-colour-text-hover: var(--fds-colour-text-subtler);
-    --fds-navbar-link-colour-text-selected-hover: var(
-        --fds-colour-text-subtler
-    );
-
-    /* Footer */
-    --fds-footer-colour-bg: var(--fds-colour-bg-inverse);
-    --fds-footer-colour-text: var(--fds-colour-text-inverse);
-    --fds-footer-link-colour-text: var(--fds-colour-text-inverse);
-    --fds-footer-link-colour-text-hover: var(--fds-colour-text-inverse);
-    --fds-footer-disclaimer-link-colour-text: var(--fds-colour-text-inverse);
-    --fds-footer-disclaimer-link-colour-text-hover: var(
-        --fds-colour-text-inverse
-    );
 
     /*
     ============================================================================
