@@ -48,6 +48,31 @@ describe("SelectHistogram", () => {
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
+
+        // jsdom v26 (jest-environment-jsdom v30) no longer returns consistent
+        // zeros for layout APIs during event dispatch. react-slider computes
+        // thumb position using both getBoundingClientRect() and clientWidth —
+        // these are separate DOM properties and must be mocked independently.
+        //
+        // getBoundingClientRect().width → thumbSize (set to 10)
+        // clientWidth                   → slider inner width (set to 100)
+        // → upperBound = 100 - 10 = 90; pageX=0 snaps value to min ✓
+        jest.spyOn(Element.prototype, "getBoundingClientRect").mockReturnValue({
+            left: 0,
+            top: 0,
+            right: 100,
+            bottom: 10,
+            width: 10,
+            height: 10,
+            x: 0,
+            y: 0,
+            toJSON: jest.fn(),
+        });
+        jest.spyOn(HTMLElement.prototype, "clientWidth", "get").mockReturnValue(100);
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it("should render the component", async () => {
@@ -108,10 +133,8 @@ describe("SelectHistogram", () => {
 
         const thumb = screen.getByTestId("slider-track-0");
 
-        await waitFor(() => {
-            fireEvent.mouseDown(thumb.parentElement!);
-            expect(mockChange).toHaveBeenCalledWith([1, 2]);
-        });
+        fireEvent.mouseDown(thumb.parentElement!);
+        expect(mockChange).toHaveBeenCalledWith([1, 2]);
     });
 
     it("should toggle dropdown list when selector is clicked", async () => {
