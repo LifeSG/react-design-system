@@ -1,55 +1,84 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { MediaQuery, Motion } from "../theme";
-import type { ModalAnimationDirection } from "./types";
 
-interface Props {
-    $show: boolean;
-    $animationFrom?: ModalAnimationDirection;
-    $verticalHeight?: number;
-    $offsetTop?: number;
-}
+export const tokens = {
+    container: {
+        verticalHeight: "--fds-internal-modalV2-container-verticalHeight",
+        offsetTop: "--fds-internal-modalV2-container-offsetTop",
+    },
+} as const;
 
-export const Container = styled.div<Props>`
+export const containerFromTop = "modalV2ContainerFromTop";
+export const containerFromBottom = "modalV2ContainerFromBottom";
+export const containerFromLeft = "modalV2ContainerFromLeft";
+export const containerFromRight = "modalV2ContainerFromRight";
+
+export const Container = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
 
     overflow: auto;
 
-    ${MediaQuery.MaxWidth.sm} {
-        ${(props) => {
-            return css`
-                height: calc(
-                    ${props.$verticalHeight
-                            ? `${props.$verticalHeight}px`
-                            : "1vh"} * 100
-                );
-            `;
-        }}
+    ${tokens.container.verticalHeight}: initial;
+    ${tokens.container.offsetTop}: initial;
 
-        top: ${(props) => props.$offsetTop || 0}px;
+    ${MediaQuery.MaxWidth.sm} {
+        height: calc(var(${tokens.container.verticalHeight}, 1vh) * 100);
+        top: var(${tokens.container.offsetTop}, 0px);
     }
 
-    ${(props) => css`
-        &[data-status="initial"] {
-            opacity: 0;
-            ${props.$animationFrom}: -3%;
-        }
+    &[data-status="initial"] {
+        opacity: 0;
+    }
 
-        &[data-status="open"] {
-            opacity: 1;
-            ${props.$animationFrom}: 0;
-            transition: all ${Motion["duration-250"]} ${Motion["ease-entrance"]};
-            transition-delay: ${Motion["duration-150"]};
-        }
+    &[data-status="open"] {
+        opacity: 1;
+        transition: all ${Motion["duration-250"]} ${Motion["ease-entrance"]};
+        transition-delay: ${Motion["duration-150"]};
+    }
 
-        &[data-status="close"] {
-            opacity: 0;
-            ${props.$animationFrom}: -3%;
-            transition: all ${Motion["duration-250"]} ${Motion["ease-exit"]};
-        }
-    `}
+    &[data-status="close"] {
+        opacity: 0;
+        transition: all ${Motion["duration-250"]} ${Motion["ease-exit"]};
+    }
+
+    &.${containerFromTop}[data-status="initial"],
+    &.${containerFromTop}[data-status="close"] {
+        top: -3%;
+    }
+
+    &.${containerFromTop}[data-status="open"] {
+        top: 0;
+    }
+
+    &.${containerFromBottom}[data-status="initial"],
+    &.${containerFromBottom}[data-status="close"] {
+        bottom: -3%;
+    }
+
+    &.${containerFromBottom}[data-status="open"] {
+        bottom: 0;
+    }
+
+    &.${containerFromLeft}[data-status="initial"],
+    &.${containerFromLeft}[data-status="close"] {
+        left: -3%;
+    }
+
+    &.${containerFromLeft}[data-status="open"] {
+        left: 0;
+    }
+
+    &.${containerFromRight}[data-status="initial"],
+    &.${containerFromRight}[data-status="close"] {
+        right: -3%;
+    }
+
+    &.${containerFromRight}[data-status="open"] {
+        right: 0;
+    }
 `;
 
 export const ScrollContainer = styled.div`

@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { ClickableIcon } from "../../shared/clickable-icon";
 import {
@@ -112,11 +112,10 @@ export const FooterContainer = styled.div`
 // =============================================================================
 // Spacer
 // =============================================================================
-interface SlotSpacerStyleProps {
-    $hasCloseButton?: boolean;
-}
+export const slotSpacerHasCloseButton = "modalV2SlotSpacerHasCloseButton";
+export const slotSpacerNoCloseButton = "modalV2SlotSpacerNoCloseButton";
 
-export const SlotSpacer = styled.div<SlotSpacerStyleProps>`
+export const SlotSpacer = styled.div`
     :where(& > ${ContentContainer}:last-child) {
         margin-bottom: ${Spacing["spacing-64"]};
     }
@@ -129,18 +128,17 @@ export const SlotSpacer = styled.div<SlotSpacerStyleProps>`
         margin-bottom: ${Spacing["spacing-64"]};
     }
 
-    ${(props) =>
-        props.$hasCloseButton
-            ? css`
-                  :where(& > ${ContentContainer}:first-child),
-                  :where(& > ${FooterContainer}:first-child) {
-                      margin-top: 0;
-                  }
-              `
-            : css`
-                  :where(& > ${ContentContainer}:first-child),
-                  :where(& > ${FooterContainer}:first-child) {
-                      margin-top: ${Spacing["spacing-64"]};
-                  }
-              `}
+    &.${slotSpacerHasCloseButton} {
+        :where(& > ${ContentContainer}:first-child),
+        :where(& > ${FooterContainer}:first-child) {
+            margin-top: 0;
+        }
+    }
+
+    &.${slotSpacerNoCloseButton} {
+        :where(& > ${ContentContainer}:first-child),
+        :where(& > ${FooterContainer}:first-child) {
+            margin-top: ${Spacing["spacing-64"]};
+        }
+    }
 `;
