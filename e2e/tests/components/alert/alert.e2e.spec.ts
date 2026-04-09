@@ -1,184 +1,194 @@
-import { expect, test } from "@playwright/test";
+import { test as base } from "@playwright/test";
+import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import { expect } from "@playwright/test";
 
-const ALERT_PAGE = "/components/alert";
+class StoryPage extends AbstractStoryPage {
+    protected readonly component = "alert";
+}
 
-// =============================================================================
-// TYPE VARIANTS
-// =============================================================================
-test.describe(() => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto(ALERT_PAGE);
-    });
-
-    test("renders all type variants", async ({ page }) => {
-        const section = page.getByTestId("story-type-variants");
-        await expect(section).toBeVisible();
-        await expect(section).toHaveScreenshot("alert-type-variants.png");
-    });
+const test = base.extend<{ story: StoryPage }>({
+    story: async ({ page }, use) => {
+        const story = new StoryPage(page);
+        await use(story);
+    },
 });
 
-// =============================================================================
-// ICON VARIANTS
-// =============================================================================
-test.describe(() => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto(ALERT_PAGE);
+test.describe("Alert", () => {
+    // =========================================================================
+    // TYPE VARIANTS
+    // =========================================================================
+    test("type-variants: renders all type variants", async ({ story }) => {
+        await story.init("type-variants");
+        const alert = story.page.getByLabel("Success").first();
+        await expect(alert).toBeVisible();
+        await compareScreenshot(story, "type-variants");
     });
 
-    test("renders all type variants with icons", async ({ page }) => {
-        const section = page.getByTestId("story-with-icons");
-        await expect(section).toBeVisible();
-        await expect(section).toHaveScreenshot("alert-with-icons.png");
-    });
-});
-
-// =============================================================================
-// SIZE VARIANTS
-// =============================================================================
-test.describe(() => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto(ALERT_PAGE);
-    });
-
-    test("renders default and small size variants", async ({ page }) => {
-        const section = page.getByTestId("story-size-variants");
-        await expect(section).toBeVisible();
-        await expect(section).toHaveScreenshot("alert-size-variants.png");
-    });
-});
-
-// =============================================================================
-// ACTION LINK
-// =============================================================================
-test.describe(() => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto(ALERT_PAGE);
-    });
-
-    test("renders action link", async ({ page }) => {
-        const section = page.getByTestId("story-with-action-link");
-        await expect(section.getByTestId("action-link")).toBeVisible();
-        await expect(section).toHaveScreenshot("alert-with-action-link.png");
-    });
-});
-
-// =============================================================================
-// SHOW MORE / SHOW LESS
-// =============================================================================
-test.describe(() => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto(ALERT_PAGE);
-    });
-
-    test("shows 'Show more' button when content exceeds maxCollapsedHeight", async ({
-        page,
+    test("type-variants: accessibility aria-label for each type", async ({
+        story,
     }) => {
-        const section = page.getByTestId("story-show-more");
-        const showMoreBtn = section.getByRole("button", { name: "Show more" });
+        await story.init("type-variants");
+        await expect(story.page.getByLabel("Success").first()).toBeVisible();
+        await expect(story.page.getByLabel("Warning").first()).toBeVisible();
+        await expect(story.page.getByLabel("Error").first()).toBeVisible();
+        await expect(
+            story.page.getByLabel("Information").first()
+        ).toBeVisible();
+        await expect(
+            story.page.getByLabel("Description").first()
+        ).toBeVisible();
+    });
+
+    // =========================================================================
+    // WITH ICONS
+    // =========================================================================
+    test("with-icons: renders all type variants with icons", async ({
+        story,
+    }) => {
+        await story.init("with-icons");
+        const alert = story.page.getByLabel("Success").first();
+        await expect(alert).toBeVisible();
+        await compareScreenshot(story, "with-icons");
+    });
+
+    // =========================================================================
+    // SIZE VARIANTS
+    // =========================================================================
+    test("size-variants: renders default and small size variants", async ({
+        story,
+    }) => {
+        await story.init("size-variants");
+        const alert = story.page.getByLabel("Information").first();
+        await expect(alert).toBeVisible();
+        await compareScreenshot(story, "size-variants");
+    });
+
+    // =========================================================================
+    // WITH ACTION LINK
+    // =========================================================================
+    test("with-action-link: renders action link", async ({ story }) => {
+        await story.init("with-action-link");
+        const actionLink = story.page.getByTestId("action-link");
+        await expect(actionLink).toBeVisible();
+        await compareScreenshot(story, "with-action-link");
+    });
+
+    // =========================================================================
+    // SHOW MORE / SHOW LESS
+    // =========================================================================
+    test("show-more: shows 'Show more' button when content exceeds maxCollapsedHeight", async ({
+        story,
+    }) => {
+        await story.init("show-more");
+        const showMoreBtn = story.page.getByRole("button", {
+            name: "Show more",
+        });
         await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
         await expect(showMoreBtn).toHaveAttribute("aria-expanded", "false");
-        await expect(section).toHaveScreenshot("alert-collapsed.png");
+        await compareScreenshot(story, "collapsed");
     });
 
-    test("expands content when 'Show more' is clicked", async ({ page }) => {
-        const section = page.getByTestId("story-show-more");
-        const showMoreBtn = section.getByRole("button", { name: "Show more" });
+    test("show-more: expands content when 'Show more' is clicked", async ({
+        story,
+    }) => {
+        await story.init("show-more");
+        const showMoreBtn = story.page.getByRole("button", {
+            name: "Show more",
+        });
         await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
         await showMoreBtn.click();
-        const showLessBtn = section.getByRole("button", { name: "Show less" });
+        const showLessBtn = story.page.getByRole("button", {
+            name: "Show less",
+        });
         await expect(showLessBtn).toBeVisible();
         await expect(showLessBtn).toHaveAttribute("aria-expanded", "true");
-        await expect(section).toHaveScreenshot("alert-expanded.png");
+        await compareScreenshot(story, "expanded");
     });
 
-    test("collapses content when 'Show less' is clicked", async ({ page }) => {
-        const section = page.getByTestId("story-show-more");
-        let showMoreBtn = section.getByRole("button", { name: "Show more" });
+    test("show-more: collapses content when 'Show less' is clicked", async ({
+        story,
+    }) => {
+        await story.init("show-more");
+        let showMoreBtn = story.page.getByRole("button", {
+            name: "Show more",
+        });
         await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
         await showMoreBtn.click();
-        const showLessBtn = section.getByRole("button", { name: "Show less" });
+        const showLessBtn = story.page.getByRole("button", {
+            name: "Show less",
+        });
         await showLessBtn.click();
-        showMoreBtn = section.getByRole("button", { name: "Show more" });
+        showMoreBtn = story.page.getByRole("button", {
+            name: "Show more",
+        });
         await expect(showMoreBtn).toBeVisible();
         await expect(showMoreBtn).toHaveAttribute("aria-expanded", "false");
-        await expect(section).toHaveScreenshot("alert-collapsed.png");
-    });
-});
-
-// =============================================================================
-// KEYBOARD NAVIGATION
-// =============================================================================
-test.describe(() => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto(ALERT_PAGE);
+        await compareScreenshot(story, "collapsed");
     });
 
-    test("can toggle show more/less via keyboard (Enter)", async ({ page }) => {
-        const section = page.getByTestId("story-keyboard-nav");
-        const showMoreBtn = section.getByRole("button", { name: "Show more" });
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        await showMoreBtn.focus();
-        await page.keyboard.press("Enter");
-        await expect(
-            section.getByRole("button", { name: "Show less" })
-        ).toBeVisible();
-        await page.keyboard.press("Enter");
-        await expect(showMoreBtn).toBeVisible();
-    });
-
-    test("can toggle show more/less via keyboard (Space)", async ({ page }) => {
-        const section = page.getByTestId("story-keyboard-nav");
-        const showMoreBtn = section.getByRole("button", { name: "Show more" });
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        await showMoreBtn.focus();
-        await page.keyboard.press("Space");
-        await expect(
-            section.getByRole("button", { name: "Show less" })
-        ).toBeVisible();
-    });
-
-    test("show more button appears before action link in tab order", async ({
-        page,
+    test("show-more: button has correct aria-controls pointing to content", async ({
+        story,
     }) => {
-        const section = page.getByTestId("story-keyboard-nav");
-        const showMoreBtn = section.getByRole("button", { name: "Show more" });
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        const beforeBtn = page.getByTestId("before-alert");
-        await beforeBtn.focus();
-        await page.keyboard.press("Tab");
-        await expect(showMoreBtn).toBeFocused();
-        await page.keyboard.press("Tab");
-        await expect(page.getByTestId("after-alert")).toBeFocused();
-    });
-});
-
-// =============================================================================
-// ACCESSIBILITY
-// =============================================================================
-test.describe(() => {
-    test.beforeEach(async ({ page }) => {
-        await page.goto(ALERT_PAGE);
-    });
-
-    test("alert has correct aria-label for each type", async ({ page }) => {
-        const section = page.getByTestId("story-type-variants");
-        await expect(section.getByLabel("Success").first()).toBeVisible();
-        await expect(section.getByLabel("Warning").first()).toBeVisible();
-        await expect(section.getByLabel("Error").first()).toBeVisible();
-        await expect(section.getByLabel("Information").first()).toBeVisible();
-        await expect(section.getByLabel("Description").first()).toBeVisible();
-    });
-
-    test("show more button has correct aria-controls pointing to content", async ({
-        page,
-    }) => {
-        const section = page.getByTestId("story-show-more");
-        const showMoreBtn = section.getByRole("button", { name: "Show more" });
+        await story.init("show-more");
+        const showMoreBtn = story.page.getByRole("button", {
+            name: "Show more",
+        });
         await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
         const controlsId = await showMoreBtn.getAttribute("aria-controls");
         expect(controlsId).toBeTruthy();
         await expect(
-            page.locator(`button[aria-controls="${controlsId!}"]`).first()
+            story.page.locator(`button[aria-controls="${controlsId!}"]`).first()
         ).toBeVisible();
+    });
+
+    // =========================================================================
+    // KEYBOARD NAVIGATION
+    // =========================================================================
+    test("keyboard-nav: can toggle show more/less via keyboard (Enter)", async ({
+        story,
+    }) => {
+        await story.init("keyboard-nav");
+        const showMoreBtn = story.page.getByRole("button", {
+            name: "Show more",
+        });
+        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
+        await showMoreBtn.focus();
+        await story.page.keyboard.press("Enter");
+        await expect(
+            story.page.getByRole("button", { name: "Show less" })
+        ).toBeVisible();
+        await story.page.keyboard.press("Enter");
+        await expect(showMoreBtn).toBeVisible();
+    });
+
+    test("keyboard-nav: can toggle show more/less via keyboard (Space)", async ({
+        story,
+    }) => {
+        await story.init("keyboard-nav");
+        const showMoreBtn = story.page.getByRole("button", {
+            name: "Show more",
+        });
+        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
+        await showMoreBtn.focus();
+        await story.page.keyboard.press("Space");
+        await expect(
+            story.page.getByRole("button", { name: "Show less" })
+        ).toBeVisible();
+    });
+
+    test("keyboard-nav: show more button appears before action link in tab order", async ({
+        story,
+    }) => {
+        await story.init("keyboard-nav");
+        const showMoreBtn = story.page.getByRole("button", {
+            name: "Show more",
+        });
+        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
+        const beforeBtn = story.page.getByTestId("before-alert");
+        await beforeBtn.focus();
+        await story.page.keyboard.press("Tab");
+        await expect(showMoreBtn).toBeFocused();
+        await story.page.keyboard.press("Tab");
+        await expect(story.page.getByTestId("after-alert")).toBeFocused();
     });
 });
