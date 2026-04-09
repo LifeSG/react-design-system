@@ -1,9 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const TriggerContainer = styled.div`
+export const triggerContainer = css`
     display: inline;
     width: fit-content;
     cursor: pointer;

@@ -2,7 +2,7 @@ import clsx from "clsx";
 
 import { PopoverTrigger } from "../popover-trigger";
 import type { PopoverInlineProps } from "../types";
-import { StyledIcon, StyledText } from "./popover-inline.styles";
+import * as styles from "./popover-inline.styles";
 
 export const PopoverInline = ({
     ariaLabel,
@@ -19,25 +19,26 @@ export const PopoverInline = ({
 
     return (
         <PopoverTrigger {...otherProps}>
-            <StyledText
+            <span
                 aria-label={ariaLabel ?? (hasContent ? undefined : "More info")}
                 role="button"
                 aria-haspopup="dialog"
                 tabIndex={0}
+                className={styles.popoverInlineText}
                 data-underline-style={underlineStyle}
                 data-underline-hover-style={underlineHoverStyle}
             >
                 {content}
                 {icon && (
-                    <StyledIcon
+                    <span
                         className={clsx(
-                            hasContent && "popoverInlineIconWithContent"
+                            hasContent && styles.popoverInlineIconWithContent
                         )}
                     >
                         {icon}
-                    </StyledIcon>
+                    </span>
                 )}
-            </StyledText>
+            </span>
         </PopoverTrigger>
     );
 };

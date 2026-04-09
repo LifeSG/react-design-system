@@ -1,6 +1,5 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Card } from "../card";
 import { Colour, MediaQuery, Radius } from "../theme";
 
 export const tokens = {
@@ -10,29 +9,18 @@ export const tokens = {
     },
 } as const;
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const PopoverContainer = styled.div`
+export const popoverContainer = css`
     max-width: 30rem;
     padding: 0 1rem;
     pointer-events: auto;
     outline: none;
 `;
 
-export const PopoverCard = styled(Card)`
+export const popoverCard = css`
     color: ${Colour.text};
 
     ${MediaQuery.MaxWidth.sm} {
         display: none;
-    }
-
-    &.popoverV2CardWithMaxHeight {
-        max-height: var(${tokens.popoverCard.maxHeight});
-    }
-
-    &.popoverV2CardWithOverflow {
-        overflow-y: var(${tokens.popoverCard.overflowY});
     }
 
     &::-webkit-scrollbar {
@@ -49,4 +37,12 @@ export const PopoverCard = styled(Card)`
         border-radius: ${Radius.full};
         background-clip: padding-box;
     }
+`;
+
+export const popoverCardWithMaxHeight = css`
+    max-height: var(${tokens.popoverCard.maxHeight});
+`;
+
+export const popoverCardWithOverflow = css`
+    overflow-y: var(${tokens.popoverCard.overflowY});
 `;

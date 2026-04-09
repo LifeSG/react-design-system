@@ -1,11 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour } from "../../theme";
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const StyledText = styled.span`
+export const popoverInlineText = css`
     color: ${Colour["text-primary"]};
     font-weight: 600;
     text-underline-position: under;
@@ -34,14 +31,12 @@ export const StyledText = styled.span`
     }
 
     svg {
-        height: 1lh; // align vertically
-        width: 1em; // scale icon with font size
+        height: 1lh; /* align vertically */
+        width: 1em; /* scale icon with font size */
         vertical-align: top;
     }
 `;
 
-export const StyledIcon = styled.span`
-    &.popoverInlineIconWithContent {
-        margin-left: 0.25rem;
-    }
+export const popoverInlineIconWithContent = css`
+    margin-left: 0.25rem;
 `;

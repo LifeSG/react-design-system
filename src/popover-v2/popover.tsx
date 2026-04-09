@@ -2,36 +2,39 @@ import clsx from "clsx";
 import { useMemo, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
 
+import { Card } from "../card";
 import { Markup } from "../markup";
 import { ModalV2 } from "../modal-v2";
 import { Breakpoint, useApplyStyle, useDesignToken } from "../theme";
 import { Typography } from "../typography";
-import { PopoverCard, PopoverContainer, tokens } from "./popover.styles";
+import * as styles from "./popover.styles";
 import type { PopoverV2Props } from "./types";
 
 export const PopoverV2 = ({
     children,
-    visible,
+    visible = false,
     onMobileClose,
     maxHeight,
     overflow,
-    ariaLabel,
+    ariaLabel = "More information",
     id,
     className,
+    "data-testid": _testId,
     ...otherProps
 }: PopoverV2Props): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const testId = otherProps["data-testid"] || "popover";
+    const testId = _testId || "popover";
     const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint || "480px" });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const popoverContainerRef = useRef<HTMLDivElement>(null);
     const popoverCardStyle = useMemo(
         () => ({
-            [tokens.popoverCard.maxHeight]:
-                maxHeight !== undefined ? `${maxHeight}px` : null,
-            [tokens.popoverCard.overflowY]: overflow ?? null,
+            [styles.tokens.popoverCard.maxHeight]: maxHeight
+                ? `${maxHeight}px`
+                : null,
+            [styles.tokens.popoverCard.overflowY]: overflow ?? null,
         }),
         [maxHeight, overflow]
     );
@@ -59,37 +62,38 @@ export const PopoverV2 = ({
     return (
         <>
             {visible && (
-                <PopoverContainer
+                <div
                     ref={popoverContainerRef}
                     tabIndex={0}
                     data-testid={testId}
                     {...otherProps}
-                    className={clsx(className)}
+                    className={clsx(styles.popoverContainer, className)}
                     id={id}
                     role="dialog"
-                    aria-label={ariaLabel ?? "More information"}
+                    aria-label={ariaLabel}
                 >
-                    <PopoverCard
+                    <Card
                         className={clsx(
+                            styles.popoverCard,
                             maxHeight !== undefined &&
-                                "popoverV2CardWithMaxHeight",
-                            overflow && "popoverV2CardWithOverflow"
+                                styles.popoverCardWithMaxHeight,
+                            overflow && styles.popoverCardWithOverflow
                         )}
                     >
                         <Markup baseTextSize="body-md">
                             {renderContent()}
                         </Markup>
-                    </PopoverCard>
-                </PopoverContainer>
+                    </Card>
+                </div>
             )}
             {isMobile && (
                 <ModalV2
-                    show={visible ?? false}
+                    show={visible}
                     onOverlayClick={handleMobileClose}
                     onClose={handleMobileClose}
                     id={id}
                     role="dialog"
-                    aria-label={ariaLabel ?? "More information"}
+                    aria-label={ariaLabel}
                 >
                     <ModalV2.Card>
                         <ModalV2.Content>
