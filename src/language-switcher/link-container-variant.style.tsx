@@ -72,7 +72,7 @@ export const LinkItem = styled.button<LinkItemStyleProps>`
               `}
 
     &:focus-visible {
-        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
+        outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: -2px;
     }
 `;

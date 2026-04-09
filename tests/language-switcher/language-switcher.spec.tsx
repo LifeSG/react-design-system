@@ -1,5 +1,10 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import { announce } from "@react-aria/live-announcer";
 import { LanguageSwitcher } from "../../src/language-switcher";
+
+jest.mock("@react-aria/live-announcer", () => ({
+    announce: jest.fn(),
+}));
 
 // =============================================================================
 // SETUP
@@ -213,11 +218,23 @@ describe("LanguageSwitcher (dropdown)", () => {
 
         expect(onSelectLanguage).toHaveBeenCalledWith("zh");
     });
-});
 
-// =============================================================================
-// LINK CONTAINER TESTS
-// =============================================================================
+    it("should announce selected language for screen readers", () => {
+        const onSelectLanguage = jest.fn();
+        render(
+            <LanguageSwitcher
+                variant="dropdown"
+                selectedLanguage="en"
+                onSelectLanguage={onSelectLanguage}
+            />
+        );
+
+        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
+        fireEvent.click(screen.getByTestId("language-switcher--item-zh"));
+
+        expect(announce).toHaveBeenCalledWith("中文 selected", "polite");
+    });
+});
 describe("LanguageSwitcher (link-container)", () => {
     it("should render all four language options", () => {
         render(
@@ -274,6 +291,21 @@ describe("LanguageSwitcher (link-container)", () => {
         fireEvent.click(screen.getByTestId("language-switcher--item-en"));
 
         expect(onSelectLanguage).not.toHaveBeenCalled();
+    });
+
+    it("should announce selected language for screen readers", () => {
+        const onSelectLanguage = jest.fn();
+        render(
+            <LanguageSwitcher
+                variant="link-container"
+                selectedLanguage="en"
+                onSelectLanguage={onSelectLanguage}
+            />
+        );
+
+        fireEvent.click(screen.getByTestId("language-switcher--item-ms"));
+
+        expect(announce).toHaveBeenCalledWith("Melayu selected", "polite");
     });
 
     it("should set aria-pressed on active language and not on others", () => {
