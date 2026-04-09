@@ -257,6 +257,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         const {
             backgroundColor,
             backgroundColor2,
+            hoverBackgroundColor,
+            hoverBackgroundColor2,
             styleType = "default",
         } = styleAttributes;
 
@@ -280,6 +282,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     $styleType={styleType}
                     $bgColor={backgroundColor}
                     $bgColor2={backgroundColor2}
+                    $hoverBgColor={hoverBackgroundColor}
+                    $hoverBgColor2={hoverBackgroundColor2}
                     $clickable={isClickable}
                     onClick={isClickable ? onClick : undefined}
                 />
@@ -305,6 +309,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 styleType = "default",
                 backgroundColor,
                 backgroundColor2,
+                hoverBackgroundColor,
+                hoverBackgroundColor2,
             } = styleAttributes;
 
             const slotWidth = TimeSlotBarHelper.calculateWidth(
@@ -346,6 +352,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         $variant={variant}
                         $bgColor={backgroundColor}
                         $bgColor2={backgroundColor2}
+                        $hoverBgColor={hoverBackgroundColor}
+                        $hoverBgColor2={hoverBackgroundColor2}
                         $clickable={isClickable}
                         onClick={handleSlotClick(slot)}
                     >
@@ -446,25 +454,23 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 data-testid={testId}
                 ref={barRef}
                 $variant={variant}
-                role="grid"
-                aria-label={slotsSummary}
-                tabIndex={0}
             >
                 <TimeMarkerWrapper
                     data-testid={getDataTestId("time-marker-wrapper")}
                     data-id="marker-wrapper"
-                    role="row"
                 >
                     {renderTimeMarkers()}
                 </TimeMarkerWrapper>
-                <TimeSlotWrapper
-                    data-testid={getDataTestId("time-slot-wrapper")}
-                    data-id="slot-wrapper"
-                    role="row"
-                >
-                    {renderDefaultTimeSlots()}
-                    {renderTimeSlots()}
-                </TimeSlotWrapper>
+                <div role="grid" aria-label={slotsSummary} tabIndex={0}>
+                    <TimeSlotWrapper
+                        data-testid={getDataTestId("time-slot-wrapper")}
+                        data-id="slot-wrapper"
+                        role="row"
+                    >
+                        {renderDefaultTimeSlots()}
+                        {renderTimeSlots()}
+                    </TimeSlotWrapper>
+                </div>
             </TimeSlotBarContainer>
             {renderArrowButtonLeft()}
             {renderArrowButtonRight()}

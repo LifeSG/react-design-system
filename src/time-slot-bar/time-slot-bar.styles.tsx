@@ -49,6 +49,8 @@ export interface TimeSlotStyleProps {
     $styleType: SlotStyle;
     $bgColor: string | ((props: ThemeStyleProps) => string);
     $bgColor2?: string | ((props: ThemeStyleProps) => string);
+    $hoverBgColor?: string | ((props: ThemeStyleProps) => string);
+    $hoverBgColor2?: string | ((props: ThemeStyleProps) => string);
     $clickable?: boolean;
 }
 
@@ -190,6 +192,14 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
     }}
     background-color: ${({ $bgColor }) => $bgColor};
     cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
+    ${({ $hoverBgColor, $clickable }) =>
+        $hoverBgColor &&
+        $clickable &&
+        css`
+            &:hover {
+                background-color: ${$hoverBgColor};
+            }
+        `}
 
     ${(props) =>
         props.$styleType === "stripes" &&
@@ -201,6 +211,31 @@ export const TimeSlot = styled.div<TimeSlotStyleProps>`
                 ${props.$bgColor || Colour["bg-stronger"]} 10px,
                 ${props.$bgColor || Colour["bg-stronger"]} 20px
             );
+            ${(props.$hoverBgColor || props.$hoverBgColor2) &&
+            props.$clickable &&
+            css`
+                &:hover {
+                    background: repeating-linear-gradient(
+                        135deg,
+                        ${props.$hoverBgColor2 ||
+                            props.$bgColor2 ||
+                            Colour["bg-strongest"]}
+                            0px,
+                        ${props.$hoverBgColor2 ||
+                            props.$bgColor2 ||
+                            Colour["bg-strongest"]}
+                            10px,
+                        ${props.$hoverBgColor ||
+                            props.$bgColor ||
+                            Colour["bg-stronger"]}
+                            10px,
+                        ${props.$hoverBgColor ||
+                            props.$bgColor ||
+                            Colour["bg-stronger"]}
+                            20px
+                    );
+                }
+            `}
         `}
 `;
 
