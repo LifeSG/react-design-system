@@ -131,7 +131,7 @@ export const DifferentIndicators: StoryObj<Component> = {
         return (
             <TimeSlotBar
                 startTime="08:00"
-                endTime="17:00"
+                endTime="19:00"
                 onSlotClick={() => {
                     /* empty arrow function */
                 }}
@@ -153,9 +153,9 @@ export const DifferentIndicators: StoryObj<Component> = {
                         startTime: "09:00",
                         endTime: "10:00",
                         styleAttributes: {
-                            backgroundColor: "#EF413D",
+                            backgroundColor: "#CB2213",
                             color: "#FFFFFF",
-                            hoverBackgroundColor: "#00f746",
+                            hoverBackgroundColor: "#9E130F",
                         },
                         label: "Event 1",
                     },
@@ -178,6 +178,18 @@ export const DifferentIndicators: StoryObj<Component> = {
                         endTime: "16:45",
                         styleAttributes: {
                             backgroundColor: Colour["bg-available"],
+                        },
+                    },
+                    {
+                        id: "4",
+                        startTime: "17:00",
+                        endTime: "18:15",
+                        styleAttributes: {
+                            styleType: "stripes",
+                            backgroundColor: "#f2df16",
+                            backgroundColor2: "#f8ef88",
+                            hoverBackgroundColor: "#fe8f17",
+                            hoverBackgroundColor2: "#f8b975",
                         },
                     },
                 ]}

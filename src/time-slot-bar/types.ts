@@ -28,6 +28,11 @@ interface TimeSlotBarStyleAttributes {
         | string
         | ((props: ThemeStyleProps) => string)
         | undefined;
+    /** The secondary background color on hover. Used in conjunction if styleType is "stripes" */
+    hoverBackgroundColor2?:
+        | string
+        | ((props: ThemeStyleProps) => string)
+        | undefined;
 }
 
 export interface TimeSlotBarProps {

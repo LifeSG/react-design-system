@@ -258,6 +258,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             backgroundColor,
             backgroundColor2,
             hoverBackgroundColor,
+            hoverBackgroundColor2,
             styleType = "default",
         } = styleAttributes;
 
@@ -282,6 +283,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     $bgColor={backgroundColor}
                     $bgColor2={backgroundColor2}
                     $hoverBgColor={hoverBackgroundColor}
+                    $hoverBgColor2={hoverBackgroundColor2}
                     $clickable={isClickable}
                     onClick={isClickable ? onClick : undefined}
                 />
@@ -308,6 +310,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 backgroundColor,
                 backgroundColor2,
                 hoverBackgroundColor,
+                hoverBackgroundColor2,
             } = styleAttributes;
 
             const slotWidth = TimeSlotBarHelper.calculateWidth(
@@ -350,6 +353,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         $bgColor={backgroundColor}
                         $bgColor2={backgroundColor2}
                         $hoverBgColor={hoverBackgroundColor}
+                        $hoverBgColor2={hoverBackgroundColor2}
                         $clickable={isClickable}
                         onClick={handleSlotClick(slot)}
                     >
