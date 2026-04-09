@@ -16,7 +16,7 @@ export default meta;
 // DROPDOWN VARIANT
 // =============================================================================
 export const Dropdown: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [language, setLanguage] = useState<LanguageCode>("en");
 
         return (
@@ -30,7 +30,7 @@ export const Dropdown: StoryObj<Component> = {
 };
 
 export const DropdownPreselected: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [language, setLanguage] = useState<LanguageCode>("zh");
 
         return (
@@ -47,7 +47,7 @@ export const DropdownPreselected: StoryObj<Component> = {
 // LINK CONTAINER VARIANT
 // =============================================================================
 export const LinkContainer: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [language, setLanguage] = useState<LanguageCode>("en");
 
         return (
@@ -61,7 +61,7 @@ export const LinkContainer: StoryObj<Component> = {
 };
 
 export const LinkContainerPreselected: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [language, setLanguage] = useState<LanguageCode>("ta");
 
         return (
