@@ -47,6 +47,7 @@ export type ColourScheme =
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
+    | "sgwdigitallobby"
     | "imda"
     | "spf";
 export type FontScheme =
@@ -82,6 +83,7 @@ export type ResourceScheme =
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
+    | "sgwdigitallobby"
     | "imda"
     | "spf";
 
