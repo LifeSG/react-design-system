@@ -50,6 +50,15 @@ describe("SelectHistogram", () => {
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
+
+        // required to mock the width of the slider track for calculating the thumb position in tests to not return NaN
+        jest.spyOn(HTMLElement.prototype, "clientWidth", "get").mockReturnValue(
+            100
+        );
+    });
+
+    afterEach(() => {
+        jest.restoreAllMocks();
     });
 
     it("should render the component", async () => {
@@ -110,10 +119,8 @@ describe("SelectHistogram", () => {
 
         const thumb = screen.getByTestId("slider-track-0");
 
-        await waitFor(() => {
-            fireEvent.mouseDown(thumb.parentElement!);
-            expect(mockChange).toHaveBeenCalledWith([1, 2]);
-        });
+        fireEvent.mouseDown(thumb.parentElement!);
+        expect(mockChange).toHaveBeenCalledWith([1, 2]);
         fireEvent.mouseUp(document);
     });
 
