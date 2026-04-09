@@ -1,8 +1,21 @@
 import clsx from "clsx";
 import React from "react";
 
+import { Breakpoint } from "../theme/tokens/breakpoint";
+import { parseCSSVariableValue } from "../theme/utils/css-variable";
 import * as styles from "./col-div.styles";
 import type { ColDivProps } from "./types";
+
+const getColCount = (
+    token: (typeof Breakpoint)[keyof typeof Breakpoint]
+): number => {
+    const value = parseCSSVariableValue(
+        token,
+        globalThis.document?.documentElement ?? null
+    );
+    const parsed = parseInt(value, 10);
+    return Number.isNaN(parsed) ? Infinity : parsed;
+};
 
 const Component = (
     props: ColDivProps,
@@ -21,63 +34,102 @@ const Component = (
         ...otherProps
     } = props;
 
-    const getColSpan = (cols: number | [number, number] | undefined) => {
-        if (!cols) return { start: undefined, span: undefined };
+    const getColSpan = (
+        cols: number | [number, number] | undefined,
+        colToken: (typeof Breakpoint)[keyof typeof Breakpoint]
+    ) => {
+        if (!cols) return { start: undefined, span: undefined, end: undefined };
 
         if (Array.isArray(cols)) {
             const [start, end] = cols;
-            if (end === -1) return { start, span: undefined };
-            return { start, span: end - start };
+            if (end === -1) {
+                return { start, span: undefined, end: -1 };
+            }
+            const maxCols = getColCount(colToken);
+            return {
+                start,
+                span: Math.min(end - start, maxCols),
+                end: undefined,
+            };
         }
 
-        return { start: undefined, span: cols };
+        const maxCols = getColCount(colToken);
+        return {
+            start: undefined,
+            span: Math.min(cols, maxCols),
+            end: undefined,
+        };
     };
 
     const getCssVars = () => {
-        const xxsStartSpan = getColSpan(xxsCols);
-        const xsStartSpan = getColSpan(xsCols || xxsCols);
-        const smStartSpan = getColSpan(smCols || xsCols || xxsCols);
-        const mdStartSpan = getColSpan(mdCols || smCols || xsCols || xxsCols);
-        const lgStartSpan = getColSpan(
-            lgCols || mdCols || smCols || xsCols || xxsCols
+        const xxsResult = getColSpan(xxsCols, Breakpoint["xxs-column"]);
+        const xsResult = getColSpan(xsCols || xxsCols, Breakpoint["xs-column"]);
+        const smResult = getColSpan(
+            smCols || xsCols || xxsCols,
+            Breakpoint["sm-column"]
         );
-        const xlStartSpan = getColSpan(
-            xlCols || lgCols || mdCols || smCols || xsCols || xxsCols
+        const mdResult = getColSpan(
+            mdCols || smCols || xsCols || xxsCols,
+            Breakpoint["md-column"]
         );
-        const xxlStartSpan = getColSpan(
-            xxlCols || xlCols || lgCols || mdCols || smCols || xsCols || xxsCols
+        const lgResult = getColSpan(
+            lgCols || mdCols || smCols || xsCols || xxsCols,
+            Breakpoint["lg-column"]
+        );
+        const xlResult = getColSpan(
+            xlCols || lgCols || mdCols || smCols || xsCols || xxsCols,
+            Breakpoint["xl-column"]
+        );
+        const xxlResult = getColSpan(
+            xxlCols ||
+                xlCols ||
+                lgCols ||
+                mdCols ||
+                smCols ||
+                xsCols ||
+                xxsCols,
+            Breakpoint["xxl-column"]
         );
 
         const cssVars: Record<string, string> = {};
 
-        if (xxsStartSpan.start)
-            cssVars[styles.tokens.xxsStart] = String(xxsStartSpan.start);
-        if (xxsStartSpan.span)
-            cssVars[styles.tokens.xxsSpan] = String(xxsStartSpan.span);
-        if (xsStartSpan.start)
-            cssVars[styles.tokens.xsStart] = String(xsStartSpan.start);
-        if (xsStartSpan.span)
-            cssVars[styles.tokens.xsSpan] = String(xsStartSpan.span);
-        if (smStartSpan.start)
-            cssVars[styles.tokens.smStart] = String(smStartSpan.start);
-        if (smStartSpan.span)
-            cssVars[styles.tokens.smSpan] = String(smStartSpan.span);
-        if (mdStartSpan.start)
-            cssVars[styles.tokens.mdStart] = String(mdStartSpan.start);
-        if (mdStartSpan.span)
-            cssVars[styles.tokens.mdSpan] = String(mdStartSpan.span);
-        if (lgStartSpan.start)
-            cssVars[styles.tokens.lgStart] = String(lgStartSpan.start);
-        if (lgStartSpan.span)
-            cssVars[styles.tokens.lgSpan] = String(lgStartSpan.span);
-        if (xlStartSpan.start)
-            cssVars[styles.tokens.xlStart] = String(xlStartSpan.start);
-        if (xlStartSpan.span)
-            cssVars[styles.tokens.xlSpan] = String(xlStartSpan.span);
-        if (xxlStartSpan.start)
-            cssVars[styles.tokens.xxlStart] = String(xxlStartSpan.start);
-        if (xxlStartSpan.span)
-            cssVars[styles.tokens.xxlSpan] = String(xxlStartSpan.span);
+        if (xxsResult.start)
+            cssVars[styles.tokens.xxsStart] = String(xxsResult.start);
+        if (xxsResult.span)
+            cssVars[styles.tokens.xxsSpan] = String(xxsResult.span);
+        if (xxsResult.end)
+            cssVars[styles.tokens.xxsEnd] = String(xxsResult.end);
+        if (xsResult.start)
+            cssVars[styles.tokens.xsStart] = String(xsResult.start);
+        if (xsResult.span)
+            cssVars[styles.tokens.xsSpan] = String(xsResult.span);
+        if (xsResult.end) cssVars[styles.tokens.xsEnd] = String(xsResult.end);
+        if (smResult.start)
+            cssVars[styles.tokens.smStart] = String(smResult.start);
+        if (smResult.span)
+            cssVars[styles.tokens.smSpan] = String(smResult.span);
+        if (smResult.end) cssVars[styles.tokens.smEnd] = String(smResult.end);
+        if (mdResult.start)
+            cssVars[styles.tokens.mdStart] = String(mdResult.start);
+        if (mdResult.span)
+            cssVars[styles.tokens.mdSpan] = String(mdResult.span);
+        if (mdResult.end) cssVars[styles.tokens.mdEnd] = String(mdResult.end);
+        if (lgResult.start)
+            cssVars[styles.tokens.lgStart] = String(lgResult.start);
+        if (lgResult.span)
+            cssVars[styles.tokens.lgSpan] = String(lgResult.span);
+        if (lgResult.end) cssVars[styles.tokens.lgEnd] = String(lgResult.end);
+        if (xlResult.start)
+            cssVars[styles.tokens.xlStart] = String(xlResult.start);
+        if (xlResult.span)
+            cssVars[styles.tokens.xlSpan] = String(xlResult.span);
+        if (xlResult.end) cssVars[styles.tokens.xlEnd] = String(xlResult.end);
+        if (xxlResult.start)
+            cssVars[styles.tokens.xxlStart] = String(xxlResult.start);
+        if (xxlResult.span)
+            cssVars[styles.tokens.xxlSpan] = String(xxlResult.span);
+        if (xxlResult.end)
+            cssVars[styles.tokens.xxlEnd] = String(xxlResult.end);
 
         return cssVars;
     };

@@ -70,8 +70,8 @@ describe("ColDiv Component", () => {
         const el = container.firstChild as HTMLElement;
 
         expect(el.style.getPropertyValue(styles.tokens.xxsStart)).toBe("2");
-
         expect(el.style.getPropertyValue(styles.tokens.xxsSpan)).toBe("");
+        expect(el.style.getPropertyValue(styles.tokens.xxsEnd)).toBe("-1");
     });
 
     it("should fall back to smaller breakpoint cols when larger not specified", () => {

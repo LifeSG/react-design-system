@@ -26,7 +26,7 @@ const Component = (
                 !stretch && styles.containerNotStretched,
                 type === "grid" && styles.containerGrid,
                 type === "flex-column" && styles.containerFlexColumn,
-                (type === "flex" || !type) && styles.containerFlex,
+                type === "flex" && styles.containerFlex,
                 className
             )}
             {...otherProps}
