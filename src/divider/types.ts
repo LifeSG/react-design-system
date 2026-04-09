@@ -16,5 +16,5 @@ export interface DividerProps
     /** The layout type. Values: "flex" | "grid" */
     layoutType?: DividerLayoutType | undefined;
     /** The line color */
-    color?: string | ((props: V3_ThemeStyleProps) => string) | undefined;
+    color?: string | undefined;
 }
