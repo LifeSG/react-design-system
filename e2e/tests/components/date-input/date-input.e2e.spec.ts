@@ -1,4 +1,5 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
+import { fixedTimestamp } from "../../consts";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -67,7 +68,7 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("DateInput", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("default");
+            await story.init("default", { mockedTimestamp: fixedTimestamp });
         });
 
         test("Single date calendar states", async ({ story }) => {
@@ -131,7 +132,7 @@ test.describe("DateInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("selected");
+            await story.init("selected", { mockedTimestamp: fixedTimestamp });
         });
 
         test("Single date month and year views", async ({ story }) => {
@@ -155,7 +156,7 @@ test.describe("DateInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("disabled");
+            await story.init("disabled", { mockedTimestamp: fixedTimestamp });
         });
 
         test("Disabled state", async ({ story }) => {

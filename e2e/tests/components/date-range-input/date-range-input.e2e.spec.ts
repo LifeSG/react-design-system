@@ -1,4 +1,5 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
+import { fixedTimestamp } from "../../consts";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -74,7 +75,7 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("DateRangeInput", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("default");
+            await story.init("default", { mockedTimestamp: fixedTimestamp });
         });
 
         test("Range calendar states", async ({ story }) => {
@@ -93,7 +94,9 @@ test.describe("DateRangeInput", () => {
             });
 
             await test.step("Range with selected end date and hovered start date", async () => {
-                await story.init("default");
+                await story.init("default", {
+                    mockedTimestamp: fixedTimestamp,
+                });
                 await story.openCalendar();
 
                 await story.locators.endField.click();
@@ -110,7 +113,9 @@ test.describe("DateRangeInput", () => {
             });
 
             await test.step("Range with selected start date and hovered end date", async () => {
-                await story.init("default");
+                await story.init("default", {
+                    mockedTimestamp: fixedTimestamp,
+                });
                 await story.openCalendar();
 
                 await story.getDayCell(10).click();
@@ -199,7 +204,9 @@ test.describe("DateRangeInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("week-default");
+            await story.init("week-default", {
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
         test("Week range with hover", async ({ story }) => {
@@ -214,7 +221,9 @@ test.describe("DateRangeInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("week-selected");
+            await story.init("week-selected", {
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
         test("Week range selected and hover states", async ({ story }) => {
@@ -238,7 +247,9 @@ test.describe("DateRangeInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("fixed-range-default");
+            await story.init("fixed-range-default", {
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
         test("Fixed range with hover", async ({ story }) => {
@@ -253,7 +264,9 @@ test.describe("DateRangeInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("fixed-range-selected");
+            await story.init("fixed-range-selected", {
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
         test("Fixed range selected and hover overlap states", async ({
@@ -284,7 +297,7 @@ test.describe("DateRangeInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("disabled");
+            await story.init("disabled", { mockedTimestamp: fixedTimestamp });
         });
 
         test("Disabled state", async ({ story }) => {

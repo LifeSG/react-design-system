@@ -16,9 +16,14 @@ export abstract class AbstractStoryPage {
         options?: {
             size?: keyof typeof viewport;
             mode?: "light" | "dark" | "auto";
+            mockedTimestamp?: string;
         }
     ) {
         await this.page.setViewportSize(viewport[options?.size ?? "desktop"]);
+
+        if (options?.mockedTimestamp) {
+            await applyMockedTimestamp(this.page, options.mockedTimestamp);
+        }
 
         if (options?.mode && options.mode !== "auto") {
             await this.page.emulateMedia({
@@ -91,4 +96,14 @@ export const compareLocatorScreenshot = async (
     await expect(locator).toHaveScreenshot(`${name}.png`, {
         threshold: options?.threshold ?? 0, // Strict colour matching by default
     });
+};
+
+export const applyMockedTimestamp = async (
+    page: Page,
+    timestamp: string
+): Promise<void> => {
+    const mockedDate = new Date(timestamp);
+    const clock = page.clock;
+
+    await clock.install({ time: mockedDate });
 };
