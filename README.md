@@ -27,6 +27,11 @@ npm i @lifesg/react-design-system
 The module requires some custom css for fonts and certain components to work
 properly. You will need to load the corresponding stylesheets in your app.
 
+> [!NOTE]
+> The font stylesheet example below is for the LifeSG theme. Fonts are
+> theme-specific. If you are using another theme, refer to the
+> [installation instructions](https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-installation--docs).
+
 Add this into the `head` of your html file:
 
 ```tsx
