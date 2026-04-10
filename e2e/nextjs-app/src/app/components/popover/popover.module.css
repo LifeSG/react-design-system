@@ -9,3 +9,11 @@
 .resize-long-content {
     height: 1200px;
 }
+
+.scroll-position-page {
+    min-height: 260vh;
+}
+
+.scroll-position-anchor {
+    margin-top: 55vh;
+}

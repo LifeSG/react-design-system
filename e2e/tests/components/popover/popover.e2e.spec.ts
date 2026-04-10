@@ -244,6 +244,42 @@ test.describe("Popover", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("position-on-scroll");
+        });
+
+        test("Popover position updates on scroll (top to bottom to top)", async ({
+            story,
+        }) => {
+            const getPopoverVerticalPosition = async () => {
+                const triggerBox =
+                    await story.locators.triggerButton.boundingBox();
+                const popoverBox =
+                    await story.locators.popoverContent.boundingBox();
+
+                if (!triggerBox || !popoverBox) return "unknown";
+                return popoverBox.y < triggerBox.y ? "above" : "below";
+            };
+
+            await test.step("Popover opens and is positioned above trigger initially", async () => {
+                await story.locators.triggerButton.click();
+                await expect(story.locators.popoverContent).toBeVisible();
+                await expect.poll(getPopoverVerticalPosition).toBe("above");
+            });
+
+            await test.step("Popover moves below trigger after scrolling down", async () => {
+                await story.page.evaluate(() => window.scrollBy(0, 380));
+                await expect.poll(getPopoverVerticalPosition).toBe("below");
+            });
+
+            await test.step("Popover returns above trigger after scrolling back up", async () => {
+                await story.page.evaluate(() => window.scrollBy(0, -380));
+                await expect.poll(getPopoverVerticalPosition).toBe("above");
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("resize");
         });
 
