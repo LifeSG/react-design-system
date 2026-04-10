@@ -23,13 +23,12 @@ export const PopoverV2 = ({
     ariaLabel = "More information",
     id,
     className,
-    "data-testid": _testId,
+    "data-testid": testId = "popover",
     ...otherProps
 }: PopoverV2Props): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const testId = _testId || "popover";
     const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
     const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const popoverContainerRef = useRef<HTMLDivElement>(null);
