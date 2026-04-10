@@ -6,9 +6,9 @@ import { Colour } from "../theme";
 // =============================================================================
 
 export const tokens = {
-    thickness: "--fds-divider-line-thickness",
-    color: "--fds-divider-line-color",
-    backgroundImage: "--fds-divider-line-background-image",
+    thickness: "--fds-internal-divider-line-thickness",
+    color: "--fds-internal-divider-line-color",
+    backgroundImage: "--fds-internal-divider-line-backgroundImage",
 } as const;
 
 export const lineBase = css`
