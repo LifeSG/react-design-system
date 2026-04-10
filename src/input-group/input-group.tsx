@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { InputGroupListAddon } from "./input-group-list-addon";
 import {
     AddonWrapper,
@@ -7,11 +7,30 @@ import {
     NoAddonWrapper,
 } from "./input-group.style";
 import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import { SimpleIdGenerator } from "../util";
 
 const Component = <T, V>(
-    { addon, error, className, ...otherProps }: InputGroupProps<T, V>,
+    {
+        addon,
+        error,
+        className,
+        "aria-label": ariaLabel,
+        "aria-labelledby": ariaLabelledBy,
+        ...otherProps
+    }: InputGroupProps<T, V>,
     ref: React.Ref<HTMLInputElement>
 ) => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const addonId = `${internalId}-addon`;
+    const ariaLabelId = `${internalId}-ariaLabelId`;
+
+    // =============================================================================
+    // RENDER FUNCTIONS
+    // =============================================================================
     const renderNoAddons = () => (
         <NoAddonWrapper
             $disabled={otherProps.disabled}
@@ -45,6 +64,8 @@ const Component = <T, V>(
                             error={error}
                             className={className}
                             noBorder={otherProps.noBorder}
+                            aria-label={ariaLabel}
+                            aria-labelledby={ariaLabelledBy}
                             {...otherProps}
                         />
                     );
@@ -52,6 +73,7 @@ const Component = <T, V>(
                     return renderNoAddons();
                 }
             }
+
             case "custom": {
                 const customAddon = addon.attributes as CustomAddon;
                 if (customAddon.children) {
@@ -67,15 +89,24 @@ const Component = <T, V>(
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
+                                id={addonId}
                                 $disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
                                 $position={position}
                             >
                                 {customAddon.children}
                             </LabelAddonContainer>
+                            <VisuallyHidden aria-hidden id={ariaLabelId}>
+                                {ariaLabel}
+                            </VisuallyHidden>
                             <MainInput
                                 ref={ref}
                                 {...otherProps}
+                                aria-labelledby={concatIds(
+                                    ariaLabelId,
+                                    ariaLabelledBy,
+                                    addonId
+                                )}
                                 allowClear={allowClear && position !== "right"}
                                 error={error}
                                 data-testid="input"
@@ -102,15 +133,24 @@ const Component = <T, V>(
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
+                                id={addonId}
                                 $disabled={otherProps.disabled}
                                 $readOnly={otherProps.readOnly}
                                 $position={position}
                             >
                                 {labelAddon.value}
                             </LabelAddonContainer>
+                            <VisuallyHidden aria-hidden id={ariaLabelId}>
+                                {ariaLabel}
+                            </VisuallyHidden>
                             <MainInput
                                 ref={ref}
                                 {...otherProps}
+                                aria-labelledby={concatIds(
+                                    ariaLabelId,
+                                    ariaLabelledBy,
+                                    addonId
+                                )}
                                 allowClear={allowClear && position !== "right"}
                                 error={error}
                                 data-testid="input"

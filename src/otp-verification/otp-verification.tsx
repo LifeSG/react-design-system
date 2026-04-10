@@ -1,3 +1,4 @@
+import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import { useState } from "react";
 import { useCountdown } from "../util";
 import { ContactInputSection } from "./contact-input-section";
@@ -23,6 +24,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
         onOtpChange,
         otpState,
         onOtpStateChange,
+        otpReminderInterval = 120,
     } = props;
 
     const [isLoading, setIsLoading] = useState(false);
@@ -30,6 +32,11 @@ export const OtpVerification = (props: OtpVerificationProps) => {
 
     const countdown = useCountdown({
         duration: verifyOtpCountdownTimer,
+        reminderInterval: otpReminderInterval,
+        getStartMessage: (duration) =>
+            `You can resend the OTP in ${duration} seconds`,
+        getIntervalMessage: (remaining) => `${remaining} seconds remaining`,
+        getCompletionMessage: () => "You can now resend the OTP",
     });
 
     // =============================================================================
@@ -59,7 +66,15 @@ export const OtpVerification = (props: OtpVerificationProps) => {
         try {
             setIsVerifyLoading(true);
             await onVerifyOtp(otpValue.value);
+
             onOtpStateChange("verified");
+
+            clearAnnouncer("polite");
+            announce(
+                "Success. Your email or mobile number has been verified.",
+                "polite"
+            );
+
             // Reset the countdown and clear the OTP code in case user enter new OTP later
             countdown.reset();
             onOtpChange?.("");
