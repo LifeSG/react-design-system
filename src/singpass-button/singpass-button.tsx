@@ -1,8 +1,8 @@
+import clsx from "clsx";
 import React from "react";
 
 import { getSpLogo } from "./singpass-assets";
-import type { MainStyleProps } from "./singpass-button.style";
-import { Main, SvgContainer } from "./singpass-button.style";
+import * as styles from "./singpass-button.styles";
 import type { SingpassButtonProps, SingpassButtonRef } from "./types";
 
 /**
@@ -15,73 +15,83 @@ const DefaultComponent = (
     props: SingpassButtonProps,
     ref: SingpassButtonRef
 ) => {
-    const { styleType = "white-filled", ...otherProps } = props;
-
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: styleType,
-        $buttonSizeStyle: "default",
-    };
+    const { styleType = "white-filled", className, ...otherProps } = props;
 
     return (
-        <Main
+        <button
             ref={ref}
             data-testid={otherProps["data-testid"] || "button"}
-            {...mainStyle}
             {...otherProps}
-            aria-label="Log in with sing pass"
+            aria-label="Log in with Singpass"
+            className={clsx(
+                styles.main,
+                styleType === "red-filled"
+                    ? styles.mainStyleRedFilled
+                    : styles.mainStyleWhiteFilled,
+                className
+            )}
         >
-            <SvgContainer $buttonSizeStyle="default">
+            <span className={styles.svgContainer}>
                 <img src={getSpLogo(styleType)} alt="" />
-            </SvgContainer>
-        </Main>
+            </span>
+        </button>
     );
 };
 DefaultComponent.displayName = "SingpassButton.Default";
 
 const SmallComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
-    const { styleType = "white-filled", ...otherProps } = props;
-
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: styleType,
-        $buttonSizeStyle: "small",
-    };
+    const { styleType = "white-filled", className, ...otherProps } = props;
 
     return (
-        <Main
+        <button
             ref={ref}
             data-testid={otherProps["data-testid"] || "button"}
-            {...mainStyle}
             {...otherProps}
-            aria-label="Log in with sing pass"
+            aria-label="Log in with Singpass"
+            className={clsx(
+                styles.main,
+                styles.mainSizeSmall,
+                styleType === "red-filled"
+                    ? styles.mainStyleRedFilled
+                    : styles.mainStyleWhiteFilled,
+                className
+            )}
         >
-            <SvgContainer $buttonSizeStyle="small">
+            <span className={styles.svgContainer}>
                 <img src={getSpLogo(styleType)} alt="" />
-            </SvgContainer>
-        </Main>
+            </span>
+        </button>
     );
 };
 SmallComponent.displayName = "SingpassButton.Small";
 
 const LargeComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
-    const { styleType = "white-filled", ...otherProps } = props;
-
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: styleType,
-        $buttonSizeStyle: "large",
-    };
+    const { styleType = "white-filled", className, ...otherProps } = props;
 
     return (
-        <Main
+        <button
             ref={ref}
             data-testid={otherProps["data-testid"] || "button"}
-            {...mainStyle}
             {...otherProps}
-            aria-label="Log in with sing pass"
+            aria-label="Log in with Singpass"
+            className={clsx(
+                styles.main,
+                styles.mainSizeLarge,
+                styleType === "red-filled"
+                    ? styles.mainStyleRedFilled
+                    : styles.mainStyleWhiteFilled,
+                className
+            )}
         >
-            <SvgContainer $buttonSizeStyle="large">
+            <span
+                className={clsx(
+                    styles.svgContainer,
+                    styles.svgContainerSizeLarge
+                )}
+            >
                 <img src={getSpLogo(styleType)} alt="" />
-            </SvgContainer>
-        </Main>
+            </span>
+        </button>
     );
 };
 LargeComponent.displayName = "SingpassButton.Large";
