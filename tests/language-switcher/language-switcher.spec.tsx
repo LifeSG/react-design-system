@@ -107,17 +107,11 @@ describe("LanguageSwitcher (dropdown)", () => {
 
         // Arrow down should move focus
         fireEvent.keyDown(listbox, { key: "ArrowDown" });
-        expect(screen.getByRole("option", { name: "中文" })).toHaveAttribute(
-            "tabindex",
-            "0"
-        );
+        expect(screen.getByRole("option", { name: "中文" })).toHaveFocus();
 
         // Arrow up should move back
         fireEvent.keyDown(listbox, { key: "ArrowUp" });
-        expect(screen.getByRole("option", { name: "English" })).toHaveAttribute(
-            "tabindex",
-            "0"
-        );
+        expect(screen.getByRole("option", { name: "English" })).toHaveFocus();
     });
 
     it("should navigate to first/last with Home/End keys", () => {
@@ -128,16 +122,10 @@ describe("LanguageSwitcher (dropdown)", () => {
         const listbox = screen.getByRole("listbox");
 
         fireEvent.keyDown(listbox, { key: "End" });
-        expect(screen.getByRole("option", { name: "தமிழ்" })).toHaveAttribute(
-            "tabindex",
-            "0"
-        );
+        expect(screen.getByRole("option", { name: "தமிழ்" })).toHaveFocus();
 
         fireEvent.keyDown(listbox, { key: "Home" });
-        expect(screen.getByRole("option", { name: "English" })).toHaveAttribute(
-            "tabindex",
-            "0"
-        );
+        expect(screen.getByRole("option", { name: "English" })).toHaveFocus();
     });
 
     it("should select focused option with Enter key", () => {
