@@ -71,6 +71,7 @@ export { SelectedIndicator, UnselectedIndicator };
 
 export const DropdownItem = styled(ListItem)`
     align-items: center;
+    ${Font["body-md-regular"]}
     color: ${Colour["text"]};
 
     &:hover {
@@ -80,11 +81,11 @@ export const DropdownItem = styled(ListItem)`
     ${(props) =>
         props.$selected &&
         css`
-            background: ${Colour["bg"]};
+            background: transparent;
             color: ${Colour["text-selected"]};
 
             &:hover {
-                background: ${Colour["bg-selected"]};
+                background: ${Colour["bg-hover"]};
             }
         `}
 `;

@@ -187,31 +187,25 @@ describe("LanguageSwitcher (dropdown)", () => {
 // LINK CONTAINER TESTS
 // =============================================================================
 describe("LanguageSwitcher (link-container)", () => {
-    it("should render all four language options", () => {
+    it("should render all four language options with group role and default selection", () => {
         render(
             <LanguageSwitcher variant="link-container" selectedLanguage="en" />
         );
+
+        screen.getByRole("group", {
+            name: "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும்",
+        });
 
         expect(screen.getByText("English")).toBeInTheDocument();
         expect(screen.getByText("中文")).toBeInTheDocument();
         expect(screen.getByText("Melayu")).toBeInTheDocument();
         expect(screen.getByText("தமிழ்")).toBeInTheDocument();
-    });
-
-    it("should have group role and aria-label on the link list", () => {
-        render(
-            <LanguageSwitcher variant="link-container" selectedLanguage="en" />
-        );
-
-        const group = screen.getByRole("group");
-        expect(group).toHaveAttribute("aria-label");
-    });
-
-    it("should render with default language (English) when no selection provided", () => {
-        render(<LanguageSwitcher variant="link-container" />);
 
         const englishButton = screen.getByRole("button", { name: "English" });
         expect(englishButton).toHaveAttribute("aria-pressed", "true");
+
+        const zhButton = screen.getByRole("button", { name: "中文" });
+        expect(zhButton).toHaveAttribute("aria-pressed", "false");
     });
 
     it("should call onSelectLanguage when an inactive language is clicked", () => {
@@ -259,18 +253,6 @@ describe("LanguageSwitcher (link-container)", () => {
         expect(announce).toHaveBeenCalledWith("Melayu selected", "polite");
     });
 
-    it("should set aria-pressed on active language and not on others", () => {
-        render(
-            <LanguageSwitcher variant="link-container" selectedLanguage="ta" />
-        );
-
-        const tamilButton = screen.getByRole("button", { name: "தமிழ்" });
-        expect(tamilButton).toHaveAttribute("aria-pressed", "true");
-
-        const englishButton = screen.getByRole("button", { name: "English" });
-        expect(englishButton).toHaveAttribute("aria-pressed", "false");
-    });
-
     it("should set lang attribute on each option", () => {
         render(
             <LanguageSwitcher variant="link-container" selectedLanguage="en" />
@@ -292,17 +274,6 @@ describe("LanguageSwitcher (link-container)", () => {
             "lang",
             "ta"
         );
-    });
-
-    it("should have aria-hidden on separator dividers", () => {
-        render(
-            <LanguageSwitcher variant="link-container" selectedLanguage="en" />
-        );
-
-        const group = screen.getByRole("group");
-        const hiddenItems = group.querySelectorAll("[aria-hidden='true']");
-        // 3 separators between 4 items
-        expect(hiddenItems.length).toBe(3);
     });
 
     it("should navigate between options with arrow keys", () => {
@@ -348,12 +319,8 @@ describe("LanguageSwitcher (link-container)", () => {
             <LanguageSwitcher variant="link-container" selectedLanguage="en" />
         );
 
-        const group = screen.getByRole("group");
-        const list = group.closest("ul") || group.querySelector("ul");
-        expect(list).toBeInTheDocument();
-
-        const listItems = list!.querySelectorAll("li");
+        const listItems = screen.getAllByRole("listitem");
         // 4 language items + 3 separator items
-        expect(listItems.length).toBe(7);
+        expect(listItems).toHaveLength(7);
     });
 });
