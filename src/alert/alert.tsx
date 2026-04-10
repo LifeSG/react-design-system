@@ -16,6 +16,29 @@ import { SimpleIdGenerator } from "../util";
 import * as styles from "./alert.styles";
 import type { AlertProps } from "./types";
 
+const TYPE_CLASS_MAP = {
+    error: {
+        wrapperTypeClass: styles.wrapperError,
+        iconColorClass: styles.alertIconError,
+    },
+    success: {
+        wrapperTypeClass: styles.wrapperSuccess,
+        iconColorClass: styles.alertIconSuccess,
+    },
+    warning: {
+        wrapperTypeClass: styles.wrapperWarning,
+        iconColorClass: styles.alertIconWarning,
+    },
+    info: {
+        wrapperTypeClass: styles.wrapperInfo,
+        iconColorClass: styles.alertIconInfo,
+    },
+    description: {
+        wrapperTypeClass: styles.wrapperDescription,
+        iconColorClass: styles.alertIconDescription,
+    },
+};
+
 export const Alert = ({
     type,
     className,
@@ -193,33 +216,10 @@ export const Alert = ({
         );
     };
 
-    const typeClassMap = {
-        error: {
-            wrapperTypeClass: styles.wrapperError,
-            iconColorClass: styles.alertIconError,
-        },
-        success: {
-            wrapperTypeClass: styles.wrapperSuccess,
-            iconColorClass: styles.alertIconSuccess,
-        },
-        warning: {
-            wrapperTypeClass: styles.wrapperWarning,
-            iconColorClass: styles.alertIconWarning,
-        },
-        info: {
-            wrapperTypeClass: styles.wrapperInfo,
-            iconColorClass: styles.alertIconInfo,
-        },
-        description: {
-            wrapperTypeClass: styles.wrapperDescription,
-            iconColorClass: styles.alertIconDescription,
-        },
-    };
-
     const {
         wrapperTypeClass = styles.wrapperWarning,
         iconColorClass = styles.alertIconWarning,
-    } = typeClassMap[type] || {};
+    } = TYPE_CLASS_MAP[type] || {};
 
     return (
         <div
