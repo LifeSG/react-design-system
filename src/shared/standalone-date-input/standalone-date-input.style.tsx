@@ -34,6 +34,7 @@ export const InputSection = styled.div`
 export const InputContainer = styled.div<InputContainerStyleProps>`
     display: flex;
     align-items: center;
+    gap: ${Spacing["spacing-4"]};
 
     ${(props) => {
         if (props.$hover) {
@@ -46,24 +47,46 @@ export const InputContainer = styled.div<InputContainerStyleProps>`
     }}
 `;
 
+const InputSizerBase = styled.span`
+    display: inline-block;
+    position: relative;
+
+    &::after {
+        ${Font["body-baseline-regular"]}
+        visibility: hidden;
+        pointer-events: none;
+        white-space: pre;
+    }
+`;
+
+export const DayInputSizer = styled(InputSizerBase)`
+    &::after {
+        content: "DD";
+    }
+`;
+
+export const MonthInputSizer = styled(InputSizerBase)`
+    &::after {
+        content: "MM";
+    }
+`;
+
+export const YearInputSizer = styled(InputSizerBase)`
+    &::after {
+        content: "YYYY";
+    }
+`;
+
 const BaseInput = styled(BasicInput)`
     background: transparent;
     text-align: center;
+    position: absolute;
+    inset: 0;
 `;
 
-export const DayInput = styled(BaseInput)`
-    width: 2rem;
-    margin-right: ${Spacing["spacing-4"]};
-`;
-
-export const MonthInput = styled(BaseInput)`
-    width: 2.5rem;
-`;
-
-export const YearInput = styled(BaseInput)`
-    width: 3rem;
-    margin-left: ${Spacing["spacing-4"]};
-`;
+export const DayInput = styled(BaseInput)``;
+export const MonthInput = styled(BaseInput)``;
+export const YearInput = styled(BaseInput)``;
 
 export const Divider = styled.span<DividerStyleProps>`
     ${Font["body-baseline-regular"]}
