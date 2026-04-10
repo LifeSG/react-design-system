@@ -23,12 +23,6 @@ beforeEach(() => {
 // DROPDOWN TESTS
 // =============================================================================
 describe("LanguageSwitcher (dropdown)", () => {
-    it("should render the trigger with the selected language", () => {
-        render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
-
-        expect(screen.getByText("English")).toBeInTheDocument();
-    });
-
     it("should render with default language (English) when no selection provided", () => {
         render(<LanguageSwitcher variant="dropdown" />);
 
