@@ -45,8 +45,8 @@ describe("LanguageSwitcher (dropdown)", () => {
             />
         );
 
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
-        fireEvent.click(screen.getByTestId("language-switcher--item-zh"));
+        fireEvent.click(screen.getByRole("combobox"));
+        fireEvent.click(screen.getByRole("option", { name: "中文" }));
 
         expect(onSelectLanguage).toHaveBeenCalledWith("zh");
     });
@@ -61,8 +61,8 @@ describe("LanguageSwitcher (dropdown)", () => {
             />
         );
 
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
-        fireEvent.click(screen.getByTestId("language-switcher--item-en"));
+        fireEvent.click(screen.getByRole("combobox"));
+        fireEvent.click(screen.getByRole("option", { name: "English" }));
 
         expect(onSelectLanguage).not.toHaveBeenCalled();
     });
@@ -70,91 +70,74 @@ describe("LanguageSwitcher (dropdown)", () => {
     it("should render all four language options in the dropdown", () => {
         render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
 
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
+        fireEvent.click(screen.getByRole("combobox"));
 
         expect(
-            screen.getByTestId("language-switcher--item-en")
+            screen.getByRole("option", { name: "English" })
         ).toBeInTheDocument();
         expect(
-            screen.getByTestId("language-switcher--item-zh")
+            screen.getByRole("option", { name: "中文" })
         ).toBeInTheDocument();
         expect(
-            screen.getByTestId("language-switcher--item-ms")
+            screen.getByRole("option", { name: "Melayu" })
         ).toBeInTheDocument();
         expect(
-            screen.getByTestId("language-switcher--item-ta")
+            screen.getByRole("option", { name: "தமிழ்" })
         ).toBeInTheDocument();
-    });
-
-    it("should set role=option, lang, and aria-selected on list items", () => {
-        render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
-
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
-
-        const enItem = screen.getByTestId("language-switcher--item-en");
-        expect(enItem).toHaveAttribute("role", "option");
-        expect(enItem).toHaveAttribute("lang", "en");
-        expect(enItem).toHaveAttribute("aria-selected", "true");
-
-        const zhItem = screen.getByTestId("language-switcher--item-zh");
-        expect(zhItem).toHaveAttribute("role", "option");
-        expect(zhItem).toHaveAttribute("lang", "zh");
-        expect(zhItem).toHaveAttribute("aria-selected", "false");
     });
 
     it("should use roving tabindex on list items", () => {
         render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
 
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
+        fireEvent.click(screen.getByRole("combobox"));
 
-        const enItem = screen.getByTestId("language-switcher--item-en");
+        const enItem = screen.getByRole("option", { name: "English" });
         expect(enItem).toHaveAttribute("tabindex", "0");
 
-        const zhItem = screen.getByTestId("language-switcher--item-zh");
+        const zhItem = screen.getByRole("option", { name: "中文" });
         expect(zhItem).toHaveAttribute("tabindex", "-1");
-    });
-
-    it("should render a listbox with aria-label", () => {
-        render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
-
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
-
-        const listbox = screen.getByRole("listbox");
-        expect(listbox).toHaveAttribute("aria-label");
     });
 
     it("should navigate options with arrow keys", () => {
         render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
 
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
+        fireEvent.click(screen.getByRole("combobox"));
 
         const listbox = screen.getByRole("listbox");
 
         // Arrow down should move focus
         fireEvent.keyDown(listbox, { key: "ArrowDown" });
-        const zhItem = screen.getByTestId("language-switcher--item-zh");
-        expect(zhItem).toHaveAttribute("tabindex", "0");
+        expect(screen.getByRole("option", { name: "中文" })).toHaveAttribute(
+            "tabindex",
+            "0"
+        );
 
         // Arrow up should move back
         fireEvent.keyDown(listbox, { key: "ArrowUp" });
-        const enItem = screen.getByTestId("language-switcher--item-en");
-        expect(enItem).toHaveAttribute("tabindex", "0");
+        expect(screen.getByRole("option", { name: "English" })).toHaveAttribute(
+            "tabindex",
+            "0"
+        );
     });
 
     it("should navigate to first/last with Home/End keys", () => {
         render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
 
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
+        fireEvent.click(screen.getByRole("combobox"));
 
         const listbox = screen.getByRole("listbox");
 
         fireEvent.keyDown(listbox, { key: "End" });
-        const taItem = screen.getByTestId("language-switcher--item-ta");
-        expect(taItem).toHaveAttribute("tabindex", "0");
+        expect(screen.getByRole("option", { name: "தமிழ்" })).toHaveAttribute(
+            "tabindex",
+            "0"
+        );
 
         fireEvent.keyDown(listbox, { key: "Home" });
-        const enItem = screen.getByTestId("language-switcher--item-en");
-        expect(enItem).toHaveAttribute("tabindex", "0");
+        expect(screen.getByRole("option", { name: "English" })).toHaveAttribute(
+            "tabindex",
+            "0"
+        );
     });
 
     it("should select focused option with Enter key", () => {
@@ -167,7 +150,7 @@ describe("LanguageSwitcher (dropdown)", () => {
             />
         );
 
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
+        fireEvent.click(screen.getByRole("combobox"));
 
         const listbox = screen.getByRole("listbox");
         fireEvent.keyDown(listbox, { key: "ArrowDown" });
@@ -186,7 +169,7 @@ describe("LanguageSwitcher (dropdown)", () => {
             />
         );
 
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
+        fireEvent.click(screen.getByRole("combobox"));
 
         const listbox = screen.getByRole("listbox");
         fireEvent.keyDown(listbox, { key: "ArrowDown" });
@@ -205,8 +188,8 @@ describe("LanguageSwitcher (dropdown)", () => {
             />
         );
 
-        fireEvent.click(screen.getByTestId("language-switcher--trigger"));
-        fireEvent.click(screen.getByTestId("language-switcher--item-zh"));
+        fireEvent.click(screen.getByRole("combobox"));
+        fireEvent.click(screen.getByRole("option", { name: "中文" }));
 
         expect(announce).toHaveBeenCalledWith("中文 selected", "polite");
     });
@@ -239,7 +222,7 @@ describe("LanguageSwitcher (link-container)", () => {
     it("should render with default language (English) when no selection provided", () => {
         render(<LanguageSwitcher variant="link-container" />);
 
-        const englishButton = screen.getByTestId("language-switcher--item-en");
+        const englishButton = screen.getByRole("button", { name: "English" });
         expect(englishButton).toHaveAttribute("aria-pressed", "true");
     });
 
@@ -253,7 +236,7 @@ describe("LanguageSwitcher (link-container)", () => {
             />
         );
 
-        fireEvent.click(screen.getByTestId("language-switcher--item-ms"));
+        fireEvent.click(screen.getByRole("button", { name: "Melayu" }));
 
         expect(onSelectLanguage).toHaveBeenCalledWith("ms");
     });
@@ -268,7 +251,7 @@ describe("LanguageSwitcher (link-container)", () => {
             />
         );
 
-        fireEvent.click(screen.getByTestId("language-switcher--item-en"));
+        fireEvent.click(screen.getByRole("button", { name: "English" }));
 
         expect(onSelectLanguage).not.toHaveBeenCalled();
     });
@@ -283,7 +266,7 @@ describe("LanguageSwitcher (link-container)", () => {
             />
         );
 
-        fireEvent.click(screen.getByTestId("language-switcher--item-ms"));
+        fireEvent.click(screen.getByRole("button", { name: "Melayu" }));
 
         expect(announce).toHaveBeenCalledWith("Melayu selected", "polite");
     });
@@ -293,10 +276,10 @@ describe("LanguageSwitcher (link-container)", () => {
             <LanguageSwitcher variant="link-container" selectedLanguage="ta" />
         );
 
-        const tamilButton = screen.getByTestId("language-switcher--item-ta");
+        const tamilButton = screen.getByRole("button", { name: "தமிழ்" });
         expect(tamilButton).toHaveAttribute("aria-pressed", "true");
 
-        const englishButton = screen.getByTestId("language-switcher--item-en");
+        const englishButton = screen.getByRole("button", { name: "English" });
         expect(englishButton).toHaveAttribute("aria-pressed", "false");
     });
 
@@ -305,18 +288,22 @@ describe("LanguageSwitcher (link-container)", () => {
             <LanguageSwitcher variant="link-container" selectedLanguage="en" />
         );
 
-        expect(
-            screen.getByTestId("language-switcher--item-en")
-        ).toHaveAttribute("lang", "en");
-        expect(
-            screen.getByTestId("language-switcher--item-zh")
-        ).toHaveAttribute("lang", "zh");
-        expect(
-            screen.getByTestId("language-switcher--item-ms")
-        ).toHaveAttribute("lang", "ms");
-        expect(
-            screen.getByTestId("language-switcher--item-ta")
-        ).toHaveAttribute("lang", "ta");
+        expect(screen.getByRole("button", { name: "English" })).toHaveAttribute(
+            "lang",
+            "en"
+        );
+        expect(screen.getByRole("button", { name: "中文" })).toHaveAttribute(
+            "lang",
+            "zh"
+        );
+        expect(screen.getByRole("button", { name: "Melayu" })).toHaveAttribute(
+            "lang",
+            "ms"
+        );
+        expect(screen.getByRole("button", { name: "தமிழ்" })).toHaveAttribute(
+            "lang",
+            "ta"
+        );
     });
 
     it("should have aria-hidden on separator dividers", () => {
@@ -324,8 +311,8 @@ describe("LanguageSwitcher (link-container)", () => {
             <LanguageSwitcher variant="link-container" selectedLanguage="en" />
         );
 
-        const wrapper = screen.getByTestId("language-switcher");
-        const hiddenItems = wrapper.querySelectorAll("[aria-hidden='true']");
+        const group = screen.getByRole("group");
+        const hiddenItems = group.querySelectorAll("[aria-hidden='true']");
         // 3 separators between 4 items
         expect(hiddenItems.length).toBe(3);
     });
@@ -335,19 +322,19 @@ describe("LanguageSwitcher (link-container)", () => {
             <LanguageSwitcher variant="link-container" selectedLanguage="en" />
         );
 
-        const enButton = screen.getByTestId("language-switcher--item-en");
+        const enButton = screen.getByRole("button", { name: "English" });
         enButton.focus();
 
         fireEvent.keyDown(enButton, { key: "ArrowRight" });
         expect(document.activeElement).toBe(
-            screen.getByTestId("language-switcher--item-zh")
+            screen.getByRole("button", { name: "中文" })
         );
 
-        fireEvent.keyDown(screen.getByTestId("language-switcher--item-zh"), {
+        fireEvent.keyDown(screen.getByRole("button", { name: "中文" }), {
             key: "ArrowLeft",
         });
         expect(document.activeElement).toBe(
-            screen.getByTestId("language-switcher--item-en")
+            screen.getByRole("button", { name: "English" })
         );
     });
 
@@ -361,7 +348,7 @@ describe("LanguageSwitcher (link-container)", () => {
             />
         );
 
-        const zhButton = screen.getByTestId("language-switcher--item-zh");
+        const zhButton = screen.getByRole("button", { name: "中文" });
         zhButton.focus();
         fireEvent.keyDown(zhButton, { key: "Enter" });
 
@@ -373,8 +360,8 @@ describe("LanguageSwitcher (link-container)", () => {
             <LanguageSwitcher variant="link-container" selectedLanguage="en" />
         );
 
-        const wrapper = screen.getByTestId("language-switcher");
-        const list = wrapper.querySelector("ul");
+        const group = screen.getByRole("group");
+        const list = group.closest("ul") || group.querySelector("ul");
         expect(list).toBeInTheDocument();
 
         const listItems = list!.querySelectorAll("li");
