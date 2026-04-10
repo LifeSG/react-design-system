@@ -1,14 +1,51 @@
 import clsx from "clsx";
 import React from "react";
 
+import type { BreakpointCSSVariableString } from "../theme";
 import { Breakpoint } from "../theme/tokens/breakpoint";
 import { parseCSSVariableValue } from "../theme/utils/css-variable";
 import * as styles from "./col-div.styles";
 import type { ColDivProps } from "./types";
 
-const getColCount = (
-    token: (typeof Breakpoint)[keyof typeof Breakpoint]
-): number => {
+const TOKEN_MAP: Record<string, Record<string, string>> = {
+    xxs: {
+        start: styles.tokens.xxsStart,
+        span: styles.tokens.xxsSpan,
+        end: styles.tokens.xxsEnd,
+    },
+    xs: {
+        start: styles.tokens.xsStart,
+        span: styles.tokens.xsSpan,
+        end: styles.tokens.xsEnd,
+    },
+    sm: {
+        start: styles.tokens.smStart,
+        span: styles.tokens.smSpan,
+        end: styles.tokens.smEnd,
+    },
+    md: {
+        start: styles.tokens.mdStart,
+        span: styles.tokens.mdSpan,
+        end: styles.tokens.mdEnd,
+    },
+    lg: {
+        start: styles.tokens.lgStart,
+        span: styles.tokens.lgSpan,
+        end: styles.tokens.lgEnd,
+    },
+    xl: {
+        start: styles.tokens.xlStart,
+        span: styles.tokens.xlSpan,
+        end: styles.tokens.xlEnd,
+    },
+    xxl: {
+        start: styles.tokens.xxlStart,
+        span: styles.tokens.xxlSpan,
+        end: styles.tokens.xxlEnd,
+    },
+};
+
+const getColCount = (token: BreakpointCSSVariableString): number => {
     const value = parseCSSVariableValue(
         token,
         globalThis.document?.documentElement ?? null
@@ -93,43 +130,22 @@ const Component = (
 
         const cssVars: Record<string, string> = {};
 
-        if (xxsResult.start)
-            cssVars[styles.tokens.xxsStart] = String(xxsResult.start);
-        if (xxsResult.span)
-            cssVars[styles.tokens.xxsSpan] = String(xxsResult.span);
-        if (xxsResult.end)
-            cssVars[styles.tokens.xxsEnd] = String(xxsResult.end);
-        if (xsResult.start)
-            cssVars[styles.tokens.xsStart] = String(xsResult.start);
-        if (xsResult.span)
-            cssVars[styles.tokens.xsSpan] = String(xsResult.span);
-        if (xsResult.end) cssVars[styles.tokens.xsEnd] = String(xsResult.end);
-        if (smResult.start)
-            cssVars[styles.tokens.smStart] = String(smResult.start);
-        if (smResult.span)
-            cssVars[styles.tokens.smSpan] = String(smResult.span);
-        if (smResult.end) cssVars[styles.tokens.smEnd] = String(smResult.end);
-        if (mdResult.start)
-            cssVars[styles.tokens.mdStart] = String(mdResult.start);
-        if (mdResult.span)
-            cssVars[styles.tokens.mdSpan] = String(mdResult.span);
-        if (mdResult.end) cssVars[styles.tokens.mdEnd] = String(mdResult.end);
-        if (lgResult.start)
-            cssVars[styles.tokens.lgStart] = String(lgResult.start);
-        if (lgResult.span)
-            cssVars[styles.tokens.lgSpan] = String(lgResult.span);
-        if (lgResult.end) cssVars[styles.tokens.lgEnd] = String(lgResult.end);
-        if (xlResult.start)
-            cssVars[styles.tokens.xlStart] = String(xlResult.start);
-        if (xlResult.span)
-            cssVars[styles.tokens.xlSpan] = String(xlResult.span);
-        if (xlResult.end) cssVars[styles.tokens.xlEnd] = String(xlResult.end);
-        if (xxlResult.start)
-            cssVars[styles.tokens.xxlStart] = String(xxlResult.start);
-        if (xxlResult.span)
-            cssVars[styles.tokens.xxlSpan] = String(xxlResult.span);
-        if (xxlResult.end)
-            cssVars[styles.tokens.xxlEnd] = String(xxlResult.end);
+        const results = [
+            { result: xxsResult, prefix: "xxs" },
+            { result: xsResult, prefix: "xs" },
+            { result: smResult, prefix: "sm" },
+            { result: mdResult, prefix: "md" },
+            { result: lgResult, prefix: "lg" },
+            { result: xlResult, prefix: "xl" },
+            { result: xxlResult, prefix: "xxl" },
+        ];
+
+        results.forEach(({ result, prefix }) => {
+            const tokens = TOKEN_MAP[prefix];
+            if (result.start) cssVars[tokens.start] = String(result.start);
+            if (result.span) cssVars[tokens.span] = String(result.span);
+            if (result.end) cssVars[tokens.end] = String(result.end);
+        });
 
         return cssVars;
     };
