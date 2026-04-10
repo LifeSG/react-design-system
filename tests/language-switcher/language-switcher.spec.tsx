@@ -38,11 +38,11 @@ describe("LanguageSwitcher (dropdown)", () => {
     it("should have combobox role and aria attributes on trigger", () => {
         render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
 
-        const trigger = screen.getByTestId("language-switcher--trigger");
-        expect(trigger).toHaveAttribute("role", "combobox");
+        const trigger = screen.getByRole("combobox", {
+            name: /Choose language.*English/,
+        });
         expect(trigger).toHaveAttribute("aria-expanded", "false");
         expect(trigger).toHaveAttribute("aria-haspopup", "listbox");
-        expect(trigger).toHaveAttribute("aria-label");
     });
 
     it("should have aria-hidden on decorative icons", () => {
@@ -229,6 +229,10 @@ describe("LanguageSwitcher (dropdown)", () => {
         expect(announce).toHaveBeenCalledWith("中文 selected", "polite");
     });
 });
+
+// =============================================================================
+// LINK CONTAINER TESTS
+// =============================================================================
 describe("LanguageSwitcher (link-container)", () => {
     it("should render all four language options", () => {
         render(
