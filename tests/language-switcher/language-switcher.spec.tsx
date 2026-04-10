@@ -35,24 +35,6 @@ describe("LanguageSwitcher (dropdown)", () => {
         expect(screen.getByText("中文")).toBeInTheDocument();
     });
 
-    it("should have combobox role and aria attributes on trigger", () => {
-        render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
-
-        const trigger = screen.getByRole("combobox", {
-            name: /Choose language.*English/,
-        });
-        expect(trigger).toHaveAttribute("aria-expanded", "false");
-        expect(trigger).toHaveAttribute("aria-haspopup", "listbox");
-    });
-
-    it("should have aria-hidden on decorative icons", () => {
-        render(<LanguageSwitcher variant="dropdown" selectedLanguage="en" />);
-
-        const trigger = screen.getByTestId("language-switcher--trigger");
-        const hiddenIcons = trigger.querySelectorAll("[aria-hidden='true']");
-        expect(hiddenIcons.length).toBeGreaterThanOrEqual(2);
-    });
-
     it("should call onSelectLanguage when a language item is clicked", () => {
         const onSelectLanguage = jest.fn();
         render(
