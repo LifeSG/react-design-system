@@ -77,7 +77,7 @@ export const LinkContainerVariant = ({
                                     lang={code}
                                     $active={isActive}
                                     aria-pressed={isActive}
-                                    tabIndex={0}
+                                    tabIndex={isActive ? 0 : -1}
                                     onClick={() => onSelectLanguage(code)}
                                     onKeyDown={(e) => handleKeyDown(e, index)}
                                     data-testid={`${testId}--item-${code}`}
