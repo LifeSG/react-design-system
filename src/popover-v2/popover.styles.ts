@@ -14,6 +14,8 @@ export const popoverContainer = css`
     padding: 0 1rem;
     pointer-events: auto;
     outline: none;
+    ${tokens.popoverCard.maxHeight}: initial;
+    ${tokens.popoverCard.overflowY}: initial;
 `;
 
 export const popoverCard = css`
