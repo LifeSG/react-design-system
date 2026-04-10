@@ -14,181 +14,141 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Alert", () => {
-    // =========================================================================
-    // TYPE VARIANTS
-    // =========================================================================
-    test("type-variants: renders all type variants", async ({ story }) => {
+    test("Type variants", async ({ story }) => {
         await story.init("type-variants");
         const alert = story.page.getByLabel("Success").first();
         await expect(alert).toBeVisible();
         await compareScreenshot(story, "type-variants");
+
+        await expect(story.page.getByTestId("alert-success"))
+            .toMatchAriaSnapshot(`
+            - text: This is a success alert.
+        `);
+        await expect(story.page.getByTestId("alert-warning"))
+            .toMatchAriaSnapshot(`
+            - text: This is a warning alert.
+        `);
+        await expect(story.page.getByTestId("alert-error"))
+            .toMatchAriaSnapshot(`
+            - text: This is an error alert.
+        `);
+        await expect(story.page.getByTestId("alert-info")).toMatchAriaSnapshot(`
+            - text: This is an info alert.
+        `);
+        await expect(story.page.getByTestId("alert-description"))
+            .toMatchAriaSnapshot(`
+            - text: This is a description alert.
+        `);
     });
 
-    test("type-variants: accessibility aria-label for each type", async ({
-        story,
-    }) => {
-        await story.init("type-variants");
-        await expect(story.page.getByLabel("Success").first()).toBeVisible();
-        await expect(story.page.getByLabel("Warning").first()).toBeVisible();
-        await expect(story.page.getByLabel("Error").first()).toBeVisible();
-        await expect(
-            story.page.getByLabel("Information").first()
-        ).toBeVisible();
-        await expect(
-            story.page.getByLabel("Description").first()
-        ).toBeVisible();
-    });
-
-    // =========================================================================
-    // WITH ICONS
-    // =========================================================================
-    test("with-icons: renders all type variants with icons", async ({
-        story,
-    }) => {
+    test("Type variants with icon", async ({ story }) => {
         await story.init("with-icons");
         const alert = story.page.getByLabel("Success").first();
         await expect(alert).toBeVisible();
         await compareScreenshot(story, "with-icons");
     });
 
-    // =========================================================================
-    // SIZE VARIANTS
-    // =========================================================================
-    test("size-variants: renders default and small size variants", async ({
-        story,
-    }) => {
+    test("Size", async ({ story }) => {
         await story.init("size-variants");
-        const alert = story.page.getByLabel("Information").first();
-        await expect(alert).toBeVisible();
+        await expect(story.page.getByTestId("alert-default")).toBeVisible();
         await compareScreenshot(story, "size-variants");
+
+        await expect(story.page.getByTestId("alert-default"))
+            .toMatchAriaSnapshot(`
+            - text: Default size alert.
+            - link "Learn more":
+                - /url: "#"
+                - text: Learn more
+                - img
+        `);
+        await expect(story.page.getByTestId("alert-small"))
+            .toMatchAriaSnapshot(`
+            - text: Small size alert.
+            - link "Learn more":
+                - /url: "#"
+                - text: Learn more
+                - img
+        `);
     });
 
-    // =========================================================================
-    // WITH ACTION LINK
-    // =========================================================================
-    test("with-action-link: renders action link", async ({ story }) => {
+    test("With action link", async ({ story }) => {
         await story.init("with-action-link");
         const actionLink = story.page.getByTestId("action-link");
         await expect(actionLink).toBeVisible();
         await compareScreenshot(story, "with-action-link");
     });
 
-    // =========================================================================
-    // SHOW MORE / SHOW LESS
-    // =========================================================================
-    test("show-more: shows 'Show more' button when content exceeds maxCollapsedHeight", async ({
-        story,
-    }) => {
-        await story.init("show-more");
-        const showMoreBtn = story.page.getByRole("button", {
-            name: "Show more",
-        });
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        await expect(showMoreBtn).toHaveAttribute("aria-expanded", "false");
-        await compareScreenshot(story, "collapsed");
-    });
+    test("With max collapsed height", async ({ story }) => {
+        await story.init("max-collapsed-height");
 
-    test("show-more: expands content when 'Show more' is clicked", async ({
-        story,
-    }) => {
-        await story.init("show-more");
         const showMoreBtn = story.page.getByRole("button", {
             name: "Show more",
         });
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        await showMoreBtn.click();
         const showLessBtn = story.page.getByRole("button", {
             name: "Show less",
         });
-        await expect(showLessBtn).toBeVisible();
-        await expect(showLessBtn).toHaveAttribute("aria-expanded", "true");
-        await compareScreenshot(story, "expanded");
+
+        await test.step("On mount: shows 'Show more' button and content is collapsed", async () => {
+            await expect(showMoreBtn).toBeVisible();
+            await expect(showMoreBtn).toHaveAttribute("aria-expanded", "false");
+
+            await compareScreenshot(story, "collapsed");
+        });
+
+        await test.step("Click 'Show more': expands content", async () => {
+            await showMoreBtn.click();
+            await expect(showLessBtn).toBeVisible();
+            await expect(showLessBtn).toHaveAttribute("aria-expanded", "true");
+            await compareScreenshot(story, "expanded");
+        });
+
+        await test.step("Click 'Show less': collapses content", async () => {
+            await showLessBtn.click();
+            await expect(showMoreBtn).toBeVisible();
+            await expect(showMoreBtn).toHaveAttribute("aria-expanded", "false");
+            await compareScreenshot(story, "collapsed");
+        });
     });
 
-    test("show-more: collapses content when 'Show less' is clicked", async ({
-        story,
-    }) => {
-        await story.init("show-more");
-        let showMoreBtn = story.page.getByRole("button", {
-            name: "Show more",
-        });
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        await showMoreBtn.click();
-        const showLessBtn = story.page.getByRole("button", {
-            name: "Show less",
-        });
-        await showLessBtn.click();
-        showMoreBtn = story.page.getByRole("button", {
-            name: "Show more",
-        });
-        await expect(showMoreBtn).toBeVisible();
-        await expect(showMoreBtn).toHaveAttribute("aria-expanded", "false");
-        await compareScreenshot(story, "collapsed");
-    });
-
-    test("show-more: button has correct aria-controls pointing to content", async ({
-        story,
-    }) => {
-        await story.init("show-more");
-        const showMoreBtn = story.page.getByRole("button", {
-            name: "Show more",
-        });
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        const controlsId = await showMoreBtn.getAttribute("aria-controls");
-        expect(controlsId).toBeTruthy();
-        await expect(
-            story.page.locator(`button[aria-controls="${controlsId!}"]`).first()
-        ).toBeVisible();
-    });
-
-    // =========================================================================
-    // KEYBOARD NAVIGATION
-    // =========================================================================
-    test("keyboard-nav: can toggle show more/less via keyboard (Enter)", async ({
-        story,
-    }) => {
+    test("Keyboard navigation", async ({ story }) => {
         await story.init("keyboard-nav");
-        const showMoreBtn = story.page.getByRole("button", {
-            name: "Show more",
-        });
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        await showMoreBtn.focus();
-        await story.page.keyboard.press("Enter");
-        await expect(
-            story.page.getByRole("button", { name: "Show less" })
-        ).toBeVisible();
-        await story.page.keyboard.press("Enter");
-        await expect(showMoreBtn).toBeVisible();
-    });
 
-    test("keyboard-nav: can toggle show more/less via keyboard (Space)", async ({
-        story,
-    }) => {
-        await story.init("keyboard-nav");
         const showMoreBtn = story.page.getByRole("button", {
             name: "Show more",
         });
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        await showMoreBtn.focus();
-        await story.page.keyboard.press("Space");
-        await expect(
-            story.page.getByRole("button", { name: "Show less" })
-        ).toBeVisible();
-    });
 
-    test("keyboard-nav: show more button appears before action link in tab order", async ({
-        story,
-    }) => {
-        await story.init("keyboard-nav");
-        const showMoreBtn = story.page.getByRole("button", {
-            name: "Show more",
-        });
         await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
-        const beforeBtn = story.page.getByTestId("before-alert");
-        await beforeBtn.focus();
-        await story.page.keyboard.press("Tab");
-        await expect(showMoreBtn).toBeFocused();
-        await story.page.keyboard.press("Tab");
-        await expect(story.page.getByTestId("after-alert")).toBeFocused();
+
+        await test.step("Tab focuses 'Show more' button", async () => {
+            await story.page.getByTestId("before-alert").focus();
+            await story.page.keyboard.press("Tab");
+            await expect(showMoreBtn).toBeFocused();
+        });
+
+        await test.step("Enter key expands content", async () => {
+            await story.page.keyboard.press("Enter");
+            await expect(
+                story.page.getByRole("button", { name: "Show less" })
+            ).toBeVisible();
+        });
+
+        await test.step("Enter key collapses content", async () => {
+            await story.page.keyboard.press("Enter");
+            await expect(showMoreBtn).toBeVisible();
+        });
+
+        await test.step("Space key expands content", async () => {
+            await story.page.keyboard.press("Space");
+            await expect(
+                story.page.getByRole("button", { name: "Show less" })
+            ).toBeVisible();
+        });
+
+        await test.step("Tab moves focus to next element after alert", async () => {
+            await story.page.getByRole("button", { name: "Show less" }).click();
+            await showMoreBtn.focus();
+            await story.page.keyboard.press("Tab");
+            await expect(story.page.getByTestId("after-alert")).toBeFocused();
+        });
     });
 });

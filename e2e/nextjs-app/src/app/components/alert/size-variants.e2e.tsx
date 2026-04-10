@@ -4,11 +4,23 @@ import { Alert } from "@lifesg/react-design-system/alert";
 
 export default function Story() {
     return (
-        <div className="alert-story-container">
-            <Alert type="info" showIcon sizeType="default">
+        <div className="story-column-container">
+            <Alert
+                data-testid="alert-default"
+                type="info"
+                sizeType="default"
+                maxCollapsedHeight={40}
+                actionLink={{ href: "#", children: "Learn more" }}
+            >
                 Default size alert.
             </Alert>
-            <Alert type="info" showIcon sizeType="small">
+            <Alert
+                data-testid="alert-small"
+                type="info"
+                sizeType="small"
+                maxCollapsedHeight={40}
+                actionLink={{ href: "#", children: "Learn more" }}
+            >
                 Small size alert.
             </Alert>
         </div>

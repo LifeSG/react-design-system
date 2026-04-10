@@ -4,7 +4,7 @@ import { Alert } from "@lifesg/react-design-system/alert";
 
 export default function Story() {
     return (
-        <div className="alert-story-container">
+        <div className="story-column-container">
             <Alert type="success" showIcon>
                 This is a success alert with icon.
             </Alert>
