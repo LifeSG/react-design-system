@@ -1,161 +1,127 @@
 import find from "lodash/find";
 import isEqual from "lodash/isEqual";
-import React, { useEffect, useRef, useState } from "react";
-import { useSpring } from "@react-spring/web";
-import { StringHelper } from "../../util/string-helper";
+import React, {
+    forwardRef,
+    useCallback,
+    useContext,
+    useEffect,
+    useImperativeHandle,
+    useRef,
+    useState,
+} from "react";
+import { Virtuoso, VirtuosoHandle } from "react-virtuoso";
 import {
+    mergeRefs,
+    useCompare,
+    useEvent,
+    useEventListener,
+    useIsMounted,
+} from "../../util";
+import { useDropdownRender } from "../dropdown-wrapper";
+import { DropdownLabel } from "./dropdown-label";
+import { DropdownListStateContext } from "./dropdown-list-state";
+import {
+    CheckboxDisabledIndicator,
+    CheckboxSelectedIndicator,
+    CheckboxUnselectedIndicator,
     Container,
-    DropdownCommonButton,
-    Label,
     LabelIcon,
     List,
-    ListCheckbox,
     ListItem,
-    ListItemSelector,
-    PrimaryText,
+    Listbox,
+    NoResultDescContainer,
     ResultStateContainer,
-    SecondaryText,
+    SelectAllButton,
     SelectAllContainer,
+    SelectedIndicator,
     Spinner,
-    TruncateFirstLine,
-    TruncateSecondLine,
+    TryAgainButton,
+    UnselectedIndicator,
 } from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
-import { DropdownListProps, ListItemDisplayProps } from "./types";
+import {
+    DropdownListApi,
+    DropdownListProps,
+    ListItemDisplayProps,
+} from "./types";
+import { VisuallyHidden } from "../accessibility";
 
 /**
- * NOTE: This component is not directly exportables
- * but forms part of a component
+ * NOTE: This component is not directly exportable but forms part of a component
  */
-export const DropdownList = <T, V>({
-    listItems,
-    listExtractor,
-    valueExtractor,
-    onSelectItem,
-    listStyleWidth,
-    visible,
-    enableSearch,
-    searchPlaceholder = "Search",
-    onSearch,
-    searchFunction,
-    onDismiss,
-    disableItemFocus,
-    multiSelect,
-    selectedItems,
-    onSelectAll,
-    onRetry,
-    itemsLoadState = "success",
-    itemTruncationType = "end",
-    itemMaxLines = 2,
-    labelDisplayType = "inline",
-    renderListItem,
-    onBlur,
-    hideNoResultsDisplay,
-    renderCustomCallToAction,
-    variant = "default",
-    ...otherProps
-}: DropdownListProps<T, V>): JSX.Element => {
-    // =============================================================================
+const DropdownListInner = <T, V>(
+    {
+        listItems,
+        multiSelect,
+        maxSelectable,
+        selectedItems,
+        disableItemFocus,
+        itemsLoadState = "success",
+        itemTruncationType = "end",
+        itemMaxLines = 2,
+        labelDisplayType = "inline",
+        variant = "default",
+        listboxId,
+        ariaLabel,
+        matchElementWidth = false,
+        width,
+        topScrollItem,
+        onSelectItem,
+        onSelectAll,
+        onDismiss,
+        onRetry,
+        /* DropdownDisplayProps */
+        valueExtractor,
+        listExtractor,
+        renderListItem,
+        renderCustomCallToAction,
+        /* DropdownSearchProps */
+        enableSearch,
+        hideNoResultsDisplay,
+        noResultsDescription: _noResultsDescription,
+        customLabels,
+        searchPlaceholder: _searchPlaceholder,
+        searchFunction,
+        onSearch,
+    }: DropdownListProps<T, V>,
+    ref: React.ForwardedRef<DropdownListApi>
+): JSX.Element => {
+    // =========================================================================
     // CONST, REF, STATE
-    // =============================================================================
-    const [focusedListIndex, _setFocusedIndex] = useState<number>(0);
-    const [searchValue, setSearchValue] = useState<string>("");
-    const [displayListItems, _setDisplayListItems] = useState<T[]>(
-        listItems ?? []
+    // =========================================================================
+    const {
+        noResultsLabel = "No results found.",
+        selectAllButtonLabel = "Select all",
+        clearAllButtonLabel = "Clear all",
+    } = customLabels || {};
+    const searchPlaceholder =
+        customLabels?.searchPlaceholder || _searchPlaceholder || "Search";
+    const noResultsDescription =
+        customLabels?.noResultsDescription || _noResultsDescription;
+    const { focusedIndex, setFocusedIndex } = useContext(
+        DropdownListStateContext
     );
-    const [contentHeight, setContentHeight] = useState<number>(0);
+    const { elementWidth, setFloatingRef, getFloatingProps, styles } =
+        useDropdownRender();
+    const [searchValue, setSearchValue] = useState<string>("");
+    const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
+    const itemsLoadStateChanged = useCompare(itemsLoadState);
+    const mounted = useIsMounted();
 
-    // React spring animation configuration
-    const containerStyles = useSpring({
-        height: contentHeight,
-    });
-
-    const nodeRef = useRef<HTMLDivElement>(null);
-    const listRef = useRef<HTMLUListElement>(null);
-    const listItemRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const nodeRef = useRef<HTMLDivElement | null>(null);
+    const listRef = useRef<HTMLDivElement>(null);
+    const listItemRefs = useRef<(HTMLElement | null)[]>([]);
     const searchInputRef = useRef<HTMLInputElement>(null);
-    const customCallToActionRef = useRef<HTMLDivElement>(null);
+    const virtuosoRef = useRef<VirtuosoHandle>(null);
 
-    /**
-     * Have to use refs to allow the state values to be accessible
-     * by the event listener callback functions
-     * Reference:
-     * https://stackoverflow.com/questions/55265255/react-usestate-hook-event-handler-using-initial-state
-     */
-    const focusedListIndexStateRef = useRef<number>(focusedListIndex);
-    const displayListItemStateRef = useRef<T[]>(displayListItems);
+    const hasSelectedMax =
+        !!maxSelectable &&
+        !!selectedItems &&
+        selectedItems?.length === maxSelectable;
 
-    // =============================================================================
-    // REF FUNCTIONS
-    // =============================================================================
-    const setFocusedIndex = (data: number) => {
-        focusedListIndexStateRef.current = data;
-        _setFocusedIndex(data);
-    };
-
-    const setDisplayListItems = (data: T[]) => {
-        displayListItemStateRef.current = data;
-        _setDisplayListItems(data);
-    };
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-
-    useEffect(() => {
-        document.addEventListener("keydown", handleKeyboardPress);
-        return () => {
-            document.removeEventListener("keydown", handleKeyboardPress);
-        };
-    }, []);
-
-    useEffect(() => {
-        filterAndUpdateList(searchValue);
-    }, [searchValue]);
-
-    useEffect(() => {
-        setSearchValue("");
-
-        if (visible) {
-            // Give some time for the custom call-to-action to be rendered
-            setTimeout(() => {
-                setContentHeight(getContentHeight());
-            });
-
-            if (disableItemFocus) return;
-
-            // Focus search input if there is a search input
-            if (searchInputRef && searchInputRef.current) {
-                searchInputRef.current.focus();
-                setFocusedIndex(-1);
-            } else if (listItemRefs.current[focusedListIndex]) {
-                // Else focus on the first/last focused element
-                listItemRefs.current[focusedListIndex].focus();
-            }
-        } else {
-            setContentHeight(0);
-        }
-    }, [visible]);
-
-    useEffect(() => {
-        if (visible) {
-            // safeguard
-            const contentHeight = getContentHeight();
-            setContentHeight(contentHeight);
-        }
-    }, [displayListItems, itemsLoadState]);
-
-    useEffect(() => {
-        setDisplayListItems(listItems ?? []);
-
-        // Reset
-        setSearchValue("");
-        setFocusedIndex(0);
-    }, [listItems]);
-
-    // =============================================================================
+    // =========================================================================
     // HELPER FUNCTIONS
-    // =============================================================================
+    // =========================================================================
     const getValue = (item: T): V => {
         return valueExtractor ? valueExtractor(item) : (item as unknown as V);
     };
@@ -176,236 +142,339 @@ export const DropdownList = <T, V>({
         return { title: value ?? "" };
     };
 
-    const hasExceededContainer = (displayText: string) => {
-        if (labelDisplayType !== "inline") {
-            return false;
-        }
-
-        let widthOfElement = 0;
-        if (listRef && listRef.current) {
-            widthOfElement = listRef.current.getBoundingClientRect().width - 60;
-        }
-
-        const textWidth = StringHelper.getTextWidth(
-            displayText,
-            "1.125rem 'Open Sans'"
-        );
-        return textWidth > widthOfElement * itemMaxLines;
-    };
-
-    const checkListItemSelected = (item: T): boolean => {
-        return !!find(selectedItems, (arrItem) => {
-            return isEqual(arrItem, item);
-        });
-    };
-
-    const filterAndUpdateList = (searchValue: string) => {
-        if (searchValue === "") {
-            // reset
-            setDisplayListItems(listItems ?? []);
-        } else if (searchFunction) {
-            const updated = searchFunction(searchValue);
-            setDisplayListItems(updated);
-        } else {
-            const updated = listItems?.filter((item) => {
-                const { title, secondaryLabel } = getOptionLabel(item);
-                const updatedSearchValue = searchValue.trim().toLowerCase();
-                return (
-                    title.includes(updatedSearchValue) ||
-                    (secondaryLabel &&
-                        secondaryLabel.includes(updatedSearchValue))
-                );
+    const checkListItemSelected = useCallback(
+        (item: T): boolean => {
+            return !!find(selectedItems, (arrItem) => {
+                return isEqual(arrItem, item);
             });
-            setDisplayListItems(updated ?? []);
-        }
-    };
+        },
+        [selectedItems]
+    );
 
-    const getContentHeight = () => {
-        const listHeight =
-            listRef && listRef.current
-                ? listRef.current.getBoundingClientRect().height
-                : 0;
-        const customCallToActionHeight = customCallToActionRef.current
-            ? customCallToActionRef.current.getBoundingClientRect().height
-            : 0;
-        return listHeight + customCallToActionHeight;
-    };
+    const filterItemsByCustomSearch = useEvent(() => {
+        return searchFunction?.(searchValue);
+    });
 
-    const hasNextLineLabel = () => {
-        return (
-            labelDisplayType === "next-line" &&
-            displayListItems.length > 0 &&
-            listExtractor &&
-            typeof listExtractor(displayListItems[0]) !== "string"
-        );
-    };
+    const filterItemsByLabel = useEvent(() => {
+        return listItems?.filter((item) => {
+            const { title, secondaryLabel } = getOptionLabel(item);
+            const updatedSearchValue = searchValue.trim().toLowerCase();
+            return (
+                title.toLowerCase().includes(updatedSearchValue) ||
+                (secondaryLabel &&
+                    secondaryLabel.toLowerCase().includes(updatedSearchValue))
+            );
+        });
+    });
 
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
-    const handleKeyboardPress = (event: KeyboardEvent) => {
-        if (nodeRef && (nodeRef.current as any).contains(event.target)) {
-            // inside click
-            switch (event.code) {
-                case "ArrowDown":
-                    // Cannot go further than last element
-                    if (
-                        focusedListIndexStateRef.current <
-                        displayListItemStateRef.current.length - 1
-                    ) {
-                        const upcomingIndex =
-                            focusedListIndexStateRef.current + 1;
-                        listItemRefs.current[upcomingIndex]?.focus();
+    const refocus = useCallback(
+        (opts?: { index?: number; preferSelected?: boolean }) => {
+            if (disableItemFocus) return;
 
-                        setFocusedIndex(upcomingIndex);
-                    }
-                    break;
-                case "ArrowUp":
-                    // Cannot go further than first element
-                    if (focusedListIndexStateRef.current > 0) {
-                        const upcomingIndex =
-                            focusedListIndexStateRef.current - 1;
-                        listItemRefs.current[upcomingIndex]?.focus();
-
-                        setFocusedIndex(focusedListIndexStateRef.current - 1);
-                    }
-                    break;
-                case "Escape":
-                    if (onDismiss) onDismiss(true);
-                    break;
-                default:
-                    break;
+            if (searchInputRef.current) {
+                setFocusedIndex(-1);
+                setTimeout(() => searchInputRef.current?.focus(), 0);
+                return;
             }
+
+            const items = displayListItems ?? [];
+            if (items.length === 0) return;
+
+            if (opts?.index !== undefined) {
+                const forced = Math.max(
+                    0,
+                    Math.min(opts.index, items.length - 1)
+                );
+                virtuosoRef.current?.scrollToIndex({
+                    index: forced,
+                    align: "center",
+                });
+                setFocusedIndex(forced);
+                setTimeout(() => listItemRefs.current[forced]?.focus(), 0);
+
+                return;
+            }
+
+            const selectedIndex = opts?.preferSelected
+                ? items.findIndex((item) => checkListItemSelected(item))
+                : -1;
+
+            const nextIndex =
+                selectedIndex !== -1
+                    ? selectedIndex
+                    : focusedIndex >= 0 && focusedIndex < items.length
+                    ? focusedIndex
+                    : 0;
+
+            virtuosoRef.current?.scrollToIndex({
+                index: nextIndex,
+                align: "center",
+            });
+            setFocusedIndex(nextIndex);
+            setTimeout(() => listItemRefs.current[nextIndex]?.focus(), 0);
+        },
+        [
+            checkListItemSelected,
+            disableItemFocus,
+            displayListItems,
+            focusedIndex,
+            setFocusedIndex,
+        ]
+    );
+
+    // =========================================================================
+    // EVENT HANDLERS
+    // =========================================================================
+    const handleKeyboardPress = (event: KeyboardEvent) => {
+        switch (event.code) {
+            case "ArrowDown":
+                event.preventDefault();
+                // Cannot go further than last element
+                if (focusedIndex < displayListItems.length - 1) {
+                    const upcomingIndex = focusedIndex + 1;
+                    listItemRefs.current[upcomingIndex]?.focus();
+                    setFocusedIndex(upcomingIndex);
+                }
+                break;
+            case "ArrowUp":
+                event.preventDefault();
+                // Cannot go further than first element
+                if (focusedIndex > 0) {
+                    const upcomingIndex = focusedIndex - 1;
+                    listItemRefs.current[upcomingIndex]?.focus();
+                    setFocusedIndex(upcomingIndex);
+                } else if (focusedIndex === 0 && searchInputRef.current) {
+                    searchInputRef.current.focus();
+                    setFocusedIndex(-1);
+                }
+                break;
+            case "Space":
+            case "Enter":
+                if (
+                    document.activeElement ===
+                    listItemRefs.current[focusedIndex]
+                ) {
+                    event.preventDefault();
+                    if (displayListItems[focusedIndex]) {
+                        handleListItemClick(
+                            displayListItems[focusedIndex],
+                            focusedIndex
+                        );
+                    }
+                }
+                break;
+            default:
+                break;
         }
-        return;
     };
 
-    const handleListItemClick = (event: React.MouseEvent, item: T) => {
-        event.preventDefault();
-        if (onSelectItem) {
-            onSelectItem(item, getValue(item));
-        }
+    const handleListItemClick = (item: T, upcomingIndex: number) => {
+        if (hasSelectedMax && !checkListItemSelected(item)) return;
+        setFocusedIndex(upcomingIndex);
+        onSelectItem?.(item, getValue(item));
     };
+
+    const handleListItemHover = (index: number) => setFocusedIndex(index);
 
     const handleSearchInputChange = (
         event: React.ChangeEvent<HTMLInputElement>
     ) => {
         const value = event.target.value;
         setSearchValue(value);
-
-        if (onSearch) onSearch();
+        onSearch?.();
     };
 
     const handleOnClear = () => {
         setSearchValue("");
         searchInputRef.current?.focus();
-
-        if (onSearch) onSearch();
+        onSearch?.();
     };
 
-    const handleTryAgain = () => {
-        if (onRetry) onRetry();
-    };
+    const handleTryAgain = () => onRetry?.();
 
-    const handleBlur = () => {
-        if (onBlur) onBlur();
-    };
+    // =========================================================================
+    // EFFECTS
+    // =========================================================================
+    useEventListener("keydown", handleKeyboardPress);
+    useImperativeHandle(ref, () => ({ refocus }), [refocus]);
 
-    // =============================================================================
+    useEffect(() => {
+        if (!topScrollItem) {
+            virtuosoRef.current?.scrollTo({ top: 0 });
+            return;
+        }
+        // Delay to ensure render is complete
+        const timer = setTimeout(() => {
+            if (!listItems) return;
+
+            const index = listItems.indexOf(topScrollItem);
+            if (virtuosoRef.current && index !== -1) {
+                virtuosoRef.current.scrollToIndex({ index });
+                setFocusedIndex(index);
+            }
+        }, 0);
+
+        return () => clearTimeout(timer);
+    }, [listItemRefs, listItems, setFocusedIndex, topScrollItem]);
+
+    useEffect(() => {
+        if (disableItemFocus) return;
+
+        // skip effect as dependency did not change
+        if (!mounted || !itemsLoadStateChanged) return;
+
+        // Reset focus when options are loaded
+        if (itemsLoadState === "success") {
+            if (searchInputRef.current) {
+                setFocusedIndex(-1);
+                searchInputRef.current.focus();
+            }
+        }
+    }, [
+        mounted,
+        itemsLoadStateChanged,
+        itemsLoadState,
+        setFocusedIndex,
+        disableItemFocus,
+    ]);
+
+    useEffect(() => {
+        const filterItems = () => {
+            if (searchValue === "") {
+                return listItems;
+            } else if (searchFunction) {
+                return filterItemsByCustomSearch();
+            } else {
+                return filterItemsByLabel();
+            }
+        };
+
+        setDisplayListItems(filterItems() ?? []);
+    }, [
+        filterItemsByCustomSearch,
+        filterItemsByLabel,
+        listItems,
+        searchFunction,
+        searchValue,
+    ]);
+
+    useEffect(() => {
+        if (mounted) {
+            // only run on mount
+            return;
+        }
+
+        if (disableItemFocus || !listItems) return;
+
+        const index = listItems.findIndex((item) =>
+            checkListItemSelected(item)
+        );
+
+        // Focus search input if there is one
+        if (searchInputRef.current) {
+            setFocusedIndex(-1);
+            setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
+        } else if (focusedIndex > 0) {
+            // Else focus on the specified element
+            virtuosoRef.current?.scrollToIndex({
+                index: focusedIndex,
+                align: "center",
+            });
+            setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
+        } else if (index !== -1) {
+            // Else focus on the selected element
+            virtuosoRef.current?.scrollToIndex({ index, align: "center" });
+            setFocusedIndex(index);
+            setTimeout(() => listItemRefs.current[index]?.focus(), 200);
+        } else {
+            // Else focus on the first list item
+            virtuosoRef.current?.scrollToIndex({ index: 0 });
+            setFocusedIndex(0);
+            setTimeout(() => listItemRefs.current[0]?.focus(), 200);
+        }
+    }, [
+        checkListItemSelected,
+        disableItemFocus,
+        focusedIndex,
+        listItems,
+        mounted,
+        setFocusedIndex,
+    ]);
+
+    // =========================================================================
     // RENDER FUNCTIONS
-    // =============================================================================
-    const renderTruncatedText = (displayText: string): JSX.Element => {
-        return (
-            <>
-                <TruncateFirstLine $maxLines={itemMaxLines} aria-hidden>
-                    {displayText}
-                </TruncateFirstLine>
-                <TruncateSecondLine $maxLines={itemMaxLines} aria-hidden>
-                    {displayText}
-                </TruncateSecondLine>
-            </>
+    // =========================================================================
+    const renderListItemIcon = (selected: boolean) => {
+        if (multiSelect) {
+            if (hasSelectedMax && !selected) {
+                return <CheckboxDisabledIndicator aria-hidden />;
+            }
+
+            return selected ? (
+                <CheckboxSelectedIndicator aria-hidden />
+            ) : (
+                <CheckboxUnselectedIndicator aria-hidden />
+            );
+        }
+
+        return selected ? (
+            <SelectedIndicator aria-hidden />
+        ) : (
+            <UnselectedIndicator />
         );
     };
 
-    const renderDropdownLabels = (item: T) => {
+    const renderDropdownLabel = (item: T, selected: boolean) => {
         const { title, secondaryLabel } = getOptionLabel(item);
 
-        const shouldTruncateTitle = hasExceededContainer(title);
-        const shouldTruncateLabel =
-            secondaryLabel && hasExceededContainer(secondaryLabel);
-
-        // css cannot truncate inline elements so if needed, render as block elements instead
-        const itemDisplayType =
-            shouldTruncateTitle || shouldTruncateLabel
-                ? "next-line"
-                : labelDisplayType;
-
         return (
-            <Label $labelDisplayType={itemDisplayType}>
-                <PrimaryText
-                    $truncateType={itemTruncationType}
-                    $maxLines={itemMaxLines}
-                    $variant={variant}
-                    aria-label={title}
-                >
-                    {itemTruncationType === "middle" && shouldTruncateTitle
-                        ? renderTruncatedText(title)
-                        : title}
-                </PrimaryText>
-                {secondaryLabel && (
-                    <SecondaryText
-                        $truncateType={itemTruncationType}
-                        $maxLines={itemMaxLines}
-                        $labelDisplayType={labelDisplayType}
-                        aria-label={secondaryLabel}
-                    >
-                        {itemTruncationType === "middle" && shouldTruncateLabel
-                            ? renderTruncatedText(secondaryLabel)
-                            : secondaryLabel}
-                    </SecondaryText>
-                )}
-            </Label>
+            <DropdownLabel
+                displayType={labelDisplayType}
+                label={title}
+                maxLines={itemMaxLines}
+                selected={selected}
+                disabled={!selected && hasSelectedMax}
+                sublabel={secondaryLabel}
+                truncationType={itemTruncationType}
+                variant={variant}
+            />
         );
     };
 
-    const renderItems = () => {
+    const renderItem = (item: T, index: number) => {
         if (!onRetry || itemsLoadState === "success") {
-            return displayListItems.map((item, index) => {
-                return (
-                    <ListItem
-                        key={getItemKey(item, index)}
-                        $checked={checkListItemSelected(item) && !multiSelect}
-                    >
-                        <ListItemSelector
-                            $hasNextLineLabel={hasNextLineLabel()}
-                            onClick={(event) => {
-                                handleListItemClick(event, item);
-                            }}
-                            ref={(element) =>
-                                (listItemRefs.current[index] = element)
-                            }
-                            data-testid={`list-item`}
-                            type="button"
-                            tabIndex={visible ? 0 : -1}
-                            $multiSelect={multiSelect}
-                            onBlur={handleBlur}
-                            $variant={variant}
-                        >
-                            {multiSelect && (
-                                <ListCheckbox
-                                    checked={checkListItemSelected(item)}
-                                    displaySize={"small"}
-                                />
-                            )}
-                            {renderListItem
-                                ? renderListItem(item, {
-                                      selected: checkListItemSelected(item),
-                                  })
-                                : renderDropdownLabels(item)}
-                        </ListItemSelector>
-                    </ListItem>
-                );
-            });
+            const selected = checkListItemSelected(item);
+            const active = index === focusedIndex;
+            return (
+                <ListItem
+                    aria-selected={selected}
+                    aria-multiselectable={multiSelect}
+                    aria-disabled={!selected && hasSelectedMax}
+                    aria-posinset={index + 1}
+                    aria-setsize={displayListItems?.length}
+                    data-testid="list-item"
+                    key={getItemKey(item, index)}
+                    onClick={() => handleListItemClick(item, index)}
+                    onMouseEnter={() => handleListItemHover(index)}
+                    ref={(element) => {
+                        listItemRefs.current[index] = element;
+                    }}
+                    role="option"
+                    tabIndex={active ? 0 : -1}
+                    $active={active}
+                    $selected={selected}
+                    $disabled={!selected && hasSelectedMax}
+                >
+                    {renderListItem ? (
+                        renderListItem(item, { selected })
+                    ) : (
+                        <>
+                            {renderListItemIcon(selected)}
+                            {renderDropdownLabel(item, selected)}
+                        </>
+                    )}
+                </ListItem>
+            );
         }
     };
 
@@ -418,15 +487,12 @@ export const DropdownList = <T, V>({
                     value={searchValue}
                     placeholder={searchPlaceholder}
                     data-testid="search-input"
-                    aria-label="search-input"
-                    tabIndex={visible ? 0 : -1}
+                    aria-label="Enter text to search"
                     onClear={handleOnClear}
                     variant={variant}
                 />
             );
         }
-
-        return null;
     };
 
     const renderSelectAll = () => {
@@ -438,16 +504,16 @@ export const DropdownList = <T, V>({
             itemsLoadState === "success"
         ) {
             return (
-                <SelectAllContainer key="selectAll">
-                    <DropdownCommonButton
+                <SelectAllContainer>
+                    <SelectAllButton
                         onClick={onSelectAll}
                         type="button"
                         $variant={variant}
                     >
-                        {selectedItems.length === 0
-                            ? "Select all"
-                            : "Clear all"}
-                    </DropdownCommonButton>
+                        {maxSelectable || selectedItems.length !== 0
+                            ? clearAllButtonLabel
+                            : selectAllButtonLabel}
+                    </SelectAllButton>
                 </SelectAllContainer>
             );
         }
@@ -461,17 +527,17 @@ export const DropdownList = <T, V>({
             itemsLoadState === "success"
         ) {
             return (
-                <ResultStateContainer
-                    key="noResults"
-                    data-testid="list-no-results"
-                    $variant={variant}
-                >
-                    <LabelIcon
-                        data-testid="no-result-icon"
-                        $variant={variant}
-                    />
-                    No results found.
-                </ResultStateContainer>
+                <>
+                    <ResultStateContainer data-testid="list-no-results">
+                        <LabelIcon data-testid="no-result-icon" />
+                        {noResultsLabel}
+                    </ResultStateContainer>
+                    {noResultsDescription && (
+                        <NoResultDescContainer data-testid="no-result-desc">
+                            {noResultsDescription}
+                        </NoResultDescContainer>
+                    )}
+                </>
             );
         }
     };
@@ -479,11 +545,7 @@ export const DropdownList = <T, V>({
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
             return (
-                <ResultStateContainer
-                    key="loading"
-                    data-testid="list-loading"
-                    $variant={variant}
-                >
+                <ResultStateContainer data-testid="list-loading">
                     <Spinner />
                     Loading...
                 </ResultStateContainer>
@@ -494,75 +556,93 @@ export const DropdownList = <T, V>({
     const renderTryAgain = () => {
         if (onRetry && itemsLoadState === "fail") {
             return (
-                <ResultStateContainer
-                    key="noResults"
-                    data-testid="list-fail"
-                    $variant={variant}
-                >
-                    <LabelIcon
-                        data-testid="load-error-icon"
-                        $variant={variant}
-                    />
+                <ResultStateContainer data-testid="list-fail">
+                    <LabelIcon data-testid="load-error-icon" />
                     Failed to load.&nbsp;
-                    <DropdownCommonButton
+                    <TryAgainButton
                         onClick={handleTryAgain}
                         type="button"
                         $variant={variant}
                     >
                         Try again.
-                    </DropdownCommonButton>
+                    </TryAgainButton>
                 </ResultStateContainer>
             );
         }
     };
 
+    const renderVirtualisedList = () => {
+        const isTestEnv = process.env.NODE_ENV === "test";
+
+        return (
+            <Listbox role="listbox" id={listboxId}>
+                <Virtuoso
+                    ref={virtuosoRef}
+                    style={{ height: "100%" }}
+                    data={displayListItems}
+                    customScrollParent={nodeRef.current ?? undefined}
+                    itemContent={(index, item) => renderItem(item, index)}
+                    // disable virtualisation in tests
+                    // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
+                    // explicitly set the `key` prop to avoid React warning
+                    key={isTestEnv ? displayListItems.length : undefined}
+                    // omit the `initialItemCount` prop to resolve NaN error
+                    {...(isTestEnv
+                        ? {
+                              initialItemCount: displayListItems.length,
+                          }
+                        : {})}
+                />
+            </Listbox>
+        );
+    };
+
     const renderList = () => {
-        if (!visible) {
-            return;
-        }
         return (
             <List
                 ref={listRef}
                 data-testid="dropdown-list"
-                $width={listStyleWidth}
-                role="list"
-                {...otherProps}
+                role="group"
+                aria-label={ariaLabel}
             >
                 {renderSearchInput()}
                 {renderSelectAll()}
                 {renderNoResults()}
                 {renderLoading()}
                 {renderTryAgain()}
-                {renderItems()}
+                {renderVirtualisedList()}
             </List>
         );
     };
 
     const renderBottomCta = () => {
-        if (!visible || !renderCustomCallToAction) {
+        if (!renderCustomCallToAction) {
             return;
         }
 
-        // FIXME: add onDismiss handling
+        // FIXME: implement onDismiss handling
         return (
-            <div ref={customCallToActionRef} data-testid="custom-cta">
+            <div data-testid="custom-cta">
                 {renderCustomCallToAction(onDismiss as any, displayListItems)}
             </div>
         );
     };
 
     return (
-        <>
-            <Container
-                style={containerStyles}
-                data-testid={
-                    visible ? "dropdown-container" : "dropdown-container-hidden"
-                }
-                ref={nodeRef}
-            >
-                {renderList()}
-                {renderBottomCta()}
-            </Container>
-        </>
+        <Container
+            data-testid="dropdown-container"
+            ref={mergeRefs(nodeRef, setFloatingRef)}
+            style={styles}
+            {...getFloatingProps()}
+            $width={matchElementWidth ? elementWidth : undefined}
+            $customWidth={width}
+            $variant={variant}
+        >
+            <VisuallyHidden role="status">{ariaLabel}</VisuallyHidden>
+            {renderList()}
+            {renderBottomCta()}
+        </Container>
     );
 };
+
+export const DropdownList = forwardRef(DropdownListInner);

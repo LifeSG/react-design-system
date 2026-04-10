@@ -27,6 +27,8 @@ export const SPFFontSpecSet: FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Public Sans",
+    "heading-font-family": "Public Sans",
+    "body-font-family": "Public Sans",
 
     "body-size-baseline": "1.2rem",
     "body-size-md": "1.125rem",

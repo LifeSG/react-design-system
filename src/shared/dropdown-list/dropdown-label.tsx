@@ -3,7 +3,7 @@ import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 import { Font } from "../../theme";
 import { StringHelper } from "../../util/string-helper";
-import { DropdownVariantType, LabelDisplayType } from "../dropdown-list/types";
+import { DropdownVariantType, LabelDisplayType } from "./types";
 import {
     Label,
     MatchedText,

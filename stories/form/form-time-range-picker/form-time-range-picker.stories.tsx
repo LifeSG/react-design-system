@@ -167,3 +167,17 @@ export const ComboboxVariant: StoryObj<Component> = {
     },
     decorators: [StoryDecorator({ maxWidth: true })],
 };
+
+export const ComboboxScrollTime: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Form.TimeRangePicker
+                label="With initial dropdown time of 9:00am to 3:00pm"
+                variant="combobox"
+                initialScrollStartTime="9:00am"
+                initialScrollEndTime="3:00pm"
+            />
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};

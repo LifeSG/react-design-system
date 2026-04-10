@@ -6,7 +6,7 @@ import { Calendar } from "../../src";
 describe("Calendar", () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date("2024-02-01T12:00:00"));
+        jest.setSystemTime(new Date("2024-02-01T12:00:00").getTime());
     });
 
     afterAll(() => {
@@ -54,7 +54,9 @@ describe("Calendar", () => {
             });
 
             const TestComponent = () => {
-                const [value, setValue] = useState<string | undefined>(undefined);
+                const [value, setValue] = useState<string | undefined>(
+                    undefined
+                );
 
                 return (
                     <>
@@ -182,7 +184,9 @@ describe("Calendar", () => {
 
                 return (
                     <>
-                        <button onClick={() => setValues([])}>Clear dates</button>
+                        <button onClick={() => setValues([])}>
+                            Clear dates
+                        </button>
                         <Calendar variant="multi" values={values} />
                     </>
                 );
@@ -196,7 +200,9 @@ describe("Calendar", () => {
                 })
             ).toHaveAttribute("aria-selected", "true");
 
-            await user.click(screen.getByRole("button", { name: "Clear dates" }));
+            await user.click(
+                screen.getByRole("button", { name: "Clear dates" })
+            );
 
             expect(
                 screen.getByRole("gridcell", {

@@ -8,7 +8,7 @@ import {
     NestedDropdownListLocalItem,
     buildKeyPathToSet,
     findItemByKeyPath,
-} from "../shared/dropdown-list-v2";
+} from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,

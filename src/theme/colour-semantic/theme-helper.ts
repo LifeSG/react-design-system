@@ -11,6 +11,10 @@ import {
     A11yPlaygroundDarkColourSet,
 } from "./specs/a11yplayground-semantic-tokens";
 import { SemanticColourCollectionMap } from "./types";
+import {
+    SGWDigitalLobbyColourSet,
+    SGWDigitalLobbyDarkColourSet,
+} from "./specs/sgwdigitallobby-tokens";
 
 export const ColourSpec: ThemeCollectionSpec<
     SemanticColourCollectionMap,
@@ -26,8 +30,10 @@ export const ColourSpec: ThemeCollectionSpec<
         pa: PAColourSet,
         a11yplayground: A11yPlaygroundColourSet,
         supportgowhere: LifeSGColourSet,
+        sgwdigitallobby: SGWDigitalLobbyColourSet,
         imda: LifeSGColourSet,
         spf: LifeSGColourSet,
+        smgs: LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -46,8 +52,10 @@ export const DarkColourSpec: ThemeCollectionSpec<
         pa: LifeSGDarkColourSet,
         a11yplayground: A11yPlaygroundDarkColourSet,
         supportgowhere: LifeSGDarkColourSet,
+        sgwdigitallobby: SGWDigitalLobbyDarkColourSet,
         imda: LifeSGDarkColourSet,
         spf: LifeSGDarkColourSet,
+        smgs: LifeSGDarkColourSet,
     },
     defaultValue: "lifesg",
 };

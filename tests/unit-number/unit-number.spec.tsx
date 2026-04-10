@@ -60,9 +60,9 @@ describe("UnitNumberInput", () => {
             });
 
             expect(floorInput).toHaveValue("A1");
-            expect(floorInputSpy).toBeCalledWith(1, 1);
+            expect(floorInputSpy).toHaveBeenCalledWith(1, 1);
             expect(unitInput).toHaveValue("B2");
-            expect(unitInputSpy).toBeCalledWith(1, 1);
+            expect(unitInputSpy).toHaveBeenCalledWith(1, 1);
         });
 
         it("should remove non-alphanumeric characters and preserve caret position", async () => {
@@ -93,9 +93,9 @@ describe("UnitNumberInput", () => {
             });
 
             expect(floorInput).toHaveValue("A1");
-            expect(floorInputSpy).toBeCalledWith(1, 1);
+            expect(floorInputSpy).toHaveBeenCalledWith(1, 1);
             expect(unitInput).toHaveValue("B2");
-            expect(unitInputSpy).toBeCalledWith(1, 1);
+            expect(unitInputSpy).toHaveBeenCalledWith(1, 1);
         });
     });
 });

@@ -1,38 +1,43 @@
+import { CrossIcon } from "@lifesg/react-icons/cross";
 import React, { forwardRef } from "react";
+import { DropdownVariantType } from "./types";
 import {
-    CancelButton,
+    ClearButton,
     Container,
+    SearchBox,
     SearchIcon,
     SearchInput,
 } from "./dropdown-search.styles";
-import { DropdownVariantType } from "./types";
-import { CrossIcon } from "@lifesg/react-icons";
 
 interface Props extends React.HTMLAttributes<HTMLInputElement> {
     value: string /** override to cast type */;
-    onClear?: () => void | undefined;
     variant?: DropdownVariantType | undefined;
+    onClear?: (() => void) | undefined;
 }
 
 const Component = (
-    props: Props,
+    { value, variant, onClear, ...otherProps }: Props,
     ref: React.Ref<HTMLInputElement>
 ): JSX.Element => {
-    const { onClear, ...otherProps } = props;
-
     return (
-        <Container key="search">
-            <SearchIcon $variant={props.variant} />
-            <SearchInput ref={ref} $variant={props.variant} {...otherProps} />
-            {otherProps.value && (
-                <CancelButton
+        <Container $variant={variant}>
+            <SearchBox $variant={variant}>
+                <SearchIcon aria-hidden />
+                <SearchInput
+                    ref={ref}
+                    value={value}
+                    $variant={variant}
+                    {...otherProps}
+                />
+            </SearchBox>
+            {value && (
+                <ClearButton
                     aria-label="Clear search"
                     focusOutline="browser"
                     onClick={onClear}
-                    $variant={props.variant}
                 >
-                    <CrossIcon />
-                </CancelButton>
+                    <CrossIcon aria-hidden />
+                </ClearButton>
             )}
         </Container>
     );

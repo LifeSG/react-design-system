@@ -1,11 +1,11 @@
 import styled, { css } from "styled-components";
-import { ExpandableElement } from "../shared/dropdown-list-v2";
-import { IconContainer } from "../shared/dropdown-list-v2/expandable-element.styles";
+import { ExpandableElement } from "../shared/dropdown-list";
+import { IconContainer } from "../shared/dropdown-list/expandable-element.styles";
 import {
     ListItem,
     SelectedIndicator,
     UnselectedIndicator,
-} from "../shared/dropdown-list-v2/dropdown-list.styles";
+} from "../shared/dropdown-list/dropdown-list.styles";
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
 // =============================================================================

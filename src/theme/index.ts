@@ -202,7 +202,7 @@ export const SupportGoWhereThemeBase: ThemeSpec = {
 };
 
 export const SGWDigitalLobbyThemeBase: ThemeSpec = {
-    colourScheme: "supportgowhere",
+    colourScheme: "sgwdigitallobby",
     fontScheme: "sgwdigitallobby",
     motionScheme: "default",
     borderScheme: "default",
@@ -238,6 +238,19 @@ const SPFThemeBase: ThemeSpec = {
     breakpointScheme: "default",
     resourceScheme: "spf",
     componentScheme: "spf",
+};
+
+const SMGSThemeBase: ThemeSpec = {
+    colourScheme: "smgs",
+    fontScheme: "smgs",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "smgs",
+    componentScheme: "smgs",
 };
 
 // =============================================================================
@@ -315,4 +328,10 @@ export const SPFTheme = {
     ...SPFThemeBase,
     light: createThemeWithColourMode(SPFThemeBase, "light"),
     dark: createThemeWithColourMode(SPFThemeBase, "dark"),
+};
+
+export const SMGSTheme = {
+    ...SMGSThemeBase,
+    light: createThemeWithColourMode(SMGSThemeBase, "light"),
+    dark: createThemeWithColourMode(SMGSThemeBase, "dark"),
 };

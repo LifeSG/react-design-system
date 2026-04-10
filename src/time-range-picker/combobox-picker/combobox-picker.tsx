@@ -7,8 +7,8 @@ import {
 } from "../../form/form-label.style";
 import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { ClearIcon } from "../../input/input.style";
-import { DropdownListState } from "../../shared/dropdown-list-v2";
-import { DropdownList } from "../../shared/dropdown-list-v2/dropdown-list";
+import { DropdownListState } from "../../shared/dropdown-list";
+import { DropdownList } from "../../shared/dropdown-list/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { SimpleIdGenerator } from "../../util";
@@ -38,6 +38,8 @@ export const ComboboxPicker = ({
     dropdownZIndex,
     startLimit,
     endLimit,
+    initialScrollStartTime,
+    initialScrollEndTime,
     interval = 15,
     dropdownRootNode,
     "aria-labelledby": ariaLabelledBy,
@@ -89,10 +91,20 @@ export const ComboboxPicker = ({
     // EFFECTS
     // =========================================================================
     const parseInput = useCallback(
-        (input: string): string | undefined => {
+        (input: string | undefined): string | undefined => {
             return TimeHelper.parseInput(input, format);
         },
         [format]
+    );
+
+    const parsedInitialStartScrollTime = useMemo(
+        () => parseInput(initialScrollStartTime) ?? "",
+        [initialScrollStartTime, parseInput]
+    );
+
+    const parsedInitialEndScrollTime = useMemo(
+        () => parseInput(initialScrollEndTime) ?? "",
+        [initialScrollEndTime, parseInput]
     );
 
     useEffect(() => {
@@ -339,13 +351,18 @@ export const ComboboxPicker = ({
 
     const renderDropdown = () => {
         if (activeTimeSelector === "start") {
+            // Prioritise start time value. If non existent, use initial scroll time
+            // If both are non existent, DropdownList will default to first option
+            const startScrollTime =
+                parseInput(startTimeVal) || parsedInitialStartScrollTime;
+
             return (
                 <DropdownList
                     listItems={startOptions}
                     onSelectItem={handleStartTime}
                     selectedItems={[startTimeVal]}
                     topScrollItem={TimeHelper.findClosestFlooredTime(
-                        parseInput(startTimeVal),
+                        startScrollTime,
                         startOptions
                     )}
                     listboxId={listboxId}
@@ -355,13 +372,16 @@ export const ComboboxPicker = ({
                 />
             );
         } else {
+            const endScrollTime =
+                parseInput(endTimeVal) || parsedInitialEndScrollTime;
+
             return (
                 <DropdownList
                     listItems={endOptions}
                     onSelectItem={handleEndTime}
                     selectedItems={[endTimeVal]}
                     topScrollItem={TimeHelper.findClosestFlooredTime(
-                        parseInput(endTimeVal),
+                        endScrollTime,
                         endOptions
                     )}
                     listboxId={listboxId}

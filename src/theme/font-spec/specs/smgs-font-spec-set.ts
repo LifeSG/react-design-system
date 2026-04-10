@@ -1,6 +1,6 @@
 import { FontSpecSet } from "../types";
 
-export const MyLegacyFontSpecSet: FontSpecSet = {
+export const SMGSFontSpecSet: FontSpecSet = {
     "heading-size-xxl": "3rem",
     "heading-size-xl": "2.5rem",
     "heading-size-lg": "2rem",
@@ -26,9 +26,9 @@ export const MyLegacyFontSpecSet: FontSpecSet = {
     "weight-regular": "400",
     "weight-semibold": "600",
     "weight-bold": "700",
-    "font-family": "Open Sans",
-    "heading-font-family": "Open Sans",
-    "body-font-family": "Open Sans",
+    "font-family": "Poppins, Inter",
+    "heading-font-family": "Poppins",
+    "body-font-family": "Inter",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",
@@ -45,12 +45,11 @@ export const MyLegacyFontSpecSet: FontSpecSet = {
     "body-ls-sm": "0.008rem",
     "body-ls-xs": "0.008rem",
 
-    "form-label-size": "1.125rem",
-    "form-description-size": "1rem",
+    "form-label-size": "1rem",
+    "form-description-size": "0.875rem",
 
     "form-label-lh": "1.5rem",
     "form-description-lh": "1.625rem",
-
     "form-label-ls": "0rem",
     "form-description-ls": "0.009rem",
 };

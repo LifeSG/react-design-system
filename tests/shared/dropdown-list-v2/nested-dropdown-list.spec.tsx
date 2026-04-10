@@ -1,7 +1,7 @@
 import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { NestedDropdownList } from "../../../src/shared/dropdown-list-v2/nested-dropdown-list";
-import { NestedDropdownListItemProps } from "../../../src/shared/dropdown-list-v2/types";
+import { NestedDropdownList } from "../../../src/shared/dropdown-list/nested-dropdown-list";
+import { NestedDropdownListItemProps } from "../../../src/shared/dropdown-list/types";
 
 describe("NestedDropdownList", () => {
     beforeEach(() => {

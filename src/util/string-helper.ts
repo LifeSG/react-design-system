@@ -244,4 +244,11 @@ export namespace StringHelper {
 
         return "";
     };
+
+    export const joinNonEmptyStrings = (
+        strings: (string | undefined | null)[],
+        delimiter = ", "
+    ) => {
+        return strings.filter(Boolean).join(delimiter);
+    };
 }

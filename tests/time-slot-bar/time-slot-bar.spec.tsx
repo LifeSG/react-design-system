@@ -101,7 +101,10 @@ describe("TimeSlotBar", () => {
     it("should render default time slot when styleAttributes provided", () => {
         const styleAttributes = {
             backgroundColor: "#CCCCCC",
-            styleType: "default" as const,
+            backgroundColor2: "#BBBBBB",
+            styleType: "stripes" as const,
+            hoverBackgroundColor: "#AAAAAA",
+            hoverBackgroundColor2: "#999999",
         };
 
         render(

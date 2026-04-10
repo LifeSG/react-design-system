@@ -13,7 +13,7 @@ const CALENDAR_TESTID = "calendar-dropdown";
 describe("DateRangeInput (week variant)", () => {
     beforeAll(() => {
         jest.useFakeTimers();
-        jest.setSystemTime(new Date("2024-02-10T12:00:00"));
+        jest.setSystemTime(new Date("2024-02-10T12:00:00").getTime());
     });
 
     afterAll(() => {

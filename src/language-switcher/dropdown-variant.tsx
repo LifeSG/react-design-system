@@ -159,7 +159,7 @@ export const DropdownVariant = ({
                     return (
                         <DropdownItem
                             key={code}
-                            ref={(el) => {
+                            ref={(el: HTMLLIElement | null) => {
                                 itemRefs.current[index] = el;
                             }}
                             role="option"

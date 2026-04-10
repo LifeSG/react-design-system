@@ -12,6 +12,7 @@ import { A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
 import { SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
 import { IMDAColourSet } from "./specs/imda-colour-set";
 import { SPFColourSet } from "./specs/spf-colour-set";
+import { SMGSColourSet } from "./specs/smgs-colour-set";
 import { ColourCollectionsMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -28,8 +29,10 @@ export const ColourSpec: ThemeCollectionSpec<
         pa: PAColourSet,
         a11yplayground: A11yPlaygroundColourSet,
         supportgowhere: SupportGoWhereColourSet,
+        sgwdigitallobby: SupportGoWhereColourSet,
         imda: IMDAColourSet,
         spf: SPFColourSet,
+        smgs: SMGSColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -52,8 +55,10 @@ export const DarkColourSpec: ThemeCollectionSpec<
         pa: PAColourSet,
         a11yplayground: A11yPlaygroundColourSet,
         supportgowhere: SupportGoWhereColourSet,
+        sgwdigitallobby: SupportGoWhereColourSet,
         imda: IMDAColourSet,
         spf: SPFColourSet,
+        smgs: SMGSColourSet,
     },
     defaultValue: "lifesg",
 };

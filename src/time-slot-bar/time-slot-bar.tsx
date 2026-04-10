@@ -1,9 +1,11 @@
 import dayjs from "dayjs";
 import type { Dayjs } from "dayjs";
 import {
+    type MouseEvent,
     forwardRef,
     useEffect,
     useImperativeHandle,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -27,10 +29,12 @@ import {
 } from "./time-slot-bar.styles";
 import {
     Direction,
+    TimeSlot as TTimeSlot,
     TimeSlotBarProps,
     TimeSlotBarRef,
     TimeSlotBarVariant,
 } from "./types";
+import { VisuallyHidden } from "../shared/accessibility";
 
 const CELL_DURATION = 30; // In minutes
 
@@ -71,6 +75,14 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     useImperativeHandle(ref, () => ({
         resetScroll,
     }));
+
+    const { summary: slotsSummary, computedSlots: allSlots } = useMemo(() => {
+        return TimeSlotBarHelper.processSlots(
+            { start: adjustedStartTime, end: adjustedEndTime },
+            slots,
+            variant
+        );
+    }, [adjustedStartTime, adjustedEndTime, slots, variant]);
 
     // =============================================================================
     // EFFECTS
@@ -190,6 +202,11 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         }
     };
 
+    const isVariant = (v: TimeSlotBarVariant) => {
+        if (variant === v) return true;
+        return false;
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -240,6 +257,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         const {
             backgroundColor,
             backgroundColor2,
+            hoverBackgroundColor,
+            hoverBackgroundColor2,
             styleType = "default",
         } = styleAttributes;
 
@@ -249,7 +268,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             cellWidth
         );
 
-        const isClickable = !!onClick && variant === "default";
+        const isClickable = !!onClick && isVariant("default");
 
         return (
             <>
@@ -263,6 +282,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     $styleType={styleType}
                     $bgColor={backgroundColor}
                     $bgColor2={backgroundColor2}
+                    $hoverBgColor={hoverBackgroundColor}
+                    $hoverBgColor2={hoverBackgroundColor2}
                     $clickable={isClickable}
                     onClick={isClickable ? onClick : undefined}
                 />
@@ -272,7 +293,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
 
     // Render time slots
     const renderTimeSlots = () => {
-        return slots.map((slot) => {
+        return allSlots.map((slot) => {
             const {
                 id,
                 startTime: slotStartTime,
@@ -280,6 +301,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 label,
                 clickable = true,
                 styleAttributes,
+                ariaLabel,
             } = slot;
 
             const {
@@ -287,6 +309,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 styleType = "default",
                 backgroundColor,
                 backgroundColor2,
+                hoverBackgroundColor,
+                hoverBackgroundColor2,
             } = styleAttributes;
 
             const slotWidth = TimeSlotBarHelper.calculateWidth(
@@ -301,10 +325,20 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             );
 
             const isClickable = clickable && variant === "default";
+            const showLabel = isVariant("default") && label;
+
+            const handleSlotClick =
+                (clickedSlot: TTimeSlot & { ariaLabel?: string }) =>
+                (evt: MouseEvent<HTMLElement>) => {
+                    evt.stopPropagation();
+                    const { ariaLabel: _, ...slot } = clickedSlot;
+                    if (isClickable) onSlotClick(slot);
+                };
 
             return (
-                <div key={id}>
+                <div key={id} role="gridcell">
                     <TimeSlotBorder
+                        data-testid="start-border"
                         $variant={variant}
                         style={{
                             left: `${slotOffset}px`,
@@ -318,14 +352,28 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         $variant={variant}
                         $bgColor={backgroundColor}
                         $bgColor2={backgroundColor2}
+                        $hoverBgColor={hoverBackgroundColor}
+                        $hoverBgColor2={hoverBackgroundColor2}
                         $clickable={isClickable}
-                        onClick={() => isClickable && onSlotClick(slot)}
+                        onClick={handleSlotClick(slot)}
                     >
-                        {label && variant === "default" && (
+                        {!!ariaLabel && (
+                            <VisuallyHidden>
+                                <button
+                                    type="button" // overrides default type="submit" when used with <form>
+                                    aria-disabled={!isClickable}
+                                    aria-label={ariaLabel}
+                                    onClick={handleSlotClick(slot)} // use `button` element native keyboard activation handling
+                                />
+                            </VisuallyHidden>
+                        )}
+
+                        {showLabel && (
                             <CellText
                                 $slotWidth={slotWidth}
                                 $color={color}
                                 weight={"semibold"}
+                                aria-hidden={!ariaLabel}
                             >
                                 {showFullEllipsis(slotWidth) ? "..." : label}
                             </CellText>
@@ -333,6 +381,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     </TimeSlot>
                     {endTime !== slotEndTime && (
                         <TimeSlotBorder
+                            data-testid="end-border"
                             $variant={variant}
                             style={{
                                 left: `${slotOffset + slotWidth}px`,
@@ -351,6 +400,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 {scrollPosition > 0 && (
                     <ArrowButton
                         data-testid={getDataTestId("arrow-left")}
+                        aria-hidden
+                        tabIndex={-1}
                         $direction={"left"}
                         $variant={variant}
                         focusHighlight={false}
@@ -379,6 +430,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             return (
                 <ArrowButton
                     data-testid={getDataTestId("arrow-right")}
+                    aria-hidden
+                    tabIndex={-1}
                     $direction={"right"}
                     $variant={variant}
                     focusHighlight={false}
@@ -408,13 +461,16 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 >
                     {renderTimeMarkers()}
                 </TimeMarkerWrapper>
-                <TimeSlotWrapper
-                    data-testid={getDataTestId("time-slot-wrapper")}
-                    data-id="slot-wrapper"
-                >
-                    {renderDefaultTimeSlots()}
-                    {renderTimeSlots()}
-                </TimeSlotWrapper>
+                <div role="grid" aria-label={slotsSummary} tabIndex={0}>
+                    <TimeSlotWrapper
+                        data-testid={getDataTestId("time-slot-wrapper")}
+                        data-id="slot-wrapper"
+                        role="row"
+                    >
+                        {renderDefaultTimeSlots()}
+                        {renderTimeSlots()}
+                    </TimeSlotWrapper>
+                </div>
             </TimeSlotBarContainer>
             {renderArrowButtonLeft()}
             {renderArrowButtonRight()}

@@ -27,6 +27,8 @@ export const OneServiceFontSpecSet: FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Open Sans",
+    "heading-font-family": "Open Sans",
+    "body-font-family": "Open Sans",
 
     "body-size-baseline": "1rem",
     "body-size-md": "0.875rem",
