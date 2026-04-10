@@ -71,6 +71,7 @@ export { SelectedIndicator, UnselectedIndicator };
 
 export const DropdownItem = styled(ListItem)`
     align-items: center;
+    color: ${Colour["text"]};
 
     &:hover {
         background: ${Colour["bg-hover-subtle"]};
