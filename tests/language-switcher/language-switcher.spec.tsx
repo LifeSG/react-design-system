@@ -320,7 +320,7 @@ describe("LanguageSwitcher (link-container)", () => {
         );
 
         const listItems = screen.getAllByRole("listitem");
-        // 4 language items + 3 separator items
-        expect(listItems).toHaveLength(7);
+        // Only accessible list items (4 language buttons; 3 separator items are aria-hidden)
+        expect(listItems).toHaveLength(4);
     });
 });
