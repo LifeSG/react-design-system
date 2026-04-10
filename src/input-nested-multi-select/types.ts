@@ -6,7 +6,7 @@ import {
 import {
     DropdownCustomLabelProps,
     DropdownSearchProps,
-} from "../shared/dropdown-list-v2/types";
+} from "../shared/dropdown-list/types";
 
 // =============================================================================
 // INPUT SELECT PROPS

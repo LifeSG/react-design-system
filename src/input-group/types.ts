@@ -5,7 +5,7 @@ import {
     DropdownSearchProps,
     ItemsLoadStateType,
     TruncateType,
-} from "../shared/dropdown-list-v2";
+} from "../shared/dropdown-list";
 
 export type InputGroupAddonType = "label" | "list" | "custom";
 export type InputGroupAddonPosition = "left" | "right" | undefined;

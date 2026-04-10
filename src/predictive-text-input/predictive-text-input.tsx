@@ -1,6 +1,6 @@
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useRef, useState } from "react";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list-v2";
+import { DropdownList, DropdownListState } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
 import { Input } from "../input";

@@ -1,10 +1,6 @@
 import styled, { css } from "styled-components";
 import { Colour, Font } from "../../theme";
-import {
-    DropdownVariantType,
-    LabelDisplayType,
-    TruncateType,
-} from "../dropdown-list/types";
+import { DropdownVariantType, LabelDisplayType, TruncateType } from "./types";
 import { lineClampCss } from "../styles";
 
 // =============================================================================

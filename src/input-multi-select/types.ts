@@ -8,7 +8,7 @@ import {
     DropdownDisplayProps,
     DropdownSearchProps,
     DropdownVariantType,
-} from "../shared/dropdown-list-v2/types";
+} from "../shared/dropdown-list/types";
 import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export interface InputMultiSelectProps<T, V>

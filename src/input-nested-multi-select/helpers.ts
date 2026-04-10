@@ -1,5 +1,5 @@
 import isEmpty from "lodash/isEmpty";
-import { NestedDropdownListItemProps } from "../shared/dropdown-list-v2";
+import { NestedDropdownListItemProps } from "../shared/dropdown-list";
 
 const findSelectedItem = <V1, V2, V3>(
     options: NestedDropdownListItemProps<V1 | V2 | V3>[] | undefined,
