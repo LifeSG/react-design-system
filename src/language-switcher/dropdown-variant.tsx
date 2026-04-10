@@ -2,6 +2,7 @@ import { LanguageIcon } from "@lifesg/react-icons/language";
 import React, { useEffect, useRef, useState } from "react";
 import { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import { SimpleIdGenerator } from "../util";
 import {
     DropdownItem,
     DropdownList,
@@ -26,6 +27,9 @@ export const DropdownVariant = ({
     // =========================================================================
     const [isOpen, setIsOpen] = useState(false);
     const [focusedIndex, setFocusedIndex] = useState(-1);
+    const [listboxId] = useState(
+        () => `listbox-${SimpleIdGenerator.generate()}`
+    );
     const triggerRef = useRef<HTMLButtonElement>(null);
     const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
 
@@ -118,7 +122,7 @@ export const DropdownVariant = ({
             ref={triggerRef}
             disabled={false}
             expanded={isOpen}
-            listboxId={`${testId}--listbox`}
+            listboxId={listboxId}
             popupRole="listbox"
             readOnly={false}
             aria-label={`${ARIA_LABEL}, ${LANGUAGE_DISPLAY_MAP[selectedLanguage]}`}
@@ -145,7 +149,7 @@ export const DropdownVariant = ({
         >
             <DropdownList
                 role="listbox"
-                id={`${testId}--listbox`}
+                id={listboxId}
                 aria-label={ARIA_LABEL}
                 onKeyDown={handleListKeyDown}
             >
