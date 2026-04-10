@@ -9,9 +9,6 @@ import {
     Spacing,
 } from "../../theme";
 
-// =============================================================================
-// Card
-// =============================================================================
 export const modalCard = css`
     width: 40rem;
     margin: ${Spacing["spacing-64"]} auto;
@@ -49,9 +46,6 @@ export const modalCard = css`
     }
 `;
 
-// =============================================================================
-// Header
-// =============================================================================
 export const closeButtonContainer = css`
     margin-right: ${Spacing["spacing-16"]};
     margin-left: auto;
@@ -69,9 +63,6 @@ export const styledClickableIcon = css`
     }
 `;
 
-// =============================================================================
-// Content
-// =============================================================================
 export const contentContainer = css`
     margin-right: ${Spacing["spacing-64"]};
     margin-left: ${Spacing["spacing-64"]};
@@ -82,9 +73,6 @@ export const contentContainer = css`
     }
 `;
 
-// =============================================================================
-// Footer
-// =============================================================================
 export const footerContainer = css`
     margin-right: ${Spacing["spacing-64"]};
     margin-left: ${Spacing["spacing-64"]};
@@ -108,9 +96,6 @@ export const footerContainer = css`
     }
 `;
 
-// =============================================================================
-// Spacer
-// =============================================================================
 export const slotSpacerHasCloseButton = "modalV2SlotSpacerHasCloseButton";
 export const slotSpacerNoCloseButton = "modalV2SlotSpacerNoCloseButton";
 
