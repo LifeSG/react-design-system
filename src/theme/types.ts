@@ -47,6 +47,7 @@ export type ColourScheme =
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
+    | "sgwdigitallobby"
     | "imda"
     | "spf"
     | "smgs";
