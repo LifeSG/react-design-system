@@ -128,7 +128,7 @@ export const DropdownVariant = ({
             aria-label={`${ARIA_LABEL}, ${LANGUAGE_DISPLAY_MAP[selectedLanguage]}`}
             data-testid={`${testId}--trigger`}
         >
-            <LanguageIconWrapper aria-hidden="true">
+            <LanguageIconWrapper aria-hidden>
                 <LanguageIcon />
             </LanguageIconWrapper>
             {LANGUAGE_DISPLAY_MAP[selectedLanguage]}
@@ -173,7 +173,7 @@ export const DropdownVariant = ({
                             data-testid={`${testId}--item-${code}`}
                         >
                             {isSelected ? (
-                                <SelectedIndicator aria-hidden="true" />
+                                <SelectedIndicator aria-hidden />
                             ) : (
                                 <UnselectedIndicator />
                             )}

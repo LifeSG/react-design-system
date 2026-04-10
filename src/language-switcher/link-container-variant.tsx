@@ -64,7 +64,7 @@ export const LinkContainerVariant = ({
                     return (
                         <React.Fragment key={code}>
                             {index > 0 && (
-                                <li aria-hidden="true">
+                                <li aria-hidden>
                                     <LinkDivider />
                                 </li>
                             )}
