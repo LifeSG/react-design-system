@@ -64,6 +64,8 @@ const Component = <T, V>(
                             error={error}
                             className={className}
                             noBorder={otherProps.noBorder}
+                            aria-label={ariaLabel}
+                            aria-labelledby={ariaLabelledBy}
                             {...otherProps}
                         />
                     );
