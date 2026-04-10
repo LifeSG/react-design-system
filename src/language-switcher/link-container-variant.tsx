@@ -13,7 +13,7 @@ export const LinkContainerVariant = ({
     selectedLanguage,
     onSelectLanguage,
     testId,
-    otherProps,
+    ...otherProps
 }: VariantInternalProps): JSX.Element => {
     // =========================================================================
     // CONST, STATE, REF

@@ -31,7 +31,7 @@ export const LanguageSwitcher = ({
                     selectedLanguage={selectedLanguage}
                     onSelectLanguage={handleSelectLanguage}
                     testId={testId}
-                    otherProps={otherProps}
+                    {...otherProps}
                 />
             );
         case "link-container":
@@ -40,7 +40,7 @@ export const LanguageSwitcher = ({
                     selectedLanguage={selectedLanguage}
                     onSelectLanguage={handleSelectLanguage}
                     testId={testId}
-                    otherProps={otherProps}
+                    {...otherProps}
                 />
             );
     }

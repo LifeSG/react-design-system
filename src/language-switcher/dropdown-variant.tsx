@@ -20,7 +20,7 @@ export const DropdownVariant = ({
     selectedLanguage,
     onSelectLanguage,
     testId,
-    otherProps,
+    ...otherProps
 }: VariantInternalProps): JSX.Element => {
     // =========================================================================
     // CONST, STATE, REF
