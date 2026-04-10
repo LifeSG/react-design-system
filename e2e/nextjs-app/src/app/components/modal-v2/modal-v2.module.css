@@ -1,0 +1,62 @@
+.page {
+    display: grid;
+    gap: 16px;
+}
+
+.row {
+    display: flex;
+    gap: 12px;
+    align-items: center;
+}
+
+.metric {
+    font-size: 14px;
+}
+
+.card {
+    max-width: 560px;
+}
+
+.content {
+    padding-bottom: 8px;
+}
+
+.custom-card {
+    border: 2px solid #5F6B8A;
+}
+
+.custom-close-button {
+    padding: 8px;
+    margin: 0;
+}
+
+.custom-content {
+    padding: 16px 24px;
+    margin: 0;
+    background: #F5F7FB;
+}
+
+.custom-footer {
+    padding: 12px 24px 20px;
+    margin: 0;
+}
+
+.tall-content {
+    min-height: 160vh;
+    background: linear-gradient(180deg, #FFFFFF 0%, #F7FBFF 100%);
+}
+
+.stack-primary {
+    height: 320px;
+    border: 2px solid #12336B;
+}
+
+.stack-secondary {
+    border: 2px solid #8D1D1D;
+}
+
+.focus-start {
+    width: 1px;
+    height: 1px;
+    opacity: 0;
+}
