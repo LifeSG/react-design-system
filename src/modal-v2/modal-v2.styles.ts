@@ -2,6 +2,9 @@ import { css } from "@linaria/core";
 
 import { MediaQuery, Motion } from "../theme";
 
+const CLOSED_POSITION_OFFSET = "-3%";
+const INITIAL_OR_CLOSE = ':is([data-status="initial"], [data-status="close"])';
+
 export const tokens = {
     container: {
         verticalHeight: "--fds-internal-modalV2-container-verticalHeight",
@@ -44,36 +47,32 @@ export const container = css`
         transition: all ${Motion["duration-250"]} ${Motion["ease-exit"]};
     }
 
-    &.${containerFromTop}[data-status="initial"],
-    &.${containerFromTop}[data-status="close"] {
-        top: -3%;
+    &.${containerFromTop}${INITIAL_OR_CLOSE} {
+        top: ${CLOSED_POSITION_OFFSET};
     }
 
     &.${containerFromTop}[data-status="open"] {
         top: 0;
     }
 
-    &.${containerFromBottom}[data-status="initial"],
-    &.${containerFromBottom}[data-status="close"] {
-        bottom: -3%;
+    &.${containerFromBottom}${INITIAL_OR_CLOSE} {
+        bottom: ${CLOSED_POSITION_OFFSET};
     }
 
     &.${containerFromBottom}[data-status="open"] {
         bottom: 0;
     }
 
-    &.${containerFromLeft}[data-status="initial"],
-    &.${containerFromLeft}[data-status="close"] {
-        left: -3%;
+    &.${containerFromLeft}${INITIAL_OR_CLOSE} {
+        left: ${CLOSED_POSITION_OFFSET};
     }
 
     &.${containerFromLeft}[data-status="open"] {
         left: 0;
     }
 
-    &.${containerFromRight}[data-status="initial"],
-    &.${containerFromRight}[data-status="close"] {
-        right: -3%;
+    &.${containerFromRight}${INITIAL_OR_CLOSE} {
+        right: ${CLOSED_POSITION_OFFSET};
     }
 
     &.${containerFromRight}[data-status="open"] {

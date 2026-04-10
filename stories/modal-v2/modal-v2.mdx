@@ -43,6 +43,13 @@ The footer can accept any `<button>` element.
 
 <Canvas of={ModalV2Stories.Footer} />
 
+## Animation direction
+
+Use the `animationFrom` prop to control where the modal enters from:
+`"top"`, `"bottom"`, `"left"`, or `"right"`.
+
+<Canvas of={ModalV2Stories.AnimationFrom} />
+
 ## Styling slots
 
 Slots come with default margins, but if custom spacing is required, the styles
@@ -61,9 +68,7 @@ const customContent = css`
     padding-inline: ${Spacing["spacing-16"]};
 `;
 
-<ModalV2.Content className={customContent}>
-    ...
-</ModalV2.Content>
+<ModalV2.Content className={customContent}>...</ModalV2.Content>;
 ```
 
 <Canvas of={ModalV2Stories.StyledSlots} />
