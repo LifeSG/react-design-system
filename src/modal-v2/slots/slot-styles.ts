@@ -115,28 +115,32 @@ export const slotSpacerHasCloseButton = "modalV2SlotSpacerHasCloseButton";
 export const slotSpacerNoCloseButton = "modalV2SlotSpacerNoCloseButton";
 
 export const slotSpacer = css`
-    :where(& > .${contentContainer}:last-child) {
+    & > .${contentContainer}:last-child {
         margin-bottom: ${Spacing["spacing-64"]};
     }
 
-    :where(& > .${footerContainer}:not(:first-child)) {
+    & > .${footerContainer}:not(:first-child) {
         margin-top: ${Spacing["spacing-32"]};
     }
 
-    :where(& > .${footerContainer}:last-child) {
+    & > .${footerContainer}:last-child {
         margin-bottom: ${Spacing["spacing-64"]};
     }
 
     &.${slotSpacerHasCloseButton} {
-        :where(& > .${contentContainer}:first-child),
-        :where(& > .${footerContainer}:first-child) {
+        &
+            > .${contentContainer}:first-child,
+            &
+            > .${footerContainer}:first-child {
             margin-top: 0;
         }
     }
 
     &.${slotSpacerNoCloseButton} {
-        :where(& > .${contentContainer}:first-child),
-        :where(& > .${footerContainer}:first-child) {
+        &
+            > .${contentContainer}:first-child,
+            &
+            > .${footerContainer}:first-child {
             margin-top: ${Spacing["spacing-64"]};
         }
     }
