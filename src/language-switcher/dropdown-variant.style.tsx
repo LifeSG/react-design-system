@@ -76,9 +76,18 @@ export { SelectedIndicator, UnselectedIndicator };
 export const DropdownItem = styled(ListItem)`
     align-items: center;
 
+    &:hover {
+        background: ${Colour["bg-hover-subtle"]};
+    }
+
     ${(props) =>
         props.$selected &&
         css`
+            background: ${Colour["bg"]};
             color: ${Colour["text-selected"]};
+
+            &:hover {
+                background: ${Colour["bg-selected"]};
+            }
         `}
 `;
