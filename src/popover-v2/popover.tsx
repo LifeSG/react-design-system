@@ -1,11 +1,15 @@
 import clsx from "clsx";
 import { useMemo, useRef } from "react";
-import { useMediaQuery } from "react-responsive";
 
 import { Card } from "../card";
 import { Markup } from "../markup";
 import { ModalV2 } from "../modal-v2";
-import { Breakpoint, useApplyStyle, useDesignToken } from "../theme";
+import {
+    Breakpoint,
+    useApplyStyle,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
 import { Typography } from "../typography";
 import * as styles from "./popover.styles";
 import type { PopoverV2Props } from "./types";
@@ -27,7 +31,7 @@ export const PopoverV2 = ({
     // =============================================================================
     const testId = _testId || "popover";
     const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint || "480px" });
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const popoverContainerRef = useRef<HTMLDivElement>(null);
     const popoverCardStyle = useMemo(
         () => ({

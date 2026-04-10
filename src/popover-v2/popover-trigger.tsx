@@ -17,10 +17,14 @@ import {
 import clsx from "clsx";
 import type React from "react";
 import { useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
-import { Breakpoint, useDesignToken, useInheritedThemeScope } from "../theme";
+import {
+    Breakpoint,
+    useDesignToken,
+    useInheritedThemeScope,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
 import { SimpleIdGenerator } from "../util";
 import { PopoverV2 } from "./popover";
 import * as styles from "./popover-trigger.styles";
@@ -53,7 +57,7 @@ export const PopoverTrigger = ({
     const nodeRef = useRef<HTMLElement | null>(null);
     const popoverRef = useRef<HTMLElement | null>(null);
     const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint || "480px" });
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const [availableHeight, setAvailableHeight] = useState(0);
     const internalId = useRef(SimpleIdGenerator.generate());
     const popoverContainerId = `${internalId.current}-popover`;
