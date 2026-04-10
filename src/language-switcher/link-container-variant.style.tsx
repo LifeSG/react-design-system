@@ -44,14 +44,14 @@ export const LinkDivider = styled.span`
 
 export const LinkItem = styled.button<LinkItemStyleProps>`
     display: flex;
-    padding: 0.125rem 0.25rem;
+    padding: 0.25rem 0.5rem;
     justify-content: center;
     align-items: center;
     gap: 0.625rem;
     border: none;
     border-radius: ${Radius["md"]};
     ${Font["body-md-semibold"]}
-    color: ${Colour["text-primary"]};
+    color: ${Colour["text-subtler"]};
     text-align: center;
     transition: color ${Motion["duration-150"]} ${Motion["ease-default"]};
 
@@ -59,6 +59,7 @@ export const LinkItem = styled.button<LinkItemStyleProps>`
         $active
             ? css`
                   background: ${Colour["bg-primary-subtler"]};
+                  color: ${Colour["text-selected"]};
                   cursor: default;
               `
             : css`
