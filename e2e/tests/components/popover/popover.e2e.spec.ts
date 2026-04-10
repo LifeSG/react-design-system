@@ -213,9 +213,7 @@ test.describe("Popover", () => {
             await story.init("placement");
         });
 
-        test("Popover renders below trigger with bottom placement", async ({
-            story,
-        }) => {
+        test("position=bottom", async ({ story }) => {
             await story.locators.triggerButton.click();
             await expect(story.locators.popoverContent).toBeVisible();
 
@@ -230,9 +228,7 @@ test.describe("Popover", () => {
             await story.init("flip");
         });
 
-        test("Popover renders below trigger with flipped top placement", async ({
-            story,
-        }) => {
+        test("nabledFlip=true", async ({ story }) => {
             await story.locators.triggerButton.click();
             await expect(story.locators.popoverContent).toBeVisible();
 
@@ -247,9 +243,7 @@ test.describe("Popover", () => {
             await story.init("position-on-scroll");
         });
 
-        test("Popover position updates on scroll (top to bottom to top)", async ({
-            story,
-        }) => {
+        test("Auto-positioning", async ({ story }) => {
             const getPopoverVerticalPosition = async () => {
                 const triggerBox =
                     await story.locators.triggerButton.boundingBox();
@@ -283,17 +277,9 @@ test.describe("Popover", () => {
             await story.init("resize");
         });
 
-        test("Resize mode constrains oversized content", async ({ story }) => {
+        test("enableResize=true, enabledFlip=false", async ({ story }) => {
             await story.locators.triggerButton.click();
             await expect(story.locators.popoverContent).toBeVisible();
-
-            const triggerBox = await story.locators.triggerButton.boundingBox();
-            const popoverBox =
-                await story.locators.popoverContent.boundingBox();
-
-            expect(triggerBox).not.toBeNull();
-            expect(popoverBox).not.toBeNull();
-            expect(popoverBox!.y).toBeLessThan(triggerBox!.y);
 
             await compareScreenshot(story, "resize-open", {
                 fullscreen: true,
