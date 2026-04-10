@@ -24,20 +24,29 @@ npm i @lifesg/react-design-system
 
 ## Getting Started
 
-The module requires some custom css for certain components to work properly. As the module does not ship with css, you will need to add this into the `head` of your html file.
+The module requires some custom css for fonts and certain components to work
+properly. You will need to load the corresponding stylesheets in your app.
+
+Add this into the `head` of your html file:
 
 ```tsx
 <link
     rel="stylesheet"
     type="text/css"
-    href="https://assets.life.gov.sg/react-design-system/css/main.css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/main.css"
+/>
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css"
 />
 ```
 
-Or if you are importing to an existing css file
+Or if you are importing to an existing css file:
 
 ```css
-@import url("https://assets.life.gov.sg/react-design-system/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
 ```
 
 <br />
