@@ -14,10 +14,3 @@ export interface LanguageSwitcherProps
     onSelectLanguage?: ((language: LanguageSwitcherCode) => void) | undefined;
     "data-testid"?: string | undefined;
 }
-
-export interface VariantInternalProps {
-    selectedLanguage: LanguageSwitcherCode;
-    onSelectLanguage: (code: LanguageSwitcherCode) => void;
-    testId: string;
-    otherProps: React.HTMLAttributes<HTMLDivElement>;
-}

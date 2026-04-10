@@ -12,7 +12,8 @@ import {
     UnselectedIndicator,
 } from "./dropdown-variant.style";
 import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
-import { LanguageSwitcherCode, VariantInternalProps } from "./types";
+import { VariantInternalProps } from "./internal-types";
+import { LanguageSwitcherCode } from "./types";
 
 export const DropdownVariant = ({
     selectedLanguage,
