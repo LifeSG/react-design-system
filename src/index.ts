@@ -40,6 +40,7 @@ export * from "./input-range-slider";
 export * from "./input-select";
 export * from "./input-slider";
 export * from "./input-textarea";
+export * from "./language-switcher";
 export * from "./layout";
 export * from "./link-list";
 export * from "./markup";
