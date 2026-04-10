@@ -1,6 +1,7 @@
 import { StarIcon } from "@lifesg/react-icons/star";
 import { render, screen } from "@testing-library/react";
-import { Alert, V2_Color } from "src";
+import { Alert } from "src";
+import { Colour } from "src/theme/tokens/colour";
 
 // =============================================================================
 // UNIT TESTS
@@ -23,12 +24,12 @@ describe("Alert", () => {
 
     describe("type", () => {
         it.each`
-            type             | backgroundColor                          | borderColor
-            ${"success"}     | ${V2_Color.Validation.Green.Background}  | ${V2_Color.Validation.Green.Border}
-            ${"warning"}     | ${V2_Color.Validation.Orange.Background} | ${V2_Color.Validation.Orange.Border}
-            ${"error"}       | ${V2_Color.Validation.Red.Background}    | ${V2_Color.Validation.Red.Border}
-            ${"info"}        | ${V2_Color.Validation.Blue.Background}   | ${V2_Color.Validation.Blue.Border}
-            ${"description"} | ${V2_Color.Neutral[7]}                   | ${V2_Color.Neutral[4]}
+            type             | backgroundColor         | borderColor
+            ${"success"}     | ${Colour["bg-success"]} | ${Colour["border-success"]}
+            ${"warning"}     | ${Colour["bg-warning"]} | ${Colour["border-warning"]}
+            ${"error"}       | ${Colour["bg-error"]}   | ${Colour["border-error"]}
+            ${"info"}        | ${Colour["bg-info"]}    | ${Colour["border-info"]}
+            ${"description"} | ${Colour["bg-strong"]}  | ${Colour["border"]}
         `(
             "should render background $backgroundColor with border $borderColor for $type type",
             ({ type, backgroundColor, borderColor }) => {
