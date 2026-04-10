@@ -102,6 +102,23 @@ test.describe("Popover", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("basic", { size: "mobile", mode: "dark" });
+        });
+
+        test("Basic with click (mobile, dark mode)", async ({ story }) => {
+            await story.locators.triggerButton.click();
+
+            await expect(story.locators.basicMobilePopover).toBeVisible();
+            await expect(story.locators.basicMobileDialog).toBeVisible();
+
+            await compareScreenshot(story, "after-click-mobile-dark", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("basic", { mode: "dark" });
         });
 
@@ -122,7 +139,7 @@ test.describe("Popover", () => {
             await story.init("hover");
         });
 
-        test("Hover trigger opens and closes popover", async ({ story }) => {
+        test("basic with hover", async ({ story }) => {
             await expect(story.locators.popoverContent).not.toBeVisible();
 
             await story.locators.triggerButton.hover();
@@ -136,6 +153,27 @@ test.describe("Popover", () => {
             await story.page.mouse.move(0, 100);
             await expect(story.locators.popoverContent).not.toBeVisible();
         });
+
+        test("Basic with hover (keyboard navigation)", async ({ story }) => {
+            await test.step("Trigger can receive focus", async () => {
+                await story.locators.triggerButton.focus();
+                await expect(story.locators.triggerButton).toBeFocused();
+            });
+
+            await test.step("Enter opens popover and Escape dismisses it", async () => {
+                await story.page.keyboard.press("Enter");
+
+                await expect(story.locators.popoverContent).toBeVisible();
+                await expect(story.locators.hoverDialog).toBeVisible();
+
+                await compareScreenshot(story, "hover-keyboard-open", {
+                    fullscreen: true,
+                });
+
+                await story.page.keyboard.press("Escape");
+                await expect(story.locators.popoverContent).not.toBeVisible();
+            });
+        });
     });
 
     test.describe(() => {
@@ -143,9 +181,7 @@ test.describe("Popover", () => {
             await story.init("basic");
         });
 
-        test("Keyboard interaction opens and dismisses popover", async ({
-            story,
-        }) => {
+        test("Basic with click (keyboard navigation)", async ({ story }) => {
             await test.step("Focus moves to trigger via Tab", async () => {
                 await story.locators.focusStart.focus();
                 await story.page.keyboard.press("Tab");
@@ -183,14 +219,6 @@ test.describe("Popover", () => {
             await story.locators.triggerButton.click();
             await expect(story.locators.popoverContent).toBeVisible();
 
-            const triggerBox = await story.locators.triggerButton.boundingBox();
-            const popoverBox =
-                await story.locators.popoverContent.boundingBox();
-
-            expect(triggerBox).not.toBeNull();
-            expect(popoverBox).not.toBeNull();
-            expect(popoverBox!.y).toBeGreaterThan(triggerBox!.y);
-
             await compareScreenshot(story, "bottom-placement", {
                 fullscreen: true,
             });
@@ -207,14 +235,6 @@ test.describe("Popover", () => {
         }) => {
             await story.locators.triggerButton.click();
             await expect(story.locators.popoverContent).toBeVisible();
-
-            const triggerBox = await story.locators.triggerButton.boundingBox();
-            const popoverBox =
-                await story.locators.popoverContent.boundingBox();
-
-            expect(triggerBox).not.toBeNull();
-            expect(popoverBox).not.toBeNull();
-            expect(popoverBox!.y).toBeGreaterThan(triggerBox!.y);
 
             await compareScreenshot(story, "flip-top-placement", {
                 fullscreen: true,

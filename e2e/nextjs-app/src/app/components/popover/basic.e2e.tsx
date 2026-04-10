@@ -1,6 +1,7 @@
 "use client";
 
 import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
+import { Typography } from "@lifesg/react-design-system";
 
 export default function Story() {
     return (
@@ -13,7 +14,9 @@ export default function Story() {
                 popoverAriaLabel="More details"
                 popoverContent={
                     <div data-testid="popover-content">
-                        Basic popover content.
+                        <Typography.BodyMD>
+                            Basic popover content.
+                        </Typography.BodyMD>
                     </div>
                 }
             >
