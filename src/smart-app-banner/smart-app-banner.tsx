@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useMemo } from "react";
 import {
     BannerIcon,
     ButtonContainer,
@@ -22,6 +22,7 @@ const APP_ICON =
     "https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png";
 
 const ID = "smart-app-banner";
+const MAX_STARS = 5;
 
 function SmartAppBannerComponent(
     props: SmartAppBannerProps,
@@ -42,9 +43,31 @@ function SmartAppBannerComponent(
         onClick,
     } = props;
 
-    const { title, message, buttonLabel, buttonAriaLabel, numberOfStars } =
-        content;
+    const {
+        title,
+        message,
+        buttonLabel,
+        iconAriaLabel,
+        buttonAriaLabel,
+        numberOfStars,
+    } = content;
 
+    const ariaLabels = useMemo(
+        () => ({
+            dismiss: "Close banner",
+            icon: iconAriaLabel,
+            contentContainer: `${title}. ${message}. A rating of ${numberOfStars} out of ${MAX_STARS} stars.`,
+            cta: buttonAriaLabel ?? buttonLabel,
+        }),
+        [
+            title,
+            message,
+            iconAriaLabel,
+            buttonLabel,
+            buttonAriaLabel,
+            numberOfStars,
+        ]
+    );
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -74,7 +97,7 @@ function SmartAppBannerComponent(
         if (hasHalfStar) {
             stars.push(<StarHalf key={`halfstar`} />);
         }
-        if (stars.length < 5) {
+        if (stars.length < MAX_STARS) {
             const remaining = 5 - stars.length;
             for (let i = 0; i < remaining; i++) {
                 stars.push(<StarEmpty key={`emptystar${i}`} />);
@@ -82,7 +105,7 @@ function SmartAppBannerComponent(
         }
 
         /* maximum of 5 stars */
-        return <RatingContainer>{stars.slice(0, 5)}</RatingContainer>;
+        return <RatingContainer>{stars.slice(0, MAX_STARS)}</RatingContainer>;
     };
 
     return (
@@ -99,7 +122,7 @@ function SmartAppBannerComponent(
                         id={`${ID}-dismiss`}
                         data-testid={`${ID}-dismiss-container`}
                     >
-                        <DismissButton aria-label="Dismiss">
+                        <DismissButton aria-label={ariaLabels.dismiss}>
                             <Cross />
                         </DismissButton>
                     </DismissContainer>
@@ -108,8 +131,12 @@ function SmartAppBannerComponent(
                         id={`${ID}-proceed`}
                         data-testid={`${ID}-proceed-container`}
                     >
-                        <BannerIcon src={icon} alt="lifesg-app-icon" />
-                        <TextContainer>
+                        <BannerIcon
+                            src={icon}
+                            alt="lifesg-app-icon"
+                            aria-label={ariaLabels.icon}
+                        />
+                        <TextContainer aria-label={ariaLabels.contentContainer}>
                             <Title>{title}</Title>
                             <Description>{message}</Description>
                             {generateStarRating()}
@@ -118,7 +145,7 @@ function SmartAppBannerComponent(
                             <StyledButton
                                 type="button"
                                 onClick={handleClick}
-                                aria-label={buttonAriaLabel}
+                                aria-label={ariaLabels.cta}
                             >
                                 {buttonLabel}
                             </StyledButton>
