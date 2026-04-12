@@ -1,5 +1,12 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
-import { useCallback, useEffect, useRef, useState } from "react";
+import {
+    ReactNode,
+    isValidElement,
+    useCallback,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { useInView } from "react-intersection-observer";
 import { useResizeDetector } from "react-resize-detector";
 import { LoadingDotsSpinner } from "../animations";
@@ -153,6 +160,61 @@ export const DataTable = ({
     const getHeaderCheckboxAriaLabel = (): string => {
         const totalColumns = getTotalColumns();
         return `Select all rows, Column 1 of ${totalColumns}`;
+    };
+
+    const extractTextFromNode = (node: ReactNode): string => {
+        if (node === null || node === undefined || typeof node === "boolean") {
+            return "";
+        }
+
+        if (typeof node === "string" || typeof node === "number") {
+            return node.toString();
+        }
+
+        if (Array.isArray(node)) {
+            return node.map(extractTextFromNode).join(" ").trim();
+        }
+
+        if (isValidElement(node)) {
+            return extractTextFromNode(node.props.children);
+        }
+
+        return "";
+    };
+
+    const getKeyFieldText = (header: HeaderProps, row: RowProps): string => {
+        if (typeof header === "string") {
+            return "";
+        }
+
+        if (!header.keyFieldLabel) {
+            return "";
+        }
+
+        const cellData = row[header.fieldKey];
+
+        if (typeof cellData === "function") {
+            return extractTextFromNode(
+                cellData(row, {
+                    isSelected: isRowSelected(row.id.toString()),
+                })
+            );
+        }
+
+        return extractTextFromNode(cellData);
+    };
+
+    const getRowCheckboxAriaLabel = (row: RowProps, index: number): string => {
+        const keyFieldText = headers
+            .map((header) => getKeyFieldText(header, row))
+            .filter((value) => value.length > 0)
+            .join(". ");
+
+        const rowPositionText = `Row ${index + 1} of ${rows?.length ?? 0}`;
+
+        return keyFieldText
+            ? `${rowPositionText}. ${keyFieldText}`
+            : rowPositionText;
     };
 
     const calculateFixedInViewport = () => {
@@ -321,8 +383,7 @@ export const DataTable = ({
                         $isSelectable={enableMultiSelect}
                         $isSelected={isRowSelected(row.id.toString())}
                     >
-                        {enableMultiSelect &&
-                            renderRowCheckBox(row.id.toString())}
+                        {enableMultiSelect && renderRowCheckBox(row, index)}
 
                         {headers.map((header) => renderRowCell(header, row))}
                     </BodyRow>
@@ -357,7 +418,9 @@ export const DataTable = ({
         );
     };
 
-    const renderRowCheckBox = (rowId: string) => {
+    const renderRowCheckBox = (row: RowProps, index: number) => {
+        const rowId = row.id.toString();
+
         return (
             <BodyCell
                 data-testid={getDataTestId(`row-${rowId}-selection`)}
@@ -366,6 +429,7 @@ export const DataTable = ({
                 <CheckBoxWrapper>
                     <Checkbox
                         checked={isRowSelected(rowId)}
+                        aria-label={getRowCheckboxAriaLabel(row, index)}
                         onClick={() => {
                             if (onSelect) {
                                 onSelect(rowId, !isRowSelected(rowId));
