@@ -150,6 +150,11 @@ export const DataTable = ({
         return headers.length + (enableMultiSelect ? 1 : 0);
     };
 
+    const getHeaderCheckboxAriaLabel = (): string => {
+        const totalColumns = getTotalColumns();
+        return `Select all rows, Column 1 of ${totalColumns}`;
+    };
+
     const calculateFixedInViewport = () => {
         if (!wrapperRef.current) {
             return;
@@ -277,12 +282,14 @@ export const DataTable = ({
                 data-testid={getDataTestId("header-selection")}
                 $clickable={false}
                 $isCheckbox={true}
+                scope="col"
             >
                 <CheckBoxWrapper>
                     {enableSelectAll && (
                         <Checkbox
                             checked={isAllCheckboxSelected()}
                             indeterminate={isIndeterminateCheckbox()}
+                            aria-label={getHeaderCheckboxAriaLabel()}
                             onClick={() => {
                                 if (onSelectAll) {
                                     onSelectAll(isAllCheckboxSelected());
