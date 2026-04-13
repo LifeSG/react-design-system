@@ -10,13 +10,13 @@ import {
     useResolvedTokenValue,
 } from "../theme";
 import { mergeRefs } from "../util";
-import * as styles from "./dashed-border.styles";
 import {
-    createSvgBackgroundImage,
     isColourToken,
     isRadiusToken,
     isThicknessToken,
-} from "./dashed-border.utils";
+} from "../util/styling-helper";
+import * as styles from "./dashed-border.styles";
+import { createSvgBackgroundImage } from "./dashed-border.utils";
 import type { DashedBorderProps } from "./types";
 
 const Component = (

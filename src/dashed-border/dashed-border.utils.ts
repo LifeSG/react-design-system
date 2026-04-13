@@ -1,18 +1,3 @@
-import type {
-    ColourCSSVariableString,
-    RadiusCSSVariableString,
-} from "../theme";
-import {
-    BorderThickness,
-    isTokenFromSet,
-    isTokenWithPrefix,
-    Radius,
-} from "../theme";
-import type { ValueOf } from "../util/utility-types";
-
-const radiusTokenSet = new Set<string>(Object.values(Radius));
-const thicknessTokenSet = new Set<string>(Object.values(BorderThickness));
-
 export interface CreateSvgBackgroundImageOptions {
     /** Resolved stroke color for the dashed border. */
     colour: string;
@@ -23,30 +8,6 @@ export interface CreateSvgBackgroundImageOptions {
     /** Resolved stroke width for the dashed border. */
     thickness: string;
 }
-
-export const isRadiusToken = (
-    value: unknown
-): value is RadiusCSSVariableString => {
-    return isTokenFromSet<RadiusCSSVariableString>(value, radiusTokenSet);
-};
-
-export const isThicknessToken = (
-    value: unknown
-): value is ValueOf<typeof BorderThickness> => {
-    return isTokenFromSet<ValueOf<typeof BorderThickness>>(
-        value,
-        thicknessTokenSet
-    );
-};
-
-export const isColourToken = (
-    value: unknown
-): value is ColourCSSVariableString => {
-    return isTokenWithPrefix<ColourCSSVariableString>(
-        value,
-        "var(--fds-colour-"
-    );
-};
 
 /**
  * Builds a data-URI SVG used as the dashed border background image.
