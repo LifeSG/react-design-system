@@ -98,11 +98,10 @@ describe("parseCSSVariableValue", () => {
     });
 
     it("returns empty string when window is undefined", () => {
-        const originalWindow = globalThis.window;
+        const windowSpy = jest
+            .spyOn(globalThis, "window", "get")
+            .mockReturnValue(undefined as any);
         const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        delete globalThis.window;
 
         const value = parseCSSVariableValue(
             "var(--fds-breakpoint-md-min)",
@@ -113,7 +112,22 @@ describe("parseCSSVariableValue", () => {
             'Cannot parse CSS variable value for "var(--fds-breakpoint-md-min)" because window or sourceElement is not available.'
         );
 
-        globalThis.window = originalWindow;
+        windowSpy.mockRestore();
+        consoleWarnSpy.mockRestore();
+    });
+
+    it("returns empty string when sourceElement is null", () => {
+        const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
+
+        const value = parseCSSVariableValue(
+            "var(--fds-breakpoint-md-min)",
+            null
+        );
+        expect(value).toBe("");
+        expect(consoleWarnSpy).toHaveBeenCalledWith(
+            'Cannot parse CSS variable value for "var(--fds-breakpoint-md-min)" because window or sourceElement is not available.'
+        );
+
         consoleWarnSpy.mockRestore();
     });
 });
