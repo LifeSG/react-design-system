@@ -57,11 +57,19 @@ describe("Divider", () => {
         });
 
         it("should always apply the lineBase class", () => {
-            const { container: solidContainer } = render(<Divider lineStyle="solid" />);
-            const { container: dashedContainer } = render(<Divider lineStyle="dashed" />);
+            const { container: solidContainer } = render(
+                <Divider lineStyle="solid" />
+            );
+            const { container: dashedContainer } = render(
+                <Divider lineStyle="dashed" />
+            );
 
-            expect(solidContainer.querySelector("hr")?.className).toContain(styles.lineBase);
-            expect(dashedContainer.querySelector("hr")?.className).toContain(styles.lineBase);
+            expect(solidContainer.querySelector("hr")?.className).toContain(
+                styles.lineBase
+            );
+            expect(dashedContainer.querySelector("hr")?.className).toContain(
+                styles.lineBase
+            );
         });
     });
 
@@ -72,13 +80,17 @@ describe("Divider", () => {
         it("should set the thickness token to 1px by default", () => {
             const { container } = render(<Divider />);
             const hr = container.querySelector("hr") as HTMLElement;
-            expect(hr.style.getPropertyValue(styles.tokens.thickness)).toBe("1px");
+            expect(hr.style.getPropertyValue(styles.tokens.thickness)).toBe(
+                "1px"
+            );
         });
 
         it("should set the thickness token to the provided value in px", () => {
             const { container } = render(<Divider thickness={4} />);
             const hr = container.querySelector("hr") as HTMLElement;
-            expect(hr.style.getPropertyValue(styles.tokens.thickness)).toBe("4px");
+            expect(hr.style.getPropertyValue(styles.tokens.thickness)).toBe(
+                "4px"
+            );
         });
     });
 

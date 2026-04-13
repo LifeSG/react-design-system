@@ -28,6 +28,7 @@ export default function Story() {
             <h5>Grid layout</h5>
             <br />
             <Divider
+                data-testid="divider-solid-grid"
                 layoutType="grid"
                 mdCols={[1, 6]}
                 xlCols={[1, 8]}
@@ -35,6 +36,7 @@ export default function Story() {
             />
             <br />
             <Divider
+                data-testid="divider-dashed-grid"
                 layoutType="grid"
                 lineStyle="dashed"
                 mdCols={[1, 6]}

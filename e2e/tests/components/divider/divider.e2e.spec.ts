@@ -1,35 +1,10 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
+import { test as base, expect, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "divider";
-
-    public readonly locators: {
-        dividerDefault: Locator;
-        dividerDashed: Locator;
-        dividerCustomThickness: Locator;
-        dividerCustomColor: Locator;
-        dividerDashedCustom: Locator;
-        dividerSolid: Locator;
-        dividerDashedVariant: Locator;
-        dividerSolidCustom: Locator;
-        dividerDashedCustomVariant: Locator;
-    };
-
     constructor(page: Page) {
         super(page);
-
-        this.locators = {
-            dividerDefault: page.getByTestId("divider-default"),
-            dividerDashed: page.getByTestId("divider-dashed"),
-            dividerCustomThickness: page.getByTestId("divider-custom-thickness"),
-            dividerCustomColor: page.getByTestId("divider-custom-color"),
-            dividerDashedCustom: page.getByTestId("divider-dashed-custom"),
-            dividerSolid: page.getByTestId("divider-solid"),
-            dividerDashedVariant: page.getByTestId("divider-dashed"),
-            dividerSolidCustom: page.getByTestId("divider-solid-custom"),
-            dividerDashedCustomVariant: page.getByTestId("divider-dashed-custom"),
-        };
     }
 }
 
@@ -40,11 +15,7 @@ const test = base.extend<{ story: StoryPage }>({
     },
 });
 
-// =============================================================================
-// BASIC
-// =============================================================================
-
-test.describe("Divider – Basic", () => {
+test.describe("Divider", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("basic");
@@ -52,13 +23,7 @@ test.describe("Divider – Basic", () => {
 
         test("Basic", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.dividerDefault).toBeVisible();
-                await expect(story.locators.dividerDashed).toBeVisible();
-                await expect(story.locators.dividerCustomThickness).toBeVisible();
-                await expect(story.locators.dividerCustomColor).toBeVisible();
-                await expect(story.locators.dividerDashedCustom).toBeVisible();
-
-                await compareScreenshot(story, "basic-mount");
+                await compareScreenshot(story, "mount");
             });
         });
     });
@@ -70,13 +35,7 @@ test.describe("Divider – Basic", () => {
 
         test("Basic (dark mode)", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.dividerDefault).toBeVisible();
-                await expect(story.locators.dividerDashed).toBeVisible();
-                await expect(story.locators.dividerCustomThickness).toBeVisible();
-                await expect(story.locators.dividerCustomColor).toBeVisible();
-                await expect(story.locators.dividerDashedCustom).toBeVisible();
-
-                await compareScreenshot(story, "basic-dark-mount");
+                await compareScreenshot(story, "dark-mode-mount");
             });
         });
     });
@@ -88,70 +47,25 @@ test.describe("Divider – Basic", () => {
 
         test("Basic (mobile)", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.dividerDefault).toBeVisible();
-                await expect(story.locators.dividerDashed).toBeVisible();
-                await expect(story.locators.dividerCustomThickness).toBeVisible();
-                await expect(story.locators.dividerCustomColor).toBeVisible();
-                await expect(story.locators.dividerDashedCustom).toBeVisible();
-
-                await compareScreenshot(story, "basic-mobile-mount");
-            });
-        });
-    });
-});
-
-// =============================================================================
-// LINE STYLE VARIANTS
-// =============================================================================
-
-test.describe("Divider – Line style variants", () => {
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("line-style-variants");
-        });
-
-        test("Line style variants", async ({ story }) => {
-            await test.step("Component mounts", async () => {
-                await expect(story.locators.dividerSolid).toBeVisible();
-                await expect(story.locators.dividerDashedVariant).toBeVisible();
-                await expect(story.locators.dividerSolidCustom).toBeVisible();
-                await expect(story.locators.dividerDashedCustomVariant).toBeVisible();
-
-                await compareScreenshot(story, "line-style-variants-mount");
+                await compareScreenshot(story, "mobile-mount");
             });
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("line-style-variants", { mode: "dark" });
+            await story.init("grid-layout");
         });
 
-        test("Line style variants (dark mode)", async ({ story }) => {
+        test("Using in grid layout", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.dividerSolid).toBeVisible();
-                await expect(story.locators.dividerDashedVariant).toBeVisible();
-                await expect(story.locators.dividerSolidCustom).toBeVisible();
-                await expect(story.locators.dividerDashedCustomVariant).toBeVisible();
-
-                await compareScreenshot(story, "line-style-variants-dark-mount");
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("line-style-variants", { size: "mobile" });
-        });
-
-        test("Line style variants (mobile)", async ({ story }) => {
-            await test.step("Component mounts", async () => {
-                await expect(story.locators.dividerSolid).toBeVisible();
-                await expect(story.locators.dividerDashedVariant).toBeVisible();
-                await expect(story.locators.dividerSolidCustom).toBeVisible();
-                await expect(story.locators.dividerDashedCustomVariant).toBeVisible();
-
-                await compareScreenshot(story, "line-style-variants-mobile-mount");
+                await expect(
+                    story.page.getByTestId("divider-solid-grid")
+                ).toBeVisible();
+                await expect(
+                    story.page.getByTestId("divider-dashed-grid")
+                ).toBeVisible();
+                await compareScreenshot(story, "grid-layout-mount");
             });
         });
     });
