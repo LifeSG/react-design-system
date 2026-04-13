@@ -79,8 +79,8 @@ export const Customisations: StoryObj<Component> = {
                     lineStyle="dashed"
                     color={Colour.Primitive["secondary-50"]}
                 />
-                <Divider thickness={6} />
-                <Divider lineStyle="dashed" thickness={6} />
+                <Divider thickness={5} />
+                <Divider lineStyle="dashed" thickness={5} />
             </>
         );
     },
