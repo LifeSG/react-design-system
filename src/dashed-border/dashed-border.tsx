@@ -11,12 +11,12 @@ import {
 } from "../theme";
 import { mergeRefs } from "../util";
 import * as styles from "./dashed-border.styles";
+import { createSvgBackgroundImage } from "./dashed-border.utils";
 import {
-    createSvgBackgroundImage,
     isColourToken,
     isRadiusToken,
     isThicknessToken,
-} from "./dashed-border.utils";
+} from "../util/styling-helper";
 import type { DashedBorderProps } from "./types";
 
 const Component = (

@@ -24,30 +24,6 @@ export interface CreateSvgBackgroundImageOptions {
     thickness: string;
 }
 
-export const isRadiusToken = (
-    value: unknown
-): value is RadiusCSSVariableString => {
-    return isTokenFromSet<RadiusCSSVariableString>(value, radiusTokenSet);
-};
-
-export const isThicknessToken = (
-    value: unknown
-): value is ValueOf<typeof BorderThickness> => {
-    return isTokenFromSet<ValueOf<typeof BorderThickness>>(
-        value,
-        thicknessTokenSet
-    );
-};
-
-export const isColourToken = (
-    value: unknown
-): value is ColourCSSVariableString => {
-    return isTokenWithPrefix<ColourCSSVariableString>(
-        value,
-        "var(--fds-colour-"
-    );
-};
-
 /**
  * Builds a data-URI SVG used as the dashed border background image.
  * @param options SVG background image options.
