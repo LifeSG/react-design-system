@@ -1,18 +1,3 @@
-import type {
-    ColourCSSVariableString,
-    RadiusCSSVariableString,
-} from "../theme";
-import {
-    BorderThickness,
-    isTokenFromSet,
-    isTokenWithPrefix,
-    Radius,
-} from "../theme";
-import type { ValueOf } from "../util/utility-types";
-
-const radiusTokenSet = new Set<string>(Object.values(Radius));
-const thicknessTokenSet = new Set<string>(Object.values(BorderThickness));
-
 export interface CreateSvgBackgroundImageOptions {
     /** Resolved stroke color for the dashed border. */
     colour: string;
