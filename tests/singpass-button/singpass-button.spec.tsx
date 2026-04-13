@@ -5,29 +5,29 @@ import { SingpassButton } from "src/singpass-button";
 describe("SingpassButton", () => {
     describe("default", () => {
         it("should render button with default testid", () => {
-            render(<SingpassButton.Default />);
+            render(<SingpassButton />);
             expect(screen.getByTestId("button")).toBeInTheDocument();
         });
 
         it("should render with custom data-testid", () => {
-            render(<SingpassButton.Default data-testid="sp-btn" />);
+            render(<SingpassButton data-testid="sp-btn" />);
             expect(screen.getByTestId("sp-btn")).toBeInTheDocument();
         });
 
         it("should have accessible aria-label", () => {
-            render(<SingpassButton.Default />);
+            render(<SingpassButton />);
             expect(
                 screen.getByRole("button", { name: "Log in with Singpass" })
             ).toBeInTheDocument();
         });
 
         it("should render singpass logo image", () => {
-            render(<SingpassButton.Default />);
+            render(<SingpassButton />);
             expect(screen.getByRole("img")).toBeInTheDocument();
         });
 
         it("should render white-filled logo by default", () => {
-            render(<SingpassButton.Default />);
+            render(<SingpassButton />);
             expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 expect.stringContaining("white_filled")
@@ -35,7 +35,7 @@ describe("SingpassButton", () => {
         });
 
         it("should render red-filled logo when styleType is red-filled", () => {
-            render(<SingpassButton.Default styleType="red-filled" />);
+            render(<SingpassButton styleType="red-filled" />);
             expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 expect.stringContaining("red_filled")
@@ -44,36 +44,36 @@ describe("SingpassButton", () => {
 
         it("should forward ref to button element", () => {
             const ref = React.createRef<HTMLButtonElement>();
-            render(<SingpassButton.Default ref={ref} />);
+            render(<SingpassButton ref={ref} />);
             expect(ref.current).toBeInstanceOf(HTMLButtonElement);
         });
 
         it("should pass HTMLButtonElement props", () => {
-            render(<SingpassButton.Default disabled />);
+            render(<SingpassButton disabled />);
             expect(screen.getByRole("button")).toBeDisabled();
         });
 
         it("should apply custom className", () => {
-            render(<SingpassButton.Default className="custom-class" />);
+            render(<SingpassButton className="custom-class" />);
             expect(screen.getByTestId("button")).toHaveClass("custom-class");
         });
     });
 
     describe("small", () => {
         it("should render button with default testid", () => {
-            render(<SingpassButton.Small />);
+            render(<SingpassButton sizeType="small" />);
             expect(screen.getByTestId("button")).toBeInTheDocument();
         });
 
         it("should have accessible aria-label", () => {
-            render(<SingpassButton.Small />);
+            render(<SingpassButton sizeType="small" />);
             expect(
                 screen.getByRole("button", { name: "Log in with Singpass" })
             ).toBeInTheDocument();
         });
 
         it("should render red-filled logo when styleType is red-filled", () => {
-            render(<SingpassButton.Small styleType="red-filled" />);
+            render(<SingpassButton sizeType="small" styleType="red-filled" />);
             expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 expect.stringContaining("red_filled")
@@ -82,26 +82,26 @@ describe("SingpassButton", () => {
 
         it("should forward ref to button element", () => {
             const ref = React.createRef<HTMLButtonElement>();
-            render(<SingpassButton.Small ref={ref} />);
+            render(<SingpassButton sizeType="small" ref={ref} />);
             expect(ref.current).toBeInstanceOf(HTMLButtonElement);
         });
     });
 
     describe("large", () => {
         it("should render button with default testid", () => {
-            render(<SingpassButton.Large />);
+            render(<SingpassButton sizeType="large" />);
             expect(screen.getByTestId("button")).toBeInTheDocument();
         });
 
         it("should have accessible aria-label", () => {
-            render(<SingpassButton.Large />);
+            render(<SingpassButton sizeType="large" />);
             expect(
                 screen.getByRole("button", { name: "Log in with Singpass" })
             ).toBeInTheDocument();
         });
 
         it("should render red-filled logo when styleType is red-filled", () => {
-            render(<SingpassButton.Large styleType="red-filled" />);
+            render(<SingpassButton sizeType="large" styleType="red-filled" />);
             expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 expect.stringContaining("red_filled")
@@ -110,7 +110,7 @@ describe("SingpassButton", () => {
 
         it("should forward ref to button element", () => {
             const ref = React.createRef<HTMLButtonElement>();
-            render(<SingpassButton.Large ref={ref} />);
+            render(<SingpassButton sizeType="large" ref={ref} />);
             expect(ref.current).toBeInstanceOf(HTMLButtonElement);
         });
     });

@@ -1,21 +1,17 @@
 import clsx from "clsx";
-import React from "react";
+import { forwardRef } from "react";
 
 import { getSpLogo } from "./singpass-assets";
 import * as styles from "./singpass-button.styles";
 import type { SingpassButtonProps, SingpassButtonRef } from "./types";
 
-/**
- * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour
- * we are unable to create a single component and have them share.
- *
- * Will refactor if there is a better way
- */
-const DefaultComponent = (
-    props: SingpassButtonProps,
-    ref: SingpassButtonRef
-) => {
-    const { styleType = "white-filled", className, ...otherProps } = props;
+const Component = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
+    const {
+        styleType = "white-filled",
+        sizeType = "default",
+        className,
+        ...otherProps
+    } = props;
 
     return (
         <button
@@ -25,58 +21,8 @@ const DefaultComponent = (
             aria-label="Log in with Singpass"
             className={clsx(
                 styles.main,
-                styleType === "red-filled"
-                    ? styles.mainStyleRedFilled
-                    : styles.mainStyleWhiteFilled,
-                className
-            )}
-        >
-            <span className={styles.svgContainer}>
-                <img src={getSpLogo(styleType)} alt="" />
-            </span>
-        </button>
-    );
-};
-DefaultComponent.displayName = "SingpassButton.Default";
-
-const SmallComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
-    const { styleType = "white-filled", className, ...otherProps } = props;
-
-    return (
-        <button
-            ref={ref}
-            data-testid={otherProps["data-testid"] || "button"}
-            {...otherProps}
-            aria-label="Log in with Singpass"
-            className={clsx(
-                styles.main,
-                styles.mainSizeSmall,
-                styleType === "red-filled"
-                    ? styles.mainStyleRedFilled
-                    : styles.mainStyleWhiteFilled,
-                className
-            )}
-        >
-            <span className={styles.svgContainer}>
-                <img src={getSpLogo(styleType)} alt="" />
-            </span>
-        </button>
-    );
-};
-SmallComponent.displayName = "SingpassButton.Small";
-
-const LargeComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
-    const { styleType = "white-filled", className, ...otherProps } = props;
-
-    return (
-        <button
-            ref={ref}
-            data-testid={otherProps["data-testid"] || "button"}
-            {...otherProps}
-            aria-label="Log in with Singpass"
-            className={clsx(
-                styles.main,
-                styles.mainSizeLarge,
+                sizeType === "small" && styles.mainSizeSmall,
+                sizeType === "large" && styles.mainSizeLarge,
                 styleType === "red-filled"
                     ? styles.mainStyleRedFilled
                     : styles.mainStyleWhiteFilled,
@@ -86,7 +32,7 @@ const LargeComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
             <span
                 className={clsx(
                     styles.svgContainer,
-                    styles.svgContainerSizeLarge
+                    sizeType === "large" && styles.svgContainerSizeLarge
                 )}
             >
                 <img src={getSpLogo(styleType)} alt="" />
@@ -94,10 +40,5 @@ const LargeComponent = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
         </button>
     );
 };
-LargeComponent.displayName = "SingpassButton.Large";
 
-export const SingpassButton = {
-    Default: React.forwardRef(DefaultComponent),
-    Small: React.forwardRef(SmallComponent),
-    Large: React.forwardRef(LargeComponent),
-};
+export const SingpassButton = forwardRef(Component);

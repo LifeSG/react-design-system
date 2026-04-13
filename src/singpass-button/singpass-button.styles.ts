@@ -8,10 +8,9 @@ export type MainButtonSize = "default" | "small" | "large";
 // MAIN BUTTON
 // =============================================================================
 export const main = css`
-    padding: var(${Spacing["spacing-8"]}) var(${Spacing["spacing-16"]});
-    transition: all var(${Motion["duration-250"]})
-        var(${Motion["ease-default"]});
-    border-radius: var(${ComponentToken.Button["radius"]});
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
+    border-radius: ${ComponentToken.Button["radius"]};
     cursor: pointer;
     display: flex;
     align-items: center;

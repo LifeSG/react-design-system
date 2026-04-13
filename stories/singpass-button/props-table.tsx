@@ -29,6 +29,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: [`"red-filled"`, `"white-filled"`],
                 defaultValue: `"white-filled"`,
             },
+            {
+                name: "sizeType",
+                description: (
+                    <>
+                        The size of the <code>SingpassButton</code>
+                    </>
+                ),
+                propTypes: [`"default"`, `"small"`, `"large"`],
+                defaultValue: `"default"`,
+            },
         ],
     },
 ];
