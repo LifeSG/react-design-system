@@ -3,8 +3,8 @@ import styled, { css } from "styled-components";
 import { Alert } from "../alert";
 import { ToggleIcon } from "../shared/toggle-icon/toggle-icon";
 import { TextList } from "../text-list";
+import { Colour, Font, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography";
-import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
 import type { ToggleStyleType } from "./types";
 
 // =============================================================================
@@ -47,16 +47,16 @@ export const Container = styled.div<ContainerStyleProps>`
     position: relative;
     display: inline-flex;
     min-width: 10.375rem;
-    border-radius: ${V3_Radius["sm"]};
+    border-radius: ${Radius["sm"]};
     border-width: 1px;
     border-style: solid;
     overflow: hidden;
     flex-direction: column;
     height: fit-content;
-    background: ${V3_Colour.bg};
+    background: ${Colour.bg};
 
     &:has(input:focus-visible) {
-        outline: 2px solid ${V3_Colour["focus-ring"]};
+        outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 0;
     }
 
@@ -84,15 +84,15 @@ export const Container = styled.div<ContainerStyleProps>`
                 if (props.$error) {
                     if (props.$disabled) {
                         return css`
-                            border-color: ${V3_Colour["border-error"]};
+                            border-color: ${Colour["border-error"]};
                         `;
                     } else {
                         return css`
-                            border-color: ${V3_Colour["border-error"]};
+                            border-color: ${Colour["border-error"]};
 
                             &:has(${HeaderContainer}:hover) {
                                 @media (pointer: fine) {
-                                    background: ${V3_Colour["bg-hover-subtle"]};
+                                    background: ${Colour["bg-hover-subtle"]};
                                 }
                             }
                         `;
@@ -103,7 +103,7 @@ export const Container = styled.div<ContainerStyleProps>`
                     if (props.$selected) {
                         return css`
                             border: none;
-                            background: ${V3_Colour["bg-selected-disabled"]};
+                            background: ${Colour["bg-selected-disabled"]};
                         `;
                     } else {
                         return css`
@@ -115,18 +115,18 @@ export const Container = styled.div<ContainerStyleProps>`
                 if (props.$selected) {
                     return css`
                         border: none;
-                        background: ${V3_Colour["bg-selected"]};
+                        background: ${Colour["bg-selected"]};
 
                         &:has(${HeaderContainer}:hover) {
                             @media (pointer: fine) {
-                                background: ${V3_Colour["bg-selected-hover"]};
+                                background: ${Colour["bg-selected-hover"]};
 
                                 & ${TextContainer} {
-                                    color: ${V3_Colour["text-selected-hover"]};
+                                    color: ${Colour["text-selected-hover"]};
                                 }
 
                                 & ${StyledToggleIcon} {
-                                    color: ${V3_Colour["icon-selected-hover"]};
+                                    color: ${Colour["icon-selected-hover"]};
                                 }
                             }
                         }
@@ -138,7 +138,7 @@ export const Container = styled.div<ContainerStyleProps>`
 
                     &:has(${HeaderContainer}:hover) {
                         @media (pointer: fine) {
-                            background: ${V3_Colour["bg-hover-subtle"]};
+                            background: ${Colour["bg-hover-subtle"]};
                         }
                     }
                 `;
@@ -148,15 +148,15 @@ export const Container = styled.div<ContainerStyleProps>`
                 if (props.$error) {
                     if (props.$disabled) {
                         return css`
-                            border-color: ${V3_Colour["border-error"]};
+                            border-color: ${Colour["border-error"]};
                         `;
                     } else {
                         return css`
-                            border-color: ${V3_Colour["border-error"]};
+                            border-color: ${Colour["border-error"]};
 
                             &:has(${HeaderContainer}:hover) {
                                 @media (pointer: fine) {
-                                    background: ${V3_Colour["bg-hover-subtle"]};
+                                    background: ${Colour["bg-hover-subtle"]};
                                 }
                             }
                         `;
@@ -166,34 +166,32 @@ export const Container = styled.div<ContainerStyleProps>`
                 if (props.$disabled) {
                     if (props.$selected) {
                         return css`
-                            border-color: ${V3_Colour[
-                                "border-selected-disabled"
-                            ]};
-                            background: ${V3_Colour["bg-selected-disabled"]};
+                            border-color: ${Colour["border-selected-disabled"]};
+                            background: ${Colour["bg-selected-disabled"]};
                         `;
                     } else {
                         return css`
-                            border-color: ${V3_Colour["border-disabled"]};
-                            background: ${V3_Colour["bg-disabled"]};
+                            border-color: ${Colour["border-disabled"]};
+                            background: ${Colour["bg-disabled"]};
                         `;
                     }
                 }
 
                 if (props.$selected) {
                     return css`
-                        border-color: ${V3_Colour["border-selected"]};
-                        background: ${V3_Colour["bg-selected"]};
+                        border-color: ${Colour["border-selected"]};
+                        background: ${Colour["bg-selected"]};
 
                         &:has(${HeaderContainer}:hover) {
                             @media (pointer: fine) {
-                                background: ${V3_Colour["bg-selected-hover"]};
+                                background: ${Colour["bg-selected-hover"]};
 
                                 & ${TextContainer} {
-                                    color: ${V3_Colour["text-selected-hover"]};
+                                    color: ${Colour["text-selected-hover"]};
                                 }
 
                                 & ${StyledToggleIcon} {
-                                    color: ${V3_Colour["icon-selected-hover"]};
+                                    color: ${Colour["icon-selected-hover"]};
                                 }
                             }
                         }
@@ -201,11 +199,11 @@ export const Container = styled.div<ContainerStyleProps>`
                 }
 
                 return css`
-                    border-color: ${V3_Colour.border};
+                    border-color: ${Colour.border};
 
                     &:has(${HeaderContainer}:hover) {
                         @media (pointer: fine) {
-                            background: ${V3_Colour["bg-hover-subtle"]};
+                            background: ${Colour["bg-hover-subtle"]};
                         }
                     }
                 `;
@@ -243,23 +241,23 @@ export const TextContainer = styled.div<StyleProps>`
         if (props.$disabled) {
             if (props.$selected) {
                 return css`
-                    color: ${V3_Colour["text-selected-disabled"]};
+                    color: ${Colour["text-selected-disabled"]};
                 `;
             } else {
                 return css`
-                    color: ${V3_Colour["text-disabled"]};
+                    color: ${Colour["text-disabled"]};
                 `;
             }
         }
 
         if (props.$selected) {
             return css`
-                color: ${V3_Colour["text-selected"]};
+                color: ${Colour["text-selected"]};
             `;
         }
 
         return css`
-            color: ${V3_Colour.text};
+            color: ${Colour.text};
         `;
     }}
 `;
@@ -267,24 +265,24 @@ export const TextContainer = styled.div<StyleProps>`
 export const Label = styled.label<LabelStyleProps & { $selected?: boolean }>`
     ${(props) =>
         props.$selected
-            ? V3_Font["body-baseline-semibold"]
-            : V3_Font["body-baseline-regular"]};
+            ? Font["body-baseline-semibold"]
+            : Font["body-baseline-regular"]};
     overflow: hidden;
     display: -webkit-box;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
     overflow-wrap: break-word;
     -webkit-line-clamp: ${(props) => props.$maxLines?.desktop ?? "none"};
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.tablet ?? "none"};
     }
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
     }
 `;
 
 export const SubLabel = styled.div`
-    ${V3_Font["body-md-regular"]}
+    ${Font["body-md-regular"]}
     margin-top: 0.5rem;
 
     z-index: 1; // forces sublabel to render above the input
@@ -292,7 +290,7 @@ export const SubLabel = styled.div`
 
     strong,
     b {
-        ${V3_Font["body-md-semibold"]}
+        ${Font["body-md-semibold"]}
     }
 `;
 
@@ -313,9 +311,9 @@ export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStylePr
 
 export const RemoveButton = styled.button<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? V3_Colour["text-disabled"] : V3_Colour["text-error"]};
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
     white-space: nowrap;
-    ${V3_Font["body-md-semibold"]}
+    ${Font["body-md-semibold"]}
     height: fit-content;
     padding: 0.6875rem 1rem 0.6875rem 0.5rem;
     border: none;
@@ -326,15 +324,13 @@ export const RemoveButton = styled.button<StyleProps>`
 
 export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     color: ${(props) =>
-        props.disabled
-            ? V3_Colour["text-disabled"]
-            : V3_Colour["text-primary"]};
-    ${V3_Font["body-baseline-semibold"]}
+        props.disabled ? Colour["text-disabled"] : Colour["text-primary"]};
+    ${Font["body-baseline-semibold"]}
     display: flex;
     align-items: center;
     justify-content: flex-end;
     border: none;
-    background-color: ${V3_Colour.bg};
+    background-color: ${Colour.bg};
     cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
     padding: 0 1rem 0.6875rem 1rem;
     padding-top: ${(props) =>
@@ -351,9 +347,9 @@ export const ExpandButton = styled.button<ExpandButtonStyleProps>`
 export const ErrorContainer = styled.div<StyleProps>`
     width: 100%;
     color: ${(props) =>
-        props.$disabled ? V3_Colour["text-disabled"] : V3_Colour["text-error"]};
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
     border: none;
-    background: ${V3_Colour.bg};
+    background: ${Colour.bg};
     cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
     padding: 0.6875rem 1rem 0.5rem 1rem;
 `;
@@ -367,20 +363,20 @@ export const Children = styled.div<ChildrenStyleProps>`
     padding: 0 1rem;
     padding-top: 0.6875rem;
     padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
-    background-color: ${V3_Colour.bg};
+    background-color: ${Colour.bg};
 
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${V3_Colour["text-disabled"]};
+                color: ${Colour["text-disabled"]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${V3_Colour["text-selected"]};
+                color: ${Colour["text-selected"]};
             `;
         } else {
             return css`
-                color: ${V3_Colour.text};
+                color: ${Colour.text};
             `;
         }
     }}
@@ -388,12 +384,12 @@ export const Children = styled.div<ChildrenStyleProps>`
 
 export const ErrorText = styled(Typography.BodyMD)<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? V3_Colour["text-disabled"] : V3_Colour["text-error"]};
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
 `;
 
 export const ErrorList = styled(TextList.Ul)<StyleProps>`
     color: ${(props) =>
-        props.$disabled ? V3_Colour["text-disabled"] : V3_Colour["text-error"]};
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
 `;
 
 export const StyledToggleIcon = styled(ToggleIcon)<StyleProps>`
@@ -401,22 +397,22 @@ export const StyledToggleIcon = styled(ToggleIcon)<StyleProps>`
         if (props.$disabled) {
             if (props.$selected) {
                 return css`
-                    color: ${V3_Colour["icon-selected-disabled"]};
+                    color: ${Colour["icon-selected-disabled"]};
                 `;
             } else {
                 return css`
-                    color: ${V3_Colour["icon-disabled-subtle"]};
+                    color: ${Colour["icon-disabled-subtle"]};
                 `;
             }
         }
 
         if (props.$selected) {
             return css`
-                color: ${V3_Colour["icon-selected"]};
+                color: ${Colour["icon-selected"]};
             `;
         }
         return css`
-            color: ${V3_Colour["icon-subtle"]};
+            color: ${Colour["icon-subtle"]};
         `;
     }};
 `;
