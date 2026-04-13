@@ -21,7 +21,7 @@ describe("TimeTable", () => {
 
     beforeEach(() => {
         jest.clearAllMocks();
-        jest.useFakeTimers().setSystemTime(new Date("2024-09-11"));
+        jest.useFakeTimers().setSystemTime(new Date("2024-09-11").getTime());
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
