@@ -1,4 +1,4 @@
-import { test as base, expect, Page } from "@playwright/test";
+import { test as base, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -42,31 +42,41 @@ test.describe("Divider", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("basic", { size: "mobile" });
+            await story.init("grid-layout");
         });
 
-        test("Basic (mobile)", async ({ story }) => {
-            await test.step("Component mounts", async () => {
-                await compareScreenshot(story, "mobile-mount");
-            });
+        test("Grid layout – desktop viewport", async ({ story }) => {
+            await compareScreenshot(story, "grid-layout-desktop");
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("grid-layout");
+            await story.init("grid-layout", { mode: "dark" });
         });
 
-        test("Using in grid layout", async ({ story }) => {
-            await test.step("Component mounts", async () => {
-                await expect(
-                    story.page.getByTestId("divider-solid-grid")
-                ).toBeVisible();
-                await expect(
-                    story.page.getByTestId("divider-dashed-grid")
-                ).toBeVisible();
-                await compareScreenshot(story, "grid-layout-mount");
-            });
+        test("Grid layout – desktop dark mode", async ({ story }) => {
+            await compareScreenshot(story, "grid-layout-desktop-dark");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout", { size: "mobile" });
+        });
+
+        test("Grid layout – mobile viewport", async ({ story }) => {
+            await compareScreenshot(story, "grid-layout-mobile");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout", { size: "mobile", mode: "dark" });
+        });
+
+        test("Grid layout – mobile dark mode", async ({ story }) => {
+            await compareScreenshot(story, "grid-layout-mobile-dark");
         });
     });
 });
