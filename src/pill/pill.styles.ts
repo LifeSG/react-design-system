@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { V3_Border, V3_Colour, V3_Font, V3_Radius } from "../v3_theme";
-import type { V3_ThemeStyleProps } from "../v3_theme/types";
+import { Border, Colour, Font, Radius } from "../theme";
 import type { PillColorType, PillType } from "./types";
 
 // =============================================================================
@@ -13,11 +12,11 @@ interface StyleProps {
 }
 
 export const Wrapper = styled.div<StyleProps>`
-    border-radius: ${V3_Radius["full"]};
+    border-radius: ${Radius["full"]};
     padding: 0.125rem 0.5rem;
     width: fit-content;
     max-width: 100%;
-    ${V3_Font["body-xs-semibold"]}
+    ${Font["body-xs-semibold"]}
     display: flex;
     align-items: center;
     gap: 0.25rem;
@@ -27,78 +26,78 @@ export const Wrapper = styled.div<StyleProps>`
     }
 
     ${(props) => {
-        let backgroundColor: (props: V3_ThemeStyleProps) => string;
-        let borderColor: ((props: V3_ThemeStyleProps) => string) | undefined;
-        let color: (props: V3_ThemeStyleProps) => string;
+        let backgroundColor: string;
+        let borderColor: string | undefined;
+        let color: string;
 
         if (props.$type === "solid") {
-            color = V3_Colour["text-inverse"];
+            color = Colour["text-inverse"];
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = V3_Colour["bg-inverse-subtler"];
+                    backgroundColor = Colour["bg-inverse-subtler"];
                     break;
                 case "green":
-                    backgroundColor = V3_Colour["bg-success-strong"];
+                    backgroundColor = Colour["bg-success-strong"];
                     break;
                 case "yellow":
-                    backgroundColor = V3_Colour["bg-warning-strong"];
+                    backgroundColor = Colour["bg-warning-strong"];
                     break;
                 case "red":
-                    backgroundColor = V3_Colour["bg-error-strong"];
+                    backgroundColor = Colour["bg-error-strong"];
                     break;
                 case "blue":
-                    backgroundColor = V3_Colour["bg-info-strong"];
+                    backgroundColor = Colour["bg-info-strong"];
                     break;
                 case "primary":
-                    backgroundColor = V3_Colour["bg-primary"];
+                    backgroundColor = Colour["bg-primary"];
                     break;
                 default:
-                    backgroundColor = V3_Colour["bg-inverse"];
+                    backgroundColor = Colour["bg-inverse"];
                     break;
             }
         } else {
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = V3_Colour["bg-stronger"];
-                    borderColor = V3_Colour["border-strong"];
-                    color = V3_Colour["text-subtler"];
+                    backgroundColor = Colour["bg-stronger"];
+                    borderColor = Colour["border-strong"];
+                    color = Colour["text-subtler"];
                     break;
                 case "green":
-                    backgroundColor = V3_Colour["bg-success"];
-                    borderColor = V3_Colour["border-success"];
-                    color = V3_Colour["text-success"];
+                    backgroundColor = Colour["bg-success"];
+                    borderColor = Colour["border-success"];
+                    color = Colour["text-success"];
                     break;
                 case "yellow":
-                    backgroundColor = V3_Colour["bg-warning"];
-                    borderColor = V3_Colour["border-warning"];
-                    color = V3_Colour["text-warning"];
+                    backgroundColor = Colour["bg-warning"];
+                    borderColor = Colour["border-warning"];
+                    color = Colour["text-warning"];
                     break;
                 case "red":
-                    backgroundColor = V3_Colour["bg-error"];
-                    borderColor = V3_Colour["border-error"];
-                    color = V3_Colour["text-error"];
+                    backgroundColor = Colour["bg-error"];
+                    borderColor = Colour["border-error"];
+                    color = Colour["text-error"];
                     break;
                 case "blue":
-                    backgroundColor = V3_Colour["bg-info"];
-                    borderColor = V3_Colour["border-info"];
-                    color = V3_Colour["text-info"];
+                    backgroundColor = Colour["bg-info"];
+                    borderColor = Colour["border-info"];
+                    color = Colour["text-info"];
                     break;
                 case "primary":
-                    backgroundColor = V3_Colour["bg-primary-subtlest"];
-                    borderColor = V3_Colour["border-primary"];
-                    color = V3_Colour["text-primary"];
+                    backgroundColor = Colour["bg-primary-subtlest"];
+                    borderColor = Colour["border-primary"];
+                    color = Colour["text-primary"];
                     break;
                 default:
-                    backgroundColor = V3_Colour.bg;
-                    borderColor = V3_Colour.border;
-                    color = V3_Colour.text;
+                    backgroundColor = Colour.bg;
+                    borderColor = Colour.border;
+                    color = Colour.text;
                     break;
             }
         }
 
         return css`
             background: ${backgroundColor};
-            border: ${V3_Border["width-010"]} ${V3_Border.solid} ${borderColor};
+            border: ${Border["width-010"]} ${Border.solid} ${borderColor};
             color: ${color};
         `;
     }}
