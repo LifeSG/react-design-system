@@ -4,6 +4,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { ModalV2 } from "src/modal-v2";
+import { slotSpacerTokens } from "src/modal-v2/slots/slot-styles";
 import { Typography } from "src/typography";
 
 import { SlotPlayground } from "./doc-elements";
@@ -159,11 +160,20 @@ const closeButton = css`
 `;
 
 const content = css`
+    ${slotSpacerTokens.firstChildMarginTopWithCloseButton}: 0;
+    ${slotSpacerTokens.firstChildMarginTopNoCloseButton}: 0;
+    ${slotSpacerTokens.contentLastChildMarginBottom}: 0;
+
     margin: 0;
     padding: 16px 32px;
 `;
 
 const footer = css`
+    ${slotSpacerTokens.firstChildMarginTopWithCloseButton}: 0;
+    ${slotSpacerTokens.firstChildMarginTopNoCloseButton}: 0;
+    ${slotSpacerTokens.footerNotFirstChildMarginTop}: 0;
+    ${slotSpacerTokens.footerLastChildMarginBottom}: 0;
+
     margin: 0;
     padding: 16px;
 `;

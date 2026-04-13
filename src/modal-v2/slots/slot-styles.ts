@@ -9,6 +9,34 @@ import {
     Spacing,
 } from "../../theme";
 
+// =============================================================================
+// Tokens and classnames
+// =============================================================================
+export const slotSpacerHasCloseButton = "modalV2SlotSpacerHasCloseButton";
+export const slotSpacerNoCloseButton = "modalV2SlotSpacerNoCloseButton";
+const internalSlotSpacerTokens = {
+    firstChildMarginTop:
+        "--fds-internal-modalV2-slotSpacer-firstChildMarginTop",
+} as const;
+
+export const slotSpacerTokens = {
+    firstChildMarginTopWithCloseButton:
+        "--fds-internal-modalV2-slotSpacer-firstChildMarginTopWithCloseButton",
+    firstChildMarginTopNoCloseButton:
+        "--fds-internal-modalV2-slotSpacer-firstChildMarginTopNoCloseButton",
+
+    contentLastChildMarginBottom:
+        "--fds-internal-modalV2-slotSpacer-contentLastChildMarginBottom",
+
+    footerNotFirstChildMarginTop:
+        "--fds-internal-modalV2-slotSpacer-footerNotFirstChildMarginTop",
+    footerLastChildMarginBottom:
+        "--fds-internal-modalV2-slotSpacer-footerLastChildMarginBottom",
+} as const;
+
+// =============================================================================
+// STYLING
+// =============================================================================
 export const modalCard = css`
     width: 40rem;
     margin: ${Spacing["spacing-64"]} auto;
@@ -96,37 +124,57 @@ export const footerContainer = css`
     }
 `;
 
-export const slotSpacerHasCloseButton = "modalV2SlotSpacerHasCloseButton";
-export const slotSpacerNoCloseButton = "modalV2SlotSpacerNoCloseButton";
-
 export const slotSpacer = css`
-    & > .${contentContainer}:last-child {
-        margin-bottom: ${Spacing["spacing-64"]};
+    ${slotSpacerTokens.contentLastChildMarginBottom}: initial;
+    ${slotSpacerTokens.footerNotFirstChildMarginTop}: initial;
+    ${slotSpacerTokens.footerLastChildMarginBottom}: initial;
+    ${slotSpacerTokens.firstChildMarginTopWithCloseButton}: initial;
+    ${slotSpacerTokens.firstChildMarginTopNoCloseButton}: initial;
+
+    ${internalSlotSpacerTokens.firstChildMarginTop}: var(
+        ${slotSpacerTokens.firstChildMarginTopNoCloseButton},
+        ${Spacing["spacing-64"]}
+    );
+
+    & > :where(.${contentContainer}:last-child) {
+        margin-bottom: var(
+            ${slotSpacerTokens.contentLastChildMarginBottom},
+            ${Spacing["spacing-64"]}
+        );
     }
 
-    & > .${footerContainer}:not(:first-child) {
-        margin-top: ${Spacing["spacing-32"]};
+    & > :where(.${footerContainer}:not(:first-child)) {
+        margin-top: var(
+            ${slotSpacerTokens.footerNotFirstChildMarginTop},
+            ${Spacing["spacing-32"]}
+        );
     }
 
-    & > .${footerContainer}:last-child {
-        margin-bottom: ${Spacing["spacing-64"]};
+    & > :where(.${footerContainer}:last-child) {
+        margin-bottom: var(
+            ${slotSpacerTokens.footerLastChildMarginBottom},
+            ${Spacing["spacing-64"]}
+        );
+    }
+
+    &
+        > :where(
+            .${contentContainer}:first-child, .${footerContainer}:first-child
+        ) {
+        margin-top: var(${internalSlotSpacerTokens.firstChildMarginTop});
     }
 
     &.${slotSpacerHasCloseButton} {
-        &
-            > .${contentContainer}:first-child,
-            &
-            > .${footerContainer}:first-child {
-            margin-top: 0;
-        }
+        ${internalSlotSpacerTokens.firstChildMarginTop}: var(
+            ${slotSpacerTokens.firstChildMarginTopWithCloseButton},
+            0
+        );
     }
 
     &.${slotSpacerNoCloseButton} {
-        &
-            > .${contentContainer}:first-child,
-            &
-            > .${footerContainer}:first-child {
-            margin-top: ${Spacing["spacing-64"]};
-        }
+        ${internalSlotSpacerTokens.firstChildMarginTop}: var(
+            ${slotSpacerTokens.firstChildMarginTopNoCloseButton},
+            ${Spacing["spacing-64"]}
+        );
     }
 `;

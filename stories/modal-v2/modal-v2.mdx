@@ -55,15 +55,21 @@ Use the `animationFrom` prop to control where the modal enters from:
 Slots come with default margins, but if custom spacing is required, the styles
 can be overridden using the `className` prop with a Linaria `css` class.
 
+For reliable cross-environment overrides, prefer using the slot spacer CSS
+variables shown below. Direct margin overrides (for example `margin: 0`) can
+depend on CSS injection order and may behave differently between environments.
+
 ```tsx
 import { css } from "@linaria/core";
 import { Spacing } from "@lifesg/react-design-system/theme";
 
 const customContent = css`
-    /* replace the margins */
-    margin: ${Spacing["spacing-16"]};
+    /* reliable: replace slot spacer-driven margins via CSS variables */
+    --fds-internal-modalV2-slotSpacer-firstChildMarginTopWithCloseButton: 0;
+    --fds-internal-modalV2-slotSpacer-firstChildMarginTopNoCloseButton: 0;
+    --fds-internal-modalV2-slotSpacer-contentLastChildMarginBottom: 0;
 
-    /* or reset them and use your preferred property instead */
+    /* optional: apply your preferred spacing styles */
     margin: 0;
     padding-inline: ${Spacing["spacing-16"]};
 `;
