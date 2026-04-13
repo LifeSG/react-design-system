@@ -6,7 +6,7 @@ describe("Modal", () => {
         jest.clearAllMocks();
     });
 
-    it("should render the component", () => {
+    it("should render the component when show=true", () => {
         render(
             <Modal show>
                 <Modal.Box>
@@ -15,10 +15,22 @@ describe("Modal", () => {
             </Modal>
         );
 
-        expect(screen.getByTestId("modal")).toBeInTheDocument();
-        expect(screen.getByTestId("modal-box")).toBeInTheDocument();
-        expect(screen.getByTestId("close-button")).toBeInTheDocument();
-        expect(screen.getByTestId("test-content")).toBeInTheDocument();
+        expect(screen.getByTestId("modal")).toBeVisible();
+        expect(screen.getByTestId("modal-box")).toBeVisible();
+        expect(screen.getByTestId("close-button")).toBeVisible();
+        expect(screen.getByTestId("test-content")).toBeVisible();
+    });
+
+    it("should render the component with hidden content when show=false", () => {
+        render(
+            <Modal show={false}>
+                <Modal.Box>
+                    <div data-testid="test-content" />
+                </Modal.Box>
+            </Modal>
+        );
+
+        expect(screen.getByTestId("modal")).not.toBeVisible();
     });
 
     it("should render custom Modal children", () => {

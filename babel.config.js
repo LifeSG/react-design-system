@@ -5,7 +5,7 @@ module.exports = (api) => {
         "@babel/preset-env",
         ["@babel/preset-react", { runtime: "automatic" }],
         "@babel/preset-typescript",
-        ["@wyw-in-js/babel-preset", { displayName: true }],
+        "./babel-plugins/babel-preset-inject-linaria-css.js",
     ];
     const plugins = isTest
         ? []
