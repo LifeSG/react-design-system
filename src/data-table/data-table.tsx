@@ -168,11 +168,7 @@ export const DataTable = ({
         return sortIndicators?.[fieldKey];
     };
 
-    const getHeaderAriaSort = (fieldKey: string, sortable: boolean) => {
-        if (!sortable) {
-            return undefined;
-        }
-
+    const getHeaderAriaSort = (fieldKey: string) => {
         const sortDirection = getSortDirection(fieldKey);
 
         if (!sortDirection) {
@@ -313,16 +309,16 @@ export const DataTable = ({
             fieldKey,
             label,
             clickable = false,
-            sortable = false,
             style,
         } = typeof header === "string"
             ? {
                   fieldKey: header,
                   label: header,
-                  sortable: false,
                   style: undefined,
               }
             : header;
+
+        const isSortable = !!sortIndicators?.[fieldKey];
 
         return (
             <HeaderCell
@@ -330,7 +326,7 @@ export const DataTable = ({
                 key={fieldKey}
                 $clickable={clickable}
                 scope="col"
-                aria-sort={getHeaderAriaSort(fieldKey, sortable)}
+                aria-sort={getHeaderAriaSort(fieldKey)}
                 style={style}
                 $isCheckbox={false}
             >
@@ -339,7 +335,7 @@ export const DataTable = ({
                         <ClickableHeader
                             type="button"
                             aria-label={
-                                sortable && typeof label === "string"
+                                isSortable && typeof label === "string"
                                     ? getSortButtonAriaLabel(label, fieldKey)
                                     : typeof label === "string"
                                       ? label

@@ -56,7 +56,6 @@ interface HeaderItemProps {
     // technically ReactNode also includes string, but this is more explicit
     label: string | ReactNode;
     clickable?: boolean | undefined;
-    sortable?: boolean | undefined;
     /** Marks this column as part of the row checkbox screen reader label */
     keyFieldLabel?: boolean | undefined;
     style?: CSSProperties | undefined;

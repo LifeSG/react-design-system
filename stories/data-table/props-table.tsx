@@ -158,17 +158,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
-                name: "sortable",
-                description: (
-                    <>
-                        Specifies if the column header is sortable. When true,{" "}
-                        <code>onHeaderClick</code> will be called when the cell
-                        is clicked
-                    </>
-                ),
-                propTypes: ["boolean"],
-            },
-            {
                 name: "style",
                 description:
                     "Specifies custom styles for the column header cell",
