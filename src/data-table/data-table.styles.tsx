@@ -184,6 +184,7 @@ export const HeaderRow = styled.tr`
 `;
 
 export const HeaderCell = styled.th<HeaderCellProps>`
+    position: relative;
     padding: ${(props) =>
         props.$isCheckbox ? "1.25rem 0.5rem 1.25rem 1.5rem" : "1.25rem 1rem"};
     text-align: left;
@@ -201,6 +202,8 @@ export const HeaderCell = styled.th<HeaderCellProps>`
 `;
 
 export const HeaderCellWrapper = styled.div`
+    position: relative;
+    z-index: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -212,13 +215,16 @@ export const HeaderCellWrapper = styled.div`
 `;
 
 export const ClickableHeader = styled(BasicButton)`
-    ${Font["body-md-semibold"]}
-    display: inline-flex;
-    align-items: center;
-    width: 100%;
-    color: ${fontColor};
+    position: absolute;
+    inset: 0.25rem;
+    z-index: 2;
     cursor: pointer;
-    text-align: left;
+    border-radius: ${Radius["sm"]};
+
+    &:focus-visible {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 0;
+    }
 `;
 
 export const BodyRow = styled.tr<BodyRowProps>`

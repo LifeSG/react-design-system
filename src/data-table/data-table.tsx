@@ -335,15 +335,18 @@ export const DataTable = ({
                 $isCheckbox={false}
             >
                 {clickable ? (
-                    <ClickableHeader
-                        type="button"
-                        aria-label={
-                            sortable && typeof label === "string"
-                                ? getSortButtonAriaLabel(label, fieldKey)
-                                : undefined
-                        }
-                        onClick={() => onHeaderClick?.(fieldKey)}
-                    >
+                    <>
+                        <ClickableHeader
+                            type="button"
+                            aria-label={
+                                sortable && typeof label === "string"
+                                    ? getSortButtonAriaLabel(label, fieldKey)
+                                    : typeof label === "string"
+                                      ? label
+                                      : undefined
+                            }
+                            onClick={() => onHeaderClick?.(fieldKey)}
+                        />
                         <HeaderCellWrapper>
                             {typeof label === "string" ? (
                                 <Typography.BodyBL weight="bold">
@@ -354,7 +357,7 @@ export const DataTable = ({
                             )}
                             {renderSortedArrow(fieldKey)}
                         </HeaderCellWrapper>
-                    </ClickableHeader>
+                    </>
                 ) : (
                     <HeaderCellWrapper>
                         {typeof label === "string" ? (
