@@ -10,7 +10,6 @@ import {
 } from "../theme";
 import type { ValueOf } from "./utility-types";
 
-// TODO: migrate dashed-border.utils.ts to recycle these helper functions
 const radiusTokenSet = new Set<string>(Object.values(Radius));
 const thicknessTokenSet = new Set<string>(Object.values(BorderThickness));
 

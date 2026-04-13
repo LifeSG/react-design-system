@@ -16,11 +16,11 @@ export const lineBase = css`
     margin: 0;
     border: none;
     ${tokens.thickness}: initial;
-    ${tokens.color}: initial;
     height: var(${tokens.thickness}, 1px);
 `;
 
 export const solidLine = css`
+    ${tokens.color}: initial;
     background-color: var(${tokens.color}, ${Colour.border});
 `;
 

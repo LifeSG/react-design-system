@@ -41,12 +41,13 @@ export const Divider = ({
     });
 
     const encodedColor = encodeURIComponent(effectiveColor);
+    const strokeWidth = thickness + 1; // best fit
 
     useApplyStyle(ref, {
         [styles.tokens.thickness]: `${thickness}px`,
-        [styles.tokens.color]: color as string | null | undefined,
+        [styles.tokens.color]: color,
         [styles.tokens.backgroundImage]: `
-            url('data:image/svg+xml,<svg width="8" height="${thickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${encodedColor}" stroke-width="${thickness}" stroke-dasharray="4 4" /></svg>')`,
+            url('data:image/svg+xml,<svg width="8" height="${thickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${encodedColor}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>')`,
     });
 
     const isV2Layout =
