@@ -210,7 +210,7 @@ export const DataTable = ({
             return "";
         }
 
-        if (!header.keyFieldLabel) {
+        if (!header.keyColumn) {
             return "";
         }
 

@@ -28,12 +28,12 @@ export const DATA_HEADERS = [
     {
         fieldKey: "status",
         label: "Status",
-        keyFieldLabel: true,
+        keyColumn: true,
     },
     {
         fieldKey: "resource",
         label: "Resource",
-        keyFieldLabel: true,
+        keyColumn: true,
     },
     {
         fieldKey: "time",

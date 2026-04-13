@@ -164,9 +164,9 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["CSSProperties"],
             },
             {
-                name: "keyFieldLabel",
+                name: "keyColumn",
                 description:
-                    "Marks this column as part of the row checkbox screen reader label. Applicable when checkbox is presented for row selection",
+                    "Used with enableMultiSelect. Marks this column as descriptive of the row and uses its value to label the row checkbox for screen readers",
                 propTypes: ["boolean"],
             },
         ],

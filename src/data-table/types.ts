@@ -56,8 +56,11 @@ interface HeaderItemProps {
     // technically ReactNode also includes string, but this is more explicit
     label: string | ReactNode;
     clickable?: boolean | undefined;
-    /** Marks this column as part of the row checkbox screen reader label */
-    keyFieldLabel?: boolean | undefined;
+    /** Used with `enableMultiSelect`. Marks this column as descriptive of the row
+     * (e.g. a name or unique ID). Its value is used to label the row's checkbox
+     * for screen readers.
+     */
+    keyColumn?: boolean | undefined;
     style?: CSSProperties | undefined;
 }
 
