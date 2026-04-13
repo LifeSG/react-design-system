@@ -12,6 +12,7 @@ const Component = (
         children,
         "data-testid": testId = "section",
         className,
+        stretch = false,
         ...otherProps
     } = props;
 
@@ -19,7 +20,11 @@ const Component = (
         <section
             ref={ref}
             data-testid={testId}
-            className={clsx(styles.section, className)}
+            className={clsx(
+                styles.section,
+                className,
+                stretch && styles.sectionStretched
+            )}
             {...otherProps}
         >
             {children}
