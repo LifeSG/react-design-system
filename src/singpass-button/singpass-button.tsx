@@ -41,4 +41,37 @@ const Component = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
     );
 };
 
-export const SingpassButton = forwardRef(Component);
+const BaseSingpassButton = forwardRef(Component);
+
+const DefaultSingpassButtonComponent = (
+    props: SingpassButtonProps,
+    ref: SingpassButtonRef
+) => (
+    <BaseSingpassButton
+        {...props}
+        sizeType={props.sizeType ?? "default"}
+        ref={ref}
+    />
+);
+DefaultSingpassButtonComponent.displayName = "SingpassButton.Default";
+
+const SmallSingpassButtonComponent = (
+    props: SingpassButtonProps,
+    ref: SingpassButtonRef
+) => <BaseSingpassButton {...props} sizeType="small" ref={ref} />;
+SmallSingpassButtonComponent.displayName = "SingpassButton.Small";
+
+const LargeSingpassButtonComponent = (
+    props: SingpassButtonProps,
+    ref: SingpassButtonRef
+) => <BaseSingpassButton {...props} sizeType="large" ref={ref} />;
+LargeSingpassButtonComponent.displayName = "SingpassButton.Large";
+
+export const SingpassButton = Object.assign(BaseSingpassButton, {
+    /** @deprecated Use the `sizeType` prop instead: `<SingpassButton>` or `<SingpassButton sizeType="default">` */
+    Default: forwardRef(DefaultSingpassButtonComponent),
+    /** @deprecated Use the `sizeType` prop instead: `<SingpassButton sizeType="small">` */
+    Small: forwardRef(SmallSingpassButtonComponent),
+    /** @deprecated Use the `sizeType` prop instead: `<SingpassButton sizeType="large">` */
+    Large: forwardRef(LargeSingpassButtonComponent),
+});
