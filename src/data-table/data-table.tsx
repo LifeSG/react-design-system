@@ -488,6 +488,7 @@ export const DataTable = ({
                             }
                         }}
                         disabled={isDisabledRow(rowId)}
+                        aria-disabled={isDisabledRow(rowId)}
                     />
                 </CheckBoxWrapper>
             </BodyCell>
@@ -527,7 +528,11 @@ export const DataTable = ({
         return (
             <tr>
                 <td colSpan={getTotalColumns()}>
-                    <LoaderWrapper>
+                    <LoaderWrapper
+                        role="status"
+                        aria-live="polite"
+                        aria-label="Loading table"
+                    >
                         {loadState === "loading" && <LoadingDotsSpinner />}
                     </LoaderWrapper>
                 </td>
@@ -554,7 +559,13 @@ export const DataTable = ({
                     <Typography.BodyMD weight="semibold">{`${count} item${
                         count > 1 ? "s" : ""
                     } selected`}</Typography.BodyMD>
-                    <TextButton type="button" onClick={onClearSelectionClick}>
+                    <TextButton
+                        type="button"
+                        aria-label={`Clear selection of ${count} item${
+                            count === 1 ? "" : "s"
+                        }`}
+                        onClick={onClearSelectionClick}
+                    >
                         Clear selection
                     </TextButton>
                     {actionBarContent}
