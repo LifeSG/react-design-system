@@ -548,8 +548,7 @@ describe("FilterModal", () => {
 
         expect(
             screen.queryByRole("heading", { name: "Filters" })
-        ).not.toBeVisible();
-        expect(screen.queryByTestId("modal-child")).not.toBeVisible();
+        ).not.toBeInTheDocument();
     });
 
     it("renders visible modal when button is clicked", () => {
