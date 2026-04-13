@@ -158,10 +158,27 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "sortable",
+                description: (
+                    <>
+                        Specifies if the column header is sortable. When true,{" "}
+                        <code>onHeaderClick</code> will be called when the cell
+                        is clicked
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
+            {
                 name: "style",
                 description:
                     "Specifies custom styles for the column header cell",
                 propTypes: ["CSSProperties"],
+            },
+            {
+                name: "keyFieldLabel",
+                description:
+                    "Marks this column as part of the row checkbox screen reader label. Applicable when checkbox is presented for row selection",
+                propTypes: ["boolean"],
             },
         ],
     },
