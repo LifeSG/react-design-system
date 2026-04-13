@@ -11,6 +11,7 @@ export default function Story() {
                 sizeType="default"
                 maxCollapsedHeight={40}
                 actionLink={{ href: "#", children: "Learn more" }}
+                role="alert"
             >
                 Default size alert.
             </Alert>
@@ -20,6 +21,7 @@ export default function Story() {
                 sizeType="small"
                 maxCollapsedHeight={40}
                 actionLink={{ href: "#", children: "Learn more" }}
+                role="alert"
             >
                 Small size alert.
             </Alert>

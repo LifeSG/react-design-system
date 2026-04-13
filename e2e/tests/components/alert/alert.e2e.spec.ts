@@ -22,22 +22,22 @@ test.describe("Alert", () => {
 
         await expect(story.page.getByTestId("alert-success"))
             .toMatchAriaSnapshot(`
-            - text: This is a success alert.
+            - alert: This is a success alert.
         `);
         await expect(story.page.getByTestId("alert-warning"))
             .toMatchAriaSnapshot(`
-            - text: This is a warning alert.
+            - alert: This is a warning alert.
         `);
         await expect(story.page.getByTestId("alert-error"))
             .toMatchAriaSnapshot(`
-            - text: This is an error alert.
+            - alert: This is an error alert.
         `);
         await expect(story.page.getByTestId("alert-info")).toMatchAriaSnapshot(`
-            - text: This is an info alert.
+            - alert: This is an info alert.
         `);
         await expect(story.page.getByTestId("alert-description"))
             .toMatchAriaSnapshot(`
-            - text: This is a description alert.
+            - alert: This is a description alert.
         `);
     });
 
@@ -117,7 +117,7 @@ test.describe("Alert", () => {
             name: "Show more",
         });
 
-        await expect(showMoreBtn).toBeVisible({ timeout: 5000 });
+        await expect(showMoreBtn).toBeVisible();
 
         await test.step("Tab focuses 'Show more' button", async () => {
             await story.page.getByTestId("before-alert").focus();
@@ -132,7 +132,19 @@ test.describe("Alert", () => {
             ).toBeVisible();
         });
 
+        await test.step("Tab focuses 'Learn more' link", async () => {
+            await story.page.keyboard.press("Tab");
+            await expect(story.page.getByTestId("action-link")).toBeFocused();
+        });
+
         await test.step("Enter key collapses content", async () => {
+            await story.page.keyboard.down("Shift");
+            await story.page.keyboard.press("Tab");
+            await story.page.keyboard.up("Shift");
+            await expect(
+                story.page.getByRole("button", { name: "Show less" })
+            ).toBeFocused();
+
             await story.page.keyboard.press("Enter");
             await expect(showMoreBtn).toBeVisible();
         });

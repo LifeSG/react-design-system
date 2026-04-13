@@ -4,9 +4,14 @@ import { Alert } from "@lifesg/react-design-system/alert";
 
 export default function Story() {
     return (
-        <div className="alert-keyboard-nav-container">
+        <div>
             <button data-testid="before-alert">Before alert</button>
-            <Alert type="info" maxCollapsedHeight={60}>
+            <Alert
+                type="info"
+                maxCollapsedHeight={60}
+                role="alert"
+                actionLink={{ href: "#", children: "Learn more" }}
+            >
                 <p>Line one of a long alert content.</p>
                 <p>Line two of a long alert content.</p>
                 <p>Line three of a long alert content.</p>
