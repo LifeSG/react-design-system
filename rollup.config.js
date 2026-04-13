@@ -1,11 +1,12 @@
+import fs from "node:fs";
+import path from "node:path";
+
 import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import wyw from "@wyw-in-js/rollup";
-import fs from "fs";
-import path from "path";
 import postcssImports from "postcss-import";
 import copy from "rollup-plugin-copy";
 import excludeDependenciesFromBundle from "rollup-plugin-exclude-dependencies-from-bundle";
@@ -13,7 +14,18 @@ import generatePackageJson from "rollup-plugin-generate-package-json";
 import { libStylePlugin } from "rollup-plugin-lib-style";
 import typescript from "rollup-plugin-typescript2";
 
-const dirsToIgnore = ["custom-types", "shared", "util", "v2_spec", "__mocks__"];
+import { createFixCssImportPathsPlugin } from "./rollup/fix-css-import-paths-plugin.js";
+
+const fixCssImportPathsPlugin = createFixCssImportPathsPlugin({
+    outputDirs: ["dist", "dist/cjs"],
+});
+const dirsToIgnore = new Set([
+    "custom-types",
+    "shared",
+    "util",
+    "v2_spec",
+    "__mocks__",
+]);
 
 const srcDir = "src";
 const subDirs = fs
@@ -22,7 +34,7 @@ const subDirs = fs
         (dirent) =>
             dirent.isDirectory() &&
             fs.existsSync(path.join(srcDir, dirent.name, "index.ts")) &&
-            !dirsToIgnore.includes(dirent.name)
+            !dirsToIgnore.has(dirent.name)
     )
     .map((dirent) => dirent.name);
 
@@ -118,10 +130,6 @@ const plugins = [
     // Injects an import statement in the source style file and outputs CSS in the same location.
     libStylePlugin({
         exclude: ["**/node_modules/**"],
-        customCSSInjectedPath: (id) => {
-            const filename = path.basename(id);
-            return "/" + filename;
-        },
         customCSSPath: (id) => {
             const relative = path.relative(process.cwd(), id);
             const outputPath = relative.replace("src/", "");
@@ -148,6 +156,7 @@ const plugins = [
     copy({
         targets: [{ src: "src/theme/styles/*", dest: "dist/theme/styles" }],
     }),
+    fixCssImportPathsPlugin,
 ];
 
 const libraryBuildConfig = {
@@ -165,7 +174,7 @@ const libraryBuildConfig = {
             entryFileNames: (chunkInfo) => {
                 if (chunkInfo.name.includes("node_modules")) {
                     return (
-                        chunkInfo.name.replace(/node_modules/g, "external") +
+                        chunkInfo.name.replaceAll("node_modules", "external") +
                         ".js"
                     );
                 }
@@ -184,7 +193,7 @@ const libraryBuildConfig = {
             entryFileNames: (chunkInfo) => {
                 if (chunkInfo.name.includes("node_modules")) {
                     return (
-                        chunkInfo.name.replace(/node_modules/g, "external") +
+                        chunkInfo.name.replaceAll("node_modules", "external") +
                         ".js"
                     );
                 }
