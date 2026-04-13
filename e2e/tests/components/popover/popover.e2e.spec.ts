@@ -5,10 +5,8 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "popover";
 
     public readonly locators: {
-        basicDesktopPopover: Locator;
-        basicMobilePopover: Locator;
-        basicDesktopDialog: Locator;
-        basicMobileDialog: Locator;
+        popover: Locator;
+        dialog: Locator;
         outsideDismissTarget: Locator;
         hoverDialog: Locator;
         focusStart: Locator;
@@ -20,16 +18,8 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            basicDesktopPopover: page
-                .getByTestId("card")
-                .getByTestId("popover-content"),
-            basicMobilePopover: page
-                .getByTestId("modal-content")
-                .getByTestId("popover-content"),
-            basicDesktopDialog: page.getByTestId("popover"),
-            basicMobileDialog: page.locator(
-                '[data-floating-ui-focusable=""][role="dialog"][aria-label="More details"]'
-            ),
+            popover: page.getByTestId("popover-content"),
+            dialog: page.locator('[role="dialog"][aria-label="More details"]'),
             outsideDismissTarget: page.getByTestId("outside-dismiss-target"),
             hoverDialog: page.getByRole("dialog", {
                 name: "Hover details",
@@ -57,16 +47,14 @@ test.describe("Popover", () => {
         test("Basic with click", async ({ story }) => {
             await test.step("Popover is not initially visible", async () => {
                 await expect(story.locators.triggerButton).toBeVisible();
-                await expect(
-                    story.locators.basicDesktopPopover
-                ).not.toBeVisible();
+                await expect(story.locators.popover).not.toBeVisible();
             });
 
             await test.step("Popover opens on click with expected semantics", async () => {
                 await story.locators.triggerButton.click();
 
-                await expect(story.locators.basicDesktopPopover).toBeVisible();
-                await expect(story.locators.basicDesktopDialog).toBeVisible();
+                await expect(story.locators.popover).toBeVisible();
+                await expect(story.locators.dialog).toBeVisible();
 
                 await compareScreenshot(story, "after-click", {
                     fullscreen: true,
@@ -75,9 +63,7 @@ test.describe("Popover", () => {
 
             await test.step("Popover closes when clicking outside", async () => {
                 await story.locators.outsideDismissTarget.click();
-                await expect(
-                    story.locators.basicDesktopPopover
-                ).not.toBeVisible();
+                await expect(story.locators.popover).not.toBeVisible();
             });
         });
     });
@@ -88,11 +74,9 @@ test.describe("Popover", () => {
         });
 
         test("Basic with click (mobile)", async ({ story }) => {
-            await expect(story.locators.basicMobilePopover).not.toBeVisible();
-
             await story.locators.triggerButton.click();
-            await expect(story.locators.basicMobilePopover).toBeVisible();
-            await expect(story.locators.basicMobileDialog).toBeVisible();
+            await expect(story.locators.popover).toBeVisible();
+            await expect(story.locators.dialog).toBeVisible();
 
             await compareScreenshot(story, "after-click-mobile", {
                 fullscreen: true,
@@ -108,8 +92,7 @@ test.describe("Popover", () => {
         test("Basic with click (mobile, dark mode)", async ({ story }) => {
             await story.locators.triggerButton.click();
 
-            await expect(story.locators.basicMobilePopover).toBeVisible();
-            await expect(story.locators.basicMobileDialog).toBeVisible();
+            await expect(story.locators.popover).toBeVisible();
 
             await compareScreenshot(story, "after-click-mobile-dark", {
                 fullscreen: true,
@@ -123,10 +106,10 @@ test.describe("Popover", () => {
         });
 
         test("Basic with click (dark mode)", async ({ story }) => {
-            await expect(story.locators.basicDesktopPopover).not.toBeVisible();
+            await expect(story.locators.popover).not.toBeVisible();
 
             await story.locators.triggerButton.click();
-            await expect(story.locators.basicDesktopPopover).toBeVisible();
+            await expect(story.locators.popover).toBeVisible();
 
             await compareScreenshot(story, "after-click", {
                 fullscreen: true,
@@ -192,8 +175,8 @@ test.describe("Popover", () => {
             await test.step("Enter opens popover and Escape dismisses it", async () => {
                 await story.page.keyboard.press("Enter");
 
-                await expect(story.locators.basicDesktopPopover).toBeVisible();
-                await expect(story.locators.basicDesktopDialog).toBeVisible();
+                await expect(story.locators.popover).toBeVisible();
+                await expect(story.locators.dialog).toBeVisible();
 
                 await compareScreenshot(story, "keyboard-open", {
                     fullscreen: true,
@@ -201,9 +184,7 @@ test.describe("Popover", () => {
 
                 await story.page.keyboard.press("Escape");
 
-                await expect(
-                    story.locators.basicDesktopPopover
-                ).not.toBeVisible();
+                await expect(story.locators.popover).not.toBeVisible();
             });
         });
     });
@@ -228,7 +209,7 @@ test.describe("Popover", () => {
             await story.init("flip");
         });
 
-        test("nabledFlip=true", async ({ story }) => {
+        test("enabledFlip=true", async ({ story }) => {
             await story.locators.triggerButton.click();
             await expect(story.locators.popoverContent).toBeVisible();
 
