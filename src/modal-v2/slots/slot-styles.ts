@@ -21,28 +21,28 @@ export const modalCard = css`
 
     max-width: calc(100% - ${Breakpoint["xxl-margin"]} * 2);
 
-    ${MediaQuery.MaxWidth.xl} {
-        max-width: calc(100% - ${Breakpoint["xl-margin"]} * 2);
-    }
-
-    ${MediaQuery.MaxWidth.lg} {
-        max-width: calc(100% - ${Breakpoint["lg-margin"]} * 2);
-    }
-
-    ${MediaQuery.MaxWidth.md} {
-        max-width: calc(100% - ${Breakpoint["md-margin"]} * 2);
-    }
-
-    ${MediaQuery.MaxWidth.sm} {
-        max-width: calc(100% - ${Breakpoint["sm-margin"]} * 2);
+    ${MediaQuery.MaxWidth.xxs} {
+        max-width: calc(100% - ${Breakpoint["xxs-margin"]} * 2);
     }
 
     ${MediaQuery.MaxWidth.xs} {
         max-width: calc(100% - ${Breakpoint["xs-margin"]} * 2);
     }
 
-    ${MediaQuery.MaxWidth.xxs} {
-        max-width: calc(100% - ${Breakpoint["xxs-margin"]} * 2);
+    ${MediaQuery.MaxWidth.sm} {
+        max-width: calc(100% - ${Breakpoint["sm-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.md} {
+        max-width: calc(100% - ${Breakpoint["md-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.lg} {
+        max-width: calc(100% - ${Breakpoint["lg-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.xl} {
+        max-width: calc(100% - ${Breakpoint["xl-margin"]} * 2);
     }
 `;
 
