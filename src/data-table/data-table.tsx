@@ -21,6 +21,7 @@ import {
     BodyCellContent,
     BodyRow,
     CheckBoxWrapper,
+    ClickableHeader,
     EmptyViewCell,
     ErrorDisplayTitle,
     HeaderCell,
@@ -162,6 +163,31 @@ export const DataTable = ({
         return `Select all rows, Column 1 of ${totalColumns}`;
     };
 
+    const getSortDirection = (fieldKey: string) => {
+        return sortIndicators?.[fieldKey];
+    };
+
+    const getHeaderAriaSort = (fieldKey: string, sortable: boolean) => {
+        if (!sortable) {
+            return undefined;
+        }
+
+        const sortDirection = getSortDirection(fieldKey);
+
+        if (!sortDirection) {
+            return undefined;
+        }
+
+        return sortDirection === "asc" ? "ascending" : "descending";
+    };
+
+    const getSortButtonAriaLabel = (label: string, fieldKey: string) => {
+        const nextSortDirection =
+            getSortDirection(fieldKey) === "asc" ? "descending" : "ascending";
+
+        return `Sort ${label} by ${nextSortDirection} order`;
+    };
+
     const extractTextFromNode = (node: ReactNode): string => {
         if (node === null || node === undefined || typeof node === "boolean") {
             return "";
@@ -286,11 +312,13 @@ export const DataTable = ({
             fieldKey,
             label,
             clickable = false,
+            sortable = false,
             style,
         } = typeof header === "string"
             ? {
                   fieldKey: header,
                   label: header,
+                  sortable: false,
                   style: undefined,
               }
             : header;
@@ -300,20 +328,44 @@ export const DataTable = ({
                 data-testid={getDataTestId(`header-${fieldKey}`)}
                 key={fieldKey}
                 $clickable={clickable}
-                onClick={() => clickable && onHeaderClick?.(fieldKey)}
+                scope="col"
+                aria-sort={getHeaderAriaSort(fieldKey, sortable)}
                 style={style}
                 $isCheckbox={false}
             >
-                <HeaderCellWrapper>
-                    {typeof label === "string" ? (
-                        <Typography.BodyBL weight="bold">
-                            {label}
-                        </Typography.BodyBL>
-                    ) : (
-                        label
-                    )}
-                    {renderSortedArrow(fieldKey)}
-                </HeaderCellWrapper>
+                {clickable ? (
+                    <ClickableHeader
+                        type="button"
+                        aria-label={
+                            sortable && typeof label === "string"
+                                ? getSortButtonAriaLabel(label, fieldKey)
+                                : undefined
+                        }
+                        onClick={() => onHeaderClick?.(fieldKey)}
+                    >
+                        <HeaderCellWrapper>
+                            {typeof label === "string" ? (
+                                <Typography.BodyBL weight="bold">
+                                    {label}
+                                </Typography.BodyBL>
+                            ) : (
+                                label
+                            )}
+                            {renderSortedArrow(fieldKey)}
+                        </HeaderCellWrapper>
+                    </ClickableHeader>
+                ) : (
+                    <HeaderCellWrapper>
+                        {typeof label === "string" ? (
+                            <Typography.BodyBL weight="bold">
+                                {label}
+                            </Typography.BodyBL>
+                        ) : (
+                            label
+                        )}
+                        {renderSortedArrow(fieldKey)}
+                    </HeaderCellWrapper>
+                )}
             </HeaderCell>
         );
     };

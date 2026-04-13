@@ -99,6 +99,7 @@ export const SortIndicators: StoryObj<Component> = {
                 fieldKey: "colA",
                 label: "Column A",
                 clickable: true,
+                sortable: true,
             },
             {
                 fieldKey: "colB",

@@ -211,6 +211,16 @@ export const HeaderCellWrapper = styled.div`
     }
 `;
 
+export const ClickableHeader = styled(BasicButton)`
+    ${Font["body-md-semibold"]}
+    display: inline-flex;
+    align-items: center;
+    width: 100%;
+    color: ${fontColor};
+    cursor: pointer;
+    text-align: left;
+`;
+
 export const BodyRow = styled.tr<BodyRowProps>`
     background-color: ${(props) => {
         if (props.$isSelected) {
