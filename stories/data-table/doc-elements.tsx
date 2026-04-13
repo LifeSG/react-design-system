@@ -37,17 +37,24 @@ export const DataTableWithCustomHeight = ({
     children,
 }: Props) => {
     const [height, setHeight] = useState<Height>("default");
+    const rowCountInputId = "data-table-row-count";
+
     return (
         <Container $height={height} key={height}>
             <div>
                 <Typography.BodyBL>
                     Modify the options to view the scroll behaviour
                 </Typography.BodyBL>
-                <Typography.BodySM weight="semibold">
+                <Typography.BodySM
+                    as="label"
+                    htmlFor={rowCountInputId}
+                    weight="semibold"
+                >
                     Number of rows
                 </Typography.BodySM>
                 <div>
                     <input
+                        id={rowCountInputId}
                         type="range"
                         value={rowCount}
                         min={1}

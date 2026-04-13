@@ -12,6 +12,7 @@ import { useResizeDetector } from "react-resize-detector";
 import { LoadingDotsSpinner } from "../animations";
 import { Checkbox } from "../checkbox";
 import { ErrorDisplay } from "../error-display";
+import { VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography";
 import { useEventListener } from "../util/use-event-listener";
 import {
@@ -399,6 +400,7 @@ export const DataTable = ({
                 scope="col"
             >
                 <CheckBoxWrapper>
+                    <VisuallyHidden>Row selection</VisuallyHidden>
                     {enableSelectAll && (
                         <Checkbox
                             checked={isAllCheckboxSelected()}
