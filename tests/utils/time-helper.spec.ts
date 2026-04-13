@@ -394,7 +394,7 @@ describe("calculateScrollPosition tests", () => {
     });
 
     describe("Invalid input handling", () => {
-        let localConsoleWarnSpy: jest.SpyInstance;
+        let localConsoleWarnSpy: jest.Spied<typeof console.warn>;
 
         beforeEach(() => {
             localConsoleWarnSpy = jest
