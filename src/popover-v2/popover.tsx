@@ -1,31 +1,46 @@
-import { useContext } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import clsx from "clsx";
+import { useMemo, useRef } from "react";
 
+import { Card } from "../card";
 import { Markup } from "../markup";
 import { ModalV2 } from "../modal-v2";
+import {
+    Breakpoint,
+    useApplyStyle,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
 import { Typography } from "../typography";
-import { V3_Breakpoint } from "../v3_theme";
-import { PopoverCard, PopoverContainer } from "./popover.styles";
+import * as styles from "./popover.styles";
 import type { PopoverV2Props } from "./types";
 
 export const PopoverV2 = ({
     children,
-    visible,
+    visible = false,
     onMobileClose,
     maxHeight,
     overflow,
-    ariaLabel,
+    ariaLabel = "More information",
     id,
+    className,
+    "data-testid": testId = "popover",
     ...otherProps
 }: PopoverV2Props): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const testId = otherProps["data-testid"] || "popover";
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
+    const popoverContainerRef = useRef<HTMLDivElement>(null);
+    const popoverCardStyle = useMemo(
+        () => ({
+            [styles.tokens.popoverCard.maxHeight]:
+                maxHeight === undefined ? null : `${maxHeight}px`,
+            [styles.tokens.popoverCard.overflowY]: overflow ?? null,
+        }),
+        [maxHeight, overflow]
+    );
+    useApplyStyle(popoverContainerRef, popoverCardStyle);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -48,33 +63,44 @@ export const PopoverV2 = ({
 
     return (
         <>
-            {visible && (
-                <PopoverContainer
+            {visible && !isMobile && (
+                <div
+                    ref={popoverContainerRef}
                     tabIndex={0}
                     data-testid={testId}
                     {...otherProps}
+                    className={clsx(styles.popoverContainer, className)}
                     id={id}
                     role="dialog"
-                    aria-label={ariaLabel ?? "More information"}
+                    aria-label={ariaLabel}
                 >
-                    <PopoverCard $maxHeight={maxHeight} $overflow={overflow}>
+                    <Card
+                        className={clsx(
+                            styles.popoverCard,
+                            maxHeight !== undefined &&
+                                styles.popoverCardWithMaxHeight,
+                            overflow && styles.popoverCardWithOverflow
+                        )}
+                    >
                         <Markup baseTextSize="body-md">
                             {renderContent()}
                         </Markup>
-                    </PopoverCard>
-                </PopoverContainer>
+                    </Card>
+                </div>
             )}
             {isMobile && (
                 <ModalV2
-                    show={visible ?? false}
+                    show={visible}
                     onOverlayClick={handleMobileClose}
                     onClose={handleMobileClose}
                     id={id}
                     role="dialog"
-                    aria-label={ariaLabel ?? "More information"}
+                    aria-label={ariaLabel}
                 >
                     <ModalV2.Card>
-                        <ModalV2.Content>{renderContent()}</ModalV2.Content>
+                        <ModalV2.Content>
+                            <Markup>{renderContent()}</Markup>
+                        </ModalV2.Content>
                         <ModalV2.CloseButton />
                     </ModalV2.Card>
                 </ModalV2>

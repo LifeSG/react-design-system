@@ -14,17 +14,20 @@ import {
     useHover,
     useInteractions,
 } from "@floating-ui/react";
+import clsx from "clsx";
 import type React from "react";
-import { useContext, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import { useRef, useState } from "react";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
-import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
+import {
+    Breakpoint,
+    useDesignToken,
+    useInheritedThemeScope,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
 import { SimpleIdGenerator } from "../util";
-import { V3_Breakpoint } from "../v3_theme";
 import { PopoverV2 } from "./popover";
-import { TriggerContainer } from "./popover-trigger.styles";
+import * as styles from "./popover-trigger.styles";
 import type { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
 
 export const PopoverTrigger = ({
@@ -44,6 +47,7 @@ export const PopoverTrigger = ({
     overflow = "auto",
     triggerOnFocus = false,
     isModal = true,
+    className,
     ...otherProps
 }: PopoverV2TriggerProps) => {
     // =========================================================================
@@ -52,9 +56,8 @@ export const PopoverTrigger = ({
     const [visible, setVisible] = useState<boolean>(false);
     const nodeRef = useRef<HTMLElement | null>(null);
     const popoverRef = useRef<HTMLElement | null>(null);
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const [availableHeight, setAvailableHeight] = useState(0);
     const internalId = useRef(SimpleIdGenerator.generate());
     const popoverContainerId = `${internalId.current}-popover`;
@@ -190,7 +193,7 @@ export const PopoverTrigger = ({
 
     return (
         <>
-            <TriggerContainer
+            <div
                 ref={(node) => {
                     nodeRef.current = node;
                     refs.setReference(node);
@@ -203,9 +206,10 @@ export const PopoverTrigger = ({
                     },
                 })}
                 {...otherProps}
+                className={clsx(styles.triggerContainer, className)}
             >
                 {children}
-            </TriggerContainer>
+            </div>
             {visible && (
                 <FloatingPortal root={rootNode}>
                     <FloatingFocusManager

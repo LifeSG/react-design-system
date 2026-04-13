@@ -206,7 +206,7 @@ const POPOVER_TRIGGER_DATA: ApiTableSectionProps[] = [
                 mandatory: true,
             },
             {
-                name: "offset",
+                name: "customOffset",
                 description: "How much offset to apply for the popover (in px)",
                 propTypes: ["number"],
                 defaultValue: "16",
@@ -292,7 +292,7 @@ const POPOVER_DATA: ApiTableSectionProps[] = [
                         The visibility state of the <code>Popover</code>
                     </>
                 ),
-                propTypes: ["string", "JSX.Element"],
+                propTypes: ["boolean"],
             },
             {
                 name: "onMobileClose",

@@ -1,53 +1,42 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { V3_Colour } from "../../v3_theme";
-import type { PopoverInlineStyle } from "../types";
+import { Colour } from "../../theme";
 
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-
-interface StyledTextProps {
-    $defaultStyle: PopoverInlineStyle;
-    $hoverStyle: PopoverInlineStyle;
-}
-
-interface StyledIconProps {
-    $standalone: boolean;
-}
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const getTextStyle = (style: PopoverInlineStyle) => {
-    switch (style) {
-        case "underline":
-            return "text-decoration: underline 1px;";
-        case "underline-dashed":
-            return "text-decoration: underline dashed 1px;";
-    }
-};
-
-export const StyledText = styled.span<StyledTextProps>`
-    color: ${V3_Colour["text-primary"]};
+export const popoverInlineText = css`
+    color: ${Colour["text-primary"]};
     font-weight: 600;
     text-underline-position: under;
 
-    ${({ $defaultStyle }) => getTextStyle($defaultStyle)}
+    &[data-underline-style="underline"] {
+        text-decoration: underline 1px;
+    }
+
+    &[data-underline-style="underline-dashed"] {
+        text-decoration: underline dashed 1px;
+    }
 
     &:hover,
     &:focus-visible {
-        color: ${V3_Colour["text-hover"]};
-        ${({ $hoverStyle }) => getTextStyle($hoverStyle)}
+        color: ${Colour["text-hover"]};
+    }
+
+    &[data-underline-hover-style="underline"]:hover,
+    &[data-underline-hover-style="underline"]:focus-visible {
+        text-decoration: underline 1px;
+    }
+
+    &[data-underline-hover-style="underline-dashed"]:hover,
+    &[data-underline-hover-style="underline-dashed"]:focus-visible {
+        text-decoration: underline dashed 1px;
     }
 
     svg {
-        height: 1lh; // align vertically
-        width: 1em; // scale icon with font size
+        height: 1lh; /* align vertically */
+        width: 1em; /* scale icon with font size */
         vertical-align: top;
     }
 `;
 
-export const StyledIcon = styled.span<StyledIconProps>`
-    ${(props) => !props.$standalone && "margin-left: 0.25rem;"}
+export const popoverInlineIconWithContent = css`
+    margin-left: 0.25rem;
 `;

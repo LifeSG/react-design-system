@@ -70,7 +70,7 @@ Before you begin, create the outline for a step-by-step plan you would have to t
 
 -   Ensure the consumer `className` prop is chained last to the top-level element using `clsx` to allow for external overrides
 -   Remove the "STYLE TYPES" section header
--   For props used as CSS values, they can be converted to CSS variables and passed down to the `styled` component as inline styles. The CSS variable name should be formatted as `--fds-internal-componentName-subComponent-propertyType`. For example:
+-   For props used as CSS values, convert them to CSS variables and apply them with `useApplyStyle` on a ref (do not use the JSX `style` prop / inline styles). The CSS variable name should be formatted as `--fds-internal-componentName-subComponent-propertyType`. For example:
 
     ```
     // before
