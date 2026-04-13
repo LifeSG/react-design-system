@@ -1,4 +1,4 @@
-import React, { useMemo } from "react";
+import React from "react";
 import {
     BannerIcon,
     ButtonContainer,
@@ -52,22 +52,11 @@ function SmartAppBannerComponent(
         numberOfStars,
     } = content;
 
-    const ariaLabels = useMemo(
-        () => ({
-            dismiss: "Close banner",
-            icon: iconAriaLabel,
-            contentContainer: `${title}. ${message}. A rating of ${numberOfStars} out of ${MAX_STARS} stars.`,
-            cta: buttonAriaLabel ?? buttonLabel,
-        }),
-        [
-            title,
-            message,
-            iconAriaLabel,
-            buttonLabel,
-            buttonAriaLabel,
-            numberOfStars,
-        ]
-    );
+    const ariaLabels = {
+        dismiss: "Close banner",
+        icon: iconAriaLabel ?? "",
+        cta: buttonAriaLabel ?? buttonLabel,
+    };
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -92,20 +81,27 @@ function SmartAppBannerComponent(
         const hasHalfStar = numberOfStars - Math.floor(numberOfStars) >= 0.4;
 
         for (let i = 0; i < Math.floor(numberOfStars); i++) {
-            stars.push(<Star key={`star${i}`} />);
+            stars.push(<Star key={`star${i}`} aria-label="star" />);
         }
         if (hasHalfStar) {
-            stars.push(<StarHalf key={`halfstar`} />);
+            stars.push(<StarHalf key={`halfstar`} aria-label="half star" />);
         }
         if (stars.length < MAX_STARS) {
             const remaining = 5 - stars.length;
             for (let i = 0; i < remaining; i++) {
-                stars.push(<StarEmpty key={`emptystar${i}`} />);
+                stars.push(<StarEmpty key={`emptystar${i}`} aria-hidden />);
             }
         }
 
         /* maximum of 5 stars */
-        return <RatingContainer>{stars.slice(0, MAX_STARS)}</RatingContainer>;
+        return (
+            <RatingContainer
+                role="group"
+                aria-label={`A rating of ${numberOfStars} out of ${MAX_STARS} stars`}
+            >
+                {stars.slice(0, MAX_STARS)}
+            </RatingContainer>
+        );
     };
 
     return (
@@ -117,15 +113,6 @@ function SmartAppBannerComponent(
                     $offset={offset}
                     className={className}
                 >
-                    <DismissContainer
-                        onClick={onDismiss}
-                        id={`${ID}-dismiss`}
-                        data-testid={`${ID}-dismiss-container`}
-                    >
-                        <DismissButton aria-label={ariaLabels.dismiss}>
-                            <Cross />
-                        </DismissButton>
-                    </DismissContainer>
                     <ProceedContainer
                         onClick={handleClick}
                         id={`${ID}-proceed`}
@@ -136,7 +123,7 @@ function SmartAppBannerComponent(
                             alt="lifesg-app-icon"
                             aria-label={ariaLabels.icon}
                         />
-                        <TextContainer aria-label={ariaLabels.contentContainer}>
+                        <TextContainer>
                             <Title>{title}</Title>
                             <Description>{message}</Description>
                             {generateStarRating()}
@@ -151,6 +138,15 @@ function SmartAppBannerComponent(
                             </StyledButton>
                         </ButtonContainer>
                     </ProceedContainer>
+                    <DismissContainer
+                        onClick={onDismiss}
+                        id={`${ID}-dismiss`}
+                        data-testid={`${ID}-dismiss-container`}
+                    >
+                        <DismissButton aria-label={ariaLabels.dismiss}>
+                            <Cross />
+                        </DismissButton>
+                    </DismissContainer>
                 </SmartAppBannerContainer>
             )}
         </>
