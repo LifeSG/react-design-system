@@ -52,7 +52,6 @@ export const ToggleIcon = ({
                 basicWrapperColor,
                 className
             )}
-            $disabled={disabled}
             aria-hidden
         >
             {component}
