@@ -33,9 +33,9 @@ Before you begin, create the outline for a step-by-step plan you would have to t
 ### 2. Migrate V3 design tokens to V4 design tokens
 
 -   Update V3 design tokens from `src/v3_theme` to V4 design tokens in `src/theme`
--   For media queries, they need to be reordered:
-    -   Max width media queries should be ordered from smallest to largest (xxs, xs, sm, md, lg, xl)
-    -   Min width media queries should be ordered from largest to smallest (xl, lg, md, sm, xs, xxs)
+-   For media queries, they should be in this order:
+    -   Max width media queries should be ordered from largest to smallest (xl, lg, md, sm, xs, xxs)
+    -   Min width media queries should be ordered from smallest to largest (xxs, xs, sm, md, lg, xl, xxl)
 
 ### 3. Convert Styled Components interpolations to class names within the `styled` tags
 
