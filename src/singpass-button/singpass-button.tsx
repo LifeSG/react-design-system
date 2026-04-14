@@ -3,16 +3,22 @@ import { forwardRef } from "react";
 
 import { getSpLogo } from "./singpass-assets";
 import * as styles from "./singpass-button.styles";
-import type { SingpassButtonProps, SingpassButtonRef } from "./types";
+import type {
+    SingpassButtonProps,
+    SingpassButtonRef,
+    SingpassButtonSizeType,
+    SingpassButtonStyleType,
+} from "./types";
 
-const styleClassMap: Record<string, string> = {
+const styleClassMap: Record<SingpassButtonStyleType, string> = {
     "red-filled": styles.mainStyleRedFilled,
     "white-filled": styles.mainStyleWhiteFilled,
 };
 
-const sizeClassMap: Record<string, string> = {
+const sizeClassMap: Record<SingpassButtonSizeType, string> = {
     small: styles.mainSizeSmall,
     large: styles.mainSizeLarge,
+    default: "",
 };
 
 const Component = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
