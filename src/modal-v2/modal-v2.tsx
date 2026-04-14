@@ -14,14 +14,7 @@ import { useApplyStyle } from "../theme";
 import { useEvent } from "../util";
 import { ModalContext } from "./modal-context";
 import * as styles from "./modal-v2.styles";
-import type { ModalAnimationDirection, ModalV2Props } from "./types";
-
-const ANIMATION_FROM_CLASS_MAP: Record<ModalAnimationDirection, string> = {
-    top: styles.containerFromTop,
-    bottom: styles.containerFromBottom,
-    left: styles.containerFromLeft,
-    right: styles.containerFromRight,
-};
+import type { ModalV2Props } from "./types";
 
 export const ModalV2 = ({
     id,
@@ -113,12 +106,9 @@ export const ModalV2 = ({
                 ref={containerRef}
                 data-testid={testId}
                 data-status={status}
+                data-animation-from={animationFrom}
                 {...otherProps}
-                className={clsx(
-                    styles.container,
-                    ANIMATION_FROM_CLASS_MAP[animationFrom],
-                    className
-                )}
+                className={clsx(styles.container, className)}
             >
                 <ModalContext.Provider value={{ onClose }}>
                     {isMounted && (

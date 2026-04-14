@@ -13,11 +13,6 @@ export const tokens = {
     },
 } as const;
 
-export const containerFromTop = "modalV2ContainerFromTop";
-export const containerFromBottom = "modalV2ContainerFromBottom";
-export const containerFromLeft = "modalV2ContainerFromLeft";
-export const containerFromRight = "modalV2ContainerFromRight";
-
 export const container = css`
     position: relative;
     width: 100%;
@@ -48,35 +43,35 @@ export const container = css`
         transition: all ${Motion["duration-250"]} ${Motion["ease-exit"]};
     }
 
-    &.${containerFromTop}${IS_INITIAL_OR_CLOSE} {
+    &[data-animation-from="top"]${IS_INITIAL_OR_CLOSE} {
         top: ${CLOSED_POSITION_OFFSET};
     }
 
-    &.${containerFromTop}[data-status="open"] {
+    &[data-animation-from="top"][data-status="open"] {
         top: 0;
     }
 
-    &.${containerFromBottom}${IS_INITIAL_OR_CLOSE} {
+    &[data-animation-from="bottom"]${IS_INITIAL_OR_CLOSE} {
         bottom: ${CLOSED_POSITION_OFFSET};
     }
 
-    &.${containerFromBottom}[data-status="open"] {
+    &[data-animation-from="bottom"][data-status="open"] {
         bottom: 0;
     }
 
-    &.${containerFromLeft}${IS_INITIAL_OR_CLOSE} {
+    &[data-animation-from="left"]${IS_INITIAL_OR_CLOSE} {
         left: ${CLOSED_POSITION_OFFSET};
     }
 
-    &.${containerFromLeft}[data-status="open"] {
+    &[data-animation-from="left"][data-status="open"] {
         left: 0;
     }
 
-    &.${containerFromRight}${IS_INITIAL_OR_CLOSE} {
+    &[data-animation-from="right"]${IS_INITIAL_OR_CLOSE} {
         right: ${CLOSED_POSITION_OFFSET};
     }
 
-    &.${containerFromRight}[data-status="open"] {
+    &[data-animation-from="right"][data-status="open"] {
         right: 0;
     }
 `;
