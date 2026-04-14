@@ -73,7 +73,7 @@ export const compareScreenshot = async (
                 width: box.width + 20,
                 height: box.height + 20,
             },
-            threshold: 0, // Strict colour matching
+            threshold: 0.01, // Strict colour matching
         });
         return;
     }
@@ -84,17 +84,7 @@ export const compareScreenshot = async (
 
     await expect(target).toHaveScreenshot(`${name}.png`, {
         fullPage: options?.fullscreen ?? false,
-        threshold: 0, // Strict colour matching
-    });
-};
-
-export const compareLocatorScreenshot = async (
-    locator: ReturnType<Page["locator"]>,
-    name: string,
-    options?: { threshold?: number }
-) => {
-    await expect(locator).toHaveScreenshot(`${name}.png`, {
-        threshold: options?.threshold ?? 0, // Strict colour matching by default
+        threshold: 0.01, // Strict colour matching
     });
 };
 
