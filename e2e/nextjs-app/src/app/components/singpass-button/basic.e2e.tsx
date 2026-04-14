@@ -4,7 +4,7 @@ import { SingpassButton } from "@lifesg/react-design-system/singpass-button";
 
 export default function Story() {
     return (
-        <div className="story-column-container" style={{ padding: "2rem" }}>
+        <div className="story-column-container">
             <div className="story-row-container">
                 <SingpassButton
                     data-testid="large-white"
