@@ -17,10 +17,6 @@ interface ThumbnailItemStyleProps {
     $active?: boolean;
 }
 
-interface TopActionButtonStyleProps extends InsetStyleProps {
-    $hasDeleteAction?: boolean;
-}
-
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -48,13 +44,16 @@ const IconButton = styled(ClickableIcon)`
     }
 `;
 
-export const CloseButton = styled(IconButton)<InsetStyleProps>`
+export const TopActionButtons = styled.div<InsetStyleProps>`
     position: absolute;
     top: ${(props) =>
         css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
     right: ${(props) =>
         css`calc(${Spacing["spacing-48"]} + ${props.$insetRight || 0}px)`};
     z-index: 5;
+    display: flex;
+    align-items: center;
+    gap: ${Spacing["spacing-16"]};
 
     ${MediaQuery.MaxWidth.sm} {
         top: ${(props) =>
@@ -64,64 +63,13 @@ export const CloseButton = styled(IconButton)<InsetStyleProps>`
     }
 `;
 
-export const DeleteButton = styled(IconButton)<InsetStyleProps>`
-    position: absolute;
-    top: ${(props) =>
-        css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
-    right: ${(props) =>
-        css`calc(2.5rem + ${Spacing["spacing-48"]} + ${
-            Spacing["spacing-16"]
-        } + ${
-            props.$insetRight || 0
-        }px)`}; // close button + gap + space from screen
+export const CloseButton = styled(IconButton)``;
+
+export const DeleteButton = styled(IconButton)`
     color: ${Colour["icon-error"]};
-
-    z-index: 5;
-
-    ${MediaQuery.MaxWidth.sm} {
-        top: ${(props) =>
-            css`calc(${Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
-        right: ${(props) =>
-            css`calc(2.5rem + ${Spacing["spacing-20"]} + ${
-                Spacing["spacing-16"]
-            } + ${
-                props.$insetRight || 0
-            }px)`}; // close button + gap + space from screen
-    }
 `;
 
-export const MagnifierButton = styled(IconButton)<TopActionButtonStyleProps>`
-    position: absolute;
-    top: ${(props) =>
-        css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
-    right: ${(props) =>
-        props.$hasDeleteAction
-            ? css`calc(5rem + ${Spacing["spacing-48"]} + ${
-                  Spacing["spacing-16"]
-              } * 2 + ${props.$insetRight || 0}px)`
-            : css`calc(2.5rem + ${Spacing["spacing-48"]} + ${
-                  Spacing["spacing-16"]
-              } + ${
-                  props.$insetRight || 0
-              }px)`}; // close button + optional delete button + gaps + space from screen
-
-    z-index: 5;
-
-    ${MediaQuery.MaxWidth.sm} {
-        top: ${(props) =>
-            css`calc(${Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
-        right: ${(props) =>
-            props.$hasDeleteAction
-                ? css`calc(5rem + ${Spacing["spacing-20"]} + ${
-                      Spacing["spacing-16"]
-                  } * 2 + ${props.$insetRight || 0}px)`
-                : css`calc(2.5rem + ${Spacing["spacing-20"]} + ${
-                      Spacing["spacing-16"]
-                  } + ${
-                      props.$insetRight || 0
-                  }px)`}; // close button + optional delete button + gaps + space from screen
-    }
-`;
+export const MagnifierButton = styled(IconButton)``;
 
 export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     z-index: 4;

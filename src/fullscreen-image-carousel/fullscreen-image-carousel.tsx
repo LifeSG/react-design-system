@@ -45,6 +45,7 @@ import {
     ThumbnailItem,
     ThumbnailItemContainer,
     ThumbnailWrapper,
+    TopActionButtons,
 } from "./fullscreen-image-carousel.style";
 import {
     FullscreenImageCarouselProps,
@@ -405,42 +406,40 @@ export const Component = (
                     {!hideThumbnail && renderThumbnails()}
                 </ImageGalleryContainer>
 
-                {!hideMagnifier && (
-                    <MagnifierButton
-                        aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
-                        onClick={handleMagnifier}
-                        $hasDeleteAction={!!onDelete}
-                        $insetTop={insets?.top}
-                        $insetRight={insets?.right}
-                    >
-                        {zoom === 1 ? (
-                            <MagnifierPlusIcon aria-hidden />
-                        ) : (
-                            <MagnifierMinusIcon aria-hidden />
-                        )}
-                    </MagnifierButton>
-                )}
-
-                {onDelete && currentItem && (
-                    <DeleteButton
-                        aria-label="Delete image"
-                        data-testid="delete-btn"
-                        onClick={handleDelete}
-                        $insetTop={insets?.top}
-                        $insetRight={insets?.right}
-                    >
-                        <BinIcon aria-hidden />
-                    </DeleteButton>
-                )}
-
-                <CloseButton
-                    aria-label="Close image carousel"
-                    onClick={onClose}
+                <TopActionButtons
                     $insetTop={insets?.top}
                     $insetRight={insets?.right}
                 >
-                    <CrossIcon aria-hidden />
-                </CloseButton>
+                    {!hideMagnifier && (
+                        <MagnifierButton
+                            aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
+                            onClick={handleMagnifier}
+                        >
+                            {zoom === 1 ? (
+                                <MagnifierPlusIcon aria-hidden />
+                            ) : (
+                                <MagnifierMinusIcon aria-hidden />
+                            )}
+                        </MagnifierButton>
+                    )}
+
+                    {onDelete && currentItem && (
+                        <DeleteButton
+                            aria-label="Delete image"
+                            data-testid="delete-btn"
+                            onClick={handleDelete}
+                        >
+                            <BinIcon aria-hidden />
+                        </DeleteButton>
+                    )}
+
+                    <CloseButton
+                        aria-label="Close image carousel"
+                        onClick={onClose}
+                    >
+                        <CrossIcon aria-hidden />
+                    </CloseButton>
+                </TopActionButtons>
             </CarouselModalContent>
         </ModalV2>
     );
