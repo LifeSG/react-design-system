@@ -1,5 +1,6 @@
 import clsx from "clsx";
-import { useEffect, useRef } from "react";
+import dayjs from "dayjs";
+import { useEffect, useRef, useState } from "react";
 
 import * as styles from "./day-cell.styles";
 import type { DayCellProps } from "./types";
@@ -38,22 +39,24 @@ export const DayCell = ({
     const isGridcellRole = role === "gridcell";
     const isSelected =
         labelType === "selected" || labelType === "selected-hover";
-    const isToday = labelType === "current";
+    const labelText = label || defaultLabel;
+    const labelTypeAttr = disabled ? undefined : labelType;
 
     // =============================================================================
     // REFS, EFFECTS
     // =============================================================================
     const buttonRef = useRef<HTMLButtonElement>(null);
+    const [isToday, setIsToday] = useState(false);
 
     useEffect(() => {
-        if (!isFocused) {
-            return;
-        }
-
-        if (isButtonRole && buttonRef.current) {
-            buttonRef.current.focus();
+        if (isFocused && isButtonRole) {
+            buttonRef.current?.focus();
         }
     }, [isButtonRole, isFocused]);
+
+    useEffect(() => {
+        setIsToday(dayjs().isSame(date, "day"));
+    }, [date]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -70,7 +73,7 @@ export const DayCell = ({
         onFocus?.(date);
     };
 
-    const handleMouseout = () => {
+    const handleMouseLeave = () => {
         onHoverEnd?.(date);
     };
 
@@ -114,20 +117,18 @@ export const DayCell = ({
                         type="button"
                         className={styles.label}
                         data-day-cell-interactive={interactive}
-                        data-day-cell-label-type={
-                            disabled ? undefined : labelType
-                        }
+                        data-day-cell-label-type={labelTypeAttr}
                         data-day-cell-disabled={disabled}
                         ref={buttonRef}
                         tabIndex={tabIndex}
                         role={role === "button" ? undefined : role}
-                        aria-label={label || defaultLabel}
+                        aria-label={labelText}
                         aria-disabled={!interactive}
                         aria-selected={isGridcellRole ? isSelected : undefined}
                         onClick={handleClick}
                         onKeyDown={handleLabelKeyDown}
                         onMouseEnter={handleHover}
-                        onMouseLeave={handleMouseout}
+                        onMouseLeave={handleMouseLeave}
                         onFocus={handleFocus}
                     >
                         {labelContent}
@@ -136,12 +137,10 @@ export const DayCell = ({
                     <div
                         className={styles.label}
                         data-day-cell-interactive={interactive}
-                        data-day-cell-label-type={
-                            disabled ? undefined : labelType
-                        }
+                        data-day-cell-label-type={labelTypeAttr}
                         data-day-cell-disabled={disabled}
                         role={role}
-                        aria-label={label || defaultLabel}
+                        aria-label={labelText}
                     >
                         {labelContent}
                     </div>
