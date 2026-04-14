@@ -340,6 +340,10 @@ describe("Pagination", () => {
             await user.click(screen.getByTestId(SELECTOR_TESTID));
 
             const dropdown = await screen.findByTestId(DROPDOWN_TESTID);
+            await waitFor(() => {
+                expect(dropdown).toBeVisible();
+            });
+
             expect(within(dropdown).queryByText("10 per page")).toBeVisible();
             expect(within(dropdown).queryByText("20 per page")).toBeVisible();
             expect(within(dropdown).queryByText("30 per page")).toBeVisible();
@@ -363,6 +367,10 @@ describe("Pagination", () => {
             await user.click(screen.getByTestId(SELECTOR_TESTID));
 
             const dropdown = await screen.findByTestId(DROPDOWN_TESTID);
+            await waitFor(() => {
+                expect(dropdown).toBeVisible();
+            });
+
             expect(within(dropdown).queryByText("1 per page")).toBeVisible();
             expect(within(dropdown).queryByText("2 per page")).toBeVisible();
         });

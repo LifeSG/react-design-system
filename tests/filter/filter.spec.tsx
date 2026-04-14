@@ -535,22 +535,33 @@ describe("FilterSidebar", () => {
 });
 
 describe("FilterModal", () => {
-    it("renders modal header and buttons", () => {
+    it("renders visible button and hidden modal initially", () => {
         render(
             <FilterModal>
                 <div data-testid="modal-child">Hidden content</div>
             </FilterModal>
         );
 
-        const button = screen.getByRole("button", { name: "Filters" });
-
-        expect(button).toBeInTheDocument();
-
-        fireEvent.click(button);
+        expect(
+            screen.getByRole("button", { name: "Filters" })
+        ).toBeInTheDocument();
 
         expect(
-            screen.getByRole("heading", { name: "Filters" })
-        ).toBeInTheDocument();
+            screen.queryByRole("heading", { name: "Filters" })
+        ).not.toBeInTheDocument();
+    });
+
+    it("renders visible modal when button is clicked", () => {
+        render(
+            <FilterModal>
+                <div data-testid="modal-child">Hidden content</div>
+            </FilterModal>
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Filters" }));
+
+        expect(screen.getByRole("heading", { name: "Filters" })).toBeVisible();
+        expect(screen.queryByTestId("modal-child")).toBeVisible();
     });
 
     it("calls onClear when Clear button is clicked", () => {
@@ -567,19 +578,6 @@ describe("FilterModal", () => {
 
         fireEvent.click(screen.getByText("Done"));
         expect(mockOnDone).toHaveBeenCalled();
-    });
-
-    it("renders children correctly", () => {
-        render(
-            <FilterModal>
-                <div data-testid="modal-item">Item content</div>
-            </FilterModal>
-        );
-
-        fireEvent.click(screen.getByTestId(MOBILE_SHOW_BUTTON_TESTID));
-
-        expect(screen.getByTestId("modal-item")).toBeInTheDocument();
-        expect(screen.getByTestId("modal-item")).toBeVisible();
     });
 });
 
