@@ -3,6 +3,7 @@ import path from "node:path";
 
 const IMPORT_CSS_REGEX = /(import\s*["'])([^"']+\.css)(["'])/g;
 const REQUIRE_CSS_REGEX = /(require\(\s*["'])([^"']+\.css)(["']\s*\))/g;
+const LIB_STYLE_MAGIC_PREFIX = "@@_MAGIC_PATH_@@";
 
 // Recursively collects files with a given extension while skipping selected
 // output directories (for example, skip dist/cjs while processing dist).
@@ -41,15 +42,26 @@ const toRelativeImportPath = (fromFile, toFile) => {
 const isFixableCssImportPath = (importPath) => {
     return (
         importPath.endsWith(".css") &&
-        (importPath.startsWith(".") || importPath.startsWith("/"))
+        (importPath.startsWith(".") ||
+            importPath.startsWith("/") ||
+            importPath.startsWith(LIB_STYLE_MAGIC_PREFIX))
     );
 };
 
+const normalizeImportPath = (importPath) => {
+    if (!importPath.startsWith(LIB_STYLE_MAGIC_PREFIX)) return importPath;
+
+    const stripped = importPath.slice(LIB_STYLE_MAGIC_PREFIX.length);
+    return stripped.startsWith("/") ? stripped : `/${stripped}`;
+};
+
 const resolveImportedCssPath = ({ outputDir, jsFile, importPath }) => {
-    if (importPath.startsWith("/")) {
-        return path.resolve(outputDir, "." + importPath);
+    const normalizedPath = normalizeImportPath(importPath);
+
+    if (normalizedPath.startsWith("/")) {
+        return path.resolve(outputDir, "." + normalizedPath);
     }
-    return path.resolve(path.dirname(jsFile), importPath);
+    return path.resolve(path.dirname(jsFile), normalizedPath);
 };
 
 const indexCssByBasename = (cssFiles) => {
@@ -72,6 +84,14 @@ const getRewrittenCssImportPath = ({
     cssByBasename,
 }) => {
     if (!isFixableCssImportPath(importPath)) return null;
+
+    if (importPath.startsWith(LIB_STYLE_MAGIC_PREFIX)) {
+        const normalizedPath = normalizeImportPath(importPath);
+        const resolvedMagicPath = path.resolve(outputDir, "." + normalizedPath);
+        if (fs.existsSync(resolvedMagicPath)) {
+            return toRelativeImportPath(jsFile, resolvedMagicPath);
+        }
+    }
 
     const resolvedPath = resolveImportedCssPath({
         outputDir,
