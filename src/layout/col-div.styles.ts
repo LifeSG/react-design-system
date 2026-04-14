@@ -27,6 +27,10 @@ export const tokens = {
 };
 
 export const colDiv = css`
+    ${Object.values(tokens)
+        .map((token) => `${token}: initial;`)
+        .join("\n    ")}
+
     position: relative;
 
     grid-column: var(${tokens.xxsStart}, auto) /

@@ -1,9 +1,10 @@
 import clsx from "clsx";
-import React from "react";
+import React, { useRef } from "react";
 
-import type { BreakpointCSSVariableString } from "../theme";
+import { type BreakpointCSSVariableString, useApplyStyle } from "../theme";
 import { Breakpoint } from "../theme/tokens/breakpoint";
 import { parseCSSVariableValue } from "../theme/utils/css-variable";
+import { mergeRefs } from "../util";
 import * as styles from "./col-div.styles";
 import type { ColDivProps } from "./types";
 
@@ -70,6 +71,9 @@ const Component = (
         style,
         ...otherProps
     } = props;
+
+    const rootRef = useRef<HTMLDivElement>(null);
+    const mergedRef = ref ? mergeRefs(rootRef, ref) : rootRef;
 
     const getColSpan = (
         cols: number | [number, number] | undefined,
@@ -150,9 +154,14 @@ const Component = (
         return cssVars;
     };
 
+    useApplyStyle(rootRef, {
+        ...getCssVars(),
+        ...style,
+    });
+
     return (
         <div
-            ref={ref}
+            ref={mergedRef}
             className={clsx(styles.colDiv, className)}
             style={{ ...getCssVars(), ...style } as React.CSSProperties}
             {...otherProps}
