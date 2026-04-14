@@ -26,12 +26,12 @@ interface TimeSlotBarStyleAttributes {
     /** The background color on hover */
     hoverBackgroundColor?:
         | string
-        | ((props: ThemeStyleProps) => string)
+        | ((props: V3_ThemeStyleProps) => string)
         | undefined;
     /** The secondary background color on hover. Used in conjunction if styleType is "stripes" */
     hoverBackgroundColor2?:
         | string
-        | ((props: ThemeStyleProps) => string)
+        | ((props: V3_ThemeStyleProps) => string)
         | undefined;
 }
 

@@ -35,7 +35,7 @@ export const InputSection = styled.div`
 export const InputContainer = styled.div<InputContainerStyleProps>`
     display: flex;
     align-items: center;
-    gap: ${Spacing["spacing-4"]};
+    gap: ${V3_Spacing["spacing-4"]};
 
     ${(props) => {
         if (props.$hover) {
@@ -53,7 +53,7 @@ const InputSizerBase = styled.span`
     position: relative;
 
     &::after {
-        ${Font["body-baseline-regular"]}
+        ${V3_Font["body-baseline-regular"]}
         visibility: hidden;
         pointer-events: none;
         white-space: pre;
