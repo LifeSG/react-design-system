@@ -199,6 +199,11 @@ export const HeaderCell = styled.th<HeaderCellProps>`
             `;
         }
     }};
+    &:focus-within {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: -3px;
+        z-index: 1;
+    }
 `;
 
 export const HeaderCellWrapper = styled.div`
@@ -211,19 +216,6 @@ export const HeaderCellWrapper = styled.div`
     svg {
         color: ${fontColor};
         margin-left: 0.5rem;
-    }
-`;
-
-export const ClickableHeader = styled(BasicButton)`
-    position: absolute;
-    inset: 0.25rem;
-    z-index: 2;
-    cursor: pointer;
-    border-radius: ${Radius["sm"]};
-
-    &:focus-visible {
-        outline: 2px solid ${Colour["focus-ring"]};
-        outline-offset: 0;
     }
 `;
 

@@ -14,7 +14,6 @@ import {
     BodyCellContent,
     BodyRow,
     CheckBoxWrapper,
-    ClickableHeader,
     EmptyViewCell,
     ErrorDisplayTitle,
     HeaderCell,
@@ -291,17 +290,22 @@ export const DataTable = ({
                 $isCheckbox={false}
             >
                 {(clickable || isSortable) && (
-                    <ClickableHeader
-                        type="button"
-                        aria-label={
-                            typeof label === "string"
-                                ? isSortable
-                                    ? getSortButtonAriaLabel(label, fieldKey)
-                                    : label
-                                : undefined
-                        }
-                        onClick={() => onHeaderClick?.(fieldKey)}
-                    />
+                    <VisuallyHidden>
+                        <button
+                            type="button"
+                            aria-label={
+                                typeof label === "string"
+                                    ? isSortable
+                                        ? getSortButtonAriaLabel(
+                                              label,
+                                              fieldKey
+                                          )
+                                        : label
+                                    : undefined
+                            }
+                            onClick={() => onHeaderClick?.(fieldKey)}
+                        />
+                    </VisuallyHidden>
                 )}
 
                 <HeaderCellWrapper>
