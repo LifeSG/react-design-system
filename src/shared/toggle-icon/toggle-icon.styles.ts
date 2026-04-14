@@ -21,27 +21,19 @@ export const Wrapper = styled.div<StyleProps>`
         width: 100%;
     }
 
-    ${(props) => {
-        if (props.$disabled) {
-            if (props.$active) {
-                return css`
-                    color: ${Colour["icon-selected-disabled"]};
-                `;
-            } else {
-                return css`
-                    color: ${Colour["icon-disabled-subtle"]};
-                `;
-            }
-        }
+    &.wrapperActive {
+        color: ${Colour["icon-selected"]};
+    }
 
-        if (props.$active) {
-            return css`
-                color: ${Colour["icon-selected"]};
-            `;
-        }
+    &.wrapperActiveDisabled {
+        color: ${Colour["icon-selected-disabled"]};
+    }
 
-        return css`
-            color: ${Colour["icon-subtle"]};
-        `;
-    }};
+    &.wrapperDisabled {
+        color: ${Colour["icon-disabled-subtle"]};
+    }
+`;
+
+export const basicWrapperColor = css`
+    color: ${Colour["icon-subtle"]};
 `;

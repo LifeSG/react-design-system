@@ -4,8 +4,9 @@ import { CrossIcon } from "@lifesg/react-icons/cross";
 import { SquareIcon } from "@lifesg/react-icons/square";
 import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
 import { TickIcon } from "@lifesg/react-icons/tick";
+import clsx from "clsx";
 
-import { Wrapper } from "./toggle-icon.styles";
+import { basicWrapperColor, Wrapper } from "./toggle-icon.styles";
 
 export type ToggleIconType = "checkbox" | "radio" | "tick" | "cross";
 
@@ -44,8 +45,13 @@ export const ToggleIcon = ({
 
     return (
         <Wrapper
-            className={className}
-            $active={active}
+            className={clsx(
+                active && "wrapperActive",
+                active && disabled && "wrapperActiveDisabled",
+                disabled && "wrapperDisabled",
+                basicWrapperColor,
+                className
+            )}
             $disabled={disabled}
             aria-hidden
         >
