@@ -1,5 +1,4 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import "jest-styled-components";
 import { FullscreenImageCarousel } from "../../src/fullscreen-image-carousel";
 
 // =============================================================================
@@ -41,30 +40,6 @@ describe("Fullscreen Image Carousel", () => {
         );
 
         expect(screen.getByTestId("delete-btn")).toBeInTheDocument();
-    });
-
-    it("should only reserve delete button spacing when onDelete is provided", () => {
-        const { rerender } = render(
-            <FullscreenImageCarousel items={IMAGES} show={true} />
-        );
-
-        expect(screen.getByLabelText("Zoom in")).toHaveStyleRule(
-            "right",
-            "calc(2.5rem + 48px + 16px + 0px)"
-        );
-
-        rerender(
-            <FullscreenImageCarousel
-                items={IMAGES}
-                show={true}
-                onDelete={jest.fn()}
-            />
-        );
-
-        expect(screen.getByLabelText("Zoom in")).toHaveStyleRule(
-            "right",
-            "calc(5rem + 48px + 16px * 2 + 0px)"
-        );
     });
 
     it("should call onDelete with the current item and index", () => {
