@@ -334,14 +334,12 @@ export const TimeSlotBarWeekDays = ({
 
     function getSlotAriaLabel(date: string, slot: TimeSlot) {
         const { startTime: slotStartTime, endTime: slotEndTime } = slot;
-        const isAvailable = slot.clickable ?? true;
 
         return StringHelper.joinNonEmptyStrings([
             dayjs(date).format("D MMMM YYYY dddd"),
             slotStartTime && slotEndTime
                 ? TimeHelper.formatTimeRange(slotStartTime, slotEndTime)
                 : undefined,
-            isAvailable ? "Available" : "Unavailable",
             slot.label,
         ]);
     }
@@ -587,6 +585,7 @@ export const TimeSlotBarWeekDays = ({
                                         backgroundColor2,
                                     } = styleAttributes;
                                     const slotKey = `${formattedDate}-${id}`;
+                                    const slotStateId = `${slotKey}-state`;
                                     return (
                                         <TimeSlotComponent
                                             $type="vertical"
@@ -613,6 +612,11 @@ export const TimeSlotBarWeekDays = ({
                                         >
                                             {isActualSlot && (
                                                 <VisuallyHidden>
+                                                    <span id={slotStateId}>
+                                                        {clickable
+                                                            ? "Available"
+                                                            : "Unavailable"}
+                                                    </span>
                                                     <button
                                                         type="button"
                                                         ref={(element) => {
@@ -622,6 +626,9 @@ export const TimeSlotBarWeekDays = ({
                                                         }}
                                                         aria-disabled={
                                                             !clickable
+                                                        }
+                                                        aria-describedby={
+                                                            slotStateId
                                                         }
                                                         aria-label={getSlotAriaLabel(
                                                             formattedDate,
