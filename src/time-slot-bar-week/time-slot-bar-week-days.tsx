@@ -144,6 +144,16 @@ export const TimeSlotBarWeekDays = ({
         onSlotClick?.(date, slot);
     };
 
+    const handleSlotButtonClick =
+        (date: string, slot: TimeSlot) =>
+        (event: React.MouseEvent<HTMLButtonElement>) => {
+            event.stopPropagation();
+
+            if (slot.clickable ?? true) {
+                handleSlotClick(date, slot);
+            }
+        };
+
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
         setExpandAll((prevExpandValue) => !prevExpandValue);
@@ -629,13 +639,10 @@ export const TimeSlotBarWeekDays = ({
                                                                 }
                                                             )
                                                         }
-                                                        onClick={() =>
-                                                            clickable &&
-                                                            handleSlotClick(
-                                                                formattedDate,
-                                                                slot
-                                                            )
-                                                        }
+                                                        onClick={handleSlotButtonClick(
+                                                            formattedDate,
+                                                            slot
+                                                        )}
                                                     />
                                                 </VisuallyHidden>
                                             )}
