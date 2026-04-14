@@ -1,79 +1,8 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Motion, Radius } from "../../../theme/tokens";
-import type { CellType, LabelType } from "./types";
 
-export const dayCellTypeClassMap: Record<CellType, string> = {
-    "hover-subtle": "dayCellTypeHoverSubtle",
-    hover: "dayCellTypeHover",
-    "hover-outline": "dayCellTypeHoverOutline",
-    "selected-outline": "dayCellTypeSelectedOutline",
-    "selected-outline-subtle": "dayCellTypeSelectedOutlineSubtle",
-    "selected-hover": "dayCellTypeSelectedHover",
-    "selected-hover-outline": "dayCellTypeSelectedHoverOutline",
-};
-
-export const dayCellLabelTypeClassMap: Record<LabelType, string> = {
-    available: "dayCellLabelAvailable",
-    unavailable: "dayCellLabelUnavailable",
-    current: "dayCellLabelCurrent",
-    hover: "dayCellLabelHover",
-    selected: "dayCellLabelSelected",
-    "selected-hover": "dayCellLabelSelectedHover",
-    hidden: "dayCellLabelHidden",
-};
-
-export const dayCellLabelDisabled = "dayCellLabelDisabled";
-export const dayCellLabelDisabledHidden = "dayCellLabelDisabledHidden";
-export const dayCellLabelPointerAuto = "dayCellLabelPointerAuto";
-
-export const dayCellLabelWrapperInteractive = "dayCellLabelWrapperInteractive";
-export const dayCellLabelWrapperNeutral = "dayCellLabelWrapperNeutral";
-
-const dayCellTypeHoverSubtle = css`
-    background-color: ${Colour["bg-hover"]};
-    border-top-color: ${Colour["bg-hover"]};
-    border-bottom-color: ${Colour["bg-hover"]};
-`;
-
-const dayCellTypeHover = css`
-    background-color: ${Colour["bg-hover-strong"]};
-    border-top-color: ${Colour["bg-hover-strong"]};
-    border-bottom-color: ${Colour["bg-hover-strong"]};
-`;
-
-const dayCellTypeHoverOutline = css`
-    background-color: ${Colour["bg-hover-subtle"]};
-    border-top-color: ${Colour["border-hover"]};
-    border-bottom-color: ${Colour["border-hover"]};
-`;
-
-const dayCellTypeSelectedOutline = css`
-    background-color: ${Colour["bg-selected"]};
-    border-top-color: ${Colour["border-selected"]};
-    border-bottom-color: ${Colour["border-selected"]};
-`;
-
-const dayCellTypeSelectedOutlineSubtle = css`
-    background-color: ${Colour["bg-selected"]};
-    border-top-color: ${Colour["border-selected-subtle"]};
-    border-bottom-color: ${Colour["border-selected-subtle"]};
-`;
-
-const dayCellTypeSelectedHover = css`
-    background-color: ${Colour["bg-selected-hover"]};
-`;
-
-const dayCellTypeSelectedHoverOutline = css`
-    background-color: ${Colour["bg-selected-hover"]};
-    border-top-color: ${Colour["border-selected-hover"]};
-    border-bottom-color: ${Colour["border-selected-hover"]};
-`;
-
-// =============================================================================
-// COMPONENTS
-// =============================================================================
-export const Cell = styled.div`
+export const cell = css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -82,7 +11,7 @@ export const Cell = styled.div`
     height: 2.5rem;
 `;
 
-const Half = styled.div`
+export const half = `
     position: absolute;
     height: 2.5rem;
     width: 50%;
@@ -92,44 +21,58 @@ const Half = styled.div`
     border-right: none;
     background-clip: border-box;
 
-    &.${dayCellTypeClassMap["hover-subtle"]} {
-        ${dayCellTypeHoverSubtle}
+    &[data-day-cell-type="hover-subtle"] {
+        background-color: ${Colour["bg-hover"]};
+        border-top-color: ${Colour["bg-hover"]};
+        border-bottom-color: ${Colour["bg-hover"]};
     }
 
-    &.${dayCellTypeClassMap["hover"]} {
-        ${dayCellTypeHover}
+    &[data-day-cell-type="hover"] {
+        background-color: ${Colour["bg-hover-strong"]};
+        border-top-color: ${Colour["bg-hover-strong"]};
+        border-bottom-color: ${Colour["bg-hover-strong"]};
     }
 
-    &.${dayCellTypeClassMap["hover-outline"]} {
-        ${dayCellTypeHoverOutline}
+    &[data-day-cell-type="hover-outline"] {
+        background-color: ${Colour["bg-hover-subtle"]};
+        border-top-color: ${Colour["border-hover"]};
+        border-bottom-color: ${Colour["border-hover"]};
     }
 
-    &.${dayCellTypeClassMap["selected-outline"]} {
-        ${dayCellTypeSelectedOutline}
+    &[data-day-cell-type="selected-outline"] {
+        background-color: ${Colour["bg-selected"]};
+        border-top-color: ${Colour["border-selected"]};
+        border-bottom-color: ${Colour["border-selected"]};
     }
 
-    &.${dayCellTypeClassMap["selected-outline-subtle"]} {
-        ${dayCellTypeSelectedOutlineSubtle}
+    &[data-day-cell-type="selected-outline-subtle"] {
+        background-color: ${Colour["bg-selected"]};
+        border-top-color: ${Colour["border-selected-subtle"]};
+        border-bottom-color: ${Colour["border-selected-subtle"]};
     }
 
-    &.${dayCellTypeClassMap["selected-hover"]} {
-        ${dayCellTypeSelectedHover}
+    &[data-day-cell-type="selected-hover"] {
+        background-color: ${Colour["bg-selected-hover"]};
     }
 
-    &.${dayCellTypeClassMap["selected-hover-outline"]} {
-        ${dayCellTypeSelectedHoverOutline}
+    &[data-day-cell-type="selected-hover-outline"] {
+        background-color: ${Colour["bg-selected-hover"]};
+        border-top-color: ${Colour["border-selected-hover"]};
+        border-bottom-color: ${Colour["border-selected-hover"]};
     }
 `;
 
-export const LeftHalf = styled(Half)`
+export const leftHalf = css`
+    ${half}
     left: 0;
 `;
 
-export const RightHalf = styled(Half)`
+export const rightHalf = css`
+    ${half}
     right: 0;
 `;
 
-export const Circle = styled.div`
+export const circle = `
     position: absolute;
     z-index: 1;
 
@@ -144,68 +87,71 @@ export const Circle = styled.div`
     border-radius: ${Radius["md"]};
     background-clip: content-box;
 
-    &.${dayCellTypeClassMap["hover-subtle"]} {
+    &[data-day-cell-type="hover-subtle"] {
         background-color: ${Colour["bg-hover"]};
         border-color: ${Colour["bg-hover"]};
     }
 
-    &.${dayCellTypeClassMap["hover"]} {
+    &[data-day-cell-type="hover"] {
         background-color: ${Colour["bg-hover-strong"]};
         border-color: ${Colour["bg-hover-strong"]};
     }
 
-    &.${dayCellTypeClassMap["hover-outline"]} {
+    &[data-day-cell-type="hover-outline"] {
         background-color: ${Colour["bg-hover-subtle"]};
         border-color: ${Colour["border-hover"]};
     }
 
-    &.${dayCellTypeClassMap["selected-outline"]} {
+    &[data-day-cell-type="selected-outline"] {
         background-color: ${Colour["bg-selected"]};
         border-color: ${Colour["border-selected"]};
     }
 
-    &.${dayCellTypeClassMap["selected-outline-subtle"]} {
+    &[data-day-cell-type="selected-outline-subtle"] {
         background-color: ${Colour["bg-selected"]};
         border-color: ${Colour["border-selected-subtle"]};
     }
 
-    &.${dayCellTypeClassMap["selected-hover"]} {
+    &[data-day-cell-type="selected-hover"] {
         background-color: ${Colour["bg-selected-hover"]};
     }
 
-    &.${dayCellTypeClassMap["selected-hover-outline"]} {
+    &[data-day-cell-type="selected-hover-outline"] {
         background-color: ${Colour["bg-selected-hover"]};
         border-color: ${Colour["border-selected-hover"]};
     }
 `;
 
-export const LeftCircle = styled(Circle)`
+export const leftCircle = css`
+    ${circle}
     right: calc(50% - 1.25rem);
     clip-path: inset(-3px 1.25rem -3px -3px);
 `;
 
-export const RightCircle = styled(Circle)`
+export const rightCircle = css`
+    ${circle}
     left: calc(50% - 1.25rem);
     clip-path: inset(-3px -3px -3px 1.25rem);
 `;
 
-export const LabelWrapper = styled.span`
+export const labelWrapper = css`
     position: absolute;
     top: 0;
     bottom: 0;
     z-index: 2;
     cursor: not-allowed;
 
-    &.${dayCellLabelWrapperInteractive} {
+    &[data-day-cell-interactive="true"] {
         cursor: pointer;
     }
 
-    &.${dayCellLabelWrapperNeutral} {
+    &[data-day-cell-interactive="null"] {
         cursor: default;
     }
 `;
 
-export const Label = styled.div`
+export const label = css`
+    all: unset;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -216,43 +162,44 @@ export const Label = styled.div`
     pointer-events: none;
     color: ${Colour["text"]};
 
-    &.${dayCellLabelPointerAuto} {
+    &[data-day-cell-interactive="true"],
+    &[data-day-cell-interactive="null"] {
         pointer-events: auto;
     }
 
-    &.${dayCellLabelTypeClassMap.selected} {
+    &[data-day-cell-label-type="selected"] {
         font-weight: ${Font.Spec["weight-semibold"]};
         color: ${Colour["text-selected"]};
     }
 
-    &.${dayCellLabelTypeClassMap["selected-hover"]} {
+    &[data-day-cell-label-type="selected-hover"] {
         font-weight: ${Font.Spec["weight-semibold"]};
         color: ${Colour["text-selected-hover"]};
     }
 
-    &.${dayCellLabelTypeClassMap.current} {
+    &[data-day-cell-label-type="current"] {
         font-weight: ${Font.Spec["weight-semibold"]};
         color: ${Colour["text-primary"]};
     }
 
-    &.${dayCellLabelTypeClassMap.hover} {
+    &[data-day-cell-label-type="hover"] {
         font-weight: ${Font.Spec["weight-semibold"]};
         color: ${Colour["text-hover"]};
     }
 
-    &.${dayCellLabelTypeClassMap.unavailable} {
+    &[data-day-cell-label-type="unavailable"] {
         color: ${Colour["text-disabled-subtlest"]};
     }
 
-    &.${dayCellLabelTypeClassMap.hidden} {
+    &[data-day-cell-label-type="hidden"] {
         visibility: hidden;
     }
 
-    &.${dayCellLabelDisabled} {
+    &[data-day-cell-disabled="true"] {
         color: ${Colour["text-disabled-subtlest"]};
     }
 
-    &.${dayCellLabelDisabledHidden} {
+    &[data-day-cell-disabled="true"][data-day-cell-label-type="hidden"] {
         visibility: hidden;
     }
 
@@ -261,7 +208,7 @@ export const Label = styled.div`
     }
 `;
 
-export const Indicator = styled.div`
+export const indicator = css`
     position: absolute;
     width: 4px;
     height: 4px;

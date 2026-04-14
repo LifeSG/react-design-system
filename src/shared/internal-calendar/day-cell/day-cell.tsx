@@ -1,5 +1,4 @@
 import clsx from "clsx";
-import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 
 import * as styles from "./day-cell.styles";
@@ -30,45 +29,31 @@ export const DayCell = ({
     // =========================================================================
     // CONST
     // =========================================================================
-    const today = dayjs().isSame(date, "day");
     const isFocused = focusDate ? focusDate.isSame(date, "day") : false;
     const defaultLabel = `${date.format("D MMMM YYYY dddd")}, ${
         disabled ? "Unavailable" : "Available"
     }`; // e.g. 1 January 2025 Tuesday, Unavailable
-    const leftHalfClass = bgLeft ? styles.dayCellTypeClassMap[bgLeft] : null;
-    const leftCircleClass = circleLeft
-        ? styles.dayCellTypeClassMap[circleLeft]
-        : null;
-    const rightHalfClass = bgRight ? styles.dayCellTypeClassMap[bgRight] : null;
-    const rightCircleClass = circleRight
-        ? styles.dayCellTypeClassMap[circleRight]
-        : null;
-    const labelWrapperClass = clsx(
-        interactive === true && styles.dayCellLabelWrapperInteractive,
-        interactive === null && styles.dayCellLabelWrapperNeutral
-    );
-    const labelTypeClass =
-        !disabled && labelType
-            ? styles.dayCellLabelTypeClassMap[labelType]
-            : null;
-    let labelDisabledClass: string | null = null;
-    if (disabled) {
-        labelDisabledClass =
-            labelType === "hidden"
-                ? styles.dayCellLabelDisabledHidden
-                : styles.dayCellLabelDisabled;
-    }
+    const isPresentationRole = role === "none" || role === "presentation";
+    const isButtonRole = !isPresentationRole;
+    const isGridcellRole = role === "gridcell";
+    const isSelected =
+        labelType === "selected" || labelType === "selected-hover";
+    const isToday = labelType === "current";
 
     // =============================================================================
     // REFS, EFFECTS
     // =============================================================================
-    const ref = useRef<HTMLDivElement>(null);
+    const buttonRef = useRef<HTMLButtonElement>(null);
 
     useEffect(() => {
-        if (isFocused && ref.current) {
-            ref.current?.focus();
+        if (!isFocused) {
+            return;
         }
-    }, [isFocused]);
+
+        if (isButtonRole && buttonRef.current) {
+            buttonRef.current.focus();
+        }
+    }, [isButtonRole, isFocused]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -89,46 +74,79 @@ export const DayCell = ({
         onHoverEnd?.(date);
     };
 
+    const handleLabelKeyDown = (event: React.KeyboardEvent) => {
+        onKeyDown?.(event);
+    };
+
+    const labelContent = (
+        <>
+            {date.date()}
+            {currentDateIndicator && isToday && (
+                <div className={styles.indicator} />
+            )}
+        </>
+    );
+
     // =========================================================================
     // RENDER FUNCTION
     // =========================================================================
     return (
-        <styles.Cell className={clsx(className)} aria-hidden={ariaHidden}>
-            <styles.LeftHalf className={clsx(leftHalfClass)}></styles.LeftHalf>
-            <styles.LeftCircle className={clsx(leftCircleClass)} />
-            <styles.RightHalf
-                className={clsx(rightHalfClass)}
-            ></styles.RightHalf>
-            <styles.RightCircle className={clsx(rightCircleClass)} />
-            <styles.LabelWrapper className={labelWrapperClass}>
-                <styles.Label
-                    className={clsx(
-                        (interactive || interactive === null) &&
-                            styles.dayCellLabelPointerAuto,
-                        labelTypeClass,
-                        labelDisabledClass
-                    )}
-                    ref={ref}
-                    tabIndex={tabIndex}
-                    role={role}
-                    aria-label={label || defaultLabel}
-                    aria-disabled={!interactive}
-                    aria-selected={
-                        labelType === "selected" ||
-                        labelType === "selected-hover"
-                    }
-                    onClick={handleClick}
-                    onKeyDown={(event) => {
-                        onKeyDown?.(event);
-                    }}
-                    onMouseEnter={handleHover}
-                    onMouseLeave={handleMouseout}
-                    onFocus={handleFocus}
-                >
-                    {date.date()}
-                    {currentDateIndicator && today && <styles.Indicator />}
-                </styles.Label>
-            </styles.LabelWrapper>
-        </styles.Cell>
+        <div className={clsx(styles.cell, className)} aria-hidden={ariaHidden}>
+            <div className={styles.leftHalf} data-day-cell-type={bgLeft}></div>
+            <div
+                className={styles.leftCircle}
+                data-day-cell-type={circleLeft}
+            />
+            <div
+                className={styles.rightHalf}
+                data-day-cell-type={bgRight}
+            ></div>
+            <div
+                className={styles.rightCircle}
+                data-day-cell-type={circleRight}
+            />
+            <span
+                className={styles.labelWrapper}
+                data-day-cell-interactive={interactive}
+            >
+                {isButtonRole ? (
+                    <button
+                        type="button"
+                        className={styles.label}
+                        data-day-cell-interactive={interactive}
+                        data-day-cell-label-type={
+                            disabled ? undefined : labelType
+                        }
+                        data-day-cell-disabled={disabled}
+                        ref={buttonRef}
+                        tabIndex={tabIndex}
+                        role={role === "button" ? undefined : role}
+                        aria-label={label || defaultLabel}
+                        aria-disabled={!interactive}
+                        aria-selected={isGridcellRole ? isSelected : undefined}
+                        onClick={handleClick}
+                        onKeyDown={handleLabelKeyDown}
+                        onMouseEnter={handleHover}
+                        onMouseLeave={handleMouseout}
+                        onFocus={handleFocus}
+                    >
+                        {labelContent}
+                    </button>
+                ) : (
+                    <div
+                        className={styles.label}
+                        data-day-cell-interactive={interactive}
+                        data-day-cell-label-type={
+                            disabled ? undefined : labelType
+                        }
+                        data-day-cell-disabled={disabled}
+                        role={role}
+                        aria-label={label || defaultLabel}
+                    >
+                        {labelContent}
+                    </div>
+                )}
+            </span>
+        </div>
     );
 };
