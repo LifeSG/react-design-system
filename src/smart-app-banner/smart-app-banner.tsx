@@ -118,11 +118,7 @@ function SmartAppBannerComponent(
                         id={`${ID}-proceed`}
                         data-testid={`${ID}-proceed-container`}
                     >
-                        <BannerIcon
-                            src={icon}
-                            alt="lifesg-app-icon"
-                            aria-label={ariaLabels.icon}
-                        />
+                        <BannerIcon src={icon} alt={ariaLabels.icon} />
                         <TextContainer>
                             <Title>{title}</Title>
                             <Description>{message}</Description>
