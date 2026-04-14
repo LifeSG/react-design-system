@@ -1,16 +1,8 @@
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { useEffect, useRef } from "react";
 
-import {
-    Cell,
-    Indicator,
-    Label,
-    LabelWrapper,
-    LeftCircle,
-    LeftHalf,
-    RightCircle,
-    RightHalf,
-} from "./day-cell.styles";
+import * as styles from "./day-cell.styles";
 import type { DayCellProps } from "./types";
 
 export const DayCell = ({
@@ -30,6 +22,7 @@ export const DayCell = ({
     onKeyDown,
     focusDate,
     label,
+    className,
     ariaHidden,
     tabIndex = -1,
     role = "button",
@@ -42,6 +35,29 @@ export const DayCell = ({
     const defaultLabel = `${date.format("D MMMM YYYY dddd")}, ${
         disabled ? "Unavailable" : "Available"
     }`; // e.g. 1 January 2025 Tuesday, Unavailable
+    const leftHalfClass = bgLeft ? styles.dayCellTypeClassMap[bgLeft] : null;
+    const leftCircleClass = circleLeft
+        ? styles.dayCellTypeClassMap[circleLeft]
+        : null;
+    const rightHalfClass = bgRight ? styles.dayCellTypeClassMap[bgRight] : null;
+    const rightCircleClass = circleRight
+        ? styles.dayCellTypeClassMap[circleRight]
+        : null;
+    const labelWrapperClass = clsx(
+        interactive === true && styles.dayCellLabelWrapperInteractive,
+        interactive === null && styles.dayCellLabelWrapperNeutral
+    );
+    const labelTypeClass =
+        !disabled && labelType
+            ? styles.dayCellLabelTypeClassMap[labelType]
+            : null;
+    let labelDisabledClass: string | null = null;
+    if (disabled) {
+        labelDisabledClass =
+            labelType === "hidden"
+                ? styles.dayCellLabelDisabledHidden
+                : styles.dayCellLabelDisabled;
+    }
 
     // =============================================================================
     // REFS, EFFECTS
@@ -77,13 +93,21 @@ export const DayCell = ({
     // RENDER FUNCTION
     // =========================================================================
     return (
-        <Cell aria-hidden={ariaHidden}>
-            <LeftHalf $type={bgLeft}></LeftHalf>
-            <LeftCircle $type={circleLeft} />
-            <RightHalf $type={bgRight}></RightHalf>
-            <RightCircle $type={circleRight} />
-            <LabelWrapper $interactive={interactive}>
-                <Label
+        <styles.Cell className={clsx(className)} aria-hidden={ariaHidden}>
+            <styles.LeftHalf className={clsx(leftHalfClass)}></styles.LeftHalf>
+            <styles.LeftCircle className={clsx(leftCircleClass)} />
+            <styles.RightHalf
+                className={clsx(rightHalfClass)}
+            ></styles.RightHalf>
+            <styles.RightCircle className={clsx(rightCircleClass)} />
+            <styles.LabelWrapper className={labelWrapperClass}>
+                <styles.Label
+                    className={clsx(
+                        (interactive || interactive === null) &&
+                            styles.dayCellLabelPointerAuto,
+                        labelTypeClass,
+                        labelDisabledClass
+                    )}
                     ref={ref}
                     tabIndex={tabIndex}
                     role={role}
@@ -93,9 +117,6 @@ export const DayCell = ({
                         labelType === "selected" ||
                         labelType === "selected-hover"
                     }
-                    $type={labelType}
-                    $disabled={disabled}
-                    $interactive={interactive}
                     onClick={handleClick}
                     onKeyDown={(event) => {
                         onKeyDown?.(event);
@@ -105,11 +126,9 @@ export const DayCell = ({
                     onFocus={handleFocus}
                 >
                     {date.date()}
-                    {currentDateIndicator && today && (
-                        <Indicator $disabled={disabled} />
-                    )}
-                </Label>
-            </LabelWrapper>
-        </Cell>
+                    {currentDateIndicator && today && <styles.Indicator />}
+                </styles.Label>
+            </styles.LabelWrapper>
+        </styles.Cell>
     );
 };

@@ -3,67 +3,72 @@ import styled, { css } from "styled-components";
 import { Border, Colour, Font, Motion, Radius } from "../../../theme/tokens";
 import type { CellType, LabelType } from "./types";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface StyleProps {
-    $type: CellType | undefined;
-}
-
-interface LabelStyleProps {
-    $type: LabelType | undefined;
-    $disabled: boolean | undefined;
-    $interactive: boolean | null | undefined;
-}
-
-interface LabelWrapperProps {
-    $interactive: boolean | null | undefined;
-}
-
-interface IndicatorStyleProps {
-    $disabled: boolean | undefined;
-}
-
-// =============================================================================
-// HELPERS
-// =============================================================================
-const getCellStyle = (props: StyleProps) => {
-    let color: string = Colour.bg;
-    let borderColor = "transparent";
-
-    switch (props.$type) {
-        case "hover-subtle":
-            color = Colour["bg-hover"];
-            borderColor = Colour["bg-hover"];
-            break;
-        case "hover":
-            color = Colour["bg-hover-strong"];
-            borderColor = Colour["bg-hover-strong"];
-            break;
-        case "hover-outline":
-            color = Colour["bg-hover-subtle"];
-            borderColor = Colour["border-hover"];
-            break;
-        case "selected-outline":
-            color = Colour["bg-selected"];
-            borderColor = Colour["border-selected"];
-            break;
-        case "selected-outline-subtle":
-            color = Colour["bg-selected"];
-            borderColor = Colour["border-selected-subtle"];
-            break;
-        case "selected-hover":
-            color = Colour["bg-selected-hover"];
-            // no border to give it an overlay effect
-            break;
-        case "selected-hover-outline":
-            color = Colour["bg-selected-hover"];
-            borderColor = Colour["border-selected-hover"];
-            break;
-    }
-
-    return { color, borderColor };
+export const dayCellTypeClassMap: Record<CellType, string> = {
+    "hover-subtle": "dayCellTypeHoverSubtle",
+    hover: "dayCellTypeHover",
+    "hover-outline": "dayCellTypeHoverOutline",
+    "selected-outline": "dayCellTypeSelectedOutline",
+    "selected-outline-subtle": "dayCellTypeSelectedOutlineSubtle",
+    "selected-hover": "dayCellTypeSelectedHover",
+    "selected-hover-outline": "dayCellTypeSelectedHoverOutline",
 };
+
+export const dayCellLabelTypeClassMap: Record<LabelType, string> = {
+    available: "dayCellLabelAvailable",
+    unavailable: "dayCellLabelUnavailable",
+    current: "dayCellLabelCurrent",
+    hover: "dayCellLabelHover",
+    selected: "dayCellLabelSelected",
+    "selected-hover": "dayCellLabelSelectedHover",
+    hidden: "dayCellLabelHidden",
+};
+
+export const dayCellLabelDisabled = "dayCellLabelDisabled";
+export const dayCellLabelDisabledHidden = "dayCellLabelDisabledHidden";
+export const dayCellLabelPointerAuto = "dayCellLabelPointerAuto";
+
+export const dayCellLabelWrapperInteractive = "dayCellLabelWrapperInteractive";
+export const dayCellLabelWrapperNeutral = "dayCellLabelWrapperNeutral";
+
+const dayCellTypeHoverSubtle = css`
+    background-color: ${Colour["bg-hover"]};
+    border-top-color: ${Colour["bg-hover"]};
+    border-bottom-color: ${Colour["bg-hover"]};
+`;
+
+const dayCellTypeHover = css`
+    background-color: ${Colour["bg-hover-strong"]};
+    border-top-color: ${Colour["bg-hover-strong"]};
+    border-bottom-color: ${Colour["bg-hover-strong"]};
+`;
+
+const dayCellTypeHoverOutline = css`
+    background-color: ${Colour["bg-hover-subtle"]};
+    border-top-color: ${Colour["border-hover"]};
+    border-bottom-color: ${Colour["border-hover"]};
+`;
+
+const dayCellTypeSelectedOutline = css`
+    background-color: ${Colour["bg-selected"]};
+    border-top-color: ${Colour["border-selected"]};
+    border-bottom-color: ${Colour["border-selected"]};
+`;
+
+const dayCellTypeSelectedOutlineSubtle = css`
+    background-color: ${Colour["bg-selected"]};
+    border-top-color: ${Colour["border-selected-subtle"]};
+    border-bottom-color: ${Colour["border-selected-subtle"]};
+`;
+
+const dayCellTypeSelectedHover = css`
+    background-color: ${Colour["bg-selected-hover"]};
+`;
+
+const dayCellTypeSelectedHoverOutline = css`
+    background-color: ${Colour["bg-selected-hover"]};
+    border-top-color: ${Colour["border-selected-hover"]};
+    border-bottom-color: ${Colour["border-selected-hover"]};
+`;
 
 // =============================================================================
 // COMPONENTS
@@ -77,7 +82,7 @@ export const Cell = styled.div`
     height: 2.5rem;
 `;
 
-const Half = styled.div<StyleProps>`
+const Half = styled.div`
     position: absolute;
     height: 2.5rem;
     width: 50%;
@@ -85,19 +90,35 @@ const Half = styled.div<StyleProps>`
     border: ${Border["width-010"]} ${Border["solid"]} transparent;
     border-left: none;
     border-right: none;
+    background-clip: border-box;
 
-    ${(props) => {
-        if (!props.$type) {
-            return;
-        }
-        const { color, borderColor } = getCellStyle(props);
-        return css`
-            background-color: ${color};
-            background-clip: border-box;
-            border-top-color: ${borderColor};
-            border-bottom-color: ${borderColor};
-        `;
-    }}
+    &.${dayCellTypeClassMap["hover-subtle"]} {
+        ${dayCellTypeHoverSubtle}
+    }
+
+    &.${dayCellTypeClassMap["hover"]} {
+        ${dayCellTypeHover}
+    }
+
+    &.${dayCellTypeClassMap["hover-outline"]} {
+        ${dayCellTypeHoverOutline}
+    }
+
+    &.${dayCellTypeClassMap["selected-outline"]} {
+        ${dayCellTypeSelectedOutline}
+    }
+
+    &.${dayCellTypeClassMap["selected-outline-subtle"]} {
+        ${dayCellTypeSelectedOutlineSubtle}
+    }
+
+    &.${dayCellTypeClassMap["selected-hover"]} {
+        ${dayCellTypeSelectedHover}
+    }
+
+    &.${dayCellTypeClassMap["selected-hover-outline"]} {
+        ${dayCellTypeSelectedHoverOutline}
+    }
 `;
 
 export const LeftHalf = styled(Half)`
@@ -108,7 +129,7 @@ export const RightHalf = styled(Half)`
     right: 0;
 `;
 
-export const Circle = styled.div<StyleProps>`
+export const Circle = styled.div`
     position: absolute;
     z-index: 1;
 
@@ -121,17 +142,41 @@ export const Circle = styled.div<StyleProps>`
 
     border: ${Border["width-010"]} ${Border["solid"]} transparent;
     border-radius: ${Radius["md"]};
+    background-clip: content-box;
 
-    ${(props) => {
-        if (props.$type) {
-            const { color, borderColor } = getCellStyle(props);
-            return css`
-                background-color: ${color};
-                background-clip: content-box;
-                border-color: ${borderColor};
-            `;
-        }
-    }}
+    &.${dayCellTypeClassMap["hover-subtle"]} {
+        background-color: ${Colour["bg-hover"]};
+        border-color: ${Colour["bg-hover"]};
+    }
+
+    &.${dayCellTypeClassMap["hover"]} {
+        background-color: ${Colour["bg-hover-strong"]};
+        border-color: ${Colour["bg-hover-strong"]};
+    }
+
+    &.${dayCellTypeClassMap["hover-outline"]} {
+        background-color: ${Colour["bg-hover-subtle"]};
+        border-color: ${Colour["border-hover"]};
+    }
+
+    &.${dayCellTypeClassMap["selected-outline"]} {
+        background-color: ${Colour["bg-selected"]};
+        border-color: ${Colour["border-selected"]};
+    }
+
+    &.${dayCellTypeClassMap["selected-outline-subtle"]} {
+        background-color: ${Colour["bg-selected"]};
+        border-color: ${Colour["border-selected-subtle"]};
+    }
+
+    &.${dayCellTypeClassMap["selected-hover"]} {
+        background-color: ${Colour["bg-selected-hover"]};
+    }
+
+    &.${dayCellTypeClassMap["selected-hover-outline"]} {
+        background-color: ${Colour["bg-selected-hover"]};
+        border-color: ${Colour["border-selected-hover"]};
+    }
 `;
 
 export const LeftCircle = styled(Circle)`
@@ -144,23 +189,23 @@ export const RightCircle = styled(Circle)`
     clip-path: inset(-3px -3px -3px 1.25rem);
 `;
 
-export const LabelWrapper = styled.span<LabelWrapperProps>`
+export const LabelWrapper = styled.span`
     position: absolute;
     top: 0;
     bottom: 0;
     z-index: 2;
-    cursor: ${(props) => {
-        if (props.$interactive) {
-            return "pointer";
-        } else if (props.$interactive === null) {
-            return "default";
-        } else {
-            return "not-allowed";
-        }
-    }};
+    cursor: not-allowed;
+
+    &.${dayCellLabelWrapperInteractive} {
+        cursor: pointer;
+    }
+
+    &.${dayCellLabelWrapperNeutral} {
+        cursor: default;
+    }
 `;
 
-export const Label = styled.div<LabelStyleProps>`
+export const Label = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -168,73 +213,55 @@ export const Label = styled.div<LabelStyleProps>`
     width: 2.5rem;
     ${Font["body-md-regular"]}
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    pointer-events: none;
+    color: ${Colour["text"]};
 
-    pointer-events: ${(props) => {
-        if (props.$interactive || props.$interactive === null) {
-            return "auto";
-        } else {
-            return "none";
-        }
-    }};
+    &.${dayCellLabelPointerAuto} {
+        pointer-events: auto;
+    }
 
-    ${(props) => {
-        const { $disabled, $type } = props;
+    &.${dayCellLabelTypeClassMap.selected} {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-selected"]};
+    }
 
-        if ($disabled) {
-            if ($type === "hidden") {
-                return css`
-                    visibility: hidden;
-                `;
-            }
+    &.${dayCellLabelTypeClassMap["selected-hover"]} {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-selected-hover"]};
+    }
 
-            return css`
-                color: ${Colour["text-disabled-subtlest"]};
-            `;
-        }
+    &.${dayCellLabelTypeClassMap.current} {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-primary"]};
+    }
 
-        switch ($type) {
-            case "selected":
-                return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-selected"]};
-                `;
-            case "selected-hover":
-                return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-selected-hover"]};
-                `;
-            case "current":
-                return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-primary"]};
-                `;
-            case "hover":
-                return css`
-                    font-weight: ${Font.Spec["weight-semibold"]};
-                    color: ${Colour["text-hover"]};
-                `;
-            case "unavailable":
-                return css`
-                    color: ${Colour["text-disabled-subtlest"]};
-                `;
-            case "hidden":
-                return css`
-                    visibility: hidden;
-                `;
-            case "available":
-            default:
-                return css`
-                    color: ${Colour["text"]};
-                `;
-        }
-    }}
+    &.${dayCellLabelTypeClassMap.hover} {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-hover"]};
+    }
+
+    &.${dayCellLabelTypeClassMap.unavailable} {
+        color: ${Colour["text-disabled-subtlest"]};
+    }
+
+    &.${dayCellLabelTypeClassMap.hidden} {
+        visibility: hidden;
+    }
+
+    &.${dayCellLabelDisabled} {
+        color: ${Colour["text-disabled-subtlest"]};
+    }
+
+    &.${dayCellLabelDisabledHidden} {
+        visibility: hidden;
+    }
 
     &:focus {
         outline: none;
     }
 `;
 
-export const Indicator = styled.div<IndicatorStyleProps>`
+export const Indicator = styled.div`
     position: absolute;
     width: 4px;
     height: 4px;
