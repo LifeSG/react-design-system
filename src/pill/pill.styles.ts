@@ -1,17 +1,12 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Border, Colour, Font, Radius } from "../theme";
-import type { PillColorType, PillType } from "./types";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-interface StyleProps {
-    $type: PillType;
-    $color: PillColorType;
-}
 
-export const Wrapper = styled.div<StyleProps>`
+export const Wrapper = styled.div`
     border-radius: ${Radius["full"]};
     padding: 0.125rem 0.5rem;
     width: fit-content;
@@ -25,82 +20,84 @@ export const Wrapper = styled.div<StyleProps>`
         flex-shrink: 0;
     }
 
-    ${(props) => {
-        let backgroundColor: string;
-        let borderColor: string | undefined;
-        let color: string;
+    &.wrapperBase {
+        border: ${Border["width-010"]} ${Border.solid};
+    }
 
-        if (props.$type === "solid") {
-            color = Colour["text-inverse"];
-            switch (props.$color) {
-                case "grey":
-                    backgroundColor = Colour["bg-inverse-subtler"];
-                    break;
-                case "green":
-                    backgroundColor = Colour["bg-success-strong"];
-                    break;
-                case "yellow":
-                    backgroundColor = Colour["bg-warning-strong"];
-                    break;
-                case "red":
-                    backgroundColor = Colour["bg-error-strong"];
-                    break;
-                case "blue":
-                    backgroundColor = Colour["bg-info-strong"];
-                    break;
-                case "primary":
-                    backgroundColor = Colour["bg-primary"];
-                    break;
-                default:
-                    backgroundColor = Colour["bg-inverse"];
-                    break;
-            }
-        } else {
-            switch (props.$color) {
-                case "grey":
-                    backgroundColor = Colour["bg-stronger"];
-                    borderColor = Colour["border-strong"];
-                    color = Colour["text-subtler"];
-                    break;
-                case "green":
-                    backgroundColor = Colour["bg-success"];
-                    borderColor = Colour["border-success"];
-                    color = Colour["text-success"];
-                    break;
-                case "yellow":
-                    backgroundColor = Colour["bg-warning"];
-                    borderColor = Colour["border-warning"];
-                    color = Colour["text-warning"];
-                    break;
-                case "red":
-                    backgroundColor = Colour["bg-error"];
-                    borderColor = Colour["border-error"];
-                    color = Colour["text-error"];
-                    break;
-                case "blue":
-                    backgroundColor = Colour["bg-info"];
-                    borderColor = Colour["border-info"];
-                    color = Colour["text-info"];
-                    break;
-                case "primary":
-                    backgroundColor = Colour["bg-primary-subtlest"];
-                    borderColor = Colour["border-primary"];
-                    color = Colour["text-primary"];
-                    break;
-                default:
-                    backgroundColor = Colour.bg;
-                    borderColor = Colour.border;
-                    color = Colour.text;
-                    break;
-            }
-        }
+    &.wrapperSolid {
+        color: ${Colour["text-inverse"]};
+        border-color: transparent;
+    }
 
-        return css`
-            background: ${backgroundColor};
-            border: ${Border["width-010"]} ${Border.solid} ${borderColor};
-            color: ${color};
-        `;
-    }}
+    &.wrapperSolidBlack {
+        background: ${Colour["bg-inverse"]};
+    }
+
+    &.wrapperSolidGrey {
+        background: ${Colour["bg-inverse-subtler"]};
+    }
+
+    &.wrapperSolidGreen {
+        background: ${Colour["bg-success-strong"]};
+    }
+
+    &.wrapperSolidYellow {
+        background: ${Colour["bg-warning-strong"]};
+    }
+
+    &.wrapperSolidRed {
+        background: ${Colour["bg-error-strong"]};
+    }
+
+    &.wrapperSolidBlue {
+        background: ${Colour["bg-info-strong"]};
+    }
+
+    &.wrapperSolidPrimary {
+        background: ${Colour["bg-primary"]};
+    }
+
+    &.wrapperOutlineBlack {
+        background: ${Colour.bg};
+        border-color: ${Colour.border};
+        color: ${Colour.text};
+    }
+
+    &.wrapperOutlineGrey {
+        background: ${Colour["bg-stronger"]};
+        border-color: ${Colour["border-strong"]};
+        color: ${Colour["text-subtler"]};
+    }
+
+    &.wrapperOutlineGreen {
+        background: ${Colour["bg-success"]};
+        border-color: ${Colour["border-success"]};
+        color: ${Colour["text-success"]};
+    }
+
+    &.wrapperOutlineYellow {
+        background: ${Colour["bg-warning"]};
+        border-color: ${Colour["border-warning"]};
+        color: ${Colour["text-warning"]};
+    }
+
+    &.wrapperOutlineRed {
+        background: ${Colour["bg-error"]};
+        border-color: ${Colour["border-error"]};
+        color: ${Colour["text-error"]};
+    }
+
+    &.wrapperOutlineBlue {
+        background: ${Colour["bg-info"]};
+        border-color: ${Colour["border-info"]};
+        color: ${Colour["text-info"]};
+    }
+
+    &.wrapperOutlinePrimary {
+        background: ${Colour["bg-primary-subtlest"]};
+        border-color: ${Colour["border-primary"]};
+        color: ${Colour["text-primary"]};
+    }
 `;
 
 export const Label = styled.div`
