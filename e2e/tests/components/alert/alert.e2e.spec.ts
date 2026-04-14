@@ -1,9 +1,29 @@
-import { test as base } from "@playwright/test";
+import { test as base, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 import { expect } from "@playwright/test";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "alert";
+
+    public readonly locators: {
+        showMoreBtn: Locator;
+        showLessBtn: Locator;
+        actionLink: Locator;
+        beforeAlert: Locator;
+        afterAlert: Locator;
+    };
+
+    constructor(page: Page) {
+        super(page);
+
+        this.locators = {
+            showMoreBtn: page.getByRole("button", { name: "Show more" }),
+            showLessBtn: page.getByRole("button", { name: "Show less" }),
+            actionLink: page.getByTestId("action-link"),
+            beforeAlert: page.getByTestId("before-alert"),
+            afterAlert: page.getByTestId("after-alert"),
+        };
+    }
 }
 
 const test = base.extend<{ story: StoryPage }>({
@@ -73,7 +93,7 @@ test.describe("Alert", () => {
 
     test("With action link", async ({ story }) => {
         await story.init("with-action-link");
-        const actionLink = story.page.getByTestId("action-link");
+        const actionLink = story.locators.actionLink;
         await expect(actionLink).toBeVisible();
         await compareScreenshot(story, "with-action-link");
     });
@@ -81,12 +101,7 @@ test.describe("Alert", () => {
     test("With max collapsed height", async ({ story }) => {
         await story.init("max-collapsed-height");
 
-        const showMoreBtn = story.page.getByRole("button", {
-            name: "Show more",
-        });
-        const showLessBtn = story.page.getByRole("button", {
-            name: "Show less",
-        });
+        const { showMoreBtn, showLessBtn } = story.locators;
 
         await test.step("On mount: shows 'Show more' button and content is collapsed", async () => {
             await expect(showMoreBtn).toBeVisible();
@@ -113,54 +128,52 @@ test.describe("Alert", () => {
     test("Keyboard navigation", async ({ story }) => {
         await story.init("keyboard-nav");
 
-        const showMoreBtn = story.page.getByRole("button", {
-            name: "Show more",
-        });
+        const {
+            showMoreBtn,
+            actionLink,
+            showLessBtn,
+            beforeAlert,
+            afterAlert,
+        } = story.locators;
 
         await expect(showMoreBtn).toBeVisible();
 
         await test.step("Tab focuses 'Show more' button", async () => {
-            await story.page.getByTestId("before-alert").focus();
+            await beforeAlert.focus();
             await story.page.keyboard.press("Tab");
             await expect(showMoreBtn).toBeFocused();
         });
 
         await test.step("Enter key expands content", async () => {
             await story.page.keyboard.press("Enter");
-            await expect(
-                story.page.getByRole("button", { name: "Show less" })
-            ).toBeVisible();
+            await expect(showLessBtn).toBeVisible();
         });
 
         await test.step("Tab focuses 'Learn more' link", async () => {
             await story.page.keyboard.press("Tab");
-            await expect(story.page.getByTestId("action-link")).toBeFocused();
+            await expect(actionLink).toBeFocused();
         });
 
         await test.step("Enter key collapses content", async () => {
             await story.page.keyboard.down("Shift");
             await story.page.keyboard.press("Tab");
             await story.page.keyboard.up("Shift");
-            await expect(
-                story.page.getByRole("button", { name: "Show less" })
-            ).toBeFocused();
+            await expect(showLessBtn).toBeFocused();
 
             await story.page.keyboard.press("Enter");
             await expect(showMoreBtn).toBeVisible();
+            await expect(showMoreBtn).toBeFocused();
         });
 
         await test.step("Space key expands content", async () => {
             await story.page.keyboard.press("Space");
-            await expect(
-                story.page.getByRole("button", { name: "Show less" })
-            ).toBeVisible();
+            await expect(showLessBtn).toBeVisible();
         });
 
         await test.step("Tab moves focus to next element after alert", async () => {
-            await story.page.getByRole("button", { name: "Show less" }).click();
-            await showMoreBtn.focus();
             await story.page.keyboard.press("Tab");
-            await expect(story.page.getByTestId("after-alert")).toBeFocused();
+            await story.page.keyboard.press("Tab");
+            await expect(afterAlert).toBeFocused();
         });
     });
 });
