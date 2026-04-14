@@ -135,6 +135,7 @@ The tests are set up in this structure
    |       │   ├── layout.tsx
    |       │   └── page.tsx
    │       └── component-name
+   |           ├── component-name.module.css
    │           └── story-name.e2e.tsx
    └── tests
        └── components
@@ -147,6 +148,7 @@ Where
 
 -   `nextjs-app` is a NextJS project configured with strict CSP
 -   `[component]/[story]` dynamically renders a component example based on the route
+-   `component-name.module.css` hosts any specific styles needed for the component story
 -   `story-name.tsx` hosts a single component example
 -   `__screenshots__` contains the Playwright snapshots for the component
 -   `component-name.e2e.spec.ts` contains the Playwright test suite for the component
