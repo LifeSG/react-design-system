@@ -13,7 +13,7 @@ export default function Story() {
             }}
         >
             {/* Solid variants */}
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <div className="story-row-container">
                 <Pill type="solid" colorType="black">
                     Black
                 </Pill>
@@ -38,7 +38,7 @@ export default function Story() {
             </div>
 
             {/* Outline variants */}
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <div className="story-row-container">
                 <Pill type="outline" colorType="black">
                     Black
                 </Pill>
@@ -63,7 +63,7 @@ export default function Story() {
             </div>
 
             {/* With icon */}
-            <div style={{ display: "flex", gap: "0.5rem", flexWrap: "wrap" }}>
+            <div className="story-row-container">
                 <Pill type="solid" colorType="green" icon={<BinIcon />}>
                     With icon
                 </Pill>
