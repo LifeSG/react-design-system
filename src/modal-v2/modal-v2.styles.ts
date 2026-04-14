@@ -3,7 +3,8 @@ import { css } from "@linaria/core";
 import { MediaQuery, Motion } from "../theme";
 
 const CLOSED_POSITION_OFFSET = "-3%";
-const INITIAL_OR_CLOSE = ':is([data-status="initial"], [data-status="close"])';
+const IS_INITIAL_OR_CLOSE =
+    ':is([data-status="initial"], [data-status="close"])';
 
 export const tokens = {
     container: {
@@ -47,7 +48,7 @@ export const container = css`
         transition: all ${Motion["duration-250"]} ${Motion["ease-exit"]};
     }
 
-    &.${containerFromTop}${INITIAL_OR_CLOSE} {
+    &.${containerFromTop}${IS_INITIAL_OR_CLOSE} {
         top: ${CLOSED_POSITION_OFFSET};
     }
 
@@ -55,7 +56,7 @@ export const container = css`
         top: 0;
     }
 
-    &.${containerFromBottom}${INITIAL_OR_CLOSE} {
+    &.${containerFromBottom}${IS_INITIAL_OR_CLOSE} {
         bottom: ${CLOSED_POSITION_OFFSET};
     }
 
@@ -63,7 +64,7 @@ export const container = css`
         bottom: 0;
     }
 
-    &.${containerFromLeft}${INITIAL_OR_CLOSE} {
+    &.${containerFromLeft}${IS_INITIAL_OR_CLOSE} {
         left: ${CLOSED_POSITION_OFFSET};
     }
 
@@ -71,7 +72,7 @@ export const container = css`
         left: 0;
     }
 
-    &.${containerFromRight}${INITIAL_OR_CLOSE} {
+    &.${containerFromRight}${IS_INITIAL_OR_CLOSE} {
         right: ${CLOSED_POSITION_OFFSET};
     }
 
