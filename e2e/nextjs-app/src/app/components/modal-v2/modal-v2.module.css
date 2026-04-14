@@ -42,6 +42,9 @@
 }
 
 .tall-content {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
     min-height: 160vh;
     background: linear-gradient(180deg, #FFFFFF 0%, #F7FBFF 100%);
 }

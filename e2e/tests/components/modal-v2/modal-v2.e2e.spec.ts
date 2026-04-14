@@ -162,32 +162,10 @@ test.describe("ModalV2", () => {
             });
 
             test("Supports overflow scrolling", async ({ story }) => {
-                await test.step("verify modal overflow is present", async () => {
-                    await expect(story.locators.modal).toBeVisible();
+                await story.page.keyboard.press("End");
 
-                    const scrollMetrics = await story.locators.modal.evaluate(
-                        (node) => {
-                            return {
-                                scrollHeight: node.scrollHeight,
-                                clientHeight: node.clientHeight,
-                            };
-                        }
-                    );
-
-                    expect(scrollMetrics.scrollHeight).toBeGreaterThan(
-                        scrollMetrics.clientHeight
-                    );
-                });
-
-                await test.step("scroll modal and verify scroll position updates", async () => {
-                    await story.locators.modal.evaluate((node) => {
-                        node.scrollTop = 400;
-                    });
-
-                    const scrollTop = await story.locators.modal.evaluate(
-                        (node) => node.scrollTop
-                    );
-                    expect(scrollTop).toBeGreaterThan(0);
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
                 });
             });
         });
