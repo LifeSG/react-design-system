@@ -31,32 +31,28 @@ test.describe("SingpassButton", () => {
         });
 
         test("All size and style variants", async ({ story }) => {
-            await compareScreenshot(story, "singpass-button-variants");
+            await compareScreenshot(story, "mount");
 
-            const buttonWhite = story.locators.buttons.first();
-            await buttonWhite.hover();
-            await compareScreenshot(
-                story,
-                "singpass-button-variants-hover-white",
-                {
+            await test.step("White button hover state", async () => {
+                const buttonWhite = story.locators.buttons.first();
+                await buttonWhite.hover();
+                await compareScreenshot(story, "hover-white", {
                     locator: buttonWhite,
-                }
-            );
+                });
+            });
 
-            const buttonRed = story.locators.buttons.nth(1);
-            await buttonRed.hover();
-            await compareScreenshot(
-                story,
-                "singpass-button-variants-hover-red",
-                {
+            await test.step("Red button hover state", async () => {
+                const buttonRed = story.locators.buttons.nth(1);
+                await buttonRed.hover();
+                await compareScreenshot(story, "hover-red", {
                     locator: buttonRed,
-                }
-            );
+                });
+            });
         });
 
         test("Keyboard focus", async ({ story }) => {
             await story.page.keyboard.press("Tab");
-            await compareScreenshot(story, "singpass-button-variants-focus", {
+            await compareScreenshot(story, "focus", {
                 locator: story.locators.buttons.first(),
             });
         });
