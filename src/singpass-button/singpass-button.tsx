@@ -5,27 +5,35 @@ import { getSpLogo } from "./singpass-assets";
 import * as styles from "./singpass-button.styles";
 import type { SingpassButtonProps, SingpassButtonRef } from "./types";
 
+const styleClassMap: Record<string, string> = {
+    "red-filled": styles.mainStyleRedFilled,
+    "white-filled": styles.mainStyleWhiteFilled,
+};
+
+const sizeClassMap: Record<string, string> = {
+    small: styles.mainSizeSmall,
+    large: styles.mainSizeLarge,
+};
+
 const Component = (props: SingpassButtonProps, ref: SingpassButtonRef) => {
     const {
         styleType = "white-filled",
         sizeType = "default",
         className,
+        "data-testid": testId = "singpass-button",
         ...otherProps
     } = props;
 
     return (
         <button
             ref={ref}
-            data-testid={otherProps["data-testid"] || "button"}
+            data-testid={testId}
             {...otherProps}
             aria-label="Log in with Singpass"
             className={clsx(
                 styles.main,
-                sizeType === "small" && styles.mainSizeSmall,
-                sizeType === "large" && styles.mainSizeLarge,
-                styleType === "red-filled"
-                    ? styles.mainStyleRedFilled
-                    : styles.mainStyleWhiteFilled,
+                sizeClassMap[sizeType],
+                styleClassMap[styleType],
                 className
             )}
         >

@@ -2,8 +2,6 @@ import { css } from "@linaria/core";
 
 import { ComponentToken, Motion, Spacing } from "../theme";
 
-export type MainButtonSize = "default" | "small" | "large";
-
 // =============================================================================
 // MAIN BUTTON
 // =============================================================================
