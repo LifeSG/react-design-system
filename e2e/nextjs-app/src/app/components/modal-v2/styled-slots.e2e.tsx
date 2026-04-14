@@ -17,8 +17,8 @@ export default function Story() {
                 </ModalV2.Content>
                 <ModalV2.Footer
                     className={styles["custom-footer"]}
-                    primaryButton={<Button.Default>Confirm</Button.Default>}
-                    secondaryButton={<Button.Default>Back</Button.Default>}
+                    primaryButton={<Button>Confirm</Button>}
+                    secondaryButton={<Button>Back</Button>}
                 />
             </ModalV2.Card>
         </ModalV2>

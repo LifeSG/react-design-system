@@ -26,7 +26,7 @@ export default function Story() {
                 onClose={() => setShow(false)}
             >
                 <ModalV2.Card className={styles.card}>
-                    <ModalV2.CloseButton data-testid="overlay-disabled-close-slot" />
+                    <ModalV2.CloseButton />
                     <ModalV2.Content>
                         <Typography.BodyBL data-testid="overlay-disabled-content">
                             Overlay click should not dismiss this modal

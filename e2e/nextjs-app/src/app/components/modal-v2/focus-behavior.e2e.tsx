@@ -48,7 +48,7 @@ export default function Story() {
                 onOverlayClick={() => setShowDefaultFocus(false)}
             >
                 <ModalV2.Card className={styles.card}>
-                    <ModalV2.CloseButton data-testid="default-focus-close-slot" />
+                    <ModalV2.CloseButton />
                     <ModalV2.Content>
                         <Typography.BodyBL data-testid="default-focus-content">
                             Default initial focus behavior

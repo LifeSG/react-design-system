@@ -26,7 +26,7 @@ export default function Story() {
                 }}
             >
                 <ModalV2.Card className={styles.card}>
-                    <ModalV2.CloseButton data-testid="keyboard-close-slot" />
+                    <ModalV2.CloseButton />
                     <ModalV2.Content>
                         <Typography.BodyBL>
                             Keyboard navigation story
@@ -38,14 +38,14 @@ export default function Story() {
                     </ModalV2.Content>
                     <ModalV2.Footer
                         primaryButton={
-                            <Button.Default data-testid="footer-primary-button">
+                            <Button data-testid="footer-primary-button">
                                 Continue
-                            </Button.Default>
+                            </Button>
                         }
                         secondaryButton={
-                            <Button.Default data-testid="footer-secondary-button">
+                            <Button data-testid="footer-secondary-button">
                                 Back
-                            </Button.Default>
+                            </Button>
                         }
                     />
                 </ModalV2.Card>
