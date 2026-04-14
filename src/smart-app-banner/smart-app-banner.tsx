@@ -81,10 +81,10 @@ function SmartAppBannerComponent(
         const hasHalfStar = numberOfStars - Math.floor(numberOfStars) >= 0.4;
 
         for (let i = 0; i < Math.floor(numberOfStars); i++) {
-            stars.push(<Star key={`star${i}`} aria-label="star" />);
+            stars.push(<Star key={`star${i}`} aria-hidden />);
         }
         if (hasHalfStar) {
-            stars.push(<StarHalf key={`halfstar`} aria-label="half star" />);
+            stars.push(<StarHalf key={`halfstar`} aria-hidden />);
         }
         if (stars.length < MAX_STARS) {
             const remaining = 5 - stars.length;
