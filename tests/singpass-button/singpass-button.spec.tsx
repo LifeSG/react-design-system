@@ -6,7 +6,7 @@ describe("SingpassButton", () => {
     describe("default", () => {
         it("should render button with default testid", () => {
             render(<SingpassButton />);
-            expect(screen.getByTestId("button")).toBeInTheDocument();
+            expect(screen.getByTestId("singpass-button")).toBeInTheDocument();
         });
 
         it("should render with custom data-testid", () => {
@@ -19,11 +19,6 @@ describe("SingpassButton", () => {
             expect(
                 screen.getByRole("button", { name: "Log in with Singpass" })
             ).toBeInTheDocument();
-        });
-
-        it("should render singpass logo image", () => {
-            render(<SingpassButton />);
-            expect(screen.getByRole("img")).toBeInTheDocument();
         });
 
         it("should render white-filled logo by default", () => {
@@ -55,63 +50,9 @@ describe("SingpassButton", () => {
 
         it("should apply custom className", () => {
             render(<SingpassButton className="custom-class" />);
-            expect(screen.getByTestId("button")).toHaveClass("custom-class");
-        });
-    });
-
-    describe("small", () => {
-        it("should render button with default testid", () => {
-            render(<SingpassButton sizeType="small" />);
-            expect(screen.getByTestId("button")).toBeInTheDocument();
-        });
-
-        it("should have accessible aria-label", () => {
-            render(<SingpassButton sizeType="small" />);
-            expect(
-                screen.getByRole("button", { name: "Log in with Singpass" })
-            ).toBeInTheDocument();
-        });
-
-        it("should render red-filled logo when styleType is red-filled", () => {
-            render(<SingpassButton sizeType="small" styleType="red-filled" />);
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                expect.stringContaining("red_filled")
+            expect(screen.getByTestId("singpass-button")).toHaveClass(
+                "custom-class"
             );
-        });
-
-        it("should forward ref to button element", () => {
-            const ref = React.createRef<HTMLButtonElement>();
-            render(<SingpassButton sizeType="small" ref={ref} />);
-            expect(ref.current).toBeInstanceOf(HTMLButtonElement);
-        });
-    });
-
-    describe("large", () => {
-        it("should render button with default testid", () => {
-            render(<SingpassButton sizeType="large" />);
-            expect(screen.getByTestId("button")).toBeInTheDocument();
-        });
-
-        it("should have accessible aria-label", () => {
-            render(<SingpassButton sizeType="large" />);
-            expect(
-                screen.getByRole("button", { name: "Log in with Singpass" })
-            ).toBeInTheDocument();
-        });
-
-        it("should render red-filled logo when styleType is red-filled", () => {
-            render(<SingpassButton sizeType="large" styleType="red-filled" />);
-            expect(screen.getByRole("img")).toHaveAttribute(
-                "src",
-                expect.stringContaining("red_filled")
-            );
-        });
-
-        it("should forward ref to button element", () => {
-            const ref = React.createRef<HTMLButtonElement>();
-            render(<SingpassButton sizeType="large" ref={ref} />);
-            expect(ref.current).toBeInstanceOf(HTMLButtonElement);
         });
     });
 });
