@@ -3,14 +3,7 @@ import { useContext } from "react";
 import { ThemeContext } from "styled-components";
 
 import { V3_LifeSGTheme } from "../v3_theme";
-import {
-    ActionButton,
-    Container,
-    DescriptionContainer,
-    Img,
-    TextContainer,
-    Title,
-} from "./error-display.style";
+import * as styles from "./error-display.styles";
 import { getErrorDisplayData } from "./error-display-data";
 import { InactivityTimer } from "./inactivity-timer";
 import type {
@@ -85,7 +78,7 @@ export const ErrorDisplay = ({
             ...actionButton,
         };
 
-        return <ActionButton {...buttonProps} />;
+        return <styles.ActionButton {...buttonProps} />;
     };
 
     const updatedAssets = {
@@ -98,22 +91,22 @@ export const ErrorDisplay = ({
     const renderContentDisplay = () => {
         if (updatedAssets.title || updatedAssets.description) {
             return (
-                <TextContainer>
+                <styles.TextContainer>
                     {updatedAssets.title &&
                         (typeof updatedAssets.title === "string" ? (
-                            <Title
+                            <styles.Title
                                 data-testid={`${testId}--title`}
                                 data-id="error-display-title"
                                 forwardedAs="h2"
                                 weight="semibold"
                             >
                                 {updatedAssets.title}
-                            </Title>
+                            </styles.Title>
                         ) : (
                             updatedAssets.title
                         ))}
                     {updatedAssets.description && (
-                        <DescriptionContainer
+                        <styles.DescriptionContainer
                             data-testid={`${testId}--description`}
                             data-id="error-display-description"
                             baseTextSize="body-baseline"
@@ -123,9 +116,9 @@ export const ErrorDisplay = ({
                             ) : (
                                 updatedAssets.description
                             )}
-                        </DescriptionContainer>
+                        </styles.DescriptionContainer>
                     )}
-                </TextContainer>
+                </styles.TextContainer>
             );
         }
 
@@ -133,7 +126,7 @@ export const ErrorDisplay = ({
     };
 
     return (
-        <Container {...otherProps} data-testid={testId}>
+        <styles.Container {...otherProps} data-testid={testId}>
             {type === "inactivity" && (
                 <InactivityTimer
                     secondsLeft={secondsLeft}
@@ -142,9 +135,13 @@ export const ErrorDisplay = ({
                     hasCustomDescription={!!description}
                 />
             )}
-            <Img {...updatedAssets.img} alt="" data-id="error-display-image" />
+            <styles.Img
+                {...updatedAssets.img}
+                alt=""
+                data-id="error-display-image"
+            />
             {!imageOnly && renderContentDisplay()}
             {actionButton && renderActionButton()}
-        </Container>
+        </styles.Container>
     );
 };
