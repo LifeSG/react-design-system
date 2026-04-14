@@ -1,7 +1,7 @@
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
+import type { MouseEvent } from "react";
 import {
-    type MouseEvent,
     forwardRef,
     useEffect,
     useImperativeHandle,
@@ -11,6 +11,7 @@ import {
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { VisuallyHidden } from "../shared/accessibility";
 import { TimeHelper } from "../util/time-helper";
 import { TimeSlotBarHelper } from "./helper";
 import {
@@ -35,7 +36,6 @@ import type {
     TimeSlotBarRef,
     TimeSlotBarVariant,
 } from "./types";
-import { VisuallyHidden } from "../shared/accessibility";
 
 const CELL_DURATION = 30; // In minutes
 

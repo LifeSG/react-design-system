@@ -1,4 +1,7 @@
 import React, { useRef } from "react";
+
+import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
+import type { VariantInternalProps } from "./internal-types";
 import {
     LinkContainerWrapper,
     LinkDivider,
@@ -6,8 +9,6 @@ import {
     LinkList,
     LinkListItem,
 } from "./link-container-variant.style";
-import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
-import { VariantInternalProps } from "./internal-types";
 
 export const LinkContainerVariant = ({
     selectedLanguage,

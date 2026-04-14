@@ -1,8 +1,11 @@
 import { LanguageIcon } from "@lifesg/react-icons/language";
-import React, { useEffect, useRef, useState } from "react";
-import { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { SimpleIdGenerator } from "../util";
+import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
 import {
     DropdownItem,
     DropdownList,
@@ -12,9 +15,8 @@ import {
     StyledExpandableElement,
     UnselectedIndicator,
 } from "./dropdown-variant.style";
-import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
-import { VariantInternalProps } from "./internal-types";
-import { LanguageSwitcherCode } from "./types";
+import type { VariantInternalProps } from "./internal-types";
+import type { LanguageSwitcherCode } from "./types";
 
 export const DropdownVariant = ({
     selectedLanguage,

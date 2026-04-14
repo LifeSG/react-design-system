@@ -1,5 +1,5 @@
+import type { TimeSlot, TimeSlotBarVariant } from "src/time-slot-bar";
 import { TimeSlotBarHelper } from "src/time-slot-bar/helper";
-import { TimeSlot, TimeSlotBarVariant } from "../../src";
 
 describe("TimeSlotBarHelper", () => {
     describe("formatHourlyDisplay", () => {
