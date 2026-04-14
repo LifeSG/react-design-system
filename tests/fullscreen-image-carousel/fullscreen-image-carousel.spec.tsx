@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { FullscreenImageCarousel } from "../../src/fullscreen-image-carousel";
 
 // =============================================================================
@@ -22,11 +22,33 @@ describe("Fullscreen Image Carousel", () => {
         render(<FullscreenImageCarousel items={IMAGES} show={true} />);
 
         expect(screen.getByTestId("image-carousel-modal")).toBeInTheDocument();
+        expect(screen.queryByTestId("delete-btn")).not.toBeInTheDocument();
 
         const slides = screen.getAllByTestId("slide-item");
         expect(slides.length).toBe(4);
         const thumbnails = screen.getAllByTestId("thumbnail-item");
         expect(thumbnails.length).toBe(4);
+    });
+
+    it("should render the delete button and call onDelete with the current item and index", () => {
+        const onDelete = jest.fn();
+
+        render(
+            <FullscreenImageCarousel
+                items={IMAGES}
+                show={true}
+                onDelete={onDelete}
+            />
+        );
+
+        expect(screen.getByTestId("delete-btn")).toBeInTheDocument();
+
+        fireEvent.click(screen.getByTestId("forward-btn"));
+        expect(screen.getByText("2/4")).toBeInTheDocument();
+
+        fireEvent.click(screen.getByTestId("delete-btn"));
+
+        expect(onDelete).toHaveBeenCalledWith(IMAGES[1], 1);
     });
 
     it("should display the correct slide current based on the initialIndex", () => {
@@ -39,6 +61,30 @@ describe("Fullscreen Image Carousel", () => {
         );
 
         expect(screen.getByText("2/4")).toBeInTheDocument();
+    });
+
+    it("should clamp the current slide when items shrink", async () => {
+        const { rerender } = render(
+            <FullscreenImageCarousel
+                items={IMAGES}
+                show={true}
+                initialActiveItemIndex={3}
+            />
+        );
+
+        expect(screen.getByText("4/4")).toBeInTheDocument();
+
+        rerender(
+            <FullscreenImageCarousel
+                items={IMAGES.slice(0, 3)}
+                show={true}
+                initialActiveItemIndex={3}
+            />
+        );
+
+        await waitFor(() => {
+            expect(screen.getByText("3/3")).toBeInTheDocument();
+        });
     });
 
     describe("Navigation", () => {
