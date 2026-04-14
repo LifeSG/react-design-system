@@ -10,7 +10,7 @@ import {
     LeftHalf,
     RightCircle,
     RightHalf,
-} from "./day-cell.style";
+} from "./day-cell.styles";
 import type { DayCellProps } from "./types";
 
 export const DayCell = ({
