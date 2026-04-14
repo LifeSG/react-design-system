@@ -1,10 +1,10 @@
 const { parseSync } = require("@babel/core");
 const { syncResolve } = require("@wyw-in-js/shared");
-const { transformSync } = require("@wyw-in-js/transform/lib/transform");
-const { TransformCacheCollection } = require("@wyw-in-js/transform/lib/cache");
 const {
     loadWywOptions,
-} = require("@wyw-in-js/transform/lib/transform/helpers/loadWywOptions");
+    TransformCacheCollection,
+} = require("@wyw-in-js/transform");
+const { transformSync } = require("@wyw-in-js/transform/lib/transform");
 
 /**
  * This babel plugin is responsible for processing Linaria `css`. It uses the
