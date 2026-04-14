@@ -1,18 +1,10 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
-import {
-    ReactNode,
-    isValidElement,
-    useCallback,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useResizeDetector } from "react-resize-detector";
 import { LoadingDotsSpinner } from "../animations";
 import { Checkbox } from "../checkbox";
 import { ErrorDisplay } from "../error-display";
-import { VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography";
 import { useEventListener } from "../util/use-event-listener";
 import {
@@ -36,6 +28,7 @@ import {
     TextButton,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 export const DataTable = ({
     id,
@@ -185,59 +178,26 @@ export const DataTable = ({
         return `Sort ${label} by ${nextSortDirection} order`;
     };
 
-    const extractTextFromNode = (node: ReactNode): string => {
-        if (node === null || node === undefined || typeof node === "boolean") {
-            return "";
-        }
-
-        if (typeof node === "string" || typeof node === "number") {
-            return node.toString();
-        }
-
-        if (Array.isArray(node)) {
-            return node.map(extractTextFromNode).join(" ").trim();
-        }
-
-        if (isValidElement(node)) {
-            return extractTextFromNode(node.props.children);
-        }
-
-        return "";
+    const getRowPositionId = (rowId: string) => {
+        return `${id || "table"}-row-${rowId}-position`;
     };
 
-    const getKeyFieldText = (header: HeaderProps, row: RowProps): string => {
-        if (typeof header === "string") {
-            return "";
-        }
-
-        if (!header.keyColumn) {
-            return "";
-        }
-
-        const cellData = row[header.fieldKey];
-
-        if (typeof cellData === "function") {
-            return extractTextFromNode(
-                cellData(row, {
-                    isSelected: isRowSelected(row.id.toString()),
-                })
-            );
-        }
-
-        return extractTextFromNode(cellData);
+    const getKeyColumnCellId = (rowId: string, fieldKey: string) => {
+        return `${id || "table"}-row-${rowId}-${fieldKey}-key-column`;
     };
 
-    const getRowCheckboxAriaLabel = (row: RowProps, index: number): string => {
-        const keyFieldText = headers
-            .map((header) => getKeyFieldText(header, row))
-            .filter((value) => value.length > 0)
-            .join(". ");
+    const getRowCheckboxAriaLabelledBy = (rowId: string) => {
+        const keyColumnIds = headers
+            .map((header) => {
+                if (typeof header === "string" || !header.keyColumn) {
+                    return undefined;
+                }
 
-        const rowPositionText = `Row ${index + 1} of ${rows?.length ?? 0}`;
+                return getKeyColumnCellId(rowId, header.fieldKey);
+            })
+            .filter((value): value is string => !!value);
 
-        return keyFieldText
-            ? `${rowPositionText}. ${keyFieldText}`
-            : rowPositionText;
+        return concatIds(getRowPositionId(rowId), ...keyColumnIds);
     };
 
     const calculateFixedInViewport = () => {
@@ -330,42 +290,30 @@ export const DataTable = ({
                 style={style}
                 $isCheckbox={false}
             >
-                {clickable ? (
-                    <>
-                        <ClickableHeader
-                            type="button"
-                            aria-label={
-                                isSortable && typeof label === "string"
+                {(clickable || isSortable) && (
+                    <ClickableHeader
+                        type="button"
+                        aria-label={
+                            typeof label === "string"
+                                ? isSortable
                                     ? getSortButtonAriaLabel(label, fieldKey)
-                                    : typeof label === "string"
-                                      ? label
-                                      : undefined
-                            }
-                            onClick={() => onHeaderClick?.(fieldKey)}
-                        />
-                        <HeaderCellWrapper>
-                            {typeof label === "string" ? (
-                                <Typography.BodyBL weight="bold">
-                                    {label}
-                                </Typography.BodyBL>
-                            ) : (
-                                label
-                            )}
-                            {renderSortedArrow(fieldKey)}
-                        </HeaderCellWrapper>
-                    </>
-                ) : (
-                    <HeaderCellWrapper>
-                        {typeof label === "string" ? (
-                            <Typography.BodyBL weight="bold">
-                                {label}
-                            </Typography.BodyBL>
-                        ) : (
-                            label
-                        )}
-                        {renderSortedArrow(fieldKey)}
-                    </HeaderCellWrapper>
+                                    : label
+                                : undefined
+                        }
+                        onClick={() => onHeaderClick?.(fieldKey)}
+                    />
                 )}
+
+                <HeaderCellWrapper>
+                    {typeof label === "string" ? (
+                        <Typography.BodyBL weight="bold">
+                            {label}
+                        </Typography.BodyBL>
+                    ) : (
+                        label
+                    )}
+                    {renderSortedArrow(fieldKey)}
+                </HeaderCellWrapper>
             </HeaderCell>
         );
     };
@@ -448,6 +396,7 @@ export const DataTable = ({
     const renderRowCell = (header: HeaderProps, row: RowProps) => {
         const style = typeof header !== "string" ? header.style : undefined;
         const fieldKey = typeof header === "string" ? header : header.fieldKey;
+        const isKeyColumn = typeof header !== "string" && !!header.keyColumn;
         const rowId = row.id.toString();
         const cellData = row[fieldKey];
         const cellId = `${rowId}-${fieldKey}`;
@@ -456,6 +405,11 @@ export const DataTable = ({
             <BodyCell
                 data-testid={getDataTestId(`row-${cellId}`)}
                 key={cellId}
+                id={
+                    isKeyColumn
+                        ? getKeyColumnCellId(rowId, fieldKey)
+                        : undefined
+                }
                 style={style}
                 $isCheckbox={false}
             >
@@ -480,16 +434,19 @@ export const DataTable = ({
                 $isCheckbox={true}
             >
                 <CheckBoxWrapper>
+                    <VisuallyHidden id={getRowPositionId(rowId)}>
+                        {`Row ${index + 1} of ${rows?.length ?? 0}`}
+                    </VisuallyHidden>
                     <Checkbox
                         checked={isRowSelected(rowId)}
-                        aria-label={getRowCheckboxAriaLabel(row, index)}
+                        aria-labelledby={getRowCheckboxAriaLabelledBy(rowId)}
                         onClick={() => {
                             if (onSelect) {
                                 onSelect(rowId, !isRowSelected(rowId));
                             }
                         }}
                         disabled={isDisabledRow(rowId)}
-                        aria-disabled={isDisabledRow(rowId)}
+                        focusableWhenDisabled={isDisabledRow(rowId)}
                     />
                 </CheckBoxWrapper>
             </BodyCell>
