@@ -130,6 +130,7 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
     ${(props) => {
         if (props.$type === "vertical") {
             return css`
+                position: relative;
                 max-width: 200px;
                 height: ${props.$height}px;
                 min-height: ${props.$height}px;
@@ -138,6 +139,12 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
             `;
         }
     }}
+
+    &:focus-within {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 1px;
+        z-index: 1;
+    }
 
     ${(props) => {
         if (!props.$halfFill) {

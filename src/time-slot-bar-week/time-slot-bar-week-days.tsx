@@ -5,12 +5,15 @@ import maxBy from "lodash/maxBy";
 import minBy from "lodash/minBy";
 import React, { useMemo, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
+import { VisuallyHidden } from "../shared/accessibility";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
 import { Colour } from "../theme";
 import { TimeSlot } from "../time-slot-bar/types";
 import { DateHelper } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
+import { StringHelper } from "../util/string-helper";
+import { TimeHelper } from "../util/time-helper";
 import {
     CellWeekText,
     ChevronIcon,
@@ -51,6 +54,7 @@ interface TimeSlotWeekDaysProps
 interface TimeSlotCell extends TimeSlot {
     cellLength: number;
     halfFill?: "top" | "bottom" | undefined;
+    isActualSlot?: boolean | undefined;
 }
 
 export const TimeSlotBarWeekDays = ({
@@ -191,18 +195,35 @@ export const TimeSlotBarWeekDays = ({
 
     function generateFallbackCell(
         prefix: string | number,
-        cellLength = 1
+        cellLength = 1,
+        startTime = "",
+        endTime = ""
     ): TimeSlotCell {
         return {
             id: `${prefix.toString()}-${new Date().getTime()}`,
-            startTime: "",
-            endTime: "",
+            startTime,
+            endTime,
             clickable: false,
+            isActualSlot: false,
             styleAttributes: {
                 backgroundColor: Colour["bg-stronger"],
             },
             cellLength,
         };
+    }
+
+    function getSlotAriaLabel(date: string, slot: TimeSlot) {
+        const { startTime: slotStartTime, endTime: slotEndTime } = slot;
+        const isAvailable = slot.clickable ?? true;
+
+        return StringHelper.joinNonEmptyStrings([
+            dayjs(date).format("D MMMM YYYY dddd"),
+            slotStartTime && slotEndTime
+                ? TimeHelper.formatTimeRange(slotStartTime, slotEndTime)
+                : undefined,
+            isAvailable ? "Available" : "Unavailable",
+            slot.label,
+        ]);
     }
 
     function initializeAndFillSlots(slots: TimeSlot[]): TimeSlotCell[] {
@@ -226,6 +247,7 @@ export const TimeSlotBarWeekDays = ({
                     // Keep fixed slots as 1 long cell
                     cellsArray[Math.floor(startIndex)] = {
                         ...slot,
+                        isActualSlot: true,
                         cellLength: endIndex - startIndex,
                     };
                     break;
@@ -257,6 +279,7 @@ export const TimeSlotBarWeekDays = ({
                             id: `${slot.id}-${i}`,
                             startTime,
                             endTime,
+                            isActualSlot: true,
                             cellLength: 1,
                             halfFill,
                         };
@@ -442,6 +465,7 @@ export const TimeSlotBarWeekDays = ({
                                     const {
                                         id,
                                         clickable = true,
+                                        isActualSlot,
                                         styleAttributes,
                                         cellLength,
                                         halfFill,
@@ -474,7 +498,29 @@ export const TimeSlotBarWeekDays = ({
                                                     slot
                                                 )
                                             }
-                                        ></TimeSlotComponent>
+                                        >
+                                            {isActualSlot && (
+                                                <VisuallyHidden>
+                                                    <button
+                                                        type="button"
+                                                        aria-disabled={
+                                                            !clickable
+                                                        }
+                                                        aria-label={getSlotAriaLabel(
+                                                            formattedDate,
+                                                            slot
+                                                        )}
+                                                        onClick={() =>
+                                                            clickable &&
+                                                            handleSlotClick(
+                                                                formattedDate,
+                                                                slot
+                                                            )
+                                                        }
+                                                    />
+                                                </VisuallyHidden>
+                                            )}
+                                        </TimeSlotComponent>
                                     );
                                 })}
                             </TimeSlotWrapper>
