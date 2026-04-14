@@ -3,7 +3,7 @@ import dayjs, { Dayjs } from "dayjs";
 import isEmpty from "lodash/isEmpty";
 import maxBy from "lodash/maxBy";
 import minBy from "lodash/minBy";
-import React, { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { VisuallyHidden } from "../shared/accessibility";
 import { InternalCalendarProps } from "../shared/internal-calendar";
@@ -55,6 +55,13 @@ interface TimeSlotCell extends TimeSlot {
     cellLength: number;
     halfFill?: "top" | "bottom" | undefined;
     isActualSlot?: boolean | undefined;
+    rowIndex?: number | undefined;
+}
+
+interface FocusableSlotMeta {
+    key: string;
+    date: string;
+    rowIndex: number;
 }
 
 export const TimeSlotBarWeekDays = ({
@@ -79,6 +86,7 @@ export const TimeSlotBarWeekDays = ({
     const dateFormat = "YYYY-MM-DD";
     const [expandAll, setExpandAll] = useState<boolean>(false);
     const [hoverDay, setHoverDay] = useState<Dayjs>();
+    const slotButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
     const currentCalendarWeek = useMemo((): Dayjs[] => {
         return CalendarHelper.generateDaysForCurrentWeek(calendarDate);
     }, [calendarDate]);
@@ -139,6 +147,108 @@ export const TimeSlotBarWeekDays = ({
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
         setExpandAll((prevExpandValue) => !prevExpandValue);
+    };
+
+    const getCellsForDate = (formattedDate: string) => {
+        return (
+            generatedDaySlots[formattedDate] ??
+            Array(variant === "flexible" ? numberOfCells : 1)
+                .fill(undefined)
+                .map((_, index) =>
+                    generateFallbackCell(
+                        index,
+                        variant === "fixed" ? numberOfCells : undefined
+                    )
+                )
+        );
+    };
+
+    const getFocusableSlotsForDate = (
+        formattedDate: string
+    ): FocusableSlotMeta[] => {
+        return getCellsForDate(formattedDate)
+            .filter(
+                (
+                    slot
+                ): slot is TimeSlotCell & {
+                    isActualSlot: true;
+                    rowIndex: number;
+                } => !!slot.isActualSlot && slot.rowIndex !== undefined
+            )
+            .map((slot) => ({
+                key: `${formattedDate}-${slot.id}`,
+                date: formattedDate,
+                rowIndex: slot.rowIndex,
+            }))
+            .sort((a, b) => a.rowIndex - b.rowIndex);
+    };
+
+    const handleSlotKeyDown = (
+        event: React.KeyboardEvent<HTMLButtonElement>,
+        currentSlot: FocusableSlotMeta
+    ) => {
+        const sameColumnSlots = getFocusableSlotsForDate(currentSlot.date);
+
+        const focusSlot = (slot?: FocusableSlotMeta) => {
+            if (!slot) return;
+            slotButtonRefs.current[slot.key]?.focus();
+        };
+
+        switch (event.key) {
+            case "ArrowRight":
+            case "ArrowDown": {
+                event.preventDefault();
+                const currentIndex = sameColumnSlots.findIndex(
+                    (slot) => slot.key === currentSlot.key
+                );
+                focusSlot(sameColumnSlots[currentIndex + 1]);
+                break;
+            }
+            case "ArrowLeft":
+            case "ArrowUp": {
+                event.preventDefault();
+                const currentIndex = sameColumnSlots.findIndex(
+                    (slot) => slot.key === currentSlot.key
+                );
+                focusSlot(sameColumnSlots[currentIndex - 1]);
+                break;
+            }
+            case "Home":
+                event.preventDefault();
+                focusSlot(sameColumnSlots[0]);
+                break;
+            case "End":
+                event.preventDefault();
+                focusSlot(sameColumnSlots[sameColumnSlots.length - 1]);
+                break;
+            case "PageUp":
+                event.preventDefault();
+                focusSlot(sameColumnSlots[0]);
+                break;
+            case "PageDown": {
+                event.preventDefault();
+                const hasCollapsedContent =
+                    !!maxVisibleCellHeight &&
+                    actualHeight > maxVisibleCellHeight;
+                if (hasCollapsedContent && !expandAll) {
+                    setExpandAll(true);
+                    const visibleRowCount = Math.max(
+                        1,
+                        Math.floor((maxVisibleCellHeight + 4) / 16)
+                    );
+                    const lastVisibleSlot = [...sameColumnSlots]
+                        .reverse()
+                        .find((slot) => slot.rowIndex < visibleRowCount);
+                    focusSlot(lastVisibleSlot ?? sameColumnSlots[0]);
+                    break;
+                }
+
+                focusSlot(sameColumnSlots[sameColumnSlots.length - 1]);
+                break;
+            }
+            default:
+                break;
+        }
     };
 
     // =============================================================================
@@ -248,6 +358,7 @@ export const TimeSlotBarWeekDays = ({
                     cellsArray[Math.floor(startIndex)] = {
                         ...slot,
                         isActualSlot: true,
+                        rowIndex: Math.floor(startIndex),
                         cellLength: endIndex - startIndex,
                     };
                     break;
@@ -280,6 +391,7 @@ export const TimeSlotBarWeekDays = ({
                             startTime,
                             endTime,
                             isActualSlot: true,
+                            rowIndex: Math.floor(startIndex + i),
                             cellLength: 1,
                             halfFill,
                         };
@@ -447,18 +559,7 @@ export const TimeSlotBarWeekDays = ({
                 >
                     {currentCalendarWeek.map((day, dayIndex) => {
                         const formattedDate = day.format(dateFormat);
-                        const cellsArray =
-                            generatedDaySlots[formattedDate] ??
-                            Array(variant === "flexible" ? numberOfCells : 1)
-                                .fill(undefined)
-                                .map((_, index) =>
-                                    generateFallbackCell(
-                                        index,
-                                        variant === "fixed"
-                                            ? numberOfCells
-                                            : undefined
-                                    )
-                                );
+                        const cellsArray = getCellsForDate(formattedDate);
                         return (
                             <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
                                 {cellsArray.map((slot) => {
@@ -475,6 +576,7 @@ export const TimeSlotBarWeekDays = ({
                                         backgroundColor,
                                         backgroundColor2,
                                     } = styleAttributes;
+                                    const slotKey = `${formattedDate}-${id}`;
                                     return (
                                         <TimeSlotComponent
                                             $type="vertical"
@@ -503,6 +605,11 @@ export const TimeSlotBarWeekDays = ({
                                                 <VisuallyHidden>
                                                     <button
                                                         type="button"
+                                                        ref={(element) => {
+                                                            slotButtonRefs.current[
+                                                                slotKey
+                                                            ] = element;
+                                                        }}
                                                         aria-disabled={
                                                             !clickable
                                                         }
@@ -510,6 +617,18 @@ export const TimeSlotBarWeekDays = ({
                                                             formattedDate,
                                                             slot
                                                         )}
+                                                        onKeyDown={(event) =>
+                                                            handleSlotKeyDown(
+                                                                event,
+                                                                {
+                                                                    key: slotKey,
+                                                                    date: formattedDate,
+                                                                    rowIndex:
+                                                                        slot.rowIndex ??
+                                                                        0,
+                                                                }
+                                                            )
+                                                        }
                                                         onClick={() =>
                                                             clickable &&
                                                             handleSlotClick(
