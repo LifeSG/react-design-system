@@ -2,10 +2,6 @@ import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Radius } from "../theme";
 
-// =============================================================================
-// STYLING
-// =============================================================================
-
 export const wrapperBase = css`
     border-radius: ${Radius["full"]};
     padding: 0.125rem 0.5rem;
