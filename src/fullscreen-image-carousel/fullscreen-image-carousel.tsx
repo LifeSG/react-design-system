@@ -423,7 +423,7 @@ export const Component = (
                         </MagnifierButton>
                     )}
 
-                    {onDelete && currentItem && (
+                    {onDelete && (
                         <DeleteButton
                             aria-label="Delete image"
                             data-testid="delete-btn"
