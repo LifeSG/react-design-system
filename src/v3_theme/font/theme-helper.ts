@@ -10,6 +10,7 @@ import { V3_DefaultFontSet } from "./specs/default-font-set";
 import { V3_IMDAFontSet } from "./specs/imda-font-set";
 import { V3_OneServiceFontSet } from "./specs/oneservice-font-set";
 import { V3_PAFontSet } from "./specs/pa-font-set";
+import { V3_SMGSFontSet } from "./specs/smgs-font-set";
 import { V3_SPFFontSet } from "./specs/spf-font-set";
 import { V3_SupportGoWhereFontSet } from "./specs/supportgowhere-font-set";
 import type { V3_FontCollectionMap, V3_FontSet } from "./types";
@@ -26,6 +27,7 @@ const FontSpec: V3_ThemeCollectionSpec<V3_FontCollectionMap, V3_FontScheme> = {
         imda: V3_IMDAFontSet,
         spf: V3_SPFFontSet,
         oneservice: V3_OneServiceFontSet,
+        smgs: V3_SMGSFontSet,
     },
     defaultValue: "default",
 };

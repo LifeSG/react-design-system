@@ -27,6 +27,8 @@ export const V3_MyLegacyFontSpecSet: V3_FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Open Sans",
+    "heading-font-family": "Open Sans",
+    "body-font-family": "Open Sans",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",

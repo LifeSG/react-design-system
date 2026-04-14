@@ -5,12 +5,15 @@ import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { DateInputHelper, StringHelper, useStateRef } from "../../util";
 import {
     DayInput,
+    DayInputSizer,
     Divider,
     InputContainer,
     InputSection,
     MonthInput,
+    MonthInputSizer,
     Placeholder,
     YearInput,
+    YearInputSizer,
 } from "./standalone-date-input.style";
 
 dayjs.extend(customParseFormat);
@@ -351,73 +354,79 @@ export const Component = (
             onFocus={handleSectionFocus}
         >
             <InputContainer ref={nodeRef} $hover={!!hoverValue}>
-                <DayInput
-                    ref={dayInputRef}
-                    name={names[0]}
-                    maxLength={2}
-                    value={hoverDayValue ?? dayValue}
-                    onFocus={handleInputFocus}
-                    onBlur={handleInputBlur}
-                    onChange={handleInputChange}
-                    type="text"
-                    inputMode={inputMode}
-                    pattern="[0-9]{2}"
-                    data-testid={`${names[0]}-input`}
-                    aria-label={inputLabels[0]}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    tabIndex={readOnly ? -1 : 0}
-                    autoComplete="off"
-                    placeholder={
-                        currentFocus === names[0] && !readOnly ? "" : "DD"
-                    }
-                />
+                <DayInputSizer>
+                    <DayInput
+                        ref={dayInputRef}
+                        name={names[0]}
+                        maxLength={2}
+                        value={hoverDayValue ?? dayValue}
+                        onFocus={handleInputFocus}
+                        onBlur={handleInputBlur}
+                        onChange={handleInputChange}
+                        type="text"
+                        inputMode={inputMode}
+                        pattern="[0-9]{2}"
+                        data-testid={`${names[0]}-input`}
+                        aria-label={inputLabels[0]}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        tabIndex={readOnly ? -1 : 0}
+                        autoComplete="off"
+                        placeholder={
+                            currentFocus === names[0] && !readOnly ? "" : "DD"
+                        }
+                    />
+                </DayInputSizer>
                 <Divider $inactive={dayValue.length === 0}>/</Divider>
-                <MonthInput
-                    ref={monthInputRef}
-                    name={names[1]}
-                    maxLength={2}
-                    value={hoverMonthValue ?? monthValue}
-                    onFocus={handleInputFocus}
-                    onBlur={handleInputBlur}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    type="text"
-                    inputMode={inputMode}
-                    pattern="[0-9]{2}"
-                    data-testid={`${names[1]}-input`}
-                    aria-label={inputLabels[1]}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    tabIndex={readOnly ? -1 : 0}
-                    autoComplete="off"
-                    placeholder={
-                        currentFocus === names[1] && !readOnly ? "" : "MM"
-                    }
-                />
+                <MonthInputSizer>
+                    <MonthInput
+                        ref={monthInputRef}
+                        name={names[1]}
+                        maxLength={2}
+                        value={hoverMonthValue ?? monthValue}
+                        onFocus={handleInputFocus}
+                        onBlur={handleInputBlur}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyDown}
+                        type="text"
+                        inputMode={inputMode}
+                        pattern="[0-9]{2}"
+                        data-testid={`${names[1]}-input`}
+                        aria-label={inputLabels[1]}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        tabIndex={readOnly ? -1 : 0}
+                        autoComplete="off"
+                        placeholder={
+                            currentFocus === names[1] && !readOnly ? "" : "MM"
+                        }
+                    />
+                </MonthInputSizer>
                 <Divider $inactive={monthValue.length === 0}>/</Divider>
-                <YearInput
-                    ref={yearInputRef}
-                    name={names[2]}
-                    maxLength={4}
-                    value={hoverYearValue ?? yearValue}
-                    onFocus={handleInputFocus}
-                    onBlur={handleInputBlur}
-                    onChange={handleInputChange}
-                    onKeyDown={handleKeyDown}
-                    type="text"
-                    inputMode={inputMode}
-                    pattern="[0-9]{4}"
-                    data-testid={`${names[2]}-input`}
-                    aria-label={inputLabels[2]}
-                    disabled={disabled}
-                    readOnly={readOnly}
-                    tabIndex={readOnly ? -1 : 0}
-                    autoComplete="off"
-                    placeholder={
-                        currentFocus === names[2] && !readOnly ? "" : "YYYY"
-                    }
-                />
+                <YearInputSizer>
+                    <YearInput
+                        ref={yearInputRef}
+                        name={names[2]}
+                        maxLength={4}
+                        value={hoverYearValue ?? yearValue}
+                        onFocus={handleInputFocus}
+                        onBlur={handleInputBlur}
+                        onChange={handleInputChange}
+                        onKeyDown={handleKeyDown}
+                        type="text"
+                        inputMode={inputMode}
+                        pattern="[0-9]{4}"
+                        data-testid={`${names[2]}-input`}
+                        aria-label={inputLabels[2]}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        tabIndex={readOnly ? -1 : 0}
+                        autoComplete="off"
+                        placeholder={
+                            currentFocus === names[2] && !readOnly ? "" : "YYYY"
+                        }
+                    />
+                </YearInputSizer>
             </InputContainer>
             {renderPlaceholder()}
         </InputSection>

@@ -27,6 +27,8 @@ export const V3_BookingSgFontSpecSet: V3_FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Plus Jakarta Sans",
+    "heading-font-family": "Plus Jakarta Sans",
+    "body-font-family": "Plus Jakarta Sans",
 
     "body-size-baseline": "1.125rem",
     "body-size-md": "1rem",

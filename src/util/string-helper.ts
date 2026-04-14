@@ -244,4 +244,11 @@ export class StringHelper {
 
         return "";
     }
+
+    public static joinNonEmptyStrings(
+        strings: (string | undefined | null)[],
+        delimiter = ", "
+    ): string {
+        return strings.filter(Boolean).join(delimiter);
+    }
 }

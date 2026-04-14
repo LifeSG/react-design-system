@@ -49,6 +49,15 @@ invalid time range (start is greater than end).
 
 <Canvas of={FormTimeRangePickerStories.ComboboxVariant} />
 
+### Initial scroll position
+
+Use `initialScrollStartTime` and `initialScrollEndTime` when you want each combobox
+dropdown to open at a specific time before the user has made a selection. This
+does not prefill the input values. It only controls the initial dropdown scroll
+position while the corresponding field is empty.
+
+<Canvas of={FormTimeRangePickerStories.ComboboxScrollTime} />
+
 ## Component API
 
 <PropsTable />

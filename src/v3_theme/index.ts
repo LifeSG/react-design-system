@@ -196,7 +196,7 @@ export const V3_SupportGoWhereThemeBase: V3_ThemeSpec = {
 };
 
 export const V3_SGWDigitalLobbyThemeBase: V3_ThemeSpec = {
-    colourScheme: "supportgowhere",
+    colourScheme: "sgwdigitallobby",
     fontScheme: "sgwdigitallobby",
     motionScheme: "default",
     borderScheme: "default",
@@ -232,6 +232,19 @@ const V3_SPFThemeBase: V3_ThemeSpec = {
     breakpointScheme: "default",
     resourceScheme: "spf",
     componentScheme: "spf",
+};
+
+const V3_SMGSThemeBase: V3_ThemeSpec = {
+    colourScheme: "smgs",
+    fontScheme: "smgs",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "smgs",
+    componentScheme: "smgs",
 };
 
 // =============================================================================
@@ -309,4 +322,10 @@ export const V3_SPFTheme = {
     ...V3_SPFThemeBase,
     light: createThemeWithColourMode(V3_SPFThemeBase, "light"),
     dark: createThemeWithColourMode(V3_SPFThemeBase, "dark"),
+};
+
+export const V3_SMGSTheme = {
+    ...V3_SMGSThemeBase,
+    light: createThemeWithColourMode(V3_SMGSThemeBase, "light"),
+    dark: createThemeWithColourMode(V3_SMGSThemeBase, "dark"),
 };

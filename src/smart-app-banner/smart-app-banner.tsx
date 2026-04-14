@@ -23,6 +23,7 @@ const APP_ICON =
     "https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png";
 
 const ID = "smart-app-banner";
+const MAX_STARS = 5;
 
 function SmartAppBannerComponent(
     props: SmartAppBannerProps,
@@ -43,9 +44,20 @@ function SmartAppBannerComponent(
         onClick,
     } = props;
 
-    const { title, message, buttonLabel, buttonAriaLabel, numberOfStars } =
-        content;
+    const {
+        title,
+        message,
+        buttonLabel,
+        iconAriaLabel,
+        buttonAriaLabel,
+        numberOfStars,
+    } = content;
 
+    const ariaLabels = {
+        dismiss: "Close banner",
+        icon: iconAriaLabel ?? "",
+        cta: buttonAriaLabel ?? buttonLabel,
+    };
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -70,20 +82,27 @@ function SmartAppBannerComponent(
         const hasHalfStar = numberOfStars - Math.floor(numberOfStars) >= 0.4;
 
         for (let i = 0; i < Math.floor(numberOfStars); i++) {
-            stars.push(<Star key={`star${i}`} />);
+            stars.push(<Star key={`star${i}`} aria-hidden />);
         }
         if (hasHalfStar) {
-            stars.push(<StarHalf key={`halfstar`} />);
+            stars.push(<StarHalf key={`halfstar`} aria-hidden />);
         }
-        if (stars.length < 5) {
+        if (stars.length < MAX_STARS) {
             const remaining = 5 - stars.length;
             for (let i = 0; i < remaining; i++) {
-                stars.push(<StarEmpty key={`emptystar${i}`} />);
+                stars.push(<StarEmpty key={`emptystar${i}`} aria-hidden />);
             }
         }
 
         /* maximum of 5 stars */
-        return <RatingContainer>{stars.slice(0, 5)}</RatingContainer>;
+        return (
+            <RatingContainer
+                role="group"
+                aria-label={`A rating of ${numberOfStars} out of ${MAX_STARS} stars`}
+            >
+                {stars.slice(0, MAX_STARS)}
+            </RatingContainer>
+        );
     };
 
     return (
@@ -95,21 +114,12 @@ function SmartAppBannerComponent(
                     $offset={offset}
                     className={className}
                 >
-                    <DismissContainer
-                        onClick={onDismiss}
-                        id={`${ID}-dismiss`}
-                        data-testid={`${ID}-dismiss-container`}
-                    >
-                        <DismissButton aria-label="Dismiss">
-                            <Cross />
-                        </DismissButton>
-                    </DismissContainer>
                     <ProceedContainer
                         onClick={handleClick}
                         id={`${ID}-proceed`}
                         data-testid={`${ID}-proceed-container`}
                     >
-                        <BannerIcon src={icon} alt="lifesg-app-icon" />
+                        <BannerIcon src={icon} alt={ariaLabels.icon} />
                         <TextContainer>
                             <Title>{title}</Title>
                             <Description>{message}</Description>
@@ -119,12 +129,21 @@ function SmartAppBannerComponent(
                             <StyledButton
                                 type="button"
                                 onClick={handleClick}
-                                aria-label={buttonAriaLabel}
+                                aria-label={ariaLabels.cta}
                             >
                                 {buttonLabel}
                             </StyledButton>
                         </ButtonContainer>
                     </ProceedContainer>
+                    <DismissContainer
+                        onClick={onDismiss}
+                        id={`${ID}-dismiss`}
+                        data-testid={`${ID}-dismiss-container`}
+                    >
+                        <DismissButton aria-label={ariaLabels.dismiss}>
+                            <Cross />
+                        </DismissButton>
+                    </DismissContainer>
                 </SmartAppBannerContainer>
             )}
         </>

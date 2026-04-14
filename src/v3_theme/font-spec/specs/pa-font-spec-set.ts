@@ -27,6 +27,8 @@ export const V3_PAFontSpecSet: V3_FontSpecSet = {
     "weight-semibold": "600",
     "weight-bold": "700",
     "font-family": "Lato",
+    "heading-font-family": "Lato",
+    "body-font-family": "Lato",
 
     "body-size-baseline": "1rem",
     "body-size-md": "0.875rem",

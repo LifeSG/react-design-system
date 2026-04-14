@@ -252,6 +252,23 @@ export class TimeHelper {
         return StringHelper.padValue(hourString);
     }
 
+    /**
+     * Formats a 24hr time range into a 12hr display string.
+     * @param start - "HH:mm" e.g. "13:00"
+     * @param end   - "HH:mm" e.g. "14:30"
+     * @returns e.g. "1:00PM to 2:30PM"
+     */
+    public static formatTimeRange(start: string, end: string): string {
+        return `${dayjs(start, "HH:mm").format("h:mmA")} to ${dayjs(
+            end,
+            "HH:mm"
+        ).format("h:mmA")}`;
+    }
+
+    public static isSameTime(a: string, b: string): boolean {
+        return dayjs(a, "H:mm").isSame(dayjs(b, "H:mm"), "minute");
+    }
+
     public static formatDisplayValue(
         value: string | undefined,
         format: TimeFormat
@@ -343,7 +360,7 @@ export class TimeHelper {
 
     // Return undefined = invalid field, "" = empty field, else returns h:mma
     public static parseInput(
-        input: string,
+        input: string | undefined,
         format: TimeFormat = "12hr" // Returned format
     ): string | undefined {
         if (input === "" || input === undefined) return input;
@@ -598,7 +615,6 @@ const convertToPlain = (
     } else {
         // Check format
         if (timeArr.length !== 2) throw error;
-
         // Validate hour and minute values
         if (!isValidHour(timeArr[0], format) || !isValidMinutes(timeArr[1])) {
             throw error;
