@@ -34,8 +34,6 @@ export const DayCell = ({
     const defaultLabel = `${date.format("D MMMM YYYY dddd")}, ${
         disabled ? "Unavailable" : "Available"
     }`; // e.g. 1 January 2025 Tuesday, Unavailable
-    const isPresentationRole = role === "none" || role === "presentation";
-    const isButtonRole = !isPresentationRole;
     const isGridcellRole = role === "gridcell";
     const isSelected =
         labelType === "selected" || labelType === "selected-hover";
@@ -49,10 +47,10 @@ export const DayCell = ({
     const [isToday, setIsToday] = useState(false);
 
     useEffect(() => {
-        if (isFocused && isButtonRole) {
+        if (isFocused) {
             buttonRef.current?.focus();
         }
-    }, [isButtonRole, isFocused]);
+    }, [isFocused]);
 
     useEffect(() => {
         setIsToday(dayjs().isSame(date, "day"));
@@ -112,39 +110,26 @@ export const DayCell = ({
                 className={styles.labelWrapper}
                 data-day-cell-interactive={interactive}
             >
-                {isButtonRole ? (
-                    <button
-                        type="button"
-                        className={styles.label}
-                        data-day-cell-interactive={interactive}
-                        data-day-cell-label-type={labelTypeAttr}
-                        data-day-cell-disabled={disabled}
-                        ref={buttonRef}
-                        tabIndex={tabIndex}
-                        role={role === "button" ? undefined : role}
-                        aria-label={labelText}
-                        aria-disabled={!interactive}
-                        aria-selected={isGridcellRole ? isSelected : undefined}
-                        onClick={handleClick}
-                        onKeyDown={handleLabelKeyDown}
-                        onMouseEnter={handleHover}
-                        onMouseLeave={handleMouseLeave}
-                        onFocus={handleFocus}
-                    >
-                        {labelContent}
-                    </button>
-                ) : (
-                    <div
-                        className={styles.label}
-                        data-day-cell-interactive={interactive}
-                        data-day-cell-label-type={labelTypeAttr}
-                        data-day-cell-disabled={disabled}
-                        role={role}
-                        aria-label={labelText}
-                    >
-                        {labelContent}
-                    </div>
-                )}
+                <button
+                    type="button"
+                    className={styles.label}
+                    data-day-cell-interactive={interactive}
+                    data-day-cell-label-type={labelTypeAttr}
+                    data-day-cell-disabled={disabled}
+                    ref={buttonRef}
+                    tabIndex={tabIndex}
+                    role={role === "button" ? undefined : role}
+                    aria-label={labelText}
+                    aria-disabled={!interactive}
+                    aria-selected={isGridcellRole ? isSelected : undefined}
+                    onClick={handleClick}
+                    onKeyDown={handleLabelKeyDown}
+                    onMouseEnter={handleHover}
+                    onMouseLeave={handleMouseLeave}
+                    onFocus={handleFocus}
+                >
+                    {labelContent}
+                </button>
             </span>
         </div>
     );
