@@ -108,7 +108,7 @@ describe("Border Theming Test", () => {
         );
     });
 
-    fit("should apply correct dashed border util styles based on theme overrides", () => {
+    it("should apply correct dashed border util styles based on theme overrides", () => {
         const mockTheme: ThemeSpec = {
             ...MOCK_THEME,
             overrides: {

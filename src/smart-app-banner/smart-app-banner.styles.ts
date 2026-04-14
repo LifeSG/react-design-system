@@ -24,7 +24,7 @@ export const SmartAppBannerContainer = styled.div<{
     $isAnimated: boolean;
 }>`
     display: flex;
-    flex-direction: row;
+    flex-direction: row-reverse;
     align-items: stretch;
     position: fixed;
     margin: 0.5rem 1.25rem;
