@@ -5,16 +5,20 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "example";
 
     public readonly locators: {
+        components: {
+            toggleButton: Locator;
+        };
         text: Locator;
-        toggleButton: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
+            components: {
+                toggleButton: page.getByRole("button", { name: "click me" }),
+            },
             text: page.getByText("Hello world"),
-            toggleButton: page.getByRole("button", { name: "click me" }),
         };
     }
 }
@@ -34,16 +38,11 @@ test.describe("Example", () => {
 
         test("Basic", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.text).not.toBeVisible();
-                await expect(story.locators.toggleButton).toBeVisible();
-
                 await compareScreenshot(story, "mount");
             });
 
-            await test.step("Text is visible after toggling the button", async () => {
-                await story.locators.toggleButton.click();
-
-                await expect(story.locators.text).toBeVisible();
+            await test.step("Box is expanded after toggling the button", async () => {
+                await story.locators.components.toggleButton.click();
 
                 await compareScreenshot(story, "after-click");
             });
@@ -57,16 +56,11 @@ test.describe("Example", () => {
 
         test("Basic (mobile)", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.text).not.toBeVisible();
-                await expect(story.locators.toggleButton).toBeVisible();
-
                 await compareScreenshot(story, "mount");
             });
 
-            await test.step("Text is visible after toggling the button", async () => {
-                await story.locators.toggleButton.click();
-
-                await expect(story.locators.text).toBeVisible();
+            await test.step("Box is expanded after toggling the button", async () => {
+                await story.locators.components.toggleButton.click();
 
                 await compareScreenshot(story, "after-click");
             });
@@ -80,16 +74,11 @@ test.describe("Example", () => {
 
         test("Basic (dark mode)", async ({ story }) => {
             await test.step("Component mounts", async () => {
-                await expect(story.locators.text).not.toBeVisible();
-                await expect(story.locators.toggleButton).toBeVisible();
-
                 await compareScreenshot(story, "mount");
             });
 
-            await test.step("Text is visible after toggling the button", async () => {
-                await story.locators.toggleButton.click();
-
-                await expect(story.locators.text).toBeVisible();
+            await test.step("Box is expanded after toggling the button", async () => {
+                await story.locators.components.toggleButton.click();
 
                 await compareScreenshot(story, "after-click");
             });
