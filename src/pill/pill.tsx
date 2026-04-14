@@ -6,22 +6,22 @@ import type { PillColorType, PillProps, PillType } from "./types";
 
 const WRAPPER_CLASS: Record<PillType, Record<PillColorType, string>> = {
     solid: {
-        black: "wrapperSolidBlack",
-        grey: "wrapperSolidGrey",
-        green: "wrapperSolidGreen",
-        yellow: "wrapperSolidYellow",
-        red: "wrapperSolidRed",
-        blue: "wrapperSolidBlue",
-        primary: "wrapperSolidPrimary",
+        black: styles.wrapperSolidBlack,
+        grey: styles.wrapperSolidGrey,
+        green: styles.wrapperSolidGreen,
+        yellow: styles.wrapperSolidYellow,
+        red: styles.wrapperSolidRed,
+        blue: styles.wrapperSolidBlue,
+        primary: styles.wrapperSolidPrimary,
     },
     outline: {
-        black: "wrapperOutlineBlack",
-        grey: "wrapperOutlineGrey",
-        green: "wrapperOutlineGreen",
-        yellow: "wrapperOutlineYellow",
-        red: "wrapperOutlineRed",
-        blue: "wrapperOutlineBlue",
-        primary: "wrapperOutlinePrimary",
+        black: styles.wrapperOutlineBlack,
+        grey: styles.wrapperOutlineGrey,
+        green: styles.wrapperOutlineGreen,
+        yellow: styles.wrapperOutlineYellow,
+        red: styles.wrapperOutlineRed,
+        blue: styles.wrapperOutlineBlue,
+        primary: styles.wrapperOutlinePrimary,
     },
 };
 
@@ -34,17 +34,17 @@ export const Pill = ({
     ...otherProps
 }: PillProps): JSX.Element => {
     return (
-        <styles.Wrapper
+        <div
             {...otherProps}
             className={clsx(
-                "wrapperBase",
-                type === "solid" && "wrapperSolid",
+                styles.wrapperBase,
+                type === "solid" && styles.wrapperSolid,
                 WRAPPER_CLASS[type][colorType],
                 className
             )}
         >
             {icon && React.cloneElement(icon, { "aria-hidden": true })}
-            <styles.Label>{children}</styles.Label>
-        </styles.Wrapper>
+            <div className={styles.label}>{children}</div>
+        </div>
     );
 };
