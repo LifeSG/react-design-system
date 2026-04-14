@@ -1,12 +1,12 @@
 import styled, { css } from "styled-components";
 
 import { V3_Colour, V3_Font } from "../../v3_theme";
+import { lineClampDynamicCss } from "../styles";
 import type {
     DropdownVariantType,
     LabelDisplayType,
     TruncateType,
-} from "../dropdown-list/types";
-import { lineClampDynamicCss } from "../styles";
+} from "./types";
 
 const tokens = {
     primaryText: {
