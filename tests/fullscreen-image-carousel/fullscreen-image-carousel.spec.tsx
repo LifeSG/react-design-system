@@ -30,19 +30,7 @@ describe("Fullscreen Image Carousel", () => {
         expect(thumbnails.length).toBe(4);
     });
 
-    it("should render the delete button when onDelete is provided", () => {
-        render(
-            <FullscreenImageCarousel
-                items={IMAGES}
-                show={true}
-                onDelete={jest.fn()}
-            />
-        );
-
-        expect(screen.getByTestId("delete-btn")).toBeInTheDocument();
-    });
-
-    it("should call onDelete with the current item and index", () => {
+    it("should render the delete button and call onDelete with the current item and index", () => {
         const onDelete = jest.fn();
 
         render(
@@ -52,6 +40,8 @@ describe("Fullscreen Image Carousel", () => {
                 onDelete={onDelete}
             />
         );
+
+        expect(screen.getByTestId("delete-btn")).toBeInTheDocument();
 
         fireEvent.click(screen.getByTestId("forward-btn"));
         expect(screen.getByText("2/4")).toBeInTheDocument();
