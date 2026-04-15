@@ -1,4 +1,4 @@
-import type { V3_ResourceScheme, V3_ThemeSpec } from "../v3_theme/types";
+import type { ThemeType } from "../theme";
 import { renderDescriptionWithProps } from "./error-display-helper-comp";
 import type { ErrorDisplayImagePathAttributes } from "./helper";
 import { ErrorDisplayHelper } from "./helper";
@@ -449,14 +449,13 @@ interface ErrorDisplayDataAttrs {
 }
 
 export const generateErrorDisplayData = (
-    ImgPathsObject: Record<string, ErrorDisplayImagePathAttributes>,
-    theme?: V3_ThemeSpec
+    ImgPathsObject: Record<string, ErrorDisplayImagePathAttributes>
 ) =>
     new Map<ErrorDisplayType, ErrorDisplayDataAttrs>([
         [
             "400",
             {
-                img: imgAttributeHelper(ImgPathsObject["400"], theme),
+                img: imgAttributeHelper(ImgPathsObject["400"]),
                 title: "Something went wrong",
                 description:
                     "This could be a temporary problem, so please refresh the page or try again later.",
@@ -465,7 +464,7 @@ export const generateErrorDisplayData = (
         [
             "403",
             {
-                img: imgAttributeHelper(ImgPathsObject["403"], theme),
+                img: imgAttributeHelper(ImgPathsObject["403"]),
                 title: "Error loading page",
                 description:
                     "You may not have permission to view this page. If someone gave you this link, let them know about this error.",
@@ -474,7 +473,7 @@ export const generateErrorDisplayData = (
         [
             "404",
             {
-                img: imgAttributeHelper(ImgPathsObject["404"], theme),
+                img: imgAttributeHelper(ImgPathsObject["404"]),
                 title: "Page not found",
                 description:
                     "If you entered or pasted the URL, check that it’s correct. If someone gave you this link, let them know about this error.",
@@ -483,7 +482,7 @@ export const generateErrorDisplayData = (
         [
             "408",
             {
-                img: imgAttributeHelper(ImgPathsObject["408"], theme),
+                img: imgAttributeHelper(ImgPathsObject["408"]),
                 title: "Something went wrong",
                 description:
                     "This could be a temporary problem, so please refresh the page or try again later.",
@@ -492,7 +491,7 @@ export const generateErrorDisplayData = (
         [
             "500",
             {
-                img: imgAttributeHelper(ImgPathsObject["500"], theme),
+                img: imgAttributeHelper(ImgPathsObject["500"]),
                 title: "Something went wrong",
                 description:
                     "We're working on a fix for the problem. Please try again later.",
@@ -501,7 +500,7 @@ export const generateErrorDisplayData = (
         [
             "502",
             {
-                img: imgAttributeHelper(ImgPathsObject["502"], theme),
+                img: imgAttributeHelper(ImgPathsObject["502"]),
                 title: "Something went wrong",
                 description:
                     "This could be a temporary problem, so please refresh the page or try again later.",
@@ -510,7 +509,7 @@ export const generateErrorDisplayData = (
         [
             "503",
             {
-                img: imgAttributeHelper(ImgPathsObject["503"], theme),
+                img: imgAttributeHelper(ImgPathsObject["503"]),
                 title: "Service under maintenance",
                 description:
                     "This service is currently unavailable. Please try again later.",
@@ -519,7 +518,7 @@ export const generateErrorDisplayData = (
         [
             "504",
             {
-                img: imgAttributeHelper(ImgPathsObject["504"], theme),
+                img: imgAttributeHelper(ImgPathsObject["504"]),
                 title: "Something went wrong",
                 description:
                     "This could be a temporary problem, so please refresh the page or try again later.",
@@ -528,7 +527,7 @@ export const generateErrorDisplayData = (
         [
             "confirmation",
             {
-                img: imgAttributeHelper(ImgPathsObject["confirmation"], theme),
+                img: imgAttributeHelper(ImgPathsObject["confirmation"]),
                 title: "Leave and lose changes?",
                 description:
                     "You have unsaved changes. If you leave this page, you will lose the changes you’ve made.",
@@ -537,7 +536,7 @@ export const generateErrorDisplayData = (
         [
             "link-error",
             {
-                img: imgAttributeHelper(ImgPathsObject["link-error"], theme),
+                img: imgAttributeHelper(ImgPathsObject["link-error"]),
                 title: "Link has expired",
                 description:
                     "If you entered or pasted the URL, check that it’s correct. If someone gave you this link, let them know it has expired.",
@@ -546,7 +545,7 @@ export const generateErrorDisplayData = (
         [
             "logout",
             {
-                img: imgAttributeHelper(ImgPathsObject["logout"], theme),
+                img: imgAttributeHelper(ImgPathsObject["logout"]),
                 title: "You’ve been logged out",
                 description:
                     "It looks like you’ve left, so we logged you out to protect your privacy.",
@@ -555,10 +554,7 @@ export const generateErrorDisplayData = (
         [
             "insufficient-credits",
             {
-                img: imgAttributeHelper(
-                    ImgPathsObject["insufficient-credits"],
-                    theme
-                ),
+                img: imgAttributeHelper(ImgPathsObject["insufficient-credits"]),
                 title: "Insufficient credits",
                 description:
                     "You do not have enough credits to make this transaction.",
@@ -567,7 +563,7 @@ export const generateErrorDisplayData = (
         [
             "inactivity",
             {
-                img: imgAttributeHelper(ImgPathsObject["inactivity"], theme),
+                img: imgAttributeHelper(ImgPathsObject["inactivity"]),
                 title: "Are you still there?",
                 description:
                     "You’ve been inactive for a while. To protect your privacy, you’ll be logged out soon.\n\nIf you wish to stay on this page, let us know now.",
@@ -577,7 +573,7 @@ export const generateErrorDisplayData = (
         [
             "maintenance",
             {
-                img: imgAttributeHelper(ImgPathsObject["503"], theme),
+                img: imgAttributeHelper(ImgPathsObject["503"]),
                 title: "Service under maintenance",
                 description:
                     "This service is currently unavailable. Please try again later.",
@@ -587,7 +583,7 @@ export const generateErrorDisplayData = (
         [
             "no-item-found",
             {
-                img: imgAttributeHelper(ImgPathsObject["no-item-found"], theme),
+                img: imgAttributeHelper(ImgPathsObject["no-item-found"]),
                 title: "No results found",
                 description:
                     "Try adjusting your search or filters to find what you’re looking for.",
@@ -596,10 +592,7 @@ export const generateErrorDisplayData = (
         [
             "payment-unsuccessful",
             {
-                img: imgAttributeHelper(
-                    ImgPathsObject["payment-unsuccessful"],
-                    theme
-                ),
+                img: imgAttributeHelper(ImgPathsObject["payment-unsuccessful"]),
                 title: "Unsuccessful payment",
                 description: "Your payment was unsuccessful. Please try again.",
             },
@@ -608,8 +601,7 @@ export const generateErrorDisplayData = (
             "transfer-unsuccessful",
             {
                 img: imgAttributeHelper(
-                    ImgPathsObject["transfer-unsuccessful"],
-                    theme
+                    ImgPathsObject["transfer-unsuccessful"]
                 ),
                 title: "Unsuccessful transfer",
                 description:
@@ -619,10 +611,7 @@ export const generateErrorDisplayData = (
         [
             "unsupported-browser",
             {
-                img: imgAttributeHelper(
-                    ImgPathsObject["unsupported-browser"],
-                    theme
-                ),
+                img: imgAttributeHelper(ImgPathsObject["unsupported-browser"]),
                 title: "Browser not supported",
                 description:
                     "Download the latest version of Chrome, Edge, Firefox or Safari.",
@@ -631,10 +620,7 @@ export const generateErrorDisplayData = (
         [
             "partially-supported-browser",
             {
-                img: imgAttributeHelper(
-                    ImgPathsObject["unsupported-browser"],
-                    theme
-                ),
+                img: imgAttributeHelper(ImgPathsObject["unsupported-browser"]),
                 title: "Browser version not supported",
                 description:
                     "Update to the latest version of Chrome, Edge, Firefox or Safari.",
@@ -643,7 +629,7 @@ export const generateErrorDisplayData = (
         [
             "warning",
             {
-                img: imgAttributeHelper(ImgPathsObject["warning"], theme),
+                img: imgAttributeHelper(ImgPathsObject["warning"]),
                 title: "Are you sure?",
                 description: "You will lose your progress.",
             },
@@ -652,17 +638,16 @@ export const generateErrorDisplayData = (
 
 export const getErrorDisplayData = (
     type: ErrorDisplayType,
-    resourceScheme: V3_ResourceScheme,
-    theme?: V3_ThemeSpec
+    resourceScheme: ThemeType
 ) => {
     switch (resourceScheme) {
         case "bookingsg":
-            return generateErrorDisplayData(BsgImgPaths, theme).get(type);
+            return generateErrorDisplayData(BsgImgPaths).get(type);
         case "ccube":
-            return generateErrorDisplayData(CCubeImgPaths, theme).get(type);
+            return generateErrorDisplayData(CCubeImgPaths).get(type);
         case "mylegacy":
-            return generateErrorDisplayData(MyLegacyImgPaths, theme).get(type);
+            return generateErrorDisplayData(MyLegacyImgPaths).get(type);
         default:
-            return generateErrorDisplayData(ImgPaths, theme).get(type);
+            return generateErrorDisplayData(ImgPaths).get(type);
     }
 };

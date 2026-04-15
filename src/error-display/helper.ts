@@ -1,5 +1,4 @@
-import { V3_Breakpoint } from "../v3_theme";
-import type { V3_ThemeSpec } from "../v3_theme/types";
+import { Breakpoint } from "../theme";
 
 export interface ErrorDisplayImagePathAttributes {
     /** base sized image path */
@@ -24,12 +23,11 @@ export class ErrorDisplayHelper {
      * @param {ErrorDisplayImagePathAttributes} pathAttributes
      */
     public static imgAttributeHelper(
-        pathAttributes: ErrorDisplayImagePathAttributes,
-        theme?: V3_ThemeSpec
+        pathAttributes: ErrorDisplayImagePathAttributes
     ): React.ImgHTMLAttributes<HTMLImageElement> {
         const { base, md, lg, width, height } = pathAttributes;
-        const mobile = V3_Breakpoint["sm-max"]({ theme });
-        const tablet = V3_Breakpoint["lg-max"]({ theme });
+        const mobile = Breakpoint["sm-max"];
+        const tablet = Breakpoint["lg-max"];
 
         return {
             srcSet: `${base} 400w, ${md} 800w, ${lg} 1200w`,

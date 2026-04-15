@@ -17,11 +17,7 @@ describe("ErrorDisplay", () => {
     it("should render the component", () => {
         renderErrorDisplay(<ErrorDisplay type="404" />);
 
-        const title = getErrorDisplayData(
-            "404",
-            "lifesg",
-            V3_LifeSGTheme
-        )!.title;
+        const title = getErrorDisplayData("404", "lifesg")!.title;
         expect(screen.getByRole("heading", { level: 2, name: title }));
     });
 
@@ -116,11 +112,7 @@ describe("ErrorDisplay", () => {
             (type: ErrorDisplayType) => {
                 renderErrorDisplay(<ErrorDisplay type={type} />);
 
-                const error = getErrorDisplayData(
-                    type,
-                    "lifesg",
-                    V3_LifeSGTheme
-                )!;
+                const error = getErrorDisplayData(type, "lifesg")!;
 
                 expect(
                     screen.getByRole("heading", { level: 2, name: error.title })
@@ -145,11 +137,7 @@ describe("ErrorDisplay", () => {
                     v4Theme: "bookingsg",
                 });
 
-                const error = getErrorDisplayData(
-                    type,
-                    "bookingsg",
-                    V3_BookingSGTheme
-                )!;
+                const error = getErrorDisplayData(type, "bookingsg")!;
 
                 expect(
                     screen.getByRole("heading", {
@@ -175,7 +163,7 @@ describe("ErrorDisplay", () => {
                 { styledTheme: V3_BookingSGTheme, v4Theme: "bookingsg" }
             );
 
-            const error = getErrorDisplayData("400", "lifesg", V3_LifeSGTheme)!;
+            const error = getErrorDisplayData("400", "lifesg")!;
 
             expect(
                 screen.getByRole("heading", {
@@ -204,7 +192,7 @@ describe("ErrorDisplay", () => {
                 <ErrorDisplay type={type} additionalProps={additionalProps} />
             );
 
-            const error = getErrorDisplayData(type, "lifesg", V3_LifeSGTheme)!;
+            const error = getErrorDisplayData(type, "lifesg")!;
             const errorDescription = transformJSXElementToString(
                 error.renderDescription!(additionalProps) as JSX.Element
             );

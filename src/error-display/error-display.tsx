@@ -1,8 +1,7 @@
 import type React from "react";
 import { useContext } from "react";
-import { ThemeContext } from "styled-components";
 
-import { V3_LifeSGTheme } from "../v3_theme";
+import { ThemeContext } from "../theme/theme-provider/context";
 import * as styles from "./error-display.styles";
 import { getErrorDisplayData } from "./error-display-data";
 import { InactivityTimer } from "./inactivity-timer";
@@ -29,8 +28,7 @@ export const ErrorDisplay = ({
     const theme = useContext(ThemeContext);
     const defaultAssets = getErrorDisplayData(
         type,
-        illustrationScheme || (theme || V3_LifeSGTheme).resourceScheme,
-        theme
+        illustrationScheme || theme?.theme || "lifesg"
     );
     const inactivityAttrs =
         type === "inactivity"
