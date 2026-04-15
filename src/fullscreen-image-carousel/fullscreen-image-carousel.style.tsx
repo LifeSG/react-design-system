@@ -2,7 +2,15 @@ import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
 import { InsetStyleProps } from "../shared/types";
-import { Border, Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
+import {
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../theme";
 import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 
@@ -366,7 +374,10 @@ export const FileInfoTextWrapper = styled.div`
     gap: ${Spacing["spacing-8"]};
     overflow: hidden;
     min-width: 0;
-    min-height: calc(26px + ${Spacing["spacing-8"]} + 24px);
+    min-height: calc(
+        ${Font.Spec["body-lh-baseline"]} + ${Spacing["spacing-8"]} +
+            ${Font.Spec["body-lh-md"]}
+    );
 `;
 
 export const FileInfoFileName = styled(Typography.BodyBL)`
