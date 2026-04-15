@@ -117,7 +117,7 @@ export const TimeSlotWeekDays = ({
 
         const dayCellStyleProps: CellStyleProps = {
             labelType: "available",
-            interactive: !enableSelection ? null : isHoverEnabled,
+            interactive: enableSelection ? isHoverEnabled : false,
         };
 
         if (disabled) {

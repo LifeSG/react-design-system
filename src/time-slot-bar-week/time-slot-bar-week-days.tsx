@@ -168,9 +168,9 @@ export const TimeSlotBarWeekDays = ({
             dayCellStyleProps.disabled = true;
         }
 
-        dayCellStyleProps.interactive = !enableSelection
-            ? null
-            : isHoverEnabled;
+        dayCellStyleProps.interactive = enableSelection
+            ? isHoverEnabled
+            : false;
 
         const isHover =
             isHoverEnabled && hoverDay && day.isSame(hoverDay, "day");

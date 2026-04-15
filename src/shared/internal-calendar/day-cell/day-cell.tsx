@@ -12,7 +12,7 @@ export const DayCell = ({
     circleRight,
     labelType,
     disabled,
-    interactive,
+    interactive = false,
     currentDateIndicator,
     date,
     onSelect,
@@ -40,14 +40,7 @@ export const DayCell = ({
     const labelText = label || defaultLabel;
     const labelTypeAttr =
         disabled && labelType !== "hidden" ? undefined : labelType;
-    let interactiveAttr: string | undefined;
-    if (interactive === undefined) {
-        interactiveAttr = "disabled";
-    } else if (interactive === null) {
-        interactiveAttr = undefined;
-    } else {
-        interactiveAttr = String(interactive);
-    }
+    console.log({ date, interactive });
 
     // =============================================================================
     // REFS, EFFECTS
@@ -117,12 +110,12 @@ export const DayCell = ({
             ></div>
             <span
                 className={styles.labelWrapper}
-                data-day-cell-interactive={interactiveAttr}
+                data-day-cell-interactive={String(interactive)}
             >
                 <button
                     type="button"
                     className={styles.label}
-                    data-day-cell-interactive={interactiveAttr}
+                    data-day-cell-interactive={String(interactive)}
                     data-day-cell-label-type={labelTypeAttr}
                     data-day-cell-disabled={disabled}
                     ref={buttonRef}

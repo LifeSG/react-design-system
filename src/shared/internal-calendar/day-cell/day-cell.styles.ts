@@ -145,7 +145,7 @@ export const labelWrapper = css`
         cursor: pointer;
     }
 
-    &[data-day-cell-interactive="disabled"] {
+    &[data-day-cell-interactive="false"] {
         cursor: not-allowed;
         pointer-events: none;
     }
@@ -166,10 +166,6 @@ export const label = css`
     &[data-day-cell-interactive="true"],
     &[data-day-cell-interactive="false"] {
         pointer-events: auto;
-    }
-
-    &[data-day-cell-interactive="disabled"] {
-        pointer-events: none;
     }
 
     &[data-day-cell-label-type="selected"] {

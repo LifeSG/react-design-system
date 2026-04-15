@@ -68,7 +68,7 @@ export const ScheduleWeekView = ({
 
         const dayCellStyleProps: CellStyleProps = {
             labelType: isToday ? "current" : "available",
-            interactive: null,
+            interactive: undefined,
         };
 
         if (isToday) {
