@@ -13,24 +13,30 @@ export interface FullscreenImageCarouselProps
         ModalProps,
         "show" | "rootComponentId" | "animationFrom" | "zIndex"
     > {
-    items: FullscreenCarouselItemProps[];
+    items: CarouselItemProps[];
     /** The index of the visible item, starts from 0 */
     initialActiveItemIndex?: number | undefined;
     hideThumbnail?: boolean | undefined;
     hideNavigation?: boolean | undefined;
     hideCounter?: boolean | undefined;
     hideMagnifier?: boolean | undefined;
-    onDelete?:
-        | ((item: FullscreenCarouselItemProps, index: number) => void)
-        | undefined;
+    onDelete?: ((item: CarouselItemProps, index: number) => void) | undefined;
     onClose?: (() => void) | undefined;
     insets?: Insets | undefined;
 }
 
-export interface ImageCarouselItemProps {
+/**
+ * Base item props shared by all carousel items.
+ * Kept as a standalone interface for backward compatibility
+ * (consumers may extend it).
+ */
+export interface FullscreenCarouselItemProps {
     src: string;
     alt?: string | undefined;
     thumbnailSrc?: string | undefined;
+}
+
+export interface ImageCarouselItemProps extends FullscreenCarouselItemProps {
     renderContent?: never;
 }
 
@@ -43,7 +49,7 @@ export interface CustomCarouselItemProps {
     renderContent: () => React.ReactNode;
 }
 
-export type FullscreenCarouselItemProps =
+export type CarouselItemProps =
     | ImageCarouselItemProps
     | CustomCarouselItemProps;
 

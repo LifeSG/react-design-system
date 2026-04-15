@@ -46,7 +46,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "items",
                 description: "List of carousel items",
-                propTypes: ["FullscreenCarouselItemProps[]"],
+                propTypes: ["CarouselItemProps[]"],
                 mandatory: true,
             },
             {
@@ -82,9 +82,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onDelete",
                 description:
                     "Called when the current image delete button is clicked. When provided, the delete button will be shown. If called, do not reorder the items array while a delete is in flight.",
-                propTypes: [
-                    "(item: FullscreenCarouselItemProps, index: number) => void",
-                ],
+                propTypes: ["(item: CarouselItemProps, index: number) => void"],
             },
             {
                 name: "onClose",
@@ -109,7 +107,7 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "FullscreenCarouselItemProps",
+        name: "CarouselItemProps",
         attributes: [
             {
                 name: "src",

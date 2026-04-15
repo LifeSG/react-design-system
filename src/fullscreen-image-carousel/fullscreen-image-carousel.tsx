@@ -48,15 +48,15 @@ import {
     TopActionButtons,
 } from "./fullscreen-image-carousel.style";
 import {
+    CarouselItemProps,
     CustomCarouselItemProps,
-    FullscreenCarouselItemProps,
     FullscreenImageCarouselProps,
     FullscreenImageCarouselRef,
     ImageDimension,
 } from "./types";
 
 const isCustomItem = (
-    item: FullscreenCarouselItemProps | undefined
+    item: CarouselItemProps | undefined
 ): item is CustomCarouselItemProps =>
     !!item &&
     "renderContent" in item &&
@@ -96,20 +96,25 @@ export const Component = (
     const imageRef = useRef<HTMLDivElement>(null);
     const diff = startX && endX ? startX - endX : 0;
     const currentItem = items[currentSlide];
-    const hasCustomItemLabel = items.some(
+    const hasAnyItemLabel = items.some(
         (item) => isCustomItem(item) && item.itemLabel !== undefined
     );
-    const carouselItemNoun = hasCustomItemLabel ? "item" : "image";
+    const carouselItemNoun = hasAnyItemLabel ? "item" : "image";
 
-    const getImageAriaLabel = useCallback(
+    const getItemAriaLabel = useCallback(
         (index: number) => {
             const item = items[index];
-            const altText = isCustomItem(item) ? "" : item.alt?.trim() || "";
-            return `${altText}. ${hasCustomItemLabel ? "Item" : "Image"} ${
-                index + 1
-            } of ${items.length}.`;
+            const itemTypeLabel = hasAnyItemLabel ? "Item" : "Image";
+            const prefix = isCustomItem(item)
+                ? item.itemLabel?.trim() || ""
+                : item.alt?.trim() || "";
+            const positionLabel = `${itemTypeLabel} ${index + 1} of ${
+                items.length
+            }.`;
+
+            return prefix ? `${prefix}. ${positionLabel}` : positionLabel;
         },
-        [items, hasCustomItemLabel]
+        [items, hasAnyItemLabel]
     );
 
     useImperativeHandle<FullscreenImageCarouselRef, FullscreenImageCarouselRef>(
@@ -258,7 +263,7 @@ export const Component = (
             (prev) => (prev === 0 ? items.length - 1 : prev - 1),
             (slide) => {
                 clearAnnouncer("polite");
-                announce(getImageAriaLabel(slide), "polite");
+                announce(getItemAriaLabel(slide), "polite");
             }
         );
     };
@@ -269,7 +274,7 @@ export const Component = (
             (prev) => (prev === items.length - 1 ? 0 : prev + 1),
             (slide) => {
                 clearAnnouncer("polite");
-                announce(getImageAriaLabel(slide), "polite");
+                announce(getItemAriaLabel(slide), "polite");
             }
         );
     };
@@ -293,6 +298,10 @@ export const Component = (
             >
                 {items.map((item, index) => {
                     const isActive = index === currentSlide;
+                    const isAdjacent =
+                        Math.abs(index - currentSlide) <= 1 ||
+                        (currentSlide === 0 && index === items.length - 1) ||
+                        (currentSlide === items.length - 1 && index === 0);
 
                     return (
                         <ImageGallerySlide key={index} data-testid="slide-item">
@@ -301,7 +310,11 @@ export const Component = (
                                 tabIndex={isActive ? 0 : -1}
                             >
                                 {isCustomItem(item) ? (
-                                    item.renderContent()
+                                    isAdjacent ? (
+                                        item.renderContent()
+                                    ) : (
+                                        <SlidePlaceholderImage />
+                                    )
                                 ) : (
                                     <TransformWrapper
                                         ref={(el) =>
@@ -318,7 +331,7 @@ export const Component = (
                                         <TransformComponent>
                                             <SlideImage
                                                 src={item.src}
-                                                alt={getImageAriaLabel(index)}
+                                                alt={getItemAriaLabel(index)}
                                                 placeholder={
                                                     <SlidePlaceholderImage />
                                                 }
@@ -380,7 +393,7 @@ export const Component = (
         <ModalV2
             {...otherProps}
             data-testid="image-carousel-modal"
-            aria-label={hasCustomItemLabel ? "Carousel" : "Image carousel"}
+            aria-label={hasAnyItemLabel ? "Carousel" : "Image carousel"}
             show={show}
             disableInitialFocus
         >
@@ -454,7 +467,7 @@ export const Component = (
                         <DeleteButton
                             aria-label={`Delete ${
                                 (isCustomItem(currentItem) &&
-                                    currentItem.itemLabel) ||
+                                    currentItem.itemLabel?.trim()) ||
                                 "image"
                             }`}
                             data-testid="delete-btn"
@@ -466,7 +479,7 @@ export const Component = (
 
                     <CloseButton
                         aria-label={
-                            hasCustomItemLabel
+                            hasAnyItemLabel
                                 ? "Close carousel"
                                 : "Close image carousel"
                         }

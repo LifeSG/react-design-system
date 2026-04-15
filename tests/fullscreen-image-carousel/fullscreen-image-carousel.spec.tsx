@@ -159,6 +159,20 @@ describe("Fullscreen Image Carousel", () => {
             const imgs = thumbnails[1].querySelectorAll("img");
             expect(imgs.length).toBe(0);
         });
+
+        it("should not render custom content for non-adjacent slides", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={SPACED_ITEMS}
+                    show={true}
+                    initialActiveItemIndex={0}
+                />
+            );
+
+            expect(
+                screen.queryByTestId("custom-slide-content")
+            ).not.toBeInTheDocument();
+        });
     });
 
     describe("itemLabel aria-labels", () => {
@@ -226,4 +240,16 @@ const MIXED_ITEMS = [
         itemLabel: "PDF",
         renderContent: () => <div data-testid="custom-slide-content">PDF</div>,
     },
+];
+
+// Custom item at index 3 with images padding both ends, so index 0 is not adjacent
+const SPACED_ITEMS = [
+    { src: "https://picsum.photos/id/157/1600/900" },
+    { src: "https://picsum.photos/id/163/900/300" },
+    { src: "https://picsum.photos/id/369/1000/1000" },
+    {
+        itemLabel: "PDF",
+        renderContent: () => <div data-testid="custom-slide-content">PDF</div>,
+    },
+    { src: "https://picsum.photos/id/445/300/300" },
 ];
