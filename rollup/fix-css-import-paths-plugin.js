@@ -101,6 +101,13 @@ const getRewrittenCssImportPath = ({
     if (fs.existsSync(resolvedPath)) return null;
 
     const cssMatches = cssByBasename.get(path.basename(importPath));
+    if (cssMatches?.length > 1) {
+        console.warn(
+            `[fix-css-import-paths] Skipping rewrite: multiple CSS files found for "${path.basename(
+                importPath
+            )}" in ${jsFile}:\n` + cssMatches.map((f) => `  - ${f}`).join("\n")
+        );
+    }
     if (cssMatches?.length !== 1) return null;
 
     return toRelativeImportPath(jsFile, cssMatches[0]);
