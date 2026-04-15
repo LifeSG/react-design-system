@@ -33,6 +33,8 @@ export interface FullscreenImageCarouselImageItemProps {
     alt?: string | undefined;
     thumbnailSrc?: string | undefined;
     renderContent?: never;
+    fileName?: string | undefined;
+    fileSize?: string | undefined;
 }
 
 /** @deprecated Use FullscreenImageCarouselImageItemProps instead */
@@ -46,6 +48,8 @@ export interface FullscreenImageCarouselCustomItemProps {
     itemLabel?: string | undefined;
     /** Render prop for the full slide area. Consumer is responsible for the entire slide content (e.g. an iframe, embed, or custom viewer). */
     renderContent: () => React.ReactNode;
+    fileName?: string | undefined;
+    fileSize?: string | undefined;
 }
 
 export type FullscreenImageCarouselItemProps =

@@ -254,6 +254,86 @@ describe("Fullscreen Image Carousel", () => {
             expect(screen.getByLabelText("Delete image")).toBeInTheDocument();
         });
     });
+
+    describe("File info bar", () => {
+        it("should render fileName and fileSize when provided on the current item", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES_WITH_FILE_INFO}
+                    show={true}
+                />
+            );
+
+            expect(screen.getByText("photo-a.jpg")).toBeInTheDocument();
+            expect(screen.getByText("1.2 MB")).toBeInTheDocument();
+        });
+
+        it("should not render the file info bar when no item has fileName or fileSize", () => {
+            render(<FullscreenImageCarousel items={IMAGES} show={true} />);
+
+            expect(screen.queryByText(/\.jpg|MB|KB/)).not.toBeInTheDocument();
+        });
+
+        it("should not render file info text for a slide that has no fileName or fileSize", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES_WITH_FILE_INFO}
+                    show={true}
+                    initialActiveItemIndex={3}
+                />
+            );
+
+            // Slide 3 has no file info; bar is present but no text
+            expect(screen.queryByText("photo-a.jpg")).not.toBeInTheDocument();
+            expect(screen.queryByText("photo-b.jpg")).not.toBeInTheDocument();
+        });
+
+        it("should update the file info bar when navigating to a different slide", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES_WITH_FILE_INFO}
+                    show={true}
+                />
+            );
+
+            expect(screen.getByText("photo-a.jpg")).toBeInTheDocument();
+
+            fireEvent.click(screen.getByTestId("forward-btn"));
+
+            expect(screen.queryByText("photo-a.jpg")).not.toBeInTheDocument();
+            expect(screen.getByText("photo-b.jpg")).toBeInTheDocument();
+            expect(screen.getByText("840 KB")).toBeInTheDocument();
+        });
+
+        it("should display '-' as the file name when only fileSize is provided", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES_WITH_FILE_INFO}
+                    show={true}
+                    initialActiveItemIndex={2}
+                />
+            );
+
+            expect(screen.getByText("-")).toBeInTheDocument();
+            expect(screen.getByText("500 KB")).toBeInTheDocument();
+        });
+
+        it("should render fileName only when fileSize is not provided", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={[
+                        {
+                            src: "https://picsum.photos/id/157/1600/900",
+                            fileName: "only-name.jpg",
+                        },
+                    ]}
+                    show={true}
+                />
+            );
+
+            expect(screen.getByText("only-name.jpg")).toBeInTheDocument();
+        });
+    });
 });
 
 // =============================================================================
@@ -294,4 +374,22 @@ const IMAGES_WITHOUT_THUMBNAIL = [
         src: "https://picsum.photos/id/163/900/300",
         thumbnailSrc: "https://picsum.photos/id/163/100/100",
     },
+];
+
+const IMAGES_WITH_FILE_INFO = [
+    {
+        src: "https://picsum.photos/id/157/1600/900",
+        fileName: "photo-a.jpg",
+        fileSize: "1.2 MB",
+    },
+    {
+        src: "https://picsum.photos/id/163/900/300",
+        fileName: "photo-b.jpg",
+        fileSize: "840 KB",
+    },
+    {
+        src: "https://picsum.photos/id/369/1000/1000",
+        fileSize: "500 KB",
+    },
+    { src: "https://picsum.photos/id/445/300/300" },
 ];

@@ -17,6 +17,10 @@ interface ThumbnailItemStyleProps {
     $active?: boolean;
 }
 
+interface TopActionButtonsStyleProps extends InsetStyleProps {
+    $hasFileInfo?: boolean | undefined;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -44,23 +48,60 @@ const IconButton = styled(ClickableIcon)`
     }
 `;
 
-export const TopActionButtons = styled.div<InsetStyleProps>`
-    position: absolute;
-    top: ${(props) =>
-        css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
-    right: ${(props) =>
-        css`calc(${Spacing["spacing-48"]} + ${props.$insetRight || 0}px)`};
-    z-index: 5;
+export const TopActionButtons = styled.div<TopActionButtonsStyleProps>`
     display: flex;
     align-items: center;
+    justify-content: flex-end;
     gap: ${Spacing["spacing-16"]};
 
-    ${MediaQuery.MaxWidth.sm} {
-        top: ${(props) =>
-            css`calc(${Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
-        right: ${(props) =>
-            css`calc(${Spacing["spacing-20"]} + ${props.$insetRight || 0}px)`};
-    }
+    ${(props) =>
+        props.$hasFileInfo
+            ? css`
+                  flex-shrink: 0;
+                  background-color: ${Colour["bg-inverse"]};
+                  padding-top: calc(
+                      ${Spacing["spacing-24"]} + ${props.$insetTop || 0}px
+                  );
+                  padding-bottom: ${Spacing["spacing-24"]};
+                  padding-left: calc(
+                      ${Spacing["spacing-32"]} + ${props.$insetLeft || 0}px
+                  );
+                  padding-right: calc(
+                      ${Spacing["spacing-32"]} + ${props.$insetRight || 0}px
+                  );
+
+                  ${MediaQuery.MaxWidth.sm} {
+                      padding-top: calc(
+                          ${Spacing["spacing-16"]} + ${props.$insetTop || 0}px
+                      );
+                      padding-bottom: ${Spacing["spacing-16"]};
+                      padding-left: calc(
+                          ${Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
+                      );
+                      padding-right: calc(
+                          ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
+                      );
+                  }
+              `
+            : css`
+                  position: absolute;
+                  top: calc(
+                      ${Spacing["spacing-48"]} + ${props.$insetTop || 0}px
+                  );
+                  right: calc(
+                      ${Spacing["spacing-48"]} + ${props.$insetRight || 0}px
+                  );
+                  z-index: 5;
+
+                  ${MediaQuery.MaxWidth.sm} {
+                      top: calc(
+                          ${Spacing["spacing-20"]} + ${props.$insetTop || 0}px
+                      );
+                      right: calc(
+                          ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
+                      );
+                  }
+              `}
 `;
 
 export const CloseButton = styled(IconButton)``;
@@ -114,7 +155,8 @@ export const ImageGalleryContainer = styled.div`
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 100%;
+    flex: 1;
+    min-height: 0;
 `;
 
 export const ImageGalleryWrapper = styled.div`
@@ -311,4 +353,31 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
 export const ThumbnailImage = styled(StatefulImage)`
     height: 100%;
     width: 100%;
+`;
+
+// -----------------------------------------------------------------------------
+// FILE INFO BAR STYLING
+// -----------------------------------------------------------------------------
+
+export const FileInfoTextWrapper = styled.div`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: ${Spacing["spacing-8"]};
+    overflow: hidden;
+    min-width: 0;
+    min-height: calc(26px + ${Spacing["spacing-8"]} + 24px);
+`;
+
+export const FileInfoFileName = styled(Typography.BodyBL)`
+    color: ${Colour["text-inverse"]};
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
+`;
+
+export const FileInfoFileSize = styled(Typography.BodyMD)`
+    color: ${Colour["text-inverse"]};
+    letter-spacing: 0.14px;
 `;

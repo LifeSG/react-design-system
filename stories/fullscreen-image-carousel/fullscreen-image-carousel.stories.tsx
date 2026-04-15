@@ -195,3 +195,47 @@ export const WithCustomContent: StoryObj<Component> = {
         );
     },
 };
+
+export const WithFileInfo: StoryObj<Component> = {
+    render: (_args) => {
+        const [show, setShow] = useState(false);
+        return (
+            <>
+                <Button.Default
+                    onClick={() => {
+                        setShow((old) => !old);
+                    }}
+                >
+                    Show carousel
+                </Button.Default>
+                <FullscreenImageCarousel
+                    items={[
+                        {
+                            src: "https://picsum.photos/id/157/1600/900",
+                            fileName: "landscape-photo.jpg",
+                            fileSize: "1.2 MB",
+                        },
+                        {
+                            src: "https://picsum.photos/id/163/900/300",
+                            fileName: "panoramic-view.jpg",
+                            fileSize: "840 KB",
+                        },
+                        {
+                            src: "https://picsum.photos/id/369/1000/1000",
+                            fileName: "square-image.jpg",
+                        },
+                        {
+                            src: "https://picsum.photos/id/445/300/300",
+                            fileSize: "320 KB",
+                        },
+                        {
+                            src: "https://picsum.photos/id/237/800/600",
+                        },
+                    ]}
+                    show={show}
+                    onClose={() => setShow(false)}
+                />
+            </>
+        );
+    },
+};
