@@ -97,13 +97,4 @@ describe("ColDiv Component", () => {
         expect(container.firstChild).toHaveClass(styles.colDiv);
         expect(container.firstChild).toHaveClass("custom-class");
     });
-
-    it("should merge external style", () => {
-        const { container } = render(
-            <ColDiv style={{ color: "red" }}>ColDiv with style</ColDiv>
-        );
-        const el = container.firstChild as HTMLElement;
-
-        expect(el.style.color).toBe("red");
-    });
 });

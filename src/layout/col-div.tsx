@@ -68,12 +68,11 @@ const Component = (
         xsCols,
         xxsCols,
         className,
-        style,
         ...otherProps
     } = props;
 
     const rootRef = useRef<HTMLDivElement>(null);
-    const mergedRef = ref ? mergeRefs(rootRef, ref) : rootRef;
+    const mergedRef = mergeRefs(rootRef, ref);
 
     const getColSpan = (
         cols: number | [number, number] | undefined,
@@ -156,14 +155,12 @@ const Component = (
 
     useApplyStyle(rootRef, {
         ...getCssVars(),
-        ...style,
     });
 
     return (
         <div
             ref={mergedRef}
             className={clsx(styles.colDiv, className)}
-            style={{ ...getCssVars(), ...style } as React.CSSProperties}
             {...otherProps}
         />
     );

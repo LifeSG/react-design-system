@@ -29,7 +29,7 @@ export const tokens = {
 export const colDiv = css`
     ${Object.values(tokens)
         .map((token) => `${token}: initial;`)
-        .join("\n    ")}
+        .join("")}
 
     position: relative;
 
