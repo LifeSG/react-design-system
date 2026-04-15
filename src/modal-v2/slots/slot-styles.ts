@@ -10,10 +10,9 @@ import {
 } from "../../theme";
 
 // =============================================================================
-// Tokens and classnames
+// Tokens and attributes
 // =============================================================================
-export const slotSpacerHasCloseButton = "modalV2SlotSpacerHasCloseButton";
-export const slotSpacerNoCloseButton = "modalV2SlotSpacerNoCloseButton";
+export const slotSpacerHasCloseButtonAttribute = "data-has-close-button";
 const internalSlotSpacerTokens = {
     firstChildMarginTop:
         "--fds-internal-modalV2-slotSpacer-firstChildMarginTop",
@@ -49,28 +48,28 @@ export const modalCard = css`
 
     max-width: calc(100% - ${Breakpoint["xxl-margin"]} * 2);
 
-    ${MediaQuery.MaxWidth.xxs} {
-        max-width: calc(100% - ${Breakpoint["xxs-margin"]} * 2);
-    }
-
-    ${MediaQuery.MaxWidth.xs} {
-        max-width: calc(100% - ${Breakpoint["xs-margin"]} * 2);
-    }
-
-    ${MediaQuery.MaxWidth.sm} {
-        max-width: calc(100% - ${Breakpoint["sm-margin"]} * 2);
-    }
-
-    ${MediaQuery.MaxWidth.md} {
-        max-width: calc(100% - ${Breakpoint["md-margin"]} * 2);
+    ${MediaQuery.MaxWidth.xl} {
+        max-width: calc(100% - ${Breakpoint["xl-margin"]} * 2);
     }
 
     ${MediaQuery.MaxWidth.lg} {
         max-width: calc(100% - ${Breakpoint["lg-margin"]} * 2);
     }
 
-    ${MediaQuery.MaxWidth.xl} {
-        max-width: calc(100% - ${Breakpoint["xl-margin"]} * 2);
+    ${MediaQuery.MaxWidth.md} {
+        max-width: calc(100% - ${Breakpoint["md-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.sm} {
+        max-width: calc(100% - ${Breakpoint["sm-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.xs} {
+        max-width: calc(100% - ${Breakpoint["xs-margin"]} * 2);
+    }
+
+    ${MediaQuery.MaxWidth.xxs} {
+        max-width: calc(100% - ${Breakpoint["xxs-margin"]} * 2);
     }
 `;
 
@@ -164,14 +163,14 @@ export const slotSpacer = css`
         margin-top: var(${internalSlotSpacerTokens.firstChildMarginTop});
     }
 
-    &.${slotSpacerHasCloseButton} {
+    &[${slotSpacerHasCloseButtonAttribute}="true"] {
         ${internalSlotSpacerTokens.firstChildMarginTop}: var(
             ${slotSpacerTokens.firstChildMarginTopWithCloseButton},
             0
         );
     }
 
-    &.${slotSpacerNoCloseButton} {
+    &[${slotSpacerHasCloseButtonAttribute}="false"] {
         ${internalSlotSpacerTokens.firstChildMarginTop}: var(
             ${slotSpacerTokens.firstChildMarginTopNoCloseButton},
             ${Spacing["spacing-64"]}

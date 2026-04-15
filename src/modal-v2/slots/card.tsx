@@ -59,12 +59,8 @@ function CardInner(
             className={clsx(styles.modalCard, className)}
         >
             <div
-                className={clsx(
-                    styles.slotSpacer,
-                    hasCloseButton
-                        ? styles.slotSpacerHasCloseButton
-                        : styles.slotSpacerNoCloseButton
-                )}
+                data-has-close-button={hasCloseButton ? "true" : "false"}
+                className={clsx(styles.slotSpacer)}
             >
                 {ContentSlot}
                 {FooterSlot}
