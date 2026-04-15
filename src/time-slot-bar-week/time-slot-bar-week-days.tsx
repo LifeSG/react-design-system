@@ -5,7 +5,7 @@ import maxBy from "lodash/maxBy";
 import minBy from "lodash/minBy";
 import React, { useMemo, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { VisuallyHidden } from "../shared/accessibility";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
 import { Colour } from "../theme";
@@ -102,10 +102,20 @@ export const TimeSlotBarWeekDays = ({
 
     // React spring animation configuration
     const { height: actualHeight = 0, ref: cellsRef } = useResizeDetector();
+    const hasCollapsedContent =
+        !!maxVisibleCellHeight && actualHeight > maxVisibleCellHeight;
+    const visibleRowCount =
+        maxVisibleCellHeight !== undefined
+            ? Math.max(1, Math.floor((maxVisibleCellHeight + 4) / 16))
+            : 0;
+    const collapsedHeight =
+        112 + visibleRowCount > 0
+            ? visibleRowCount * 16 - 4
+            : maxVisibleCellHeight;
     const height = maxVisibleCellHeight
-        ? actualHeight < maxVisibleCellHeight || expandAll
+        ? !hasCollapsedContent || expandAll
             ? actualHeight
-            : maxVisibleCellHeight
+            : collapsedHeight
         : actualHeight;
     const expandableStyles = useSpring({ height });
 
@@ -228,15 +238,8 @@ export const TimeSlotBarWeekDays = ({
                 break;
             case "PageDown": {
                 event.preventDefault();
-                const hasCollapsedContent =
-                    !!maxVisibleCellHeight &&
-                    actualHeight > maxVisibleCellHeight;
                 if (hasCollapsedContent && !expandAll) {
                     setExpandAll(true);
-                    const visibleRowCount = Math.max(
-                        1,
-                        Math.floor((maxVisibleCellHeight + 4) / 16)
-                    );
                     const lastVisibleSlot = [...sameColumnSlots]
                         .reverse()
                         .find((slot) => slot.rowIndex < visibleRowCount);
@@ -577,6 +580,11 @@ export const TimeSlotBarWeekDays = ({
             backgroundColor2,
         } = styleAttributes;
         const slotId = `${formattedDate}-${id}`;
+        const isCollapsedSlot =
+            hasCollapsedContent &&
+            !expandAll &&
+            !!isActualSlot &&
+            (slot.rowIndex ?? 0) >= visibleRowCount;
 
         return (
             <TimeSlotComponent
@@ -598,7 +606,7 @@ export const TimeSlotBarWeekDays = ({
                 }
             >
                 {isActualSlot && (
-                    <VisuallyHidden>
+                    <VisuallyHidden inert={inertValue(isCollapsedSlot)}>
                         <button
                             type="button"
                             ref={(element) => {
@@ -652,11 +660,7 @@ export const TimeSlotBarWeekDays = ({
     };
 
     const renderCollapseExpandAll = () => {
-        if (
-            !maxVisibleCellHeight ||
-            !cellsRef.current ||
-            (actualHeight && actualHeight < maxVisibleCellHeight)
-        )
+        if (!maxVisibleCellHeight || !cellsRef.current || !hasCollapsedContent)
             return;
         return (
             <CollapseExpandAllWrapper>
