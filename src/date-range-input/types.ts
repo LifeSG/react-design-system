@@ -26,7 +26,7 @@ export interface DateRangeInputProps extends CommonCalendarProps {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     /** Indicate calendar variant from the date input component. */
-    variant?: Exclude<Variant, "single"> | undefined;
+    variant?: Exclude<Variant, "single" | "multi"> | undefined;
     /** Set the number of days for fixed-range variant */
     numberOfDays?: number;
     /**
