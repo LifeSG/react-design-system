@@ -97,7 +97,7 @@ export const Component = (
     const diff = startX && endX ? startX - endX : 0;
     const currentItem = items[currentSlide];
     const hasAnyItemLabel = items.some(
-        (item) => isCustomItem(item) && item.itemLabel !== undefined
+        (item) => isCustomItem(item) && !!item.itemLabel?.trim()
     );
     const carouselItemNoun = hasAnyItemLabel ? "item" : "image";
 
