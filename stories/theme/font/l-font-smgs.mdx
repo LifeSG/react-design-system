@@ -1,0 +1,37 @@
+// TODO: BOOKINGSG-9203
+
+import { Meta } from "@storybook/addon-docs/blocks";
+import { SMGSTheme } from "src/theme";
+import { DocInfo } from "stories/storybook-common";
+import { FontDisplay } from "../doc-elements";
+
+<Meta title="Foundations/Font/SMGS" />
+
+# SMGS font
+
+This is the font set used when the `fontScheme` is `"smgs"`.
+
+```tsx
+const theme: ThemeSpec = {
+    fontScheme: "smgs",
+    // ...other specifications
+};
+```
+
+These stylesheets should be loaded in your app.
+
+```
+// Poppins
+https://assets.life.gov.sg/react-design-system/v3/css/poppins.css
+
+// Inter
+https://assets.life.gov.sg/react-design-system/v3/css/inter.css
+```
+
+<DocInfo>
+    [Common
+    ligatures](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures)
+    are **disabled** for this font set
+</DocInfo>
+
+<FontDisplay theme={SMGSTheme} />

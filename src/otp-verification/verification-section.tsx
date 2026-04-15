@@ -1,10 +1,12 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
+import { concatIds } from "../shared/accessibility";
 import { Typography } from "../typography";
+import { SimpleIdGenerator } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import type { VerificationSectionProps } from "./internal-types";
 import { EmailThumbnail, PhoneThumbnail } from "./thumbnail";
@@ -37,13 +39,18 @@ export const VerificationSection = ({
         maxWidth: V3_Breakpoint["sm-max"]({ theme }),
     });
     const thumbnailSize = isMobile ? 64 : 120;
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+
+    const titleId = `${internalId}-title`;
+    const messageId = `${internalId}-message`;
+    const otpAddonId = `${internalId}-verify-input-addon`;
+    const verifyErrorId = `${internalId}-verify-error`;
 
     const renderThumbnail = () => {
         if (!showVerifyOtpThumbnail) return null;
-        const iconLabel =
-            type === "email" ? "Email verification" : "Phone verification";
+
         return (
-            <div aria-label={iconLabel} role="img">
+            <div aria-hidden>
                 {type === "email" ? (
                     <EmailThumbnail
                         width={thumbnailSize}
@@ -64,14 +71,13 @@ export const VerificationSection = ({
             id={id}
             data-testid={dataTestId}
             role="group"
-            aria-labelledby={id ? `${id}-title` : undefined}
         >
             {renderThumbnail()}
             <SectionContainer>
                 <div>
                     <Typography.BodyMD
                         weight="semibold"
-                        id={id ? `${id}-title` : undefined}
+                        id={titleId}
                         data-testid={
                             dataTestId ? `${dataTestId}-title` : undefined
                         }
@@ -80,7 +86,7 @@ export const VerificationSection = ({
                     </Typography.BodyMD>
                     <Typography.BodyMD
                         weight="regular"
-                        id={id ? `${id}-message` : undefined}
+                        id={messageId}
                         data-testid={
                             dataTestId ? `${dataTestId}-message` : undefined
                         }
@@ -110,7 +116,12 @@ export const VerificationSection = ({
                             }}
                             type="number"
                             error={!!verifyOtpError}
-                            aria-label="Enter OTP code"
+                            aria-labelledby={titleId}
+                            aria-describedby={concatIds(
+                                messageId,
+                                otpAddonId,
+                                verifyOtpError ? verifyErrorId : undefined
+                            )}
                             aria-invalid={!!verifyOtpError}
                             aria-required={true}
                         />
@@ -132,7 +143,7 @@ export const VerificationSection = ({
                     </VerifyInputWrapper>
                     {verifyOtpError && (
                         <FormErrorMessage
-                            id={id ? `${id}-verify-error` : undefined}
+                            id={verifyErrorId}
                             data-testid={
                                 dataTestId
                                     ? `${dataTestId}-verify-error`

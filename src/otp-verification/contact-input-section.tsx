@@ -1,7 +1,10 @@
 import { TickCircleFillIcon } from "@lifesg/react-icons";
 
 import { FormErrorMessage } from "../form/form-label";
-import type { PhoneNumberInputValue } from "../phone-number-input";
+import type {
+    CountryValue,
+    PhoneNumberInputValue,
+} from "../phone-number-input";
 import {
     ContactButton,
     ContactInputSectionWrapper,
@@ -33,6 +36,8 @@ export const ContactInputSection = ({
     onStateReset,
     sendOtpError,
 }: ContactInputSectionProps) => {
+    const contactErrorId = id ? `${id}-contact-error` : undefined;
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -69,6 +74,11 @@ export const ContactInputSection = ({
         return "Send OTP";
     };
 
+    const getMobileAriaLabel = (country?: CountryValue) =>
+        `Enter your ${
+            country?.name ?? ""
+        } mobile number to receive a verification OTP`.replace(/\s+/g, " ");
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -86,6 +96,8 @@ export const ContactInputSection = ({
                 noBorder
                 aria-invalid={!!sendOtpError}
                 aria-required={true}
+                aria-label="Enter your email address to receive a verification OTP"
+                aria-describedby={sendOtpError ? contactErrorId : undefined}
                 disabled={disabled}
                 readOnly={readOnly}
             />
@@ -102,6 +114,8 @@ export const ContactInputSection = ({
                 fixedCountry={fixedCountry}
                 aria-invalid={!!sendOtpError}
                 aria-required={true}
+                aria-describedby={sendOtpError ? contactErrorId : undefined}
+                getAriaLabel={getMobileAriaLabel}
                 disabled={disabled}
                 readOnly={readOnly}
             />
@@ -145,7 +159,7 @@ export const ContactInputSection = ({
             </ContactInputSectionWrapper>
             {sendOtpError && (
                 <FormErrorMessage
-                    id={id ? `${id}-contact-error` : undefined}
+                    id={contactErrorId}
                     data-testid={
                         dataTestId ? `${dataTestId}-contact-error` : undefined
                     }

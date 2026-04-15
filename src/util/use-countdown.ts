@@ -1,3 +1,4 @@
+import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import { useEffect, useRef, useState } from "react";
 
 export interface UseCountdownOptions {
@@ -5,6 +6,14 @@ export interface UseCountdownOptions {
     duration: number;
     /** Called when countdown ends */
     onComplete?: () => void;
+    /** Time in seconds between reminder announcements */
+    reminderInterval?: number;
+    /** Build the message announced when countdown timer starts */
+    getStartMessage?: (duration: number) => string;
+    /** Build the message announced when countdown reaches each interval based on `reminderInterval` */
+    getIntervalMessage?: (remaining: number) => string;
+    /** Build the message announced when countdown timer completes */
+    getCompletionMessage?: () => string;
 }
 
 export interface UseCountdownReturn {
@@ -28,24 +37,50 @@ export interface UseCountdownReturn {
 export const useCountdown = ({
     duration,
     onComplete,
+    reminderInterval,
+    getStartMessage,
+    getIntervalMessage,
+    getCompletionMessage,
 }: UseCountdownOptions): UseCountdownReturn => {
     const [timeLeft, setTimeLeft] = useState(duration);
     const [isRunning, setIsRunning] = useState(false);
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const startTimeRef = useRef<number | null>(null);
 
+    const clearTimer = () => {
+        if (intervalRef.current) {
+            clearInterval(intervalRef.current);
+            intervalRef.current = null;
+        }
+    };
+
     const formatTime = (time?: number) => {
         const t = time ?? timeLeft;
         return `${t} second${t === 1 ? "" : "s"}`;
     };
 
+    const handleAnnounce = (message: string) => {
+        clearAnnouncer("polite");
+        announce(message, "polite");
+    };
+
     const start = () => {
         if (isRunning) return;
 
-        startTimeRef.current = Date.now();
+        clearTimer();
+
+        setTimeLeft(duration);
         setIsRunning(true);
+        startTimeRef.current = Date.now();
+
+        // First resend reminder message
+        if (getStartMessage) {
+            handleAnnounce(getStartMessage(duration));
+        }
 
         intervalRef.current = setInterval(() => {
+            if (startTimeRef.current == null) return;
+
             const elapsed = Math.floor(
                 (Date.now() - startTimeRef.current!) / 1000
             );
@@ -53,12 +88,28 @@ export const useCountdown = ({
 
             setTimeLeft(remaining);
 
+            if (
+                typeof reminderInterval === "number" &&
+                reminderInterval > 0 &&
+                remaining > 0 &&
+                remaining < duration &&
+                remaining % reminderInterval === 0
+            ) {
+                // second resend reminder message in intervals
+                if (getIntervalMessage) {
+                    handleAnnounce(getIntervalMessage(remaining));
+                }
+            }
+
             if (remaining <= 0) {
                 setIsRunning(false);
-                if (intervalRef.current) {
-                    clearInterval(intervalRef.current);
-                    intervalRef.current = null;
+                clearTimer();
+
+                // final reminder message
+                if (getCompletionMessage) {
+                    handleAnnounce(getCompletionMessage());
                 }
+
                 onComplete?.();
             }
         }, 1000);
@@ -66,10 +117,7 @@ export const useCountdown = ({
 
     const stop = () => {
         setIsRunning(false);
-        if (intervalRef.current) {
-            clearInterval(intervalRef.current);
-            intervalRef.current = null;
-        }
+        clearTimer();
     };
 
     const reset = () => {
@@ -84,6 +132,12 @@ export const useCountdown = ({
             setTimeLeft(duration);
         }
     }, [duration, isRunning]);
+
+    useEffect(() => {
+        return () => {
+            clearTimer();
+        };
+    }, []);
 
     return {
         timeLeft,

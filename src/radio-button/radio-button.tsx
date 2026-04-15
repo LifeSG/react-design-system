@@ -13,22 +13,32 @@ export const RadioButton = ({
     checked,
     disabled,
     displaySize = "default",
+    focusableWhenDisabled,
     onChange,
+    tabIndex,
     ...otherProps
 }: RadioButtonProps) => {
+    // =============================================================================
+    // CONST
+    // =============================================================================
+    const isFocusableWhenDisabled = !!disabled && !!focusableWhenDisabled;
+    const isNativeDisabled = !!disabled && !focusableWhenDisabled;
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (!disabled) {
-            onChange?.(event);
+        if (disabled) {
+            event.preventDefault();
+            return;
         }
+
+        onChange?.(event);
     };
 
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
-
     const renderIcon = () => {
         return checked ? (
             <StyledCheckedIcon
@@ -58,7 +68,10 @@ export const RadioButton = ({
                 data-testid="radio-input"
                 onChange={handleOnChange}
                 checked={checked}
-                disabled={disabled}
+                disabled={isNativeDisabled}
+                aria-disabled={isFocusableWhenDisabled}
+                tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
+                $disabledVisual={disabled}
                 {...otherProps}
             />
             {renderIcon()}

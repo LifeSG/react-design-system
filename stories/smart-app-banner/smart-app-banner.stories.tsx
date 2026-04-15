@@ -22,6 +22,7 @@ export const Default: StoryObj<Component> = {
                 content={{
                     title: "LifeSG App",
                     message: "Report neighbourhood issues in 3 simple steps",
+                    iconAriaLabel: "LifeSG app banner",
                     buttonLabel: "Download",
                     buttonAriaLabel: "Download LifeSG App",
                     numberOfStars: 3.5,
@@ -57,6 +58,7 @@ export const Animation: StoryObj<Component> = {
                         title: "LifeSG App",
                         message:
                             "Report neighbourhood issues in 3 simple steps",
+                        iconAriaLabel: "LifeSG app banner",
                         buttonLabel: "Download",
                         buttonAriaLabel: "Download LifeSG App",
                         numberOfStars: 3.5,

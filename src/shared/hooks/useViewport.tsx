@@ -1,3 +1,4 @@
+import throttle from "lodash/throttle";
 import { useCallback, useEffect, useState } from "react";
 
 export const useViewport = () => {
@@ -25,15 +26,25 @@ export const useViewport = () => {
 
         // use VisualViewport API if available, it gives more accurate dimensions when iOS software keyboard is active
         if (window.visualViewport) {
+            const handleViewportScroll = throttle(handleViewportResize, 300);
             handleViewportResize();
             window.visualViewport.addEventListener(
                 "resize",
                 handleViewportResize
             );
+            window.visualViewport.addEventListener(
+                "scroll",
+                handleViewportScroll
+            );
+
             return () => {
                 window.visualViewport?.removeEventListener(
                     "resize",
                     handleViewportResize
+                );
+                window.visualViewport?.removeEventListener(
+                    "scroll",
+                    handleViewportScroll
                 );
             };
         } else {
