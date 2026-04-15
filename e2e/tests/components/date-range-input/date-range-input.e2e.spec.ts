@@ -35,10 +35,10 @@ class StoryPage extends AbstractStoryPage {
         };
     }
 
-    public getDayCell(day: number) {
+    public getDayCell(day: number, label = "Available") {
         return this.page
             .getByRole("gridcell", {
-                name: new RegExp(`^${day} .*Available$`),
+                name: new RegExp(`^${day} .*${label}$`),
             })
             .first();
     }
@@ -239,7 +239,23 @@ test.describe("DateRangeInput", () => {
                 });
             });
 
-            test("Disabled dates after max", async ({ story }) => {
+            test("Open", async ({ story }) => {
+                await story.openCalendar();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe("With disabledDates", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("range-with-disabled-dates", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Open", async ({ story }) => {
                 await story.openCalendar();
 
                 await compareScreenshot(story, "state", {

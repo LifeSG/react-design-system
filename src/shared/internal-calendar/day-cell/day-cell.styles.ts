@@ -139,14 +139,15 @@ export const labelWrapper = css`
     top: 0;
     bottom: 0;
     z-index: 2;
-    cursor: not-allowed;
+    cursor: default;
 
     &[data-day-cell-interactive="true"] {
         cursor: pointer;
     }
 
-    &[data-day-cell-interactive="null"] {
-        cursor: default;
+    &[data-day-cell-interactive="disabled"] {
+        cursor: not-allowed;
+        pointer-events: none;
     }
 `;
 
@@ -163,8 +164,12 @@ export const label = css`
     color: ${Colour["text"]};
 
     &[data-day-cell-interactive="true"],
-    &[data-day-cell-interactive="null"] {
+    &[data-day-cell-interactive="false"] {
         pointer-events: auto;
+    }
+
+    &[data-day-cell-interactive="disabled"] {
+        pointer-events: none;
     }
 
     &[data-day-cell-label-type="selected"] {

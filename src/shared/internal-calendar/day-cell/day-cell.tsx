@@ -40,6 +40,14 @@ export const DayCell = ({
     const labelText = label || defaultLabel;
     const labelTypeAttr =
         disabled && labelType !== "hidden" ? undefined : labelType;
+    let interactiveAttr: string | undefined;
+    if (interactive === undefined) {
+        interactiveAttr = "disabled";
+    } else if (interactive === null) {
+        interactiveAttr = undefined;
+    } else {
+        interactiveAttr = String(interactive);
+    }
 
     // =============================================================================
     // REFS, EFFECTS
@@ -98,7 +106,7 @@ export const DayCell = ({
             <div
                 className={styles.leftCircle}
                 data-day-cell-type={circleLeft}
-            />
+            ></div>
             <div
                 className={styles.rightHalf}
                 data-day-cell-type={bgRight}
@@ -106,15 +114,15 @@ export const DayCell = ({
             <div
                 className={styles.rightCircle}
                 data-day-cell-type={circleRight}
-            />
+            ></div>
             <span
                 className={styles.labelWrapper}
-                data-day-cell-interactive={interactive}
+                data-day-cell-interactive={interactiveAttr}
             >
                 <button
                     type="button"
                     className={styles.label}
-                    data-day-cell-interactive={interactive}
+                    data-day-cell-interactive={interactiveAttr}
                     data-day-cell-label-type={labelTypeAttr}
                     data-day-cell-disabled={disabled}
                     ref={buttonRef}
