@@ -138,5 +138,7 @@ export default function Story() {
 
 ### Best practices
 
--   Prefer using `getByRole` for selecting elements
--   Use `getByTestId` if there is no suitable role, and add a `data-testid` attribute to the relevant element in the story
+Refer to the `Locating elements` section in https://playwright.dev/docs/locators#locating-elements on when to use different locator strategies. In general:
+
+-   Prefer using `getByRole` for locating elements
+-   Use `getByTestId` if there are no suitable locators, and add a `data-testid` attribute to the relevant element in the story
