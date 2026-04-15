@@ -36,6 +36,6 @@ export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     onOverlayClick?: (() => void) | undefined;
     /** Dismiss keyboard to keep modal in fullscreen */
     dismissKeyboardOnShow?: boolean | undefined;
-    /** Disable initial focus on the modal when it is shown */
+    /** Disable automatic initial focus on show. Consumer must focus an element within the modal. */
     disableInitialFocus?: boolean | undefined;
 }
