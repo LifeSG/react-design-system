@@ -231,6 +231,22 @@ test.describe("DateRangeInput", () => {
                 /^\d{4}-\d{2}-\d{2}$/
             );
         });
+
+        test.describe("With maxDate constraint", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("range-with-max-date", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Disabled dates after max", async ({ story }) => {
+                await story.openCalendar();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
+            });
+        });
     });
 
     test.describe("Week", () => {
