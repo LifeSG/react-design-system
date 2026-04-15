@@ -48,10 +48,19 @@ import {
     TopActionButtons,
 } from "./fullscreen-image-carousel.style";
 import {
+    CustomCarouselItemProps,
+    FullscreenCarouselItemProps,
     FullscreenImageCarouselProps,
     FullscreenImageCarouselRef,
     ImageDimension,
 } from "./types";
+
+const isCustomItem = (
+    item: FullscreenCarouselItemProps | undefined
+): item is CustomCarouselItemProps =>
+    !!item &&
+    "renderContent" in item &&
+    typeof item.renderContent === "function";
 
 export const Component = (
     {
@@ -87,14 +96,20 @@ export const Component = (
     const imageRef = useRef<HTMLDivElement>(null);
     const diff = startX && endX ? startX - endX : 0;
     const currentItem = items[currentSlide];
+    const hasCustomItemLabel = items.some(
+        (item) => item.itemLabel !== undefined
+    );
+    const carouselItemNoun = hasCustomItemLabel ? "item" : "image";
 
     const getImageAriaLabel = useCallback(
         (index: number) => {
             const item = items[index];
-            const altText = item.alt?.trim() || "";
-            return `${altText}. Image ${index + 1} of ${items.length}.`;
+            const altText = isCustomItem(item) ? "" : item.alt?.trim() || "";
+            return `${altText}. ${hasCustomItemLabel ? "Item" : "Image"} ${
+                index + 1
+            } of ${items.length}.`;
         },
-        [items]
+        [items, hasCustomItemLabel]
     );
 
     useImperativeHandle<FullscreenImageCarouselRef, FullscreenImageCarouselRef>(
@@ -208,7 +223,7 @@ export const Component = (
     };
 
     const getZoomRatio = () => {
-        if (!currentItem) {
+        if (!currentItem || isCustomItem(currentItem)) {
             return;
         }
 
@@ -285,29 +300,35 @@ export const Component = (
                                 ref={isActive ? imageRef : null}
                                 tabIndex={isActive ? 0 : -1}
                             >
-                                <TransformWrapper
-                                    ref={(el) => (zoomRefs.current[index] = el)}
-                                    panning={{
-                                        disabled: zoom <= 1,
-                                    }}
-                                    initialScale={1}
-                                    onZoom={handleZoom}
-                                    onZoomStop={handleZoom}
-                                    onWheel={handleZoom}
-                                >
-                                    <TransformComponent>
-                                        <SlideImage
-                                            src={item.src}
-                                            alt={getImageAriaLabel(index)}
-                                            placeholder={
-                                                <SlidePlaceholderImage />
-                                            }
-                                            fit="scale-down"
-                                            retrieveImageDimension
-                                            setDimension={setDimension}
-                                        />
-                                    </TransformComponent>
-                                </TransformWrapper>
+                                {isCustomItem(item) ? (
+                                    item.renderContent()
+                                ) : (
+                                    <TransformWrapper
+                                        ref={(el) =>
+                                            (zoomRefs.current[index] = el)
+                                        }
+                                        panning={{
+                                            disabled: zoom <= 1,
+                                        }}
+                                        initialScale={1}
+                                        onZoom={handleZoom}
+                                        onZoomStop={handleZoom}
+                                        onWheel={handleZoom}
+                                    >
+                                        <TransformComponent>
+                                            <SlideImage
+                                                src={item.src}
+                                                alt={getImageAriaLabel(index)}
+                                                placeholder={
+                                                    <SlidePlaceholderImage />
+                                                }
+                                                fit="scale-down"
+                                                retrieveImageDimension
+                                                setDimension={setDimension}
+                                            />
+                                        </TransformComponent>
+                                    </TransformWrapper>
+                                )}
                             </FocusableImageRegion>
                         </ImageGallerySlide>
                     );
@@ -324,7 +345,9 @@ export const Component = (
             >
                 <ThumbnailWrapper>
                     {items.map((item, index) => {
-                        const src = item.thumbnailSrc ?? item.src;
+                        const src =
+                            item.thumbnailSrc ??
+                            (isCustomItem(item) ? undefined : item.src);
                         return (
                             <ThumbnailItemContainer key={index}>
                                 <ThumbnailItem
@@ -335,11 +358,15 @@ export const Component = (
                                         (thumbnailRefs.current[index] = el)
                                     }
                                 >
-                                    <ThumbnailImage
-                                        src={src}
-                                        alt={`Thumbnail ${index + 1}`}
-                                        fit="cover"
-                                    />
+                                    {src ? (
+                                        <ThumbnailImage
+                                            src={src}
+                                            alt={`Thumbnail ${index + 1}`}
+                                            fit="cover"
+                                        />
+                                    ) : (
+                                        <SlidePlaceholderImage />
+                                    )}
                                 </ThumbnailItem>
                             </ThumbnailItemContainer>
                         );
@@ -353,7 +380,7 @@ export const Component = (
         <ModalV2
             {...otherProps}
             data-testid="image-carousel-modal"
-            aria-label="Image carousel"
+            aria-label={hasCustomItemLabel ? "Carousel" : "Image carousel"}
             show={show}
             disableInitialFocus
         >
@@ -372,7 +399,7 @@ export const Component = (
                         {!hideNavigation && (
                             <>
                                 <ArrowButton
-                                    aria-label="Previous image"
+                                    aria-label={`Previous ${carouselItemNoun}`}
                                     data-testid="prev-btn"
                                     $position="left"
                                     onClick={goToPrevSlide}
@@ -382,7 +409,7 @@ export const Component = (
                                     <ChevronLeftIcon aria-hidden />
                                 </ArrowButton>
                                 <ArrowButton
-                                    aria-label="Next image"
+                                    aria-label={`Next ${carouselItemNoun}`}
                                     data-testid="forward-btn"
                                     $position="right"
                                     onClick={goToNextSlide}
@@ -410,7 +437,7 @@ export const Component = (
                     $insetTop={insets?.top}
                     $insetRight={insets?.right}
                 >
-                    {!hideMagnifier && (
+                    {!hideMagnifier && !isCustomItem(currentItem) && (
                         <MagnifierButton
                             aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
                             onClick={handleMagnifier}
@@ -425,7 +452,9 @@ export const Component = (
 
                     {onDelete && (
                         <DeleteButton
-                            aria-label="Delete image"
+                            aria-label={`Delete ${
+                                currentItem?.itemLabel ?? "image"
+                            }`}
                             data-testid="delete-btn"
                             onClick={handleDelete}
                         >
@@ -434,7 +463,11 @@ export const Component = (
                     )}
 
                     <CloseButton
-                        aria-label="Close image carousel"
+                        aria-label={
+                            hasCustomItemLabel
+                                ? "Close carousel"
+                                : "Close image carousel"
+                        }
                         onClick={onClose}
                     >
                         <CrossIcon aria-hidden />
