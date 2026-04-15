@@ -121,7 +121,20 @@ const DATA: ApiTableSectionProps[] = [
                 name: "illustrationScheme",
                 description:
                     "Use resource scheme provided instead of default theme",
-                propTypes: ["base", "bookingsg", "rbs"],
+                propTypes: [
+                    `"lifesg"`,
+                    `"bookingsg"`,
+                    `"ccube"`,
+                    `"rbs"`,
+                    `"mylegacy"`,
+                    `"oneservice"`,
+                    `"pa"`,
+                    `"spf"`,
+                    `"a11y-playground"`,
+                    `"sgw-digital-lobby"`,
+                    `"supportgowhere"`,
+                    `"imda"`,
+                ],
             },
             {
                 name: "additionalProps",
@@ -158,6 +171,12 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description:
                     "The amount of time left (in seconds) for the inactivity display",
+                propTypes: ["number"],
+            },
+            {
+                name: "reminderInterval",
+                description:
+                    "Interval (in seconds) for announcing remaining time via screen readers",
                 propTypes: ["number"],
             },
         ],
