@@ -221,6 +221,13 @@ export const WithFileInfo: StoryObj<Component> = {
                             fileSize: "840 KB",
                         },
                         {
+                            src: "https://picsum.photos/id/10/1600/900",
+                            fileName:
+                                "this-is-a-very-long-file-name-that-should-be-truncated-when-it-exceeds-the-available-width-in-the-bar.jpg",
+                            fileSize:
+                                "234,567,890.12 MB (123,456,789.99 MB compressed)",
+                        },
+                        {
                             src: "https://picsum.photos/id/369/1000/1000",
                             fileName: "square-image.jpg",
                         },

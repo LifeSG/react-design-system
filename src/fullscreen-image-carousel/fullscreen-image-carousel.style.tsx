@@ -380,4 +380,8 @@ export const FileInfoFileName = styled(Typography.BodyBL)`
 export const FileInfoFileSize = styled(Typography.BodyMD)`
     color: ${Colour["text-inverse"]};
     letter-spacing: 0.14px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    min-width: 0;
 `;
