@@ -5,7 +5,9 @@ import { useResizeDetector } from "react-resize-detector";
 import { LoadingDotsSpinner } from "../animations";
 import { Checkbox } from "../checkbox";
 import { ErrorDisplay } from "../error-display";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import { Typography } from "../typography";
+import { SimpleIdGenerator } from "../util";
 import { useEventListener } from "../util/use-event-listener";
 import {
     ActionBar,
@@ -27,7 +29,6 @@ import {
     TextButton,
 } from "./data-table.styles";
 import { DataTableProps, HeaderProps, RowProps } from "./types";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 export const DataTable = ({
     id,
@@ -60,6 +61,7 @@ export const DataTable = ({
     const headerRef = useRef<HTMLTableSectionElement>(null);
     const actionBarRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
+    const internalId = useRef(id || SimpleIdGenerator.generate());
     const [scrollable, setScrollable] = useState(false);
     const [scrollEnd, setScrollEnd] = useState(false);
     const [tableEnd, setTableEnd] = useState(false);
@@ -177,24 +179,24 @@ export const DataTable = ({
         return `Sort ${label} by ${nextSortDirection} order`;
     };
 
+    const keyColumns = headers.filter(
+        (header): header is Exclude<HeaderProps, string> => {
+            return typeof header !== "string" && !!header.keyColumn;
+        }
+    );
+
     const getRowPositionId = (rowId: string) => {
-        return `${id || "table"}-row-${rowId}-position`;
+        return `${internalId.current}-row-${rowId}-position`;
     };
 
     const getKeyColumnCellId = (rowId: string, fieldKey: string) => {
-        return `${id || "table"}-row-${rowId}-${fieldKey}-key-column`;
+        return `${internalId.current}-row-${rowId}-${fieldKey}-key-column`;
     };
 
     const getRowCheckboxAriaLabelledBy = (rowId: string) => {
-        const keyColumnIds = headers
-            .map((header) => {
-                if (typeof header === "string" || !header.keyColumn) {
-                    return undefined;
-                }
-
-                return getKeyColumnCellId(rowId, header.fieldKey);
-            })
-            .filter((value): value is string => !!value);
+        const keyColumnIds = keyColumns.map((header) =>
+            getKeyColumnCellId(rowId, header.fieldKey)
+        );
 
         return concatIds(getRowPositionId(rowId), ...keyColumnIds);
     };
@@ -277,7 +279,7 @@ export const DataTable = ({
               }
             : header;
 
-        const isSortable = !!sortIndicators?.[fieldKey];
+        const isSortable = !!getSortDirection(fieldKey);
 
         return (
             <HeaderCell
@@ -400,7 +402,6 @@ export const DataTable = ({
     const renderRowCell = (header: HeaderProps, row: RowProps) => {
         const style = typeof header !== "string" ? header.style : undefined;
         const fieldKey = typeof header === "string" ? header : header.fieldKey;
-        const isKeyColumn = typeof header !== "string" && !!header.keyColumn;
         const rowId = row.id.toString();
         const cellData = row[fieldKey];
         const cellId = `${rowId}-${fieldKey}`;
@@ -409,11 +410,7 @@ export const DataTable = ({
             <BodyCell
                 data-testid={getDataTestId(`row-${cellId}`)}
                 key={cellId}
-                id={
-                    isKeyColumn
-                        ? getKeyColumnCellId(rowId, fieldKey)
-                        : undefined
-                }
+                id={getKeyColumnCellId(rowId, fieldKey)}
                 style={style}
                 $isCheckbox={false}
             >

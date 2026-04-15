@@ -202,13 +202,10 @@ export const HeaderCell = styled.th<HeaderCellProps>`
     &:focus-within {
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: -3px;
-        z-index: 1;
     }
 `;
 
 export const HeaderCellWrapper = styled.div`
-    position: relative;
-    z-index: 1;
     display: flex;
     flex-direction: row;
     align-items: center;
