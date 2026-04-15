@@ -31,8 +31,6 @@ export interface ImageCarouselItemProps {
     src: string;
     alt?: string | undefined;
     thumbnailSrc?: string | undefined;
-    fileName?: string | undefined;
-    fileSize?: string | undefined;
     /** Label for this item used in aria-labels (e.g. "PDF"). Defaults to "image". When any item sets this, carousel-level aria-labels use generic "item" wording. */
     itemLabel?: string | undefined;
     renderContent?: never;
@@ -42,8 +40,6 @@ export interface CustomCarouselItemProps {
     /** Optional src used as thumbnail fallback. If omitted, a placeholder is shown in the thumbnail strip. */
     src?: string | undefined;
     thumbnailSrc?: string | undefined;
-    fileName?: string | undefined;
-    fileSize?: string | undefined;
     /** Label for this item used in aria-labels (e.g. "PDF"). Defaults to "image". When any item sets this, carousel-level aria-labels use generic "item" wording. */
     itemLabel?: string | undefined;
     /** Render prop for the full slide area. Consumer is responsible for the entire slide content (e.g. an iframe, embed, or custom viewer). */

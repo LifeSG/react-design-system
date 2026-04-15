@@ -135,3 +135,44 @@ export const Configurable: StoryObj<Component> = {
         );
     },
 };
+
+export const WithCustomContent: StoryObj<Component> = {
+    render: (_args) => {
+        const [show, setShow] = useState(false);
+        return (
+            <>
+                <Button.Default
+                    onClick={() => {
+                        setShow((old) => !old);
+                    }}
+                >
+                    Show carousel
+                </Button.Default>
+                <FullscreenImageCarousel
+                    items={[
+                        { src: "https://picsum.photos/id/157/1600/900" },
+                        {
+                            itemLabel: "PDF",
+                            thumbnailSrc: "/img/pdf-icon.svg",
+                            renderContent: () => (
+                                <iframe
+                                    src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"
+                                    title="PDF preview"
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        border: "none",
+                                    }}
+                                />
+                            ),
+                        },
+                        { src: "https://picsum.photos/id/369/1000/1000" },
+                    ]}
+                    show={show}
+                    onDelete={() => undefined}
+                    onClose={() => setShow(false)}
+                />
+            </>
+        );
+    },
+};

@@ -113,14 +113,25 @@ const DATA: ApiTableSectionProps[] = [
         attributes: [
             {
                 name: "src",
-                description: "The image src",
+                description: (
+                    <>
+                        The image src. Required for{" "}
+                        <code>ImageCarouselItemProps</code>, optional for{" "}
+                        <code>CustomCarouselItemProps</code> (used as thumbnail
+                        fallback)
+                    </>
+                ),
                 propTypes: ["string"],
-                mandatory: true,
             },
             {
                 name: "alt",
-                description:
-                    "Descriptive text to be set on the image for screen readers",
+                description: (
+                    <>
+                        Descriptive text to be set on the image for screen
+                        readers. Only applicable for{" "}
+                        <code>ImageCarouselItemProps</code>
+                    </>
+                ),
                 propTypes: ["string"],
             },
             {
@@ -128,10 +139,37 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The thumbnail image src. If not specified, the image{" "}
-                        <code>src</code> will be used
+                        <code>src</code> will be used. If neither is available,
+                        a placeholder is shown
                     </>
                 ),
                 propTypes: ["string"],
+            },
+            {
+                name: "itemLabel",
+                description: (
+                    <>
+                        Label for this item used in aria-labels (e.g.{" "}
+                        <code>&quot;PDF&quot;</code>). Defaults to{" "}
+                        <code>&quot;image&quot;</code>. When any item sets this,
+                        carousel-level aria-labels switch to generic wording
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "renderContent",
+                description: (
+                    <>
+                        Render prop for the full slide area. When provided, the
+                        item is treated as a{" "}
+                        <code>CustomCarouselItemProps</code> and the consumer
+                        owns the entire slide content (e.g. an iframe, embed, or
+                        custom viewer). Zoom controls are hidden for custom
+                        slides
+                    </>
+                ),
+                propTypes: ["() => React.ReactNode"],
             },
         ],
     },

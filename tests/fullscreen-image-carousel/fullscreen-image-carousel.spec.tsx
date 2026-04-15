@@ -111,6 +111,103 @@ describe("Fullscreen Image Carousel", () => {
             expect(screen.getByText("1/4")).toBeInTheDocument();
         });
     });
+
+    describe("Custom content (renderContent)", () => {
+        it("should render custom content from renderContent", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={MIXED_ITEMS}
+                    show={true}
+                    initialActiveItemIndex={1}
+                />
+            );
+
+            expect(
+                screen.getByTestId("custom-slide-content")
+            ).toBeInTheDocument();
+        });
+
+        it("should hide magnifier button when current item is custom", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={MIXED_ITEMS}
+                    show={true}
+                    initialActiveItemIndex={1}
+                />
+            );
+
+            expect(screen.queryByLabelText("Zoom in")).not.toBeInTheDocument();
+        });
+
+        it("should show magnifier button when current item is an image", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={MIXED_ITEMS}
+                    show={true}
+                    initialActiveItemIndex={0}
+                />
+            );
+
+            expect(screen.getByLabelText("Zoom in")).toBeInTheDocument();
+        });
+
+        it("should render placeholder thumbnail when custom item has no src", () => {
+            render(<FullscreenImageCarousel items={MIXED_ITEMS} show={true} />);
+
+            const thumbnails = screen.getAllByTestId("thumbnail-item");
+            // Second thumbnail (custom item) should not have an img
+            const imgs = thumbnails[1].querySelectorAll("img");
+            expect(imgs.length).toBe(0);
+        });
+    });
+
+    describe("itemLabel aria-labels", () => {
+        it("should use generic wording when any item has itemLabel", () => {
+            render(<FullscreenImageCarousel items={MIXED_ITEMS} show={true} />);
+
+            expect(screen.getByLabelText("Carousel")).toBeInTheDocument();
+            expect(screen.getByLabelText("Close carousel")).toBeInTheDocument();
+            expect(screen.getByLabelText("Previous item")).toBeInTheDocument();
+            expect(screen.getByLabelText("Next item")).toBeInTheDocument();
+        });
+
+        it("should use image-specific wording when no item has itemLabel", () => {
+            render(<FullscreenImageCarousel items={IMAGES} show={true} />);
+
+            expect(screen.getByLabelText("Image carousel")).toBeInTheDocument();
+            expect(
+                screen.getByLabelText("Close image carousel")
+            ).toBeInTheDocument();
+            expect(screen.getByLabelText("Previous image")).toBeInTheDocument();
+            expect(screen.getByLabelText("Next image")).toBeInTheDocument();
+        });
+
+        it("should use per-item itemLabel for the delete button", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={MIXED_ITEMS}
+                    show={true}
+                    initialActiveItemIndex={1}
+                    onDelete={jest.fn()}
+                />
+            );
+
+            expect(screen.getByLabelText("Delete PDF")).toBeInTheDocument();
+        });
+
+        it("should default delete label to 'image' when no itemLabel", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={MIXED_ITEMS}
+                    show={true}
+                    initialActiveItemIndex={0}
+                    onDelete={jest.fn()}
+                />
+            );
+
+            expect(screen.getByLabelText("Delete image")).toBeInTheDocument();
+        });
+    });
 });
 
 // =============================================================================
@@ -121,4 +218,12 @@ const IMAGES = [
     { src: "https://picsum.photos/id/163/900/300" },
     { src: "https://picsum.photos/id/369/1000/1000" },
     { src: "https://picsum.photos/id/445/300/300" },
+];
+
+const MIXED_ITEMS = [
+    { src: "https://picsum.photos/id/157/1600/900" },
+    {
+        itemLabel: "PDF",
+        renderContent: () => <div data-testid="custom-slide-content">PDF</div>,
+    },
 ];
