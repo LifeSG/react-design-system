@@ -268,7 +268,7 @@ describe("Fullscreen Image Carousel", () => {
             expect(screen.getByText("1.2 MB")).toBeInTheDocument();
         });
 
-        it("should not render the file info bar when no item has fileName or fileSize", () => {
+        it("should not render file info text when no item has fileName or fileSize", () => {
             render(<FullscreenImageCarousel items={IMAGES} show={true} />);
 
             expect(screen.queryByText(/\.jpg|MB|KB/)).not.toBeInTheDocument();
