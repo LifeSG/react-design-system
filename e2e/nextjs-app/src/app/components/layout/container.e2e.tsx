@@ -1,5 +1,6 @@
 "use client";
 
+import styles from "./layout.module.css";
 import { Layout } from "@lifesg/react-design-system/layout";
 
 export default function ContainerStory() {
@@ -8,21 +9,21 @@ export default function ContainerStory() {
             <Layout.Container
                 data-testid="container-flex"
                 type="flex"
-                className="layout-container-flex"
+                className={styles["layout-container-flex"]}
             >
                 <span>Flex child</span>
             </Layout.Container>
             <Layout.Container
                 data-testid="container-flex-column"
                 type="flex-column"
-                className="layout-container-flex-column"
+                className={styles["layout-container-flex-column"]}
             >
                 <span>Flex column child</span>
             </Layout.Container>
             <Layout.Container
                 data-testid="container-grid"
                 type="grid"
-                className="layout-container-grid"
+                className={styles["layout-container-grid"]}
             >
                 <span>Grid child</span>
             </Layout.Container>
@@ -30,7 +31,7 @@ export default function ContainerStory() {
                 data-testid="container-stretched"
                 type="flex"
                 stretch
-                className="layout-container-stretched"
+                className={styles["layout-container-stretched"]}
             >
                 <span>Stretched child</span>
             </Layout.Container>
