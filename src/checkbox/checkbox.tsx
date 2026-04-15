@@ -1,13 +1,13 @@
+import {
+    MinusSquareFillIcon,
+    SquareFillIcon,
+    SquareIcon,
+    SquareTickFillIcon,
+} from "@lifesg/react-icons";
+import clsx from "clsx";
 import { useEffect, useRef } from "react";
 
-import {
-    Container,
-    Input,
-    StyledCheckedIcon,
-    StyledInteremediateIcon,
-    StyledUncheckedDisabledIcon,
-    StyledUncheckedIcon,
-} from "./checkbox.style";
+import * as styles from "./checkbox.styles";
 import type { CheckboxProps } from "./types";
 
 export const Checkbox = ({
@@ -17,9 +17,9 @@ export const Checkbox = ({
     focusableWhenDisabled,
     indeterminate,
     displaySize = "default",
+    onChange,
     id,
     tabIndex,
-    onChange,
     ...otherProps
 }: CheckboxProps): JSX.Element => {
     // =============================================================================
@@ -30,12 +30,6 @@ export const Checkbox = ({
     const isFocusableWhenDisabled = !!disabled && !!focusableWhenDisabled;
     const isNativeDisabled = !!disabled && !focusableWhenDisabled;
 
-    useEffect(() => {
-        if (checkRef.current) {
-            checkRef.current.indeterminate = indeterminate ?? false;
-        }
-    }, [indeterminate]);
-
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -44,9 +38,14 @@ export const Checkbox = ({
             event.preventDefault();
             return;
         }
-
         onChange?.(event);
     };
+
+    useEffect(() => {
+        if (checkRef.current) {
+            checkRef.current.indeterminate = indeterminate ?? false;
+        }
+    }, [indeterminate]);
 
     // =============================================================================
     // RENDER FUNCTION
@@ -54,8 +53,12 @@ export const Checkbox = ({
     const renderIcon = () => {
         if (indeterminate) {
             return (
-                <StyledInteremediateIcon
-                    $disabled={disabled}
+                <MinusSquareFillIcon
+                    className={clsx(
+                        styles.icon,
+                        styles.selectedIcon,
+                        disabled && styles.iconDisabled
+                    )}
                     data-testid="indeterminate"
                     aria-hidden
                 />
@@ -64,8 +67,12 @@ export const Checkbox = ({
 
         if (checked) {
             return (
-                <StyledCheckedIcon
-                    $disabled={disabled}
+                <SquareTickFillIcon
+                    className={clsx(
+                        styles.icon,
+                        styles.selectedIcon,
+                        disabled && styles.iconDisabled
+                    )}
                     data-testid="checkmark"
                     aria-hidden
                 />
@@ -74,7 +81,8 @@ export const Checkbox = ({
 
         if (disabled) {
             return (
-                <StyledUncheckedDisabledIcon
+                <SquareFillIcon
+                    className={clsx(styles.icon, styles.uncheckedDisabledIcon)}
                     data-testid="empty-disabled-checkbox"
                     aria-hidden
                 />
@@ -82,8 +90,8 @@ export const Checkbox = ({
         }
 
         return (
-            <StyledUncheckedIcon
-                $disabled={disabled}
+            <SquareIcon
+                className={clsx(styles.icon, styles.uncheckedIcon)}
                 data-testid="empty-checkbox"
                 aria-hidden
             />
@@ -91,26 +99,29 @@ export const Checkbox = ({
     };
 
     return (
-        <Container
-            className={className}
+        <div
+            className={clsx(
+                styles.container,
+                displaySize === "small" && styles.containerSmall,
+                className
+            )}
             data-testid="checkbox"
-            $displaySize={displaySize}
         >
-            <Input
+            <input
                 id={id}
+                className={styles.input}
                 data-testid="checkbox-input"
                 type="checkbox"
-                onChange={handleOnChange}
                 checked={checked}
-                aria-checked={indeterminate ? "mixed" : checked}
                 ref={checkRef}
+                tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
                 disabled={isNativeDisabled}
                 aria-disabled={isFocusableWhenDisabled}
-                tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
-                $disabledVisual={disabled}
+                aria-checked={indeterminate ? "mixed" : checked}
+                onChange={handleOnChange}
                 {...otherProps}
             />
             {renderIcon()}
-        </Container>
+        </div>
     );
 };
