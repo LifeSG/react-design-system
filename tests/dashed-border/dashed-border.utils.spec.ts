@@ -1,10 +1,10 @@
 import { createSvgBackgroundImage } from "src/dashed-border/dashed-border.utils";
+import { BorderThickness, Colour, Radius } from "src/theme";
 import {
     isColourToken,
     isRadiusToken,
     isThicknessToken,
 } from "src/util/styling-helper";
-import { BorderThickness, Colour, Radius } from "src/theme";
 
 const decodeSvgDataUrl = (value: string) => {
     const match = /^url\("data:image\/svg\+xml,(.*)"\)$/.exec(value);

@@ -29,15 +29,18 @@ describe("Alert", () => {
             ${"warning"}     | ${Colour["bg-warning"]} | ${Colour["border-warning"]}
             ${"error"}       | ${Colour["bg-error"]}   | ${Colour["border-error"]}
             ${"info"}        | ${Colour["bg-info"]}    | ${Colour["border-info"]}
-            ${"description"} | ${Colour["bg-strong"]}  | ${Colour["border"]}
+            ${"description"} | ${Colour["bg-strong"]}  | ${Colour["border-strong"]}
         `(
             "should render background $backgroundColor with border $borderColor for $type type",
             ({ type, backgroundColor, borderColor }) => {
-                render(<Alert type={type}>{DEFAULT_TEXT}</Alert>);
-
-                expect(screen.getByText(DEFAULT_TEXT)).toHaveStyle({
-                    backgroundColor,
-                    borderColor: `2px solid ${borderColor}`,
+                render(
+                    <Alert data-testid="alert" type={type}>
+                        {DEFAULT_TEXT}
+                    </Alert>
+                );
+                expect(screen.getByTestId("alert")).toHaveStyle({
+                    background: backgroundColor,
+                    borderLeftColor: borderColor,
                 });
             }
         );

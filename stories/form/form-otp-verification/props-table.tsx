@@ -119,6 +119,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
                 defaultValue: "60",
             },
+            {
+                name: "otpReminderInterval",
+                description: "Time in seconds between reminder announcements ",
+                propTypes: ["number"],
+                defaultValue: "120",
+            },
         ],
     },
     {

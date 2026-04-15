@@ -5,13 +5,15 @@ import {
     useInteractions,
     useTransitionStatus,
 } from "@floating-ui/react";
+import clsx from "clsx";
 import React, { useEffect, useRef } from "react";
 
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
+import { useApplyStyle } from "../theme";
 import { useEvent } from "../util";
 import { ModalContext } from "./modal-context";
-import { Container, ModalContainer, ScrollContainer } from "./modal-v2.styles";
+import * as styles from "./modal-v2.styles";
 import type { ModalV2Props } from "./types";
 
 export const ModalV2 = ({
@@ -30,6 +32,7 @@ export const ModalV2 = ({
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     disableInitialFocus = false,
+    className,
     ...otherProps
 }: ModalV2Props): JSX.Element => {
     // =========================================================================
@@ -37,9 +40,17 @@ export const ModalV2 = ({
     // =========================================================================
     const { verticalHeight, offsetTop } = useViewport();
     const childRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const childWithRef =
         children &&
         React.cloneElement(children as React.ReactElement, { ref: childRef });
+
+    useApplyStyle(containerRef, {
+        [styles.tokens.container.verticalHeight]:
+            verticalHeight == null ? null : `${verticalHeight}px`,
+        [styles.tokens.container.offsetTop]:
+            offsetTop == null ? null : `${offsetTop}px`,
+    });
 
     // =========================================================================
     // FLOATING UI CONFIG
@@ -91,14 +102,13 @@ export const ModalV2 = ({
             containerRef={childRef}
             zIndex={zIndex}
         >
-            <Container
-                $show={isMounted}
-                $animationFrom={animationFrom}
+            <div
+                ref={containerRef}
                 data-testid={testId}
-                $verticalHeight={verticalHeight}
-                $offsetTop={offsetTop}
                 data-status={status}
+                data-animation-from={animationFrom}
                 {...otherProps}
+                className={clsx(styles.container, className)}
             >
                 <ModalContext.Provider value={{ onClose }}>
                     {isMounted && (
@@ -108,22 +118,23 @@ export const ModalV2 = ({
                                 disableInitialFocus ? -1 : refs.floating
                             }
                         >
-                            <ScrollContainer>
-                                <ModalContainer
+                            <div className={styles.scrollContainer}>
+                                <div
                                     ref={refs.setFloating}
                                     {...getFloatingProps()}
                                     role="dialog"
                                     aria-label={ariaLabel}
                                     aria-labelledby={ariaLabelledBy}
                                     aria-describedby={ariaDescribedBy}
+                                    className={styles.modalContainer}
                                 >
                                     {childWithRef}
-                                </ModalContainer>
-                            </ScrollContainer>
+                                </div>
+                            </div>
                         </FloatingFocusManager>
                     )}
                 </ModalContext.Provider>
-            </Container>
+            </div>
         </Overlay>
     );
 };

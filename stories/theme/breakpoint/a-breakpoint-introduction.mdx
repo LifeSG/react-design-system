@@ -31,7 +31,7 @@ min width (mobile-first approach).
 
 <DocAlert>
     Max-width media queries should be arranged in{" "}
-    <strong>ascending order</strong>. The order matters as breakpoint detection
+    <strong>descending order</strong>. The order matters as breakpoint detection
     is achieved with classes instead of native media queries.
 </DocAlert>
 
@@ -39,7 +39,7 @@ min width (mobile-first approach).
 import { MediaQuery } from "@lifesg/react-design-system/theme";
 
 const container = css`
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.lg} {
         // styles
     }
 
@@ -47,7 +47,7 @@ const container = css`
         // styles
     }
 
-    ${MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.sm} {
         // styles
     }
 `;
@@ -57,7 +57,7 @@ const container = css`
 
 <DocAlert>
     Min-width media queries should be arranged in{" "}
-    <strong>descending order</strong>. The order matters as breakpoint detection
+    <strong>ascending order</strong>. The order matters as breakpoint detection
     is achieved with classes instead of native media queries.
 </DocAlert>
 
@@ -65,7 +65,7 @@ const container = css`
 import { MediaQuery } from "@lifesg/react-design-system/theme";
 
 const container = css`
-    ${MediaQuery.MinWidth.lg} {
+    ${MediaQuery.MinWidth.sm} {
         // styles
     }
 
@@ -73,7 +73,7 @@ const container = css`
         // styles
     }
 
-    ${MediaQuery.MinWidth.sm} {
+    ${MediaQuery.MinWidth.lg} {
         // styles
     }
 `;

@@ -28,7 +28,7 @@ interface ContainerStyleProps {
     $variant: DropdownVariantType;
 }
 
-interface ListItemStyleProps {
+export interface ListItemStyleProps {
     $active: boolean;
     $selected: boolean;
     $disabled: boolean;

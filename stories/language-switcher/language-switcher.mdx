@@ -1,0 +1,57 @@
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
+import * as LanguageSwitcherStories from "./language-switcher.stories";
+import { PropsTable } from "./props-table";
+
+<Meta of={LanguageSwitcherStories} />
+
+# Language Switcher
+
+## Overview
+
+The Language Switcher allows users to switch the language of the website. It supports multilingual access for users.
+
+Supported languages: English, 中文 (Mandarin), Melayu (Malay), தமிழ் (Tamil).
+
+## Dropdown variant
+
+The dropdown variant is suited for the global header. It displays the currently selected language and opens a list of available languages on click.
+
+```tsx
+import { LanguageSwitcher } from "@lifesg/react-design-system/language-switcher";
+
+<LanguageSwitcher
+    variant="dropdown"
+    selectedLanguage="en"
+    onSelectLanguage={handleChange}
+/>;
+```
+
+<Canvas of={LanguageSwitcherStories.Dropdown} />
+
+### With preselected language
+
+<Canvas of={LanguageSwitcherStories.DropdownPreselected} />
+
+## Link Container variant
+
+The link container variant displays all supported languages inline. The current language is visually highlighted and non-interactive.
+
+```tsx
+import { LanguageSwitcher } from "@lifesg/react-design-system/language-switcher";
+
+<LanguageSwitcher
+    variant="link-container"
+    selectedLanguage="en"
+    onSelectLanguage={handleChange}
+/>;
+```
+
+<Canvas of={LanguageSwitcherStories.LinkContainer} />
+
+### With preselected language
+
+<Canvas of={LanguageSwitcherStories.LinkContainerPreselected} />
+
+## Component API
+
+<PropsTable />

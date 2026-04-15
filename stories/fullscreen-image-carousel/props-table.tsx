@@ -79,6 +79,14 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "onDelete",
+                description:
+                    "Called when the current image delete button is clicked. When provided, the delete button will be shown. If called, do not reorder the items array while a delete is in flight.",
+                propTypes: [
+                    "(item: FullscreenCarouselItemProps, index: number) => void",
+                ],
+            },
+            {
                 name: "onClose",
                 description:
                     "The callback when the carousel overlay is dimissed via the close button or Esc key",

@@ -93,6 +93,19 @@ const MODAL_DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "true",
             },
+            {
+                name: "disableInitialFocus",
+                description: (
+                    <>
+                        Disables automatic focus placement when the modal is
+                        shown. When enabled, you must move focus to an element
+                        inside the modal yourself (for example in an effect
+                        after opening).
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
         ],
     },
 ];

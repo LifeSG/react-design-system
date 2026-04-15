@@ -43,8 +43,10 @@ export type V3_ColourScheme =
     | "pa"
     | "a11yplayground"
     | "supportgowhere"
+    | "sgwdigitallobby"
     | "imda"
-    | "spf";
+    | "spf"
+    | "smgs";
 export type V3_FontScheme =
     | "default"
     | "bookingsg"
@@ -55,7 +57,8 @@ export type V3_FontScheme =
     | "sgwdigitallobby"
     | "imda"
     | "spf"
-    | "oneservice";
+    | "oneservice"
+    | "smgs";
 export type V3_MotionScheme = "default";
 export type V3_BorderScheme = "default";
 export type V3_SpacingScheme = "default";
@@ -67,7 +70,8 @@ export type V3_ComponentScheme =
     | "pa"
     | "a11yplayground"
     | "lifesg"
-    | "spf";
+    | "spf"
+    | "smgs";
 export type V3_ResourceScheme =
     | "lifesg"
     | "bookingsg"
@@ -79,7 +83,8 @@ export type V3_ResourceScheme =
     | "a11yplayground"
     | "supportgowhere"
     | "imda"
-    | "spf";
+    | "spf"
+    | "smgs";
 
 export type V3_ColourMode = "light" | "dark";
 

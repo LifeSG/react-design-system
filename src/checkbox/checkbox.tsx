@@ -14,9 +14,12 @@ export const Checkbox = ({
     className,
     checked,
     disabled,
+    focusableWhenDisabled,
     indeterminate,
     displaySize = "default",
     id,
+    tabIndex,
+    onChange,
     ...otherProps
 }: CheckboxProps): JSX.Element => {
     // =============================================================================
@@ -24,11 +27,26 @@ export const Checkbox = ({
     // =============================================================================
     const checkRef = useRef<HTMLInputElement>(null);
 
+    const isFocusableWhenDisabled = !!disabled && !!focusableWhenDisabled;
+    const isNativeDisabled = !!disabled && !focusableWhenDisabled;
+
     useEffect(() => {
         if (checkRef.current) {
             checkRef.current.indeterminate = indeterminate ?? false;
         }
     }, [indeterminate]);
+
+    // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        if (disabled) {
+            event.preventDefault();
+            return;
+        }
+
+        onChange?.(event);
+    };
 
     // =============================================================================
     // RENDER FUNCTION
@@ -82,11 +100,14 @@ export const Checkbox = ({
                 id={id}
                 data-testid="checkbox-input"
                 type="checkbox"
+                onChange={handleOnChange}
                 checked={checked}
-                ref={checkRef}
-                tabIndex={disabled ? -1 : 0}
-                disabled={disabled}
                 aria-checked={indeterminate ? "mixed" : checked}
+                ref={checkRef}
+                disabled={isNativeDisabled}
+                aria-disabled={isFocusableWhenDisabled}
+                tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
+                $disabledVisual={disabled}
                 {...otherProps}
             />
             {renderIcon()}

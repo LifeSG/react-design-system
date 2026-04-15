@@ -7,7 +7,7 @@ import {
 import styled, { css, keyframes } from "styled-components";
 
 import { V3_Colour, V3_Motion } from "../v3_theme";
-import type { CheckboxProps, CheckboxSize } from "./types";
+import type { CheckboxSize } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -17,6 +17,10 @@ interface StyleProps {
     $unchecked?: boolean;
     $disabled?: boolean;
     $displaySize?: CheckboxSize;
+}
+
+interface InputStyleProps {
+    $disabledVisual?: boolean;
 }
 
 // =============================================================================
@@ -84,12 +88,12 @@ export const Container = styled.div<StyleProps>`
     }
 `;
 
-export const Input = styled.input<CheckboxProps>`
+export const Input = styled.input<InputStyleProps>`
     position: absolute;
     opacity: 0;
     width: 100%;
     height: 100%;
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    cursor: ${(props) => (props.$disabledVisual ? "not-allowed" : "pointer")};
 
     &:hover
         + ${StyledUncheckedIcon},
@@ -99,7 +103,7 @@ export const Input = styled.input<CheckboxProps>`
         + ${StyledInteremediateIcon} {
         @media (pointer: fine) {
             color: ${(props) =>
-                !props.disabled && V3_Colour["icon-hover"](props)};
+                !props.$disabledVisual && V3_Colour["icon-hover"](props)};
         }
     }
 `;
