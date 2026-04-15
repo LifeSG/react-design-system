@@ -1,7 +1,6 @@
 import React, { useRef } from "react";
 import {
     LinkContainerWrapper,
-    LinkDivider,
     LinkItem,
     LinkList,
     LinkListItem,
@@ -62,30 +61,23 @@ export const LinkContainerVariant = ({
                 {LANGUAGE_CODES.map((code, index) => {
                     const isActive = code === selectedLanguage;
                     return (
-                        <React.Fragment key={code}>
-                            {index > 0 && (
-                                <li aria-hidden>
-                                    <LinkDivider />
-                                </li>
-                            )}
-                            <LinkListItem>
-                                <LinkItem
-                                    ref={(el) => {
-                                        itemRefs.current[index] = el;
-                                    }}
-                                    type="button"
-                                    lang={code}
-                                    $active={isActive}
-                                    aria-pressed={isActive}
-                                    tabIndex={isActive ? 0 : -1}
-                                    onClick={() => onSelectLanguage(code)}
-                                    onKeyDown={(e) => handleKeyDown(e, index)}
-                                    data-testid={`${testId}--item-${code}`}
-                                >
-                                    {LANGUAGE_DISPLAY_MAP[code]}
-                                </LinkItem>
-                            </LinkListItem>
-                        </React.Fragment>
+                        <LinkListItem key={code}>
+                            <LinkItem
+                                ref={(el) => {
+                                    itemRefs.current[index] = el;
+                                }}
+                                type="button"
+                                lang={code}
+                                $active={isActive}
+                                aria-pressed={isActive}
+                                tabIndex={isActive ? 0 : -1}
+                                onClick={() => onSelectLanguage(code)}
+                                onKeyDown={(e) => handleKeyDown(e, index)}
+                                data-testid={`${testId}--item-${code}`}
+                            >
+                                {LANGUAGE_DISPLAY_MAP[code]}
+                            </LinkItem>
+                        </LinkListItem>
                     );
                 })}
             </LinkList>

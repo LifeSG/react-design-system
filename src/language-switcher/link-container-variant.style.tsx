@@ -35,13 +35,6 @@ export const LinkListItem = styled.li`
     align-items: center;
 `;
 
-export const LinkDivider = styled.span`
-    width: ${Border["width-010"]};
-    height: 1rem;
-    background: ${Colour["border-strong"]};
-    flex-shrink: 0;
-`;
-
 export const LinkItem = styled.button<LinkItemStyleProps>`
     display: flex;
     padding: 0.25rem 0.5rem;
