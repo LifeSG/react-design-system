@@ -141,13 +141,12 @@ export const labelWrapper = css`
     z-index: 2;
     cursor: default;
 
-    &[data-day-cell-interactive="true"] {
+    &[data-day-cell-state="interactive"] {
         cursor: pointer;
     }
 
-    &[data-day-cell-interactive="false"] {
+    &[data-day-cell-state="disabled"] {
         cursor: not-allowed;
-        pointer-events: none;
     }
 `;
 
@@ -163,8 +162,7 @@ export const label = css`
     pointer-events: none;
     color: ${Colour["text"]};
 
-    &[data-day-cell-interactive="true"],
-    &[data-day-cell-interactive="false"] {
+    &[data-day-cell-state="interactive"] {
         pointer-events: auto;
     }
 

@@ -41,6 +41,12 @@ export const DayCell = ({
     const labelTypeAttr =
         disabled && labelType !== "hidden" ? undefined : labelType;
     const isToday = useMemo(() => dayjs().isSame(date, "day"), [date]);
+    let interactionState = "default";
+    if (interactive) {
+        interactionState = "interactive";
+    } else if (disabled) {
+        interactionState = "disabled";
+    }
 
     // =============================================================================
     // REFS, EFFECTS
@@ -105,24 +111,24 @@ export const DayCell = ({
             ></div>
             <span
                 className={styles.labelWrapper}
-                data-day-cell-interactive={String(interactive)}
+                data-day-cell-state={interactionState}
             >
                 <button
                     type="button"
                     className={styles.label}
-                    data-day-cell-interactive={String(interactive)}
+                    data-day-cell-state={interactionState}
                     data-day-cell-label-type={labelTypeAttr}
                     data-day-cell-disabled={disabled}
                     ref={buttonRef}
                     tabIndex={tabIndex}
                     role={role === "button" ? undefined : role}
                     aria-label={labelText}
-                    aria-disabled={!interactive}
+                    aria-disabled={disabled && !interactive ? true : undefined}
                     aria-selected={isGridcellRole ? isSelected : undefined}
-                    onClick={handleClick}
+                    onClick={interactive ? handleClick : undefined}
                     onKeyDown={handleLabelKeyDown}
-                    onMouseEnter={handleHover}
-                    onMouseLeave={handleMouseLeave}
+                    onMouseEnter={interactive ? handleHover : undefined}
+                    onMouseLeave={interactive ? handleMouseLeave : undefined}
                     onFocus={handleFocus}
                 >
                     {labelContent}
