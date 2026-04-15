@@ -1,4 +1,3 @@
-import clsx from "clsx";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useRef } from "react";
 
@@ -22,7 +21,6 @@ export const DayCell = ({
     onKeyDown,
     focusDate,
     label,
-    className,
     ariaHidden,
     tabIndex = -1,
     role = "button",
@@ -82,20 +80,11 @@ export const DayCell = ({
         onKeyDown?.(event);
     };
 
-    const labelContent = (
-        <>
-            {date.date()}
-            {currentDateIndicator && isToday && (
-                <div className={styles.indicator} />
-            )}
-        </>
-    );
-
     // =========================================================================
     // RENDER FUNCTION
     // =========================================================================
     return (
-        <div className={clsx(styles.cell, className)} aria-hidden={ariaHidden}>
+        <div className={styles.cell} aria-hidden={ariaHidden}>
             <div className={styles.leftHalf} data-day-cell-type={bgLeft}></div>
             <div
                 className={styles.leftCircle}
@@ -131,7 +120,10 @@ export const DayCell = ({
                     onMouseLeave={interactive ? handleMouseLeave : undefined}
                     onFocus={handleFocus}
                 >
-                    {labelContent}
+                    {date.date()}
+                    {currentDateIndicator && isToday && (
+                        <div className={styles.indicator} />
+                    )}
                 </button>
             </span>
         </div>

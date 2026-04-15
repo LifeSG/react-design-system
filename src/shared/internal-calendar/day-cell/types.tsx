@@ -30,7 +30,6 @@ export interface CellStyleProps {
 }
 
 export interface DayCellProps extends CellStyleProps {
-    className?: string;
     date: Dayjs;
     calendarDate: Dayjs;
     focusDate?: Dayjs | undefined;
