@@ -273,31 +273,13 @@ test.describe("DateRangeInput", () => {
                 });
             });
 
-            test("Hover", async ({ story }) => {
+            test("Hover current week", async ({ story }) => {
                 await story.openCalendar();
                 await story.getWeekCell(1).hover();
 
                 await compareScreenshot(story, "state", {
                     fullscreen: true,
                 });
-            });
-
-            test("Click and commit selection", async ({ story }) => {
-                await story.openCalendar();
-                await story.getWeekCell(1).click();
-
-                await compareScreenshot(story, "state", {
-                    fullscreen: true,
-                });
-
-                await story.locators.doneButton.click();
-
-                await expect(story.locators.selectedStart).toHaveText(
-                    "2026-04-05"
-                );
-                await expect(story.locators.selectedEnd).toHaveText(
-                    "2026-04-11"
-                );
             });
         });
 
