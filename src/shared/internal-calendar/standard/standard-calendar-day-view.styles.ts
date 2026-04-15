@@ -1,15 +1,15 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { V3_Colour, V3_Font } from "../../../v3_theme";
+import { Colour, Font } from "../../../theme";
 
-export const Wrapper = styled.div`
+export const wrapper = css`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     row-gap: 0.25rem;
 `;
 
-export const HeaderCell = styled.div`
+export const headerCell = css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -17,11 +17,11 @@ export const HeaderCell = styled.div`
     pointer-events: none;
     user-select: none;
 
-    ${V3_Font["body-sm-semibold"]};
-    color: ${V3_Colour["text"]};
+    ${Font["body-sm-semibold"]}
+    color: ${Colour["text"]};
 `;
 
-export const RowDayCell = styled.div`
+export const rowDayCell = css`
     grid-column: 1 / -1;
     display: flex;
 `;

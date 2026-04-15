@@ -21,8 +21,6 @@ import {
 
 dayjs.extend(isBetween);
 
-export type DayVariant = "default" | "other-month" | "today";
-
 interface TimeSlotWeekDaysProps
     extends Pick<
         InternalCalendarProps,

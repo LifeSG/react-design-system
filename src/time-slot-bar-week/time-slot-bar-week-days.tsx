@@ -33,7 +33,6 @@ import {
 } from "./time-slot-bar-week-days.style";
 import type { TimeSlotCellsVariant } from "./types";
 
-export type DayVariant = "default" | "other-month" | "today";
 interface TimeSlotWeekDaysProps
     extends Pick<
         InternalCalendarProps,
