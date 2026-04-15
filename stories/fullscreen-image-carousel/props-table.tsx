@@ -151,7 +151,8 @@ const DATA: ApiTableSectionProps[] = [
                         Label for this item used in aria-labels (e.g.{" "}
                         <code>&quot;PDF&quot;</code>). Defaults to{" "}
                         <code>&quot;image&quot;</code>. When any item sets this,
-                        carousel-level aria-labels switch to generic wording
+                        carousel-level aria-labels switch to generic wording.
+                        Only applicable for <code>CustomCarouselItemProps</code>
                     </>
                 ),
                 propTypes: ["string"],

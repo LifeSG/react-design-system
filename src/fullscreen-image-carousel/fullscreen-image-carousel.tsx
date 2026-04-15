@@ -97,7 +97,7 @@ export const Component = (
     const diff = startX && endX ? startX - endX : 0;
     const currentItem = items[currentSlide];
     const hasCustomItemLabel = items.some(
-        (item) => item.itemLabel !== undefined
+        (item) => isCustomItem(item) && item.itemLabel !== undefined
     );
     const carouselItemNoun = hasCustomItemLabel ? "item" : "image";
 
@@ -453,7 +453,9 @@ export const Component = (
                     {onDelete && (
                         <DeleteButton
                             aria-label={`Delete ${
-                                currentItem?.itemLabel ?? "image"
+                                (isCustomItem(currentItem) &&
+                                    currentItem.itemLabel) ||
+                                "image"
                             }`}
                             data-testid="delete-btn"
                             onClick={handleDelete}
