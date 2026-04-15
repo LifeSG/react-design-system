@@ -4,14 +4,7 @@ import { BinIcon } from "@lifesg/react-icons/bin";
 
 export default function Story() {
     return (
-        <div
-            style={{
-                display: "flex",
-                flexDirection: "column",
-                gap: "1rem",
-                padding: "2rem",
-            }}
-        >
+        <div className="story-column-container">
             {/* Solid variants */}
             <div className="story-row-container">
                 <Pill type="solid" colorType="black">
