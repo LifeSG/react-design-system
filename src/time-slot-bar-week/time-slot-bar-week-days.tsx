@@ -492,7 +492,7 @@ export const TimeSlotBarWeekDays = ({
 
     const renderHeader = () => {
         return (
-            <HeaderCellWeekColumn>
+            <HeaderCellWeekColumn role="row">
                 {currentCalendarWeek.map((day, dayIndex) => {
                     const dayCellStyleProps = generateStyleProps(day);
 
@@ -501,6 +501,7 @@ export const TimeSlotBarWeekDays = ({
                             key={`day-${dayIndex}`}
                             date={day}
                             calendarDate={dayjs(selectedDate)}
+                            role="columnheader"
                             onSelect={() => {
                                 handleDayClick(
                                     day,
@@ -560,7 +561,7 @@ export const TimeSlotBarWeekDays = ({
 
     const renderTimeSlotBarCells = () => {
         return (
-            <Expandable style={expandableStyles}>
+            <Expandable style={expandableStyles} role="row">
                 <ColumnWeekCell
                     ref={cellsRef}
                     key={`week-cell-${calendarDate.format(dateFormat)}`}
@@ -569,7 +570,10 @@ export const TimeSlotBarWeekDays = ({
                         const formattedDate = day.format(dateFormat);
                         const cellsArray = getCellsForDate(formattedDate);
                         return (
-                            <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
+                            <TimeSlotWrapper
+                                key={`wrapper-${dayIndex}`}
+                                role="gridcell"
+                            >
                                 {cellsArray.map((slot) => {
                                     const {
                                         id,
@@ -686,7 +690,7 @@ export const TimeSlotBarWeekDays = ({
     };
 
     return (
-        <Wrapper>
+        <Wrapper role="grid">
             {renderHeader()}
             {renderWeek()}
             {renderTimeColumn()}
