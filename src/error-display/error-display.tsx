@@ -1,7 +1,11 @@
+import clsx from "clsx";
 import type React from "react";
 import { useContext } from "react";
 
+import { Button } from "../button";
+import { Markup } from "../markup";
 import { ThemeContext } from "../theme/theme-provider/context";
+import { Typography } from "../typography";
 import * as styles from "./error-display.styles";
 import { getErrorDisplayData } from "./error-display-data";
 import { InactivityTimer } from "./inactivity-timer";
@@ -20,6 +24,7 @@ export const ErrorDisplay = ({
     additionalProps,
     imageOnly,
     illustrationScheme,
+    className,
     ...otherProps
 }: ErrorDisplayProps) => {
     // =============================================================================
@@ -76,7 +81,9 @@ export const ErrorDisplay = ({
             ...actionButton,
         };
 
-        return <styles.ActionButton {...buttonProps} />;
+        return (
+            <Button.Default className={styles.actionButton} {...buttonProps} />
+        );
     };
 
     const updatedAssets = {
@@ -89,22 +96,24 @@ export const ErrorDisplay = ({
     const renderContentDisplay = () => {
         if (updatedAssets.title || updatedAssets.description) {
             return (
-                <styles.TextContainer>
+                <div className={styles.textContainer}>
                     {updatedAssets.title &&
                         (typeof updatedAssets.title === "string" ? (
-                            <styles.Title
+                            <Typography.HeadingMD
+                                className={styles.title}
                                 data-testid={`${testId}--title`}
                                 data-id="error-display-title"
-                                forwardedAs="h2"
+                                as="h2"
                                 weight="semibold"
                             >
                                 {updatedAssets.title}
-                            </styles.Title>
+                            </Typography.HeadingMD>
                         ) : (
                             updatedAssets.title
                         ))}
                     {updatedAssets.description && (
-                        <styles.DescriptionContainer
+                        <Markup
+                            className={styles.descriptionContainer}
                             data-testid={`${testId}--description`}
                             data-id="error-display-description"
                             baseTextSize="body-baseline"
@@ -114,9 +123,9 @@ export const ErrorDisplay = ({
                             ) : (
                                 updatedAssets.description
                             )}
-                        </styles.DescriptionContainer>
+                        </Markup>
                     )}
-                </styles.TextContainer>
+                </div>
             );
         }
 
@@ -124,7 +133,11 @@ export const ErrorDisplay = ({
     };
 
     return (
-        <styles.Container {...otherProps} data-testid={testId}>
+        <div
+            {...otherProps}
+            data-testid={testId}
+            className={clsx(styles.container, className)}
+        >
             {type === "inactivity" && (
                 <InactivityTimer
                     secondsLeft={secondsLeft}
@@ -133,13 +146,14 @@ export const ErrorDisplay = ({
                     hasCustomDescription={!!description}
                 />
             )}
-            <styles.Img
+            <img
                 {...updatedAssets.img}
                 alt=""
                 data-id="error-display-image"
+                className={styles.img}
             />
             {!imageOnly && renderContentDisplay()}
             {actionButton && renderActionButton()}
-        </styles.Container>
+        </div>
     );
 };

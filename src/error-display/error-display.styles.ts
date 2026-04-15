@@ -1,11 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
-import { Markup } from "../markup";
 import { Colour, MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography";
 
-export const Container = styled.div`
+export const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,7 +10,7 @@ export const Container = styled.div`
     position: relative;
 `;
 
-export const Img = styled.img`
+export const img = css`
     position: relative;
     width: 400px;
     height: auto;
@@ -31,7 +28,7 @@ export const Img = styled.img`
     }
 `;
 
-export const TextContainer = styled.div`
+export const textContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -40,12 +37,12 @@ export const TextContainer = styled.div`
     white-space: pre-wrap;
 `;
 
-export const Title = styled(Typography.HeadingMD)`
+export const title = css`
     margin: ${Spacing["spacing-32"]} 0 ${Spacing["spacing-16"]};
     text-align: center;
 `;
 
-export const DescriptionContainer = styled(Markup)`
+export const descriptionContainer = css`
     color: ${Colour.text};
     text-align: center;
 
@@ -54,7 +51,7 @@ export const DescriptionContainer = styled(Markup)`
     }
 `;
 
-export const ActionButton = styled(Button.Default)`
+export const actionButton = css`
     margin: ${Spacing["spacing-32"]} auto 0;
     width: 21rem;
 
