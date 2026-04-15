@@ -199,10 +199,6 @@ export const label = css`
         color: ${Colour["text-disabled-subtlest"]};
     }
 
-    &[data-day-cell-disabled="true"][data-day-cell-label-type="hidden"] {
-        visibility: hidden;
-    }
-
     &:focus {
         outline: none;
     }

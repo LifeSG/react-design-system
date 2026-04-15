@@ -38,7 +38,8 @@ export const DayCell = ({
     const isSelected =
         labelType === "selected" || labelType === "selected-hover";
     const labelText = label || defaultLabel;
-    const labelTypeAttr = disabled ? undefined : labelType;
+    const labelTypeAttr =
+        disabled && labelType !== "hidden" ? undefined : labelType;
 
     // =============================================================================
     // REFS, EFFECTS
