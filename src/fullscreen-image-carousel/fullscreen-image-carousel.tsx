@@ -12,6 +12,7 @@ import {
     useCallback,
     useEffect,
     useImperativeHandle,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -101,8 +102,12 @@ export const Component = (
         (item) => isCustomItem(item) && !!item.itemLabel?.trim()
     );
     const carouselItemNoun = hasAnyItemLabel ? "item" : "image";
-    const hasFileInfo = items.some(
-        (item) => item.fileName?.trim() || item.fileSize?.trim()
+    const hasFileInfo = useMemo(
+        () =>
+            items.some(
+                (item) => item.fileName?.trim() || item.fileSize?.trim()
+            ),
+        [items]
     );
 
     const getItemAriaLabel = useCallback(
