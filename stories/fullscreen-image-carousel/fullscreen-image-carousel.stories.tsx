@@ -166,6 +166,24 @@ export const WithCustomContent: StoryObj<Component> = {
                                 />
                             ),
                         },
+                        {
+                            itemLabel: "document",
+                            renderContent: () => (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        width: "100%",
+                                        height: "100%",
+                                        color: "#fff",
+                                        fontSize: 24,
+                                    }}
+                                >
+                                    No thumbnail provided
+                                </div>
+                            ),
+                        },
                         { src: "https://picsum.photos/id/369/1000/1000" },
                     ]}
                     show={show}
