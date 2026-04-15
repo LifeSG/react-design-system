@@ -1,6 +1,6 @@
 import clsx from "clsx";
 import dayjs from "dayjs";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useMemo, useRef } from "react";
 
 import * as styles from "./day-cell.styles";
 import type { DayCellProps } from "./types";
@@ -40,23 +40,18 @@ export const DayCell = ({
     const labelText = label || defaultLabel;
     const labelTypeAttr =
         disabled && labelType !== "hidden" ? undefined : labelType;
-    console.log({ date, interactive });
+    const isToday = useMemo(() => dayjs().isSame(date, "day"), [date]);
 
     // =============================================================================
     // REFS, EFFECTS
     // =============================================================================
     const buttonRef = useRef<HTMLButtonElement>(null);
-    const [isToday, setIsToday] = useState(false);
 
     useEffect(() => {
         if (isFocused) {
             buttonRef.current?.focus();
         }
     }, [isFocused]);
-
-    useEffect(() => {
-        setIsToday(dayjs().isSame(date, "day"));
-    }, [date]);
 
     // =========================================================================
     // EVENT HANDLERS
