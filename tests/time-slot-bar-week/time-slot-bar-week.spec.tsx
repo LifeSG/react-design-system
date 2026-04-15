@@ -350,7 +350,7 @@ describe("TimeSlotBarWeekCalendar", () => {
 
             expect(
                 screen.getByRole("button", {
-                    name: "29 January 2021 Friday, 9:00AM to 9:30AM, Morning slot",
+                    name: "29 January 2021 Friday, 9:00AM to 9:30AM, Morning slot, Available",
                 })
             ).toHaveFocus();
         });
@@ -369,10 +369,10 @@ describe("TimeSlotBarWeekCalendar", () => {
 
             await user.tab();
             const firstSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday, 9:00AM to 9:30AM, Sun 9am",
+                name: "24 January 2021 Sunday, 9:00AM to 9:30AM, Sun 9am, Available",
             });
             const secondSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday, 9:30AM to 10:00AM, Sun 930am",
+                name: "24 January 2021 Sunday, 9:30AM to 10:00AM, Sun 930am, Available",
             });
 
             expect(firstSlot).toHaveFocus();
@@ -404,10 +404,10 @@ describe("TimeSlotBarWeekCalendar", () => {
 
             await user.tab();
             const firstRowSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday, 9:00AM to 9:30AM, Sun 9am",
+                name: "24 January 2021 Sunday, 9:00AM to 9:30AM, Sun 9am, Available",
             });
             const lastColumnSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday, 9:30AM to 10:00AM, Sun 930am",
+                name: "24 January 2021 Sunday, 9:30AM to 10:00AM, Sun 930am, Available",
             });
 
             fireEvent.keyDown(firstRowSlot, { key: "End" });
@@ -431,10 +431,10 @@ describe("TimeSlotBarWeekCalendar", () => {
 
             await user.tab();
             const firstSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday, 9:00AM to 9:30AM, Sun 9am",
+                name: "24 January 2021 Sunday, 9:00AM to 9:30AM, Sun 9am, Available",
             });
             const lastColumnSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday, 9:30AM to 10:00AM, Sun 930am",
+                name: "24 January 2021 Sunday, 9:30AM to 10:00AM, Sun 930am, Available",
             });
 
             fireEvent.keyDown(firstSlot, { key: "PageDown" });
