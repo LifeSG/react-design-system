@@ -142,8 +142,7 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
 
     &:focus-within {
         outline: 2px solid ${Colour["focus-ring"]};
-        outline-offset: 1px;
-        z-index: 1;
+        outline-offset: -2px;
     }
 
     ${(props) => {

@@ -149,48 +149,12 @@ export const TimeSlotBarWeekDays = ({
         (event: React.MouseEvent<HTMLButtonElement>) => {
             event.stopPropagation();
 
-            if (slot.clickable ?? true) {
-                handleSlotClick(date, slot);
-            }
+            handleSlotClick(date, slot);
         };
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
         setExpandAll((prevExpandValue) => !prevExpandValue);
-    };
-
-    const getCellsForDate = (formattedDate: string) => {
-        return (
-            generatedDaySlots[formattedDate] ??
-            Array(variant === "flexible" ? numberOfCells : 1)
-                .fill(undefined)
-                .map((_, index) =>
-                    generateFallbackCell(
-                        index,
-                        variant === "fixed" ? numberOfCells : undefined
-                    )
-                )
-        );
-    };
-
-    const getFocusableSlotsForDate = (
-        formattedDate: string
-    ): FocusableSlotMeta[] => {
-        return getCellsForDate(formattedDate)
-            .filter(
-                (
-                    slot
-                ): slot is TimeSlotCell & {
-                    isActualSlot: true;
-                    rowIndex: number;
-                } => !!slot.isActualSlot && slot.rowIndex !== undefined
-            )
-            .map((slot) => ({
-                key: `${formattedDate}-${slot.id}`,
-                date: formattedDate,
-                rowIndex: slot.rowIndex,
-            }))
-            .sort((a, b) => a.rowIndex - b.rowIndex);
     };
 
     const handleSlotKeyDown = (
@@ -315,14 +279,12 @@ export const TimeSlotBarWeekDays = ({
 
     function generateFallbackCell(
         prefix: string | number,
-        cellLength = 1,
-        startTime = "",
-        endTime = ""
+        cellLength = 1
     ): TimeSlotCell {
         return {
             id: `${prefix.toString()}-${new Date().getTime()}`,
-            startTime,
-            endTime,
+            startTime: "",
+            endTime: "",
             clickable: false,
             isActualSlot: false,
             styleAttributes: {
@@ -341,6 +303,7 @@ export const TimeSlotBarWeekDays = ({
                 ? TimeHelper.formatTimeRange(slotStartTime, slotEndTime)
                 : undefined,
             slot.label,
+            slot.clickable ?? true ? "Available" : "Unavailable",
         ]);
     }
 
@@ -470,6 +433,40 @@ export const TimeSlotBarWeekDays = ({
         );
     }
 
+    const getCellsForDate = (formattedDate: string) => {
+        return (
+            generatedDaySlots[formattedDate] ??
+            Array(variant === "flexible" ? numberOfCells : 1)
+                .fill(undefined)
+                .map((_, index) =>
+                    generateFallbackCell(
+                        index,
+                        variant === "fixed" ? numberOfCells : undefined
+                    )
+                )
+        );
+    };
+
+    const getFocusableSlotsForDate = (
+        formattedDate: string
+    ): FocusableSlotMeta[] => {
+        return getCellsForDate(formattedDate)
+            .filter(
+                (
+                    slot
+                ): slot is TimeSlotCell & {
+                    isActualSlot: true;
+                    rowIndex: number;
+                } => !!slot.isActualSlot && slot.rowIndex !== undefined
+            )
+            .map((slot) => ({
+                key: `${formattedDate}-${slot.id}`,
+                date: formattedDate,
+                rowIndex: slot.rowIndex,
+            }))
+            .sort((a, b) => a.rowIndex - b.rowIndex);
+    };
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
@@ -558,6 +555,68 @@ export const TimeSlotBarWeekDays = ({
             </TimeColumn>
         );
     };
+    const renderSlotCell = (formattedDate: string, slot: TimeSlotCell) => {
+        const {
+            id,
+            clickable = true,
+            isActualSlot,
+            styleAttributes,
+            cellLength,
+            halfFill,
+        } = slot;
+        const {
+            styleType = "default",
+            backgroundColor,
+            backgroundColor2,
+        } = styleAttributes;
+        const slotId = `${formattedDate}-${id}`;
+
+        return (
+            <TimeSlotComponent
+                $type="vertical"
+                $variant="default"
+                key={id}
+                $styleType={styleType}
+                $bgColor={backgroundColor}
+                $bgColor2={backgroundColor2}
+                $halfFill={halfFill}
+                $clickable={clickable}
+                $height={
+                    variant === "fixed"
+                        ? cellLength * 12 + (cellLength - 1) * 4
+                        : 12
+                }
+                onClick={() =>
+                    clickable && handleSlotClick(formattedDate, slot)
+                }
+            >
+                {isActualSlot && (
+                    <VisuallyHidden>
+                        <button
+                            type="button"
+                            ref={(element) => {
+                                slotButtonRefs.current[slotId] = element;
+                            }}
+                            aria-disabled={!clickable}
+                            aria-label={getSlotAriaLabel(formattedDate, slot)}
+                            onKeyDown={(event) =>
+                                handleSlotKeyDown(event, {
+                                    key: slotId,
+                                    date: formattedDate,
+                                    rowIndex: slot.rowIndex ?? 0,
+                                })
+                            }
+                            onClick={
+                                clickable
+                                    ? handleSlotButtonClick(formattedDate, slot)
+                                    : undefined
+                            }
+                        />
+                    </VisuallyHidden>
+                )}
+            </TimeSlotComponent>
+        );
+    };
 
     const renderTimeSlotBarCells = () => {
         return (
@@ -574,92 +633,9 @@ export const TimeSlotBarWeekDays = ({
                                 key={`wrapper-${dayIndex}`}
                                 role="gridcell"
                             >
-                                {cellsArray.map((slot) => {
-                                    const {
-                                        id,
-                                        clickable = true,
-                                        isActualSlot,
-                                        styleAttributes,
-                                        cellLength,
-                                        halfFill,
-                                    } = slot;
-                                    const {
-                                        styleType = "default",
-                                        backgroundColor,
-                                        backgroundColor2,
-                                    } = styleAttributes;
-                                    const slotKey = `${formattedDate}-${id}`;
-                                    const slotStateId = `${slotKey}-state`;
-                                    return (
-                                        <TimeSlotComponent
-                                            $type="vertical"
-                                            $variant="default"
-                                            key={id}
-                                            $styleType={styleType}
-                                            $bgColor={backgroundColor}
-                                            $bgColor2={backgroundColor2}
-                                            $halfFill={halfFill}
-                                            $clickable={clickable}
-                                            $height={
-                                                variant === "fixed"
-                                                    ? cellLength * 12 +
-                                                      (cellLength - 1) * 4
-                                                    : 12
-                                            }
-                                            onClick={() =>
-                                                clickable &&
-                                                handleSlotClick(
-                                                    formattedDate,
-                                                    slot
-                                                )
-                                            }
-                                        >
-                                            {isActualSlot && (
-                                                <VisuallyHidden>
-                                                    <span id={slotStateId}>
-                                                        {clickable
-                                                            ? "Available"
-                                                            : "Unavailable"}
-                                                    </span>
-                                                    <button
-                                                        type="button"
-                                                        ref={(element) => {
-                                                            slotButtonRefs.current[
-                                                                slotKey
-                                                            ] = element;
-                                                        }}
-                                                        aria-disabled={
-                                                            !clickable
-                                                        }
-                                                        aria-describedby={
-                                                            slotStateId
-                                                        }
-                                                        aria-label={getSlotAriaLabel(
-                                                            formattedDate,
-                                                            slot
-                                                        )}
-                                                        onKeyDown={(event) =>
-                                                            handleSlotKeyDown(
-                                                                event,
-                                                                {
-                                                                    key: slotKey,
-                                                                    date: formattedDate,
-                                                                    rowIndex:
-                                                                        slot.rowIndex ??
-                                                                        0,
-                                                                }
-                                                            )
-                                                        }
-                                                        onClick={handleSlotButtonClick(
-                                                            formattedDate,
-                                                            slot
-                                                        )}
-                                                    />
-                                                </VisuallyHidden>
-                                            )}
-                                        </TimeSlotComponent>
-                                    );
-                                })}
+                                {cellsArray.map((slot) =>
+                                    renderSlotCell(formattedDate, slot)
+                                )}
                             </TimeSlotWrapper>
                         );
                     })}
