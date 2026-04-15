@@ -116,9 +116,8 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The image src. Required for{" "}
-                        <code>ImageCarouselItemProps</code>, optional for{" "}
-                        <code>CustomCarouselItemProps</code> (used as thumbnail
-                        fallback)
+                        <code>ImageCarouselItemProps</code>. Not available on{" "}
+                        <code>CustomCarouselItemProps</code>
                     </>
                 ),
                 propTypes: ["string"],

@@ -37,8 +37,7 @@ export interface ImageCarouselItemProps {
 }
 
 export interface CustomCarouselItemProps {
-    /** Optional src used as thumbnail fallback. If omitted, a placeholder is shown in the thumbnail strip. */
-    src?: string | undefined;
+    /** The thumbnail image src. If omitted, a placeholder is shown in the thumbnail strip. */
     thumbnailSrc?: string | undefined;
     /** Label for this item used in aria-labels (e.g. "PDF"). Defaults to "image". When any item sets this, carousel-level aria-labels use generic "item" wording. */
     itemLabel?: string | undefined;

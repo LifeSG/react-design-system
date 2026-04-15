@@ -345,9 +345,9 @@ export const Component = (
             >
                 <ThumbnailWrapper>
                     {items.map((item, index) => {
-                        const src =
-                            item.thumbnailSrc ??
-                            (isCustomItem(item) ? undefined : item.src);
+                        const src = isCustomItem(item)
+                            ? item.thumbnailSrc
+                            : item.thumbnailSrc ?? item.src;
                         return (
                             <ThumbnailItemContainer key={index}>
                                 <ThumbnailItem
