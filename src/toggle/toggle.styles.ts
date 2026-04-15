@@ -1,11 +1,10 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Alert } from "../alert";
 import { ToggleIcon } from "../shared/toggle-icon/toggle-icon";
 import { TextList } from "../text-list";
 import { Colour, Font, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography";
-import type { ToggleStyleType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -17,33 +16,72 @@ interface StyleProps {
     $indicator?: boolean;
 }
 
-interface ContainerStyleProps extends StyleProps {
-    $styleType?: ToggleStyleType;
-    $error?: boolean;
-    $useContentWidth?: boolean;
-}
-
-interface IndicatorLabelContainerStyleProps {
-    $addPadding?: boolean;
-}
-
 interface LabelStyleProps {
     $maxLines?: { desktop?: number; mobile?: number; tablet?: number };
 }
 
-interface ExpandButtonStyleProps extends StyleProps {
-    $paddingTopRequired?: boolean;
-}
-
-interface ChildrenStyleProps extends StyleProps {
-    $isFinalItem?: boolean;
-}
+export const tokens = {
+    label: {
+        desktopLineClamp: "--fds-internal-toggle-label-desktopLineClamp",
+        tabletLineClamp: "--fds-internal-toggle-label-tabletLineClamp",
+        mobileLineClamp: "--fds-internal-toggle-label-mobileLineClamp",
+    },
+} as const;
 
 // =============================================================================
 // STYLING
 // =============================================================================
 
-export const Container = styled.div<ContainerStyleProps>`
+export const HeaderContainer = styled.div`
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+`;
+
+export const TextContainer = styled.div<StyleProps>`
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: anywhere;
+    width: 100%;
+    overflow: hidden;
+
+    // apply header container text color
+    &.toggleTextContainerDisabledSelected {
+        color: ${Colour["text-selected-disabled"]};
+    }
+
+    &.toggleTextContainerDisabled {
+        color: ${Colour["text-disabled"]};
+    }
+
+    &.toggleTextContainerSelected {
+        color: ${Colour["text-selected"]};
+    }
+
+    &.toggleTextContainerDefault {
+        color: ${Colour.text};
+    }
+`;
+
+export const StyledToggleIcon = styled(ToggleIcon)`
+    &.toggleStyledToggleIconDisabledSelected {
+        color: ${Colour["icon-selected-disabled"]};
+    }
+
+    &.toggleStyledToggleIconDisabled {
+        color: ${Colour["icon-disabled-subtle"]};
+    }
+
+    &.toggleStyledToggleIconSelected {
+        color: ${Colour["icon-selected"]};
+    }
+
+    &.toggleStyledToggleIconDefault {
+        color: ${Colour["icon-subtle"]};
+    }
+`;
+
+export const Container = styled.div`
     position: relative;
     display: inline-flex;
     min-width: 10.375rem;
@@ -60,165 +98,136 @@ export const Container = styled.div<ContainerStyleProps>`
         outline-offset: 0;
     }
 
-    ${(props) => {
-        if (!props.$indicator) {
-            return css`
-                justify-content: center;
-            `;
-        }
-    }}
+    &.noIndicator {
+        justify-content: center;
+    }
 
     // Container min width to fit content
-    ${(props) => {
-        if (props.$useContentWidth) {
-            return css`
-                min-width: unset;
-            `;
-        }
-    }}
+    &.useContentWidth {
+        min-width: unset;
+    }
 
-    // apply container border and header background color
-    ${(props) => {
-        switch (props.$styleType) {
-            case "no-border": {
-                if (props.$error) {
-                    if (props.$disabled) {
-                        return css`
-                            border-color: ${Colour["border-error"]};
-                        `;
-                    } else {
-                        return css`
-                            border-color: ${Colour["border-error"]};
+    &.toggleContainerNoBorderErrorDisabled {
+        border-color: ${Colour["border-error"]};
+    }
 
-                            &:has(${HeaderContainer}:hover) {
-                                @media (pointer: fine) {
-                                    background: ${Colour["bg-hover-subtle"]};
-                                }
-                            }
-                        `;
-                    }
-                }
+    &.toggleContainerNoBorderError {
+        border-color: ${Colour["border-error"]};
 
-                if (props.$disabled) {
-                    if (props.$selected) {
-                        return css`
-                            border: none;
-                            background: ${Colour["bg-selected-disabled"]};
-                        `;
-                    } else {
-                        return css`
-                            border: none;
-                        `;
-                    }
-                }
-
-                if (props.$selected) {
-                    return css`
-                        border: none;
-                        background: ${Colour["bg-selected"]};
-
-                        &:has(${HeaderContainer}:hover) {
-                            @media (pointer: fine) {
-                                background: ${Colour["bg-selected-hover"]};
-
-                                & ${TextContainer} {
-                                    color: ${Colour["text-selected-hover"]};
-                                }
-
-                                & ${StyledToggleIcon} {
-                                    color: ${Colour["icon-selected-hover"]};
-                                }
-                            }
-                        }
-                    `;
-                }
-
-                return css`
-                    border: none;
-
-                    &:has(${HeaderContainer}:hover) {
-                        @media (pointer: fine) {
-                            background: ${Colour["bg-hover-subtle"]};
-                        }
-                    }
-                `;
-            }
-
-            default: {
-                if (props.$error) {
-                    if (props.$disabled) {
-                        return css`
-                            border-color: ${Colour["border-error"]};
-                        `;
-                    } else {
-                        return css`
-                            border-color: ${Colour["border-error"]};
-
-                            &:has(${HeaderContainer}:hover) {
-                                @media (pointer: fine) {
-                                    background: ${Colour["bg-hover-subtle"]};
-                                }
-                            }
-                        `;
-                    }
-                }
-
-                if (props.$disabled) {
-                    if (props.$selected) {
-                        return css`
-                            border-color: ${Colour["border-selected-disabled"]};
-                            background: ${Colour["bg-selected-disabled"]};
-                        `;
-                    } else {
-                        return css`
-                            border-color: ${Colour["border-disabled"]};
-                            background: ${Colour["bg-disabled"]};
-                        `;
-                    }
-                }
-
-                if (props.$selected) {
-                    return css`
-                        border-color: ${Colour["border-selected"]};
-                        background: ${Colour["bg-selected"]};
-
-                        &:has(${HeaderContainer}:hover) {
-                            @media (pointer: fine) {
-                                background: ${Colour["bg-selected-hover"]};
-
-                                & ${TextContainer} {
-                                    color: ${Colour["text-selected-hover"]};
-                                }
-
-                                & ${StyledToggleIcon} {
-                                    color: ${Colour["icon-selected-hover"]};
-                                }
-                            }
-                        }
-                    `;
-                }
-
-                return css`
-                    border-color: ${Colour.border};
-
-                    &:has(${HeaderContainer}:hover) {
-                        @media (pointer: fine) {
-                            background: ${Colour["bg-hover-subtle"]};
-                        }
-                    }
-                `;
+        &:has(${HeaderContainer}:hover) {
+            @media (pointer: fine) {
+                background: ${Colour["bg-hover-subtle"]};
             }
         }
-    }}
+    }
+
+    &.toggleContainerNoBorderDisabledSelected {
+        border: none;
+        background: ${Colour["bg-selected-disabled"]};
+    }
+
+    &.toggleContainerNoBorderDisabled {
+        border: none;
+    }
+
+    &.toggleContainerNoBorderSelected {
+        border: none;
+        background: ${Colour["bg-selected"]};
+
+        &:has(${HeaderContainer}:hover) {
+            @media (pointer: fine) {
+                background: ${Colour["bg-selected-hover"]};
+
+                & ${TextContainer} {
+                    color: ${Colour["text-selected-hover"]};
+                }
+
+                & ${StyledToggleIcon} {
+                    color: ${Colour["icon-selected-hover"]};
+                }
+            }
+        }
+    }
+
+    &.toggleContainerNoBorderDefault {
+        border: none;
+
+        &:has(${HeaderContainer}:hover) {
+            @media (pointer: fine) {
+                background: ${Colour["bg-hover-subtle"]};
+            }
+        }
+    }
+
+    &.toggleContainerDefaultErrorDisabled {
+        border-color: ${Colour["border-error"]};
+    }
+
+    &.toggleContainerDefaultError {
+        border-color: ${Colour["border-error"]};
+
+        &:has(${HeaderContainer}:hover) {
+            @media (pointer: fine) {
+                background: ${Colour["bg-hover-subtle"]};
+            }
+        }
+    }
+
+    &.toggleContainerDefaultDisabledSelected {
+        border-color: ${Colour["border-selected-disabled"]};
+        background: ${Colour["bg-selected-disabled"]};
+    }
+
+    &.toggleContainerDefaultDisabled {
+        border-color: ${Colour["border-disabled"]};
+        background: ${Colour["bg-disabled"]};
+    }
+
+    &.toggleContainerDefaultSelected {
+        border-color: ${Colour["border-selected"]};
+        background: ${Colour["bg-selected"]};
+
+        &:has(${HeaderContainer}:hover) {
+            @media (pointer: fine) {
+                background: ${Colour["bg-selected-hover"]};
+
+                & ${TextContainer} {
+                    color: ${Colour["text-selected-hover"]};
+                }
+
+                & ${StyledToggleIcon} {
+                    color: ${Colour["icon-selected-hover"]};
+                }
+            }
+        }
+    }
+
+    &.toggleContainerDefault {
+        border-color: ${Colour.border};
+
+        &:has(${HeaderContainer}:hover) {
+            @media (pointer: fine) {
+                background: ${Colour["bg-hover-subtle"]};
+            }
+        }
+    }
 `;
 
 export const Input = styled.input`
     position: absolute;
     height: 100%;
     width: 100%;
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    cursor: pointer;
     top: 0;
     left: 0;
+
+    &.toggleInputDisabled {
+        cursor: not-allowed;
+    }
+
+    &.toggleInputEnabled {
+        cursor: pointer;
+    }
 
     /* Hide appearance but keep it focusable using keyboard interactions */
     appearance: none;
@@ -229,55 +238,31 @@ export const InputContainer = styled.div`
     display: flex;
 `;
 
-export const TextContainer = styled.div<StyleProps>`
-    display: flex;
-    flex-direction: column;
-    overflow-wrap: anywhere;
-    width: 100%;
-    overflow: hidden;
-
-    // apply header container text color
-    ${(props) => {
-        if (props.$disabled) {
-            if (props.$selected) {
-                return css`
-                    color: ${Colour["text-selected-disabled"]};
-                `;
-            } else {
-                return css`
-                    color: ${Colour["text-disabled"]};
-                `;
-            }
-        }
-
-        if (props.$selected) {
-            return css`
-                color: ${Colour["text-selected"]};
-            `;
-        }
-
-        return css`
-            color: ${Colour.text};
-        `;
-    }}
-`;
-
 export const Label = styled.label<LabelStyleProps & { $selected?: boolean }>`
-    ${(props) =>
-        props.$selected
-            ? Font["body-baseline-semibold"]
-            : Font["body-baseline-regular"]};
+    &.toggleLabelSelected {
+        ${Font["body-baseline-semibold"]}
+    }
+
+    &.toggleLabelDefault {
+        ${Font["body-baseline-regular"]}
+    }
+
     overflow: hidden;
     display: -webkit-box;
     text-overflow: ellipsis;
     -webkit-box-orient: vertical;
     overflow-wrap: break-word;
-    -webkit-line-clamp: ${(props) => props.$maxLines?.desktop ?? "none"};
+
+    ${tokens.label.desktopLineClamp}: initial;
+    ${tokens.label.tabletLineClamp}: initial;
+    ${tokens.label.mobileLineClamp}: initial;
+
+    -webkit-line-clamp: var(${tokens.label.desktopLineClamp}, none);
     ${MediaQuery.MaxWidth.lg} {
-        -webkit-line-clamp: ${(props) => props.$maxLines?.tablet ?? "none"};
+        -webkit-line-clamp: var(${tokens.label.tabletLineClamp}, none);
     }
     ${MediaQuery.MaxWidth.sm} {
-        -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
+        -webkit-line-clamp: var(${tokens.label.mobileLineClamp}, none);
     }
 `;
 
@@ -294,48 +279,55 @@ export const SubLabel = styled.div`
     }
 `;
 
-export const HeaderContainer = styled.div<ContainerStyleProps>`
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-`;
-
-export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStyleProps>`
+export const IndicatorLabelContainer = styled.div`
     display: flex;
     height: 100%;
     width: 100%;
     position: relative;
-    padding: ${(props) =>
-        props.$addPadding ? "0.6875rem 0rem 0.6875rem 1rem" : "0.6875rem 1rem"};
+    padding: 0.6875rem 1rem;
+
+    &.indicatorLabelContainerAddPadding {
+        padding: 0.6875rem 0rem 0.6875rem 1rem;
+    }
 `;
 
-export const RemoveButton = styled.button<StyleProps>`
-    color: ${(props) =>
-        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
+export const RemoveButton = styled.button`
+    color: ${Colour["text-error"]};
     white-space: nowrap;
     ${Font["body-md-semibold"]}
     height: fit-content;
     padding: 0.6875rem 1rem 0.6875rem 0.5rem;
     border: none;
     background: none;
+    cursor: pointer;
 
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    &.removeButtonDisabled {
+        color: ${Colour["text-disabled"]};
+        cursor: not-allowed;
+    }
 `;
 
-export const ExpandButton = styled.button<ExpandButtonStyleProps>`
-    color: ${(props) =>
-        props.disabled ? Colour["text-disabled"] : Colour["text-primary"]};
+export const ExpandButton = styled.button`
+    color: ${Colour["text-primary"]};
     ${Font["body-baseline-semibold"]}
     display: flex;
     align-items: center;
     justify-content: flex-end;
     border: none;
     background-color: ${Colour.bg};
-    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    cursor: pointer;
     padding: 0 1rem 0.6875rem 1rem;
-    padding-top: ${(props) =>
-        props.$paddingTopRequired ? "0.6875rem" : "0rem"};
+    padding-top: 0rem;
     width: 100%;
+
+    &.expandButtonDisabled {
+        color: ${Colour["text-disabled"]};
+        cursor: not-allowed;
+    }
+
+    &.expandButtonPaddingTopRequired {
+        padding-top: 0.6875rem;
+    }
 
     svg {
         width: 1em;
@@ -344,14 +336,18 @@ export const ExpandButton = styled.button<ExpandButtonStyleProps>`
     }
 `;
 
-export const ErrorContainer = styled.div<StyleProps>`
+export const ErrorContainer = styled.div`
     width: 100%;
-    color: ${(props) =>
-        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
+    color: ${Colour["text-error"]};
     border: none;
     background: ${Colour.bg};
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    cursor: pointer;
     padding: 0.6875rem 1rem 0.5rem 1rem;
+
+    &.errorContainerDisabled {
+        color: ${Colour["text-disabled"]};
+        cursor: not-allowed;
+    }
 `;
 
 export const AlertContainer = styled(Alert)`
@@ -359,60 +355,38 @@ export const AlertContainer = styled(Alert)`
     user-select: none;
 `;
 
-export const Children = styled.div<ChildrenStyleProps>`
+export const Children = styled.div`
     padding: 0 1rem;
     padding-top: 0.6875rem;
-    padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
+    padding-bottom: 0.5rem;
     background-color: ${Colour.bg};
+    color: ${Colour.text};
 
-    ${(props) => {
-        if (props.$disabled) {
-            return css`
-                color: ${Colour["text-disabled"]};
-            `;
-        } else if (props.$selected) {
-            return css`
-                color: ${Colour["text-selected"]};
-            `;
-        } else {
-            return css`
-                color: ${Colour.text};
-            `;
-        }
-    }}
+    &.childrenIsFinalItem {
+        padding-bottom: 0.6875rem;
+    }
+
+    &.childrenDisabled {
+        color: ${Colour["text-disabled"]};
+    }
+
+    &.childrenSelected {
+        color: ${Colour["text-selected"]};
+    }
 `;
 
-export const ErrorText = styled(Typography.BodyMD)<StyleProps>`
-    color: ${(props) =>
-        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
+export const ErrorText = styled(Typography.BodyMD)`
+    color: ${Colour["text-error"]};
+
+    &.errorTextDisabled {
+        color: ${Colour["text-disabled"]};
+    }
 `;
 
-export const ErrorList = styled(TextList.Ul)<StyleProps>`
-    color: ${(props) =>
-        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
-`;
+export const ErrorList = styled(TextList.Ul)`
+    color: ${Colour["text-error"]};
 
-export const StyledToggleIcon = styled(ToggleIcon)<StyleProps>`
-    ${(props) => {
-        if (props.$disabled) {
-            if (props.$selected) {
-                return css`
-                    color: ${Colour["icon-selected-disabled"]};
-                `;
-            } else {
-                return css`
-                    color: ${Colour["icon-disabled-subtle"]};
-                `;
-            }
-        }
-
-        if (props.$selected) {
-            return css`
-                color: ${Colour["icon-selected"]};
-            `;
-        }
-        return css`
-            color: ${Colour["icon-subtle"]};
-        `;
-    }};
+    &.errorListDisabled {
+        color: ${Colour["text-disabled"]};
+    }
 `;
