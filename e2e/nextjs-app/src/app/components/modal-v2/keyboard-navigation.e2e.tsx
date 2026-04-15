@@ -6,7 +6,6 @@ import styles from "./modal-v2.module.css";
 
 export default function Story() {
     const [show, setShow] = useState(true);
-    const [closeCount, setCloseCount] = useState(0);
 
     return (
         <div className={styles.page}>
@@ -14,14 +13,10 @@ export default function Story() {
                 Focus Start
             </button>
             <button data-testid="outside-button">Outside button</button>
-            <div data-testid="close-count" className={styles.metric}>
-                {closeCount}
-            </div>
 
             <ModalV2
                 show={show}
                 onClose={() => {
-                    setCloseCount((count) => count + 1);
                     setShow(false);
                 }}
             >
