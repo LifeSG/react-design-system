@@ -95,21 +95,28 @@ describe("Checkbox", () => {
             expect(screen.getByTestId("checkbox-input")).toBeDisabled();
         });
 
-        it("has tabIndex=-1 when disabled", () => {
+        it("does not set tabIndex when disabled (browser handles via disabled attr)", () => {
             render(<Checkbox disabled />);
 
-            expect(screen.getByTestId("checkbox-input")).toHaveAttribute(
-                "tabindex",
-                "-1"
+            expect(screen.getByTestId("checkbox-input")).not.toHaveAttribute(
+                "tabindex"
             );
         });
 
-        it("has tabIndex=0 when enabled", () => {
+        it("sets tabIndex=0 and aria-disabled when disabled with focusableWhenDisabled", () => {
+            render(<Checkbox disabled focusableWhenDisabled />);
+
+            const input = screen.getByTestId("checkbox-input");
+            expect(input).toHaveAttribute("tabindex", "0");
+            expect(input).toHaveAttribute("aria-disabled", "true");
+            expect(input).not.toBeDisabled();
+        });
+
+        it("does not set tabIndex when enabled (browser default is focusable)", () => {
             render(<Checkbox />);
 
-            expect(screen.getByTestId("checkbox-input")).toHaveAttribute(
-                "tabindex",
-                "0"
+            expect(screen.getByTestId("checkbox-input")).not.toHaveAttribute(
+                "tabindex"
             );
         });
 
