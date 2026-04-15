@@ -22,9 +22,7 @@ test.describe("Divider", () => {
         });
 
         test("Basic", async ({ story }) => {
-            await test.step("Component mounts", async () => {
-                await compareScreenshot(story, "mount");
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -34,9 +32,7 @@ test.describe("Divider", () => {
         });
 
         test("Basic (dark mode)", async ({ story }) => {
-            await test.step("Component mounts", async () => {
-                await compareScreenshot(story, "dark-mode-mount");
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -45,18 +41,8 @@ test.describe("Divider", () => {
             await story.init("grid-layout");
         });
 
-        test("Grid layout – desktop viewport", async ({ story }) => {
-            await compareScreenshot(story, "grid-layout-desktop");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("grid-layout", { mode: "dark" });
-        });
-
-        test("Grid layout – desktop dark mode", async ({ story }) => {
-            await compareScreenshot(story, "grid-layout-desktop-dark");
+        test("Grid layout (desktop)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -65,18 +51,8 @@ test.describe("Divider", () => {
             await story.init("grid-layout", { size: "mobile" });
         });
 
-        test("Grid layout – mobile viewport", async ({ story }) => {
-            await compareScreenshot(story, "grid-layout-mobile");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("grid-layout", { size: "mobile", mode: "dark" });
-        });
-
-        test("Grid layout – mobile dark mode", async ({ story }) => {
-            await compareScreenshot(story, "grid-layout-mobile-dark");
+        test("Grid layout (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 });

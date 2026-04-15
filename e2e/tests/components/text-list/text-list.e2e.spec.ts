@@ -1,4 +1,4 @@
-import { test as base, Locator, Page } from "@playwright/test";
+import { test as base, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -17,33 +17,63 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("TextList", () => {
-    test("Unordered default", async ({ story }) => {
-        await story.init("unordered-default");
-        await compareScreenshot(story, "mount");
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("unordered-default");
+        });
+
+        test("Unordered default", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
     });
 
-    test("Ordered default", async ({ story }) => {
-        await story.init("ordered-default");
-        await compareScreenshot(story, "mount");
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("ordered-default");
+        });
+
+        test("Ordered default", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
     });
 
-    test("Ordered reversed", async ({ story }) => {
-        await story.init("ordered-reversed");
-        await compareScreenshot(story, "mount");
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("ordered-reversed");
+        });
+
+        test("Ordered reversed", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
     });
 
-    test("Ordered custom start", async ({ story }) => {
-        await story.init("ordered-start");
-        await compareScreenshot(story, "mount");
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("ordered-start");
+        });
+
+        test("Ordered custom start", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
     });
 
-    test("Unordered with custom bullet icon", async ({ story }) => {
-        await story.init("unordered-custom-bullet");
-        await compareScreenshot(story, "mount");
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("unordered-custom-bullet");
+        });
+
+        test("Unordered with custom bullet icon", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
     });
 
-    test("Nested counter", async ({ story }) => {
-        await story.init("nested-counter");
-        await compareScreenshot(story, "mount");
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("nested-counter");
+        });
+
+        test("Nested counter", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
     });
 });

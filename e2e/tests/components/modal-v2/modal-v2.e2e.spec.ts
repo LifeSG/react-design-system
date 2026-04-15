@@ -61,146 +61,131 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("ModalV2", () => {
-    test.describe("Default", () => {
-        test.describe("", () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("default");
-            });
-
-            test("Matches screenshot", async ({ story }) => {
-                await compareScreenshot(story, "state", {
-                    fullscreen: true,
-                });
-            });
-
-            test("Dismisses via close button", async ({ story }) => {
-                await expect(story.locators.defaultContent).toBeVisible();
-
-                await story.locators.closeButton.click();
-                await expect(story.locators.dialog).not.toBeVisible();
-            });
-
-            test("Dismisses on overlay click", async ({ story }) => {
-                await expect(story.locators.defaultContent).toBeVisible();
-
-                await story.clickOverlayOutsideModal(
-                    story.locators.defaultContent
-                );
-
-                await expect(story.locators.dialog).not.toBeVisible();
-            });
-        });
-
-        test.describe("", () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("focus-behavior");
-            });
-
-            test("Dismisses on Escape", async ({ story }) => {
-                await test.step("verify dialog focus", async () => {
-                    await story.locators.openDefaultFocusModalButton.click();
-
-                    const defaultDialog = story.locators.dialog.first();
-                    await expect(defaultDialog).toBeVisible();
-                    await expect(defaultDialog).toBeFocused();
-
-                    await story.page.keyboard.press("Escape");
-                    await expect(defaultDialog).not.toBeVisible();
-                });
-
-                await test.step("verify manual target focus", async () => {
-                    await story.locators.openDisableInitialFocusModalButton.click();
-
-                    const disabledFocusDialog = story.locators.dialog.first();
-                    await expect(disabledFocusDialog).toBeVisible();
-                    await expect(
-                        story.locators.disabledFocusTarget
-                    ).toBeFocused();
-
-                    await story.page.keyboard.press("Escape");
-                    await expect(disabledFocusDialog).not.toBeVisible();
-                });
-            });
-        });
-
-        test.describe("", () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("keyboard-navigation");
-            });
-
-            test("Traps tab on keyboard navigation", async ({ story }) => {
-                await test.step("validate accessibility tree snapshot", async () => {
-                    await expect(story.layout).toMatchAriaSnapshot(`
-                        - button "Outside button"
-                        - button "Close button"
-                        - text: Keyboard navigation story
-                        - textbox "Type here"
-                        - button "Continue"
-                        - button "Back"
-                    `);
-                });
-
-                await test.step("tab within modal and verify focus does not escape", async () => {
-                    await story.locators.closeButton.focus();
-                    await story.page.keyboard.press("Shift+Tab");
-                    await expect(
-                        story.locators.outsideButton
-                    ).not.toBeFocused();
-                });
-
-                await test.step("activate close button with keyboard", async () => {
-                    await story.locators.closeButton.focus();
-                    await story.page.keyboard.press("Enter");
-                    await expect(story.locators.dialog).not.toBeVisible();
-                });
-            });
-        });
-
-        test.describe("", () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("scroll-handling");
-            });
-
-            test("Supports overflow scrolling", async ({ story }) => {
-                await story.page.keyboard.press("End");
-
-                await compareScreenshot(story, "state", {
-                    fullscreen: true,
-                });
-            });
-        });
-    });
-
-    test.describe("enableOverlayClick=false", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("overlay-click-disabled");
+            await story.init("default");
         });
 
-        test("Does not dismiss via overlay click", async ({ story }) => {
-            const disabledOverlayContent = story.page.getByTestId(
-                "overlay-disabled-content"
-            );
-            await test.step("verify initial visible state", async () => {
-                await expect(disabledOverlayContent).toBeVisible();
-            });
-
-            await test.step("click outside modal content and verify no dismissal", async () => {
-                await story.clickOverlayOutsideModal(disabledOverlayContent);
-
-                await expect(disabledOverlayContent).toBeVisible();
+        test("Default", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
             });
         });
 
         test("Dismisses via close button", async ({ story }) => {
+            await story.locators.closeButton.click();
+            await expect(story.locators.dialog).not.toBeVisible();
+        });
+
+        test("Dismisses on overlay click", async ({ story }) => {
+            await story.clickOverlayOutsideModal(story.locators.defaultContent);
+            await expect(story.locators.dialog).not.toBeVisible();
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("focus-behavior");
+        });
+
+        test("Initial focus behavior", async ({ story }) => {
+            await test.step("Default focus targets the dialog", async () => {
+                await story.locators.openDefaultFocusModalButton.click();
+
+                const defaultDialog = story.locators.dialog.first();
+                await expect(defaultDialog).toBeVisible();
+                await expect(defaultDialog).toBeFocused();
+
+                await story.page.keyboard.press("Escape");
+                await expect(defaultDialog).not.toBeVisible();
+            });
+
+            await test.step("Disabled initial focus targets the specified element", async () => {
+                await story.locators.openDisableInitialFocusModalButton.click();
+
+                const disabledFocusDialog = story.locators.dialog.first();
+                await expect(disabledFocusDialog).toBeVisible();
+                await expect(story.locators.disabledFocusTarget).toBeFocused();
+
+                await story.page.keyboard.press("Escape");
+                await expect(disabledFocusDialog).not.toBeVisible();
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("keyboard-navigation");
+        });
+
+        test("Traps tab on keyboard navigation", async ({ story }) => {
+            const input = story.page.getByTestId("modal-input");
+
+            await test.step("Validate accessibility tree snapshot", async () => {
+                await expect(story.page.locator("xpath=//html/body"))
+                    .toMatchAriaSnapshot(`
+                    - /children: equal
+                    - dialog:
+                      - paragraph: Keyboard navigation story
+                      - textbox "Type here"
+                      - button "Continue"
+                      - button "Back"
+                      - button "Close button"
+                `);
+            });
+
+            await test.step("Tab within modal and verify focus does not escape", async () => {
+                await input.focus();
+
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+
+                // focus cycles back to the first element
+                await expect(input).toBeFocused();
+            });
+
+            await test.step("Activate close button with keyboard", async () => {
+                await story.locators.closeButton.focus();
+                await story.page.keyboard.press("Enter");
+
+                await expect(story.locators.dialog).not.toBeVisible();
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("scroll-handling");
+        });
+
+        test("Supports overflow scrolling", async ({ story }) => {
+            await story.page.keyboard.press("End");
+
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("overlay-click-disabled");
+        });
+
+        test("Overlay click disabled", async ({ story }) => {
             const disabledOverlayContent = story.page.getByTestId(
                 "overlay-disabled-content"
             );
 
-            await test.step("verify modal is open before close action", async () => {
+            await test.step("Does not dismiss via overlay click", async () => {
+                await story.clickOverlayOutsideModal(disabledOverlayContent);
+
                 await expect(disabledOverlayContent).toBeVisible();
             });
 
-            await test.step("close modal from close button", async () => {
+            await test.step("Dismisses via close button", async () => {
                 await story.locators.closeButton.click();
 
                 await expect(disabledOverlayContent).not.toBeVisible();
@@ -208,24 +193,24 @@ test.describe("ModalV2", () => {
         });
     });
 
-    test.describe("Stacked", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("stacked");
         });
 
-        test("Matches screenshot", async ({ story }) => {
+        test("Stacked", async ({ story }) => {
             await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
 
-        test("Dismisses top modal first", async ({ story }) => {
-            await test.step("verify both modals are initially visible", async () => {
+        test("Stacked modals dismiss top modal first", async ({ story }) => {
+            await test.step("Both modals are initially visible", async () => {
                 await expect(story.locators.firstModalContent).toBeVisible();
                 await expect(story.locators.secondModalContent).toBeVisible();
             });
 
-            await test.step("close top modal and verify bottom remains", async () => {
+            await test.step("Close top modal and verify bottom remains", async () => {
                 await story.page.getByTestId("second-modal-close-slot").click();
 
                 await expect(
@@ -236,13 +221,13 @@ test.describe("ModalV2", () => {
         });
     });
 
-    test.describe("Styled slots", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("styled-slots");
         });
 
-        test("Matches screenshot", async ({ story }) => {
-            await compareScreenshot(story, "state", {
+        test("Styled slots", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
         });

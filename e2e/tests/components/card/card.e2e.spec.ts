@@ -17,18 +17,22 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Card", () => {
-    test("Default content renders (light mode)", async ({ story }) => {
-        await story.init("basic");
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("basic");
+        });
 
-        await test.step("Component mounts", async () => {
+        test("Default content", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
-        test("Default content renders (dark mode)", async ({ story }) => {
+        test.beforeEach(async ({ story }) => {
             await story.init("basic", { mode: "dark" });
+        });
 
+        test("Default content (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });

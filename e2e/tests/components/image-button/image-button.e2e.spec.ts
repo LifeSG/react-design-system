@@ -47,38 +47,38 @@ test.describe("ImageButton", () => {
         });
 
         test("All variants", async ({ story }) => {
-            await compareScreenshot(story, "variants");
+            await compareScreenshot(story, "mount");
 
             await expect(story.layout).toMatchAriaSnapshot(`
-                    - button "Default"
-                    - button "Selected"
-                    - button "Error"
-                    - button "Error Selected"
-                    - button "Disabled" [disabled]
-                `);
+                - button "Default"
+                - button "Selected"
+                - button "Error"
+                - button "Error Selected"
+                - button "Disabled" [disabled]
+            `);
 
             await story.locators.imageButtonDefault.hover();
-            await compareScreenshot(story, "variants-hover-default", {
+            await compareScreenshot(story, "hover-default", {
                 locator: story.locators.imageButtonDefault,
             });
 
             await story.locators.imageButtonSelected.hover();
-            await compareScreenshot(story, "variants-hover-selected", {
+            await compareScreenshot(story, "hover-selected", {
                 locator: story.locators.imageButtonSelected,
             });
 
             await story.locators.imageButtonError.hover();
-            await compareScreenshot(story, "variants-hover-error", {
+            await compareScreenshot(story, "hover-error", {
                 locator: story.locators.imageButtonError,
             });
 
             await story.locators.imageButtonErrorSelected.hover();
-            await compareScreenshot(story, "variants-hover-error-selected", {
+            await compareScreenshot(story, "hover-error-selected", {
                 locator: story.locators.imageButtonErrorSelected,
             });
 
             await story.locators.imageButtonDisabled.hover();
-            await compareScreenshot(story, "variants-hover-disabled", {
+            await compareScreenshot(story, "hover-disabled", {
                 locator: story.locators.imageButtonDisabled,
             });
         });
@@ -90,30 +90,30 @@ test.describe("ImageButton", () => {
         });
 
         test("All variants (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "variants");
+            await compareScreenshot(story, "mount");
 
             await story.locators.imageButtonDefault.hover();
-            await compareScreenshot(story, "variants-hover-default", {
+            await compareScreenshot(story, "hover-default", {
                 locator: story.locators.imageButtonDefault,
             });
 
             await story.locators.imageButtonSelected.hover();
-            await compareScreenshot(story, "variants-hover-selected", {
+            await compareScreenshot(story, "hover-selected", {
                 locator: story.locators.imageButtonSelected,
             });
 
             await story.locators.imageButtonError.hover();
-            await compareScreenshot(story, "variants-hover-error", {
+            await compareScreenshot(story, "hover-error", {
                 locator: story.locators.imageButtonError,
             });
 
             await story.locators.imageButtonErrorSelected.hover();
-            await compareScreenshot(story, "variants-hover-error-selected", {
+            await compareScreenshot(story, "hover-error-selected", {
                 locator: story.locators.imageButtonErrorSelected,
             });
 
             await story.locators.imageButtonDisabled.hover();
-            await compareScreenshot(story, "variants-hover-disabled", {
+            await compareScreenshot(story, "hover-disabled", {
                 locator: story.locators.imageButtonDisabled,
             });
         });
@@ -138,7 +138,7 @@ test.describe("ImageButton", () => {
                 /data:image\/png/
             );
 
-            await compareScreenshot(story, "image-fallback");
+            await compareScreenshot(story, "fallback");
         });
     });
 
@@ -150,8 +150,8 @@ test.describe("ImageButton", () => {
         test("Focusable when disabled", async ({ story }) => {
             await test.step("Button remains disabled for ATs", async () => {
                 await expect(story.locators.imageButton).toMatchAriaSnapshot(`
-                      - button "Label" [disabled]
-                    `);
+                    - button "Label" [disabled]
+                `);
             });
 
             await test.step("Button can receive focus", async () => {
@@ -164,9 +164,7 @@ test.describe("ImageButton", () => {
             await test.step("Clicking the button does not fire the onClick handler", async () => {
                 await expect(story.locators.clickCount).toHaveText("0");
 
-                await story.locators.imageButton.click({
-                    force: true,
-                });
+                await story.locators.imageButton.click({ force: true });
 
                 await expect(story.locators.clickCount).toHaveText("0");
             });

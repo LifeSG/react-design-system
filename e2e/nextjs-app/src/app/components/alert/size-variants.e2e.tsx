@@ -6,24 +6,41 @@ export default function Story() {
     return (
         <div className="story-column-container">
             <Alert
-                data-testid="alert-default"
+                type="info"
+                sizeType="default"
+                actionLink={{ href: "#", children: "Learn more" }}
+                showIcon
+            >
+                Default size alert with link.
+            </Alert>
+            <Alert
                 type="info"
                 sizeType="default"
                 maxCollapsedHeight={40}
-                actionLink={{ href: "#", children: "Learn more" }}
-                role="alert"
+                showIcon
             >
-                Default size alert.
+                Default size alert, collapsed.
+                <br />
+                &nbsp;
             </Alert>
             <Alert
-                data-testid="alert-small"
                 type="info"
                 sizeType="small"
                 maxCollapsedHeight={40}
                 actionLink={{ href: "#", children: "Learn more" }}
-                role="alert"
+                showIcon
             >
-                Small size alert.
+                Small size alert with link.
+            </Alert>
+            <Alert
+                type="info"
+                sizeType="small"
+                maxCollapsedHeight={40}
+                showIcon
+            >
+                Small size alert, collapsed.
+                <br />
+                &nbsp;
             </Alert>
         </div>
     );

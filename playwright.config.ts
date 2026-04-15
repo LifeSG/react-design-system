@@ -17,7 +17,7 @@ export default defineConfig({
     reporter: "html",
     /* Location of screenshots */
     snapshotPathTemplate:
-        "{testDir}/{testFileDir}/__screenshots__/{projectName}/{testName}-{arg}{ext}",
+        "{testDir}/{testFileDir}/__screenshots__/{projectName}/{testName}--{arg}{ext}",
     /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
     use: {
         /* Base URL to use in actions like `await page.goto('')`. */

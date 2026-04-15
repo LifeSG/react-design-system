@@ -22,8 +22,8 @@ test.describe("Pill", () => {
             await story.init("basic");
         });
 
-        test("Basic – all type and color combinations", async ({ story }) => {
-            await compareScreenshot(story, "basic");
+        test("All type and color variants", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -32,8 +32,8 @@ test.describe("Pill", () => {
             await story.init("basic", { mode: "dark" });
         });
 
-        test("Basic – dark mode", async ({ story }) => {
-            await compareScreenshot(story, "basic-dark");
+        test("All type and color variants (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 });
