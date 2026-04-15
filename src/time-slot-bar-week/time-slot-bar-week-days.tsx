@@ -123,6 +123,33 @@ export const TimeSlotBarWeekDays = ({
         return {};
     }, [daySlots]);
 
+    const focusableSlotsByDate = useMemo(() => {
+        return currentCalendarWeek.reduce<Record<string, FocusableSlotMeta[]>>(
+            (result, day) => {
+                const formattedDate = day.format(dateFormat);
+
+                result[formattedDate] = getCellsForDate(formattedDate)
+                    .filter(
+                        (
+                            slot
+                        ): slot is TimeSlotCell & {
+                            isActualSlot: true;
+                            rowIndex: number;
+                        } => !!slot.isActualSlot && slot.rowIndex !== undefined
+                    )
+                    .map((slot) => ({
+                        key: `${formattedDate}-${slot.id}`,
+                        date: formattedDate,
+                        rowIndex: slot.rowIndex,
+                    }))
+                    .sort((a, b) => a.rowIndex - b.rowIndex);
+
+                return result;
+            },
+            {}
+        );
+    }, [currentCalendarWeek, getCellsForDate]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -161,7 +188,7 @@ export const TimeSlotBarWeekDays = ({
         event: React.KeyboardEvent<HTMLButtonElement>,
         currentSlot: FocusableSlotMeta
     ) => {
-        const sameColumnSlots = getFocusableSlotsForDate(currentSlot.date);
+        const sameColumnSlots = focusableSlotsByDate[currentSlot.date] ?? [];
 
         const focusSlot = (slot?: FocusableSlotMeta) => {
             if (!slot) return;
@@ -433,7 +460,7 @@ export const TimeSlotBarWeekDays = ({
         );
     }
 
-    const getCellsForDate = (formattedDate: string) => {
+    function getCellsForDate(formattedDate: string) {
         return (
             generatedDaySlots[formattedDate] ??
             Array(variant === "flexible" ? numberOfCells : 1)
@@ -445,27 +472,7 @@ export const TimeSlotBarWeekDays = ({
                     )
                 )
         );
-    };
-
-    const getFocusableSlotsForDate = (
-        formattedDate: string
-    ): FocusableSlotMeta[] => {
-        return getCellsForDate(formattedDate)
-            .filter(
-                (
-                    slot
-                ): slot is TimeSlotCell & {
-                    isActualSlot: true;
-                    rowIndex: number;
-                } => !!slot.isActualSlot && slot.rowIndex !== undefined
-            )
-            .map((slot) => ({
-                key: `${formattedDate}-${slot.id}`,
-                date: formattedDate,
-                rowIndex: slot.rowIndex,
-            }))
-            .sort((a, b) => a.rowIndex - b.rowIndex);
-    };
+    }
 
     // =============================================================================
     // RENDER FUNCTIONS
