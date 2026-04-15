@@ -102,7 +102,7 @@ export const Component = (
     );
     const carouselItemNoun = hasAnyItemLabel ? "item" : "image";
     const hasFileInfo = items.some(
-        (item) => item.fileName?.trim() || item.fileSize
+        (item) => item.fileName?.trim() || item.fileSize?.trim()
     );
 
     const getItemAriaLabel = useCallback(
@@ -357,7 +357,8 @@ export const Component = (
     const renderFileInfo = () => {
         const { fileName, fileSize } = currentItem ?? {};
         const trimmedName = fileName?.trim();
-        const displayName = trimmedName || (fileSize ? "-" : undefined);
+        const trimmedSize = fileSize?.trim();
+        const displayName = trimmedName || (trimmedSize ? "-" : undefined);
 
         return (
             <FileInfoTextWrapper aria-live="polite" aria-atomic="true">
@@ -366,7 +367,9 @@ export const Component = (
                         {displayName}
                     </FileInfoFileName>
                 )}
-                {fileSize && <FileInfoFileSize>{fileSize}</FileInfoFileSize>}
+                {trimmedSize && (
+                    <FileInfoFileSize>{trimmedSize}</FileInfoFileSize>
+                )}
             </FileInfoTextWrapper>
         );
     };
