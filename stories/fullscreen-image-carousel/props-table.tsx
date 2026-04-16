@@ -46,7 +46,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "items",
                 description: "List of carousel items",
-                propTypes: ["CarouselItemProps[]"],
+                propTypes: ["FullscreenImageCarouselItemProps[]"],
                 mandatory: true,
             },
             {
@@ -82,7 +82,9 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onDelete",
                 description:
                     "Called when the current image delete button is clicked. When provided, the delete button will be shown. If called, do not reorder the items array while a delete is in flight.",
-                propTypes: ["(item: CarouselItemProps, index: number) => void"],
+                propTypes: [
+                    "(item: FullscreenImageCarouselItemProps, index: number) => void",
+                ],
             },
             {
                 name: "onClose",
@@ -107,15 +109,28 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "CarouselItemProps",
+        name: "FullscreenImageCarouselItemProps",
         attributes: [
+            {
+                name: "type",
+                description: (
+                    <>
+                        Discriminant for the item type.{" "}
+                        <code>&quot;image&quot;</code> (or omitted) for image
+                        items, <code>&quot;custom&quot;</code> for custom
+                        content items
+                    </>
+                ),
+                propTypes: [`"image" | "custom"`],
+            },
             {
                 name: "src",
                 description: (
                     <>
                         The image src. Required for{" "}
-                        <code>ImageCarouselItemProps</code>. Not available on{" "}
-                        <code>CustomCarouselItemProps</code>
+                        <code>FullscreenCarouselImageItemProps</code>. Not
+                        available on{" "}
+                        <code>FullscreenImageCarouselCustomItemProps</code>
                     </>
                 ),
                 propTypes: ["string"],
@@ -126,7 +141,7 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         Descriptive text to be set on the image for screen
                         readers. Only applicable for{" "}
-                        <code>ImageCarouselItemProps</code>
+                        <code>FullscreenCarouselImageItemProps</code>
                     </>
                 ),
                 propTypes: ["string"],
@@ -150,7 +165,8 @@ const DATA: ApiTableSectionProps[] = [
                         <code>&quot;PDF&quot;</code>). Defaults to{" "}
                         <code>&quot;image&quot;</code>. When any item sets this,
                         carousel-level aria-labels switch to generic wording.
-                        Only applicable for <code>CustomCarouselItemProps</code>
+                        Only applicable for{" "}
+                        <code>FullscreenImageCarouselCustomItemProps</code>
                     </>
                 ),
                 propTypes: ["string"],
@@ -161,10 +177,10 @@ const DATA: ApiTableSectionProps[] = [
                     <>
                         Render prop for the full slide area. When provided, the
                         item is treated as a{" "}
-                        <code>CustomCarouselItemProps</code> and the consumer
-                        owns the entire slide content (e.g. an iframe, embed, or
-                        custom viewer). Zoom controls are hidden for custom
-                        slides
+                        <code>FullscreenImageCarouselCustomItemProps</code> and
+                        the consumer owns the entire slide content (e.g. an
+                        iframe, embed, or custom viewer). Zoom controls are
+                        hidden for custom slides
                     </>
                 ),
                 propTypes: ["() => React.ReactNode"],

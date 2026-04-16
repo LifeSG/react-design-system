@@ -150,10 +150,11 @@ export const WithCustomContent: StoryObj<Component> = {
                 </Button.Default>
                 <FullscreenImageCarousel
                     items={[
-                        { src: "https://picsum.photos/id/157/1600/900" },
                         {
+                            type: "custom",
                             itemLabel: "PDF",
-                            thumbnailSrc: "/img/pdf-icon.svg",
+                            thumbnailSrc:
+                                "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg",
                             renderContent: () => (
                                 <iframe
                                     src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"
@@ -167,6 +168,7 @@ export const WithCustomContent: StoryObj<Component> = {
                             ),
                         },
                         {
+                            type: "custom",
                             itemLabel: "document",
                             renderContent: () => (
                                 <div
@@ -184,7 +186,6 @@ export const WithCustomContent: StoryObj<Component> = {
                                 </div>
                             ),
                         },
-                        { src: "https://picsum.photos/id/369/1000/1000" },
                     ]}
                     show={show}
                     onDelete={() => undefined}

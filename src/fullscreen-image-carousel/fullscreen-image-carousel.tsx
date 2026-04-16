@@ -48,19 +48,17 @@ import {
     TopActionButtons,
 } from "./fullscreen-image-carousel.style";
 import {
-    CarouselItemProps,
-    CustomCarouselItemProps,
+    FullscreenImageCarouselCustomItemProps,
+    FullscreenImageCarouselItemProps,
     FullscreenImageCarouselProps,
     FullscreenImageCarouselRef,
     ImageDimension,
 } from "./types";
 
 const isCustomItem = (
-    item: CarouselItemProps | undefined
-): item is CustomCarouselItemProps =>
-    !!item &&
-    "renderContent" in item &&
-    typeof item.renderContent === "function";
+    item: FullscreenImageCarouselItemProps | undefined
+): item is FullscreenImageCarouselCustomItemProps =>
+    !!item && item.type === "custom";
 
 export const Component = (
     {
@@ -298,7 +296,7 @@ export const Component = (
             >
                 {items.map((item, index) => {
                     const isActive = index === currentSlide;
-                    const isAdjacent =
+                    const isActiveOrAdjacent =
                         Math.abs(index - currentSlide) <= 1 ||
                         (currentSlide === 0 && index === items.length - 1) ||
                         (currentSlide === items.length - 1 && index === 0);
@@ -310,7 +308,7 @@ export const Component = (
                                 tabIndex={isActive ? 0 : -1}
                             >
                                 {isCustomItem(item) ? (
-                                    isAdjacent ? (
+                                    isActiveOrAdjacent ? (
                                         item.renderContent()
                                     ) : (
                                         <SlidePlaceholderImage />

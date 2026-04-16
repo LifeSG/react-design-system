@@ -13,34 +13,33 @@ export interface FullscreenImageCarouselProps
         ModalProps,
         "show" | "rootComponentId" | "animationFrom" | "zIndex"
     > {
-    items: CarouselItemProps[];
+    items: FullscreenImageCarouselItemProps[];
     /** The index of the visible item, starts from 0 */
     initialActiveItemIndex?: number | undefined;
     hideThumbnail?: boolean | undefined;
     hideNavigation?: boolean | undefined;
     hideCounter?: boolean | undefined;
     hideMagnifier?: boolean | undefined;
-    onDelete?: ((item: CarouselItemProps, index: number) => void) | undefined;
+    onDelete?:
+        | ((item: FullscreenImageCarouselItemProps, index: number) => void)
+        | undefined;
     onClose?: (() => void) | undefined;
     insets?: Insets | undefined;
 }
 
-/**
- * Base item props shared by all carousel items.
- * Kept as a standalone interface for backward compatibility
- * (consumers may extend it).
- */
-export interface FullscreenCarouselItemProps {
+export interface FullscreenCarouselImageItemProps {
+    type?: "image" | undefined;
     src: string;
     alt?: string | undefined;
     thumbnailSrc?: string | undefined;
-}
-
-export interface ImageCarouselItemProps extends FullscreenCarouselItemProps {
     renderContent?: never;
 }
 
-export interface CustomCarouselItemProps {
+/** @deprecated Use FullscreenCarouselImageItemProps instead */
+export type FullscreenCarouselItemProps = FullscreenCarouselImageItemProps;
+
+export interface FullscreenImageCarouselCustomItemProps {
+    type: "custom";
     /** The thumbnail image src. If omitted, a placeholder is shown in the thumbnail strip. */
     thumbnailSrc?: string | undefined;
     /** Label for this item used in aria-labels (e.g. "PDF"). Defaults to "image". When any item sets this, carousel-level aria-labels use generic "item" wording. */
@@ -49,9 +48,9 @@ export interface CustomCarouselItemProps {
     renderContent: () => React.ReactNode;
 }
 
-export type CarouselItemProps =
-    | ImageCarouselItemProps
-    | CustomCarouselItemProps;
+export type FullscreenImageCarouselItemProps =
+    | FullscreenCarouselImageItemProps
+    | FullscreenImageCarouselCustomItemProps;
 
 export interface ImageDimension {
     width: number;

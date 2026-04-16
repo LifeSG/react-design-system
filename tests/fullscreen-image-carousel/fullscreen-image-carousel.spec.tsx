@@ -151,13 +151,45 @@ describe("Fullscreen Image Carousel", () => {
             expect(screen.getByLabelText("Zoom in")).toBeInTheDocument();
         });
 
-        it("should render placeholder thumbnail when custom item has no src", () => {
+        it("should render placeholder thumbnail when custom item has no thumbnailSrc", () => {
             render(<FullscreenImageCarousel items={MIXED_ITEMS} show={true} />);
 
             const thumbnails = screen.getAllByTestId("thumbnail-item");
-            // Second thumbnail (custom item) should not have an img
+            // The placeholder renders an SVG icon instead of an <img>,
+            // so querying for img elements should return none
             const imgs = thumbnails[1].querySelectorAll("img");
             expect(imgs.length).toBe(0);
+        });
+
+        it("should use src as fallback thumbnail when image item has no thumbnailSrc", async () => {
+            const OriginalImage = global.Image;
+            // Simulate image load completing in jsdom (onload never fires natively)
+            (global as any).Image = class {
+                width = 100;
+                height = 100;
+                onload: (() => void) | null = null;
+                set src(_: string) {
+                    Promise.resolve().then(() => this.onload?.());
+                }
+            };
+
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES_WITHOUT_THUMBNAIL}
+                    show={true}
+                />
+            );
+
+            await waitFor(() => {
+                const img = screen
+                    .getAllByTestId("thumbnail-item")[0]
+                    .querySelector("img");
+                expect(img?.getAttribute("src")).toBe(
+                    "https://picsum.photos/id/157/1600/900"
+                );
+            });
+
+            global.Image = OriginalImage;
         });
 
         it("should not render custom content for non-adjacent slides", () => {
@@ -237,6 +269,7 @@ const IMAGES = [
 const MIXED_ITEMS = [
     { src: "https://picsum.photos/id/157/1600/900" },
     {
+        type: "custom" as const,
         itemLabel: "PDF",
         renderContent: () => <div data-testid="custom-slide-content">PDF</div>,
     },
@@ -248,8 +281,17 @@ const SPACED_ITEMS = [
     { src: "https://picsum.photos/id/163/900/300" },
     { src: "https://picsum.photos/id/369/1000/1000" },
     {
+        type: "custom" as const,
         itemLabel: "PDF",
         renderContent: () => <div data-testid="custom-slide-content">PDF</div>,
     },
     { src: "https://picsum.photos/id/445/300/300" },
+];
+
+const IMAGES_WITHOUT_THUMBNAIL = [
+    { src: "https://picsum.photos/id/157/1600/900" },
+    {
+        src: "https://picsum.photos/id/163/900/300",
+        thumbnailSrc: "https://picsum.photos/id/163/100/100",
+    },
 ];
