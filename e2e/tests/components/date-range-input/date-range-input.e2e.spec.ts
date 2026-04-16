@@ -248,6 +248,22 @@ test.describe("DateRangeInput", () => {
             });
         });
 
+        test.describe("With minDate constraint", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("range-with-min-date", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Open", async ({ story }) => {
+                await story.openCalendar();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
+            });
+        });
+
         test.describe("With disabledDates", () => {
             test.beforeEach(async ({ story }) => {
                 await story.init("range-with-disabled-dates", {
