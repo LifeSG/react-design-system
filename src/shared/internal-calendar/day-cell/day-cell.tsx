@@ -85,19 +85,16 @@ export const DayCell = ({
     // =========================================================================
     return (
         <div className={styles.cell} aria-hidden={ariaHidden}>
-            <div className={styles.leftHalf} data-day-cell-type={bgLeft}></div>
+            <div className={styles.leftHalf} data-day-cell-type={bgLeft} />
             <div
                 className={styles.leftCircle}
                 data-day-cell-type={circleLeft}
-            ></div>
-            <div
-                className={styles.rightHalf}
-                data-day-cell-type={bgRight}
-            ></div>
+            />
+            <div className={styles.rightHalf} data-day-cell-type={bgRight} />
             <div
                 className={styles.rightCircle}
                 data-day-cell-type={circleRight}
-            ></div>
+            />
             <span
                 className={styles.labelWrapper}
                 data-day-cell-state={interactionState}
