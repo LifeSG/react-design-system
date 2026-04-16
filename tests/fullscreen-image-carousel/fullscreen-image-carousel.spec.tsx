@@ -264,17 +264,24 @@ describe("Fullscreen Image Carousel", () => {
                 />
             );
 
-            expect(screen.getByText("photo-a.jpg")).toBeInTheDocument();
-            expect(screen.getByText("1.2 MB")).toBeInTheDocument();
+            expect(screen.getByTestId("file-info-bar")).toBeInTheDocument();
+            expect(screen.getByTestId("file-info-name")).toHaveTextContent(
+                "photo-a.jpg"
+            );
+            expect(screen.getByTestId("file-info-size")).toHaveTextContent(
+                "1.2 MB"
+            );
         });
 
-        it("should not render file info text when no item has fileName or fileSize", () => {
+        it("should not render file info bar when no item has fileName or fileSize", () => {
             render(<FullscreenImageCarousel items={IMAGES} show={true} />);
 
-            expect(screen.queryByText(/\.jpg|MB|KB/)).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("file-info-bar")
+            ).not.toBeInTheDocument();
         });
 
-        it("should not render file info text for a slide that has no fileName or fileSize", () => {
+        it("should render file info bar but no text for a slide that has no fileName or fileSize", () => {
             render(
                 <FullscreenImageCarousel
                     items={IMAGES_WITH_FILE_INFO}
@@ -283,9 +290,13 @@ describe("Fullscreen Image Carousel", () => {
                 />
             );
 
-            // Slide 3 has no file info; bar is present but no text
-            expect(screen.queryByText("photo-a.jpg")).not.toBeInTheDocument();
-            expect(screen.queryByText("photo-b.jpg")).not.toBeInTheDocument();
+            expect(screen.getByTestId("file-info-bar")).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("file-info-name")
+            ).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("file-info-size")
+            ).not.toBeInTheDocument();
         });
 
         it("should update the file info bar when navigating to a different slide", () => {
@@ -296,16 +307,21 @@ describe("Fullscreen Image Carousel", () => {
                 />
             );
 
-            expect(screen.getByText("photo-a.jpg")).toBeInTheDocument();
+            expect(screen.getByTestId("file-info-name")).toHaveTextContent(
+                "photo-a.jpg"
+            );
 
             fireEvent.click(screen.getByTestId("forward-btn"));
 
-            expect(screen.queryByText("photo-a.jpg")).not.toBeInTheDocument();
-            expect(screen.getByText("photo-b.jpg")).toBeInTheDocument();
-            expect(screen.getByText("840 KB")).toBeInTheDocument();
+            expect(screen.getByTestId("file-info-name")).toHaveTextContent(
+                "photo-b.jpg"
+            );
+            expect(screen.getByTestId("file-info-size")).toHaveTextContent(
+                "840 KB"
+            );
         });
 
-        it("should display '-' as the file name when only fileSize is provided", () => {
+        it("should not render fileName when only fileSize is provided", () => {
             render(
                 <FullscreenImageCarousel
                     items={IMAGES_WITH_FILE_INFO}
@@ -314,8 +330,12 @@ describe("Fullscreen Image Carousel", () => {
                 />
             );
 
-            expect(screen.getByText("-")).toBeInTheDocument();
-            expect(screen.getByText("500 KB")).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("file-info-name")
+            ).not.toBeInTheDocument();
+            expect(screen.getByTestId("file-info-size")).toHaveTextContent(
+                "500 KB"
+            );
         });
 
         it("should render fileName only when fileSize is not provided", () => {
@@ -331,7 +351,12 @@ describe("Fullscreen Image Carousel", () => {
                 />
             );
 
-            expect(screen.getByText("only-name.jpg")).toBeInTheDocument();
+            expect(screen.getByTestId("file-info-name")).toHaveTextContent(
+                "only-name.jpg"
+            );
+            expect(
+                screen.queryByTestId("file-info-size")
+            ).not.toBeInTheDocument();
         });
     });
 });

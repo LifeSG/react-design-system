@@ -363,17 +363,25 @@ export const Component = (
         const { fileName, fileSize } = currentItem ?? {};
         const trimmedName = fileName?.trim();
         const trimmedSize = fileSize?.trim();
-        const displayName = trimmedName || (trimmedSize ? "-" : undefined);
 
         return (
-            <FileInfoTextWrapper aria-live="polite" aria-atomic="true">
-                {displayName && (
-                    <FileInfoFileName weight="semibold">
-                        {displayName}
+            <FileInfoTextWrapper
+                aria-live="polite"
+                aria-atomic="true"
+                data-testid="file-info-bar"
+            >
+                {trimmedName && (
+                    <FileInfoFileName
+                        weight="semibold"
+                        data-testid="file-info-name"
+                    >
+                        {trimmedName}
                     </FileInfoFileName>
                 )}
                 {trimmedSize && (
-                    <FileInfoFileSize>{trimmedSize}</FileInfoFileSize>
+                    <FileInfoFileSize data-testid="file-info-size">
+                        {trimmedSize}
+                    </FileInfoFileSize>
                 )}
             </FileInfoTextWrapper>
         );
@@ -427,51 +435,6 @@ export const Component = (
             disableInitialFocus
         >
             <CarouselModalContent>
-                <TopActionButtons
-                    $hasFileInfo={hasFileInfo}
-                    $insetTop={insets?.top}
-                    $insetLeft={insets?.left}
-                    $insetRight={insets?.right}
-                >
-                    {hasFileInfo && renderFileInfo()}
-                    {!hideMagnifier && !isCustomItem(currentItem) && (
-                        <MagnifierButton
-                            aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
-                            onClick={handleMagnifier}
-                        >
-                            {zoom === 1 ? (
-                                <MagnifierPlusIcon aria-hidden />
-                            ) : (
-                                <MagnifierMinusIcon aria-hidden />
-                            )}
-                        </MagnifierButton>
-                    )}
-
-                    {onDelete && (
-                        <DeleteButton
-                            aria-label={`Delete ${
-                                (isCustomItem(currentItem) &&
-                                    currentItem.itemLabel?.trim()) ||
-                                "image"
-                            }`}
-                            data-testid="delete-btn"
-                            onClick={handleDelete}
-                        >
-                            <BinIcon aria-hidden />
-                        </DeleteButton>
-                    )}
-
-                    <CloseButton
-                        aria-label={
-                            hasAnyItemLabel
-                                ? "Close carousel"
-                                : "Close image carousel"
-                        }
-                        onClick={onClose}
-                    >
-                        <CrossIcon aria-hidden />
-                    </CloseButton>
-                </TopActionButtons>
                 <ImageGalleryContainer>
                     <ImageGalleryWrapper>
                         <ImageGallerySwipe
@@ -519,6 +482,51 @@ export const Component = (
 
                     {!hideThumbnail && renderThumbnails()}
                 </ImageGalleryContainer>
+                <TopActionButtons
+                    $hasFileInfo={hasFileInfo}
+                    $insetTop={insets?.top}
+                    $insetLeft={insets?.left}
+                    $insetRight={insets?.right}
+                >
+                    {hasFileInfo && renderFileInfo()}
+                    {!hideMagnifier && !isCustomItem(currentItem) && (
+                        <MagnifierButton
+                            aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
+                            onClick={handleMagnifier}
+                        >
+                            {zoom === 1 ? (
+                                <MagnifierPlusIcon aria-hidden />
+                            ) : (
+                                <MagnifierMinusIcon aria-hidden />
+                            )}
+                        </MagnifierButton>
+                    )}
+
+                    {onDelete && (
+                        <DeleteButton
+                            aria-label={`Delete ${
+                                (isCustomItem(currentItem) &&
+                                    currentItem.itemLabel?.trim()) ||
+                                "image"
+                            }`}
+                            data-testid="delete-btn"
+                            onClick={handleDelete}
+                        >
+                            <BinIcon aria-hidden />
+                        </DeleteButton>
+                    )}
+
+                    <CloseButton
+                        aria-label={
+                            hasAnyItemLabel
+                                ? "Close carousel"
+                                : "Close image carousel"
+                        }
+                        onClick={onClose}
+                    >
+                        <CrossIcon aria-hidden />
+                    </CloseButton>
+                </TopActionButtons>
             </CarouselModalContent>
         </ModalV2>
     );
