@@ -62,6 +62,12 @@ export const DataTable = ({
     const actionBarRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const internalId = useRef(id || SimpleIdGenerator.generate());
+    const keyColumns = headers.filter(
+        (header): header is Exclude<HeaderProps, string> => {
+            return typeof header !== "string" && !!header.keyColumn;
+        }
+    );
+
     const [scrollable, setScrollable] = useState(false);
     const [scrollEnd, setScrollEnd] = useState(false);
     const [tableEnd, setTableEnd] = useState(false);
@@ -172,18 +178,16 @@ export const DataTable = ({
         return sortDirection === "asc" ? "ascending" : "descending";
     };
 
-    const getSortButtonAriaLabel = (label: string, fieldKey: string) => {
+    const getSortButtonAriaLabel = (fieldKey: string) => {
         const nextSortDirection =
             getSortDirection(fieldKey) === "asc" ? "descending" : "ascending";
 
-        return `Sort ${label} by ${nextSortDirection} order`;
+        return ` by ${nextSortDirection} order`;
     };
 
-    const keyColumns = headers.filter(
-        (header): header is Exclude<HeaderProps, string> => {
-            return typeof header !== "string" && !!header.keyColumn;
-        }
-    );
+    const getHeaderWrapperId = (fieldKey: string) => {
+        return `${internalId.current}-header-${fieldKey}`;
+    };
 
     const getRowPositionId = (rowId: string) => {
         return `${internalId.current}-row-${rowId}-position`;
@@ -280,6 +284,7 @@ export const DataTable = ({
             : header;
 
         const isSortable = !!getSortDirection(fieldKey);
+        const wrapperId = getHeaderWrapperId(fieldKey);
 
         return (
             <HeaderCell
@@ -295,22 +300,14 @@ export const DataTable = ({
                     <VisuallyHidden>
                         <button
                             type="button"
-                            aria-label={
-                                typeof label === "string"
-                                    ? isSortable
-                                        ? getSortButtonAriaLabel(
-                                              label,
-                                              fieldKey
-                                          )
-                                        : label
-                                    : undefined
-                            }
+                            aria-labelledby={wrapperId}
                             onClick={() => onHeaderClick?.(fieldKey)}
                         />
                     </VisuallyHidden>
                 )}
 
-                <HeaderCellWrapper>
+                <HeaderCellWrapper id={wrapperId}>
+                    {isSortable && <VisuallyHidden>{"Sort "}</VisuallyHidden>}
                     {typeof label === "string" ? (
                         <Typography.BodyBL weight="bold">
                             {label}
@@ -319,6 +316,11 @@ export const DataTable = ({
                         label
                     )}
                     {renderSortedArrow(fieldKey)}
+                    {isSortable && (
+                        <VisuallyHidden>
+                            {getSortButtonAriaLabel(fieldKey)}
+                        </VisuallyHidden>
+                    )}
                 </HeaderCellWrapper>
             </HeaderCell>
         );
