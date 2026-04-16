@@ -13,7 +13,7 @@ export default function Story() {
             <DateRangeInput
                 data-testid="date-range-input"
                 variant="range"
-                maxDate="2026-04-10"
+                minDate="2026-04-10"
                 value={startDate}
                 valueEnd={endDate}
                 onChange={(start, end) => {
