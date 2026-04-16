@@ -1,9 +1,8 @@
-import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour, Motion } from "../theme";
 
-export const Container = styled.div`
+export const container = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -20,7 +19,7 @@ export const Container = styled.div`
     }
 `;
 
-export const StyledUnCheckedIcon = styled(CircleIcon)`
+export const uncheckedIcon = css`
     height: 100%;
     width: 100%;
     color: ${Colour["icon-subtle"]};
@@ -31,7 +30,7 @@ export const StyledUnCheckedIcon = styled(CircleIcon)`
     }
 `;
 
-export const StyledCheckedIcon = styled(CircleDotIcon)`
+export const checkedIcon = css`
     height: 100%;
     width: 100%;
     color: ${Colour["icon-selected"]};
@@ -43,7 +42,7 @@ export const StyledCheckedIcon = styled(CircleDotIcon)`
     }
 `;
 
-export const Input = styled.input`
+export const input = css`
     position: absolute;
     height: 100%;
     width: 100%;

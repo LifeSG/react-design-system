@@ -1,11 +1,8 @@
+import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 import type { ChangeEvent } from "react";
 
-import {
-    Container,
-    Input,
-    StyledCheckedIcon,
-    StyledUnCheckedIcon,
-} from "./radio-button.styles";
+import * as styles from "./radio-button.styles";
 import type { RadioButtonProps } from "./types";
 
 export const RadioButton = ({
@@ -41,29 +38,31 @@ export const RadioButton = ({
     // =============================================================================
     const renderIcon = () => {
         return checked ? (
-            <StyledCheckedIcon
+            <CircleDotIcon
                 data-testid="radio-checked"
                 data-radio-icon
                 data-disabled={disabled ? "true" : "false"}
+                className={styles.checkedIcon}
                 aria-hidden
             />
         ) : (
-            <StyledUnCheckedIcon
+            <CircleIcon
                 data-testid="radio-unchecked"
                 data-radio-icon
                 data-disabled={disabled ? "true" : "false"}
+                className={styles.uncheckedIcon}
                 aria-hidden
             />
         );
     };
 
     return (
-        <Container
-            className={className}
+        <div
+            className={clsx(styles.container, className)}
             data-display-size={displaySize}
             data-testid="radio-button"
         >
-            <Input
+            <input
                 type="radio"
                 data-testid="radio-input"
                 onChange={handleOnChange}
@@ -72,9 +71,10 @@ export const RadioButton = ({
                 aria-disabled={isFocusableWhenDisabled}
                 tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
                 data-disabled-visual={disabled ? "true" : "false"}
+                className={styles.input}
                 {...otherProps}
             />
             {renderIcon()}
-        </Container>
+        </div>
     );
 };
