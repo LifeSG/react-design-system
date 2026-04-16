@@ -1,14 +1,12 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
+import clsx from "clsx";
 import type React from "react";
 import { forwardRef } from "react";
 
-import {
-    ClearButton,
-    Container,
-    SearchBox,
-    SearchIcon,
-    SearchInput,
-} from "./dropdown-search.styles";
+import { ClickableIcon } from "../clickable-icon";
+import { BasicInput } from "../input-wrapper";
+import * as styles from "./dropdown-search.styles";
 import type { DropdownVariantType } from "./types";
 
 interface Props extends React.HTMLAttributes<HTMLInputElement> {
@@ -22,26 +20,39 @@ const Component = (
     ref: React.Ref<HTMLInputElement>
 ): JSX.Element => {
     return (
-        <Container $variant={variant}>
-            <SearchBox $variant={variant}>
-                <SearchIcon aria-hidden />
-                <SearchInput
+        <div
+            className={clsx(
+                styles.container,
+                variant === "small"
+                    ? styles.containerVariantSmall
+                    : styles.containerVariantDefault
+            )}
+        >
+            <label
+                className={clsx(
+                    styles.searchBox,
+                    variant === "small" && styles.searchBoxVariantSmall
+                )}
+            >
+                <MagnifierIcon aria-hidden className={styles.searchIcon} />
+                <BasicInput
                     ref={ref}
                     value={value}
-                    variant={variant}
+                    className={styles.searchInput}
                     {...otherProps}
                 />
-            </SearchBox>
+            </label>
             {value && (
-                <ClearButton
+                <ClickableIcon
                     aria-label="Clear search"
                     focusOutline="browser"
                     onClick={onClear}
+                    className={styles.clearButton}
                 >
                     <CrossIcon aria-hidden />
-                </ClearButton>
+                </ClickableIcon>
             )}
-        </Container>
+        </div>
     );
 };
 

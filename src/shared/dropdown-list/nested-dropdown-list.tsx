@@ -1,39 +1,28 @@
 import { CaretRightIcon } from "@lifesg/react-icons/caret-right";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { MinusSquareFillIcon } from "@lifesg/react-icons/minus-square-fill";
+import { SquareIcon } from "@lifesg/react-icons/square";
+import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
+import { TickIcon } from "@lifesg/react-icons/tick";
+import clsx from "clsx";
+import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 
+import { Markup } from "../../markup";
 import {
     mergeRefs,
     useEvent,
     useEventListener,
     useIsMounted,
 } from "../../util";
+import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { useDropdownRender } from "../dropdown-wrapper";
+import { BasicButton } from "../input-wrapper";
 import { DropdownLabel } from "./dropdown-label";
-import {
-    CheckboxSelectedIndicator,
-    CheckboxUnselectedIndicator,
-    Container,
-    LabelIcon,
-    List,
-    NoResultDescContainer,
-    ResultStateContainer,
-    SelectAllButton,
-    SelectAllContainer,
-    SelectedIndicator,
-    Spinner,
-    TryAgainButton,
-} from "./dropdown-list.styles";
+import * as styles from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
-import {
-    CheckboxMixedIndicator,
-    ExpandButton,
-    Indent,
-    ListItem,
-    ListItemContainer,
-    SelectionIndicator,
-    UnexpandableIndicator,
-} from "./nested-dropdown-list.styles";
+import * as nestedStyles from "./nested-dropdown-list.styles";
 import {
     expandFirstSubtree,
     expandMatchedSubtrees,
@@ -88,8 +77,12 @@ export const NestedDropdownList = <T,>({
         customLabels?.noResultsDescription || _noResultsDescription;
     const selectableCategory = multiSelect || _selectableCategory;
 
-    const { elementWidth, setFloatingRef, getFloatingProps, styles } =
-        useDropdownRender();
+    const {
+        elementWidth,
+        setFloatingRef,
+        getFloatingProps,
+        styles: floatingStyles,
+    } = useDropdownRender();
     const [searchValue, setSearchValue] = useState<string>("");
     const searchTerm = searchValue.toLowerCase().trim();
     const [searchActive, setSearchActive] = useState<boolean>(false);
@@ -438,13 +431,17 @@ export const NestedDropdownList = <T,>({
             itemsLoadState === "success"
         ) {
             return (
-                <SelectAllContainer>
-                    <SelectAllButton onClick={handleOnSelectAll} type="button">
+                <div className={styles.selectAllContainer}>
+                    <BasicButton
+                        onClick={handleOnSelectAll}
+                        type="button"
+                        className={styles.selectAllButton}
+                    >
                         {selectedKeyPaths.size === 0
                             ? selectAllButtonLabel
                             : clearAllButtonLabel}
-                    </SelectAllButton>
-                </SelectAllContainer>
+                    </BasicButton>
+                </div>
             );
         }
     };
@@ -458,14 +455,23 @@ export const NestedDropdownList = <T,>({
         ) {
             return (
                 <>
-                    <ResultStateContainer data-testid="list-no-results">
-                        <LabelIcon data-testid="no-result-icon" />
+                    <div
+                        data-testid="list-no-results"
+                        className={styles.resultStateContainer}
+                    >
+                        <ExclamationCircleFillIcon
+                            data-testid="no-result-icon"
+                            className={styles.labelIcon}
+                        />
                         {noResultsLabel}
-                    </ResultStateContainer>
+                    </div>
                     {noResultsDescription && (
-                        <NoResultDescContainer data-testid="no-result-desc">
+                        <Markup
+                            data-testid="no-result-desc"
+                            className={styles.noResultDescContainer}
+                        >
                             {noResultsDescription}
-                        </NoResultDescContainer>
+                        </Markup>
                     )}
                 </>
             );
@@ -475,10 +481,13 @@ export const NestedDropdownList = <T,>({
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
             return (
-                <ResultStateContainer data-testid="list-loading">
-                    <Spinner />
+                <div
+                    data-testid="list-loading"
+                    className={styles.resultStateContainer}
+                >
+                    <ComponentLoadingSpinner className={styles.spinner} />
                     Loading...
-                </ResultStateContainer>
+                </div>
             );
         }
     };
@@ -486,13 +495,23 @@ export const NestedDropdownList = <T,>({
     const renderTryAgain = () => {
         if (onRetry && itemsLoadState === "fail") {
             return (
-                <ResultStateContainer data-testid="list-fail">
-                    <LabelIcon data-testid="load-error-icon" />
+                <div
+                    data-testid="list-fail"
+                    className={styles.resultStateContainer}
+                >
+                    <ExclamationCircleFillIcon
+                        data-testid="load-error-icon"
+                        className={styles.labelIcon}
+                    />
                     Failed to load.&nbsp;
-                    <TryAgainButton onClick={handleTryAgain} type="button">
+                    <BasicButton
+                        onClick={handleTryAgain}
+                        type="button"
+                        className={styles.tryAgainButton}
+                    >
                         Try again.
-                    </TryAgainButton>
-                </ResultStateContainer>
+                    </BasicButton>
+                </div>
             );
         }
     };
@@ -500,11 +519,26 @@ export const NestedDropdownList = <T,>({
         if (multiSelect) {
             switch (listItem.checked) {
                 case "mixed":
-                    return <CheckboxMixedIndicator aria-hidden />;
+                    return (
+                        <MinusSquareFillIcon
+                            aria-hidden
+                            className={nestedStyles.checkboxMixedIndicator}
+                        />
+                    );
                 case true:
-                    return <CheckboxSelectedIndicator aria-hidden />;
+                    return (
+                        <SquareTickFillIcon
+                            aria-hidden
+                            className={styles.checkboxSelectedIndicator}
+                        />
+                    );
                 default:
-                    return <CheckboxUnselectedIndicator aria-hidden />;
+                    return (
+                        <SquareIcon
+                            aria-hidden
+                            className={styles.checkboxUnselectedIndicator}
+                        />
+                    );
             }
         }
 
@@ -514,13 +548,20 @@ export const NestedDropdownList = <T,>({
         }
 
         return (
-            <SelectionIndicator
-                $hasNestedSiblings={
-                    listItem.hasNestedSiblings || listItem.level === 0
-                }
+            <div
+                className={clsx(
+                    nestedStyles.selectionIndicator,
+                    (listItem.hasNestedSiblings || listItem.level === 0) &&
+                        nestedStyles.selectionIndicatorNested
+                )}
             >
-                {listItem.checked && <SelectedIndicator aria-hidden />}
-            </SelectionIndicator>
+                {listItem.checked && (
+                    <TickIcon
+                        aria-hidden
+                        className={styles.selectedIndicator}
+                    />
+                )}
+            </div>
         );
     };
 
@@ -543,15 +584,30 @@ export const NestedDropdownList = <T,>({
         const toggleable = hasSubItems && !selectableCategory;
 
         return (
-            <ListItemContainer
+            <li
                 key={`[${keyPath.join("---")}]`}
-                $visible={visible}
-            >
-                {maxLevel > 0 && <Indent $level={level} />}
-                {maxLevel > 0 && !hasSubItems && multiSelect && (
-                    <UnexpandableIndicator />
+                className={clsx(
+                    nestedStyles.listItemContainer,
+                    !visible && nestedStyles.listItemContainerHidden
                 )}
-                <ListItem
+            >
+                {maxLevel > 0 && (
+                    <div
+                        className={nestedStyles.indent}
+                        ref={(node) => {
+                            if (node) {
+                                node.style.setProperty(
+                                    nestedStyles.tokens.level,
+                                    String(level)
+                                );
+                            }
+                        }}
+                    />
+                )}
+                {maxLevel > 0 && !hasSubItems && multiSelect && (
+                    <div className={nestedStyles.unexpandableIndicator} />
+                )}
+                <div
                     aria-checked={checked} // not working with safari voiceover
                     aria-selected={!!checked} // required for safari voiceover
                     aria-expanded={hasSubItems ? expanded : undefined}
@@ -573,21 +629,27 @@ export const NestedDropdownList = <T,>({
                     }
                     role="treeitem"
                     tabIndex={active ? 0 : -1}
-                    $active={active}
-                    $toggleable={toggleable}
+                    className={clsx(
+                        nestedStyles.listItem,
+                        active && nestedStyles.listItemActive,
+                        toggleable && nestedStyles.listItemToggleable
+                    )}
                 >
                     {hasSubItems && (
                         // not an actual button, only required for visual display
-                        <ExpandButton
+                        <div
                             data-testid="toggle-category-button"
                             onClick={(e) => {
                                 e.stopPropagation();
                                 toggleCategory(itemIndex, !expanded, vIndex);
                             }}
-                            $expanded={expanded}
+                            className={clsx(
+                                nestedStyles.expandButton,
+                                expanded && nestedStyles.expandButtonExpanded
+                            )}
                         >
                             <CaretRightIcon />
-                        </ExpandButton>
+                        </div>
                     )}
                     {renderSelectionIcon(listItem)}
                     <DropdownLabel
@@ -598,8 +660,8 @@ export const NestedDropdownList = <T,>({
                         truncationType={itemTruncationType}
                         maxLines={itemMaxLines}
                     />
-                </ListItem>
-            </ListItemContainer>
+                </div>
+            </li>
         );
     };
 
@@ -635,28 +697,37 @@ export const NestedDropdownList = <T,>({
 
     const renderList = () => {
         return (
-            <List data-testid="nested-dropdown-list">
+            <div data-testid="nested-dropdown-list" className={styles.list}>
                 {renderSearchInput()}
                 {renderSelectAll()}
                 {renderNoResults()}
                 {renderLoading()}
                 {renderTryAgain()}
                 {renderVirtualisedList()}
-            </List>
+            </div>
         );
     };
 
+    const containerWidthStyle: React.CSSProperties = width
+        ? { width }
+        : matchElementWidth && elementWidth
+        ? { width: elementWidth }
+        : {};
+
     return (
-        <Container
+        <div
             data-testid="dropdown-container"
             ref={mergeRefs(nodeRef, setFloatingRef)}
-            style={styles}
+            style={{ ...floatingStyles, ...containerWidthStyle }}
             {...getFloatingProps()}
-            $width={matchElementWidth ? elementWidth : undefined}
-            $variant={variant}
-            $customWidth={width}
+            className={clsx(
+                styles.container,
+                variant === "small"
+                    ? styles.containerVariantSmall
+                    : styles.containerVariantDefault
+            )}
         >
             {renderList()}
-        </Container>
+        </div>
     );
 };
