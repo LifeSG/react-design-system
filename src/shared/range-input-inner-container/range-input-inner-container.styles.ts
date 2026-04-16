@@ -1,7 +1,7 @@
 import { ArrowRightIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 
-import { V3_Colour, V3_Font, V3_Motion, V3_Spacing } from "../../v3_theme";
+import { Colour, Font, Motion, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -35,14 +35,14 @@ export const Wrapper = styled.div<GeneralStyleProps>`
                 [data-id="range-container-elem2-container"] {
                     // 100% - Icon size - 2padding
                     max-width: calc(
-                        100% - ${V3_Font.Spec["body-size-baseline"]} -
-                            ${V3_Spacing["spacing-16"]}
+                        100% - ${Font.Spec["body-size-baseline"]} -
+                            ${Spacing["spacing-16"]}
                     );
                     flex: unset;
                 }
 
                 [data-id="range-container-elem2-container"] {
-                    margin-top: ${V3_Spacing["spacing-8"]};
+                    margin-top: ${Spacing["spacing-8"]};
                 }
             `;
         }
@@ -60,11 +60,11 @@ export const ElementContainer = styled.div`
 `;
 
 export const ArrowRight = styled(ArrowRightIcon)`
-    color: ${V3_Colour["icon"]};
-    width: ${V3_Font.Spec["body-size-baseline"]};
-    height: ${V3_Font.Spec["body-size-baseline"]};
+    color: ${Colour["icon"]};
+    width: ${Font.Spec["body-size-baseline"]};
+    height: ${Font.Spec["body-size-baseline"]};
     flex-shrink: 0;
-    margin: 0 ${V3_Spacing["spacing-8"]};
+    margin: 0 ${Spacing["spacing-8"]};
     align-self: center;
 `;
 
@@ -72,16 +72,15 @@ export const Indicator = styled.div<IndicatorStyleProps>`
     position: absolute;
     background: ${(props) =>
         props.$error
-            ? V3_Colour["border-error-focus-strong"]
-            : V3_Colour["border-focus-strong"]};
+            ? Colour["border-error-focus-strong"]
+            : Colour["border-focus-strong"]};
     height: 2px;
     // half - half padding - half icon width
     width: calc(
-        50% - ${V3_Spacing["spacing-8"]} -
-            (${V3_Font.Spec["body-size-baseline"]} / 2)
+        50% - ${Spacing["spacing-8"]} - (${Font.Spec["body-size-baseline"]} / 2)
     );
-    transition: left ${V3_Motion["duration-350"]} ${V3_Motion["ease-standard"]},
-        opacity ${V3_Motion["duration-350"]} ${V3_Motion["ease-standard"]};
+    transition: left ${Motion["duration-350"]} ${Motion["ease-standard"]},
+        opacity ${Motion["duration-350"]} ${Motion["ease-standard"]};
     left: 0;
     bottom: 0;
 
@@ -93,7 +92,7 @@ export const Indicator = styled.div<IndicatorStyleProps>`
                 `;
             case "end":
                 return css`
-                    left: calc(50% + ${V3_Spacing["spacing-16"]});
+                    left: calc(50% + ${Spacing["spacing-16"]});
                     opacity: 1;
                 `;
             case "none":
