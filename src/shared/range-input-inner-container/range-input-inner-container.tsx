@@ -27,7 +27,7 @@ export const RangeInputInnerContainer = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Wrapper className={className} $wrap={wrap}>
+        <Wrapper className={className} data-wrap={wrap ? "true" : undefined}>
             <ElementContainer data-id="range-container-elem1-container">
                 {elem1}
             </ElementContainer>
@@ -38,9 +38,9 @@ export const RangeInputInnerContainer = ({
             </ElementContainer>
             <Indicator
                 data-id="range-container-indicator"
-                $position={currentActive}
-                $error={error}
-                $wrap={wrap}
+                data-error={error ? "true" : undefined}
+                data-position={currentActive}
+                data-wrap={wrap ? "true" : undefined}
             />
         </Wrapper>
     );
