@@ -1,5 +1,4 @@
 import type { OpenChangeReason } from "@floating-ui/react";
-import clsx from "clsx";
 import findIndex from "lodash/findIndex";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
@@ -10,7 +9,11 @@ import {
     ExpandableElement,
 } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import * as dropdownWrapperStyles from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import {
+    LabelContainer,
+    PlaceholderLabel,
+    ValueLabel,
+} from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { InputBox } from "../shared/input-wrapper";
 import { SimpleIdGenerator } from "../util";
 import type { InputMultiSelectProps } from "./types";
@@ -186,37 +189,27 @@ export const InputMultiSelect = <T, V>({
     const renderLabel = () => {
         if (!selected || selected.length === 0) {
             return (
-                <div
-                    className={clsx(
-                        dropdownWrapperStyles.valueLabel,
-                        dropdownWrapperStyles.placeholderLabel
-                    )}
-                    data-variant={variant}
-                    data-truncate={optionTruncationType}
+                <PlaceholderLabel
+                    variant={variant}
+                    truncateType={optionTruncationType}
                 >
                     {placeholder}
-                </div>
+                </PlaceholderLabel>
             );
         } else {
             return (
-                <div
-                    className={dropdownWrapperStyles.valueLabel}
-                    data-variant={variant}
-                    data-truncate={optionTruncationType}
+                <ValueLabel
+                    variant={variant}
+                    truncateType={optionTruncationType}
                 >
                     {getDisplayValue()}
-                </div>
+                </ValueLabel>
             );
         }
     };
 
     const renderSelectorContent = () => (
-        <div
-            className={dropdownWrapperStyles.labelContainer}
-            data-disabled={disabled}
-        >
-            {renderLabel()}
-        </div>
+        <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
     );
 
     const renderElement = () => {

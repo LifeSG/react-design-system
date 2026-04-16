@@ -12,9 +12,15 @@ export interface DropdownSelectorProps {
     variant?: DropdownVariantType | undefined;
 }
 
-export type DropdownAlignmentType = "left" | "right";
-
-export interface DropdownWrapperValueLabelDataAttrs {
-    "data-variant"?: DropdownVariantType;
-    "data-truncate"?: TruncateType;
+export interface ValueLabelProps {
+    variant?: DropdownVariantType | undefined;
+    truncateType?: TruncateType | undefined;
+    children: React.ReactNode;
 }
+
+export interface LabelContainerProps {
+    disabled?: boolean | undefined;
+    children: React.ReactNode;
+}
+
+export type DropdownAlignmentType = "left" | "right";
