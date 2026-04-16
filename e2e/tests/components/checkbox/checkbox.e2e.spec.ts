@@ -75,10 +75,10 @@ test.describe("Checkbox", () => {
         });
 
         test("All variants", async ({ story }) => {
-            await compareScreenshot(story, "variants");
+            await compareScreenshot(story, "mount");
 
             await expect(story.layout).toMatchAriaSnapshot(`
-                - checkbox "Default"
+                - checkbox "Default" [checked=false]
                 - checkbox "Checked" [checked]
                 - checkbox "Indeterminate" [checked=mixed]
                 - checkbox "Disabled" [disabled]
@@ -91,33 +91,33 @@ test.describe("Checkbox", () => {
                 - checkbox "Small Disabled Checked" [checked] [disabled]
                 - checkbox "Small Disabled Indeterminate" [checked=mixed] [disabled]
             `);
-        });
 
-        test("Hover — unchecked", async ({ story }) => {
-            await story.locators.checkboxDefault.hover();
-            await compareScreenshot(story, "hover-unchecked", {
-                locator: story.locators.checkboxDefault,
+            await test.step("Hover unchecked", async () => {
+                await story.locators.checkboxDefault.hover();
+                await compareScreenshot(story, "hover-unchecked", {
+                    locator: story.locators.checkboxDefault,
+                });
             });
-        });
 
-        test("Hover — checked", async ({ story }) => {
-            await story.locators.checkboxChecked.hover();
-            await compareScreenshot(story, "hover-checked", {
-                locator: story.locators.checkboxChecked,
+            await test.step("Hover checked", async () => {
+                await story.locators.checkboxChecked.hover();
+                await compareScreenshot(story, "hover-checked", {
+                    locator: story.locators.checkboxChecked,
+                });
             });
-        });
 
-        test("Hover — indeterminate", async ({ story }) => {
-            await story.locators.checkboxIndeterminate.hover();
-            await compareScreenshot(story, "hover-indeterminate", {
-                locator: story.locators.checkboxIndeterminate,
+            await test.step("Hover indeterminate", async () => {
+                await story.locators.checkboxIndeterminate.hover();
+                await compareScreenshot(story, "hover-indeterminate", {
+                    locator: story.locators.checkboxIndeterminate,
+                });
             });
-        });
 
-        test("Hover — disabled (no hover effect)", async ({ story }) => {
-            await story.locators.checkboxDisabled.hover();
-            await compareScreenshot(story, "hover-disabled", {
-                locator: story.locators.checkboxDisabled,
+            await test.step("Hover disabled", async () => {
+                await story.locators.checkboxDisabled.hover();
+                await compareScreenshot(story, "hover-disabled", {
+                    locator: story.locators.checkboxDisabled,
+                });
             });
         });
     });
@@ -128,7 +128,7 @@ test.describe("Checkbox", () => {
         });
 
         test("All variants (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "variants-dark");
+            await compareScreenshot(story, "mount");
         });
     });
 
