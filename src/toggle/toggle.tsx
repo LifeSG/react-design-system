@@ -3,8 +3,15 @@ import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { Alert } from "../alert";
 import { Markup } from "../markup";
-import type { ToggleIconType } from "../shared/toggle-icon/toggle-icon";
+import {
+    ToggleIcon,
+    type ToggleIconType,
+} from "../shared/toggle-icon/toggle-icon";
+import { UnorderedList } from "../text-list/unordered-list";
+import { useApplyStyle } from "../theme";
+import { BodyMD } from "../typography/typography";
 import { SimpleIdGenerator } from "../util";
 import * as styles from "./toggle.styles";
 import type { ToggleProps } from "./types";
@@ -51,6 +58,22 @@ export const Toggle = ({
     const generatedId = id ? `${id}` : `tg-${uniqueId}`;
 
     const inputRef = useRef<HTMLInputElement>(null);
+    const labelRef = useRef<HTMLLabelElement>(null);
+
+    useApplyStyle(labelRef, {
+        [styles.tokens.label.desktopLineClamp]:
+            childrenMaxLines?.desktop == null
+                ? null
+                : `${childrenMaxLines.desktop}`,
+        [styles.tokens.label.tabletLineClamp]:
+            childrenMaxLines?.tablet == null
+                ? null
+                : `${childrenMaxLines.tablet}`,
+        [styles.tokens.label.mobileLineClamp]:
+            childrenMaxLines?.mobile == null
+                ? null
+                : `${childrenMaxLines.mobile}`,
+    });
 
     // =============================================================================
     // EFFECTS
@@ -120,68 +143,68 @@ export const Toggle = ({
         if (styleType === "no-border") {
             if (error) {
                 return disabled
-                    ? "toggleContainerNoBorderErrorDisabled"
-                    : "toggleContainerNoBorderError";
+                    ? styles.toggleContainerNoBorderErrorDisabled
+                    : styles.toggleContainerNoBorderError;
             }
 
             if (disabled) {
                 return selected
-                    ? "toggleContainerNoBorderDisabledSelected"
-                    : "toggleContainerNoBorderDisabled";
+                    ? styles.toggleContainerNoBorderDisabledSelected
+                    : styles.toggleContainerNoBorderDisabled;
             }
 
             if (selected) {
-                return "toggleContainerNoBorderSelected";
+                return styles.toggleContainerNoBorderSelected;
             }
 
-            return "toggleContainerNoBorderDefault";
+            return styles.toggleContainerNoBorderDefault;
         }
 
         if (error) {
             return disabled
-                ? "toggleContainerDefaultErrorDisabled"
-                : "toggleContainerDefaultError";
+                ? styles.toggleContainerDefaultErrorDisabled
+                : styles.toggleContainerDefaultError;
         }
 
         if (disabled) {
             return selected
-                ? "toggleContainerDefaultDisabledSelected"
-                : "toggleContainerDefaultDisabled";
+                ? styles.toggleContainerDefaultDisabledSelected
+                : styles.toggleContainerDefaultDisabled;
         }
 
         if (selected) {
-            return "toggleContainerDefaultSelected";
+            return styles.toggleContainerDefaultSelected;
         }
 
-        return "toggleContainerDefault";
+        return styles.toggleContainerDefault;
     })();
 
     const textContainerStateClass = (() => {
         if (disabled) {
             return selected
-                ? "toggleTextContainerDisabledSelected"
-                : "toggleTextContainerDisabled";
+                ? styles.toggleTextContainerDisabledSelected
+                : styles.toggleTextContainerDisabled;
         }
 
         if (selected) {
-            return "toggleTextContainerSelected";
+            return styles.toggleTextContainerSelected;
         }
 
-        return "toggleTextContainerDefault";
+        return styles.toggleTextContainerDefault;
     })();
 
     const styledToggleIconStateClass = (() => {
         if (disabled) {
             return selected
-                ? "toggleStyledToggleIconDisabledSelected"
-                : "toggleStyledToggleIconDisabled";
+                ? styles.toggleStyledToggleIconDisabledSelected
+                : styles.toggleStyledToggleIconDisabled;
         }
 
         if (selected) {
-            return "toggleStyledToggleIconSelected";
+            return styles.toggleStyledToggleIconSelected;
         }
 
-        return "toggleStyledToggleIconDefault";
+        return styles.toggleStyledToggleIconDefault;
     })();
 
     // =============================================================================
@@ -204,11 +227,11 @@ export const Toggle = ({
         }
 
         return (
-            <styles.StyledToggleIcon
+            <ToggleIcon
                 type={toggleIconType}
                 active={selected}
                 disabled={disabled}
-                className={clsx(styledToggleIconStateClass)}
+                className={styledToggleIconStateClass}
             />
         );
     };
@@ -227,32 +250,34 @@ export const Toggle = ({
 
         // Hide sublabel from screen readers as the main input already has aria-describedby that points to the sublabel
         return (
-            <styles.SubLabel
+            <div
                 data-id="toggle-sublabel"
                 id={`${generatedId}-sublabel`}
                 aria-hidden
+                className={styles.subLabel}
             >
                 {component}
-            </styles.SubLabel>
+            </div>
         );
     };
 
     const renderCompositeChildren = () => {
         return (
             (!collapsible || expanded) && (
-                <styles.Children
+                <div
                     data-id="toggle-composite-children"
                     className={clsx(
-                        !collapsible && "childrenIsFinalItem",
+                        styles.children,
+                        !collapsible && styles.childrenIsFinalItem,
                         disabled
-                            ? "childrenDisabled"
-                            : selected && "childrenSelected"
+                            ? styles.childrenDisabled
+                            : selected && styles.childrenSelected
                     )}
                 >
                     <Markup baseTextSize="body-md">
                         {compositeSectionChildren}
                     </Markup>
-                </styles.Children>
+                </div>
             )
         );
     };
@@ -261,11 +286,12 @@ export const Toggle = ({
         const collapsedWithoutErrors = !expanded && !hasCompositeSectionError;
         return (
             collapsible && (
-                <styles.ExpandButton
+                <button
                     className={clsx(
-                        disabled && "expandButtonDisabled",
+                        styles.expandButton,
+                        disabled && styles.expandButtonDisabled,
                         collapsedWithoutErrors &&
-                            "expandButtonPaddingTopRequired"
+                            styles.expandButtonPaddingTopRequired
                     )}
                     disabled={disabled}
                     onClick={handleExpandCollapseClick}
@@ -277,7 +303,7 @@ export const Toggle = ({
                     ) : (
                         <ChevronDownIcon aria-hidden />
                     )}
-                </styles.ExpandButton>
+                </button>
             )
         );
     };
@@ -292,26 +318,32 @@ export const Toggle = ({
                 .join(" ") || undefined;
 
         return (
-            <styles.HeaderContainer id={`${generatedId}-header-container`}>
-                <styles.IndicatorLabelContainer
+            <div
+                id={`${generatedId}-header-container`}
+                className={styles.headerContainer}
+            >
+                <div
                     className={clsx(
-                        removable && "indicatorLabelContainerAddPadding"
+                        removable && styles.indicatorLabelContainerAddPadding,
+                        styles.indicatorLabelContainer
                     )}
                 >
-                    <styles.InputContainer
+                    <div
                         id={`${generatedId}-input-container`}
                         onClick={handleContainerClick}
+                        className={styles.inputContainer}
                     >
-                        <styles.Input
+                        <input
                             ref={inputRef}
                             name={name}
                             id={`${generatedId}-input`}
                             type={type === "checkbox" ? "checkbox" : "radio"}
                             data-testid="toggle-input"
                             className={clsx(
+                                styles.input,
                                 disabled
-                                    ? "toggleInputDisabled"
-                                    : "toggleInputEnabled"
+                                    ? styles.toggleInputDisabled
+                                    : styles.toggleInputEnabled
                             )}
                             disabled={disabled}
                             onChange={handleOnChange}
@@ -321,68 +353,84 @@ export const Toggle = ({
                             {...otherProps}
                         />
                         {indicator && renderIndicator()}
-                        <styles.TextContainer
-                            className={clsx(textContainerStateClass)}
+                        <div
+                            className={clsx(
+                                textContainerStateClass,
+                                styles.textContainer
+                            )}
                         >
-                            <styles.Label
+                            <label
+                                ref={labelRef}
                                 htmlFor={`${generatedId}-input`}
                                 data-testid={`toggle-label`}
                                 id={`${generatedId}-label`}
-                                $maxLines={childrenMaxLines}
                                 className={clsx(
                                     selected
-                                        ? "toggleLabelSelected"
-                                        : "toggleLabelDefault"
+                                        ? styles.toggleLabelSelected
+                                        : styles.toggleLabelDefault,
+                                    styles.label
                                 )}
                             >
                                 {children}
-                            </styles.Label>
+                            </label>
                             {subLabel && renderSubLabel()}
-                        </styles.TextContainer>
-                    </styles.InputContainer>
-                </styles.IndicatorLabelContainer>
+                        </div>
+                    </div>
+                </div>
                 {removable && (
-                    <styles.RemoveButton
+                    <button
                         type="button"
-                        className={clsx(disabled && "removeButtonDisabled")}
+                        className={clsx(
+                            disabled && styles.removeButtonDisabled,
+                            styles.removeButton
+                        )}
                         onClick={handleOnRemove}
                         id={`${generatedId}-remove-button`}
                     >
                         Remove
-                    </styles.RemoveButton>
+                    </button>
                 )}
-            </styles.HeaderContainer>
+            </div>
         );
     };
 
     const renderErrorList = (errors: string[]) => {
-        const errorStateClass = disabled ? "errorTextDisabled" : "";
-        const errorListStateClass = disabled ? "errorListDisabled" : "";
         return (
             <>
-                <styles.ErrorText
+                <BodyMD
                     weight="semibold"
-                    className={clsx(errorStateClass)}
+                    className={clsx(
+                        disabled && styles.errorTextDisabled,
+                        styles.errorText
+                    )}
                 >
                     Error
-                </styles.ErrorText>
-                <styles.ErrorList className={clsx(errorListStateClass)}>
+                </BodyMD>
+                <UnorderedList
+                    className={clsx(
+                        disabled && styles.errorListDisabled,
+                        styles.errorList
+                    )}
+                >
                     {errors?.map((item, index) => {
                         return (
                             <li
                                 key={index}
                                 id={`${generatedId}-error-list-item-${index}`}
                             >
-                                <styles.ErrorText
+                                <BodyMD
                                     weight="semibold"
-                                    className={clsx(errorStateClass)}
+                                    className={clsx(
+                                        disabled && styles.errorTextDisabled,
+                                        styles.errorText
+                                    )}
                                 >
                                     {item}
-                                </styles.ErrorText>
+                                </BodyMD>
                             </li>
                         );
                     })}
-                </styles.ErrorList>
+                </UnorderedList>
             </>
         );
     };
@@ -392,21 +440,24 @@ export const Toggle = ({
             collapsible &&
             !expanded &&
             hasCompositeSectionError && (
-                <styles.ErrorContainer
-                    className={clsx(disabled && "errorContainerDisabled")}
+                <div
+                    className={clsx(
+                        disabled && styles.errorContainerDisabled,
+                        styles.errorContainer
+                    )}
                     onClick={handleExpandCollapseClick}
                     id={`${generatedId}-error-alert`}
                 >
-                    <styles.AlertContainer
+                    <Alert
                         type={disabled ? "description" : "error"}
-                        className={clsx(className)}
+                        className={clsx(styles.alertContainer, className)}
                         showIcon
                     >
                         {Array.isArray(errors)
                             ? renderErrorList(errors)
                             : errors}
-                    </styles.AlertContainer>
-                </styles.ErrorContainer>
+                    </Alert>
+                </div>
             )
         );
     };
@@ -424,11 +475,12 @@ export const Toggle = ({
     };
 
     return (
-        <styles.Container
+        <div
             className={clsx(
                 containerStateClass,
-                !indicator && "noIndicator",
-                useContentWidth && "useContentWidth",
+                !indicator && styles.noIndicatorContainer,
+                useContentWidth && styles.useContentWidthContainer,
+                styles.container,
                 className
             )}
             id={id}
@@ -436,6 +488,6 @@ export const Toggle = ({
         >
             {renderToggleWithRemoveButton()}
             {renderCompositeSection()}
-        </styles.Container>
+        </div>
     );
 };

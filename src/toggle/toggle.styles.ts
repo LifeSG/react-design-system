@@ -1,25 +1,12 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Alert } from "../alert";
-import { ToggleIcon } from "../shared/toggle-icon/toggle-icon";
-import { TextList } from "../text-list";
+import { WrapperBase } from "../shared/toggle-icon/toggle-icon.styles";
 import { Colour, Font, MediaQuery, Radius } from "../theme";
-import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface StyleProps {
-    $selected?: boolean;
-    $disabled?: boolean;
-    $indicator?: boolean;
-}
-
-interface LabelStyleProps {
-    $maxLines?: { desktop?: number; mobile?: number; tablet?: number };
-}
-
 export const tokens = {
     label: {
         desktopLineClamp: "--fds-internal-toggle-label-desktopLineClamp",
@@ -32,56 +19,53 @@ export const tokens = {
 // STYLING
 // =============================================================================
 
-export const HeaderContainer = styled.div`
+export const headerContainer = css`
     display: flex;
     align-items: flex-start;
     justify-content: space-between;
 `;
 
-export const TextContainer = styled.div<StyleProps>`
+export const textContainer = css`
     display: flex;
     flex-direction: column;
     overflow-wrap: anywhere;
     width: 100%;
     overflow: hidden;
-
-    // apply header container text color
-    &.toggleTextContainerDisabledSelected {
-        color: ${Colour["text-selected-disabled"]};
-    }
-
-    &.toggleTextContainerDisabled {
-        color: ${Colour["text-disabled"]};
-    }
-
-    &.toggleTextContainerSelected {
-        color: ${Colour["text-selected"]};
-    }
-
-    &.toggleTextContainerDefault {
-        color: ${Colour.text};
-    }
 `;
 
-export const StyledToggleIcon = styled(ToggleIcon)`
-    &.toggleStyledToggleIconDisabledSelected {
-        color: ${Colour["icon-selected-disabled"]};
-    }
-
-    &.toggleStyledToggleIconDisabled {
-        color: ${Colour["icon-disabled-subtle"]};
-    }
-
-    &.toggleStyledToggleIconSelected {
-        color: ${Colour["icon-selected"]};
-    }
-
-    &.toggleStyledToggleIconDefault {
-        color: ${Colour["icon-subtle"]};
-    }
+export const toggleTextContainerDefault = css`
+    color: ${Colour.text};
 `;
 
-export const Container = styled.div`
+export const toggleTextContainerSelected = css`
+    color: ${Colour["text-selected"]};
+`;
+
+export const toggleTextContainerDisabled = css`
+    color: ${Colour["text-disabled"]};
+`;
+
+export const toggleTextContainerDisabledSelected = css`
+    color: ${Colour["text-selected-disabled"]};
+`;
+
+export const toggleStyledToggleIconDefault = css`
+    color: ${Colour["icon-subtle"]};
+`;
+
+export const toggleStyledToggleIconSelected = css`
+    color: ${Colour["icon-selected"]};
+`;
+
+export const toggleStyledToggleIconDisabled = css`
+    color: ${Colour["icon-disabled-subtle"]};
+`;
+
+export const toggleStyledToggleIconDisabledSelected = css`
+    color: ${Colour["icon-selected-disabled"]};
+`;
+
+export const container = css`
     position: relative;
     display: inline-flex;
     min-width: 10.375rem;
@@ -98,114 +82,10 @@ export const Container = styled.div`
         outline-offset: 0;
     }
 
-    &.noIndicator {
-        justify-content: center;
-    }
-
-    // Container min width to fit content
-    &.useContentWidth {
-        min-width: unset;
-    }
-
-    &.toggleContainerNoBorderErrorDisabled {
-        border-color: ${Colour["border-error"]};
-    }
-
-    &.toggleContainerNoBorderError {
-        border-color: ${Colour["border-error"]};
-
-        &:has(${HeaderContainer}:hover) {
-            @media (pointer: fine) {
-                background: ${Colour["bg-hover-subtle"]};
-            }
-        }
-    }
-
-    &.toggleContainerNoBorderDisabledSelected {
-        border: none;
-        background: ${Colour["bg-selected-disabled"]};
-    }
-
-    &.toggleContainerNoBorderDisabled {
-        border: none;
-    }
-
-    &.toggleContainerNoBorderSelected {
-        border: none;
-        background: ${Colour["bg-selected"]};
-
-        &:has(${HeaderContainer}:hover) {
-            @media (pointer: fine) {
-                background: ${Colour["bg-selected-hover"]};
-
-                & ${TextContainer} {
-                    color: ${Colour["text-selected-hover"]};
-                }
-
-                & ${StyledToggleIcon} {
-                    color: ${Colour["icon-selected-hover"]};
-                }
-            }
-        }
-    }
-
-    &.toggleContainerNoBorderDefault {
-        border: none;
-
-        &:has(${HeaderContainer}:hover) {
-            @media (pointer: fine) {
-                background: ${Colour["bg-hover-subtle"]};
-            }
-        }
-    }
-
-    &.toggleContainerDefaultErrorDisabled {
-        border-color: ${Colour["border-error"]};
-    }
-
-    &.toggleContainerDefaultError {
-        border-color: ${Colour["border-error"]};
-
-        &:has(${HeaderContainer}:hover) {
-            @media (pointer: fine) {
-                background: ${Colour["bg-hover-subtle"]};
-            }
-        }
-    }
-
-    &.toggleContainerDefaultDisabledSelected {
-        border-color: ${Colour["border-selected-disabled"]};
-        background: ${Colour["bg-selected-disabled"]};
-    }
-
-    &.toggleContainerDefaultDisabled {
-        border-color: ${Colour["border-disabled"]};
-        background: ${Colour["bg-disabled"]};
-    }
-
-    &.toggleContainerDefaultSelected {
-        border-color: ${Colour["border-selected"]};
-        background: ${Colour["bg-selected"]};
-
-        &:has(${HeaderContainer}:hover) {
-            @media (pointer: fine) {
-                background: ${Colour["bg-selected-hover"]};
-
-                & ${TextContainer} {
-                    color: ${Colour["text-selected-hover"]};
-                }
-
-                & ${StyledToggleIcon} {
-                    color: ${Colour["icon-selected-hover"]};
-                }
-            }
-        }
-    }
-
     &.toggleContainerDefault {
         border-color: ${Colour.border};
 
-        &:has(${HeaderContainer}:hover) {
+        &:has(.${headerContainer}:hover) {
             @media (pointer: fine) {
                 background: ${Colour["bg-hover-subtle"]};
             }
@@ -213,7 +93,121 @@ export const Container = styled.div`
     }
 `;
 
-export const Input = styled.input`
+export const noIndicatorContainer = css`
+    justify-content: center;
+`;
+
+export const useContentWidthContainer = css`
+    min-width: unset;
+`;
+
+export const toggleContainerNoBorderErrorDisabled = css`
+    border-color: ${Colour["border-error"]};
+`;
+
+export const toggleContainerNoBorderError = css`
+        border-color: ${Colour["border-error"]};
+
+        &:has(.${headerContainer}:hover) {
+            @media (pointer: fine) {
+                background: ${Colour["bg-hover-subtle"]};
+            }
+        }
+    }
+`;
+
+export const toggleContainerNoBorderDisabledSelected = css`
+    border: none;
+    background: ${Colour["bg-selected-disabled"]};
+`;
+
+export const toggleContainerNoBorderDisabled = css`
+    border: none;
+`;
+
+export const toggleContainerNoBorderSelected = css`
+    border: none;
+    background: ${Colour["bg-selected"]};
+
+    &:has(.${headerContainer}:hover) {
+        @media (pointer: fine) {
+            background: ${Colour["bg-selected-hover"]};
+
+            & .${textContainer} {
+                color: ${Colour["text-selected-hover"]};
+            }
+
+            & .${WrapperBase} {
+                color: ${Colour["icon-selected-hover"]};
+            }
+        }
+    }
+`;
+
+export const toggleContainerNoBorderDefault = css`
+    border: none;
+
+    &:has(.${headerContainer}:hover) {
+        @media (pointer: fine) {
+            background: ${Colour["bg-hover-subtle"]};
+        }
+    }
+`;
+
+export const toggleContainerDefaultErrorDisabled = css`
+    border-color: ${Colour["border-error"]};
+`;
+
+export const toggleContainerDefaultError = css`
+    border-color: ${Colour["border-error"]};
+
+    &:has(.${headerContainer}:hover) {
+        @media (pointer: fine) {
+            background: ${Colour["bg-hover-subtle"]};
+        }
+    }
+`;
+
+export const toggleContainerDefaultDisabledSelected = css`
+    border-color: ${Colour["border-selected-disabled"]};
+    background: ${Colour["bg-selected-disabled"]};
+`;
+
+export const toggleContainerDefaultDisabled = css`
+    border-color: ${Colour["border-disabled"]};
+    background: ${Colour["bg-disabled"]};
+`;
+
+export const toggleContainerDefaultSelected = css`
+    border-color: ${Colour["border-selected"]};
+    background: ${Colour["bg-selected"]};
+
+    &:has(.${headerContainer}:hover) {
+        @media (pointer: fine) {
+            background: ${Colour["bg-selected-hover"]};
+
+            & .${textContainer} {
+                color: ${Colour["text-selected-hover"]};
+            }
+
+            & .${WrapperBase} {
+                color: ${Colour["icon-selected-hover"]};
+            }
+        }
+    }
+`;
+
+export const toggleContainerDefault = css`
+    border-color: ${Colour.border};
+
+    &:has(.${headerContainer}:hover) {
+        @media (pointer: fine) {
+            background: ${Colour["bg-hover-subtle"]};
+        }
+    }
+`;
+
+export const input = css`
     position: absolute;
     height: 100%;
     width: 100%;
@@ -221,32 +215,25 @@ export const Input = styled.input`
     top: 0;
     left: 0;
 
-    &.toggleInputDisabled {
-        cursor: not-allowed;
-    }
-
-    &.toggleInputEnabled {
-        cursor: pointer;
-    }
-
     /* Hide appearance but keep it focusable using keyboard interactions */
     appearance: none;
     background: transparent;
     border: none;
 `;
-export const InputContainer = styled.div`
+
+export const toggleInputDisabled = css`
+    cursor: not-allowed;
+`;
+
+export const toggleInputEnabled = css`
+    cursor: pointer;
+`;
+
+export const inputContainer = css`
     display: flex;
 `;
 
-export const Label = styled.label<LabelStyleProps & { $selected?: boolean }>`
-    &.toggleLabelSelected {
-        ${Font["body-baseline-semibold"]}
-    }
-
-    &.toggleLabelDefault {
-        ${Font["body-baseline-regular"]}
-    }
-
+export const label = css`
     overflow: hidden;
     display: -webkit-box;
     text-overflow: ellipsis;
@@ -266,7 +253,15 @@ export const Label = styled.label<LabelStyleProps & { $selected?: boolean }>`
     }
 `;
 
-export const SubLabel = styled.div`
+export const toggleLabelDefault = css`
+    ${Font["body-baseline-regular"]}
+`;
+
+export const toggleLabelSelected = css`
+    ${Font["body-baseline-semibold"]}
+`;
+
+export const subLabel = css`
     ${Font["body-md-regular"]}
     margin-top: 0.5rem;
 
@@ -279,19 +274,19 @@ export const SubLabel = styled.div`
     }
 `;
 
-export const IndicatorLabelContainer = styled.div`
+export const indicatorLabelContainer = css`
     display: flex;
     height: 100%;
     width: 100%;
     position: relative;
     padding: 0.6875rem 1rem;
-
-    &.indicatorLabelContainerAddPadding {
-        padding: 0.6875rem 0rem 0.6875rem 1rem;
-    }
 `;
 
-export const RemoveButton = styled.button`
+export const indicatorLabelContainerAddPadding = css`
+    padding: 0.6875rem 0rem 0.6875rem 1rem;
+`;
+
+export const removeButton = css`
     color: ${Colour["text-error"]};
     white-space: nowrap;
     ${Font["body-md-semibold"]}
@@ -300,14 +295,14 @@ export const RemoveButton = styled.button`
     border: none;
     background: none;
     cursor: pointer;
-
-    &.removeButtonDisabled {
-        color: ${Colour["text-disabled"]};
-        cursor: not-allowed;
-    }
 `;
 
-export const ExpandButton = styled.button`
+export const removeButtonDisabled = css`
+    color: ${Colour["text-disabled"]};
+    cursor: not-allowed;
+`;
+
+export const expandButton = css`
     color: ${Colour["text-primary"]};
     ${Font["body-baseline-semibold"]}
     display: flex;
@@ -320,15 +315,6 @@ export const ExpandButton = styled.button`
     padding-top: 0rem;
     width: 100%;
 
-    &.expandButtonDisabled {
-        color: ${Colour["text-disabled"]};
-        cursor: not-allowed;
-    }
-
-    &.expandButtonPaddingTopRequired {
-        padding-top: 0.6875rem;
-    }
-
     svg {
         width: 1em;
         height: 1em;
@@ -336,57 +322,66 @@ export const ExpandButton = styled.button`
     }
 `;
 
-export const ErrorContainer = styled.div`
+export const expandButtonDisabled = css`
+    color: ${Colour["text-disabled"]};
+    cursor: not-allowed;
+`;
+
+export const expandButtonPaddingTopRequired = css`
+    padding-top: 0.6875rem;
+`;
+
+export const errorContainer = css`
     width: 100%;
     color: ${Colour["text-error"]};
     border: none;
     background: ${Colour.bg};
     cursor: pointer;
     padding: 0.6875rem 1rem 0.5rem 1rem;
-
-    &.errorContainerDisabled {
-        color: ${Colour["text-disabled"]};
-        cursor: not-allowed;
-    }
 `;
 
-export const AlertContainer = styled(Alert)`
+export const errorContainerDisabled = css`
+    color: ${Colour["text-disabled"]};
+    cursor: not-allowed;
+`;
+
+export const alertContainer = css`
     width: 100%;
     user-select: none;
 `;
 
-export const Children = styled.div`
+export const children = css`
     padding: 0 1rem;
     padding-top: 0.6875rem;
     padding-bottom: 0.5rem;
     background-color: ${Colour.bg};
     color: ${Colour.text};
-
-    &.childrenIsFinalItem {
-        padding-bottom: 0.6875rem;
-    }
-
-    &.childrenDisabled {
-        color: ${Colour["text-disabled"]};
-    }
-
-    &.childrenSelected {
-        color: ${Colour["text-selected"]};
-    }
 `;
 
-export const ErrorText = styled(Typography.BodyMD)`
-    color: ${Colour["text-error"]};
-
-    &.errorTextDisabled {
-        color: ${Colour["text-disabled"]};
-    }
+export const childrenIsFinalItem = css`
+    padding-bottom: 0.6875rem;
 `;
 
-export const ErrorList = styled(TextList.Ul)`
-    color: ${Colour["text-error"]};
+export const childrenSelected = css`
+    color: ${Colour["text-selected"]};
+`;
 
-    &.errorListDisabled {
-        color: ${Colour["text-disabled"]};
-    }
+export const childrenDisabled = css`
+    color: ${Colour["text-disabled"]};
+`;
+
+export const errorText = css`
+    color: ${Colour["text-error"]};
+`;
+
+export const errorTextDisabled = css`
+    color: ${Colour["text-disabled"]};
+`;
+
+export const errorList = css`
+    color: ${Colour["text-error"]};
+`;
+
+export const errorListDisabled = css`
+    color: ${Colour["text-disabled"]};
 `;
