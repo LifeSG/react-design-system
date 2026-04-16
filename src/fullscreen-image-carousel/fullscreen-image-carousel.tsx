@@ -366,6 +366,7 @@ export const Component = (
 
         return (
             <FileInfoTextWrapper
+                $centerContent={!trimmedSize}
                 aria-live="polite"
                 aria-atomic="true"
                 data-testid="file-info-bar"

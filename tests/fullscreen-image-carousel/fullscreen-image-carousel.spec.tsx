@@ -281,7 +281,7 @@ describe("Fullscreen Image Carousel", () => {
             ).not.toBeInTheDocument();
         });
 
-        it("should render file info bar but no text for a slide that has no fileName or fileSize", () => {
+        it("should render fileName without fileSize for a slide that has no fileSize", () => {
             render(
                 <FullscreenImageCarousel
                     items={IMAGES_WITH_FILE_INFO}
@@ -291,9 +291,9 @@ describe("Fullscreen Image Carousel", () => {
             );
 
             expect(screen.getByTestId("file-info-bar")).toBeInTheDocument();
-            expect(
-                screen.queryByTestId("file-info-name")
-            ).not.toBeInTheDocument();
+            expect(screen.getByTestId("file-info-name")).toHaveTextContent(
+                "photo-d.jpg"
+            );
             expect(
                 screen.queryByTestId("file-info-size")
             ).not.toBeInTheDocument();
@@ -318,23 +318,6 @@ describe("Fullscreen Image Carousel", () => {
             );
             expect(screen.getByTestId("file-info-size")).toHaveTextContent(
                 "840 KB"
-            );
-        });
-
-        it("should not render fileName when only fileSize is provided", () => {
-            render(
-                <FullscreenImageCarousel
-                    items={IMAGES_WITH_FILE_INFO}
-                    show={true}
-                    initialActiveItemIndex={2}
-                />
-            );
-
-            expect(
-                screen.queryByTestId("file-info-name")
-            ).not.toBeInTheDocument();
-            expect(screen.getByTestId("file-info-size")).toHaveTextContent(
-                "500 KB"
             );
         });
 
@@ -414,7 +397,11 @@ const IMAGES_WITH_FILE_INFO = [
     },
     {
         src: "https://picsum.photos/id/369/1000/1000",
+        fileName: "photo-c.jpg",
         fileSize: "500 KB",
     },
-    { src: "https://picsum.photos/id/445/300/300" },
+    {
+        src: "https://picsum.photos/id/445/300/300",
+        fileName: "photo-d.jpg",
+    },
 ];

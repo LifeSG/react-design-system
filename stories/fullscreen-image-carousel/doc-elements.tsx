@@ -1,4 +1,4 @@
-import { FullscreenCarouselItemProps } from "src/fullscreen-image-carousel";
+import { FullscreenImageCarouselImageItemProps } from "src/fullscreen-image-carousel";
 
 const RESOLUTIONS = [
     [1600, 900],
@@ -11,7 +11,7 @@ const RESOLUTIONS = [
 ];
 
 export const getImages = (size: number) => {
-    const images: FullscreenCarouselItemProps[] = [];
+    const images: FullscreenImageCarouselImageItemProps[] = [];
     for (let i = 0; i < size; i++) {
         const [width, height] = RESOLUTIONS[i % RESOLUTIONS.length];
         images.push({

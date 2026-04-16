@@ -29,6 +29,10 @@ interface TopActionButtonsStyleProps extends InsetStyleProps {
     $hasFileInfo?: boolean | undefined;
 }
 
+interface FileInfoTextWrapperStyleProps {
+    $centerContent?: boolean | undefined;
+}
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -368,7 +372,7 @@ export const ThumbnailImage = styled(StatefulImage)`
 // FILE INFO BAR STYLING
 // -----------------------------------------------------------------------------
 
-export const FileInfoTextWrapper = styled.div`
+export const FileInfoTextWrapper = styled.div<FileInfoTextWrapperStyleProps>`
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -379,6 +383,11 @@ export const FileInfoTextWrapper = styled.div`
         ${Font.Spec["body-lh-baseline"]} + ${Spacing["spacing-8"]} +
             ${Font.Spec["body-lh-md"]}
     );
+    ${(props) =>
+        props.$centerContent &&
+        css`
+            justify-content: center;
+        `}
 `;
 
 export const FileInfoFileName = styled(Typography.BodyBL)`

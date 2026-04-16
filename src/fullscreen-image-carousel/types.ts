@@ -8,12 +8,11 @@ export interface FullscreenImageCarouselRef {
     goToNextItem: () => void;
 }
 
-export interface FullscreenImageCarouselProps
+export interface FullscreenImageCarouselBaseProps
     extends Pick<
         ModalProps,
         "show" | "rootComponentId" | "animationFrom" | "zIndex"
     > {
-    items: FullscreenImageCarouselItemProps[];
     /** The index of the visible item, starts from 0 */
     initialActiveItemIndex?: number | undefined;
     hideThumbnail?: boolean | undefined;
@@ -27,14 +26,22 @@ export interface FullscreenImageCarouselProps
     insets?: Insets | undefined;
 }
 
+type FullscreenCarouselItemBase =
+    | FullscreenImageCarouselImageItemProps
+    | FullscreenImageCarouselCustomItemProps;
+
+export type FullscreenImageCarouselProps = FullscreenImageCarouselBaseProps & {
+    items:
+        | (FullscreenCarouselItemBase & FullscreenCarouselItemWithFileName)[]
+        | (FullscreenCarouselItemBase & FullscreenCarouselItemWithoutFileName)[];
+};
+
 export interface FullscreenImageCarouselImageItemProps {
     type?: "image" | undefined;
     src: string;
     alt?: string | undefined;
     thumbnailSrc?: string | undefined;
     renderContent?: never;
-    fileName?: string | undefined;
-    fileSize?: string | undefined;
 }
 
 /** @deprecated Use FullscreenImageCarouselImageItemProps instead */
@@ -48,13 +55,20 @@ export interface FullscreenImageCarouselCustomItemProps {
     itemLabel?: string | undefined;
     /** Render prop for the full slide area. Consumer is responsible for the entire slide content (e.g. an iframe, embed, or custom viewer). */
     renderContent: () => React.ReactNode;
-    fileName?: string | undefined;
+}
+
+export interface FullscreenCarouselItemWithFileName {
+    fileName: string;
     fileSize?: string | undefined;
 }
 
-export type FullscreenImageCarouselItemProps =
-    | FullscreenImageCarouselImageItemProps
-    | FullscreenImageCarouselCustomItemProps;
+export interface FullscreenCarouselItemWithoutFileName {
+    fileName?: undefined;
+    fileSize?: undefined;
+}
+
+export type FullscreenImageCarouselItemProps = FullscreenCarouselItemBase &
+    (FullscreenCarouselItemWithFileName | FullscreenCarouselItemWithoutFileName);
 
 export interface ImageDimension {
     width: number;

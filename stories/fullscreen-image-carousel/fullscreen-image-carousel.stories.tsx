@@ -228,10 +228,12 @@ export const WithFileInfo: StoryObj<Component> = {
                         },
                         {
                             src: "https://picsum.photos/id/445/300/300",
+                            fileName: "small-photo.jpg",
                             fileSize: "320 KB",
                         },
                         {
                             src: "https://picsum.photos/id/237/800/600",
+                            fileName: "dog-photo.jpg",
                         },
                     ]}
                     show={show}
