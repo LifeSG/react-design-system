@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { V3_Colour, V3_Font } from "../../v3_theme";
+import { Colour, Font } from "../../theme";
 import type { DropdownVariantType, TruncateType } from "../dropdown-list/types";
 import { lineClampCss } from "../styles";
 
@@ -53,7 +53,7 @@ export const LabelContainer = styled.div<LabelContainerStyleProps>`
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${V3_Colour["text-disabled"]};
+                color: ${Colour["text-disabled"]};
             `;
         }
     }}
@@ -62,8 +62,8 @@ export const LabelContainer = styled.div<LabelContainerStyleProps>`
 export const ValueLabel = styled.div<ValueLabelStyleProps>`
     ${(props) =>
         props.$variant === "small"
-            ? V3_Font["body-md-regular"]
-            : V3_Font["body-baseline-regular"]}
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]}
     text-align: left;
     ${(props) => {
         switch (props.$truncateType) {
@@ -80,5 +80,5 @@ export const ValueLabel = styled.div<ValueLabelStyleProps>`
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
-    color: ${V3_Colour["text-subtler"]};
+    color: ${Colour["text-subtler"]};
 `;
