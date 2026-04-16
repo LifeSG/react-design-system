@@ -10,6 +10,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 import { Virtuoso } from "react-virtuoso";
 
 import { Markup } from "../../markup";
+import { useApplyStyle } from "../../theme";
 import {
     mergeRefs,
     useEvent,
@@ -253,6 +254,12 @@ export const NestedDropdownList = <T,>({
         }
     };
 
+    const containerWidthStyle: React.CSSProperties = width
+        ? { width }
+        : matchElementWidth && elementWidth
+        ? { width: elementWidth }
+        : {};
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -402,6 +409,15 @@ export const NestedDropdownList = <T,>({
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
     }, [focusedIndex, virtuosoIndex, mounted]);
+
+    // =========================================================================
+    // APPLY STYLE
+    // =========================================================================
+
+    useApplyStyle(nodeRef, {
+        ...floatingStyles,
+        ...containerWidthStyle,
+    });
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -708,17 +724,10 @@ export const NestedDropdownList = <T,>({
         );
     };
 
-    const containerWidthStyle: React.CSSProperties = width
-        ? { width }
-        : matchElementWidth && elementWidth
-        ? { width: elementWidth }
-        : {};
-
     return (
         <div
             data-testid="dropdown-container"
             ref={mergeRefs(nodeRef, setFloatingRef)}
-            style={{ ...floatingStyles, ...containerWidthStyle }}
             {...getFloatingProps()}
             className={clsx(
                 styles.container,
