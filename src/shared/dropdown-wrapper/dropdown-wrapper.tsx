@@ -1,28 +1,8 @@
 import clsx from "clsx";
-import type React from "react";
+import { forwardRef } from "react";
 
-import type { DropdownVariantType, TruncateType } from "../dropdown-list/types";
 import * as styles from "./dropdown-wrapper.styles";
-
-// =============================================================================
-// SHARED PROPS
-// =============================================================================
-
-interface ValueLabelProps {
-    variant?: DropdownVariantType;
-    truncateType?: TruncateType;
-    children?: React.ReactNode;
-}
-
-interface LabelContainerProps {
-    disabled?: boolean;
-    children?: React.ReactNode;
-    ref?: React.Ref<HTMLDivElement>;
-}
-
-// =============================================================================
-// COMPONENTS
-// =============================================================================
+import type { LabelContainerProps, ValueLabelProps } from "./types";
 
 export const ValueLabel = ({
     variant,
@@ -52,12 +32,16 @@ export const PlaceholderLabel = ({
     </div>
 );
 
-export const LabelContainer = ({
-    disabled,
-    children,
-    ref,
-}: LabelContainerProps) => (
-    <div className={styles.labelContainer} data-disabled={disabled} ref={ref}>
-        {children}
-    </div>
+export const LabelContainer = forwardRef<HTMLDivElement, LabelContainerProps>(
+    function LabelContainer({ disabled, children }, ref) {
+        return (
+            <div
+                className={styles.labelContainer}
+                data-disabled={disabled}
+                ref={ref}
+            >
+                {children}
+            </div>
+        );
+    }
 );
