@@ -7,29 +7,24 @@ export const wrapper = css`
     height: 100%;
     display: flex;
     flex: 1;
-
-    &[data-wrap="true"] {
-        /* Parent container need to provide space */
-        flex-wrap: wrap;
-
-        [data-id="range-container-elem1-container"],
-        [data-id="range-container-elem2-container"] {
-            // 100% - Icon size - 2padding
-            max-width: calc(
-                100% - ${Font.Spec["body-size-baseline"]} -
-                    ${Spacing["spacing-16"]}
-            );
-            flex: unset;
-        }
-
-        [data-id="range-container-elem2-container"] {
-            margin-top: ${Spacing["spacing-8"]};
-        }
-    }
 `;
 
-export const breakElement = css`
-    width: 100%; // Force next flex item to break to next line
+export const wrapperWrap = css`
+    /* Parent container need to provide space */
+    flex-wrap: wrap;
+
+    [data-id="range-container-elem1-container"],
+    [data-id="range-container-elem2-container"] {
+        // 100% - Icon size - 2padding
+        max-width: calc(
+            100% - ${Font.Spec["body-size-baseline"]} - ${Spacing["spacing-16"]}
+        );
+        flex: unset;
+    }
+
+    [data-id="range-container-elem2-container"] {
+        margin-top: ${Spacing["spacing-8"]};
+    }
 `;
 
 export const elementContainer = css`
@@ -47,6 +42,10 @@ export const arrowRight = css`
     align-self: center;
 `;
 
+export const lineBreak = css`
+    width: 100%; // Force next flex item to break to next line
+`;
+
 export const indicator = css`
     position: absolute;
     background: ${Colour["border-focus-strong"]};
@@ -61,10 +60,6 @@ export const indicator = css`
     bottom: 0;
     opacity: 0;
 
-    &[data-error="true"] {
-        background: ${Colour["border-error-focus-strong"]};
-    }
-
     &[data-position="start"] {
         opacity: 1;
     }
@@ -73,12 +68,12 @@ export const indicator = css`
         left: calc(50% + ${Spacing["spacing-16"]});
         opacity: 1;
     }
+`;
 
-    &[data-position="none"] {
-        opacity: 0;
-    }
+export const indicatorError = css`
+    background: ${Colour["border-error-focus-strong"]};
+`;
 
-    &[data-wrap="true"] {
-        display: none;
-    }
+export const indicatorWrap = css`
+    display: none;
 `;

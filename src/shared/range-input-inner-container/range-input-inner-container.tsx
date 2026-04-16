@@ -25,8 +25,11 @@ export const RangeInputInnerContainer = ({
     // =========================================================================
     return (
         <div
-            className={clsx(styles.wrapper, className)}
-            data-wrap={wrap ? "true" : undefined}
+            className={clsx(
+                styles.wrapper,
+                wrap && styles.wrapperWrap,
+                className
+            )}
         >
             <div
                 className={styles.elementContainer}
@@ -35,7 +38,7 @@ export const RangeInputInnerContainer = ({
                 {elem1}
             </div>
             <ArrowRightIcon aria-hidden="true" className={styles.arrowRight} />
-            {wrap && <div className={styles.breakElement} />}
+            {wrap && <div className={styles.lineBreak} />}
             <div
                 className={styles.elementContainer}
                 data-id="range-container-elem2-container"
@@ -43,11 +46,13 @@ export const RangeInputInnerContainer = ({
                 {elem2}
             </div>
             <div
-                className={styles.indicator}
+                className={clsx(
+                    styles.indicator,
+                    error && styles.indicatorError,
+                    wrap && styles.indicatorWrap
+                )}
                 data-id="range-container-indicator"
-                data-error={error ? "true" : undefined}
                 data-position={currentActive}
-                data-wrap={wrap ? "true" : undefined}
             />
         </div>
     );
