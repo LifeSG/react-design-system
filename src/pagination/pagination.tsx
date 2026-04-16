@@ -7,8 +7,11 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
 import React, { useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
+import { ThemeContext } from "styled-components";
 import { InputSelect } from "../input-select";
+import { VisuallyHidden } from "../shared/accessibility";
 import { Breakpoint } from "../theme";
+import { SimpleIdGenerator } from "../util";
 import {
     EllipsisButton,
     EllipsisContainer,
@@ -25,9 +28,6 @@ import {
     PaginationWrapper,
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
-import { ThemeContext } from "styled-components";
-import { VisuallyHidden } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
 
 const Component = (
     {
@@ -396,7 +396,11 @@ const Component = (
             </PaginationList>
             {showPageSizeChanger && !isMobile && (
                 <InputSelectWrapper>
+                    <VisuallyHidden id={`${paginationId}-page-size`}>
+                        Items per page
+                    </VisuallyHidden>
                     <InputSelect
+                        aria-labelledby={`${paginationId}-page-size`}
                         options={pageSizeOptions}
                         valueExtractor={(item) => item.value}
                         listExtractor={(item) => item.label}
