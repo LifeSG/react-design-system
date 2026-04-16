@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Divider } from "src/divider";
-import { V3_Colour } from "src/v3_theme";
+import { Colour } from "src/theme";
 import {
     FullWidthStoryDecorator,
     GridDecorator,
@@ -74,10 +74,10 @@ export const Customisations: StoryObj<Component> = {
             <>
                 <Divider color="red" />
                 <Divider lineStyle="dashed" color="red" />
-                <Divider color={V3_Colour.Primitive["secondary-50"]} />
+                <Divider color={Colour.Primitive["secondary-50"]} />
                 <Divider
                     lineStyle="dashed"
-                    color={V3_Colour.Primitive["secondary-50"]}
+                    color={Colour.Primitive["secondary-50"]}
                 />
                 <Divider thickness={5} />
                 <Divider lineStyle="dashed" thickness={5} />
@@ -88,9 +88,9 @@ export const Customisations: StoryObj<Component> = {
         GridDecorator({
             columns: 1,
             rowHeaders: [
-                "V3_Colour string",
+                "Colour string",
                 "",
-                "V3_Colour token",
+                "Colour token",
                 "",
                 "Thickness",
                 "",

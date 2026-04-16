@@ -4,11 +4,11 @@ import { SingpassButton } from "src/singpass-button";
 import { Container } from "./doc-elements";
 import { TokensTable } from "./tokens-table";
 
-type Component = typeof SingpassButton.Default;
+type Component = typeof SingpassButton;
 
 const meta: Meta<Component> = {
     title: "Selection and input/SingpassButton",
-    component: SingpassButton.Default,
+    component: SingpassButton,
 };
 
 export default meta;
@@ -18,16 +18,16 @@ export const Default: StoryObj<Component> = {
         return (
             <>
                 <Container>
-                    <SingpassButton.Large styleType="white-filled" />
-                    <SingpassButton.Large styleType="red-filled" />
+                    <SingpassButton sizeType="large" styleType="white-filled" />
+                    <SingpassButton sizeType="large" styleType="red-filled" />
                 </Container>
                 <Container>
-                    <SingpassButton.Default styleType="white-filled" />
-                    <SingpassButton.Default styleType="red-filled" />
+                    <SingpassButton styleType="white-filled" />
+                    <SingpassButton styleType="red-filled" />
                 </Container>
                 <Container>
-                    <SingpassButton.Small styleType="white-filled" />
-                    <SingpassButton.Small styleType="red-filled" />
+                    <SingpassButton sizeType="small" styleType="white-filled" />
+                    <SingpassButton sizeType="small" styleType="red-filled" />
                 </Container>
             </>
         );

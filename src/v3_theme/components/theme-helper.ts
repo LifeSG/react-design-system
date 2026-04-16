@@ -5,6 +5,7 @@ import { V3_A11yPlaygroundComponentTokenSet } from "./specs/a11yplayground-compo
 import { V3_DefaultComponentTokenSet } from "./specs/default-component-token-set";
 import { V3_LifeSGComponentTokenSet } from "./specs/lifesg-component-token-set";
 import { V3_PAComponentTokenSet } from "./specs/pa-component-token-set";
+import { V3_SMGSComponentTokenSet } from "./specs/smgs-component-token-set";
 import { V3_SPFComponentTokenSet } from "./specs/spf-component-token-set";
 import type {
     V3_AnimationTokens,
@@ -21,6 +22,7 @@ const V3_ComponentTokenSpec = {
         a11yplayground: V3_A11yPlaygroundComponentTokenSet,
         lifesg: V3_LifeSGComponentTokenSet,
         spf: V3_SPFComponentTokenSet,
+        smgs: V3_SMGSComponentTokenSet,
     },
     defaultValue: "default",
 };

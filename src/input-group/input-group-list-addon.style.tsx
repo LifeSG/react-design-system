@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { Input } from "../input";
-import { ExpandableElement } from "../shared/dropdown-list-v2";
+import { ExpandableElement } from "../shared/dropdown-list";
 import { InputBox } from "../shared/input-wrapper";
 import { V3_Colour, V3_Spacing } from "../v3_theme";
 import type { InputGroupAddonPosition } from "./types";

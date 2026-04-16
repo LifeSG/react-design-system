@@ -1,58 +1,71 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import styled, { css } from "styled-components";
 
-import { V3_Colour, V3_Radius, V3_Spacing } from "../../v3_theme";
+import { V3_Colour, V3_Font, V3_Radius, V3_Spacing } from "../../v3_theme";
 import { ClickableIcon } from "../clickable-icon";
 import { BasicInput } from "../input-wrapper";
-import type { DropdownVariantType, IconProps } from "./types";
+import type { DropdownVariantType } from "./types";
 
-const getIconSize = (variant?: DropdownVariantType) => {
-    return variant === "small" ? 1 : 1.375;
-};
-const getCssHeightAndWidth = (variant?: DropdownVariantType) => {
-    return css`
-        height: ${getIconSize(variant)}rem;
-        width: ${getIconSize(variant)}rem;
-    `;
-};
+//=============================================================================
+// STYLE INTERFACE
+//=============================================================================
+export interface StyleProps {
+    $variant: DropdownVariantType | undefined;
+}
 
-export const Container = styled.li`
+//=============================================================================
+// STYLING
+//=============================================================================
+export const Container = styled.div<StyleProps>`
     background: ${V3_Colour["bg-strong"]};
-    display: flex;
     border-radius: ${V3_Radius["sm"]};
+    display: flex;
     align-items: center;
+
+    ${(props) =>
+        props.$variant === "small"
+            ? V3_Font["body-md-regular"]
+            : V3_Font["body-baseline-regular"]}
+`;
+
+export const SearchBox = styled.label<StyleProps>`
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: ${V3_Spacing["spacing-8"]};
+    padding: ${(props) =>
+        props.$variant === "small"
+            ? css`
+                  ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]}
+              `
+            : // TODO: confirm vertical spacing
+              css`10px ${V3_Spacing["spacing-8"]}`};
 `;
 
 export const SearchInput = styled(BasicInput)`
-    height: ${(props) => (props.variant === "small" ? 2.5 : 3)}rem;
     flex: 1;
-    padding: 0 ${V3_Spacing["spacing-8"]} 0 0;
-    width: 100%;
 `;
 
-export const SearchIcon = styled(MagnifierIcon)<IconProps>`
-    ${(props) => {
-        return getCssHeightAndWidth(props.$variant);
-    }}
-    margin: 0 ${V3_Spacing["spacing-8"]};
+export const SearchIcon = styled(MagnifierIcon)`
     color: ${V3_Colour["icon"]};
+    flex-shrink: 0;
+    height: 1em;
+    width: 1em;
 `;
 
-export const CancelButton = styled(ClickableIcon)<IconProps>`
-    ${(props) => {
-        return getCssHeightAndWidth(props.$variant);
-    }}
-    padding: 0;
-    margin: 0 ${V3_Spacing["spacing-8"]};
+export const ClearButton = styled(ClickableIcon)`
+    flex-shrink: 0;
+    align-self: stretch;
+    box-sizing: content-box;
+    padding: ${V3_Spacing["spacing-8"]};
+    margin-left: -${V3_Spacing["spacing-8"]};
     color: ${V3_Colour["icon"]};
     cursor: pointer;
-    ${(props) => {
-        if (props.$variant === "small")
-            // override svg style in ClickableIcon
-            return css`
-                svg {
-                    ${getCssHeightAndWidth(props.$variant)}
-                }
-            `;
-    }}
+    font-size: inherit;
+
+    svg {
+        flex-shrink: 0;
+        height: 1em;
+        width: 1em;
+    }
 `;

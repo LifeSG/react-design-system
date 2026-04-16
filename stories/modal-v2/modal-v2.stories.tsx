@@ -1,10 +1,11 @@
 import { TickIcon } from "@lifesg/react-icons/tick";
+import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { ModalV2 } from "src/modal-v2";
+import { slotSpacerTokens } from "src/modal-v2/slots/slot-styles";
 import { Typography } from "src/typography";
-import styled from "styled-components";
 
 import { SlotPlayground } from "./doc-elements";
 
@@ -24,9 +25,7 @@ export const Default: StoryObj<Component> = {
         const closeModal = () => setShow(false);
         return (
             <>
-                <Button.Default onClick={openModal}>
-                    Click to open
-                </Button.Default>
+                <Button onClick={openModal}>Click to open</Button>
                 <ModalV2
                     show={show}
                     onOverlayClick={closeModal}
@@ -44,13 +43,9 @@ export const Default: StoryObj<Component> = {
                             </Typography.BodyBL>
                         </ModalV2.Content>
                         <ModalV2.Footer
-                            primaryButton={
-                                <Button.Default>Log out</Button.Default>
-                            }
+                            primaryButton={<Button>Log out</Button>}
                             secondaryButton={
-                                <Button.Default styleType="secondary">
-                                    Continue
-                                </Button.Default>
+                                <Button styleType="secondary">Continue</Button>
                             }
                         />
                     </ModalV2.Card>
@@ -71,6 +66,61 @@ export const Slots: StoryObj<Component> = {
     },
 };
 
+export const AnimationFrom: StoryObj<Component> = {
+    render: () => {
+        const [show, setShow] = useState(false);
+        const [animationFrom, setAnimationFrom] = useState<
+            "top" | "bottom" | "left" | "right"
+        >("bottom");
+        const openModal = (direction: "top" | "bottom" | "left" | "right") => {
+            setAnimationFrom(direction);
+            setShow(true);
+        };
+        const closeModal = () => setShow(false);
+
+        return (
+            <>
+                <div
+                    style={{
+                        display: "flex",
+                        gap: "0.75rem",
+                        flexWrap: "wrap",
+                    }}
+                >
+                    <Button onClick={() => openModal("top")}>
+                        Open from top
+                    </Button>
+                    <Button onClick={() => openModal("bottom")}>
+                        Open from bottom
+                    </Button>
+                    <Button onClick={() => openModal("left")}>
+                        Open from left
+                    </Button>
+                    <Button onClick={() => openModal("right")}>
+                        Open from right
+                    </Button>
+                </div>
+
+                <ModalV2
+                    show={show}
+                    animationFrom={animationFrom}
+                    onOverlayClick={closeModal}
+                    onClose={closeModal}
+                >
+                    <ModalV2.Card>
+                        <ModalV2.CloseButton />
+                        <ModalV2.Content>
+                            <Typography.BodyBL>
+                                Animation direction: {animationFrom}
+                            </Typography.BodyBL>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
+                </ModalV2>
+            </>
+        );
+    },
+};
+
 export const Footer: StoryObj<Component> = {
     render: () => {
         const [show, setShow] = useState(false);
@@ -78,9 +128,7 @@ export const Footer: StoryObj<Component> = {
         const closeModal = () => setShow(false);
         return (
             <>
-                <Button.Default onClick={openModal}>
-                    Click to open
-                </Button.Default>
+                <Button onClick={openModal}>Click to open</Button>
                 <ModalV2
                     show={show}
                     onOverlayClick={closeModal}
@@ -106,17 +154,26 @@ export const Footer: StoryObj<Component> = {
     },
 };
 
-const StyledCloseButton = styled(ModalV2.CloseButton)`
+const closeButton = css`
     margin: 0;
     padding: 8px;
 `;
 
-const StyledContent = styled(ModalV2.Content)`
+const content = css`
+    ${slotSpacerTokens.firstChildMarginTopWithCloseButton}: 0;
+    ${slotSpacerTokens.firstChildMarginTopNoCloseButton}: 0;
+    ${slotSpacerTokens.contentLastChildMarginBottom}: 0;
+
     margin: 0;
     padding: 16px 32px;
 `;
 
-const StyledFooter = styled(ModalV2.Footer)`
+const footer = css`
+    ${slotSpacerTokens.firstChildMarginTopWithCloseButton}: 0;
+    ${slotSpacerTokens.firstChildMarginTopNoCloseButton}: 0;
+    ${slotSpacerTokens.footerNotFirstChildMarginTop}: 0;
+    ${slotSpacerTokens.footerLastChildMarginBottom}: 0;
+
     margin: 0;
     padding: 16px;
 `;
@@ -129,24 +186,21 @@ export const StyledSlots: StoryObj<Component> = {
 
         return (
             <>
-                <Button.Default onClick={openModal}>
-                    Click to open
-                </Button.Default>
+                <Button onClick={openModal}>Click to open</Button>
                 <ModalV2
                     show={show}
                     onOverlayClick={closeModal}
                     onClose={closeModal}
                 >
                     <ModalV2.Card>
-                        <StyledCloseButton />
-                        <StyledContent>
+                        <ModalV2.CloseButton className={closeButton} />
+                        <ModalV2.Content className={content}>
                             Content with custom spacing
-                        </StyledContent>
-                        <StyledFooter
+                        </ModalV2.Content>
+                        <ModalV2.Footer
+                            className={footer}
                             primaryButton={
-                                <Button.Default styleType="light">
-                                    Continue
-                                </Button.Default>
+                                <Button styleType="light">Continue</Button>
                             }
                         />
                     </ModalV2.Card>
@@ -164,9 +218,7 @@ export const CustomContent: StoryObj<Component> = {
 
         return (
             <>
-                <Button.Default onClick={openModal}>
-                    Open custom modal
-                </Button.Default>
+                <Button onClick={openModal}>Open custom modal</Button>
                 <ModalV2
                     show={show}
                     onOverlayClick={closeModal}
@@ -200,13 +252,13 @@ export const StackedModals: StoryObj<Component> = {
         };
         return (
             <div>
-                <Button.Default
+                <Button
                     onClick={() => {
                         handleFirst(true);
                     }}
                 >
                     Click to open
-                </Button.Default>
+                </Button>
                 <ModalV2
                     show={showFirst}
                     onOverlayClick={() => {
@@ -224,13 +276,13 @@ export const StackedModals: StoryObj<Component> = {
                             </Typography.BodyBL>
                             <br />
                             <br />
-                            <Button.Default
+                            <Button
                                 onClick={() => {
                                     handleStacked(true);
                                 }}
                             >
                                 Click to open the stacked modal
-                            </Button.Default>
+                            </Button>
                         </ModalV2.Content>
                     </ModalV2.Card>
                 </ModalV2>
@@ -265,9 +317,7 @@ export const ScrollHandling: StoryObj<Component> = {
         const closeModal = () => setShow(false);
         return (
             <>
-                <Button.Default onClick={openModal}>
-                    Click to open
-                </Button.Default>
+                <Button onClick={openModal}>Click to open</Button>
                 <ModalV2
                     show={show}
                     onOverlayClick={closeModal}

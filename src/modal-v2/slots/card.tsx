@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { NamedExoticComponent } from "react";
 import React from "react";
 import { isStyledComponent } from "styled-components";
@@ -6,13 +7,14 @@ import type { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
 import { Content } from "./content";
 import { Footer } from "./footer";
-import { ModalCard, SlotSpacer } from "./slot-styles";
+import * as styles from "./slot-styles";
 
 function CardInner(
     {
         id,
         "data-testid": testId = "modal-card",
         children,
+        className,
         ...otherProps
     }: ModalCardProps,
     ref: React.ForwardedRef<HTMLDivElement>
@@ -48,19 +50,23 @@ function CardInner(
     const hasCloseButton = !!CloseButtonSlot;
 
     return (
-        <ModalCard
+        <div
             ref={ref}
             id={id}
             data-testid={testId}
             {...otherProps}
             onClick={handleOnClick}
+            className={clsx(styles.modalCard, className)}
         >
-            <SlotSpacer $hasCloseButton={hasCloseButton}>
+            <div
+                data-has-close-button={hasCloseButton ? "true" : "false"}
+                className={clsx(styles.slotSpacer)}
+            >
                 {ContentSlot}
                 {FooterSlot}
-            </SlotSpacer>
+            </div>
             {hasCloseButton && CloseButtonSlot}
-        </ModalCard>
+        </div>
     );
 }
 

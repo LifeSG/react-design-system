@@ -20,6 +20,9 @@ export interface FullscreenImageCarouselProps
     hideNavigation?: boolean | undefined;
     hideCounter?: boolean | undefined;
     hideMagnifier?: boolean | undefined;
+    onDelete?:
+        | ((item: FullscreenCarouselItemProps, index: number) => void)
+        | undefined;
     onClose?: (() => void) | undefined;
     insets?: Insets | undefined;
 }

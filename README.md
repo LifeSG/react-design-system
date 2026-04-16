@@ -24,39 +24,59 @@ npm i @lifesg/react-design-system
 
 ## Getting Started
 
-The module requires some custom css for certain components to work properly. As the module does not ship with css, you will need to add this into the `head` of your html file.
+The module requires some custom css for fonts and certain components to work
+properly. You will need to load the corresponding stylesheets in your app.
+
+> [!NOTE]
+> The font stylesheet example below is for the LifeSG theme. Fonts are
+> theme-specific. If you are using another theme, refer to the
+> [installation instructions](https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-installation--docs).
+
+Add this into the `head` of your html file:
 
 ```tsx
 <link
     rel="stylesheet"
     type="text/css"
-    href="https://assets.life.gov.sg/react-design-system/css/main.css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/main.css"
+/>
+<link
+    rel="stylesheet"
+    type="text/css"
+    href="https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css"
 />
 ```
 
-Or if you are importing to an existing css file
+Or if you are importing to an existing css file:
 
 ```css
-@import url("https://assets.life.gov.sg/react-design-system/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
 ```
 
 <br />
 
 ## Setting up the theme
 
-If you are intending to make use of the themes, you will need [**Styled Components**](https://styled-components.com/docs).
+To use themes, you will need [**Styled Components**](https://styled-components.com/docs).
 
-Styled components provide us with the `ThemeProvider` which you could make use of.
+To configure the theme in your project:
+
+1. Import the theme preset
+2. Wrap your components in the `ThemeProvider` context (typically at the root of the application)
+3. Pass in the theme object via the `theme` prop
+
+If a theme is not specified, components will use LifeSG as the default.
 
 ```tsx
 // app.tsx
+import { LifeSGTheme } from "@lifesg/react-design-system/theme";
 import { ThemeProvider } from "styled-components";
-import { BaseTheme } from "@lifesg/react-design-system/theme";
 import { Component } from "./index";
 
 const App = () => {
     return (
-        <ThemeProvider theme={BaseTheme}>
+        <ThemeProvider theme={LifeSGTheme}>
             <Component />
         </ThemeProvider>
     );
@@ -65,7 +85,7 @@ const App = () => {
 export default App;
 ```
 
-For more information on the usage of themes, you can visit our [documentation](https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-themes--docs) about it.
+For more information on themes and available presets, visit our [documentation](https://designsystem.life.gov.sg/react/index.html?path=/docs/foundations-themes-introduction--docs).
 
 <br />
 

@@ -1,9 +1,14 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { animated } from "@react-spring/web";
+import { SquareIcon } from "@lifesg/react-icons/square";
+import { SquareFillIcon } from "@lifesg/react-icons/square-fill";
+import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
+import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
 
-import { Checkbox } from "../../checkbox";
+import { Markup } from "../../markup";
 import {
+    V3_Border,
+    V3_Breakpoint,
     V3_Colour,
     V3_Font,
     V3_MediaQuery,
@@ -11,39 +16,22 @@ import {
     V3_Spacing,
 } from "../../v3_theme";
 import { ComponentLoadingSpinner } from "../component-loading-spinner";
-import type {
-    DropdownVariantType,
-    IconProps,
-    LabelDisplayType,
-    TruncateType,
-} from "./types";
+import { BasicButton } from "../input-wrapper";
+import type { DropdownVariantType } from "./types";
 
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
-interface ListContainerProps {
-    $width?: string;
+interface ContainerStyleProps {
+    $width?: number;
+    $customWidth?: string;
+    $variant: DropdownVariantType;
 }
 
-interface ListItemProps {
-    $checked?: boolean;
-}
-
-interface ListItemSelectorProps {
-    $multiSelect?: boolean;
-    $hasNextLineLabel?: boolean;
-    $variant?: DropdownVariantType;
-}
-
-interface LabelProps {
-    $truncateType?: TruncateType;
-    $maxLines?: number;
-    $labelDisplayType?: LabelDisplayType;
-    $variant?: DropdownVariantType;
-}
-
-interface ResultStateProps {
-    $variant?: DropdownVariantType;
+export interface ListItemStyleProps {
+    $active: boolean;
+    $selected: boolean;
+    $disabled: boolean;
 }
 
 // =============================================================================
@@ -53,21 +41,45 @@ interface ResultStateProps {
 // -----------------------------------------------------------------------------
 // MAIN STYLES
 // -----------------------------------------------------------------------------
+export const Container = styled.div<ContainerStyleProps>`
+    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        ${V3_Colour["border"]};
+    border-radius: ${V3_Radius["sm"]};
+    background: ${V3_Colour["bg"]};
 
-export const Container = animated(styled.div`
+    --x-spacing: 0px;
+    --available-width: calc(100vw - var(--x-spacing) * 2);
+
+    ${V3_MediaQuery.MaxWidth.sm} {
+        --x-spacing: ${V3_Breakpoint["sm-margin"]}px;
+        max-height: 15rem;
+    }
+
+    ${V3_MediaQuery.MaxWidth.xs} {
+        --x-spacing: ${V3_Breakpoint["xs-margin"]}px;
+    }
+
+    ${V3_MediaQuery.MaxWidth.xxs} {
+        --x-spacing: ${V3_Breakpoint["xxs-margin"]}px;
+    }
+
+    max-width: var(--available-width);
+
+    ${(props) => {
+        if (props.$customWidth) return `width: ${props.$customWidth};`;
+        if (props.$width)
+            return `width: ${props.$width}px; min-width: min(23rem, var(--available-width));`;
+
+        return "min-width: min(23rem, var(--available-width));";
+    }}
+
+    max-height: min(27rem, var(--available-height, infinity * 1px));
     overflow: hidden;
-    box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2);
-`);
-
-export const List = styled.ul<ListContainerProps>`
-    border-bottom-left-radius: ${V3_Radius["sm"]};
-    border-bottom-right-radius: ${V3_Radius["sm"]};
-    background: transparent;
-    max-height: 20rem;
-    width: ${(props) => props.$width || "100%"};
     overflow-y: auto;
-    padding: ${V3_Spacing["spacing-8"]};
-    list-style-type: none;
+    ${(props) =>
+        props.$variant === "small"
+            ? V3_Font["body-md-regular"]
+            : V3_Font["body-baseline-regular"]}
 
     &::-webkit-scrollbar {
         width: 14px;
@@ -83,158 +95,79 @@ export const List = styled.ul<ListContainerProps>`
         border-radius: ${V3_Radius["full"]};
         background-clip: padding-box;
     }
-
-    ${V3_MediaQuery.MaxWidth.sm} {
-        max-height: 15rem;
-    }
+`;
+export const List = styled.div`
+    background: transparent;
+    padding: ${V3_Spacing["spacing-8"]};
 `;
 
-export const ListItem = styled.li<ListItemProps>`
-    &:hover,
-    &:focus,
-    &:active {
-        background: ${V3_Colour["bg-hover"]};
-    }
-    ${(props) => {
-        if (props.$checked) {
-            return css`
-                background: ${V3_Colour["bg-selected"]};
-                &:hover,
-                &:focus,
-                &:active {
-                    background: ${V3_Colour["bg-selected-hover"]};
-                }
-            `;
-        }
-    }}
+export const Listbox = styled.ul`
+    list-style-type: none;
 `;
 
-export const ListItemSelector = styled.button<ListItemSelectorProps>`
+// -----------------------------------------------------------------------------
+// LIST ITEM STYLES
+// -----------------------------------------------------------------------------
+
+export const ListItem = styled.li<ListItemStyleProps>`
     display: flex;
-    ${(props) => {
-        if (props.$multiSelect) {
-            return css`
-                padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]};
-            `;
-        } else {
-            return css`
-                padding: 15px ${V3_Spacing["spacing-16"]}; // TODO: confirm vertical spacing
-                align-items: center;
-            `;
-        }
-    }}
-    margin: 0 -${V3_Spacing["spacing-8"]};
+    align-items: flex-start;
+    gap: ${V3_Spacing["spacing-8"]};
+    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-8"]};
+    cursor: pointer;
     border: none;
     border-radius: ${V3_Radius["none"]};
-    background: transparent;
-    width: 100%;
-    cursor: pointer;
-
-    &:hover,
-    &:visited,
-    &:focus,
-    &:active {
-        outline-color: ${V3_Colour["border-focus"]};
-    }
-
-    span {
-        margin-bottom: 0;
-    }
-`;
-
-// -----------------------------------------------------------------------------
-// LIST ITEM LABEL STYLES
-// -----------------------------------------------------------------------------
-
-const lineClampCss = css<LabelProps>`
-    overflow: hidden;
-    display: -webkit-inline-box;
-    text-overflow: ellipsis;
-    -webkit-line-clamp: ${(props) => props.$maxLines || 2};
-    -webkit-box-orient: vertical;
-    overflow-wrap: break-word;
-`;
-
-export const PrimaryText = styled.div<LabelProps>`
-    ${(props) =>
-        props.$variant === "small"
-            ? V3_Font["body-md-regular"]
-            : V3_Font["body-baseline-regular"]}
-    color: ${V3_Colour["text"]};
-    width: 100%;
-
-    ${(props) => props.$truncateType === "end" && lineClampCss}
-`;
-
-export const SecondaryText = styled.div<LabelProps>`
-    color: ${V3_Colour["text-subtlest"]};
-    width: 100%;
-
-    ${(props) => props.$truncateType === "end" && lineClampCss}
+    outline: none;
 
     ${(props) => {
-        switch (props.$labelDisplayType) {
-            case "next-line":
-                return css`
-                    ${V3_Font["body-md-semibold"]}
-                `;
-            case "inline":
-            default:
-                return css`
-                    ${V3_Font["body-baseline-regular"]}
-                `;
+        if (props.$disabled) {
+            return css`
+                cursor: not-allowed;
+            `;
+        } else if (props.$active && props.$selected) {
+            return css`
+                background: ${V3_Colour["bg-hover"]};
+            `;
+        } else if (props.$active) {
+            return css`
+                background: ${V3_Colour["bg-hover-subtle"]};
+            `;
         }
     }}
 `;
 
-export const Label = styled.div<LabelProps>`
-    text-align: left;
-    width: 100%;
-
-    ${(props) => {
-        switch (props.$labelDisplayType) {
-            case "next-line":
-                return css`
-                    display: flex;
-                    flex-direction: column;
-                `;
-            case "inline":
-                return css`
-                    ${PrimaryText} {
-                        display: inline;
-                    }
-
-                    ${SecondaryText} {
-                        display: inline;
-                        margin-left: ${V3_Spacing["spacing-8"]};
-                    }
-                `;
-        }
-    }}
-`;
-
-export const TruncateFirstLine = styled.div<LabelProps>`
-    display: inline-block;
-    width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
-    height: 1lh;
-    word-break: break-all;
-    overflow: hidden;
-`;
-
-export const TruncateSecondLine = styled.div<LabelProps>`
-    display: inline-block;
-    width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
-    height: 1lh;
-    text-overflow: ellipsis;
-    white-space: nowrap;
-    overflow: hidden;
-    direction: rtl;
-    text-align: right;
-`;
-
-export const ListCheckbox = styled(Checkbox)`
+export const SelectedIndicator = styled(TickIcon)`
     flex-shrink: 0;
-    margin-right: ${V3_Spacing["spacing-16"]};
+    height: 1lh;
+    width: 1rem;
+    color: ${V3_Colour["icon-selected"]};
+`;
+
+export const UnselectedIndicator = styled.div`
+    flex-shrink: 0;
+    height: 1lh;
+    width: 1rem;
+`;
+
+export const CheckboxSelectedIndicator = styled(SquareTickFillIcon)`
+    flex-shrink: 0;
+    height: 1lh;
+    width: 1lh;
+    color: ${V3_Colour["icon-selected"]};
+`;
+
+export const CheckboxUnselectedIndicator = styled(SquareIcon)`
+    flex-shrink: 0;
+    height: 1lh;
+    width: 1lh;
+    color: ${V3_Colour["icon-primary-subtlest"]};
+`;
+
+export const CheckboxDisabledIndicator = styled(SquareFillIcon)`
+    flex-shrink: 0;
+    height: 1lh;
+    width: 1lh;
+    color: ${V3_Colour["icon-disabled-subtle"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -245,43 +178,45 @@ export const SelectAllContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    padding: ${V3_Spacing["spacing-16"]} 0 ${V3_Spacing["spacing-8"]} 0;
 `;
 
-export const DropdownCommonButton = styled.button<LabelProps>`
-    ${(props) =>
-        props.$variant === "small"
-            ? V3_Font["body-md-semibold"]
-            : V3_Font["body-baseline-semibold"]}
-    background-color: transparent;
-    background-repeat: no-repeat;
-    border: none;
+export const DropdownCommonButton = styled(BasicButton)`
     cursor: pointer;
     overflow: hidden;
-    outline: none;
     color: ${V3_Colour["text-primary"]};
+    font-size: inherit;
 `;
 
-export const ResultStateContainer = styled.div<ResultStateProps>`
+export const TryAgainButton = styled(DropdownCommonButton)`
+    ${V3_Font["body-baseline-semibold"]}
+`;
+
+export const SelectAllButton = styled(DropdownCommonButton)`
+    ${V3_Font["body-md-semibold"]}
+    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-8"]};
+`;
+
+export const ResultStateContainer = styled.div`
     width: 100%;
     display: flex;
-    padding: 15px ${V3_Spacing["spacing-16"]}; // TODO: confirm vertical padding
+    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-16"]};
     align-items: center;
-
-    ${(props) =>
-        props.$variant === "small"
-            ? V3_Font["body-md-regular"]
-            : V3_Font["body-baseline-regular"]}
 `;
 
-export const LabelIcon = styled(ExclamationCircleFillIcon)<IconProps>`
-    height: 1em;
-    width: 1em;
+export const LabelIcon = styled(ExclamationCircleFillIcon)`
     margin-right: ${V3_Spacing["spacing-4"]};
     color: ${V3_Colour["icon-error"]};
+    height: 1em;
+    width: 1em;
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)`
-    margin-right: ${V3_Spacing["spacing-4"]};
+    margin-right: ${V3_Spacing["spacing-8"]};
     color: ${V3_Colour["icon"]};
+`;
+
+export const NoResultDescContainer = styled(Markup)`
+    color: ${V3_Colour["text-subtle"]};
+    padding: 0 ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-12"]}
+        ${V3_Spacing["spacing-16"]};
 `;

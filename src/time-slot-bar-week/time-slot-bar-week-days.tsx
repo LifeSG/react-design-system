@@ -33,7 +33,6 @@ import {
 } from "./time-slot-bar-week-days.style";
 import type { TimeSlotCellsVariant } from "./types";
 
-export type DayVariant = "default" | "other-month" | "today";
 interface TimeSlotWeekDaysProps
     extends Pick<
         InternalCalendarProps,
@@ -168,9 +167,9 @@ export const TimeSlotBarWeekDays = ({
             dayCellStyleProps.disabled = true;
         }
 
-        dayCellStyleProps.interactive = !enableSelection
-            ? null
-            : isHoverEnabled;
+        dayCellStyleProps.interactive = enableSelection
+            ? isHoverEnabled
+            : false;
 
         const isHover =
             isHoverEnabled && hoverDay && day.isSame(hoverDay, "day");

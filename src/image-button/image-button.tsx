@@ -21,12 +21,14 @@ const Component = (
     }: ImageButtonProps,
     ref: ButtonRef
 ) => {
+    const isNativeDisabled = !!disabled && !focusableWhenDisabled;
+
     return (
         <button
             ref={ref}
             type={type}
             aria-disabled={disabled}
-            disabled={disabled && !focusableWhenDisabled}
+            disabled={isNativeDisabled}
             onClick={disabled ? undefined : onClick}
             className={clsx(
                 styles.main,

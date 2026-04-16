@@ -13,7 +13,8 @@ export interface SmartAppBannerProps {
 export interface SmartAppBannerContentProps {
     title: string;
     buttonLabel: string;
-    buttonAriaLabel: string;
+    iconAriaLabel?: string | undefined;
+    buttonAriaLabel?: string | undefined;
     message?: string | undefined;
     numberOfStars: number;
 }

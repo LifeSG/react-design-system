@@ -7,12 +7,12 @@ import { useEffect, useRef, useState } from "react";
 import type {
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
-} from "../shared/dropdown-list-v2";
+} from "../shared/dropdown-list";
 import {
     buildKeyPathToSet,
     ExpandableElement,
     NestedDropdownList,
-} from "../shared/dropdown-list-v2";
+} from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,

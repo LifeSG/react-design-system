@@ -4,7 +4,7 @@ import { Markup } from "@lifesg/react-design-system/markup";
 
 export default function Story() {
     return (
-        <Markup baseTextSize="body-sm" data-testid="markup-markup">
+        <Markup baseTextSize="body-sm">
             <p>
                 This paragraph contains a <strong>bold phrase</strong> and an{" "}
                 <a href="#">

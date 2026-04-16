@@ -7,6 +7,7 @@ import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import type { CountryValue, PhoneNumberInputProps } from "./types";
 
 export const PhoneNumberInput = ({
+    id,
     onChange,
     value,
     allowClear,
@@ -22,6 +23,7 @@ export const PhoneNumberInput = ({
     placeholder,
     autoComplete,
     noBorder = false,
+    getAriaLabel,
     ...otherProps
 }: PhoneNumberInputProps) => {
     // =============================================================================
@@ -46,6 +48,9 @@ export const PhoneNumberInput = ({
                 selectedCountry
             ),
     });
+
+    const resolvedAriaLabel =
+        getAriaLabel?.(selectedCountry) ?? "Enter phone number";
 
     // =============================================================================
     // EFFECTS
@@ -158,6 +163,7 @@ export const PhoneNumberInput = ({
     // =========================================================================
     return (
         <InputGroup
+            id={id}
             ref={nodeRef}
             value={inputValue}
             onChange={handleInputChange}
@@ -169,8 +175,8 @@ export const PhoneNumberInput = ({
             addon={getAddonProps()}
             inputMode="numeric"
             autoComplete={autoComplete}
-            aria-label="Enter phone number"
             noBorder={noBorder}
+            aria-label={resolvedAriaLabel}
             {...otherProps}
         />
     );

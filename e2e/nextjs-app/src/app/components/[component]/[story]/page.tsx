@@ -9,8 +9,17 @@ export default async function Page({
 
     const Story = dynamic(
         () => import(`@/app/components/${component}/${story}.e2e`),
-        // TODO: Remove when date-range-input have stable hydation support
-        { ssr: component !== "date-range-input" }
+        // TODO: Remove when each component has stable hydration support
+        {
+            ssr: ![
+                "date-range-input",
+                "date-input",
+                "select",
+                "nested-select",
+                "multi-select",
+                "nested-multi-select",
+            ].includes(component),
+        }
     );
     return <Story />;
 }

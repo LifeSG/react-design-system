@@ -31,10 +31,11 @@ export const Toggle = ({
     className,
     compositeSection,
     removable,
-    onRemove,
-    "data-testid": testId,
-    onChange,
+    focusableWhenDisabled,
     useContentWidth,
+    onRemove,
+    onChange,
+    "data-testid": testId,
     "aria-describedby": ariaDescribedBy,
     ...otherProps
 }: ToggleProps) => {
@@ -75,6 +76,10 @@ export const Toggle = ({
                 : `${childrenMaxLines.mobile}`,
     });
 
+    const isFocusableWhenDisabled = !!disabled && !!focusableWhenDisabled;
+    const isNativeDisabled = !!disabled && !focusableWhenDisabled;
+    const isInteractionBlocked = !!disabled;
+
     // =============================================================================
     // EFFECTS
     // =============================================================================
@@ -92,27 +97,29 @@ export const Toggle = ({
     // EVENT HANDLERS
     // =============================================================================
     const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        if (!disabled) {
-            if (onChange) {
-                onChange(event);
-                return;
-            }
-            switch (type) {
-                case "checkbox":
-                    setSelected((prevSelected) => {
-                        return !prevSelected;
-                    });
-                    break;
-                case "radio":
-                case "yes":
-                case "no":
-                    {
-                        if (!selected) {
-                            setSelected(true);
-                        }
-                    }
-                    break;
-            }
+        if (isInteractionBlocked) {
+            event.preventDefault();
+            return;
+        }
+
+        if (onChange) {
+            onChange(event);
+            return;
+        }
+
+        switch (type) {
+            case "checkbox":
+                setSelected((prevSelected) => {
+                    return !prevSelected;
+                });
+                break;
+            case "radio":
+            case "yes":
+            case "no":
+                if (!selected) {
+                    setSelected(true);
+                }
+                break;
         }
     };
 
@@ -235,6 +242,7 @@ export const Toggle = ({
             />
         );
     };
+
     const renderSubLabel = () => {
         if (!subLabel) {
             return null;
@@ -284,6 +292,7 @@ export const Toggle = ({
 
     const renderExpandButton = () => {
         const collapsedWithoutErrors = !expanded && !hasCompositeSectionError;
+
         return (
             collapsible && (
                 <button
@@ -345,10 +354,12 @@ export const Toggle = ({
                                     ? styles.toggleInputDisabled
                                     : styles.toggleInputEnabled
                             )}
-                            disabled={disabled}
+                            disabled={isNativeDisabled}
+                            aria-disabled={isFocusableWhenDisabled}
                             onChange={handleOnChange}
                             onClick={handleInputClick}
                             checked={selected}
+                            tabIndex={isFocusableWhenDisabled ? 0 : undefined}
                             aria-describedby={ariaDescriptions}
                             {...otherProps}
                         />

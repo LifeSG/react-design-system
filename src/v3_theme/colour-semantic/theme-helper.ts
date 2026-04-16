@@ -11,6 +11,10 @@ import {
     V3_LifeSGDarkColourSet,
 } from "./specs/lifesg-semantic-tokens";
 import { V3_PAColourSet } from "./specs/pa-semantic-tokens";
+import {
+    V3_SGWDigitalLobbyColourSet,
+    V3_SGWDigitalLobbyDarkColourSet,
+} from "./specs/sgwdigitallobby-tokens";
 import type { V3_SemanticColourCollectionMap } from "./types";
 
 export const V3_ColourSpec: V3_ThemeCollectionSpec<
@@ -29,6 +33,8 @@ export const V3_ColourSpec: V3_ThemeCollectionSpec<
         rbs: V3_LifeSGColourSet,
         spf: V3_LifeSGColourSet,
         supportgowhere: V3_LifeSGColourSet,
+        sgwdigitallobby: V3_SGWDigitalLobbyColourSet,
+        smgs: V3_LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -49,6 +55,8 @@ export const V3_DarkColourSpec: V3_ThemeCollectionSpec<
         rbs: V3_LifeSGDarkColourSet,
         spf: V3_LifeSGDarkColourSet,
         supportgowhere: V3_LifeSGDarkColourSet,
+        sgwdigitallobby: V3_SGWDigitalLobbyDarkColourSet,
+        smgs: V3_LifeSGDarkColourSet,
     },
     defaultValue: "lifesg",
 };

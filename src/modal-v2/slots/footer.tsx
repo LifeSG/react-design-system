@@ -1,17 +1,24 @@
+import clsx from "clsx";
+
 import type { ModalFooterProps } from "../types";
-import { FooterContainer } from "./slot-styles";
+import * as styles from "./slot-styles";
 
 export const Footer = ({
     "data-testid": testId = "modal-footer",
     primaryButton,
     secondaryButton,
+    className,
     ...otherProps
 }: ModalFooterProps) => {
     return (
-        <FooterContainer data-testid={testId} {...otherProps}>
+        <div
+            data-testid={testId}
+            {...otherProps}
+            className={clsx(styles.footerContainer, className)}
+        >
             {primaryButton}
             {secondaryButton}
-        </FooterContainer>
+        </div>
     );
 };
 

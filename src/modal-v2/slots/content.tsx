@@ -1,15 +1,22 @@
+import clsx from "clsx";
+
 import type { ModalContentProps } from "../types";
-import { ContentContainer } from "./slot-styles";
+import * as styles from "./slot-styles";
 
 export const Content = ({
     "data-testid": testId = "modal-content",
     children,
+    className,
     ...otherProps
 }: ModalContentProps) => {
     return (
-        <ContentContainer data-testid={testId} {...otherProps}>
+        <div
+            data-testid={testId}
+            {...otherProps}
+            className={clsx(styles.contentContainer, className)}
+        >
             {children}
-        </ContentContainer>
+        </div>
     );
 };
 

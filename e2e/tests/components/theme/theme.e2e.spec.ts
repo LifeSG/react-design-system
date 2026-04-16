@@ -48,7 +48,7 @@ test.describe("Theme", () => {
             await story.init("theme-provider", { mode: "dark" });
         });
 
-        test("Themes are loaded correctly in dark mode", async ({ story }) => {
+        test("Themes are loaded correctly (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });

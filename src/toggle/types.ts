@@ -48,6 +48,7 @@ export interface ToggleProps
     onRemove?: (() => void) | undefined;
     /** Changes min-width to fit content */
     useContentWidth?: boolean | undefined;
+    focusableWhenDisabled?: boolean | undefined;
 }
 
 export interface ToggleCompositeSectionProps {

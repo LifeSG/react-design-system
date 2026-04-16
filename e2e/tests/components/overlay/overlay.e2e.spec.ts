@@ -43,11 +43,7 @@ test.describe("Overlay", () => {
         });
 
         test("With background blur enabled", async ({ story }) => {
-            await expect(story.locators.modalContent).toBeVisible();
-
-            await compareScreenshot(story, "blur-enabled", {
-                fullscreen: true,
-            });
+            await compareScreenshot(story, "mount", { fullscreen: true });
         });
     });
 
@@ -57,11 +53,7 @@ test.describe("Overlay", () => {
         });
 
         test("With background blur disabled", async ({ story }) => {
-            await expect(story.locators.modalContent).toBeVisible();
-
-            await compareScreenshot(story, "blur-disabled", {
-                fullscreen: true,
-            });
+            await compareScreenshot(story, "mount", { fullscreen: true });
         });
     });
 
@@ -70,15 +62,11 @@ test.describe("Overlay", () => {
             await story.init("stacked");
         });
 
-        test("Stacked overlays with background blur disabled", async ({
-            story,
-        }) => {
+        test("Stacked overlays", async ({ story }) => {
             await expect(story.locators.modalContentFirst).toBeVisible();
             await expect(story.locators.modalContentSecond).toBeVisible();
 
-            await compareScreenshot(story, "stacked", {
-                fullscreen: true,
-            });
+            await compareScreenshot(story, "mount", { fullscreen: true });
         });
     });
 
@@ -169,13 +157,13 @@ test.describe("Overlay", () => {
         });
 
         test("Backdrop click behavior", async ({ story }) => {
+            await expect(story.locators.modalContent).toBeVisible();
+            await expect(story.locators.dismissCount).toHaveText("0");
+
             const box = await story.locators.modalContent.boundingBox();
             if (!box) {
                 throw new Error("Could not get bounding box");
             }
-
-            await expect(story.locators.modalContent).toBeVisible();
-            await expect(story.locators.dismissCount).toHaveText("0");
 
             await test.step("Click on modal content does not dismiss the overlay", async () => {
                 await story.locators.modalContent.click();

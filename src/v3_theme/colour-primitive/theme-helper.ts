@@ -11,6 +11,7 @@ import { V3_MyLegacyColourSet } from "./specs/mylegacy-colour-set";
 import { V3_OneServiceColourSet } from "./specs/oneservice-colour-set";
 import { V3_PAColourSet } from "./specs/pa-colour-set";
 import { V3_RBSColourSet } from "./specs/rbs-colour-set";
+import { V3_SMGSColourSet } from "./specs/smgs-colour-set";
 import { V3_SPFColourSet } from "./specs/spf-colour-set";
 import { V3_SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
 import type { V3_ColourCollectionsMap } from "./types";
@@ -31,6 +32,8 @@ export const V3_ColourSpec: V3_ThemeCollectionSpec<
         rbs: V3_RBSColourSet,
         spf: V3_SPFColourSet,
         supportgowhere: V3_SupportGoWhereColourSet,
+        smgs: V3_SMGSColourSet,
+        sgwdigitallobby: V3_SupportGoWhereColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -55,6 +58,8 @@ export const V3_DarkColourSpec: V3_ThemeCollectionSpec<
         supportgowhere: V3_SupportGoWhereColourSet,
         imda: V3_IMDAColourSet,
         spf: V3_SPFColourSet,
+        smgs: V3_SMGSColourSet,
+        sgwdigitallobby: V3_SupportGoWhereColourSet,
     },
     defaultValue: "lifesg",
 };
