@@ -25,9 +25,8 @@ import { useResizeDetector } from "react-resize-detector";
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import {
     Breakpoint,
-    DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT,
-    parsePxOrRemValue,
     useDesignToken,
+    useSafeMaxWidthMediaQuery,
 } from "../../theme";
 import { useInheritedThemeScope } from "../../theme/theme-provider/hooks";
 import type { DropdownAlignmentType } from "./types";
@@ -141,10 +140,8 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const mobileBreakpointTokenValue = useDesignToken(Breakpoint["sm-max"]);
-    const mobileBreakpoint = parsePxOrRemValue(
-        mobileBreakpointTokenValue || DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT
-    );
+    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const elementRef = useRef<HTMLDivElement | null>(null);
     const { width: referenceWidth = 0 } = useResizeDetector({
         targetRef: positionRef ?? elementRef,
@@ -155,10 +152,9 @@ export const ElementWithDropdown = ({
         fn: ({ x, rects }) => {
             const noGapInBetween =
                 x === 0 || x + rects.floating.width === window.innerWidth;
-            const isMobileScreen = window.innerWidth < mobileBreakpoint;
             return {
                 x:
-                    noGapInBetween && isMobileScreen
+                    noGapInBetween && isMobile
                         ? (window.innerWidth - rects.floating.width) / 2
                         : x,
             };
