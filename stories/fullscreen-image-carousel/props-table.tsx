@@ -112,38 +112,39 @@ const DATA: ApiTableSectionProps[] = [
         name: "FullscreenImageCarouselItemProps",
         attributes: [
             {
-                name: "type",
+                name: "",
                 description: (
                     <>
-                        Discriminant for the item type.{" "}
-                        <code>&quot;image&quot;</code> (or omitted) for image
-                        items, <code>&quot;custom&quot;</code> for custom
-                        content items
-                    </>
-                ),
-                propTypes: [`"image" | "custom"`],
-            },
-            {
-                name: "src",
-                description: (
-                    <>
-                        The image src. Required for{" "}
-                        <code>FullscreenCarouselImageItemProps</code>. Not
-                        available on{" "}
+                        One of
+                        <code>FullscreenImageCarouselImageItemProps</code> or
                         <code>FullscreenImageCarouselCustomItemProps</code>
                     </>
                 ),
+            },
+        ],
+    },
+    {
+        name: "FullscreenImageCarouselImageItemProps",
+        attributes: [
+            {
+                name: "type",
+                description: (
+                    <>
+                        Discriminant for the item type. Must be{" "}
+                        <code>&quot;image&quot;</code> or omitted
+                    </>
+                ),
+            },
+            {
+                name: "src",
+                description: "The image src",
+                mandatory: true,
                 propTypes: ["string"],
             },
             {
                 name: "alt",
-                description: (
-                    <>
-                        Descriptive text to be set on the image for screen
-                        readers. Only applicable for{" "}
-                        <code>FullscreenCarouselImageItemProps</code>
-                    </>
-                ),
+                description:
+                    "Descriptive text to be set on the image for screen readers",
                 propTypes: ["string"],
             },
             {
@@ -151,38 +152,47 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The thumbnail image src. If not specified, the image{" "}
-                        <code>src</code> will be used. If neither is available,
-                        a placeholder is shown
+                        <code>src</code> will be used. If neither are valid, a
+                        placeholder is shown
                     </>
                 ),
+                propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "FullscreenImageCarouselCustomItemProps",
+        attributes: [
+            {
+                name: "type",
+                description: (
+                    <>
+                        Discriminant for the item type. Must be{" "}
+                        <code>&quot;custom&quot;</code>
+                    </>
+                ),
+                mandatory: true,
+            },
+            {
+                name: "thumbnailSrc",
+                description:
+                    "The thumbnail image src. If not specified, a placeholder is shown",
                 propTypes: ["string"],
             },
             {
                 name: "itemLabel",
                 description: (
                     <>
-                        Label for this item used in aria-labels (e.g.{" "}
-                        <code>&quot;PDF&quot;</code>). Defaults to{" "}
-                        <code>&quot;image&quot;</code>. When any item sets this,
-                        carousel-level aria-labels switch to generic wording.
-                        Only applicable for{" "}
-                        <code>FullscreenImageCarouselCustomItemProps</code>
+                        Label to describe the type of content (e.g.{" "}
+                        <code>&quot;PDF&quot;</code>)
                     </>
                 ),
                 propTypes: ["string"],
             },
             {
                 name: "renderContent",
-                description: (
-                    <>
-                        Render prop for the full slide area. When provided, the
-                        item is treated as a{" "}
-                        <code>FullscreenImageCarouselCustomItemProps</code> and
-                        the consumer owns the entire slide content (e.g. an
-                        iframe, embed, or custom viewer). Zoom controls are
-                        hidden for custom slides
-                    </>
-                ),
+                description: "Custom render prop for the full slide area",
+                mandatory: true,
                 propTypes: ["() => React.ReactNode"],
             },
         ],

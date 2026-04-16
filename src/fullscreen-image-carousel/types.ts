@@ -27,7 +27,7 @@ export interface FullscreenImageCarouselProps
     insets?: Insets | undefined;
 }
 
-export interface FullscreenCarouselImageItemProps {
+export interface FullscreenImageCarouselImageItemProps {
     type?: "image" | undefined;
     src: string;
     alt?: string | undefined;
@@ -35,8 +35,8 @@ export interface FullscreenCarouselImageItemProps {
     renderContent?: never;
 }
 
-/** @deprecated Use FullscreenCarouselImageItemProps instead */
-export type FullscreenCarouselItemProps = FullscreenCarouselImageItemProps;
+/** @deprecated Use FullscreenImageCarouselImageItemProps instead */
+export type FullscreenCarouselItemProps = FullscreenImageCarouselImageItemProps;
 
 export interface FullscreenImageCarouselCustomItemProps {
     type: "custom";
@@ -49,7 +49,7 @@ export interface FullscreenImageCarouselCustomItemProps {
 }
 
 export type FullscreenImageCarouselItemProps =
-    | FullscreenCarouselImageItemProps
+    | FullscreenImageCarouselImageItemProps
     | FullscreenImageCarouselCustomItemProps;
 
 export interface ImageDimension {
