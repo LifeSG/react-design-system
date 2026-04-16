@@ -110,7 +110,7 @@ export const DayCell = ({
                     data-day-cell-disabled={disabled}
                     ref={buttonRef}
                     tabIndex={tabIndex}
-                    role={role === "button" ? undefined : role}
+                    role={role}
                     aria-label={labelText}
                     aria-disabled={disabled && !interactive ? true : undefined}
                     aria-selected={isGridcellRole ? isSelected : undefined}
