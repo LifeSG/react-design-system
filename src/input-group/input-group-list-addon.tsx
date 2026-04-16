@@ -1,11 +1,14 @@
 import type { OpenChangeReason } from "@floating-ui/react";
-import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import * as dropdownWrapperStyles from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import {
+    LabelContainer,
+    PlaceholderLabel,
+    ValueLabel,
+} from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { SimpleIdGenerator } from "../util";
 import {
     Divider,
@@ -182,32 +185,14 @@ export const Component = <T, V>(
     // =============================================================================
     const renderLabel = () => {
         if (selected) {
-            return (
-                <div className={dropdownWrapperStyles.valueLabel}>
-                    {getDisplayValue()}
-                </div>
-            );
+            return <ValueLabel>{getDisplayValue()}</ValueLabel>;
         }
 
-        return (
-            <div
-                className={clsx(
-                    dropdownWrapperStyles.valueLabel,
-                    dropdownWrapperStyles.placeholderLabel
-                )}
-            >
-                {placeholder}
-            </div>
-        );
+        return <PlaceholderLabel>{placeholder}</PlaceholderLabel>;
     };
 
     const renderSelectorContent = () => (
-        <div
-            className={dropdownWrapperStyles.labelContainer}
-            data-disabled={disabled}
-        >
-            {renderLabel()}
-        </div>
+        <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
     );
 
     const renderElement = () => {
@@ -273,9 +258,7 @@ export const Component = <T, V>(
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
                 >
-                    <div className={dropdownWrapperStyles.valueLabel}>
-                        {getDisplayValue()}
-                    </div>
+                    <ValueLabel>{getDisplayValue()}</ValueLabel>
                 </SelectorReadOnly>
             ) : null;
         } else {

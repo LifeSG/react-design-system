@@ -1,4 +1,4 @@
-import type { DropdownVariantType, TruncateType } from "../dropdown-list/types";
+import type { DropdownVariantType } from "../dropdown-list/types";
 
 export interface DropdownSelectorProps {
     children: React.ReactNode;
@@ -13,8 +13,3 @@ export interface DropdownSelectorProps {
 }
 
 export type DropdownAlignmentType = "left" | "right";
-
-export interface DropdownWrapperValueLabelDataAttrs {
-    "data-variant"?: DropdownVariantType;
-    "data-truncate"?: TruncateType;
-}

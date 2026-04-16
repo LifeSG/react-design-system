@@ -1,5 +1,4 @@
 import type { OpenChangeReason } from "@floating-ui/react";
-import clsx from "clsx";
 import isEmpty from "lodash/isEmpty";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
@@ -15,7 +14,11 @@ import {
     NestedDropdownList,
 } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import * as dropdownWrapperStyles from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import {
+    LabelContainer,
+    PlaceholderLabel,
+    ValueLabel,
+} from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { InputBox } from "../shared/input-wrapper";
 import { SimpleIdGenerator, StringHelper } from "../util";
 import type {
@@ -206,36 +209,23 @@ export const InputNestedSelect = <V1, V2, V3>({
     const renderLabel = () => {
         if (isEmpty(selectedItem)) {
             return (
-                <div
-                    className={clsx(
-                        dropdownWrapperStyles.valueLabel,
-                        dropdownWrapperStyles.placeholderLabel
-                    )}
-                    data-truncate={optionTruncationType}
-                >
+                <PlaceholderLabel truncateType={optionTruncationType}>
                     {placeholder}
-                </div>
+                </PlaceholderLabel>
             );
         } else {
             return (
-                <div
-                    className={dropdownWrapperStyles.valueLabel}
-                    data-truncate={optionTruncationType}
-                >
+                <ValueLabel truncateType={optionTruncationType}>
                     {truncateValue(getDisplayValue())}
-                </div>
+                </ValueLabel>
             );
         }
     };
 
     const renderSelectorContent = () => (
-        <div
-            className={dropdownWrapperStyles.labelContainer}
-            ref={labelContainerRef}
-            data-disabled={disabled}
-        >
+        <LabelContainer ref={labelContainerRef} disabled={disabled}>
             {renderLabel()}
-        </div>
+        </LabelContainer>
     );
 
     const renderElement = () => {
