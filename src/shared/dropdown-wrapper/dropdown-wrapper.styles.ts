@@ -1,21 +1,9 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour, Font } from "../../theme";
 import { lineClampCss } from "../styles";
 
-export const Wrapper = styled.div`
-    position: relative;
-    width: 100%;
-    min-height: 3rem;
-    height: 3rem; // Need this to persist the height when expanding or collapsing list
-
-    &[data-variant="small"] {
-        min-height: 2.5rem;
-        height: 2.5rem;
-    }
-`;
-
-export const LabelContainer = styled.div`
+export const labelContainer = css`
     display: flex;
     flex: 1;
     word-break: break-all;
@@ -25,7 +13,7 @@ export const LabelContainer = styled.div`
     }
 `;
 
-export const ValueLabel = styled.div`
+export const valueLabel = css`
     ${Font["body-baseline-regular"]}
     text-align: left;
     overflow: hidden;
@@ -39,6 +27,6 @@ export const ValueLabel = styled.div`
     }
 `;
 
-export const PlaceholderLabel = styled(ValueLabel)`
+export const placeholderLabel = css`
     color: ${Colour["text-subtler"]};
 `;

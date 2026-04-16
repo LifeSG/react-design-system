@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 // hack to force child to respect max-height of parent
 // even though parent does not have explicit height
-export const DropdownContainer = styled.div`
+export const dropdownContainer = css`
     display: flex;
     flex-direction: column;
 `;

@@ -1,3 +1,4 @@
+import { css } from "@linaria/core";
 import styled from "styled-components";
 
 import { ClearButton } from "../input/input.style";
@@ -7,6 +8,18 @@ import { V3_Colour, V3_Spacing } from "../v3_theme";
 // =============================================================================
 // STYLING
 // =============================================================================
+export const wrapper = css`
+    position: relative;
+    width: 100%;
+    min-height: 3rem;
+    height: 3rem; // Need this to persist the height when expanding or collapsing list
+
+    &[data-variant="small"] {
+        min-height: 2.5rem;
+        height: 2.5rem;
+    }
+`;
+
 export const ClearIconContainer = styled(ClearButton)`
     position: absolute;
     right: 0;
