@@ -1,14 +1,11 @@
 import type { OpenChangeReason } from "@floating-ui/react";
+import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import {
-    LabelContainer,
-    PlaceholderLabel,
-    ValueLabel,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import * as dropdownWrapperStyles from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { SimpleIdGenerator } from "../util";
 import {
     Divider,
@@ -184,15 +181,33 @@ export const Component = <T, V>(
     // RENDER FUNCTIONS
     // =============================================================================
     const renderLabel = () => {
-        if (!selected) {
-            return <PlaceholderLabel>{placeholder}</PlaceholderLabel>;
-        } else {
-            return <ValueLabel>{getDisplayValue()}</ValueLabel>;
+        if (selected) {
+            return (
+                <div className={dropdownWrapperStyles.valueLabel}>
+                    {getDisplayValue()}
+                </div>
+            );
         }
+
+        return (
+            <div
+                className={clsx(
+                    dropdownWrapperStyles.valueLabel,
+                    dropdownWrapperStyles.placeholderLabel
+                )}
+            >
+                {placeholder}
+            </div>
+        );
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer $disabled={disabled}>{renderLabel()}</LabelContainer>
+        <div
+            className={dropdownWrapperStyles.labelContainer}
+            data-disabled={disabled}
+        >
+            {renderLabel()}
+        </div>
     );
 
     const renderElement = () => {
@@ -258,7 +273,9 @@ export const Component = <T, V>(
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
                 >
-                    <ValueLabel>{getDisplayValue()}</ValueLabel>
+                    <div className={dropdownWrapperStyles.valueLabel}>
+                        {getDisplayValue()}
+                    </div>
                 </SelectorReadOnly>
             ) : null;
         } else {

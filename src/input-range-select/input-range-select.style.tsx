@@ -4,9 +4,6 @@ import { ClearButton } from "../input/input.style";
 import { InputWrapper } from "../shared/input-wrapper";
 import { V3_Colour, V3_Spacing } from "../v3_theme";
 
-// =============================================================================
-// STYLING
-// =============================================================================
 export const ClearIconContainer = styled(ClearButton)`
     position: absolute;
     right: 0;

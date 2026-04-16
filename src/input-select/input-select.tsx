@@ -1,4 +1,5 @@
 import type { OpenChangeReason } from "@floating-ui/react";
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
@@ -7,12 +8,11 @@ import {
     DropdownListState,
     ExpandableElement,
 } from "../shared/dropdown-list";
-import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
-    LabelContainer,
-    PlaceholderLabel,
-    ValueLabel,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+    type DropdownWrapperValueLabelDataAttrs,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
+import * as dropdownWrapperStyles from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper";
 import { SimpleIdGenerator } from "../util";
 import { StringHelper } from "../util/string-helper";
@@ -181,33 +181,45 @@ export const InputSelect = <T, V>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderLabel = () => {
+        const valueLabelProps: DropdownWrapperValueLabelDataAttrs = {
+            "data-variant": variant,
+            "data-truncate": optionTruncationType,
+        };
+
         if (!selected) {
             return (
-                <PlaceholderLabel
-                    $truncateType={optionTruncationType}
-                    $variant={variant}
+                <div
+                    className={clsx(
+                        dropdownWrapperStyles.valueLabel,
+                        dropdownWrapperStyles.placeholderLabel
+                    )}
+                    {...valueLabelProps}
                 >
                     {placeholder}
-                </PlaceholderLabel>
+                </div>
             );
         } else if (renderCustomSelectedOption) {
             return renderCustomSelectedOption(selected);
         } else {
             return (
-                <ValueLabel
-                    $truncateType={optionTruncationType}
-                    $variant={variant}
+                <div
+                    className={dropdownWrapperStyles.valueLabel}
+                    {...valueLabelProps}
                 >
                     {truncateValue(getDisplayValue())}
-                </ValueLabel>
+                </div>
             );
         }
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+        <div
+            className={dropdownWrapperStyles.labelContainer}
+            ref={labelContainerRef}
+            data-disabled={disabled}
+        >
             {renderLabel()}
-        </LabelContainer>
+        </div>
     );
 
     const renderElement = () => {

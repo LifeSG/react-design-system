@@ -4,7 +4,7 @@ import { HistogramSlider } from "../histogram-slider";
 import { DropdownListState, ExpandableElement } from "../shared/dropdown-list";
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import { LabelContainer } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import * as dropdownWrapperStyles from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper";
 import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
@@ -158,9 +158,13 @@ export const SelectHistogram = ({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+        <div
+            className={dropdownWrapperStyles.labelContainer}
+            ref={labelContainerRef}
+            data-disabled={disabled || undefined}
+        >
             {getDisplayValue()}
-        </LabelContainer>
+        </div>
     );
 
     const renderElement = () => {
