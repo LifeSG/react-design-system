@@ -1,4 +1,4 @@
-import type React from "react";
+import type { ChangeEvent } from "react";
 
 import {
     Container,
@@ -27,7 +27,7 @@ export const RadioButton = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (disabled) {
             event.preventDefault();
             return;
@@ -43,13 +43,15 @@ export const RadioButton = ({
         return checked ? (
             <StyledCheckedIcon
                 data-testid="radio-checked"
-                $disabled={disabled}
+                data-radio-icon
+                data-disabled={disabled ? "true" : "false"}
                 aria-hidden
             />
         ) : (
             <StyledUnCheckedIcon
                 data-testid="radio-unchecked"
-                $disabled={disabled}
+                data-radio-icon
+                data-disabled={disabled ? "true" : "false"}
                 aria-hidden
             />
         );
@@ -57,10 +59,8 @@ export const RadioButton = ({
 
     return (
         <Container
-            $selected={checked}
-            $disabled={disabled}
             className={className}
-            $displaySize={displaySize}
+            data-display-size={displaySize}
             data-testid="radio-button"
         >
             <Input
@@ -71,7 +71,7 @@ export const RadioButton = ({
                 disabled={isNativeDisabled}
                 aria-disabled={isFocusableWhenDisabled}
                 tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
-                $disabledVisual={disabled}
+                data-disabled-visual={disabled ? "true" : "false"}
                 {...otherProps}
             />
             {renderIcon()}
