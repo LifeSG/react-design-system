@@ -1,9 +1,8 @@
-import { ArrowRightIcon } from "@lifesg/react-icons";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour, Font, Motion, Spacing } from "../../theme";
 
-export const Wrapper = styled.div`
+export const wrapper = css`
     position: relative;
     height: 100%;
     display: flex;
@@ -29,17 +28,17 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Break = styled.div`
+export const breakElement = css`
     width: 100%; // Force next flex item to break to next line
 `;
 
-export const ElementContainer = styled.div`
+export const elementContainer = css`
     display: flex;
     flex: 1;
     align-items: center;
 `;
 
-export const ArrowRight = styled(ArrowRightIcon)`
+export const arrowRight = css`
     color: ${Colour["icon"]};
     width: ${Font.Spec["body-size-baseline"]};
     height: ${Font.Spec["body-size-baseline"]};
@@ -48,7 +47,7 @@ export const ArrowRight = styled(ArrowRightIcon)`
     align-self: center;
 `;
 
-export const Indicator = styled.div`
+export const indicator = css`
     position: absolute;
     background: ${Colour["border-focus-strong"]};
     height: 2px;

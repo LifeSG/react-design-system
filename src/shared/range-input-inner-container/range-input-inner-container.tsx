@@ -1,10 +1,7 @@
-import {
-    ArrowRight,
-    Break,
-    ElementContainer,
-    Indicator,
-    Wrapper,
-} from "./range-input-inner-container.styles";
+import { ArrowRightIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
+
+import * as styles from "./range-input-inner-container.styles";
 import type { RangeInputInnerContainerProps } from "./types";
 
 /**
@@ -27,21 +24,31 @@ export const RangeInputInnerContainer = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Wrapper className={className} data-wrap={wrap ? "true" : undefined}>
-            <ElementContainer data-id="range-container-elem1-container">
+        <div
+            className={clsx(styles.wrapper, className)}
+            data-wrap={wrap ? "true" : undefined}
+        >
+            <div
+                className={styles.elementContainer}
+                data-id="range-container-elem1-container"
+            >
                 {elem1}
-            </ElementContainer>
-            <ArrowRight aria-hidden="true" />
-            {wrap && <Break />}
-            <ElementContainer data-id="range-container-elem2-container">
+            </div>
+            <ArrowRightIcon aria-hidden="true" className={styles.arrowRight} />
+            {wrap && <div className={styles.breakElement} />}
+            <div
+                className={styles.elementContainer}
+                data-id="range-container-elem2-container"
+            >
                 {elem2}
-            </ElementContainer>
-            <Indicator
+            </div>
+            <div
+                className={styles.indicator}
                 data-id="range-container-indicator"
                 data-error={error ? "true" : undefined}
                 data-position={currentActive}
                 data-wrap={wrap ? "true" : undefined}
             />
-        </Wrapper>
+        </div>
     );
 };
