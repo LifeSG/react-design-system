@@ -1,7 +1,7 @@
 import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
 import styled, { css } from "styled-components";
 
-import { V3_Colour, V3_Motion } from "../v3_theme";
+import { Colour, Motion } from "../theme";
 import type { RadioButtonSize } from "./types";
 
 // =============================================================================
@@ -47,9 +47,9 @@ export const StyledUnCheckedIcon = styled(CircleIcon)<StyleProps>`
     width: 100%;
     color: ${(props) =>
         props.$disabled
-            ? V3_Colour["icon-disabled-subtle"](props)
-            : V3_Colour["icon-subtle"](props)};
-    transition: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
+            ? Colour["icon-disabled-subtle"]
+            : Colour["icon-subtle"]};
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
 export const StyledCheckedIcon = styled(CircleDotIcon)<StyleProps>`
@@ -57,10 +57,10 @@ export const StyledCheckedIcon = styled(CircleDotIcon)<StyleProps>`
     width: 100%;
     color: ${(props) =>
         props.$disabled
-            ? V3_Colour["icon-selected-disabled"](props)
-            : V3_Colour["icon-selected"](props)};
+            ? Colour["icon-selected-disabled"]
+            : Colour["icon-selected"]};
 
-    transition: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
 export const Input = styled.input<InputStyleProps>`
@@ -76,8 +76,7 @@ export const Input = styled.input<InputStyleProps>`
 
     &:hover + ${StyledUnCheckedIcon}, &:hover + ${StyledCheckedIcon} {
         @media (pointer: fine) {
-            color: ${(props) =>
-                !props.$disabledVisual && V3_Colour["icon-hover"](props)};
+            color: ${(props) => !props.$disabledVisual && Colour["icon-hover"]};
         }
     }
 `;
