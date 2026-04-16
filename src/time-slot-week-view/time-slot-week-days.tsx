@@ -21,8 +21,6 @@ import {
 
 dayjs.extend(isBetween);
 
-export type DayVariant = "default" | "other-month" | "today";
-
 interface TimeSlotWeekDaysProps
     extends Pick<
         InternalCalendarProps,
@@ -117,7 +115,7 @@ export const TimeSlotWeekDays = ({
 
         const dayCellStyleProps: CellStyleProps = {
             labelType: "available",
-            interactive: !enableSelection ? null : isHoverEnabled,
+            interactive: enableSelection ? isHoverEnabled : false,
         };
 
         if (disabled) {

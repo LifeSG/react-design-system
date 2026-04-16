@@ -25,7 +25,7 @@ export interface CellStyleProps {
     circleRight?: CellType | undefined;
     labelType?: LabelType | undefined;
     disabled?: boolean | undefined;
-    interactive?: boolean | null | undefined;
+    interactive?: boolean | undefined;
     currentDateIndicator?: boolean | undefined;
 }
 

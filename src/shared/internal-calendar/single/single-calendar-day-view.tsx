@@ -4,14 +4,11 @@ import isBetween from "dayjs/plugin/isBetween";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { CalendarHelper } from "../../../util/calendar-helper";
-import { HeaderCell, RowDayCell, Wrapper } from "../standard";
+import * as styles from "../standard/standard-calendar-day-view.styles";
 import type { CommonCalendarProps } from "../types";
 import { SingleCell } from "./single-cell";
 
 dayjs.extend(isBetween);
-
-// TODO: to remove after all references have been cleaned up
-export type DayVariant = "default" | "other-month" | "today";
 
 interface CalendarDayViewProps extends CommonCalendarProps {
     selectedDate: string | undefined;
@@ -149,20 +146,25 @@ export const SingleCalendarDayView = ({
     // =============================================================================
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
-            <HeaderCell key={`week-day-${index}`} aria-hidden>
+            <div
+                key={`week-day-${index}`}
+                className={styles.headerCell}
+                aria-hidden
+            >
                 {dayjs(day).format("ddd")}
-            </HeaderCell>
+            </div>
         ));
     };
 
     const renderDayCells = () => {
         return weeksOfTheMonth.map((week, weekIndex) => {
             return (
-                <RowDayCell
+                <div
                     role="row"
                     aria-label={`Week ${weekIndex + 1}`}
                     key={weekIndex}
                     onMouseLeave={handleMouseLeaveCell}
+                    className={styles.rowDayCell}
                 >
                     {week.map((day, dayIndex) => {
                         return (
@@ -192,20 +194,21 @@ export const SingleCalendarDayView = ({
                             />
                         );
                     })}
-                </RowDayCell>
+                </div>
             );
         });
     };
 
     return (
-        <Wrapper
+        <div
             role="grid"
             onBlur={handleOnBlur}
             data-testid="calendar-content"
             aria-label="Date grid"
+            className={styles.wrapper}
         >
             {renderHeader()}
             {renderDayCells()}
-        </Wrapper>
+        </div>
     );
 };
