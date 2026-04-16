@@ -287,7 +287,7 @@ export const InputRangeSelect = <T, V>({
 
         if (!selected) {
             return (
-                <PlaceholderLabel $truncateType={optionTruncationType}>
+                <PlaceholderLabel data-truncate={optionTruncationType}>
                     {truncateValue(rangeType, placeholders?.[rangeType] || "")}
                 </PlaceholderLabel>
             );
@@ -298,7 +298,7 @@ export const InputRangeSelect = <T, V>({
         }
 
         return (
-            <ValueLabel $truncateType={optionTruncationType}>
+            <ValueLabel data-truncate={optionTruncationType}>
                 {truncateValue(rangeType, getDisplayValue(rangeType))}
             </ValueLabel>
         );

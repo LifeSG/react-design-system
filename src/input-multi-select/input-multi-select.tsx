@@ -190,21 +190,28 @@ export const InputMultiSelect = <T, V>({
         if (!selected || selected.length === 0) {
             return (
                 <PlaceholderLabel
-                    $truncateType={optionTruncationType}
-                    $variant={variant}
+                    data-variant={variant}
+                    data-truncate={optionTruncationType}
                 >
                     {placeholder}
                 </PlaceholderLabel>
             );
         } else {
             return (
-                <ValueLabel $variant={variant}>{getDisplayValue()}</ValueLabel>
+                <ValueLabel
+                    data-variant={variant}
+                    data-truncate={optionTruncationType}
+                >
+                    {getDisplayValue()}
+                </ValueLabel>
             );
         }
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer $disabled={disabled}>{renderLabel()}</LabelContainer>
+        <LabelContainer data-disabled={disabled}>
+            {renderLabel()}
+        </LabelContainer>
     );
 
     const renderElement = () => {

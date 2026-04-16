@@ -209,13 +209,13 @@ export const InputNestedSelect = <V1, V2, V3>({
     const renderLabel = () => {
         if (isEmpty(selectedItem)) {
             return (
-                <PlaceholderLabel $truncateType={optionTruncationType}>
+                <PlaceholderLabel data-truncate={optionTruncationType}>
                     {placeholder}
                 </PlaceholderLabel>
             );
         } else {
             return (
-                <ValueLabel $truncateType={optionTruncationType}>
+                <ValueLabel data-truncate={optionTruncationType}>
                     {truncateValue(getDisplayValue())}
                 </ValueLabel>
             );
@@ -223,7 +223,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+        <LabelContainer ref={labelContainerRef} data-disabled={disabled}>
             {renderLabel()}
         </LabelContainer>
     );

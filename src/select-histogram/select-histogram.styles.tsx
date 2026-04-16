@@ -1,6 +1,9 @@
 import styled, { css } from "styled-components";
 
-import type { ValueLabelStyleProps } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import type {
+    DropdownVariantType,
+    TruncateType,
+} from "../shared/dropdown-list/types";
 import { lineClampCss } from "../shared/styles";
 import {
     V3_Border,
@@ -11,6 +14,11 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../v3_theme";
+
+interface ValueLabelStyleProps {
+    $truncateType?: TruncateType;
+    $variant?: DropdownVariantType;
+}
 
 export const HistogramSliderDropdownContainer = styled.div`
     overflow: hidden;

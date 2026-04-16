@@ -7,7 +7,10 @@ import {
     DropdownListState,
     ExpandableElement,
 } from "../shared/dropdown-list";
-import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import {
+    type DropdownWrapperValueLabelDataAttrs,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
     PlaceholderLabel,
@@ -181,12 +184,14 @@ export const InputSelect = <T, V>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderLabel = () => {
+        const valueLabelProps: DropdownWrapperValueLabelDataAttrs = {
+            "data-variant": variant,
+            "data-truncate": optionTruncationType,
+        };
+
         if (!selected) {
             return (
-                <PlaceholderLabel
-                    $truncateType={optionTruncationType}
-                    $variant={variant}
-                >
+                <PlaceholderLabel {...valueLabelProps}>
                     {placeholder}
                 </PlaceholderLabel>
             );
@@ -194,10 +199,7 @@ export const InputSelect = <T, V>({
             return renderCustomSelectedOption(selected);
         } else {
             return (
-                <ValueLabel
-                    $truncateType={optionTruncationType}
-                    $variant={variant}
-                >
+                <ValueLabel {...valueLabelProps}>
                     {truncateValue(getDisplayValue())}
                 </ValueLabel>
             );
@@ -205,7 +207,7 @@ export const InputSelect = <T, V>({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+        <LabelContainer ref={labelContainerRef} data-disabled={disabled}>
             {renderLabel()}
         </LabelContainer>
     );

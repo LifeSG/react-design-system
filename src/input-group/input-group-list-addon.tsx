@@ -192,7 +192,9 @@ export const Component = <T, V>(
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer $disabled={disabled}>{renderLabel()}</LabelContainer>
+        <LabelContainer data-disabled={disabled}>
+            {renderLabel()}
+        </LabelContainer>
     );
 
     const renderElement = () => {
