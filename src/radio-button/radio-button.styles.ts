@@ -2,6 +2,12 @@ import { css } from "@linaria/core";
 
 import { Colour, Motion } from "../theme";
 
+export const classes = {
+    icon: "radioButtonIcon",
+    iconDisabled: "radioButtonIconDisabled",
+    inputDisabledVisual: "radioButtonInputDisabledVisual",
+} as const;
+
 export const container = css`
     display: flex;
     justify-content: center;
@@ -25,7 +31,7 @@ export const uncheckedIcon = css`
     color: ${Colour["icon-subtle"]};
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
-    &[data-disabled="true"] {
+    &.${classes.iconDisabled} {
         color: ${Colour["icon-disabled-subtle"]};
     }
 `;
@@ -37,7 +43,7 @@ export const checkedIcon = css`
 
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
-    &[data-disabled="true"] {
+    &.${classes.iconDisabled} {
         color: ${Colour["icon-selected-disabled"]};
     }
 `;
@@ -53,11 +59,11 @@ export const input = css`
     background: transparent;
     border: none;
 
-    &[data-disabled-visual="true"] {
+    &.${classes.inputDisabledVisual} {
         cursor: not-allowed;
     }
 
-    &:not([data-disabled-visual="true"]):hover + [data-radio-icon] {
+    &:not(.${classes.inputDisabledVisual}):hover + .${classes.icon} {
         @media (pointer: fine) {
             color: ${Colour["icon-hover"]};
         }

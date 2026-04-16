@@ -40,17 +40,21 @@ export const RadioButton = ({
         return checked ? (
             <CircleDotIcon
                 data-testid="radio-checked"
-                data-radio-icon
-                data-disabled={disabled ? "true" : "false"}
-                className={styles.checkedIcon}
+                className={clsx(
+                    styles.checkedIcon,
+                    styles.classes.icon,
+                    disabled && styles.classes.iconDisabled
+                )}
                 aria-hidden
             />
         ) : (
             <CircleIcon
                 data-testid="radio-unchecked"
-                data-radio-icon
-                data-disabled={disabled ? "true" : "false"}
-                className={styles.uncheckedIcon}
+                className={clsx(
+                    styles.uncheckedIcon,
+                    styles.classes.icon,
+                    disabled && styles.classes.iconDisabled
+                )}
                 aria-hidden
             />
         );
@@ -70,8 +74,10 @@ export const RadioButton = ({
                 disabled={isNativeDisabled}
                 aria-disabled={isFocusableWhenDisabled}
                 tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
-                data-disabled-visual={disabled ? "true" : "false"}
-                className={styles.input}
+                className={clsx(
+                    styles.input,
+                    disabled && styles.classes.inputDisabledVisual
+                )}
                 {...otherProps}
             />
             {renderIcon()}
