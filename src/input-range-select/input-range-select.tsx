@@ -15,7 +15,6 @@ import {
     ClearIconContainer,
     RangeSelectorButton,
     StyledInputWrapper,
-    wrapper,
 } from "./input-range-select.style";
 import type { InputRangeSelectProps } from "./types";
 
@@ -400,7 +399,7 @@ export const InputRangeSelect = <T, V>({
     };
 
     return (
-        <div className={wrapper} id={id} {...otherProps}>
+        <div id={id} {...otherProps}>
             <DropdownListState>
                 <ElementWithDropdown
                     enabled={!readOnly && !disabled}
