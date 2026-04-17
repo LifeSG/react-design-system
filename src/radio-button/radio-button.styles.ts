@@ -23,11 +23,14 @@ export const container = css`
     }
 `;
 
-export const uncheckedIcon = css`
+export const icon = css`
     height: 100%;
     width: 100%;
-    color: ${Colour["icon-subtle"]};
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+`;
+
+export const uncheckedIcon = css`
+    color: ${Colour["icon-subtle"]};
 
     &.${classes.iconDisabled} {
         color: ${Colour["icon-disabled-subtle"]};
@@ -35,11 +38,7 @@ export const uncheckedIcon = css`
 `;
 
 export const checkedIcon = css`
-    height: 100%;
-    width: 100%;
     color: ${Colour["icon-selected"]};
-
-    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
     &.${classes.iconDisabled} {
         color: ${Colour["icon-selected-disabled"]};

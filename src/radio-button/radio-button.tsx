@@ -41,6 +41,7 @@ export const RadioButton = ({
             <CircleDotIcon
                 data-testid="radio-checked"
                 className={clsx(
+                    styles.icon,
                     styles.checkedIcon,
                     disabled && styles.classes.iconDisabled
                 )}
@@ -50,6 +51,7 @@ export const RadioButton = ({
             <CircleIcon
                 data-testid="radio-unchecked"
                 className={clsx(
+                    styles.icon,
                     styles.uncheckedIcon,
                     disabled && styles.classes.iconDisabled
                 )}
