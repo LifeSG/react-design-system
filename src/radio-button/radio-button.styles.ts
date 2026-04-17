@@ -2,9 +2,7 @@ import { css } from "@linaria/core";
 
 import { Colour, Motion } from "../theme";
 
-export const classes = {
-    iconDisabled: "radioButtonIconDisabled",
-} as const;
+export const classes = {} as const;
 
 export const container = css`
     display: flex;
@@ -31,18 +29,18 @@ export const icon = css`
 
 export const uncheckedIcon = css`
     color: ${Colour["icon-subtle"]};
+`;
 
-    &.${classes.iconDisabled} {
-        color: ${Colour["icon-disabled-subtle"]};
-    }
+export const uncheckedIconDisabled = css`
+    color: ${Colour["icon-disabled-subtle"]};
 `;
 
 export const checkedIcon = css`
     color: ${Colour["icon-selected"]};
+`;
 
-    &.${classes.iconDisabled} {
-        color: ${Colour["icon-selected-disabled"]};
-    }
+export const checkedIconDisabled = css`
+    color: ${Colour["icon-selected-disabled"]};
 `;
 
 export const input = css`

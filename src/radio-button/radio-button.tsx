@@ -42,8 +42,7 @@ export const RadioButton = ({
                 data-testid="radio-checked"
                 className={clsx(
                     styles.icon,
-                    styles.checkedIcon,
-                    disabled && styles.classes.iconDisabled
+                    disabled ? styles.checkedIconDisabled : styles.checkedIcon
                 )}
                 aria-hidden
             />
@@ -52,8 +51,9 @@ export const RadioButton = ({
                 data-testid="radio-unchecked"
                 className={clsx(
                     styles.icon,
-                    styles.uncheckedIcon,
-                    disabled && styles.classes.iconDisabled
+                    disabled
+                        ? styles.uncheckedIconDisabled
+                        : styles.uncheckedIcon
                 )}
                 aria-hidden
             />
