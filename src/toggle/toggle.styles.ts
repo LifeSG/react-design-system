@@ -34,10 +34,6 @@ export const toggleTextContainerSelected = css`
     color: ${Colour["text-selected"]};
 `;
 
-export const toggleTextContainerDisabled = css`
-    color: ${Colour["text-disabled"]};
-`;
-
 export const toggleTextContainerDisabledSelected = css`
     color: ${Colour["text-selected-disabled"]};
 `;
@@ -68,7 +64,7 @@ export const useContentWidthContainer = css`
     min-width: unset;
 `;
 
-export const toggleContainerNoBorderErrorDisabled = css`
+export const colorBorderError = css`
     border-color: ${Colour["border-error"]};
 `;
 
@@ -110,7 +106,7 @@ export const toggleContainerNoBorderSelected = css`
     }
 `;
 
-export const toggleContainerNoBorderDefault = css`
+export const toggleContainerNoBorder = css`
     border: none;
 
     &:has(.${headerContainer}:hover) {
@@ -120,11 +116,7 @@ export const toggleContainerNoBorderDefault = css`
     }
 `;
 
-export const toggleContainerDefaultErrorDisabled = css`
-    border-color: ${Colour["border-error"]};
-`;
-
-export const toggleContainerDefaultError = css`
+export const toggleContainerError = css`
     border-color: ${Colour["border-error"]};
 
     &:has(.${headerContainer}:hover) {
@@ -134,17 +126,17 @@ export const toggleContainerDefaultError = css`
     }
 `;
 
-export const toggleContainerDefaultDisabledSelected = css`
+export const toggleContainerDisabledSelected = css`
     border-color: ${Colour["border-selected-disabled"]};
     background: ${Colour["bg-selected-disabled"]};
 `;
 
-export const toggleContainerDefaultDisabled = css`
+export const toggleContainerDisabled = css`
     border-color: ${Colour["border-disabled"]};
     background: ${Colour["bg-disabled"]};
 `;
 
-export const toggleContainerDefaultSelected = css`
+export const toggleContainerSelected = css`
     border-color: ${Colour["border-selected"]};
     background: ${Colour["bg-selected"]};
 
@@ -163,7 +155,7 @@ export const toggleContainerDefaultSelected = css`
     }
 `;
 
-export const toggleContainerDefault = css`
+export const toggleContainer = css`
     border-color: ${Colour.border};
 
     &:has(.${headerContainer}:hover) {
@@ -260,7 +252,7 @@ export const removeButton = css`
     cursor: pointer;
 `;
 
-export const removeButtonDisabled = css`
+export const disabledColorCursor = css`
     color: ${Colour["text-disabled"]};
     cursor: not-allowed;
 `;
@@ -284,11 +276,6 @@ export const expandButton = css`
     }
 `;
 
-export const expandButtonDisabled = css`
-    color: ${Colour["text-disabled"]};
-    cursor: not-allowed;
-`;
-
 export const expandButtonPaddingTopRequired = css`
     padding-top: 0.6875rem;
 `;
@@ -300,11 +287,6 @@ export const errorContainer = css`
     background: ${Colour.bg};
     cursor: pointer;
     padding: 0.6875rem 1rem 0.5rem 1rem;
-`;
-
-export const errorContainerDisabled = css`
-    color: ${Colour["text-disabled"]};
-    cursor: not-allowed;
 `;
 
 export const children = css`
@@ -319,22 +301,10 @@ export const childrenIsFinalItem = css`
     padding-bottom: 0.6875rem;
 `;
 
-export const childrenDisabled = css`
+export const colorTextDisabled = css`
     color: ${Colour["text-disabled"]};
 `;
 
-export const errorText = css`
+export const colorTextError = css`
     color: ${Colour["text-error"]};
-`;
-
-export const errorTextDisabled = css`
-    color: ${Colour["text-disabled"]};
-`;
-
-export const errorList = css`
-    color: ${Colour["text-error"]};
-`;
-
-export const errorListDisabled = css`
-    color: ${Colour["text-disabled"]};
 `;

@@ -152,7 +152,7 @@ export const Toggle = ({
         if (styleType === "no-border") {
             if (error) {
                 return disabled
-                    ? styles.toggleContainerNoBorderErrorDisabled
+                    ? styles.colorBorderError
                     : styles.toggleContainerNoBorderError;
             }
 
@@ -166,33 +166,33 @@ export const Toggle = ({
                 return styles.toggleContainerNoBorderSelected;
             }
 
-            return styles.toggleContainerNoBorderDefault;
+            return styles.toggleContainerNoBorder;
         }
 
         if (error) {
             return disabled
-                ? styles.toggleContainerDefaultErrorDisabled
-                : styles.toggleContainerDefaultError;
+                ? styles.colorBorderError
+                : styles.toggleContainerError;
         }
 
         if (disabled) {
             return selected
-                ? styles.toggleContainerDefaultDisabledSelected
-                : styles.toggleContainerDefaultDisabled;
+                ? styles.toggleContainerDisabledSelected
+                : styles.toggleContainerDisabled;
         }
 
         if (selected) {
-            return styles.toggleContainerDefaultSelected;
+            return styles.toggleContainerSelected;
         }
 
-        return styles.toggleContainerDefault;
+        return styles.toggleContainer;
     })();
 
     const getTextContainerStateClass = (() => {
         if (disabled) {
             return selected
                 ? styles.toggleTextContainerDisabledSelected
-                : styles.toggleTextContainerDisabled;
+                : styles.colorTextDisabled;
         }
 
         if (selected) {
@@ -262,7 +262,7 @@ export const Toggle = ({
                     className={clsx(
                         styles.children,
                         !collapsible && styles.childrenIsFinalItem,
-                        disabled && styles.childrenDisabled
+                        disabled && styles.colorTextDisabled
                     )}
                 >
                     <Markup baseTextSize="body-md">
@@ -281,7 +281,7 @@ export const Toggle = ({
                 <button
                     className={clsx(
                         styles.expandButton,
-                        disabled && styles.expandButtonDisabled,
+                        disabled && styles.disabledColorCursor,
                         collapsedWithoutErrors &&
                             styles.expandButtonPaddingTopRequired
                     )}
@@ -374,7 +374,7 @@ export const Toggle = ({
                         type="button"
                         className={clsx(
                             styles.removeButton,
-                            disabled && styles.removeButtonDisabled
+                            disabled && styles.disabledColorCursor
                         )}
                         onClick={handleOnRemove}
                         id={`${generatedId}-remove-button`}
@@ -392,16 +392,16 @@ export const Toggle = ({
                 <Typography.BodyMD
                     weight="semibold"
                     className={clsx(
-                        styles.errorText,
-                        disabled && styles.errorTextDisabled
+                        styles.colorTextError,
+                        disabled && styles.colorTextDisabled
                     )}
                 >
                     Error
                 </Typography.BodyMD>
                 <UnorderedList
                     className={clsx(
-                        styles.errorList,
-                        disabled && styles.errorListDisabled
+                        styles.colorTextError,
+                        disabled && styles.colorTextDisabled
                     )}
                 >
                     {errors?.map((item, index) => {
@@ -413,8 +413,8 @@ export const Toggle = ({
                                 <Typography.BodyMD
                                     weight="semibold"
                                     className={clsx(
-                                        styles.errorText,
-                                        disabled && styles.errorTextDisabled
+                                        styles.colorTextError,
+                                        disabled && styles.colorTextDisabled
                                     )}
                                 >
                                     {item}
@@ -435,7 +435,7 @@ export const Toggle = ({
                 <div
                     className={clsx(
                         styles.errorContainer,
-                        disabled && styles.errorContainerDisabled
+                        disabled && styles.disabledColorCursor
                     )}
                     onClick={handleExpandCollapseClick}
                     id={`${generatedId}-error-alert`}
