@@ -5,15 +5,13 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { Alert } from "../alert";
 import { Markup } from "../markup";
-import {
-    ToggleIcon,
-    type ToggleIconType,
-} from "../shared/toggle-icon/toggle-icon";
 import { UnorderedList } from "../text-list/unordered-list";
 import { useApplyStyle } from "../theme";
-import { BodyMD } from "../typography/typography";
+import * as Typography from "../typography/typography";
 import { SimpleIdGenerator } from "../util";
 import * as styles from "./toggle.styles";
+import type { ToggleIconType } from "./toggle-icon";
+import { ToggleIcon } from "./toggle-icon";
 import type { ToggleProps } from "./types";
 
 export const Toggle = ({
@@ -146,7 +144,11 @@ export const Toggle = ({
         e.stopPropagation();
     };
 
-    const containerStateClass = (() => {
+    // =============================================================================
+    // HELPER FUNCTIONS
+    // =============================================================================
+
+    const getContainerStateClass = (() => {
         if (styleType === "no-border") {
             if (error) {
                 return disabled
@@ -186,7 +188,7 @@ export const Toggle = ({
         return styles.toggleContainerDefault;
     })();
 
-    const textContainerStateClass = (() => {
+    const getTextContainerStateClass = (() => {
         if (disabled) {
             return selected
                 ? styles.toggleTextContainerDisabledSelected
@@ -196,22 +198,6 @@ export const Toggle = ({
         if (selected) {
             return styles.toggleTextContainerSelected;
         }
-
-        return styles.toggleTextContainerDefault;
-    })();
-
-    const styledToggleIconStateClass = (() => {
-        if (disabled) {
-            return selected
-                ? styles.toggleStyledToggleIconDisabledSelected
-                : styles.toggleStyledToggleIconDisabled;
-        }
-
-        if (selected) {
-            return styles.toggleStyledToggleIconSelected;
-        }
-
-        return styles.toggleStyledToggleIconDefault;
     })();
 
     // =============================================================================
@@ -238,7 +224,6 @@ export const Toggle = ({
                 type={toggleIconType}
                 active={selected}
                 disabled={disabled}
-                className={styledToggleIconStateClass}
             />
         );
     };
@@ -333,8 +318,8 @@ export const Toggle = ({
             >
                 <div
                     className={clsx(
-                        removable && styles.indicatorLabelContainerAddPadding,
-                        styles.indicatorLabelContainer
+                        styles.indicatorLabelContainer,
+                        removable && styles.indicatorLabelContainerAddPadding
                     )}
                 >
                     <div
@@ -350,9 +335,7 @@ export const Toggle = ({
                             data-testid="toggle-input"
                             className={clsx(
                                 styles.input,
-                                disabled
-                                    ? styles.toggleInputDisabled
-                                    : styles.toggleInputEnabled
+                                disabled && styles.toggleInputDisabled
                             )}
                             disabled={isNativeDisabled}
                             aria-disabled={isFocusableWhenDisabled}
@@ -366,8 +349,8 @@ export const Toggle = ({
                         {indicator && renderIndicator()}
                         <div
                             className={clsx(
-                                textContainerStateClass,
-                                styles.textContainer
+                                styles.textContainer,
+                                getTextContainerStateClass
                             )}
                         >
                             <label
@@ -376,10 +359,10 @@ export const Toggle = ({
                                 data-testid={`toggle-label`}
                                 id={`${generatedId}-label`}
                                 className={clsx(
+                                    styles.label,
                                     selected
                                         ? styles.toggleLabelSelected
-                                        : styles.toggleLabelDefault,
-                                    styles.label
+                                        : styles.toggleLabelDefault
                                 )}
                             >
                                 {children}
@@ -392,8 +375,8 @@ export const Toggle = ({
                     <button
                         type="button"
                         className={clsx(
-                            disabled && styles.removeButtonDisabled,
-                            styles.removeButton
+                            styles.removeButton,
+                            disabled && styles.removeButtonDisabled
                         )}
                         onClick={handleOnRemove}
                         id={`${generatedId}-remove-button`}
@@ -408,19 +391,19 @@ export const Toggle = ({
     const renderErrorList = (errors: string[]) => {
         return (
             <>
-                <BodyMD
+                <Typography.BodyMD
                     weight="semibold"
                     className={clsx(
-                        disabled && styles.errorTextDisabled,
-                        styles.errorText
+                        styles.errorText,
+                        disabled && styles.errorTextDisabled
                     )}
                 >
                     Error
-                </BodyMD>
+                </Typography.BodyMD>
                 <UnorderedList
                     className={clsx(
-                        disabled && styles.errorListDisabled,
-                        styles.errorList
+                        styles.errorList,
+                        disabled && styles.errorListDisabled
                     )}
                 >
                     {errors?.map((item, index) => {
@@ -429,15 +412,15 @@ export const Toggle = ({
                                 key={index}
                                 id={`${generatedId}-error-list-item-${index}`}
                             >
-                                <BodyMD
+                                <Typography.BodyMD
                                     weight="semibold"
                                     className={clsx(
-                                        disabled && styles.errorTextDisabled,
-                                        styles.errorText
+                                        styles.errorText,
+                                        disabled && styles.errorTextDisabled
                                     )}
                                 >
                                     {item}
-                                </BodyMD>
+                                </Typography.BodyMD>
                             </li>
                         );
                     })}
@@ -453,15 +436,15 @@ export const Toggle = ({
             hasCompositeSectionError && (
                 <div
                     className={clsx(
-                        disabled && styles.errorContainerDisabled,
-                        styles.errorContainer
+                        styles.errorContainer,
+                        disabled && styles.errorContainerDisabled
                     )}
                     onClick={handleExpandCollapseClick}
                     id={`${generatedId}-error-alert`}
                 >
                     <Alert
                         type={disabled ? "description" : "error"}
-                        className={clsx(styles.alertContainer, className)}
+                        className={className}
                         showIcon
                     >
                         {Array.isArray(errors)
@@ -488,10 +471,10 @@ export const Toggle = ({
     return (
         <div
             className={clsx(
-                containerStateClass,
+                styles.container,
+                getContainerStateClass,
                 !indicator && styles.noIndicatorContainer,
                 useContentWidth && styles.useContentWidthContainer,
-                styles.container,
                 className
             )}
             id={id}

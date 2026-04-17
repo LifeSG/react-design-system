@@ -1,11 +1,11 @@
 import { css } from "@linaria/core";
 
-import { Colour } from "../../theme";
+import { Colour } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const WrapperBase = css`
+export const wrapperBase = css`
     height: 1.625rem;
     width: 1.625rem;
     margin-right: 0.5rem;
@@ -18,14 +18,14 @@ export const WrapperBase = css`
     }
 `;
 
-export const WrapperDisabled = css`
+export const wrapperDisabled = css`
     color: ${Colour["icon-disabled-subtle"]};
 `;
 
-export const WrapperActive = css`
+export const wrapperActive = css`
     color: ${Colour["icon-selected"]};
 `;
 
-export const WrapperActiveDisabled = css`
+export const wrapperActiveDisabled = css`
     color: ${Colour["icon-selected-disabled"]};
 `;

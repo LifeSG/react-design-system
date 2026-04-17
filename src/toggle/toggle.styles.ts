@@ -1,12 +1,8 @@
 import { css } from "@linaria/core";
 
-import { WrapperBase } from "../shared/toggle-icon/toggle-icon.styles";
 import { Colour, Font, MediaQuery, Radius } from "../theme";
+import * as toggleIconStyles from "./toggle-icon.styles";
 
-// =============================================================================
-// STYLE INTERFACES, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
 export const tokens = {
     label: {
         desktopLineClamp: "--fds-internal-toggle-label-desktopLineClamp",
@@ -31,9 +27,6 @@ export const textContainer = css`
     overflow-wrap: anywhere;
     width: 100%;
     overflow: hidden;
-`;
-
-export const toggleTextContainerDefault = css`
     color: ${Colour.text};
 `;
 
@@ -47,22 +40,6 @@ export const toggleTextContainerDisabled = css`
 
 export const toggleTextContainerDisabledSelected = css`
     color: ${Colour["text-selected-disabled"]};
-`;
-
-export const toggleStyledToggleIconDefault = css`
-    color: ${Colour["icon-subtle"]};
-`;
-
-export const toggleStyledToggleIconSelected = css`
-    color: ${Colour["icon-selected"]};
-`;
-
-export const toggleStyledToggleIconDisabled = css`
-    color: ${Colour["icon-disabled-subtle"]};
-`;
-
-export const toggleStyledToggleIconDisabledSelected = css`
-    color: ${Colour["icon-selected-disabled"]};
 `;
 
 export const container = css`
@@ -81,16 +58,6 @@ export const container = css`
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 0;
     }
-
-    &.toggleContainerDefault {
-        border-color: ${Colour.border};
-
-        &:has(.${headerContainer}:hover) {
-            @media (pointer: fine) {
-                background: ${Colour["bg-hover-subtle"]};
-            }
-        }
-    }
 `;
 
 export const noIndicatorContainer = css`
@@ -106,12 +73,11 @@ export const toggleContainerNoBorderErrorDisabled = css`
 `;
 
 export const toggleContainerNoBorderError = css`
-        border-color: ${Colour["border-error"]};
+    border-color: ${Colour["border-error"]};
 
-        &:has(.${headerContainer}:hover) {
-            @media (pointer: fine) {
-                background: ${Colour["bg-hover-subtle"]};
-            }
+    &:has(.${headerContainer}:hover) {
+        @media (pointer: fine) {
+            background: ${Colour["bg-hover-subtle"]};
         }
     }
 `;
@@ -137,7 +103,7 @@ export const toggleContainerNoBorderSelected = css`
                 color: ${Colour["text-selected-hover"]};
             }
 
-            & .${WrapperBase} {
+            & .${toggleIconStyles.wrapperBase} {
                 color: ${Colour["icon-selected-hover"]};
             }
         }
@@ -190,7 +156,7 @@ export const toggleContainerDefaultSelected = css`
                 color: ${Colour["text-selected-hover"]};
             }
 
-            & .${WrapperBase} {
+            & .${toggleIconStyles.wrapperBase} {
                 color: ${Colour["icon-selected-hover"]};
             }
         }
@@ -224,10 +190,6 @@ export const input = css`
 
 export const toggleInputDisabled = css`
     cursor: not-allowed;
-`;
-
-export const toggleInputEnabled = css`
-    cursor: pointer;
 `;
 
 export const inputContainer = css`
@@ -313,7 +275,6 @@ export const expandButton = css`
     background-color: ${Colour.bg};
     cursor: pointer;
     padding: 0 1rem 0.6875rem 1rem;
-    padding-top: 0rem;
     width: 100%;
 
     svg {
@@ -344,11 +305,6 @@ export const errorContainer = css`
 export const errorContainerDisabled = css`
     color: ${Colour["text-disabled"]};
     cursor: not-allowed;
-`;
-
-export const alertContainer = css`
-    width: 100%;
-    user-select: none;
 `;
 
 export const children = css`

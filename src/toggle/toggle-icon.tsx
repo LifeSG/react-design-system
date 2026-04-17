@@ -25,6 +25,22 @@ export const ToggleIcon = ({
 }: ToggleIconProps) => {
     let component: JSX.Element | null;
 
+    const getWrapperStateClass = (() => {
+        if (active && disabled) {
+            return styles.wrapperActiveDisabled;
+        }
+
+        if (disabled) {
+            return styles.wrapperDisabled;
+        }
+
+        if (active) {
+            return styles.wrapperActive;
+        }
+
+        return undefined;
+    })();
+
     switch (type) {
         case "checkbox":
             component = active ? <SquareTickFillIcon /> : <SquareIcon />;
@@ -46,10 +62,8 @@ export const ToggleIcon = ({
     return (
         <div
             className={clsx(
-                active && styles.WrapperActive,
-                active && disabled && styles.WrapperActiveDisabled,
-                disabled && styles.WrapperDisabled,
-                styles.WrapperBase,
+                styles.wrapperBase,
+                getWrapperStateClass,
                 className
             )}
             aria-hidden
