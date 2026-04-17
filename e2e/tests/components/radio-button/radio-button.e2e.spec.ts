@@ -12,8 +12,6 @@ class StoryPage extends AbstractStoryPage {
             radioCheckedDefault: Locator;
             radioUncheckedDisabled: Locator;
             radioCheckedDisabled: Locator;
-
-            radioFocusableDisabled: Locator;
         };
         focusStart: Locator;
         changeCount: Locator;
@@ -35,9 +33,6 @@ class StoryPage extends AbstractStoryPage {
                 ),
                 radioCheckedDisabled: page.getByTestId(
                     "radio-checked-disabled"
-                ),
-                radioFocusableDisabled: page.getByTestId(
-                    "radio-focusable-disabled"
                 ),
             },
             focusStart: page.getByTestId("focus-start"),
