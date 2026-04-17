@@ -1,113 +1,94 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Border, Colour, Font, Radius } from "../theme";
-import type { BadgeProps } from "./types";
 
 // =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
+// STYLE TOKENS
 // =============================================================================
-interface StyledBadgeProps {
-    $variant: BadgeProps["variant"];
-    $color: BadgeProps["color"];
-}
-interface BadgeContainerProps {
-    $isOverlay?: boolean;
-}
-interface BadgeWrapperProps extends BadgeContainerProps {
-    $offset?: [string, string];
-}
+export const tokens = {
+    wrapper: {
+        offsetX: "--fds-internal-badge-wrapper-offsetX",
+        offsetY: "--fds-internal-badge-wrapper-offsetY",
+    },
+};
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const BadgeOverlay = styled.div<BadgeContainerProps>`
-    ${(props) =>
-        props.$isOverlay &&
-        css`
-            position: relative;
-            width: fit-content;
-            height: fit-content;
-        `}
-`;
-
-export const BadgeWrapper = styled.div<BadgeWrapperProps>`
-    ${(props) =>
-        props.$isOverlay &&
-        css`
-            position: absolute;
-            top: 0;
-            right: 0;
-            transform: translate(50%, -25%)
-                ${props.$offset
-                    ? `translate(${props.$offset[0]},${props.$offset[1]})`
-                    : ""};
-        `}
-`;
-
-const numberBadgeStyles = css`
+const numberBadgeStyles = `
     min-width: 1.25rem;
     padding: 0.25rem 0.375rem;
     ${Font["body-xs-bold"]}
     line-height: 1;
 `;
 
-const dotBadgeStyles = css`
+const dotBadgeStyles = `
     border-radius: 50%;
     width: 0.5rem;
     height: 0.5rem;
 `;
 
-export const StyledBadge = styled.div<StyledBadgeProps>`
-    background-color: ${({ $color }) =>
-        $color === "important" ? Colour["icon-error"] : Colour["bg-primary"]};
+export const BadgeOverlay = styled.div`
+    &.badgeOverlayIsOverlay {
+        position: relative;
+        width: fit-content;
+        height: fit-content;
+    }
+`;
+
+export const BadgeWrapper = styled.div`
+    &.badgeWrapperIsOverlay {
+        position: absolute;
+        top: 0;
+        right: 0;
+        transform: translate(50%, -25%)
+            translate(
+                var(${tokens.wrapper.offsetX}, 0px),
+                var(${tokens.wrapper.offsetY}, 0px)
+            );
+    }
+`;
+
+export const StyledBadge = styled.div`
+    background-color: ${Colour["bg-primary"]};
     color: ${Colour["text-inverse"]};
-    font-weight: ${Font["body-xs-bold"]};
     display: flex;
     align-items: center;
     justify-content: center;
-
     width: fit-content;
-    ${({ $variant, $color }) => {
-        switch ($variant) {
-            case "number":
-                return css`
-                    ${numberBadgeStyles}
-                    border-radius: ${Radius.full};
-                `;
 
-            case "number-with-border":
-                return css`
-                    ${numberBadgeStyles}
-                    border-radius: ${Radius.full};
-                    box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
-                `;
+    &.styledBadgeImportantColor {
+        background-color: ${Colour["icon-error"]};
+    }
 
-            case "dot":
-                return css`
-                    ${dotBadgeStyles}
-                `;
+    &.styledBadgeNumber {
+        ${numberBadgeStyles}
+        border-radius: ${Radius.full};
+    }
 
-            case "dot-with-border":
-                return css`
-                    ${dotBadgeStyles}
-                    box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
-                `;
+    &.styledBadgeNumberWithBorder {
+        ${numberBadgeStyles}
+        border-radius: ${Radius.full};
+        box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
+    }
 
-            case "square-number":
-                return css`
-                    ${numberBadgeStyles}
-                    border-radius: ${Radius.sm};
-                    padding: 0.25rem 0.4375rem;
-                    ${$color === "default" &&
-                    css`
-                        background-color: ${Colour["bg-primary-subtler"]};
-                        color: ${Colour["text-primary"]};
-                    `}
-                `;
+    &.styledBadgeDot {
+        ${dotBadgeStyles}
+    }
 
-            default:
-                return "";
-        }
-    }};
+    &.styledBadgeDotWithBorder {
+        ${dotBadgeStyles}
+        box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
+    }
+
+    &.styledBadgeSquareNumber {
+        ${numberBadgeStyles}
+        border-radius: ${Radius.sm};
+        padding: 0.25rem 0.4375rem;
+    }
+
+    &.styledBadgeSquareNumberDefaultColor {
+        background-color: ${Colour["bg-primary-subtler"]};
+        color: ${Colour["text-primary"]};
+    }
 `;

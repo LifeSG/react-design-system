@@ -1,4 +1,8 @@
-import { BadgeOverlay, BadgeWrapper, StyledBadge } from "./badge.styles";
+import clsx from "clsx";
+import { useRef } from "react";
+
+import { useApplyStyle } from "../theme";
+import * as styles from "./badge.styles";
 import type { BadgeProps, BadgeVariant } from "./types";
 
 // =============================================================================
@@ -17,6 +21,7 @@ export const Badge = ({
     color = "default",
     badgeOffset,
     "data-testid": testId = "badge",
+    className,
     ...otherProps
 }: BadgeProps) => {
     // =============================================================================
@@ -31,24 +36,51 @@ export const Badge = ({
     const shouldShowCount = variantsToShowCount.includes(variant);
 
     // =============================================================================
+    // REFS
+    // =============================================================================
+    const wrapperRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(wrapperRef, {
+        [styles.tokens.wrapper.offsetX]: badgeOffset?.[0],
+        [styles.tokens.wrapper.offsetY]: badgeOffset?.[1],
+    });
+
+    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <BadgeOverlay $isOverlay={children !== undefined}>
-            <BadgeWrapper
-                $offset={badgeOffset}
-                $isOverlay={children !== undefined}
+        <styles.BadgeOverlay
+            className={clsx(children !== undefined && "badgeOverlayIsOverlay")}
+        >
+            <styles.BadgeWrapper
+                ref={wrapperRef}
+                className={clsx(
+                    children !== undefined && "badgeWrapperIsOverlay"
+                )}
             >
-                <StyledBadge
-                    $variant={variant}
-                    $color={color}
+                <styles.StyledBadge
                     data-testid={testId}
+                    className={clsx(
+                        variant === "number" && "styledBadgeNumber",
+                        variant === "number-with-border" &&
+                            "styledBadgeNumberWithBorder",
+                        variant === "dot" && "styledBadgeDot",
+                        variant === "dot-with-border" &&
+                            "styledBadgeDotWithBorder",
+                        variant === "square-number" &&
+                            "styledBadgeSquareNumber",
+                        color === "important" && "styledBadgeImportantColor",
+                        variant === "square-number" &&
+                            color === "default" &&
+                            "styledBadgeSquareNumberDefaultColor",
+                        className
+                    )}
                     {...otherProps}
                 >
                     {shouldShowCount ? displayCount : null}
-                </StyledBadge>
-            </BadgeWrapper>
+                </styles.StyledBadge>
+            </styles.BadgeWrapper>
             {children}
-        </BadgeOverlay>
+        </styles.BadgeOverlay>
     );
 };
