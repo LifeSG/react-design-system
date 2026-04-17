@@ -54,7 +54,7 @@ export const container = css`
     height: fit-content;
     background: ${Colour.bg};
 
-    &:has(input:focus-visible) {
+    &:focus-within {
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 0;
     }
