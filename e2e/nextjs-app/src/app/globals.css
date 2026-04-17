@@ -12,7 +12,8 @@
     gap: 1rem;
 }
 
-.story-background-wrapper {
-    padding: 1rem;
-    background-color: var(--fds-colour-bg);
+@media (prefers-color-scheme: dark) {
+    .story-background {
+        background-color: #000000;
+    }
 }

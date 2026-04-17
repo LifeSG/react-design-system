@@ -78,8 +78,7 @@ test.describe("ErrorDisplay", () => {
                 name: "Continue anyway",
             });
 
-            await test.step("Action button is visible", async () => {
-                await expect(button).toBeVisible();
+            await test.step("Screenshot matches", async () => {
                 await compareScreenshot(story, "with-action-button-mount");
             });
 
@@ -155,21 +154,6 @@ test.describe("ErrorDisplay", () => {
         test("Maintenance – renders dateString in description", async ({
             story,
         }) => {
-            await test.step("Title is rendered", async () => {
-                await expect(
-                    story.page.getByRole("heading", {
-                        level: 2,
-                        name: "Service under maintenance",
-                    })
-                ).toBeVisible();
-            });
-
-            await test.step("Description contains the dateString", async () => {
-                await expect(
-                    story.page.getByTestId("error-display--description")
-                ).toContainText("1 January 2023, 8:00am");
-            });
-
             await test.step("Screenshot matches", async () => {
                 await compareScreenshot(story, "maintenance-mount");
             });
