@@ -3,7 +3,7 @@ import React from "react";
 import type { ErrorDisplayType } from "src";
 import { ErrorDisplay, V3_BookingSGTheme, V3_LifeSGTheme } from "src";
 import { getErrorDisplayData } from "src/error-display/error-display-data";
-import { ThemeProvider as V4ThemeProvider } from "src/theme";
+import { Breakpoint, ThemeProvider as V4ThemeProvider } from "src/theme";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 
 // =============================================================================
@@ -20,16 +20,18 @@ describe("ErrorDisplay", () => {
         const title = getErrorDisplayData(
             "404",
             "lifesg",
-            V3_LifeSGTheme
+            MOBILE_BREAKPOINT,
+            TABLET_BREAKPOINT
         )!.title;
-        expect(screen.getByRole("heading", { level: 2, name: title }));
+        expect(
+            screen.getByRole("heading", { level: 2, name: title })
+        ).toBeInTheDocument();
     });
 
     it("should render action button if prop is provided", () => {
         const buttonLabel = "custom button";
         const actionButton = {
             children: buttonLabel,
-
             onClick: () => {},
         };
 
@@ -87,7 +89,7 @@ describe("ErrorDisplay", () => {
         });
     });
 
-    describe("ErrorDisplay components", () => {
+    describe("type", () => {
         const testData = [
             ["400"],
             ["403"],
@@ -111,7 +113,7 @@ describe("ErrorDisplay", () => {
             ["partially-supported-browser"],
         ] as const;
 
-        test.each(testData)(
+        it.each(testData)(
             "should render %s error correctly",
             (type: ErrorDisplayType) => {
                 renderErrorDisplay(<ErrorDisplay type={type} />);
@@ -119,16 +121,21 @@ describe("ErrorDisplay", () => {
                 const error = getErrorDisplayData(
                     type,
                     "lifesg",
-                    V3_LifeSGTheme
+                    MOBILE_BREAKPOINT,
+                    TABLET_BREAKPOINT
                 )!;
+                const imgPaths = error.img!;
 
                 expect(
                     screen.getByRole("heading", { level: 2, name: error.title })
                 ).toBeInTheDocument();
 
-                expect(screen.getByRole("img")).toHaveAttribute(
-                    "src",
-                    error.img!.src
+                const img = screen.getByRole("img");
+                expect(img).toHaveAttribute("src", imgPaths.src);
+                expect(img).toHaveAttribute("srcset", imgPaths.srcSet);
+                expect(img).toHaveAttribute(
+                    "sizes",
+                    `(max-width: ${Breakpoint["sm-max"]}) 400px, (max-width: ${Breakpoint["lg-max"]}) 800px, 1200px`
                 );
 
                 expect(
@@ -137,7 +144,7 @@ describe("ErrorDisplay", () => {
             }
         );
 
-        test.each(testData)(
+        it.each(testData)(
             "should render bookingsg %s error correctly",
             (type: ErrorDisplayType) => {
                 renderErrorDisplay(<ErrorDisplay type={type} />, {
@@ -148,7 +155,8 @@ describe("ErrorDisplay", () => {
                 const error = getErrorDisplayData(
                     type,
                     "bookingsg",
-                    V3_BookingSGTheme
+                    MOBILE_BREAKPOINT,
+                    TABLET_BREAKPOINT
                 )!;
 
                 expect(
@@ -162,6 +170,14 @@ describe("ErrorDisplay", () => {
                     "src",
                     error.img!.src
                 );
+                expect(screen.getByRole("img")).toHaveAttribute(
+                    "srcset",
+                    error.img!.srcSet
+                );
+                expect(screen.getByRole("img")).toHaveAttribute(
+                    "sizes",
+                    error.img!.sizes
+                );
 
                 expect(
                     screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
@@ -169,13 +185,18 @@ describe("ErrorDisplay", () => {
             }
         );
 
-        test("should use the specified illustration based on the illustrationScheme prop", () => {
+        it("should use the specified illustration based on the illustrationScheme prop", () => {
             renderErrorDisplay(
                 <ErrorDisplay type={"400"} illustrationScheme="lifesg" />,
                 { styledTheme: V3_BookingSGTheme, v4Theme: "bookingsg" }
             );
 
-            const error = getErrorDisplayData("400", "lifesg", V3_LifeSGTheme)!;
+            const error = getErrorDisplayData(
+                "400",
+                "lifesg",
+                MOBILE_BREAKPOINT,
+                TABLET_BREAKPOINT
+            )!;
 
             expect(
                 screen.getByRole("heading", {
@@ -187,6 +208,14 @@ describe("ErrorDisplay", () => {
             expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img!.src
+            );
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "srcset",
+                error.img!.srcSet
+            );
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "sizes",
+                error.img!.sizes
             );
 
             expect(
@@ -204,7 +233,12 @@ describe("ErrorDisplay", () => {
                 <ErrorDisplay type={type} additionalProps={additionalProps} />
             );
 
-            const error = getErrorDisplayData(type, "lifesg", V3_LifeSGTheme)!;
+            const error = getErrorDisplayData(
+                type,
+                "lifesg",
+                MOBILE_BREAKPOINT,
+                TABLET_BREAKPOINT
+            )!;
             const errorDescription = transformJSXElementToString(
                 error.renderDescription!(additionalProps) as JSX.Element
             );
@@ -268,6 +302,8 @@ describe("ErrorDisplay", () => {
 const CUSTOM_TITLE = "custom error";
 const CUSTOM_DESCRIPTION = "custom description";
 const ERROR_DESCRIPTION_TEST_ID = "error-display--description";
+const MOBILE_BREAKPOINT = Breakpoint["sm-max"];
+const TABLET_BREAKPOINT = Breakpoint["lg-max"];
 
 // =============================================================================
 // HELPER FUNCTIONS

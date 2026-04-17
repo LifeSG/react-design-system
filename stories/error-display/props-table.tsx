@@ -1,3 +1,4 @@
+import { THEME_TYPES } from "src/theme/types";
 import type { ApiTableSectionProps } from "stories/storybook-common";
 import { ApiTable } from "stories/storybook-common";
 import styled from "styled-components";
@@ -121,7 +122,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "illustrationScheme",
                 description:
                     "Use resource scheme provided instead of default theme",
-                propTypes: ["base", "bookingsg", "rbs"],
+                propTypes: [...THEME_TYPES],
             },
             {
                 name: "additionalProps",
@@ -158,6 +159,12 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description:
                     "The amount of time left (in seconds) for the inactivity display",
+                propTypes: ["number"],
+            },
+            {
+                name: "reminderInterval",
+                description:
+                    "Interval (in seconds) for announcing remaining time via screen readers",
                 propTypes: ["number"],
             },
         ],

@@ -12,20 +12,22 @@ import type {
     Spacing,
 } from "./tokens";
 
-export type ThemeType =
-    | "a11y-playground"
-    | "bookingsg"
-    | "ccube"
-    | "imda"
-    | "lifesg"
-    | "mylegacy"
-    | "oneservice"
-    | "pa"
-    | "rbs"
-    | "sgw-digital-lobby"
-    | "spf"
-    | "supportgowhere";
+export const THEME_TYPES = [
+    "a11y-playground",
+    "bookingsg",
+    "ccube",
+    "imda",
+    "lifesg",
+    "mylegacy",
+    "oneservice",
+    "pa",
+    "rbs",
+    "sgw-digital-lobby",
+    "spf",
+    "supportgowhere",
+] as const;
 
+export type ThemeType = (typeof THEME_TYPES)[number];
 export type ThemeMode = "light" | "dark" | "auto";
 
 export type ResolvedThemeMode = "light" | "dark";
