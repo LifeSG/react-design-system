@@ -163,6 +163,12 @@ const DATA: ApiTableSectionProps[] = [
                     "Specifies custom styles for the column header cell",
                 propTypes: ["CSSProperties"],
             },
+            {
+                name: "keyColumn",
+                description:
+                    "Used with enableMultiSelect. Marks this column as descriptive of the row and uses its value to label the row checkbox for screen readers",
+                propTypes: ["boolean"],
+            },
         ],
     },
     {
