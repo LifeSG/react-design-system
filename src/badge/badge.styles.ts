@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Radius } from "../theme";
 
@@ -28,67 +28,63 @@ const dotBadgeStyles = `
     height: 0.5rem;
 `;
 
-export const BadgeOverlay = styled.div`
-    &.badgeOverlayIsOverlay {
-        position: relative;
-        width: fit-content;
-        height: fit-content;
-    }
+export const Overlay = css`
+    position: relative;
+    width: fit-content;
+    height: fit-content;
 `;
 
-export const BadgeWrapper = styled.div`
-    &.badgeWrapperIsOverlay {
-        position: absolute;
-        top: 0;
-        right: 0;
-        transform: translate(50%, -25%)
-            translate(
-                var(${tokens.wrapper.offsetX}, 0px),
-                var(${tokens.wrapper.offsetY}, 0px)
-            );
-    }
+export const OverlayWrapper = css`
+    position: absolute;
+    top: 0;
+    right: 0;
+    transform: translate(50%, -25%)
+        translate(
+            var(${tokens.wrapper.offsetX}, 0px),
+            var(${tokens.wrapper.offsetY}, 0px)
+        );
 `;
 
-export const StyledBadge = styled.div`
+export const badge = css`
     background-color: ${Colour["bg-primary"]};
     color: ${Colour["text-inverse"]};
     display: flex;
     align-items: center;
     justify-content: center;
     width: fit-content;
+`;
 
-    &.styledBadgeImportantColor {
-        background-color: ${Colour["icon-error"]};
-    }
+export const badgeImportantColor = css`
+    background-color: ${Colour["icon-error"]};
+`;
 
-    &.styledBadgeNumber {
-        ${numberBadgeStyles}
-        border-radius: ${Radius.full};
-    }
+export const badgeNumber = css`
+    ${numberBadgeStyles}
+    border-radius: ${Radius.full};
+`;
 
-    &.styledBadgeNumberWithBorder {
-        ${numberBadgeStyles}
-        border-radius: ${Radius.full};
-        box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
-    }
+export const badgeNumberWithBorder = css`
+    ${numberBadgeStyles}
+    border-radius: ${Radius.full};
+    box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
+`;
 
-    &.styledBadgeDot {
-        ${dotBadgeStyles}
-    }
+export const badgeDot = css`
+    ${dotBadgeStyles}
+`;
 
-    &.styledBadgeDotWithBorder {
-        ${dotBadgeStyles}
-        box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
-    }
+export const badgeDotWithBorder = css`
+    ${dotBadgeStyles}
+    box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
+`;
 
-    &.styledBadgeSquareNumber {
-        ${numberBadgeStyles}
-        border-radius: ${Radius.sm};
-        padding: 0.25rem 0.4375rem;
-    }
+export const badgeSquareNumber = css`
+    ${numberBadgeStyles}
+    border-radius: ${Radius.sm};
+    padding: 0.25rem 0.4375rem;
+`;
 
-    &.styledBadgeSquareNumberDefaultColor {
-        background-color: ${Colour["bg-primary-subtler"]};
-        color: ${Colour["text-primary"]};
-    }
+export const badgeSquareNumberDefaultColor = css`
+    background-color: ${Colour["bg-primary-subtler"]};
+    color: ${Colour["text-primary"]};
 `;

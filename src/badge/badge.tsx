@@ -49,38 +49,36 @@ export const Badge = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <styles.BadgeOverlay
-            className={clsx(children !== undefined && "badgeOverlayIsOverlay")}
-        >
-            <styles.BadgeWrapper
+        <div className={clsx(children !== undefined && styles.Overlay)}>
+            <div
                 ref={wrapperRef}
                 className={clsx(
-                    children !== undefined && "badgeWrapperIsOverlay"
+                    children !== undefined && styles.OverlayWrapper
                 )}
             >
-                <styles.StyledBadge
+                <div
                     data-testid={testId}
                     className={clsx(
-                        variant === "number" && "styledBadgeNumber",
+                        styles.badge,
+                        variant === "number" && styles.badgeNumber,
                         variant === "number-with-border" &&
-                            "styledBadgeNumberWithBorder",
-                        variant === "dot" && "styledBadgeDot",
+                            styles.badgeNumberWithBorder,
+                        variant === "dot" && styles.badgeDot,
                         variant === "dot-with-border" &&
-                            "styledBadgeDotWithBorder",
-                        variant === "square-number" &&
-                            "styledBadgeSquareNumber",
-                        color === "important" && "styledBadgeImportantColor",
+                            styles.badgeDotWithBorder,
+                        variant === "square-number" && styles.badgeSquareNumber,
+                        color === "important" && styles.badgeImportantColor,
                         variant === "square-number" &&
                             color === "default" &&
-                            "styledBadgeSquareNumberDefaultColor",
+                            styles.badgeSquareNumberDefaultColor,
                         className
                     )}
                     {...otherProps}
                 >
                     {shouldShowCount ? displayCount : null}
-                </styles.StyledBadge>
-            </styles.BadgeWrapper>
+                </div>
+            </div>
             {children}
-        </styles.BadgeOverlay>
+        </div>
     );
 };
