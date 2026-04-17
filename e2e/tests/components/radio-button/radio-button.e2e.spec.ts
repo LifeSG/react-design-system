@@ -92,6 +92,13 @@ test.describe("RadioButton", () => {
                 ),
             });
 
+            await expect(
+                story.getContainer(
+                    story.locators.components.radioUncheckedDisabled
+                )
+            ).toMatchAriaSnapshot(`
+                - radio [disabled]
+            `);
             await story.locators.components.radioUncheckedDisabled.hover();
             await compareScreenshot(story, "hover-disabled", {
                 locator: story.getContainer(
