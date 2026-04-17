@@ -2,11 +2,10 @@ import styled, { css } from "styled-components";
 
 import { ExpandableElement } from "../shared/dropdown-list";
 import {
-    ListItem,
-    SelectedIndicator,
-    UnselectedIndicator,
+    selectedIndicator,
+    unselectedIndicator,
 } from "../shared/dropdown-list/dropdown-list.styles";
-import { IconContainer } from "../shared/dropdown-list/expandable-element.styles";
+import { iconContainer } from "../shared/dropdown-list/expandable-element.styles";
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
 // =============================================================================
@@ -23,7 +22,7 @@ export const StyledExpandableElement = styled(ExpandableElement)`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     background: ${Colour["bg"]};
 
-    ${IconContainer} {
+    .${iconContainer} {
         margin-left: auto;
 
         svg {
@@ -68,9 +67,9 @@ export const DropdownList = styled.ul`
     padding: ${Spacing["spacing-8"]};
 `;
 
-export { SelectedIndicator, UnselectedIndicator };
+export { selectedIndicator, unselectedIndicator };
 
-export const DropdownItem = styled(ListItem)`
+export const DropdownItem = styled.li<{ $selected: boolean }>`
     align-items: center;
     ${Font["body-md-regular"]}
     color: ${Colour["text"]};
