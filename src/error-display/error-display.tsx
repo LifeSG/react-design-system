@@ -4,6 +4,7 @@ import { useContext } from "react";
 
 import { Button } from "../button";
 import { Markup } from "../markup";
+import { Breakpoint, useDesignToken } from "../theme";
 import { ThemeContext } from "../theme/theme-provider/context";
 import { Typography } from "../typography";
 import * as styles from "./error-display.styles";
@@ -31,9 +32,13 @@ export const ErrorDisplay = ({
     // CONST, STATE, REF
     // =============================================================================
     const theme = useContext(ThemeContext);
+    const mobile = useDesignToken(Breakpoint["sm-max"]) || Breakpoint["sm-max"];
+    const tablet = useDesignToken(Breakpoint["lg-max"]) || Breakpoint["lg-max"];
     const defaultAssets = getErrorDisplayData(
         type,
-        illustrationScheme || theme?.theme || "lifesg"
+        illustrationScheme || theme?.theme || "lifesg",
+        mobile,
+        tablet
     );
     const inactivityAttrs =
         type === "inactivity"
@@ -81,9 +86,7 @@ export const ErrorDisplay = ({
             ...actionButton,
         };
 
-        return (
-            <Button.Default className={styles.actionButton} {...buttonProps} />
-        );
+        return <Button className={styles.actionButton} {...buttonProps} />;
     };
 
     const updatedAssets = {
@@ -150,7 +153,7 @@ export const ErrorDisplay = ({
                 {...updatedAssets.img}
                 alt=""
                 data-id="error-display-image"
-                className={styles.img}
+                className={clsx(styles.img, updatedAssets.img?.className)}
             />
             {!imageOnly && renderContentDisplay()}
             {actionButton && renderActionButton()}

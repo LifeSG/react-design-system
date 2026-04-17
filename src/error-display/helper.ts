@@ -1,5 +1,3 @@
-import { Breakpoint } from "../theme";
-
 export interface ErrorDisplayImagePathAttributes {
     /** base sized image path */
     base: string;
@@ -23,16 +21,16 @@ export class ErrorDisplayHelper {
      * @param {ErrorDisplayImagePathAttributes} pathAttributes
      */
     public static imgAttributeHelper(
-        pathAttributes: ErrorDisplayImagePathAttributes
+        pathAttributes: ErrorDisplayImagePathAttributes,
+        mobile: string,
+        tablet: string
     ): React.ImgHTMLAttributes<HTMLImageElement> {
         const { base, md, lg, width, height } = pathAttributes;
-        const mobile = Breakpoint["sm-max"];
-        const tablet = Breakpoint["lg-max"];
 
         return {
             srcSet: `${base} 400w, ${md} 800w, ${lg} 1200w`,
             src: lg,
-            sizes: `(max-width: ${mobile}px) 400px, (max-width: ${tablet}px) 800px, 1200px`,
+            sizes: `(max-width: ${mobile}) 400px, (max-width: ${tablet}) 800px, 1200px`,
             width,
             height,
         };
