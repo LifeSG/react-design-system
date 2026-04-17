@@ -1,5 +1,14 @@
-import { BadgeOverlay, BadgeWrapper, StyledBadge } from "./badge.style";
+import { BadgeOverlay, BadgeWrapper, StyledBadge } from "./badge.styles";
 import type { BadgeProps, BadgeVariant } from "./types";
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+function getDisplayCount(count: number) {
+    if (count <= 999) return count.toString();
+    if (count === 1000) return "1K";
+    return "1K+";
+}
 
 export const Badge = ({
     children,
@@ -20,15 +29,6 @@ export const Badge = ({
         "square-number",
     ];
     const shouldShowCount = variantsToShowCount.includes(variant);
-
-    // =============================================================================
-    // HELPER FUNCTIONS
-    // =============================================================================
-    function getDisplayCount(count: number) {
-        if (count <= 999) return count.toString();
-        if (count === 1000) return "1K";
-        return "1K+";
-    }
 
     // =============================================================================
     // RENDER FUNCTIONS
