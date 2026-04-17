@@ -1,3 +1,4 @@
+import { THEME_TYPES } from "src/theme/types";
 import type { ApiTableSectionProps } from "stories/storybook-common";
 import { ApiTable } from "stories/storybook-common";
 import styled from "styled-components";
@@ -121,20 +122,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "illustrationScheme",
                 description:
                     "Use resource scheme provided instead of default theme",
-                propTypes: [
-                    `"lifesg"`,
-                    `"bookingsg"`,
-                    `"ccube"`,
-                    `"rbs"`,
-                    `"mylegacy"`,
-                    `"oneservice"`,
-                    `"pa"`,
-                    `"spf"`,
-                    `"a11y-playground"`,
-                    `"sgw-digital-lobby"`,
-                    `"supportgowhere"`,
-                    `"imda"`,
-                ],
+                propTypes: [...THEME_TYPES],
             },
             {
                 name: "additionalProps",
