@@ -3,9 +3,7 @@ import { css } from "@linaria/core";
 import { Colour, Motion } from "../theme";
 
 export const classes = {
-    icon: "radioButtonIcon",
     iconDisabled: "radioButtonIconDisabled",
-    inputDisabledVisual: "radioButtonInputDisabledVisual",
 } as const;
 
 export const container = css`
@@ -52,18 +50,18 @@ export const input = css`
     position: absolute;
     height: 100%;
     width: 100%;
-    cursor: pointer;
+    cursor: not-allowed;
     z-index: 1;
 
     appearance: none;
     background: transparent;
     border: none;
+`;
 
-    &.${classes.inputDisabledVisual} {
-        cursor: not-allowed;
-    }
+export const inputActive = css`
+    cursor: pointer;
 
-    &:not(.${classes.inputDisabledVisual}):hover + .${classes.icon} {
+    &:hover + svg {
         @media (pointer: fine) {
             color: ${Colour["icon-hover"]};
         }

@@ -42,7 +42,6 @@ export const RadioButton = ({
                 data-testid="radio-checked"
                 className={clsx(
                     styles.checkedIcon,
-                    styles.classes.icon,
                     disabled && styles.classes.iconDisabled
                 )}
                 aria-hidden
@@ -52,7 +51,6 @@ export const RadioButton = ({
                 data-testid="radio-unchecked"
                 className={clsx(
                     styles.uncheckedIcon,
-                    styles.classes.icon,
                     disabled && styles.classes.iconDisabled
                 )}
                 aria-hidden
@@ -74,10 +72,7 @@ export const RadioButton = ({
                 disabled={isNativeDisabled}
                 aria-disabled={isFocusableWhenDisabled}
                 tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
-                className={clsx(
-                    styles.input,
-                    disabled && styles.classes.inputDisabledVisual
-                )}
+                className={clsx(styles.input, !disabled && styles.inputActive)}
                 {...otherProps}
             />
             {renderIcon()}
