@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import dayjs from "dayjs";
 import { TimeSlotBarWeek } from "../../src";
+import { Colour } from "../../src/theme";
 
 describe("TimeSlotBarWeekCalendar", () => {
     const DATE_FORMAT = "YYYY-MM-DD";
@@ -267,5 +269,179 @@ describe("TimeSlotBarWeekCalendar", () => {
         const dateButton = screen.getByText("29");
         fireEvent.click(dateButton);
         expect(onChange).toHaveBeenCalledTimes(1);
+    });
+
+    describe("Keyboard navigation", () => {
+        const navigationSlots = {
+            "2021-01-24": [
+                {
+                    id: "sun-0900",
+                    startTime: "09:00",
+                    endTime: "09:30",
+                    label: "Sun 9am",
+                    clickable: true,
+                    styleAttributes: {
+                        backgroundColor: Colour["bg-available"],
+                    },
+                },
+                {
+                    id: "sun-0930",
+                    startTime: "09:30",
+                    endTime: "10:00",
+                    label: "Sun 930am",
+                    clickable: true,
+                    styleAttributes: {
+                        backgroundColor: Colour["bg-available"],
+                    },
+                },
+            ],
+            "2021-01-25": [
+                {
+                    id: "mon-0900",
+                    startTime: "09:00",
+                    endTime: "09:30",
+                    label: "Mon 9am",
+                    clickable: true,
+                    styleAttributes: {
+                        backgroundColor: Colour["bg-available"],
+                    },
+                },
+            ],
+            "2021-01-26": [
+                {
+                    id: "tue-0900",
+                    startTime: "09:00",
+                    endTime: "09:30",
+                    label: "Tue 9am",
+                    clickable: true,
+                    styleAttributes: {
+                        backgroundColor: Colour["bg-available"],
+                    },
+                },
+            ],
+        };
+
+        it("should allow keyboard tabbing to time slots", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            render(
+                <TimeSlotBarWeek
+                    slots={{
+                        "2021-01-29": [
+                            {
+                                id: "slot-1",
+                                startTime: "09:00",
+                                endTime: "09:30",
+                                label: "Morning slot",
+                                clickable: true,
+                                styleAttributes: {
+                                    backgroundColor: Colour["bg-available"],
+                                },
+                            },
+                        ],
+                    }}
+                    currentCalendarDate={"2021-01-29"}
+                    showNavigationHeader={false}
+                />
+            );
+
+            await user.tab();
+
+            expect(
+                screen.getByRole("button", {
+                    name: "29 January 2021 Friday, 9:00AM to 9:30AM, Morning slot, Available",
+                })
+            ).toHaveFocus();
+        });
+
+        it("should move focus within the column on arrow keys", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            render(
+                <TimeSlotBarWeek
+                    slots={navigationSlots}
+                    currentCalendarDate={"2021-01-24"}
+                    showNavigationHeader={false}
+                />
+            );
+
+            await user.tab();
+            const firstSlot = screen.getByRole("button", {
+                name: "24 January 2021 Sunday, 9:00AM to 9:30AM, Sun 9am, Available",
+            });
+            const secondSlot = screen.getByRole("button", {
+                name: "24 January 2021 Sunday, 9:30AM to 10:00AM, Sun 930am, Available",
+            });
+
+            expect(firstSlot).toHaveFocus();
+
+            fireEvent.keyDown(firstSlot, { key: "ArrowDown" });
+            expect(secondSlot).toHaveFocus();
+
+            fireEvent.keyDown(secondSlot, { key: "ArrowUp" });
+            expect(firstSlot).toHaveFocus();
+
+            fireEvent.keyDown(firstSlot, { key: "ArrowRight" });
+            expect(secondSlot).toHaveFocus();
+
+            fireEvent.keyDown(secondSlot, { key: "ArrowLeft" });
+            expect(firstSlot).toHaveFocus();
+        });
+
+        it("should move focus to first and last slot in the column for home and end", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            render(
+                <TimeSlotBarWeek
+                    slots={navigationSlots}
+                    currentCalendarDate={"2021-01-24"}
+                    showNavigationHeader={false}
+                />
+            );
+
+            await user.tab();
+            const firstRowSlot = screen.getByRole("button", {
+                name: "24 January 2021 Sunday, 9:00AM to 9:30AM, Sun 9am, Available",
+            });
+            const lastColumnSlot = screen.getByRole("button", {
+                name: "24 January 2021 Sunday, 9:30AM to 10:00AM, Sun 930am, Available",
+            });
+
+            fireEvent.keyDown(firstRowSlot, { key: "End" });
+            expect(lastColumnSlot).toHaveFocus();
+
+            fireEvent.keyDown(lastColumnSlot, { key: "Home" });
+            expect(firstRowSlot).toHaveFocus();
+        });
+
+        it("should move focus to first and last slot in the column for page up and page down", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            render(
+                <TimeSlotBarWeek
+                    slots={navigationSlots}
+                    currentCalendarDate={"2021-01-24"}
+                    showNavigationHeader={false}
+                />
+            );
+
+            await user.tab();
+            const firstSlot = screen.getByRole("button", {
+                name: "24 January 2021 Sunday, 9:00AM to 9:30AM, Sun 9am, Available",
+            });
+            const lastColumnSlot = screen.getByRole("button", {
+                name: "24 January 2021 Sunday, 9:30AM to 10:00AM, Sun 930am, Available",
+            });
+
+            fireEvent.keyDown(firstSlot, { key: "PageDown" });
+            expect(lastColumnSlot).toHaveFocus();
+
+            fireEvent.keyDown(lastColumnSlot, { key: "PageUp" });
+            expect(firstSlot).toHaveFocus();
+        });
     });
 });
