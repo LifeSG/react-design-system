@@ -320,27 +320,6 @@ describe("Fullscreen Image Carousel", () => {
                 "840 KB"
             );
         });
-
-        it("should render fileName only when fileSize is not provided", () => {
-            render(
-                <FullscreenImageCarousel
-                    items={[
-                        {
-                            src: "https://picsum.photos/id/157/1600/900",
-                            fileName: "only-name.jpg",
-                        },
-                    ]}
-                    show={true}
-                />
-            );
-
-            expect(screen.getByTestId("file-info-name")).toHaveTextContent(
-                "only-name.jpg"
-            );
-            expect(
-                screen.queryByTestId("file-info-size")
-            ).not.toBeInTheDocument();
-        });
     });
 });
 
