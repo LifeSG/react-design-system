@@ -53,21 +53,11 @@ test.describe("RadioButton", () => {
         test("Variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
 
-            await expect(
-                story.getContainer(story.locators.radioUncheckedDefault)
-            ).toMatchAriaSnapshot(`
+            await expect(story.layout).toMatchAriaSnapshot(`
                 - radio
-            `);
-
-            await expect(story.getContainer(story.locators.radioCheckedDefault))
-                .toMatchAriaSnapshot(`
                 - radio [checked]
-            `);
-
-            await expect(
-                story.getContainer(story.locators.radioCheckedDisabled)
-            ).toMatchAriaSnapshot(`
                 - radio [disabled] [checked]
+                - radio [disabled]
             `);
 
             await story.locators.radioUncheckedDefault.hover();
@@ -77,15 +67,22 @@ test.describe("RadioButton", () => {
                 ),
             });
 
-            await expect(
-                story.getContainer(story.locators.radioUncheckedDisabled)
-            ).toMatchAriaSnapshot(`
-                - radio [disabled]
-            `);
+            await story.locators.radioCheckedDefault.hover();
+            await compareScreenshot(story, "hover-checked-enabled", {
+                locator: story.getContainer(story.locators.radioCheckedDefault),
+            });
+
             await story.locators.radioUncheckedDisabled.hover();
             await compareScreenshot(story, "hover-disabled", {
                 locator: story.getContainer(
                     story.locators.radioUncheckedDisabled
+                ),
+            });
+
+            await story.locators.radioCheckedDisabled.hover();
+            await compareScreenshot(story, "hover-checked-disabled", {
+                locator: story.getContainer(
+                    story.locators.radioCheckedDisabled
                 ),
             });
         });
