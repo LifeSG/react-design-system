@@ -5,14 +5,12 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "radio-button";
 
     public readonly locators: {
-        components: {
-            radio: Locator;
+        radio: Locator;
 
-            radioUncheckedDefault: Locator;
-            radioCheckedDefault: Locator;
-            radioUncheckedDisabled: Locator;
-            radioCheckedDisabled: Locator;
-        };
+        radioUncheckedDefault: Locator;
+        radioCheckedDefault: Locator;
+        radioUncheckedDisabled: Locator;
+        radioCheckedDisabled: Locator;
         focusStart: Locator;
         changeCount: Locator;
     };
@@ -21,20 +19,14 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            components: {
-                radio: page.getByRole("radio"),
+            radio: page.getByRole("radio"),
 
-                radioUncheckedDefault: page.getByTestId(
-                    "radio-unchecked-default"
-                ),
-                radioCheckedDefault: page.getByTestId("radio-checked-default"),
-                radioUncheckedDisabled: page.getByTestId(
-                    "radio-unchecked-disabled"
-                ),
-                radioCheckedDisabled: page.getByTestId(
-                    "radio-checked-disabled"
-                ),
-            },
+            radioUncheckedDefault: page.getByTestId("radio-unchecked-default"),
+            radioCheckedDefault: page.getByTestId("radio-checked-default"),
+            radioUncheckedDisabled: page.getByTestId(
+                "radio-unchecked-disabled"
+            ),
+            radioCheckedDisabled: page.getByTestId("radio-checked-disabled"),
             focusStart: page.getByTestId("focus-start"),
             changeCount: page.getByTestId("change-count"),
         };
@@ -62,47 +54,38 @@ test.describe("RadioButton", () => {
             await compareScreenshot(story, "mount");
 
             await expect(
-                story.getContainer(
-                    story.locators.components.radioUncheckedDefault
-                )
+                story.getContainer(story.locators.radioUncheckedDefault)
             ).toMatchAriaSnapshot(`
                 - radio
             `);
 
-            await expect(
-                story.getContainer(
-                    story.locators.components.radioCheckedDefault
-                )
-            ).toMatchAriaSnapshot(`
+            await expect(story.getContainer(story.locators.radioCheckedDefault))
+                .toMatchAriaSnapshot(`
                 - radio [checked]
             `);
 
             await expect(
-                story.getContainer(
-                    story.locators.components.radioCheckedDisabled
-                )
+                story.getContainer(story.locators.radioCheckedDisabled)
             ).toMatchAriaSnapshot(`
                 - radio [disabled] [checked]
             `);
 
-            await story.locators.components.radioUncheckedDefault.hover();
+            await story.locators.radioUncheckedDefault.hover();
             await compareScreenshot(story, "hover-enabled", {
                 locator: story.getContainer(
-                    story.locators.components.radioUncheckedDefault
+                    story.locators.radioUncheckedDefault
                 ),
             });
 
             await expect(
-                story.getContainer(
-                    story.locators.components.radioUncheckedDisabled
-                )
+                story.getContainer(story.locators.radioUncheckedDisabled)
             ).toMatchAriaSnapshot(`
                 - radio [disabled]
             `);
-            await story.locators.components.radioUncheckedDisabled.hover();
+            await story.locators.radioUncheckedDisabled.hover();
             await compareScreenshot(story, "hover-disabled", {
                 locator: story.getContainer(
-                    story.locators.components.radioUncheckedDisabled
+                    story.locators.radioUncheckedDisabled
                 ),
             });
         });
@@ -115,25 +98,25 @@ test.describe("RadioButton", () => {
 
         test("Focusable when disabled", async ({ story }) => {
             await test.step("Remains disabled", async () => {
-                await expect(story.locators.components.radio).toHaveAttribute(
+                await expect(story.locators.radio).toHaveAttribute(
                     "aria-disabled",
                     "true"
                 );
 
-                await expect(story.locators.components.radio).toBeDisabled();
+                await expect(story.locators.radio).toBeDisabled();
             });
 
             await test.step("Can receive focus", async () => {
                 await story.locators.focusStart.focus();
                 await story.page.keyboard.press("Tab");
 
-                await expect(story.locators.components.radio).toBeFocused();
+                await expect(story.locators.radio).toBeFocused();
             });
 
             await test.step("Do not trigger onChange", async () => {
                 await expect(story.locators.changeCount).toHaveText("0");
 
-                await story.locators.components.radio.click({
+                await story.locators.radio.click({
                     force: true,
                 });
 
@@ -154,7 +137,7 @@ test.describe("RadioButton", () => {
                 await story.locators.focusStart.focus();
                 await story.page.keyboard.press("Tab");
 
-                await expect(story.locators.components.radio).toBeFocused();
+                await expect(story.locators.radio).toBeFocused();
             });
 
             await test.step("Space key checks radio and fires onChange", async () => {
@@ -162,7 +145,7 @@ test.describe("RadioButton", () => {
 
                 await story.page.keyboard.press("Space");
 
-                await expect(story.locators.components.radio).toBeChecked();
+                await expect(story.locators.radio).toBeChecked();
                 await expect(story.locators.changeCount).toHaveText("1");
             });
         });

@@ -4,7 +4,7 @@ import { RadioButton } from "@lifesg/react-design-system/radio-button";
 
 export default function Story() {
     return (
-        <>
+        <div className="story-column-container">
             <div className="story-row-container">
                 <RadioButton
                     data-testid="radio-unchecked-default"
@@ -41,6 +41,6 @@ export default function Story() {
                     disabled
                 />
             </div>
-        </>
+        </div>
     );
 }
