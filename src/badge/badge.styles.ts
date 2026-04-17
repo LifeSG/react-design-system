@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { V3_Border, V3_Colour, V3_Font, V3_Radius } from "../v3_theme";
+import { Border, Colour, Font, Radius } from "../theme";
 import type { BadgeProps } from "./types";
 
 // =============================================================================
@@ -48,8 +48,7 @@ export const BadgeWrapper = styled.div<BadgeWrapperProps>`
 const numberBadgeStyles = css`
     min-width: 1.25rem;
     padding: 0.25rem 0.375rem;
-    font-size: ${V3_Font.Spec["body-size-xs"]};
-    font-weight: ${V3_Font.Spec["weight-bold"]};
+    ${Font["body-xs-bold"]}
     line-height: 1;
 `;
 
@@ -61,11 +60,9 @@ const dotBadgeStyles = css`
 
 export const StyledBadge = styled.div<StyledBadgeProps>`
     background-color: ${({ $color }) =>
-        $color === "important"
-            ? V3_Colour["icon-error"]
-            : V3_Colour["bg-primary"]};
-    color: ${V3_Colour["text-inverse"]};
-    font-weight: ${V3_Font.Spec["weight-bold"]};
+        $color === "important" ? Colour["icon-error"] : Colour["bg-primary"]};
+    color: ${Colour["text-inverse"]};
+    font-weight: ${Font["body-xs-bold"]};
     display: flex;
     align-items: center;
     justify-content: center;
@@ -76,15 +73,14 @@ export const StyledBadge = styled.div<StyledBadgeProps>`
             case "number":
                 return css`
                     ${numberBadgeStyles}
-                    border-radius: ${V3_Radius.full};
+                    border-radius: ${Radius.full};
                 `;
 
             case "number-with-border":
                 return css`
                     ${numberBadgeStyles}
-                    border-radius: ${V3_Radius.full};
-                    box-shadow: 0 0 0 ${V3_Border["width-020"]}
-                        ${V3_Colour["bg"]};
+                    border-radius: ${Radius.full};
+                    box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
                 `;
 
             case "dot":
@@ -95,20 +91,18 @@ export const StyledBadge = styled.div<StyledBadgeProps>`
             case "dot-with-border":
                 return css`
                     ${dotBadgeStyles}
-                    box-shadow: 0 0 0  ${V3_Border["width-020"]} ${V3_Colour[
-                        "bg"
-                    ]};
+                    box-shadow: 0 0 0 ${Border["width-020"]} ${Colour.bg};
                 `;
 
             case "square-number":
                 return css`
                     ${numberBadgeStyles}
-                    border-radius: ${V3_Radius.sm};
+                    border-radius: ${Radius.sm};
                     padding: 0.25rem 0.4375rem;
                     ${$color === "default" &&
                     css`
-                        background-color: ${V3_Colour["bg-primary-subtler"]};
-                        color: ${V3_Colour["text-primary"]};
+                        background-color: ${Colour["bg-primary-subtler"]};
+                        color: ${Colour["text-primary"]};
                     `}
                 `;
 
