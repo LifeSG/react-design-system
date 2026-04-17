@@ -286,14 +286,32 @@ describe("Fullscreen Image Carousel", () => {
                 <FullscreenImageCarousel
                     items={IMAGES_WITH_FILE_INFO}
                     show={true}
-                    initialActiveItemIndex={3}
+                    initialActiveItemIndex={2}
                 />
             );
 
             expect(screen.getByTestId("file-info-bar")).toBeInTheDocument();
             expect(screen.getByTestId("file-info-name")).toHaveTextContent(
-                "photo-d.jpg"
+                "photo-c.jpg"
             );
+            expect(
+                screen.queryByTestId("file-info-size")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should not render fileName or fileSize for a slide that has neither", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES_WITH_FILE_INFO}
+                    show={true}
+                    initialActiveItemIndex={3}
+                />
+            );
+
+            expect(screen.getByTestId("file-info-bar")).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("file-info-name")
+            ).not.toBeInTheDocument();
             expect(
                 screen.queryByTestId("file-info-size")
             ).not.toBeInTheDocument();
@@ -375,12 +393,10 @@ const IMAGES_WITH_FILE_INFO = [
         fileSize: "840 KB",
     },
     {
-        src: "https://picsum.photos/id/369/1000/1000",
+        src: "https://picsum.photos/id/445/300/300",
         fileName: "photo-c.jpg",
-        fileSize: "500 KB",
     },
     {
-        src: "https://picsum.photos/id/445/300/300",
-        fileName: "photo-d.jpg",
+        src: "https://picsum.photos/id/369/1000/1000",
     },
 ];

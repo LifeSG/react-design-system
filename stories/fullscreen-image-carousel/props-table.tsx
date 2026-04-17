@@ -121,6 +121,18 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
             },
+            {
+                name: "fileName",
+                description:
+                    "The file name to display in the file info bar at the top",
+                propTypes: ["string"],
+            },
+            {
+                name: "fileSize",
+                description:
+                    'The pre-formatted file size string to display in the file info bar at the top (e.g. "2.4 MB")',
+                propTypes: ["string"],
+            },
         ],
     },
     {
@@ -156,18 +168,6 @@ const DATA: ApiTableSectionProps[] = [
                         placeholder is shown
                     </>
                 ),
-                propTypes: ["string"],
-            },
-            {
-                name: "fileName",
-                description:
-                    "The file name to display in the file info bar at the top",
-                propTypes: ["string"],
-            },
-            {
-                name: "fileSize",
-                description:
-                    'The pre-formatted file size string to display in the file info bar at the top (e.g. "2.4 MB")',
                 propTypes: ["string"],
             },
         ],

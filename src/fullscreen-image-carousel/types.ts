@@ -8,11 +8,12 @@ export interface FullscreenImageCarouselRef {
     goToNextItem: () => void;
 }
 
-export interface FullscreenImageCarouselBaseProps
+export interface FullscreenImageCarouselProps
     extends Pick<
         ModalProps,
         "show" | "rootComponentId" | "animationFrom" | "zIndex"
     > {
+    items: FullscreenImageCarouselItemProps[];
     /** The index of the visible item, starts from 0 */
     initialActiveItemIndex?: number | undefined;
     hideThumbnail?: boolean | undefined;
@@ -25,16 +26,6 @@ export interface FullscreenImageCarouselBaseProps
     onClose?: (() => void) | undefined;
     insets?: Insets | undefined;
 }
-
-type FullscreenCarouselItemBase =
-    | FullscreenImageCarouselImageItemProps
-    | FullscreenImageCarouselCustomItemProps;
-
-export type FullscreenImageCarouselProps = FullscreenImageCarouselBaseProps & {
-    items:
-        | (FullscreenCarouselItemBase & FullscreenCarouselItemWithFileName)[]
-        | (FullscreenCarouselItemBase & FullscreenCarouselItemWithoutFileName)[];
-};
 
 export interface FullscreenImageCarouselImageItemProps {
     type?: "image" | undefined;
@@ -57,18 +48,13 @@ export interface FullscreenImageCarouselCustomItemProps {
     renderContent: () => React.ReactNode;
 }
 
-export interface FullscreenCarouselItemWithFileName {
-    fileName: string;
+export type FullscreenImageCarouselItemProps = (
+    | FullscreenImageCarouselImageItemProps
+    | FullscreenImageCarouselCustomItemProps
+) & {
+    fileName?: string | undefined;
     fileSize?: string | undefined;
-}
-
-export interface FullscreenCarouselItemWithoutFileName {
-    fileName?: undefined;
-    fileSize?: undefined;
-}
-
-export type FullscreenImageCarouselItemProps = FullscreenCarouselItemBase &
-    (FullscreenCarouselItemWithFileName | FullscreenCarouselItemWithoutFileName);
+};
 
 export interface ImageDimension {
     width: number;
