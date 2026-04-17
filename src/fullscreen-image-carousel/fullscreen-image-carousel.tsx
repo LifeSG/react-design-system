@@ -12,6 +12,7 @@ import {
     useCallback,
     useEffect,
     useImperativeHandle,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -31,6 +32,9 @@ import {
     Chip,
     CloseButton,
     DeleteButton,
+    FileInfoFileName,
+    FileInfoFileSize,
+    FileInfoTextWrapper,
     FocusableImageRegion,
     ImageGalleryContainer,
     ImageGallerySlide,
@@ -98,6 +102,13 @@ export const Component = (
         (item) => isCustomItem(item) && !!item.itemLabel?.trim()
     );
     const carouselItemNoun = hasAnyItemLabel ? "item" : "image";
+    const hasFileInfo = useMemo(
+        () =>
+            items.some(
+                (item) => item.fileName?.trim() || item.fileSize?.trim()
+            ),
+        [items]
+    );
 
     const getItemAriaLabel = useCallback(
         (index: number) => {
@@ -348,6 +359,35 @@ export const Component = (
         );
     };
 
+    const renderFileInfo = () => {
+        const { fileName, fileSize } = currentItem ?? {};
+        const trimmedName = fileName?.trim();
+        const trimmedSize = fileSize?.trim();
+
+        return (
+            <FileInfoTextWrapper
+                $centerContent={!trimmedSize}
+                aria-live="polite"
+                aria-atomic="true"
+                data-testid="file-info-bar"
+            >
+                {trimmedName && (
+                    <FileInfoFileName
+                        weight="semibold"
+                        data-testid="file-info-name"
+                    >
+                        {trimmedName}
+                    </FileInfoFileName>
+                )}
+                {trimmedSize && (
+                    <FileInfoFileSize data-testid="file-info-size">
+                        {trimmedSize}
+                    </FileInfoFileSize>
+                )}
+            </FileInfoTextWrapper>
+        );
+    };
+
     const renderThumbnails = () => {
         return (
             <ThumbnailContainer
@@ -443,11 +483,13 @@ export const Component = (
 
                     {!hideThumbnail && renderThumbnails()}
                 </ImageGalleryContainer>
-
                 <TopActionButtons
+                    $hasFileInfo={hasFileInfo}
                     $insetTop={insets?.top}
+                    $insetLeft={insets?.left}
                     $insetRight={insets?.right}
                 >
+                    {hasFileInfo && renderFileInfo()}
                     {!hideMagnifier && !isCustomItem(currentItem) && (
                         <MagnifierButton
                             aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
