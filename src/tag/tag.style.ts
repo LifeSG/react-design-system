@@ -1,12 +1,6 @@
 import styled, { css } from "styled-components";
 
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Radius,
-} from "../v3_theme";
+import { Border, Colour, Font, MediaQuery, Radius } from "../theme";
 import type { TagColorType, TagType } from "./types";
 
 // =============================================================================
@@ -19,11 +13,11 @@ interface StyleProps {
 }
 
 export const Wrapper = styled.div<StyleProps>`
-    border-radius: ${V3_Radius["sm"]};
+    border-radius: ${Radius["sm"]};
     padding: 0.125rem 0.5rem;
     width: fit-content;
     max-width: 100%;
-    ${V3_Font["body-xs-semibold"]}
+    ${Font["body-xs-semibold"]}
     transition: all 200ms ease;
     cursor: ${({ $interactive }) => ($interactive ? "pointer" : "default")};
     display: flex;
@@ -35,112 +29,112 @@ export const Wrapper = styled.div<StyleProps>`
     }
 
     ${(props) => {
-        let backgroundColor: (props: any) => string;
-        let borderColor: ((props: any) => string) | undefined;
-        let color: (props: any) => string;
-        let hoverBackgroundColor: (props: any) => string;
-        let hoverBorderColor: ((props: any) => string) | undefined;
+        let backgroundColor: string;
+        let borderColor: string | undefined;
+        let color: string;
+        let hoverBackgroundColor: string;
+        let hoverBorderColor: string | undefined;
 
         if (props.$type === "solid") {
-            color = V3_Colour["text-inverse"];
+            color = Colour["text-inverse"];
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = V3_Colour["bg-inverse-subtler"];
-                    hoverBackgroundColor = V3_Colour["bg-inverse-hover"];
+                    backgroundColor = Colour["bg-inverse-subtler"];
+                    hoverBackgroundColor = Colour["bg-inverse-hover"];
                     break;
                 case "green":
-                    backgroundColor = V3_Colour["bg-success-strong"];
-                    hoverBackgroundColor = V3_Colour["bg-success-strong-hover"];
+                    backgroundColor = Colour["bg-success-strong"];
+                    hoverBackgroundColor = Colour["bg-success-strong-hover"];
                     break;
                 case "yellow":
-                    backgroundColor = V3_Colour["bg-warning-strong"];
-                    hoverBackgroundColor = V3_Colour["bg-warning-strong-hover"];
+                    backgroundColor = Colour["bg-warning-strong"];
+                    hoverBackgroundColor = Colour["bg-warning-strong-hover"];
                     break;
                 case "red":
-                    backgroundColor = V3_Colour["bg-error-strong"];
-                    hoverBackgroundColor = V3_Colour["bg-error-strong-hover"];
+                    backgroundColor = Colour["bg-error-strong"];
+                    hoverBackgroundColor = Colour["bg-error-strong-hover"];
                     break;
                 case "blue":
-                    backgroundColor = V3_Colour["bg-info-strong"];
-                    hoverBackgroundColor = V3_Colour["bg-info-strong-hover"];
+                    backgroundColor = Colour["bg-info-strong"];
+                    hoverBackgroundColor = Colour["bg-info-strong-hover"];
                     break;
                 case "primary":
-                    backgroundColor = V3_Colour["bg-primary"];
-                    hoverBackgroundColor = V3_Colour["bg-primary-hover"];
+                    backgroundColor = Colour["bg-primary"];
+                    hoverBackgroundColor = Colour["bg-primary-hover"];
                     break;
                 default:
-                    backgroundColor = V3_Colour["bg-inverse"];
-                    hoverBackgroundColor = V3_Colour["bg-inverse-hover"];
+                    backgroundColor = Colour["bg-inverse"];
+                    hoverBackgroundColor = Colour["bg-inverse-hover"];
                     break;
             }
         } else {
             switch (props.$color) {
                 case "grey":
-                    backgroundColor = V3_Colour["bg-strong"];
-                    borderColor = V3_Colour["border-strong"];
-                    color = V3_Colour["text-subtle"];
-                    hoverBackgroundColor = V3_Colour["bg-hover-neutral-strong"];
+                    backgroundColor = Colour["bg-strong"];
+                    borderColor = Colour["border-strong"];
+                    color = Colour["text-subtle"];
+                    hoverBackgroundColor = Colour["bg-hover-neutral-strong"];
                     break;
                 case "green":
-                    backgroundColor = V3_Colour["bg-success"];
-                    borderColor = V3_Colour["border-success"];
-                    color = V3_Colour["text-success"];
-                    hoverBackgroundColor = V3_Colour["bg-success-hover"];
+                    backgroundColor = Colour["bg-success"];
+                    borderColor = Colour["border-success"];
+                    color = Colour["text-success"];
+                    hoverBackgroundColor = Colour["bg-success-hover"];
                     break;
                 case "yellow":
-                    backgroundColor = V3_Colour["bg-warning"];
-                    borderColor = V3_Colour["border-warning"];
-                    color = V3_Colour["text-warning"];
-                    hoverBackgroundColor = V3_Colour["bg-warning-hover"];
+                    backgroundColor = Colour["bg-warning"];
+                    borderColor = Colour["border-warning"];
+                    color = Colour["text-warning"];
+                    hoverBackgroundColor = Colour["bg-warning-hover"];
                     break;
                 case "red":
-                    backgroundColor = V3_Colour["bg-error"];
-                    borderColor = V3_Colour["border-error"];
-                    color = V3_Colour["text-error"];
-                    hoverBackgroundColor = V3_Colour["bg-error-hover"];
+                    backgroundColor = Colour["bg-error"];
+                    borderColor = Colour["border-error"];
+                    color = Colour["text-error"];
+                    hoverBackgroundColor = Colour["bg-error-hover"];
                     break;
                 case "blue":
-                    backgroundColor = V3_Colour["bg-info"];
-                    borderColor = V3_Colour["border-info"];
-                    color = V3_Colour["text-info"];
-                    hoverBackgroundColor = V3_Colour["bg-info-hover"];
+                    backgroundColor = Colour["bg-info"];
+                    borderColor = Colour["border-info"];
+                    color = Colour["text-info"];
+                    hoverBackgroundColor = Colour["bg-info-hover"];
                     break;
                 case "primary":
-                    backgroundColor = V3_Colour["bg-primary-subtlest"];
-                    borderColor = V3_Colour["border-primary"];
-                    color = V3_Colour["text-primary"];
-                    hoverBackgroundColor = V3_Colour["bg-primary-hover"];
+                    backgroundColor = Colour["bg-primary-subtlest"];
+                    borderColor = Colour["border-primary"];
+                    color = Colour["text-primary"];
+                    hoverBackgroundColor = Colour["bg-primary-hover"];
                     break;
                 default:
-                    backgroundColor = V3_Colour.bg;
-                    borderColor = V3_Colour.border;
-                    color = V3_Colour.text;
-                    hoverBackgroundColor = V3_Colour["bg-hover-neutral"];
+                    backgroundColor = Colour.bg;
+                    borderColor = Colour.border;
+                    color = Colour.text;
+                    hoverBackgroundColor = Colour["bg-hover-neutral"];
                     break;
             }
         }
         return css`
             background: ${backgroundColor};
-            border: ${V3_Border["width-010"]} ${V3_Border.solid} ${borderColor};
+            border: ${Border["width-010"]} ${Border.solid} ${borderColor};
             color: ${color};
             @media (hover: hover) {
                 &:hover {
                     ${props.$interactive &&
                     hoverBackgroundColor &&
-                    `background: ${hoverBackgroundColor(props)};`}
+                    `background: ${hoverBackgroundColor};`}
                     ${props.$interactive &&
                     hoverBorderColor &&
-                    `border-color: ${hoverBorderColor(props)};`}
+                    `border-color: ${hoverBorderColor};`}
                 }
             }
         `;
     }}
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         ${({ $interactive }) => {
             if ($interactive) {
                 return css`
-                    ${V3_Font["body-md-semibold"]}
+                    ${Font["body-md-semibold"]}
                     padding: calc(0.5rem - 1px) 1rem;
                 `;
             }
