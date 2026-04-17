@@ -2,9 +2,6 @@ import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Radius } from "../theme";
 
-// =============================================================================
-// STYLE TOKENS
-// =============================================================================
 export const tokens = {
     wrapper: {
         offsetX: "--fds-internal-badge-wrapper-offsetX",
@@ -12,9 +9,6 @@ export const tokens = {
     },
 };
 
-// =============================================================================
-// STYLING
-// =============================================================================
 const numberBadgeStyles = `
     min-width: 1.25rem;
     padding: 0.25rem 0.375rem;
@@ -28,13 +22,15 @@ const dotBadgeStyles = `
     height: 0.5rem;
 `;
 
-export const Overlay = css`
+export const badgeOverlay = css`
     position: relative;
     width: fit-content;
     height: fit-content;
 `;
 
-export const OverlayWrapper = css`
+export const badgeWrapper = css``;
+
+export const badgeWrapperIsOverlay = css`
     position: absolute;
     top: 0;
     right: 0;

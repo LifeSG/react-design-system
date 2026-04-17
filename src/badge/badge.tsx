@@ -5,14 +5,16 @@ import { useApplyStyle } from "../theme";
 import * as styles from "./badge.styles";
 import type { BadgeProps, BadgeVariant } from "./types";
 
-// =============================================================================
-// HELPER FUNCTIONS
-// =============================================================================
 function getDisplayCount(count: number) {
     if (count <= 999) return count.toString();
     if (count === 1000) return "1K";
     return "1K+";
 }
+const variantsToShowCount: Set<BadgeVariant> = new Set([
+    "number",
+    "number-with-border",
+    "square-number",
+]);
 
 export const Badge = ({
     children,
@@ -28,12 +30,7 @@ export const Badge = ({
     // CONST
     // =============================================================================
     const displayCount = getDisplayCount(count);
-    const variantsToShowCount: BadgeVariant[] = [
-        "number",
-        "number-with-border",
-        "square-number",
-    ];
-    const shouldShowCount = variantsToShowCount.includes(variant);
+    const shouldShowCount = variantsToShowCount.has(variant);
 
     // =============================================================================
     // REFS
@@ -49,11 +46,12 @@ export const Badge = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <div className={clsx(children !== undefined && styles.Overlay)}>
+        <div className={clsx(children !== undefined && styles.badgeOverlay)}>
             <div
                 ref={wrapperRef}
                 className={clsx(
-                    children !== undefined && styles.OverlayWrapper
+                    styles.badgeWrapper,
+                    children !== undefined && styles.badgeWrapperIsOverlay
                 )}
             >
                 <div
@@ -67,10 +65,10 @@ export const Badge = ({
                         variant === "dot-with-border" &&
                             styles.badgeDotWithBorder,
                         variant === "square-number" && styles.badgeSquareNumber,
-                        color === "important" && styles.badgeImportantColor,
                         variant === "square-number" &&
                             color === "default" &&
                             styles.badgeSquareNumberDefaultColor,
+                        color === "important" && styles.badgeImportantColor,
                         className
                     )}
                     {...otherProps}
