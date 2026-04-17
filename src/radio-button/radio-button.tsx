@@ -1,11 +1,8 @@
-import type React from "react";
+import { CircleDotIcon, CircleIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
+import type { ChangeEvent } from "react";
 
-import {
-    Container,
-    Input,
-    StyledCheckedIcon,
-    StyledUnCheckedIcon,
-} from "./radio-button.styles";
+import * as styles from "./radio-button.styles";
 import type { RadioButtonProps } from "./types";
 
 export const RadioButton = ({
@@ -27,7 +24,7 @@ export const RadioButton = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleOnChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const handleOnChange = (event: ChangeEvent<HTMLInputElement>) => {
         if (disabled) {
             event.preventDefault();
             return;
@@ -41,29 +38,35 @@ export const RadioButton = ({
     // =============================================================================
     const renderIcon = () => {
         return checked ? (
-            <StyledCheckedIcon
+            <CircleDotIcon
                 data-testid="radio-checked"
-                $disabled={disabled}
+                className={clsx(
+                    styles.icon,
+                    disabled ? styles.checkedIconDisabled : styles.checkedIcon
+                )}
                 aria-hidden
             />
         ) : (
-            <StyledUnCheckedIcon
+            <CircleIcon
                 data-testid="radio-unchecked"
-                $disabled={disabled}
+                className={clsx(
+                    styles.icon,
+                    disabled
+                        ? styles.uncheckedIconDisabled
+                        : styles.uncheckedIcon
+                )}
                 aria-hidden
             />
         );
     };
 
     return (
-        <Container
-            $selected={checked}
-            $disabled={disabled}
-            className={className}
-            $displaySize={displaySize}
+        <div
+            className={clsx(styles.container, className)}
+            data-display-size={displaySize}
             data-testid="radio-button"
         >
-            <Input
+            <input
                 type="radio"
                 data-testid="radio-input"
                 onChange={handleOnChange}
@@ -71,10 +74,10 @@ export const RadioButton = ({
                 disabled={isNativeDisabled}
                 aria-disabled={isFocusableWhenDisabled}
                 tabIndex={isFocusableWhenDisabled ? 0 : tabIndex}
-                $disabledVisual={disabled}
+                className={clsx(styles.input, !disabled && styles.inputActive)}
                 {...otherProps}
             />
             {renderIcon()}
-        </Container>
+        </div>
     );
 };
