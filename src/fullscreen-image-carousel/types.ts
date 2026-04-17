@@ -27,7 +27,13 @@ export interface FullscreenImageCarouselProps
     insets?: Insets | undefined;
 }
 
-export interface FullscreenImageCarouselImageItemProps {
+interface FullscreenImageCarouselBaseItemProps {
+    fileName?: string | undefined;
+    fileSize?: string | undefined;
+}
+
+export interface FullscreenImageCarouselImageItemProps
+    extends FullscreenImageCarouselBaseItemProps {
     type?: "image" | undefined;
     src: string;
     alt?: string | undefined;
@@ -38,7 +44,8 @@ export interface FullscreenImageCarouselImageItemProps {
 /** @deprecated Use FullscreenImageCarouselImageItemProps instead */
 export type FullscreenCarouselItemProps = FullscreenImageCarouselImageItemProps;
 
-export interface FullscreenImageCarouselCustomItemProps {
+export interface FullscreenImageCarouselCustomItemProps
+    extends FullscreenImageCarouselBaseItemProps {
     type: "custom";
     /** The thumbnail image src. If omitted, a placeholder is shown in the thumbnail strip. */
     thumbnailSrc?: string | undefined;
@@ -48,13 +55,9 @@ export interface FullscreenImageCarouselCustomItemProps {
     renderContent: () => React.ReactNode;
 }
 
-export type FullscreenImageCarouselItemProps = (
+export type FullscreenImageCarouselItemProps =
     | FullscreenImageCarouselImageItemProps
-    | FullscreenImageCarouselCustomItemProps
-) & {
-    fileName?: string | undefined;
-    fileSize?: string | undefined;
-};
+    | FullscreenImageCarouselCustomItemProps;
 
 export interface ImageDimension {
     width: number;
