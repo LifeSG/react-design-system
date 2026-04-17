@@ -135,3 +135,63 @@ export const Configurable: StoryObj<Component> = {
         );
     },
 };
+
+export const WithCustomContent: StoryObj<Component> = {
+    render: (_args) => {
+        const [show, setShow] = useState(false);
+        return (
+            <>
+                <Button.Default
+                    onClick={() => {
+                        setShow((old) => !old);
+                    }}
+                >
+                    Show carousel
+                </Button.Default>
+                <FullscreenImageCarousel
+                    items={[
+                        {
+                            type: "custom",
+                            itemLabel: "PDF",
+                            thumbnailSrc:
+                                "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg",
+                            renderContent: () => (
+                                <iframe
+                                    src="https://mozilla.github.io/pdf.js/web/compressed.tracemonkey-pldi-09.pdf"
+                                    title="PDF preview"
+                                    style={{
+                                        width: "100%",
+                                        height: "100%",
+                                        border: "none",
+                                    }}
+                                />
+                            ),
+                        },
+                        {
+                            type: "custom",
+                            itemLabel: "document",
+                            renderContent: () => (
+                                <div
+                                    style={{
+                                        display: "flex",
+                                        alignItems: "center",
+                                        justifyContent: "center",
+                                        width: "100%",
+                                        height: "100%",
+                                        color: "#fff",
+                                        fontSize: 24,
+                                    }}
+                                >
+                                    No thumbnail provided
+                                </div>
+                            ),
+                        },
+                    ]}
+                    show={show}
+                    onDelete={() => undefined}
+                    onClose={() => setShow(false)}
+                />
+            </>
+        );
+    },
+};

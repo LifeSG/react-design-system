@@ -46,7 +46,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "items",
                 description: "List of carousel items",
-                propTypes: ["FullscreenCarouselItemProps[]"],
+                propTypes: ["FullscreenImageCarouselItemProps[]"],
                 mandatory: true,
             },
             {
@@ -83,7 +83,7 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "Called when the current image delete button is clicked. When provided, the delete button will be shown. If called, do not reorder the items array while a delete is in flight.",
                 propTypes: [
-                    "(item: FullscreenCarouselItemProps, index: number) => void",
+                    "(item: FullscreenImageCarouselItemProps, index: number) => void",
                 ],
             },
             {
@@ -109,13 +109,37 @@ const DATA: ApiTableSectionProps[] = [
         ],
     },
     {
-        name: "FullscreenCarouselItemProps",
+        name: "FullscreenImageCarouselItemProps",
         attributes: [
+            {
+                name: "",
+                description: (
+                    <>
+                        One of
+                        <code>FullscreenImageCarouselImageItemProps</code> or
+                        <code>FullscreenImageCarouselCustomItemProps</code>
+                    </>
+                ),
+            },
+        ],
+    },
+    {
+        name: "FullscreenImageCarouselImageItemProps",
+        attributes: [
+            {
+                name: "type",
+                description: (
+                    <>
+                        Discriminant for the item type. Must be{" "}
+                        <code>&quot;image&quot;</code> or omitted
+                    </>
+                ),
+            },
             {
                 name: "src",
                 description: "The image src",
-                propTypes: ["string"],
                 mandatory: true,
+                propTypes: ["string"],
             },
             {
                 name: "alt",
@@ -128,10 +152,48 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The thumbnail image src. If not specified, the image{" "}
-                        <code>src</code> will be used
+                        <code>src</code> will be used. If neither are valid, a
+                        placeholder is shown
                     </>
                 ),
                 propTypes: ["string"],
+            },
+        ],
+    },
+    {
+        name: "FullscreenImageCarouselCustomItemProps",
+        attributes: [
+            {
+                name: "type",
+                description: (
+                    <>
+                        Discriminant for the item type. Must be{" "}
+                        <code>&quot;custom&quot;</code>
+                    </>
+                ),
+                mandatory: true,
+            },
+            {
+                name: "thumbnailSrc",
+                description:
+                    "The thumbnail image src. If not specified, a placeholder is shown",
+                propTypes: ["string"],
+            },
+            {
+                name: "itemLabel",
+                description: (
+                    <>
+                        Label to describe the type of content (e.g.{" "}
+                        <code>&quot;PDF&quot;</code>)
+                    </>
+                ),
+                propTypes: ["string"],
+            },
+            {
+                name: "renderContent",
+                description: "Custom render prop for the full slide area",
+                mandatory: true,
+                propTypes: ["() => React.ReactNode"],
             },
         ],
     },
