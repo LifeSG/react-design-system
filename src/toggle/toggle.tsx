@@ -262,9 +262,7 @@ export const Toggle = ({
                     className={clsx(
                         styles.children,
                         !collapsible && styles.childrenIsFinalItem,
-                        disabled
-                            ? styles.childrenDisabled
-                            : selected && styles.childrenSelected
+                        disabled && styles.childrenDisabled
                     )}
                 >
                     <Markup baseTextSize="body-md">

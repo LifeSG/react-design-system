@@ -319,10 +319,6 @@ export const childrenIsFinalItem = css`
     padding-bottom: 0.6875rem;
 `;
 
-export const childrenSelected = css`
-    color: ${Colour["text-selected"]};
-`;
-
 export const childrenDisabled = css`
     color: ${Colour["text-disabled"]};
 `;
