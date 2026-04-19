@@ -1,20 +1,11 @@
+import clsx from "clsx";
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 
 import { DateInputHelper, StringHelper, useStateRef } from "../../util";
-import {
-    DayInput,
-    DayInputSizer,
-    Divider,
-    InputContainer,
-    InputSection,
-    MonthInput,
-    MonthInputSizer,
-    Placeholder,
-    YearInput,
-    YearInputSizer,
-} from "./standalone-date-input.style";
+import { basicInput } from "../input-wrapper/input-wrapper.styles";
+import * as styles from "./standalone-date-input.styles";
 
 dayjs.extend(customParseFormat);
 
@@ -336,26 +327,36 @@ export const Component = (
         }
 
         return (
-            <Placeholder
-                $hide={hidePlaceholder}
-                $disabled={disabled}
+            <div
+                className={clsx(
+                    styles.placeholder,
+                    disabled && styles.placeholderDisabled,
+                    hidePlaceholder && styles.placeholderHide
+                )}
                 onMouseDown={handlePlaceholderClick}
             >
                 {placeholder}
-            </Placeholder>
+            </div>
         );
     };
 
     return (
-        <InputSection
+        <div
             role="group"
             aria-label={label}
+            className={styles.inputSection}
             onClick={handleSectionClick}
             onFocus={handleSectionFocus}
         >
-            <InputContainer ref={nodeRef} $hover={!!hoverValue}>
-                <DayInputSizer>
-                    <DayInput
+            <div
+                ref={nodeRef}
+                className={clsx(
+                    styles.inputContainer,
+                    !!hoverValue && styles.HOVER_CLASS
+                )}
+            >
+                <span className={styles.dayInputSizer}>
+                    <input
                         ref={dayInputRef}
                         name={names[0]}
                         maxLength={2}
@@ -375,11 +376,19 @@ export const Component = (
                         placeholder={
                             currentFocus === names[0] && !readOnly ? "" : "DD"
                         }
+                        className={clsx(basicInput, styles.baseInput)}
                     />
-                </DayInputSizer>
-                <Divider $inactive={dayValue.length === 0}>/</Divider>
-                <MonthInputSizer>
-                    <MonthInput
+                </span>
+                <span
+                    className={clsx(
+                        styles.divider,
+                        dayValue.length === 0 && styles.dividerInactive
+                    )}
+                >
+                    /
+                </span>
+                <span className={styles.monthInputSizer}>
+                    <input
                         ref={monthInputRef}
                         name={names[1]}
                         maxLength={2}
@@ -400,11 +409,19 @@ export const Component = (
                         placeholder={
                             currentFocus === names[1] && !readOnly ? "" : "MM"
                         }
+                        className={clsx(basicInput, styles.baseInput)}
                     />
-                </MonthInputSizer>
-                <Divider $inactive={monthValue.length === 0}>/</Divider>
-                <YearInputSizer>
-                    <YearInput
+                </span>
+                <span
+                    className={clsx(
+                        styles.divider,
+                        monthValue.length === 0 && styles.dividerInactive
+                    )}
+                >
+                    /
+                </span>
+                <span className={styles.yearInputSizer}>
+                    <input
                         ref={yearInputRef}
                         name={names[2]}
                         maxLength={4}
@@ -425,11 +442,12 @@ export const Component = (
                         placeholder={
                             currentFocus === names[2] && !readOnly ? "" : "YYYY"
                         }
+                        className={clsx(basicInput, styles.baseInput)}
                     />
-                </YearInputSizer>
-            </InputContainer>
+                </span>
+            </div>
             {renderPlaceholder()}
-        </InputSection>
+        </div>
     );
 };
 
