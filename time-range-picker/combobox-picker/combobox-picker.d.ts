@@ -1,0 +1,2 @@
+import { TimeRangePickerProps } from "../types";
+export declare const ComboboxPicker: ({ id, disabled, error, value, format, readOnly, onChange, onFocus, onBlur, alignment, dropdownZIndex, startLimit, endLimit, initialScrollStartTime, initialScrollEndTime, interval, dropdownRootNode, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, "aria-invalid": ariaInvalid, ...otherProps }: TimeRangePickerProps) => import("react/jsx-runtime").JSX.Element;
