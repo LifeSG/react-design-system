@@ -27,10 +27,6 @@ export const uncheckedIcon = css`
     color: ${Colour["icon-primary-subtlest"]};
 `;
 
-export const uncheckedDisabledIcon = css`
-    color: ${Colour["icon-disabled-subtle"]};
-`;
-
 export const selectedIcon = css`
     color: ${Colour["icon-selected"]};
 `;
@@ -66,11 +62,12 @@ export const input = css`
     height: 100%;
     cursor: pointer;
 
-    &[disabled] {
+    &[disabled],
+    &[aria-disabled="true"] {
         cursor: not-allowed;
     }
 
-    &:not([disabled]):hover + svg {
+    &:not([disabled]):not([aria-disabled="true"]):hover + svg {
         @media (pointer: fine) {
             color: ${Colour["icon-hover"]};
         }

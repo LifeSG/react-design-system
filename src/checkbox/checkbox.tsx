@@ -86,7 +86,7 @@ export const Checkbox = ({
         if (disabled) {
             return (
                 <SquareFillIcon
-                    className={clsx(styles.icon, styles.uncheckedDisabledIcon)}
+                    className={clsx(styles.icon, styles.iconDisabled)}
                     data-testid="empty-disabled-checkbox"
                     aria-hidden
                 />

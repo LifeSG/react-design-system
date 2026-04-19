@@ -9,74 +9,69 @@ describe("Checkbox", () => {
         jest.clearAllMocks();
     });
 
-    // =========================================================================
-    // Input behaviour
-    // =========================================================================
-    describe("input behaviour", () => {
-        it("forwards id and additional props to the input", () => {
-            render(<Checkbox id="my-checkbox" name="agree" value="yes" />);
+    it("forwards id and additional props to the input", () => {
+        render(<Checkbox id="my-checkbox" name="agree" value="yes" />);
 
-            const input = screen.getByTestId("checkbox-input");
+        const input = screen.getByTestId("checkbox-input");
 
-            expect(input).toHaveAttribute("id", "my-checkbox");
-            expect(input).toHaveAttribute("name", "agree");
-            expect(input).toHaveAttribute("value", "yes");
-        });
+        expect(input).toHaveAttribute("id", "my-checkbox");
+        expect(input).toHaveAttribute("name", "agree");
+        expect(input).toHaveAttribute("value", "yes");
+    });
 
-        it("is enabled by default", () => {
-            render(<Checkbox />);
+    it("is enabled by default", () => {
+        render(<Checkbox />);
 
-            expect(screen.getByTestId("checkbox-input")).toBeEnabled();
-        });
+        expect(screen.getByTestId("checkbox-input")).toBeEnabled();
+    });
 
-        it("is disabled when disabled prop is set", () => {
-            render(<Checkbox disabled />);
+    it("is disabled when disabled prop is set", () => {
+        render(<Checkbox disabled />);
 
-            expect(screen.getByTestId("checkbox-input")).toBeDisabled();
-        });
+        expect(screen.getByTestId("checkbox-input")).toBeDisabled();
+    });
 
-        it("does not set tabIndex when disabled (browser handles via disabled attr)", () => {
-            render(<Checkbox disabled />);
+    it("does not set tabIndex when disabled (browser handles via disabled attr)", () => {
+        render(<Checkbox disabled />);
 
-            expect(screen.getByTestId("checkbox-input")).not.toHaveAttribute(
-                "tabindex"
-            );
-        });
+        expect(screen.getByTestId("checkbox-input")).not.toHaveAttribute(
+            "tabindex"
+        );
+    });
 
-        it("sets tabIndex=0 and aria-disabled when disabled with focusableWhenDisabled", () => {
-            render(<Checkbox disabled focusableWhenDisabled />);
+    it("sets tabIndex=0 and aria-disabled when disabled with focusableWhenDisabled", () => {
+        render(<Checkbox disabled focusableWhenDisabled />);
 
-            const input = screen.getByTestId("checkbox-input");
-            expect(input).toHaveAttribute("tabindex", "0");
-            expect(input).toHaveAttribute("aria-disabled", "true");
-            expect(input).not.toBeDisabled();
-        });
+        const input = screen.getByTestId("checkbox-input");
+        expect(input).toHaveAttribute("tabindex", "0");
+        expect(input).toHaveAttribute("aria-disabled", "true");
+        expect(input).not.toBeDisabled();
+    });
 
-        it("sets aria-checked=mixed when indeterminate", () => {
-            render(<Checkbox indeterminate readOnly />);
+    it("sets aria-checked=mixed when indeterminate", () => {
+        render(<Checkbox indeterminate readOnly />);
 
-            expect(screen.getByTestId("checkbox-input")).toHaveAttribute(
-                "aria-checked",
-                "mixed"
-            );
-        });
+        expect(screen.getByTestId("checkbox-input")).toHaveAttribute(
+            "aria-checked",
+            "mixed"
+        );
+    });
 
-        it("sets aria-checked=true when checked", () => {
-            render(<Checkbox checked readOnly />);
+    it("sets aria-checked=true when checked", () => {
+        render(<Checkbox checked readOnly />);
 
-            expect(screen.getByTestId("checkbox-input")).toHaveAttribute(
-                "aria-checked",
-                "true"
-            );
-        });
+        expect(screen.getByTestId("checkbox-input")).toHaveAttribute(
+            "aria-checked",
+            "true"
+        );
+    });
 
-        it("calls onChange when clicked", () => {
-            const onChange = jest.fn();
-            render(<Checkbox onChange={onChange} />);
+    it("calls onChange when clicked", () => {
+        const onChange = jest.fn();
+        render(<Checkbox onChange={onChange} />);
 
-            fireEvent.click(screen.getByTestId("checkbox-input"));
+        fireEvent.click(screen.getByTestId("checkbox-input"));
 
-            expect(onChange).toHaveBeenCalledTimes(1);
-        });
+        expect(onChange).toHaveBeenCalledTimes(1);
     });
 });
