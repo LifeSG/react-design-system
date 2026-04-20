@@ -1,8 +1,10 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import clsx from "clsx";
 import type { AriaAttributes, Ref } from "react";
 import { forwardRef } from "react";
 
-import { IconContainer, Selector } from "./expandable-element.styles";
+import { BasicButton } from "../input-wrapper";
+import * as styles from "./expandable-element.styles";
 import type { DropdownVariantType } from "./types";
 
 export interface ExpandableElementProps
@@ -11,6 +13,7 @@ export interface ExpandableElementProps
         "aria-labelledby" | "aria-describedby" | "aria-invalid"
     > {
     children: React.ReactNode;
+    className?: string | undefined;
     disabled: boolean | undefined;
     expanded: boolean | undefined;
     listboxId: string;
@@ -22,6 +25,7 @@ export interface ExpandableElementProps
 export const Component = (
     {
         children,
+        className,
         disabled,
         expanded,
         listboxId,
@@ -32,31 +36,37 @@ export const Component = (
     }: ExpandableElementProps,
     ref: Ref<HTMLButtonElement>
 ) => {
-    // =============================================================================
-    // RENDER FUNCTION
-    // =============================================================================
     return (
-        <Selector
+        <BasicButton
             ref={ref}
             type="button"
             role="combobox"
             aria-expanded={expanded}
             aria-haspopup={popupRole}
-            aria-controls={expanded ? listboxId : undefined} // only apply when dropdown is mounted
+            aria-controls={expanded ? listboxId : undefined}
             data-testid="selector"
             aria-disabled={disabled}
             aria-readonly={readOnly}
-            $variant={variant}
-            $readOnly={readOnly}
+            className={clsx(
+                styles.selector,
+                variant === "small" && styles.selectorVariantSmall,
+                readOnly ? styles.selectorReadOnly : styles.selectorEditable,
+                className
+            )}
             {...otherProps}
         >
             {children}
             {!readOnly && (
-                <IconContainer $expanded={expanded} $variant={variant}>
+                <div
+                    className={clsx(
+                        styles.iconContainer,
+                        expanded && styles.iconContainerExpanded
+                    )}
+                >
                     <ChevronDownIcon aria-hidden />
-                </IconContainer>
+                </div>
             )}
-        </Selector>
+        </BasicButton>
     );
 };
 

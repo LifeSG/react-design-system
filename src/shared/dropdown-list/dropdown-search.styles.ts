@@ -1,65 +1,56 @@
-import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { V3_Colour, V3_Font, V3_Radius, V3_Spacing } from "../../v3_theme";
-import { ClickableIcon } from "../clickable-icon";
-import { BasicInput } from "../input-wrapper";
-import type { DropdownVariantType } from "./types";
+import { Colour, Font, Radius, Spacing } from "../../theme";
 
-//=============================================================================
-// STYLE INTERFACE
-//=============================================================================
-export interface StyleProps {
-    $variant: DropdownVariantType | undefined;
-}
-
-//=============================================================================
+// =============================================================================
 // STYLING
-//=============================================================================
-export const Container = styled.div<StyleProps>`
-    background: ${V3_Colour["bg-strong"]};
-    border-radius: ${V3_Radius["sm"]};
+// =============================================================================
+
+export const container = css`
+    background: ${Colour["bg-strong"]};
+    border-radius: ${Radius["sm"]};
     display: flex;
     align-items: center;
-
-    ${(props) =>
-        props.$variant === "small"
-            ? V3_Font["body-md-regular"]
-            : V3_Font["body-baseline-regular"]}
 `;
 
-export const SearchBox = styled.label<StyleProps>`
+export const containerVariantDefault = css`
+    ${Font["body-baseline-regular"]}
+`;
+
+export const containerVariantSmall = css`
+    ${Font["body-md-regular"]}
+`;
+
+export const searchBox = css`
     flex: 1;
     display: flex;
     align-items: center;
-    gap: ${V3_Spacing["spacing-8"]};
-    padding: ${(props) =>
-        props.$variant === "small"
-            ? css`
-                  ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-16"]}
-              `
-            : // TODO: confirm vertical spacing
-              css`10px ${V3_Spacing["spacing-8"]}`};
+    gap: ${Spacing["spacing-8"]};
+    padding: 10px ${Spacing["spacing-8"]};
 `;
 
-export const SearchInput = styled(BasicInput)`
+export const searchBoxVariantSmall = css`
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+`;
+
+export const searchInput = css`
     flex: 1;
 `;
 
-export const SearchIcon = styled(MagnifierIcon)`
-    color: ${V3_Colour["icon"]};
+export const searchIcon = css`
+    color: ${Colour["icon"]};
     flex-shrink: 0;
     height: 1em;
     width: 1em;
 `;
 
-export const ClearButton = styled(ClickableIcon)`
+export const clearButton = css`
     flex-shrink: 0;
     align-self: stretch;
     box-sizing: content-box;
-    padding: ${V3_Spacing["spacing-8"]};
-    margin-left: -${V3_Spacing["spacing-8"]};
-    color: ${V3_Colour["icon"]};
+    padding: ${Spacing["spacing-8"]};
+    margin-left: -${Spacing["spacing-8"]};
+    color: ${Colour["icon"]};
     cursor: pointer;
     font-size: inherit;
 

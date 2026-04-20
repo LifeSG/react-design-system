@@ -1,7 +1,14 @@
 import { LanguageIcon } from "@lifesg/react-icons/language";
+import { TickIcon } from "@lifesg/react-icons/tick";
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
+import {
+    listItem,
+    listItemActive,
+    listItemActiveSelected,
+} from "../shared/dropdown-list/dropdown-list.styles";
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { SimpleIdGenerator } from "../util";
@@ -11,9 +18,9 @@ import {
     DropdownList,
     DropdownPanel,
     LanguageIconWrapper,
-    SelectedIndicator,
+    selectedIndicator,
     StyledExpandableElement,
-    UnselectedIndicator,
+    unselectedIndicator,
 } from "./dropdown-variant.style";
 import type { VariantInternalProps } from "./internal-types";
 import type { LanguageSwitcherCode } from "./types";
@@ -166,18 +173,26 @@ export const DropdownVariant = ({
                             }}
                             role="option"
                             lang={code}
+                            className={clsx(
+                                listItem,
+                                isFocused &&
+                                    isSelected &&
+                                    listItemActiveSelected,
+                                isFocused && !isSelected && listItemActive
+                            )}
                             aria-selected={isSelected}
                             tabIndex={isFocused ? 0 : -1}
-                            $active={isFocused}
                             $selected={isSelected}
-                            $disabled={false}
                             onClick={() => handleItemSelect(code)}
                             data-testid={`${testId}--item-${code}`}
                         >
                             {isSelected ? (
-                                <SelectedIndicator aria-hidden />
+                                <TickIcon
+                                    className={selectedIndicator}
+                                    aria-hidden
+                                />
                             ) : (
-                                <UnselectedIndicator />
+                                <div className={unselectedIndicator} />
                             )}
                             {LANGUAGE_DISPLAY_MAP[code]}
                         </DropdownItem>

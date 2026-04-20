@@ -1,107 +1,95 @@
-import { MinusSquareFillIcon } from "@lifesg/react-icons/minus-square-fill";
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { V3_Colour, V3_Motion, V3_Radius, V3_Spacing } from "../../v3_theme";
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface ListItemStyleProps {
-    $active?: boolean;
-    $visible?: boolean;
-    $toggleable?: boolean;
-}
-
-interface IndentStyleProps {
-    $level?: number;
-}
-
-interface IndicatorStyleProps {
-    $hasNestedSiblings?: boolean;
-}
-
-interface ExpandButtonStyleProps {
-    $expanded?: boolean;
-}
+import { Colour, Motion, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 
+export const tokens = {
+    level: "--fds-internal-nestedDropdownList-indent-level",
+};
+
 // -----------------------------------------------------------------------------
 // LIST ITEM STYLES
 // -----------------------------------------------------------------------------
 
-export const ListItemContainer = styled.li<ListItemStyleProps>`
-    display: ${(props) => (props.$visible ? "flex" : "none")};
+export const listItemContainer = css`
+    display: flex;
 `;
 
-export const ListItem = styled.div<ListItemStyleProps>`
+export const listItemContainerHidden = css`
+    display: none;
+`;
+
+export const listItem = css`
     flex: 1;
     display: flex;
     align-items: flex-start;
-    gap: ${V3_Spacing["spacing-8"]};
-    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-8"]};
-    cursor: ${(props) => (props.$toggleable ? "default" : "pointer")};
-    overflow: hidden; // required for label to truncate properly
-    border-radius: ${V3_Radius["none"]};
+    gap: ${Spacing["spacing-8"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
+    cursor: pointer;
+    overflow: hidden;
+    border-radius: ${Radius["none"]};
     outline: none;
-
-    ${(props) =>
-        props.$active &&
-        css`
-            background: ${V3_Colour["bg-hover"]};
-        `}
 `;
 
-export const Indent = styled.div<IndentStyleProps>`
+export const listItemToggleable = css`
+    cursor: default;
+`;
+
+export const listItemActive = css`
+    background: ${Colour["bg-hover"]};
+`;
+
+export const indent = css`
+    ${tokens.level}: 0;
     height: 1px;
-    width: calc(
-        (1lh + ${V3_Spacing["spacing-8"]}) * ${(props) => props.$level}
-    );
+    width: calc((1lh + ${Spacing["spacing-8"]}) * var(${tokens.level}));
 `;
 
-export const ExpandButton = styled.div<ExpandButtonStyleProps>`
+const expandButtonTransition = `transform ${Motion["duration-350"]} ${Motion["ease-standard"]}`;
+
+export const expandButton = css`
     width: 1lh;
     height: 1lh;
-    color: ${V3_Colour["icon-primary"]};
+    color: ${Colour["icon-primary"]};
     cursor: pointer;
 
     svg {
         width: 1lh;
         height: 1lh;
-        transition: transform ${V3_Motion["duration-350"]}
-            ${V3_Motion["ease-standard"]};
-
-        ${(props) => {
-            if (props.$expanded) {
-                return css`
-                    transform: rotate(90deg);
-                `;
-            }
-        }}
+        transition: ${expandButtonTransition};
     }
 `;
 
-export const UnexpandableIndicator = styled.div`
-    width: 1lh;
-    height: 1lh;
-    margin-right: ${V3_Spacing["spacing-8"]};
+export const expandButtonExpanded = css`
+    svg {
+        transform: rotate(90deg);
+    }
 `;
 
-export const SelectionIndicator = styled.div<IndicatorStyleProps>`
+export const unexpandableIndicator = css`
+    width: 1lh;
+    height: 1lh;
+    margin-right: ${Spacing["spacing-8"]};
+`;
+
+export const selectionIndicator = css`
     flex-shrink: 0;
     height: 1lh;
-    width: ${(props) =>
-        props.$hasNestedSiblings ? "1lh" : V3_Spacing["spacing-16"]};
-
+    width: ${Spacing["spacing-16"]};
     display: flex;
     justify-content: center;
 `;
 
-export const CheckboxMixedIndicator = styled(MinusSquareFillIcon)`
+export const selectionIndicatorNested = css`
+    width: 1lh;
+`;
+
+export const checkboxMixedIndicator = css`
     flex-shrink: 0;
     height: 1lh;
-    width: lh;
-    r: ${V3_Colour["icon-selected"]};
+    width: 1lh;
+    color: ${Colour["icon-selected"]};
 `;

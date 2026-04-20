@@ -1,85 +1,56 @@
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { SquareIcon } from "@lifesg/react-icons/square";
-import { SquareFillIcon } from "@lifesg/react-icons/square-fill";
-import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
-import { TickIcon } from "@lifesg/react-icons/tick";
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { Markup } from "../../markup";
 import {
-    V3_Border,
-    V3_Breakpoint,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Radius,
-    V3_Spacing,
-} from "../../v3_theme";
-import { ComponentLoadingSpinner } from "../component-loading-spinner";
-import { BasicButton } from "../input-wrapper";
-import type { DropdownVariantType } from "./types";
+    Border,
+    Breakpoint,
+    Colour,
+    Font,
+    MediaQuery,
+    Radius,
+    Spacing,
+} from "../../theme";
 
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface ContainerStyleProps {
-    $width?: number;
-    $customWidth?: string;
-    $variant: DropdownVariantType;
-}
-
-export interface ListItemStyleProps {
-    $active: boolean;
-    $selected: boolean;
-    $disabled: boolean;
-}
-
-// =============================================================================
-// STYLING
-// =============================================================================
+export const tokens = {
+    xSpacing: "--fds-internal-dropdownList-container-x-spacing",
+    availableWidth: "--fds-internal-dropdownList-container-available-width",
+    availableHeight: "--fds-internal-dropdownList-container-available-height",
+} as const;
 
 // -----------------------------------------------------------------------------
 // MAIN STYLES
 // -----------------------------------------------------------------------------
-export const Container = styled.div<ContainerStyleProps>`
-    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
-    border-radius: ${V3_Radius["sm"]};
-    background: ${V3_Colour["bg"]};
+export const container = css`
+    ${tokens.availableHeight}: initial;
+    ${tokens.availableWidth}: initial;
+    ${tokens.xSpacing}: initial;
 
-    --x-spacing: 0px;
-    --available-width: calc(100vw - var(--x-spacing) * 2);
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour["bg"]};
 
-    ${V3_MediaQuery.MaxWidth.sm} {
-        --x-spacing: ${V3_Breakpoint["sm-margin"]}px;
+    ${tokens.xSpacing}: 0px;
+    ${tokens.availableWidth}: calc(
+        100vw - var(${tokens.xSpacing}) * 2
+    );
+
+    ${MediaQuery.MaxWidth.xxs} {
+        ${tokens.xSpacing}: ${Breakpoint["xxs-margin"]};
+    }
+
+    ${MediaQuery.MaxWidth.xs} {
+        ${tokens.xSpacing}: ${Breakpoint["xs-margin"]};
+    }
+
+    ${MediaQuery.MaxWidth.sm} {
+        ${tokens.xSpacing}: ${Breakpoint["sm-margin"]};
         max-height: 15rem;
     }
 
-    ${V3_MediaQuery.MaxWidth.xs} {
-        --x-spacing: ${V3_Breakpoint["xs-margin"]}px;
-    }
-
-    ${V3_MediaQuery.MaxWidth.xxs} {
-        --x-spacing: ${V3_Breakpoint["xxs-margin"]}px;
-    }
-
-    max-width: var(--available-width);
-
-    ${(props) => {
-        if (props.$customWidth) return `width: ${props.$customWidth};`;
-        if (props.$width)
-            return `width: ${props.$width}px; min-width: min(23rem, var(--available-width));`;
-
-        return "min-width: min(23rem, var(--available-width));";
-    }}
-
-    max-height: min(27rem, var(--available-height, infinity * 1px));
+    max-width: var(${tokens.availableWidth});
+    min-width: min(23rem, var(${tokens.availableWidth}));
+    max-height: min(27rem, var(${tokens.availableHeight}, 9999px));
     overflow: hidden;
     overflow-y: auto;
-    ${(props) =>
-        props.$variant === "small"
-            ? V3_Font["body-md-regular"]
-            : V3_Font["body-baseline-regular"]}
 
     &::-webkit-scrollbar {
         width: 14px;
@@ -90,133 +61,136 @@ export const Container = styled.div<ContainerStyleProps>`
     }
 
     &::-webkit-scrollbar-thumb {
-        background: ${V3_Colour["bg-inverse-subtlest"]};
+        background: ${Colour["bg-inverse-subtlest"]};
         border: 5px solid transparent;
-        border-radius: ${V3_Radius["full"]};
+        border-radius: ${Radius["full"]};
         background-clip: padding-box;
     }
 `;
-export const List = styled.div`
-    background: transparent;
-    padding: ${V3_Spacing["spacing-8"]};
+
+export const containerVariantDefault = css`
+    ${Font["body-baseline-regular"]}
 `;
 
-export const Listbox = styled.ul`
+export const containerVariantSmall = css`
+    ${Font["body-md-regular"]}
+`;
+
+export const list = css`
+    background: transparent;
+    padding: ${Spacing["spacing-8"]};
+`;
+
+export const listbox = css`
     list-style-type: none;
 `;
 
 // -----------------------------------------------------------------------------
 // LIST ITEM STYLES
 // -----------------------------------------------------------------------------
-
-export const ListItem = styled.li<ListItemStyleProps>`
+export const listItem = css`
     display: flex;
     align-items: flex-start;
-    gap: ${V3_Spacing["spacing-8"]};
-    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-8"]};
+    gap: ${Spacing["spacing-8"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
     cursor: pointer;
     border: none;
-    border-radius: ${V3_Radius["none"]};
+    border-radius: ${Radius["none"]};
     outline: none;
-
-    ${(props) => {
-        if (props.$disabled) {
-            return css`
-                cursor: not-allowed;
-            `;
-        } else if (props.$active && props.$selected) {
-            return css`
-                background: ${V3_Colour["bg-hover"]};
-            `;
-        } else if (props.$active) {
-            return css`
-                background: ${V3_Colour["bg-hover-subtle"]};
-            `;
-        }
-    }}
 `;
 
-export const SelectedIndicator = styled(TickIcon)`
+export const listItemActive = css`
+    background: ${Colour["bg-hover-subtle"]};
+`;
+
+export const listItemActiveSelected = css`
+    background: ${Colour["bg-hover"]};
+`;
+
+export const listItemDisabled = css`
+    cursor: not-allowed;
+`;
+
+export const selectedIndicator = css`
     flex-shrink: 0;
     height: 1lh;
     width: 1rem;
-    color: ${V3_Colour["icon-selected"]};
+    color: ${Colour["icon-selected"]};
 `;
 
-export const UnselectedIndicator = styled.div`
+export const unselectedIndicator = css`
     flex-shrink: 0;
     height: 1lh;
     width: 1rem;
 `;
 
-export const CheckboxSelectedIndicator = styled(SquareTickFillIcon)`
+export const checkboxSelectedIndicator = css`
     flex-shrink: 0;
     height: 1lh;
     width: 1lh;
-    color: ${V3_Colour["icon-selected"]};
+    color: ${Colour["icon-selected"]};
 `;
 
-export const CheckboxUnselectedIndicator = styled(SquareIcon)`
+export const checkboxUnselectedIndicator = css`
     flex-shrink: 0;
     height: 1lh;
     width: 1lh;
-    color: ${V3_Colour["icon-primary-subtlest"]};
+    color: ${Colour["icon-primary-subtlest"]};
 `;
 
-export const CheckboxDisabledIndicator = styled(SquareFillIcon)`
+export const checkboxDisabledIndicator = css`
     flex-shrink: 0;
     height: 1lh;
     width: 1lh;
-    color: ${V3_Colour["icon-disabled-subtle"]};
+    color: ${Colour["icon-disabled-subtle"]};
 `;
 
 // -----------------------------------------------------------------------------
 // ELEMENT STYLES
 // -----------------------------------------------------------------------------
-
-export const SelectAllContainer = styled.div`
+export const selectAllContainer = css`
     width: 100%;
     display: flex;
     justify-content: flex-end;
 `;
 
-export const DropdownCommonButton = styled(BasicButton)`
+export const selectAllButton = css`
     cursor: pointer;
     overflow: hidden;
-    color: ${V3_Colour["text-primary"]};
+    color: ${Colour["text-primary"]};
     font-size: inherit;
+    ${Font["body-md-semibold"]}
+    padding: ${Spacing["spacing-8"]};
 `;
 
-export const TryAgainButton = styled(DropdownCommonButton)`
-    ${V3_Font["body-baseline-semibold"]}
+export const tryAgainButton = css`
+    cursor: pointer;
+    overflow: hidden;
+    color: ${Colour["text-primary"]};
+    font-size: inherit;
+    ${Font["body-baseline-semibold"]}
 `;
 
-export const SelectAllButton = styled(DropdownCommonButton)`
-    ${V3_Font["body-md-semibold"]}
-    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-8"]};
-`;
-
-export const ResultStateContainer = styled.div`
+export const resultStateContainer = css`
     width: 100%;
     display: flex;
-    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     align-items: center;
 `;
 
-export const LabelIcon = styled(ExclamationCircleFillIcon)`
-    margin-right: ${V3_Spacing["spacing-4"]};
-    color: ${V3_Colour["icon-error"]};
+export const labelIcon = css`
+    margin-right: ${Spacing["spacing-4"]};
+    color: ${Colour["icon-error"]};
     height: 1em;
     width: 1em;
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)`
-    margin-right: ${V3_Spacing["spacing-8"]};
-    color: ${V3_Colour["icon"]};
+export const spinner = css`
+    margin-right: ${Spacing["spacing-8"]};
+    color: ${Colour["icon"]};
 `;
 
-export const NoResultDescContainer = styled(Markup)`
-    color: ${V3_Colour["text-subtle"]};
-    padding: 0 ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-12"]}
-        ${V3_Spacing["spacing-16"]};
+export const noResultDescContainer = css`
+    color: ${Colour["text-subtle"]};
+    padding: 0 ${Spacing["spacing-16"]} ${Spacing["spacing-12"]} 0;
 `;

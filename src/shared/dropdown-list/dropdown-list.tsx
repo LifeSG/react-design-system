@@ -1,3 +1,9 @@
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { SquareIcon } from "@lifesg/react-icons/square";
+import { SquareFillIcon } from "@lifesg/react-icons/square-fill";
+import { SquareTickFillIcon } from "@lifesg/react-icons/square-tick-fill";
+import { TickIcon } from "@lifesg/react-icons/tick";
+import clsx from "clsx";
 import find from "lodash/find";
 import isEqual from "lodash/isEqual";
 import type React from "react";
@@ -13,6 +19,8 @@ import {
 import type { VirtuosoHandle } from "react-virtuoso";
 import { Virtuoso } from "react-virtuoso";
 
+import { Markup } from "../../markup";
+import { useApplyStyle } from "../../theme";
 import {
     mergeRefs,
     useCompare,
@@ -21,26 +29,11 @@ import {
     useIsMounted,
 } from "../../util";
 import { VisuallyHidden } from "../accessibility";
+import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { useDropdownRender } from "../dropdown-wrapper";
+import { BasicButton } from "../input-wrapper";
 import { DropdownLabel } from "./dropdown-label";
-import {
-    CheckboxDisabledIndicator,
-    CheckboxSelectedIndicator,
-    CheckboxUnselectedIndicator,
-    Container,
-    LabelIcon,
-    List,
-    Listbox,
-    ListItem,
-    NoResultDescContainer,
-    ResultStateContainer,
-    SelectAllButton,
-    SelectAllContainer,
-    SelectedIndicator,
-    Spinner,
-    TryAgainButton,
-    UnselectedIndicator,
-} from "./dropdown-list.styles";
+import * as styles from "./dropdown-list.styles";
 import { DropdownListStateContext } from "./dropdown-list-state";
 import { DropdownSearch } from "./dropdown-search";
 import type {
@@ -104,8 +97,12 @@ const DropdownListInner = <T, V>(
     const { focusedIndex, setFocusedIndex } = useContext(
         DropdownListStateContext
     );
-    const { elementWidth, setFloatingRef, getFloatingProps, styles } =
-        useDropdownRender();
+    const {
+        elementWidth,
+        setFloatingRef,
+        getFloatingProps,
+        styles: floatingStyles,
+    } = useDropdownRender();
     const [searchValue, setSearchValue] = useState<string>("");
     const [displayListItems, setDisplayListItems] = useState(listItems ?? []);
     const itemsLoadStateChanged = useCompare(itemsLoadState);
@@ -122,6 +119,12 @@ const DropdownListInner = <T, V>(
         !!selectedItems &&
         selectedItems?.length === maxSelectable;
 
+    const containerWidthStyle: React.CSSProperties = width
+        ? { width }
+        : matchElementWidth && elementWidth
+        ? { width: elementWidth }
+        : {};
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -131,7 +134,6 @@ const DropdownListInner = <T, V>(
 
     const getItemKey = (item: T, index: number) => {
         const formattedValue = valueExtractor ? valueExtractor(item) : item;
-        // This is needed as some items might have the same value
         return `item_${index}__${formattedValue}`;
     };
 
@@ -232,7 +234,6 @@ const DropdownListInner = <T, V>(
         switch (event.code) {
             case "ArrowDown":
                 event.preventDefault();
-                // Cannot go further than last element
                 if (focusedIndex < displayListItems.length - 1) {
                     const upcomingIndex = focusedIndex + 1;
                     listItemRefs.current[upcomingIndex]?.focus();
@@ -241,7 +242,6 @@ const DropdownListInner = <T, V>(
                 break;
             case "ArrowUp":
                 event.preventDefault();
-                // Cannot go further than first element
                 if (focusedIndex > 0) {
                     const upcomingIndex = focusedIndex - 1;
                     listItemRefs.current[upcomingIndex]?.focus();
@@ -306,7 +306,6 @@ const DropdownListInner = <T, V>(
             virtuosoRef.current?.scrollTo({ top: 0 });
             return;
         }
-        // Delay to ensure render is complete
         const timer = setTimeout(() => {
             if (!listItems) return;
 
@@ -322,11 +321,8 @@ const DropdownListInner = <T, V>(
 
     useEffect(() => {
         if (disableItemFocus) return;
-
-        // skip effect as dependency did not change
         if (!mounted || !itemsLoadStateChanged) return;
 
-        // Reset focus when options are loaded
         if (itemsLoadState === "success") {
             if (searchInputRef.current) {
                 setFocusedIndex(-1);
@@ -363,7 +359,6 @@ const DropdownListInner = <T, V>(
 
     useEffect(() => {
         if (mounted) {
-            // only run on mount
             return;
         }
 
@@ -373,24 +368,20 @@ const DropdownListInner = <T, V>(
             checkListItemSelected(item)
         );
 
-        // Focus search input if there is one
         if (searchInputRef.current) {
             setFocusedIndex(-1);
-            setTimeout(() => searchInputRef.current?.focus(), 200); // Wait for animation
+            setTimeout(() => searchInputRef.current?.focus(), 200);
         } else if (focusedIndex > 0) {
-            // Else focus on the specified element
             virtuosoRef.current?.scrollToIndex({
                 index: focusedIndex,
                 align: "center",
             });
             setTimeout(() => listItemRefs.current[focusedIndex]?.focus(), 200);
         } else if (index !== -1) {
-            // Else focus on the selected element
             virtuosoRef.current?.scrollToIndex({ index, align: "center" });
             setFocusedIndex(index);
             setTimeout(() => listItemRefs.current[index]?.focus(), 200);
         } else {
-            // Else focus on the first list item
             virtuosoRef.current?.scrollToIndex({ index: 0 });
             setFocusedIndex(0);
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
@@ -405,25 +396,45 @@ const DropdownListInner = <T, V>(
     ]);
 
     // =========================================================================
+    // APPLY STYLES
+    // =========================================================================
+
+    useApplyStyle(nodeRef, {
+        ...floatingStyles,
+        ...containerWidthStyle,
+    });
+
+    // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     const renderListItemIcon = (selected: boolean) => {
         if (multiSelect) {
             if (hasSelectedMax && !selected) {
-                return <CheckboxDisabledIndicator aria-hidden />;
+                return (
+                    <SquareFillIcon
+                        aria-hidden
+                        className={styles.checkboxDisabledIndicator}
+                    />
+                );
             }
 
             return selected ? (
-                <CheckboxSelectedIndicator aria-hidden />
+                <SquareTickFillIcon
+                    aria-hidden
+                    className={styles.checkboxSelectedIndicator}
+                />
             ) : (
-                <CheckboxUnselectedIndicator aria-hidden />
+                <SquareIcon
+                    aria-hidden
+                    className={styles.checkboxUnselectedIndicator}
+                />
             );
         }
 
         return selected ? (
-            <SelectedIndicator aria-hidden />
+            <TickIcon aria-hidden className={styles.selectedIndicator} />
         ) : (
-            <UnselectedIndicator />
+            <div className={styles.unselectedIndicator} />
         );
     };
 
@@ -448,11 +459,12 @@ const DropdownListInner = <T, V>(
         if (!onRetry || itemsLoadState === "success") {
             const selected = checkListItemSelected(item);
             const active = index === focusedIndex;
+            const disabled = !selected && hasSelectedMax;
             return (
-                <ListItem
+                <li
                     aria-selected={selected}
                     aria-multiselectable={multiSelect}
-                    aria-disabled={!selected && hasSelectedMax}
+                    aria-disabled={disabled}
                     aria-posinset={index + 1}
                     aria-setsize={displayListItems?.length}
                     data-testid="list-item"
@@ -464,9 +476,12 @@ const DropdownListInner = <T, V>(
                     }}
                     role="option"
                     tabIndex={active ? 0 : -1}
-                    $active={active}
-                    $selected={selected}
-                    $disabled={!selected && hasSelectedMax}
+                    className={clsx(
+                        styles.listItem,
+                        disabled && styles.listItemDisabled,
+                        active && selected && styles.listItemActiveSelected,
+                        active && !selected && styles.listItemActive
+                    )}
                 >
                     {renderListItem ? (
                         renderListItem(item, { selected })
@@ -476,7 +491,7 @@ const DropdownListInner = <T, V>(
                             {renderDropdownLabel(item, selected)}
                         </>
                     )}
-                </ListItem>
+                </li>
             );
         }
     };
@@ -507,13 +522,17 @@ const DropdownListInner = <T, V>(
             itemsLoadState === "success"
         ) {
             return (
-                <SelectAllContainer>
-                    <SelectAllButton onClick={onSelectAll} type="button">
+                <div className={styles.selectAllContainer}>
+                    <BasicButton
+                        onClick={onSelectAll}
+                        type="button"
+                        className={styles.selectAllButton}
+                    >
                         {maxSelectable || selectedItems.length !== 0
                             ? clearAllButtonLabel
                             : selectAllButtonLabel}
-                    </SelectAllButton>
-                </SelectAllContainer>
+                    </BasicButton>
+                </div>
             );
         }
     };
@@ -527,14 +546,23 @@ const DropdownListInner = <T, V>(
         ) {
             return (
                 <>
-                    <ResultStateContainer data-testid="list-no-results">
-                        <LabelIcon data-testid="no-result-icon" />
+                    <div
+                        data-testid="list-no-results"
+                        className={styles.resultStateContainer}
+                    >
+                        <ExclamationCircleFillIcon
+                            data-testid="no-result-icon"
+                            className={styles.labelIcon}
+                        />
                         {noResultsLabel}
-                    </ResultStateContainer>
+                    </div>
                     {noResultsDescription && (
-                        <NoResultDescContainer data-testid="no-result-desc">
+                        <Markup
+                            data-testid="no-result-desc"
+                            className={styles.noResultDescContainer}
+                        >
                             {noResultsDescription}
-                        </NoResultDescContainer>
+                        </Markup>
                     )}
                 </>
             );
@@ -544,10 +572,13 @@ const DropdownListInner = <T, V>(
     const renderLoading = () => {
         if (onRetry && itemsLoadState === "loading") {
             return (
-                <ResultStateContainer data-testid="list-loading">
-                    <Spinner />
+                <div
+                    data-testid="list-loading"
+                    className={styles.resultStateContainer}
+                >
+                    <ComponentLoadingSpinner className={styles.spinner} />
                     Loading...
-                </ResultStateContainer>
+                </div>
             );
         }
     };
@@ -555,13 +586,23 @@ const DropdownListInner = <T, V>(
     const renderTryAgain = () => {
         if (onRetry && itemsLoadState === "fail") {
             return (
-                <ResultStateContainer data-testid="list-fail">
-                    <LabelIcon data-testid="load-error-icon" />
+                <div
+                    data-testid="list-fail"
+                    className={styles.resultStateContainer}
+                >
+                    <ExclamationCircleFillIcon
+                        data-testid="load-error-icon"
+                        className={styles.labelIcon}
+                    />
                     Failed to load.&nbsp;
-                    <TryAgainButton onClick={handleTryAgain} type="button">
+                    <BasicButton
+                        onClick={handleTryAgain}
+                        type="button"
+                        className={styles.tryAgainButton}
+                    >
                         Try again.
-                    </TryAgainButton>
-                </ResultStateContainer>
+                    </BasicButton>
+                </div>
             );
         }
     };
@@ -570,35 +611,32 @@ const DropdownListInner = <T, V>(
         const isTestEnv = process.env.NODE_ENV === "test";
 
         return (
-            <Listbox role="listbox" id={listboxId}>
+            <ul role="listbox" id={listboxId} className={styles.listbox}>
                 <Virtuoso
                     ref={virtuosoRef}
                     style={{ height: "100%" }}
                     data={displayListItems}
                     customScrollParent={nodeRef.current ?? undefined}
                     itemContent={(index, item) => renderItem(item, index)}
-                    // disable virtualisation in tests
-                    // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
-                    // explicitly set the `key` prop to avoid React warning
                     key={isTestEnv ? displayListItems.length : undefined}
-                    // omit the `initialItemCount` prop to resolve NaN error
                     {...(isTestEnv
                         ? {
                               initialItemCount: displayListItems.length,
                           }
                         : {})}
                 />
-            </Listbox>
+            </ul>
         );
     };
 
     const renderList = () => {
         return (
-            <List
+            <div
                 ref={listRef}
                 data-testid="dropdown-list"
                 role="group"
                 aria-label={ariaLabel}
+                className={styles.list}
             >
                 {renderSearchInput()}
                 {renderSelectAll()}
@@ -606,7 +644,7 @@ const DropdownListInner = <T, V>(
                 {renderLoading()}
                 {renderTryAgain()}
                 {renderVirtualisedList()}
-            </List>
+            </div>
         );
     };
 
@@ -615,7 +653,6 @@ const DropdownListInner = <T, V>(
             return;
         }
 
-        // FIXME: implement onDismiss handling
         return (
             <div data-testid="custom-cta">
                 {renderCustomCallToAction(onDismiss as any, displayListItems)}
@@ -624,19 +661,21 @@ const DropdownListInner = <T, V>(
     };
 
     return (
-        <Container
+        <div
             data-testid="dropdown-container"
             ref={mergeRefs(nodeRef, setFloatingRef)}
-            style={styles}
             {...getFloatingProps()}
-            $width={matchElementWidth ? elementWidth : undefined}
-            $customWidth={width}
-            $variant={variant}
+            className={clsx(
+                styles.container,
+                variant === "small"
+                    ? styles.containerVariantSmall
+                    : styles.containerVariantDefault
+            )}
         >
             <VisuallyHidden role="status">{ariaLabel}</VisuallyHidden>
             {renderList()}
             {renderBottomCta()}
-        </Container>
+        </div>
     );
 };
 
