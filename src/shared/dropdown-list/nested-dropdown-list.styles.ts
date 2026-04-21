@@ -48,8 +48,6 @@ export const indent = css`
     width: calc((1lh + ${Spacing["spacing-8"]}) * var(${tokens.level}));
 `;
 
-const expandButtonTransition = `transform ${Motion["duration-350"]} ${Motion["ease-standard"]}`;
-
 export const expandButton = css`
     width: 1lh;
     height: 1lh;
@@ -59,7 +57,8 @@ export const expandButton = css`
     svg {
         width: 1lh;
         height: 1lh;
-        transition: ${expandButtonTransition};
+        transition: transform ${Motion["duration-350"]}
+            ${Motion["ease-standard"]};
     }
 `;
 

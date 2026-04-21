@@ -38,6 +38,7 @@ const Component = (
                 <BasicInput
                     ref={ref}
                     value={value}
+                    variant={variant}
                     className={styles.searchInput}
                     {...otherProps}
                 />
