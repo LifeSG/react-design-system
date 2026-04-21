@@ -30,10 +30,7 @@ describe("DropdownList", () => {
         }));
     });
 
-    // =========================================================================
-    // Single selection
-    // =========================================================================
-    describe("single selection", () => {
+    describe("Single Selection", () => {
         it("should call onSelectItem with the item when clicked", async () => {
             const user = userEvent.setup();
             const onSelectItem = jest.fn();
@@ -64,10 +61,7 @@ describe("DropdownList", () => {
         });
     });
 
-    // =========================================================================
-    // Multi-selection
-    // =========================================================================
-    describe("multi-selection", () => {
+    describe("Multi-Selection", () => {
         it("should call onSelectItem for each item clicked", async () => {
             const user = userEvent.setup();
             const onSelectItem = jest.fn();
@@ -133,10 +127,7 @@ describe("DropdownList", () => {
         });
     });
 
-    // =========================================================================
-    // Search
-    // =========================================================================
-    describe("search", () => {
+    describe("Search", () => {
         const SEARCH_ITEMS = [
             "Apple",
             "Banana",
@@ -189,10 +180,7 @@ describe("DropdownList", () => {
         });
     });
 
-    // =========================================================================
-    // Keyboard navigation
-    // =========================================================================
-    describe("keyboard navigation", () => {
+    describe("Keyboard Navigation", () => {
         it("should move focus down on ArrowDown", async () => {
             const user = userEvent.setup();
             renderList();
@@ -247,10 +235,7 @@ describe("DropdownList", () => {
         });
     });
 
-    // =========================================================================
-    // Load states
-    // =========================================================================
-    describe("load states", () => {
+    describe("Load States", () => {
         it("should show loading spinner when itemsLoadState is loading", () => {
             renderList({ itemsLoadState: "loading", onRetry: jest.fn() });
 
@@ -279,10 +264,7 @@ describe("DropdownList", () => {
         });
     });
 
-    // =========================================================================
-    // Custom CTA
-    // =========================================================================
-    describe("custom CTA", () => {
+    describe("Custom CTA", () => {
         it("should render the custom call-to-action at the bottom", () => {
             renderList({
                 renderCustomCallToAction: () => (
