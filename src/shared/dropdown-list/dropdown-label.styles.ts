@@ -20,7 +20,6 @@ export const tokens = {
 // PRIMARY TEXT
 // -----------------------------------------------------------------------------
 export const primaryText = css`
-    ${tokens.primaryText.maxLines}: 2;
     font-weight: ${Font.Spec["weight-regular"]};
     color: ${Colour["text"]};
     width: 100%;
@@ -40,6 +39,7 @@ export const primaryTextDisabled = css`
 `;
 
 export const primaryTextTruncateEnd = css`
+    ${tokens.primaryText.maxLines}: 2;
     ${lineClampDynamicCss(tokens.primaryText.maxLines)}
 `;
 
@@ -47,13 +47,13 @@ export const primaryTextTruncateEnd = css`
 // SECONDARY TEXT
 // -----------------------------------------------------------------------------
 export const secondaryText = css`
-    ${tokens.secondaryText.maxLines}: 2;
     color: ${Colour["text-subtlest"]};
     width: 100%;
     overflow-wrap: break-word;
 `;
 
 export const secondaryTextTruncateEnd = css`
+    ${tokens.secondaryText.maxLines}: 2;
     ${lineClampDynamicCss(tokens.secondaryText.maxLines)}
 `;
 
@@ -80,9 +80,6 @@ export const label = css`
     width: 100%;
     overflow: hidden;
     overflow-wrap: break-word;
-`;
-
-export const labelVariantDefault = css`
     ${Font["body-baseline-regular"]}
 `;
 
@@ -109,29 +106,24 @@ export const labelInline = css`
 // -----------------------------------------------------------------------------
 // TRUNCATION
 // -----------------------------------------------------------------------------
-export const truncateFirstLine = css`
+export const baseTruncateStyle = css`
     display: inline-block;
     width: 100%;
     height: 1lh;
-    word-break: break-all;
     overflow: hidden;
 `;
 
-export const truncateFirstLineSingle = css`
-    width: 50%;
+export const truncateFirstLine = css`
+    word-break: break-all;
 `;
 
 export const truncateSecondLine = css`
-    display: inline-block;
-    width: 100%;
-    height: 1lh;
     text-overflow: ellipsis;
     white-space: nowrap;
-    overflow: hidden;
     direction: rtl;
     text-align: right;
 `;
 
-export const truncateSecondLineSingle = css`
+export const truncateLineSingle = css`
     width: 50%;
 `;

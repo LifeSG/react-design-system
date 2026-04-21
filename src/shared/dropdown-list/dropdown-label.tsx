@@ -118,7 +118,7 @@ export const DropdownLabel = ({
                 <div
                     className={clsx(
                         styles.truncateFirstLine,
-                        maxLines === 1 && styles.truncateFirstLineSingle
+                        maxLines === 1 && styles.truncateLineSingle
                     )}
                     aria-hidden
                 >
@@ -127,7 +127,7 @@ export const DropdownLabel = ({
                 <div
                     className={clsx(
                         styles.truncateSecondLine,
-                        maxLines === 1 && styles.truncateSecondLineSingle
+                        maxLines === 1 && styles.truncateLineSingle
                     )}
                     aria-hidden
                 >
@@ -142,9 +142,7 @@ export const DropdownLabel = ({
             ref={ref}
             className={clsx(
                 styles.label,
-                variant === "small"
-                    ? styles.labelVariantSmall
-                    : styles.labelVariantDefault,
+                variant === "small" && styles.labelVariantSmall,
                 itemDisplayType === "next-line"
                     ? styles.labelNextLine
                     : styles.labelInline
