@@ -1,10 +1,7 @@
 import clsx from "clsx";
 
-import {
-    AvatarBaselineText,
-    AvatarBodySmallText,
-    AvatarDisplay,
-} from "./avatar.styles";
+import { Typography } from "../typography";
+import * as styles from "./avatar.styles";
 import type { AvatarProps } from "./types";
 
 export const Avatar = ({
@@ -24,9 +21,16 @@ export const Avatar = ({
 
         if (typeof children === "string") {
             const TextComponent =
-                sizeType === "small" ? AvatarBodySmallText : AvatarBaselineText;
+                sizeType === "small" ? Typography.BodySM : Typography.BodyBL;
             return (
-                <TextComponent weight="semibold">
+                <TextComponent
+                    weight="semibold"
+                    className={
+                        sizeType === "small"
+                            ? styles.avatarBodySmallText
+                            : styles.avatarBaselineText
+                    }
+                >
                     {String.fromCodePoint(
                         children.codePointAt(0) ?? 0
                     ).toUpperCase()}
@@ -38,17 +42,18 @@ export const Avatar = ({
     };
 
     return (
-        <AvatarDisplay
+        <div
             {...otherProps}
             data-testid={testId}
             className={clsx(
+                styles.avatarDisplay,
                 sizeType === "small"
-                    ? "avatarDisplaySmall"
-                    : "avatarDisplayDefault",
+                    ? styles.avatarDisplaySmall
+                    : styles.avatarDisplayDefault,
                 className
             )}
         >
             {renderContent()}
-        </AvatarDisplay>
+        </div>
     );
 };
