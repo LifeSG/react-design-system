@@ -119,11 +119,18 @@ const DropdownListInner = <T, V>(
         !!selectedItems &&
         selectedItems?.length === maxSelectable;
 
-    const containerWidthStyle: React.CSSProperties = width
-        ? { width }
-        : matchElementWidth && elementWidth
-        ? { width: elementWidth }
-        : {};
+    let containerWidthStyle = {};
+    if (width) {
+        containerWidthStyle = {
+            [styles.tokens.containerWidth]: `${width}px`,
+            [styles.tokens.containerMinWidth]: `0px`,
+        };
+    } else if (matchElementWidth && elementWidth) {
+        containerWidthStyle = {
+            [styles.tokens.containerWidth]: `${elementWidth}px`,
+            [styles.tokens.containerMinWidth]: `${elementWidth}px`,
+        };
+    }
 
     // =========================================================================
     // HELPER FUNCTIONS

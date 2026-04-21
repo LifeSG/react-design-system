@@ -14,6 +14,14 @@ export const tokens = {
     xSpacing: "--fds-internal-dropdownList-container-x-spacing",
     availableWidth: "--fds-internal-dropdownList-container-available-width",
     availableHeight: "--fds-internal-dropdownList-container-available-height",
+    /**
+     * Width logic (mirrors old styled-components props):
+     * - customWidth (string): set containerWidth + set containerMinWidth to 0px
+     * - width (number in px): set containerWidth to `${width}px` only
+     * - default: set neither (width=auto, min-width uses fallback)
+     */
+    containerWidth: "--fds-internal-dropdownList-container-width",
+    containerMinWidth: "--fds-internal-dropdownList-container-min-width",
 } as const;
 
 // -----------------------------------------------------------------------------
@@ -21,8 +29,6 @@ export const tokens = {
 // -----------------------------------------------------------------------------
 export const container = css`
     ${tokens.availableHeight}: initial;
-    ${tokens.availableWidth}: initial;
-    ${tokens.xSpacing}: initial;
 
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
@@ -33,21 +39,25 @@ export const container = css`
         100vw - var(${tokens.xSpacing}) * 2
     );
 
-    ${MediaQuery.MaxWidth.xxs} {
-        ${tokens.xSpacing}: ${Breakpoint["xxs-margin"]};
+    ${MediaQuery.MaxWidth.sm} {
+        ${tokens.xSpacing}: ${Breakpoint["sm-margin"]};
+        max-height: 15rem;
     }
 
     ${MediaQuery.MaxWidth.xs} {
         ${tokens.xSpacing}: ${Breakpoint["xs-margin"]};
     }
 
-    ${MediaQuery.MaxWidth.sm} {
-        ${tokens.xSpacing}: ${Breakpoint["sm-margin"]};
-        max-height: 15rem;
+    ${MediaQuery.MaxWidth.xxs} {
+        ${tokens.xSpacing}: ${Breakpoint["xxs-margin"]};
     }
 
     max-width: var(${tokens.availableWidth});
-    min-width: min(23rem, var(${tokens.availableWidth}));
+    min-width: var(
+        ${tokens.containerMinWidth},
+        min(23rem, var(${tokens.availableWidth}))
+    );
+    width: var(${tokens.containerWidth});
     max-height: min(27rem, var(${tokens.availableHeight}, 9999px));
     overflow: hidden;
     overflow-y: auto;
@@ -192,5 +202,6 @@ export const spinner = css`
 
 export const noResultDescContainer = css`
     color: ${Colour["text-subtle"]};
-    padding: 0 ${Spacing["spacing-16"]} ${Spacing["spacing-12"]} 0;
+    padding: 0 ${Spacing["spacing-16"]};
+    padding-bottom: ${Spacing["spacing-12"]};
 `;
