@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Colour, Font } from "../theme";
+import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -54,6 +55,16 @@ export const TimeSlotText = styled.div`
     color: ${Colour.text};
     span {
         display: block;
+    }
+`;
+
+export const TimeSlotComponent = styled(TimeSlot)`
+    position: relative;
+
+    &:focus-within {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 2px;
+        z-index: 1;
     }
 `;
 
