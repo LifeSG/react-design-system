@@ -1,28 +1,11 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_Motion,
-    V3_Radius,
-} from "../../v3_theme";
-import type { YearVariant } from "./internal-calendar-year";
-
-// =============================================================================
-// STYLE INTERFACES, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $disabledDisplay: boolean;
-    $interactive: boolean;
-    $variant: YearVariant;
-}
+import { Border, Colour, Font, Motion, Radius } from "../../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div`
+export const wrapper = css`
     width: 100%;
     height: 100%;
     display: grid;
@@ -31,100 +14,60 @@ export const Wrapper = styled.div`
     grid-template-columns: repeat(3, 1fr);
 `;
 
-export const YearCell = styled.div<StyleProps>`
+export const yearCell = css`
     display: flex;
     justify-content: center;
     align-items: center;
     margin: 1rem 0.5rem;
-    transition: ${V3_Motion["duration-150"]} ${V3_Motion["ease-default"]};
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
     padding: 0.5rem;
 
-    // default styles
-    ${V3_Font["body-md-regular"]}
-    border-radius: ${V3_Radius["md"]};
-    border: ${V3_Border["width-010"]} ${V3_Border.solid} transparent;
+    ${Font["body-md-regular"]}
+    border-radius: ${Radius["md"]};
+    border: ${Border["width-010"]} ${Border["solid"]} transparent;
     background-clip: border-box;
-    color: ${V3_Colour["text"]};
+    color: ${Colour["text"]};
     cursor: default;
+`;
 
-    // cursor style
-    ${({ $interactive, $disabledDisplay }) => {
-        if ($interactive) {
-            return css`
-                cursor: pointer;
-            `;
-        }
+export const yearCellDisabledDisplay = css`
+    cursor: not-allowed;
+    color: ${Colour["text-disabled-subtlest"]};
+`;
 
-        if ($disabledDisplay) {
-            return css`
-                cursor: not-allowed;
-            `;
-        }
-    }}
+export const yearCellInteractive = css`
+    cursor: pointer;
+`;
 
-    // background, border and text styles
-    ${({ $variant, $interactive, $disabledDisplay }) => {
-        if ($variant === "selected-year") {
-            return css`
-                background: ${V3_Colour["bg-selected"]};
-                border-color: ${V3_Colour["border-selected"]};
-                color: ${V3_Colour["text-selected"]};
-                font-weight: ${V3_Font.Spec["weight-semibold"]};
+export const yearCellOtherDecade = css`
+    color: ${Colour["text-disabled-subtlest"]};
+`;
 
-                ${$interactive &&
-                css`
-                    &:hover {
-                        background: ${V3_Colour["bg-selected-hover"]};
-                        border-color: ${V3_Colour["border-selected-hover"]};
-                        color: ${V3_Colour["text-selected-hover"]};
-                    }
-                `}
-            `;
-        }
+export const yearCellCurrentYear = css`
+    color: ${Colour["text-primary"]};
+    font-weight: ${Font.Spec["weight-semibold"]};
+`;
 
-        if ($variant === "current-year") {
-            return css`
-                color: ${V3_Colour["text-primary"]};
-                font-weight: ${V3_Font.Spec["weight-semibold"]};
-            `;
-        }
+export const yearCellSelectedYear = css`
+    background: ${Colour["bg-selected"]};
+    border-color: ${Colour["border-selected"]};
+    color: ${Colour["text-selected"]};
+    font-weight: ${Font.Spec["weight-semibold"]};
+`;
 
-        if ($variant === "other-decade") {
-            return css`
-                color: ${V3_Colour["text-disabled-subtlest"]};
-            `;
-        }
+export const yearCellDefaultHover = css`
+    &:hover {
+        background: ${Colour["bg-hover"]};
+        color: ${Colour["text-hover"]};
+        font-weight: ${Font.Spec["weight-semibold"]};
+    }
+`;
 
-        if ($disabledDisplay) {
-            return css`
-                color: ${V3_Colour["text-disabled-subtlest"]};
-            `;
-        }
-    }}
-
-    // hover styles
-    ${({ $variant, $interactive }) => {
-        if (!$interactive) {
-            return;
-        }
-
-        if ($variant === "selected-year") {
-            return css`
-                &:hover {
-                    background: ${V3_Colour["bg-selected-hover"]};
-                    border-color: ${V3_Colour["border-selected-hover"]};
-                    color: ${V3_Colour["text-selected-hover"]};
-                    font-weight: ${V3_Font.Spec["weight-semibold"]};
-                }
-            `;
-        }
-
-        return css`
-            &:hover {
-                background: ${V3_Colour["bg-hover"]};
-                color: ${V3_Colour["text-hover"]};
-                font-weight: ${V3_Font.Spec["weight-semibold"]};
-            }
-        `;
-    }}
+export const yearCellSelectedHover = css`
+    &:hover {
+        background: ${Colour["bg-selected-hover"]};
+        border-color: ${Colour["border-selected-hover"]};
+        color: ${Colour["text-selected-hover"]};
+        font-weight: ${Font.Spec["weight-semibold"]};
+    }
 `;

@@ -1,23 +1,6 @@
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
-import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../../button";
-import { V3_Colour, V3_Font } from "../../v3_theme";
-import { ClickableIcon } from "../clickable-icon";
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface DropdownButtonStyleProps {
-    $expanded: boolean;
-    $visible?: boolean;
-}
-
-interface OverlayStyleProps {
-    $visible?: boolean;
-}
+import { Colour, Font } from "../../theme";
 
 // =============================================================================
 // STYLING
@@ -25,30 +8,34 @@ interface OverlayStyleProps {
 // -----------------------------------------------------------------------------
 // ICONS
 // -----------------------------------------------------------------------------
-const iconStyle = css`
-    color: ${V3_Colour.icon};
+export const arrowLeft = css`
+    color: ${Colour["icon"]};
     height: 1rem;
     width: 1rem;
 `;
 
-export const ArrowLeft = styled(ChevronLeftIcon)`
-    ${iconStyle}
+export const arrowRight = css`
+    color: ${Colour["icon"]};
+    height: 1rem;
+    width: 1rem;
 `;
 
-export const ArrowRight = styled(ChevronRightIcon)`
-    ${iconStyle}
-`;
-
-export const IconChevronDown = styled(ChevronDownIcon)`
-    ${iconStyle}
+export const iconChevronDown = css`
+    color: ${Colour["icon"]};
+    height: 1rem;
+    width: 1rem;
     transition: transform 250ms ease-in-out;
     margin-left: 0.5rem;
+`;
+
+export const iconChevronDownExpanded = css`
+    transform: rotate(180deg);
 `;
 
 // -----------------------------------------------------------------------------
 // MAIN
 // -----------------------------------------------------------------------------
-export const Container = styled.div`
+export const container = css`
     position: relative;
     width: 100%;
     display: flex;
@@ -58,13 +45,13 @@ export const Container = styled.div`
     padding-bottom: var(--vertical-inset);
 `;
 
-export const ToggleZone = styled.div`
+export const toggleZone = css`
     display: flex;
     flex: 1;
     position: relative;
 `;
 
-export const DefaultView = styled.div`
+export const defaultView = css`
     isolation: isolate;
     width: 100%;
 
@@ -72,30 +59,26 @@ export const DefaultView = styled.div`
     padding-right: var(--horizontal-inset);
 `;
 
-export const OptionsOverlay = styled.div<OverlayStyleProps>`
+export const optionsOverlay = css`
     position: absolute;
     top: 0;
     left: 0;
     height: 100%;
     width: 100%;
-    background: ${V3_Colour.bg};
+    background: ${Colour["bg"]};
 
     padding-left: var(--horizontal-inset);
     padding-right: var(--horizontal-inset);
+`;
 
-    ${(props) => {
-        if (!props.$visible) {
-            return css`
-                display: none;
-            `;
-        }
-    }}
+export const optionsOverlayHidden = css`
+    display: none;
 `;
 
 // -----------------------------------------------------------------------------
 // HEADER
 // -----------------------------------------------------------------------------
-export const Header = styled.div`
+export const header = css`
     display: flex;
     justify-content: space-between;
 
@@ -104,45 +87,33 @@ export const Header = styled.div`
     padding-bottom: var(--header-bottom-spacing);
 `;
 
-export const HeaderInputDropdown = styled.div`
+export const headerInputDropdown = css`
     display: flex;
 `;
 
-export const DropdownButton = styled.button<DropdownButtonStyleProps>`
+export const dropdownButton = css`
     border: none;
     display: flex;
     align-items: center;
     padding: 0.5rem;
     background: transparent;
     cursor: pointer;
-
-    ${(props) => {
-        if (props.$visible === false) {
-            return css`
-                display: none;
-            `;
-        }
-
-        if (props.$expanded) {
-            return css`
-                ${IconChevronDown} {
-                    transform: rotate(180deg);
-                }
-            `;
-        }
-    }};
 `;
 
-export const DropdownText = styled.span`
-    ${V3_Font["body-md-regular"]}
-    color: ${V3_Colour["text"]};
+export const dropdownButtonHidden = css`
+    display: none;
 `;
 
-export const HeaderArrows = styled.div`
+export const dropdownText = css`
+    ${Font["body-md-regular"]}
+    color: ${Colour["text"]};
+`;
+
+export const headerArrows = css`
     display: flex;
 `;
 
-export const HeaderArrowButton = styled(ClickableIcon)`
+export const headerArrowButton = css`
     margin: auto 0;
     padding: 0.75rem;
 
@@ -154,7 +125,7 @@ export const HeaderArrowButton = styled(ClickableIcon)`
 // -----------------------------------------------------------------------------
 // ACTION BUTTONS
 // -----------------------------------------------------------------------------
-export const ActionButtonSection = styled.div`
+export const actionButtonSection = css`
     display: flex;
     gap: 0.5rem;
     margin-top: 1.5rem;
@@ -163,6 +134,6 @@ export const ActionButtonSection = styled.div`
     padding-right: var(--horizontal-inset);
 `;
 
-export const ActionButton = styled(Button.Small)`
+export const actionButton = css`
     flex: 1;
 `;

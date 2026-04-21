@@ -1,37 +1,31 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import {
-    V3_Border,
-    V3_Colour,
-    V3_MediaQuery,
-    V3_Radius,
-    V3_Spacing,
-} from "../../v3_theme";
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface StyleProps {
-    $width: number;
-}
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const CalendarWrapper = styled.div<StyleProps>`
-    --vertical-inset: ${V3_Spacing["spacing-24"]};
-    --horizontal-inset: ${V3_Spacing["spacing-20"]};
-    --header-bottom-spacing: ${V3_Spacing["spacing-4"]};
+export const tokens = {
+    calendarWrapper: {
+        width: "--fds-internal-calendarDropdown-calendarWrapper-width",
+    },
+};
 
-    border: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour.border};
-    border-radius: ${V3_Radius["sm"]};
+export const calendarWrapper = css`
+    --vertical-inset: ${Spacing["spacing-24"]};
+    --horizontal-inset: ${Spacing["spacing-20"]};
+    --header-bottom-spacing: ${Spacing["spacing-4"]};
+
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
     overflow: hidden;
 
-    width: ${(props) => props.$width}px;
+    ${tokens.calendarWrapper.width}: initial;
+    width: var(${tokens.calendarWrapper.width});
     max-width: 41rem;
     min-width: 21rem;
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         min-width: 17.5rem;
     }
 `;
