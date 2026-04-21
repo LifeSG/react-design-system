@@ -5,6 +5,7 @@ import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
 import {
+    baseIndicatorStyle,
     listItem,
     listItemActive,
     listItemActiveSelected,
@@ -20,7 +21,6 @@ import {
     LanguageIconWrapper,
     selectedIndicator,
     StyledExpandableElement,
-    unselectedIndicator,
 } from "./dropdown-variant.style";
 import type { VariantInternalProps } from "./internal-types";
 import type { LanguageSwitcherCode } from "./types";
@@ -188,11 +188,14 @@ export const DropdownVariant = ({
                         >
                             {isSelected ? (
                                 <TickIcon
-                                    className={selectedIndicator}
+                                    className={clsx(
+                                        baseIndicatorStyle,
+                                        selectedIndicator
+                                    )}
                                     aria-hidden
                                 />
                             ) : (
-                                <div className={unselectedIndicator} />
+                                <div className={baseIndicatorStyle} />
                             )}
                             {LANGUAGE_DISPLAY_MAP[code]}
                         </DropdownItem>

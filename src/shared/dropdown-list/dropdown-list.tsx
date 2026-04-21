@@ -420,7 +420,10 @@ const DropdownListInner = <T, V>(
                 return (
                     <SquareFillIcon
                         aria-hidden
-                        className={styles.checkboxDisabledIndicator}
+                        className={clsx(
+                            styles.baseCheckboxIndicatorStyle,
+                            styles.checkboxDisabledIndicator
+                        )}
                     />
                 );
             }
@@ -428,12 +431,18 @@ const DropdownListInner = <T, V>(
             return selected ? (
                 <SquareTickFillIcon
                     aria-hidden
-                    className={styles.checkboxSelectedIndicator}
+                    className={clsx(
+                        styles.baseCheckboxIndicatorStyle,
+                        styles.checkboxSelectedIndicator
+                    )}
                 />
             ) : (
                 <SquareIcon
                     aria-hidden
-                    className={styles.checkboxUnselectedIndicator}
+                    className={clsx(
+                        styles.baseCheckboxIndicatorStyle,
+                        styles.checkboxUnselectedIndicator
+                    )}
                 />
             );
         }
@@ -441,7 +450,7 @@ const DropdownListInner = <T, V>(
         return selected ? (
             <TickIcon aria-hidden className={styles.selectedIndicator} />
         ) : (
-            <div className={styles.unselectedIndicator} />
+            <div className={styles.baseIndicatorStyle} />
         );
     };
 

@@ -121,37 +121,31 @@ export const listItemDisabled = css`
     cursor: not-allowed;
 `;
 
-export const selectedIndicator = css`
+export const baseIndicatorStyle = css`
     flex-shrink: 0;
     height: 1lh;
     width: 1rem;
+`;
+
+export const selectedIndicator = css`
     color: ${Colour["icon-selected"]};
 `;
 
-export const unselectedIndicator = css`
-    flex-shrink: 0;
-    height: 1lh;
-    width: 1rem;
-`;
-
-export const checkboxSelectedIndicator = css`
+export const baseCheckboxIndicatorStyle = css`
     flex-shrink: 0;
     height: 1lh;
     width: 1lh;
+`;
+
+export const checkboxSelectedIndicator = css`
     color: ${Colour["icon-selected"]};
 `;
 
 export const checkboxUnselectedIndicator = css`
-    flex-shrink: 0;
-    height: 1lh;
-    width: 1lh;
     color: ${Colour["icon-primary-subtlest"]};
 `;
 
 export const checkboxDisabledIndicator = css`
-    flex-shrink: 0;
-    height: 1lh;
-    width: 1lh;
     color: ${Colour["icon-disabled-subtle"]};
 `;
 

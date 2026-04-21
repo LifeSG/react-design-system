@@ -545,14 +545,20 @@ export const NestedDropdownList = <T,>({
                     return (
                         <SquareTickFillIcon
                             aria-hidden
-                            className={styles.checkboxSelectedIndicator}
+                            className={clsx(
+                                styles.baseCheckboxIndicatorStyle,
+                                styles.checkboxSelectedIndicator
+                            )}
                         />
                     );
                 default:
                     return (
                         <SquareIcon
                             aria-hidden
-                            className={styles.checkboxUnselectedIndicator}
+                            className={clsx(
+                                styles.baseCheckboxIndicatorStyle,
+                                styles.checkboxUnselectedIndicator
+                            )}
                         />
                     );
             }

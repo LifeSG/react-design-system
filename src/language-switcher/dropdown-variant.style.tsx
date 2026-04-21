@@ -2,8 +2,8 @@ import styled, { css } from "styled-components";
 
 import { ExpandableElement } from "../shared/dropdown-list";
 import {
+    baseIndicatorStyle,
     selectedIndicator,
-    unselectedIndicator,
 } from "../shared/dropdown-list/dropdown-list.styles";
 import { iconContainer } from "../shared/dropdown-list/expandable-element.styles";
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
@@ -67,7 +67,7 @@ export const DropdownList = styled.ul`
     padding: ${Spacing["spacing-8"]};
 `;
 
-export { selectedIndicator, unselectedIndicator };
+export { baseIndicatorStyle, selectedIndicator };
 
 export const DropdownItem = styled.li<{ $selected: boolean }>`
     align-items: center;
