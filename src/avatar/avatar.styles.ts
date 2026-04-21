@@ -1,37 +1,27 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Colour } from "../theme";
 import { Typography } from "../typography";
-import type { AvatarSize } from "./types";
-
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-export interface AvatarDisplayProps {
-    $sizeType?: AvatarSize;
-}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const AvatarDisplay = styled.div<AvatarDisplayProps>`
+export const AvatarDisplay = styled.div`
     border-radius: 50%;
     background-color: ${Colour["bg-primary-subtler"]};
-    ${(props) => {
-        return props.$sizeType === "small"
-            ? css`
-                  width: 1.5rem;
-                  height: 1.5rem;
-              `
-            : css`
-                  width: 2.5rem;
-                  height: 2.5rem;
-              `;
-    }}
-
     align-items: center;
     justify-content: center;
     display: flex;
+
+    &.avatarDisplayDefault {
+        width: 2.5rem;
+        height: 2.5rem;
+    }
+
+    &.avatarDisplaySmall {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
 `;
 
 export const AvatarBaselineText = styled(Typography.BodyBL)`

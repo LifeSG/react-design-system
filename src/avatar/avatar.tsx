@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import {
     AvatarBaselineText,
     AvatarBodySmallText,
@@ -9,6 +11,7 @@ export const Avatar = ({
     children,
     sizeType = "default",
     "data-testid": testId = "avatar",
+    className,
     ...otherProps
 }: AvatarProps): JSX.Element => {
     // =============================================================================
@@ -37,8 +40,13 @@ export const Avatar = ({
     return (
         <AvatarDisplay
             {...otherProps}
-            $sizeType={sizeType}
             data-testid={testId}
+            className={clsx(
+                sizeType === "small"
+                    ? "avatarDisplaySmall"
+                    : "avatarDisplayDefault",
+                className
+            )}
         >
             {renderContent()}
         </AvatarDisplay>
