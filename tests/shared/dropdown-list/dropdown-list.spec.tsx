@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DropdownList } from "src/shared/dropdown-list/dropdown-list";
 import { DropdownListState } from "src/shared/dropdown-list/dropdown-list-state";
@@ -186,7 +186,7 @@ describe("DropdownList", () => {
             renderList();
 
             const options = screen.getAllByRole("option");
-            options[0].focus();
+            await waitFor(() => expect(options[0]).toHaveFocus());
 
             await user.keyboard("{ArrowDown}");
 
@@ -198,7 +198,7 @@ describe("DropdownList", () => {
             renderList();
 
             const options = screen.getAllByRole("option");
-            options[0].focus();
+            await waitFor(() => expect(options[0]).toHaveFocus());
 
             await user.keyboard("{ArrowDown}");
             await user.keyboard("{ArrowDown}");
@@ -213,7 +213,7 @@ describe("DropdownList", () => {
             renderList({ selectedItems: [], onSelectItem });
 
             const options = screen.getAllByRole("option");
-            options[0].focus();
+            await waitFor(() => expect(options[0]).toHaveFocus());
 
             await user.keyboard("{Enter}");
 
@@ -226,7 +226,7 @@ describe("DropdownList", () => {
             renderList({ selectedItems: [], onSelectItem });
 
             const options = screen.getAllByRole("option");
-            options[0].focus();
+            await waitFor(() => expect(options[0]).toHaveFocus());
 
             await user.keyboard("{ArrowDown}");
             await user.keyboard(" ");
