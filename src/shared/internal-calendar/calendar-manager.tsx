@@ -1,27 +1,17 @@
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import clsx from "clsx";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 
+import { Button } from "../../button";
 import { DateHelper } from "../../util";
 import { CalendarHelper } from "../../util/calendar-helper";
 import { inertValue } from "../accessibility";
-import {
-    ActionButton,
-    ActionButtonSection,
-    ArrowLeft,
-    ArrowRight,
-    Container,
-    DefaultView,
-    DropdownButton,
-    DropdownText,
-    Header,
-    HeaderArrowButton,
-    HeaderArrows,
-    HeaderInputDropdown,
-    IconChevronDown,
-    OptionsOverlay,
-    ToggleZone,
-} from "./calendar-manager.style";
+import { ClickableIcon } from "../clickable-icon";
+import * as styles from "./calendar-manager.styles";
 import { InternalCalendarMonth } from "./internal-calendar-month";
 import { InternalCalendarYear } from "./internal-calendar-year";
 import type {
@@ -390,32 +380,46 @@ const Component = (
 
         return (
             <>
-                <DropdownButton
+                <button
+                    className={clsx(
+                        styles.dropdownButton,
+                        currentView !== "default" && styles.dropdownButtonHidden
+                    )}
                     aria-label={`${fullMonthLabel}, Select month`}
                     type="button"
-                    $expanded={currentView === "month-options"}
-                    $visible={currentView === "default"}
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
                     onKeyDown={handleMonthDropdownKeydown}
                     tabIndex={isFocusable ? 0 : -1}
                 >
-                    <DropdownText>{monthLabel}</DropdownText>
-                    <IconChevronDown />
-                </DropdownButton>
-                <DropdownButton
+                    <span className={styles.dropdownText}>{monthLabel}</span>
+                    <ChevronDownIcon
+                        className={clsx(
+                            styles.iconChevronDown,
+                            currentView === "month-options" &&
+                                styles.iconChevronDownExpanded
+                        )}
+                    />
+                </button>
+                <button
                     ref={yearDropdownRef}
+                    className={styles.dropdownButton}
                     aria-label={viewToYearLabel[currentView]}
                     type="button"
-                    $expanded={currentView !== "default"}
                     id="year-dropdown"
                     onClick={handleYearDropdownClick}
                     onKeyDown={handleYearDropdownKeydown}
                     tabIndex={isFocusable ? 0 : -1}
                 >
-                    <DropdownText>{yearLabel}</DropdownText>
-                    <IconChevronDown />
-                </DropdownButton>
+                    <span className={styles.dropdownText}>{yearLabel}</span>
+                    <ChevronDownIcon
+                        className={clsx(
+                            styles.iconChevronDown,
+                            currentView !== "default" &&
+                                styles.iconChevronDownExpanded
+                        )}
+                    />
+                </button>
             </>
         );
     };
@@ -468,12 +472,17 @@ const Component = (
         const selection = viewToSelection[currentView];
 
         return (
-            <Header data-id="calendar-header" data-testid="calendar-header">
-                <HeaderInputDropdown>
+            <div
+                className={styles.header}
+                data-id="calendar-header"
+                data-testid="calendar-header"
+            >
+                <div className={styles.headerInputDropdown}>
                     {renderDropdownButtons()}
-                </HeaderInputDropdown>
-                <HeaderArrows>
-                    <HeaderArrowButton
+                </div>
+                <div className={styles.headerArrows}>
+                    <ClickableIcon
+                        className={styles.headerArrowButton}
                         aria-label={`Previous ${selection}`}
                         data-testid="left-arrow-btn"
                         disabled={isLeftArrowDisabled()}
@@ -482,9 +491,10 @@ const Component = (
                         onClick={handleLeftArrowClick}
                         tabIndex={isFocusable ? 0 : -1}
                     >
-                        <ArrowLeft />
-                    </HeaderArrowButton>
-                    <HeaderArrowButton
+                        <ChevronLeftIcon className={styles.arrowLeft} />
+                    </ClickableIcon>
+                    <ClickableIcon
+                        className={styles.headerArrowButton}
                         aria-label={`Next ${selection}`}
                         data-testid="right-arrow-btn"
                         disabled={isRightArrowDisabled()}
@@ -493,10 +503,10 @@ const Component = (
                         onClick={handleRightArrowClick}
                         tabIndex={isFocusable ? 0 : -1}
                     >
-                        <ArrowRight />
-                    </HeaderArrowButton>
-                </HeaderArrows>
-            </Header>
+                        <ChevronRightIcon className={styles.arrowRight} />
+                    </ClickableIcon>
+                </div>
+            </div>
         );
     };
 
@@ -508,8 +518,9 @@ const Component = (
         const disabled = !isDayView ? false : doneButtonDisabled;
 
         return (
-            <ActionButtonSection>
-                <ActionButton
+            <div className={styles.actionButtonSection}>
+                <Button.Small
+                    className={styles.actionButton}
                     ref={cancelButtonRef}
                     data-testid="cancel-button"
                     styleType="light"
@@ -517,8 +528,9 @@ const Component = (
                     onClick={handleCancelButton}
                 >
                     Cancel
-                </ActionButton>
-                <ActionButton
+                </Button.Small>
+                <Button.Small
+                    className={styles.actionButton}
                     data-testid="done-button"
                     ref={doneButtonRef}
                     type="button"
@@ -526,8 +538,8 @@ const Component = (
                     disabled={disabled}
                 >
                     Done
-                </ActionButton>
-            </ActionButtonSection>
+                </Button.Small>
+            </div>
         );
     };
 
@@ -549,19 +561,28 @@ const Component = (
             return (
                 // Prevent interaction with the default view when options are open
                 <>
-                    <DefaultView inert={inertValue(!isDefaultView)}>
+                    <div
+                        className={styles.defaultView}
+                        inert={inertValue(!isDefaultView)}
+                    >
                         {defaultView}
-                    </DefaultView>
-                    <OptionsOverlay $visible={!isDefaultView}>
+                    </div>
+                    <div
+                        className={clsx(
+                            styles.optionsOverlay,
+                            isDefaultView && styles.optionsOverlayHidden
+                        )}
+                    >
                         {renderOptionsOverlay()}
-                    </OptionsOverlay>
+                    </div>
                 </>
             );
         }
     };
 
     return (
-        <Container
+        <div
+            className={styles.container}
             ref={containerRef}
             data-id="calendar-container"
             data-testid="calendar-container"
@@ -570,9 +591,9 @@ const Component = (
             {...otherProps}
         >
             {showNavigationHeader && renderHeader()}
-            <ToggleZone>{renderViews()}</ToggleZone>
+            <div className={styles.toggleZone}>{renderViews()}</div>
             {renderActionButtons()}
-        </Container>
+        </div>
     );
 };
 

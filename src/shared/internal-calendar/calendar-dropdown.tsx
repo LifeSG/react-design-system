@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useRef } from "react";
 
+import { useApplyStyle } from "../../theme";
 import { useDropdownRender } from "../dropdown-wrapper";
-import { CalendarWrapper } from "./calendar-dropdown.style";
+import * as styles from "./calendar-dropdown.styles";
 import { InternalCalendar } from "./internal-calendar";
 import type { CalendarDropdownProps, InternalCalendarRef } from "./types";
 
@@ -9,18 +10,35 @@ const Component = (
     props: CalendarDropdownProps,
     ref: React.ForwardedRef<InternalCalendarRef>
 ) => {
-    const { elementWidth, setFloatingRef, getFloatingProps, styles } =
-        useDropdownRender();
+    const {
+        elementWidth,
+        setFloatingRef,
+        getFloatingProps,
+        styles: positioningStyles,
+    } = useDropdownRender();
+
+    const wrapperRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(wrapperRef, {
+        [styles.tokens.calendarWrapper.width]: `${elementWidth}px`,
+    });
+
+    const setRef = (el: HTMLDivElement | null) => {
+        (wrapperRef as React.MutableRefObject<HTMLDivElement | null>).current =
+            el;
+        setFloatingRef(el);
+    };
+
     return (
-        <CalendarWrapper
-            $width={elementWidth}
+        <div
+            className={styles.calendarWrapper}
             data-testid="calendar-dropdown"
-            ref={setFloatingRef}
-            style={styles}
+            ref={setRef}
+            style={positioningStyles}
             {...getFloatingProps()}
         >
             <InternalCalendar ref={ref} {...props} />
-        </CalendarWrapper>
+        </div>
     );
 };
 

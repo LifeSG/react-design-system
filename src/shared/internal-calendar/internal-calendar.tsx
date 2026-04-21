@@ -3,7 +3,7 @@ import React, { useImperativeHandle, useRef } from "react";
 
 import { CalendarManager } from "./calendar-manager";
 import { FixedRangeCalendarDayView } from "./fixed-range";
-import { Container } from "./internal-calendar.style";
+import * as styles from "./internal-calendar.styles";
 import { MultiCalendarDayView } from "./multi";
 import { SingleCalendarDayView } from "./single";
 import { StandardCalendarDayView } from "./standard";
@@ -233,7 +233,7 @@ export const Component = (
     };
 
     return (
-        <Container ref={containerRef}>
+        <div className={styles.container} ref={containerRef}>
             <CalendarManager
                 ref={calendarManagerRef}
                 withButton={withButton}
@@ -252,7 +252,7 @@ export const Component = (
             >
                 {({ calendarDate }) => renderCalendarDay(calendarDate)}
             </CalendarManager>
-        </Container>
+        </div>
     );
 };
 
