@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
+import { Colour } from "../theme";
 import { Typography } from "../typography";
-import { V3_Colour } from "../v3_theme";
 import type { AvatarSize } from "./types";
 
 // =============================================================================
@@ -16,7 +16,7 @@ export interface AvatarDisplayProps {
 // =============================================================================
 export const AvatarDisplay = styled.div<AvatarDisplayProps>`
     border-radius: 50%;
-    background-color: ${V3_Colour["bg-primary-subtler"]};
+    background-color: ${Colour["bg-primary-subtler"]};
     ${(props) => {
         return props.$sizeType === "small"
             ? css`
@@ -35,9 +35,9 @@ export const AvatarDisplay = styled.div<AvatarDisplayProps>`
 `;
 
 export const AvatarBaselineText = styled(Typography.BodyBL)`
-    color: ${V3_Colour["text-primary"]};
+    color: ${Colour["text-primary"]};
 `;
 
 export const AvatarBodySmallText = styled(Typography.BodySM)`
-    color: ${V3_Colour["text-primary"]};
+    color: ${Colour["text-primary"]};
 `;
