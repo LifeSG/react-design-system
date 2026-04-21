@@ -60,11 +60,16 @@ export const DropdownLabel = ({
                 return false;
             }
 
+            // best-effort attempt to check if multi-line text will overflow,
+            // rendering an actual element in the DOM might be more accurate
+            // but might not be performant for large lists
             const textWidth = StringHelper.getTextWidth(
                 displayText,
                 `${fontSize} '${fontFamily}'`
             );
 
+            // there's less space than expected due to word breaks, so an
+            // arbitary offset is applied
             return textWidth > width * maxLines - 50;
         },
         [width, displayType, fontSize, fontFamily, maxLines]
@@ -82,6 +87,8 @@ export const DropdownLabel = ({
         [hasExceededContainer, sublabel]
     );
 
+    // there's less space than expected due to word breaks, so an
+    // arbitary offset is applied
     const itemDisplayType =
         shouldTruncateTitle || shouldTruncateLabel ? "next-line" : displayType;
 
@@ -117,6 +124,7 @@ export const DropdownLabel = ({
             <>
                 <div
                     className={clsx(
+                        styles.baseTruncateStyle,
                         styles.truncateFirstLine,
                         maxLines === 1 && styles.truncateLineSingle
                     )}
@@ -126,6 +134,7 @@ export const DropdownLabel = ({
                 </div>
                 <div
                     className={clsx(
+                        styles.baseTruncateStyle,
                         styles.truncateSecondLine,
                         maxLines === 1 && styles.truncateLineSingle
                     )}
