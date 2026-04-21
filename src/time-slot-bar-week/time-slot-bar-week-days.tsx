@@ -109,9 +109,7 @@ export const TimeSlotBarWeekDays = ({
             ? Math.max(1, Math.floor((maxVisibleCellHeight + 4) / 16))
             : 0;
     const collapsedHeight =
-        112 + visibleRowCount > 0
-            ? visibleRowCount * 16 - 4
-            : maxVisibleCellHeight;
+        visibleRowCount > 0 ? visibleRowCount * 16 - 4 : maxVisibleCellHeight;
     const height = maxVisibleCellHeight
         ? !hasCollapsedContent || expandAll
             ? actualHeight
@@ -158,7 +156,7 @@ export const TimeSlotBarWeekDays = ({
             },
             {}
         );
-    }, [currentCalendarWeek, getCellsForDate]);
+    }, [currentCalendarWeek, generatedDaySlots]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -583,7 +581,6 @@ export const TimeSlotBarWeekDays = ({
         const isCollapsedSlot =
             hasCollapsedContent &&
             !expandAll &&
-            !!isActualSlot &&
             (slot.rowIndex ?? 0) >= visibleRowCount;
 
         return (
@@ -660,8 +657,7 @@ export const TimeSlotBarWeekDays = ({
     };
 
     const renderCollapseExpandAll = () => {
-        if (!maxVisibleCellHeight || !cellsRef.current || !hasCollapsedContent)
-            return;
+        if (!maxVisibleCellHeight || !cellsRef.current) return;
         return (
             <CollapseExpandAllWrapper>
                 <CollapseExpandAllButton
