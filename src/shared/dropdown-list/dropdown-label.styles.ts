@@ -92,15 +92,13 @@ export const labelNextLine = css`
     flex-direction: column;
 `;
 
-export const labelInline = css`
-    .${primaryText} {
-        display: inline;
-    }
+export const textLabelInline = css`
+    display: inline;
+`;
 
-    .${secondaryText} {
-        display: inline;
-        margin-left: 0.5rem;
-    }
+export const secondaryTextLabelInline = css`
+    display: inline;
+    margin-left: 0.5rem;
 `;
 
 // -----------------------------------------------------------------------------

@@ -68,9 +68,10 @@ export const DropdownLabel = ({
                 `${fontSize} '${fontFamily}'`
             );
 
-            // there's less space than expected due to word breaks, so an
-            // arbitary offset is applied
-            return textWidth > width * maxLines - 50;
+            // compare against a single line width — if text overflows one line
+            // in inline mode, switch to next-line layout with middle truncation.
+            // an arbitrary offset accounts for word breaks reducing actual usage
+            return textWidth > width - 50;
         },
         [width, displayType, fontSize, fontFamily, maxLines]
     );
@@ -90,7 +91,10 @@ export const DropdownLabel = ({
     // there's less space than expected due to word breaks, so an
     // arbitary offset is applied
     const itemDisplayType =
-        shouldTruncateTitle || shouldTruncateLabel ? "next-line" : displayType;
+        truncationType === "middle" &&
+        (shouldTruncateTitle || shouldTruncateLabel)
+            ? "next-line"
+            : displayType;
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -152,9 +156,7 @@ export const DropdownLabel = ({
             className={clsx(
                 styles.label,
                 variant === "small" && styles.labelVariantSmall,
-                itemDisplayType === "next-line"
-                    ? styles.labelNextLine
-                    : styles.labelInline
+                itemDisplayType === "next-line" && styles.labelNextLine
             )}
         >
             <div
@@ -165,6 +167,9 @@ export const DropdownLabel = ({
                     bold && styles.primaryTextBold,
                     disabled && styles.primaryTextDisabled,
                     !disabled && selected && styles.primaryTextSelected,
+                    itemDisplayType !== "next-line" &&
+                        truncationType !== "end" &&
+                        styles.textLabelInline,
                     truncationType === "end" && styles.primaryTextTruncateEnd
                 )}
             >
@@ -182,7 +187,10 @@ export const DropdownLabel = ({
                             styles.secondaryTextTruncateEnd,
                         displayType === "next-line"
                             ? styles.secondaryTextNextLine
-                            : styles.secondaryTextInline
+                            : styles.secondaryTextInline,
+                        itemDisplayType !== "next-line" &&
+                            truncationType !== "end" &&
+                            styles.secondaryTextLabelInline
                     )}
                 >
                     {truncationType === "middle" && shouldTruncateLabel
