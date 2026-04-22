@@ -3,6 +3,10 @@ import { BadgeProps, BadgeVariant } from "./types";
 
 /**
  * A visual indicator for notifications or status, displayed as a badge overlay.
+ * @example
+ * ```tsx
+ * <Badge count={5}><button>Inbox</button></Badge>
+ * ```
  */
 export const Badge = ({
     children,

@@ -13,6 +13,6 @@
  * @keywords tile, panel, paper, content box, surface
  */
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
-    /** The test identifier for the component. */
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
 }

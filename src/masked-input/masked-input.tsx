@@ -309,5 +309,9 @@ const Component = (
 
 /**
  * Configuration for masking behaviour applied to an input field.
+ * @example
+ * ```tsx
+ * <MaskedInput value="S1234567A" maskRange={[1, 7]} />
+ * ```
  */
 export const MaskedInput = React.forwardRef(Component);

@@ -35,6 +35,10 @@ const ESignatureCanvas = lazy(async () => ({
 /**
  * A canvas-based electronic signature input
  * that allows users to draw and submit their signature.
+ * @example
+ * ```tsx
+ * <ESignature onChange={(dataUrl) => setSignature(dataUrl)} />
+ * ```
  */
 export const ESignature = (props: EsignatureProps) => {
     // =============================================================================

@@ -23,7 +23,12 @@ export type CounterType = "lower-alpha" | "decimal" | "lower-roman";
  * @keywords ordered list, numbered list, ol, counter, sequence
  */
 export interface OrderedListProps extends BaseListProps {
-    /**  Values: "lower-alpha" | "decimal" | "lower-roman" */
+    /**
+     * The counter style for list items.
+     * - `"lower-alpha"`: Alphabetic letters (a, b, c, ...)
+     * - `"decimal"`: Numbers (1, 2, 3, ...)
+     * - `"lower-roman"`: Roman numerals (i, ii, iii, ...)
+     */
     counterType?: CounterType | undefined;
     /** The separator between the counter and the text. It can be any string value specified. */
     counterSeparator?: string | undefined;
@@ -41,6 +46,13 @@ export type BulletType = "disc" | "circle" | "square" | "none";
  * @keywords unordered list, bullet list, ul, bullet points
  */
 export interface UnorderedListProps extends BaseListProps {
-    /** Values: "disc" | "circle" | "square" | "none" or custom React.ReactNode icon */
+    /**
+     * The bullet style for list items. Accepts a predefined string or a custom icon element.
+     * - `"disc"`: Filled circle
+     * - `"circle"`: Hollow circle
+     * - `"square"`: Square
+     * - `"none"`: No bullet
+     * - Custom `React.ReactNode`: Renders a custom icon as the bullet
+     */
     bulletType?: BulletType | React.ReactNode | undefined;
 }

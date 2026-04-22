@@ -24,6 +24,10 @@ import { AlertProps } from "./types";
  *
  * Displays messages of different types (success, warning, error, info, description)
  * with optional icons and action links.
+ * @example
+ * ```tsx
+ * <Alert type="success">Your changes have been saved.</Alert>
+ * ```
  */
 export const Alert = ({
     type,

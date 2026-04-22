@@ -12,6 +12,16 @@ import { VisuallyHidden, concatIds } from "src/shared/accessibility";
 /**
  * An async autocomplete input that fetches
  * and displays matching suggestions as the user types.
+ * @example
+ * ```tsx
+ * <PredictiveTextInput
+ *     fetchOptions={async (query) => fetchUsers(query)}
+ *     valueExtractor={(item) => item.id}
+ *     listExtractor={(item) => item.name}
+ *     displayValueExtractor={(item) => item.name}
+ *     onSelectOption={(item) => setSelected(item)}
+ * />
+ * ```
  */
 export const PredictiveTextInput = <T, V>({
     className,

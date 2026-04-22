@@ -3,10 +3,19 @@ import { ComponentLoadingSpinnerProps } from "../shared/component-loading-spinne
 
 export type ButtonStyleType = "default" | "secondary" | "light" | "link";
 
+/** Base props shared by all Button component variants. */
 export interface ButtonBaseProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
-    /** The style type of the button. Values: "default" | "secondary" | "light" | "link" */
+    /**
+     * Controls the visual style of the button.
+     * - `"default"`: Primary filled button style
+     * - `"secondary"`: Secondary outlined button style
+     * - `"light"`: Light/ghost button style
+     * - `"link"`: Renders the button as an inline text link
+     * @default "default"
+     */
     styleType?: ButtonStyleType | undefined;
     /** If specified, the component will have a red color scheme being applied */
     danger?: boolean | undefined;
@@ -14,8 +23,9 @@ export interface ButtonBaseProps
     focusableWhenDisabled?: boolean | undefined;
 }
 
+/** Props for the Button component. */
 export interface ButtonProps extends ButtonBaseProps {
-    /** Indicates if a loading spinner is to be displayed */
+    /** Displays a loading spinner and prevents interaction when `true`. @default false */
     loading?: boolean | undefined;
 }
 

@@ -14,6 +14,7 @@ export interface MarkupProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * Specifies if element is rendered as block element `div` or inline
      * element `span`
+     * @default false
      */
     inline?: boolean | undefined;
 }

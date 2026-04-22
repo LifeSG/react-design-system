@@ -131,4 +131,17 @@ const FormTextareaComponent = (
     );
 };
 
+/**
+ * A form field that wraps `InputTextarea` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.Textarea` to present a multi-line text input within a form.
+ * @example
+ * ```tsx
+ * <Form.Textarea
+ *     label="Description"
+ *     placeholder="Enter description"
+ *     errorMessage={errors.description}
+ * />
+ * ```
+ */
 export const FormTextarea = React.forwardRef(FormTextareaComponent);

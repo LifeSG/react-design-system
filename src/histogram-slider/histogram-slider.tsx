@@ -16,6 +16,10 @@ const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
 /**
  *  Describes a single histogram bin with its frequency count and lower boundary value.
+ * @example
+ * ```tsx
+ * <HistogramSlider bins={bins} interval={10} value={[20, 80]} onChange={setRange} />
+ * ```
  */
 export const HistogramSlider = ({
     bins = [],

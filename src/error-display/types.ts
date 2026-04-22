@@ -23,11 +23,15 @@ export type ErrorDisplayType =
     | "unsupported-browser"
     | "partially-supported-browser";
 
+/** Additional attributes for the maintenance error display type. */
 export interface MaintenanceAdditionalAttributes {
+    /** The scheduled maintenance date string displayed to the user. */
     dateString: string;
 }
 
+/** Additional attributes for the inactivity timeout error display type. */
 export interface InactivityAdditionalAttributes {
+    /** The number of seconds remaining before the session expires. */
     secondsLeft: number;
     /** Interval (in seconds) for announcing remaining time via screen readers */
     reminderInterval?: number | undefined;

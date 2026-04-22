@@ -4,6 +4,18 @@ import { FormOtpVerificationProps } from "../otp-verification/types";
 import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 
+/**
+ * A form field that wraps `OtpVerification` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.OtpVerification` to present an OTP input within a form.
+ * @example
+ * ```tsx
+ * <Form.OtpVerification
+ *     label="One-time password"
+ *     onInputFulfilled={handleOtpComplete}
+ * />
+ * ```
+ */
 export const FormOtpVerification = ({
     label,
     id,

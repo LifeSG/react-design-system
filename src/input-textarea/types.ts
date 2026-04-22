@@ -21,7 +21,7 @@ export interface TextareaProps
         | undefined;
 }
 
-/** To be exposed for Form component inheritance */
+/** Subset of TextareaProps without `error`, for Form component inheritance. */
 export type TextareaPartialProps = Omit<TextareaProps, "error">;
 
 export type TextareaRef = React.Ref<HTMLTextAreaElement>;

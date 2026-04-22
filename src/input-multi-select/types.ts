@@ -51,7 +51,7 @@ export interface InputMultiSelectProps<T, V>
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
 }
 
-/** To be exposed for Form component inheritance */
+/** Subset of InputMultiSelectProps without `error`, for Form component inheritance. */
 export type InputMultiSelectPartialProps<T, V> = Omit<
     InputMultiSelectProps<T, V>,
     "error"

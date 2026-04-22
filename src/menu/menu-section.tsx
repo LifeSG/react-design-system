@@ -3,6 +3,17 @@ import { SimpleIdGenerator } from "../util";
 import { Label, Section } from "./menu-section.styles";
 import { MenuSectionProps } from "./types";
 
+/**
+ * A labeled group of items within a `Menu.Content`.
+ *
+ * Optionally renders a divider above the section. Use to visually separate related menu actions.
+ * @example
+ * ```tsx
+ * <Menu.Section label="Account">
+ *     <Menu.Item label="Profile" />
+ * </Menu.Section>
+ * ```
+ */
 export const MenuSection = ({
     children,
     label,

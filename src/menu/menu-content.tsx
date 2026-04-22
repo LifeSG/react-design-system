@@ -13,6 +13,18 @@ const getFocusables = (container: HTMLElement) => {
     ).filter((el) => !el.hasAttribute("disabled"));
 };
 
+/**
+ * The scrollable panel that contains all items of a `Menu`.
+ *
+ * Handles keyboard navigation (arrow keys) across focusable children. Pass directly as the
+ * `menuContent` prop of `Menu` and compose it with `Menu.Section`, `Menu.Item`, and `Menu.Link`.
+ * @example
+ * ```tsx
+ * <Menu.Content>
+ *     <Menu.Item label="Action" onClick={handleClick} />
+ * </Menu.Content>
+ * ```
+ */
 export const MenuContent = ({
     children,
     "data-testid": testId = "menu-content",

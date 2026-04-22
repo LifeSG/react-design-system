@@ -1,10 +1,15 @@
 import { ModalProps } from "../modal";
 import { Insets } from "../shared/types";
 
+/** Imperative handle for controlling the FullscreenImageCarousel programmatically. */
 export interface FullscreenImageCarouselRef {
+    /** The zero-based index of the currently visible carousel item. */
     currentItemIndex: number;
+    /** Navigates directly to the item at the given zero-based index. */
     setCurrentItem: (currentItemIndex: number) => void;
+    /** Navigates to the previous carousel item. */
     goToPrevItem: () => void;
+    /** Navigates to the next carousel item. */
     goToNextItem: () => void;
 }
 

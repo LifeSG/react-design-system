@@ -8,11 +8,16 @@ export type { Variant as CalendarVariant } from "../shared/internal-calendar/typ
 interface CalendarBaseProps extends CommonCalendarProps {
     /** CSS class name for custom styling. */
     className?: string | undefined;
-    /** Test identifier for automated testing. */
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
     /** Unique identifier for the component. */
     id?: string | undefined;
-    /** Specifies if the component should have a border around it. Values `no-border` | `bordered` */
+    /**
+     * Controls the visual border style of the calendar.
+     * - `"no-border"`: Displays without a surrounding border
+     * - `"bordered"`: Displays with a surrounding border
+     * @default "bordered"
+     */
     styleType?: "no-border" | "bordered" | undefined;
     /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
     onHover?: ((value: string) => void) | undefined;

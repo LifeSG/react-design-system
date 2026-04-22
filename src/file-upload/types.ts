@@ -2,6 +2,7 @@
  * Props for an individual file item displayed in the upload list.
  */
 export interface FileItemProps {
+    /** The unique identifier of the file. */
     id: string;
     /** The name of the file */
     name: string;
@@ -33,10 +34,15 @@ export interface FileInputProps {
     capture?: boolean | "user" | "environment" | undefined; // https://www.w3.org/TR/html-media-capture/#the-capture-attribute
     /** Specifies if user is allowed to select more than one file. */
     multiple?: boolean | undefined;
+    /** Disables the file input when `true`. */
     disabled?: boolean | undefined;
+    /** The unique identifier for the element. */
     id?: string | undefined;
+    /** CSS class name for custom styling. */
     className?: string | undefined;
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
+    /** The name of the file input field, used in form submissions. */
     name?: string | undefined;
 }
 
@@ -62,6 +68,7 @@ export interface FileInputProps {
 export interface FileUploadProps extends FileInputProps {
     /** Component specific */
     title?: string | JSX.Element | undefined;
+    /** The description text or element displayed below the title. */
     description?: string | JSX.Element | undefined;
     /** The style type for the component. Values "bordered" | "no-border" */
     styleType?: FileUploadStyle | undefined;

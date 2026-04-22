@@ -6,6 +6,16 @@ export interface TabItemComponentProps extends TabItemProps {
     index?: number | undefined; // injected
 }
 
+/**
+ * The content panel for a single tab within a `Tab` component.
+ *
+ * Renders its children only when its tab is active. The `index` prop is injected automatically
+ * by the parent `Tab` — do not set it manually.
+ * @example
+ * ```tsx
+ * <Tab.Item>Tab content here</Tab.Item>
+ * ```
+ */
 export const TabItem = ({
     index,
     children,

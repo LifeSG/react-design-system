@@ -18,6 +18,12 @@ import { VisuallyHidden } from "src/shared/accessibility";
 
 /**
  * Represents a single step or item within a Timeline.
+ * @example
+ * ```tsx
+ * <Timeline
+ *     items={[{ title: "Step 1", content: "Description" }]}
+ * />
+ * ```
  */
 export const Timeline = ({
     items,

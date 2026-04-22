@@ -12,6 +12,17 @@ import {
 } from "./sidenav-drawer-item.styles";
 import { SidenavDrawerItemProps } from "./types";
 
+/**
+ * A collapsible item inside a `Sidenav.Item` drawer.
+ *
+ * Renders an expandable row with a title that reveals nested `Sidenav.DrawerSubitem` children.
+ * @example
+ * ```tsx
+ * <Sidenav.DrawerItem title="Reports">
+ *     <Sidenav.DrawerSubitem id="r1" title="Monthly" />
+ * </Sidenav.DrawerItem>
+ * ```
+ */
 export const SidenavDrawerItem = ({
     id,
     title,

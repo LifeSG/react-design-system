@@ -47,4 +47,17 @@ const Component = (
     );
 };
 
+/**
+ * A form field that wraps `MaskedInput` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.MaskedInput` to present a masked text input (e.g. NRIC, card number) within a form.
+ * @example
+ * ```tsx
+ * <Form.MaskedInput
+ *     label="NRIC"
+ *     maskRange={[0, 4]}
+ *     errorMessage={errors.nric}
+ * />
+ * ```
+ */
 export const FormMaskedInput = React.forwardRef(Component);

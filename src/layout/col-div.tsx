@@ -125,4 +125,13 @@ const Component = (
     return <StyledDiv ref={ref} {...getStyleProps()} {...otherProps} />;
 };
 
+/**
+ * A responsive column `<div>` that spans a configurable number of grid columns at each breakpoint.
+ *
+ * Use as `Layout.ColDiv` to position elements within a 12-column responsive grid.
+ * @example
+ * ```tsx
+ * <Layout.ColDiv lgCols={6}>content</Layout.ColDiv>
+ * ```
+ */
 export const ColDiv = React.forwardRef(Component);

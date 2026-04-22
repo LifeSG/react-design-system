@@ -4,6 +4,10 @@ import { TagProps } from "./types";
 
 /**
  * A static or interactive element that is used to communicate selections, statuses and categories.
+ * @example
+ * ```tsx
+ * <Tag colorType="blue">Category</Tag>
+ * ```
  */
 export const Tag = ({
     type,

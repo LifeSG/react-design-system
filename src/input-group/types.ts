@@ -100,5 +100,5 @@ export interface InputGroupProps<T, V> extends InputProps {
     onBlur?: ((event?: React.FocusEvent<HTMLInputElement>) => void) | undefined;
 }
 
-/** To be exposed for Form component inheritance */
+/** Subset of InputGroupProps without `error`, for Form component inheritance. */
 export type InputGroupPartialProps<T, V> = Omit<InputGroupProps<T, V>, "error">;

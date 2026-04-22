@@ -20,6 +20,10 @@ import { DateNavigatorProps } from "./types";
 /**
  * Displays the current date with left/right arrow navigation and an optional calendar dropdown.
  * Supports day and week view modes.
+ * @example
+ * ```tsx
+ * <DateNavigator selectedDate="2024-01-15" onLeftArrowClick={onPrev} onRightArrowClick={onNext} />
+ * ```
  */
 export const DateNavigator = ({
     selectedDate,

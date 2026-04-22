@@ -34,14 +34,19 @@ export interface DateInputProps extends CommonCalendarProps {
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
 
     // Input-specific Attributes
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
+    /** When true, the input is read-only and cannot be modified by the user. @default false */
     readOnly?: boolean | undefined;
+    /** When true, suppresses the on-screen keyboard on mobile devices. @default false */
     hideInputKeyboard?: boolean | undefined;
     /**
      * The value of the date input in "YYYY-MM-DD" or "YYYY-M-D" string format.
      */
     value?: string | undefined;
+    /** When true, renders the input in an error state. @default false */
     error?: boolean | undefined;
+    /** When true, disables the input and prevents user interaction. @default false */
     disabled?: boolean | undefined;
     /**
      * Specifies if the "Done" and "Cancel" action buttons should be rendered.

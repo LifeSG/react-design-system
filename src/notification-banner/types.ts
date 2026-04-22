@@ -28,14 +28,18 @@ export interface NotificationBannerProps
     actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
 }
 
+/** Internal wrapper that attaches a forwarded ref to NotificationBannerProps. */
 export interface NotificationBannerWithForwardedRefProps
     extends NotificationBannerProps {
+    /** The forwarded ref attached to the root div element. */
     forwardedRef?: React.Ref<HTMLDivElement> | undefined;
 }
 
 export type ContentType = "text" | "link";
 
+/** Attributes for link-type content used in the notification banner. */
 export interface ContentLinkAttributes extends TypographyLinkProps {}
+/** Attributes for text-type content used in the notification banner. */
 export interface ContentTextAttributes extends TypographyProps {}
 
 /**

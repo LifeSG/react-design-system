@@ -32,6 +32,6 @@ export interface BreadcrumbProps {
     className?: string | undefined;
     /** Unique identifier for the component. */
     id?: string | undefined;
-    /** Test identifier for automated testing. */
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
 }

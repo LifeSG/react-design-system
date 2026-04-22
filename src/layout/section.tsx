@@ -25,6 +25,16 @@ const Component = (
     );
 };
 
+/**
+ * A full-width semantic `<section>` element used as a horizontal band in page layout.
+ *
+ * Use as `Layout.Section` to define distinct vertical regions of a page. Supports optional
+ * full-width stretching beyond the container.
+ * @example
+ * ```tsx
+ * <Layout.Section>content</Layout.Section>
+ * ```
+ */
 export const Section = React.forwardRef(Component);
 
 interface StyleProps {

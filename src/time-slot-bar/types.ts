@@ -6,6 +6,9 @@ export type Direction = "right" | "left";
 
 export type TimeSlotBarVariant = "minified" | "default";
 
+/**
+ * Ref handle for the TimeSlotBar component providing imperative scroll control.
+ */
 export interface TimeSlotBarRef {
     /** Resets the scroll position to the initialScrollTime if provided */
     resetScroll: () => void;

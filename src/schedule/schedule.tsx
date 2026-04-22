@@ -24,6 +24,14 @@ import {
 
 /**
  * Represents a service or resource entity with its associated time slots.
+ * @example
+ * ```tsx
+ * <Schedule
+ *     id="schedule"
+ *     date="2024-01-15"
+ *     serviceData={services}
+ * />
+ * ```
  */
 export const Schedule = ({
     id,

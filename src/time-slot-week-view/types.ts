@@ -20,8 +20,11 @@ import { TimeSlot } from "../time-slot-bar/types";
  */
 export interface TimeSlotWeekViewProps extends CommonCalendarProps {
     // Basic component props
+    /** Additional CSS class names applied to the root element. */
     className?: string | undefined;
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
+    /** Unique HTML identifier for the root element. */
     id?: string | undefined;
 
     /** The value of the selected date in YYYY-MM-DD format */

@@ -4,6 +4,19 @@ import { FormWrapper } from "./form-wrapper";
 import { FormInputSelectProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 
+/**
+ * A form field that wraps `InputSelect` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.Select` to present a dropdown selector within a form.
+ * @example
+ * ```tsx
+ * <Form.Select
+ *     label="Country"
+ *     options={countries}
+ *     onSelectOption={handleSelect}
+ * />
+ * ```
+ */
 export const FormSelect = <T, V>({
     label,
     errorMessage,

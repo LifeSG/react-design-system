@@ -99,6 +99,13 @@ TabBase.displayName = "Tab";
 // =============================================================================
 /**
  * Used to organise content into multiple panes. Users can toggle between the different tabs to view different categories of information.
+ * @example
+ * ```tsx
+ * <Tab initialActive={0} onTabClick={handleTabClick}>
+ *     <Tab.Item title="First">First tab content</Tab.Item>
+ *     <Tab.Item title="Second">Second tab content</Tab.Item>
+ * </Tab>
+ * ```
  */
 export const Tab = Object.assign(TabBase, {
     Item: TabItem,

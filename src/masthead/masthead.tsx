@@ -7,6 +7,10 @@ import { MastheadProps } from "./types";
 
 /**
  * A mandatory banner displayed at the top of .gov.sg digital service pages.
+ * @example
+ * ```tsx
+ * <Masthead />
+ * ```
  */
 export const Masthead = ({ stretch = false }: MastheadProps): JSX.Element => {
     const theme = useContext(ThemeContext);

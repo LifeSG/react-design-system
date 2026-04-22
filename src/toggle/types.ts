@@ -48,15 +48,21 @@ export interface ToggleProps
               tablet?: number | undefined;
           }
         | undefined;
-    // /** The description label displayed below the main label */
+    /** Secondary description label displayed below the main label. */
     subLabel?: (() => JSX.Element) | JSX.Element | string | undefined;
+    /** When `true`, the toggle is disabled and cannot be interacted with. */
     disabled?: boolean | undefined;
     /** Specifies if the error display should be present */
     error?: boolean | undefined;
+    /** Additional CSS class names applied to the root element. */
     className?: string | undefined;
+    /** Name attribute used when the toggle is part of a form. */
     name?: string | undefined;
+    /** Unique HTML identifier for the root element. */
     id?: string | undefined;
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
+    /** Called when the checked state changes. */
     onChange?:
         | ((event: React.ChangeEvent<HTMLInputElement>) => void)
         | undefined;
@@ -64,12 +70,17 @@ export interface ToggleProps
     compositeSection?: ToggleCompositeSectionProps | undefined;
     /** Specifies if the remove button should be displayed */
     removable?: boolean | undefined;
+    /** Called when the remove button is clicked. */
     onRemove?: (() => void) | undefined;
     /** Changes min-width to fit content */
     useContentWidth?: boolean | undefined;
 }
 
+/**
+ * Props for the collapsible subsection rendered beneath a Toggle.
+ */
 export interface ToggleCompositeSectionProps {
+    /** The content of the subsection. */
     children: React.ReactNode;
     /** Specifies if the subsection is collapsible */
     collapsible?: boolean | undefined;

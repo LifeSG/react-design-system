@@ -66,7 +66,7 @@ export interface InputRangeSelectProps<T, V>
     renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
 }
 
-/** To be exposed for Form component inheritance */
+/** Subset of InputRangeSelectProps without `error`, for Form component inheritance. */
 export type InputRangeSelectPartialProps<T, V> = Omit<
     InputRangeSelectProps<T, V>,
     "error"

@@ -22,6 +22,13 @@ import { SelectHistogramProps } from "./types";
 
 /**
  * Subset of HistogramSlider props passed to the embedded histogram slider.
+ * @example
+ * ```tsx
+ * <SelectHistogram
+ *     histogramSlider={{ interval: 10, bins: [{ minValue: 0, count: 5 }] }}
+ *     onChange={handleChange}
+ * />
+ * ```
  */
 export const SelectHistogram = ({
     alignment = "left",

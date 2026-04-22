@@ -37,7 +37,16 @@ const TileComponent = (
 // =============================================================================
 // EXPORTABLE
 // =============================================================================
-/** @deprecated consider switching to `Layout.ColDiv` to manage grids */
+/**
+ * @deprecated consider switching to `Layout.ColDiv` to manage grids
+ * @example
+ * ```tsx
+ * <Masonry.Grid>
+ *   <Masonry.Tile>item 1</Masonry.Tile>
+ *   <Masonry.Tile>item 2</Masonry.Tile>
+ * </Masonry.Grid>
+ * ```
+ */
 export const Masonry = {
     Grid: React.forwardRef(GridComponent),
     Tile: React.forwardRef(TileComponent),

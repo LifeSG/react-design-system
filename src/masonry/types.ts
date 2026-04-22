@@ -12,13 +12,17 @@ export interface ColumnCountAttribute {
 
 /** @deprecated consider switching to `Layout.ColDiv` to manage grids */
 export interface MasonryGridProps extends React.HTMLAttributes<HTMLDivElement> {
+    /** Column count configuration for each breakpoint. */
     numOfCols: ColumnCountAttribute;
+    /** The tile elements to render inside the grid. */
     children: JSX.Element | JSX.Element[];
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
 }
 
 /** @deprecated consider switching to `Layout.ColDiv` to manage grids */
 export interface MasonryTileProps extends React.HTMLAttributes<HTMLDivElement> {
+    /** The content to render inside the tile. */
     children: JSX.Element;
     /** the column to start on desktop resolutions */
     startLg?: number | undefined;

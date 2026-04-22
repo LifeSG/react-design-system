@@ -63,4 +63,17 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
     );
 };
 
+/**
+ * A form field that wraps `Input` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.Input` to present a text input within a form. Forwards a ref to the underlying input element.
+ * @example
+ * ```tsx
+ * <Form.Input
+ *     label="Email address"
+ *     placeholder="Enter email"
+ *     errorMessage={errors.email}
+ * />
+ * ```
+ */
 export const FormInput = React.forwardRef(Component);

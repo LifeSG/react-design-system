@@ -4,6 +4,19 @@ import { FormWrapper } from "./form-wrapper";
 import { FormInputRangeSelectProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 
+/**
+ * A form field that wraps `InputRangeSelect` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.RangeSelect` to present a two-handle range selector within a form.
+ * @example
+ * ```tsx
+ * <Form.RangeSelect
+ *     label="Price range"
+ *     options={options}
+ *     errorMessage={errors.range}
+ * />
+ * ```
+ */
 export const FormRangeSelect = <T, V>({
     label,
     errorMessage,

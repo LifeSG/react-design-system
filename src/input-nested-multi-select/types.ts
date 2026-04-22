@@ -35,7 +35,7 @@ export interface InputNestedMultiSelectProps<V1, V2, V3>
     customLabels?: DropdownCustomLabelProps | undefined;
 }
 
-/** To be exposed for Form component inheritance */
+/** Subset of InputNestedMultiSelectProps without `error`, for Form inheritance. */
 export type InputNestedMultiSelectPartialProps<V1, V2, V3> = Omit<
     InputNestedMultiSelectProps<V1, V2, V3>,
     "error"

@@ -44,10 +44,16 @@ export interface SmartAppBannerProps {
     onClick?: (() => void) | undefined;
 }
 
+/** Content configuration for the SmartAppBanner component. */
 export interface SmartAppBannerContentProps {
+    /** The app name or title displayed in the banner. */
     title: string;
+    /** The label text for the action button. */
     buttonLabel: string;
+    /** Accessible label for the action button. */
     buttonAriaLabel: string;
+    /** Optional subtitle or description text. */
     message?: string | undefined;
+    /** The star rating to display (0–5). */
     numberOfStars: number;
 }

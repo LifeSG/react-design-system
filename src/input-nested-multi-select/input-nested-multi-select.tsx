@@ -22,6 +22,13 @@ import { InputNestedMultiSelectProps } from "./types";
 
 /**
  * A multi-select dropdown that supports hierarchical (nested) option categories up to 3 levels deep.
+ * @example
+ * ```tsx
+ * <InputNestedMultiSelect
+ *   options={[{ label: "Category", subItems: [{ label: "Option A", value: "a" }] }]}
+ *   onSelectOptions={(keyPaths) => console.log(keyPaths)}
+ * />
+ * ```
  */
 export const InputNestedMultiSelect = <V1, V2, V3>({
     placeholder = "Select",

@@ -7,6 +7,17 @@ import { VerificationSection } from "./verification-section";
 
 /**
  * Base props shared by all OTP verification variants.
+ * @example
+ * ```tsx
+ * <OtpVerification
+ *     onSendOtp={handleSendOtp}
+ *     onVerifyOtp={handleVerifyOtp}
+ *     otpValue={otpValue}
+ *     onOtpChange={setOtpValue}
+ *     otpState={otpState}
+ *     onOtpStateChange={setOtpState}
+ * />
+ * ```
  */
 export const OtpVerification = (props: OtpVerificationProps) => {
     // =============================================================================

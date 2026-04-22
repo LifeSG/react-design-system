@@ -29,7 +29,9 @@ export interface DateRangeInputProps extends CommonCalendarProps {
     id?: string | undefined;
 
     // Input-specific Attributes
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
+    /** When true, suppresses the on-screen keyboard on mobile devices. @default false */
     hideInputKeyboard?: boolean | undefined;
     /**
      * The value of the start date input in "YYYY-MM-DD" or "YYYY-M-D" string format.
@@ -39,8 +41,11 @@ export interface DateRangeInputProps extends CommonCalendarProps {
      * The value of the end date input in "YYYY-MM-DD" or "YYYY-M-D" string format.
      */
     valueEnd?: string | undefined;
+    /** When true, renders the inputs in an error state. @default false */
     error?: boolean | undefined;
+    /** When true, disables the inputs and prevents user interaction. @default false */
     disabled?: boolean | undefined;
+    /** When true, the inputs are read-only and cannot be modified by the user. @default false */
     readOnly?: boolean | undefined;
     /** Indicate calendar variant from the date input component. */
     variant?: Exclude<Variant, "single"> | undefined;

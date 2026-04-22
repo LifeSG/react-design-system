@@ -4,6 +4,18 @@ import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormTimeRangePickerProps } from "./types";
 
+/**
+ * A form field that wraps `TimeRangePicker` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.TimeRangePicker` to present a start/end time range picker within a form.
+ * @example
+ * ```tsx
+ * <Form.TimeRangePicker
+ *     label="Operating hours"
+ *     errorMessage={errors.hours}
+ * />
+ * ```
+ */
 export const FormTimeRangePicker = ({
     label,
     errorMessage,

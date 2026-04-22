@@ -6,6 +6,12 @@ import { ModalProps } from "./types";
 
 /**
  * A window or pop up that displays over other page content and provides information or actions.
+ * @example
+ * ```tsx
+ * <Modal show={isOpen} onOverlayClick={() => setIsOpen(false)}>
+ *     <div>Modal content</div>
+ * </Modal>
+ * ```
  */
 export const Modal = ({
     id = "modal",

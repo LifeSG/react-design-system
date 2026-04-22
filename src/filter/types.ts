@@ -6,13 +6,19 @@ import { Insets } from "../shared/types";
 export type Mode = "default" | "mobile";
 
 interface FilterSidebarCustomLabelProps {
+    /** Overrides the sidebar header title text. */
     headerTitle?: string | undefined;
+    /** Overrides the clear button label text. */
     clearButtonLabel?: string | undefined;
 }
 interface FilterModalCustomLabelProps {
+    /** Overrides the modal header title text. */
     headerTitle?: string | undefined;
+    /** Overrides the toggle filter button label text (mobile). */
     toggleFilterButtonLabel?: string | undefined;
+    /** Overrides the done button label text (mobile). */
     doneButtonLabel?: string | undefined;
+    /** Overrides the clear button label text. */
     clearButtonLabel?: string | undefined;
 }
 
@@ -158,8 +164,11 @@ export interface FilterPageProps {
  * @keywords filter-checkbox, option, checkbox, selection
  */
 export interface FilterItemCheckboxOptionProps {
+    /** The value submitted when this option is selected. */
     value: any;
+    /** The display text for the checkbox option. */
     label: string;
+    /** Nested child options for multi-level filter hierarchies. */
     options?: FilterItemCheckboxOptionProps[] | undefined;
 }
 

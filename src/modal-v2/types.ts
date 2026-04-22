@@ -63,7 +63,7 @@ export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     show: boolean;
     /** The content to render inside the modal. */
     children: React.ReactNode;
-    /** Animation direction of appearance and dismissal. Values: "top" | "bottom" | "left" | "right" */
+    /** Animation direction of appearance and dismissal. Values: "top" | "bottom" | "left" | "right" @default "bottom" */
     animationFrom?: ModalAnimationDirection | undefined;
     /** Toggles whether the Modal can be dismissed by clicking on the overlay. @default true */
     enableOverlayClick?: boolean | undefined;
@@ -75,8 +75,8 @@ export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     onClose?: (() => void) | undefined;
     /** Callback when the overlay outside of the modal is clicked. Triggered if `enableOverlayClick` is true. */
     onOverlayClick?: (() => void) | undefined;
-    /** Dismiss keyboard to keep modal in fullscreen */
+    /** Dismiss keyboard to keep modal in fullscreen @default true */
     dismissKeyboardOnShow?: boolean | undefined;
-    /** Disable initial focus on the modal when it is shown */
+    /** Disable initial focus on the modal when it is shown @default false */
     disableInitialFocus?: boolean | undefined;
 }

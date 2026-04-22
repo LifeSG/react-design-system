@@ -105,6 +105,10 @@ SmallComponent.displayName = "ButtonWithIcon.Small";
  * The primary call to action component with an icon.
  *
  * Extends `ButtonProps` with an icon slot that can be positioned on the left or right of the label.
+ * @example
+ * ```tsx
+ * <ButtonWithIcon.Default icon={<PlusIcon />}>Add item</ButtonWithIcon.Default>
+ * ```
  */
 export const ButtonWithIcon = {
     Default: React.forwardRef(DefaultComponent),

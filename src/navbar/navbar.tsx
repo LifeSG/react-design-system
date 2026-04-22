@@ -344,5 +344,9 @@ const Component = <T,>(
 
 /**
  * A standard navigation item rendered as a link, optionally with sub-menu items.
+ * @example
+ * ```tsx
+ * <Navbar items={navItems} selectedId="home" onItemClick={handleItemClick} />
+ * ```
  */
 export const Navbar = forwardRef(Component);

@@ -112,12 +112,12 @@ export type OtpVerificationProps =
     | EmailOtpVerificationProps
     | PhoneOtpVerificationProps;
 
-// Form wrapper props for email-based OTP verification
+/** Form-wrapped props for the email-based OTP verification variant. */
 export interface FormEmailOtpVerificationProps
     extends EmailOtpVerificationProps,
         Omit<BaseFormElementProps, "errorMessage"> {}
 
-// Form wrapper props for phone-based OTP verification
+/** Form-wrapped props for the phone-number-based OTP verification variant. */
 export interface FormPhoneOtpVerificationProps
     extends PhoneOtpVerificationProps,
         Omit<BaseFormElementProps, "errorMessage"> {}

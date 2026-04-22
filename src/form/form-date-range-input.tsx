@@ -4,6 +4,18 @@ import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormDateRangeInputProps } from "./types";
 
+/**
+ * A form field that wraps `DateRangeInput` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.DateRangeInput` to present a date range picker within a form.
+ * @example
+ * ```tsx
+ * <Form.DateRangeInput
+ *     label="Travel dates"
+ *     errorMessage={errors.dates}
+ * />
+ * ```
+ */
 export const FormDateRangeInput = ({
     label,
     errorMessage,

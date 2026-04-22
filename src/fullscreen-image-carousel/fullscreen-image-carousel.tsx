@@ -52,6 +52,10 @@ import { useStateCallback } from "../shared/hooks";
 
 /**
  * An overlay that displays images in a carousel and offers the ability to zoom into the current image.
+ * @example
+ * ```tsx
+ * <FullscreenImageCarousel items={images} show={isOpen} onClose={() => setIsOpen(false)} />
+ * ```
  */
 export const Component = (
     {

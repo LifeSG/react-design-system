@@ -58,8 +58,11 @@ export interface InputRangeSliderProps extends BaseSliderProps {
     ariaLabels?: string[] | undefined;
     /** Accessible descriptions for each thumb, one per thumb in order. */
     ariaDescriptions?: string[] | undefined;
+    /** Marks the slider as having an invalid value for assistive technology. */
     "aria-invalid"?: boolean | undefined;
+    /** ID of an external element that labels the slider group (WAI-ARIA). */
     "aria-labelledby"?: string | undefined;
+    /** ID of an external element that describes the slider group (WAI-ARIA). */
     "aria-describedby"?: string | undefined;
     /** Called on every selection change */
     onChange?: ((value: number[]) => void) | undefined;

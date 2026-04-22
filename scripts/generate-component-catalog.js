@@ -154,9 +154,9 @@ function extractKeywordsFromJsDoc(raw) {
  */
 function extractSourceMetadata(moduleDir, moduleName) {
     const candidates = [
-        path.join(moduleDir, "types.ts"),
         path.join(moduleDir, moduleName + ".tsx"),
         path.join(moduleDir, moduleName + ".ts"),
+        path.join(moduleDir, "types.ts"),
     ];
     for (const filePath of candidates) {
         const text = readFileSafe(filePath);

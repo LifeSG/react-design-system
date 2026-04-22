@@ -24,6 +24,16 @@ import {
 import { SidenavItemProps } from "./types";
 import { useResizeDetector } from "react-resize-detector";
 
+/**
+ * A top-level navigation item within a `Sidenav`.
+ *
+ * Renders an icon and title button that, when clicked, opens a floating desktop drawer
+ * populated by `Sidenav.DrawerItem` children.
+ * @example
+ * ```tsx
+ * <Sidenav.Item title="Dashboard" icon={<DashboardIcon />} />
+ * ```
+ */
 export const SidenavItem = ({
     children,
     icon,

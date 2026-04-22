@@ -57,7 +57,10 @@ export interface PaginationProps {
     onPageSizeChange?: ((page: number, pageSize: number) => void) | undefined;
 }
 
+/** A single option in the page-size dropdown. */
 export interface PageSizeItemProps {
+    /** The numeric page size value. */
     value: number;
+    /** The display label shown in the dropdown. */
     label: string;
 }

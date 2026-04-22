@@ -53,7 +53,7 @@ export interface NavItemCommonProps<T> extends TypographyLinkProps {
 export interface NavItemsProps<T> {
     /** The navigation items for the desktop viewport. */
     desktop: NavItemProps<T>[];
-    /* The items for mobile drawer. Takes desktop if not specified */
+    /** The navigation items for the mobile drawer. Defaults to desktop items if not specified. */
     mobile?: NavItemProps<T>[] | undefined;
 }
 

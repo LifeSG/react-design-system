@@ -14,6 +14,12 @@ import { ModalV2Props } from "./types";
 
 /**
  * The styled card container within a ModalV2, wrapping the modal's visual surface.
+ * @example
+ * ```tsx
+ * <ModalV2 show={isOpen} onClose={() => setIsOpen(false)}>
+ *     <div>Modal content</div>
+ * </ModalV2>
+ * ```
  */
 export const ModalV2 = ({
     id,

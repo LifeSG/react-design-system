@@ -18,6 +18,13 @@ import { InputSelectProps } from "./types";
 
 /**
  * Options and loading state props shared across select components.
+ * @example
+ * ```tsx
+ * <InputSelect
+ *   options={[{ value: "a", label: "Option A" }, { value: "b", label: "Option B" }]}
+ *   onSelectOption={(opt) => console.log(opt)}
+ * />
+ * ```
  */
 export const InputSelect = <T, V>({
     selectedOption,

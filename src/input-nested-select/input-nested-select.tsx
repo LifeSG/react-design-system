@@ -36,6 +36,13 @@ interface SelectedItemType<V1, V2, V3> {
 
 /**
  * Options props for nested select, replacing the flat options list with a hierarchical one.
+ * @example
+ * ```tsx
+ * <InputNestedSelect
+ *   options={[{ label: "Category", subItems: [{ label: "Option A", value: "a" }] }]}
+ *   onSelectOption={(keyPath) => console.log(keyPath)}
+ * />
+ * ```
  */
 export const InputNestedSelect = <V1, V2, V3>({
     placeholder = "Select",

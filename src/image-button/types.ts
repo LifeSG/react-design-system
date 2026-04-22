@@ -24,5 +24,6 @@ export interface ImageButtonProps
     selected?: boolean | undefined;
     /** Shows the error border state when `true`. */
     error?: boolean | undefined;
+    /** Keeps the button in the tab order and focusable when disabled. @default false */
     focusableWhenDisabled?: boolean | undefined;
 }

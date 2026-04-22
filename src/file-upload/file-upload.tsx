@@ -18,6 +18,10 @@ import { FileItemProps, FileUploadProps } from "./types";
 
 /**
  * Props for an individual file item displayed in the upload list.
+ * @example
+ * ```tsx
+ * <FileUpload fileItems={files} onChange={handleChange} onDelete={handleDelete} />
+ * ```
  */
 export const FileUpload = ({
     styleType = "bordered",

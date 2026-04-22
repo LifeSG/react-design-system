@@ -4,6 +4,18 @@ import { FormWrapper } from "./form-wrapper";
 import { FormDateInputProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 
+/**
+ * A form field that wraps `DateInput` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.DateInput` to present a date picker within a form.
+ * @example
+ * ```tsx
+ * <Form.DateInput
+ *     label="Date of birth"
+ *     errorMessage={errors.dob}
+ * />
+ * ```
+ */
 export const FormDateInput = ({
     label,
     errorMessage,

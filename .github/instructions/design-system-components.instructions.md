@@ -1,227 +1,148 @@
 ---
-description: "Component catalog and usage rules for @lifesg/react-design-system"
+description: "Component catalog and usage rules for @lifesg/react-design-system — consult foundation tokens first, then the component catalog, before writing any custom UI code."
 applyTo: "**/*.{tsx,ts,jsx,js}"
 ---
 
 This project uses **@lifesg/react-design-system** and **@lifesg/react-icons**.
 
-## Step 1 — Use foundations first
+When writing UI code, follow these steps in order:
 
-Before writing any custom styles, use design system foundation tokens via **styled-components**. Never use inline styles, plain CSS, hardcoded hex values, or raw px/rem sizes.
+1. **Foundation tokens first** — use `Colour`, `Spacing`, `MediaQuery` from the design system; no raw hex, px, or rem unless a spacing token doesn't exist.
+2. **Check the component catalog** — read `component-catalog.json` to find the right component and import path before writing any custom UI.
+3. **File structure** — page components in `src/pages/`; everything else in `src/components/`.
+4. **Page layout** — always wrap sections in `Layout.Section` + `Layout.Container`.
+5. **Typography** — use `Typography.*` components; never raw `<h1>`, `<p>`, or `<a>` tags.
+6. **Icons** — use `@lifesg/react-icons`;
 
-### Typography
+---
 
-```tsx
-import { Typography } from "@lifesg/react-design-system/typography";
-// Headings: HeadingXXL HeadingXL HeadingLG HeadingMD HeadingSM HeadingXS
-<Typography.HeadingLG weight="semibold" />
-// Body: BodyBL BodyMD BodySM BodyXS
-<Typography.BodyMD />
-// Inline links (pass external for off-site)
-<Typography.LinkMD href="..." external />
-```
+## Step 1 — Foundation tokens first
 
-weight values: "regular" | "semibold" | "bold" | "light"
-
-### Responsive / media queries
+All styling goes through **styled-components** using design system tokens. No inline styles, hardcoded hex values, or raw px/rem sizes.
 
 ```tsx
+import { Colour, Spacing } from "@lifesg/react-design-system/theme";
 import { MediaQuery } from "@lifesg/react-design-system/media";
-const Wrapper = styled.div`
-    padding: 2rem;
+import styled from "styled-components";
+
+const Card = styled.div`
+    background: ${Colour["bg-strong"]};
+    border: 1px solid ${Colour["border-strong"]};
+    color: ${Colour["text-subtle"]};
+    padding: ${Spacing["spacing-16"]};
+    gap: ${Spacing["spacing-8"]};
+
     ${MediaQuery.MaxWidth.tablet} {
-        padding: 1rem;
+        padding: ${Spacing["spacing-12"]};
     }
 `;
 ```
 
-Breakpoints: mobileS, mobileM, mobileL, tablet, desktopM, desktopL, desktop4k.
+**Spacing tokens** (`Spacing` from `@lifesg/react-design-system/theme`):
 
-### Layout
+For layout-level gaps and padding there are also `"layout-xs"` through `"layout-xxxl"` keys.
+
+If a spacing value does not match any token (e.g. 6px, 10px), use `rem` instead (e.g. `0.375rem`, `0.625rem`).
+
+**Breakpoints** (`MediaQuery.MaxWidth` / `MediaQuery.MinWidth`): `mobileS`, `mobileM`, `mobileL`, `tablet`, `desktopM`, `desktopL`, `desktop4k`.
+
+---
+
+## Step 2 — Component catalog
+
+Read `node_modules/@lifesg/react-design-system/component-catalog.json` before writing any component code. Match `searchKeys` to your intent, then use the exact `importPath`. Never import from the package root.
+
+---
+
+## Step 3 — File structure
+
+Supporting files must **not** live in `src/pages/`. Keep only the page component in `src/pages/`; put everything else in `src/components/`.
+
+```
+src/
+├── pages/<feature>/
+│   └── index.tsx              # page component only
+└── components/<feature>/
+    ├── types.ts               # all interfaces and types
+    └── <feature>.styles.tsx   # all styled-components
+```
+
+-   Import types with `import type` from `src/components/<feature>/types`.
+-   Import styles by name from `src/components/<feature>/<feature>.styles`.
+-   Shared constants go in `src/components/<feature>/constants.ts`; page-only constants stay in `index.tsx`.
+
+---
+
+## Step 4 — Page layout
+
+Always use `Layout.Section` + `Layout.Container` for every structural section. Never use a plain `<div>` with a manual `max-width`.
 
 ```tsx
 import { Layout } from "@lifesg/react-design-system/layout";
+
 <Layout.Section>
+    {" "}
+    {/* full-width background band */}
     <Layout.Container>
-        <Layout.Content>...</Layout.Content>
+        {" "}
+        {/* constrains width + adds padding */}
+        ...
     </Layout.Container>
 </Layout.Section>;
 ```
 
-### Spacing
+---
 
-No spacing token. Use multiples of 0.5rem (8px grid). Prefer `gap` in flex/grid over margin on children.
+## Step 5 — Typography
+
+Never use raw HTML elements for text, links, or emphasis.
+
+| Instead of                | Use                                                                                 |
+| ------------------------- | ----------------------------------------------------------------------------------- |
+| `<a href="...">`          | `<Typography.LinkSM href="...">` (BL / MD / SM / XS to match surrounding text size) |
+| `<strong>text</strong>`   | `<Typography.BodySM weight="semibold" inline>`                                      |
+| `<h1>` … `<p>` … `<span>` | `Typography.HeadingLG`, `Typography.BodyBL`, etc.                                   |
+
+Add the `inline` prop when the element sits inside a paragraph to prevent block-level wrapping.
 
 ---
 
-## Step 2 — Use the component catalog
+## Step 6 — Icons
 
-Read `node_modules/@lifesg/react-design-system/component-catalog.json` before writing any component code.
+Icons come from **`@lifesg/react-icons`** — one component per file. The component name is the filename in PascalCase with an `Icon` suffix, e.g. `bin-fill` → `BinFillIcon`.
 
-**Rules:**
+When a button has an icon, use `ButtonWithIcon` (not `Button.Default` with a text prefix like `+`).
 
-1. Use the exact `importPath` from the catalog — never import from the package root.
-2. Prefer design system components over custom implementations.
-3. When unsure of exported names or props, read the `.d.ts` at `node_modules/@lifesg/react-design-system/<importPath>/index.d.ts` **before** using the component. Do not guess API shapes.
+```tsx
+import { ButtonWithIcon } from "@lifesg/react-design-system/button-with-icon";
+import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
+import { BinFillIcon } from "@lifesg/react-icons/bin-fill";
+
+<ButtonWithIcon.Default styleType="secondary" icon={<PlusCircleFillIcon />}>
+  Add item
+</ButtonWithIcon.Default>
+
+<ButtonWithIcon.Default styleType="link" danger icon={<BinFillIcon />}>
+  Remove
+</ButtonWithIcon.Default>
+```
+
+To find available icons, browse `node_modules/@lifesg/react-icons/*.d.ts`.
 
 ---
 
-## Step 3 — Verified component patterns
+## Step 7 — Pre-implementation checklist
 
-### Form fields
+Before writing any code, enumerate **every section** in the ticket scope and map each to a design system component. Do not skip sections marked "covered in a separate ticket" — render a visible placeholder instead.
 
-```tsx
-import { Form } from "@lifesg/react-design-system/form";
+Common sections to check:
 
-// Text input
-<Form.Input label="Full name" placeholder="e.g. Tan Ah Kow" />
-
-// Dropdown: always provide all four extractor props
-<Form.Select
-    options={OPTIONS}
-    selectedOption={OPTIONS.find((o) => o.value === value)}
-    onSelectOption={(option) => setValue(option.value)}
-    valueExtractor={(o) => o.value}
-    listExtractor={(o) => o.label}
-    displayValueExtractor={(o) => o.label}
-    placeholder="Select..."
-/>
-```
-
-**Do NOT** use `label.addon` when the design shows a standalone (i) icon beside a label. Use `PopoverInline` in a manual label row instead.
-
-### Popover (i) icon beside a label
-
-`PopoverInline` is self-contained: renders its own trigger icon, accepts `popoverContent` directly — no wrapper button needed.
-
-```tsx
-import { PopoverInline } from "@lifesg/react-design-system/popover-v2";
-import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
-
-const LabelRow = styled.div`
-    display: flex;
-    align-items: center;
-    gap: 0.375rem;
-    margin-bottom: 0.5rem;
-`;
-
-<LabelRow>
-    <Typography.BodyBL weight="semibold">Label text</Typography.BodyBL>
-    <PopoverInline
-        content={<ICircleFillIcon />}
-        popoverContent="Explanation shown in the popover."
-        position="top"
-    />
-</LabelRow>;
-{
-    /* Render input below with no label prop — the row above replaces it */
-}
-<Form.Input placeholder="..." />;
-```
-
-Note: `PopoverTrigger` (also from `popover-v2`) wraps a custom child element. Use `PopoverInline` for the (i) label pattern.
-
-### Alert with inline links and multiple paragraphs
-
-```tsx
-import { Alert } from "@lifesg/react-design-system/alert";
-
-<Alert type="info" showIcon>
-    <>
-        <Typography.BodyMD>
-            First paragraph with a{" "}
-            <Typography.LinkMD href="https://example.com" external>
-                link
-            </Typography.LinkMD>
-            .
-        </Typography.BodyMD>
-        <Typography.BodyMD style={{ marginTop: "0.75rem" }}>
-            Second paragraph with{" "}
-            <Typography.LinkMD href="https://example.com" external>
-                another link
-            </Typography.LinkMD>
-            .
-        </Typography.BodyMD>
-    </>
-</Alert>;
-```
-
-`type` values: "success" | "warning" | "error" | "info" | "description"
-
-### Step progress indicator
-
-```tsx
-import { ProgressIndicator } from "@lifesg/react-design-system/progress-indicator";
-// currentIndex is zero-based
-<ProgressIndicator steps={["Step 1", "Step 2", "Step 3"]} currentIndex={1} />;
-```
-
-### Radio buttons with description cards
-
-```tsx
-import { RadioButton } from "@lifesg/react-design-system/radio-button";
-
-const OptionCard = styled.label`
-    display: flex;
-    align-items: flex-start;
-    gap: 0.75rem;
-    padding: 0.75rem;
-    border: 1px solid #d1dce5;
-    border-radius: 6px;
-    cursor: pointer;
-    margin-bottom: 0.75rem;
-    &:hover {
-        border-color: #1c76d5;
-        background: #f5f9ff;
-    }
-`;
-
-<OptionCard htmlFor="option-id">
-    <RadioButton
-        id="option-id"
-        name="group"
-        value="sole"
-        checked={value === "sole"}
-        onChange={() => setValue("sole")}
-    />
-    <div>
-        <Typography.BodyBL weight="semibold">Option title</Typography.BodyBL>
-        <Typography.BodyMD>Option description.</Typography.BodyMD>
-    </div>
-</OptionCard>;
-```
-
----
-
-## Step 4 — Icons (@lifesg/react-icons)
-
-Each icon is a named export from its own sub-path. Always verify names by scanning `node_modules/@lifesg/react-icons/*.d.ts` — do not guess icon names.
-
-```tsx
-import { PencilFillIcon } from "@lifesg/react-icons/pencil-fill";
-import { DocPencilFillIcon } from "@lifesg/react-icons/doc-pencil-fill";
-import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
-import { LightbulbFillIcon } from "@lifesg/react-icons/lightbulb-fill";
-import { BookmarkFillIcon } from "@lifesg/react-icons/bookmark-fill";
-
-<PencilFillIcon width={20} height={20} />;
-```
-
-Confirmed sub-paths: `pencil`, `pencil-fill`, `pencil-stroke`, `pencil-stroke-fill`, `doc-pencil`, `doc-pencil-fill`, `lightbulb`, `lightbulb-fill`, `i-circle`, `i-circle-fill`, `bookmark`, `bookmark-fill`, `bell`, `bell-fill`.
-
----
-
-## Step 5 — File and folder structure
-
-Split any non-trivial page into a folder:
-
-```
-src/pages/<page-name>/
-    index.tsx   -- page component only; imports from ./styles and ./types
-    styles.tsx  -- all styled-components; no logic
-    types.ts    -- interfaces, constants, factory helpers; no JSX
-```
-
--   `styles.tsx`: imports only styled-components and design system foundation packages.
--   `types.ts`: zero design system imports — pure data shapes and constants.
--   `index.tsx`: imports everything from `./styles` and `./types` by name; no inline `styled` calls.
+| Section                                         | Component                                   |
+| ----------------------------------------------- | ------------------------------------------- |
+| Step / progress tracker                         | `ProgressIndicator`                         |
+| Item / record cards                             | `BoxContainer`                              |
+| Sub-sections inside a card (e.g. beneficiaries) | placeholder with `ButtonWithIcon`           |
+| Info / warning banners                          | `Alert` + `Typography.LinkSM` for any links |
+| Confirmation dialogs                            | `Modal` + `Modal.Box`                       |
+| Status notifications                            | `Toast`                                     |
+| Buttons with an icon                            | `ButtonWithIcon`                            |

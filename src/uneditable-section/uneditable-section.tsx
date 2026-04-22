@@ -11,6 +11,12 @@ import {
 
 /**
  * Props for a single uneditable item within UneditableSection.
+ * @example
+ * ```tsx
+ * <UneditableSection
+ *     items={[{ label: "Name", value: "John Doe" }]}
+ * />
+ * ```
  */
 export const UneditableSectionBase = ({
     items,

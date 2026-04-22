@@ -4,6 +4,18 @@ import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormTimepickerProps } from "./types";
 
+/**
+ * A form field that wraps `Timepicker` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.Timepicker` to present a time selection input within a form.
+ * @example
+ * ```tsx
+ * <Form.Timepicker
+ *     label="Appointment time"
+ *     errorMessage={errors.time}
+ * />
+ * ```
+ */
 export const FormTimepicker = ({
     label,
     errorMessage,

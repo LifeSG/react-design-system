@@ -17,6 +17,10 @@ import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 /**
  * Base props shared between all slider variants.
+ * @example
+ * ```tsx
+ * <InputRangeSlider value={[20, 80]} min={0} max={100} onChange={(v) => console.log(v)} />
+ * ```
  */
 export const InputRangeSlider = ({
     id,

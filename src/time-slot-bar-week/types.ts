@@ -23,8 +23,11 @@ export type TimeSlotCellsVariant = "flexible" | "fixed";
  */
 export interface TimeSlotBarWeekProps extends CommonCalendarProps {
     // Basic component props
+    /** Additional CSS class names applied to the root element. */
     className?: string | undefined;
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
+    /** Unique HTML identifier for the root element. */
     id?: string | undefined;
 
     /** Time slots to render */

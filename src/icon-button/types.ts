@@ -29,6 +29,7 @@ export interface IconButtonProps
      * @default "default"
      */
     sizeType?: SizeType;
+    /** Keeps the button in the tab order and focusable when disabled. @default false */
     focusableWhenDisabled?: boolean | undefined;
 }
 

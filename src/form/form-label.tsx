@@ -9,6 +9,15 @@ import {
 } from "./form-label.style";
 import { FormLabelProps } from "./types";
 
+/**
+ * A standalone label component for form fields, supporting a title, subtitle, error message, and popover addon.
+ *
+ * Use as `Form.Label` when you need a label outside of a standard form field wrapper.
+ * @example
+ * ```tsx
+ * <Form.Label id="field-label">Field label</Form.Label>
+ * ```
+ */
 export const FormLabel = ({
     id,
     children,

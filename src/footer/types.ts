@@ -2,15 +2,21 @@ import { TypographyLinkProps } from "../typography";
 
 type DisclaimerTextLinkProps = Omit<TypographyLinkProps, "children">;
 
+/** Link props overrides for the mandatory disclaimer links in the footer. */
 export interface DisclaimerLinks {
+    /** Custom link props for the Privacy Policy link. */
     privacy?: DisclaimerTextLinkProps | undefined;
+    /** Custom link props for the Terms of Use link. */
     termsOfUse?: DisclaimerTextLinkProps | undefined;
+    /** Custom link props for the Report Vulnerability link. */
     reportVulnerability?: DisclaimerTextLinkProps | undefined;
 }
 
+/** Props for an individual footer navigation link. */
 export interface FooterLinkProps<T = void> extends TypographyLinkProps {
     /** Any custom attributes you would like to pass to the link */
     "data-options"?: T | undefined;
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
 }
 
@@ -60,6 +66,7 @@ export interface FooterProps<T = void> {
     "data-testid"?: string | undefined;
     /** CSS class selector for the component. */
     className?: string | undefined;
+    /** Hides the logo when `true`. */
     hideLogo?: boolean | undefined;
 }
 

@@ -4,7 +4,12 @@ import { V2_Text } from "../v2_text/text";
 import { Arrow, Bubble, BubbleWrap } from "./tooltip.styles";
 import { TooltipPosition, TooltipProps } from "./types";
 
-/** @deprecated Use `PopoverV2` */
+/** @deprecated Use `PopoverV2`
+ * @example
+ * ```tsx
+ * <Tooltip visible={isHovered}>Tooltip text here</Tooltip>
+ * ```
+ */
 export const Tooltip = ({
     visible,
     position = "top",

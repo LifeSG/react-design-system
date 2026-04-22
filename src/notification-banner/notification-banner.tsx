@@ -171,6 +171,18 @@ const formatId = (componentName: string, id = "wrapper"): string => {
 // =============================================================================
 const Base = React.forwardRef(NBWithRef);
 (Base as NamedExoticComponent).displayName = "NotificationBanner";
+/**
+ * A dismissible banner for displaying important notices, alerts, or status messages.
+ *
+ * Supports icons, action buttons, expandable content height, sticky positioning, and
+ * click handlers. Use `NotificationBanner.Link` for styled inline links within the content.
+ * @example
+ * ```tsx
+ * <NotificationBanner dismissible onDismiss={() => setVisible(false)}>
+ *     Your session will expire in 5 minutes.
+ * </NotificationBanner>
+ * ```
+ */
 export const NotificationBanner = Object.assign(Base, {
     Link: NBLink,
 });

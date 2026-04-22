@@ -35,6 +35,10 @@ const TOAST_ICON_MAP = {
 
 /**
  * Configuration for the action button rendered within a Toast.
+ * @example
+ * ```tsx
+ * <Toast type="success" title="Saved" label="Your changes were saved." />
+ * ```
  */
 export const Toast = ({
     type = "success",

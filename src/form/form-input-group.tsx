@@ -66,4 +66,17 @@ const Component = <T, V>(
     );
 };
 
+/**
+ * A form field that wraps `InputGroup` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.InputGroup` to present a combination input (e.g. prefix/suffix) within a form.
+ * @example
+ * ```tsx
+ * <Form.InputGroup
+ *     label="Amount"
+ *     addon={{ type: "label", attributes: { value: "SGD" }, position: "left" }}
+ *     errorMessage={errors.amount}
+ * />
+ * ```
+ */
 export const FormInputGroup = React.forwardRef(Component);

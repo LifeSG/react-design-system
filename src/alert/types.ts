@@ -20,7 +20,7 @@ export type AlertSizeType = "default" | "small";
 export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
     /** Indicates the style type of the component */
     type: AlertType;
-    /** Test identifier for automated testing. */
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
     /** The attributes of an action link that performs an action on click */
     actionLink?: React.AnchorHTMLAttributes<HTMLAnchorElement> | undefined;

@@ -188,6 +188,18 @@ function Component(
     );
 }
 
+/**
+ * A single expandable section within an `Accordion`.
+ *
+ * Renders a titled button that toggles the visibility of its children. Supports controlled
+ * expansion via `expanded` and imperative expand/collapse via a forwarded ref.
+ * @example
+ * ```tsx
+ * <Accordion.Item title="How does it work?">
+ *     Answer content here.
+ * </Accordion.Item>
+ * ```
+ */
 export const AccordionItem = forwardRef<
     AccordionItemHandle,
     AccordionItemProps

@@ -4,6 +4,20 @@ import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormSliderProps } from "./types";
 
+/**
+ * A form field that wraps `InputSlider` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.Slider` to present a single-handle numeric slider within a form.
+ * @example
+ * ```tsx
+ * <Form.Slider
+ *     label="Volume"
+ *     value={50}
+ *     min={0}
+ *     max={100}
+ * />
+ * ```
+ */
 export const FormSlider = ({
     label,
     errorMessage,

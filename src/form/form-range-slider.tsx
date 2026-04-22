@@ -4,6 +4,20 @@ import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormRangeSliderProps } from "./types";
 
+/**
+ * A form field that wraps `InputRangeSlider` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.RangeSlider` to present a dual-handle numeric range slider within a form.
+ * @example
+ * ```tsx
+ * <Form.RangeSlider
+ *     label="Budget"
+ *     value={[0, 100]}
+ *     min={0}
+ *     max={100}
+ * />
+ * ```
+ */
 export const FormRangeSlider = ({
     label,
     errorMessage,

@@ -1,17 +1,17 @@
 ---
 mode: "agent"
-description: "Generates a Storybook .stories.tsx, props-table.tsx, and .mdx documentation file for a component, based on its JSDoc."
+description: "Generates a Storybook .stories.tsx, props-table.tsx, and .mdx documentation file for a component, based on its JSDoc. Reads source from src/ files."
 ---
 
 # Generate Storybook Story and MDX Documentation
 
-You will create or update the Storybook files for a component, using its JSDoc-annotated `types.ts` as the source of truth.
+You will create or update the Storybook files for a component, using its JSDoc-annotated source files as the source of truth. Keywords and description come from the component function in `[component].tsx`; prop types come from `types.ts`.
 
 The user must specify a component name. If they do not, prompt them for one.
 
 ## When to Use This Prompt
 
-Use this prompt after running `generate-component-jsdoc.prompt.md`, once the component's `src/[COMPONENT]/types.ts` has been annotated with JSDoc. This prompt reads those annotations to produce consistent, accurate documentation.
+Use this prompt after running `generate-component-jsdoc.prompt.md`, once the component's `src/[COMPONENT]/[COMPONENT].tsx` and `types.ts` have been annotated with JSDoc. This prompt reads those annotations to produce consistent, accurate documentation.
 
 ---
 
@@ -19,8 +19,8 @@ Use this prompt after running `generate-component-jsdoc.prompt.md`, once the com
 
 Read the following files before writing anything:
 
-1. `src/[COMPONENT_NAME]/types.ts` — JSDoc on interfaces (interface description, `Keywords:` line, prop types)
-2. `src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — component structure, sub-components (e.g. `Component.Item`)
+1. `src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — component function JSDoc (description, `@keywords`, `@example`), component structure, sub-components
+2. `src/[COMPONENT_NAME]/types.ts` — JSDoc on prop interfaces (prop descriptions, types)
 3. `stories/[COMPONENT_NAME]/[COMPONENT_NAME].stories.tsx` — if it exists, check the current title category and story names
 
 ---
@@ -43,15 +43,17 @@ Use the title `"Category/ComponentName"` format. Choose the category that fits t
 
 ## Step 3: Extract Tags from JSDoc
 
-Find the `@keywords` tag in the primary `*Props` interface JSDoc block in
-`src/[COMPONENT_NAME]/types.ts`. It contains comma-separated search terms:
+Find the `@keywords` tag on the **exported component function** in
+`src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx`. It contains comma-separated search terms:
 
 ```typescript
 /**
- * ...
+ * One-line description.
+ *
  * @keywords filter, multi-select, dropdown, search, chips
+ * @example ...
  */
-export interface ComponentNameProps {
+export const ComponentName = ({
 ```
 
 Map those terms to the `tags` array in `Meta`. Do NOT include `"autodocs"` — only
@@ -68,15 +70,16 @@ Also populate `parameters.keywords` with the same terms as a string array:
 parameters: {
     docs: {
         description: {
-            component: "One-sentence overview from the top of the interface JSDoc.",
+            component: "One-sentence overview from the component function JSDoc.",
         },
     },
     keywords: ["filter", "multi-select", "dropdown", "search", "chips"],
 },
 ```
 
-If `@keywords` is absent from the interface JSDoc, add it before writing the story
-(follow the keyword guidelines in `generate-component-jsdoc.prompt.md` Section B2).
+If `@keywords` is absent from the component function JSDoc, add it to
+`src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` before writing the story
+(follow the keyword guidelines in `generate-component-jsdoc.prompt.md`).
 
 ---
 
@@ -190,7 +193,8 @@ const meta: Meta<Component> = {
     parameters: {
         docs: {
             description: {
-                component: "One-sentence description from the interface JSDoc.",
+                component:
+                    "One-sentence description from the component function JSDoc.",
             },
         },
         keywords: ["keyword1", "keyword2"],
@@ -204,7 +208,7 @@ export default meta;
 
 export const Default: StoryObj<Component> = {
     args: {
-        // minimum required props with sensible values from JSDoc @example
+        // minimum required props with sensible values from the component function @example
     },
 };
 ```
@@ -240,7 +244,7 @@ import { PropsTableTabs } from "./props-table";
 
 <Secondary>Overview</Secondary>
 
-One or two sentences from the interface JSDoc.
+One or two sentences from the component function JSDoc.
 
 ```tsx
 import { ComponentName } from "@lifesg/react-design-system/[component-name]";

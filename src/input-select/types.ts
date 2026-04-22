@@ -18,6 +18,7 @@ import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
  * @keywords select, dropdown, options, loading, retry
  */
 export interface InputSelectOptionsProps<T> {
+    /** The list of selectable options. */
     options: T[];
     /**
      * Used when options are loaded from an api call.
@@ -106,7 +107,7 @@ export interface InputSelectProps<T, V>
     customLabels?: DropdownCustomLabelProps | undefined;
 }
 
-/** To be exposed for Form component inheritance */
+/** Subset of InputSelectProps without `error`, for Form component inheritance. */
 export type InputSelectPartialProps<T, V> = Omit<
     InputSelectProps<T, V>,
     "error"

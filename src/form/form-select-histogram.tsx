@@ -4,6 +4,22 @@ import { FormWrapper } from "./form-wrapper";
 import { FormSelectHistogramProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 
+/**
+ * A form field that wraps `SelectHistogram` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.SelectHistogram` to present a histogram-backed dropdown filter within a form.
+ * @example
+ * ```tsx
+ * <Form.SelectHistogram
+ *     label="Price range"
+ *     options={options}
+ *     histogramSlider={{
+ *         bins: [{ count: 5, minValue: 0 }, { count: 3, minValue: 100 }],
+ *         interval: 100,
+ *     }}
+ * />
+ * ```
+ */
 export const FormSelectHistogram = ({
     label,
     errorMessage,

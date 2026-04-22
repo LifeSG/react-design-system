@@ -45,13 +45,13 @@
             "name": "Avatar",
             "importPath": "@lifesg/react-design-system/avatar",
             "description": "A component that displays a visual representation of a user or entity.",
-            "searchKeys": ["avatar", "icon", "initials", "profile", "user"]
+            "searchKeys": ["avatar", "icon", "profile", "user"]
         },
         {
             "name": "Badge",
             "importPath": "@lifesg/react-design-system/badge",
             "description": "A visual indicator for notifications or status, displayed as a badge overlay.",
-            "searchKeys": ["badge", "count", "dot", "indicator", "notification"]
+            "searchKeys": ["badge", "count", "indicator", "notification"]
         },
         {
             "name": "BoxContainer",

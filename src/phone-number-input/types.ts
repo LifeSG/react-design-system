@@ -69,6 +69,11 @@ export interface PhoneNumberInputProps extends React.AriaAttributes {
     "data-testid"?: string | undefined;
     /** Additional CSS class name. */
     className?: string | undefined;
+    /**
+     * When `true`, removes the border from the phone number input field.
+     *
+     * @default false
+     */
     noBorder?: boolean | undefined;
     /**
      * Locks the country code selector, preventing the user from changing the country.

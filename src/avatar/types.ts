@@ -10,6 +10,9 @@ export interface AvatarProps extends React.HTMLAttributes<HTMLDivElement> {
     children: string | JSX.Element;
     /** Size of the avatar. @default "default" */
     sizeType?: AvatarSize | undefined;
-    /** Test identifier for automated testing. @default "avatar" */
+    /**
+     * Sets the `data-testid` attribute for targeting the element in automated tests.
+     * @default "avatar"
+     */
     "data-testid"?: string | undefined;
 }

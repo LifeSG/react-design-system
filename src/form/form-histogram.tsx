@@ -4,6 +4,19 @@ import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormHistogramSliderProps } from "./types";
 
+/**
+ * A form field that wraps `HistogramSlider` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.HistogramSlider` to present a histogram-based range slider within a form.
+ * @example
+ * ```tsx
+ * <Form.HistogramSlider
+ *     label="Price range"
+ *     bins={[{ count: 5, minValue: 0 }, { count: 3, minValue: 100 }]}
+ *     interval={100}
+ * />
+ * ```
+ */
 export const FormHistogramSlider = ({
     label,
     errorMessage,

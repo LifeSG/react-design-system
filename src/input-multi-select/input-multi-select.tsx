@@ -18,6 +18,13 @@ import { InputMultiSelectProps } from "./types";
 
 /**
  * A multi-select dropdown input that allows users to pick multiple options from a list.
+ * @example
+ * ```tsx
+ * <InputMultiSelect
+ *   options={[{ value: "a", label: "Option A" }, { value: "b", label: "Option B" }]}
+ *   onSelectOptions={(selectedOpts) => console.log(selectedOpts)}
+ * />
+ * ```
  */
 export const InputMultiSelect = <T, V>({
     selectedOptions,

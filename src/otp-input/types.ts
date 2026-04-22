@@ -25,6 +25,7 @@ export interface OtpInputProps extends React.AriaAttributes {
     otpOnly?: boolean | undefined;
     /** The number of characters for the Otp */
     numOfInput: number;
+    /** Optional prefix prepended before the OTP digits, paired with a separator. */
     prefix?:
         | {
               /** Optional OTP prefix, usually consisting of a few alphabetic characters */

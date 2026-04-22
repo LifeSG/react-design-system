@@ -36,4 +36,14 @@ const Component = (
     );
 };
 
+/**
+ * A padded content area that wraps a `Layout.Section` with consistent horizontal padding.
+ *
+ * Use as `Layout.Content` to constrain readable content width and apply responsive padding
+ * inside a `Layout.Section`.
+ * @example
+ * ```tsx
+ * <Layout.Content>content</Layout.Content>
+ * ```
+ */
 export const Content = React.forwardRef(Component);

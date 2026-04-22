@@ -4,6 +4,19 @@ import { FormWrapper } from "./form-wrapper";
 import { FormMultiSelectProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 
+/**
+ * A form field that wraps `InputMultiSelect` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.MultiSelect` to allow selecting multiple options within a form.
+ * @example
+ * ```tsx
+ * <Form.MultiSelect
+ *     label="Interests"
+ *     options={options}
+ *     errorMessage={errors.interests}
+ * />
+ * ```
+ */
 export const FormMultiSelect = <T, V>({
     label,
     errorMessage,

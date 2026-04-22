@@ -1,142 +1,40 @@
 ---
 mode: "agent"
-description: "Generates or copies JSDoc comments for component props and fills catalog content gaps (MDX overview, stories tags)."
+description: "Generates JSDoc for component props and component function from source files. Only modifies src/ files."
 ---
 
-# Document Component Props and Fill Catalog Gaps
+# Document Component Props
 
-You will document all public props in `src/[COMPONENT_NAME]/types.ts` and ensure the
-component catalog has a `description` and `searchKeys` by filling the MDX overview and
-stories tags.
+You will document all public props in `src/[COMPONENT_NAME]/types.ts` and add or
+improve JSDoc on the exported component function in
+`src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx`.
 
 The user must specify a component name. If they do not, prompt them for one.
 
-## Step 0: Decide Which Approach to Use
+If `src/[COMPONENT_NAME]/types.ts` does not exist, skip prop documentation — do not
+create the file.
 
-Before reading anything else, check whether `stories/[COMPONENT_NAME]/props-table.tsx`
-exists.
-
--   **If it exists** → use the **Props-Table Approach** (Section A). Props-table
-    descriptions are manually written and more accurate than inferred descriptions.
--   **If it does not exist** → use the **Source-Inference Approach** (Section B).
-
-Either way, always complete **Section C** (MDX overview + stories tags) before
-finishing.
-
-If `src/[COMPONENT_NAME]/types.ts` does not exist, skip Sections A and B entirely — do
-not create the file. Still complete Section C.
+**Files you may modify**: only files under `src/`. Do not read or modify any storybook
+or stories files.
 
 ---
 
-## Section A — Props-Table Approach (props-table.tsx exists)
+## Step 1: Read Source Files
 
-### A1: Read Source Files
-
-1. `stories/[COMPONENT_NAME]/[COMPONENT_NAME].mdx` — extract overview description and
-   high-level feature headings
-2. `stories/[COMPONENT_NAME]/props-table.tsx` — parse the `DATA: ApiTableSectionProps[]`
-   array for all property descriptions
-3. `src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — locate the exported component function
-4. `src/[COMPONENT_NAME]/types.ts` (and any related type files if types are spread across
-   multiple files — use grep if needed)
-5. `src/[COMPONENT_NAME]/[COMPONENT_NAME].style.tsx` (if present) — identify `$`-prefixed
-   transient props to skip
-
-### A2: Compose the Component JSDoc and Interface Keywords
-
-The component-level description must be placed on the **component function** in
-`src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — not on the `*Props` interface. This
-ensures IntelliSense shows the description when consumers hover over the component in
-their IDE.
-
-Add a JSDoc block above the exported component function:
-
-````typescript
-/**
- * Primary description from the MDX overview.
- *
- * Additional capabilities, structure, or modes inferred from MDX section headings.
- *
- * @example
- * ```tsx
- * <ComponentName prop="value">content</ComponentName>
- * ```
- */
-export const ComponentName = ({
-````
-
-**Include** in the additional sentences:
-
--   Component anatomy (e.g., `Tab` + `Tab.Item` sub-components)
--   Key feature capabilities (sort, multi-select, loading states, etc.)
--   Controlled vs uncontrolled mode notes
-
-**Exclude**: step-by-step usage, edge-case warnings.
-
-On the `*Props` interface in `types.ts`, retain only the `@keywords` tag — it is read
-by the component catalog and must remain on the interface:
-
-```typescript
-/**
- * @keywords keyword1, keyword2, keyword3
- */
-export interface ComponentNameProps {
-```
-
-For `@keywords`, provide 3–6 comma-separated terms a developer might search for (see
-Section B2 for keyword guidelines).
-
-### A3: Write Property JSDoc from Props-Table
-
-For each `attribute` in `DATA`, add a JSDoc comment above the matching prop in `types.ts`.
-
-**Finding the right type file**: Props tables often document types spread across multiple
-files. Match `section.name` (e.g., `"HeaderItemProps"`) to the interface with that name
-wherever it lives in `src/`. Use grep to locate it if not in the main `types.ts`.
-
-**Converting props-table values to JSDoc**:
-
--   `description` (string or JSX) → plain-text JSDoc comment
-    -   `<code>value</code>` → `` `value` ``
-    -   HTML entities → appropriate Unicode
-    -   Links → keep URL in parentheses
--   `defaultValue` present → append `@default "value"` tag
--   `mandatory: true` → do not add `@default` (required prop)
--   `name: ""` empty-name attributes → include as a leading comment on the interface body
-    if relevant
-
-**Replacing existing JSDoc**: Replace existing JSDoc comments with the props-table
-description, even if JSDoc already exists — props-table content is the authoritative
-source.
-
-### A4: Handle Multiple Sections
-
-A single `props-table.tsx` can document several types:
-
--   Section with no `name` → describes the main component props (e.g., `DataTableProps`)
--   Section with `name: "HeaderItemProps"` → find and update `HeaderItemProps` wherever
-    it is defined in `src/`
-
-Process all sections, not just the first.
+1. `src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — component function, sub-components,
+   runtime behaviour, existing JSDoc
+2. `src/[COMPONENT_NAME]/types.ts` — existing props and any partial JSDoc; use grep to
+   find related type files if types are spread across multiple files
+3. `src/[COMPONENT_NAME]/[COMPONENT_NAME].style.tsx` (if present) — identify
+   `$`-prefixed transient props to skip
 
 ---
 
-## Section B — Source-Inference Approach (no props-table.tsx)
+## Step 2: Document the Component Function
 
-### B1: Read Source Files
-
-1. `src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — understand what each prop does at runtime
-2. `src/[COMPONENT_NAME]/types.ts` — see existing props and any partial JSDoc
-3. `src/[COMPONENT_NAME]/[COMPONENT_NAME].style.tsx` (if present) — identify `$`-prefixed
-   transient props to skip
-4. `stories/[COMPONENT_NAME]/[COMPONENT_NAME].mdx` (if present) — extract overview
-
-### B2: Document the Component Function and Interface Keywords
-
-The component-level description must be placed on the **component function** in
-`src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — not on the `*Props` interface. This
-ensures IntelliSense shows the description when consumers hover over the component in
-their IDE.
+The component-level description and `@keywords` must both be placed on the **exported
+component function** in `src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx`. This ensures both
+appear in IntelliSense when consumers hover over the component in their IDE.
 
 Add a JSDoc block above the exported component function:
 
@@ -146,6 +44,7 @@ Add a JSDoc block above the exported component function:
  *
  * [2-3 sentences: when to use this component, key capabilities, important behaviours]
  *
+ * @keywords keyword1, keyword2, keyword3
  * @example
  * ```tsx
  * <ComponentName prop="value">content</ComponentName>
@@ -154,23 +53,30 @@ Add a JSDoc block above the exported component function:
 export const ComponentName = ({
 ````
 
-On the `*Props` interface in `types.ts`, retain only the `@keywords` tag — it is read
-by the component catalog and must remain on the interface:
-
-```typescript
-/**
- * @keywords keyword1, keyword2, keyword3
- */
-export interface ComponentNameProps {
-```
-
-For `@keywords`, provide 3–6 comma-separated terms that a developer might search for:
+**`@keywords` guidelines** — provide 3–6 comma-separated terms a developer might search
+for:
 
 -   Alternative names or common search terms (e.g. `dropdown` for InputSelect)
 -   Related UI patterns or concepts (e.g. `multi-select`, `chips`, `filter`)
 -   Focus on terms NOT already present in the component's kebab-case name
 
-### B3: Document Each Prop
+**Include** in the description:
+
+-   Component anatomy (e.g., `Tab` + `Tab.Item` sub-components)
+-   Key feature capabilities (sort, multi-select, loading states, etc.)
+-   Controlled vs uncontrolled mode notes
+
+**Exclude**: step-by-step usage, edge-case warnings.
+
+If the component exposes sub-components (detected in Step 1), also apply **Section D**
+to add JSDoc to each sub-component's exported constant.
+
+The `*Props` interface in `types.ts` does **not** need a `@keywords` tag — keywords live
+on the component function only.
+
+---
+
+## Step 3: Document Each Prop
 
 Apply the pattern that fits each prop type:
 
@@ -267,37 +173,69 @@ export type ComponentHandle = HTMLDivElement & {
 
 ---
 
-## Section C — Catalog Content (always required)
+## Section D — Subcomponent JSDoc (if applicable)
 
-The component catalog reads from two specific locations — these are separate from JSDoc
-and must be filled regardless of which approach was used above.
+Sub-components are exposed either via `Object.assign` in the main component file, or as
+properties of an object literal in `index.ts`. Hovering over `Parent.Sub` in an IDE
+resolves to the JSDoc on the **sub-component's own exported constant** — the parent's
+JSDoc does not propagate.
 
-### C1: MDX Overview (`description` field)
+### D1: Detect Sub-Component Exposure
 
-File: `stories/[COMPONENT_NAME]/[COMPONENT_NAME].mdx`
+Check two locations:
 
-The catalog reads the text immediately after `<Secondary>Overview</Secondary>`. If this
-block is missing or empty, add a concise 1–3 sentence description of the component
-directly after that marker.
+1. `src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx` — look for:
+   `export const Parent = Object.assign(Base, { SubName: SubComponent })`
+2. `src/[COMPONENT_NAME]/index.ts` — look for:
+   `export const Parent = { SubName: SubComponent, ... }`
 
-If the `<Secondary>Overview</Secondary>` heading itself is absent, locate the first
-logical introductory paragraph in the MDX file and add the heading + description there.
+If neither pattern exists, skip this section.
 
-### C2: JSDoc Keywords (`searchKeys` field)
+### D2: Add JSDoc to Each Sub-Component Exported Constant
 
-The component catalog reads `@keywords` from the `@keywords` tag on the main `*Props`
-interface in `src/[COMPONENT_NAME]/types.ts`. This tag always lives on the interface —
-not on the component function — regardless of which approach was used.
+For each sub-component (e.g. `Accordion.Item` → `AccordionItem`), locate its source file
+and add a JSDoc block above its **exported constant**. Focus the description on the
+sub-component's role within the parent.
 
-Verify the `@keywords` tag is present on the interface before finishing. If it is
-missing, add it now as a standalone JSDoc block containing only `@keywords`:
+**Arrow-function component:**
 
 ```typescript
 /**
- * @keywords keyword1, keyword2, keyword3
+ * [One-line role of this sub-component within the parent.]
+ *
+ * [Optional: key behaviour or usage note.]
  */
-export interface ComponentNameProps {
+export const SubComponent = ({
 ```
+
+**`forwardRef` component** — JSDoc goes on the exported `const`, not on the inner
+render function:
+
+```typescript
+/**
+ * [One-line role of this sub-component within the parent.]
+ *
+ * [Optional: note if a ref is exposed and what the handle provides.]
+ */
+export const SubComponent = forwardRef<Handle, Props>(Component);
+```
+
+**`React.forwardRef` with a separate `Component` function:**
+
+```typescript
+/**
+ * [One-line role of this sub-component within the parent.]
+ */
+export const SubComponent = React.forwardRef(Component);
+```
+
+### D3: Placement Rules
+
+-   JSDoc goes on the **exported constant** assigned as the sub-component, not on any
+    private inner function (`Base`, `Component`, `NBWithRef`, etc.).
+-   Sub-component JSDoc does **not** need `@keywords`.
+-   If the sub-component already has JSDoc on its exported const, improve it if vague;
+    do not discard accurate content.
 
 ---
 
@@ -313,7 +251,7 @@ export interface ComponentNameProps {
 -   Do NOT document props inherited from standard HTML element attributes (e.g. `onClick`,
     `className` from `React.ButtonHTMLAttributes`)
 -   If a prop already has JSDoc, improve it if incomplete or unclear; do not discard
-    accurate existing content (exception: Section A always replaces with props-table data)
+    accurate existing content
 
 ## What NOT to Do
 
@@ -323,7 +261,8 @@ export interface ComponentNameProps {
 -   Do not skip enum options — explain each one
 -   Do not add `@default` to required props
 -   Do not create `types.ts` if it does not already exist
--   Do not modify `props-table.tsx` files
+-   Do not read or modify any storybook or stories files
+-   Do not add `@keywords` to `types.ts` — keywords belong on the component function only
 
 ---
 
@@ -331,10 +270,6 @@ export interface ComponentNameProps {
 
 Report:
 
--   Which approach was used (props-table or source-inference)
 -   Which interfaces and type aliases were documented, with file links
 -   Count of props documented
 -   Any props skipped and why
--   Any props-table entries that could not be matched to a type (Section A only)
--   Whether the MDX overview block was present or added (Section C1)
--   Whether the stories `tags` array was present or updated (Section C2)

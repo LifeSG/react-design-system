@@ -4,6 +4,19 @@ import { FormWrapper } from "./form-wrapper";
 import { FormNestedMultiSelectProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 
+/**
+ * A form field that wraps `InputNestedMultiSelect` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.NestedMultiSelect` to present a hierarchical multi-select dropdown within a form.
+ * @example
+ * ```tsx
+ * <Form.NestedMultiSelect
+ *     label="Categories"
+ *     options={options}
+ *     errorMessage={errors.categories}
+ * />
+ * ```
+ */
 export const FormNestedMultiSelect = <V1, V2, V3>({
     label,
     errorMessage,

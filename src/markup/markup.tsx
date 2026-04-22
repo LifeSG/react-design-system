@@ -24,5 +24,11 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
 
 /**
  * Sets styling for commonly used HTML markup elements such as `<strong>` or `<a>`.
+ * @example
+ * ```tsx
+ * <Markup>
+ *   <strong>Bold text</strong> and <a href="/link">a link</a>
+ * </Markup>
+ * ```
  */
 export const Markup = forwardRef(Component);

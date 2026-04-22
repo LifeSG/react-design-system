@@ -15,6 +15,12 @@ import { PopoverProps } from "./types";
 
 /**
  * @deprecated Use `PopoverV2` for improved positioning behaviour. This component will be removed in DS v3.
+ * @example
+ * ```tsx
+ * <Popover visible={isOpen} onMobileClose={() => setOpen(false)}>
+ *     <p>Popover content</p>
+ * </Popover>
+ * ```
  */
 export const Popover = ({
     children,

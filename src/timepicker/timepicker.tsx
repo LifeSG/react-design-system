@@ -12,6 +12,10 @@ import { TimepickerProps } from "./types";
 /**
  * A time entry field supporting dial-based selection
  * in 12-hour or 24-hour formats.
+ * @example
+ * ```tsx
+ * <Timepicker value="09:00" onChange={handleChange} />
+ * ```
  */
 export const Timepicker = ({
     id,

@@ -9,6 +9,12 @@ import { MenuContentProps, MenuProps } from "./types";
 /**
  * A popover-based dropdown menu component, commonly used with Avatar and Navbar.
  * Extends PopoverV2TriggerProps (except `popoverContent`).
+ * @example
+ * ```tsx
+ * <MenuTrigger menuContent={<Menu.Content><Menu.Item label="Edit" onClick={handleEdit} /></Menu.Content>}>
+ *     <button>Open Menu</button>
+ * </MenuTrigger>
+ * ```
  */
 export const MenuTrigger = ({
     children,
@@ -37,6 +43,17 @@ export const MenuTrigger = ({
     );
 };
 
+/**
+ * A popover-based dropdown menu that composes `Menu.Content`, `Menu.Section`, `Menu.Item`, and `Menu.Link`.
+ *
+ * Renders as a trigger element (typically a button or avatar) that opens a floating panel on interaction.
+ * @example
+ * ```tsx
+ * <Menu menuContent={<Menu.Content><Menu.Item label="Edit" onClick={handleEdit} /></Menu.Content>}>
+ *     <button>Open</button>
+ * </Menu>
+ * ```
+ */
 export const Menu = Object.assign(MenuTrigger, {
     Content: MenuContent,
     Section: MenuSection,

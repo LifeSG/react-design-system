@@ -10,9 +10,9 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     show: boolean;
     /** The content to render inside the modal. */
     children: React.ReactNode;
-    /** Animation direction of appearance and dismissal. Values: "top" | "bottom" | "left" | "right" */
+    /** Animation direction of appearance and dismissal. Values: "top" | "bottom" | "left" | "right" @default "bottom" */
     animationFrom?: ModalAnimationDirection | undefined;
-    /** Toggles whether the Modal can be dismissed by clicking on the overlay. */
+    /** Toggles whether the Modal can be dismissed by clicking on the overlay. @default true */
     enableOverlayClick?: boolean | undefined;
     /** The identifier of the element to inject the Modal into */
     rootComponentId?: string | undefined;
@@ -20,7 +20,7 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     zIndex?: number | undefined;
     /** Callback when the overlay is clicked. Triggered if `enableOverlayClick` is true. */
     onOverlayClick?: (() => void) | undefined;
-    /** Dismiss keyboard to keep modal in fullscreen */
+    /** Dismiss keyboard to keep modal in fullscreen @default true */
     dismissKeyboardOnShow?: boolean | undefined;
 }
 

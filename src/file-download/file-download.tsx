@@ -12,6 +12,10 @@ import { FileDownloadProps, FileItemDownloadProps } from "./types";
 
 /**
  * Represents a single file item available for download.
+ * @example
+ * ```tsx
+ * <FileDownload fileItems={files} onDownload={handleDownload} />
+ * ```
  */
 export const FileDownload = ({
     id,

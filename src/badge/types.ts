@@ -23,6 +23,9 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLDivElement> {
     variant?: BadgeVariant | undefined;
     /** Defines the visual color tone of the badge. @default "default" */
     color?: BadgeColor | undefined;
-    /** Test identifier for automated testing. @default "badge" */
+    /**
+     * Sets the `data-testid` attribute for targeting the element in automated tests.
+     * @default "badge"
+     */
     "data-testid"?: string | undefined;
 }

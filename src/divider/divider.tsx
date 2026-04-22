@@ -7,6 +7,10 @@ import { DividerProps } from "./types";
  * A component that renders a horizontal line.
  *
  * Supports both flex and grid layouts, with configurable thickness, color, and line style.
+ * @example
+ * ```tsx
+ * <Divider />
+ * ```
  */
 export const Divider = ({
     thickness = 1,

@@ -2,6 +2,18 @@ import { ESignature } from "../e-signature";
 import { FormWrapper } from "./form-wrapper";
 import { FormESignatureProps } from "./types";
 
+/**
+ * A form field that wraps `ESignature` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.ESignature` to present a signature capture input within a form.
+ * @example
+ * ```tsx
+ * <Form.ESignature
+ *     label="Signature"
+ *     errorMessage={errors.signature}
+ * />
+ * ```
+ */
 export const FormESignature = (props: FormESignatureProps) => {
     const {
         label,

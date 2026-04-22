@@ -10,6 +10,10 @@ import { RadioButtonProps } from "./types";
 /**
  * A field that allows a user to select from a predefined set of mutually
  * exclusive options, shown with a graphical circle indicator when active.
+ * @example
+ * ```tsx
+ * <RadioButton checked={selected === "yes"} onChange={() => setSelected("yes")} />
+ * ```
  */
 export const RadioButton = ({
     className,

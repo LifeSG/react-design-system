@@ -32,7 +32,7 @@ export interface BoxContainerProps {
     className?: string | undefined;
     /** The id used for testing the label and handle button */
     subComponentTestIds?: BoxContainerSubComponentTestIds | undefined;
-    /** Test identifier for automated testing. */
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
     /** The unique id of the component */
     id?: string | undefined;

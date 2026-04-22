@@ -25,7 +25,7 @@ export interface InputProps
     styleType?: InputStyleType | undefined;
 }
 
-/** To be exposed for Form component inheritance */
+/** Subset of InputProps without `error`, for Form component inheritance. */
 export type InputPartialProps = Omit<InputProps, "error">;
 
 export type InputRef = React.Ref<HTMLInputElement>;

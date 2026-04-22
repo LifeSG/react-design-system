@@ -4,6 +4,19 @@ import { FormWrapper } from "./form-wrapper";
 import { FormNestedSelectProps } from "./types";
 import { SimpleIdGenerator } from "../util";
 
+/**
+ * A form field that wraps `InputNestedSelect` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.NestedSelect` to present a hierarchical single-select dropdown within a form.
+ * @example
+ * ```tsx
+ * <Form.NestedSelect
+ *     label="Location"
+ *     options={options}
+ *     errorMessage={errors.location}
+ * />
+ * ```
+ */
 export const FormNestedSelect = <V1, V2, V3>({
     label,
     errorMessage,

@@ -26,6 +26,13 @@ type RangeType = "from" | "to";
 
 /**
  * Options props for the range select, providing separate from/to option lists and load states.
+ * @example
+ * ```tsx
+ * <InputRangeSelect
+ *   options={{ from: [{ value: "2020", label: "2020" }], to: [{ value: "2024", label: "2024" }] }}
+ *   onSelectOption={(range) => console.log(range)}
+ * />
+ * ```
  */
 export const InputRangeSelect = <T, V>({
     selectedOptions,

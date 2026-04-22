@@ -11,6 +11,12 @@ import { FilterSidebar } from "./filter-sidebar";
 
 /**
  * Base props shared by all Filter variants. Displays widgets under collapsible panels to filter data results.
+ * @example
+ * ```tsx
+ * <Filter onDone={handleApply} onDismiss={handleDismiss}>
+ *     <Filter.Item title="Category"><Filter.Checkbox items={options} onChange={onChange} /></Filter.Item>
+ * </Filter>
+ * ```
  */
 export const Filter = ({
     children,

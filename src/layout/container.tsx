@@ -27,4 +27,14 @@ const Component = (
     );
 };
 
+/**
+ * A fixed-width or full-width wrapper that centres page content within a max-width boundary.
+ *
+ * Use as `Layout.Container` to constrain content to the design grid. Supports flex and block
+ * layout types, and optional full-width stretching.
+ * @example
+ * ```tsx
+ * <Layout.Container>content</Layout.Container>
+ * ```
+ */
 export const Container = React.forwardRef(Component);

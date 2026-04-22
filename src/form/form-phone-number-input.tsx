@@ -4,6 +4,18 @@ import { SimpleIdGenerator } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormPhoneNumberInputProps } from "./types";
 
+/**
+ * A form field that wraps `PhoneNumberInput` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.PhoneNumberInput` to present a phone number input within a form.
+ * @example
+ * ```tsx
+ * <Form.PhoneNumberInput
+ *     label="Mobile number"
+ *     errorMessage={errors.phone}
+ * />
+ * ```
+ */
 export const FormPhoneNumberInput = ({
     label,
     errorMessage,

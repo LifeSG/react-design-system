@@ -37,7 +37,7 @@ export interface MaskedInputProps extends InputProps, MaskAttributeProps {
     iconActiveColor?: string | undefined;
     /** Colour applied to the mask/unmask icon when in the inactive state. */
     iconInactiveColor?: string | undefined;
-    /** When `true`, masking is disabled and the value is always displayed as plain text. */
+    /** When `true`, masking is disabled and the value is always displayed as plain text. @default false */
     disableMask?: boolean | undefined;
     /** Transforms the raw input value to uppercase or lowercase before storing. */
     transformInput?: "uppercase" | "lowercase" | undefined;
