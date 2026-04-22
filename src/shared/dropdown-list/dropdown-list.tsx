@@ -407,7 +407,6 @@ const DropdownListInner = <T, V>(
     // =========================================================================
 
     useApplyStyle(nodeRef, {
-        ...floatingStyles,
         ...containerWidthStyle,
     });
 
@@ -687,6 +686,7 @@ const DropdownListInner = <T, V>(
                     ? styles.containerVariantSmall
                     : styles.containerVariantDefault
             )}
+            style={floatingStyles}
         >
             <VisuallyHidden role="status">{ariaLabel}</VisuallyHidden>
             {renderList()}

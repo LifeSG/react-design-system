@@ -415,7 +415,6 @@ export const NestedDropdownList = <T,>({
     // =========================================================================
 
     useApplyStyle(nodeRef, {
-        ...floatingStyles,
         ...containerWidthStyle,
     });
 
@@ -741,6 +740,7 @@ export const NestedDropdownList = <T,>({
                     ? styles.containerVariantSmall
                     : styles.containerVariantDefault
             )}
+            style={floatingStyles}
         >
             {renderList()}
         </div>
