@@ -29,13 +29,12 @@ export const tokens = {
 // MAIN STYLES
 // -----------------------------------------------------------------------------
 export const container = css`
-    ${tokens.availableHeight}: initial;
-
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
     background: ${Colour["bg"]};
 
     ${tokens.xSpacing}: 0px;
+    ${tokens.availableHeight}: initial;
     ${tokens.availableWidth}: calc(
         100vw - var(${tokens.xSpacing}) * 2
     );
