@@ -1,12 +1,7 @@
 import type React from "react";
 import { useEffect, useState } from "react";
 
-import {
-    Content,
-    ExpandCollapseLink,
-    Title,
-    TitleWrapper,
-} from "./accordion.style";
+import * as styles from "./accordion.styles";
 import { AccordionContext } from "./accordion-context";
 import { AccordionItem } from "./accordion-item";
 import type { AccordionProps } from "./types";
@@ -89,14 +84,14 @@ const AccordionBase = ({
 
     const renderCollapseExpandAll = () => {
         return (
-            <ExpandCollapseLink
+            <styles.ExpandCollapseLink
                 data-testid="accordion-expand-collapse-button"
                 onClick={handleExpandCollapseClick}
                 styleType="link"
                 type="button"
             >
                 {expandAll ? "Hide all" : "Show all"}
-            </ExpandCollapseLink>
+            </styles.ExpandCollapseLink>
         );
     };
 
@@ -106,21 +101,21 @@ const AccordionBase = ({
         }
 
         return (
-            <TitleWrapper
+            <styles.TitleWrapper
                 $showTitleInMobile={showTitleInMobile}
                 $hasExpandAll={enableExpandAll}
             >
                 {title && (
-                    <Title
+                    <styles.Title
                         $showInMobile={showTitleInMobile}
                         data-testid="accordion-title"
                         aria-level={headingLevel}
                     >
                         {title}
-                    </Title>
+                    </styles.Title>
                 )}
                 {enableExpandAll && renderCollapseExpandAll()}
-            </TitleWrapper>
+            </styles.TitleWrapper>
         );
     };
 
@@ -138,10 +133,10 @@ const AccordionBase = ({
                 itemState,
             }}
         >
-            <Content id={id} data-testid={testId} className={className}>
+            <styles.Content id={id} data-testid={testId} className={className}>
                 {renderTitleWrapper()}
                 {children}
-            </Content>
+            </styles.Content>
         </AccordionContext.Provider>
     );
 };
