@@ -493,9 +493,11 @@ const DropdownListInner = <T, V>(
                     tabIndex={active ? 0 : -1}
                     className={clsx(
                         styles.listItem,
-                        disabled && styles.listItemDisabled,
-                        active && selected && styles.listItemActiveSelected,
-                        active && !selected && styles.listItemActive
+                        (disabled && styles.listItemDisabled) ||
+                            (active &&
+                                selected &&
+                                styles.listItemActiveSelected) ||
+                            (active && !selected && styles.listItemActive)
                     )}
                 >
                     {renderListItem ? (
