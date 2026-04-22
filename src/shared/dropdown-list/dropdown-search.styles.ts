@@ -11,9 +11,6 @@ export const container = css`
     border-radius: ${Radius["sm"]};
     display: flex;
     align-items: center;
-`;
-
-export const containerVariantDefault = css`
     ${Font["body-baseline-regular"]}
 `;
 

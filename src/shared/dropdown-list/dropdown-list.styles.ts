@@ -76,9 +76,7 @@ export const container = css`
         border-radius: ${Radius["full"]};
         background-clip: padding-box;
     }
-`;
 
-export const containerVariantDefault = css`
     ${Font["body-baseline-regular"]}
 `;
 

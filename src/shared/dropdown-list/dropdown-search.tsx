@@ -23,9 +23,7 @@ const Component = (
         <div
             className={clsx(
                 styles.container,
-                variant === "small"
-                    ? styles.containerVariantSmall
-                    : styles.containerVariantDefault
+                variant === "small" && styles.containerVariantSmall
             )}
         >
             <label

@@ -690,9 +690,7 @@ const DropdownListInner = <T, V>(
             {...getFloatingProps()}
             className={clsx(
                 styles.container,
-                variant === "small"
-                    ? styles.containerVariantSmall
-                    : styles.containerVariantDefault
+                variant === "small" && styles.containerVariantSmall
             )}
             style={floatingStyles}
         >
