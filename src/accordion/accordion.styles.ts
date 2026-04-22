@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { Button } from "../button";
-import { V3_Border, V3_Colour, V3_Font, V3_MediaQuery } from "../v3_theme";
+import { Border, Colour, Font, MediaQuery } from "../theme";
 import type { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 
 // ============================================================================
@@ -9,8 +9,7 @@ import type { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 // =============================================================================
 export const Content = styled.div`
     width: 100%;
-    border-bottom: ${V3_Border["width-010"]} ${V3_Border.solid}
-        ${V3_Colour.border};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
 export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
@@ -20,14 +19,14 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     justify-content: flex-end;
     padding-bottom: 1rem;
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         justify-content: flex-end;
     }
 
     ${(props) => {
         if (!props.$showTitleInMobile && !props.$hasExpandAll) {
             return css`
-                ${V3_MediaQuery.MaxWidth.sm} {
+                ${MediaQuery.MaxWidth.sm} {
                     display: none;
                 }
             `;
@@ -40,17 +39,17 @@ export const Title = styled.h2<TitleStyleProps>`
     align-self: flex-start;
     flex: 1;
 
-    ${V3_Font["heading-md-bold"]}
-    color: ${V3_Colour["text"]};
+    ${Font["heading-md-bold"]}
+    color: ${Colour["text"]};
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         text-align: left;
     }
 
     ${(props) => {
         if (!props.$showInMobile) {
             return css`
-                ${V3_MediaQuery.MaxWidth.sm} {
+                ${MediaQuery.MaxWidth.sm} {
                     display: none;
                     visibility: hidden;
                 }
