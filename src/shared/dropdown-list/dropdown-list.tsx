@@ -541,7 +541,10 @@ const DropdownListInner = <T, V>(
                     <BasicButton
                         onClick={onSelectAll}
                         type="button"
-                        className={styles.selectAllButton}
+                        className={clsx(
+                            styles.baseButton,
+                            styles.selectAllButton
+                        )}
                     >
                         {maxSelectable || selectedItems.length !== 0
                             ? clearAllButtonLabel
@@ -613,7 +616,10 @@ const DropdownListInner = <T, V>(
                     <BasicButton
                         onClick={handleTryAgain}
                         type="button"
-                        className={styles.tryAgainButton}
+                        className={clsx(
+                            styles.baseButton,
+                            styles.tryAgainButton
+                        )}
                     >
                         Try again.
                     </BasicButton>

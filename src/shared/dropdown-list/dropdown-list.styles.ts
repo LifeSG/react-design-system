@@ -158,20 +158,19 @@ export const selectAllContainer = css`
     justify-content: flex-end;
 `;
 
-export const selectAllButton = css`
+export const baseButton = css`
     cursor: pointer;
     overflow: hidden;
     color: ${Colour["text-primary"]};
     font-size: inherit;
+`;
+
+export const selectAllButton = css`
     ${Font["body-md-semibold"]}
     padding: ${Spacing["spacing-8"]};
 `;
 
 export const tryAgainButton = css`
-    cursor: pointer;
-    overflow: hidden;
-    color: ${Colour["text-primary"]};
-    font-size: inherit;
     ${Font["body-baseline-semibold"]}
 `;
 

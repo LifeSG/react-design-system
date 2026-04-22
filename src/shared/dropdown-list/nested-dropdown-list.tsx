@@ -450,7 +450,10 @@ export const NestedDropdownList = <T,>({
                     <BasicButton
                         onClick={handleOnSelectAll}
                         type="button"
-                        className={styles.selectAllButton}
+                        className={clsx(
+                            styles.baseButton,
+                            styles.selectAllButton
+                        )}
                     >
                         {selectedKeyPaths.size === 0
                             ? selectAllButtonLabel
@@ -522,7 +525,10 @@ export const NestedDropdownList = <T,>({
                     <BasicButton
                         onClick={handleTryAgain}
                         type="button"
-                        className={styles.tryAgainButton}
+                        className={clsx(
+                            styles.baseButton,
+                            styles.tryAgainButton
+                        )}
                     >
                         Try again.
                     </BasicButton>
