@@ -21,6 +21,7 @@ import {
     CollapseExpandAllWrapper,
     ColumnWeekCell,
     Expandable,
+    GridWrapper,
     HeaderCellWeek,
     HeaderCellWeekColumn,
     TimeColumn,
@@ -666,6 +667,7 @@ export const TimeSlotBarWeekDays = ({
                 <CollapseExpandAllButton
                     data-testid="time-bar-expand-collapse-button"
                     styleType="light"
+                    aria-expanded={expandAll}
                     onClick={handleExpandCollapseClick}
                 >
                     <ChevronIcon $isExpanded={expandAll} />
@@ -676,11 +678,13 @@ export const TimeSlotBarWeekDays = ({
     };
 
     return (
-        <Wrapper role="grid">
-            {renderHeader()}
-            {renderWeek()}
-            {renderTimeColumn()}
-            {renderTimeSlotBarCells()}
+        <Wrapper>
+            <GridWrapper role="grid">
+                {renderHeader()}
+                {renderWeek()}
+                {renderTimeColumn()}
+                {renderTimeSlotBarCells()}
+            </GridWrapper>
             {renderCollapseExpandAll()}
         </Wrapper>
     );

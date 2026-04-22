@@ -51,6 +51,10 @@ export const HeaderCellWeekColumn = styled.div`
 
 export const Wrapper = styled.div`
     width: 100%;
+`;
+
+export const GridWrapper = styled.div`
+    width: 100%;
     display: grid;
     grid-template-columns: auto repeat(7, 1fr);
     column-gap: ${Spacing["spacing-4"]};
