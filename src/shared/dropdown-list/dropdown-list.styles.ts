@@ -11,17 +11,18 @@ import {
 } from "../../theme";
 
 export const tokens = {
-    xSpacing: "--fds-internal-dropdownList-container-x-spacing",
-    availableWidth: "--fds-internal-dropdownList-container-available-width",
-    availableHeight: "--fds-internal-dropdownList-container-available-height",
+    availableWidth: "--fds-internal-dropdownList-container-availableWidth",
+    availableHeight: "--fds-internal-dropdownList-container-availableHeight",
     /**
      * Width logic (mirrors old styled-components props):
      * - customWidth (string): set containerWidth + set containerMinWidth to 0px
      * - width (number in px): set containerWidth to `${width}px` only
      * - default: set neither (width=auto, min-width uses fallback)
      */
-    containerWidth: "--fds-internal-dropdownList-container-width",
-    containerMinWidth: "--fds-internal-dropdownList-container-min-width",
+    containerWidth: "--fds-internal-dropdownList-containerWidth",
+    containerMinWidth: "--fds-internal-dropdownList-containerMinWidth",
+
+    xSpacing: "--fds-internal-dropdownList-container-xSpacing",
 } as const;
 
 // -----------------------------------------------------------------------------

@@ -7,7 +7,7 @@ import { Colour, Motion, Radius, Spacing } from "../../theme";
 // =============================================================================
 
 export const tokens = {
-    level: "--fds-internal-nestedDropdownList-indent-level",
+    level: "--fds-internal-nestedDropdownList-indentLevel",
 };
 
 // -----------------------------------------------------------------------------
