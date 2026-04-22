@@ -1,5 +1,6 @@
+import { CrossIcon } from "@lifesg/react-icons/cross";
 import React from "react";
-import { Box, CloseButton, CloseIcon } from "./modal-box.styles";
+import { Box, CloseButton } from "./modal-box.styles";
 import { ModalBoxProps } from "./types";
 
 export const ModalBox = ({
@@ -25,8 +26,9 @@ export const ModalBox = ({
                 onClick={onClose}
                 data-testid="close-button"
                 focusHighlight={false}
+                focusOutline="browser"
             >
-                <CloseIcon />
+                <CrossIcon />
             </CloseButton>
         );
     };

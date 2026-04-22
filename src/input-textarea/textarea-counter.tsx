@@ -1,11 +1,9 @@
-import React from "react";
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
 import { CounterLabel } from "./textara-counter.style";
 
 interface Props {
-    value: string | number | readonly string[];
+    value: string | number | readonly string[] | undefined;
     maxLength: number;
-    disabled?: boolean | undefined;
     renderCustomCounter?: (
         maxLength: number,
         currentValueLength: number
@@ -15,7 +13,6 @@ interface Props {
 export const TextareaCounter = ({
     value,
     maxLength,
-    disabled,
     renderCustomCounter,
 }: Props): JSX.Element => {
     // =============================================================================
@@ -40,7 +37,7 @@ export const TextareaCounter = ({
             return renderCustomCounter(maxLength, value.toString().length);
         } else {
             const remainingLength = maxLength - value.toString().length;
-            if (remainingLength <= 1) {
+            if (remainingLength === 1) {
                 return `${remainingLength} character left`;
             } else {
                 return `${remainingLength.toLocaleString()} characters left`;
@@ -56,11 +53,7 @@ export const TextareaCounter = ({
             {React.isValidElement(counterLabel) ? (
                 counterLabel
             ) : (
-                <CounterLabel
-                    data-testid="counter-label"
-                    weight="semibold"
-                    disabled={disabled}
-                >
+                <CounterLabel data-testid="counter-label">
                     {counterLabel}
                 </CounterLabel>
             )}

@@ -1,6 +1,8 @@
 import { useContext, useRef } from "react";
 import { useMediaQuery } from "react-responsive";
-import { MediaWidths } from "../media";
+import { ThemeContext } from "styled-components";
+import { ResizeCallbackParams } from "../shared/fade-wrapper";
+import { Breakpoint } from "../theme";
 import { TabContext } from "./tab-context";
 import {
     BoldLabel,
@@ -9,37 +11,51 @@ import {
     ChainLink,
     CustomFadeWrapper,
     Label,
+    LabelContainer,
 } from "./tab-link-chain.style";
-import { ResizeCallbackParams } from "../shared/fade-wrapper";
+import { TabProps } from "./types";
 
-interface Props {
+interface Props
+    extends Pick<
+        TabProps,
+        "fullWidthIndicatorLine" | "onTabClick" | "data-testid" | "fadeColor"
+    > {
     controlledMode?: boolean | undefined;
-    "data-testid"?: string | undefined;
-    onTabClick?: ((title: string, order: number) => void) | undefined;
 }
 
 export const TabLinkChain = ({
     controlledMode,
     "data-testid": testId,
     onTabClick,
+    fullWidthIndicatorLine,
+    fadeColor,
 }: Props) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
     const { setCurrentActiveIndex, currentActiveIndex, tabLinks } =
         useContext(TabContext);
+
+    const theme = useContext(ThemeContext);
+    const mobileBreakpoint = Breakpoint["md-max"]({ theme });
+
     const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
+        maxWidth: mobileBreakpoint,
     });
 
+    const tabletBreakpoint = Breakpoint["lg-max"]({ theme });
+
     const activeLinkRef = useRef<HTMLLIElement>(null);
+    const chainLinkRefs = useRef<(HTMLButtonElement | null)[]>([]);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleChainLinkClick =
-        (index: number) => (event: React.MouseEvent<HTMLButtonElement>) => {
+        (index: number) =>
+        (event: React.MouseEvent<HTMLButtonElement | HTMLDivElement>) => {
             event.preventDefault();
+            event.stopPropagation();
             if (!controlledMode) {
                 setCurrentActiveIndex(index);
             }
@@ -53,12 +69,25 @@ export const TabLinkChain = ({
         if (
             content &&
             wrapper &&
-            window.innerWidth <= MediaWidths.tablet &&
-            activeLinkRef
+            window.innerWidth <= tabletBreakpoint &&
+            activeLinkRef.current
         ) {
             content.scrollLeft =
                 activeLinkRef.current.getBoundingClientRect().left;
         }
+    };
+
+    const handleKeyDown = (e: React.KeyboardEvent, index: number) => {
+        let nextIndex = index;
+        if (e.key === "ArrowRight") {
+            nextIndex = (index + 1) % tabLinks.length;
+            e.preventDefault();
+        } else if (e.key === "ArrowLeft") {
+            nextIndex = (index - 1 + tabLinks.length) % tabLinks.length;
+            e.preventDefault();
+        }
+
+        chainLinkRefs.current[nextIndex]?.focus();
     };
 
     // =========================================================================
@@ -76,34 +105,57 @@ export const TabLinkChain = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <CustomFadeWrapper onResize={handleResize} data-testid={testId}>
-            <Chain role="tablist">
-                {tabLinks.map((linkChain, index) => {
+        <CustomFadeWrapper
+            onResize={handleResize}
+            data-testid={testId}
+            fadeColor={fadeColor}
+        >
+            <Chain
+                role="tablist"
+                $fullWidthIndicatorLine={fullWidthIndicatorLine}
+            >
+                {tabLinks.map(({ title, width, titleAddon }, index) => {
                     const isActive = currentActiveIndex === index;
 
                     return (
                         <ChainItem
                             key={index}
+                            role="none"
                             $active={isActive}
                             ref={isActive ? activeLinkRef : null}
+                            $width={width}
                         >
                             <ChainLink
-                                role="tab"
-                                type="button"
-                                aria-selected={isActive}
+                                role="none"
                                 onClick={handleChainLinkClick(index)}
                                 data-testid={`${testId}-link-${index}`}
+                                $reversed={titleAddon?.position === "left"}
                             >
-                                <Label $active={isActive} weight="regular">
-                                    {truncateText(linkChain.title)}
-                                </Label>
-                                <BoldLabel
-                                    $active={isActive}
-                                    weight="semibold"
-                                    aria-hidden="true"
-                                >
-                                    {truncateText(linkChain.title)}
-                                </BoldLabel>
+                                <LabelContainer role="none">
+                                    <Label
+                                        $active={isActive}
+                                        onClick={handleChainLinkClick(index)}
+                                        aria-hidden="true"
+                                    >
+                                        {truncateText(title)}
+                                    </Label>
+                                    <BoldLabel
+                                        role="tab"
+                                        type="button"
+                                        aria-selected={isActive}
+                                        tabIndex={isActive ? 0 : -1}
+                                        onKeyDown={(e) =>
+                                            handleKeyDown(e, index)
+                                        }
+                                        ref={(el) =>
+                                            (chainLinkRefs.current[index] = el)
+                                        }
+                                        $active={isActive}
+                                    >
+                                        {truncateText(title)}
+                                    </BoldLabel>
+                                </LabelContainer>
+                                {titleAddon?.content}
                             </ChainLink>
                         </ChainItem>
                     );

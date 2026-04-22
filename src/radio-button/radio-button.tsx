@@ -1,11 +1,25 @@
 import React from "react";
-import { Checkmark, Container, Input } from "./radio-button.styles";
+import {
+    Container,
+    Input,
+    StyledCheckedIcon,
+    StyledUnCheckedIcon,
+} from "./radio-button.styles";
 import { RadioButtonProps } from "./types";
 
+/**
+ * A field that allows a user to select from a predefined set of mutually
+ * exclusive options, shown with a graphical circle indicator when active.
+ * @example
+ * ```tsx
+ * <RadioButton checked={selected === "yes"} onChange={() => setSelected("yes")} />
+ * ```
+ */
 export const RadioButton = ({
     className,
     checked,
     disabled,
+    displaySize = "default",
     onChange,
     ...otherProps
 }: RadioButtonProps) => {
@@ -21,11 +35,29 @@ export const RadioButton = ({
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
+
+    const renderIcon = () => {
+        return checked ? (
+            <StyledCheckedIcon
+                data-testid="radio-checked"
+                $disabled={disabled}
+                aria-hidden
+            />
+        ) : (
+            <StyledUnCheckedIcon
+                data-testid="radio-unchecked"
+                $disabled={disabled}
+                aria-hidden
+            />
+        );
+    };
+
     return (
         <Container
             $selected={checked}
             $disabled={disabled}
             className={className}
+            $displaySize={displaySize}
             data-testid="radio-button"
         >
             <Input
@@ -36,12 +68,7 @@ export const RadioButton = ({
                 disabled={disabled}
                 {...otherProps}
             />
-            <Checkmark
-                id="checkmark"
-                data-testid="checkmark"
-                $disabled={disabled}
-                $selected={checked}
-            />
+            {renderIcon()}
         </Container>
     );
 };

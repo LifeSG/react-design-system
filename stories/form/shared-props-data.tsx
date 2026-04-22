@@ -15,8 +15,8 @@ export const SHARED_FORM_PROPS_DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "errorMessage",
-                description: "The error message text to be displayed",
-                propTypes: ["string"],
+                description: "The error message to be displayed",
+                propTypes: ["string", "React.ReactNode"],
             },
             {
                 name: "data-error-testid",

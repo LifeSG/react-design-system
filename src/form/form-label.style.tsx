@@ -1,45 +1,45 @@
 import styled from "styled-components";
-import { Color } from "../color";
-import { Text, TextStyleHelper } from "../text";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { Colour, Font, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
+export const LabelContainer = styled.div`
+    margin-bottom: ${Spacing["spacing-8"]};
+`;
 export const Label = styled.label`
-    ${TextStyleHelper.getTextStyle("H5", "semibold")}
-    color: ${Color.Neutral[3]};
-    margin-bottom: 0.5rem;
+    color: ${Colour["text-subtle"]};
     display: inline-block;
 
-    a,
-    span,
-    p {
-        ${TextStyleHelper.getTextStyle("H5", "semibold")}
-    }
-
-    a {
-        color: ${Color.Primary};
-        text-decoration: none;
-
-        :hover,
-        :active,
-        :focus {
-            color: ${Color.Secondary};
-
-            svg {
-                color: ${Color.Secondary};
-            }
-        }
-    }
+    ${Font["form-label"]}
+    ${applyHtmlContentStyle()}
+    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
-export const ErrorMessage = styled(Text.H6)`
-    color: ${Color.Validation.Red.Text};
-    margin-top: 0.5rem;
+export const ErrorIcon = styled(ExclamationCircleFillIcon)`
+    height: 1lh;
+    width: 1em;
+    flex-shrink: 0;
+    color: ${Colour["icon-error-strong"]};
+`;
+
+export const ErrorMessageContainer = styled.div`
+    ${Font["body-sm-semibold"]}
+    display: flex;
+    gap: ${Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-8"]};
+`;
+
+export const ErrorMessage = styled.p`
+    color: ${Colour["text-error"]};
     margin-bottom: 0;
     outline: none;
 `;
 
-export const Subtitle = styled(Text.BodySmall)`
-    color: ${Color.Neutral[3]};
+export const Subtitle = styled.span`
+    ${Font["form-description"]}
+    color: ${Colour["text-subtler"]};
+    display: block;
 `;

@@ -5,15 +5,19 @@ import { CellStyleProps, CellType, DayCell, DayCellProps } from "../day-cell";
 interface Props {
     date: Dayjs;
     calendarDate: Dayjs;
-    selectedDate: string;
-    hoverDate: string;
+    selectedDate: string | undefined;
+    focusDate: string;
+    hoverDate: string | undefined;
     minDate?: string | undefined;
     maxDate?: string | undefined;
     disabledDates?: string[] | undefined;
     allowDisabledSelection?: boolean | undefined;
-    numberOfDays?: number;
+    numberOfDays?: number | undefined;
     onSelect: (value: Dayjs, disabled: boolean) => void;
     onHover: (value: string, disabled: boolean) => void;
+    onFocus: (value: string) => void;
+    setFocusCell: (value: string) => void;
+    tabIndex: number;
 }
 
 export const FixedRangeDayCell = ({
@@ -21,13 +25,17 @@ export const FixedRangeDayCell = ({
     calendarDate,
     selectedDate,
     hoverDate,
+    focusDate,
     minDate,
     maxDate,
     disabledDates,
     allowDisabledSelection,
-    numberOfDays,
+    numberOfDays = 1,
     onSelect,
     onHover,
+    onFocus,
+    setFocusCell,
+    tabIndex,
 }: Props) => {
     // =========================================================================
     // CONSTS
@@ -53,15 +61,20 @@ export const FixedRangeDayCell = ({
         : { start: undefined, end: undefined };
 
     const isSelected =
-        selectedDate && date.isBetween(rangeStart, rangeEnd, "day", "[]");
+        !!selectedDate && date.isBetween(rangeStart, rangeEnd, "day", "[]");
     const isHover =
-        hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
+        !!hoverDate && date.isBetween(hoverStart, hoverEnd, "day", "[]");
     const isStart =
         (isSelected && date.isSame(rangeStart, "day")) ||
         (isHover && date.isSame(hoverStart, "day"));
     const isEnd =
         (isSelected && date.isSame(rangeEnd, "day")) ||
         (isHover && date.isSame(hoverEnd, "day"));
+
+    // For accessible label
+    const label = `From ${dayjs(hoverStart).format("D MMMM")} to ${dayjs(
+        hoverEnd
+    ).format("D MMMM")}, ${disabled ? "Unavailable" : "Available"}`;
 
     // =========================================================================
     // EVENT HANDLERS
@@ -72,6 +85,55 @@ export const FixedRangeDayCell = ({
 
     const handleHover = () => {
         onHover(date.format("YYYY-MM-DD"), !interactive);
+    };
+
+    const handleFocus = () => {
+        onFocus(date.format("YYYY-MM-DD"));
+    };
+
+    const handleKeyNavigation = (event: React.KeyboardEvent) => {
+        let newFocusSelection: Dayjs | undefined;
+
+        const keyActions: Record<string, () => dayjs.Dayjs> = {
+            ArrowLeft: () => date.subtract(1, "day"),
+            ArrowRight: () => date.add(1, "day"),
+            ArrowUp: () => date.subtract(7, "day"),
+            ArrowDown: () => date.add(7, "day"),
+            Home: () => date.startOf("week"),
+            End: () => date.endOf("week"),
+            PageUp: () => {
+                return event.shiftKey
+                    ? date.subtract(1, "year")
+                    : date.subtract(1, "month");
+            },
+            PageDown: () => {
+                return event.shiftKey
+                    ? date.add(1, "year")
+                    : date.add(1, "month");
+            },
+        };
+
+        const action = keyActions[event.key];
+        if (action) {
+            event.preventDefault();
+            newFocusSelection = action();
+            setFocusCell(newFocusSelection.format("YYYY-MM-DD"));
+        }
+    };
+
+    const handleKeyDown = (event: React.KeyboardEvent) => {
+        const keyboardEvent = event as React.KeyboardEvent<HTMLInputElement>;
+        const selectedKey = keyboardEvent.key;
+
+        if (selectedKey === "Enter" || selectedKey === " ") {
+            event.preventDefault();
+            if (interactive) {
+                handleSelect();
+            }
+            return;
+        }
+
+        handleKeyNavigation(event);
     };
 
     // =========================================================================
@@ -104,7 +166,7 @@ export const FixedRangeDayCell = ({
         if (isHover) {
             applyRange(
                 props,
-                "hover-dash",
+                "hover",
                 formattedDate === hoverStart,
                 formattedDate === hoverEnd
             );
@@ -112,32 +174,16 @@ export const FixedRangeDayCell = ({
         if (isSelected) {
             applyRange(
                 props,
-                "selected",
+                "selected-outline",
                 formattedDate === rangeStart,
                 formattedDate === rangeEnd
             );
         }
         if (isSelected && isHover) {
-            applyRange(props, "overlap", isStart, isEnd);
-        }
+            applyRange(props, "selected-hover-outline", isStart, isEnd);
 
-        if (formattedDate === rangeStart) {
-            if (isHover) {
-                props.circleLeft = "overlap-outline";
-                props.circleRight = "overlap-outline";
-            } else {
-                props.circleRight = "selected-outline";
-                props.circleLeft = "selected-outline";
-            }
-        }
-
-        if (formattedDate === hoverStart) {
-            props.circleLeft = "hover-current";
-            props.circleRight = "hover-current";
-            props.circleShadow = true;
-            if (hoverStart >= rangeStart && hoverStart < rangeEnd) {
-                props.circleLeft = "overlap-outline";
-                props.circleRight = "overlap-outline";
+            if (formattedDate === hoverStart && formattedDate !== rangeStart) {
+                props.circleLeft = "selected-hover";
             }
         }
 
@@ -153,8 +199,6 @@ export const FixedRangeDayCell = ({
             props.labelType = "unavailable";
         } else if (dayjs().isSame(date, "day") && !disabled) {
             props.labelType = "current";
-            props.circleLeft = "current";
-            props.circleRight = "current";
         }
 
         return props;
@@ -169,8 +213,15 @@ export const FixedRangeDayCell = ({
         calendarDate,
         disabled,
         interactive,
+        currentDateIndicator: true,
         onSelect: handleSelect,
         onHover: handleHover,
+        onFocus: handleFocus,
+        onKeyDown: handleKeyDown,
+        focusDate: dayjs(focusDate),
+        role: "gridcell",
+        tabIndex,
+        label,
     };
 
     return (

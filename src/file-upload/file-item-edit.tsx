@@ -11,9 +11,9 @@ import {
     Item,
     NameSection,
 } from "./file-item-edit.styles";
+import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
-import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
 
 interface Props {
     fileItem: FileItemProps;
@@ -46,8 +46,8 @@ export const FileItemEdit = ({
     const [formattedName, setFormattedName] = useState<string>();
     const [currentDescription, setCurrentDescription] = useState<string>("");
 
-    const textareaRef = useRef<HTMLTextAreaElement>();
-    const nameSectionRef = useRef<HTMLDivElement>();
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const nameSectionRef = useRef<HTMLDivElement>(null);
 
     // =========================================================================
     // EFFECTS
@@ -64,7 +64,9 @@ export const FileItemEdit = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleSave = () => {
-        onSave(textareaRef.current.value.trim());
+        if (textareaRef.current) {
+            onSave(textareaRef.current.value.trim());
+        }
     };
 
     const handleChange = (event: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -131,6 +133,7 @@ export const FileItemEdit = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={3}
+                        aria-label={`Photo description for ${name}`}
                         label={{
                             children: "Photo description",
                             subtitle:

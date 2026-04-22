@@ -10,6 +10,18 @@ import { TimeSlotWeekViewProps } from "./types";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 
+/**
+ * A week-view availability grid for date selection.
+ *
+ * Renders a calendar week grid that overlays time slot availability on each
+ * day. Unlike `TimeSlotBarWeek`, slots are optional and the component focuses
+ * on date selection. Extends `CommonCalendarProps`.
+ *
+ * @example
+ * ```tsx
+ * <TimeSlotWeekView currentDate={date} onDateChange={setDate} />
+ * ```
+ */
 export const TimeSlotWeekView = ({
     disabledDates,
     onWeekDisplayChange,
@@ -27,9 +39,9 @@ export const TimeSlotWeekView = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [selectedDate, setSelectedDate] = useState<string>(value); // YYYY-MM-DD
-    const calendarManagerRef = useRef<CalendarManagerRef>();
-    const previousCalendarDate = useRef<Dayjs>(undefined);
+    const [selectedDate, setSelectedDate] = useState<string | undefined>(value); // YYYY-MM-DD
+    const calendarManagerRef = useRef<CalendarManagerRef>(null);
+    const previousCalendarDate = useRef<Dayjs | undefined>(undefined);
 
     // =============================================================================
     // EFFECTS
@@ -45,7 +57,7 @@ export const TimeSlotWeekView = ({
     const handleDateSelect = (value: Dayjs) => {
         const stringValue = value.format(DATE_FORMAT);
         setSelectedDate(stringValue);
-        onChange && onChange(stringValue);
+        onChange?.(stringValue);
     };
 
     const handleOnSlotClick = (date: string, slot: TimeSlot) => {
@@ -97,20 +109,19 @@ export const TimeSlotWeekView = ({
         <Wrapper {...otherProps}>
             <CalendarManager
                 ref={calendarManagerRef}
-                type="standalone"
                 dynamicHeight
                 initialCalendarDate={getInitialCalendarDate()}
                 selectedStartDate={selectedDate}
                 getLeftArrowDate={(day) => day.subtract(1, "week")}
                 getRightArrowDate={(day) => day.add(1, "week")}
                 isLeftArrowDisabled={(calendarDate) =>
-                    minDate &&
+                    !!minDate &&
                     dayjs(calendarDate)
                         .subtract(1, "week")
                         .isBefore(minDate, "week")
                 }
                 isRightArrowDisabled={(calendarDate) =>
-                    maxDate &&
+                    !!maxDate &&
                     dayjs(calendarDate).add(1, "week").isAfter(maxDate, "week")
                 }
                 onCalendarDateChange={handleOnCalendarDateChange}

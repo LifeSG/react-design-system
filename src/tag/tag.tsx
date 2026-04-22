@@ -1,12 +1,21 @@
-import { TagProps } from "./types";
+import React from "react";
 import { Label, Wrapper } from "./tag.style";
+import { TagProps } from "./types";
 
+/**
+ * A static or interactive element that is used to communicate selections, statuses and categories.
+ * @example
+ * ```tsx
+ * <Tag colorType="blue">Category</Tag>
+ * ```
+ */
 export const Tag = ({
     type,
     colorType = "black",
     children,
     interactive = false,
     icon,
+    iconPosition = "left",
     ...otherProps
 }: TagProps): JSX.Element => {
     return (
@@ -17,8 +26,13 @@ export const Tag = ({
             $interactive={interactive}
             {...otherProps}
         >
-            {icon}
-            <Label>{children}</Label>
+            {iconPosition === "left" &&
+                icon &&
+                React.cloneElement(icon, { "aria-hidden": true })}
+            <Label role="presentation">{children}</Label>
+            {iconPosition === "right" &&
+                icon &&
+                React.cloneElement(icon, { "aria-hidden": true })}
         </Wrapper>
     );
 };

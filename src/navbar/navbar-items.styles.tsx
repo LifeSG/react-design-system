@@ -1,9 +1,10 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import styled from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
+import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text";
+import { Font, MediaQuery } from "../theme";
+import { Colour } from "../theme";
+import { ThemeNavbar } from "../theme/components/theme-helper";
+import { TypographyWeight } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -14,11 +15,11 @@ interface StyleProps {
 }
 
 interface WrapperStyleProps {
-    $alignLeft: boolean;
+    $alignLeft: boolean | undefined;
 }
 
 interface ItemStyleProps {
-    $hiddenBranding: boolean;
+    $hiddenBranding: boolean | undefined;
 }
 
 // =============================================================================
@@ -32,7 +33,7 @@ export const Wrapper = styled.ul<WrapperStyleProps>`
 
     ${(props) => props.$alignLeft && "margin-right: auto;"}
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;
@@ -41,7 +42,7 @@ export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -53,14 +54,14 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 export const LinkItem = styled.li<ItemStyleProps>`
     display: flex;
-    margin-left: 1rem;
+    margin: 0 1rem;
 
-    :first-child {
+    &:first-child {
         // negative margin to preserve touch target size for link
         margin-left: ${(props) => (props.$hiddenBranding ? "-0.5rem" : "0")};
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
         padding: 0.125rem 0;
         width: 100%;
@@ -68,30 +69,50 @@ export const LinkItem = styled.li<ItemStyleProps>`
     }
 `;
 
-export const Link = styled(Text.Hyperlink.Small)<StyleProps>`
+const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
+    ${(props) => Font[`body-md-${props.weight}`]}
+
     display: flex;
     position: relative;
     align-items: center;
     text-align: center;
-    color: ${Color.Neutral[1]};
+    color: ${ThemeNavbar["navbar-link-colour-text"]};
     height: 100%;
-    padding: 0 0.5rem;
 
-    :active,
-    :focus {
-        color: ${Color.Neutral[1]};
+    &:active,
+    &:hover,
+    &:focus {
+        color: ${(props) =>
+            props.$selected
+                ? ThemeNavbar["navbar-link-colour-text-selected-hover"]
+                : ThemeNavbar["navbar-link-colour-text-hover"]};
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
-        color: ${Color.Neutral[1]};
+    ${MediaQuery.MaxWidth.lg} {
         width: 100%;
         padding: 0.5rem 1rem;
         text-align: left;
         align-items: flex-start;
-        :hover {
-            color: ${Color.Neutral[1]};
-        }
     }
+`;
+export const Link = styled.a<{ $selected: boolean; weight: TypographyWeight }>`
+    ${linkCss}
+`;
+
+export const LinkButton = styled.button<{
+    $selected: boolean;
+    weight: TypographyWeight;
+}>`
+    ${linkCss}
+    background: none;
+    border: 0;
+    padding: 0;
+    cursor: pointer;
+    text-align: left;
+    margin: 0;
+    box-shadow: none;
+    font: inherit;
+    color: inherit;
 `;
 
 export const LinkLabel = styled.div`
@@ -105,22 +126,25 @@ export const LinkLabel = styled.div`
     white-space: pre-wrap;
 `;
 
-export const LinkIndicator = styled.div`
+export const LinkIndicator = styled.div<StyleProps>`
     position: absolute;
     bottom: 0;
+    left: 0;
+    right: 0;
     height: 0.25rem;
-    left: 0.5rem;
-    right: 0.5rem;
-    background-color: ${Color.Primary};
+    background-color: ${Colour["border-selected"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    &:hover {
+        ${(props) => props.$selected && Colour["border-selected-hover"]};
+    }
+
+    ${MediaQuery.MaxWidth.lg} {
         left: 0;
         right: unset;
         top: 0;
         bottom: 0;
         height: 100%;
         width: 0.25rem;
-        background-color: ${Color.Primary};
     }
 `;
 
@@ -136,11 +160,14 @@ export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
     margin: auto 0.25rem auto 0;
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)`
+export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
     height: 1.25rem;
     width: 1.25rem;
-    color: ${Color.Neutral[3]};
-    :hover {
-        color: ${Color.Neutral[1]};
+    color: ${Colour.icon};
+    &:hover {
+        ${(props) =>
+            props.$selected
+                ? Colour["icon-selected-hover"]
+                : Colour["icon-hover"]};
     }
 `;

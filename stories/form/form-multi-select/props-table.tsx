@@ -1,7 +1,6 @@
-import React from "react";
-import { ApiTable } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
+import { PropTableTabs } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -76,12 +75,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"end"`,
             },
             {
-                name: "listStyleWidth",
-                description:
-                    "Style option: The width of the option display. (E.g. '100%' or '12rem')",
-                propTypes: ["string"],
-            },
-            {
                 name: "enableSearch",
                 description:
                     "When specified, it will allow a text base search for the items in the list",
@@ -89,7 +82,7 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
-                name: "searchPlaceholder",
+                name: "searchPlaceholder (deprecated)",
                 description: "The placeholder for the search field",
                 propTypes: ["string"],
             },
@@ -126,9 +119,139 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Called when a search is being executed",
                 propTypes: ["() => void"],
             },
+            {
+                name: "hideNoResultsDisplay",
+                description:
+                    "If specified, the default no results display will not be rendered",
+                propTypes: ["boolean"],
+            },
+            {
+                name: "noResultsDescription (deprecated)",
+                description:
+                    "Additional description rendered after the default no results display",
+                propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "customLabels",
+                description:
+                    "Specifies custom labels to replace default labels",
+                propTypes: ["DropdownCustomLabelProps"],
+            },
+            {
+                name: "variant",
+                description: "The display variant of the component",
+                propTypes: [`"small"`, `"default"`],
+                defaultValue: `"default"`,
+            },
+            {
+                name: "alignment",
+                description:
+                    "Specifies if the dropdown is aligned to the left or right of the main field",
+                propTypes: [`"left"`, `"right"`],
+                defaultValue: `"left"`,
+            },
+            {
+                name: "dropdownZIndex",
+                description:
+                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
+                propTypes: ["number"],
+                defaultValue: "50",
+            },
+            {
+                name: "dropdownWidth",
+                description:
+                    "Custom width for the dropdown. When specified, the dropdown will use this exact width instead of matching the input element width.",
+                propTypes: ["string"],
+            },
+            {
+                name: "maxSelectable",
+                description:
+                    "Specifies the maximum number of options that can be selected",
+                propTypes: ["number"],
+            },
+            {
+                name: "dropdownRootNode",
+                description: (
+                    <>
+                        The root element that hosts the dropdown element. Only
+                        specify this if you absolutely need to change the parent
+                        of the dropdown.
+                        <br />
+                        <br />
+                        For example, the dropdown is rendered in{" "}
+                        <code>body</code> by default. This could cause scroll
+                        issues if your UI only scrolls within a certain
+                        container. In that case, you can specify this prop so
+                        that they share the same stacking context. However, note
+                        that this might cause z-index issues since it will no
+                        longer be rendered in <code>body</code>.
+                    </>
+                ),
+                propTypes: ["RefObject<HTMLElement>"],
+                defaultValue: (
+                    <>
+                        document<code>body</code>
+                    </>
+                ),
+            },
+        ],
+    },
+    {
+        name: "DropdownCustomLabelProps",
+        attributes: [
+            {
+                name: "searchPlaceholder",
+                description: "The placeholder for the search field",
+                propTypes: ["string"],
+            },
+            {
+                name: "noResultsLabel",
+                description:
+                    "Specifies to replace the default no results display",
+                propTypes: ["string"],
+            },
+            {
+                name: "noResultsDescription",
+                description:
+                    "Additional description rendered after the default no results display",
+                propTypes: ["() => React.ReactNode"],
+            },
+            {
+                name: "selectAllButtonLabel",
+                description:
+                    "Specifies to replace the default Select all button label",
+                propTypes: ["string"],
+            },
+            {
+                name: "clearAllButtonLabel",
+                description:
+                    "Specifies to replace the default Clear all button label",
+                propTypes: ["string"],
+            },
+            {
+                name: "allSelectedLabel",
+                description:
+                    "Specifies to replace the default All selected label",
+                propTypes: ["string"],
+            },
+            {
+                name: "multiSelectedLabel",
+                description:
+                    "Specifies to replace the default X selected label",
+                propTypes: ["string"],
+            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
 ];
 
-export const PropsTable = () => <ApiTable sections={DATA} />;
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
+            {
+                label: "Form.MultiSelect",
+                content: <ApiTable sections={DATA} />,
+            },
+        ]}
+    />
+);

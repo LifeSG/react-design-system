@@ -1,6 +1,6 @@
-import React from "react";
-import { useTheme } from "styled-components";
-import { BaseTheme } from "../theme";
+import React, { useContext } from "react";
+import { ThemeContext } from "styled-components";
+import { LifeSGTheme } from "../theme";
 import { getErrorDisplayData } from "./error-display-data";
 import {
     ActionButton,
@@ -10,12 +10,25 @@ import {
     TextContainer,
     Title,
 } from "./error-display.style";
+import { InactivityTimer } from "./inactivity-timer";
 import {
     ErrorDisplayProps,
     InactivityAdditionalAttributes,
     MaintenanceAdditionalAttributes,
 } from "./types";
 
+/**
+ * Renders a pre-defined error page with an illustration, title, description, and optional action button.
+ *
+ * Supports standard HTTP error codes (`"400"`, `"403"`, `"404"`, `"408"`,
+ * `"500"`, `"502"`, `"503"`, `"504"`) plus a `"no-item"` empty state.
+ * Use `illustrationOnly` to render the image alone.
+ *
+ * @example
+ * ```tsx
+ * <ErrorDisplay type="404" />
+ * ```
+ */
 export const ErrorDisplay = ({
     type,
     img,
@@ -26,16 +39,23 @@ export const ErrorDisplay = ({
     imageOnly,
     illustrationScheme,
     ...otherProps
-}: ErrorDisplayProps): JSX.Element => {
+}: ErrorDisplayProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
     const defaultAssets = getErrorDisplayData(
         type,
-        illustrationScheme || (theme || BaseTheme).resourceScheme
+        illustrationScheme || (theme || LifeSGTheme).resourceScheme,
+        theme
     );
+    const inactivityAttrs =
+        type === "inactivity"
+            ? (additionalProps as InactivityAdditionalAttributes | undefined)
+            : undefined;
 
+    const secondsLeft = inactivityAttrs?.secondsLeft;
+    const reminderInterval = inactivityAttrs?.reminderInterval;
     const testId = otherProps["data-testid"] || "error-display";
 
     // =============================================================================
@@ -47,14 +67,14 @@ export const ErrorDisplay = ({
                 const typecastProps =
                     additionalProps as MaintenanceAdditionalAttributes;
                 return additionalProps && typecastProps.dateString
-                    ? defaultAssets.renderDescription(typecastProps)
+                    ? defaultAssets?.renderDescription?.(typecastProps)
                     : description || undefined;
             }
             case "inactivity": {
                 const typecastProps =
                     additionalProps as InactivityAdditionalAttributes;
                 return additionalProps && typecastProps.secondsLeft
-                    ? defaultAssets.renderDescription(typecastProps)
+                    ? defaultAssets?.renderDescription?.(typecastProps)
                     : description || undefined;
             }
             default:
@@ -122,6 +142,14 @@ export const ErrorDisplay = ({
 
     return (
         <Container {...otherProps} data-testid={testId}>
+            {type === "inactivity" && (
+                <InactivityTimer
+                    secondsLeft={secondsLeft}
+                    reminderInterval={reminderInterval}
+                    imageOnly={imageOnly}
+                    hasCustomDescription={!!description}
+                />
+            )}
             <Img {...updatedAssets.img} alt="" data-id="error-display-image" />
             {!imageOnly && renderContentDisplay()}
             {actionButton && renderActionButton()}

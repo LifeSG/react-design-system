@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import styled from "styled-components";
-import { Color } from "../../src/color";
-import { TextStyleHelper } from "../../src/text/helper";
+import { V2_Color } from "../../src/v2_color";
+import { V2_TextStyleHelper } from "../../src/v2_text";
 
 interface PropTableTabsProps {
     tabs: {
@@ -36,30 +36,31 @@ export const PropTableTabs: React.FC<PropTableTabsProps> = ({ tabs }) => {
 
 const Container = styled.div`
     margin: 1rem 0;
-    border: 1px solid ${Color.Neutral[6]};
+    border: 1px solid ${V2_Color.Neutral[6]};
     border-radius: 0.75rem; /* Rounded border around tabs + content */
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.06), 0 6px 12px rgba(0, 0, 0, 0.04);
     padding: 0.25rem 0.75rem 0.75rem; /* Reduce top padding, keep side/bottom comfortable */
-    background: ${Color.Neutral[7]}; /* Subtle background to elevate block */
+    background: ${V2_Color.Neutral[7]}; /* Subtle background to elevate block */
 `;
 
 const TabList = styled.div`
     display: flex;
     gap: 0.5rem;
-    border-bottom: 1px solid ${Color.Neutral[5]};
+    border-bottom: 1px solid ${V2_Color.Neutral[5]};
     margin: 0 0 0.75rem 0; /* Slightly tighter space before content */
     padding: 0.25rem 0 0.5rem; /* Compress vertical padding overall */
 `;
 
 const Tab = styled.button<{ $active: boolean }>`
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    ${V2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
     padding: 0.5rem 0.875rem;
     background: ${(props) =>
-        props.$active ? Color.Neutral[6] : Color.Neutral[8]};
+        props.$active ? V2_Color.Neutral[6] : V2_Color.Neutral[8]};
     border: 1px solid
-        ${(props) => (props.$active ? Color.Primary : Color.Neutral[6])};
+        ${(props) => (props.$active ? V2_Color.Primary : V2_Color.Neutral[6])};
     border-radius: 0.5rem;
-    color: ${(props) => (props.$active ? Color.Primary : Color.Neutral[3])};
+    color: ${(props) =>
+        props.$active ? V2_Color.Primary : V2_Color.Neutral[3]};
     font-size: 0.75rem;
     font-weight: ${(props) => (props.$active ? 600 : 500)};
     cursor: pointer;
@@ -67,18 +68,18 @@ const Tab = styled.button<{ $active: boolean }>`
     transition: all 0.18s ease;
 
     &:hover {
-        background: ${Color.Neutral[6]};
-        color: ${Color.Primary};
+        background: ${V2_Color.Neutral[6]};
+        color: ${V2_Color.Primary};
         box-shadow: 0 1px 2px rgba(0, 0, 0, 0.12);
     }
 
     &:focus {
-        outline: 2px solid ${Color.Primary};
+        outline: 2px solid ${V2_Color.Primary};
         outline-offset: 2px;
     }
 
     &:active {
-        background: ${Color.Neutral[5]};
+        background: ${V2_Color.Neutral[5]};
     }
 `;
 

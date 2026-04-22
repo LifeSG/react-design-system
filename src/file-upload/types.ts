@@ -1,4 +1,8 @@
+/**
+ * Props for an individual file item displayed in the upload list.
+ */
 export interface FileItemProps {
+    /** The unique identifier of the file. */
     id: string;
     /** The name of the file */
     name: string;
@@ -11,7 +15,7 @@ export interface FileItemProps {
     /** The upload progress display. Values from 0 to 1 */
     progress?: number | undefined;
     /** The error message display to indicate file upload error */
-    errorMessage?: string | undefined;
+    errorMessage?: string | React.ReactNode | undefined;
     /** The thumbnail of the file that will be rendered */
     thumbnailImageDataUrl?: string | undefined;
     /** Indicates if text should be truncated */
@@ -20,6 +24,9 @@ export interface FileItemProps {
 
 export type FileUploadStyle = "bordered" | "no-border";
 
+/**
+ * HTML file input pass-through attributes for the hidden `<input type="file">` element.
+ */
 export interface FileInputProps {
     /** Defines the file types that is accepted */
     accept?: string | undefined;
@@ -27,21 +34,49 @@ export interface FileInputProps {
     capture?: boolean | "user" | "environment" | undefined; // https://www.w3.org/TR/html-media-capture/#the-capture-attribute
     /** Specifies if user is allowed to select more than one file. */
     multiple?: boolean | undefined;
+    /** Disables the file input when `true`. */
     disabled?: boolean | undefined;
+    /** The unique identifier for the element. */
     id?: string | undefined;
+    /** CSS class name for custom styling. */
     className?: string | undefined;
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
+    /** The name of the file input field, used in form submissions. */
     name?: string | undefined;
 }
 
+/**
+ * Props for the FileUpload component - drag-and-drop file input.
+ *
+ * Renders a drop zone with optional file list, sortable items, editable
+ * descriptions, and error display. Extends `FileInputProps` (the underlying
+ * `<input type="file">` attributes).
+ *
+ * @example
+ * ```tsx
+ * <FileUpload
+ *     title="Upload documents"
+ *     maxFiles={5}
+ *     fileItems={uploadedFiles}
+ *     onChange={(files) => handleUpload(files)}
+ *     onDelete={(item) => handleDelete(item)}
+ * />
+ * ```
+ * @keywords drop zone, drag and drop, attachment, file input, upload field
+ */
 export interface FileUploadProps extends FileInputProps {
     /** Component specific */
     title?: string | JSX.Element | undefined;
+    /** The description text or element displayed below the title. */
     description?: string | JSX.Element | undefined;
     /** The style type for the component. Values "bordered" | "no-border" */
     styleType?: FileUploadStyle | undefined;
+    /** The maximum number of files the user can upload. */
     maxFiles?: number | undefined;
+    /** A warning message displayed below the drop zone. */
     warning?: string | JSX.Element | undefined;
+    /** The list of uploaded file items to render. */
     fileItems?: FileItemProps[] | undefined;
     /** If set, file items will have editable descriptions (only image files) */
     editableFileItems?: boolean | undefined;
@@ -50,9 +85,11 @@ export interface FileUploadProps extends FileInputProps {
     /** Specifies if sorting is enabled for the file items */
     sortable?: boolean | undefined;
     /** The general error message for the component */
-    errorMessage?: string | undefined;
+    errorMessage?: string | JSX.Element | undefined;
     /** Indicates if the component is in the readonly state */
     readOnly?: boolean | undefined;
+    /** Specify custom label text for elements within the component */
+    customLabels?: { uploadButtonLabel?: string | undefined } | undefined;
     /** Called when an upload happens via drag drop or click */
     onChange?: ((files: File[]) => void) | undefined;
     /** Called when an update to the description happens */

@@ -1,17 +1,21 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { animated } from "react-spring";
+import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 import { Checkbox } from "../../checkbox";
-import { Color } from "../../color";
-import { MediaQuery } from "../../media";
-import { Text, TextStyleHelper } from "../../text";
-import { LabelDisplayType, TruncateType } from "./types";
+import { Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
+import { ComponentLoadingSpinner } from "../component-loading-spinner";
+import {
+    DropdownVariantType,
+    IconProps,
+    LabelDisplayType,
+    TruncateType,
+} from "./types";
 
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
 interface ListContainerProps {
-    width?: string;
+    $width?: string;
 }
 
 interface ListItemProps {
@@ -21,12 +25,18 @@ interface ListItemProps {
 interface ListItemSelectorProps {
     $multiSelect?: boolean;
     $hasNextLineLabel?: boolean;
+    $variant?: DropdownVariantType;
 }
 
 interface LabelProps {
     $truncateType?: TruncateType;
     $maxLines?: number;
     $labelDisplayType?: LabelDisplayType;
+    $variant?: DropdownVariantType;
+}
+
+interface ResultStateProps {
+    $variant?: DropdownVariantType;
 }
 
 // =============================================================================
@@ -37,51 +47,56 @@ interface LabelProps {
 // MAIN STYLES
 // -----------------------------------------------------------------------------
 
-export const Container = styled(animated.div)`
+export const Container = animated(styled.div`
     overflow: hidden;
     box-shadow: 0 4px 5px 0 rgba(0, 0, 0, 0.2);
-`;
+`);
 
 export const List = styled.ul<ListContainerProps>`
-    border-bottom-left-radius: 4px;
-    border-bottom-right-radius: 4px;
+    border-bottom-left-radius: ${Radius["sm"]};
+    border-bottom-right-radius: ${Radius["sm"]};
     background: transparent;
     max-height: 20rem;
-    width: ${(props) => props.width || "100%"};
+    width: ${(props) => props.$width || "100%"};
     overflow-y: auto;
-    padding: 0.5rem;
+    padding: ${Spacing["spacing-8"]};
     list-style-type: none;
 
-    ::-webkit-scrollbar {
-        width: 9px;
+    &::-webkit-scrollbar {
+        width: 14px;
     }
 
-    ::-webkit-scrollbar-track {
+    &::-webkit-scrollbar-track {
         background: transparent;
     }
 
-    ::-webkit-scrollbar-thumb {
-        background: ${Color.Neutral[4]};
-        border-right: 5px solid ${Color.Neutral[8]};
-        border-top-right-radius: 4px;
-        border-bottom-right-radius: 4px;
+    &::-webkit-scrollbar-thumb {
+        background: ${Colour["bg-inverse-subtlest"]};
+        border: 5px solid transparent;
+        border-radius: ${Radius["full"]};
+        background-clip: padding-box;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         max-height: 15rem;
     }
 `;
 
 export const ListItem = styled.li<ListItemProps>`
-    :hover,
-    :focus,
-    :active {
-        background: ${Color.Accent.Light[5]};
+    &:hover,
+    &:focus,
+    &:active {
+        background: ${Colour["bg-hover"]};
     }
     ${(props) => {
         if (props.$checked) {
             return css`
-                background: ${Color.Accent.Light[5]};
+                background: ${Colour["bg-selected"]};
+                &:hover,
+                &:focus,
+                &:active {
+                    background: ${Colour["bg-selected-hover"]};
+                }
             `;
         }
     }}
@@ -92,27 +107,27 @@ export const ListItemSelector = styled.button<ListItemSelectorProps>`
     ${(props) => {
         if (props.$multiSelect) {
             return css`
-                padding: 0.5rem 1rem;
+                padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
             `;
         } else {
             return css`
-                padding: 0 1rem;
-                min-height: ${props.$hasNextLineLabel ? "4.255rem" : "3.5rem"};
+                padding: 15px ${Spacing["spacing-16"]}; // TODO: confirm vertical spacing
                 align-items: center;
             `;
         }
     }}
-    margin: 0 -0.5rem;
+    margin: 0 -${Spacing["spacing-8"]};
     border: none;
+    border-radius: ${Radius["none"]};
     background: transparent;
     width: 100%;
     cursor: pointer;
 
-    :hover,
-    :visited,
-    :focus,
-    :active {
-        outline-color: ${Color.Accent.Light[3]};
+    &:hover,
+    &:visited,
+    &:focus,
+    &:active {
+        outline-color: ${Colour["border-focus"]};
     }
 
     span {
@@ -134,15 +149,18 @@ const lineClampCss = css<LabelProps>`
 `;
 
 export const PrimaryText = styled.div<LabelProps>`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
+    ${(props) =>
+        props.$variant === "small"
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
     width: 100%;
 
     ${(props) => props.$truncateType === "end" && lineClampCss}
 `;
 
 export const SecondaryText = styled.div<LabelProps>`
-    color: ${Color.Neutral[4]};
+    color: ${Colour["text-subtlest"]};
     width: 100%;
 
     ${(props) => props.$truncateType === "end" && lineClampCss}
@@ -151,12 +169,12 @@ export const SecondaryText = styled.div<LabelProps>`
         switch (props.$labelDisplayType) {
             case "next-line":
                 return css`
-                    ${TextStyleHelper.getTextStyle("BodySmall", "semibold")}
+                    ${Font["body-md-semibold"]}
                 `;
             case "inline":
             default:
                 return css`
-                    ${TextStyleHelper.getTextStyle("Body", "regular")}
+                    ${Font["body-baseline-regular"]}
                 `;
         }
     }}
@@ -181,7 +199,7 @@ export const Label = styled.div<LabelProps>`
 
                     ${SecondaryText} {
                         display: inline;
-                        margin-left: 0.5rem;
+                        margin-left: ${Spacing["spacing-8"]};
                     }
                 `;
         }
@@ -191,7 +209,7 @@ export const Label = styled.div<LabelProps>`
 export const TruncateFirstLine = styled.div<LabelProps>`
     display: inline-block;
     width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
-    height: 1.5rem;
+    height: 1lh;
     word-break: break-all;
     overflow: hidden;
 `;
@@ -199,7 +217,7 @@ export const TruncateFirstLine = styled.div<LabelProps>`
 export const TruncateSecondLine = styled.div<LabelProps>`
     display: inline-block;
     width: ${(props) => (props.$maxLines === 1 ? 50 : 100)}%;
-    height: 1.5rem;
+    height: 1lh;
     text-overflow: ellipsis;
     white-space: nowrap;
     overflow: hidden;
@@ -208,8 +226,8 @@ export const TruncateSecondLine = styled.div<LabelProps>`
 `;
 
 export const ListCheckbox = styled(Checkbox)`
-    flex: 0 0 1.5rem;
-    margin-right: 1rem;
+    flex-shrink: 0;
+    margin-right: ${Spacing["spacing-16"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -220,36 +238,43 @@ export const SelectAllContainer = styled.div`
     width: 100%;
     display: flex;
     justify-content: flex-end;
-    padding: 1rem 0 0.5rem 0;
+    padding: ${Spacing["spacing-16"]} 0 ${Spacing["spacing-8"]} 0;
 `;
 
-export const DropdownCommonButton = styled.button`
-    ${TextStyleHelper.getTextStyle("Body", "semibold")}
+export const DropdownCommonButton = styled.button<LabelProps>`
+    ${(props) =>
+        props.$variant === "small"
+            ? Font["body-md-semibold"]
+            : Font["body-baseline-semibold"]}
     background-color: transparent;
     background-repeat: no-repeat;
     border: none;
     cursor: pointer;
     overflow: hidden;
     outline: none;
-    ${(props) => {
-        return `
-			color: ${Color.Primary(props)};
-		`;
-    }}
+    color: ${Colour["text-primary"]};
 `;
 
-export const ResultStateContainer = styled.div`
+export const ResultStateContainer = styled.div<ResultStateProps>`
     width: 100%;
     display: flex;
-    padding: 1rem 0.5rem;
+    padding: 15px ${Spacing["spacing-16"]}; // TODO: confirm vertical padding
     align-items: center;
+
+    ${(props) =>
+        props.$variant === "small"
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]}
 `;
 
-export const ResultStateText = styled(Text.Body)``;
+export const LabelIcon = styled(ExclamationCircleFillIcon)<IconProps>`
+    height: 1em;
+    width: 1em;
+    margin-right: ${Spacing["spacing-4"]};
+    color: ${Colour["icon-error"]};
+`;
 
-export const LabelIcon = styled(ExclamationCircleFillIcon)`
-    margin-right: 0.625rem;
-    height: 1.5rem;
-    width: 1.5rem;
-    color: ${Color.Validation.Red.Icon};
+export const Spinner = styled(ComponentLoadingSpinner)`
+    margin-right: ${Spacing["spacing-4"]};
+    color: ${Colour["icon"]};
 `;

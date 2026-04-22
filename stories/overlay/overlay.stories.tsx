@@ -1,4 +1,4 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Overlay } from "src/overlay";
@@ -6,8 +6,9 @@ import { Overlay } from "src/overlay";
 type Component = typeof Overlay;
 
 const meta: Meta<Component> = {
-    title: "Modules/Overlay",
+    title: "Overlays/Overlay",
     component: Overlay,
+    tags: ["backdrop", "dimmer", "background", "scrim"],
 };
 
 export default meta;

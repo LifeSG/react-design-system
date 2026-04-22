@@ -364,6 +364,98 @@ describe("FileUpload", () => {
             expect(uploadButton).not.toBeInTheDocument();
         });
     });
+
+    describe("Progress Announcements", () => {
+        it("should announce the start of file upload when progress begins", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    ...MOCK_NON_IMAGE_FILE,
+                    progress: 0.1,
+                },
+            ];
+
+            render(<FileUpload fileItems={fileItems} />);
+
+            const announcement = screen.getByText(
+                "Starting upload of bugs-bunny.pdf"
+            );
+            expect(announcement).toBeInTheDocument();
+            expect(
+                announcement.closest('[aria-live="polite"]')
+            ).toBeInTheDocument();
+        });
+
+        it("should announce when file upload is complete", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    ...MOCK_NON_IMAGE_FILE,
+                    progress: 1,
+                },
+            ];
+
+            render(<FileUpload fileItems={fileItems} />);
+
+            const announcement = screen.getByText(
+                "bugs-bunny.pdf upload is complete"
+            );
+            expect(announcement).toBeInTheDocument();
+            expect(
+                announcement.closest('[aria-live="polite"]')
+            ).toBeInTheDocument();
+        });
+
+        it("should announce errors when file upload fails", () => {
+            const errorMessage = "File size too large";
+            const fileItems: FileItemProps[] = [
+                {
+                    ...MOCK_NON_IMAGE_FILE,
+                    errorMessage,
+                },
+            ];
+
+            render(<FileUpload fileItems={fileItems} />);
+
+            const announcement = screen.getByText(
+                `Error uploading bugs-bunny.pdf: ${errorMessage}`
+            );
+            expect(announcement).toBeInTheDocument();
+            expect(
+                announcement.closest('[aria-live="polite"]')
+            ).toBeInTheDocument();
+        });
+
+        it("should announce multiple file uploads correctly", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    ...MOCK_NON_IMAGE_FILE,
+                    id: "file1",
+                    name: "document1.pdf",
+                    progress: 0.2,
+                },
+                {
+                    ...MOCK_IMAGE_ITEM,
+                    id: "file2",
+                    name: "image1.png",
+                    progress: 1,
+                },
+                {
+                    id: "file3",
+                    name: "document2.pdf",
+                    type: "application/pdf",
+                    size: 5000,
+                    errorMessage: "Network error",
+                },
+            ];
+
+            render(<FileUpload fileItems={fileItems} />);
+
+            // Should announce all three states in one message
+            const announcementText = screen.getByText(
+                /Starting upload of document1.pdf, image1.png upload is complete, Error uploading document2.pdf: Network error/
+            );
+            expect(announcementText).toBeInTheDocument();
+        });
+    });
 });
 
 // =============================================================================

@@ -1,22 +1,28 @@
+import { Font } from "src/theme";
 import styled from "styled-components";
-import { TextStyleHelper } from "src/text";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
-    display: flex;
-    flex-direction: column;
-`;
-
 export const OptionContainer = styled.div`
     display: flex;
-    :not(:last-of-type) {
-        margin-bottom: 1rem;
+    align-items: center;
+    gap: 0.5rem;
+
+    &:not(:last-of-type) {
+        margin-bottom: 0.5rem;
     }
 `;
+OptionContainer.displayName = "div";
 
-export const Label = styled.label`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    margin-left: 1rem;
+export const OptionLabel = styled.label`
+    ${Font["body-baseline-regular"]}
+    cursor: pointer;
 `;
+OptionLabel.displayName = "label";
+
+export const RadioGroupLabel = styled.div`
+    ${Font["body-baseline-semibold"]}
+    margin-bottom: 1rem;
+`;
+RadioGroupLabel.displayName = "div";

@@ -31,7 +31,7 @@ export const RangeInputInnerContainer = ({
             <ElementContainer data-id="range-container-elem1-container">
                 {elem1}
             </ElementContainer>
-            <ArrowRight />
+            <ArrowRight aria-hidden="true" />
             {wrap && <Break />}
             <ElementContainer data-id="range-container-elem2-container">
                 {elem2}

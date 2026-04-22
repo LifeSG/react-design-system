@@ -1,6 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { BoxContainer } from "../../src";
-import { BaseColorSet } from "../../src/spec/color-spec/base-color-set";
+import { BoxContainer, Colour, LifeSGTheme } from "../../src";
 
 // =============================================================================
 // UNIT TESTS
@@ -48,7 +47,7 @@ describe("BoxContainer", () => {
          * two traversals up to the div container that contains the styles
          */
         expect(
-            screen.getByText(DEFAULT_TEXT).parentElement.parentElement
+            screen.getByText(DEFAULT_TEXT).parentElement?.parentElement
         ).toHaveStyle({
             height: 0,
         });
@@ -58,8 +57,8 @@ describe("BoxContainer", () => {
         it.each`
             state        | color
             ${"default"} | ${"no"}
-            ${"error"}   | ${BaseColorSet.Validation.Red.Icon}
-            ${"warning"} | ${BaseColorSet.Validation.Orange.Icon}
+            ${"error"}   | ${Colour["icon-error"]({ theme: LifeSGTheme })}
+            ${"warning"} | ${Colour["icon-warning"]({ theme: LifeSGTheme })}
         `(
             "should render $state state with $color color icon",
             ({ state, color }) => {

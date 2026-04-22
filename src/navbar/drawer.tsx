@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 import { Brand } from "./brand";
 import {
     CloseButton,
@@ -20,27 +20,18 @@ const Component = (
     // =============================================================================
     const {
         show,
-        resources,
+        resources = {},
         children,
         hideNavBranding,
         onClose,
         onBrandClick,
+        drawerLabel = "Mobile navigation menu",
+        mobileMenuRef,
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
+    const containerRef = useRef<HTMLDivElement>(null);
 
     const { primary, secondary } = resources;
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEffect(() => {
-        handleResize();
-        window.addEventListener("resize", handleResize);
-
-        return () => {
-            window.removeEventListener("resize", handleResize);
-        };
-    }, []);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -56,20 +47,60 @@ const Component = (
         }
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLDivElement>) => {
+        if (!show) return;
+
+        if (event.key === "Escape") {
+            event.preventDefault();
+            onClose?.();
+            // Return focus to the hamburger menu button
+            setTimeout(() => {
+                mobileMenuRef?.current?.focus();
+            }, 300);
+        }
+    };
+
+    // =============================================================================
+    // EFFECTS
+    // =============================================================================
+    useEffect(() => {
+        handleResize();
+        window.addEventListener("resize", handleResize);
+
+        return () => {
+            window.removeEventListener("resize", handleResize);
+        };
+    }, []);
+
+    // Focus management when drawer opens
+    useLayoutEffect(() => {
+        if (show) {
+            const timer = setTimeout(() => {
+                if (containerRef.current) {
+                    containerRef.current.focus({ preventScroll: true });
+                }
+            }, 550);
+
+            return () => clearTimeout(timer);
+        }
+    }, [show]);
+
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderBrand = () => {
         return (
             <>
-                <Brand
-                    resources={primary}
-                    compress
-                    onClick={onBrandClick}
-                    data-id="drawer-brand-primary"
-                    data-testid="drawer__brand"
-                    type="primary"
-                />
+                {primary && (
+                    <Brand
+                        resources={primary}
+                        compress
+                        onClick={onBrandClick}
+                        data-id="drawer-brand-primary"
+                        data-testid="drawer__brand"
+                        type="primary"
+                    />
+                )}
                 {secondary && (
                     <>
                         <NavSeparator />
@@ -104,7 +135,14 @@ const Component = (
 
     return (
         <Wrapper ref={ref} data-testid="drawer">
-            <Container $show={show} $viewHeight={viewHeight}>
+            <Container
+                ref={containerRef}
+                $show={show}
+                $viewHeight={viewHeight}
+                onKeyDown={handleKeyDown}
+                tabIndex={show ? 0 : -1}
+                aria-label={drawerLabel}
+            >
                 <Content>
                     {renderTopBar()}
                     {children}

@@ -1,20 +1,15 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import { useMemo } from "react";
+import { useMemo, useState } from "react";
 import { InternalCalendarProps } from "../shared/internal-calendar";
-import {
-    GrowDayCell,
-    InteractiveCircle,
-    RowDayCell,
-    StyleProps,
-} from "../shared/internal-calendar/standard";
-import { Text } from "../text/text";
+import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
+import { Colour } from "../theme";
 import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
 import {
     ColumnWeekCell,
-    DayLabelWeek,
+    DayLabel,
     HeaderCellWeek,
     TimeSlotText,
     TimeSlotWrapper,
@@ -29,7 +24,7 @@ interface TimeSlotWeekDaysProps
         InternalCalendarProps,
         "disabledDates" | "minDate" | "maxDate"
     > {
-    selectedDate: string;
+    selectedDate: string | undefined;
     calendarDate: Dayjs;
     onSelect: (value: Dayjs) => void;
     slots?: { [date: string]: TimeSlot[] } | undefined;
@@ -37,15 +32,18 @@ interface TimeSlotWeekDaysProps
     onSlotClick?: ((date: string, timeSlot: TimeSlot) => void) | undefined;
 }
 
-const fallbackSlot = {
+const dateFormat = "YYYY-MM-DD";
+
+const fallbackSlot: TimeSlot = {
     id: "1",
     startTime: "",
     endTime: "",
     clickable: false,
     styleAttributes: {
+        color: "",
         styleType: "stripes",
-        backgroundColor: "#ECEFEF",
-        backgroundColor2: "#E0E4E5",
+        backgroundColor: Colour["bg-stronger"],
+        backgroundColor2: Colour["bg-strongest"],
     },
 };
 
@@ -66,6 +64,7 @@ export const TimeSlotWeekDays = ({
     const currentCalendarWeek = useMemo((): Dayjs[] => {
         return CalendarHelper.generateDaysForCurrentWeek(calendarDate);
     }, [calendarDate]);
+    const [hoverDay, setHoverDay] = useState<Dayjs>();
 
     // =============================================================================
     // EVENT HANDLERS
@@ -77,9 +76,16 @@ export const TimeSlotWeekDays = ({
     };
 
     const handleSlotClick = (date: string, slot: TimeSlot) => {
-        onSlotClick(date, slot);
+        onSlotClick?.(date, slot);
     };
-    const dateFormat = "YYYY-MM-DD";
+
+    const handleDayHover = (value: Dayjs) => {
+        setHoverDay(value);
+    };
+
+    const handleDayMouseout = () => {
+        setHoverDay(undefined);
+    };
 
     // =============================================================================
     // HELPER FUNCTIONS
@@ -92,7 +98,7 @@ export const TimeSlotWeekDays = ({
         );
 
         const isDisabledDate =
-            disabledDates && disabledDates.includes(day.format(dateFormat));
+            !!disabledDates && disabledDates.includes(day.format(dateFormat));
 
         return !isWithinRange || isDisabledDate;
     };
@@ -100,78 +106,63 @@ export const TimeSlotWeekDays = ({
     const generateStyleProps = (day: Dayjs) => {
         const dateStartWithYear = day.format(dateFormat);
         const disabled = isDisabled(day);
+        const isHoverEnabled = enableSelection && !disabled;
+        const isHover =
+            isHoverEnabled && hoverDay && day.isSame(hoverDay, "day");
+        const isSelected = [selectedDate].includes(dateStartWithYear);
 
-        const styleCircleProps: StyleProps = {},
-            styleLabelProps: StyleProps = {};
+        const dayCellStyleProps: CellStyleProps = {
+            labelType: "available",
+            interactive: !enableSelection ? null : isHoverEnabled,
+        };
 
         if (disabled) {
-            styleCircleProps.$disabledDisplay = true;
-            styleLabelProps.$disabledDisplay = true;
+            dayCellStyleProps.disabled = true;
+            dayCellStyleProps.labelType = "unavailable";
         }
 
-        styleCircleProps.$interactive = enableSelection && !disabled;
-
-        // apply selected styles
-        if ([selectedDate].includes(dateStartWithYear)) {
-            styleCircleProps.$selected = true;
-            styleLabelProps.$selected = true;
+        if (isSelected && isHover) {
+            dayCellStyleProps.labelType = "selected-hover";
+            dayCellStyleProps.circleLeft = "selected-hover-outline";
+            dayCellStyleProps.circleRight = "selected-hover-outline";
+        } else if (isSelected) {
+            dayCellStyleProps.labelType = "selected";
+            dayCellStyleProps.circleLeft = "selected-outline";
+            dayCellStyleProps.circleRight = "selected-outline";
+        } else if (isHover) {
+            dayCellStyleProps.labelType = "hover";
+            dayCellStyleProps.circleLeft = "hover-subtle";
+            dayCellStyleProps.circleRight = "hover-subtle";
         }
 
-        return {
-            styleCircleProps,
-            styleLabelProps,
-        };
+        return dayCellStyleProps;
     };
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderWeek = () => {
-        return currentCalendarWeek.map((day, index) => (
-            <HeaderCellWeek key={`week-day-${index}`}>
-                <Text.XSmall weight={"semibold"}>
-                    {dayjs(day).format("ddd")}
-                </Text.XSmall>
-            </HeaderCellWeek>
-        ));
-    };
-
     const renderHeader = () => {
-        return (
-            <RowDayCell>
-                {currentCalendarWeek.map((day, dayIndex) => {
-                    const variant = "default";
-                    const { styleCircleProps, styleLabelProps } =
-                        generateStyleProps(day);
+        return currentCalendarWeek.map((day, index) => {
+            const dayCellStyleProps = generateStyleProps(day);
 
-                    return (
-                        <GrowDayCell key={`day-${dayIndex}`}>
-                            <InteractiveCircle
-                                $variant={variant}
-                                onClick={() =>
-                                    handleDayClick(
-                                        day,
-                                        !styleCircleProps.$interactive
-                                    )
-                                }
-                                {...styleCircleProps}
-                            >
-                                <DayLabelWeek
-                                    weight={
-                                        styleLabelProps["$selected"]
-                                            ? "semibold"
-                                            : "regular"
-                                    }
-                                    $variant={variant}
-                                    {...styleLabelProps}
-                                >
-                                    {day.format("D")}
-                                </DayLabelWeek>
-                            </InteractiveCircle>
-                        </GrowDayCell>
-                    );
-                })}
-            </RowDayCell>
-        );
+            return (
+                <HeaderCellWeek key={`week-day-${index}`}>
+                    <DayCell
+                        key={`day-${index}`}
+                        date={day}
+                        calendarDate={dayjs(selectedDate)}
+                        onSelect={() => {
+                            handleDayClick(day, !dayCellStyleProps.interactive);
+                        }}
+                        onHover={handleDayHover}
+                        onHoverEnd={handleDayMouseout}
+                        {...dayCellStyleProps}
+                    />
+                    <DayLabel $disabled={dayCellStyleProps.disabled}>
+                        {dayjs(day).format("ddd")}
+                    </DayLabel>
+                </HeaderCellWeek>
+            );
+        });
     };
 
     const renderTimeSlotBarCells = () => {
@@ -252,7 +243,6 @@ export const TimeSlotWeekDays = ({
     return (
         <Wrapper>
             {renderHeader()}
-            {renderWeek()}
             {renderTimeSlotBarCells()}
         </Wrapper>
     );

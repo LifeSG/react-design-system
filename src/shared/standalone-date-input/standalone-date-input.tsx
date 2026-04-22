@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
-import { StringHelper, useStateRef } from "../../util";
+import { DateInputHelper, StringHelper, useStateRef } from "../../util";
 import {
     DayInput,
     Divider,
@@ -25,21 +25,24 @@ export type FieldType =
 interface Props {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
+    hideInputKeyboard?: boolean | undefined;
     names: StartInputNames | EndInputNames;
     value: string | undefined;
     hoverValue?: string | undefined;
     focused: boolean;
     placeholder?: string | undefined;
     label?: string | undefined;
+    inputLabels?: string[] | undefined;
     onChange: (value: string) => void;
-    onFocus: () => void;
+    onFocus?: ((event: React.FocusEvent) => void) | undefined;
     onBlur?: ((valid: boolean) => void) | undefined;
 }
 
 export interface StandaloneDateInputRef {
-    ref: React.Ref<HTMLDivElement>;
+    ref: React.RefObject<HTMLDivElement>;
     resetPlaceholder: () => void;
     resetInput: () => void;
+    focusYearRef: () => void;
 }
 
 export const Component = (
@@ -55,12 +58,16 @@ export const Component = (
         onChange,
         onFocus,
         onBlur,
+        hideInputKeyboard,
+        inputLabels = ["Date", "Month", "Year"],
     }: Props,
     ref: React.ForwardedRef<StandaloneDateInputRef>
 ) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
+    const inputMode = hideInputKeyboard ? "none" : "numeric";
+
     const [dayValue, setDayValue, dayValueRef] = useStateRef<string>("");
     const [monthValue, setMonthValue, monthValueRef] = useStateRef<string>("");
     const [yearValue, setYearValue, yearValueRef] = useStateRef<string>("");
@@ -83,6 +90,16 @@ export const Component = (
         setDayValue(day);
         setMonthValue(month);
         setYearValue(year);
+
+        // re-focus on day input if all 3 inputs get cleared while typing
+        if (
+            !day &&
+            !month &&
+            !year &&
+            nodeRef.current &&
+            nodeRef.current.contains(document.activeElement)
+        )
+            dayInputRef.current?.focus();
     }, [value]);
 
     useEffect(() => {
@@ -95,8 +112,11 @@ export const Component = (
         if (focused) {
             setHidePlaceholder(true);
 
-            if (!nodeRef.current.contains(document.activeElement)) {
-                dayInputRef.current.focus();
+            if (
+                nodeRef.current &&
+                !nodeRef.current.contains(document.activeElement)
+            ) {
+                dayInputRef.current?.focus();
             }
         }
     }, [focused]);
@@ -115,8 +135,11 @@ export const Component = (
                 setMonthValue(month);
                 setYearValue(year);
             },
+            focusYearRef() {
+                yearInputRef.current?.focus();
+            },
         }),
-        [value]
+        [setDayValue, setMonthValue, setYearValue, value]
     );
 
     // =============================================================================
@@ -129,12 +152,15 @@ export const Component = (
 
         setHidePlaceholder(true);
 
-        if (!nodeRef.current.contains(document.activeElement)) {
-            dayInputRef.current.focus();
+        if (
+            nodeRef.current &&
+            !nodeRef.current.contains(document.activeElement)
+        ) {
+            dayInputRef.current?.focus();
         }
     };
 
-    const handleSectionFocus = () => {
+    const handleSectionFocus = (event: React.FocusEvent) => {
         if (disabled) {
             return;
         }
@@ -142,8 +168,13 @@ export const Component = (
         setHidePlaceholder(true);
 
         if (!focused) {
-            onFocus();
+            onFocus?.(event);
         }
+    };
+
+    const handlePlaceholderClick = (event: React.MouseEvent) => {
+        event.preventDefault();
+        dayInputRef.current?.focus();
     };
 
     const handleInputFocus = (event: React.FocusEvent<HTMLInputElement>) => {
@@ -193,7 +224,7 @@ export const Component = (
             onChange(value);
         }
 
-        if (!nodeRef.current.contains(event.relatedTarget)) {
+        if (nodeRef.current && !nodeRef.current.contains(event.relatedTarget)) {
             // entire field was blurred
             setCurrentFocus("none");
             onBlur?.(isEmpty || isValid);
@@ -221,7 +252,7 @@ export const Component = (
                 setDayValue(targetValue);
                 // auto focus the next input once filled in
                 if (targetValue.length === 2) {
-                    monthInputRef.current.focus();
+                    monthInputRef.current?.focus();
                 }
                 break;
             case names[1]:
@@ -229,7 +260,7 @@ export const Component = (
                 setMonthValue(targetValue);
                 // auto focus the next input once filled in
                 if (targetValue.length === 2) {
-                    yearInputRef.current.focus();
+                    yearInputRef.current?.focus();
                 }
                 break;
             case names[2]:
@@ -260,11 +291,11 @@ export const Component = (
          */
         if (event.code === "Backspace" || event.key === "Backspace") {
             if (currentFocus === names[1] && monthValue.length === 0) {
-                dayInputRef.current.focus();
+                dayInputRef.current?.focus();
             }
 
             if (currentFocus === names[2] && yearValue.length === 0) {
-                monthInputRef.current.focus();
+                monthInputRef.current?.focus();
             }
         }
     };
@@ -272,11 +303,17 @@ export const Component = (
     // =============================================================================
     // HELPERS
     // =============================================================================
-    function parseToInputValues(stringVal: string) {
+    function parseToInputValues(stringVal: string | undefined) {
         if (!stringVal) {
             return [undefined, undefined, undefined];
         } else {
-            const day = dayjs(new Date(stringVal));
+            const sanitized = DateInputHelper.sanitizeInput(stringVal);
+
+            if (!sanitized) {
+                return [undefined, undefined, undefined];
+            }
+
+            const day = dayjs(sanitized, "YYYY-MM-DD", true);
 
             return [
                 StringHelper.padValue(day.date().toString()),
@@ -295,7 +332,11 @@ export const Component = (
         }
 
         return (
-            <Placeholder $hide={hidePlaceholder} $disabled={disabled}>
+            <Placeholder
+                $hide={hidePlaceholder}
+                $disabled={disabled}
+                onMouseDown={handlePlaceholderClick}
+            >
                 {placeholder}
             </Placeholder>
         );
@@ -318,10 +359,10 @@ export const Component = (
                     onBlur={handleInputBlur}
                     onChange={handleInputChange}
                     type="text"
-                    inputMode="numeric"
+                    inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[0]}-input`}
-                    aria-label="day"
+                    aria-label={inputLabels[0]}
                     disabled={disabled}
                     readOnly={readOnly}
                     tabIndex={readOnly ? -1 : 0}
@@ -341,10 +382,10 @@ export const Component = (
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     type="text"
-                    inputMode="numeric"
+                    inputMode={inputMode}
                     pattern="[0-9]{2}"
                     data-testid={`${names[1]}-input`}
-                    aria-label="month"
+                    aria-label={inputLabels[1]}
                     disabled={disabled}
                     readOnly={readOnly}
                     tabIndex={readOnly ? -1 : 0}
@@ -364,10 +405,10 @@ export const Component = (
                     onChange={handleInputChange}
                     onKeyDown={handleKeyDown}
                     type="text"
-                    inputMode="numeric"
+                    inputMode={inputMode}
                     pattern="[0-9]{4}"
                     data-testid={`${names[2]}-input`}
-                    aria-label="year"
+                    aria-label={inputLabels[2]}
                     disabled={disabled}
                     readOnly={readOnly}
                     tabIndex={readOnly ? -1 : 0}

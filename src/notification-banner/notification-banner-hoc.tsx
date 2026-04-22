@@ -8,7 +8,6 @@ import {
     NotificationContentAttributes,
 } from "./types";
 
-// eslint-disable-next-line @typescript-eslint/explicit-module-boundary-types
 export const withNotificationBanner = (
     data: NotificationContentAttributes[]
 ) => {

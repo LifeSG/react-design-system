@@ -1,24 +1,12 @@
 import { StarIcon } from "@lifesg/react-icons/star";
 import { StarFillIcon } from "@lifesg/react-icons/star-fill";
 import styled, { css } from "styled-components";
-import { Color } from "../color/color";
-
-export const Input = styled.input`
-    position: absolute;
-    opacity: 0;
-    width: 0;
-    height: 0;
-`;
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
 
 const starStyle = css`
     width: 2.75rem;
     height: 2.75rem;
-    color: ${Color.Primary};
-    ${Input}:focus-visible + & {
-        outline: 0.125rem solid ${Color.Primary};
-        outline-offset: -0.0625rem;
-        border-radius: 0.25rem;
-    }
+    color: ${Colour["icon-primary"]};
 `;
 
 export const StarUnfilled = styled(StarIcon)`
@@ -29,16 +17,30 @@ export const StarFilled = styled(StarFillIcon)`
     ${starStyle}
 `;
 
-export const Label = styled.label`
-    margin: 0 0.5rem;
+export const Label = styled.div`
+    margin: 0 ${Spacing["spacing-8"]};
     line-height: 0;
-    @media screen and (max-width: 38rem) {
-        margin: 0 0.5rem;
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+
+    ${MediaQuery.MaxWidth.md} {
+        margin: 0 ${Spacing["spacing-8"]};
     }
 `;
 
-export const Container = styled.div`
+export const Container = styled.div<{ $isFocused: boolean }>`
     display: flex;
     justify-content: center;
-    margin: 0.5rem 1rem;
+    margin: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    border-radius: ${Radius["sm"]};
+    outline: none;
+
+    ${({ $isFocused }) =>
+        $isFocused &&
+        css`
+            outline: ${Border["width-020"]} ${Border["solid"]}
+                ${Colour["icon-primary"]};
+            outline-offset: 2px;
+        `}
 `;

@@ -3,10 +3,31 @@ import { TimeSlot } from "../time-slot-bar/types";
 
 export type TimeSlotCellsVariant = "flexible" | "fixed";
 
+/**
+ * Props for the TimeSlotBarWeek component - week-view time slot calendar.
+ *
+ * Renders a week calendar with per-day `TimeSlotBar` columns and an optional
+ * navigation header. Extends `CommonCalendarProps` for min/max date and locale
+ * settings.
+ *
+ * @example
+ * ```tsx
+ * <TimeSlotBarWeek
+ *     slots={slotsByDate}
+ *     startTime="08:00"
+ *     endTime="18:00"
+ *     onSlotClick={(date, slot) => handleSelect(date, slot)}
+ * />
+ * ```
+ * @keywords weekly schedule, week view booking, availability calendar week, weekly time slots
+ */
 export interface TimeSlotBarWeekProps extends CommonCalendarProps {
     // Basic component props
+    /** Additional CSS class names applied to the root element. */
     className?: string | undefined;
+    /** Sets the `data-testid` attribute for targeting the element in automated tests. */
     "data-testid"?: string | undefined;
+    /** Unique HTML identifier for the root element. */
     id?: string | undefined;
 
     /** Time slots to render */

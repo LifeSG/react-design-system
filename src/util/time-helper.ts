@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { StringHelper } from "./string-helper";
 
 // =============================================================================
@@ -16,6 +17,24 @@ export interface TimeValues {
     period: EPeriod;
 }
 
+export interface CalculateScrollPositionProps {
+    /** The time to scroll to in HH:mm format */
+    scrollTime: string;
+    /** The minimum time of the scrollable range in HH:mm format */
+    minTime: string;
+    /** The maximum time of the scrollable range in HH:mm format */
+    maxTime: string;
+    /** The interval in minutes (e.g., 15, 30, 60) */
+    interval: number;
+    /** The width in pixels of each interval */
+    intervalWidth: number;
+    /** Optional configuration */
+    options?: {
+        /** Round the scroll time to the nearest interval */
+        roundToInterval?: boolean;
+    };
+}
+
 // unexportable
 interface TimeValuesPlain {
     hour: string;
@@ -27,9 +46,79 @@ interface TimeValuesPlain {
 // HELPER FUNCTIONS
 // =============================================================================
 export namespace TimeHelper {
+    /**
+     * Rounds time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60
+     * @param time the input time in HH:mm format
+     * @param interval the interval in minutes (e.g., 15 for 15 minutes, 60 for 1 hour)
+     * @param toNextInterval to clamp to next interval instead, e.g. 6:30 will be clamped to 7:00 when interval = 60.
+     * If the time is already a valid interval, it will not be rounded
+     * @returns the rounded time in HH:mm format,
+     */
+    export const roundToNearestInterval = (
+        time: string,
+        interval: number,
+        toNextInterval?: boolean
+    ): string => {
+        const [hoursStr, minutesStr] = time.split(":");
+        const hours = parseInt(hoursStr, 10);
+        const minutes = parseInt(minutesStr, 10);
+
+        // Handle invalid inputs
+        if (isNaN(hours) || isNaN(minutes) || minutes < 0 || minutes >= 60) {
+            throw new Error("Invalid time format");
+        }
+
+        // Convert the time to total minutes
+        const totalMinutes = hours * 60 + minutes;
+        const remainder = totalMinutes % interval;
+
+        // Calculate the rounded total minutes
+        const roundedMinutes =
+            remainder === 0
+                ? totalMinutes
+                : toNextInterval
+                ? totalMinutes + (interval - remainder)
+                : totalMinutes - remainder;
+
+        // Convert the rounded total minutes back to hours and minutes
+        const roundedHours = Math.floor(roundedMinutes / 60);
+        const roundedMinutesWithinHour = roundedMinutes % 60;
+
+        // Format the result as HH:mm, allowing for hours >= 24
+        const formattedHours = roundedHours.toString().padStart(2, "0");
+        const formattedMinutes = roundedMinutesWithinHour
+            .toString()
+            .padStart(2, "0");
+
+        return `${formattedHours}:${formattedMinutes}`;
+    };
+
+    export const generateHourlyIntervals = (
+        startTime: string,
+        endTime: string,
+        generatedFormat = "ha"
+    ) => {
+        const format = "HH:mm";
+        let start = dayjs(startTime, format);
+        let end = dayjs(endTime, format);
+
+        if (start.isSame(end)) {
+            end = end.add(1, "day");
+        }
+
+        const intervals: string[] = [];
+
+        while (start.isBefore(end)) {
+            intervals.push(start.format(generatedFormat));
+            start = start.add(1, "hour");
+        }
+
+        return intervals;
+    };
+
     export const getTimeValues = (
         format: TimeFormat,
-        value?: string
+        value: string | undefined
     ): TimeValues => {
         // Default value
         const timeValues: TimeValues = {
@@ -63,18 +152,20 @@ export namespace TimeHelper {
                             : StringHelper.padValue((hour - 12).toString());
                 }
             } else {
-                const plain = convertToPlain(value, format);
+                const {
+                    hour,
+                    minute,
+                    period = "",
+                } = convertToPlain(value, format);
 
-                timeValues.hour = StringHelper.padValue(plain.hour);
-                timeValues.minute = StringHelper.padValue(plain.minute);
+                timeValues.hour = StringHelper.padValue(hour);
+                timeValues.minute = StringHelper.padValue(minute);
                 timeValues.period =
-                    plain.period.toLowerCase() === "am"
-                        ? EPeriod.AM
-                        : EPeriod.PM;
+                    period.toLowerCase() === "am" ? EPeriod.AM : EPeriod.PM;
             }
 
             return timeValues;
-        } catch (error) {
+        } catch {
             return timeValues;
         }
     };
@@ -161,25 +252,25 @@ export namespace TimeHelper {
     };
 
     export const formatDisplayValue = (
-        value: string,
+        value: string | undefined,
         format: TimeFormat
     ): string => {
         try {
-            const plain = convertToPlain(value, format);
+            const { hour, minute, period = "" } = convertToPlain(value, format);
 
-            const paddedHour = StringHelper.padValue(plain.hour);
-            const paddedMinute = StringHelper.padValue(plain.minute);
+            const paddedHour = StringHelper.padValue(hour);
+            const paddedMinute = StringHelper.padValue(minute);
 
             let formatted = `${paddedHour}:${paddedMinute}`;
 
             if (format === "12hr") {
-                formatted += plain.period.toLowerCase();
+                formatted += period.toLowerCase();
 
                 return formatted;
             }
 
             return formatted;
-        } catch (error) {
+        } catch {
             return "";
         }
     };
@@ -193,11 +284,269 @@ export namespace TimeHelper {
             seconds,
         };
     };
+
+    // Converts h:mma/hh:mma to 24hr (eg. 13:00)
+    export const to24Hour = (time: string) => {
+        if (time?.includes("am") || time?.includes("pm")) {
+            const [t, p] = time.split(/(am|pm)/i);
+            const [hr, m] = t.split(":").map(Number);
+            let h = hr;
+            if (p === "pm" && h < 12) h += 12;
+            if (p === "am" && h === 12) h = 0;
+            return toTimeString(h, m);
+        }
+        return time; // No conversion if string alr has am/pm
+    };
+
+    // Generates an array of timings based on given startTime/interval/format
+    export const generateTimings = (
+        interval: number, // In minutes
+        format: TimeFormat = "12hr",
+        startTime?: string | undefined,
+        endTime?: string | undefined // Inclusive
+    ): string[] => {
+        const timings = [];
+        let currentMinutes = 0;
+        let endMinutes = 1440 - interval; // Do not include next day's 12am
+
+        // Convert startTime (h:mma) to minutes
+        if (startTime) {
+            currentMinutes = timeToMinutes(startTime);
+        }
+        if (endTime) {
+            endMinutes = timeToMinutes(endTime);
+        }
+
+        while (currentMinutes <= endMinutes) {
+            let hours = Math.floor(currentMinutes / 60);
+            const minutes = currentMinutes % 60;
+
+            if (format === "12hr") {
+                const period = hours >= 12 ? "pm" : "am";
+
+                hours = hours % 12;
+                hours = hours ? hours : 12; // Convert hour 0 to 12
+
+                const timeString = toTimeString(hours, minutes, period);
+                timings.push(timeString);
+            } else {
+                const timeString = toTimeString(hours, minutes);
+                timings.push(timeString);
+            }
+
+            currentMinutes += interval;
+        }
+
+        return timings;
+    };
+
+    // Return undefined = invalid field, "" = empty field, else returns h:mma
+    export const parseInput = (
+        input: string,
+        format: TimeFormat = "12hr" // Returned format
+    ): string | undefined => {
+        if (input === "" || input === undefined) return input;
+
+        const sanitizedInput = input.trim().toLowerCase();
+        const timeRegex = /^(?:(\d{1,2})([:.])?(\d{2})?)?(a|p|am|pm)?$/;
+        const match = timeRegex.exec(sanitizedInput);
+
+        if (!match) return;
+
+        let hours = parseInt(match[1] || "0", 10);
+        const minutes = parseInt(match[3] || "0", 10);
+        let period = match[4];
+
+        // Ensure hours/mins are valid
+        if (match[1] === undefined || hours > 24 || minutes > 59) return;
+
+        // Convert single-character periods to full am/pm
+        if (period === "a") {
+            period = "am";
+        } else if (period === "p") {
+            period = "pm";
+        }
+
+        if (format === "24hr") {
+            // Convert 12-hour input to 24-hour format if period is present
+            if (period === "pm" && hours < 12) {
+                hours += 12;
+            } else if ((period === "am" && hours === 12) || hours === 24) {
+                hours = 0; // Midnight case
+            }
+
+            // Return time in 24-hour format (HH:mm)
+            return toTimeString(hours, minutes);
+        }
+
+        // Handle 24-hour times or AM/PM conversion
+        if (period) {
+            if (hours === 0 || hours === 24) {
+                period = "am";
+                hours = 12;
+            } else if (hours > 12) {
+                period = "pm";
+                hours -= 12;
+            }
+        } else {
+            period =
+                // NOTE: 12 or 1-6 will default to pm for convenience
+                hours === 0 || hours === 24 || (hours > 6 && hours < 12)
+                    ? "am"
+                    : "pm";
+            hours = hours % 12 || 12;
+        }
+
+        // Format the time as h:mma
+        const formattedTime = toTimeString(hours, minutes, period);
+
+        return formattedTime;
+    };
+
+    export const findClosestFlooredTime = (
+        inputTime: string | undefined,
+        timeArray: string[] // Should already be sorted in ascending order
+    ): string | undefined => {
+        if (!inputTime) return inputTime;
+        const flooredInputMinutes = timeToMinutes(inputTime);
+
+        let closestTime = "";
+        let minDifference = Infinity;
+
+        for (const time of timeArray) {
+            const timeInMinutes = timeToMinutes(time);
+            const difference = timeInMinutes - flooredInputMinutes;
+
+            // If the difference is negative or zero, update the closest time
+            if (difference <= 0 && Math.abs(difference) < minDifference) {
+                minDifference = Math.abs(difference);
+                closestTime = time;
+            }
+            // If the difference becomes positive, we've passed the closest time
+            else if (difference > 0) {
+                break;
+            }
+        }
+
+        return closestTime;
+    };
+
+    // Accepts both 12hr and 24hr formats
+    export const timeToMinutes = (time: string) => {
+        const [startHourMin, ampm] = time.toLowerCase().split(/(am|pm)/);
+        const [startHoursRaw, startMinutes] = startHourMin
+            .split(":")
+            .map(Number);
+        let startHours = startHoursRaw;
+
+        if (ampm === "pm" && startHours !== 12) {
+            startHours += 12; // Convert PM hours to 24-hour format
+        }
+        if (ampm === "am" && startHours === 12) {
+            startHours = 0; // Convert 12am to 0 hours
+        }
+
+        return startHours * 60 + startMinutes;
+    };
+
+    // Calculate duration between two time strings
+    export const calculateDuration = (
+        startTime: string,
+        endTime: string
+    ): number => {
+        const startMinutes = timeToMinutes(startTime);
+        const endMinutes = timeToMinutes(endTime);
+        return endMinutes - startMinutes;
+    };
+
+    /**
+     * Validates and calculates scroll position for a given time
+     * @param props - The configuration object for calculating scroll position
+     * @returns the calculated scroll position in pixels, or null if invalid
+     */
+    export const calculateScrollPosition = (
+        props: CalculateScrollPositionProps
+    ): number | null => {
+        const {
+            scrollTime,
+            minTime,
+            maxTime,
+            interval,
+            intervalWidth,
+            options,
+        } = props;
+
+        try {
+            // Validate time format (HH:mm)
+            const timeRegex = /^([0-1]?[0-9]|2[0-3]):[0-5][0-9]$/;
+            if (!timeRegex.test(scrollTime)) {
+                console.warn(
+                    `Invalid scrollTime format: "${scrollTime}". Expected format: HH:mm.`
+                );
+                return null;
+            }
+
+            // Round to nearest interval if specified
+            const timeToUse = options?.roundToInterval
+                ? roundToNearestInterval(scrollTime, interval)
+                : scrollTime;
+
+            const [hours, minutes] = parseTimeToNumbers(timeToUse);
+
+            // Validate parsed values
+            if (isNaN(hours) || isNaN(minutes)) {
+                console.warn(`Invalid scrollTime: "${scrollTime}".`);
+                return null;
+            }
+
+            const scrollMinutes = hours * 60 + minutes;
+
+            const [minHours, minMinutes] = parseTimeToNumbers(minTime);
+            const minTotalMinutes = minHours * 60 + minMinutes;
+
+            const [maxHours, maxMinutes] = parseTimeToNumbers(maxTime);
+            const maxTotalMinutes = maxHours * 60 + maxMinutes;
+
+            // Warn if time is outside the visible range
+            if (
+                scrollMinutes < minTotalMinutes ||
+                scrollMinutes > maxTotalMinutes
+            ) {
+                console.warn(
+                    `scrollTime "${scrollTime}" is outside the range (${minTime} - ${maxTime}).`
+                );
+            }
+
+            const minutesFromStart = scrollMinutes - minTotalMinutes;
+            const intervalsFromStart = minutesFromStart / interval;
+            const scrollPosition = intervalsFromStart * intervalWidth;
+
+            return scrollPosition;
+        } catch (error) {
+            console.warn(
+                `Error processing scrollTime: "${scrollTime}".`,
+                error
+            );
+            return null;
+        }
+    };
 }
 
 // =============================================================================
 // NON-EXPORTABLES
 // =============================================================================
+
+/**
+ * Parses a time string in HH:mm format to separate hour and minute values
+ * @param timeString - Time string in HH:mm format (e.g., "09:30", "14:45")
+ * @returns Array containing [hours, minutes] as numbers
+ * @example
+ * parseTimeToNumbers("09:30") // returns [9, 30]
+ * parseTimeToNumbers("14:45") // returns [14, 45]
+ */
+const parseTimeToNumbers = (timeString: string): number[] => {
+    return timeString.split(":").map(Number);
+};
 const isValidHour = (hourString: string, format: TimeFormat): boolean => {
     const numValue = parseInt(hourString);
     return format === "24hr"
@@ -217,8 +566,11 @@ const isValidTimePeriod = (timePeriodString: string): boolean => {
     );
 };
 
-const convertToPlain = (value: string, format: TimeFormat): TimeValuesPlain => {
-    const timeArr = value.split(":");
+const convertToPlain = (
+    value: string | undefined,
+    format: TimeFormat
+): TimeValuesPlain => {
+    const timeArr = value ? value.split(":") : [];
     const error = new Error("Invalid format");
 
     if (format === "12hr") {
@@ -256,4 +608,12 @@ const convertToPlain = (value: string, format: TimeFormat): TimeValuesPlain => {
             minute: timeArr[1],
         };
     }
+};
+
+const toTimeString = (hours: number, minutes: number, period?: string) => {
+    return period
+        ? `${hours}:${minutes.toString().padStart(2, "0")}${period}`
+        : `${hours.toString().padStart(2, "0")}:${minutes
+              .toString()
+              .padStart(2, "0")}`;
 };

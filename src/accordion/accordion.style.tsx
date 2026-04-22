@@ -1,8 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button";
-import { MediaQuery } from "../media";
-import { Color } from "../color";
-import { Text } from "../text/text";
+import { Border, Colour, Font, MediaQuery } from "../theme";
 import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 
 // ============================================================================
@@ -10,32 +8,47 @@ import { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 // =============================================================================
 export const Content = styled.div`
     width: 100%;
-    border-bottom: 1px solid ${Color.Neutral[6]};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
 export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
     display: flex;
-    flex-direction: ${(props) => (props.$hasTitle ? "row" : "column")};
-    align-items: ${(props) => (props.$hasTitle ? "center" : "flex-end")};
+    flex-direction: row;
+    align-items: center;
+    justify-content: flex-end;
     padding-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.sm} {
         justify-content: flex-end;
     }
+
+    ${(props) => {
+        if (!props.$showTitleInMobile && !props.$hasExpandAll) {
+            return css`
+                ${MediaQuery.MaxWidth.sm} {
+                    display: none;
+                }
+            `;
+        }
+    }}
 `;
 
-export const Title = styled(Text.H2)<TitleStyleProps>`
+export const Title = styled.h2<TitleStyleProps>`
     display: flex;
     align-self: flex-start;
     flex: 1;
-    ${MediaQuery.MaxWidth.mobileL} {
+
+    ${Font["heading-md-bold"]}
+    color: ${Colour["text"]};
+
+    ${MediaQuery.MaxWidth.sm} {
         text-align: left;
     }
 
     ${(props) => {
         if (!props.$showInMobile) {
             return css`
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.sm} {
                     display: none;
                     visibility: hidden;
                 }

@@ -1,10 +1,17 @@
-import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
+import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { IconButton as DSIconButton } from "../../icon-button";
-import { MediaQuery } from "../../media";
-import { Text } from "../../text";
 import { ClickableIcon } from "../../shared/clickable-icon";
+import {
+    Border,
+    Colour,
+    MediaQuery,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../../theme";
+import { Typography } from "../../typography";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -18,6 +25,7 @@ interface ItemStyleProps {
 
 interface DragHandleIconStyleProps {
     $disabled?: boolean | undefined;
+    $active?: boolean | undefined;
 }
 
 interface BoxStyleProps {
@@ -51,8 +59,8 @@ export const Item = styled.li<ItemStyleProps>`
     width: 100%;
     border: none;
 
-    :not(:last-child) {
-        margin-bottom: 1rem;
+    &:not(:last-child) {
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 
     ${(props) => {
@@ -70,7 +78,7 @@ export const Item = styled.li<ItemStyleProps>`
             `;
         } else if (props.$sortable) {
             return css`
-                :hover {
+                &:hover {
                     cursor: grab;
                 }
                 // Following recommendation by the library for touch events
@@ -84,47 +92,53 @@ export const Item = styled.li<ItemStyleProps>`
 export const DragHandleIcon = styled(
     DSDragHandleIcon
 )<DragHandleIconStyleProps>`
-    // Temp icon
-    margin-right: 1rem;
+    margin-right: ${Spacing["spacing-16"]};
     height: 1.5rem;
     width: 1.5rem;
+    color: ${Colour["icon"]};
 
     ${(props) => {
-        if (props.$disabled) {
+        if (props.$active) {
             return css`
-                color: ${Color.Neutral[4]};
+                color: ${Colour["icon-primary"]};
             `;
         }
-    }}
+
+        if (props.$disabled) {
+            return css`
+                color: ${Colour["icon-disabled"]};
+            `;
+        }
+    }};
 `;
 
 export const Box = styled.div<BoxStyleProps>`
-    background: ${Color.Accent.Light[6]};
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    padding: 1rem 2rem;
+    background: ${Colour["bg-primary-subtlest"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
     display: flex;
     align-items: center;
     width: 100%;
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        padding: 1rem;
+    ${MediaQuery.MaxWidth.md} {
+        padding: ${Spacing["spacing-16"]};
     }
 
     ${(props) => {
         if (props.$focused) {
             return css`
-                border-color: ${Color.Accent.Light[1]};
-                box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
+                border-color: ${Colour["border-focus"]};
+                box-shadow: ${Shadow["xs-focus-strong"]};
             `;
         } else if (props.$disabled) {
             return css`
-                background: ${Color.Neutral[7]};
+                border-color: ${Colour["border-disabled"]};
             `;
         } else if (props.$error) {
             return css`
-                background: ${Color.Validation.Red.Background};
-                border-color: ${Color.Validation.Red.Border};
+                background: ${Colour["bg-error"]};
+                border-color: ${Colour["border-error"]};
             `;
         }
     }}
@@ -132,7 +146,7 @@ export const Box = styled.div<BoxStyleProps>`
     ${(props) => {
         if (!props.$error && (props.$loading || props.$editable)) {
             return css`
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.md} {
                     flex-direction: column;
                     align-items: flex-start;
                 }
@@ -146,7 +160,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         width: 100%;
         align-items: flex-start;
@@ -155,7 +169,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     ${(props) => {
         if (props.$hasThumbnail) {
             return css`
-                ${MediaQuery.MaxWidth.mobileL} {
+                ${MediaQuery.MaxWidth.md} {
                     flex-direction: row;
                     align-items: center;
                 }
@@ -176,7 +190,7 @@ export const ExtendedNameSection = styled.div`
     flex: 1;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -186,10 +200,10 @@ export const ExtendedNameSection = styled.div`
 export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     display: flex;
     width: 5rem;
-    margin-left: 0.5rem;
+    margin-left: ${Spacing["spacing-8"]};
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.md} {
         ${(props) => {
             if (props.$hideInMobile) {
                 return css`
@@ -200,7 +214,7 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
                 return css`
                     width: 100%;
                     margin-left: 0;
-                    margin-top: 0.5rem;
+                    margin-top: ${Spacing["spacing-8"]};
                     justify-content: flex-start;
                 `;
             }
@@ -208,19 +222,28 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     }
 `;
 
-export const ItemText = styled(Text.BodySmall)``;
+export const ItemText = styled(Typography.BodyMD)``;
 export const ItemDescriptionText = styled(ItemText)`
-    margin-top: 0.25rem;
+    margin-top: ${Spacing["spacing-4"]};
 `;
 
-export const BaseErrorMessage = styled(Text.XSmall)`
-    font-size: 0.875rem !important;
-    color: ${Color.Validation.Red.Text};
+export const ErrorIcon = styled(ExclamationCircleFillIcon)`
+    height: 1lh;
+    width: 1em;
+    flex-shrink: 0;
+    color: ${Colour["icon-error-strong"]};
+`;
+
+export const BaseErrorMessage = styled(Typography.BodySM)`
+    color: ${Colour["text-error"]};
 `;
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
-    margin-top: 0.25rem;
-    ${MediaQuery.MaxWidth.mobileL} {
+    margin-top: ${Spacing["spacing-4"]};
+    display: flex;
+    gap: ${Spacing["spacing-4"]};
+
+    ${MediaQuery.MaxWidth.md} {
         display: none;
         visibility: hidden;
     }
@@ -229,45 +252,48 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
 export const MobileErrorMessage = styled(BaseErrorMessage)`
     display: none;
     visibility: hidden;
-    ${MediaQuery.MaxWidth.mobileL} {
-        display: block;
+
+    ${MediaQuery.MaxWidth.md} {
+        display: flex;
+        gap: ${Spacing["spacing-4"]};
         visibility: visible;
-        margin-top: 0.5rem;
+        margin-top: ${Spacing["spacing-8"]};
     }
 `;
 
 export const ActionContainer = styled.div<ActionContainerStyleProps>`
     width: 6rem;
-    margin-left: 2rem;
+    margin-left: ${Spacing["spacing-32"]};
     display: flex;
     justify-content: flex-end;
     align-items: center;
 
-    ${MediaQuery.MaxWidth.mobileL} {
+    ${MediaQuery.MaxWidth.md} {
         width: fit-content;
 
         ${(props) => {
             if (props.$loading && !props.$error) {
                 return css`
                     margin-left: 0;
-                    margin-top: 1rem;
+                    margin-top: ${Spacing["spacing-16"]};
                     width: 100%;
                 `;
             } else if (props.$editable && !props.$error) {
                 return css`
                     margin-left: 0;
-                    margin-top: 1rem;
+                    margin-top: ${Spacing["spacing-16"]};
                     align-self: flex-end;
                 `;
             }
         }}
+    }
 `;
 
 export const IconButton = styled(DSIconButton)`
     min-width: unset;
 
-    :not(:last-child) {
-        margin-right: 1rem;
+    &:not(:last-child) {
+        margin-right: ${Spacing["spacing-16"]};
     }
 `;
 
@@ -278,6 +304,6 @@ export const ErrorIconButton = styled(ClickableIcon)`
     svg {
         height: 1.5rem;
         width: 1.5rem;
-        color: ${Color.Neutral[3]};
+        color: ${Colour["icon"]};
     }
 `;

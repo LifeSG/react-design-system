@@ -1,7 +1,8 @@
-import React from "react";
+import React, { useState } from "react";
 import { FormWrapper } from "./form-wrapper";
 import { FormMaskedInputProps } from "./types";
 import { MaskedInput } from "../masked-input/masked-input";
+import { SimpleIdGenerator } from "../util";
 
 const Component = (
     props: FormMaskedInputProps,
@@ -10,7 +11,7 @@ const Component = (
     const {
         label,
         errorMessage,
-        id = "form-field-masked-input",
+        id,
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
@@ -20,9 +21,12 @@ const Component = (
         ...otherProps
     } = props;
 
+    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const inputId = id ?? `form-field-masked-input-${internalId}`;
+
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
@@ -34,8 +38,8 @@ const Component = (
         >
             <MaskedInput
                 ref={ref}
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 {...otherProps}
             />
@@ -43,4 +47,17 @@ const Component = (
     );
 };
 
+/**
+ * A form field that wraps `MaskedInput` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.MaskedInput` to present a masked text input (e.g. NRIC, card number) within a form.
+ * @example
+ * ```tsx
+ * <Form.MaskedInput
+ *     label="NRIC"
+ *     maskRange={[0, 4]}
+ *     errorMessage={errors.nric}
+ * />
+ * ```
+ */
 export const FormMaskedInput = React.forwardRef(Component);

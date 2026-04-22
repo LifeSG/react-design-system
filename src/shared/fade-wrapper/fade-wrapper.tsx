@@ -108,8 +108,8 @@ const Component = (
 
         if (onResize) {
             onResize({
-                content: contentRef.current,
-                wrapper: wrapperRef.current,
+                content: contentRef.current!,
+                wrapper: wrapperRef.current!,
             });
         }
 

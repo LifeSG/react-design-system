@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
-import { useMemo } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { CalendarHelper } from "../../util/calendar-helper";
-import { CellLabel, Wrapper, YearCell } from "./internal-calendar-year.style";
+import { Wrapper, YearCell } from "./internal-calendar-year.style";
 import { FocusType, InternalCalendarProps } from "./types";
 
 export type YearVariant =
@@ -13,15 +13,16 @@ export type YearVariant =
 interface Props
     extends Pick<
         InternalCalendarProps,
-        "type" | "minDate" | "maxDate" | "allowDisabledSelection"
+        "minDate" | "maxDate" | "allowDisabledSelection"
     > {
     calendarDate: Dayjs;
     currentFocus?: FocusType | undefined;
-    selectedStartDate: string;
+    selectedStartDate: string | undefined;
     selectedEndDate?: string | undefined;
     viewCalendarDate: Dayjs;
     isNewSelection: boolean;
     onYearSelect: (value: Dayjs) => void;
+    setCalendarDate: React.Dispatch<React.SetStateAction<dayjs.Dayjs>>;
 }
 
 export const InternalCalendarYear = ({
@@ -30,12 +31,12 @@ export const InternalCalendarYear = ({
     selectedStartDate,
     selectedEndDate,
     viewCalendarDate,
-    type,
     isNewSelection,
     minDate,
     maxDate,
     allowDisabledSelection,
     onYearSelect,
+    setCalendarDate,
 }: Props) => {
     // =============================================================================
     // CONST, STATE, REF
@@ -44,14 +45,73 @@ export const InternalCalendarYear = ({
         () => CalendarHelper.generateDecadeOfYears(dayjs(calendarDate)),
         [calendarDate]
     );
+    const yearRefs = useRef<Array<HTMLDivElement | null>>(
+        new Array(years.length).fill(null)
+    );
+    const [focusedYear, setFocusedYear] = useState<Dayjs | null>(calendarDate);
+
+    useEffect(() => {
+        if (focusedYear === null) return;
+        // Focus the year cell that corresponds to the focused year
+        const focusedYearIndex = years.findIndex((year) =>
+            year.isSame(focusedYear, "year")
+        );
+        if (focusedYearIndex >= 0) {
+            yearRefs.current[focusedYearIndex]?.focus();
+        }
+    }, [focusedYear, years]);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
+    const handleOnBlur = () => {
+        // Reset focused year when the component loses focus
+        setFocusedYear(null);
+    };
+
     const handleYearClick = (value: Dayjs, isDisabled: boolean) => {
         if (isDisabled) return;
 
         onYearSelect(value);
+    };
+
+    const handleKeyDownPress = (
+        event: React.KeyboardEvent<HTMLDivElement>,
+        value: Dayjs,
+        isDisabled: boolean
+    ) => {
+        const keyboardEvent = event as React.KeyboardEvent<HTMLInputElement>;
+        const selectedKey = keyboardEvent.key;
+
+        let newYearSelection: Dayjs | undefined;
+        switch (selectedKey) {
+            case "Enter":
+            case " ":
+                event.preventDefault();
+                handleYearClick(value, isDisabled);
+                break;
+            case "ArrowLeft":
+                newYearSelection = value.subtract(1, "year");
+                break;
+            case "ArrowRight":
+                newYearSelection = value.add(1, "year");
+                break;
+            case "ArrowUp":
+                newYearSelection = value.subtract(3, "year");
+                break;
+            case "ArrowDown":
+                newYearSelection = value.add(3, "year");
+                break;
+            default:
+                break;
+        }
+
+        if (newYearSelection === undefined) return;
+
+        event.preventDefault();
+
+        setCalendarDate(newYearSelection);
+        setFocusedYear(newYearSelection);
     };
 
     // =============================================================================
@@ -81,13 +141,14 @@ export const InternalCalendarYear = ({
             day.isBefore(selectedStartDate, "year") &&
             isNewSelection;
 
-        return isStartAfterEnd || isEndBeforeStart;
+        return !!(isStartAfterEnd || isEndBeforeStart);
     };
 
     const generateYearStatus = (date: Dayjs) => {
         const otherDecadeIndexes = [0, 11];
+        const yearIndex = years.indexOf(date);
 
-        const isOtherDecade = otherDecadeIndexes.includes(years.indexOf(date));
+        const isOtherDecade = otherDecadeIndexes.includes(yearIndex);
         const year = date.year();
         const disabled = isDisabled(date);
 
@@ -99,11 +160,24 @@ export const InternalCalendarYear = ({
             ? "current-year"
             : "default";
 
+        const isSelectedYearInDecade =
+            viewCalendarDate.year() >= years[0].year() &&
+            viewCalendarDate.year() <= years[years.length - 1].year();
+
+        const tabIndex = isSelectedYearInDecade
+            ? variant === "selected-year"
+                ? 0
+                : -1
+            : yearIndex === 1
+            ? 0
+            : -1;
+
         return {
             disabledDisplay: disabled || isOutsideSelectedRange(date),
             interactive: !disabled || allowDisabledSelection,
             year,
-            variant: variant,
+            variant,
+            tabIndex,
         };
     };
 
@@ -113,27 +187,36 @@ export const InternalCalendarYear = ({
     if (!years.length) return null;
 
     return (
-        <Wrapper $type={type}>
-            {years.map((date) => {
-                const { disabledDisplay, interactive, variant, year } =
-                    generateYearStatus(date);
+        <Wrapper onBlur={handleOnBlur}>
+            {years.map((date, index) => {
+                const {
+                    disabledDisplay,
+                    interactive,
+                    variant,
+                    year,
+                    tabIndex,
+                } = generateYearStatus(date);
 
                 return (
                     <YearCell
+                        ref={(el) => {
+                            yearRefs.current[index] = el;
+                        }}
+                        tabIndex={tabIndex}
+                        role="button"
+                        aria-label={`${year}`}
+                        aria-disabled={!interactive}
+                        aria-selected={variant === "selected-year"}
                         key={year}
                         $variant={variant}
                         $disabledDisplay={disabledDisplay}
-                        $interactive={interactive}
+                        $interactive={!!interactive}
                         onClick={() => handleYearClick(date, !interactive)}
+                        onKeyDown={(event) => {
+                            handleKeyDownPress(event, date, !interactive);
+                        }}
                     >
-                        <CellLabel
-                            weight="regular"
-                            $variant={variant}
-                            $disabledDisplay={disabledDisplay}
-                            $interactive={interactive}
-                        >
-                            {year}
-                        </CellLabel>
+                        {year}
                     </YearCell>
                 );
             })}

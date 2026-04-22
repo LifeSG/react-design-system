@@ -1,9 +1,8 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
-import { Text } from "../text";
-import { Variant } from "./types";
 import { Pill } from "../pill";
+import { Colour, Font, MediaQuery, Radius } from "../theme";
+import { Typography } from "../typography";
+import { Variant } from "./types";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -28,28 +27,38 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     align-items: center;
     width: 1.5rem;
     height: 1.5rem;
-    border-radius: 50%;
+    border-radius: 100%;
 
     ${(props) => {
         switch (props.$variant) {
             case "current":
                 return css`
-                    background-color: ${Color.Accent.Light[1]};
+                    background-color: ${Colour["icon-primary-subtle"]};
                 `;
             case "upcoming-active":
                 return css`
-                    border: 4px solid ${Color.Accent.Light[1]};
+                    border: 4px solid ${Colour["icon-primary-subtle"]};
                 `;
             case "upcoming-inactive":
                 return css`
-                    border: 4px solid ${Color.Neutral[4]};
+                    border: 4px solid ${Colour["icon-subtle"]};
+                `;
+            case "disabled":
+                return css`
+                    background-color: ${Colour["icon-disabled-subtle"]};
                 `;
             case "completed":
                 return css`
-                    background-color: ${Color.Validation.Green.Icon};
+                    background-color: ${Colour["icon-success"]};
                     svg {
-                        color: ${Color.Neutral[8]};
+                        color: ${Colour["icon-inverse"]};
                     }
+                `;
+            case "numeric":
+                return css`
+                    background-color: ${Colour["icon-info"]};
+                    color: ${Colour["text-inverse"]};
+                    font-size: ${Font["body-sm-bold"]};
                 `;
             case "error":
                 return css`
@@ -58,7 +67,7 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
                     margin: -0.15rem 0 -0.15rem -0.15rem;
 
                     svg {
-                        color: ${Color.Validation.Red.Icon};
+                        color: ${Colour["icon-error"]};
                         height: 100%;
                         width: 100%;
                     }
@@ -72,27 +81,35 @@ export const LineIndicator = styled.div<VariantStyleProps>`
     flex-grow: 1;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
-    border-radius: 2px;
+    border-radius: ${Radius["full"]};
 
     ${(props) => {
         switch (props.$variant) {
             case "current":
             case "upcoming-active":
                 return css`
-                    background-color: ${Color.Accent.Light[1]};
+                    background-color: ${Colour["icon-primary-subtle"]};
                 `;
             case "upcoming-inactive":
                 return css`
-                    background-color: ${Color.Neutral[4]};
+                    background-color: ${Colour["icon-subtle"]};
+                `;
+            case "disabled":
+                return css`
+                    background-color: ${Colour["icon-disabled-subtle"]};
                 `;
             case "completed":
                 return css`
-                    background-color: ${Color.Validation.Green.Icon};
+                    background-color: ${Colour["icon-success"]};
+                `;
+            case "numeric":
+                return css`
+                    background-color: ${Colour["icon-info"]};
                 `;
             case "error":
                 return css`
                     margin-left: -0.15rem;
-                    background-color: ${Color.Validation.Red.Icon};
+                    background-color: ${Colour["icon-error"]};
                 `;
         }
     }}
@@ -109,24 +126,24 @@ export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
     grid-column: ${(props) => (props.$startCol ? props.$startCol : 3)} / span
         ${(props) => (props.$colSpan ? props.$colSpan : 8)};
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         grid-column: span 8;
     }
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        grid-column: span 4;
+    ${MediaQuery.MaxWidth.sm} {
+        grid-column: span 8;
     }
 `;
 
-export const TimelineTitle = styled(Text.H3)`
+export const TimelineTitle = styled(Typography.HeadingSM)`
     margin-bottom: 1rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-bottom: 1.5rem;
     }
 `;
 
-export const TimelineItemTitle = styled(Text.H4)`
+export const TimelineItemTitle = styled(Typography.HeadingXS)`
     margin-top: -0.125rem;
     margin-bottom: 0.5rem;
 `;
@@ -135,7 +152,7 @@ export const TimelineItemTitle = styled(Text.H4)`
 export const TimelineItem = styled.div`
     display: flex;
 
-    :last-of-type ${LineIndicator} {
+    &:last-of-type ${LineIndicator} {
         margin-bottom: 0;
     }
 `;
@@ -145,7 +162,7 @@ export const TimelineItemContent = styled.div`
     width: 100%;
 `;
 
-export const TimelinePills = styled(Text.H3)`
+export const TimelinePills = styled.div`
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 0.5rem;

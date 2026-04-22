@@ -7,8 +7,8 @@
             "clickable": false,
             "styleAttributes": {
                 "styleType": "stripes",
-                "backgroundColor": "#ECEFEF",
-                "backgroundColor2": "#E0E4E5"
+                "backgroundColor": "#EDEFEF",
+                "backgroundColor2": "#DDE1E2"
             }
         }
     ],
@@ -18,7 +18,7 @@
             "startTime": "13:00",
             "endTime": "14:30",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         },
         {
@@ -39,7 +39,7 @@
             "startTime": "14:30",
             "endTime": "16:45",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         }
     ],
@@ -49,7 +49,7 @@
             "startTime": "14:30",
             "endTime": "16:45",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         }
     ],
@@ -69,7 +69,7 @@
             "startTime": "09:15",
             "endTime": "09:45",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         },
         {
@@ -77,7 +77,7 @@
             "startTime": "09:45",
             "endTime": "10:15",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         },
         {
@@ -93,7 +93,7 @@
             "startTime": "12:15",
             "endTime": "14:00",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         },
         {
@@ -101,7 +101,7 @@
             "startTime": "14:00",
             "endTime": "15:00",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         },
         {
@@ -109,7 +109,7 @@
             "startTime": "15:00",
             "endTime": "16:00",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         }
     ],
@@ -119,7 +119,7 @@
             "startTime": "14:30",
             "endTime": "16:45",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         }
     ],
@@ -129,7 +129,7 @@
             "startTime": "14:30",
             "endTime": "16:45",
             "styleAttributes": {
-                "backgroundColor": "#B2EAD2"
+                "backgroundColor": "#6DD0A1"
             }
         }
     ]

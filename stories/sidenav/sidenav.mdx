@@ -1,13 +1,12 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Heading3, Secondary, Title } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as SidenavStories from "./sidenav.stories";
-import { PropsTable } from "./props-table";
+import { PropsTableTabs } from "./props-table";
 
 <Meta of={SidenavStories} />
 
-<Title>Sidenav</Title>
+# Sidenav
 
-<Secondary>Overview</Secondary>
+## Overview
 
 A component that renders navigation buttons on the side of a page.
 
@@ -17,10 +16,10 @@ import { Sidenav } from "@lifesg/react-design-system/sidenav";
 
 <Canvas of={SidenavStories.Default} />
 
-<Heading3>Subitem drawer</Heading3>
+## Subitem drawer
 
 The drawer is expanded when a menu item with subitems is hovered or selected. After a subitem is selected, the drawer will close.
 
 <Canvas of={SidenavStories.SubitemDrawer} />
 
-<PropsTable />
+<PropsTableTabs />

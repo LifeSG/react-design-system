@@ -14,8 +14,7 @@ describe("PhoneNumberInputHelper", () => {
         });
 
         it("should not return empty list", () => {
-            const expected = [];
-            expect(PhoneNumberInputHelper.getCountries()).not.toEqual(expected);
+            expect(PhoneNumberInputHelper.getCountries()).not.toEqual([]);
         });
     });
 

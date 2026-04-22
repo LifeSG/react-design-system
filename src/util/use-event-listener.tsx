@@ -2,15 +2,18 @@ import { useEffect, useRef } from "react";
 
 type Target = "window" | "document" | HTMLElement | null;
 type Element = Window | Document | HTMLElement | null;
+type EventHandler<K extends keyof WindowEventMap> = (
+    event: WindowEventMap[K]
+) => void;
 
 export const useEventListener = <K extends keyof WindowEventMap>(
     eventName: K,
-    handler: (event: WindowEventMap[K]) => void,
+    handler: EventHandler<K>,
     target: Target = "window",
     options?: AddEventListenerOptions | boolean
 ) => {
     // Create a ref that stores handler
-    const savedHandler = useRef<(event: WindowEventMap[K]) => void>();
+    const savedHandler = useRef<EventHandler<K>>();
     // Update ref.current value if handler changes.
     // This allows our effect below to always get latest handler ...
     useEffect(() => {
@@ -32,17 +35,16 @@ export const useEventListener = <K extends keyof WindowEventMap>(
             }
 
             // Make sure element supports addEventListener
-            const isSupported = element && element.addEventListener;
+            if (!element || !element.addEventListener) return;
 
-            if (!isSupported) return;
             // Create event listener that calls handler function stored in ref
-            const eventListener = (event: WindowEventMap[K]) =>
-                savedHandler.current(event);
+            const eventListener = ((event: WindowEventMap[K]) =>
+                savedHandler.current?.(event)) as EventListener;
             // Add event listener
             element.addEventListener(eventName, eventListener, options);
             // Remove event listener on cleanup
             return () => {
-                element.removeEventListener(eventName, eventListener, options);
+                element?.removeEventListener(eventName, eventListener, options);
             };
         },
         [eventName, target] // Re-run if eventName or element changes

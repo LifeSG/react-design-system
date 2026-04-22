@@ -8,13 +8,13 @@ describe("useStateActions", () => {
         expect(screen.queryByTestId("test")).toHaveTextContent("1");
 
         act(() => {
-            fireEvent.click(screen.queryByTestId("increment"));
+            fireEvent.click(screen.getByTestId("increment"));
         });
 
         expect(screen.queryByTestId("test")).toHaveTextContent("2");
 
         act(() => {
-            fireEvent.click(screen.queryByTestId("multiply"));
+            fireEvent.click(screen.getByTestId("multiply"));
         });
 
         expect(screen.queryByTestId("test")).toHaveTextContent("6");

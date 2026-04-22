@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Transition } from "../transition";
+import { Motion } from "../theme";
 import { BrandType } from "./types";
 
 // =============================================================================
@@ -13,7 +13,7 @@ interface StyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Clickable = styled.a<StyleProps>`
+export const Container = styled.a<StyleProps>`
     display: flex;
     justify-content: center;
     height: 100%;
@@ -21,7 +21,7 @@ export const Clickable = styled.a<StyleProps>`
     img {
         width: auto;
         height: 100%;
-        transition: ${Transition.Base};
+        transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
         object-fit: contain;
     }
 `;

@@ -1,19 +1,8 @@
 import { MenuIcon } from "@lifesg/react-icons/menu";
-import styled from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
+import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Transition } from "../transition";
-
-// =============================================================================
-// CONSTANTS
-// =============================================================================
-export const NAVBAR_HEIGHT = {
-    notCompress: 6,
-    compress: 4,
-};
-
-export const NAVBAR_MOBILE_HEIGHT = 3.5;
+import { Border, Colour, MediaQuery, Motion, Shadow } from "../theme";
+import { ThemeNavbar } from "../theme/components/theme-helper";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -29,30 +18,46 @@ interface StyleProps {
 // =============================================================================
 export const Wrapper = styled.div<StyleProps>`
     position: ${(props) => (props.$fixed ? "sticky" : "relative")};
-    background-color: white;
+    background-color: ${ThemeNavbar["navbar-colour-bg"]};
     z-index: 30;
     top: 0;
     left: 0;
     right: 0;
     width: 100%;
-    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.1);
+    ${(props) => {
+        return props.theme?.colourMode === "dark"
+            ? css`
+                  border-bottom: ${Border["width-010"]} ${Border["solid"]}
+                      ${Colour["border"]};
+              `
+            : css`
+                  box-shadow: ${Shadow["xs-subtle"]};
+              `;
+    }}
 `;
 
 export const Nav = styled.nav<StyleProps>`
-    height: ${(props) =>
-        props.$compress
-            ? NAVBAR_HEIGHT.compress
-            : NAVBAR_HEIGHT.notCompress}rem;
+    height: ${(props) => {
+        const baseHeight = props.$compress
+            ? ThemeNavbar["navbar-compressed-height"](props)
+            : ThemeNavbar["navbar-full-height"](props);
+        return props.theme?.colourMode === "dark"
+            ? `calc(${baseHeight} - 1px)`
+            : `${baseHeight}`;
+    }};
     width: 100%;
     display: flex;
     flex-direction: row;
     justify-content: space-between;
     align-items: center;
     position: relative;
-    transition: ${Transition.Base};
+    transition: ${Motion["duration-350"]} ${Motion["ease-standard"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
-        height: ${NAVBAR_MOBILE_HEIGHT}rem;
+    ${MediaQuery.MaxWidth.lg} {
+        height: ${(props) =>
+            props.theme?.colourMode === "dark"
+                ? `calc(${ThemeNavbar["navbar-mobile-height"](props)} - 1px)`
+                : `${ThemeNavbar["navbar-mobile-height"](props)}`};
     }
 `;
 
@@ -63,7 +68,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
     flex: 1;
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-left: 0rem;
     }
 `;
@@ -71,7 +76,7 @@ export const NavElementsContainer = styled.div<StyleProps>`
 export const MobileMenuButton = styled(ClickableIcon)`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         padding: 0 1.5rem;
         margin-right: -1.5rem;
@@ -81,7 +86,7 @@ export const MobileMenuButton = styled(ClickableIcon)`
 export const MobileMenuIcon = styled(MenuIcon)`
     height: 1.5rem;
     width: 1.5rem;
-    color: ${Color.Neutral[1]};
+    color: ${ThemeNavbar["navbar-colour-icon"]};
 `;
 
 export const NavBrandContainer = styled.div<StyleProps>`
@@ -90,30 +95,32 @@ export const NavBrandContainer = styled.div<StyleProps>`
     align-items: center;
     flex-shrink: 0;
 
-    height: ${(props) => (props.$compress ? 1.5 : 2)}rem;
+    height: ${(props) =>
+        props.$compress
+            ? ThemeNavbar["navbar-compressed-logo-height"]
+            : ThemeNavbar["navbar-full-logo-height"]};
 
-    ${MediaQuery.MaxWidth.tablet} {
-        height: 1.5rem;
+    ${MediaQuery.MaxWidth.lg} {
+        height: ${ThemeNavbar["navbar-mobile-logo-height"]};
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
+    ${MediaQuery.MaxWidth.xxs} {
         height: 1.25rem;
     }
 `;
 
 export const NavSeparator = styled.div<StyleProps>`
     display: flex;
-    background-color: ${Color.Neutral[5]};
+    background-color: ${Colour.border};
     height: 100%;
-    width: 1px;
+    width: 2px;
     margin: 0 ${(props) => (props.$compress ? 1 : 1.5)}rem;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         margin: 0 1rem;
     }
 
-    ${MediaQuery.MaxWidth.mobileS} {
-        width: 2px;
+    ${MediaQuery.MaxWidth.sm} {
         margin: 0 0.75rem;
     }
 `;

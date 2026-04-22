@@ -1,72 +1,142 @@
-import { ColorSet, ColorSetOptions } from "../color/types";
-import { DesignTokenSet, DesignTokenSetOptions } from "../design-token/types";
-import { TextStyleSetOptionsType, TextStyleSetType } from "../text/types";
+import { ReactNode } from "react";
+import { V2_ThemeSpec } from "../v2_theme/types";
+import { BorderSetOptions } from "./border/types";
+import { BreakpointSetOptions } from "./breakpoint/types";
+import { PrimitiveColourSetOptions } from "./colour-primitive/types";
+import { SemanticColourSetOptions } from "./colour-semantic/types";
+import { ComponentOverrideOptions } from "./components/types";
+import { FontSpecSetOptions } from "./font-spec/types";
+import { FontSetOptions } from "./font/types";
+import { MotionSetOptions } from "./motion/types";
+import { RadiusSetOptions } from "./radius/types";
+import { ShadowSetOptions } from "./shadow/types";
+import { SpacingSetOptions } from "./spacing/types";
 
-export type ThemeLayout = "normal";
+export type {
+    PrimitiveColourSet,
+    PrimitiveColourSetOptions,
+} from "./colour-primitive/types";
+export type {
+    SemanticColourSet,
+    SemanticColourSetOptions,
+} from "./colour-semantic/types";
 
-// =============================================================================
-// COLOR THEMES
-// =============================================================================
-export type ColorScheme = "base" | "bookingsg" | "rbs" | "mylegacy" | "ccube";
-export type ColorCollectionsMap = {
-    [key in ColorScheme]: ColorSet;
-};
+export type { FontSpecSet, FontSpecSetOptions } from "./font-spec/types";
 
-// =============================================================================
-// FONT STYLE THEMES
-// =============================================================================
-export type TextStyleScheme = "base";
-export type FontStyleCollectionsMap = {
-    [key in TextStyleScheme]: TextStyleSetType;
-};
+export type { FontSet, FontSetOptions } from "./font/types";
 
-// =============================================================================
-// DESIGN TOKEN THEMES
-// =============================================================================
-export type DesignTokenScheme = "base" | "rbs";
-export type DesignTokenCollectionsMap = {
-    [key in DesignTokenScheme]: DesignTokenSet;
-};
+export type { MotionSet, MotionSetOptions } from "./motion/types";
 
-// =============================================================================
-// RESOURCE THEMES
-// =============================================================================
-export type ResourceScheme = "base" | "bookingsg" | "rbs" | "ccube";
+export type { BorderSet, BorderSetOptions } from "./border/types";
 
-// =============================================================================
-// GENERAL
-// =============================================================================
-export enum ThemeContextKeys {
-    colorScheme = "colorScheme",
-    layout = "layout",
-    textStyleScheme = "textStyleScheme",
-    designTokenScheme = "designTokenScheme",
-    resourceScheme = "resourceScheme",
-}
+export type { RadiusSet, RadiusSetOptions } from "./radius/types";
+
+export type { ShadowSet, ShadowSetOptions } from "./shadow/types";
+
+export type { SpacingSet, SpacingSetOptions } from "./spacing/types";
+
+export type { BreakpointSet, BreakpointSetOptions } from "./breakpoint/types";
+
+export type ColourScheme =
+    | "lifesg"
+    | "bookingsg"
+    | "rbs"
+    | "mylegacy"
+    | "ccube"
+    | "oneservice"
+    | "pa"
+    | "a11yplayground"
+    | "supportgowhere"
+    | "imda"
+    | "spf";
+export type FontScheme =
+    | "default"
+    | "bookingsg"
+    | "mylegacy"
+    | "pa"
+    | "a11yplayground"
+    | "supportgowhere"
+    | "sgwdigitallobby"
+    | "imda"
+    | "spf"
+    | "oneservice";
+export type MotionScheme = "default";
+export type BorderScheme = "default";
+export type SpacingScheme = "default";
+export type RadiusScheme = "default" | "spf";
+export type ShadowScheme = "default";
+export type BreakpointScheme = "default";
+export type ComponentScheme =
+    | "default"
+    | "pa"
+    | "a11yplayground"
+    | "lifesg"
+    | "spf";
+export type ResourceScheme =
+    | "lifesg"
+    | "bookingsg"
+    | "rbs"
+    | "mylegacy"
+    | "ccube"
+    | "oneservice"
+    | "pa"
+    | "a11yplayground"
+    | "supportgowhere"
+    | "imda"
+    | "spf";
+
+export type ColourMode = "light" | "dark";
 
 export interface ThemeSpecOptions {
-    /** for color customisation, can specify subset of set */
-    color?: ColorSetOptions | undefined;
-    textStyle?: TextStyleSetOptionsType | undefined;
-    designToken?: DesignTokenSetOptions | undefined;
+    primitiveColour?: PrimitiveColourSetOptions | undefined;
+    primitiveColourDark?: PrimitiveColourSetOptions | undefined;
+    semanticColour?: SemanticColourSetOptions | undefined;
+    semanticColourDark?: SemanticColourSetOptions | undefined;
+    fontSpec?: FontSpecSetOptions | undefined;
+    font?: FontSetOptions | undefined;
+    motion?: MotionSetOptions | undefined;
+    spacing?: SpacingSetOptions | undefined;
+    border?: BorderSetOptions | undefined;
+    radius?: RadiusSetOptions | undefined;
+    shadow?: ShadowSetOptions | undefined;
+    resourceScheme?: ResourceScheme | undefined;
+    breakpoint?: BreakpointSetOptions | undefined;
 }
 
+/**
+ * Configuration object passed to ThemeProvider to define the active design system theme.
+ *
+ * @keywords theming, color scheme, brand theme, ThemeProvider, design tokens config
+ */
 export interface ThemeSpec {
-    /** Sets the color scheme of the theme */
-    [ThemeContextKeys.colorScheme]: ColorScheme;
-    /** Sets the text style scheme of the theme */
-    [ThemeContextKeys.textStyleScheme]: TextStyleScheme;
-    /** Sets the design token scheme of the theme */
-    [ThemeContextKeys.designTokenScheme]: DesignTokenScheme;
-    /** Sets the layout scheme of the theme */
-    [ThemeContextKeys.layout]?: ThemeLayout | undefined;
-    /** Sets the resource scheme (e.g. images, text) of the theme */
-    [ThemeContextKeys.resourceScheme]: ResourceScheme;
-    /** For specific customisations to any schemes */
-    options?: ThemeSpecOptions | undefined;
+    colourScheme: ColourScheme;
+    colourMode?: ColourMode | undefined;
+    fontScheme: FontScheme;
+    motionScheme: MotionScheme;
+    borderScheme: BorderScheme;
+    spacingScheme: SpacingScheme;
+    radiusScheme: RadiusScheme;
+    shadowScheme: ShadowScheme;
+    breakpointScheme: BreakpointScheme;
+    resourceScheme: ResourceScheme;
+    componentScheme?: ComponentScheme | undefined;
+    componentOverrides?: ComponentOverrideOptions | undefined;
+    overrides?: ThemeSpecOptions | undefined;
+
+    maxColumns?: any;
+    /** @deprecated For backwards compatibility with V2 theme */
+    _v2?: V2_ThemeSpec;
+}
+export interface ThemeStyleProps {
+    theme?: ThemeSpec;
 }
 
-export interface ThemeCollectionSpec<T, V> {
-    collections: T;
-    defaultValue: V;
+export interface DSThemeProviderProps {
+    theme: ThemeSpec;
+    children: ReactNode;
+}
+
+export interface DSTheme {
+    colourMode: ColourMode;
+    theme: ThemeSpec | null;
 }

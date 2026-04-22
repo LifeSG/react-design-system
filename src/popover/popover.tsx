@@ -3,8 +3,8 @@ import { useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { Card } from "src/card";
 import { Modal } from "../modal/modal";
-import { MediaWidths } from "../spec/media-spec";
-import { Text } from "../text/text";
+import { MediaWidths } from "../v2_spec/media-spec";
+import { V2_Text } from "../v2_text/text";
 import {
     BubbleWrap,
     ContentWrapper,
@@ -15,6 +15,12 @@ import { PopoverProps } from "./types";
 
 /**
  * @deprecated Use `PopoverV2` for improved positioning behaviour. This component will be removed in DS v3.
+ * @example
+ * ```tsx
+ * <Popover visible={isOpen} onMobileClose={() => setOpen(false)}>
+ *     <p>Popover content</p>
+ * </Popover>
+ * ```
  */
 export const Popover = ({
     children,
@@ -136,7 +142,7 @@ export const Popover = ({
     // =============================================================================
     const renderContent = () =>
         typeof children === "string" ? (
-            <Text.BodySmall>{children}</Text.BodySmall>
+            <V2_Text.BodySmall>{children}</V2_Text.BodySmall>
         ) : (
             children
         );
@@ -153,7 +159,10 @@ export const Popover = ({
                 <Card>{renderContent()}</Card>
             </BubbleWrap>
             {isMobile && (
-                <Modal show={visible} onOverlayClick={handleMobileClose}>
+                <Modal
+                    show={visible ?? false}
+                    onOverlayClick={handleMobileClose}
+                >
                     <MobileModalBox onClose={handleMobileClose}>
                         <ContentWrapper>{renderContent()}</ContentWrapper>
                     </MobileModalBox>

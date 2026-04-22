@@ -25,8 +25,9 @@ const getMask = (
 };
 
 export namespace PhoneNumberInputHelper {
-    export const getCountries = (): CountryValue[] =>
-        [].concat(
+    export const getCountries = (): CountryValue[] => {
+        const countries: CountryValue[] = [];
+        return countries.concat(
             ...CountryData.map((country): CountryValue => {
                 const countryItem = {
                     name: country[0] as string,
@@ -44,6 +45,7 @@ export namespace PhoneNumberInputHelper {
                 return countryItem;
             })
         );
+    };
 
     export const formatNumber = (
         numberText = "",
@@ -79,7 +81,8 @@ export namespace PhoneNumberInputHelper {
                     };
                 }
 
-                const [head, ...tail] = acc.remainingText;
+                const head = acc.remainingText.slice(0, 1);
+                const tail = acc.remainingText.slice(1);
 
                 return {
                     formattedText: acc.formattedText + head,

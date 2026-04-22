@@ -1,9 +1,9 @@
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
-import {
-    UneditableSectionItemMaskState,
-    UneditableSectionItemProps,
-} from "./types";
+import { useEffect, useState } from "react";
+import { FormLabel } from "../form/form-label";
+import { Typography } from "../typography";
+import { StringHelper } from "../util/string-helper";
 import {
     Clickable,
     Container,
@@ -12,18 +12,21 @@ import {
     IconContainer,
     LoadingLabel,
     Spinner,
+    StyledAlert,
     TryAgainLabel,
 } from "./section-item.styles";
-import { FormLabel } from "../form/form-label";
-import { Text } from "../text";
-import { StringHelper } from "../util/string-helper";
-import { useEffect, useState } from "react";
+import {
+    UneditableSectionItemMaskState,
+    UneditableSectionItemProps,
+} from "./types";
+import { VisuallyHidden } from "../shared/accessibility";
 
 export interface UneditableSectionItemComponentProps
     extends UneditableSectionItemProps {
     onMask?: (() => void) | undefined;
     onUnmask?: (() => void) | undefined;
     onTryAgain?: (() => void) | undefined;
+    fullWidth?: boolean | undefined;
 }
 
 export const UneditableSectionItem = ({
@@ -37,10 +40,12 @@ export const UneditableSectionItem = ({
     unmaskRange,
     maskRegex,
     disableMaskUnmask,
+    alert,
     maskTransformer,
     onMask,
     onUnmask,
     onTryAgain,
+    fullWidth,
 }: UneditableSectionItemComponentProps) => {
     // =========================================================================
     // CONST, STATE, REF
@@ -86,6 +91,10 @@ export const UneditableSectionItem = ({
     // HELPER FUNCTIONS
     // =========================================================================
     const getValue = () => {
+        if (typeof value !== "string") {
+            return value;
+        }
+
         return displayMaskState === "masked"
             ? StringHelper.maskValue(value, {
                   maskChar,
@@ -107,7 +116,10 @@ export const UneditableSectionItem = ({
                     <>
                         <ErrorIcon />
                         <ErrorLabel>Error</ErrorLabel>
-                        <TryAgainLabel>Try again?</TryAgainLabel>
+                        <TryAgainLabel>
+                            Try again?
+                            <VisuallyHidden>{label}</VisuallyHidden>
+                        </TryAgainLabel>
                     </>
                 );
             case "loading":
@@ -121,7 +133,13 @@ export const UneditableSectionItem = ({
                 return (
                     <>
                         {getValue()}
-                        <IconContainer>
+                        <IconContainer
+                            aria-label={
+                                displayMaskState === "masked"
+                                    ? `Display ${label}`
+                                    : `Hide ${label}`
+                            }
+                        >
                             {displayMaskState === "masked" ? (
                                 <EyeIcon data-testid="masked-icon" />
                             ) : (
@@ -134,12 +152,16 @@ export const UneditableSectionItem = ({
     };
 
     const renderContent = () => {
+        if (typeof value !== "string") {
+            return value;
+        }
+
         if (!displayMaskState) {
-            return <Text.Body>{value}</Text.Body>;
+            return <Typography.BodyBL>{value}</Typography.BodyBL>;
         }
 
         if (disableMaskUnmask) {
-            return <Text.Body>{getValue()}</Text.Body>;
+            return <Typography.BodyBL>{getValue()}</Typography.BodyBL>;
         }
 
         return (
@@ -148,6 +170,12 @@ export const UneditableSectionItem = ({
                 onClick={handleClickableClick}
                 aria-busy={maskLoadingState === "loading"}
                 aria-live="polite"
+                type="button"
+                aria-label={StringHelper.getMaskedDescription(
+                    value,
+                    displayMaskState,
+                    maskRange
+                )}
             >
                 {renderMaskingState()}
             </Clickable>
@@ -155,9 +183,10 @@ export const UneditableSectionItem = ({
     };
 
     return (
-        <Container $widthStyle={displayWidth}>
+        <Container $widthStyle={displayWidth} $fullWidth={fullWidth}>
             <FormLabel>{label}</FormLabel>
             {renderContent()}
+            {alert && <StyledAlert sizeType="small" {...alert} />}
         </Container>
     );
 };

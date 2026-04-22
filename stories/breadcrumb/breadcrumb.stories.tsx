@@ -1,17 +1,22 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Breadcrumb } from "src/breadcrumb";
+import { FullWidthStoryDecorator } from "stories/storybook-common";
 
 type Component = typeof Breadcrumb;
 
 const meta: Meta<Component> = {
-    title: "Modules/Breadcrumb",
+    title: "Navigation/Breadcrumb",
     component: Breadcrumb,
+    parameters: {
+        layout: "fullscreen",
+    },
+    decorators: [FullWidthStoryDecorator()],
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Breadcrumb
                 links={[
@@ -48,8 +53,47 @@ export const Default: StoryObj<Component> = {
     },
 };
 
+export const Variations: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Breadcrumb
+                    links={[
+                        { children: "Home", href: "https://life.gov.sg" },
+                        {
+                            children: "Link 1",
+                            href: "https://life.gov.sg",
+                        },
+                        {
+                            children: "Link 2",
+                            href: "https://life.gov.sg",
+                        },
+                        { children: "Current page" },
+                    ]}
+                    separatorStyle="chevron"
+                />
+                <Breadcrumb
+                    links={[
+                        { children: "Home", href: "https://life.gov.sg" },
+                        {
+                            children: "Link 1",
+                            href: "https://life.gov.sg",
+                        },
+                        {
+                            children: "Link 2",
+                            href: "https://life.gov.sg",
+                        },
+                        { children: "Current page" },
+                    ]}
+                    separatorStyle="slash"
+                />
+            </>
+        );
+    },
+    decorators: [],
+};
 export const DifferentFadeColors: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Breadcrumb
                 links={[

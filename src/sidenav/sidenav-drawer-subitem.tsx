@@ -3,6 +3,15 @@ import { Container, LinkButton } from "./sidenav-drawer-subitem.styles";
 import { SidenavContext } from "./sidenav-context";
 import { useContext } from "react";
 
+/**
+ * A leaf-level navigation link inside a `Sidenav.DrawerItem`.
+ *
+ * Renders as a clickable button that marks itself as selected and updates the sidenav context.
+ * @example
+ * ```tsx
+ * <Sidenav.DrawerSubitem id="sub1" title="Overview" onClick={handleClick} />
+ * ```
+ */
 export const SidenavDrawerSubitem = ({
     id,
     title,
@@ -26,7 +35,7 @@ export const SidenavDrawerSubitem = ({
         if (onClick) {
             onClick(id);
         }
-        setSelectedItem({ itemId: currentItem.itemId, content: undefined });
+        setSelectedItem({ itemId: currentItem?.itemId, content: undefined });
         setCurrentItem(undefined);
         setPreviouslySelectedItemId(undefined);
     };
@@ -36,7 +45,7 @@ export const SidenavDrawerSubitem = ({
     // =========================================================================
     return (
         <Container {...otherProps}>
-            <LinkButton styleType="link" type="button" onClick={handleOnClick}>
+            <LinkButton type="button" onClick={handleOnClick}>
                 {title}
             </LinkButton>
         </Container>

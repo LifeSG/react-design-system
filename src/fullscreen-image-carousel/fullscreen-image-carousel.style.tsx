@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
-import { Text } from "../text";
+import { InsetStyleProps } from "../shared/types";
+import { Border, Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
+import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
-interface ArrowButtonStyleProps {
+interface ArrowButtonStyleProps extends InsetStyleProps {
     $position: "left" | "right";
 }
 
@@ -23,26 +23,65 @@ interface ThumbnailItemStyleProps {
 const IconButton = styled(ClickableIcon)`
     padding: 0;
     border-radius: 100%;
-    background: ${Color.Neutral[8]};
-    color: ${Color.Primary};
+    background: ${Colour["bg"]};
+    color: ${Colour["icon-primary"]};
     height: 2.5rem;
     width: 2.5rem;
-`;
-
-export const CloseButton = styled(IconButton)`
-    position: absolute;
-    top: 3rem;
-    right: 3rem;
-    z-index: 5;
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        top: 1.25rem;
-        right: 1.25rem;
-    }
+    box-shadow: ${Shadow["md-strong"]};
 
     svg {
         height: 1.5rem;
         width: 1.5rem;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
+        outline-offset: 2px;
+    }
+`;
+
+export const CloseButton = styled(IconButton)<InsetStyleProps>`
+    position: absolute;
+    top: ${(props) =>
+        css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
+    right: ${(props) =>
+        css`calc(${Spacing["spacing-48"]} + ${props.$insetRight || 0}px)`};
+    z-index: 5;
+
+    ${MediaQuery.MaxWidth.sm} {
+        top: ${(props) =>
+            css`calc(${Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
+        right: ${(props) =>
+            css`calc(${Spacing["spacing-20"]} + ${props.$insetRight || 0}px)`};
+    }
+`;
+
+export const MagnifierButton = styled(IconButton)<InsetStyleProps>`
+    position: absolute;
+    top: ${(props) =>
+        css`calc(${Spacing["spacing-48"]} + ${props.$insetTop || 0}px)`};
+    right: ${(props) =>
+        css`calc(2.5rem + ${Spacing["spacing-48"]} + ${
+            Spacing["spacing-16"]
+        } + ${
+            props.$insetRight || 0
+        }px)`}; // close button + space from screen + gap between buttons
+
+    z-index: 5;
+
+    ${MediaQuery.MaxWidth.sm} {
+        top: ${(props) =>
+            css`calc(${Spacing["spacing-20"]} + ${props.$insetTop || 0}px)`};
+        right: ${(props) =>
+            css`calc(2.5rem + ${Spacing["spacing-20"]} + ${
+                Spacing["spacing-16"]
+            } + ${
+                props.$insetRight || 0
+            }px)`}; // close button + space from screen + gap between buttons
     }
 `;
 
@@ -55,25 +94,34 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     ${(props) =>
         props.$position === "left" &&
         css`
-            left: 3rem;
-            ${MediaQuery.MaxWidth.mobileL} {
-                left: 1.25rem;
+            left: calc(${Spacing["spacing-48"]} + ${props.$insetLeft || 0}px);
+
+            ${MediaQuery.MaxWidth.sm} {
+                left: calc(
+                    ${Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
+                );
             }
         `}
 
     ${(props) =>
         props.$position === "right" &&
         css`
-            right: 3rem;
-            ${MediaQuery.MaxWidth.mobileL} {
-                right: 1.25rem;
+            right: calc(${Spacing["spacing-48"]} + ${props.$insetRight || 0}px);
+
+            ${MediaQuery.MaxWidth.sm} {
+                right: calc(
+                    ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
+                );
             }
         `}
+`;
 
-    svg {
-        height: 1.25rem;
-        width: 1.25rem;
-    }
+export const CarouselModalContent = styled.div`
+    position: relative;
+    width: 100%;
+    height: 100dvh;
+    display: flex;
+    flex-direction: column;
 `;
 
 export const ImageGalleryContainer = styled.div`
@@ -89,7 +137,8 @@ export const ImageGalleryWrapper = styled.div`
     display: block;
     overflow: hidden;
     width: 100%;
-    height: 100%;
+    flex: 1;
+    min-height: 0;
 `;
 
 export const ImageGallerySwipe = styled.div`
@@ -116,32 +165,51 @@ export const ImageGallerySlide = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
+
     .react-transform-wrapper {
         height: 100%;
         width: 100%;
     }
+
     .react-transform-component {
         height: 100%;
         width: 100%;
     }
 `;
 
+export const FocusableImageRegion = styled.div`
+    height: 100%;
+    width: 100%;
+    outline: none;
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
+        outline-offset: -2px;
+    }
+`;
+
 export const SlideImage = styled(StatefulImage)`
     height: 100%;
     width: 100%;
+    border-radius: ${Radius["none"]};
 `;
 
 export const SlidePlaceholderImage = styled(ImagePlaceholder)`
     width: 60vw;
     height: auto;
     max-height: 100%;
+    border-radius: ${Radius["none"]};
     aspect-ratio: 4 / 3;
 `;
 
 export const BoxChip = styled.div`
     display: flex;
     justify-content: center;
-    padding: 1rem;
+    padding: ${Spacing["spacing-16"]};
     position: absolute;
     bottom: 0;
     left: 0;
@@ -151,13 +219,13 @@ export const BoxChip = styled.div`
     z-index: 3;
 `;
 
-export const Chip = styled(Text.XSmall)`
+export const Chip = styled(Typography.BodyXS)`
     display: inline-flex;
-    padding: 0.25rem 1rem;
+    padding: ${Spacing["spacing-4"]} ${Spacing["spacing-16"]};
     justify-content: center;
     align-items: center;
-    border-radius: 20px;
-    background-color: ${Color.Neutral[8]};
+    border-radius: ${Radius["full"]};
+    background-color: ${Colour["bg"]};
     text-align: center;
 `;
 
@@ -165,15 +233,26 @@ export const Chip = styled(Text.XSmall)`
 // THUMBNAIL STYLING
 // -----------------------------------------------------------------------------
 
-export const ThumbnailContainer = styled.div`
+export const ThumbnailContainer = styled.div<InsetStyleProps>`
     flex-shrink: 0;
     display: flex;
     overflow: auto;
-    background-color: ${Color.Neutral[1]};
-    padding: 1.5rem 1rem;
-
-    ${MediaQuery.MaxWidth.mobileL} {
-        padding: 1rem 1.25rem;
+    background-color: ${Colour["bg-inverse"]};
+    padding: ${(props) =>
+            css`
+                ${Spacing["spacing-24"]} ${Spacing[
+                    "spacing-16"
+                ]} calc(${Spacing["spacing-24"]} + ${props.$insetBottom ||
+                0}px);
+            `}
+        ${MediaQuery.MaxWidth.sm} {
+        padding: ${(props) =>
+            css`
+                ${Spacing["spacing-16"]} ${Spacing[
+                    "spacing-20"
+                ]} calc(${Spacing["spacing-16"]} + ${props.$insetBottom ||
+                0}px);
+            `};
     }
 `;
 
@@ -181,43 +260,64 @@ export const ThumbnailWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    gap: 1rem;
+    gap: ${Spacing["spacing-16"]};
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
 `;
 
-export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
-    cursor: pointer;
-    background-color: ${Color.Neutral[1]};
-    border-radius: 10px;
-
-    flex-shrink: 0;
-    overflow: hidden;
-    border: 1px solid transparent;
+export const ThumbnailItemContainer = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 6.25rem;
-    width: 6.25rem;
+    height: 100px;
+    width: 100px;
 
-    ${MediaQuery.MaxWidth.mobileL} {
-        height: 4rem;
-        width: 4rem;
+    ${MediaQuery.MaxWidth.sm} {
+        height: 64px;
+        width: 64px;
+    }
+`;
+
+export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
+    cursor: pointer;
+    background-color: ${Colour["bg-inverse"]};
+    border-radius: ${Radius["md"]};
+    border: ${Border["solid"]} transparent;
+    box-sizing: content-box;
+
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 92px;
+    width: 92px;
+
+    ${MediaQuery.MaxWidth.sm} {
+        height: 60px;
+        width: 60px;
     }
 
     ${(props) =>
         props.$active
             ? css`
-                  border: 4px solid ${Color.Primary};
+                  border-width: ${Border["width-040"]};
+                  border-color: ${Colour["border-selected"]};
 
-                  ${MediaQuery.MaxWidth.mobileL} {
-                      border: 2px solid ${Color.Primary};
+                  ${MediaQuery.MaxWidth.sm} {
+                      border-width: ${Border["width-020"]};
+                  }
+
+                  &:hover {
+                      border-color: ${Colour["border-selected-hover"]};
                   }
               `
             : css`
-                  :hover {
-                      border: 1px solid ${Color.Neutral[5]};
+                  border-width: ${Border["width-010"]};
+
+                  &:hover {
+                      border-color: ${Colour["border-hover"]};
                   }
               `};
 `;

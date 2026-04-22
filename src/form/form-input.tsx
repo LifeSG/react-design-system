@@ -1,26 +1,41 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "../input";
 import { InputRef } from "../input/types";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
 const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
     const {
         label,
         errorMessage,
-        id = "form-field",
+        id,
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
         mobileCols,
         tabletCols,
         desktopCols,
+        xxsCols,
+        xsCols,
+        smCols,
+        mdCols,
+        lgCols,
+        xlCols,
+        xxlCols,
         ...otherProps
     } = props;
 
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
+    );
+
+    const inputId = id ?? internalId;
+
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             disabled={otherProps.disabled}
@@ -29,10 +44,17 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <Input
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 ref={ref}
                 error={!!errorMessage}
                 {...otherProps}
@@ -41,4 +63,17 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
     );
 };
 
+/**
+ * A form field that wraps `Input` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.Input` to present a text input within a form. Forwards a ref to the underlying input element.
+ * @example
+ * ```tsx
+ * <Form.Input
+ *     label="Email address"
+ *     placeholder="Enter email"
+ *     errorMessage={errors.email}
+ * />
+ * ```
+ */
 export const FormInput = React.forwardRef(Component);

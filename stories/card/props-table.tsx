@@ -1,17 +1,13 @@
-import React from "react";
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable, PropTableTabs } from "stories/storybook-common";
+import { CardPropsData } from "./generated-props";
 
-const DATA: ApiTableSectionProps[] = [
-    {
-        attributes: [
+export const PropsTableTabs = () => (
+    <PropTableTabs
+        tabs={[
             {
-                name: "data-testid",
-                description: "The test identifier for the component",
-                propTypes: ["string"],
+                label: "CardProps",
+                content: <ApiTable sections={CardPropsData} />,
             },
-        ],
-    },
-];
-
-export const PropsTable = () => <ApiTable sections={DATA} />;
+        ]}
+    />
+);

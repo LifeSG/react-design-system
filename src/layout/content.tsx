@@ -1,9 +1,12 @@
 import React from "react";
 import { Container } from "./container";
+import { ContentProps } from "./types";
 import { Section } from "./section";
-import { ContentProps, DivRef } from "./types";
 
-const Component = (props: ContentProps, ref: DivRef): JSX.Element => {
+const Component = (
+    props: ContentProps,
+    ref: React.Ref<HTMLDivElement>
+): JSX.Element => {
     const {
         children,
         "data-testid": testId = "content",
@@ -33,7 +36,14 @@ const Component = (props: ContentProps, ref: DivRef): JSX.Element => {
     );
 };
 
-// =============================================================================
-// EXPORT
-// =============================================================================
+/**
+ * A padded content area that wraps a `Layout.Section` with consistent horizontal padding.
+ *
+ * Use as `Layout.Content` to constrain readable content width and apply responsive padding
+ * inside a `Layout.Section`.
+ * @example
+ * ```tsx
+ * <Layout.Content>content</Layout.Content>
+ * ```
+ */
 export const Content = React.forwardRef(Component);

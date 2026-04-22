@@ -1,8 +1,16 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text } from "../text";
+import {
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Motion,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -15,20 +23,29 @@ interface StyleProps {
 // =============================================================================
 // STYLING HELPERS
 // =============================================================================
-const VISIBILITY_STYLE = (show: boolean | undefined) => {
-    if (show) {
-        return css`
-            right: 0;
-            transition: all 300ms cubic-bezier(0.21, 0.79, 0.53, 1);
-            transition-delay: 200ms;
-        `;
+// FloatingUI transition styles
+const FLOATING_TRANSITION_STYLES = css`
+    transition-property: right, visibility;
+
+    &[data-status="initial"] {
+        right: -100%;
+        visibility: hidden;
     }
 
-    return css`
+    &[data-status="open"] {
+        transition-duration: ${Motion["duration-800"]};
+        transition-timing-function: ${Motion["ease-entrance"]};
+        right: 0;
+        visibility: visible;
+    }
+
+    &[data-status="close"] {
+        transition-duration: ${Motion["duration-800"]};
+        transition-timing-function: ${Motion["ease-exit"]};
         right: -100%;
-        transition: all 300ms cubic-bezier(0.4, 0.34, 0.38, 1);
-    `;
-};
+        visibility: hidden;
+    }
+`;
 
 // =============================================================================
 // STYLING
@@ -41,23 +58,22 @@ export const Container = styled.div<StyleProps>`
     flex-direction: column;
     height: 100%;
 
-    background-color: ${Color.Neutral[8]};
-    box-shadow: 0px 2px 12px rgba(104, 104, 104, 0.25);
+    background-color: ${Colour.bg};
+    box-shadow: ${Shadow["lg-subtle"]};
 
-    visibility: ${(props) => (props.$show ? "visible" : "hidden")};
-    ${(props) => VISIBILITY_STYLE(props.$show)}
+    ${FLOATING_TRANSITION_STYLES}
 
     width: 40%;
-    border-top-left-radius: 8px;
-    border-bottom-left-radius: 8px;
+    border-top-left-radius: ${Radius["md"]};
+    border-bottom-left-radius: ${Radius["md"]};
     overflow: hidden;
 
-    ${MediaQuery.MaxWidth.desktopL} {
+    ${MediaQuery.MaxWidth.xl} {
         width: 50%;
         min-width: 700px;
     }
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 100%;
         min-width: unset;
         border-top-left-radius: 0;
@@ -67,38 +83,41 @@ export const Container = styled.div<StyleProps>`
 
 export const Header = styled.div`
     top: 0;
-
     display: flex;
     align-items: center;
-    gap: 1rem;
-    height: 5rem;
-    padding: 2rem 1rem 1rem;
-    background-color: ${Color.Neutral[8]};
-    border-bottom: 1px solid ${Color.Neutral[5]};
+    gap: ${Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]}
+        ${Spacing["spacing-16"]}
+        calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-32"]});
+    background-color: ${Colour.bg};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
-    ${MediaQuery.MaxWidth.tablet} {
-        gap: 0.5rem;
-        padding: 2rem 1.25rem 1rem;
+    ${MediaQuery.MaxWidth.lg} {
+        gap: ${Spacing["spacing-8"]};
+        padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
+            ${Spacing["spacing-16"]}
+            calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-24"]});
     }
 `;
 
 export const CloseButton = styled(ClickableIcon)`
-    color: ${Color.Neutral[3]};
+    color: ${Colour.icon};
     padding: 0;
-    order: -1; // show button on the left of the header
-
-    :active,
-    :focus {
-        color: ${Color.Primary};
+    position: absolute;
+    top: ${Spacing["spacing-32"]};
+    left: ${Spacing["spacing-16"]};
+    &:active,
+    &:focus {
+        color: ${Colour["icon-hover"]};
     }
 
     svg {
-        height: 2rem;
-        width: 2rem;
+        height: ${Font.Spec["heading-lh-md"]};
+        width: ${Font.Spec["heading-lh-md"]};
     }
 `;
 
-export const Heading = styled(Text.H2)`
+export const Heading = styled(Typography.HeadingMD)`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

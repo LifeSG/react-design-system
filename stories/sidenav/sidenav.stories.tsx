@@ -3,23 +3,25 @@ import { DocIcon } from "@lifesg/react-icons/doc";
 import { Person2Icon } from "@lifesg/react-icons/person-2";
 import { Square2x2Icon } from "@lifesg/react-icons/square-2x2";
 import { TicketIcon } from "@lifesg/react-icons/ticket";
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Sidenav } from "src/sidenav";
 
 type Component = typeof Sidenav;
 
 const meta: Meta<Component> = {
-    title: "Modules/Sidenav",
+    title: "Navigation/Sidenav",
     component: Sidenav,
+    tags: ["side navigation", "sidebar", "nav menu"],
     parameters: {
         layout: "fullscreen",
+        docs: { story: { inline: false, iframeHeight: 600 } },
     },
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Sidenav fixed={false} /* For storybook purposes */>
                 <Sidenav.Group separator={true}>
@@ -53,7 +55,7 @@ export const Default: StoryObj<Component> = {
 };
 
 export const SubitemDrawer: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Sidenav fixed={false} /* For storybook purposes */>
                 <Sidenav.Group separator={true}>

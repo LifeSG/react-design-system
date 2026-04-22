@@ -1,7 +1,5 @@
 import styled, { css } from "styled-components";
-import { Color } from "../../color";
-import { DesignToken } from "../../design-token";
-import { TextStyleHelper } from "../../text";
+import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -11,72 +9,121 @@ export interface InputWrapperStyleProps {
     $disabled?: boolean | undefined;
     $error?: boolean | undefined;
     $readOnly?: boolean | undefined;
+    $focused?: boolean | undefined;
     $position?: "left" | "right" | undefined;
+    $noBorder?: boolean | undefined;
+}
+
+export interface InputStyleProps {
+    $variant?: "small" | "default" | undefined;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const InputWrapper = styled.div<InputWrapperStyleProps>`
-    display: flex;
-    align-items: center;
-    position: relative;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: 4px;
-    background: ${Color.Neutral[8]};
-    height: max-content;
-    width: 100%;
-    padding: 0 1rem;
-    flex-direction: ${(props) =>
-        props.$position === "right" ? "row-reverse" : "row"};
+const defaultFocusCss = css`
+    outline-offset: -1px;
+    outline: ${Border["width-020"]} ${Border["solid"]} ${Colour["border-focus"]};
+`;
 
-    :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
+const readOnlyFocusCss = css`
+    outline-color: ${Colour["border-focus"]};
+`;
+
+const disabledFocusCss = css`
+    outline-color: ${Colour["border-disabled"]};
+`;
+
+const errorFocusCss = css`
+    outline-color: ${Colour["border-error-focus"]};
+`;
+
+const noFocusCss = css`
+    outline: none;
+`;
+
+/**
+ * basic wrapper for input fields that provides the border style but does not
+ * prescibe any layout for content
+ */
+export const InputBox = styled.div<InputWrapperStyleProps>`
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour["bg"]};
+
+    &:focus-within {
+        ${defaultFocusCss}
     }
+    ${(props) => props.$focused && !props.$noBorder && defaultFocusCss}
 
     ${(props) => {
         if (props.$readOnly) {
             return css`
-                border: 1px solid transparent;
+                border-color: transparent;
                 padding: 0;
                 background: transparent !important;
 
-                :focus-within {
-                    border: 1px solid transparent;
-                    box-shadow: none;
+                &:focus-within {
+                    ${readOnlyFocusCss}
                 }
+                ${props.$focused && readOnlyFocusCss}
             `;
         } else if (props.$disabled) {
             return css`
-                background: ${Color.Neutral[6]};
+                background: ${Colour["bg-disabled"]};
                 cursor: not-allowed;
 
-                :focus-within {
-                    border: 1px solid ${Color.Neutral[5]};
-                    box-shadow: none;
+                &:focus-within {
+                    ${disabledFocusCss}
                 }
+                ${props.$focused && disabledFocusCss}
             `;
         } else if (props.$error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border};
+                border-color: ${Colour["border-error"]};
 
-                :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
+                &:focus-within {
+                    ${errorFocusCss}
+                }
+                ${props.$focused && errorFocusCss}
+            `;
+        }
+    }}
+    ${(props) => {
+        if (props.$noBorder) {
+            return css`
+                border-color: transparent;
+                background: transparent;
+                &:focus-within {
+                    ${noFocusCss}
                 }
             `;
         }
     }}
 `;
 
+export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
+    display: flex;
+    align-items: center;
+    position: relative;
+    height: max-content;
+    width: 100%;
+    padding: 0 ${Spacing["spacing-16"]} 0
+        ${(props) => (props.$readOnly ? "0" : Spacing["spacing-16"])};
+    flex-direction: ${(props) =>
+        props.$position === "right" ? "row-reverse" : "row"};
+`;
+
 /**
  * standalone native input with stripped-down styles, intended to be used in
  * combination with `InputWrapper` or other wrappers to build composite widgets
  */
-export const BasicInput = styled.input`
-    ${TextStyleHelper.getTextStyle("Body", "regular")}
-    color: ${Color.Neutral[1]};
+export const BasicInput = styled.input<InputStyleProps>`
+    ${(props) =>
+        props.$variant === "small"
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
     display: block;
     background: transparent;
     border: none;
@@ -85,20 +132,22 @@ export const BasicInput = styled.input`
     padding: 0;
     margin: 0;
 
-    :disabled {
-        :hover {
+    &:disabled {
+        color: ${Colour["text-subtler"]};
+
+        &:hover {
             cursor: not-allowed;
         }
     }
 
-    ::placeholder,
-    ::-webkit-input-placeholder {
-        color: ${Color.Neutral[3]};
+    &::placeholder,
+    &::-webkit-input-placeholder {
+        color: ${Colour["text-subtler"]};
     }
 
     // Chrome, Safari, Edge, Opera
-    ::-webkit-outer-spin-button,
-    ::-webkit-inner-spin-button {
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
         -webkit-appearance: none;
         margin: 0;
     }
@@ -108,4 +157,24 @@ export const BasicInput = styled.input`
 
     // Firefox
     --moz-appearance: textfield;
+`;
+
+/**
+ * standalone native button with stripped-down styles
+ */
+export const BasicButton = styled.button<InputStyleProps>`
+    background: transparent;
+    border: none;
+    outline: none;
+
+    &:focus,
+    &:active {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: ${Border["width-010"]} ${Border["solid"]}
+            ${Colour["border-focus"]};
+        border-radius: ${Radius["sm"]};
+    }
 `;

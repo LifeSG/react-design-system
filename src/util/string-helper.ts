@@ -101,6 +101,42 @@ export namespace StringHelper {
     };
 
     /**
+     * Performs a truncation by adding ellipsis in the middle of the text.
+     * @param text input text
+     * @param widthOfElement the dynamic width of the container in px
+     * @param fontSize the fontsize of the text
+     * @param lineHeight the line height of the text
+     */
+    export const truncateTwoLines = (
+        text: string,
+        widthOfElement: number,
+        fontSize: number,
+        lineHeight = 1.2
+    ): string => {
+        // Estimate characters per line based on width and font size
+        const charsPerLine = Math.floor(
+            (widthOfElement * 2) / (fontSize * 0.6) // 0.6 is an approximation for average char width
+        );
+
+        // Calculate total characters allowed in two lines
+        const totalCharsAllowed = charsPerLine * (2 / lineHeight);
+
+        if (text.length <= totalCharsAllowed) {
+            return text; // No truncation needed
+        }
+
+        // Calculate the number of characters to keep
+        const keepFromStart = Math.floor(totalCharsAllowed * 0.6); // Keep 60% from start
+        const keepFromEnd = Math.floor(totalCharsAllowed * 0.2); // Keep 20% from end
+
+        // Truncate the text
+        const start = text.substring(0, keepFromStart);
+        const end = text.substring(text.length - keepFromEnd);
+
+        return `${start}...${end}`;
+    };
+
+    /**
      * Returns the width of the text in the specified font
      * https://stackoverflow.com/questions/118241/calculate-text-width-with-javascript/21015393#21015393
      */
@@ -120,7 +156,7 @@ export namespace StringHelper {
         return metrics.width;
     };
 
-    export const maskValue = (value: string, options?: MaskValueOptions) => {
+    export const maskValue = (value: string, options: MaskValueOptions) => {
         if (!value) {
             return value;
         }
@@ -168,5 +204,44 @@ export namespace StringHelper {
         return index0 < index1
             ? { startIndex: index0, endIndex: index1 }
             : { startIndex: index1, endIndex: index0 };
+    };
+
+    const ordinalPluralRules = new Intl.PluralRules("en", {
+        type: "ordinal",
+    });
+
+    const suffixes = new Map([
+        ["one", "st"],
+        ["two", "nd"],
+        ["few", "rd"],
+        ["other", "th"],
+    ]);
+
+    export const formatOrdinal = (n: number) => {
+        const rule = ordinalPluralRules.select(n);
+        const suffix = suffixes.get(rule);
+        return `${n}${suffix}`;
+    };
+
+    export const getMaskedDescription = (
+        value: string,
+        displayMaskState: "masked" | "unmasked",
+        maskRange?: number[]
+    ): string => {
+        if (!value || displayMaskState !== "masked" || !maskRange) return "";
+
+        const [startIndex, endIndex] = maskRange;
+        const hasStart = startIndex > 0;
+        const hasEnd = endIndex < value.length - 1;
+
+        const start = hasStart ? value.substring(0, startIndex) : "";
+        const end = hasEnd ? value.substring(endIndex + 1) : "";
+
+        if (hasStart && hasEnd)
+            return `Starting with ${start} and ending with ${end}`;
+        if (hasStart) return `Starting with ${start}`;
+        if (hasEnd) return `Ending with ${end}`;
+
+        return "";
     };
 }

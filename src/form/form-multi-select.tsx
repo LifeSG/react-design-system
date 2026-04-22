@@ -1,11 +1,26 @@
+import { useState } from "react";
 import { InputMultiSelect } from "../input-multi-select/input-multi-select";
 import { FormWrapper } from "./form-wrapper";
 import { FormMultiSelectProps } from "./types";
+import { SimpleIdGenerator } from "../util";
 
+/**
+ * A form field that wraps `InputMultiSelect` with a label, error message, and responsive layout.
+ *
+ * Use as `Form.MultiSelect` to allow selecting multiple options within a form.
+ * @example
+ * ```tsx
+ * <Form.MultiSelect
+ *     label="Interests"
+ *     options={options}
+ *     errorMessage={errors.interests}
+ * />
+ * ```
+ */
 export const FormMultiSelect = <T, V>({
     label,
     errorMessage,
-    id = "form-multi-select",
+    id,
     "data-error-testid": errorTestId,
     "data-testid": testId,
     enableSearch = false,
@@ -13,11 +28,24 @@ export const FormMultiSelect = <T, V>({
     mobileCols,
     tabletCols,
     desktopCols,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
+    variant,
     ...otherProps
 }: FormMultiSelectProps<T, V>): JSX.Element => {
+    const [internalId] = useState(
+        () => `form-field-${SimpleIdGenerator.generate()}`
+    );
+    const inputId = id ?? internalId;
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
@@ -26,12 +54,20 @@ export const FormMultiSelect = <T, V>({
             mobileCols={mobileCols}
             tabletCols={tabletCols}
             desktopCols={desktopCols}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <InputMultiSelect
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 error={!!errorMessage}
                 enableSearch={enableSearch}
+                variant={variant}
                 {...otherProps}
             />
         </FormWrapper>

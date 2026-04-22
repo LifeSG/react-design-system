@@ -1,15 +1,16 @@
-import { Canvas, Meta } from "@storybook/blocks";
-import { Secondary, Title } from "../../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
+import { DocAlert } from "stories/storybook-common";
 import * as FormCustomFieldStories from "./form-custom-field.stories";
-import { PropsTable } from "./props-table";
+import { PropsTableTabs } from "./props-table";
 
 <Meta of={FormCustomFieldStories} />
 
-<Title>Form.CustomField</Title>
+# Form.CustomField
 
-<Secondary>Overview</Secondary>
+## Overview
 
-Allows for a custom form element to be specified, and still have the label and error message.
+Allows for a custom form element to be specified, and still have the label and
+error message.
 
 ```tsx
 import { Form } from "@lifesg/react-design-system/form";
@@ -17,6 +18,19 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormCustomFieldStories.Default} />
 
-<Secondary>Component API</Secondary>
+## Accessibility
 
-<PropsTable />
+The component injects the following props into the form element:
+
+-   `aria-describedby`
+-   `aria-invalid`
+-   `aria-labelledby`
+
+The form element can be associated with the subtitle and error message by
+forwarding them accordingly.
+
+<Canvas of={FormCustomFieldStories.Accessibility} />
+
+## Component API
+
+<PropsTableTabs />

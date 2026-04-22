@@ -1,11 +1,8 @@
 import styled, { css } from "styled-components";
-import { Button } from "../button/button";
-import { Color } from "../color";
 import { Input } from "../input";
-import { MediaQuery } from "../media";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Text, TextStyleHelper } from "../text";
-
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
+import { Typography } from "../typography";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -25,29 +22,33 @@ export const PaginationWrapper = styled.nav`
 `;
 
 export const PaginationList = styled.div`
+    align-self: flex-start;
+
     display: flex;
     align-items: center;
-    align-self: flex-start;
-    overflow: auto;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         align-self: center;
     }
 `;
 
 export const PaginationMenu = styled.div`
     display: inline-flex;
-    padding: 0.125rem;
     align-items: center;
 `;
 
-export const NavigationItem = styled(ClickableIcon)`
+export const EllipsisButton = styled(ClickableIcon)`
     display: flex;
-    padding: 0.625rem;
     justify-content: center;
     align-items: center;
-    border-radius: 0.25rem;
-    color: ${Color.Primary};
+
+    outline: none;
+    border-radius: ${Radius["sm"]};
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0 ${Spacing["spacing-8"]};
+
+    color: ${Colour["icon-primary"]};
 
     svg {
         height: 1.25rem;
@@ -55,23 +56,29 @@ export const NavigationItem = styled(ClickableIcon)`
     }
 
     &:disabled {
-        color: ${Color.Neutral[4]};
+        color: ${Colour["icon-disabled-subtle"]};
         cursor: not-allowed;
     }
-    :active,
-    :focus {
-        outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
+
+    &:hover,
+    &:focus-visible {
+        background-color: ${Colour["bg-hover"]};
     }
 `;
 
 export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     display: flex;
-    padding: 0.625rem;
     justify-content: center;
     align-items: center;
-    border-radius: 0.25rem;
-    color: ${Color.Primary};
+
+    outline: none;
+    margin: ${Spacing["spacing-4"]};
+    border-radius: ${Radius["sm"]};
+    height: 2.5rem;
+    width: 2.5rem;
+    padding: 0 ${Spacing["spacing-8"]};
+
+    color: ${Colour["icon-primary"]};
 
     svg {
         height: 1.25rem;
@@ -79,207 +86,128 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     }
 
     &:disabled {
-        color: ${Color.Neutral[4]};
+        color: ${Colour["icon-disabled-subtle"]};
         cursor: not-allowed;
     }
-    :active,
-    :focus {
-        outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
-    }
-    ${(props) => {
-        if (props.$position === "left") {
-            return css`
-                margin-right: 0.625rem;
-                margin-left: 0rem;
-            `;
-        } else {
-            return css`
-                margin-right: 0rem;
-                margin-left: 0.625rem;
-            `;
-        }
-    }}
 
-    ${MediaQuery.MaxWidth.mobileS} {
-        margin-right: 0rem;
-        margin-left: 0rem;
+    &:not(:disabled):hover,
+    &:not(:disabled):focus-visible {
+        background: ${Colour["bg-hover"]};
     }
 `;
 
-export const PageItem = styled(Button.Default)<StyleProps>`
-    background: ${(props) =>
-        props.$selected ? Color.Primary : Color.Neutral[8]};
-    border: 1px solid
-        ${(props) => (props.$selected ? Color.Primary : Color.Neutral[5])};
-    color: ${(props) =>
-        props.$selected ? Color.Neutral[8] : Color.Neutral[1]};
-
+export const PageItem = styled.button<StyleProps>`
+    outline: none;
+    margin: ${Spacing["spacing-4"]};
+    box-shadow: none;
+    border: ${Border["width-010"]} ${Border.solid}
+        ${(props) =>
+            css`
+                ${props.$selected ? Colour["bg-primary"] : Colour.border}
+            `};
+    border-radius: ${Radius["sm"]};
     min-width: 2.5rem;
     height: 2.5rem;
-    text-align: center;
-    padding: 0.4rem 0.5rem;
-    border-radius: 0.25rem;
-    margin: 0.25rem;
+    padding: 0 ${Spacing["spacing-8"]};
+
+    background: ${(props) =>
+        props.$selected ? Colour["bg-primary"] : Colour.bg};
     cursor: pointer;
 
-    span {
-        color: ${(props) =>
-            props.$selected ? Color.Neutral[8] : Color.Neutral[1]};
-        ${(props) => {
-            if (props.$selected) {
-                return css`
-                    ${TextStyleHelper.getTextStyle("Body", 700)};
-                `;
-            } else {
-                return css`
-                    ${TextStyleHelper.getTextStyle("Body", 400)};
-                `;
-            }
-        }}
-    }
-    :hover {
-        box-shadow: none;
+    ${Font["body-baseline-regular"]};
+    text-align: center;
+    color: ${(props) =>
+        props.$selected ? Colour["text-inverse"] : Colour.text};
 
-        background: ${(props) =>
-            props.$selected ? Color.Primary : Color.Accent.Light[5]};
-        border: 1px solid
-            ${(props) =>
-                props.$selected ? Color.Primary : Color.Accent.Light[5]};
-        span {
-            color: ${(props) =>
-                props.$selected ? Color.Neutral[8] : Color.Primary};
-            ${(props) => {
-                if (props.$selected) {
-                    return css`
-                        ${TextStyleHelper.getTextStyle("Body", 700)};
-                    `;
-                } else {
-                    return css`
-                        ${TextStyleHelper.getTextStyle("Body", 600)};
-                    `;
-                }
-            }}
-        }
-    }
+    ${(props) =>
+        props.$selected
+            ? css`
+                  font-weight: ${Font.Spec["weight-bold"]};
 
-    :active,
-    :focus {
-        background: ${(props) =>
-            props.$selected ? Color.Primary : Color.Neutral[8]};
-        outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
-        span {
-            color: ${(props) =>
-                props.$selected ? Color.Neutral[8] : Color.Primary};
-
-            ${(props) => {
-                if (props.$selected) {
-                    return css`
-                        ${TextStyleHelper.getTextStyle("Body", 700)};
-                    `;
-                } else {
-                    return css`
-                        ${TextStyleHelper.getTextStyle("Body", 400)};
-                    `;
-                }
-            }}
-        }
-    }
-`;
-
-export const EllipsisItem = styled(ClickableIcon)`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: ${Color.Neutral[3]};
-    padding: 0.4rem 0.5rem;
-    border-radius: 0.25rem;
-    white-space: nowrap;
-
-    svg {
-        height: 1.25rem;
-        width: 1.25rem;
-    }
-
-    :hover {
-        svg {
-            color: ${Color.Neutral[3]};
-        }
-    }
-
-    :active,
-    :focus {
-        outline: none;
-        box-shadow: inset 0px 0px 4px 1px ${Color.Accent.Light[1]};
-    }
+                  &:hover,
+                  &:focus-visible {
+                      border-color: ${Colour["bg-selected-strongest-hover"]};
+                      background: ${Colour["bg-selected-strongest-hover"]};
+                      color: ${Colour["text-inverse"]};
+                  }
+              `
+            : css`
+                  &:hover,
+                  &:focus-visible {
+                      border-color: ${Colour["bg-hover"]};
+                      background: ${Colour["bg-hover"]};
+                      color: ${Colour["text-hover"]};
+                      font-weight: ${Font.Spec["weight-semibold"]};
+                  }
+              `}
 `;
 
 export const EllipsisContainer = styled.div`
+    position: relative;
+
     display: flex;
-    cursor: pointer;
-    min-width: 2.5rem;
-    height: 2.5rem;
-    border-radius: 0.25rem;
     justify-content: center;
     align-items: center;
-    position: relative;
+
+    margin: ${Spacing["spacing-4"]};
+    border-radius: ${Radius["sm"]};
+    width: 2.5rem;
+    height: 2.5rem;
+
+    cursor: pointer;
 `;
 
 export const PaginationMobileInput = styled.div`
     display: flex;
     justify-content: center;
-    margin: 0.625rem;
     align-items: center;
-    color: ${Color.Neutral[1]};
 
-    display: flex;
-    justify-content: center;
+    margin: ${Spacing["spacing-4"]};
+
+    color: ${Colour.text};
 `;
 
-export const Label = styled(Text.Body)`
+export const Label = styled(Typography.BodyBL)`
     white-space: nowrap;
 `;
 
-export const LabelDivider = styled(Text.Body)`
+export const LabelDivider = styled(Typography.BodyBL)`
+    margin: 0 ${Spacing["spacing-16"]};
     white-space: nowrap;
-    margin: 0 1rem;
 `;
 
 export const InputView = styled(Input)`
-    ${TextStyleHelper.getTextStyle("Body", 400)};
-    justify-content: center;
     width: 3.5rem;
     height: 2.5rem;
-    border-radius: 0.25rem;
-    border: 1px solid ${Color.Neutral[5]};
-    padding: 0.5rem 0.5rem;
+    ${Font["body-baseline-regular"]};
 
     input {
+        padding: 0 ${Spacing["spacing-8"]};
         text-align: center;
-
-        ::placeholder {
-            ${TextStyleHelper.getTextStyle("XSmall", 400)};
-        }
     }
 `;
 
 export const Hover = styled.div`
-    ${TextStyleHelper.getTextStyle("XSmall", 400)};
+    position: absolute;
+    top: -${Spacing["spacing-8"]};
+    transform: translateY(-100%);
 
-    background-color: ${Color.Primary};
-    border: none;
-    border-radius: 0.25rem;
-    color: ${Color.Neutral[8]};
-    align-items: center;
-    position: fixed;
     display: flex;
+    align-items: center;
     justify-content: center;
-    margin-top: 6rem;
-    padding: 0.25rem 0.75rem;
+
+    border: none;
+    border-radius: ${Radius["sm"]};
+    width: max-content;
+    padding: ${Spacing["spacing-4"]} ${Spacing["spacing-12"]};
+
+    background-color: ${Colour["bg-hover"]};
+
+    ${Font["body-xs-regular"]}
+    color: ${Colour["text-hover"]};
 `;
 
 export const InputSelectWrapper = styled.div`
-    width: 9.2rem;
-    margin-left: 0.5rem;
+    margin-left: ${Spacing["spacing-4"]};
+    width: 10rem;
 `;

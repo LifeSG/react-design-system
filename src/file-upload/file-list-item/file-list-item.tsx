@@ -15,6 +15,7 @@ import {
     ContentSection,
     DesktopErrorMessage,
     DragHandleIcon,
+    ErrorIcon,
     ErrorIconButton,
     ExtendedNameSection,
     FileSizeSection,
@@ -61,7 +62,7 @@ const Component = ({
     // Sortable mechanism
     const { attributes, listeners, setNodeRef, transform, transition } =
         useSortable({ id });
-    const detailSectionRef = useRef<HTMLDivElement>();
+    const detailSectionRef = useRef<HTMLDivElement>(null);
     const style = {
         transform: CSS.Translate.toString(transform),
         transition,
@@ -134,7 +135,7 @@ const Component = ({
 
     const shouldDisable = () => disabled || !!activeId;
 
-    const shouldEnableSort = () => sortable && !readOnly;
+    const shouldEnableSort = () => !!sortable && !readOnly;
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -156,6 +157,7 @@ const Component = ({
                 {renderNameDescription()}
                 {errorMessage && (
                     <DesktopErrorMessage weight="semibold">
+                        <ErrorIcon aria-hidden />
                         {errorMessage}
                     </DesktopErrorMessage>
                 )}
@@ -165,13 +167,14 @@ const Component = ({
             </FileSizeSection>
             {errorMessage && (
                 <MobileErrorMessage weight="semibold">
+                    <ErrorIcon aria-hidden />
                     {errorMessage}
                 </MobileErrorMessage>
             )}
         </>
     );
 
-    const renderWithThumbnail = () => (
+    const renderWithThumbnail = (thumbnailImageDataUrl: string) => (
         <>
             <FileListItemThumbnail
                 thumbnailImageDataUrl={thumbnailImageDataUrl}
@@ -205,7 +208,7 @@ const Component = ({
         if (errorMessage) {
             content = renderErrorState();
         } else if (thumbnailImageDataUrl) {
-            content = renderWithThumbnail();
+            content = renderWithThumbnail(thumbnailImageDataUrl);
         } else {
             content = renderDefault();
         }
@@ -225,7 +228,7 @@ const Component = ({
                 <ErrorIconButton
                     onClick={handleDelete}
                     data-testid={`${id}-error-delete-button`}
-                    aria-label={`delete-${name}`}
+                    aria-label={`delete ${name}, error: ${errorMessage}`}
                 >
                     <CrossIcon aria-hidden />
                 </ErrorIconButton>
@@ -298,6 +301,7 @@ const Component = ({
                 <DragHandleIcon
                     data-testid={`${id}-drag-handle`}
                     $disabled={shouldDisable()}
+                    $active={focusType === "self"}
                 />
             )}
             <Box

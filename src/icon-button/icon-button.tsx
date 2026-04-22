@@ -10,6 +10,9 @@ const Component = (
         children,
         sizeType = "default",
         type = "button",
+        disabled = false,
+        focusableWhenDisabled = false,
+        onClick,
         ...otherProps
     }: IconButtonProps,
     ref: ButtonRef
@@ -19,8 +22,11 @@ const Component = (
             data-testid={dataTestId || "iconButton"}
             ref={ref}
             type={type}
+            $styleType={disabled ? "disabled" : styleType}
             $sizeType={sizeType}
-            $styleType={styleType}
+            aria-disabled={disabled}
+            disabled={disabled && !focusableWhenDisabled}
+            onClick={disabled ? undefined : onClick}
             {...otherProps}
         >
             {children}
@@ -28,4 +34,18 @@ const Component = (
     );
 };
 
+/**
+ * Icon-only button.
+ *
+ * Renders a square button containing only an icon child. Extends all
+ * `HTMLButtonElement` attributes. Choose the style type based on hierarchy
+ * and the size type based on available space.
+ *
+ * @example
+ * ```tsx
+ * <IconButton styleType="secondary" sizeType="small" onClick={handleEdit}>
+ *     <EditIcon />
+ * </IconButton>
+ * ```
+ */
 export const IconButton = React.forwardRef(Component);

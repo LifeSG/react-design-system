@@ -2,6 +2,7 @@ import dayjs, { Dayjs } from "dayjs";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { DateHelper } from "../../util";
 import { CalendarHelper } from "../../util/calendar-helper";
+import { inertValue } from "../accessibility";
 import {
     ActionButton,
     ActionButtonSection,
@@ -32,7 +33,6 @@ const Component = (
     {
         children,
         initialCalendarDate,
-        type,
         minDate,
         maxDate,
         currentFocus,
@@ -54,6 +54,7 @@ const Component = (
         isRightArrowDisabled: _isRightArrowDisabled,
         getMonthHeaderLabel,
         getYearHeaderLabel,
+        isFocusable = false,
         ...otherProps
     }: CalendarManagerProps,
     ref: React.ForwardedRef<CalendarManagerRef>
@@ -73,7 +74,8 @@ const Component = (
 
     const doneButtonRef = useRef<HTMLButtonElement>(null);
     const cancelButtonRef = useRef<HTMLButtonElement>(null);
-    const containerRef = useRef<HTMLDivElement>();
+    const containerRef = useRef<HTMLDivElement>(null);
+    const yearDropdownRef = useRef<HTMLButtonElement>(null);
 
     // =============================================================================
     // EFFECTS
@@ -118,10 +120,44 @@ const Component = (
             setCurrentView("month-options");
 
             // Maintain focus when selecting month dropdown
-            containerRef.current.focus();
+            containerRef.current?.focus();
         } else {
             setCurrentView("default");
             setCalendarDate(viewCalendarDate);
+        }
+    };
+
+    const handleMonthDropdownKeydown = (
+        event: React.KeyboardEvent<HTMLButtonElement>
+    ) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handleMonthDropdownClick();
+            yearDropdownRef.current?.focus(); // Focus on year dropdown after month selection
+        }
+
+        // Up and Down arrow keys will change the month
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+            event.preventDefault();
+            const nextDate =
+                event.key === "ArrowUp"
+                    ? calendarDate.subtract(1, "month")
+                    : calendarDate.add(1, "month");
+
+            if (
+                !CalendarHelper.isWithinRange(
+                    nextDate,
+                    minDate ? dayjs(minDate) : undefined,
+                    maxDate ? dayjs(maxDate) : undefined,
+                    "month"
+                )
+            )
+                return;
+            setCalendarDate(nextDate);
+
+            if (currentView === "default") {
+                setViewCalendarDate(nextDate);
+            }
         }
     };
 
@@ -139,9 +175,55 @@ const Component = (
         }
     };
 
+    const handleYearDropdownKeydown = (
+        event: React.KeyboardEvent<HTMLButtonElement>
+    ) => {
+        if (event.key === "Enter" || event.key === " ") {
+            event.preventDefault();
+            handleYearDropdownClick();
+        }
+
+        // Up and Down arrow keys will change the year
+        if (event.key === "ArrowUp" || event.key === "ArrowDown") {
+            event.preventDefault();
+            const isYearView = currentView === "year-options";
+            let nextDate: Dayjs;
+
+            if (isYearView) {
+                // In year options view, change decade
+                nextDate =
+                    event.key === "ArrowUp"
+                        ? calendarDate.subtract(10, "year")
+                        : calendarDate.add(10, "year");
+            } else {
+                // In default view, change year
+                nextDate =
+                    event.key === "ArrowUp"
+                        ? calendarDate.subtract(1, "year")
+                        : calendarDate.add(1, "year");
+            }
+
+            if (
+                !CalendarHelper.isWithinRange(
+                    nextDate,
+                    minDate ? dayjs(minDate) : undefined,
+                    maxDate ? dayjs(maxDate) : undefined,
+                    "year"
+                )
+            )
+                return;
+
+            setCalendarDate(nextDate);
+
+            if (currentView === "default") {
+                setViewCalendarDate(nextDate);
+            }
+        }
+    };
+
     const handleLeftArrowClick = () => {
         // Maintain focus as button could become disabled
-        containerRef.current.focus();
+        containerRef.current?.focus();
 
         const nextDate = getLeftArrowDate
             ? getLeftArrowDate(calendarDate)
@@ -163,7 +245,7 @@ const Component = (
 
     const handleRightArrowClick = () => {
         // Maintain focus as button could become disabled
-        containerRef.current.focus();
+        containerRef.current?.focus();
 
         const nextDate = getRightArrowDate
             ? getRightArrowDate(calendarDate)
@@ -204,7 +286,7 @@ const Component = (
         }
     };
 
-    const handleDoneButton = (isDisabled: boolean) => {
+    const handleDoneButton = (isDisabled: boolean | undefined) => {
         if (isDisabled) return;
 
         setCalendarDate(viewCalendarDate);
@@ -294,27 +376,42 @@ const Component = (
         const monthLabel = getMonthHeaderLabel
             ? getMonthHeaderLabel(calendarDate)
             : calendarDate.format("MMM");
+
+        const fullMonthLabel = dayjs(monthLabel, "MMM").format("MMMM");
+
+        const yearLabel = getYearHeaderText();
+        const viewToYearLabel: Record<View, string> = {
+            "month-options": `${yearLabel}, Close month selection`,
+            "year-options": `${yearLabel}, Close year selection`,
+            default: `${yearLabel}, Select year`,
+        };
+
         return (
             <>
                 <DropdownButton
+                    aria-label={`${fullMonthLabel}, Select month`}
                     type="button"
-                    tabIndex={-1}
                     $expanded={currentView === "month-options"}
                     $visible={currentView === "default"}
                     id="month-dropdown"
                     onClick={handleMonthDropdownClick}
+                    onKeyDown={handleMonthDropdownKeydown}
+                    tabIndex={isFocusable ? 0 : -1}
                 >
                     <DropdownText>{monthLabel}</DropdownText>
                     <IconChevronDown />
                 </DropdownButton>
                 <DropdownButton
+                    ref={yearDropdownRef}
+                    aria-label={viewToYearLabel[currentView]}
                     type="button"
-                    tabIndex={-1}
                     $expanded={currentView !== "default"}
                     id="year-dropdown"
                     onClick={handleYearDropdownClick}
+                    onKeyDown={handleYearDropdownKeydown}
+                    tabIndex={isFocusable ? 0 : -1}
                 >
-                    <DropdownText>{getYearHeaderText()}</DropdownText>
+                    <DropdownText>{yearLabel}</DropdownText>
                     <IconChevronDown />
                 </DropdownButton>
             </>
@@ -326,7 +423,6 @@ const Component = (
             case "month-options":
                 return (
                     <InternalCalendarMonth
-                        type={type}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
                         minDate={minDate}
@@ -334,7 +430,7 @@ const Component = (
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
-                        isNewSelection={selectWithinRange}
+                        isNewSelection={!!selectWithinRange}
                         onMonthSelect={handleMonthYearSelect}
                         allowDisabledSelection={allowDisabledSelection}
                     />
@@ -342,7 +438,7 @@ const Component = (
             case "year-options":
                 return (
                     <InternalCalendarYear
-                        type={type}
+                        setCalendarDate={setCalendarDate}
                         calendarDate={calendarDate}
                         currentFocus={currentFocus}
                         minDate={minDate}
@@ -350,7 +446,7 @@ const Component = (
                         selectedStartDate={selectedStartDate}
                         selectedEndDate={selectedEndDate}
                         viewCalendarDate={viewCalendarDate}
-                        isNewSelection={selectWithinRange}
+                        isNewSelection={!!selectWithinRange}
                         onYearSelect={handleMonthYearSelect}
                         allowDisabledSelection={allowDisabledSelection}
                     />
@@ -361,6 +457,14 @@ const Component = (
     };
 
     const renderHeader = () => {
+        const viewToSelection: Record<View, string> = {
+            "month-options": "year",
+            "year-options": "decade",
+            default: "month",
+        };
+
+        const selection = viewToSelection[currentView];
+
         return (
             <Header data-id="calendar-header" data-testid="calendar-header">
                 <HeaderInputDropdown>
@@ -368,20 +472,24 @@ const Component = (
                 </HeaderInputDropdown>
                 <HeaderArrows>
                     <HeaderArrowButton
+                        aria-label={`Previous ${selection}`}
                         data-testid="left-arrow-btn"
                         disabled={isLeftArrowDisabled()}
                         focusHighlight={false}
-                        tabIndex={-1}
+                        focusOutline="browser"
                         onClick={handleLeftArrowClick}
+                        tabIndex={isFocusable ? 0 : -1}
                     >
                         <ArrowLeft />
                     </HeaderArrowButton>
                     <HeaderArrowButton
+                        aria-label={`Next ${selection}`}
                         data-testid="right-arrow-btn"
                         disabled={isRightArrowDisabled()}
                         focusHighlight={false}
-                        tabIndex={-1}
+                        focusOutline="browser"
                         onClick={handleRightArrowClick}
+                        tabIndex={isFocusable ? 0 : -1}
                     >
                         <ArrowRight />
                     </HeaderArrowButton>
@@ -435,10 +543,14 @@ const Component = (
                 </>
             );
         } else {
+            const isDefaultView = currentView === "default";
             return (
+                // Prevent interaction with the default view when options are open
                 <>
-                    <DefaultView>{defaultView}</DefaultView>
-                    <OptionsOverlay $visible={currentView !== "default"}>
+                    <DefaultView inert={inertValue(!isDefaultView)}>
+                        {defaultView}
+                    </DefaultView>
+                    <OptionsOverlay $visible={!isDefaultView}>
                         {renderOptionsOverlay()}
                     </OptionsOverlay>
                 </>
@@ -449,9 +561,10 @@ const Component = (
     return (
         <Container
             ref={containerRef}
-            tabIndex={-1}
             data-id="calendar-container"
             data-testid="calendar-container"
+            aria-label={viewCalendarDate.format("MMMM, YYYY")}
+            role="group"
             {...otherProps}
         >
             {showNavigationHeader && renderHeader()}

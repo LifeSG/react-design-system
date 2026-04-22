@@ -1,8 +1,9 @@
-import { useState } from "react";
+import { useSpring } from "@react-spring/web";
+import { useContext, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
-import { useSpring } from "react-spring";
-import { MediaWidths } from "../media";
+import { ThemeContext } from "styled-components";
+import { Breakpoint } from "../theme";
 import {
     AlertIcon,
     CallToActionContainer,
@@ -13,13 +14,27 @@ import {
     HandleIcon,
     HandleIconContainer,
     Header,
-    LabelIcon,
     LabelText,
     LabelWrapper,
     NonExpandable,
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
+import { SimpleIdGenerator } from "../util";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
 
+/**
+ * Displays contents in a box styling layout that can be collapsible if specified.
+ *
+ * Supports a title bar with an expand/collapse handle, optional call-to-action slot,
+ * and configurable display states (`"default"`, `"error"`, `"warning"`).
+ *
+ * @example
+ * ```tsx
+ * <BoxContainer title="Details" collapsible expanded>
+ *   <p>Content here</p>
+ * </BoxContainer>
+ * ```
+ */
 export const BoxContainer = ({
     children,
     title,
@@ -28,6 +43,7 @@ export const BoxContainer = ({
     callToActionComponent,
     displayState = "default",
     subComponentTestIds,
+    clickableHeader,
     ...otherProps
 }: BoxContainerProps) => {
     // =============================================================================
@@ -38,14 +54,20 @@ export const BoxContainer = ({
     );
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
+    const theme = useContext(ThemeContext);
+    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const interactiveHeader = clickableHeader && collapsible;
+    const internalId = useRef(SimpleIdGenerator.generate());
+    const contentId = `${internalId.current}-content`;
+    const headerId = `${internalId.current}-header`;
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const onHandleClick = () => {
+    const onHandleClick = (event: React.MouseEvent) => {
+        // to prevent it triggers twice when click on button as clickableHeader enable
+        event.stopPropagation();
         setShowExpanded(!showExpanded);
     };
 
@@ -62,9 +84,15 @@ export const BoxContainer = ({
             return (
                 <Expandable
                     style={expandableStyles}
-                    data-testid="expandable-container"
+                    data-testid={"expandable-container"}
+                    id={contentId}
                 >
-                    <ChildContainer ref={childRef}>{children}</ChildContainer>
+                    <ChildContainer
+                        ref={childRef}
+                        inert={inertValue(!showExpanded)}
+                    >
+                        {children}
+                    </ChildContainer>
                 </Expandable>
             );
         }
@@ -81,15 +109,14 @@ export const BoxContainer = ({
             case "error":
             case "warning":
                 return (
-                    <LabelIcon
+                    <AlertIcon
                         $displayState={displayState}
                         data-testid={
                             subComponentTestIds?.displayStateIcon ||
                             `${displayState}-icon`
                         }
-                    >
-                        <AlertIcon />
-                    </LabelIcon>
+                        aria-label={displayState}
+                    />
                 );
             default:
                 return null;
@@ -102,9 +129,13 @@ export const BoxContainer = ({
                 <Handle
                     onClick={onHandleClick}
                     type="button"
+                    aria-labelledby={headerId}
+                    aria-controls={contentId}
+                    aria-disabled={!collapsible} // remains focusable
+                    aria-expanded={showExpanded}
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
-                    <HandleIconContainer $expanded={showExpanded}>
+                    <HandleIconContainer $expanded={showExpanded} aria-hidden>
                         <HandleIcon />
                     </HandleIconContainer>
                 </Handle>
@@ -113,15 +144,27 @@ export const BoxContainer = ({
     };
 
     return (
-        <Container {...otherProps}>
-            <Header data-testid="header">
-                <LabelWrapper>
+        <Container
+            {...otherProps}
+            aria-labelledby={headerId}
+            role="region"
+            title={typeof title === "string" ? title : undefined}
+        >
+            <Header
+                data-testid="header"
+                onClick={interactiveHeader ? onHandleClick : undefined}
+                $interactive={interactiveHeader}
+            >
+                <LabelWrapper role={"status"} id={headerId}>
                     <LabelText
-                        id="title"
                         data-testid={subComponentTestIds?.title || "title"}
-                        weight="semibold"
                     >
                         {title}
+                        {displayState !== "default" && (
+                            <>
+                                <VisuallyHidden>{displayState}</VisuallyHidden>
+                            </>
+                        )}
                     </LabelText>
                     {renderDisplayIcon()}
                     {isMobile && renderHandleIcon()}

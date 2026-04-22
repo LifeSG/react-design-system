@@ -1,12 +1,19 @@
+import { ChangeEvent, useRef, useState } from "react";
+import { VisuallyHidden } from "../shared/accessibility";
 import { StarContainerData } from "./feedback-rating-stars-container-data";
 import {
     Container,
-    Input,
     Label,
     StarFilled,
     StarUnfilled,
 } from "./feedback-rating-stars-container.styles";
-import { FeedbackRatingStarsContainerProps } from "./types";
+
+interface FeedbackRatingStarsContainerProps {
+    ariaLabelledBy: string;
+    ariaDescribedBy: string;
+    rating: number;
+    onRatingChange: (value: number) => void;
+}
 
 export const FeedbackRatingStarsContainer = (
     props: FeedbackRatingStarsContainerProps
@@ -14,38 +21,57 @@ export const FeedbackRatingStarsContainer = (
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
-    const { description, rating, onRatingChange } = props;
+    const { ariaLabelledBy, ariaDescribedBy, rating, onRatingChange } = props;
+    const maxRating = StarContainerData.MAX_STAR;
+    const currentRating = Math.min(Math.max(rating ?? 0, 0), maxRating);
+    const inputRef = useRef<HTMLInputElement>(null);
+    const [isFocused, setIsFocused] = useState(false);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleStarSelection = (starIndex: number) => {
         onRatingChange(starIndex);
+        inputRef.current?.focus();
+    };
+
+    const handleRangeChange = (event: ChangeEvent<HTMLInputElement>) => {
+        onRatingChange(Number(event.target.value));
+    };
+
+    const handleFocus = () => {
+        setIsFocused(true);
+    };
+
+    const handleBlur = () => {
+        setIsFocused(false);
     };
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
+    const getAriaValueText = () => {
+        return `${currentRating} star${currentRating === 1 ? "" : "s"}`;
+    };
+
     const renderStar = (starIndex: number) => {
-        const ariaLabel = `${starIndex} star${starIndex === 1 ? "" : "s"}`;
-        if (starIndex <= rating) {
-            return <StarFilled aria-label={ariaLabel} />;
-        } else {
-            return <StarUnfilled aria-label={ariaLabel} />;
+        if (starIndex <= currentRating) {
+            return <StarFilled aria-hidden />;
         }
+
+        return <StarUnfilled aria-hidden />;
     };
 
     const renderRatings = () => {
-        return [...Array(StarContainerData.MAX_STAR)].map((_star, index) => {
+        return [...Array(maxRating)].map((_star, index) => {
             const starIndex = index + 1;
+
             return (
-                <Label key={starIndex}>
-                    <Input
-                        type="radio"
-                        name="star"
-                        checked={starIndex === rating}
-                        onChange={() => handleStarSelection(starIndex)}
-                    />
+                <Label
+                    key={starIndex}
+                    data-testid={`feedback-rating-star-${starIndex}`}
+                    onClick={() => handleStarSelection(starIndex)}
+                >
                     {renderStar(starIndex)}
                 </Label>
             );
@@ -53,8 +79,26 @@ export const FeedbackRatingStarsContainer = (
     };
 
     return (
-        <Container role="radiogroup" aria-label={description}>
-            {renderRatings()}
-        </Container>
+        <>
+            <VisuallyHidden>
+                <input
+                    ref={inputRef}
+                    type="range"
+                    min={0}
+                    max={maxRating}
+                    step={1}
+                    value={currentRating}
+                    aria-labelledby={ariaLabelledBy}
+                    aria-describedby={ariaDescribedBy}
+                    aria-valuetext={getAriaValueText()}
+                    onChange={handleRangeChange}
+                    onFocus={handleFocus}
+                    onBlur={handleBlur}
+                />
+            </VisuallyHidden>
+            <Container aria-hidden $isFocused={isFocused}>
+                {renderRatings()}
+            </Container>
+        </>
     );
 };

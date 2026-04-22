@@ -1,20 +1,47 @@
-import type { Meta, StoryObj } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Button } from "src/button";
 import { Container } from "./doc-elements";
+import { TokensTable } from "./tokens-table";
 
 type Component = typeof Button.Default;
 
 const meta: Meta<Component> = {
-    title: "General/Button",
+    title: "Selection and input/Button/Base",
     component: Button.Default,
+    tags: ["general", "cta", "action", "forms"],
+    parameters: {
+        docs: {
+            description: {
+                component:
+                    "Primary call-to-action component for triggering user actions. Supports multiple styles, loading states, and danger variants for destructive actions.",
+            },
+        },
+        keywords: [
+            "button",
+            "cta",
+            "submit",
+            "action",
+            "click",
+            "primary",
+            "secondary",
+            "call to action",
+        ],
+    },
 };
 
 export default meta;
 
 export const Default: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
+                <Container>
+                    <Button.Large>Large</Button.Large>
+                    <Button.Large styleType="secondary">Secondary</Button.Large>
+                    <Button.Large styleType="light">Light</Button.Large>
+                    <Button.Large styleType="link">Link</Button.Large>
+                    <Button.Large disabled>Disabled</Button.Large>
+                </Container>
                 <Container>
                     <Button.Default>Default</Button.Default>
                     <Button.Default styleType="secondary">
@@ -37,11 +64,26 @@ export const Default: StoryObj<Component> = {
 };
 
 export const LoadingState: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
                 <Container>
-                    <Button.Default loading>Loading</Button.Default>
+                    <Button.Large loading>Large</Button.Large>
+                    <Button.Large styleType="secondary" loading>
+                        Loading
+                    </Button.Large>
+                    <Button.Large styleType="light" loading>
+                        Loading
+                    </Button.Large>
+                    <Button.Large styleType="link" loading>
+                        Loading
+                    </Button.Large>
+                    <Button.Large disabled loading>
+                        Loading
+                    </Button.Large>
+                </Container>
+                <Container>
+                    <Button.Default loading>Default</Button.Default>
                     <Button.Default styleType="secondary" loading>
                         Loading
                     </Button.Default>
@@ -76,9 +118,21 @@ export const LoadingState: StoryObj<Component> = {
 };
 
 export const Danger: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <>
+                <Container>
+                    <Button.Large danger>Large</Button.Large>
+                    <Button.Large styleType="secondary" danger>
+                        Secondary
+                    </Button.Large>
+                    <Button.Large styleType="light" danger>
+                        Light
+                    </Button.Large>
+                    <Button.Large styleType="link" danger>
+                        Link
+                    </Button.Large>
+                </Container>
                 <Container>
                     <Button.Default danger>Default</Button.Default>
                     <Button.Default styleType="secondary" danger>
@@ -103,9 +157,32 @@ export const Danger: StoryObj<Component> = {
                         Link
                     </Button.Small>
                 </Container>
+            </>
+        );
+    },
+};
+
+export const DangerLoadingState: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Container>
+                    <Button.Large loading danger>
+                        Large
+                    </Button.Large>
+                    <Button.Large styleType="secondary" loading danger>
+                        Loading
+                    </Button.Large>
+                    <Button.Large styleType="light" loading danger>
+                        Loading
+                    </Button.Large>
+                    <Button.Large styleType="link" loading danger>
+                        Loading
+                    </Button.Large>
+                </Container>
                 <Container>
                     <Button.Default loading danger>
-                        Loading
+                        Default
                     </Button.Default>
                     <Button.Default styleType="secondary" loading danger>
                         Loading
@@ -134,4 +211,21 @@ export const Danger: StoryObj<Component> = {
             </>
         );
     },
+};
+
+export const FocusableWhenDisabled: StoryObj<Component> = {
+    render: (_args) => (
+        <Button.Default
+            disabled
+            focusableWhenDisabled
+            onClick={() => alert("I shouldn't be here!")}
+        >
+            Add to cart
+        </Button.Default>
+    ),
+};
+
+export const TokenCustomisation: StoryObj = {
+    tags: ["!dev"],
+    render: () => <TokensTable />,
 };

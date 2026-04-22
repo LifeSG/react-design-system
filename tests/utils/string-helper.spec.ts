@@ -187,7 +187,7 @@ describe("StringHelper", () => {
         it("should render the correct masked value based on the mask transformer", () => {
             const testString = "S1234567D";
             const options = {
-                maskTransformer: (value) => value.replace(/\D/g, "*"),
+                maskTransformer: (value: string) => value.replace(/\D/g, "*"),
             };
 
             expect(StringHelper.maskValue(testString, options)).toEqual(
@@ -204,6 +204,25 @@ describe("StringHelper", () => {
             expect(StringHelper.maskValue(testString, options)).toEqual(
                 "•1234567•"
             );
+        });
+    });
+
+    describe("formatOrdinal", () => {
+        it.each`
+            input | output
+            ${0}  | ${"0th"}
+            ${1}  | ${"1st"}
+            ${2}  | ${"2nd"}
+            ${3}  | ${"3rd"}
+            ${4}  | ${"4th"}
+            ${11} | ${"11th"}
+            ${12} | ${"12th"}
+            ${13} | ${"13th"}
+            ${21} | ${"21st"}
+            ${22} | ${"22nd"}
+            ${23} | ${"23rd"}
+        `("should return $output", ({ input, output }) => {
+            expect(StringHelper.formatOrdinal(input)).toEqual(output);
         });
     });
 });

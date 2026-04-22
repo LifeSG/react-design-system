@@ -1,6 +1,10 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { TextStyleHelper } from "../text";
+import { Alert } from "../alert";
+import { applyHtmlContentStyle } from "../shared/html-content/html-content";
+import { ToggleIcon } from "../shared/toggle-icon/toggle-icon";
+import { TextList } from "../text-list";
+import { Colour, Font, MediaQuery, Radius } from "../theme";
+import { Typography } from "../typography";
 import { ToggleStyleType } from "./types";
 
 // =============================================================================
@@ -16,24 +20,46 @@ interface StyleProps {
 interface ContainerStyleProps extends StyleProps {
     $styleType?: ToggleStyleType;
     $error?: boolean;
+    $useContentWidth?: boolean;
 }
 
-interface LabelStyleProps extends StyleProps {}
+interface IndicatorLabelContainerStyleProps {
+    $addPadding?: boolean;
+}
+
+interface LabelStyleProps {
+    $maxLines?: { desktop?: number; mobile?: number; tablet?: number };
+}
+
+interface ExpandButtonStyleProps extends StyleProps {
+    $paddingTopRequired?: boolean;
+}
+
+interface ChildrenStyleProps extends StyleProps {
+    $isFinalItem?: boolean;
+}
 
 // =============================================================================
 // STYLING
 // =============================================================================
+
 export const Container = styled.div<ContainerStyleProps>`
     position: relative;
     display: inline-flex;
     min-width: 10.375rem;
-    border-radius: 4px;
+    border-radius: ${Radius["sm"]};
     border-width: 1px;
     border-style: solid;
-    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
-    padding: 0.6875rem 1rem;
+    overflow: hidden;
+    flex-direction: column;
+    height: fit-content;
+    background: ${Colour.bg};
 
-    // Content positioning style
+    &:has(input:focus-visible) {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 0;
+    }
+
     ${(props) => {
         if (!props.$indicator) {
             return css`
@@ -42,74 +68,145 @@ export const Container = styled.div<ContainerStyleProps>`
         }
     }}
 
-    // Background, Hover and Border style
+    // Container min width to fit content
+    ${(props) => {
+        if (props.$useContentWidth) {
+            return css`
+                min-width: unset;
+            `;
+        }
+    }}
+
+    // apply container border and header background color
     ${(props) => {
         switch (props.$styleType) {
             case "no-border": {
                 if (props.$error) {
-                    return css`
-                        border-color: ${Color.Validation.Red.Icon};
-                        background: ${Color.Neutral[8]};
+                    if (props.$disabled) {
+                        return css`
+                            border-color: ${Colour["border-error"]};
+                        `;
+                    } else {
+                        return css`
+                            border-color: ${Colour["border-error"]};
 
-                        :hover {
-                            box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
-                        }
-                    `;
-                } else if (!props.$disabled) {
-                    return css`
-                        border-color: transparent;
+                            &:has(${HeaderContainer}:hover) {
+                                @media (pointer: fine) {
+                                    background: ${Colour["bg-hover-subtle"]};
+                                }
+                            }
+                        `;
+                    }
+                }
 
-                        :hover {
-                            background: ${Color.Accent.Light[6]};
-                        }
-                    `;
-                } else {
+                if (props.$disabled) {
+                    if (props.$selected) {
+                        return css`
+                            border: none;
+                            background: ${Colour["bg-selected-disabled"]};
+                        `;
+                    } else {
+                        return css`
+                            border: none;
+                        `;
+                    }
+                }
+
+                if (props.$selected) {
                     return css`
-                        border-color: transparent;
+                        border: none;
+                        background: ${Colour["bg-selected"]};
+
+                        &:has(${HeaderContainer}:hover) {
+                            @media (pointer: fine) {
+                                background: ${Colour["bg-selected-hover"]};
+
+                                & ${TextContainer} {
+                                    color: ${Colour["text-selected-hover"]};
+                                }
+
+                                & ${StyledToggleIcon} {
+                                    color: ${Colour["icon-selected-hover"]};
+                                }
+                            }
+                        }
                     `;
                 }
+
+                return css`
+                    border: none;
+
+                    &:has(${HeaderContainer}:hover) {
+                        @media (pointer: fine) {
+                            background: ${Colour["bg-hover-subtle"]};
+                        }
+                    }
+                `;
             }
 
             default: {
-                if (props.$disabled && !props.$selected) {
-                    return css`
-                        background: ${Color.Neutral[6]};
-                        border-color: ${Color.Neutral[5]};
-                    `;
-                } else if (props.$disabled && props.$selected) {
-                    return css`
-                        background: ${Color.Neutral[6]};
-                        border-color: ${Color.Neutral[4]};
-                    `;
-                } else if (props.$error) {
-                    return css`
-                        background: ${Color.Neutral[8]};
-                        border-color: ${Color.Validation.Red.Border};
+                if (props.$error) {
+                    if (props.$disabled) {
+                        return css`
+                            border-color: ${Colour["border-error"]};
+                        `;
+                    } else {
+                        return css`
+                            border-color: ${Colour["border-error"]};
 
-                        :hover {
-                            box-shadow: 0 0 4px 1px ${Color.Shadow.Red};
-                        }
-                    `;
-                } else if (props.$selected) {
-                    return css`
-                        background: ${Color.Accent.Light[5]};
-                        border-color: ${Color.Primary};
+                            &:has(${HeaderContainer}:hover) {
+                                @media (pointer: fine) {
+                                    background: ${Colour["bg-hover-subtle"]};
+                                }
+                            }
+                        `;
+                    }
+                }
 
-                        :hover {
-                            box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
-                        }
-                    `;
-                } else {
-                    return css`
-                        background: ${Color.Neutral[8]};
-                        border-color: ${Color.Neutral[5]};
+                if (props.$disabled) {
+                    if (props.$selected) {
+                        return css`
+                            border-color: ${Colour["border-selected-disabled"]};
+                            background: ${Colour["bg-selected-disabled"]};
+                        `;
+                    } else {
+                        return css`
+                            border-color: ${Colour["border-disabled"]};
+                            background: ${Colour["bg-disabled"]};
+                        `;
+                    }
+                }
 
-                        :hover {
-                            box-shadow: 0 0 4px 1px ${Color.Shadow.Accent};
-                            border-color: ${Color.Accent.Light[1]};
+                if (props.$selected) {
+                    return css`
+                        border-color: ${Colour["border-selected"]};
+                        background: ${Colour["bg-selected"]};
+
+                        &:has(${HeaderContainer}:hover) {
+                            @media (pointer: fine) {
+                                background: ${Colour["bg-selected-hover"]};
+
+                                & ${TextContainer} {
+                                    color: ${Colour["text-selected-hover"]};
+                                }
+
+                                & ${StyledToggleIcon} {
+                                    color: ${Colour["icon-selected-hover"]};
+                                }
+                            }
                         }
                     `;
                 }
+
+                return css`
+                    border-color: ${Colour.border};
+
+                    &:has(${HeaderContainer}:hover) {
+                        @media (pointer: fine) {
+                            background: ${Colour["bg-hover-subtle"]};
+                        }
+                    }
+                `;
             }
         }
     }}
@@ -128,44 +225,64 @@ export const Input = styled.input`
     background: transparent;
     border: none;
 `;
+export const InputContainer = styled.div`
+    display: flex;
+`;
 
-export const TextContainer = styled.div`
+export const TextContainer = styled.div<StyleProps>`
     display: flex;
     flex-direction: column;
     overflow-wrap: anywhere;
     width: 100%;
-`;
+    overflow: hidden;
 
-export const Label = styled.label<LabelStyleProps>`
-    ${(props) => {
-        if (props.$selected && !props.$indicator) {
-            return css`
-                ${TextStyleHelper.getTextStyle("H4", "semibold")}
-            `;
-        } else {
-            return css`
-                ${TextStyleHelper.getTextStyle("H4", "regular")}
-            `;
-        }
-    }}
-
-    color: ${Color.Neutral[1]};
-
+    // apply header container text color
     ${(props) => {
         if (props.$disabled) {
+            if (props.$selected) {
+                return css`
+                    color: ${Colour["text-selected-disabled"]};
+                `;
+            } else {
+                return css`
+                    color: ${Colour["text-disabled"]};
+                `;
+            }
+        }
+
+        if (props.$selected) {
             return css`
-                color: ${Color.Neutral[3]};
-            `;
-        } else if (props.$selected) {
-            return css`
-                color: ${Color.Primary};
+                color: ${Colour["text-selected"]};
             `;
         }
+
+        return css`
+            color: ${Colour.text};
+        `;
     }}
 `;
 
-export const SubLabel = styled.div<LabelStyleProps>`
-    ${TextStyleHelper.getTextStyle("BodySmall", "regular")}
+export const Label = styled.label<LabelStyleProps & { $selected?: boolean }>`
+    ${(props) =>
+        props.$selected
+            ? Font["body-baseline-semibold"]
+            : Font["body-baseline-regular"]};
+    overflow: hidden;
+    display: -webkit-box;
+    text-overflow: ellipsis;
+    -webkit-box-orient: vertical;
+    overflow-wrap: break-word;
+    -webkit-line-clamp: ${(props) => props.$maxLines?.desktop ?? "none"};
+    ${MediaQuery.MaxWidth.lg} {
+        -webkit-line-clamp: ${(props) => props.$maxLines?.tablet ?? "none"};
+    }
+    ${MediaQuery.MaxWidth.sm} {
+        -webkit-line-clamp: ${(props) => props.$maxLines?.mobile ?? "none"};
+    }
+`;
+
+export const SubLabel = styled.div`
+    ${Font["body-md-regular"]}
     margin-top: 0.5rem;
 
     z-index: 1; // forces sublabel to render above the input
@@ -173,23 +290,130 @@ export const SubLabel = styled.div<LabelStyleProps>`
 
     strong,
     b {
-        ${TextStyleHelper.getFontFamily("BodySmall", "semibold")}
-        color: inherit;
+        ${Font["body-md-semibold"]}
     }
+`;
+
+export const HeaderContainer = styled.div<ContainerStyleProps>`
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+`;
+
+export const IndicatorLabelContainer = styled.div<IndicatorLabelContainerStyleProps>`
+    display: flex;
+    height: 100%;
+    width: 100%;
+    position: relative;
+    padding: ${(props) =>
+        props.$addPadding ? "0.6875rem 0rem 0.6875rem 1rem" : "0.6875rem 1rem"};
+`;
+
+export const RemoveButton = styled.button<StyleProps>`
+    color: ${(props) =>
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
+    white-space: nowrap;
+    ${Font["body-md-semibold"]}
+    height: fit-content;
+    padding: 0.6875rem 1rem 0.6875rem 0.5rem;
+    border: none;
+    background: none;
+
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+`;
+
+export const ExpandButton = styled.button<ExpandButtonStyleProps>`
+    color: ${(props) =>
+        props.disabled ? Colour["text-disabled"] : Colour["text-primary"]};
+    ${Font["body-baseline-semibold"]}
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    border: none;
+    background-color: ${Colour.bg};
+    cursor: ${(props) => (props.disabled ? "not-allowed" : "pointer")};
+    padding: 0 1rem 0.6875rem 1rem;
+    padding-top: ${(props) =>
+        props.$paddingTopRequired ? "0.6875rem" : "0rem"};
+    width: 100%;
+
+    svg {
+        width: 1em;
+        height: 1em;
+        margin-left: 0.5rem;
+    }
+`;
+
+export const ErrorContainer = styled.div<StyleProps>`
+    width: 100%;
+    color: ${(props) =>
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
+    border: none;
+    background: ${Colour.bg};
+    cursor: ${(props) => (props.$disabled ? "not-allowed" : "pointer")};
+    padding: 0.6875rem 1rem 0.5rem 1rem;
+`;
+
+export const AlertContainer = styled(Alert)`
+    width: 100%;
+    user-select: none;
+`;
+
+export const Children = styled.div<ChildrenStyleProps>`
+    padding: 0 1rem;
+    padding-top: 0.6875rem;
+    padding-bottom: ${(props) => (props.$isFinalItem ? "0.6875rem" : "0.5rem")};
+    background-color: ${Colour.bg};
+    ${applyHtmlContentStyle({ textSize: "body-md" })}
 
     ${(props) => {
         if (props.$disabled) {
             return css`
-                color: ${Color.Neutral[3]};
+                color: ${Colour["text-disabled"]};
             `;
         } else if (props.$selected) {
             return css`
-                color: ${Color.Primary};
+                color: ${Colour["text-selected"]};
             `;
         } else {
             return css`
-                color: ${Color.Neutral[1]};
+                color: ${Colour.text};
             `;
         }
     }}
+`;
+
+export const ErrorText = styled(Typography.BodyMD)<StyleProps>`
+    color: ${(props) =>
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
+`;
+
+export const ErrorList = styled(TextList.Ul)<StyleProps>`
+    color: ${(props) =>
+        props.$disabled ? Colour["text-disabled"] : Colour["text-error"]};
+`;
+
+export const StyledToggleIcon = styled(ToggleIcon)<StyleProps>`
+    ${(props) => {
+        if (props.$disabled) {
+            if (props.$selected) {
+                return css`
+                    color: ${Colour["icon-selected-disabled"]};
+                `;
+            } else {
+                return css`
+                    color: ${Colour["icon-disabled-subtle"]};
+                `;
+            }
+        }
+
+        if (props.$selected) {
+            return css`
+                color: ${Colour["icon-selected"]};
+            `;
+        }
+        return css`
+            color: ${Colour["icon-subtle"]};
+        `;
+    }};
 `;

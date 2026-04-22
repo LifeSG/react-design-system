@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
-import { MediaQuery } from "../../media";
+import { Colour, MediaQuery, Spacing } from "../../theme";
 import { ClickableIcon } from "../clickable-icon";
-import { Color } from "../../color";
 
 // =============================================================================
 // STYLE TYPES, transient props are denoted with $
@@ -26,7 +25,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Fade = styled.div<FadeProps>`
-    width: 4rem;
+    width: 64px;
     height: 100%;
     top: 0;
     position: absolute;
@@ -35,8 +34,9 @@ export const Fade = styled.div<FadeProps>`
     align-items: center;
 
     ${(props) => {
-        let positionStyle;
+        let positionStyle: string;
         const transparentColor = "rgba(255,255,255,0.001)";
+        const fadeColor = Colour.bg(props);
 
         if (props.$position === "left") {
             positionStyle = `
@@ -45,7 +45,9 @@ export const Fade = styled.div<FadeProps>`
                     to right,
                     ${
                         props.$backgroundColor ||
-                        (props.$showIndicator ? "white, white" : "white")
+                        (props.$showIndicator
+                            ? `${fadeColor}, ${fadeColor}`
+                            : `${fadeColor}`)
                     },
                     ${transparentColor}
                 );
@@ -57,18 +59,20 @@ export const Fade = styled.div<FadeProps>`
                     to left,
                     ${
                         props.$backgroundColor ||
-                        (props.$showIndicator ? "white, white" : "white")
+                        (props.$showIndicator
+                            ? `${fadeColor}, ${fadeColor}`
+                            : `${fadeColor}`)
                     },
                     ${transparentColor}
                 );
             `;
         }
 
-        return `
-			${MediaQuery.MaxWidth.tablet} {
-				${positionStyle}
-			}
-		`;
+        return css`
+            ${MediaQuery.MaxWidth.lg} {
+                ${positionStyle}
+            }
+        `;
     }};
 `;
 
@@ -81,7 +85,7 @@ export const Content = styled.div`
     white-space: nowrap;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
-    ::-webkit-scrollbar {
+    &::-webkit-scrollbar {
         display: none; /* Chrome/Safari/Webkit */
     }
 `;
@@ -89,7 +93,7 @@ export const Content = styled.div`
 export const FadeIndicatorButton = styled(ClickableIcon)<IndicatorButtonProps>`
     display: none;
 
-    ${MediaQuery.MaxWidth.tablet} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         height: 100%;
         width: 100%;
@@ -100,18 +104,18 @@ export const FadeIndicatorButton = styled(ClickableIcon)<IndicatorButtonProps>`
             if (props.$position === "left") {
                 return css`
                     justify-content: left;
-                    padding-left: 0.5rem;
+                    padding-left: ${Spacing["spacing-8"]};
                 `;
             } else {
                 return css`
                     justify-content: right;
-                    padding-right: 0.5rem;
+                    padding-right: ${Spacing["spacing-8"]};
                 `;
             }
         }}
 
         svg {
-            color: ${Color.Neutral[3]};
+            color: ${Colour["icon"]};
         }
     }
 `;

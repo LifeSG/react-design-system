@@ -1,25 +1,21 @@
 import { css } from "styled-components";
-import { Color } from "../../color";
-import { TextLinkSizeType, TextSizeType, TextStyleHelper } from "../../text";
+import { Colour, Font } from "../../theme";
+import { TypographySizeType } from "../../theme/font/types";
 
-interface HtmlContentStyleOptions {
-    textColor?: string | ((props: any) => string);
+export interface HtmlContentStyleOptions {
+    textSize?: TypographySizeType | undefined;
 }
 
-export const applyHtmlContentStyle = (
-    textStyle: TextSizeType | TextLinkSizeType,
-    options?: HtmlContentStyleOptions
-) => {
-    const { textColor = Color.Neutral[1] } = options || {};
+export const applyHtmlContentStyle = (options?: HtmlContentStyleOptions) => {
+    const { textSize } = options || {};
 
     return css`
-        // Text
-        ${TextStyleHelper.getTextStyle(textStyle, "regular")}
-        color: ${textColor};
+        // Text styling
+        ${textSize && Font[`${textSize}-regular`]}
 
-        a,
         strong {
-            ${TextStyleHelper.getTextStyle(textStyle, "semibold")}
+            font-weight: ${Font.Spec["weight-semibold"]};
+            ${textSize && Font[`${textSize}-semibold`]};
         }
 
         p {
@@ -28,16 +24,27 @@ export const applyHtmlContentStyle = (
 
         // Link styling
         a {
-            color: ${Color.Primary};
-            text-decoration: none;
+            font-weight: ${Font.Spec["weight-semibold"]};
+            ${textSize && Font[`${textSize}-semibold`]}
+            color: ${Colour.hyperlink};
+            text-decoration: underline;
 
-            :hover,
-            :active,
-            :focus {
-                color: ${Color.Secondary};
+            svg {
+                color: ${Colour["icon-primary"]};
+                height: 1lh;
+                width: 1em;
+                margin-left: 0.4rem;
+                vertical-align: middle;
+            }
+
+            &:hover,
+            &:active,
+            &:visited,
+            &:focus {
+                color: ${Colour["hyperlink-hover"]};
 
                 svg {
-                    color: ${Color.Secondary};
+                    color: ${Colour["icon-hover"]};
                 }
             }
         }

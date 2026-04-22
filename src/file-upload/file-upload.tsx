@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { FileUploadContext } from "./context";
 import { DropzoneElement, FileUploadDropzone } from "./dropzone";
-import { FileList } from "./file-list";
+import { FileList, FileListRef } from "./file-list";
 import {
     Description,
     DescriptionContainer,
@@ -11,11 +11,18 @@ import {
     TitleContainer,
     UploadButton,
     UploadButtonContainer,
-    UploadButtonLabel,
+    UploadButtonText,
     WarningAlert,
 } from "./file-upload.styles";
 import { FileItemProps, FileUploadProps } from "./types";
 
+/**
+ * Props for an individual file item displayed in the upload list.
+ * @example
+ * ```tsx
+ * <FileUpload fileItems={files} onChange={handleChange} onDelete={handleDelete} />
+ * ```
+ */
 export const FileUpload = ({
     styleType = "bordered",
     fileItems,
@@ -36,15 +43,20 @@ export const FileUpload = ({
     editableFileItems = false,
     errorMessage,
     readOnly,
+    customLabels,
     onChange,
     onDelete,
     onEdit,
     onSort,
 }: FileUploadProps) => {
+    const labels = {
+        uploadButton: customLabels?.uploadButtonLabel || "Upload files",
+    };
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const dropzoneRef = useRef<DropzoneElement>();
+    const dropzoneRef = useRef<DropzoneElement>(null);
+    const fileListRef = useRef<FileListRef>(null);
     const [activeId, setActiveId] = useState<string>();
 
     // =========================================================================
@@ -53,12 +65,14 @@ export const FileUpload = ({
     const handleChange = (files: File[]) => {
         if (!disabled && onChange) {
             onChange(files);
+            fileListRef.current?.focus();
         }
     };
 
     const handleItemDelete = (item: FileItemProps) => {
         if (onDelete) {
             onDelete(item);
+            fileListRef.current?.focus();
         }
     };
 
@@ -89,7 +103,7 @@ export const FileUpload = ({
     // HELPER FUNCTIONS
     // =========================================================================
     const reachedMaxFiles = () => {
-        return maxFiles ? fileItems.length >= maxFiles : false;
+        return maxFiles && fileItems ? fileItems.length >= maxFiles : false;
     };
 
     // =========================================================================
@@ -101,7 +115,7 @@ export const FileUpload = ({
         }
 
         if (typeof title === "string") {
-            return <Title weight="regular">{title}</Title>;
+            return <Title>{title}</Title>;
         }
 
         return <TitleContainer>{title}</TitleContainer>;
@@ -113,7 +127,7 @@ export const FileUpload = ({
         }
 
         if (typeof description === "string") {
-            return <Description weight="regular">{description}</Description>;
+            return <Description>{description}</Description>;
         }
 
         return <DescriptionContainer>{description}</DescriptionContainer>;
@@ -134,16 +148,17 @@ export const FileUpload = ({
                 multiple={multiple}
                 disabled={disabled || reachedMaxFiles() || readOnly}
             >
-                {(title || description) && (
+                {!!(title || description) && (
                     <TextContainer>
                         {renderTitle()}
                         {renderDescription()}
                     </TextContainer>
                 )}
-                {warning && (
+                {!!warning && (
                     <WarningAlert type="warning">{warning}</WarningAlert>
                 )}
                 <FileList
+                    ref={fileListRef}
                     fileItems={fileItems}
                     editableFileItems={editableFileItems}
                     fileDescriptionMaxLength={fileDescriptionMaxLength}
@@ -167,9 +182,11 @@ export const FileUpload = ({
                             }
                             onClick={handleUploadButtonClick}
                         >
-                            Upload files
+                            {labels.uploadButton}
                         </UploadButton>
-                        <UploadButtonLabel>or drop them here</UploadButtonLabel>
+                        <UploadButtonText weight="semibold">
+                            or drop them here
+                        </UploadButtonText>
                     </UploadButtonContainer>
                 )}
             </FileUploadDropzone>

@@ -1,28 +1,34 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
-import { DayLabel } from "../shared/internal-calendar/standard";
-import { TextStyleHelper } from "../text";
+import { Colour, Font } from "../theme";
 
-export const DayLabelWeek = styled(DayLabel)`
-    ${(props) => {
-        const { $variant } = props;
-        switch ($variant) {
-            case "default":
-                return css`
-                    ${TextStyleHelper.getFontFamily("H5", "semibold")}
-                    color: ${Color.Neutral[3]};
-                `;
-        }
-    }}
-`;
+// =============================================================================
+// STYLE INTERFACES
+// =============================================================================
+interface LabelStyleProps {
+    $disabled: boolean | undefined;
+}
 
+// =============================================================================
+// STYLING
+// =============================================================================
 export const HeaderCellWeek = styled.div`
     display: flex;
+    flex-direction: column;
     align-items: center;
     justify-content: center;
-    pointer-events: none;
     user-select: none;
     margin-bottom: 0.188rem;
+`;
+
+export const DayLabel = styled.div<LabelStyleProps>`
+    ${Font["body-xs-semibold"]}
+    color:${Colour["text"]};
+
+    ${(props) =>
+        props.$disabled &&
+        css`
+            color: ${Colour["text-disabled-subtlest"]};
+        `};
 `;
 
 export const Wrapper = styled.div`
@@ -36,15 +42,16 @@ export const ColumnWeekCell = styled.div`
     display: flex;
     min-height: 7.625rem;
 `;
+
 export const TimeSlotText = styled.div`
-    ${TextStyleHelper.getTextStyle("XSmall", "semibold")}
+    ${Font["body-xs-semibold"]}
     margin: 1rem 0rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     max-width: 2.5rem;
-    color: ${Color.Neutral[1]};
+    color: ${Colour.text};
     span {
         display: block;
     }

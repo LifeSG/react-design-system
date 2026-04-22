@@ -1,65 +1,80 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import styled, { css, keyframes } from "styled-components";
-import { Color } from "../../color";
-import { DesignToken } from "../../design-token";
-import { Text, TextStyle } from "../../text";
-import { Transition } from "../../transition";
-import { TruncateType } from "../dropdown-list/types";
+import { Border, Colour, Font, Motion, Radius, Spacing } from "../../theme";
+import { DropdownVariantType, TruncateType } from "../dropdown-list/types";
+import { lineClampCss } from "../styles";
 
 // =============================================================================
 // STYLE INTERFACE
 // =============================================================================
 export interface DropdownWrapperStyleProps {
-    disabled?: boolean;
+    $disabled?: boolean;
     $readOnly?: boolean;
-    error?: boolean;
-    expanded?: boolean;
+    $error?: boolean;
+    $expanded?: boolean;
 }
 
 export interface ValueLabelStyleProps {
-    truncateType?: TruncateType;
+    $truncateType?: TruncateType;
+    $variant?: DropdownVariantType | undefined;
+}
+
+export interface SelectorStyleProps {
+    $variant?: DropdownVariantType | undefined;
+}
+
+export interface LabelContainerStyleProps {
+    $disabled?: boolean | undefined;
 }
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const BORDER_RADIUS = "4px";
+const getHeight = (variant?: DropdownVariantType | undefined) => {
+    return variant === "small" ? 2.5 : 3;
+};
 
-export const Wrapper = styled.div`
+export const Wrapper = styled.div<SelectorStyleProps>`
     position: relative;
-    min-height: 3rem;
-    height: 3rem; // Need this to persist the height when expanding or collapsing list
     width: 100%;
+    ${(props) => {
+        const height = getHeight(props.$variant);
+        return css`
+            min-height: ${height}rem;
+            height: ${height}rem; // Need this to persist the height when expanding or collapsing list
+        `;
+    }}
 `;
 
-export const baseSelectorCSS = css`
+export const baseSelectorCSS = css<SelectorStyleProps>`
     display: flex;
     position: relative;
     align-items: center;
     justify-content: space-between;
-    padding: 0 1rem;
-    height: calc(3rem - 2px); // exclude top and bottom borders
+    padding: 0 ${Spacing["spacing-16"]};
+    // exclude top and bottom borders
+    height: calc(${(props) => getHeight(props.$variant)}rem - 2px);
     width: 100%;
-    border-radius: ${BORDER_RADIUS};
+    border-radius: ${Radius["sm"]};
     border: none;
     background: transparent;
 
-    :focus,
-    :active {
+    &:focus,
+    &:active {
         outline: none;
     }
 
-    :focus-visible {
-        outline: 2px solid ${Color.Accent.Light[3]};
+    &:focus-visible {
+        outline: 2px solid ${Colour["border-focus"]};
     }
 `;
 
-export const Selector = styled.button`
+export const Selector = styled.button<SelectorStyleProps>`
     ${baseSelectorCSS}
     cursor: pointer;
 `;
 
-export const SelectorDiv = styled.div`
+export const SelectorDiv = styled.div<SelectorStyleProps>`
     ${baseSelectorCSS}
 `;
 
@@ -76,22 +91,25 @@ const zindexPositionHide = keyframes`
 
 	to {
 		position: relative;
+        width: 100%;
 	}
 `;
 
 export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     position: relative;
-    border: 1px solid ${Color.Neutral[5]};
-    border-radius: ${BORDER_RADIUS};
-    background: ${Color.Neutral[8]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour["bg"]};
+    overflow: hidden;
 
-    :focus-within {
-        border: 1px solid ${Color.Accent.Light[1]};
-        box-shadow: ${DesignToken.InputBoxShadow};
+    &:focus-within {
+        border-color: ${Colour["border-focus"]};
+        box-shadow: 0px 0px 4px 0px
+            rgb(from ${Colour["border-focus"]} r g b / 50%) inset; // TODO: confirm shadow
     }
 
     ${(props) => {
-        if (props.expanded) {
+        if (props.$expanded) {
             return css`
                 position: absolute;
                 top: 0;
@@ -107,16 +125,16 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
     }}
 
     ${(props) => {
-        if (props.disabled) {
+        if (props.$disabled) {
             return css`
-                background: ${Color.Neutral[6](props)};
+                background: ${Colour["bg-disabled"]};
 
                 ${Selector} {
                     cursor: not-allowed;
                 }
 
-                :focus-within {
-                    border: 1px solid ${Color.Neutral[5](props)};
+                &:focus-within {
+                    border-color: ${Colour["border"]};
                     box-shadow: none;
                 }
             `;
@@ -129,18 +147,19 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
                     padding: 0;
                 }
 
-                :focus-within {
+                &:focus-within {
                     border: none;
                     box-shadow: none;
                 }
             `;
-        } else if (props.error) {
+        } else if (props.$error) {
             return css`
-                border: 1px solid ${Color.Validation.Red.Border(props)};
+                border-color: ${Colour["border-error"]};
 
-                :focus-within {
-                    border: 1px solid ${Color.Validation.Red.Border(props)};
-                    box-shadow: ${DesignToken.InputErrorBoxShadow};
+                &:focus-within {
+                    border-color: ${Colour["border-error"]};
+                    box-shadow: 0px 0px 4px 0px
+                        rgb(from ${Colour["border-error"]} r g b / 50%) inset; // TODO: confirm shadow
                 }
             `;
         }
@@ -148,42 +167,48 @@ export const ElementBoundary = styled.div<DropdownWrapperStyleProps>`
 `;
 
 export const IconContainer = styled.div<DropdownWrapperStyleProps>`
-    transform: rotate(${(props) => (props.expanded ? 180 : 0)}deg);
-    transition: ${Transition.Base};
-    margin-left: 1rem;
+    transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
+    transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
+    margin-left: ${Spacing["spacing-16"]};
 `;
 
-export const StyledChevronIcon = styled(ChevronDownIcon)`
-    color: ${Color.Neutral[3]};
-    height: ${TextStyle.Body.fontSize}rem;
-    width: ${TextStyle.Body.fontSize}rem;
+export const StyledChevronIcon = styled(ChevronDownIcon)<SelectorStyleProps>`
+    color: ${Colour["icon"]};
 `;
 
 export const Divider = styled.div`
     height: 1px;
-    background: ${Color.Neutral[5]};
-    margin: 0 0.5rem;
+    background: ${Colour["border"]};
+    margin: 0 ${Spacing["spacing-8"]};
 `;
 
-export const LabelContainer = styled.div`
+export const LabelContainer = styled.div<LabelContainerStyleProps>`
     display: flex;
     flex: 1;
+    word-break: break-all;
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Colour["text-disabled"]};
+            `;
+        }
+    }}
 `;
 
-export const ValueLabel = styled(Text.Body)<ValueLabelStyleProps>`
+export const ValueLabel = styled.div<ValueLabelStyleProps>`
+    ${(props) =>
+        props.$variant === "small"
+            ? Font["body-md-regular"]
+            : Font["body-baseline-regular"]}
     text-align: left;
-    line-height: 1.375rem;
     ${(props) => {
-        switch (props.truncateType) {
+        switch (props.$truncateType) {
             case "middle":
                 break;
             case "end":
             default:
                 return css`
-                    display: -webkit-box;
-                    -webkit-line-clamp: 1;
-                    -webkit-box-orient: vertical;
-                    text-overflow: ellipsis;
+                    ${lineClampCss(1)}
                 `;
         }
     }}
@@ -191,5 +216,5 @@ export const ValueLabel = styled(Text.Body)<ValueLabelStyleProps>`
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
-    color: ${Color.Neutral[3]};
+    color: ${Colour["text-subtler"]};
 `;

@@ -2,6 +2,18 @@ import { useEffect, useState } from "react";
 import { InputRangeSlider } from "../input-range-slider";
 import { InputSliderProps } from "./types";
 
+/**
+ * Single-thumb numeric slider.
+ *
+ * Renders a horizontal slider with a single thumb for selecting a numeric value
+ * within a given range. Supports step intervals, track colour customisation,
+ * and value labels. For a dual-thumb range slider use `InputRangeSlider`.
+ *
+ * @example
+ * ```tsx
+ * <InputSlider min={0} max={10} step={1} value={5} onChange={(v) => setValue(v)} />
+ * ```
+ */
 export const InputSlider = ({
     value,
     ariaLabel,

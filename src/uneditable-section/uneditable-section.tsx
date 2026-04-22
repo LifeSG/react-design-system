@@ -3,11 +3,21 @@ import { UneditableSectionItemProps, UneditableSectionProps } from "./types";
 import {
     CustomSection,
     Description,
+    FullWidthWrapper,
     GridUl,
     Title,
     Wrapper,
 } from "./uneditable-section.styles";
 
+/**
+ * Props for a single uneditable item within UneditableSection.
+ * @example
+ * ```tsx
+ * <UneditableSection
+ *     items={[{ label: "Name", value: "John Doe" }]}
+ * />
+ * ```
+ */
 export const UneditableSectionBase = ({
     items,
     title,
@@ -16,6 +26,8 @@ export const UneditableSectionBase = ({
     bottomSection,
     children,
     background = true,
+    stretch,
+    fullWidth,
     onMask,
     onUnmask,
     onTryAgain,
@@ -49,11 +61,16 @@ export const UneditableSectionBase = ({
                         onMask={handleItemMask(item)}
                         onUnmask={handleItemUnmask(item)}
                         onTryAgain={handleTryAgain(item)}
+                        fullWidth={fullWidth}
                     />
                 );
             });
 
-            return <GridUl>{renderedItems}</GridUl>;
+            return (
+                <GridUl $stretch={stretch} $fullWidth={fullWidth}>
+                    {renderedItems}
+                </GridUl>
+            );
         }
 
         return null;
@@ -66,16 +83,26 @@ export const UneditableSectionBase = ({
 
         return (
             <>
-                {title && <Title weight="semibold">{title}</Title>}
-                {description && <Description>{description}</Description>}
+                {title && (
+                    <Title
+                        forwardedAs="h2"
+                        weight="semibold"
+                        $stretch={stretch}
+                    >
+                        {title}
+                    </Title>
+                )}
+                {description && (
+                    <Description $stretch={stretch}>{description}</Description>
+                )}
                 {topSection && (
-                    <CustomSection data-id="top-section">
+                    <CustomSection data-id="top-section" $stretch={stretch}>
                         {topSection}
                     </CustomSection>
                 )}
                 {renderItems()}
                 {bottomSection && (
-                    <CustomSection data-id="bottom-section">
+                    <CustomSection data-id="bottom-section" $stretch={stretch}>
                         {bottomSection}
                     </CustomSection>
                 )}
@@ -83,6 +110,13 @@ export const UneditableSectionBase = ({
         );
     };
 
+    if (fullWidth) {
+        return (
+            <FullWidthWrapper $background={background} {...otherProps}>
+                {renderChildren()}
+            </FullWidthWrapper>
+        );
+    }
     return (
         <Wrapper $background={background} {...otherProps} type="grid">
             {renderChildren()}

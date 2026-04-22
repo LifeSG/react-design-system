@@ -1,15 +1,15 @@
 import styled, { css } from "styled-components";
-import { Color } from "../color";
 import { InputRangeSlider } from "../input-range-slider";
+import { Colour, Radius, Spacing } from "../theme";
 
 interface BarStyleProps {
     $selected: boolean;
-    $disabled: boolean;
+    $disabled: boolean | undefined;
 }
 
 export const Label = styled.div`
     display: flex;
-    margin-bottom: 1rem;
+    margin-bottom: ${Spacing["spacing-16"]};
     align-items: baseline;
 `;
 
@@ -27,17 +27,18 @@ export const Histogram = styled.div`
 
 export const Bar = styled.div<BarStyleProps>`
     flex: 1;
-    border-radius: 4px 4px 0px 0px;
-    border: 0.5px solid ${Color.Neutral[8]};
+    border-radius: ${Radius["sm"]} ${Radius["sm"]} 0 0;
+    border: 0.5px solid transparent; // space between bars
+    background-clip: content-box;
 
     ${(props) => {
-        let color = Color.Neutral[6];
+        let color = Colour["bg-strongest"];
         if (props.$disabled && props.$selected) {
-            color = Color.Neutral[4];
+            color = Colour["bg-selected-stronger-disabled"];
         } else if (props.$disabled) {
-            color = Color.Neutral[5];
+            color = Colour["bg-disabled"];
         } else if (props.$selected) {
-            color = Color.Accent.Light[1];
+            color = Colour["bg-selected-stronger"];
         }
         return css`
             background-color: ${color};

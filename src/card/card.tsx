@@ -1,7 +1,20 @@
-import { Text } from "../text/text";
+import { Typography } from "../typography/typography";
 import { StyledCard } from "./card.style";
 import { CardProps } from "./types";
 
+/**
+ * Elevated content container.
+ *
+ * Renders a styled box with a white background and rounded corners.
+ * Inherits all `HTMLDivElement` attributes.
+ *
+ * @example
+ * ```tsx
+ * <Card>
+ *     <p>Card content goes here.</p>
+ * </Card>
+ * ```
+ */
 export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
@@ -13,7 +26,7 @@ export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
     // =============================================================================
     const renderContent = () =>
         typeof children === "string" ? (
-            <Text.Body>{children}</Text.Body>
+            <Typography.BodyBL>{children}</Typography.BodyBL>
         ) : (
             children
         );
