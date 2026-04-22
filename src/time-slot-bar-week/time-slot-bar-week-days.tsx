@@ -507,6 +507,9 @@ export const TimeSlotBarWeekDays = ({
                             date={day}
                             calendarDate={dayjs(selectedDate)}
                             role="columnheader"
+                            tabIndex={
+                                dayCellStyleProps.interactive ? 0 : -1
+                            }
                             onSelect={() => {
                                 handleDayClick(
                                     day,

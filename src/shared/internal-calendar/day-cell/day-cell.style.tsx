@@ -231,6 +231,12 @@ export const Label = styled.div<LabelStyleProps>`
     &:focus {
         outline: none;
     }
+
+    &:focus-visible {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 2px;
+        border-radius: ${Radius["sm"]};
+    }
 `;
 
 export const Indicator = styled.div<IndicatorStyleProps>`
