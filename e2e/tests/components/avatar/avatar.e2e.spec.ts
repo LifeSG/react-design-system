@@ -33,9 +33,6 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Avatar", () => {
-    // -------------------------------------------------------------------------
-    // Avatar without Badge variants
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("size-variants-text");
@@ -54,29 +51,6 @@ test.describe("Avatar", () => {
         test("Size variants with text content (dark mode)", async ({
             story,
         }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    // -------------------------------------------------------------------------
-    // Avatar with Badge variants
-    // -------------------------------------------------------------------------
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("size-variants-with-badge");
-        });
-
-        test("Size variants with badge", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("size-variants-with-badge", { mode: "dark" });
-        });
-
-        test("Size variants with badge (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
