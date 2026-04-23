@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useState } from "react";
 
@@ -89,6 +90,7 @@ const AccordionBase = ({
                 onClick={handleExpandCollapseClick}
                 styleType="link"
                 type="button"
+                sizeType="small"
             >
                 {expandAll ? "Hide all" : "Show all"}
             </styles.ExpandCollapseLink>
@@ -102,12 +104,15 @@ const AccordionBase = ({
 
         return (
             <styles.TitleWrapper
-                $showTitleInMobile={showTitleInMobile}
-                $hasExpandAll={enableExpandAll}
+                className={clsx(
+                    !showTitleInMobile &&
+                        !enableExpandAll &&
+                        "titleWrapperHidden"
+                )}
             >
                 {title && (
                     <styles.Title
-                        $showInMobile={showTitleInMobile}
+                        className={clsx(!showTitleInMobile && "titleHidden")}
                         data-testid="accordion-title"
                         aria-level={headingLevel}
                     >

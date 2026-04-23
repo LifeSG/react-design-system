@@ -1,8 +1,7 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button } from "../button";
 import { Border, Colour, Font, MediaQuery } from "../theme";
-import type { TitleStyleProps, TitleWrapperStyleProps } from "./types";
 
 // ============================================================================
 // STYLING
@@ -12,7 +11,7 @@ export const Content = styled.div`
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
-export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
+export const TitleWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -23,18 +22,14 @@ export const TitleWrapper = styled.div<TitleWrapperStyleProps>`
         justify-content: flex-end;
     }
 
-    ${(props) => {
-        if (!props.$showTitleInMobile && !props.$hasExpandAll) {
-            return css`
-                ${MediaQuery.MaxWidth.sm} {
-                    display: none;
-                }
-            `;
+    &.titleWrapperHidden {
+        ${MediaQuery.MaxWidth.sm} {
+            display: none;
         }
-    }}
+    }
 `;
 
-export const Title = styled.h2<TitleStyleProps>`
+export const Title = styled.h2`
     display: flex;
     align-self: flex-start;
     flex: 1;
@@ -46,19 +41,15 @@ export const Title = styled.h2<TitleStyleProps>`
         text-align: left;
     }
 
-    ${(props) => {
-        if (!props.$showInMobile) {
-            return css`
-                ${MediaQuery.MaxWidth.sm} {
-                    display: none;
-                    visibility: hidden;
-                }
-            `;
+    &.titleHidden {
+        ${MediaQuery.MaxWidth.sm} {
+            display: none;
+            visibility: hidden;
         }
-    }}
+    }
 `;
 
-export const ExpandCollapseLink = styled(Button.Small)`
+export const ExpandCollapseLink = styled(Button)`
     padding: 1.75rem 1rem; // larger clickable area
     margin: -1rem -1rem -1rem 0px;
     white-space: nowrap;

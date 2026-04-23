@@ -1,6 +1,6 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { animated } from "@react-spring/web";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import {
     V3_Border,
@@ -11,40 +11,20 @@ import {
     V3_Radius,
     V3_Spacing,
 } from "../v3_theme";
-import type { AccordionItemType } from "./types";
-
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface ContainerStyleProps {
-    $expanded?: boolean | undefined;
-}
-
-interface ExpandCollapseButtonProps {
-    $expanded: boolean;
-    $collapsible: boolean;
-}
-
-interface TitleProps {
-    $type: AccordionItemType;
-    $isCollapsed?: boolean | undefined;
-}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div<ContainerStyleProps>`
+export const Container = styled.div`
     background-color: ${V3_Colour.bg};
     border-top: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour.border};
-    ${(props) =>
-        props.$expanded &&
-        css`
-            padding-bottom: ${V3_Spacing["spacing-16"]};
-        `}
+
+    &.containerExpanded {
+        padding-bottom: ${V3_Spacing["spacing-16"]};
+    }
 `;
 
-export const ExpandCollapseButton = styled.button<ExpandCollapseButtonProps>`
+export const ExpandCollapseButton = styled.button`
     background: transparent;
     border: none;
     border-radius: ${V3_Radius["sm"]};
@@ -60,17 +40,13 @@ export const ExpandCollapseButton = styled.button<ExpandCollapseButtonProps>`
     gap: ${V3_Spacing["spacing-48"]};
     padding: ${V3_Spacing["spacing-16"]} 0;
 
-    ${(props) =>
-        props.$expanded &&
-        css`
-            padding-bottom: ${V3_Spacing["spacing-8"]};
-        `}
+    &.expandCollapseButtonExpanded {
+        padding-bottom: ${V3_Spacing["spacing-8"]};
+    }
 
-    ${(props) =>
-        props.$collapsible &&
-        css`
-            cursor: pointer;
-        `}
+    &.expandCollapseButtonCollapsible {
+        cursor: pointer;
+    }
 
     &:focus-visible {
         outline: 2px solid ${V3_Colour["focus-ring"]};
@@ -78,20 +54,24 @@ export const ExpandCollapseButton = styled.button<ExpandCollapseButtonProps>`
     }
 `;
 
-export const Title = styled.span<TitleProps>`
+export const Title = styled.span`
     flex: 1;
     transition: all ${V3_Motion["duration-250"]} ${V3_Motion["ease-standard"]};
     color: ${V3_Colour["text"]};
+    ${V3_Font["heading-sm-bold"]}
 
-    ${(props) =>
-        props.$type === "small"
-            ? V3_Font["heading-xs-bold"]
-            : V3_Font["heading-sm-bold"]}
+    &.titleSmall {
+        ${V3_Font["heading-xs-bold"]}
+    }
 `;
 
-export const IconContainer = styled.span<ContainerStyleProps>`
-    transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
+export const IconContainer = styled.span`
+    transform: rotate(180deg);
     transition: transform ${V3_Motion["duration-250"]}${V3_Motion["ease-default"]};
+
+    &.iconContainerExpanded {
+        transform: rotate(0deg);
+    }
 `;
 
 export const ChevronIcon = styled(ChevronUpIcon)`

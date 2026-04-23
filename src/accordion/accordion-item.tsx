@@ -1,4 +1,5 @@
 import { useSpring } from "@react-spring/web";
+import clsx from "clsx";
 import type React from "react";
 import {
     forwardRef,
@@ -77,7 +78,7 @@ function Component(
                     },
                 }
             ),
-        [expanded]
+        [expanded, internalId, onItemStateChange]
     );
 
     // =========================================================================
@@ -94,7 +95,13 @@ function Component(
             internalId,
             collapsible ? expandedControlled ?? expandAll : true
         );
-    }, [expandAll, expandedControlled, collapsible]);
+    }, [
+        expandAll,
+        expandedControlled,
+        collapsible,
+        onItemStateChange,
+        internalId,
+    ]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -140,8 +147,7 @@ function Component(
         return (
             <Title
                 data-testid={`${testId}-title`}
-                $type={type}
-                $isCollapsed={expanded}
+                className={clsx(type === "small" && "titleSmall")}
             >
                 {title}
             </Title>
@@ -156,8 +162,10 @@ function Component(
                     onClick={
                         collapsible ? handleExpandCollapseClick : undefined
                     }
-                    $expanded={expanded}
-                    $collapsible={collapsible}
+                    className={clsx(
+                        expanded && "expandCollapseButtonExpanded",
+                        collapsible && "expandCollapseButtonCollapsible"
+                    )}
                     aria-controls={contentId}
                     aria-disabled={!collapsible} // remains focusable
                     aria-expanded={expanded}
@@ -166,7 +174,9 @@ function Component(
                     {collapsible && (
                         <IconContainer
                             data-testid={`${testId}-expand-collapse-icon`}
-                            $expanded={expanded}
+                            className={clsx(
+                                expanded && "iconContainerExpanded"
+                            )}
                         >
                             <ChevronIcon />
                         </IconContainer>
@@ -179,9 +189,8 @@ function Component(
     return (
         <Container
             data-testid={testId}
-            className={className}
+            className={clsx(expanded && "containerExpanded", className)}
             id={id}
-            $expanded={expanded}
             ref={elementRef}
         >
             {renderTitle()}
