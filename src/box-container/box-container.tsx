@@ -1,12 +1,11 @@
 import { useSpring } from "@react-spring/web";
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
 
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
+import { Breakpoint } from "../theme";
 import { SimpleIdGenerator } from "../util";
-import { V3_Breakpoint } from "../v3_theme";
 import {
     AlertIcon,
     CallToActionContainer,
@@ -42,8 +41,7 @@ export const BoxContainer = ({
     );
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
+    const mobileBreakpoint = Breakpoint["sm-max"];
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const interactiveHeader = clickableHeader && collapsible;
     const internalId = useRef(SimpleIdGenerator.generate());
