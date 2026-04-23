@@ -199,16 +199,14 @@ export const InternalCalendarMonth = ({
                             styles.monthCell,
                             disabledDisplay && styles.monthCellDisabledDisplay,
                             interactive && styles.monthCellInteractive,
-                            variant === "current-month" &&
-                                styles.monthCellCurrentMonth,
-                            variant === "selected-month" &&
-                                styles.monthCellSelectedMonth,
-                            interactive &&
-                                variant !== "selected-month" &&
-                                styles.monthCellDefaultHover,
-                            interactive &&
-                                variant === "selected-month" &&
-                                styles.monthCellSelectedHover
+                            (variant === "current-month" &&
+                                styles.monthCellCurrentMonth) ||
+                                (variant === "selected-month" &&
+                                    styles.monthCellSelectedMonth) ||
+                                (interactive &&
+                                    variant !== "selected-month" &&
+                                    styles.monthCellDefaultHover) ||
+                                (interactive && styles.monthCellSelectedHover)
                         )}
                         onClick={() => handleMonthClick(date, !interactive)}
                         onKeyDown={(event) => {
