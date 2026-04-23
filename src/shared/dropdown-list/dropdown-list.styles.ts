@@ -13,12 +13,7 @@ import * as dropdownWrapperStyles from "../dropdown-wrapper/dropdown-wrapper.sty
 
 export const tokens = {
     availableWidth: "--fds-internal-dropdownList-container-availableWidth",
-    /**
-     * Width logic (mirrors old styled-components props):
-     * - customWidth (string): set containerWidth + set containerMinWidth to 0px
-     * - width (number in px): set containerWidth to `${width}px` only
-     * - default: set neither (width=auto, min-width uses fallback)
-     */
+
     containerWidth: "--fds-internal-dropdownList-containerWidth",
     containerMinWidth: "--fds-internal-dropdownList-containerMinWidth",
 
@@ -29,6 +24,7 @@ export const tokens = {
 // MAIN STYLES
 // -----------------------------------------------------------------------------
 export const container = css`
+    ${Font["body-baseline-regular"]}
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
     background: ${Colour["bg"]};
@@ -79,8 +75,6 @@ export const container = css`
         border-radius: ${Radius["full"]};
         background-clip: padding-box;
     }
-
-    ${Font["body-baseline-regular"]}
 `;
 
 export const containerVariantSmall = css`

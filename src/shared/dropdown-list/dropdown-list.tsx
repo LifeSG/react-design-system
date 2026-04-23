@@ -497,7 +497,7 @@ const DropdownListInner = <T, V>(
                             (active &&
                                 selected &&
                                 styles.listItemActiveSelected) ||
-                            (active && !selected && styles.listItemActive)
+                            (active && styles.listItemActive)
                     )}
                 >
                     {renderListItem ? (
