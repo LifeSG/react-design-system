@@ -26,7 +26,6 @@ export const monthCell = css`
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 
     ${Font["body-md-regular"]}
-    border-radius: ${Radius["md"]};
     border: ${Border["width-010"]} ${Border["solid"]} transparent;
     background-clip: border-box;
     color: ${Colour["text"]};
