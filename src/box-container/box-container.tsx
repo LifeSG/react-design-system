@@ -1,10 +1,11 @@
 import { useSpring } from "@react-spring/web";
+import clsx from "clsx";
 import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
 
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
-import { Breakpoint } from "../theme";
+import { Breakpoint, useApplyStyle } from "../theme";
 import { SimpleIdGenerator } from "../util";
 import {
     AlertIcon,
@@ -19,6 +20,7 @@ import {
     LabelText,
     LabelWrapper,
     NonExpandable,
+    tokens,
 } from "./box-container.styles";
 import type { BoxContainerProps } from "./types";
 
@@ -31,6 +33,7 @@ export const BoxContainer = ({
     displayState = "default",
     subComponentTestIds,
     clickableHeader,
+    className,
     ...otherProps
 }: BoxContainerProps) => {
     // =============================================================================
@@ -47,6 +50,12 @@ export const BoxContainer = ({
     const internalId = useRef(SimpleIdGenerator.generate());
     const contentId = `${internalId.current}-content`;
     const headerId = `${internalId.current}-header`;
+    const handleIconRef = useRef<HTMLDivElement>(null);
+
+    // Apply CSS variables
+    useApplyStyle(handleIconRef, {
+        [tokens.handleIconContainer.rotation]: showExpanded ? "180deg" : "0deg",
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -96,7 +105,10 @@ export const BoxContainer = ({
             case "warning":
                 return (
                     <AlertIcon
-                        $displayState={displayState}
+                        className={clsx(
+                            displayState === "error" && "alertIconError",
+                            displayState === "warning" && "alertIconWarning"
+                        )}
                         data-testid={
                             subComponentTestIds?.displayStateIcon ||
                             `${displayState}-icon`
@@ -121,7 +133,7 @@ export const BoxContainer = ({
                     aria-expanded={showExpanded}
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
-                    <HandleIconContainer $expanded={showExpanded} aria-hidden>
+                    <HandleIconContainer ref={handleIconRef} aria-hidden>
                         <HandleIcon />
                     </HandleIconContainer>
                 </Handle>
@@ -132,14 +144,15 @@ export const BoxContainer = ({
     return (
         <Container
             {...otherProps}
+            className={clsx(className)}
             aria-labelledby={headerId}
             role="region"
             title={typeof title === "string" ? title : undefined}
         >
             <Header
+                className={clsx(interactiveHeader && "headerInteractive")}
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
-                $interactive={interactiveHeader}
             >
                 <LabelWrapper role={"status"} id={headerId}>
                     <LabelText
@@ -157,7 +170,9 @@ export const BoxContainer = ({
                 </LabelWrapper>
                 {callToActionComponent && (
                     <CallToActionContainer
-                        $collapsible={collapsible}
+                        className={clsx(
+                            collapsible && "callToActionContainerCollapsible"
+                        )}
                         data-testid="call-to-action-container"
                     >
                         {callToActionComponent}

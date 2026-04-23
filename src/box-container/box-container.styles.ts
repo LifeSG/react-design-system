@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { animated } from "@react-spring/web";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import {
     Border,
@@ -12,24 +12,12 @@ import {
     Radius,
     Spacing,
 } from "../theme";
-import type { BoxContainerDisplayState } from "./types";
 
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $expanded?: boolean;
-    $collapsible?: boolean;
-}
-
-interface LabelIconStyleProps {
-    $displayState?: BoxContainerDisplayState;
-}
-
-interface HeaderStyleProps {
-    $interactive?: boolean;
-}
+export const tokens = {
+    handleIconContainer: {
+        rotation: "--fds-internal-boxContainer-handleIcon-rotation",
+    },
+};
 
 // =============================================================================
 // STYLING
@@ -52,7 +40,7 @@ export const ChildContainer = styled.div`
     border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 `;
 
-export const Header = styled.div<HeaderStyleProps>`
+export const Header = styled.div`
     padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
     display: flex;
     align-items: center;
@@ -63,13 +51,9 @@ export const Header = styled.div<HeaderStyleProps>`
         display: block;
     }
 
-    ${(props) => {
-        if (props.$interactive) {
-            return css`
-                cursor: pointer;
-            `;
-        }
-    }}
+    &.headerInteractive {
+        cursor: pointer;
+    }
 `;
 
 export const LabelText = styled.div`
@@ -86,7 +70,7 @@ export const LabelWrapper = styled.div`
     display: flex;
 `;
 
-export const AlertIcon = styled(ExclamationCircleFillIcon)<LabelIconStyleProps>`
+export const AlertIcon = styled(ExclamationCircleFillIcon)`
     height: ${Font.Spec["heading-size-sm"]};
     width: ${Font.Spec["heading-size-sm"]};
     align-self: center;
@@ -97,39 +81,31 @@ export const AlertIcon = styled(ExclamationCircleFillIcon)<LabelIconStyleProps>`
         margin-right: 0;
     }
 
-    ${(props) => {
-        switch (props.$displayState) {
-            case "error":
-                return css`
-                    color: ${Colour["icon-error"]};
-                `;
-            case "warning":
-                return css`
-                    color: ${Colour["icon-warning"]};
-                `;
-            default:
-                break;
-        }
-    }}
+    &.alertIconError {
+        color: ${Colour["icon-error"]};
+    }
+
+    &.alertIconWarning {
+        color: ${Colour["icon-warning"]};
+    }
 `;
 
-export const CallToActionContainer = styled.div<StyleProps>`
+export const CallToActionContainer = styled.div`
     display: flex;
     margin-left: auto;
+
     ${MediaQuery.MaxWidth.sm} {
         flex-direction: column;
     }
-    ${(props) => {
-        if (props.$collapsible) {
-            return css`
-                margin-right: ${Spacing["spacing-40"]};
-                ${MediaQuery.MaxWidth.sm} {
-                    margin-right: 0;
-                    margin-top: ${Spacing["spacing-16"]};
-                }
-            `;
+
+    &.callToActionContainerCollapsible {
+        margin-right: ${Spacing["spacing-40"]};
+
+        ${MediaQuery.MaxWidth.sm} {
+            margin-right: 0;
+            margin-top: ${Spacing["spacing-16"]};
         }
-    }}
+    }
 `;
 
 export const Handle = styled.button`
@@ -149,8 +125,10 @@ export const Handle = styled.button`
     }
 `;
 
-export const HandleIconContainer = styled.div<StyleProps>`
-    transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
+export const HandleIconContainer = styled.div`
+    /* reset variable to prevent leaking to child components */
+    ${tokens.handleIconContainer.rotation}: initial;
+    transform: rotate(var(${tokens.handleIconContainer.rotation}, 0deg));
     transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
 `;
 
