@@ -7,21 +7,7 @@ import { useMediaQuery } from "react-responsive";
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import { Breakpoint, useApplyStyle } from "../theme";
 import { SimpleIdGenerator } from "../util";
-import {
-    AlertIcon,
-    CallToActionContainer,
-    ChildContainer,
-    Container,
-    Expandable,
-    Handle,
-    HandleIcon,
-    HandleIconContainer,
-    Header,
-    LabelText,
-    LabelWrapper,
-    NonExpandable,
-    tokens,
-} from "./box-container.styles";
+import * as styles from "./box-container.styles";
 import type { BoxContainerProps } from "./types";
 
 export const BoxContainer = ({
@@ -54,7 +40,9 @@ export const BoxContainer = ({
 
     // Apply CSS variables
     useApplyStyle(handleIconRef, {
-        [tokens.handleIconContainer.rotation]: showExpanded ? "180deg" : "0deg",
+        [styles.tokens.handleIconContainer.rotation]: showExpanded
+            ? "180deg"
+            : "0deg",
     });
 
     // =============================================================================
@@ -77,25 +65,30 @@ export const BoxContainer = ({
     const renderChildContent = () => {
         if (collapsible) {
             return (
-                <Expandable
+                <styles.AnimatedExpandable
+                    className={styles.expandable}
                     style={expandableStyles}
                     data-testid={"expandable-container"}
                     id={contentId}
                 >
-                    <ChildContainer
+                    <div
+                        className={styles.childContainer}
                         ref={childRef}
                         inert={inertValue(!showExpanded)}
                     >
                         {children}
-                    </ChildContainer>
-                </Expandable>
+                    </div>
+                </styles.AnimatedExpandable>
             );
         }
 
         return (
-            <NonExpandable data-testid="non-expandable-container">
-                <ChildContainer>{children}</ChildContainer>
-            </NonExpandable>
+            <div
+                className={styles.nonExpandable}
+                data-testid="non-expandable-container"
+            >
+                <div className={styles.childContainer}>{children}</div>
+            </div>
         );
     };
 
@@ -104,10 +97,12 @@ export const BoxContainer = ({
             case "error":
             case "warning":
                 return (
-                    <AlertIcon
+                    <styles.AlertIconComponent
                         className={clsx(
-                            displayState === "error" && "alertIconError",
-                            displayState === "warning" && "alertIconWarning"
+                            styles.alertIcon,
+                            displayState === "error" && styles.alertIconError,
+                            displayState === "warning" &&
+                                styles.alertIconWarning
                         )}
                         data-testid={
                             subComponentTestIds?.displayStateIcon ||
@@ -124,7 +119,8 @@ export const BoxContainer = ({
     const renderHandleIcon = () => {
         return (
             collapsible && (
-                <Handle
+                <button
+                    className={styles.handle}
                     onClick={onHandleClick}
                     type="button"
                     aria-labelledby={headerId}
@@ -133,29 +129,43 @@ export const BoxContainer = ({
                     aria-expanded={showExpanded}
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
-                    <HandleIconContainer ref={handleIconRef} aria-hidden>
-                        <HandleIcon />
-                    </HandleIconContainer>
-                </Handle>
+                    <div
+                        className={styles.handleIconContainer}
+                        ref={handleIconRef}
+                        aria-hidden
+                    >
+                        <styles.HandleIconComponent
+                            className={styles.handleIcon}
+                        />
+                    </div>
+                </button>
             )
         );
     };
 
     return (
-        <Container
+        <section
             {...otherProps}
-            className={clsx(className)}
+            className={clsx(styles.container, className)}
             aria-labelledby={headerId}
             role="region"
             title={typeof title === "string" ? title : undefined}
         >
-            <Header
-                className={clsx(interactiveHeader && "headerInteractive")}
+            <div
+                className={clsx(
+                    styles.header,
+                    interactiveHeader && styles.headerInteractive
+                )}
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
             >
-                <LabelWrapper role={"status"} id={headerId}>
-                    <LabelText
+                <div
+                    className={styles.labelWrapper}
+                    role={"status"}
+                    id={headerId}
+                >
+                    <div
+                        className={styles.labelText}
                         data-testid={subComponentTestIds?.title || "title"}
                     >
                         {title}
@@ -164,24 +174,26 @@ export const BoxContainer = ({
                                 <VisuallyHidden>{displayState}</VisuallyHidden>
                             </>
                         )}
-                    </LabelText>
+                    </div>
                     {renderDisplayIcon()}
                     {isMobile && renderHandleIcon()}
-                </LabelWrapper>
+                </div>
                 {callToActionComponent && (
-                    <CallToActionContainer
+                    <div
                         className={clsx(
-                            collapsible && "callToActionContainerCollapsible"
+                            styles.callToActionContainer,
+                            collapsible &&
+                                styles.callToActionContainerCollapsible
                         )}
                         data-testid="call-to-action-container"
                     >
                         {callToActionComponent}
-                    </CallToActionContainer>
+                    </div>
                 )}
 
                 {!isMobile && renderHandleIcon()}
-            </Header>
+            </div>
             {renderChildContent()}
-        </Container>
+        </section>
     );
 };

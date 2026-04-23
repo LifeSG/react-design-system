@@ -1,7 +1,7 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { css } from "@linaria/core";
 import { animated } from "@react-spring/web";
-import styled from "styled-components";
 
 import {
     Border,
@@ -19,28 +19,25 @@ export const tokens = {
     },
 };
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Container = styled.section`
+export const container = css`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
     margin-bottom: ${Spacing["spacing-32"]};
 `;
 
-export const Expandable = animated(styled.div`
+export const expandable = css`
     overflow: hidden;
-`);
+`;
 
-export const NonExpandable = styled.div`
+export const nonExpandable = css`
     height: max-content;
 `;
 
-export const ChildContainer = styled.div`
+export const childContainer = css`
     border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 `;
 
-export const Header = styled.div`
+export const header = css`
     padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
     display: flex;
     align-items: center;
@@ -50,13 +47,13 @@ export const Header = styled.div`
         padding: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
         display: block;
     }
-
-    &.headerInteractive {
-        cursor: pointer;
-    }
 `;
 
-export const LabelText = styled.div`
+export const headerInteractive = css`
+    cursor: pointer;
+`;
+
+export const labelText = css`
     ${Font["heading-sm-semibold"]}
     color: ${Colour["text"]};
     word-wrap: break-word;
@@ -66,11 +63,11 @@ export const LabelText = styled.div`
     margin-right: ${Spacing["spacing-16"]};
 `;
 
-export const LabelWrapper = styled.div`
+export const labelWrapper = css`
     display: flex;
 `;
 
-export const AlertIcon = styled(ExclamationCircleFillIcon)`
+export const alertIcon = css`
     height: ${Font.Spec["heading-size-sm"]};
     width: ${Font.Spec["heading-size-sm"]};
     align-self: center;
@@ -80,35 +77,35 @@ export const AlertIcon = styled(ExclamationCircleFillIcon)`
     ${MediaQuery.MaxWidth.sm} {
         margin-right: 0;
     }
-
-    &.alertIconError {
-        color: ${Colour["icon-error"]};
-    }
-
-    &.alertIconWarning {
-        color: ${Colour["icon-warning"]};
-    }
 `;
 
-export const CallToActionContainer = styled.div`
+export const alertIconError = css`
+    color: ${Colour["icon-error"]};
+`;
+
+export const alertIconWarning = css`
+    color: ${Colour["icon-warning"]};
+`;
+
+export const callToActionContainer = css`
     display: flex;
     margin-left: auto;
 
     ${MediaQuery.MaxWidth.sm} {
         flex-direction: column;
     }
+`;
 
-    &.callToActionContainerCollapsible {
-        margin-right: ${Spacing["spacing-40"]};
+export const callToActionContainerCollapsible = css`
+    margin-right: ${Spacing["spacing-40"]};
 
-        ${MediaQuery.MaxWidth.sm} {
-            margin-right: 0;
-            margin-top: ${Spacing["spacing-16"]};
-        }
+    ${MediaQuery.MaxWidth.sm} {
+        margin-right: 0;
+        margin-top: ${Spacing["spacing-16"]};
     }
 `;
 
-export const Handle = styled.button`
+export const handle = css`
     background: transparent;
     border: none;
     cursor: pointer;
@@ -125,15 +122,22 @@ export const Handle = styled.button`
     }
 `;
 
-export const HandleIconContainer = styled.div`
+export const handleIconContainer = css`
     /* reset variable to prevent leaking to child components */
     ${tokens.handleIconContainer.rotation}: initial;
     transform: rotate(var(${tokens.handleIconContainer.rotation}, 0deg));
     transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
 `;
 
-export const HandleIcon = styled(ChevronDownIcon)`
+export const handleIcon = css`
     color: ${Colour["icon"]};
     height: ${Font.Spec["heading-size-sm"]};
     width: ${Font.Spec["heading-size-sm"]};
 `;
+
+// Animated component wrapper
+export const AnimatedExpandable = animated.div;
+
+// Icon components
+export const AlertIconComponent = ExclamationCircleFillIcon;
+export const HandleIconComponent = ChevronDownIcon;
