@@ -20,7 +20,7 @@ const Component = (
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     useApplyStyle(wrapperRef, {
-        [styles.tokens.calendarWrapper.width]: `${elementWidth}px`,
+        [styles.tokens.width]: `${elementWidth}px`,
         ...positioningStyles,
     });
 

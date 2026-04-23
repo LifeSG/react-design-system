@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 
 import { Colour, Font } from "../../theme";
+import * as calendarDropdownStyles from "../internal-calendar/calendar-dropdown.styles";
 
 // =============================================================================
 // STYLING
@@ -32,8 +33,8 @@ export const container = css`
     display: flex;
     flex-direction: column;
 
-    padding-top: var(--vertical-inset);
-    padding-bottom: var(--vertical-inset);
+    padding-top: var(${calendarDropdownStyles.tokens.verticalInset});
+    padding-bottom: var(${calendarDropdownStyles.tokens.verticalInset});
 `;
 
 export const toggleZone = css`
@@ -46,8 +47,8 @@ export const defaultView = css`
     isolation: isolate;
     width: 100%;
 
-    padding-left: var(--horizontal-inset);
-    padding-right: var(--horizontal-inset);
+    padding-left: var(${calendarDropdownStyles.tokens.horizontalInset});
+    padding-right: var(${calendarDropdownStyles.tokens.horizontalInset});
 `;
 
 export const optionsOverlay = css`
@@ -58,8 +59,8 @@ export const optionsOverlay = css`
     width: 100%;
     background: ${Colour["bg"]};
 
-    padding-left: var(--horizontal-inset);
-    padding-right: var(--horizontal-inset);
+    padding-left: var(${calendarDropdownStyles.tokens.horizontalInset});
+    padding-right: var(${calendarDropdownStyles.tokens.horizontalInset});
 `;
 
 export const optionsOverlayHidden = css`
@@ -73,9 +74,15 @@ export const header = css`
     display: flex;
     justify-content: space-between;
 
-    padding-left: var(--header-horizontal-inset, var(--horizontal-inset));
-    padding-right: var(--header-horizontal-inset, var(--horizontal-inset));
-    padding-bottom: var(--header-bottom-spacing);
+    padding-left: var(
+        ${calendarDropdownStyles.tokens.horizontalInset},
+        var(${calendarDropdownStyles.tokens.horizontalInset})
+    );
+    padding-right: var(
+        ${calendarDropdownStyles.tokens.horizontalInset},
+        var(${calendarDropdownStyles.tokens.horizontalInset})
+    );
+    padding-bottom: var(${calendarDropdownStyles.tokens.headerBottomSpacing});
 `;
 
 export const headerInputDropdown = css`
@@ -121,8 +128,8 @@ export const actionButtonSection = css`
     gap: 0.5rem;
     margin-top: 1.5rem;
 
-    padding-left: var(--horizontal-inset);
-    padding-right: var(--horizontal-inset);
+    padding-left: var(${calendarDropdownStyles.tokens.horizontalInset});
+    padding-right: var(${calendarDropdownStyles.tokens.horizontalInset});
 `;
 
 export const actionButton = css`
