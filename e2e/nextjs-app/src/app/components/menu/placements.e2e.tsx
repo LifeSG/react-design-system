@@ -1,9 +1,9 @@
 "use client";
 
+import { Button } from "@lifesg/react-design-system/button";
 import { Menu } from "@lifesg/react-design-system/menu";
-import type { PopoverV2Position } from "@lifesg/react-design-system/popover-v2/types";
+import type { PopoverV2Position } from "@lifesg/react-design-system/popover-v2";
 import styles from "./menu.module.css";
-import { Button } from "@lifesg/react-design-system";
 
 type PlacementEntry = {
     key: string;

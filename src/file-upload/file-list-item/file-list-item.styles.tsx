@@ -229,7 +229,7 @@ export const FileSizeText = styled(Typography.BodyMD)`
 
 export const ItemText = styled(Typography.BodyMD)``;
 
-export const ItemDescriptionText = styled(ItemText)`
+export const ItemDescriptionText = styled(Typography.BodyMD)`
     margin-top: ${V3_Spacing["spacing-4"]};
 `;
 
@@ -244,7 +244,8 @@ export const BaseErrorMessage = styled(Typography.BodySM)`
     color: ${V3_Colour["text-error"]};
 `;
 
-export const DesktopErrorMessage = styled(BaseErrorMessage)`
+export const DesktopErrorMessage = styled(Typography.BodySM)`
+    color: ${V3_Colour["text-error"]};
     margin-top: ${V3_Spacing["spacing-4"]};
     display: flex;
     gap: ${V3_Spacing["spacing-4"]};
@@ -255,7 +256,8 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
     }
 `;
 
-export const MobileErrorMessage = styled(BaseErrorMessage)`
+export const MobileErrorMessage = styled(Typography.BodySM)`
+    color: ${V3_Colour["text-error"]};
     display: none;
     visibility: hidden;
 
