@@ -68,12 +68,11 @@ export const DropdownLabel = ({
                 `${fontSize} '${fontFamily}'`
             );
 
-            // compare against a single line width — if text overflows one line
-            // in inline mode, switch to next-line layout with middle truncation.
-            // an arbitrary offset accounts for word breaks reducing actual usage
+            // there's less space than expected due to word breaks, so an
+            // arbitary offset is applied
             return textWidth > width - 50;
         },
-        [width, displayType, fontSize, fontFamily, maxLines]
+        [width, displayType, fontSize, fontFamily]
     );
 
     // =========================================================================
@@ -88,8 +87,8 @@ export const DropdownLabel = ({
         [hasExceededContainer, sublabel]
     );
 
-    // there's less space than expected due to word breaks, so an
-    // arbitary offset is applied
+    // css cannot truncate inline elements so force the display to render
+    // them separately
     const itemDisplayType =
         truncationType === "middle" &&
         (shouldTruncateTitle || shouldTruncateLabel)
@@ -167,9 +166,8 @@ export const DropdownLabel = ({
                     bold && styles.primaryTextBold,
                     disabled && styles.primaryTextDisabled,
                     !disabled && selected && styles.primaryTextSelected,
-                    itemDisplayType !== "next-line" &&
-                        truncationType !== "end" &&
-                        styles.textLabelInline,
+                    itemDisplayType === "inline" &&
+                        styles.primaryTextLabelInline,
                     truncationType === "end" && styles.primaryTextTruncateEnd
                 )}
             >
@@ -183,14 +181,13 @@ export const DropdownLabel = ({
                     aria-label={sublabel}
                     className={clsx(
                         styles.secondaryText,
+                        itemDisplayType === "inline" &&
+                            styles.secondaryTextLabelInline,
                         truncationType === "end" &&
                             styles.secondaryTextTruncateEnd,
                         displayType === "next-line"
                             ? styles.secondaryTextNextLine
-                            : styles.secondaryTextInline,
-                        itemDisplayType !== "next-line" &&
-                            truncationType !== "end" &&
-                            styles.secondaryTextLabelInline
+                            : styles.secondaryTextInline
                     )}
                 >
                     {truncationType === "middle" && shouldTruncateLabel

@@ -38,6 +38,10 @@ export const primaryTextDisabled = css`
     color: ${Colour["text-disabled"]};
 `;
 
+export const primaryTextLabelInline = css`
+    display: inline;
+`;
+
 export const primaryTextTruncateEnd = css`
     ${tokens.primaryText.maxLines}: 2;
     ${lineClampDynamicCss(tokens.primaryText.maxLines)}
@@ -52,17 +56,22 @@ export const secondaryText = css`
     overflow-wrap: break-word;
 `;
 
-export const secondaryTextTruncateEnd = css`
-    ${tokens.secondaryText.maxLines}: 2;
-    ${lineClampDynamicCss(tokens.secondaryText.maxLines)}
-`;
-
 export const secondaryTextNextLine = css`
     ${Font["body-md-semibold"]}
 `;
 
 export const secondaryTextInline = css`
     ${Font["body-baseline-regular"]}
+`;
+
+export const secondaryTextLabelInline = css`
+    display: inline;
+    margin-left: 0.5rem;
+`;
+
+export const secondaryTextTruncateEnd = css`
+    ${tokens.secondaryText.maxLines}: 2;
+    ${lineClampDynamicCss(tokens.secondaryText.maxLines)}
 `;
 
 // -----------------------------------------------------------------------------
@@ -90,15 +99,6 @@ export const labelVariantSmall = css`
 export const labelNextLine = css`
     display: flex;
     flex-direction: column;
-`;
-
-export const textLabelInline = css`
-    display: inline;
-`;
-
-export const secondaryTextLabelInline = css`
-    display: inline;
-    margin-left: 0.5rem;
 `;
 
 // -----------------------------------------------------------------------------
