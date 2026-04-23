@@ -9,7 +9,7 @@ import {
     Radius,
     Spacing,
 } from "../../theme";
-import * as dropdownWrapperStyles from "../dropdown-wrapper/dropdown-wrapper.styles";
+import * as elementWithDropdownStyles from "../dropdown-wrapper/element-with-dropdown.styles";
 
 export const tokens = {
     availableWidth: "--fds-internal-dropdownList-container-availableWidth",
@@ -30,7 +30,7 @@ export const container = css`
     background: ${Colour["bg"]};
 
     ${tokens.xSpacing}: 0px;
-    ${dropdownWrapperStyles.tokens.availableHeight}: initial;
+    ${elementWithDropdownStyles.tokens.availableHeight}: initial;
     ${tokens.availableWidth}: calc(
         100vw - var(${tokens.xSpacing}) * 2
     );
@@ -56,7 +56,7 @@ export const container = css`
     width: var(${tokens.containerWidth});
     max-height: min(
         27rem,
-        var(${dropdownWrapperStyles.tokens.availableHeight}, 9999px)
+        var(${elementWithDropdownStyles.tokens.availableHeight}, 9999px)
     );
     overflow: hidden;
     overflow-y: auto;

@@ -3,10 +3,6 @@ import { css } from "@linaria/core";
 import { Colour, Font } from "../../theme";
 import { lineClampCss } from "../styles";
 
-export const tokens = {
-    availableHeight: "--fds-internal-dropdownWrapper-availableHeight",
-};
-
 export const labelContainer = css`
     display: flex;
     flex: 1;
