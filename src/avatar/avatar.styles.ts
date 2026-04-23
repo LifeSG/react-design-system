@@ -26,7 +26,3 @@ export const avatarDisplaySmall = css`
 export const avatarBaselineText = css`
     color: ${Colour["text-primary"]};
 `;
-
-export const avatarBodySmallText = css`
-    color: ${Colour["text-primary"]};
-`;

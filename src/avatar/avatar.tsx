@@ -25,11 +25,7 @@ export const Avatar = ({
             return (
                 <TextComponent
                     weight="semibold"
-                    className={
-                        sizeType === "small"
-                            ? styles.avatarBodySmallText
-                            : styles.avatarBaselineText
-                    }
+                    className={styles.avatarBaselineText}
                 >
                     {String.fromCodePoint(
                         children.codePointAt(0) ?? 0
