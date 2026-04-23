@@ -144,7 +144,7 @@ export const DateNavigator = ({
                         sizeType="small"
                         icon={
                             <ChevronLeftIcon
-                                className={calendarManagerStyles.arrowLeft}
+                                className={calendarManagerStyles.icon}
                             />
                         }
                     />
@@ -172,7 +172,7 @@ export const DateNavigator = ({
                         sizeType="small"
                         icon={
                             <ChevronRightIcon
-                                className={calendarManagerStyles.arrowRight}
+                                className={calendarManagerStyles.icon}
                             />
                         }
                     />

@@ -8,22 +8,13 @@ import { Colour, Font } from "../../theme";
 // -----------------------------------------------------------------------------
 // ICONS
 // -----------------------------------------------------------------------------
-export const arrowLeft = css`
-    color: ${Colour["icon"]};
-    height: 1rem;
-    width: 1rem;
-`;
-
-export const arrowRight = css`
+export const icon = css`
     color: ${Colour["icon"]};
     height: 1rem;
     width: 1rem;
 `;
 
 export const iconChevronDown = css`
-    color: ${Colour["icon"]};
-    height: 1rem;
-    width: 1rem;
     transition: transform 250ms ease-in-out;
     margin-left: 0.5rem;
 `;

@@ -395,6 +395,7 @@ const Component = (
                     <span className={styles.dropdownText}>{monthLabel}</span>
                     <ChevronDownIcon
                         className={clsx(
+                            styles.icon,
                             styles.iconChevronDown,
                             currentView === "month-options" &&
                                 styles.iconChevronDownExpanded
@@ -414,6 +415,7 @@ const Component = (
                     <span className={styles.dropdownText}>{yearLabel}</span>
                     <ChevronDownIcon
                         className={clsx(
+                            styles.icon,
                             styles.iconChevronDown,
                             currentView !== "default" &&
                                 styles.iconChevronDownExpanded
@@ -491,7 +493,7 @@ const Component = (
                         onClick={handleLeftArrowClick}
                         tabIndex={isFocusable ? 0 : -1}
                     >
-                        <ChevronLeftIcon className={styles.arrowLeft} />
+                        <ChevronLeftIcon className={styles.icon} />
                     </ClickableIcon>
                     <ClickableIcon
                         className={styles.headerArrowButton}
@@ -503,7 +505,7 @@ const Component = (
                         onClick={handleRightArrowClick}
                         tabIndex={isFocusable ? 0 : -1}
                     >
-                        <ChevronRightIcon className={styles.arrowRight} />
+                        <ChevronRightIcon className={styles.icon} />
                     </ClickableIcon>
                 </div>
             </div>
