@@ -215,16 +215,16 @@ export const InternalCalendarYear = ({
                             styles.yearCell,
                             disabledDisplay && styles.yearCellDisabledDisplay,
                             interactive && styles.yearCellInteractive,
-                            (variant === "other-decade" &&
-                                styles.yearCellOtherDecade) ||
-                                (variant === "current-year" &&
-                                    styles.yearCellCurrentYear) ||
-                                (variant === "selected-year" &&
-                                    styles.yearCellSelectedYear) ||
-                                (interactive &&
-                                    variant !== "selected-year" &&
-                                    styles.yearCellDefaultHover) ||
-                                (interactive && styles.yearCellSelectedHover)
+                            variant === "other-decade" &&
+                                styles.yearCellOtherDecade,
+                            variant === "current-year" &&
+                                styles.yearCellCurrentYear,
+                            variant === "selected-year" &&
+                                styles.yearCellSelectedYear,
+                            interactive &&
+                                variant !== "selected-year" &&
+                                styles.yearCellDefaultHover,
+                            interactive && styles.yearCellSelectedHover
                         )}
                         onClick={() => handleYearClick(date, !interactive)}
                         onKeyDown={(event) => {
