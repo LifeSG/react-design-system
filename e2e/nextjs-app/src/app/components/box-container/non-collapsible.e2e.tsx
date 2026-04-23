@@ -1,0 +1,21 @@
+"use client";
+import { BoxContainer } from "@lifesg/react-design-system/box-container";
+
+export default function Story() {
+    return (
+        <BoxContainer
+            title="Non-collapsible container"
+            collapsible={false}
+            data-testid="box-container-non-collapsible"
+        >
+            <div style={{ padding: "2rem" }}>
+                <p>
+                    Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed
+                    do eiusmod tempor incididunt ut labore et dolore magna
+                    aliqua. Ut enim ad minim veniam, quis nostrud exercitation
+                    ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                </p>
+            </div>
+        </BoxContainer>
+    );
+}
