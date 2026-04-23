@@ -21,6 +21,7 @@ const Component = (
 
     useApplyStyle(wrapperRef, {
         [styles.tokens.calendarWrapper.width]: `${elementWidth}px`,
+        ...positioningStyles,
     });
 
     const setRef = (el: HTMLDivElement | null) => {
@@ -34,7 +35,6 @@ const Component = (
             className={styles.calendarWrapper}
             data-testid="calendar-dropdown"
             ref={setRef}
-            style={positioningStyles}
             {...getFloatingProps()}
         >
             <InternalCalendar ref={ref} {...props} />
