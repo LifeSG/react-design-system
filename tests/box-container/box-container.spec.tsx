@@ -1,5 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
-import { BoxContainer, V3_Colour, V3_LifeSGTheme } from "src";
+import { BoxContainer, Colour } from "src";
 
 // =============================================================================
 // UNIT TESTS
@@ -78,8 +78,8 @@ describe("BoxContainer", () => {
         it.each`
             state        | color
             ${"default"} | ${"no"}
-            ${"error"}   | ${V3_Colour["icon-error"]({ theme: V3_LifeSGTheme })}
-            ${"warning"} | ${V3_Colour["icon-warning"]({ theme: V3_LifeSGTheme })}
+            ${"error"}   | ${Colour["icon-error"]}
+            ${"warning"} | ${Colour["icon-warning"]}
         `(
             "should render $state state with $color color icon",
             ({ state, color }) => {
