@@ -1,17 +1,16 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
 import { Border, Colour, Font, MediaQuery } from "../theme";
 
 // ============================================================================
 // STYLING
 // =============================================================================
-export const Content = styled.div`
+export const content = css`
     width: 100%;
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
-export const TitleWrapper = styled.div`
+export const titleWrapper = css`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -21,15 +20,15 @@ export const TitleWrapper = styled.div`
     ${MediaQuery.MaxWidth.sm} {
         justify-content: flex-end;
     }
+`;
 
-    &.titleWrapperHidden {
-        ${MediaQuery.MaxWidth.sm} {
-            display: none;
-        }
+export const titleWrapperHidden = css`
+    ${MediaQuery.MaxWidth.sm} {
+        display: none;
     }
 `;
 
-export const Title = styled.h2`
+export const title = css`
     display: flex;
     align-self: flex-start;
     flex: 1;
@@ -40,16 +39,16 @@ export const Title = styled.h2`
     ${MediaQuery.MaxWidth.sm} {
         text-align: left;
     }
+`;
 
-    &.titleHidden {
-        ${MediaQuery.MaxWidth.sm} {
-            display: none;
-            visibility: hidden;
-        }
+export const titleHidden = css`
+    ${MediaQuery.MaxWidth.sm} {
+        display: none;
+        visibility: hidden;
     }
 `;
 
-export const ExpandCollapseLink = styled(Button)`
+export const expandCollapseLink = css`
     padding: 1.75rem 1rem; // larger clickable area
     margin: -1rem -1rem -1rem 0px;
     white-space: nowrap;

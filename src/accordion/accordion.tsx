@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type React from "react";
 import { useEffect, useState } from "react";
 
+import { Button } from "../button";
 import * as styles from "./accordion.styles";
 import { AccordionContext } from "./accordion-context";
 import { AccordionItem } from "./accordion-item";
@@ -85,7 +86,8 @@ const AccordionBase = ({
 
     const renderCollapseExpandAll = () => {
         return (
-            <styles.ExpandCollapseLink
+            <Button
+                className={styles.expandCollapseLink}
                 data-testid="accordion-expand-collapse-button"
                 onClick={handleExpandCollapseClick}
                 styleType="link"
@@ -93,7 +95,7 @@ const AccordionBase = ({
                 sizeType="small"
             >
                 {expandAll ? "Hide all" : "Show all"}
-            </styles.ExpandCollapseLink>
+            </Button>
         );
     };
 
@@ -103,24 +105,28 @@ const AccordionBase = ({
         }
 
         return (
-            <styles.TitleWrapper
+            <div
                 className={clsx(
+                    styles.titleWrapper,
                     !showTitleInMobile &&
                         !enableExpandAll &&
-                        "titleWrapperHidden"
+                        styles.titleWrapperHidden
                 )}
             >
                 {title && (
-                    <styles.Title
-                        className={clsx(!showTitleInMobile && "titleHidden")}
+                    <h2
+                        className={clsx(
+                            styles.title,
+                            !showTitleInMobile && styles.titleHidden
+                        )}
                         data-testid="accordion-title"
                         aria-level={headingLevel}
                     >
                         {title}
-                    </styles.Title>
+                    </h2>
                 )}
                 {enableExpandAll && renderCollapseExpandAll()}
-            </styles.TitleWrapper>
+            </div>
         );
     };
 
@@ -138,10 +144,14 @@ const AccordionBase = ({
                 itemState,
             }}
         >
-            <styles.Content id={id} data-testid={testId} className={className}>
+            <div
+                id={id}
+                data-testid={testId}
+                className={clsx(styles.content, className)}
+            >
                 {renderTitleWrapper()}
                 {children}
-            </styles.Content>
+            </div>
         </AccordionContext.Provider>
     );
 };

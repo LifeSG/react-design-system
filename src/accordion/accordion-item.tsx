@@ -1,4 +1,5 @@
-import { useSpring } from "@react-spring/web";
+import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
+import { animated, useSpring } from "@react-spring/web";
 import clsx from "clsx";
 import type React from "react";
 import {
@@ -14,15 +15,7 @@ import { useResizeDetector } from "react-resize-detector";
 import { inertValue } from "../shared/accessibility";
 import { SimpleIdGenerator } from "../util";
 import { AccordionContext } from "./accordion-context";
-import {
-    ChevronIcon,
-    Container,
-    ContentContainer,
-    Expandable,
-    ExpandCollapseButton,
-    IconContainer,
-    Title,
-} from "./accordion-item.style";
+import * as styles from "./accordion-item.styles";
 import type {
     AccordionItemApi,
     AccordionItemHandle,
@@ -78,7 +71,7 @@ function Component(
                     },
                 }
             ),
-        [expanded, internalId, onItemStateChange]
+        [expanded]
     );
 
     // =========================================================================
@@ -95,13 +88,7 @@ function Component(
             internalId,
             collapsible ? expandedControlled ?? expandAll : true
         );
-    }, [
-        expandAll,
-        expandedControlled,
-        collapsible,
-        onItemStateChange,
-        internalId,
-    ]);
+    }, [expandAll, expandedControlled, collapsible]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -123,19 +110,21 @@ function Component(
 
     const renderContent = () => {
         return (
-            <Expandable
+            <animated.div
                 id={contentId}
+                className={styles.expandable}
                 style={hasFirstLoad ? expandableStyles : resizeHeight}
                 data-testid={`${testId}-expandable-container`}
                 inert={inertValue(!expanded)}
             >
-                <ContentContainer
+                <div
                     ref={resizeDetector.ref}
+                    className={styles.contentContainer}
                     data-testid="content-container"
                 >
                     {children}
-                </ContentContainer>
-            </Expandable>
+                </div>
+            </animated.div>
         );
     };
 
@@ -145,26 +134,30 @@ function Component(
         }
 
         return (
-            <Title
+            <span
                 data-testid={`${testId}-title`}
-                className={clsx(type === "small" && "titleSmall")}
+                className={clsx(
+                    styles.title,
+                    type === "small" && styles.titleSmall
+                )}
             >
                 {title}
-            </Title>
+            </span>
         );
     };
 
     const renderTitle = () => {
         return (
             <h3 aria-level={itemHeadingLevel}>
-                <ExpandCollapseButton
+                <button
                     data-testid={`${testId}-expand-collapse-button`}
                     onClick={
                         collapsible ? handleExpandCollapseClick : undefined
                     }
                     className={clsx(
-                        expanded && "expandCollapseButtonExpanded",
-                        collapsible && "expandCollapseButtonCollapsible"
+                        styles.expandCollapseButton,
+                        expanded && styles.expandCollapseButtonExpanded,
+                        collapsible && styles.expandCollapseButtonCollapsible
                     )}
                     aria-controls={contentId}
                     aria-disabled={!collapsible} // remains focusable
@@ -172,30 +165,35 @@ function Component(
                 >
                     {renderTitleText()}
                     {collapsible && (
-                        <IconContainer
+                        <span
                             data-testid={`${testId}-expand-collapse-icon`}
                             className={clsx(
-                                expanded && "iconContainerExpanded"
+                                styles.iconContainer,
+                                expanded && styles.iconContainerExpanded
                             )}
                         >
-                            <ChevronIcon />
-                        </IconContainer>
+                            <ChevronUpIcon className={styles.chevronIcon} />
+                        </span>
                     )}
-                </ExpandCollapseButton>
+                </button>
             </h3>
         );
     };
 
     return (
-        <Container
+        <div
             data-testid={testId}
-            className={clsx(expanded && "containerExpanded", className)}
+            className={clsx(
+                styles.container,
+                expanded && styles.containerExpanded,
+                className
+            )}
             id={id}
             ref={elementRef}
         >
             {renderTitle()}
             {renderContent()}
-        </Container>
+        </div>
     );
 }
 

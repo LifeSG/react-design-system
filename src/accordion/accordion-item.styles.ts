@@ -1,6 +1,4 @@
-import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import { animated } from "@react-spring/web";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import {
     Border,
@@ -15,16 +13,16 @@ import {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
+export const container = css`
     background-color: ${Colour.bg};
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-
-    &.containerExpanded {
-        padding-bottom: ${Spacing["spacing-16"]};
-    }
 `;
 
-export const ExpandCollapseButton = styled.button`
+export const containerExpanded = css`
+    padding-bottom: ${Spacing["spacing-16"]};
+`;
+
+export const expandCollapseButton = css`
     background: transparent;
     border: none;
     border-radius: ${Radius["sm"]};
@@ -40,51 +38,51 @@ export const ExpandCollapseButton = styled.button`
     gap: ${Spacing["spacing-48"]};
     padding: ${Spacing["spacing-16"]} 0;
 
-    &.expandCollapseButtonExpanded {
-        padding-bottom: ${Spacing["spacing-8"]};
-    }
-
-    &.expandCollapseButtonCollapsible {
-        cursor: pointer;
-    }
-
     &:focus-visible {
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 0;
     }
 `;
 
-export const Title = styled.span`
+export const expandCollapseButtonExpanded = css`
+    padding-bottom: ${Spacing["spacing-8"]};
+`;
+
+export const expandCollapseButtonCollapsible = css`
+    cursor: pointer;
+`;
+
+export const title = css`
     flex: 1;
     transition: all ${Motion["duration-250"]} ${Motion["ease-standard"]};
     color: ${Colour["text"]};
     ${Font["heading-sm-bold"]}
-
-    &.titleSmall {
-        ${Font["heading-xs-bold"]}
-    }
 `;
 
-export const IconContainer = styled.span`
+export const titleSmall = css`
+    ${Font["heading-xs-bold"]}
+`;
+
+export const iconContainer = css`
     transform: rotate(180deg);
     transition: transform ${Motion["duration-250"]}${Motion["ease-default"]};
-
-    &.iconContainerExpanded {
-        transform: rotate(0deg);
-    }
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)`
+export const iconContainerExpanded = css`
+    transform: rotate(0deg);
+`;
+
+export const chevronIcon = css`
     height: 1.25rem;
     width: 1.25rem;
     color: ${Colour["icon-primary"]};
 `;
 
-export const Expandable = animated(styled.div`
+export const expandable = css`
     overflow: hidden;
-`);
+`;
 
-export const ContentContainer = styled.div`
+export const contentContainer = css`
     display: inline-block;
     padding-right: ${Spacing["spacing-64"]};
 
