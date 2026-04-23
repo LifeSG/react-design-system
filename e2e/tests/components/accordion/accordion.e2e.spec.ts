@@ -89,6 +89,16 @@ test.describe("Accordion", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("default", { mode: "dark" });
+        });
+
+        test("Default (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "default mount (dark mode)");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("expand-all");
         });
 
