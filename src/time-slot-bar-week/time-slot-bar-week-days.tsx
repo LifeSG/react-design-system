@@ -105,12 +105,16 @@ export const TimeSlotBarWeekDays = ({
     const { height: actualHeight = 0, ref: cellsRef } = useResizeDetector();
     const hasCollapsedContent =
         !!maxVisibleCellHeight && actualHeight > maxVisibleCellHeight;
+    // 12px slot height + 4px vertical gap.
+    const rowHeight = 16;
     const visibleRowCount =
         maxVisibleCellHeight !== undefined
-            ? Math.max(1, Math.floor((maxVisibleCellHeight + 4) / 16))
+            ? Math.max(1, Math.floor((maxVisibleCellHeight + 4) / rowHeight))
             : 0;
     const collapsedHeight =
-        visibleRowCount > 0 ? visibleRowCount * 16 - 4 : maxVisibleCellHeight;
+        visibleRowCount > 0
+            ? visibleRowCount * rowHeight - 4
+            : maxVisibleCellHeight;
     const height = maxVisibleCellHeight
         ? !hasCollapsedContent || expandAll
             ? actualHeight
@@ -481,9 +485,9 @@ export const TimeSlotBarWeekDays = ({
     // =============================================================================
     const renderWeek = () => {
         return (
-            <HeaderCellWeekColumn>
+            <HeaderCellWeekColumn role="row">
                 {currentCalendarWeek.map((day, index) => (
-                    <HeaderCellWeek key={`week-day-${index}`}>
+                    <HeaderCellWeek key={`week-day-${index}`} role="gridcell">
                         <CellWeekText
                             weight={"semibold"}
                             $disabled={isDisabled(day)}
@@ -508,9 +512,7 @@ export const TimeSlotBarWeekDays = ({
                             date={day}
                             calendarDate={dayjs(selectedDate)}
                             role="columnheader"
-                            tabIndex={
-                                dayCellStyleProps.interactive ? 0 : -1
-                            }
+                            tabIndex={dayCellStyleProps.interactive ? 0 : -1}
                             onSelect={() => {
                                 handleDayClick(
                                     day,
@@ -556,7 +558,7 @@ export const TimeSlotBarWeekDays = ({
         };
 
         return (
-            <TimeColumn $height={height}>
+            <TimeColumn $height={height} aria-hidden>
                 {Array(Math.ceil(numberOfCells / 4))
                     .fill(undefined)
                     .map((_, index) => (

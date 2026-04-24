@@ -109,8 +109,6 @@ export const TimeSlotWrapper = styled.div`
 `;
 
 export const CollapseExpandAllWrapper = styled.div`
-    grid-row: 4;
-    grid-column: 1 / -1;
     display: flex;
     margin-top: ${Spacing["spacing-8"]};
 `;
