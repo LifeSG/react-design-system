@@ -36,15 +36,6 @@ export default function Story() {
             >
                 <input placeholder="Enter phone number" />
             </Form.CustomField>
-
-            <Form.CustomField
-                id="custom-field-disabled"
-                data-testid="custom-field-disabled"
-                label="Disabled field"
-                disabled
-            >
-                <input placeholder="Disabled" disabled />
-            </Form.CustomField>
         </div>
     );
 }

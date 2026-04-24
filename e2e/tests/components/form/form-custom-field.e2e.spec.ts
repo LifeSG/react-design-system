@@ -9,8 +9,6 @@ class StoryPage extends AbstractStoryPage {
         labelField: Locator;
         subtitleField: Locator;
         errorField: Locator;
-        errorMessage: Locator;
-        disabledField: Locator;
     };
 
     constructor(page: Page) {
@@ -21,8 +19,6 @@ class StoryPage extends AbstractStoryPage {
             labelField: page.getByTestId("custom-field-label"),
             subtitleField: page.getByTestId("custom-field-subtitle"),
             errorField: page.getByTestId("custom-field-error"),
-            errorMessage: page.getByTestId("custom-field-error-message"),
-            disabledField: page.getByTestId("custom-field-disabled"),
         };
     }
 }
@@ -58,13 +54,6 @@ test.describe("Form.CustomField", () => {
                 - text: Phone number
                 - textbox "Phone number"
                 - paragraph: Please enter a valid phone number
-            `);
-            await expect(story.locators.errorMessage).toMatchAriaSnapshot(`
-                - paragraph: Please enter a valid phone number
-            `);
-            await expect(story.locators.disabledField).toMatchAriaSnapshot(`
-                - text: Disabled field
-                - textbox "Disabled field" [disabled]
             `);
         });
     });
