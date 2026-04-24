@@ -12,9 +12,6 @@ export const FormTimeRangePicker = ({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -36,9 +33,6 @@ export const FormTimeRangePicker = ({
             disabled={otherProps.disabled}
             data-error-testid={errorTestId}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

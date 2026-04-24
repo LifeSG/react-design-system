@@ -16,9 +16,6 @@ const Component = (
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
-        mobileCols,
-        tabletCols,
-        desktopCols,
         ...otherProps
     } = props;
 
@@ -33,9 +30,6 @@ const Component = (
             disabled={otherProps.disabled}
             data-error-testid={errorTestId}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
         >
             <MaskedInput
                 ref={ref}

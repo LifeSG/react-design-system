@@ -12,9 +12,6 @@ export const FormRangeSlider = ({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -35,9 +32,6 @@ export const FormRangeSlider = ({
             data-error-testid={errorTestId}
             disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

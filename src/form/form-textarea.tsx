@@ -24,9 +24,6 @@ const FormTextareaComponent = (
         "data-testid": testId,
         onChange,
         layoutType,
-        mobileCols,
-        tabletCols,
-        desktopCols,
         xxsCols,
         xsCols,
         smCols,
@@ -99,9 +96,6 @@ const FormTextareaComponent = (
             label={label}
             disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}
