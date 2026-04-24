@@ -95,4 +95,16 @@ test.describe("Theme", () => {
             await compareScreenshot(story, "mount");
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("media-query-specificity");
+        });
+
+        test("Enable consumer to override media query specificity", async ({
+            story,
+        }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
 });
