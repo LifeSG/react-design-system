@@ -9,7 +9,6 @@ import { Children, cloneElement, useState } from "react";
 
 import { ColDiv } from "../layout/col-div";
 import { SimpleIdGenerator } from "../util";
-import { V2_ColDiv } from "../v2_layout/col-div";
 import { FormErrorMessage, FormLabel } from "./form-label";
 import * as styles from "./form-wrapper.styles";
 import type { FormElementLayoutType, FormWrapperProps } from "./types";
@@ -21,9 +20,6 @@ export const FormWrapper = ({
     disabled,
     children,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -68,9 +64,7 @@ export const FormWrapper = ({
     };
 
     function getLayoutType(): FormElementLayoutType {
-        if (!layoutType && (mobileCols || tabletCols || desktopCols)) {
-            return "v2-grid";
-        } else if (
+        if (
             !layoutType &&
             (xxsCols ||
                 xsCols ||
@@ -90,12 +84,6 @@ export const FormWrapper = ({
 
     const getContainerLayoutProps = (layoutType: FormElementLayoutType) => {
         switch (layoutType) {
-            case "v2-grid":
-                return {
-                    mobileCols,
-                    tabletCols,
-                    desktopCols,
-                };
             case "grid":
                 return {
                     xxsCols,
@@ -115,8 +103,6 @@ export const FormWrapper = ({
         layoutType: FormElementLayoutType
     ): ElementType => {
         switch (layoutType) {
-            case "v2-grid":
-                return V2_ColDiv;
             case "grid":
                 return ColDiv;
             case "flex":
