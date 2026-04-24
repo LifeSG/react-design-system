@@ -9,6 +9,7 @@ export default function Story() {
             </Form.CustomField>
 
             <Form.CustomField
+                id="custom-field-label"
                 data-testid="custom-field-label"
                 label="Full name"
             >
@@ -16,6 +17,7 @@ export default function Story() {
             </Form.CustomField>
 
             <Form.CustomField
+                id="custom-field-subtitle"
                 data-testid="custom-field-subtitle"
                 label={{
                     children: "Email address",
@@ -26,6 +28,7 @@ export default function Story() {
             </Form.CustomField>
 
             <Form.CustomField
+                id="custom-field-error"
                 data-testid="custom-field-error"
                 label="Phone number"
                 errorMessage="Please enter a valid phone number"
@@ -35,6 +38,7 @@ export default function Story() {
             </Form.CustomField>
 
             <Form.CustomField
+                id="custom-field-disabled"
                 data-testid="custom-field-disabled"
                 label="Disabled field"
                 disabled
