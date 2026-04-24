@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Breakpoint, MediaQuery } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div`
+export const wrapper = css`
     // matches Layout.Container
     --sgds-mainnav-padding-x: ${Breakpoint["xxl-margin"]}px;
     --sgds-mainnav-mobile-padding-x: ${Breakpoint["xxl-margin"]}px;
@@ -40,8 +40,8 @@ export const Wrapper = styled.div`
         --sgds-mainnav-padding-x: ${Breakpoint["xxs-margin"]}px;
         --sgds-mainnav-mobile-padding-x: ${Breakpoint["xxs-margin"]}px;
     }
+`;
 
-    &.mastheadWrapperStretch {
-        --sgds-mainnav-max-width: calc(infinity * 1px);
-    }
+export const wrapperStretch = css`
+    --sgds-mainnav-max-width: calc(infinity * 1px);
 `;

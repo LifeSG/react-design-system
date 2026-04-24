@@ -70,9 +70,13 @@ const MastheadComponent = ({
     // =============================================================================
 
     return (
-        <styles.Wrapper
+        <div
             {...otherProps}
-            className={clsx(stretch && "mastheadWrapperStretch", className)}
+            className={clsx(
+                styles.wrapper,
+                stretch && styles.wrapperStretch,
+                className
+            )}
             dangerouslySetInnerHTML={createContent()}
         />
     );
