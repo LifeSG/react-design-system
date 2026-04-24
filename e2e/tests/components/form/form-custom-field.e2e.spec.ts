@@ -42,6 +42,30 @@ test.describe("Form.CustomField", () => {
 
         test("All variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
+
+            await expect(story.locators.basicField).toMatchAriaSnapshot(`
+                - textbox \"No label\"
+            `);
+            await expect(story.locators.labelField).toMatchAriaSnapshot(`
+                - text: Full name
+                - textbox "Full name"
+            `);
+            await expect(story.locators.subtitleField).toMatchAriaSnapshot(`
+                - text: Email address We will send a confirmation to this address
+                - textbox "Email address"
+            `);
+            await expect(story.locators.errorField).toMatchAriaSnapshot(`
+                - text: Phone number
+                - textbox "Phone number"
+                - paragraph: Please enter a valid phone number
+            `);
+            await expect(story.locators.errorMessage).toMatchAriaSnapshot(`
+                - paragraph: Please enter a valid phone number
+            `);
+            await expect(story.locators.disabledField).toMatchAriaSnapshot(`
+                - text: Disabled field
+                - textbox "Disabled field" [disabled]
+            `);
         });
     });
 
