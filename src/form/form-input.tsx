@@ -36,7 +36,6 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
             data-testid={testId}
             label={label}
             errorMessage={errorMessage}
-            disabled={otherProps.disabled}
             data-error-testid={errorTestId}
             layoutType={layoutType}
             xxsCols={xxsCols}

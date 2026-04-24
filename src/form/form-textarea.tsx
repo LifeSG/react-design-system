@@ -94,7 +94,6 @@ const FormTextareaComponent = (
         <FormWrapper
             id={id}
             label={label}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
             xxsCols={xxsCols}
             xsCols={xsCols}

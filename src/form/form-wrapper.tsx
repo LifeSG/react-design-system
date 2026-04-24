@@ -17,7 +17,6 @@ export const FormWrapper = ({
     label,
     errorMessage: eRaw,
     id,
-    disabled,
     children,
     layoutType,
     xxsCols,
@@ -123,7 +122,6 @@ export const FormWrapper = ({
                     // in most cases data-testid should be separate from id
                     data-testid={id ? `${id}-label` : "form-label"}
                     id={labelId}
-                    disabled={disabled}
                 >
                     {label}
                 </FormLabel>
@@ -134,7 +132,6 @@ export const FormWrapper = ({
                 htmlFor={`${id}-base`}
                 data-testid={id ? `${id}-label` : "form-label"}
                 id={labelId}
-                disabled={disabled}
                 {...label}
             />
         );

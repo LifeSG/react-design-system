@@ -30,7 +30,6 @@ export const FormRangeSlider = ({
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
             xxsCols={xxsCols}
             xsCols={xsCols}

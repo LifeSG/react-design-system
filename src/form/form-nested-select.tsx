@@ -32,7 +32,6 @@ export const FormNestedSelect = <V1, V2, V3>({
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
             xxsCols={xxsCols}
             xsCols={xsCols}

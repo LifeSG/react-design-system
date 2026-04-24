@@ -27,7 +27,6 @@ const Component = (
             id={inputId}
             label={label}
             errorMessage={errorMessage}
-            disabled={otherProps.disabled}
             data-error-testid={errorTestId}
             layoutType={layoutType}
         >

@@ -30,7 +30,6 @@ export const FormTimeRangePicker = ({
             id={inputId}
             label={label}
             errorMessage={errorMessage}
-            disabled={otherProps.disabled}
             data-error-testid={errorTestId}
             layoutType={layoutType}
             xxsCols={xxsCols}
