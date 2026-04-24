@@ -1,13 +1,18 @@
 import "@govtechsg/sgds-web-component/themes/day.css";
 import "@govtechsg/sgds-web-component/themes/night.css";
 
+import clsx from "clsx";
 import { memo, useContext, useEffect } from "react";
 import { ThemeContext } from "styled-components";
 
 import * as styles from "./masthead.styles";
 import type { MastheadProps } from "./types";
 
-const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
+const MastheadComponent = ({
+    className,
+    stretch = false,
+    ...otherProps
+}: MastheadProps): JSX.Element => {
     const theme = useContext(ThemeContext);
     const isDarkMode = theme?.colourMode === "dark";
 
@@ -66,8 +71,9 @@ const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
 
     return (
         <styles.Wrapper
+            {...otherProps}
+            className={clsx(stretch && "mastheadWrapperStretch", className)}
             dangerouslySetInnerHTML={createContent()}
-            $stretch={stretch}
         />
     );
 };

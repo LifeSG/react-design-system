@@ -1,21 +1,15 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Breakpoint, MediaQuery } from "../theme";
 
 // =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface WrapperStyleProps {
-    $stretch: boolean;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div<WrapperStyleProps>`
+export const Wrapper = styled.div`
     // matches Layout.Container
     --sgds-mainnav-padding-x: ${Breakpoint["xxl-margin"]}px;
     --sgds-mainnav-mobile-padding-x: ${Breakpoint["xxl-margin"]}px;
+    --sgds-mainnav-max-width: 1440px;
 
     ${MediaQuery.MaxWidth.xl} {
         --sgds-mainnav-padding-x: ${Breakpoint["xl-margin"]}px;
@@ -47,15 +41,7 @@ export const Wrapper = styled.div<WrapperStyleProps>`
         --sgds-mainnav-mobile-padding-x: ${Breakpoint["xxs-margin"]}px;
     }
 
-    ${(props) => {
-        if (props.$stretch) {
-            return css`
-                --sgds-mainnav-max-width: calc(infinity * 1px);
-            `;
-        } else {
-            return css`
-                --sgds-mainnav-max-width: 1440px;
-            `;
-        }
-    }}
+    &.mastheadWrapperStretch {
+        --sgds-mainnav-max-width: calc(infinity * 1px);
+    }
 `;
