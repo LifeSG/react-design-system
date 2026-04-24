@@ -4,10 +4,12 @@
  *
  */
 
-import type { ComponentType } from "react";
+import type { ElementType } from "react";
 import { Children, cloneElement, useState } from "react";
 
+import { ColDiv } from "../layout/col-div";
 import { SimpleIdGenerator } from "../util";
+import { V2_ColDiv } from "../v2_layout/col-div";
 import { FormErrorMessage, FormLabel } from "./form-label";
 import * as styles from "./form-wrapper.styles";
 import type { FormElementLayoutType, FormWrapperProps } from "./types";
@@ -111,14 +113,14 @@ export const FormWrapper = ({
 
     const getContainerComponent = (
         layoutType: FormElementLayoutType
-    ): ComponentType => {
+    ): ElementType => {
         switch (layoutType) {
             case "v2-grid":
-                return styles.V2_ColDivContainer;
+                return V2_ColDiv;
             case "grid":
-                return styles.ColDivContainer;
+                return ColDiv;
             case "flex":
-                return styles.Container;
+                return "div";
         }
     };
 
@@ -167,6 +169,7 @@ export const FormWrapper = ({
 
     return (
         <ContainerComponent
+            className={styles.container}
             data-testid={testId}
             {...getContainerLayoutProps(updatedLayoutType)}
         >
