@@ -8,11 +8,7 @@ import { ThemeContext } from "styled-components";
 import * as styles from "./masthead.styles";
 import type { MastheadProps } from "./types";
 
-const MastheadComponent = ({
-    className,
-    stretch = false,
-    ...otherProps
-}: MastheadProps): JSX.Element => {
+const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
     const theme = useContext(ThemeContext);
     const isDarkMode = theme?.colourMode === "dark";
 
@@ -71,12 +67,7 @@ const MastheadComponent = ({
 
     return (
         <div
-            {...otherProps}
-            className={clsx(
-                styles.wrapper,
-                stretch && styles.wrapperStretch,
-                className
-            )}
+            className={clsx(styles.wrapper, stretch && styles.wrapperStretch)}
             dangerouslySetInnerHTML={createContent()}
         />
     );
