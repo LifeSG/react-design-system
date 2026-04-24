@@ -4,7 +4,7 @@ import "@govtechsg/sgds-web-component/themes/night.css";
 import { memo, useContext, useEffect } from "react";
 import { ThemeContext } from "styled-components";
 
-import { Wrapper } from "./masthead.style";
+import * as styles from "./masthead.styles";
 import type { MastheadProps } from "./types";
 
 const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
@@ -65,7 +65,10 @@ const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
     // =============================================================================
 
     return (
-        <Wrapper dangerouslySetInnerHTML={createContent()} $stretch={stretch} />
+        <styles.Wrapper
+            dangerouslySetInnerHTML={createContent()}
+            $stretch={stretch}
+        />
     );
 };
 
