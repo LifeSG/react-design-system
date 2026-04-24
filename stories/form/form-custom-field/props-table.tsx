@@ -17,21 +17,6 @@ const DATA: ApiTableSectionProps[] = [
                 description: "The unique identifier of the component",
                 propTypes: ["string"],
             },
-            {
-                name: "disabled",
-                description: (
-                    <>
-                        Indicates if the component is disabled and a disabled
-                        display is to be present for the label.
-                        <br />
-                        <strong>
-                            (Note: You will need to handle the disabled state of
-                            the custom component yourself)
-                        </strong>
-                    </>
-                ),
-                propTypes: ["boolean"],
-            },
         ],
     },
     ...SHARED_FORM_PROPS_DATA,
