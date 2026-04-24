@@ -13,7 +13,7 @@ import {
     PreviousLink,
     Slash,
     Wrapper,
-} from "./breadcrumb.style";
+} from "./breadcrumb.styles";
 import type { BreadcrumbProps, FadeColorSet } from "./types";
 
 export const Breadcrumb = ({
