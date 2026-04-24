@@ -12,6 +12,7 @@ export default async function Page({
         // TODO: Remove when each component has stable hydration support
         {
             ssr: ![
+                "badge",
                 "date-range-input",
                 "date-input",
                 "select",
