@@ -1,0 +1,47 @@
+.page {
+    display: grid;
+    gap: 16px;
+    max-width: 720px;
+}
+
+.block {
+    display: grid;
+    gap: 8px;
+}
+
+.title {
+    margin: 0;
+}
+
+.note {
+    margin: 0;
+    color: #4B5563;
+}
+
+.consumer-padding-override {
+    padding-right: 0;
+    padding-left: 0;
+    background: #EEF2FF;
+    border: 1px solid #C7D2FE;
+}
+
+.consumer-grid-override {
+    column-gap: 0;
+    padding-right: 0;
+    padding-left: 0;
+    background: #EFF6FF;
+    border: 1px solid #93C5FD;
+}
+
+.consumer-content-override [data-id="container"] {
+    padding-right: 0;
+    padding-left: 0;
+    background: #F0FDF4;
+    border: 1px solid #86EFAC;
+}
+
+.content {
+    padding: 12px;
+    font-weight: 700;
+    color: #1D4ED8;
+}
