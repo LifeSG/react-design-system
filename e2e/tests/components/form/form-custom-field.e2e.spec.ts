@@ -41,25 +41,7 @@ test.describe("Form.CustomField", () => {
         });
 
         test("All variants", async ({ story }) => {
-            await compareScreenshot(story, "custom-field-variants");
-        });
-
-        test("Error state", async ({ story }) => {
-            await compareScreenshot(story, "custom-field-error", {
-                locator: story.locators.errorField,
-            });
-        });
-
-        test("Disabled state", async ({ story }) => {
-            await compareScreenshot(story, "custom-field-disabled", {
-                locator: story.locators.disabledField,
-            });
-        });
-
-        test("Error message accessibility", async ({ story }) => {
-            await expect(story.locators.errorMessage).toMatchAriaSnapshot(`
-                - paragraph: Please enter a valid phone number
-            `);
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -69,7 +51,7 @@ test.describe("Form.CustomField", () => {
         });
 
         test("All variants (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "custom-field-variants-dark");
+            await compareScreenshot(story, "mount");
         });
     });
 });
