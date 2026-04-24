@@ -26,6 +26,7 @@
         "test-watch": "jest --watch",
         "test-e2e": "playwright test --ui",
         "test-e2e-ci": "sh scripts/e2e-ci.sh",
+        "test-e2e-docker": "docker compose up --build",
         "prepare": "(test -d ./.git && npx husky install) || true",
         "postinstall": "patch-package",
         "storybook": "storybook dev -p 6006",

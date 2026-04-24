@@ -15,6 +15,10 @@ npm i ../../dist/lifesg-react-design-system-$LIB_VERSION.tgz
 rm -rf .next
 popd
 
+# Pre-cache Playwright image to speed up the Docker build command
+echo "[CI] Pulling Playwright image"
+docker pull mcr.microsoft.com/playwright:v1.58.2-noble
+
 # Run functional tests
 echo "[CI] Running Playwright"
 export CI=true
