@@ -1,9 +1,9 @@
-import { useContext, useRef, useState } from "react";
+import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { ThemeContext } from "styled-components";
 
+import { parsePxOrRemValue,useDesignToken } from "../theme";
+import { Breakpoint } from "../theme/tokens";
 import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
-import { V3_Breakpoint } from "../v3_theme";
 import {
     Caret,
     Content,
@@ -43,8 +43,10 @@ export const Breadcrumb = ({
     // EVENT HANDLERS
     // =============================================================================
 
-    const theme = useContext(ThemeContext);
-    const tabletBreakpoint = V3_Breakpoint["lg-max"]({ theme });
+    const tabletBreakpointToken = useDesignToken(Breakpoint["lg-max"]);
+    const tabletBreakpoint = parsePxOrRemValue(
+        tabletBreakpointToken || "1200px"
+    );
 
     const onResize = useEvent(() => {
         const content = contentRef.current;
