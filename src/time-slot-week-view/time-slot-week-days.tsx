@@ -1,7 +1,7 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import React, { useMemo, useRef, useState } from "react";
-import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
 import { Colour } from "../theme";
@@ -80,7 +80,6 @@ export const TimeSlotWeekDays = ({
     // =============================================================================
     const handleDayClick = (value: Dayjs, isDisabled: boolean) => {
         if (isDisabled || !enableSelection) return;
-
         onSelect(value);
     };
 
@@ -220,7 +219,8 @@ export const TimeSlotWeekDays = ({
             slotStartTime && slotEndTime
                 ? TimeHelper.formatTimeRange(slotStartTime, slotEndTime)
                 : undefined,
-            slot.label
+            slot.label,
+            slot.clickable ?? true ? "Available" : "Unavailable"
         );
     };
     // =============================================================================
@@ -231,7 +231,7 @@ export const TimeSlotWeekDays = ({
             const dayCellStyleProps = generateStyleProps(day);
 
             return (
-                <HeaderCellWeek key={`week-day-${index}`}>
+                <HeaderCellWeek key={`week-day-${index}`} role="row">
                     <DayCell
                         key={`day-${index}`}
                         date={day}
@@ -241,6 +241,7 @@ export const TimeSlotWeekDays = ({
                         }}
                         onHover={handleDayHover}
                         onHoverEnd={handleDayMouseout}
+                        role="columnheader"
                         {...dayCellStyleProps}
                     />
                     <DayLabel $disabled={dayCellStyleProps.disabled}>
@@ -255,7 +256,7 @@ export const TimeSlotWeekDays = ({
         return (
             <ColumnWeekCell
                 key={`week-cell-${calendarDate.format(dateFormat)}`}
-               
+                role="row"
             >
                 {currentCalendarWeek.map((day, dayIndex) => {
                     const formattedDate = day.format(dateFormat);
@@ -264,6 +265,7 @@ export const TimeSlotWeekDays = ({
                     return (
                         <TimeSlotWrapper
                             key={`wrapper-${dayIndex}`}
+                            role="gridcell"
                         >
                             {slots &&
                                 slots.map((slot, rowIndex) => {
@@ -281,7 +283,6 @@ export const TimeSlotWeekDays = ({
                                         backgroundColor2,
                                     } = styleAttributes;
                                     const slotKey = `${formattedDate}-${id}`;
-                                    const slotStateId = `${slotKey}-state`;
                                     const isActualSlot = slot !== fallbackSlot;
 
                                     return (
@@ -321,11 +322,6 @@ export const TimeSlotWeekDays = ({
                                             </TimeSlotText>
                                             {isActualSlot && (
                                                 <VisuallyHidden>
-                                                    <span id={slotStateId}>
-                                                        {clickable
-                                                            ? "Available"
-                                                            : "Unavailable"}
-                                                    </span>
                                                     <button
                                                         type="button"
                                                         ref={(element) => {
@@ -335,9 +331,6 @@ export const TimeSlotWeekDays = ({
                                                         }}
                                                         aria-disabled={
                                                             !clickable
-                                                        }
-                                                        aria-describedby={
-                                                            slotStateId
                                                         }
                                                         aria-label={getSlotAriaLabel(
                                                             formattedDate,
@@ -371,7 +364,7 @@ export const TimeSlotWeekDays = ({
     };
 
     return (
-        <Wrapper>
+        <Wrapper role="grid">
             {renderHeader()}
             {renderTimeSlotBarCells()}
         </Wrapper>
