@@ -382,6 +382,33 @@ describe("TimeSlotWeekCalendar", () => {
             ],
         };
 
+        const tabToFirstSlot = async (user: ReturnType<typeof userEvent.setup>) => {
+            for (let index = 0; index < 8; index++) {
+                await user.tab();
+            }
+        };
+
+        it("should allow keyboard tabbing to the header dates", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            render(
+                <TimeSlotWeekView
+                    slots={{}}
+                    currentCalendarDate={"2021-01-29"}
+                    showNavigationHeader={false}
+                />
+            );
+
+            await user.tab();
+
+            expect(
+                screen.getByRole("columnheader", {
+                    name: "24 January 2021 Sunday, Available",
+                })
+            ).toHaveFocus();
+        });
+
         it("should allow keyboard tabbing to time slots", async () => {
             const user = userEvent.setup({
                 advanceTimers: jest.advanceTimersByTime,
@@ -407,11 +434,11 @@ describe("TimeSlotWeekCalendar", () => {
                 />
             );
 
-            await user.tab();
+            await tabToFirstSlot(user);
 
             expect(
                 screen.getByRole("button", {
-                    name: "29 January 2021 Friday 9:00AM to 9:30AM Morning slot",
+                    name: "29 January 2021 Friday 9:00AM to 9:30AM Morning slot Available",
                 })
             ).toHaveFocus();
         });
@@ -428,12 +455,12 @@ describe("TimeSlotWeekCalendar", () => {
                 />
             );
 
-            await user.tab();
+            await tabToFirstSlot(user);
             const firstSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday 9:00AM to 9:30AM Sun 9am",
+                name: "24 January 2021 Sunday 9:00AM to 9:30AM Sun 9am Available",
             });
             const secondSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday 9:30AM to 10:00AM Sun 930am",
+                name: "24 January 2021 Sunday 9:30AM to 10:00AM Sun 930am Available",
             });
 
             expect(firstSlot).toHaveFocus();
@@ -463,12 +490,12 @@ describe("TimeSlotWeekCalendar", () => {
                 />
             );
 
-            await user.tab();
+            await tabToFirstSlot(user);
             const firstSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday 9:00AM to 9:30AM Sun 9am",
+                name: "24 January 2021 Sunday 9:00AM to 9:30AM Sun 9am Available",
             });
             const lastSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday 9:30AM to 10:00AM Sun 930am",
+                name: "24 January 2021 Sunday 9:30AM to 10:00AM Sun 930am Available",
             });
 
             fireEvent.keyDown(firstSlot, { key: "End" });
@@ -490,12 +517,12 @@ describe("TimeSlotWeekCalendar", () => {
                 />
             );
 
-            await user.tab();
+            await tabToFirstSlot(user);
             const firstSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday 9:00AM to 9:30AM Sun 9am",
+                name: "24 January 2021 Sunday 9:00AM to 9:30AM Sun 9am Available",
             });
             const lastSlot = screen.getByRole("button", {
-                name: "24 January 2021 Sunday 9:30AM to 10:00AM Sun 930am",
+                name: "24 January 2021 Sunday 9:30AM to 10:00AM Sun 930am Available",
             });
 
             fireEvent.keyDown(firstSlot, { key: "PageDown" });
