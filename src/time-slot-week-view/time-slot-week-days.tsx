@@ -242,6 +242,7 @@ export const TimeSlotWeekDays = ({
                         onHover={handleDayHover}
                         onHoverEnd={handleDayMouseout}
                         role="columnheader"
+                        tabIndex={dayCellStyleProps.interactive ? 0 : -1}
                         {...dayCellStyleProps}
                     />
                     <DayLabel $disabled={dayCellStyleProps.disabled}>
