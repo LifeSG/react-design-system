@@ -80,30 +80,44 @@ export const labelContainer = css`
     position: relative;
 `;
 
-export const buttonBase = css`
+export const label = css`
     border: none;
     background: none;
+
+    ${MediaQuery.MaxWidth.sm} {
+        max-width: 20ch;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 `;
 
-export const label = css`
+export const deselectedLabel = css`
     position: absolute;
     ${Font["body-baseline-regular"]}
     color: ${Colour["text-subtler"]};
     opacity: 1;
 `;
 
-export const labelActive = css`
+export const deselectedLabelActive = css`
     opacity: 0;
 `;
 
-export const boldLabel = css`
+export const selectedLabel = css`
     ${Font["body-baseline-semibold"]}
     color: ${Colour["text-primary"]};
     opacity: 0;
     outline: none;
+
+    ${MediaQuery.MaxWidth.sm} {
+        max-width: 20ch;
+        text-overflow: ellipsis;
+        overflow: hidden;
+        white-space: nowrap;
+    }
 `;
 
-export const boldLabelActive = css`
+export const selectedLabelActive = css`
     opacity: 1;
 `;
 
