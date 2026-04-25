@@ -12,6 +12,7 @@ import {
     ColumnWeekCell,
     DayLabel,
     HeaderCellWeek,
+    HeaderRow,
     TimeSlotComponent,
     TimeSlotText,
     TimeSlotWrapper,
@@ -227,30 +228,45 @@ export const TimeSlotWeekDays = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHeader = () => {
-        return currentCalendarWeek.map((day, index) => {
-            const dayCellStyleProps = generateStyleProps(day);
+        return (
+            <HeaderRow role="row">
+                {currentCalendarWeek.map((day, index) => {
+                    const dayCellStyleProps = generateStyleProps(day);
 
-            return (
-                <HeaderCellWeek key={`week-day-${index}`} role="row">
-                    <DayCell
-                        key={`day-${index}`}
-                        date={day}
-                        calendarDate={dayjs(selectedDate)}
-                        onSelect={() => {
-                            handleDayClick(day, !dayCellStyleProps.interactive);
-                        }}
-                        onHover={handleDayHover}
-                        onHoverEnd={handleDayMouseout}
-                        role="columnheader"
-                        tabIndex={dayCellStyleProps.interactive ? 0 : -1}
-                        {...dayCellStyleProps}
-                    />
-                    <DayLabel $disabled={dayCellStyleProps.disabled}>
-                        {dayjs(day).format("ddd")}
-                    </DayLabel>
-                </HeaderCellWeek>
-            );
-        });
+                    return (
+                        <HeaderCellWeek
+                            key={`week-day-${index}`}
+                            role="presentation"
+                        >
+                            <DayCell
+                                key={`day-${index}`}
+                                date={day}
+                                calendarDate={dayjs(selectedDate)}
+                                onSelect={() => {
+                                    handleDayClick(
+                                        day,
+                                        !dayCellStyleProps.interactive
+                                    );
+                                }}
+                                onHover={handleDayHover}
+                                onHoverEnd={handleDayMouseout}
+                                role="columnheader"
+                                tabIndex={
+                                    dayCellStyleProps.interactive ? 0 : -1
+                                }
+                                {...dayCellStyleProps}
+                            />
+                            <DayLabel
+                                aria-hidden="true"
+                                $disabled={dayCellStyleProps.disabled}
+                            >
+                                {dayjs(day).format("ddd")}
+                            </DayLabel>
+                        </HeaderCellWeek>
+                    );
+                })}
+            </HeaderRow>
+        );
     };
 
     const renderTimeSlotBarCells = () => {

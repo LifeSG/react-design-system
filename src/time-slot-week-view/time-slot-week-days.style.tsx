@@ -21,6 +21,12 @@ export const HeaderCellWeek = styled.div`
     margin-bottom: 0.188rem;
 `;
 
+export const HeaderRow = styled.div`
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+`;
+
 export const DayLabel = styled.div<LabelStyleProps>`
     ${Font["body-xs-semibold"]}
     color:${Colour["text"]};
