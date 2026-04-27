@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
-import { Element, Wrapper } from "./textarea.styles";
+import * as styles from "./textarea.styles";
 import { TextareaCounter } from "./textarea-counter";
 import type { TextareaProps, TextareaRef } from "./types";
 
@@ -114,16 +114,18 @@ const TextareaBaseComponent = (
     };
 
     return (
-        <Element
+        <textarea
             ref={ref}
             disabled={disabled}
             value={getDisplayValue()}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
             className={clsx(
-                disabled && "elementDisabled",
-                error && "elementError",
-                otherProps.readOnly && "elementReadOnly"
+                styles.element,
+                disabled && styles.elementDisabled,
+                error && styles.elementError,
+                otherProps.readOnly && styles.elementReadOnly,
+                otherProps.className
             )}
             rows={rows}
             maxLength={
@@ -181,7 +183,7 @@ const TextareaComponent = (
     // RENDER FUNCTIONS
     // -------------------------------------------------------------------------
     return (
-        <Wrapper>
+        <div className={styles.wrapper}>
             <TextareaBase
                 ref={ref}
                 disabled={disabled}
@@ -200,7 +202,7 @@ const TextareaComponent = (
                     renderCustomCounter={renderCustomCounter}
                 />
             )}
-        </Wrapper>
+        </div>
     );
 };
 

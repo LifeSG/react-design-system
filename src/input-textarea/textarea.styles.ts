@@ -1,17 +1,13 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
-// =============================================================================
-// STYLING
-// =============================================================================
-
-export const Wrapper = styled.div`
+export const wrapper = css`
     display: flex;
     flex-direction: column;
 `;
 
-export const Element = styled.textarea`
+export const element = css`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
     background: ${Colour.bg};
@@ -51,34 +47,34 @@ export const Element = styled.textarea`
         border-radius: ${Radius["full"]};
         background-clip: padding-box;
     }
+`;
 
-    &.elementReadOnly {
-        border-color: transparent;
-        background: transparent !important;
-        padding: ${Spacing["spacing-12"]} 0;
+export const elementReadOnly = css`
+    border-color: transparent;
+    background: transparent !important;
+    padding: ${Spacing["spacing-12"]} 0;
 
-        &:focus,
-        &:active {
-            outline-color: ${Colour["border-focus"]};
-        }
+    &:focus,
+    &:active {
+        outline-color: ${Colour["border-focus"]};
     }
+`;
 
-    &.elementDisabled {
-        background: ${Colour["bg-disabled"]};
-        cursor: not-allowed;
+export const elementDisabled = css`
+    background: ${Colour["bg-disabled"]};
+    cursor: not-allowed;
 
-        &:focus,
-        &:active {
-            outline-color: ${Colour["border-disabled"]};
-        }
+    &:focus,
+    &:active {
+        outline-color: ${Colour["border-disabled"]};
     }
+`;
 
-    &.elementError {
-        border-color: ${Colour["border-error"]};
+export const elementError = css`
+    border-color: ${Colour["border-error"]};
 
-        &:focus,
-        &:active {
-            outline-color: ${Colour["border-error-focus"]};
-        }
+    &:focus,
+    &:active {
+        outline-color: ${Colour["border-error-focus"]};
     }
 `;
