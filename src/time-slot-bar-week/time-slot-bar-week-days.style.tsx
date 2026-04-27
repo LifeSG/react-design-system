@@ -85,7 +85,7 @@ export const TimeColumn = styled.div<TimeColumnStyleProps>`
 `;
 
 export const TimeColumnWrapper = styled.div`
-    min-height: 3.75rem;
+    min-height: 60px;
     &:last-child {
         min-height: 0;
     }

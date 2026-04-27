@@ -65,6 +65,10 @@ interface FocusableSlotMeta {
     rowIndex: number;
 }
 
+const SLOT_HEIGHT = 12; // px
+const SLOT_GAP = 4; // px
+const ROW_HEIGHT = SLOT_HEIGHT + SLOT_GAP;
+
 export const TimeSlotBarWeekDays = ({
     calendarDate,
     disabledDates,
@@ -105,15 +109,16 @@ export const TimeSlotBarWeekDays = ({
     const { height: actualHeight = 0, ref: cellsRef } = useResizeDetector();
     const hasCollapsedContent =
         !!maxVisibleCellHeight && actualHeight > maxVisibleCellHeight;
-    // 12px slot height + 4px vertical gap.
-    const rowHeight = 16;
     const visibleRowCount =
         maxVisibleCellHeight !== undefined
-            ? Math.max(1, Math.floor((maxVisibleCellHeight + 4) / rowHeight))
+            ? Math.max(
+                  1,
+                  Math.floor((maxVisibleCellHeight + SLOT_GAP) / ROW_HEIGHT)
+              )
             : 0;
     const collapsedHeight =
         visibleRowCount > 0
-            ? visibleRowCount * rowHeight - 4
+            ? visibleRowCount * ROW_HEIGHT - SLOT_GAP
             : maxVisibleCellHeight;
     const height = maxVisibleCellHeight
         ? !hasCollapsedContent || expandAll
@@ -601,8 +606,8 @@ export const TimeSlotBarWeekDays = ({
                 $clickable={clickable}
                 $height={
                     variant === "fixed"
-                        ? cellLength * 12 + (cellLength - 1) * 4
-                        : 12
+                        ? cellLength * SLOT_HEIGHT + (cellLength - 1) * SLOT_GAP
+                        : SLOT_HEIGHT
                 }
                 onClick={() =>
                     clickable && handleSlotClick(formattedDate, slot)
