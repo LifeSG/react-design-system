@@ -1,12 +1,35 @@
 .page {
     display: grid;
     gap: 16px;
-    max-width: 720px;
+    max-width: 1000px;
 }
 
 .block {
     display: grid;
+    gap: 32px;
+}
+
+.comparison {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 16px;
+}
+
+.variant {
+    display: grid;
     gap: 8px;
+    background: #EEF2FF;
+
+    & > *:last-child {
+        border: 1px solid #86EFAC;
+    }
+}
+
+.variant-label {
+    margin: 0;
+    font-size: 0.875rem;
+    font-weight: 600;
+    color: #111827;
 }
 
 .title {
@@ -21,27 +44,22 @@
 .consumer-padding-override {
     padding-right: 0;
     padding-left: 0;
-    background: #EEF2FF;
-    border: 1px solid #C7D2FE;
 }
 
 .consumer-grid-override {
     column-gap: 0;
     padding-right: 0;
     padding-left: 0;
-    background: #EFF6FF;
-    border: 1px solid #93C5FD;
 }
 
 .consumer-content-override [data-id="container"] {
     padding-right: 0;
     padding-left: 0;
-    background: #F0FDF4;
-    border: 1px solid #86EFAC;
 }
 
 .content {
-    padding: 12px;
-    font-weight: 700;
-    color: #1D4ED8;
+    min-width: 48px;
+    min-height: 48px;
+    background: #BFDBFE;
+    border-radius: 4px;
 }
