@@ -114,7 +114,7 @@ test.describe("Theme", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("media-query-specificity");
+            await story.init("media-query-specificity", { size: "sm" });
         });
 
         test("Enable override media query specificity", async ({ story }) => {

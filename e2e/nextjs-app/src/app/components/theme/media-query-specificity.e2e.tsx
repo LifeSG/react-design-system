@@ -1,7 +1,6 @@
 "use client";
 
 import { Layout } from "@lifesg/react-design-system/layout";
-import { useEffect } from "react";
 import styles from "./media-query-specificity.module.css";
 
 function DemoBlock({
@@ -35,14 +34,6 @@ function ComparisonPane({
 }
 
 export default function Story() {
-    useEffect(() => {
-        document.body.classList.add("fds-breakpoint-sm-min");
-
-        return () => {
-            document.body.classList.remove("fds-breakpoint-sm-min");
-        };
-    }, []);
-
     return (
         <div className={styles.page}>
             <h2 className={styles.title}>MediaQuery specificity repro</h2>
