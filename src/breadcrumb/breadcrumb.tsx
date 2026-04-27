@@ -1,7 +1,7 @@
 import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
-import { parsePxOrRemValue,useDesignToken } from "../theme";
+import { parsePxOrRemValue, useApplyStyle, useDesignToken } from "../theme";
 import { Breakpoint } from "../theme/tokens";
 import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
 import {
@@ -12,8 +12,7 @@ import {
     Item,
     PreviousLink,
     Slash,
-    Wrapper,
-} from "./breadcrumb.styles";
+ tokens,    Wrapper } from "./breadcrumb.styles";
 import type { BreadcrumbProps, FadeColorSet } from "./types";
 
 export const Breadcrumb = ({
@@ -23,6 +22,7 @@ export const Breadcrumb = ({
     itemStyle,
     id,
     separatorStyle = "chevron",
+    className,
     ...otherProps
 }: BreadcrumbProps) => {
     // =========================================================================
@@ -38,6 +38,8 @@ export const Breadcrumb = ({
 
     const wrapperRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLUListElement>(null);
+    const fadeLeftRef = useRef<HTMLDivElement>(null);
+    const fadeRightRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -47,6 +49,40 @@ export const Breadcrumb = ({
     const tabletBreakpoint = parsePxOrRemValue(
         tabletBreakpointToken || "1200px"
     );
+
+    // =============================================================================
+    // FADE COLOR CALCULATION
+    // =============================================================================
+    let fadeColorSet: FadeColorSet;
+
+    if (Array.isArray(fadeColor) && fadeColor.length > 0) {
+        fadeColorSet = {
+            left: fadeColor,
+            right: fadeColor,
+        };
+    } else if (!fadeColor) {
+        fadeColorSet = {
+            left: undefined,
+            right: undefined,
+        };
+    } else {
+        fadeColorSet = fadeColor as FadeColorSet;
+    }
+
+    // =============================================================================
+    // CSS VARIABLES
+    // =============================================================================
+    useApplyStyle(fadeLeftRef, {
+        [tokens.fade.backgroundColor]: fadeColorSet?.left?.[0],
+    });
+
+    useApplyStyle(fadeRightRef, {
+        [tokens.fade.backgroundColor]: fadeColorSet?.right?.[0],
+    });
+
+    useApplyStyle(contentRef, {
+        [tokens.item.customStyles]: itemStyle,
+    });
 
     const onResize = useEvent(() => {
         const content = contentRef.current;
@@ -136,7 +172,6 @@ export const Breadcrumb = ({
             return (
                 <Item
                     key={index}
-                    $styleProps={itemStyle}
                     {...(index === links.length - 1 && {
                         "aria-current": "page",
                     })}
@@ -156,43 +191,25 @@ export const Breadcrumb = ({
     };
 
     const renderFade = () => {
-        let fadeColorSet: FadeColorSet;
-
-        if (Array.isArray(fadeColor) && fadeColor.length > 0) {
-            // Single array, apply same color
-            fadeColorSet = {
-                left: fadeColor,
-                right: fadeColor,
-            };
-        } else if (!fadeColor) {
-            fadeColorSet = {
-                left: undefined,
-                right: undefined,
-            };
-        } else {
-            fadeColorSet = fadeColor as FadeColorSet;
-        }
-
         return (
             <>
                 {showFadeLeft && shouldShowFadeLeft && (
-                    <Fade
-                        $backgroundColor={fadeColorSet.left}
-                        $position="left"
-                    />
+                    <Fade ref={fadeLeftRef} className="fadeLeft" />
                 )}
                 {showFadeRight && shouldShowFadeRight && (
-                    <Fade
-                        $backgroundColor={fadeColorSet.right}
-                        $position="right"
-                    />
+                    <Fade ref={fadeRightRef} className="fadeRight" />
                 )}
             </>
         );
     };
 
     return (
-        <Wrapper ref={wrapperRef} id={id || "breadcrumb"} {...otherProps}>
+        <Wrapper
+            ref={wrapperRef}
+            id={id || "breadcrumb"}
+            className={className}
+            {...otherProps}
+        >
             <nav aria-label="Breadcrumb">
                 <Content ref={contentRef}>{renderLinks()}</Content>
             </nav>

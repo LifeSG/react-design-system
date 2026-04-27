@@ -1,21 +1,17 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Colour, Font, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-// =============================================================================
-// STYLE TYPES, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface FadeProps {
-    $backgroundColor?: string[];
-    $position?: "left" | "right";
-}
-
-interface ItemStyleProps {
-    $styleProps?: string;
-}
+export const tokens = {
+    fade: {
+        backgroundColor: "--fds-internal-breadcrumb-fade-backgroundColor",
+    },
+    item: {
+        customStyles: "--fds-internal-breadcrumb-item-customStyles",
+    },
+};
 
 // =============================================================================
 // STYLE COMPONENTS
@@ -36,6 +32,7 @@ export const Wrapper = styled.div`
 `;
 
 export const Content = styled.ul`
+    ${tokens.item.customStyles}: initial;
     display: inline-flex;
     width: 100%;
     flex-wrap: wrap;
@@ -55,7 +52,8 @@ export const Content = styled.ul`
     }
 `;
 
-export const Fade = styled.div<FadeProps>`
+export const Fade = styled.div`
+    ${tokens.fade.backgroundColor}: initial;
     width: ${Spacing["spacing-64"]};
     height: calc(1lh + ${Spacing["spacing-4"]});
     position: absolute;
@@ -63,48 +61,34 @@ export const Fade = styled.div<FadeProps>`
     transform: translateY(-50%);
     pointer-events: none;
 
-    ${(props) => {
-        let positionStyle: string;
-        const transparentColor = "rgba(255,255,255,0.001)";
-        const fadeColor = Colour.bg;
-
-        if (props.$position === "left") {
-            positionStyle = `
-				left: -8px;
-				background-image: linear-gradient(
-					to right, 
-					${props.$backgroundColor || fadeColor}, 
-					${transparentColor}
-				);
-			`;
-        } else {
-            positionStyle = `
-				right: 8px;
-				background-image: linear-gradient(
-					to left,
-					${props.$backgroundColor || fadeColor},
-					${transparentColor}
-				);
-			`;
+    ${MediaQuery.MaxWidth.lg} {
+        &.fadeLeft {
+            left: -8px;
+            background-image: linear-gradient(
+                to right,
+                var(${tokens.fade.backgroundColor}, ${Colour.bg}),
+                rgba(255, 255, 255, 0.001)
+            );
         }
 
-        return css`
-            ${MediaQuery.MaxWidth.lg} {
-                ${positionStyle}
-            }
-        `;
-    }};
+        &.fadeRight {
+            right: 8px;
+            background-image: linear-gradient(
+                to left,
+                var(${tokens.fade.backgroundColor}, ${Colour.bg}),
+                rgba(255, 255, 255, 0.001)
+            );
+        }
+    }
 `;
 
-export const Item = styled.li<ItemStyleProps>`
+export const Item = styled.li`
     display: flex;
     flex-direction: row;
     align-items: center;
     line-height: inherit;
     font-size: inherit;
-    ${(props) => {
-        return props.$styleProps || ``;
-    }};
+    ${tokens.item.customStyles};
 `;
 
 export const Caret = styled(ChevronRightIcon)`
