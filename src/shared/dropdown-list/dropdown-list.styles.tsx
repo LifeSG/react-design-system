@@ -99,10 +99,6 @@ export const List = styled.div`
     padding: ${Spacing["spacing-8"]};
 `;
 
-export const Listbox = styled.ul`
-    list-style-type: none;
-`;
-
 // -----------------------------------------------------------------------------
 // LIST ITEM STYLES
 // -----------------------------------------------------------------------------

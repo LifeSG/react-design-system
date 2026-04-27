@@ -17,6 +17,7 @@ import {
     useEventListener,
     useIsMounted,
 } from "../../util";
+import { VisuallyHidden } from "../accessibility";
 import { useDropdownRender } from "../dropdown-wrapper";
 import { DropdownLabel } from "./dropdown-label";
 import { DropdownListStateContext } from "./dropdown-list-state";
@@ -28,7 +29,6 @@ import {
     LabelIcon,
     List,
     ListItem,
-    Listbox,
     NoResultDescContainer,
     ResultStateContainer,
     SelectAllButton,
@@ -44,7 +44,7 @@ import {
     DropdownListProps,
     ListItemDisplayProps,
 } from "./types";
-import { VisuallyHidden } from "../accessibility";
+import { VirtuosoItem, VirtuosoList } from "./virtuoso-components";
 
 /**
  * NOTE: This component is not directly exportable but forms part of a component
@@ -109,7 +109,6 @@ const DropdownListInner = <T, V>(
     const mounted = useIsMounted();
 
     const nodeRef = useRef<HTMLDivElement | null>(null);
-    const listRef = useRef<HTMLDivElement>(null);
     const listItemRefs = useRef<(HTMLElement | null)[]>([]);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const virtuosoRef = useRef<VirtuosoHandle>(null);
@@ -448,7 +447,6 @@ const DropdownListInner = <T, V>(
             return (
                 <ListItem
                     aria-selected={selected}
-                    aria-multiselectable={multiSelect}
                     aria-disabled={!selected && hasSelectedMax}
                     aria-posinset={index + 1}
                     aria-setsize={displayListItems?.length}
@@ -575,32 +573,43 @@ const DropdownListInner = <T, V>(
         const isTestEnv = process.env.NODE_ENV === "test";
 
         return (
-            <Listbox role="listbox" id={listboxId}>
-                <Virtuoso
-                    ref={virtuosoRef}
-                    style={{ height: "100%" }}
-                    data={displayListItems}
-                    customScrollParent={nodeRef.current ?? undefined}
-                    itemContent={(index, item) => renderItem(item, index)}
-                    // disable virtualisation in tests
-                    // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
-                    // explicitly set the `key` prop to avoid React warning
-                    key={isTestEnv ? displayListItems.length : undefined}
-                    // omit the `initialItemCount` prop to resolve NaN error
-                    {...(isTestEnv
-                        ? {
-                              initialItemCount: displayListItems.length,
-                          }
-                        : {})}
-                />
-            </Listbox>
+            <Virtuoso
+                ref={virtuosoRef}
+                style={{ height: "100%" }}
+                data={displayListItems}
+                customScrollParent={nodeRef.current ?? undefined}
+                itemContent={(index, item) => renderItem(item, index)}
+                components={{
+                    List: VirtuosoList,
+                    Item: VirtuosoItem,
+                }}
+                context={{
+                    listProps: {
+                        id: listboxId,
+                        role: "listbox",
+                        "aria-multiselectable": multiSelect,
+                    },
+                    listItemProps: {
+                        role: "none",
+                    },
+                }}
+                // disable virtualisation in tests
+                // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
+                // explicitly set the `key` prop to avoid React warning
+                key={isTestEnv ? displayListItems.length : undefined}
+                // omit the `initialItemCount` prop to resolve NaN error
+                {...(isTestEnv
+                    ? {
+                          initialItemCount: displayListItems.length,
+                      }
+                    : {})}
+            />
         );
     };
 
     const renderList = () => {
         return (
             <List
-                ref={listRef}
                 data-testid="dropdown-list"
                 role="group"
                 aria-label={ariaLabel}
