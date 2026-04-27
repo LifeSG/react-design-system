@@ -38,7 +38,7 @@ export const FormLabel = ({
             <label id={id} className={styles.label} {...otherProps}>
                 <Markup inline>
                     {children}
-                    {addon && addon.type && renderAddon()}
+                    {addon?.type && renderAddon()}
                 </Markup>
             </label>
             {typeof subtitle === "string" ? (
@@ -56,16 +56,17 @@ export const FormLabel = ({
     );
 };
 
-export const FormErrorMessage = (
-    props: React.HTMLAttributes<HTMLElement>
-): JSX.Element => {
+export const FormErrorMessage = ({
+    className,
+    ...restProps
+}: React.HTMLAttributes<HTMLElement>): JSX.Element => {
     return (
-        <div className={styles.errorMessageContainer}>
+        <div className={clsx(styles.errorMessageContainer, className)}>
             <ExclamationCircleFillIcon
                 className={styles.errorIcon}
                 aria-hidden
             />
-            <p className={styles.errorMessage} {...props} />
+            <p className={styles.errorMessage} {...restProps} />
         </div>
     );
 };

@@ -72,12 +72,14 @@ const FormTextareaComponent = (
         return (
             <div className={styles.labelContainer}>
                 {errorMessage && (
-                    <FormErrorMessage
-                        className={styles.errorMessageLabel}
-                        data-testid={getErrorTestMessageId()}
-                    >
-                        {errorMessage}
-                    </FormErrorMessage>
+                    <div className={styles.errorMessageContainer}>
+                        <FormErrorMessage
+                            className={styles.errorMessageLabel}
+                            data-testid={getErrorTestMessageId()}
+                        >
+                            {errorMessage}
+                        </FormErrorMessage>
+                    </div>
                 )}
                 {otherProps.maxLength && (
                     <TextareaCounter
