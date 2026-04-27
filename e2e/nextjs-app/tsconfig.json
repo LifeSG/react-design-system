@@ -25,7 +25,9 @@
             "@lifesg/react-design-system/*": ["../../src/*"],
             "@/*": ["./src/*"],
             "react": ["./node_modules/@types/react"],
-            "react-dom": ["./node_modules/@types/react-dom"]
+            "react-dom": ["./node_modules/@types/react-dom"],
+            // TODO: remove Styled Components after V4 migration
+            "styled-components": ["./node_modules/styled-components"]
         }
     },
     "include": [

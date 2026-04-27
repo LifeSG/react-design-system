@@ -7,9 +7,9 @@ export function proxy(request: NextRequest) {
     const cspHeader = `
         default-src 'self';
         script-src 'self' 'nonce-${nonce}' ${isDev ? "'unsafe-eval'" : ""};
-        style-src 'self' ${
-            isDev ? "'unsafe-inline'" : ""
-        } https://assets.life.gov.sg;
+        style-src 'self' 'nonce-${nonce}' ${
+        isDev ? "'unsafe-inline'" : ""
+    } https://assets.life.gov.sg;
         img-src 'self' https://assets.life.gov.sg blob: data:;
         font-src 'self' https://assets.life.gov.sg;
         object-src 'none';

@@ -29,8 +29,6 @@ export const TabLinkChain = ({
     const { setCurrentActiveIndex, currentActiveIndex, tabLinks } =
         useContext(TabContext);
 
-    const mobileBreakpoint = useDesignToken(Breakpoint["md-max"]);
-    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const tabletBreakpoint = useDesignToken(Breakpoint["lg-max"]);
     const isTablet = useSafeMaxWidthMediaQuery(tabletBreakpoint);
 
@@ -94,17 +92,6 @@ export const TabLinkChain = ({
     };
 
     // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
-    const truncateText = (value: string) => {
-        if (isMobile) {
-            return value.length > 20 ? `${value.substring(0, 20)}...` : value;
-        }
-
-        return value;
-    };
-
-    // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     return (
@@ -160,15 +147,15 @@ export const TabLinkChain = ({
                                 >
                                     <div
                                         className={clsx(
-                                            styles.flexRow,
-                                            styles.buttonBase,
                                             styles.label,
-                                            isActive && styles.labelActive
+                                            styles.deselectedLabel,
+                                            isActive &&
+                                                styles.deselectedLabelActive
                                         )}
                                         onClick={handleChainLinkClick(index)}
                                         aria-hidden="true"
                                     >
-                                        {truncateText(title)}
+                                        {title}
                                     </div>
                                     <button
                                         role="tab"
@@ -182,13 +169,13 @@ export const TabLinkChain = ({
                                             (chainLinkRefs.current[index] = el)
                                         }
                                         className={clsx(
-                                            styles.flexRow,
-                                            styles.buttonBase,
-                                            styles.boldLabel,
-                                            isActive && styles.boldLabelActive
+                                            styles.label,
+                                            styles.selectedLabel,
+                                            isActive &&
+                                                styles.selectedLabelActive
                                         )}
                                     >
-                                        {truncateText(title)}
+                                        {title}
                                     </button>
                                 </div>
                                 {titleAddon?.content}

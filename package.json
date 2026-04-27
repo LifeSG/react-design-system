@@ -24,8 +24,10 @@
         "start": "rollup -c -w",
         "test": "jest --coverage",
         "test-watch": "jest --watch",
-        "test-e2e": "playwright test --ui",
-        "test-e2e-ci": "sh scripts/e2e-ci.sh",
+        "test-e2e": "npm run test-e2e:setup && playwright test --ui",
+        "test-e2e:docker": "docker compose up --build",
+        "test-e2e:setup": "./scripts/e2e-setup.sh",
+        "test-e2e-ci": "npm run test-e2e:setup && ./scripts/e2e-ci.sh",
         "prepare": "(test -d ./.git && npx husky install) || true",
         "postinstall": "patch-package",
         "storybook": "storybook dev -p 6006",
@@ -137,6 +139,7 @@
         "lodash": "^4.17.21",
         "lottie-colorify": "^0.8.0",
         "lottie-react": "^2.3.1",
+        "patch-package": "^8.0.0",
         "postcss": "^8.4.38",
         "postcss-import": "^16.1.0",
         "prettier": "^2.6.1",
@@ -158,11 +161,10 @@
         "rollup-plugin-typescript2": "^0.37.0",
         "storybook": "^10.2.10",
         "style-loader": "^2.0.0",
-        "styled-components": "^6.1.19",
+        "styled-components": "^6.4.0",
         "stylelint": "^17.4.0",
         "stylelint-config-recess-order": "^7.6.1",
         "stylelint-config-standard": "^40.0.0",
-        "patch-package": "^8.0.0",
         "typescript": "^5.7.3"
     },
     "peerDependencies": {
@@ -170,7 +172,7 @@
         "@lifesg/react-icons": "^1.5.0",
         "react": "^17.0.2 || ^18.0.0 || ^19.0.0",
         "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0",
-        "styled-components": "^6.1.19"
+        "styled-components": "^6.4.0"
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "^4.54.0",

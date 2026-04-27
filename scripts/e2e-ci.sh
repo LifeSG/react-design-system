@@ -6,7 +6,7 @@ set -e
 # Create production build of library
 LIB_VERSION=$(npm pkg get version --workspaces=false | tr -d \")
 echo "[CI] Building v$LIB_VERSION"
-sh scripts/build.sh
+./scripts/build.sh
 
 # Set up E2E test environment
 echo "[CI] Installing in NextJS"
