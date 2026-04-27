@@ -1,13 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface StyleProps {
-    $error?: boolean;
-}
 
 // =============================================================================
 // STYLING
@@ -18,9 +11,8 @@ export const Wrapper = styled.div`
     flex-direction: column;
 `;
 
-export const Element = styled.textarea<StyleProps>`
-    border: ${Border["width-010"]} ${Border["solid"]}
-        ${Colour["border"]};
+export const Element = styled.textarea`
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
     background: ${Colour.bg};
     outline: none;
@@ -60,37 +52,33 @@ export const Element = styled.textarea<StyleProps>`
         background-clip: padding-box;
     }
 
-    ${(props) => {
-        if (props.readOnly) {
-            return css`
-                border-color: transparent;
-                background: transparent !important;
-                padding: ${Spacing["spacing-12"]} 0;
+    &.elementReadOnly {
+        border-color: transparent;
+        background: transparent !important;
+        padding: ${Spacing["spacing-12"]} 0;
 
-                &:focus,
-                &:active {
-                    outline-color: ${Colour["border-focus"]};
-                }
-            `;
-        } else if (props.disabled) {
-            return css`
-                background: ${Colour["bg-disabled"]};
-                cursor: not-allowed;
-
-                &:focus,
-                &:active {
-                    outline-color: ${Colour["border-disabled"]};
-                }
-            `;
-        } else if (props.$error) {
-            return css`
-                border-color: ${Colour["border-error"]};
-
-                &:focus,
-                &:active {
-                    outline-color: ${Colour["border-error-focus"]};
-                }
-            `;
+        &:focus,
+        &:active {
+            outline-color: ${Colour["border-focus"]};
         }
-    }}
+    }
+
+    &.elementDisabled {
+        background: ${Colour["bg-disabled"]};
+        cursor: not-allowed;
+
+        &:focus,
+        &:active {
+            outline-color: ${Colour["border-disabled"]};
+        }
+    }
+
+    &.elementError {
+        border-color: ${Colour["border-error"]};
+
+        &:focus,
+        &:active {
+            outline-color: ${Colour["border-error-focus"]};
+        }
+    }
 `;

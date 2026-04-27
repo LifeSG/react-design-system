@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
 import { Element, Wrapper } from "./textarea.styles";
@@ -119,7 +120,11 @@ const TextareaBaseComponent = (
             value={getDisplayValue()}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            $error={error}
+            className={clsx(
+                disabled && "elementDisabled",
+                error && "elementError",
+                otherProps.readOnly && "elementReadOnly"
+            )}
             rows={rows}
             maxLength={
                 prefix && maxLength ? prefix.length + maxLength : maxLength
