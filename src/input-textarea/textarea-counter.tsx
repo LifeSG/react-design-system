@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { CounterLabel } from "./textara-counter.style";
+import { CounterLabel } from "./textarea-counter.styles";
 
 interface Props {
     value: string | number | readonly string[] | undefined;

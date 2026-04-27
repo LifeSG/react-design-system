@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { Element, Wrapper } from "./textarea.style";
+import { Element, Wrapper } from "./textarea.styles";
 import { TextareaCounter } from "./textarea-counter";
 import type { TextareaProps, TextareaRef } from "./types";
 
