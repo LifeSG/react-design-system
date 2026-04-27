@@ -48,6 +48,7 @@ import {
     NestedDropdownListLocalItem,
     NestedDropdownListProps,
 } from "./types";
+import { VirtuosoItem, VirtuosoList } from "./virtuoso-components";
 
 export const NestedDropdownList = <T,>({
     listItems,
@@ -93,7 +94,6 @@ export const NestedDropdownList = <T,>({
     const searchTerm = searchValue.toLowerCase().trim();
     const [searchActive, setSearchActive] = useState<boolean>(false);
     const nodeRef = useRef<HTMLDivElement>(null);
-    const listRef = useRef<HTMLDivElement>(null);
     const listItemRefs = useRef<(HTMLElement | null)[]>([]);
     const searchInputRef = useRef<HTMLInputElement>(null);
     const mounted = useIsMounted();
@@ -553,6 +553,7 @@ export const NestedDropdownList = <T,>({
             <ListItemContainer
                 key={`[${keyPath.join("---")}]`}
                 $visible={visible}
+                role="none"
             >
                 {maxLevel > 0 && <Indent $level={level} />}
                 {maxLevel > 0 && !hasSubItems && multiSelect && (
@@ -592,6 +593,7 @@ export const NestedDropdownList = <T,>({
                                 toggleCategory(itemIndex, !expanded, vIndex);
                             }}
                             $expanded={expanded}
+                            aria-hidden
                         >
                             <CaretRightIcon />
                         </ExpandButton>
@@ -614,29 +616,36 @@ export const NestedDropdownList = <T,>({
         const isTestEnv = process.env.NODE_ENV === "test";
 
         return (
-            <div
-                aria-multiselectable={multiSelect}
-                id={listboxId}
-                ref={listRef}
-                role="tree"
-            >
-                <Virtuoso
-                    style={{ height: "100%" }}
-                    customScrollParent={nodeRef.current ?? undefined}
-                    data={visibleItems}
-                    itemContent={(vIndex, item) => renderItem(item, vIndex)}
-                    // disable virtualisation in tests
-                    // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
-                    // explicitly set the `key` prop to avoid React warning
-                    key={isTestEnv ? visibleItems.length : undefined}
-                    // omit the `initialItemCount` prop to resolve NaN error
-                    {...(isTestEnv
-                        ? {
-                              initialItemCount: visibleItems.length,
-                          }
-                        : {})}
-                />
-            </div>
+            <Virtuoso
+                style={{ height: "100%" }}
+                customScrollParent={nodeRef.current ?? undefined}
+                data={visibleItems}
+                itemContent={(vIndex, item) => renderItem(item, vIndex)}
+                components={{
+                    List: VirtuosoList,
+                    Item: VirtuosoItem,
+                }}
+                context={{
+                    listProps: {
+                        id: listboxId,
+                        role: "tree",
+                        "aria-multiselectable": multiSelect,
+                    },
+                    listItemProps: {
+                        role: "none",
+                    },
+                }}
+                // disable virtualisation in tests
+                // https://github.com/petyosi/react-virtuoso/issues/26#issuecomment-1040316576
+                // explicitly set the `key` prop to avoid React warning
+                key={isTestEnv ? visibleItems.length : undefined}
+                // omit the `initialItemCount` prop to resolve NaN error
+                {...(isTestEnv
+                    ? {
+                          initialItemCount: visibleItems.length,
+                      }
+                    : {})}
+            />
         );
     };
 
