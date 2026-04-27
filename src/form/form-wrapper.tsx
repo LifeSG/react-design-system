@@ -4,9 +4,10 @@
  *
  */
 
-import type { ComponentType } from "react";
+import type { ElementType } from "react";
 import { Children, cloneElement, useState } from "react";
 
+import { ColDiv } from "../layout/col-div";
 import { SimpleIdGenerator } from "../util";
 import { FormErrorMessage, FormLabel } from "./form-label";
 import * as styles from "./form-wrapper.styles";
@@ -16,12 +17,8 @@ export const FormWrapper = ({
     label,
     errorMessage: eRaw,
     id,
-    disabled,
     children,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -66,9 +63,7 @@ export const FormWrapper = ({
     };
 
     function getLayoutType(): FormElementLayoutType {
-        if (!layoutType && (mobileCols || tabletCols || desktopCols)) {
-            return "v2-grid";
-        } else if (
+        if (
             !layoutType &&
             (xxsCols ||
                 xsCols ||
@@ -88,12 +83,6 @@ export const FormWrapper = ({
 
     const getContainerLayoutProps = (layoutType: FormElementLayoutType) => {
         switch (layoutType) {
-            case "v2-grid":
-                return {
-                    mobileCols,
-                    tabletCols,
-                    desktopCols,
-                };
             case "grid":
                 return {
                     xxsCols,
@@ -111,14 +100,12 @@ export const FormWrapper = ({
 
     const getContainerComponent = (
         layoutType: FormElementLayoutType
-    ): ComponentType => {
+    ): ElementType => {
         switch (layoutType) {
-            case "v2-grid":
-                return styles.V2_ColDivContainer;
             case "grid":
-                return styles.ColDivContainer;
+                return ColDiv;
             case "flex":
-                return styles.Container;
+                return "div";
         }
     };
 
@@ -135,7 +122,6 @@ export const FormWrapper = ({
                     // in most cases data-testid should be separate from id
                     data-testid={id ? `${id}-label` : "form-label"}
                     id={labelId}
-                    disabled={disabled}
                 >
                     {label}
                 </FormLabel>
@@ -146,7 +132,6 @@ export const FormWrapper = ({
                 htmlFor={`${id}-base`}
                 data-testid={id ? `${id}-label` : "form-label"}
                 id={labelId}
-                disabled={disabled}
                 {...label}
             />
         );
@@ -167,6 +152,7 @@ export const FormWrapper = ({
 
     return (
         <ContainerComponent
+            className={styles.container}
             data-testid={testId}
             {...getContainerLayoutProps(updatedLayoutType)}
         >

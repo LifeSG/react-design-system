@@ -11,9 +11,6 @@ export const FormOtpVerification = ({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -35,9 +32,6 @@ export const FormOtpVerification = ({
             label={label}
             data-error-testid={errorTestId}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

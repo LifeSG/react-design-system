@@ -20,7 +20,6 @@ import type { SelectHistogramProps } from "../select-histogram";
 import type { TimeRangePickerProps } from "../time-range-picker/types";
 import type { TimepickerProps } from "../timepicker/types";
 import type { UnitNumberInputProps } from "../unit-number/types";
-import type { V2_ColProps } from "../v2_layout/types";
 
 export type FormLabelAddonType = "tooltip" | "popover";
 
@@ -42,14 +41,13 @@ export interface FormLabelAddonProps {
 export interface FormLabelProps
     extends React.LabelHTMLAttributes<HTMLLabelElement> {
     addon?: FormLabelAddonProps | undefined;
-    disabled?: boolean | undefined;
     subtitle?: string | JSX.Element | undefined;
     "data-testid"?: string | undefined;
 }
 
-export type FormElementLayoutType = "flex" | "grid" | "v2-grid";
+export type FormElementLayoutType = "flex" | "grid";
 
-export interface BaseFormElementProps extends V2_ColProps, ColProps {
+export interface BaseFormElementProps extends ColProps {
     label?: FormLabelProps | string | undefined;
     errorMessage?: string | React.ReactNode | undefined;
     "data-testid"?: string | undefined;
@@ -61,7 +59,6 @@ export interface BaseFormElementProps extends V2_ColProps, ColProps {
 export interface FormWrapperProps extends BaseFormElementProps {
     children: JSX.Element | JSX.Element[];
     id?: string | undefined;
-    disabled?: boolean | undefined;
 }
 
 export interface FormInputProps
