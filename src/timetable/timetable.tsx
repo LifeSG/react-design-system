@@ -1,3 +1,4 @@
+import dayjs from "dayjs";
 import { isEmpty, throttle } from "lodash";
 import {
     forwardRef,
@@ -24,7 +25,6 @@ import {
     ColumnHeaderRow,
     ColumnHeaderTitle,
     Container,
-    ContentContainer,
     EmptyTableContainer,
     Loader,
     LoadingBar,
@@ -33,10 +33,12 @@ import {
     NoResultsFound,
     RowColumnHeader,
     RowHeader,
-    RowHeaderColumn,
     RowHeaderSubtitle,
     StyledPopoverTrigger,
+    TimeTableBody,
     TimeTableContainer,
+    TimeTableHeaderRow,
+    TimeTableRow,
 } from "./timetable.style";
 import { TimeTableProps, TimeTableRef, TimeTableRowData } from "./types";
 
@@ -76,6 +78,16 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
         timetableMinTime,
         timetableMaxTime
     );
+    const numberOfIntervals = Math.ceil(
+        (hourlyIntervals.length * 60) / ROW_INTERVAL
+    );
+    const formattedDate = dayjs(date).format("D MMMM YYYY");
+    const timetableAriaLabel = `Timetable of resource availability, for ${formattedDate}, from ${dayjs(
+        timetableMinTime,
+        "HH:mm"
+    ).format("ha")} to ${dayjs(timetableMaxTime, "HH:mm").format("ha")}`;
+    const ariaRowCount = (totalRecords || rowData.length) + 1;
+    const ariaColCount = numberOfIntervals + 1;
 
     const isEmptyContent = totalRecords === 0 || isEmpty(rowData);
     const allRecordsLoaded = isEmptyContent || rowData.length === totalRecords;
@@ -257,64 +269,38 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-
-    const ConditionalCellWrapper = ({
-        wrapper,
-        children,
-    }: {
-        wrapper: (child: JSX.Element) => JSX.Element;
-        children: JSX.Element;
-    }) => {
-        return wrapper(children);
-    };
-
-    const renderRowHeaderColumn = () => {
-        return (
+    const renderRowHeader = (data: TimeTableRowData) => {
+        const rowHeaderContent = (
             <>
-                {rowData.map((data, index) => {
-                    return (
-                        <ConditionalCellWrapper
-                            key={index}
-                            wrapper={(child: JSX.Element) =>
-                                buildPopoverTrigger(data, child)
-                            }
-                        >
-                            <RowHeader
-                                $isScrolled={isScrolledX}
-                                key={`${data.id}-row-header`}
-                            >
-                                <ClickableRowHeaderTitle
-                                    $isClickable={!!data.onRowNameClick}
-                                    onClick={(event: React.MouseEvent) =>
-                                        handleRowNameClick(data, event)
-                                    }
-                                    weight="semibold"
-                                    data-testid={`${data.id}-row-header-title`}
-                                >
-                                    {data.name}
-                                </ClickableRowHeaderTitle>
+                <ClickableRowHeaderTitle
+                    $isClickable={!!data.onRowNameClick}
+                    onClick={(event: React.MouseEvent) =>
+                        handleRowNameClick(data, event)
+                    }
+                    weight="semibold"
+                    data-testid={`${data.id}-row-header-title`}
+                >
+                    {data.name}
+                </ClickableRowHeaderTitle>
 
-                                <RowHeaderSubtitle
-                                    weight="bold"
-                                    $show={!!data.subtitle}
-                                    data-testid={`${data.id}-row-header-subtitle`}
-                                >
-                                    {data.subtitle}
-                                </RowHeaderSubtitle>
-                            </RowHeader>
-                        </ConditionalCellWrapper>
-                    );
-                })}
-                {renderRowHeaderColumnLazyLoad()}
+                <RowHeaderSubtitle
+                    weight="bold"
+                    $show={!!data.subtitle}
+                    data-testid={`${data.id}-row-header-subtitle`}
+                >
+                    {data.subtitle}
+                </RowHeaderSubtitle>
             </>
         );
-    };
 
-    const renderRowHeaderColumnLazyLoad = () => {
-        if (loading || !loadMore) return;
         return (
-            <RowHeader $isScrolled={isScrolledX}>
-                <LoadingBar />
+            <RowHeader
+                $isScrolled={isScrolledX}
+                key={`${data.id}-row-header`}
+                role="rowheader"
+                aria-colindex={1}
+            >
+                {buildPopoverTrigger(data, rowHeaderContent)}
             </RowHeader>
         );
     };
@@ -326,6 +312,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                 <ColumnHeader
                     key={`${columnHeader}-column-key`}
                     data-testid={`${columnHeader}-column`}
+                    aria-hidden
                 >
                     <ColumnHeaderTitle weight={"semibold"}>
                         {columnHeader}
@@ -335,45 +322,64 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
         });
     };
 
-    const renderRowBarData = () => {
+    const renderRows = () => {
         if (loading) return <Loader $isEmptyContent={isEmptyContent} />;
         return (
-            <ContentContainer
+            <TimeTableBody
                 data-testid="content-container-id"
                 ref={contentContainerRef}
-                $numOfRows={rowData.length}
+                role="rowgroup"
             >
                 {rowData.map((data, index) => {
                     return (
-                        <RowBar
-                            key={`${index}-row-bar`}
-                            timetableMinTime={timetableMinTime}
-                            timetableMaxTime={timetableMaxTime}
-                            rowBarColor={getColorFromSequence()}
-                            intervalWidth={intervalWidth}
-                            containerRef={contentContainerRef}
-                            {...data}
-                        />
+                        <TimeTableRow
+                            key={`${index}-timetable-row`}
+                            role="row"
+                            aria-rowindex={index + 2}
+                        >
+                            {renderRowHeader(data)}
+                            <RowBar
+                                key={`${index}-row-bar`}
+                                timetableMinTime={timetableMinTime}
+                                timetableMaxTime={timetableMaxTime}
+                                rowBarColor={getColorFromSequence()}
+                                intervalWidth={intervalWidth}
+                                containerRef={contentContainerRef}
+                                {...data}
+                            />
+                        </TimeTableRow>
                     );
                 })}
-                {renderRowDataLazyLoad()}
-            </ContentContainer>
+                {renderLazyLoadRow()}
+            </TimeTableBody>
         );
     };
 
-    const renderRowDataLazyLoad = () => {
+    const renderLazyLoadRow = () => {
         if (loading || !loadMore) return;
         return (
-            <LoadingWrapper data-testid="lazy-loader">
-                {hourlyIntervals.map((_, index) => (
-                    <LoadingCell
-                        key={`lazy-load-cell-${index}`}
-                        $width={intervalWidth * 4}
-                    >
-                        <LoadingBar />
-                    </LoadingCell>
-                ))}
-            </LoadingWrapper>
+            <TimeTableRow role="row" aria-rowindex={rowData.length + 2}>
+                <RowHeader
+                    $isScrolled={isScrolledX}
+                    role="rowheader"
+                    aria-colindex={1}
+                >
+                    <LoadingBar />
+                </RowHeader>
+                <LoadingWrapper data-testid="lazy-loader" role="presentation">
+                    {hourlyIntervals.map((_, index) => (
+                        <LoadingCell
+                            key={`lazy-load-cell-${index}`}
+                            $width={intervalWidth * 4}
+                            role="gridcell"
+                            aria-colindex={index * 4 + 2}
+                            aria-colspan={4}
+                        >
+                            <LoadingBar />
+                        </LoadingCell>
+                    ))}
+                </LoadingWrapper>
+            </TimeTableRow>
         );
     };
 
@@ -431,25 +437,33 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                 ref={tableContainerRef}
                 $loading={loading}
                 $allRecordsLoaded={allRecordsLoaded || !onPage}
+                role="grid"
+                aria-label={timetableAriaLabel}
+                aria-rowcount={ariaRowCount}
+                aria-colcount={ariaColCount}
             >
-                <RowColumnHeader
-                    $isScrolledY={isScrolledY}
-                    $isScrolledX={isScrolledX}
-                ></RowColumnHeader>
-                <RowHeaderColumn
-                    $numOfRows={rowData.length}
-                    $isScrolled={isScrolledX}
+                <TimeTableHeaderRow
+                    role="row"
+                    aria-rowindex={1}
                     data-testid={"row-header-column-id"}
                 >
-                    {renderRowHeaderColumn()}
-                </RowHeaderColumn>
-                <ColumnHeaderRow
-                    $numOfColumns={hourlyIntervals.length}
-                    $isScrolled={isScrolledY}
-                >
-                    {renderColumnHeaders()}
-                </ColumnHeaderRow>
-                {renderRowBarData()}
+                    <RowColumnHeader
+                        $isScrolledY={isScrolledY}
+                        $isScrolledX={isScrolledX}
+                        role="columnheader"
+                        aria-colindex={1}
+                        aria-label="Resource"
+                    ></RowColumnHeader>
+                    <ColumnHeaderRow
+                        $numOfColumns={hourlyIntervals.length}
+                        $intervalWidth={intervalWidth}
+                        $isScrolled={isScrolledY}
+                        role="presentation"
+                    >
+                        {renderColumnHeaders()}
+                    </ColumnHeaderRow>
+                </TimeTableHeaderRow>
+                {renderRows()}
             </TimeTableContainer>
         </Container>
     );

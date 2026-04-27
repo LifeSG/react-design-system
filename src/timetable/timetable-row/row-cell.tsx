@@ -1,6 +1,8 @@
 import dayjs from "dayjs";
 import React, { RefObject } from "react";
+import { concatIds } from "../../shared/accessibility";
 import { DateHelper } from "../../util";
+import { TimeHelper } from "../../util/time-helper";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
 import { InternalTimeTableRowCellData, RowBarColors } from "../internal-types";
 import {
@@ -17,6 +19,9 @@ interface RowCellProps extends InternalTimeTableRowCellData {
     containerRef: RefObject<HTMLDivElement>;
     intervalWidth: number;
     rowBarColor: RowBarColors;
+    ariaColIndex: number;
+    ariaColSpan: number;
+    rowName: string;
 }
 
 const Component = ({
@@ -33,6 +38,9 @@ const Component = ({
     cellStyleAttributes,
     roundedStartTime = startTime,
     roundedEndTime = endTime,
+    ariaColIndex,
+    ariaColSpan,
+    rowName,
     onClick,
 }: RowCellProps) => {
     // =============================================================================
@@ -46,6 +54,13 @@ const Component = ({
     const adjustedCellWidth = totalCellWidth - ROW_CELL_GAP;
     const isClickable =
         !!onClick || (customPopover && customPopover.trigger === "click");
+    const rowAriaLabel = concatIds(
+        `${TimeHelper.formatTimeRange(startTime, endTime)}`,
+        rowName,
+        title,
+        subtitle,
+        `${status} slot`
+    );
 
     // =============================================================================
     // EVENT HANDLERS
@@ -79,6 +94,10 @@ const Component = ({
                 key={`block-container-key`}
                 data-testid={`block-container`}
                 $isOnTheHour={isOnTheHour}
+                role="gridcell"
+                aria-colindex={ariaColIndex}
+                aria-colspan={ariaColSpan}
+                aria-label={rowAriaLabel}
             >
                 <Wrapper>
                     <Block
