@@ -181,7 +181,7 @@ export const TimeSlotBarWeekDays = ({
         setHoverDay(value);
     };
 
-    const handleDayMouseout = () => {
+    const handleDayHoverClear = () => {
         setHoverDay(undefined);
     };
 
@@ -507,7 +507,7 @@ export const TimeSlotBarWeekDays = ({
 
     const renderHeader = () => {
         return (
-            <HeaderCellWeekColumn role="row">
+            <HeaderCellWeekColumn role="row" onBlur={handleDayHoverClear}>
                 {currentCalendarWeek.map((day, dayIndex) => {
                     const dayCellStyleProps = generateStyleProps(day);
 
@@ -525,7 +525,8 @@ export const TimeSlotBarWeekDays = ({
                                 );
                             }}
                             onHover={handleDayHover}
-                            onHoverEnd={handleDayMouseout}
+                            onHoverEnd={handleDayHoverClear}
+                            onFocus={handleDayHover}
                             {...dayCellStyleProps}
                         ></DayCell>
                     );
