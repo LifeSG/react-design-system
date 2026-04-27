@@ -1,10 +1,6 @@
-volumes:
-    node_modules:
 services:
     playwright-tests:
         build: .
         network_mode: "host"
         extra_hosts:
             - "host.docker.internal:host-gateway"
-        ports:
-            - "3010:3010"
