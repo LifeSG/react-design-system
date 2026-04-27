@@ -1,7 +1,4 @@
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { css } from "@linaria/core";
-import { animated } from "@react-spring/web";
 
 import {
     Border,
@@ -13,11 +10,17 @@ import {
     Spacing,
 } from "../theme";
 
-export const tokens = {
-    handleIconContainer: {
-        rotation: "--fds-internal-boxContainer-handleIcon-rotation",
-    },
-};
+export const handleIconContainer = css`
+    transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
+`;
+
+export const handleIconContainerExpanded = css`
+    transform: rotate(180deg);
+`;
+
+export const handleIconContainerCollapsed = css`
+    transform: rotate(0deg);
+`;
 
 export const container = css`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
@@ -122,22 +125,8 @@ export const handle = css`
     }
 `;
 
-export const handleIconContainer = css`
-    /* reset variable to prevent leaking to child components */
-    ${tokens.handleIconContainer.rotation}: initial;
-    transform: rotate(var(${tokens.handleIconContainer.rotation}, 0deg));
-    transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
-`;
-
 export const handleIcon = css`
     color: ${Colour["icon"]};
     height: ${Font.Spec["heading-size-sm"]};
     width: ${Font.Spec["heading-size-sm"]};
 `;
-
-// Animated component wrapper
-export const AnimatedExpandable = animated.div;
-
-// Icon components
-export const AlertIconComponent = ExclamationCircleFillIcon;
-export const HandleIconComponent = ChevronDownIcon;

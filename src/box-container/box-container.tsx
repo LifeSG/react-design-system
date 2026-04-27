@@ -1,11 +1,16 @@
-import { useSpring } from "@react-spring/web";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { animated, useSpring } from "@react-spring/web";
 import clsx from "clsx";
 import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useMediaQuery } from "react-responsive";
 
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
-import { Breakpoint, useApplyStyle } from "../theme";
+import {
+    Breakpoint,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
 import { SimpleIdGenerator } from "../util";
 import * as styles from "./box-container.styles";
 import type { BoxContainerProps } from "./types";
@@ -30,20 +35,13 @@ export const BoxContainer = ({
     );
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
-    const mobileBreakpoint = Breakpoint["sm-max"];
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const interactiveHeader = clickableHeader && collapsible;
     const internalId = useRef(SimpleIdGenerator.generate());
     const contentId = `${internalId.current}-content`;
     const headerId = `${internalId.current}-header`;
     const handleIconRef = useRef<HTMLDivElement>(null);
-
-    // Apply CSS variables
-    useApplyStyle(handleIconRef, {
-        [styles.tokens.handleIconContainer.rotation]: showExpanded
-            ? "180deg"
-            : "0deg",
-    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -65,7 +63,7 @@ export const BoxContainer = ({
     const renderChildContent = () => {
         if (collapsible) {
             return (
-                <styles.AnimatedExpandable
+                <animated.div
                     className={styles.expandable}
                     style={expandableStyles}
                     data-testid={"expandable-container"}
@@ -78,7 +76,7 @@ export const BoxContainer = ({
                     >
                         {children}
                     </div>
-                </styles.AnimatedExpandable>
+                </animated.div>
             );
         }
 
@@ -97,7 +95,7 @@ export const BoxContainer = ({
             case "error":
             case "warning":
                 return (
-                    <styles.AlertIconComponent
+                    <ExclamationCircleFillIcon
                         className={clsx(
                             styles.alertIcon,
                             displayState === "error" && styles.alertIconError,
@@ -130,13 +128,16 @@ export const BoxContainer = ({
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
                     <div
-                        className={styles.handleIconContainer}
+                        className={clsx(
+                            styles.handleIconContainer,
+                            showExpanded
+                                ? styles.handleIconContainerExpanded
+                                : styles.handleIconContainerCollapsed
+                        )}
                         ref={handleIconRef}
                         aria-hidden
                     >
-                        <styles.HandleIconComponent
-                            className={styles.handleIcon}
-                        />
+                        <ChevronDownIcon className={styles.handleIcon} />
                     </div>
                 </button>
             )
