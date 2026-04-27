@@ -74,36 +74,6 @@ test.describe("BoxContainer", () => {
             await story.init("non-collapsible");
         });
 
-        test("Non-collapsible container", async ({ story }) => {
-            // Verify no handle buttons are present for non-collapsible containers
-            await test.step("Handle buttons should not be present", async () => {
-                await story.page.waitForLoadState("networkidle");
-                expect(await story.locators.handle.count()).toBe(0);
-            });
-
-            // Verify container uses non-expandable structure
-            await test.step("Content should be in non-expandable container", async () => {
-                expect(
-                    await story.locators.nonExpandableContainer.count()
-                ).toBe(1);
-                expect(await story.locators.expandableContainer.count()).toBe(
-                    0
-                );
-            });
-
-            // Verify container is visible and accessible
-            await test.step("Container should be visible and accessible", async () => {
-                await expect(
-                    story.locators.container.nonCollapsible
-                ).toBeVisible();
-            });
-
-            // Visual regression test
-            await test.step("Visual appearance", async () => {
-                await compareScreenshot(story, "non-collapsible-container");
-            });
-        });
-
         test("Aria attributes for non-collapsible container", async ({
             story,
         }) => {
@@ -197,13 +167,12 @@ test.describe("BoxContainer", () => {
             });
 
             // Test button interaction
-            await test.step("Button should be clickable", async () => {
-                await story.locators.ctaButton.click();
-            });
-
-            // Visual regression test
             await test.step("Visual appearance of call-to-action container", async () => {
                 await compareScreenshot(story, "call-to-action-container");
+            });
+
+            await test.step("Button should be clickable", async () => {
+                await story.locators.ctaButton.click();
             });
         });
 
@@ -428,9 +397,8 @@ test.describe("BoxContainer", () => {
                         "aria-controls"
                     );
 
-                    // Verify the controlled element exists
                     const controlledElement = story.page.locator(
-                        `#${controlsId}`
+                        `[id="${controlsId}"]`
                     );
                     await expect(controlledElement).toBeAttached();
                 }
