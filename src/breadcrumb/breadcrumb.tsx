@@ -1,18 +1,14 @@
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import clsx from "clsx";
 import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { parsePxOrRemValue, useApplyStyle, useDesignToken } from "../theme";
 import { Breakpoint } from "../theme/tokens";
+import { Typography } from "../typography";
 import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
-import {
-    Caret,
-    Content,
-    CurrentLabel,
-    Fade,
-    Item,
-    PreviousLink,
-    Slash,
- tokens,    Wrapper } from "./breadcrumb.styles";
+import * as styles from "./breadcrumb.styles";
+import { tokens } from "./breadcrumb.styles";
 import type { BreadcrumbProps, FadeColorSet } from "./types";
 
 export const Breadcrumb = ({
@@ -155,23 +151,29 @@ export const Breadcrumb = ({
 
             if (index === links.length - 1 || !link.href) {
                 element = (
-                    <CurrentLabel weight="semibold" forwardedAs="span">
+                    <Typography.BodyMD
+                        weight="semibold"
+                        forwardedAs="span"
+                        className={styles.currentLabel}
+                    >
                         {link.children}
-                    </CurrentLabel>
+                    </Typography.BodyMD>
                 );
             } else {
                 element = (
-                    <PreviousLink
+                    <Typography.LinkMD
                         {...link}
                         weight="semibold"
                         underlineStyle="none"
+                        className={styles.previousLink}
                     />
                 );
             }
 
             return (
-                <Item
+                <li
                     key={index}
+                    className={styles.item}
                     {...(index === links.length - 1 && {
                         "aria-current": "page",
                     })}
@@ -179,13 +181,20 @@ export const Breadcrumb = ({
                     {element}
                     {index < links.length - 1 &&
                         (separatorStyle === "chevron" ? (
-                            <Caret aria-hidden />
+                            <ChevronRightIcon
+                                aria-hidden
+                                className={styles.caret}
+                            />
                         ) : (
-                            <Slash inline aria-hidden>
+                            <Typography.BodyMD
+                                inline
+                                aria-hidden
+                                className={styles.slash}
+                            >
                                 /
-                            </Slash>
+                            </Typography.BodyMD>
                         ))}
-                </Item>
+                </li>
             );
         });
     };
@@ -194,26 +203,34 @@ export const Breadcrumb = ({
         return (
             <>
                 {showFadeLeft && shouldShowFadeLeft && (
-                    <Fade ref={fadeLeftRef} className="fadeLeft" />
+                    <div
+                        ref={fadeLeftRef}
+                        className={clsx(styles.fade, "fadeLeft")}
+                    />
                 )}
                 {showFadeRight && shouldShowFadeRight && (
-                    <Fade ref={fadeRightRef} className="fadeRight" />
+                    <div
+                        ref={fadeRightRef}
+                        className={clsx(styles.fade, "fadeRight")}
+                    />
                 )}
             </>
         );
     };
 
     return (
-        <Wrapper
+        <div
             ref={wrapperRef}
             id={id || "breadcrumb"}
-            className={className}
+            className={clsx(styles.wrapper, className)}
             {...otherProps}
         >
             <nav aria-label="Breadcrumb">
-                <Content ref={contentRef}>{renderLinks()}</Content>
+                <ul ref={contentRef} className={styles.content}>
+                    {renderLinks()}
+                </ul>
             </nav>
             {showFade && renderFade()}
-        </Wrapper>
+        </div>
     );
 };

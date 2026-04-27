@@ -1,8 +1,6 @@
-import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour, Font, MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 export const tokens = {
     fade: {
@@ -14,9 +12,9 @@ export const tokens = {
 };
 
 // =============================================================================
-// STYLE COMPONENTS
+// STYLE CLASSES
 // =============================================================================
-export const Wrapper = styled.div`
+export const wrapper = css`
     position: relative;
     width: 100%;
     z-index: 1;
@@ -31,7 +29,7 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Content = styled.ul`
+export const content = css`
     ${tokens.item.customStyles}: initial;
     display: inline-flex;
     width: 100%;
@@ -52,7 +50,7 @@ export const Content = styled.ul`
     }
 `;
 
-export const Fade = styled.div`
+export const fade = css`
     ${tokens.fade.backgroundColor}: initial;
     width: ${Spacing["spacing-64"]};
     height: calc(1lh + ${Spacing["spacing-4"]});
@@ -82,7 +80,7 @@ export const Fade = styled.div`
     }
 `;
 
-export const Item = styled.li`
+export const item = css`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -91,21 +89,21 @@ export const Item = styled.li`
     ${tokens.item.customStyles};
 `;
 
-export const Caret = styled(ChevronRightIcon)`
+export const caret = css`
     height: 1em;
     width: 1em;
     color: ${Colour["icon-subtle"]};
 `;
 
-export const Slash = styled(Typography.BodyMD)`
+export const slash = css`
     display: inline-block;
     color: ${Colour["text-subtlest"]};
 `;
 
-export const CurrentLabel = styled(Typography.BodyMD)`
+export const currentLabel = css`
     margin: ${Spacing["spacing-8"]} !important;
 `;
 
-export const PreviousLink = styled(Typography.LinkMD)`
+export const previousLink = css`
     margin: ${Spacing["spacing-8"]} !important;
 `;
