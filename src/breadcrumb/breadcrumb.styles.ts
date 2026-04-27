@@ -81,12 +81,12 @@ export const fade = css`
 `;
 
 export const item = css`
+    ${tokens.item.customStyles}: initial;
     display: flex;
     flex-direction: row;
     align-items: center;
     line-height: inherit;
     font-size: inherit;
-    ${tokens.item.customStyles};
 `;
 
 export const caret = css`
