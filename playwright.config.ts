@@ -47,7 +47,7 @@ export default defineConfig({
     /* Run local dev servers before starting the tests */
     webServer: [
         {
-            command: "npm run test-e2e-docker",
+            command: "npm run test-e2e:docker",
             wait: {
                 stdout: /Listening on ws:\/\/0\.0\.0\.0:(?<PLAYWRIGHT_SERVER_PORT>\d+)/,
             },
