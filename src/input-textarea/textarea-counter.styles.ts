@@ -1,9 +1,9 @@
 import styled from "styled-components";
 
-import { V3_Colour, V3_Font } from "../v3_theme";
+import { Colour, Font } from "../theme";
 
 export const CounterLabel = styled.p`
     text-align: right;
-    ${V3_Font["body-sm-semibold"]}
-    color: ${V3_Colour["text-subtler"]};
+    ${Font["body-sm-semibold"]}
+    color: ${Colour["text-subtler"]};
 `;

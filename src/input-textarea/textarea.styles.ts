@@ -1,12 +1,6 @@
 import styled, { css } from "styled-components";
 
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_Radius,
-    V3_Spacing,
-} from "../v3_theme";
+import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -25,30 +19,30 @@ export const Wrapper = styled.div`
 `;
 
 export const Element = styled.textarea<StyleProps>`
-    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
-    border-radius: ${V3_Radius["sm"]};
-    background: ${V3_Colour["bg"]};
+    border: ${Border["width-010"]} ${Border["solid"]}
+        ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour.bg};
     outline: none;
     overflow: auto;
 
     display: block;
-    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     width: 100%;
 
-    ${V3_Font["body-baseline-regular"]}
-    color: ${V3_Colour["text"]};
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
 
     &:focus,
     &:active {
         outline-offset: -1px;
-        outline: ${V3_Border["width-020"]} ${V3_Border["solid"]}
-            ${V3_Colour["border-focus"]};
+        outline: ${Border["width-020"]} ${Border["solid"]}
+            ${Colour["border-focus"]};
     }
 
     &::placeholder,
     &::-webkit-input-placeholder {
-        color: ${V3_Colour["text-subtler"]};
+        color: ${Colour["text-subtler"]};
     }
 
     &::-webkit-scrollbar {
@@ -60,9 +54,9 @@ export const Element = styled.textarea<StyleProps>`
     }
 
     &::-webkit-scrollbar-thumb {
-        background: ${V3_Colour["bg-inverse-subtlest"]};
+        background: ${Colour["bg-inverse-subtlest"]};
         border: 5px solid transparent;
-        border-radius: ${V3_Radius["full"]};
+        border-radius: ${Radius["full"]};
         background-clip: padding-box;
     }
 
@@ -71,30 +65,30 @@ export const Element = styled.textarea<StyleProps>`
             return css`
                 border-color: transparent;
                 background: transparent !important;
-                padding: ${V3_Spacing["spacing-12"]} 0;
+                padding: ${Spacing["spacing-12"]} 0;
 
                 &:focus,
                 &:active {
-                    outline-color: ${V3_Colour["border-focus"]};
+                    outline-color: ${Colour["border-focus"]};
                 }
             `;
         } else if (props.disabled) {
             return css`
-                background: ${V3_Colour["bg-disabled"]};
+                background: ${Colour["bg-disabled"]};
                 cursor: not-allowed;
 
                 &:focus,
                 &:active {
-                    outline-color: ${V3_Colour["border-disabled"]};
+                    outline-color: ${Colour["border-disabled"]};
                 }
             `;
         } else if (props.$error) {
             return css`
-                border-color: ${V3_Colour["border-error"]};
+                border-color: ${Colour["border-error"]};
 
                 &:focus,
                 &:active {
-                    outline-color: ${V3_Colour["border-error-focus"]};
+                    outline-color: ${Colour["border-error-focus"]};
                 }
             `;
         }
