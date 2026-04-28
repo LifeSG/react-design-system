@@ -55,12 +55,21 @@ test.describe("InputTextarea", () => {
         test("Focus", async ({ story }) => {
             await story.page.keyboard.press("Tab");
             await expect(story.locators.defaultTextarea).toBeFocused();
+            await compareScreenshot(story, "default-focus", {
+                locator: story.locators.defaultTextarea,
+            });
 
             await story.page.keyboard.press("Tab");
             await expect(story.locators.readonlyTextarea).toBeFocused();
+            await compareScreenshot(story, "readonly-focus", {
+                locator: story.locators.readonlyTextarea,
+            });
 
             await story.page.keyboard.press("Tab");
             await expect(story.locators.errorTextarea).toBeFocused();
+            await compareScreenshot(story, "error-focus", {
+                locator: story.locators.errorTextarea,
+            });
         });
     });
 
