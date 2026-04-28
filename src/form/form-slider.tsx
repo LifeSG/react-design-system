@@ -29,6 +29,7 @@ export const FormSlider = ({
             id={inputId}
             label={label}
             errorMessage={errorMessage}
+            data-testid={testId}
             data-error-testid={errorTestId}
             layoutType={layoutType}
             xxsCols={xxsCols}
