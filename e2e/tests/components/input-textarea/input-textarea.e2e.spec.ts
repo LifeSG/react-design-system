@@ -5,30 +5,20 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "input-textarea";
 
     public readonly locators: {
-        prefixTextarea: Locator;
         defaultTextarea: Locator;
         readonlyTextarea: Locator;
         disabledTextarea: Locator;
         errorTextarea: Locator;
-        counterTextarea: Locator;
-        defaultCounterLabel: Locator;
-        customCounterTextarea: Locator;
-        customCounterLabel: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
-            prefixTextarea: page.getByTestId("textarea-prefix"),
             defaultTextarea: page.getByTestId("textarea-default"),
             readonlyTextarea: page.getByTestId("textarea-readonly"),
             disabledTextarea: page.getByTestId("textarea-disabled"),
             errorTextarea: page.getByTestId("textarea-error"),
-            counterTextarea: page.getByTestId("textarea-counter"),
-            defaultCounterLabel: page.getByTestId("counter-label"),
-            customCounterTextarea: page.getByTestId("textarea-custom-counter"),
-            customCounterLabel: page.getByTestId("custom-counter-label"),
         };
     }
 }
