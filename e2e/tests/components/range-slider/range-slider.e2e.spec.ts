@@ -393,4 +393,14 @@ test.describe("RangeSlider", () => {
             `);
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("labels");
+        });
+
+        test("Slider labels and indicator label", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
 });
