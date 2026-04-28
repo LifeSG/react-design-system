@@ -137,7 +137,7 @@ describe("Textarea", () => {
         const textarea: HTMLTextAreaElement = screen.getByTestId("textarea");
 
         textarea.setSelectionRange(4, 4);
-        await user.type(textarea, "{arrowleft}");
+        await user.type(textarea, "{backspace}");
 
         expect(textarea).toHaveValue("prefix: ");
         expect(handleChange).not.toHaveBeenCalled();
