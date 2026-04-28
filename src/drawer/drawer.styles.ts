@@ -14,14 +14,6 @@ import {
 import { Typography } from "../typography";
 
 // =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $show?: boolean | undefined;
-}
-
-// =============================================================================
 // STYLING HELPERS
 // =============================================================================
 // FloatingUI transition styles
@@ -51,7 +43,7 @@ const FLOATING_TRANSITION_STYLES = css`
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div<StyleProps>`
+export const Container = styled.div`
     position: fixed;
     top: 0;
 

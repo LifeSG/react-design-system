@@ -6,6 +6,7 @@ import {
     useTransitionStatus,
 } from "@floating-ui/react";
 import { CrossIcon } from "@lifesg/react-icons/cross";
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 
 import { Overlay } from "../overlay";
@@ -25,6 +26,7 @@ export const Drawer = ({
     show,
     onClose,
     onOverlayClick,
+    className,
     ...otherProps
 }: DrawerProps) => {
     // =========================================================================
@@ -100,7 +102,6 @@ export const Drawer = ({
                 >
                     <Container
                         ref={refs.setFloating}
-                        $show={show}
                         data-status={status}
                         data-testid="drawer"
                         onClick={handleClick}
@@ -110,6 +111,7 @@ export const Drawer = ({
                         onTransitionEnd={handleDialogVisibility}
                         {...getFloatingProps()}
                         {...otherProps}
+                        className={clsx(className)}
                     >
                         <Header>
                             <Heading
