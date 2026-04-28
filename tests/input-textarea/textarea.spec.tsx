@@ -1,4 +1,4 @@
-import { createEvent, fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Textarea } from "src/input-textarea";
 
@@ -118,8 +118,9 @@ describe("Textarea", () => {
         );
     });
 
-    it("should prevent backspace when cursor is inside prefix", () => {
+    it("should prevent backspace when cursor is inside prefix", async () => {
         const handleChange = jest.fn();
+        const user = userEvent.setup();
 
         render(
             <Textarea
@@ -129,24 +130,18 @@ describe("Textarea", () => {
             />
         );
 
-        const textarea = screen.getByTestId("textarea");
-        const event = createEvent.keyDown(textarea, {
-            key: "Backspace",
-        });
+        const textarea: HTMLTextAreaElement = screen.getByTestId("textarea");
 
-        Object.defineProperty(textarea, "selectionStart", {
-            configurable: true,
-            value: 8,
-        });
-
-        fireEvent(textarea, event);
+        textarea.setSelectionRange(4, 4);
+        await user.type(textarea, "{arrowleft}");
 
         expect(textarea).toHaveValue("prefix: ");
         expect(handleChange).not.toHaveBeenCalled();
     });
 
-    it("should prevent left arrow when cursor is inside prefix", () => {
+    it("should prevent left arrow when cursor is inside prefix", async () => {
         const handleChange = jest.fn();
+        const user = userEvent.setup();
 
         render(
             <Textarea
@@ -156,24 +151,21 @@ describe("Textarea", () => {
             />
         );
 
-        const textarea = screen.getByTestId("textarea");
-        const event = createEvent.keyDown(textarea, {
-            key: "ArrowLeft",
-        });
+        const textarea: HTMLTextAreaElement = screen.getByTestId("textarea");
 
-        Object.defineProperty(textarea, "selectionStart", {
-            configurable: true,
-            value: 8,
-        });
+        textarea.setSelectionRange(4, 4);
 
-        fireEvent(textarea, event);
+        await user.keyboard("{arrowleft}");
 
         expect(textarea).toHaveValue("prefix: ");
+        expect(textarea.selectionStart).toBe(4);
+        expect(textarea.selectionEnd).toBe(4);
         expect(handleChange).not.toHaveBeenCalled();
     });
 
-    it("should move cursor to the end of prefix when home key is pressed", () => {
+    it("should move cursor to the end of prefix when home key is pressed", async () => {
         const handleChange = jest.fn();
+        const user = userEvent.setup();
 
         render(
             <Textarea
@@ -184,13 +176,10 @@ describe("Textarea", () => {
         );
 
         const textarea = screen.getByTestId("textarea") as HTMLTextAreaElement;
-        const event = createEvent.keyDown(textarea, {
-            key: "Home",
-        });
 
         textarea.setSelectionRange(4, 4);
 
-        fireEvent(textarea, event);
+        await user.type(textarea, "{home}");
 
         expect(textarea).toHaveValue("prefix: ");
         expect(textarea.selectionStart).toBe(8);
@@ -198,44 +187,39 @@ describe("Textarea", () => {
         expect(handleChange).not.toHaveBeenCalled();
     });
 
-    it("should allow navigation keys when cursor is outside prefix", () => {
+    it("should allow navigation keys when cursor is outside prefix", async () => {
         const handleChange = jest.fn();
+        const user = userEvent.setup();
 
         render(
             <Textarea
                 data-testid="textarea"
                 prefix="prefix: "
                 onChange={handleChange}
+                value={"Some text"}
             />
         );
 
-        const textarea = screen.getByTestId("textarea");
-        const backspaceEvent = createEvent.keyDown(textarea, {
-            key: "Backspace",
-        });
-        const arrowLeftEvent = createEvent.keyDown(textarea, {
-            key: "ArrowLeft",
-        });
+        const textarea: HTMLTextAreaElement = screen.getByTestId("textarea");
+        textarea.setSelectionRange(10, 10);
 
-        Object.defineProperty(textarea, "selectionStart", {
-            configurable: true,
-            value: 10,
-        });
+        await user.type(textarea, "{backspace}");
 
-        const backspacePreventDefaultSpy = jest.spyOn(
-            backspaceEvent,
-            "preventDefault"
+        expect(textarea).toHaveValue("prefix: Some tex");
+        expect(textarea.selectionStart).toBe(16);
+        expect(textarea.selectionEnd).toBe(textarea.selectionStart);
+
+        await user.keyboard("{arrowleft}");
+
+        expect(textarea.selectionStart).toBe(15);
+
+        expect(handleChange).toHaveBeenCalled();
+        expect(handleChange).toHaveBeenLastCalledWith(
+            expect.objectContaining({
+                target: expect.objectContaining({
+                    value: "Some tex",
+                }),
+            })
         );
-        const arrowLeftPreventDefaultSpy = jest.spyOn(
-            arrowLeftEvent,
-            "preventDefault"
-        );
-
-        fireEvent(textarea, backspaceEvent);
-        fireEvent(textarea, arrowLeftEvent);
-
-        expect(backspacePreventDefaultSpy).not.toHaveBeenCalled();
-        expect(arrowLeftPreventDefaultSpy).not.toHaveBeenCalled();
-        expect(handleChange).not.toHaveBeenCalled();
     });
 });
