@@ -113,14 +113,14 @@ export const handle = css`
     border: none;
     cursor: pointer;
     padding: ${Spacing["spacing-16"]};
-    margin: -${Spacing["spacing-16"]};
+    margin: calc(${Spacing["spacing-16"]} * -1);
     display: flex;
     align-items: center;
 
     ${MediaQuery.MaxWidth.sm} {
-        margin: -${Spacing["spacing-16"]} -${Spacing["spacing-16"]} -${Spacing[
-                "spacing-16"
-            ]} 0;
+        margin: calc(${Spacing["spacing-16"]} * -1)
+            calc(${Spacing["spacing-16"]} * -1)
+            calc(${Spacing["spacing-16"]} * -1) 0;
         margin-left: auto;
     }
 `;
