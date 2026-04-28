@@ -1,32 +1,36 @@
 "use client";
 
-import { Textarea } from "@lifesg/react-design-system/input-textarea";
+import { Form } from "@lifesg/react-design-system/form";
 
 export default function Story() {
     return (
         <div className="story-column-container">
-            <Textarea
+            <Form.Textarea
                 data-testid="textarea-default"
+                label="Default textarea"
                 placeholder="Default textarea"
                 defaultValue="Default value"
             />
-            <Textarea
+            <Form.Textarea
                 data-testid="textarea-readonly"
+                label="Readonly textarea"
                 placeholder="Readonly textarea"
                 value="Readonly value"
                 readOnly
             />
-            <Textarea
+            <Form.Textarea
                 data-testid="textarea-disabled"
+                label="Disabled textarea"
                 placeholder="Disabled textarea"
                 value="Disabled value"
                 disabled
             />
-            <Textarea
+            <Form.Textarea
                 data-testid="textarea-error"
+                label="Error textarea"
                 placeholder="Error textarea"
                 defaultValue="Error value"
-                error
+                errorMessage="This field has an error"
             />
         </div>
     );

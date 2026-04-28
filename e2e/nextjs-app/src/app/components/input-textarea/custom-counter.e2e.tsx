@@ -1,14 +1,15 @@
 "use client";
 
-import { Textarea } from "@lifesg/react-design-system/input-textarea";
+import { Form } from "@lifesg/react-design-system/form";
 import { useState } from "react";
 
 export default function Story() {
     const [value, setValue] = useState<string>("");
 
     return (
-        <Textarea
+        <Form.Textarea
             data-testid="textarea-custom-counter"
+            label="Textarea with custom counter"
             maxLength={10}
             value={value}
             onChange={(event) => {

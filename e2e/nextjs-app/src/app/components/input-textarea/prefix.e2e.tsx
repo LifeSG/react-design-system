@@ -1,7 +1,13 @@
 "use client";
 
-import { Textarea } from "@lifesg/react-design-system/input-textarea";
+import { Form } from "@lifesg/react-design-system/form";
 
 export default function Story() {
-    return <Textarea data-testid="textarea-prefix" prefix="prefix: " />;
+    return (
+        <Form.Textarea
+            data-testid="textarea-prefix"
+            label="Textarea with prefix"
+            prefix="prefix: "
+        />
+    );
 }

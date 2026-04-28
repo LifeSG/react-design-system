@@ -43,6 +43,16 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("InputTextarea", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("standalone");
+        });
+
+        test("Standalone", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("states");
         });
 
@@ -70,9 +80,7 @@ test.describe("InputTextarea", () => {
         });
 
         test("Prefix", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                fullscreen: true,
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 

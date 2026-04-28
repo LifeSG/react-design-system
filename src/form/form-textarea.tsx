@@ -33,6 +33,7 @@ const FormTextareaComponent = (
         xxlCols,
         transformValue,
         prefix = "",
+        renderCustomCounter,
         ...otherProps
     } = props;
 
@@ -85,7 +86,7 @@ const FormTextareaComponent = (
                     <TextareaCounter
                         value={stateValue}
                         maxLength={otherProps.maxLength}
-                        renderCustomCounter={otherProps.renderCustomCounter}
+                        renderCustomCounter={renderCustomCounter}
                     />
                 )}
             </div>
