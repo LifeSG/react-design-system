@@ -8,7 +8,7 @@ type PseudoMediaQuerySpec<T extends readonly string[]> = Record<
 >;
 
 const getPseudoMediaQuery = (breakpoint: string, type: WidthConstraint) =>
-    `body.fds-breakpoint-${breakpoint}-${type} &`;
+    `:where(body.fds-breakpoint-${breakpoint}-${type}) &`;
 
 const getPseudoMediaQuerySpec = <T extends readonly string[]>(
     breakpoints: T,
