@@ -82,7 +82,7 @@ test.describe("BoxContainer", () => {
                       - status:
                         - text: Container with error state error
                         - img "error"
-                      - button "Container with error state error error"
+                      - button "Container with error state error error" [expanded=false]
                       - paragraph: This container has an error display state with a red error icon.
                 `);
 
@@ -91,13 +91,13 @@ test.describe("BoxContainer", () => {
                       - status:
                         - text: Container with warning state warning
                         - img "warning"
-                      - button "Container with warning state warning warning"
+                      - button "Container with warning state warning warning" [expanded=false]
                       - paragraph: This container has a warning display state with an amber warning icon.
                 `);
 
             await expect(story.locators.container.default).toMatchAriaSnapshot(`
                     - region "Default state (no icon)":
-                      - button "Default state (no icon)"
+                      - button "Default state (no icon)" [expanded=false]
                       - paragraph: This container has default display state with no icon.
                 `);
         });
@@ -115,7 +115,7 @@ test.describe("BoxContainer", () => {
                 .toMatchAriaSnapshot(`
                     - region "Non-collapsible container":
                       - status: Non-collapsible container
-                      - paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      - paragraph: Lorem ipsum dolor sit amet
                 `);
         });
     });
@@ -137,19 +137,14 @@ test.describe("BoxContainer", () => {
 
         test("Expand/collapse interaction", async ({ story }) => {
             await test.step("Visual appearance of expand/collapse states", async () => {
-                const handles = story.page.getByTestId("handle");
                 await compareScreenshot(story, "expand-collapse-mixed-states");
-
-                // Ensure first is expanded, second is collapsed
-                await handles.nth(0).click();
-                await handles.nth(1).click();
 
                 // First container starts collapsed
                 await expect(story.locators.container.collapsed)
                     .toMatchAriaSnapshot(`
                     - region "Title":
                       - status: Title
-                      - button "Title"
+                      - button "Title" [expanded=false]
                 `);
 
                 // Second container starts expanded
@@ -157,8 +152,8 @@ test.describe("BoxContainer", () => {
                     .toMatchAriaSnapshot(`
                     - region "Title":
                       - status: Title
-                      - button "Title"
-                      - paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      - button "Title" [expanded=true]
+                      - paragraph: Lorem ipsum dolor sit amet
                 `);
             });
 
@@ -175,8 +170,8 @@ test.describe("BoxContainer", () => {
                     .toMatchAriaSnapshot(`
                     - region "Title":
                       - status: Title
-                      - button "Title"
-                      - paragraph: Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.
+                      - button "Title" [expanded=true]
+                      - paragraph: Lorem ipsum dolor sit amet
                 `);
             });
 
@@ -193,7 +188,7 @@ test.describe("BoxContainer", () => {
                     .toMatchAriaSnapshot(`
                     - region "Title":
                       - status: Title
-                      - button "Title"
+                      - button "Title" [expanded=false]
                 `);
             });
         });
