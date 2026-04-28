@@ -10,14 +10,16 @@ import type { TextareaProps, TextareaRef } from "./types";
 // =============================================================================
 const TextareaBaseComponent = (
     {
-        value,
+        className,
         disabled,
         error,
-        rows = 5,
-        prefix,
-        transformValue,
-        onChange,
         maxLength,
+        onChange,
+        prefix,
+        readOnly,
+        rows = 5,
+        transformValue,
+        value,
         ...otherProps
     }: TextareaProps,
     ref: TextareaRef
@@ -120,12 +122,13 @@ const TextareaBaseComponent = (
             value={getDisplayValue()}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
+            readOnly={readOnly}
             className={clsx(
                 styles.element,
-                disabled && styles.elementDisabled,
-                error && styles.elementError,
-                otherProps.readOnly && styles.elementReadOnly,
-                otherProps.className
+                (readOnly && styles.elementReadOnly) ||
+                    (disabled && styles.elementDisabled) ||
+                    (error && styles.elementError),
+                className
             )}
             rows={rows}
             maxLength={
