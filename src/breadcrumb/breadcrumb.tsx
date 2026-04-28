@@ -8,7 +8,6 @@ import { Breakpoint } from "../theme/tokens";
 import { Typography } from "../typography";
 import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
 import * as styles from "./breadcrumb.styles";
-import { tokens } from "./breadcrumb.styles";
 import type { BreadcrumbProps, FadeColorSet } from "./types";
 
 export const Breadcrumb = ({
@@ -56,28 +55,28 @@ export const Breadcrumb = ({
             left: fadeColor,
             right: fadeColor,
         };
-    } else if (!fadeColor) {
+    } else if (fadeColor) {
+        fadeColorSet = fadeColor as FadeColorSet;
+    } else {
         fadeColorSet = {
             left: undefined,
             right: undefined,
         };
-    } else {
-        fadeColorSet = fadeColor as FadeColorSet;
     }
 
     // =============================================================================
     // CSS VARIABLES
     // =============================================================================
     useApplyStyle(fadeLeftRef, {
-        [tokens.fade.backgroundColor]: fadeColorSet?.left?.[0],
+        [styles.tokens.fade.backgroundColor]: fadeColorSet?.left?.join(", "),
     });
 
     useApplyStyle(fadeRightRef, {
-        [tokens.fade.backgroundColor]: fadeColorSet?.right?.[0],
+        [styles.tokens.fade.backgroundColor]: fadeColorSet?.right?.join(", "),
     });
 
     useApplyStyle(contentRef, {
-        [tokens.item.customStyles]: itemStyle,
+        [styles.tokens.item.customStyles]: itemStyle,
     });
 
     const onResize = useEvent(() => {
@@ -153,7 +152,7 @@ export const Breadcrumb = ({
                 element = (
                     <Typography.BodyMD
                         weight="semibold"
-                        forwardedAs="span"
+                        as="span"
                         className={styles.currentLabel}
                     >
                         {link.children}
@@ -205,13 +204,13 @@ export const Breadcrumb = ({
                 {showFadeLeft && shouldShowFadeLeft && (
                     <div
                         ref={fadeLeftRef}
-                        className={clsx(styles.fade, "fadeLeft")}
+                        className={clsx(styles.fade, styles.fadeLeft)}
                     />
                 )}
                 {showFadeRight && shouldShowFadeRight && (
                     <div
                         ref={fadeRightRef}
-                        className={clsx(styles.fade, "fadeRight")}
+                        className={clsx(styles.fade, styles.fadeRight)}
                     />
                 )}
             </>

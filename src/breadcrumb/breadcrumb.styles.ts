@@ -35,8 +35,8 @@ export const content = css`
     width: 100%;
     flex-wrap: wrap;
     white-space: nowrap;
-    margin-left: -${Spacing["spacing-8"]};
-    font-size: ${Font["body-md-regular"]};
+    margin-left: calc(${Spacing["spacing-8"]} * -1);
+    font-size: ${Font.Spec["body-size-md"]};
     overflow-x: scroll;
     overflow-y: hidden;
     scrollbar-width: none; /* Firefox */
@@ -58,25 +58,27 @@ export const fade = css`
     top: 50%;
     transform: translateY(-50%);
     pointer-events: none;
+`;
 
+export const fadeLeft = css`
     ${MediaQuery.MaxWidth.lg} {
-        &.fadeLeft {
-            left: -8px;
-            background-image: linear-gradient(
-                to right,
-                var(${tokens.fade.backgroundColor}, ${Colour.bg}),
-                rgba(255, 255, 255, 0.001)
-            );
-        }
+        left: calc(${Spacing["spacing-8"]} * -1);
+        background-image: linear-gradient(
+            to right,
+            var(${tokens.fade.backgroundColor}, ${Colour.bg}),
+            rgba(255, 255, 255, 0.001)
+        );
+    }
+`;
 
-        &.fadeRight {
-            right: 8px;
-            background-image: linear-gradient(
-                to left,
-                var(${tokens.fade.backgroundColor}, ${Colour.bg}),
-                rgba(255, 255, 255, 0.001)
-            );
-        }
+export const fadeRight = css`
+    ${MediaQuery.MaxWidth.lg} {
+        right: ${Spacing["spacing-8"]};
+        background-image: linear-gradient(
+            to left,
+            var(${tokens.fade.backgroundColor}, ${Colour.bg}),
+            rgba(255, 255, 255, 0.001)
+        );
     }
 `;
 
