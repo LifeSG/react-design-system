@@ -1,20 +1,15 @@
 import ReactSlider from "react-slider";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Border, Colour, Radius, Shadow, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface TrackStyleProps {
-    $color: string | undefined;
-}
-
-interface ThumbStyleProps {
-    $disabled: boolean | undefined;
-    $readOnly: boolean | undefined;
-}
+export const tokens = {
+    track: {
+        backgroundColor:
+            "--fds-internal-inputRangeSlider-track-backgroundColor",
+    },
+};
 
 // =============================================================================
 // STYLING
@@ -42,7 +37,7 @@ export const Slider = styled(ReactSlider)`
     height: 0.875rem;
 `;
 
-export const Knob = styled.div<ThumbStyleProps>`
+export const Knob = styled.div`
     height: 2.5rem;
     width: 2.5rem;
     position: absolute;
@@ -50,23 +45,19 @@ export const Knob = styled.div<ThumbStyleProps>`
     left: 50%;
     transform: translate(-50%, -50%);
 
-    ${(props) => {
-        if (props.$disabled) {
-            return css`
-                cursor: not-allowed;
-            `;
-        }
-        if (!props.$readOnly) {
-            return css`
-                cursor: grab;
-                &:active {
-                    cursor: grabbing;
-                }
-            `;
-        }
-    }}
+    &.inputRangeSliderKnobDisabled {
+        cursor: not-allowed;
+    }
 
-    &:after {
+    &.inputRangeSliderKnobInteractive {
+        cursor: grab;
+
+        &:active {
+            cursor: grabbing;
+        }
+    }
+
+    &::after {
         content: "";
         display: block;
         height: 0.875rem;
@@ -79,11 +70,12 @@ export const Knob = styled.div<ThumbStyleProps>`
         background-color: ${Colour["bg"]};
         box-shadow: ${Shadow["sm-subtle"]};
         border: ${Border["width-010"]} ${Border["solid"]}
-            ${(props) =>
-                props.$disabled
-                    ? Colour["border-selected-disabled"]
-                    : Colour["border-strong"]};
+            ${Colour["border-strong"]};
         border-radius: ${Radius["full"]};
+    }
+
+    &.inputRangeSliderKnobDisabled::after {
+        border-color: ${Colour["border-selected-disabled"]};
     }
 `;
 
@@ -93,17 +85,22 @@ export const SliderThumb = styled.div`
     position: relative;
     outline: none;
 
-    &:focus ${Knob}:after, &[data-focused="true"] ${Knob}:after {
+    &:focus ${Knob}::after, &[data-focused="true"] ${Knob}::after {
         outline-offset: -1px;
         outline: ${Border["width-040"]} ${Border["solid"]}
             ${Colour["border-selected"]};
     }
 `;
 
-export const SliderTrack = styled.div<TrackStyleProps>`
+export const SliderTrack = styled.div`
     height: 0.25rem;
     top: 50%;
     transform: translateY(-50%);
     border-radius: ${Radius["full"]};
-    background: ${(props) => props.$color || Colour["border-strong"]};
+
+    ${tokens.track.backgroundColor}: initial;
+    background: var(
+        ${tokens.track.backgroundColor},
+        ${Colour["border-strong"]}
+    );
 `;
