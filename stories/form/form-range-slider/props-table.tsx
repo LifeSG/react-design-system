@@ -82,9 +82,7 @@ const DATA: ApiTableSectionProps[] = [
                         length is {code("(numOfThumbs + 1)")}
                     </>
                 ),
-                propTypes: [
-                    "(string | ((props: ThemeStyleProps) => string | undefined))[]",
-                ],
+                propTypes: ["string[]"],
             },
             {
                 name: "showSliderLabels",
@@ -137,7 +135,7 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(value: number[]) => void"],
             },
             {
-                name: "onChange",
+                name: "onChangeEnd",
                 description:
                     "Called when a thumb is released after selection is complete",
                 propTypes: ["(value: number[]) => void"],

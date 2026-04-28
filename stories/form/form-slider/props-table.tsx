@@ -66,9 +66,7 @@ const DATA: ApiTableSectionProps[] = [
                         such <code>[leftTrack, rightTrack]</code>
                     </>
                 ),
-                propTypes: [
-                    "(string | ((props: ThemeStyleProps) => string | undefined))[]",
-                ],
+                propTypes: ["string[]"],
             },
             {
                 name: "showSliderLabels",
