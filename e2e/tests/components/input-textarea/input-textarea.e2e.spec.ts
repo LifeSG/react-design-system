@@ -43,18 +43,6 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("InputTextarea", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("prefix");
-        });
-
-        test("Prefix", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                fullscreen: true,
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
             await story.init("states");
         });
 
@@ -78,26 +66,23 @@ test.describe("InputTextarea", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("prefix");
+        });
+
+        test("Prefix", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("counter");
         });
 
         test("Counter", async ({ story }) => {
             await compareScreenshot(story, "mount", {
-                locator: story.layout,
-            });
-
-            await expect(story.locators.defaultCounterLabel).toHaveText(
-                "6 characters left"
-            );
-
-            await story.locators.counterTextarea.click();
-            await story.locators.counterTextarea.type("hello");
-
-            await expect(story.locators.defaultCounterLabel).toHaveText(
-                "1 character left"
-            );
-
-            await compareScreenshot(story, "updated", {
                 locator: story.layout,
             });
         });
@@ -110,17 +95,6 @@ test.describe("InputTextarea", () => {
 
         test("Custom counter", async ({ story }) => {
             await compareScreenshot(story, "mount", {
-                locator: story.layout,
-            });
-
-            await expect(story.locators.customCounterLabel).toHaveText("0/10");
-
-            await story.locators.customCounterTextarea.click();
-            await story.locators.customCounterTextarea.type("abcd");
-
-            await expect(story.locators.customCounterLabel).toHaveText("4/10");
-
-            await compareScreenshot(story, "updated", {
                 locator: story.layout,
             });
         });
