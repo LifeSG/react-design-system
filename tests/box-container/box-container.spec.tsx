@@ -115,20 +115,25 @@ describe("BoxContainer", () => {
     });
 
     it("should render a custom call to action component if specified", () => {
+        const mockClickHandler = jest.fn();
         const buttonLabel = "custom button";
 
         render(
             <BoxContainer
                 title={DEFAULT_TITLE}
-                callToActionComponent={<button>{buttonLabel}</button>}
+                callToActionComponent={
+                    <button onClick={mockClickHandler}>{buttonLabel}</button>
+                }
             >
                 <p>{DEFAULT_TEXT}</p>
             </BoxContainer>
         );
 
-        expect(
-            screen.getByRole("button", { name: buttonLabel })
-        ).toBeInTheDocument();
+        const customButton = screen.getByRole("button", { name: buttonLabel });
+        expect(customButton).toBeInTheDocument();
+
+        fireEvent.click(customButton);
+        expect(mockClickHandler).toHaveBeenCalledTimes(1);
     });
 });
 
