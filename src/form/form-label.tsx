@@ -58,7 +58,7 @@ export const FormLabel = ({
 
 export const FormErrorMessage = ({
     className,
-    ...restProps
+    ...otherProps
 }: React.HTMLAttributes<HTMLElement>): JSX.Element => {
     return (
         <div className={clsx(styles.errorMessageContainer, className)}>
@@ -66,7 +66,7 @@ export const FormErrorMessage = ({
                 className={styles.errorIcon}
                 aria-hidden
             />
-            <p className={styles.errorMessage} {...restProps} />
+            <p className={styles.errorMessage} {...otherProps} />
         </div>
     );
 };
