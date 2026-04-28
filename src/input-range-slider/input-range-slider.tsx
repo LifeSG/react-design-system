@@ -2,9 +2,11 @@ import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import clsx from "clsx";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
+import ReactSlider from "react-slider";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { Colour, useApplyStyle } from "../theme";
+import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
 import * as styles from "./input-range-slider.styles";
 import type { InputRangeSliderProps } from "./types";
@@ -335,11 +337,11 @@ export const InputRangeSlider = ({
         }
 
         return (
-            <styles.LabelText>
+            <Typography.BodyBL className={styles.labelText}>
                 {sliderLabelPrefix}
                 {value}
                 {sliderLabelSuffix}
-            </styles.LabelText>
+            </Typography.BodyBL>
         );
     };
 
@@ -357,22 +359,22 @@ export const InputRangeSlider = ({
         }
 
         return (
-            <styles.LabelText>
+            <Typography.BodyBL className={styles.labelText}>
                 {indicatorLabelPrefix}
                 {formattedSelection}
                 {indicatorLabelSuffix}
-            </styles.LabelText>
+            </Typography.BodyBL>
         );
     };
 
     return (
-        <styles.Wrapper
+        <div
             {...otherProps}
             id={id}
             role="group"
             aria-labelledby={ariaLabelledBy}
             aria-disabled={disabled}
-            className={clsx(className)}
+            className={clsx(styles.wrapper, className)}
         >
             {!disabled && !readOnly && (
                 <VisuallyHidden id={instructionTextId}>
@@ -381,9 +383,12 @@ export const InputRangeSlider = ({
             )}
 
             {showIndicatorLabel && (
-                <styles.IndicatorLabelContainer id={indicatorTextId}>
+                <div
+                    id={indicatorTextId}
+                    className={styles.indicatorLabelContainer}
+                >
                     {formatIndicationLabel()}
-                </styles.IndicatorLabelContainer>
+                </div>
             )}
 
             {selection.map((thumbValue, index) => {
@@ -436,7 +441,7 @@ export const InputRangeSlider = ({
 
             {/* Native range inputs provide the accessible interaction model.
                 The visible react-slider is presentation-only. */}
-            <styles.Slider
+            <ReactSlider
                 step={step}
                 min={min}
                 max={max}
@@ -446,14 +451,19 @@ export const InputRangeSlider = ({
                 onAfterChange={handleChangeEnd}
                 minDistance={minRange}
                 aria-hidden
+                className={styles.slider}
                 renderThumb={(
                     thumbProps: React.HTMLAttributes<HTMLDivElement>,
                     state
                 ) => {
                     return (
-                        <styles.SliderThumb
+                        <div
                             data-testid={`slider-thumb-${state.index}`}
                             {...thumbProps}
+                            className={clsx(
+                                styles.sliderThumb,
+                                thumbProps.className
+                            )}
                             tabIndex={-1}
                             aria-hidden
                             data-focused={
@@ -462,15 +472,16 @@ export const InputRangeSlider = ({
                                     : undefined
                             }
                         >
-                            <styles.Knob
+                            <div
                                 className={clsx(
-                                    (disabled &&
-                                        "inputRangeSliderKnobDisabled") ||
-                                        (!readOnly &&
-                                            "inputRangeSliderKnobInteractive")
+                                    styles.knob,
+                                    disabled && styles.knobDisabled,
+                                    !disabled &&
+                                        !readOnly &&
+                                        styles.knobInteractive
                                 )}
                             />
-                        </styles.SliderThumb>
+                        </div>
                     );
                 }}
                 renderTrack={(
@@ -488,12 +499,12 @@ export const InputRangeSlider = ({
             />
 
             {showSliderLabels && (
-                <styles.LabelContainer>
+                <div className={styles.labelContainer}>
                     <div>{formatLabel(min)}</div>
                     <div>{formatLabel(max)}</div>
-                </styles.LabelContainer>
+                </div>
             )}
-        </styles.Wrapper>
+        </div>
     );
 };
 
@@ -501,12 +512,18 @@ interface TrackProps extends React.HTMLAttributes<HTMLDivElement> {
     color?: string;
 }
 
-const Track = ({ color, ...otherProps }: TrackProps) => {
+const Track = ({ color, className, ...otherProps }: TrackProps) => {
     const trackRef = useRef<HTMLDivElement>(null);
 
     useApplyStyle(trackRef, {
         [styles.tokens.track.backgroundColor]: color,
     });
 
-    return <styles.SliderTrack {...otherProps} ref={trackRef} />;
+    return (
+        <div
+            {...otherProps}
+            className={clsx(styles.sliderTrack, className)}
+            ref={trackRef}
+        />
+    );
 };

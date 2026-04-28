@@ -1,8 +1,6 @@
-import ReactSlider from "react-slider";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Radius, Shadow, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 export const tokens = {
     track: {
@@ -11,51 +9,36 @@ export const tokens = {
     },
 };
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Wrapper = styled.div`
+export const wrapper = css`
     isolation: isolate;
 `;
 
-export const LabelContainer = styled.div`
+export const labelContainer = css`
     margin-top: ${Spacing["spacing-8"]};
     display: flex;
     justify-content: space-between;
     gap: ${Spacing["spacing-8"]};
 `;
 
-export const IndicatorLabelContainer = styled.div`
+export const indicatorLabelContainer = css`
     margin-bottom: ${Spacing["spacing-8"]};
 `;
 
-export const LabelText = styled(Typography.BodyBL)`
+export const labelText = css`
     overflow-wrap: anywhere;
 `;
 
-export const Slider = styled(ReactSlider)`
+export const slider = css`
     height: 0.875rem;
 `;
 
-export const Knob = styled.div`
+export const knob = css`
     height: 2.5rem;
     width: 2.5rem;
     position: absolute;
     top: 50%;
     left: 50%;
     transform: translate(-50%, -50%);
-
-    &.inputRangeSliderKnobDisabled {
-        cursor: not-allowed;
-    }
-
-    &.inputRangeSliderKnobInteractive {
-        cursor: grab;
-
-        &:active {
-            cursor: grabbing;
-        }
-    }
 
     &::after {
         content: "";
@@ -73,26 +56,38 @@ export const Knob = styled.div`
             ${Colour["border-strong"]};
         border-radius: ${Radius["full"]};
     }
+`;
 
-    &.inputRangeSliderKnobDisabled::after {
+export const knobDisabled = css`
+    cursor: not-allowed;
+
+    &::after {
         border-color: ${Colour["border-selected-disabled"]};
     }
 `;
 
-export const SliderThumb = styled.div`
+export const knobInteractive = css`
+    cursor: grab;
+
+    &:active {
+        cursor: grabbing;
+    }
+`;
+
+export const sliderThumb = css`
     height: 0.875rem;
     width: 0.875rem;
     position: relative;
     outline: none;
 
-    &:focus ${Knob}::after, &[data-focused="true"] ${Knob}::after {
+    &:focus .${knob}::after, &[data-focused="true"] .${knob}::after {
         outline-offset: -1px;
         outline: ${Border["width-040"]} ${Border["solid"]}
             ${Colour["border-selected"]};
     }
 `;
 
-export const SliderTrack = styled.div`
+export const sliderTrack = css`
     height: 0.25rem;
     top: 50%;
     transform: translateY(-50%);
