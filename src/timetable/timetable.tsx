@@ -441,6 +441,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                 aria-label={timetableAriaLabel}
                 aria-rowcount={ariaRowCount}
                 aria-colcount={ariaColCount}
+                tabIndex={0}
             >
                 <TimeTableHeaderRow
                     role="row"
@@ -452,7 +453,6 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                         $isScrolledX={isScrolledX}
                         role="columnheader"
                         aria-colindex={1}
-                        aria-label="Resource"
                     ></RowColumnHeader>
                     <ColumnHeaderRow
                         $numOfColumns={hourlyIntervals.length}

@@ -116,7 +116,12 @@ export const RowBar = ({
                 ROW_INTERVAL,
                 true
             );
-            rowCellArray.push({ ...cell, roundedStartTime, roundedEndTime });
+            rowCellArray.push({
+                ...cell,
+                roundedStartTime,
+                roundedEndTime,
+                isFocusable: true,
+            });
 
             const nextSlotStartTime =
                 rowCells[index + 1]?.startTime || roundedMaxTime; // Get next cell start time, if next cell don't exist, use current row max time

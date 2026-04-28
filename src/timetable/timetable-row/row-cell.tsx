@@ -36,6 +36,7 @@ const Component = ({
     containerRef,
     customPopover,
     cellStyleAttributes,
+    isFocusable,
     roundedStartTime = startTime,
     roundedEndTime = endTime,
     ariaColIndex,
@@ -98,6 +99,7 @@ const Component = ({
                 aria-colindex={ariaColIndex}
                 aria-colspan={ariaColSpan}
                 aria-label={rowAriaLabel}
+                tabIndex={isFocusable ? 0 : undefined}
             >
                 <Wrapper>
                     <Block
