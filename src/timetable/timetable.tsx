@@ -9,6 +9,7 @@ import {
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { PopoverV2TriggerProps } from "../popover-v2";
+import { VisuallyHidden } from "../shared/accessibility";
 import { TimeHelper } from "../util/time-helper";
 import {
     MIN_INTERVAL_WIDTH,
@@ -223,7 +224,6 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
 
         const popoverTriggerProps: PopoverV2TriggerProps = {
             position: "bottom-start",
-            rootNode: tableContainerRef,
             customOffset: data.rowHeaderPopover.offset,
             children: child,
             trigger: data.rowHeaderPopover.trigger,
@@ -336,6 +336,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                             key={`${index}-timetable-row`}
                             role="row"
                             aria-rowindex={index + 2}
+                            aria-label={data.name}
                         >
                             {renderRowHeader(data)}
                             <RowBar
@@ -400,14 +401,23 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                     onRefresh={onRefresh}
                     onCalendarDateSelect={onCalendarDateSelect}
                 />
-                <EmptyTableContainer className="empty-container">
+                <EmptyTableContainer
+                    className="empty-container"
+                    tabIndex={0}
+                    aria-live="polite"
+                    aria-atomic
+                    aria-busy={loading}
+                >
                     {!loading ? (
                         <NoResultsFound
                             type="no-item-found"
                             description={emptyContentMessage}
                         />
                     ) : (
-                        <Loader $isEmptyContent={isEmptyContent}></Loader>
+                        <>
+                            <VisuallyHidden>{`Loading ${timetableAriaLabel}`}</VisuallyHidden>
+                            <Loader $isEmptyContent={isEmptyContent}></Loader>
+                        </>
                     )}
                 </EmptyTableContainer>
             </Container>
@@ -453,7 +463,9 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                         $isScrolledX={isScrolledX}
                         role="columnheader"
                         aria-colindex={1}
-                    ></RowColumnHeader>
+                    >
+                        <VisuallyHidden>Resource</VisuallyHidden>
+                    </RowColumnHeader>
                     <ColumnHeaderRow
                         $numOfColumns={hourlyIntervals.length}
                         $intervalWidth={intervalWidth}

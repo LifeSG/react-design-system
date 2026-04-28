@@ -33,7 +33,6 @@ const Component = ({
     status,
     intervalWidth,
     rowBarColor,
-    containerRef,
     customPopover,
     cellStyleAttributes,
     isFocusable,
@@ -60,7 +59,7 @@ const Component = ({
         rowName,
         title,
         subtitle,
-        `${status} slot`
+        `${status}`
     );
 
     // =============================================================================
@@ -87,10 +86,7 @@ const Component = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <WithOptionalPopover
-            containerRef={containerRef}
-            customPopover={customPopover}
-        >
+        <WithOptionalPopover customPopover={customPopover}>
             <BlockContainer
                 key={`block-container-key`}
                 data-testid={`block-container`}
@@ -103,6 +99,7 @@ const Component = ({
             >
                 <Wrapper>
                     <Block
+                        aria-hidden={isFocusable ? true : undefined}
                         $width={adjustedCellWidth}
                         $status={status}
                         $mainColor={rowBarColor.mainColor}

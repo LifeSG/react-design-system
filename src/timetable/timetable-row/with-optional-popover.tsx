@@ -1,15 +1,12 @@
-import { RefObject } from "react";
 import { PopoverTrigger, PopoverV2TriggerProps } from "../../popover-v2";
 import { TimeTablePopoverProps } from "../types";
 
 interface ConditionalCellWrapperProps {
-    containerRef: RefObject<HTMLDivElement>;
     children: JSX.Element;
     customPopover?: TimeTablePopoverProps | undefined;
 }
 
 export const WithOptionalPopover = ({
-    containerRef,
     children,
     customPopover,
 }: ConditionalCellWrapperProps) => {
@@ -19,7 +16,6 @@ export const WithOptionalPopover = ({
 
     const popoverTriggerProps: PopoverV2TriggerProps = {
         position: "bottom-start",
-        rootNode: containerRef,
         customOffset: customPopover.offset,
         children: children,
         trigger: customPopover.trigger,
