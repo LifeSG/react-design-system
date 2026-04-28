@@ -123,6 +123,72 @@ test.describe("RangeSlider", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("form-variants");
+        });
+
+        test("Focus state", async ({ story }) => {
+            await story.locators.default.getByRole("slider").first().focus();
+            await compareScreenshot(story, "default-focus", {
+                locator: story.locators.default,
+            });
+
+            await story.locators.disabled.getByRole("slider").first().focus();
+            await compareScreenshot(story, "disabled-focus", {
+                locator: story.locators.disabled,
+            });
+
+            await story.locators.readonly.getByRole("slider").first().focus();
+            await compareScreenshot(story, "readonly-focus", {
+                locator: story.locators.readonly,
+            });
+
+            await story.locators.error.getByRole("slider").first().focus();
+            await compareScreenshot(story, "error-focus", {
+                locator: story.locators.error,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", { mode: "dark" });
+        });
+
+        test("Focus state (dark mode)", async ({ story }) => {
+            await story.locators.default.getByRole("slider").first().focus();
+            await compareScreenshot(story, "default-focus", {
+                locator: story.locators.default,
+            });
+
+            await story.locators.disabled.getByRole("slider").first().focus();
+            await compareScreenshot(story, "disabled-focus", {
+                locator: story.locators.disabled,
+            });
+
+            await story.locators.readonly.getByRole("slider").first().focus();
+            await compareScreenshot(story, "readonly-focus", {
+                locator: story.locators.readonly,
+            });
+
+            await story.locators.error.getByRole("slider").first().focus();
+            await compareScreenshot(story, "error-focus", {
+                locator: story.locators.error,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout");
+        });
+
+        test("Grid layout", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("multiple-thumbs");
         });
 
