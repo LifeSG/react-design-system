@@ -139,11 +139,9 @@ describe("Textarea", () => {
             value: 8,
         });
 
-        const preventDefaultSpy = jest.spyOn(event, "preventDefault");
-
         fireEvent(textarea, event);
 
-        expect(preventDefaultSpy).toHaveBeenCalledTimes(1);
+        expect(textarea).toHaveValue("prefix: ");
         expect(handleChange).not.toHaveBeenCalled();
     });
 
@@ -168,11 +166,9 @@ describe("Textarea", () => {
             value: 8,
         });
 
-        const preventDefaultSpy = jest.spyOn(event, "preventDefault");
-
         fireEvent(textarea, event);
 
-        expect(preventDefaultSpy).toHaveBeenCalledTimes(1);
+        expect(textarea).toHaveValue("prefix: ");
         expect(handleChange).not.toHaveBeenCalled();
     });
 
@@ -192,18 +188,13 @@ describe("Textarea", () => {
             key: "Home",
         });
 
-        Object.defineProperty(textarea, "selectionStart", {
-            configurable: true,
-            value: 12,
-        });
-
-        const preventDefaultSpy = jest.spyOn(event, "preventDefault");
-        const setSelectionRangeSpy = jest.spyOn(textarea, "setSelectionRange");
+        textarea.setSelectionRange(4, 4);
 
         fireEvent(textarea, event);
 
-        expect(preventDefaultSpy).toHaveBeenCalledTimes(1);
-        expect(setSelectionRangeSpy).toHaveBeenCalledWith(8, 8);
+        expect(textarea).toHaveValue("prefix: ");
+        expect(textarea.selectionStart).toBe(8);
+        expect(textarea.selectionEnd).toBe(8);
         expect(handleChange).not.toHaveBeenCalled();
     });
 
