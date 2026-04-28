@@ -75,6 +75,18 @@ test.describe("InputTextarea", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("states", { mode: "dark" });
+        });
+
+        test("States with Dark Mode", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("grid");
         });
 

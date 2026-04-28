@@ -4,7 +4,7 @@ import { Form } from "@lifesg/react-design-system/form";
 
 export default function Story() {
     return (
-        <div className="story-row-container">
+        <div className="story-row-container story-background">
             <div className="story-column-container">
                 <Form.Textarea
                     data-testid="textarea-default"
