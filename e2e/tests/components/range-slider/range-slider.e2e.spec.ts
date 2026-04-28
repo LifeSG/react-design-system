@@ -120,4 +120,25 @@ test.describe("RangeSlider", () => {
             await compareScreenshot(story, "mount");
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("multiple-thumbs");
+        });
+
+        test("Multiple thumbs", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+
+            await expect(story.layout).toMatchAriaSnapshot(`
+                - group:
+                    - slider "Minimum value slider": "15"
+                    - slider "Indeterminate value slider": "35"
+                    - slider "Maximum value slider": "55"
+                - group:
+                    - slider "Custom start": "15"
+                    - slider "Custom middle": "35"
+                    - slider "Custom end": "55"
+            `);
+        });
+    });
 });
