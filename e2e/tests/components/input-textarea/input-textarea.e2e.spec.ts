@@ -75,6 +75,16 @@ test.describe("InputTextarea", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("grid");
+        });
+
+        test("Grid", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("prefix");
         });
 
