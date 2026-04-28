@@ -5,22 +5,36 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "range-slider";
 
     public readonly locators: {
+        internal: {
+            slider: (index: number) => Locator;
+            thumb: (index: number) => Locator;
+            track: (index: number) => Locator;
+        };
         default: Locator;
         disabled: Locator;
         readonly: Locator;
         error: Locator;
         prefilled: Locator;
+        interaction: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
+            internal: {
+                slider: (index: number) => page.getByRole("slider").nth(index),
+                thumb: (index: number) =>
+                    page.getByTestId(`slider-thumb-${index}`),
+                track: (index: number) =>
+                    page.getByTestId(`slider-track-${index}`),
+            },
             default: page.getByTestId("range-slider-default"),
             disabled: page.getByTestId("range-slider-disabled"),
             readonly: page.getByTestId("range-slider-readonly"),
             error: page.getByTestId("range-slider-error"),
             prefilled: page.getByTestId("range-slider-prefilled"),
+            interaction: page.getByTestId("range-slider-interaction"),
         };
     }
 
@@ -31,6 +45,39 @@ class StoryPage extends AbstractStoryPage {
         for (const slider of await sliders.all()) {
             await expect(slider).toHaveAccessibleDescription(description);
         }
+    }
+
+    async getSliderValue(index: number) {
+        const slider = this.locators.internal.thumb(index);
+        const value = await slider.getAttribute("aria-valuenow");
+
+        if (value === null) {
+            throw new Error(`Slider at index ${index} does not have a value`);
+        }
+
+        return parseInt(value);
+    }
+
+    async getSliderDelta(locator: Locator, range: number) {
+        const slider = await locator.boundingBox();
+        const step = slider?.width ? slider.width / range : 0;
+        return step;
+    }
+
+    async dragSlider(index: number, deltaX: number) {
+        const slider = this.locators.internal.thumb(index);
+        const boundingBox = await slider.boundingBox();
+
+        if (!boundingBox) {
+            throw new Error(
+                `Slider at index ${index} does not have a bounding box`
+            );
+        }
+
+        await slider.hover();
+        await this.page.mouse.down();
+        await this.page.mouse.move(boundingBox.x + deltaX, boundingBox.y);
+        await this.page.mouse.up();
     }
 }
 
@@ -184,6 +231,145 @@ test.describe("RangeSlider", () => {
 
         test("Grid layout", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe("Mouse interaction", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("interaction");
+        });
+
+        test("Min slider", async ({ story }) => {
+            const step = await story.getSliderDelta(
+                story.locators.interaction,
+                10
+            );
+            expect(await story.getSliderValue(0)).toEqual(0);
+
+            await test.step("Drag the slider to the right for 1 step", async () => {
+                await story.dragSlider(0, step);
+
+                expect(await story.getSliderValue(0)).toEqual(1);
+            });
+
+            await test.step("Drag the slider to the right for multiple steps", async () => {
+                await story.dragSlider(0, step * 2);
+
+                expect(await story.getSliderValue(0)).toEqual(3);
+            });
+
+            await test.step("Drag the slider to the minimum", async () => {
+                await story.dragSlider(0, -step * 10);
+
+                expect(await story.getSliderValue(0)).toEqual(0);
+            });
+
+            await test.step("Drag the slider to the maximum", async () => {
+                await story.dragSlider(0, step * 10);
+
+                expect(await story.getSliderValue(0)).toEqual(7);
+            });
+        });
+
+        test("Max slider", async ({ story }) => {
+            const step = await story.getSliderDelta(
+                story.locators.interaction,
+                10
+            );
+            expect(await story.getSliderValue(1)).toEqual(10);
+
+            await test.step("Drag the slider to the left for 1 step", async () => {
+                await story.dragSlider(1, -step);
+
+                expect(await story.getSliderValue(1)).toEqual(9);
+            });
+
+            await test.step("Drag the slider to the left for multiple steps", async () => {
+                await story.dragSlider(1, -step * 2);
+
+                expect(await story.getSliderValue(1)).toEqual(7);
+            });
+
+            await test.step("Drag the slider to the maximum", async () => {
+                await story.dragSlider(1, step * 10);
+
+                expect(await story.getSliderValue(1)).toEqual(10);
+            });
+
+            await test.step("Drag the slider to the minimum", async () => {
+                await story.dragSlider(1, -step * 10);
+
+                expect(await story.getSliderValue(1)).toEqual(3);
+            });
+        });
+    });
+
+    test.describe("Keyboard navigation", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("interaction");
+        });
+
+        test("Tab to focus thumbs", async ({ story }) => {
+            await test.step("Tab focuses the min thumb", async () => {
+                await story.page.keyboard.press("Tab");
+                await expect(story.locators.internal.slider(0)).toBeFocused();
+            });
+
+            await test.step("Tab moves focus to the max thumb", async () => {
+                await story.page.keyboard.press("Tab");
+                await expect(story.locators.internal.slider(1)).toBeFocused();
+            });
+        });
+
+        test("Min slider", async ({ story }) => {
+            expect(await story.getSliderValue(0)).toEqual(0);
+
+            await test.step("ArrowRight increases thumb value by one step", async () => {
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("ArrowRight");
+                expect(await story.getSliderValue(0)).toEqual(1);
+            });
+
+            await test.step("ArrowLeft decreases thumb value by one step", async () => {
+                await story.page.keyboard.press("ArrowLeft");
+                expect(await story.getSliderValue(0)).toEqual(0);
+            });
+
+            await test.step("End sets thumb value to maximum", async () => {
+                await story.page.keyboard.press("End");
+                expect(await story.getSliderValue(0)).toEqual(7);
+            });
+
+            await test.step("Home sets thumb value to minimum", async () => {
+                await story.page.keyboard.press("Home");
+                expect(await story.getSliderValue(0)).toEqual(0);
+            });
+        });
+
+        test("Max slider", async ({ story }) => {
+            expect(await story.getSliderValue(1)).toEqual(10);
+
+            await test.step("ArrowLeft decreases thumb value by one step", async () => {
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("ArrowLeft");
+                expect(await story.getSliderValue(1)).toEqual(9);
+            });
+
+            await test.step("ArrowRight increases thumb value by one step", async () => {
+                await story.page.keyboard.press("ArrowRight");
+                expect(await story.getSliderValue(1)).toEqual(10);
+            });
+
+            await test.step("Home sets thumb value to minimum", async () => {
+                await story.page.keyboard.press("Home");
+                expect(await story.getSliderValue(1)).toEqual(3);
+            });
+
+            await test.step("End sets thumb value to maximum", async () => {
+                await story.page.keyboard.press("End");
+                expect(await story.getSliderValue(1)).toEqual(10);
+            });
         });
     });
 
