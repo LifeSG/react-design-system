@@ -150,6 +150,10 @@ export const PopoverTrigger = ({
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
+        // On mobile, ModalV2 handles its own dismiss via onMobileClose
+        if (isModal || (isMobile && typeof popoverContent !== "function"))
+            return;
+
         const next =
             (e.relatedTarget as Node | null) ??
             (document.activeElement as Node | null);
