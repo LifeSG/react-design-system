@@ -10,14 +10,10 @@ import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 
 import { Overlay } from "../overlay";
+import { ClickableIcon } from "../shared/clickable-icon";
+import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
-import {
-    CloseButton,
-    Container,
-    Content,
-    Header,
-    Heading,
-} from "./drawer.styles";
+import * as styles from "./drawer.styles";
 import type { DrawerProps } from "./types";
 
 export const Drawer = ({
@@ -81,10 +77,6 @@ export const Drawer = ({
         }
     };
 
-    const handleClick = (event: React.MouseEvent) => {
-        event.stopPropagation();
-    };
-
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -100,39 +92,40 @@ export const Drawer = ({
                     initialFocus={-1}
                     returnFocus={true}
                 >
-                    <Container
+                    <div
                         ref={refs.setFloating}
                         data-status={status}
                         data-testid="drawer"
-                        onClick={handleClick}
                         aria-modal
                         role="dialog"
                         aria-labelledby={id}
                         onTransitionEnd={handleDialogVisibility}
+                        className={clsx(styles.container, className)}
                         {...getFloatingProps()}
                         {...otherProps}
-                        className={clsx(className)}
                     >
-                        <Header>
-                            <Heading
+                        <div className={styles.header}>
+                            <Typography.HeadingMD
                                 id={id}
                                 ref={initialFocusRef}
                                 tabIndex={-1}
                                 weight="bold"
                                 forwardedAs="h2"
+                                className={styles.heading}
                             >
                                 {heading}
-                            </Heading>
-                        </Header>
-                        <Content>{children}</Content>
-                        <CloseButton
+                            </Typography.HeadingMD>
+                        </div>
+                        <div className={styles.content}>{children}</div>
+                        <ClickableIcon
                             aria-label="Close drawer"
                             onClick={onClose}
                             focusHighlight={false}
+                            className={styles.closeButton}
                         >
                             <CrossIcon aria-hidden />
-                        </CloseButton>
-                    </Container>
+                        </ClickableIcon>
+                    </div>
                 </FloatingFocusManager>
             ) : undefined}
         </Overlay>

@@ -1,6 +1,5 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { ClickableIcon } from "../shared/clickable-icon";
 import {
     Border,
     Colour,
@@ -11,13 +10,31 @@ import {
     Shadow,
     Spacing,
 } from "../theme";
-import { Typography } from "../typography";
 
 // =============================================================================
 // STYLING HELPERS
 // =============================================================================
 // FloatingUI transition styles
-const FLOATING_TRANSITION_STYLES = css`
+
+// =============================================================================
+// STYLING
+// =============================================================================
+export const container = css`
+    position: fixed;
+    top: 0;
+
+    display: flex;
+    flex-direction: column;
+
+    height: 100%;
+    width: 40%;
+    overflow: hidden;
+
+    background-color: ${Colour["bg"]};
+    box-shadow: ${Shadow["lg-subtle"]};
+    border-top-left-radius: ${Radius["md"]};
+    border-bottom-left-radius: ${Radius["md"]};
+
     transition-property: right, visibility;
 
     &[data-status="initial"] {
@@ -38,28 +55,6 @@ const FLOATING_TRANSITION_STYLES = css`
         right: -100%;
         visibility: hidden;
     }
-`;
-
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Container = styled.div`
-    position: fixed;
-    top: 0;
-
-    display: flex;
-    flex-direction: column;
-    height: 100%;
-
-    background-color: ${Colour["bg"]};
-    box-shadow: ${Shadow["lg-subtle"]};
-
-    ${FLOATING_TRANSITION_STYLES}
-
-    width: 40%;
-    border-top-left-radius: ${Radius["md"]};
-    border-bottom-left-radius: ${Radius["md"]};
-    overflow: hidden;
 
     ${MediaQuery.MaxWidth.xl} {
         width: 50%;
@@ -74,7 +69,7 @@ export const Container = styled.div`
     }
 `;
 
-export const Header = styled.div`
+export const header = css`
     top: 0;
     display: flex;
     align-items: center;
@@ -93,7 +88,7 @@ export const Header = styled.div`
     }
 `;
 
-export const CloseButton = styled(ClickableIcon)`
+export const closeButton = css`
     color: ${Colour["icon"]};
     padding: 0;
     position: absolute;
@@ -110,13 +105,13 @@ export const CloseButton = styled(ClickableIcon)`
     }
 `;
 
-export const Heading = styled(Typography.HeadingMD)`
+export const heading = css`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 `;
 
-export const Content = styled.div`
+export const content = css`
     flex: 1;
     overflow-y: auto;
 `;
