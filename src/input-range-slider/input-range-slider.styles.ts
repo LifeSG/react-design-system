@@ -1,21 +1,14 @@
 import ReactSlider from "react-slider";
 import styled, { css } from "styled-components";
 
+import { Border, Colour, Radius, Shadow, Spacing } from "../theme";
 import { Typography } from "../typography";
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Radius,
-    V3_Shadow,
-    V3_Spacing,
-} from "../v3_theme";
-import type { V3_ThemeStyleProps } from "../v3_theme/types";
 
 // =============================================================================
 // STYLE INTERFACES
 // =============================================================================
 interface TrackStyleProps {
-    $color: string | ((props: V3_ThemeStyleProps) => string) | undefined;
+    $color: string | undefined;
 }
 
 interface ThumbStyleProps {
@@ -31,14 +24,14 @@ export const Wrapper = styled.div`
 `;
 
 export const LabelContainer = styled.div`
-    margin-top: ${V3_Spacing["spacing-8"]};
+    margin-top: ${Spacing["spacing-8"]};
     display: flex;
     justify-content: space-between;
-    gap: ${V3_Spacing["spacing-8"]};
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const IndicatorLabelContainer = styled.div`
-    margin-bottom: ${V3_Spacing["spacing-8"]};
+    margin-bottom: ${Spacing["spacing-8"]};
 `;
 
 export const LabelText = styled(Typography.BodyBL)`
@@ -83,14 +76,14 @@ export const Knob = styled.div<ThumbStyleProps>`
         left: 50%;
         transform: translate(-50%, -50%);
 
-        background-color: ${V3_Colour["bg"]};
-        box-shadow: ${V3_Shadow["sm-subtle"]};
-        border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
+        background-color: ${Colour["bg"]};
+        box-shadow: ${Shadow["sm-subtle"]};
+        border: ${Border["width-010"]} ${Border["solid"]}
             ${(props) =>
                 props.$disabled
-                    ? V3_Colour["border-selected-disabled"]
-                    : V3_Colour["border-strong"]};
-        border-radius: ${V3_Radius["full"]};
+                    ? Colour["border-selected-disabled"]
+                    : Colour["border-strong"]};
+        border-radius: ${Radius["full"]};
     }
 `;
 
@@ -102,8 +95,8 @@ export const SliderThumb = styled.div`
 
     &:focus ${Knob}:after, &[data-focused="true"] ${Knob}:after {
         outline-offset: -1px;
-        outline: ${V3_Border["width-040"]} ${V3_Border["solid"]}
-            ${V3_Colour["border-selected"]};
+        outline: ${Border["width-040"]} ${Border["solid"]}
+            ${Colour["border-selected"]};
     }
 `;
 
@@ -111,13 +104,6 @@ export const SliderTrack = styled.div<TrackStyleProps>`
     height: 0.25rem;
     top: 50%;
     transform: translateY(-50%);
-    border-radius: ${V3_Radius["full"]};
-
-    background: ${(props) => {
-        if (props.$color && typeof props.$color === "function") {
-            return props.$color(props);
-        } else {
-            return props.$color || V3_Colour["border-strong"](props);
-        }
-    }};
+    border-radius: ${Radius["full"]};
+    background: ${(props) => props.$color || Colour["border-strong"]};
 `;

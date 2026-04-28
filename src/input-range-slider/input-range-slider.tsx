@@ -3,8 +3,8 @@ import type React from "react";
 import { useEffect, useState } from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import { Colour } from "../theme";
 import { SimpleIdGenerator } from "../util";
-import { V3_Colour } from "../v3_theme";
 import {
     IndicatorLabelContainer,
     Knob,
@@ -199,12 +199,12 @@ export const InputRangeSlider = ({
     function getDefaultColors() {
         const inactiveColor =
             disabled || readOnly
-                ? V3_Colour["border-disabled"]
-                : V3_Colour["border-strong"];
+                ? Colour["border-disabled"]
+                : Colour["border-strong"];
         const activeColor =
             disabled || readOnly
-                ? V3_Colour["border-selected-disabled"]
-                : V3_Colour["border-selected"];
+                ? Colour["border-selected-disabled"]
+                : Colour["border-selected"];
 
         if (numOfThumbs === 1) {
             return [activeColor, inactiveColor];
