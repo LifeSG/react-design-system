@@ -39,7 +39,8 @@ describe("Textarea", () => {
         );
     });
 
-    it("should render custom counter label", () => {
+    it("should render custom counter label", async () => {
+        const user = userEvent.setup();
         const renderCustomCounter = jest.fn((maxLength, currentValueLength) => (
             <span>
                 {currentValueLength}/{maxLength}
@@ -50,10 +51,13 @@ describe("Textarea", () => {
             <Textarea
                 data-testid="textarea"
                 maxLength={10}
-                value="test"
                 renderCustomCounter={renderCustomCounter}
             />
         );
+
+        expect(screen.getByText("0/10")).toBeInTheDocument();
+
+        await user.type(screen.getByTestId("textarea"), "test");
 
         expect(renderCustomCounter).toHaveBeenLastCalledWith(10, 4);
         expect(screen.getByText("4/10")).toBeInTheDocument();
