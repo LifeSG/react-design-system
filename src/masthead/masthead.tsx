@@ -16,9 +16,7 @@ const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
     // EFFECTS
     // =============================================================================
     useEffect(() => {
-        if (!doAssetsExist()) {
-            addAssets();
-        }
+        void loadMastheadElement();
     }, []);
 
     useEffect(() => {
@@ -35,19 +33,12 @@ const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
-    const doAssetsExist = () => {
-        return document.getElementById(SCRIPT_ID);
-    };
-
-    const addAssets = () => {
-        if (!document.getElementById(SCRIPT_ID)) {
-            const script = document.createElement("script");
-            script.id = SCRIPT_ID;
-            script.type = "module";
-            script.src = SCRIPT_SRC;
-
-            document.head.appendChild(script);
+    const loadMastheadElement = async () => {
+        if (customElements.get(SGDS_MASTHEAD_TAGNAME)) {
+            return;
         }
+
+        await import(SGDS_MASTHEAD_MODULE);
     };
 
     const createContent = () => {
@@ -78,7 +69,7 @@ export const Masthead = memo(MastheadComponent);
 // =============================================================================
 // CONSTANTS
 // =============================================================================
-const SCRIPT_ID = "lifesg-ds-masthead-script";
-const SCRIPT_SRC =
-    "https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3/components/Masthead/index.umd.js";
+const SGDS_MASTHEAD_TAGNAME = "sgds-masthead";
 const SGDS_THEME_NIGHT_CLASSNAME = "sgds-night-theme";
+const SGDS_MASTHEAD_MODULE =
+    "@govtechsg/sgds-web-component/components/Masthead/index.js";
