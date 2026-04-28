@@ -55,7 +55,7 @@ describe("Textarea", () => {
             />
         );
 
-        expect(renderCustomCounter).toHaveBeenCalledWith(10, 4);
+        expect(renderCustomCounter).toHaveBeenLastCalledWith(10, 4);
         expect(screen.getByText("4/10")).toBeInTheDocument();
     });
 
@@ -79,7 +79,13 @@ describe("Textarea", () => {
 
         expect(textarea).toHaveValue("hello");
         expect(handleChange).toHaveBeenCalled();
-        expect(handleChange.mock.calls.at(-1)?.[0].target.value).toBe("hello");
+        expect(handleChange).toHaveBeenLastCalledWith(
+            expect.objectContaining({
+                target: expect.objectContaining({
+                    value: "hello",
+                }),
+            })
+        );
     });
 
     it("should preserve prefix in displayed value and emit value without prefix", async () => {
@@ -103,7 +109,13 @@ describe("Textarea", () => {
 
         expect(textarea).toHaveValue("prefix: hello");
         expect(handleChange).toHaveBeenCalledTimes(5);
-        expect(handleChange.mock.calls[4][0].target.value).toBe("hello");
+        expect(handleChange).toHaveBeenLastCalledWith(
+            expect.objectContaining({
+                target: expect.objectContaining({
+                    value: "hello",
+                }),
+            })
+        );
     });
 
     it("should prevent backspace when cursor is inside prefix", () => {
