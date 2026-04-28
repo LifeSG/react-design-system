@@ -1,17 +1,17 @@
 import styled, { css } from "styled-components";
 
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Typography } from "../typography";
 import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Motion,
-    V3_Radius,
-    V3_Shadow,
-    V3_Spacing,
-} from "../v3_theme";
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Motion,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../theme";
+import { Typography } from "../typography";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -34,15 +34,15 @@ const FLOATING_TRANSITION_STYLES = css`
     }
 
     &[data-status="open"] {
-        transition-duration: ${V3_Motion["duration-800"]};
-        transition-timing-function: ${V3_Motion["ease-entrance"]};
+        transition-duration: ${Motion["duration-800"]};
+        transition-timing-function: ${Motion["ease-entrance"]};
         right: 0;
         visibility: visible;
     }
 
     &[data-status="close"] {
-        transition-duration: ${V3_Motion["duration-800"]};
-        transition-timing-function: ${V3_Motion["ease-exit"]};
+        transition-duration: ${Motion["duration-800"]};
+        transition-timing-function: ${Motion["ease-exit"]};
         right: -100%;
         visibility: hidden;
     }
@@ -59,22 +59,22 @@ export const Container = styled.div<StyleProps>`
     flex-direction: column;
     height: 100%;
 
-    background-color: ${V3_Colour.bg};
-    box-shadow: ${V3_Shadow["lg-subtle"]};
+    background-color: ${Colour["bg"]};
+    box-shadow: ${Shadow["lg-subtle"]};
 
     ${FLOATING_TRANSITION_STYLES}
 
     width: 40%;
-    border-top-left-radius: ${V3_Radius["md"]};
-    border-bottom-left-radius: ${V3_Radius["md"]};
+    border-top-left-radius: ${Radius["md"]};
+    border-bottom-left-radius: ${Radius["md"]};
     overflow: hidden;
 
-    ${V3_MediaQuery.MaxWidth.xl} {
+    ${MediaQuery.MaxWidth.xl} {
         width: 50%;
         min-width: 700px;
     }
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 100%;
         min-width: unset;
         border-top-left-radius: 0;
@@ -86,36 +86,35 @@ export const Header = styled.div`
     top: 0;
     display: flex;
     align-items: center;
-    gap: ${V3_Spacing["spacing-16"]};
-    padding: ${V3_Spacing["spacing-32"]} ${V3_Spacing["spacing-16"]}
-        ${V3_Spacing["spacing-16"]}
-        calc(${V3_Font.Spec["heading-lh-md"]} + ${V3_Spacing["spacing-32"]});
-    background-color: ${V3_Colour.bg};
-    border-bottom: ${V3_Border["width-010"]} ${V3_Border.solid}
-        ${V3_Colour.border};
+    gap: ${Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]}
+        ${Spacing["spacing-16"]}
+        calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-32"]});
+    background-color: ${Colour["bg"]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 
-    ${V3_MediaQuery.MaxWidth.lg} {
-        gap: ${V3_Spacing["spacing-8"]};
-        padding: ${V3_Spacing["spacing-32"]} ${V3_Spacing["spacing-20"]}
-            ${V3_Spacing["spacing-16"]}
-            calc(${V3_Font.Spec["heading-lh-md"]} + ${V3_Spacing["spacing-24"]});
+    ${MediaQuery.MaxWidth.lg} {
+        gap: ${Spacing["spacing-8"]};
+        padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
+            ${Spacing["spacing-16"]}
+            calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-24"]});
     }
 `;
 
 export const CloseButton = styled(ClickableIcon)`
-    color: ${V3_Colour.icon};
+    color: ${Colour["icon"]};
     padding: 0;
     position: absolute;
-    top: ${V3_Spacing["spacing-32"]};
-    left: ${V3_Spacing["spacing-16"]};
+    top: ${Spacing["spacing-32"]};
+    left: ${Spacing["spacing-16"]};
     &:active,
     &:focus {
-        color: ${V3_Colour["icon-hover"]};
+        color: ${Colour["icon-hover"]};
     }
 
     svg {
-        height: ${V3_Font.Spec["heading-lh-md"]};
-        width: ${V3_Font.Spec["heading-lh-md"]};
+        height: ${Font.Spec["heading-lh-md"]};
+        width: ${Font.Spec["heading-lh-md"]};
     }
 `;
 
