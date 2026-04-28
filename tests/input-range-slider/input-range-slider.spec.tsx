@@ -28,27 +28,23 @@ describe("InputRangeSlider", () => {
         render(<InputRangeSlider />);
 
         expect(screen.queryAllByRole("slider")).toHaveLength(2);
-        expect(screen.queryByTestId("slider-thumb-0")).toHaveAttribute(
-            "aria-valuenow",
-            "0"
+        expect(screen.queryByTestId("slider-input-0")).toHaveValue("0");
+        expect(screen.queryByTestId("slider-input-1")).toHaveValue("1");
+    });
+
+    it("should forward className to the root element", () => {
+        render(
+            <InputRangeSlider data-testid="input" className="custom-class" />
         );
-        expect(screen.queryByTestId("slider-thumb-1")).toHaveAttribute(
-            "aria-valuenow",
-            "1"
-        );
+
+        expect(screen.getByTestId("input")).toHaveClass("custom-class");
     });
 
     it("should render component with value", () => {
         render(<InputRangeSlider min={1} max={10} value={[5, 8]} />);
 
-        expect(screen.queryByTestId("slider-thumb-0")).toHaveAttribute(
-            "aria-valuenow",
-            "5"
-        );
-        expect(screen.queryByTestId("slider-thumb-1")).toHaveAttribute(
-            "aria-valuenow",
-            "8"
-        );
+        expect(screen.queryByTestId("slider-input-0")).toHaveValue("5");
+        expect(screen.queryByTestId("slider-input-1")).toHaveValue("8");
     });
 
     it("should handle change", () => {

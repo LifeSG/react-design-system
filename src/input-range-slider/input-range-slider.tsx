@@ -410,6 +410,7 @@ export const InputRangeSlider = ({
                         </span>
 
                         <input
+                            data-testid={`slider-input-${index}`}
                             type="range"
                             min={getThumbMin(index)}
                             max={getThumbMax(index)}
