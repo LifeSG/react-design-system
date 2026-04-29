@@ -74,8 +74,8 @@ test.describe("BoxContainer", () => {
             await story.init("display-states");
         });
 
-        test("Display states (error and warning icons)", async ({ story }) => {
-            await compareScreenshot(story, "display-states");
+        test("Display states", async ({ story }) => {
+            await compareScreenshot(story, "mount");
 
             await expect(story.locators.container.error).toMatchAriaSnapshot(`
                     - region "Container with error state error error":
@@ -109,7 +109,7 @@ test.describe("BoxContainer", () => {
         });
 
         test("Non-collapsible container", async ({ story }) => {
-            await compareScreenshot(story, "non-collapsible-container");
+            await compareScreenshot(story, "mount");
 
             await expect(story.locators.container.nonCollapsible)
                 .toMatchAriaSnapshot(`
@@ -126,7 +126,7 @@ test.describe("BoxContainer", () => {
         });
 
         test("Container with call-to-action component", async ({ story }) => {
-            await compareScreenshot(story, "call-to-action-container");
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -137,7 +137,7 @@ test.describe("BoxContainer", () => {
 
         test("Expand/collapse interaction", async ({ story }) => {
             await test.step("Visual appearance of expand/collapse states", async () => {
-                await compareScreenshot(story, "expand-collapse-mixed-states");
+                await compareScreenshot(story, "mount");
 
                 // First container starts collapsed
                 await expect(story.locators.container.collapsed)
