@@ -1,4 +1,3 @@
-import kebabCase from "lodash/kebabCase";
 import type { CSSProperties, RefObject } from "react";
 
 import { useIsomorphicLayoutEffect } from "../../util";
@@ -36,6 +35,27 @@ const numericCssStyleProperties: (keyof CSSStyleDeclaration)[] = [
     "paddingBottom",
 ];
 
+/**
+ * Normalises standard CSS property names from camelCase to kebab-case
+ * - `backgroundColor` → `background-color`
+ * - `WebkitLineClamp` → `-webkit-line-clamp`
+ * - `--custom-variable` → `--custom-variable`
+ *
+ * Ref
+ * https://github.com/facebook/react/blob/ad5dfc82b7107728da1430dd142f75b97b684dac/packages/react-dom-bindings/src/shared/hyphenateStyleName.js#L26
+ */
+function normaliseCssProperty(key: string): string {
+    if (key.startsWith("--")) return key;
+
+    const kebabCased = key.replace(/([A-Z])/g, "-$1").toLowerCase();
+
+    if (/^(o|moz|ms|webkit)-/.test(kebabCased)) {
+        return `-${kebabCased}`;
+    }
+
+    return kebabCased;
+}
+
 function normaliseCssValue(key: string, value: unknown): string {
     if (value == null) return "";
 
@@ -67,7 +87,7 @@ export function useApplyStyle<TElement extends HTMLElement>(
         if (!element || !styles) return;
 
         Object.entries(styles).forEach(([key, value]) => {
-            const normalisedKey = key.startsWith("--") ? key : kebabCase(key);
+            const normalisedKey = normaliseCssProperty(key);
 
             if (value == null) {
                 element.style.removeProperty(normalisedKey);

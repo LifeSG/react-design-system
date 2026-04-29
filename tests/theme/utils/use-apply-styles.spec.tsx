@@ -3,7 +3,7 @@ import { useRef } from "react";
 import type { ApplyStyleMap } from "src/theme/utils";
 import { useApplyStyle } from "src/theme/utils";
 
-const TestComponent = ({ styles }: { styles: ApplyStyleMap }) => {
+const TestComponent = ({ styles }: { styles: ApplyStyleMap | undefined }) => {
     const ref = useRef<HTMLDivElement>(null);
 
     useApplyStyle(ref, styles);
@@ -22,7 +22,7 @@ describe("useApplyStyle Hooks", () => {
         expect(element.style.background).toBe("red");
     });
 
-    it("applies number style value", () => {
+    it("applies number style value without unit for unitless property", () => {
         const { getByTestId } = render(
             <TestComponent styles={{ opacity: 0.5 }} />
         );
@@ -30,6 +30,36 @@ describe("useApplyStyle Hooks", () => {
         const element = getByTestId("target");
 
         expect(element.style.opacity).toBe("0.5");
+    });
+
+    it("applies number style value with px for property that requires units", () => {
+        const { getByTestId } = render(
+            <TestComponent styles={{ width: 100 }} />
+        );
+
+        const element = getByTestId("target");
+
+        expect(element.style.width).toBe("100px");
+    });
+
+    it("normalises properties to the expected CSS equivalent", () => {
+        const { getByTestId } = render(
+            <TestComponent
+                styles={{
+                    backgroundColor: "red",
+                    marginBottom: 10,
+                    WebkitLineClamp: 1, // vendor prefix in uppercase
+                    webkitTextFillColor: "blue", // vendor prefix in lowercase
+                }}
+            />
+        );
+
+        const element = getByTestId("target");
+
+        expect(element.style.backgroundColor).toBe("red");
+        expect(element.style.marginBottom).toBe("10px");
+        expect(element.style.webkitLineClamp).toBe("1");
+        expect(element.style.webkitTextFillColor).toBe("blue");
     });
 
     it("removes style when value is null", () => {
@@ -79,5 +109,13 @@ describe("useApplyStyle Hooks", () => {
         };
 
         expect(() => render(<BrokenComponent />)).not.toThrow();
+    });
+
+    it("does not crash when style not provided", () => {
+        const { getByTestId } = render(<TestComponent styles={undefined} />);
+
+        const element = getByTestId("target");
+
+        expect(element).toBeInTheDocument();
     });
 });
