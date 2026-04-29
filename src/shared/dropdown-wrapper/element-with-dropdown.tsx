@@ -29,6 +29,7 @@ import {
     useSafeMaxWidthMediaQuery,
 } from "../../theme";
 import { useInheritedThemeScope } from "../../theme/theme-provider/hooks";
+import * as elementWithDropdownStyles from "./element-with-dropdown.styles";
 import type { DropdownAlignmentType } from "./types";
 
 export interface DropdownRenderProps {
@@ -188,14 +189,14 @@ export const ElementWithDropdown = ({
                     ) {
                         // reset this so that dropdown can expand as needed
                         elements.floating.style.setProperty(
-                            "--available-height",
+                            elementWithDropdownStyles.tokens.availableHeight,
                             ""
                         );
                         return;
                     }
 
                     elements.floating.style.setProperty(
-                        "--available-height",
+                        elementWithDropdownStyles.tokens.availableHeight,
                         `${Math.max(0, availableHeight)}px`
                     );
                 },

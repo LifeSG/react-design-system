@@ -1,17 +1,11 @@
-import { useCallback, useContext, useMemo } from "react";
+import clsx from "clsx";
+import { useCallback, useMemo, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { ThemeContext } from "styled-components";
 
+import { Font } from "../../theme";
+import { useApplyStyle } from "../../theme/utils/use-apply-styles";
 import { StringHelper } from "../../util/string-helper";
-import { V3_Font } from "../../v3_theme";
-import {
-    Label,
-    MatchedText,
-    PrimaryText,
-    SecondaryText,
-    TruncateFirstLine,
-    TruncateSecondLine,
-} from "./dropdown-label.styles";
+import * as styles from "./dropdown-label.styles";
 import type { DropdownVariantType, LabelDisplayType } from "./types";
 
 interface DropdownLabelProps {
@@ -39,14 +33,23 @@ export const DropdownLabel = ({
     truncationType = "middle",
     variant = "default",
 }: DropdownLabelProps): JSX.Element => {
-    const theme = useContext(ThemeContext);
-
     const fontSize =
         variant === "small"
-            ? V3_Font.Spec["body-size-md"]({ theme })
-            : V3_Font.Spec["body-size-baseline"]({ theme });
-    const fontFamily = V3_Font.Spec["font-family"]({ theme });
+            ? Font.Spec["body-size-md"]
+            : Font.Spec["body-size-baseline"];
+    const fontFamily = Font.Spec["font-family"];
     const { ref, width } = useResizeDetector();
+
+    const primaryTextRef = useRef<HTMLDivElement>(null);
+    const secondaryTextRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(primaryTextRef, {
+        [styles.tokens.primaryText.maxLines]: String(maxLines),
+    });
+
+    useApplyStyle(secondaryTextRef, {
+        [styles.tokens.secondaryText.maxLines]: String(maxLines),
+    });
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -67,9 +70,9 @@ export const DropdownLabel = ({
 
             // there's less space than expected due to word breaks, so an
             // arbitary offset is applied
-            return textWidth > width * maxLines - 50;
+            return textWidth > width - 50;
         },
-        [width, displayType, fontSize, fontFamily, maxLines]
+        [width, displayType, fontSize, fontFamily]
     );
 
     // =========================================================================
@@ -87,7 +90,10 @@ export const DropdownLabel = ({
     // css cannot truncate inline elements so force the display to render
     // them separately
     const itemDisplayType =
-        shouldTruncateTitle || shouldTruncateLabel ? "next-line" : displayType;
+        truncationType === "middle" &&
+        (shouldTruncateTitle || shouldTruncateLabel)
+            ? "next-line"
+            : displayType;
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -108,9 +114,9 @@ export const DropdownLabel = ({
         return (
             <>
                 {label.slice(0, startIndex)}
-                <MatchedText $variant={variant}>
+                <span className={styles.matchedText}>
                     {label.slice(startIndex, endIndex)}
-                </MatchedText>
+                </span>
                 {label.slice(endIndex)}
             </>
         );
@@ -119,42 +125,76 @@ export const DropdownLabel = ({
     const renderTruncatedText = (displayText: string): JSX.Element => {
         return (
             <>
-                <TruncateFirstLine $maxLines={maxLines} aria-hidden>
+                <div
+                    className={clsx(
+                        styles.baseTruncateStyle,
+                        styles.truncateFirstLine,
+                        maxLines === 1 && styles.truncateLineSingle
+                    )}
+                    aria-hidden
+                >
                     {renderMatchInBold(displayText)}
-                </TruncateFirstLine>
-                <TruncateSecondLine $maxLines={maxLines} aria-hidden>
+                </div>
+                <div
+                    className={clsx(
+                        styles.baseTruncateStyle,
+                        styles.truncateSecondLine,
+                        maxLines === 1 && styles.truncateLineSingle
+                    )}
+                    aria-hidden
+                >
                     {renderMatchInBold(displayText)}
-                </TruncateSecondLine>
+                </div>
             </>
         );
     };
 
     return (
-        <Label ref={ref} $labelDisplayType={itemDisplayType} $variant={variant}>
-            <PrimaryText
+        <div
+            ref={ref}
+            className={clsx(
+                styles.label,
+                variant === "small" && styles.labelVariantSmall,
+                itemDisplayType === "next-line" && styles.labelNextLine
+            )}
+        >
+            <div
+                ref={primaryTextRef}
                 aria-label={label}
-                $bold={bold}
-                $maxLines={maxLines}
-                $selected={selected}
-                $disabled={disabled}
-                $truncateType={truncationType}
+                className={clsx(
+                    styles.primaryText,
+                    bold && styles.primaryTextBold,
+                    disabled && styles.primaryTextDisabled,
+                    !disabled && selected && styles.primaryTextSelected,
+                    itemDisplayType === "inline" &&
+                        styles.primaryTextLabelInline,
+                    truncationType === "end" && styles.primaryTextTruncateEnd
+                )}
             >
                 {truncationType === "middle" && shouldTruncateTitle
                     ? renderTruncatedText(label)
                     : renderMatchInBold(label)}
-            </PrimaryText>
+            </div>
             {sublabel && (
-                <SecondaryText
+                <div
+                    ref={secondaryTextRef}
                     aria-label={sublabel}
-                    $maxLines={maxLines}
-                    $truncateType={truncationType}
-                    $labelDisplayType={displayType}
+                    className={clsx(
+                        styles.secondaryText,
+                        itemDisplayType === "inline" &&
+                            styles.secondaryTextLabelInline,
+                        truncationType === "end" &&
+                            styles.secondaryTextTruncateEnd,
+                        displayType === "next-line"
+                            ? styles.secondaryTextNextLine
+                            : styles.secondaryTextInline
+                    )}
                 >
                     {truncationType === "middle" && shouldTruncateLabel
                         ? renderTruncatedText(sublabel)
                         : sublabel}
-                </SecondaryText>
+                </div>
             )}
-        </Label>
+        </div>
     );
 };
