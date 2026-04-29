@@ -11,7 +11,6 @@ export interface BreadcrumbProps {
     links: React.AnchorHTMLAttributes<HTMLAnchorElement>[];
     fadeColor?: string[] | FadeColorSet | undefined;
     fadePosition?: FadePosition | undefined;
-    itemStyle?: string | undefined;
     separatorStyle?: SeparatorStyle | undefined;
     className?: string | undefined;
     id?: string | undefined;

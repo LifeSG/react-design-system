@@ -1,28 +1,22 @@
-import { useContext, useRef, useState } from "react";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import clsx from "clsx";
+import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { ThemeContext } from "styled-components";
 
+import { parsePxOrRemValue, useApplyStyle, useDesignToken } from "../theme";
+import { Breakpoint } from "../theme/tokens";
+import { Typography } from "../typography";
 import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
-import { V3_Breakpoint } from "../v3_theme";
-import {
-    Caret,
-    Content,
-    CurrentLabel,
-    Fade,
-    Item,
-    PreviousLink,
-    Slash,
-    Wrapper,
-} from "./breadcrumb.style";
+import * as styles from "./breadcrumb.styles";
 import type { BreadcrumbProps, FadeColorSet } from "./types";
 
 export const Breadcrumb = ({
     links,
     fadeColor,
     fadePosition = "both",
-    itemStyle,
     id,
     separatorStyle = "chevron",
+    className,
     ...otherProps
 }: BreadcrumbProps) => {
     // =========================================================================
@@ -38,13 +32,47 @@ export const Breadcrumb = ({
 
     const wrapperRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLUListElement>(null);
+    const fadeLeftRef = useRef<HTMLDivElement>(null);
+    const fadeRightRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
 
-    const theme = useContext(ThemeContext);
-    const tabletBreakpoint = V3_Breakpoint["lg-max"]({ theme });
+    const tabletBreakpointToken = useDesignToken(Breakpoint["lg-max"]);
+    const tabletBreakpoint = parsePxOrRemValue(
+        tabletBreakpointToken || "1200px"
+    );
+
+    // =============================================================================
+    // FADE COLOR CALCULATION
+    // =============================================================================
+    let fadeColorSet: FadeColorSet;
+
+    if (Array.isArray(fadeColor) && fadeColor.length > 0) {
+        fadeColorSet = {
+            left: fadeColor,
+            right: fadeColor,
+        };
+    } else if (fadeColor) {
+        fadeColorSet = fadeColor as FadeColorSet;
+    } else {
+        fadeColorSet = {
+            left: undefined,
+            right: undefined,
+        };
+    }
+
+    // =============================================================================
+    // CSS VARIABLES
+    // =============================================================================
+    useApplyStyle(fadeLeftRef, {
+        [styles.tokens.fade.backgroundColor]: fadeColorSet?.left?.join(", "),
+    });
+
+    useApplyStyle(fadeRightRef, {
+        [styles.tokens.fade.backgroundColor]: fadeColorSet?.right?.join(", "),
+    });
 
     const onResize = useEvent(() => {
         const content = contentRef.current;
@@ -117,24 +145,29 @@ export const Breadcrumb = ({
 
             if (index === links.length - 1 || !link.href) {
                 element = (
-                    <CurrentLabel weight="semibold" forwardedAs="span">
+                    <Typography.BodyMD
+                        weight="semibold"
+                        as="span"
+                        className={styles.currentLabel}
+                    >
                         {link.children}
-                    </CurrentLabel>
+                    </Typography.BodyMD>
                 );
             } else {
                 element = (
-                    <PreviousLink
+                    <Typography.LinkMD
                         {...link}
                         weight="semibold"
                         underlineStyle="none"
+                        className={styles.previousLink}
                     />
                 );
             }
 
             return (
-                <Item
+                <li
                     key={index}
-                    $styleProps={itemStyle}
+                    className={styles.item}
                     {...(index === links.length - 1 && {
                         "aria-current": "page",
                     })}
@@ -142,47 +175,37 @@ export const Breadcrumb = ({
                     {element}
                     {index < links.length - 1 &&
                         (separatorStyle === "chevron" ? (
-                            <Caret aria-hidden />
+                            <ChevronRightIcon
+                                aria-hidden
+                                className={styles.caret}
+                            />
                         ) : (
-                            <Slash inline aria-hidden>
+                            <Typography.BodyMD
+                                inline
+                                aria-hidden
+                                className={styles.slash}
+                            >
                                 /
-                            </Slash>
+                            </Typography.BodyMD>
                         ))}
-                </Item>
+                </li>
             );
         });
     };
 
     const renderFade = () => {
-        let fadeColorSet: FadeColorSet;
-
-        if (Array.isArray(fadeColor) && fadeColor.length > 0) {
-            // Single array, apply same color
-            fadeColorSet = {
-                left: fadeColor,
-                right: fadeColor,
-            };
-        } else if (!fadeColor) {
-            fadeColorSet = {
-                left: undefined,
-                right: undefined,
-            };
-        } else {
-            fadeColorSet = fadeColor as FadeColorSet;
-        }
-
         return (
             <>
                 {showFadeLeft && shouldShowFadeLeft && (
-                    <Fade
-                        $backgroundColor={fadeColorSet.left}
-                        $position="left"
+                    <div
+                        ref={fadeLeftRef}
+                        className={clsx(styles.fade, styles.fadeLeft)}
                     />
                 )}
                 {showFadeRight && shouldShowFadeRight && (
-                    <Fade
-                        $backgroundColor={fadeColorSet.right}
-                        $position="right"
+                    <div
+                        ref={fadeRightRef}
+                        className={clsx(styles.fade, styles.fadeRight)}
                     />
                 )}
             </>
@@ -190,11 +213,18 @@ export const Breadcrumb = ({
     };
 
     return (
-        <Wrapper ref={wrapperRef} id={id || "breadcrumb"} {...otherProps}>
+        <div
+            ref={wrapperRef}
+            id={id || "breadcrumb"}
+            className={clsx(styles.wrapper, className)}
+            {...otherProps}
+        >
             <nav aria-label="Breadcrumb">
-                <Content ref={contentRef}>{renderLinks()}</Content>
+                <ul ref={contentRef} className={styles.content}>
+                    {renderLinks()}
+                </ul>
             </nav>
             {showFade && renderFade()}
-        </Wrapper>
+        </div>
     );
 };

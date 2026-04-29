@@ -42,16 +42,6 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: `"both"`,
             },
             {
-                name: "itemStyle",
-                description: (
-                    <>
-                        Custom style that can be passed to the
-                        <code>Breadcrumb</code> items
-                    </>
-                ),
-                propTypes: ["CSS-JS string"],
-            },
-            {
                 name: "separatorStyle",
                 description: <>Separator style between breadcrumb items</>,
                 propTypes: [`"chevron"`, `"slash"`],
