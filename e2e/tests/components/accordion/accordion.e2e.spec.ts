@@ -10,6 +10,8 @@ class StoryPage extends AbstractStoryPage {
             title: Locator;
             expandCollapseAllButton: Locator;
         };
+        expandableContainer: (testId: string) => Locator;
+        icon: (testId: string) => Locator;
         defaultAccordion: Locator;
         expandAllAccordion: Locator;
         nonCollapsibleAccordion: Locator;
@@ -28,6 +30,10 @@ class StoryPage extends AbstractStoryPage {
                     "accordion-expand-collapse-button"
                 ),
             },
+            expandableContainer: (testId: string) =>
+                page.getByTestId(`${testId}-expandable-container`),
+            icon: (testId: string) =>
+                page.getByTestId(`${testId}-expand-collapse-icon`),
             defaultAccordion: page.getByTestId("accordion-default"),
             expandAllAccordion: page.getByTestId("accordion-expand-all"),
             nonCollapsibleAccordion: page.getByTestId(
@@ -39,18 +45,6 @@ class StoryPage extends AbstractStoryPage {
                 "non-collapsible-item-content"
             ),
         };
-    }
-
-    public itemButton(name: string) {
-        return this.page.getByRole("button", { name });
-    }
-
-    public expandableContainer(testId: string) {
-        return this.page.getByTestId(`${testId}-expandable-container`);
-    }
-
-    public icon(testId: string) {
-        return this.page.getByTestId(`${testId}-expand-collapse-icon`);
     }
 }
 
@@ -133,6 +127,7 @@ test.describe("Accordion", () => {
             await test.step("Hide all collapses both items", async () => {
                 await story.locators.component.expandCollapseAllButton.click();
                 await expectExpandAllItems();
+                await compareScreenshot(story, "collapse all");
             });
         });
     });
@@ -143,7 +138,7 @@ test.describe("Accordion", () => {
         });
 
         test("Non collapsible", async ({ story }) => {
-            const expandable = story.expandableContainer(
+            const expandable = story.locators.expandableContainer(
                 "non-collapsible-item"
             );
 
@@ -155,7 +150,9 @@ test.describe("Accordion", () => {
                 - paragraph: This item stays expanded.
             `);
 
-            await expect(story.icon("non-collapsible-item")).toHaveCount(0);
+            await expect(
+                story.locators.icon("non-collapsible-item")
+            ).toHaveCount(0);
             await expect(expandable).not.toHaveAttribute("inert");
             await expect(
                 story.locators.nonCollapsibleItemContent
