@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React, { useImperativeHandle, useRef } from "react";
 
 import { StringHelper, useNextInputState } from "../util";
@@ -116,6 +117,17 @@ const Component = (
     const showClear = shouldShowClear();
 
     const renderInputElement = () => {
+        const inputClassName = clsx({
+            bordered: styleType !== "no-border",
+            "padding-left": styleType !== "no-border" && !readOnly,
+            "padding-right":
+                styleType !== "no-border" && !readOnly && !showClear,
+        });
+
+        const clearButtonClassName = clsx({
+            "no-border": styleType === "no-border",
+        });
+
         return (
             <>
                 <InputElement
@@ -126,9 +138,7 @@ const Component = (
                     onChange={handleChange}
                     type={type}
                     readOnly={readOnly || disabled}
-                    $showClear={showClear}
-                    $styleType={styleType}
-                    $visuallyReadOnly={readOnly}
+                    className={inputClassName}
                     {...otherProps}
                 />
                 {showClear && (
@@ -136,7 +146,7 @@ const Component = (
                         onClick={handleClear}
                         type="button"
                         aria-label="Clear input"
-                        $styleType={styleType}
+                        className={clearButtonClassName}
                     >
                         <ClearIcon aria-hidden />
                     </ClearButton>

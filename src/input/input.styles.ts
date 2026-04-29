@@ -1,50 +1,37 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { BasicButton, BasicInput, InputBox } from "../shared/input-wrapper";
 import { Colour, Spacing } from "../theme";
-import type { InputStyleType } from "./types";
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-export interface InputStyleProps {
-    $showClear?: boolean | undefined;
-    $styleType?: InputStyleType | undefined;
-    $visuallyReadOnly?: boolean | undefined;
-}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const InputElement = styled(BasicInput)<InputStyleProps>`
+export const InputElement = styled(BasicInput)`
     width: 100%;
     height: calc(3rem - 2px); // exclude top and bottom borders
 
-    ${(props) =>
-        props.$styleType !== "no-border" &&
-        css`
-            padding-left: ${props.$visuallyReadOnly
-                ? 0
-                : Spacing["spacing-16"]};
-            padding-right: ${props.$visuallyReadOnly || props.$showClear
-                ? 0
-                : Spacing["spacing-16"]};
-        `}
+    &.bordered {
+        &.padding-left {
+            padding-left: ${Spacing["spacing-16"]};
+        }
+
+        &.padding-right {
+            padding-right: ${Spacing["spacing-16"]};
+        }
+    }
 `;
 
-export const ClearButton = styled(BasicButton)<InputStyleProps>`
+export const ClearButton = styled(BasicButton)`
     height: auto;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
 
     cursor: pointer;
     color: ${Colour.icon};
 
-    ${(props) =>
-        props.$styleType === "no-border" &&
-        css`
-            margin-right: -${Spacing["spacing-12"]};
-        `}
+    &.no-border {
+        margin-right: -${Spacing["spacing-12"]};
+    }
 `;
 
 export const ClearIcon = styled(CrossIcon)`
