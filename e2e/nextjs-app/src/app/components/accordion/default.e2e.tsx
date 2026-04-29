@@ -6,7 +6,7 @@ import { StoryContent } from "./common";
 
 export default function Story() {
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <Accordion title="My Accordion" data-testid="accordion-default">
                 <Accordion.Item
                     title="This is the first item"
