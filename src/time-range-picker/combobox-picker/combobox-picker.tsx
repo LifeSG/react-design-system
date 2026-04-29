@@ -2,7 +2,7 @@ import type { OpenChangeReason } from "@floating-ui/react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FormErrorMessage } from "../../form/form-label";
-import { ClearIcon } from "../../input/input.style";
+import { ClearIcon } from "../../input/input.styles";
 import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { concatIds, VisuallyHidden } from "../../shared/accessibility";
 import { DropdownListState } from "../../shared/dropdown-list";

@@ -7,7 +7,7 @@ import {
     DefaultWrapper,
     InputElement,
     NoBorderWrapper,
-} from "./input.style";
+} from "./input.styles";
 import type { InputProps, InputRef } from "./types";
 
 const shouldAllowSpacing = (

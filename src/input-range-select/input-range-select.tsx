@@ -1,7 +1,7 @@
 import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import { ClearIcon } from "../input/input.style";
+import { ClearIcon } from "../input/input.styles";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import type { DropdownListApi } from "../shared/dropdown-list";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list";

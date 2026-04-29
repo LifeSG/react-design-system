@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { ClearButton } from "../input/input.style";
+import { ClearButton } from "../input/input.styles";
 import { InputWrapper } from "../shared/input-wrapper";
 import { V3_Colour, V3_Spacing } from "../v3_theme";
 
