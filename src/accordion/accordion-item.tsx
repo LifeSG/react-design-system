@@ -49,7 +49,7 @@ function Component(
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
     const [internalId] = useState(() => SimpleIdGenerator.generate());
     const contentId = `${internalId}-content`;
-    const resizeDetector = useResizeDetector();
+    const { height, ref: resizeDetectorRef } = useResizeDetector();
     const expanded =
         itemState[internalId] ??
         (collapsible ? expandedControlled ?? expandAll : true); // the initial value
@@ -104,7 +104,7 @@ function Component(
     // =========================================================================
     // React spring animation configuration
     const resizeHeight = {
-        height: expanded ? resizeDetector.height : 0,
+        height: expanded ? height : 0,
     };
     const expandableStyles = useSpring(resizeHeight);
 
@@ -118,7 +118,7 @@ function Component(
                 inert={inertValue(!expanded)}
             >
                 <div
-                    ref={resizeDetector.ref}
+                    ref={resizeDetectorRef}
                     className={styles.contentContainer}
                     data-testid="content-container"
                 >
