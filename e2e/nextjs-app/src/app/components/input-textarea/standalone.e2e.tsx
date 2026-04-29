@@ -29,24 +29,24 @@ export default function Story() {
 
             <div className="story-column-container">
                 <Textarea
-                    data-testid="textarea-default"
+                    data-testid="textarea-default-placeholder"
                     placeholder="Default textarea placeholder"
                     defaultValue="Default value"
                 />
                 <Textarea
-                    data-testid="textarea-readonly"
+                    data-testid="textarea-readonly-placeholder"
                     placeholder="Readonly textarea placeholder"
                     value="Readonly value"
                     readOnly
                 />
                 <Textarea
-                    data-testid="textarea-disabled"
+                    data-testid="textarea-disabled-placeholder"
                     placeholder="Disabled textarea placeholder"
                     value="Disabled value"
                     disabled
                 />
                 <Textarea
-                    data-testid="textarea-error"
+                    data-testid="textarea-error-placeholder"
                     placeholder="Error textarea placeholder"
                     defaultValue="Error value"
                     error

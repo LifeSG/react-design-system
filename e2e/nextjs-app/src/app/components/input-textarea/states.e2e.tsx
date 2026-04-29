@@ -33,27 +33,27 @@ export default function Story() {
 
             <div className="story-column-container">
                 <Form.Textarea
-                    data-testid="textarea-default"
+                    data-testid="textarea-default-placeholder"
                     label="Default textarea"
                     placeholder="Default textarea placeholder"
                     defaultValue="Default value"
                 />
                 <Form.Textarea
-                    data-testid="textarea-readonly"
+                    data-testid="textarea-readonly-placeholder"
                     label="Readonly textarea"
                     placeholder="Readonly textarea placeholder"
                     value="Readonly value"
                     readOnly
                 />
                 <Form.Textarea
-                    data-testid="textarea-disabled"
+                    data-testid="textarea-disabled-placeholder"
                     label="Disabled textarea"
                     placeholder="Disabled textarea placeholder"
                     value="Disabled value"
                     disabled
                 />
                 <Form.Textarea
-                    data-testid="textarea-error"
+                    data-testid="textarea-error-placeholder"
                     label="Error textarea"
                     placeholder="Error textarea placeholder"
                     defaultValue="Error value"
