@@ -106,12 +106,12 @@ export const Drawer = ({
                     >
                         <div className={styles.header}>
                             <Typography.HeadingMD
+                                as="h2"
+                                className={styles.heading}
                                 id={id}
                                 ref={initialFocusRef}
                                 tabIndex={-1}
                                 weight="bold"
-                                forwardedAs="h2"
-                                className={styles.heading}
                             >
                                 {heading}
                             </Typography.HeadingMD>
