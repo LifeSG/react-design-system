@@ -1,26 +1,18 @@
-import { useSpring } from "@react-spring/web";
-import { useContext, useRef, useState } from "react";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { animated, useSpring } from "@react-spring/web";
+import clsx from "clsx";
+import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
 
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
-import { V3_Breakpoint } from "../v3_theme";
 import {
-    AlertIcon,
-    CallToActionContainer,
-    ChildContainer,
-    Container,
-    Expandable,
-    Handle,
-    HandleIcon,
-    HandleIconContainer,
-    Header,
-    LabelText,
-    LabelWrapper,
-    NonExpandable,
-} from "./box-container.styles";
+    Breakpoint,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
+import { SimpleIdGenerator } from "../util";
+import * as styles from "./box-container.styles";
 import type { BoxContainerProps } from "./types";
 
 export const BoxContainer = ({
@@ -32,6 +24,7 @@ export const BoxContainer = ({
     displayState = "default",
     subComponentTestIds,
     clickableHeader,
+    className,
     ...otherProps
 }: BoxContainerProps) => {
     // =============================================================================
@@ -42,13 +35,13 @@ export const BoxContainer = ({
     );
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const interactiveHeader = clickableHeader && collapsible;
     const internalId = useRef(SimpleIdGenerator.generate());
     const contentId = `${internalId.current}-content`;
     const headerId = `${internalId.current}-header`;
+    const handleIconRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -70,25 +63,30 @@ export const BoxContainer = ({
     const renderChildContent = () => {
         if (collapsible) {
             return (
-                <Expandable
+                <animated.div
+                    className={styles.expandable}
                     style={expandableStyles}
                     data-testid={"expandable-container"}
                     id={contentId}
                 >
-                    <ChildContainer
+                    <div
+                        className={styles.childContainer}
                         ref={childRef}
                         inert={inertValue(!showExpanded)}
                     >
                         {children}
-                    </ChildContainer>
-                </Expandable>
+                    </div>
+                </animated.div>
             );
         }
 
         return (
-            <NonExpandable data-testid="non-expandable-container">
-                <ChildContainer>{children}</ChildContainer>
-            </NonExpandable>
+            <div
+                className={styles.nonExpandable}
+                data-testid="non-expandable-container"
+            >
+                <div className={styles.childContainer}>{children}</div>
+            </div>
         );
     };
 
@@ -97,8 +95,13 @@ export const BoxContainer = ({
             case "error":
             case "warning":
                 return (
-                    <AlertIcon
-                        $displayState={displayState}
+                    <ExclamationCircleFillIcon
+                        className={clsx(
+                            styles.alertIcon,
+                            displayState === "error" && styles.alertIconError,
+                            displayState === "warning" &&
+                                styles.alertIconWarning
+                        )}
                         data-testid={
                             subComponentTestIds?.displayStateIcon ||
                             `${displayState}-icon`
@@ -114,7 +117,8 @@ export const BoxContainer = ({
     const renderHandleIcon = () => {
         return (
             collapsible && (
-                <Handle
+                <button
+                    className={styles.handle}
                     onClick={onHandleClick}
                     type="button"
                     aria-labelledby={headerId}
@@ -123,28 +127,46 @@ export const BoxContainer = ({
                     aria-expanded={showExpanded}
                     data-testid={subComponentTestIds?.handle || "handle"}
                 >
-                    <HandleIconContainer $expanded={showExpanded} aria-hidden>
-                        <HandleIcon />
-                    </HandleIconContainer>
-                </Handle>
+                    <div
+                        className={clsx(
+                            styles.handleIconContainer,
+                            showExpanded
+                                ? styles.handleIconContainerExpanded
+                                : styles.handleIconContainerCollapsed
+                        )}
+                        ref={handleIconRef}
+                        aria-hidden
+                    >
+                        <ChevronDownIcon className={styles.handleIcon} />
+                    </div>
+                </button>
             )
         );
     };
 
     return (
-        <Container
+        <section
             {...otherProps}
+            className={clsx(styles.container, className)}
             aria-labelledby={headerId}
             role="region"
             title={typeof title === "string" ? title : undefined}
         >
-            <Header
+            <div
+                className={clsx(
+                    styles.header,
+                    interactiveHeader && styles.headerInteractive
+                )}
                 data-testid="header"
                 onClick={interactiveHeader ? onHandleClick : undefined}
-                $interactive={interactiveHeader}
             >
-                <LabelWrapper role={"status"} id={headerId}>
-                    <LabelText
+                <div
+                    className={styles.labelWrapper}
+                    role={"status"}
+                    id={headerId}
+                >
+                    <div
+                        className={styles.labelText}
                         data-testid={subComponentTestIds?.title || "title"}
                     >
                         {title}
@@ -153,22 +175,26 @@ export const BoxContainer = ({
                                 <VisuallyHidden>{displayState}</VisuallyHidden>
                             </>
                         )}
-                    </LabelText>
+                    </div>
                     {renderDisplayIcon()}
                     {isMobile && renderHandleIcon()}
-                </LabelWrapper>
+                </div>
                 {callToActionComponent && (
-                    <CallToActionContainer
-                        $collapsible={collapsible}
+                    <div
+                        className={clsx(
+                            styles.callToActionContainer,
+                            collapsible &&
+                                styles.callToActionContainerCollapsible
+                        )}
                         data-testid="call-to-action-container"
                     >
                         {callToActionComponent}
-                    </CallToActionContainer>
+                    </div>
                 )}
 
                 {!isMobile && renderHandleIcon()}
-            </Header>
+            </div>
             {renderChildContent()}
-        </Container>
+        </section>
     );
 };
