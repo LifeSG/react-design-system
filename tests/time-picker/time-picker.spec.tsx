@@ -206,4 +206,45 @@ describe("Timepicker (Floating UI)", () => {
             ).not.toBeInTheDocument();
         });
     });
+
+    describe("keyboard navigation", () => {
+        it("should open dropdown on Enter key", async () => {
+            const user = userEvent.setup();
+            render(<Timepicker id={ID} />);
+
+            const selector = screen.getByTestId(selectorTestId);
+            await user.click(selector);
+
+            // Test Enter key
+            selector.focus();
+            await user.keyboard("{Enter}");
+            await waitFor(() =>
+                expect(screen.getByTestId(dropdownTestId)).toBeVisible()
+            );
+        });
+
+        it("should open dropdown on Space key", async () => {
+            const user = userEvent.setup();
+            render(<Timepicker id={ID} />);
+
+            const selector = screen.getByTestId(selectorTestId);
+            selector.focus();
+            await user.keyboard(" ");
+            await waitFor(() =>
+                expect(screen.getByTestId(dropdownTestId)).toBeVisible()
+            );
+        });
+
+        it("should open dropdown on ArrowDown key", async () => {
+            const user = userEvent.setup();
+            render(<Timepicker id={ID} />);
+
+            const selector = screen.getByTestId(selectorTestId);
+            selector.focus();
+            await user.keyboard("{ArrowDown}");
+            await waitFor(() =>
+                expect(screen.getByTestId(dropdownTestId)).toBeVisible()
+            );
+        });
+    });
 });
