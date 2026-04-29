@@ -1,14 +1,15 @@
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import clsx from "clsx";
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 import ReactSlider from "react-slider";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
-import { Colour, useApplyStyle } from "../theme";
+import { Colour } from "../theme";
 import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
 import * as styles from "./input-range-slider.styles";
+import { Thumb, Track } from "./slider-components";
 import type { InputRangeSliderProps } from "./types";
 
 export const InputRangeSlider = ({
@@ -458,31 +459,15 @@ export const InputRangeSlider = ({
                     state
                 ) => {
                     return (
-                        <div
+                        <Thumb
                             data-testid={`slider-thumb-${state.index}`}
                             {...thumbProps}
-                            className={clsx(
-                                styles.sliderThumb,
-                                thumbProps.className
-                            )}
                             tabIndex={-1}
                             aria-hidden
-                            data-focused={
-                                focusedThumbIndex === state.index
-                                    ? "true"
-                                    : undefined
-                            }
-                        >
-                            <div
-                                className={clsx(
-                                    styles.knob,
-                                    disabled && styles.knobDisabled,
-                                    !disabled &&
-                                        !readOnly &&
-                                        styles.knobInteractive
-                                )}
-                            />
-                        </div>
+                            focused={focusedThumbIndex === state.index}
+                            disabled={disabled}
+                            readOnly={readOnly}
+                        />
                     );
                 }}
                 renderTrack={(
@@ -506,25 +491,5 @@ export const InputRangeSlider = ({
                 </div>
             )}
         </div>
-    );
-};
-
-interface TrackProps extends React.HTMLAttributes<HTMLDivElement> {
-    color?: string;
-}
-
-const Track = ({ color, className, ...otherProps }: TrackProps) => {
-    const trackRef = useRef<HTMLDivElement>(null);
-
-    useApplyStyle(trackRef, {
-        [styles.tokens.track.backgroundColor]: color,
-    });
-
-    return (
-        <div
-            {...otherProps}
-            className={clsx(styles.sliderTrack, className)}
-            ref={trackRef}
-        />
     );
 };

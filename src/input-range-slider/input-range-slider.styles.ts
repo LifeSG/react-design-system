@@ -30,6 +30,7 @@ export const labelText = css`
 
 export const slider = css`
     height: 0.875rem;
+    position: relative;
 `;
 
 export const knob = css`
