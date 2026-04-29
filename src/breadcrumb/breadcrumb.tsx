@@ -14,7 +14,6 @@ export const Breadcrumb = ({
     links,
     fadeColor,
     fadePosition = "both",
-    itemStyle,
     id,
     separatorStyle = "chevron",
     className,
@@ -73,10 +72,6 @@ export const Breadcrumb = ({
 
     useApplyStyle(fadeRightRef, {
         [styles.tokens.fade.backgroundColor]: fadeColorSet?.right?.join(", "),
-    });
-
-    useApplyStyle(contentRef, {
-        [styles.tokens.item.customStyles]: itemStyle,
     });
 
     const onResize = useEvent(() => {

@@ -6,9 +6,6 @@ export const tokens = {
     fade: {
         backgroundColor: "--fds-internal-breadcrumb-fade-backgroundColor",
     },
-    item: {
-        customStyles: "--fds-internal-breadcrumb-item-customStyles",
-    },
 };
 
 // =============================================================================
@@ -30,7 +27,6 @@ export const wrapper = css`
 `;
 
 export const content = css`
-    ${tokens.item.customStyles}: initial;
     display: inline-flex;
     width: 100%;
     flex-wrap: wrap;
@@ -83,7 +79,6 @@ export const fadeRight = css`
 `;
 
 export const item = css`
-    ${tokens.item.customStyles}: initial;
     display: flex;
     flex-direction: row;
     align-items: center;
