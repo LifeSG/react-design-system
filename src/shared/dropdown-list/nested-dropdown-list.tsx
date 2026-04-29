@@ -128,6 +128,19 @@ export const NestedDropdownList = <T,>({
     // NOTE: Maintaining a separate index for UI to keep track on which item (in terms of Virtuoso's indexing) is currently focused on keyboard press events.
     const [virtuosoIndex, setVirtuosoIndex] = useState(0);
 
+    let containerWidthStyle = {};
+    if (width) {
+        containerWidthStyle = {
+            [styles.tokens.containerWidth]: `${width}px`,
+            [styles.tokens.containerMinWidth]: `0px`,
+        };
+    } else if (matchElementWidth && elementWidth) {
+        containerWidthStyle = {
+            [styles.tokens.containerWidth]: `${elementWidth}px`,
+            [styles.tokens.containerMinWidth]: `${elementWidth}px`,
+        };
+    }
+
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
@@ -253,12 +266,6 @@ export const NestedDropdownList = <T,>({
             onSelectAll?.([], []);
         }
     };
-
-    const containerWidthStyle: React.CSSProperties = width
-        ? { width }
-        : matchElementWidth && elementWidth
-        ? { width: elementWidth }
-        : {};
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -585,7 +592,10 @@ export const NestedDropdownList = <T,>({
                 {listItem.checked && (
                     <TickIcon
                         aria-hidden
-                        className={styles.selectedIndicator}
+                        className={clsx(
+                            styles.baseIndicatorStyle,
+                            styles.selectedIndicator
+                        )}
                     />
                 )}
             </div>

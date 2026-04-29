@@ -447,7 +447,13 @@ const DropdownListInner = <T, V>(
         }
 
         return selected ? (
-            <TickIcon aria-hidden className={styles.selectedIndicator} />
+            <TickIcon
+                aria-hidden
+                className={clsx(
+                    styles.baseIndicatorStyle,
+                    styles.selectedIndicator
+                )}
+            />
         ) : (
             <div className={styles.baseIndicatorStyle} />
         );
