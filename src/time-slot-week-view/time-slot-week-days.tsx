@@ -1,16 +1,19 @@
 import dayjs, { Dayjs } from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
-import { useMemo, useState } from "react";
+import React, { useMemo, useRef, useState } from "react";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import { InternalCalendarProps } from "../shared/internal-calendar";
 import { CellStyleProps, DayCell } from "../shared/internal-calendar/day-cell";
 import { Colour } from "../theme";
-import { TimeSlot as TimeSlotComponent } from "../time-slot-bar/time-slot-bar.styles";
 import { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
+import { TimeHelper } from "../util/time-helper";
 import {
     ColumnWeekCell,
     DayLabel,
     HeaderCellWeek,
+    HeaderRow,
+    TimeSlotComponent,
     TimeSlotText,
     TimeSlotWrapper,
     Wrapper,
@@ -18,6 +21,12 @@ import {
 dayjs.extend(isBetween);
 
 export type DayVariant = "default" | "other-month" | "today";
+
+interface FocusableSlotMeta {
+    key: string;
+    date: string;
+    rowIndex: number;
+}
 
 interface TimeSlotWeekDaysProps
     extends Pick<
@@ -65,13 +74,13 @@ export const TimeSlotWeekDays = ({
         return CalendarHelper.generateDaysForCurrentWeek(calendarDate);
     }, [calendarDate]);
     const [hoverDay, setHoverDay] = useState<Dayjs>();
+    const slotButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
     const handleDayClick = (value: Dayjs, isDisabled: boolean) => {
         if (isDisabled || !enableSelection) return;
-
         onSelect(value);
     };
 
@@ -79,11 +88,21 @@ export const TimeSlotWeekDays = ({
         onSlotClick?.(date, slot);
     };
 
+    const handleSlotButtonClick =
+        (date: string, slot: TimeSlot) =>
+        (event: React.MouseEvent<HTMLButtonElement>) => {
+            event.stopPropagation();
+
+            if (slot.clickable ?? true) {
+                handleSlotClick(date, slot);
+            }
+        };
+
     const handleDayHover = (value: Dayjs) => {
         setHoverDay(value);
     };
 
-    const handleDayMouseout = () => {
+    const handleDayHoverClear = () => {
         setHoverDay(undefined);
     };
 
@@ -137,51 +156,137 @@ export const TimeSlotWeekDays = ({
 
         return dayCellStyleProps;
     };
+
+    const getFocusableSlotsForDate = (
+        formattedDate: string
+    ): FocusableSlotMeta[] => {
+        return (daySlots?.[formattedDate] ?? []).map((slot, index) => ({
+            key: `${formattedDate}-${slot.id}`,
+            date: formattedDate,
+            rowIndex: index,
+        }));
+    };
+
+    const handleSlotKeyDown = (
+        event: React.KeyboardEvent<HTMLButtonElement>,
+        currentSlot: FocusableSlotMeta
+    ) => {
+        const sameColumnSlots = getFocusableSlotsForDate(currentSlot.date);
+
+        const focusSlot = (slot?: FocusableSlotMeta) => {
+            if (!slot) return;
+            slotButtonRefs.current[slot.key]?.focus();
+        };
+
+        switch (event.key) {
+            case "ArrowRight":
+            case "ArrowDown": {
+                event.preventDefault();
+                const currentIndex = sameColumnSlots.findIndex(
+                    (slot) => slot.key === currentSlot.key
+                );
+                focusSlot(sameColumnSlots[currentIndex + 1]);
+                break;
+            }
+            case "ArrowLeft":
+            case "ArrowUp": {
+                event.preventDefault();
+                const currentIndex = sameColumnSlots.findIndex(
+                    (slot) => slot.key === currentSlot.key
+                );
+                focusSlot(sameColumnSlots[currentIndex - 1]);
+                break;
+            }
+            case "Home":
+            case "PageUp":
+                event.preventDefault();
+                focusSlot(sameColumnSlots[0]);
+                break;
+            case "End":
+            case "PageDown":
+                event.preventDefault();
+                focusSlot(sameColumnSlots[sameColumnSlots.length - 1]);
+                break;
+            default:
+                break;
+        }
+    };
+
+    const getSlotAriaLabel = (date: string, slot: TimeSlot) => {
+        const { startTime: slotStartTime, endTime: slotEndTime } = slot;
+
+        return concatIds(
+            dayjs(date).format("D MMMM YYYY dddd"),
+            slotStartTime && slotEndTime
+                ? TimeHelper.formatTimeRange(slotStartTime, slotEndTime)
+                : undefined,
+            slot.label,
+            slot.clickable ?? true ? "Available" : "Unavailable"
+        );
+    };
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHeader = () => {
-        return currentCalendarWeek.map((day, index) => {
-            const dayCellStyleProps = generateStyleProps(day);
+        return (
+            <HeaderRow role="row" onBlur={handleDayHoverClear}>
+                {currentCalendarWeek.map((day, index) => {
+                    const dayCellStyleProps = generateStyleProps(day);
 
-            return (
-                <HeaderCellWeek key={`week-day-${index}`}>
-                    <DayCell
-                        key={`day-${index}`}
-                        date={day}
-                        calendarDate={dayjs(selectedDate)}
-                        onSelect={() => {
-                            handleDayClick(day, !dayCellStyleProps.interactive);
-                        }}
-                        onHover={handleDayHover}
-                        onHoverEnd={handleDayMouseout}
-                        {...dayCellStyleProps}
-                    />
-                    <DayLabel $disabled={dayCellStyleProps.disabled}>
-                        {dayjs(day).format("ddd")}
-                    </DayLabel>
-                </HeaderCellWeek>
-            );
-        });
+                    return (
+                        <HeaderCellWeek
+                            key={`week-day-${index}`}
+                            role="presentation"
+                        >
+                            <DayCell
+                                key={`day-${index}`}
+                                date={day}
+                                calendarDate={dayjs(selectedDate)}
+                                onSelect={() => {
+                                    handleDayClick(
+                                        day,
+                                        !dayCellStyleProps.interactive
+                                    );
+                                }}
+                                onHover={handleDayHover}
+                                onHoverEnd={handleDayHoverClear}
+                                onFocus={handleDayHover}
+                                role="columnheader"
+                                tabIndex={
+                                    dayCellStyleProps.interactive ? 0 : -1
+                                }
+                                {...dayCellStyleProps}
+                            />
+                            <DayLabel
+                                aria-hidden
+                                $disabled={dayCellStyleProps.disabled}
+                            >
+                                {dayjs(day).format("ddd")}
+                            </DayLabel>
+                        </HeaderCellWeek>
+                    );
+                })}
+            </HeaderRow>
+        );
     };
 
     const renderTimeSlotBarCells = () => {
         return (
             <ColumnWeekCell
                 key={`week-cell-${calendarDate.format(dateFormat)}`}
+                role="row"
             >
                 {currentCalendarWeek.map((day, dayIndex) => {
                     const formattedDate = day.format(dateFormat);
-                    const slots =
-                        daySlots &&
-                        (daySlots[formattedDate]
-                            ? daySlots[formattedDate]
-                            : [fallbackSlot]);
+                    const slots = daySlots?.[formattedDate] ?? [fallbackSlot];
 
                     return (
-                        <TimeSlotWrapper key={`wrapper-${dayIndex}`}>
+                        <TimeSlotWrapper
+                            key={`wrapper-${dayIndex}`}
+                            role="gridcell"
+                        >
                             {slots &&
-                                slots.map((slot) => {
+                                slots.map((slot, rowIndex) => {
                                     const {
                                         id,
                                         startTime: slotStartTime,
@@ -195,6 +300,9 @@ export const TimeSlotWeekDays = ({
                                         backgroundColor,
                                         backgroundColor2,
                                     } = styleAttributes;
+                                    const slotKey = `${formattedDate}-${id}`;
+                                    const isActualSlot = slot !== fallbackSlot;
+
                                     return (
                                         <TimeSlotComponent
                                             $type="vertical"
@@ -230,6 +338,39 @@ export const TimeSlotWeekDays = ({
                                                     )}
                                                 </span>
                                             </TimeSlotText>
+                                            {isActualSlot && (
+                                                <VisuallyHidden>
+                                                    <button
+                                                        type="button"
+                                                        ref={(element) => {
+                                                            slotButtonRefs.current[
+                                                                slotKey
+                                                            ] = element;
+                                                        }}
+                                                        aria-disabled={
+                                                            !clickable
+                                                        }
+                                                        aria-label={getSlotAriaLabel(
+                                                            formattedDate,
+                                                            slot
+                                                        )}
+                                                        onKeyDown={(event) =>
+                                                            handleSlotKeyDown(
+                                                                event,
+                                                                {
+                                                                    key: slotKey,
+                                                                    date: formattedDate,
+                                                                    rowIndex,
+                                                                }
+                                                            )
+                                                        }
+                                                        onClick={handleSlotButtonClick(
+                                                            formattedDate,
+                                                            slot
+                                                        )}
+                                                    />
+                                                </VisuallyHidden>
+                                            )}
                                         </TimeSlotComponent>
                                     );
                                 })}
@@ -241,7 +382,7 @@ export const TimeSlotWeekDays = ({
     };
 
     return (
-        <Wrapper>
+        <Wrapper role="grid">
             {renderHeader()}
             {renderTimeSlotBarCells()}
         </Wrapper>

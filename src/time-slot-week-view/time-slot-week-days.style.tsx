@@ -1,5 +1,6 @@
 import styled, { css } from "styled-components";
 import { Colour, Font } from "../theme";
+import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -18,6 +19,12 @@ export const HeaderCellWeek = styled.div`
     justify-content: center;
     user-select: none;
     margin-bottom: 0.188rem;
+`;
+
+export const HeaderRow = styled.div`
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
 `;
 
 export const DayLabel = styled.div<LabelStyleProps>`
@@ -54,6 +61,16 @@ export const TimeSlotText = styled.div`
     color: ${Colour.text};
     span {
         display: block;
+    }
+`;
+
+export const TimeSlotComponent = styled(TimeSlot)`
+    position: relative;
+
+    &:focus-within {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 2px;
+        z-index: 1;
     }
 `;
 
