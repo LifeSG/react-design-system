@@ -113,7 +113,7 @@ function Component(
             <animated.div
                 id={contentId}
                 className={styles.expandable}
-                style={hasFirstLoad ? expandableStyles : resizeHeight}
+                style={hasFirstLoad ? expandableStyles : undefined}
                 data-testid={`${testId}-expandable-container`}
                 inert={inertValue(!expanded)}
             >
