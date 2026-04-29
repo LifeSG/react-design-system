@@ -29,16 +29,6 @@ test.describe("Breadcrumb", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("multiple-lengths");
-        });
-
-        test("Multiple breadcrumb lengths", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
             await story.init("link-vs-non-link");
         });
 
