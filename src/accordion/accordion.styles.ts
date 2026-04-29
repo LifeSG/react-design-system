@@ -1,11 +1,11 @@
 import { css } from "@linaria/core";
 
-import { Border, Colour, Font, MediaQuery } from "../theme";
+import { Border, Colour, Font, MediaQuery, Spacing } from "../theme";
 
 // ============================================================================
 // STYLING
 // =============================================================================
-export const content = css`
+export const accordionWrapper = css`
     width: 100%;
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
@@ -15,11 +15,7 @@ export const titleWrapper = css`
     flex-direction: row;
     align-items: center;
     justify-content: flex-end;
-    padding-bottom: 1rem;
-
-    ${MediaQuery.MaxWidth.sm} {
-        justify-content: flex-end;
-    }
+    padding-bottom: ${Spacing["spacing-16"]};
 `;
 
 export const titleWrapperHidden = css`
@@ -49,7 +45,9 @@ export const titleHidden = css`
 `;
 
 export const expandCollapseLink = css`
-    padding: 1.75rem 1rem; // larger clickable area
-    margin: -1rem -1rem -1rem 0px;
+    padding: 1.75rem ${Spacing["spacing-16"]}; // larger clickable area
+    margin: -${Spacing["spacing-16"]} -${Spacing["spacing-16"]} -${Spacing[
+            "spacing-16"
+        ]} 0px;
     white-space: nowrap;
 `;

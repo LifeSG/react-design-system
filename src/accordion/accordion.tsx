@@ -147,7 +147,7 @@ const AccordionBase = ({
             <div
                 id={id}
                 data-testid={testId}
-                className={clsx(styles.content, className)}
+                className={clsx(styles.accordionWrapper, className)}
             >
                 {renderTitleWrapper()}
                 {children}
