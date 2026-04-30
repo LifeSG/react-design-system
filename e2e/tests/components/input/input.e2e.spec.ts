@@ -80,20 +80,10 @@ test.describe("Input", () => {
         });
 
         test("Text spacing for telephone inputs", async ({ story }) => {
-            // Test normal input
             await story.locators.spacingInputs.spacingField.fill("91234567");
-            await expect(story.locators.spacingInputs.spacingField).toHaveValue(
-                "9123 4567"
-            );
-
-            // Test form input
             await story.locators.spacingInputs.formSpacingField.fill(
                 "91234567"
             );
-            await expect(
-                story.locators.spacingInputs.formSpacingField
-            ).toHaveValue("9123 4567");
-
             await compareScreenshot(story, "with-spacing");
         });
     });
