@@ -215,7 +215,7 @@ export const WithCustomCallToAction: StoryObj<Component> = {
                 renderCustomCallToAction={(hideOptions, options) => {
                     return (
                         <CustomCTAContainer>
-                            <Button.Default
+                            <Button
                                 style={{ width: "100%" }}
                                 onClick={() => {
                                     alert("Clicked on custom CTA");
@@ -225,7 +225,7 @@ export const WithCustomCallToAction: StoryObj<Component> = {
                                 {options.length === 0
                                     ? "Add first option"
                                     : "Add another option"}
-                            </Button.Default>
+                            </Button>
                         </CustomCTAContainer>
                     );
                 }}
