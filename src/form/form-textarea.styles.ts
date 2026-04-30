@@ -5,7 +5,7 @@ import { Spacing } from "../theme";
 export const labelContainer = css`
     display: flex;
     justify-content: flex-end;
-    margin-top: ${Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-8"]};
 `;
 
 export const errorMessageContainer = css`

@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from "react";
 
-import { CounterLabel } from "./textara-counter.style";
+import * as styles from "./textarea-counter.styles";
 
 interface Props {
     value: string | number | readonly string[] | undefined;
@@ -54,9 +54,9 @@ export const TextareaCounter = ({
             {React.isValidElement(counterLabel) ? (
                 counterLabel
             ) : (
-                <CounterLabel data-testid="counter-label">
+                <p className={styles.counterLabel} data-testid="counter-label">
                     {counterLabel}
-                </CounterLabel>
+                </p>
             )}
         </>
     );

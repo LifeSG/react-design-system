@@ -32,6 +32,7 @@ export const errorMessageContainer = css`
 
 export const errorMessage = css`
     color: ${Colour["text-error"]};
+    ${Font["body-sm-semibold"]}
     margin-bottom: 0;
     outline: none;
 `;
