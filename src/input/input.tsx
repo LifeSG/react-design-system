@@ -2,6 +2,7 @@ import { CrossIcon } from "@lifesg/react-icons/cross";
 import clsx from "clsx";
 import React, { useImperativeHandle, useRef } from "react";
 
+import { BasicButton, BasicInput, InputBox } from "../shared/input-wrapper";
 import { StringHelper, useNextInputState } from "../util";
 import * as styles from "./input.styles";
 import type { InputProps, InputRef } from "./types";
@@ -112,30 +113,22 @@ const Component = (
     const showClear = shouldShowClear();
 
     const renderInputElement = () => {
-        const inputClassName = clsx(
-            styles.inputElementStyles,
-            {
-                [styles.inputElementDisabledStyles]: disabled,
-            },
-            styleType !== "no-border" &&
-                !readOnly && {
-                    [styles.inputElementPaddingLeftStyles]: true,
-                },
-            styleType !== "no-border" &&
-                !readOnly &&
-                !showClear && {
-                    [styles.inputElementPaddingRightStyles]: true,
-                }
-        );
+        const inputClassName = clsx(styles.inputElement, {
+            [styles.inputElementDisabled]: disabled,
+            [styles.inputElementPaddingLeft]:
+                styleType !== "no-border" && !readOnly,
+            [styles.inputElementPaddingRight]:
+                styleType !== "no-border" && !readOnly && !showClear,
+        });
 
         const clearButtonClassName = clsx(
-            styles.clearButtonStyles,
-            styleType === "no-border" && styles.clearButtonNoBorderStyles
+            styles.clearButton,
+            styleType === "no-border" && styles.clearButtonNoBorder
         );
 
         return (
             <>
-                <input
+                <BasicInput
                     data-testid="input"
                     ref={elementRef}
                     aria-disabled={disabled}
@@ -148,17 +141,14 @@ const Component = (
                     {...otherProps}
                 />
                 {showClear && (
-                    <button
+                    <BasicButton
                         onClick={handleClear}
                         type="button"
                         aria-label="Clear input"
                         className={clearButtonClassName}
                     >
-                        <CrossIcon
-                            className={styles.clearIconStyles}
-                            aria-hidden
-                        />
-                    </button>
+                        <CrossIcon className={styles.clearIcon} aria-hidden />
+                    </BasicButton>
                 )}
             </>
         );
@@ -167,19 +157,22 @@ const Component = (
     return (
         <>
             {styleType === "no-border" ? (
-                <div className={clsx(styles.noBorderWrapperStyles, className)}>
+                <div className={clsx(styles.noBorderWrapper, className)}>
                     {renderInputElement()}
                 </div>
             ) : (
-                <div
-                    className={clsx(styles.defaultWrapperStyles, className, {
-                        [styles.defaultWrapperDisabledStyles]: disabled,
-                        [styles.defaultWrapperErrorStyles]: error,
-                        [styles.defaultWrapperReadOnlyStyles]: readOnly,
+                <InputBox
+                    className={clsx(styles.defaultWrapper, className, {
+                        [styles.defaultWrapperDisabled]: disabled,
+                        [styles.defaultWrapperError]: error,
+                        [styles.defaultWrapperReadOnly]: readOnly,
                     })}
+                    disabled={disabled}
+                    error={error}
+                    readOnly={readOnly}
                 >
                     {renderInputElement()}
-                </div>
+                </InputBox>
             )}
         </>
     );

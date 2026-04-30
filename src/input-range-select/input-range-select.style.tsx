@@ -1,27 +1,10 @@
 import styled from "styled-components";
 
 import { InputWrapper } from "../shared/input-wrapper";
-import { Border, Colour, Radius, Spacing } from "../theme";
+import { Colour, Spacing } from "../theme";
 import { V3_Colour, V3_Spacing } from "../v3_theme";
 
 export const ClearIconContainer = styled.button`
-    /* Base button styles */
-    background: transparent;
-    border: none;
-    outline: none;
-
-    &:focus,
-    &:active {
-        outline: none;
-    }
-
-    &:focus-visible {
-        outline: ${Border["width-010"]} ${Border["solid"]}
-            ${Colour["border-focus"]};
-        border-radius: ${Radius["sm"]};
-    }
-
-    /* Component specific styles */
     height: auto;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     cursor: pointer;
