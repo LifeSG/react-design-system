@@ -1,6 +1,6 @@
-import { useState } from "react";
+import { VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography/typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FeedbackRatingData } from "./feedback-rating-data";
 import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
 import {
@@ -10,7 +10,6 @@ import {
     SubmitButton,
 } from "./feedback-rating.styles";
 import { FeedbackRatingProps } from "./types";
-import { VisuallyHidden } from "../shared/accessibility";
 
 export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
     // =========================================================================
@@ -25,7 +24,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         onSubmit,
         ...otherProps
     } = props;
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const descriptionId = `${internalId}-description`;
     const bannerSrc = imgSrc ?? FeedbackRatingData.IMG;
     const componentDescription =

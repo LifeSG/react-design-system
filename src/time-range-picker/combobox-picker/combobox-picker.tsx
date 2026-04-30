@@ -7,16 +7,16 @@ import {
 } from "../../form/form-label.style";
 import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { ClearIcon } from "../../input/input.style";
+import { VisuallyHidden, concatIds } from "../../shared/accessibility";
 import { DropdownListState } from "../../shared/dropdown-list";
 import { DropdownList } from "../../shared/dropdown-list/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
-import { SimpleIdGenerator } from "../../util";
+import { useId } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { SelectorInput, Wrapper } from "../common.styles";
 import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 import { TimeFieldContainer } from "./combobox-picker.styles";
-import { VisuallyHidden, concatIds } from "../../shared/accessibility";
 
 type TimeRangeInputType = "start" | "end";
 interface TimeChangeOptions {
@@ -50,7 +50,7 @@ export const ComboboxPicker = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const [activeTimeSelector, setActiveTimeSelector] =
         useState<TimeRangeInputType | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);

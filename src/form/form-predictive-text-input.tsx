@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { SimpleIdGenerator } from "src/util";
+import { useId } from "src/util";
 import { PredictiveTextInput } from "../predictive-text-input";
 import { FormWrapper } from "./form-wrapper";
 import { FormPredictiveTextInputProps } from "./types";
@@ -23,11 +22,8 @@ export const FormPredictiveTextInput = <T, V>({
     xxlCols,
     ...otherProps
 }: FormPredictiveTextInputProps<T, V>): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-field-${SimpleIdGenerator.generate()}`
-    );
-
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-field-${internalId}`;
 
     return (
         <FormWrapper

@@ -9,7 +9,7 @@ import React, {
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { inertValue } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { AccordionContext } from "./accordion-context";
 import {
     ChevronIcon,
@@ -51,7 +51,7 @@ function Component(
         onItemDeregister,
     } = useContext(AccordionContext);
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const contentId = `${internalId}-content`;
     const resizeDetector = useResizeDetector();
     const expanded =

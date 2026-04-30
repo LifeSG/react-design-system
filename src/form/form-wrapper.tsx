@@ -4,8 +4,8 @@
  *
  */
 
-import { Children, ComponentType, cloneElement, useState } from "react";
-import { SimpleIdGenerator } from "../util";
+import { Children, ComponentType, cloneElement } from "react";
+import { useId } from "../util";
 import { FormLabel } from "./form-label";
 import {
     ErrorIcon,
@@ -44,7 +44,7 @@ export const FormWrapper = ({
     // =============================================================================
     const updatedLayoutType = getLayoutType();
     const errorMessage = typeof eRaw === "string" ? eRaw.trim() : eRaw;
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const labelId = `${id ?? internalId}-label`; // matches FormLabel
     const subtitleId = `${id ?? internalId}-label-subtitle`; // matches FormLabel
     const errorMessageId = `${id ?? internalId}-error-message`;

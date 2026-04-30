@@ -1,7 +1,6 @@
-import { useState } from "react";
 import { OtpVerification } from "../otp-verification";
 import { FormOtpVerificationProps } from "../otp-verification/types";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 
 export const FormOtpVerification = ({
@@ -22,10 +21,8 @@ export const FormOtpVerification = ({
     xxlCols,
     ...otherProps
 }: FormOtpVerificationProps): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-otp-verification-${SimpleIdGenerator.generate()}`
-    );
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-otp-verification-${internalId}`;
 
     return (
         <FormWrapper

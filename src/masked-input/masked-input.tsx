@@ -1,6 +1,9 @@
-import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
+import { isEmpty } from "lodash";
+import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import { StringHelper, useId } from "../util";
 import {
     ClickableErrorWrapper,
     ErrorIcon,
@@ -17,9 +20,6 @@ import {
     TryAgainLabel,
 } from "./masked-input.style";
 import { MaskedInputProps } from "./types";
-import { isEmpty } from "lodash";
-import { SimpleIdGenerator, StringHelper } from "../util";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 const Component = (
     {
@@ -55,7 +55,7 @@ const Component = (
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
     const [isMasked, setIsMasked] = useState<boolean>(!disableMask);
     const [updatedValue, setUpdatedValue] = useState<string>(value || "");
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const valueId = `${otherProps.id ?? internalId}-value`;
 
     const inputRef = useRef<HTMLInputElement>(null);

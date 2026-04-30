@@ -1,8 +1,11 @@
 import { LanguageIcon } from "@lifesg/react-icons/language";
 import React, { useEffect, useRef, useState } from "react";
-import { DropdownRenderProps } from "../shared/dropdown-wrapper";
-import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import { SimpleIdGenerator } from "../util";
+import {
+    DropdownRenderProps,
+    ElementWithDropdown,
+} from "../shared/dropdown-wrapper";
+import { useId } from "../util";
+import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
 import {
     DropdownItem,
     DropdownList,
@@ -12,7 +15,6 @@ import {
     StyledExpandableElement,
     UnselectedIndicator,
 } from "./dropdown-variant.style";
-import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
 import { VariantInternalProps } from "./internal-types";
 import { LanguageSwitcherCode } from "./types";
 
@@ -27,11 +29,11 @@ export const DropdownVariant = ({
     // =========================================================================
     const [isOpen, setIsOpen] = useState(false);
     const [focusedIndex, setFocusedIndex] = useState(-1);
-    const [listboxId] = useState(
-        () => `listbox-${SimpleIdGenerator.generate()}`
-    );
     const triggerRef = useRef<HTMLButtonElement>(null);
     const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
+
+    const id = useId();
+    const listboxId = `listbox-${id}`;
 
     // =========================================================================
     // EFFECTS

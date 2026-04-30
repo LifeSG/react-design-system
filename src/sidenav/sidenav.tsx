@@ -1,5 +1,5 @@
 import { useRef, useState } from "react";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { SidenavContext, SidenavContextItem } from "./sidenav-context";
 import { SidenavDrawerItem } from "./sidenav-drawer-item";
 import { SidenavDrawerSubitem } from "./sidenav-drawer-subitem";
@@ -19,7 +19,7 @@ const SidenavBase = ({
     // =============================================================================
     const wrapperRef = useRef<HTMLDivElement>(null);
     const menuRef = useRef<HTMLDivElement>(null);
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
 
     const [currentItem, setCurrentItem] = useState<
         SidenavContextItem | undefined

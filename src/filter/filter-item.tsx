@@ -1,8 +1,10 @@
 import { useSpring } from "@react-spring/web";
 import isNil from "lodash/isNil";
-import { useContext, useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { PopoverAddon } from "../form/form-label-addon";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
+import { useId } from "../util";
 import { FilterContext } from "./filter-context";
 import {
     ChevronIcon,
@@ -17,8 +19,6 @@ import {
     MinimisableContent,
 } from "./filter-item.styles";
 import { FilterItemProps } from "./types";
-import { VisuallyHidden, inertValue } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
 
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,
@@ -52,9 +52,9 @@ export const FilterItem = ({
         ? minimisedHeight ??
           Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
         : contentResizeDetector.height;
-    const internalId = useRef(SimpleIdGenerator.generate());
-    const contentId = `${internalId.current}-content`;
-    const titleId = `${internalId.current}-title`;
+    const internalId = useId();
+    const contentId = `${internalId}-content`;
+    const titleId = `${internalId}-title`;
 
     // =============================================================================
     // EFFECTS

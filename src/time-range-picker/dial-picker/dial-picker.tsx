@@ -1,15 +1,15 @@
 import { useEffect, useRef, useState } from "react";
-import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
-import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
-import { TimeHelper } from "../../util/time-helper";
-import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
-import { TimepickerDropdown } from "../../shared/timepicker-dropdown/timepicker-dropdown";
+import { concatIds } from "../../shared/accessibility";
 import {
     DropdownRenderProps,
     ElementWithDropdown,
 } from "../../shared/dropdown-wrapper";
-import { SimpleIdGenerator } from "../../util";
-import { concatIds } from "../../shared/accessibility";
+import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
+import { TimepickerDropdown } from "../../shared/timepicker-dropdown/timepicker-dropdown";
+import { useId } from "../../util";
+import { TimeHelper } from "../../util/time-helper";
+import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
+import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 
 type Active = "start" | "end" | "none";
 
@@ -42,7 +42,7 @@ export const DialPicker = ({
 
     const enabled = !readOnly && !disabled;
     const nodeRef = useRef<HTMLDivElement>(null);
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const startLabelId = `${internalId}-start-label`;
     const endLabelId = `${internalId}-end-label`;
 

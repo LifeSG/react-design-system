@@ -1,9 +1,11 @@
 import { useSpring } from "@react-spring/web";
-import { useContext, useRef, useState } from "react";
+import { useContext, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
+import { VisuallyHidden, inertValue } from "../shared/accessibility";
 import { Breakpoint } from "../theme";
+import { useId } from "../util";
 import {
     AlertIcon,
     CallToActionContainer,
@@ -19,8 +21,6 @@ import {
     NonExpandable,
 } from "./box-container.styles";
 import { BoxContainerProps } from "./types";
-import { SimpleIdGenerator } from "../util";
-import { VisuallyHidden, inertValue } from "../shared/accessibility";
 
 export const BoxContainer = ({
     children,
@@ -45,9 +45,9 @@ export const BoxContainer = ({
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
     const interactiveHeader = clickableHeader && collapsible;
-    const internalId = useRef(SimpleIdGenerator.generate());
-    const contentId = `${internalId.current}-content`;
-    const headerId = `${internalId.current}-header`;
+    const internalId = useId();
+    const contentId = `${internalId}-content`;
+    const headerId = `${internalId}-header`;
 
     // =============================================================================
     // EVENT HANDLERS

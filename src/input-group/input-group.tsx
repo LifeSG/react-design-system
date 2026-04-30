@@ -1,4 +1,6 @@
-import React, { useState } from "react";
+import React from "react";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import { useId } from "../util";
 import { InputGroupListAddon } from "./input-group-list-addon";
 import {
     AddonWrapper,
@@ -7,8 +9,6 @@ import {
     NoAddonWrapper,
 } from "./input-group.style";
 import { CustomAddon, InputGroupProps, LabelAddon, ListAddon } from "./types";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
 
 const Component = <T, V>(
     {
@@ -24,7 +24,7 @@ const Component = <T, V>(
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const addonId = `${internalId}-addon`;
     const ariaLabelId = `${internalId}-ariaLabelId`;
 

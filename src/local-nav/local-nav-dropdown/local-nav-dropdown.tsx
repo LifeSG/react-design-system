@@ -1,7 +1,8 @@
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+import { Typography } from "../../typography";
+import { useId } from "../../util";
 import { LocalNavDropdownItemComponentProps } from "../internal-types";
 import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
-import { SimpleIdGenerator } from "../../util";
 import {
     Backdrop,
     NavItem,
@@ -12,7 +13,6 @@ import {
     NavWrapper,
     StyledTickIcon,
 } from "./local-nav-dropdown.styles";
-import { Typography } from "../../typography";
 
 const Component = (
     {
@@ -43,7 +43,7 @@ const Component = (
     const [dynamicMargin, setDynamicMargin] = useState(0);
     const [focusedIndex, setFocusedIndex] = useState(0);
     const navTestId = testId || "local-nav-dropdown";
-    const [dropdownListId] = useState(() => SimpleIdGenerator.generate());
+    const dropdownListId = useId();
 
     useImperativeHandle(ref, () => navWrapperRef.current!);
 

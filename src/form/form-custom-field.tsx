@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormCustomFieldProps } from "./types";
 
@@ -10,11 +9,9 @@ export const FormCustomField = ({
     children,
     ...otherProps
 }: FormCustomFieldProps): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-custom-field-${SimpleIdGenerator.generate()}`
-    );
+    const internalId = useId();
 
-    const inputId = id ?? internalId;
+    const inputId = id ?? `form-custom-field-${internalId}`;
 
     return (
         <FormWrapper

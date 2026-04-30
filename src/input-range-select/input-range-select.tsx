@@ -1,4 +1,6 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
+import { ClearIcon } from "../input/input.style";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import {
     DropdownList,
     DropdownListApi,
@@ -11,16 +13,14 @@ import {
     Wrapper,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
+import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
-import { InputRangeSelectProps } from "./types";
-import { ClearIcon } from "../input/input.style";
 import {
     ClearIconContainer,
     RangeSelectorButton,
     StyledInputWrapper,
 } from "./input-range-select.style";
-import { SimpleIdGenerator } from "../util";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import { InputRangeSelectProps } from "./types";
 
 type RangeType = "from" | "to";
 
@@ -74,7 +74,7 @@ export const InputRangeSelect = <T, V>({
     };
     const dropdownRef = useRef<DropdownListApi>(null);
 
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const listboxId = `${internalId}-range-listbox`;
     const fromLabelId = `${internalId}-from-label`;
     const toLabelId = `${internalId}-to-label`;
