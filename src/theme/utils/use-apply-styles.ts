@@ -56,9 +56,7 @@ function normaliseCssProperty(key: string): string {
     return kebabCased;
 }
 
-function normaliseCssValue(key: string, value: unknown): string {
-    if (value == null) return "";
-
+function normaliseCssValue(key: string, value: string | number): string {
     if (
         typeof value === "number" &&
         numericCssStyleProperties.includes(key as keyof CSSStyleDeclaration)
@@ -86,7 +84,7 @@ export function useApplyStyle<TElement extends HTMLElement>(
         const element = ref?.current;
         if (!element || !styles) return;
 
-        Object.entries(styles).forEach(([key, value]) => {
+        Object.entries(styles).forEach(([key, value]: [string, StyleValue]) => {
             const normalisedKey = normaliseCssProperty(key);
 
             if (value == null) {
