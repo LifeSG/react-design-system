@@ -1,20 +1,15 @@
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useState } from "react";
+import ReactSlider from "react-slider";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import { Colour } from "../theme";
+import { Typography } from "../typography";
 import { SimpleIdGenerator } from "../util";
-import { V3_Colour } from "../v3_theme";
-import {
-    IndicatorLabelContainer,
-    Knob,
-    LabelContainer,
-    LabelText,
-    Slider,
-    SliderThumb,
-    SliderTrack,
-    Wrapper,
-} from "./input-range-slider.styles";
+import * as styles from "./input-range-slider.styles";
+import { Thumb, Track } from "./slider-components";
 import type { InputRangeSliderProps } from "./types";
 
 export const InputRangeSlider = ({
@@ -42,6 +37,7 @@ export const InputRangeSlider = ({
     renderSliderLabel,
     onChange,
     onChangeEnd,
+    className,
     ...otherProps
 }: InputRangeSliderProps) => {
     // =========================================================================
@@ -199,12 +195,12 @@ export const InputRangeSlider = ({
     function getDefaultColors() {
         const inactiveColor =
             disabled || readOnly
-                ? V3_Colour["border-disabled"]
-                : V3_Colour["border-strong"];
+                ? Colour["border-disabled"]
+                : Colour["border-strong"];
         const activeColor =
             disabled || readOnly
-                ? V3_Colour["border-selected-disabled"]
-                : V3_Colour["border-selected"];
+                ? Colour["border-selected-disabled"]
+                : Colour["border-selected"];
 
         if (numOfThumbs === 1) {
             return [activeColor, inactiveColor];
@@ -342,11 +338,11 @@ export const InputRangeSlider = ({
         }
 
         return (
-            <LabelText>
+            <Typography.BodyBL className={styles.labelText}>
                 {sliderLabelPrefix}
                 {value}
                 {sliderLabelSuffix}
-            </LabelText>
+            </Typography.BodyBL>
         );
     };
 
@@ -364,21 +360,22 @@ export const InputRangeSlider = ({
         }
 
         return (
-            <LabelText>
+            <Typography.BodyBL className={styles.labelText}>
                 {indicatorLabelPrefix}
                 {formattedSelection}
                 {indicatorLabelSuffix}
-            </LabelText>
+            </Typography.BodyBL>
         );
     };
 
     return (
-        <Wrapper
+        <div
             {...otherProps}
             id={id}
             role="group"
             aria-labelledby={ariaLabelledBy}
             aria-disabled={disabled}
+            className={clsx(styles.wrapper, className)}
         >
             {!disabled && !readOnly && (
                 <VisuallyHidden id={instructionTextId}>
@@ -387,9 +384,12 @@ export const InputRangeSlider = ({
             )}
 
             {showIndicatorLabel && (
-                <IndicatorLabelContainer id={indicatorTextId}>
+                <div
+                    id={indicatorTextId}
+                    className={styles.indicatorLabelContainer}
+                >
                     {formatIndicationLabel()}
-                </IndicatorLabelContainer>
+                </div>
             )}
 
             {selection.map((thumbValue, index) => {
@@ -411,6 +411,7 @@ export const InputRangeSlider = ({
                         </span>
 
                         <input
+                            data-testid={`slider-input-${index}`}
                             type="range"
                             min={getThumbMin(index)}
                             max={getThumbMax(index)}
@@ -442,7 +443,7 @@ export const InputRangeSlider = ({
 
             {/* Native range inputs provide the accessible interaction model.
                 The visible react-slider is presentation-only. */}
-            <Slider
+            <ReactSlider
                 step={step}
                 min={min}
                 max={max}
@@ -452,24 +453,21 @@ export const InputRangeSlider = ({
                 onAfterChange={handleChangeEnd}
                 minDistance={minRange}
                 aria-hidden
+                className={styles.slider}
                 renderThumb={(
                     thumbProps: React.HTMLAttributes<HTMLDivElement>,
                     state
                 ) => {
                     return (
-                        <SliderThumb
+                        <Thumb
                             data-testid={`slider-thumb-${state.index}`}
                             {...thumbProps}
                             tabIndex={-1}
                             aria-hidden
-                            data-focused={
-                                focusedThumbIndex === state.index
-                                    ? "true"
-                                    : undefined
-                            }
-                        >
-                            <Knob $disabled={disabled} $readOnly={readOnly} />
-                        </SliderThumb>
+                            focused={focusedThumbIndex === state.index}
+                            disabled={disabled}
+                            readOnly={readOnly}
+                        />
                     );
                 }}
                 renderTrack={(
@@ -477,21 +475,21 @@ export const InputRangeSlider = ({
                     state
                 ) => {
                     return (
-                        <SliderTrack
+                        <Track
                             data-testid={`slider-track-${state.index}`}
                             {...trackProps}
-                            $color={trackColors[state.index]}
+                            color={trackColors[state.index]}
                         />
                     );
                 }}
             />
 
             {showSliderLabels && (
-                <LabelContainer>
+                <div className={styles.labelContainer}>
                     <div>{formatLabel(min)}</div>
                     <div>{formatLabel(max)}</div>
-                </LabelContainer>
+                </div>
             )}
-        </Wrapper>
+        </div>
     );
 };

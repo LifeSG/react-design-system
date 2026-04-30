@@ -1,7 +1,3 @@
-import type { V3_ThemeStyleProps } from "../v3_theme/types";
-
-type CustomColor = string | ((props: V3_ThemeStyleProps) => string);
-
 export interface BaseSliderProps {
     className?: string | undefined;
     id?: string | undefined;
@@ -13,7 +9,7 @@ export interface BaseSliderProps {
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     /** Customise the color of each track segment. Expected length is (number of values + 1) */
-    colors?: (CustomColor | undefined)[] | undefined;
+    colors?: (string | undefined)[] | undefined;
     showSliderLabels?: boolean | undefined;
     sliderLabelPrefix?: string | undefined;
     sliderLabelSuffix?: string | undefined;
