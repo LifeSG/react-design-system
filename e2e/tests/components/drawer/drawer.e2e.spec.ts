@@ -108,4 +108,23 @@ test.describe("Drawer", () => {
             `);
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("sticky-header");
+        });
+
+        test("Header remains sticky on scroll", async ({ story }) => {
+            await story.open();
+
+            const content = story.page.locator('[class*="content"]');
+            await content.evaluate((el) => {
+                el.scrollTop = el.scrollHeight;
+            });
+
+            await compareScreenshot(story, "sticky-scrolled", {
+                fullscreen: true,
+            });
+        });
+    });
 });
