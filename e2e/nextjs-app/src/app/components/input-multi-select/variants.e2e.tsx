@@ -7,17 +7,18 @@ export default function Story() {
     return (
         <div className="story-column-container">
             <Form.MultiSelect
-                data-testid="variant-default"
-                label="Default variant"
+                data-testid="small-default"
+                variant="small"
+                label="Small default"
                 options={OPTIONS}
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
             />
 
             <Form.MultiSelect
-                data-testid="variant-small"
+                data-testid="small-with-search"
                 variant="small"
-                label="Small variant"
+                label="Small with search"
                 options={OPTIONS}
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
