@@ -45,7 +45,6 @@ export const titleHidden = css`
 `;
 
 export const expandCollapseLink = css`
-    padding: 1.75rem ${Spacing["spacing-16"]}; // larger clickable area
     margin: -${Spacing["spacing-16"]} -${Spacing["spacing-16"]} -${Spacing[
             "spacing-16"
         ]} 0px;
