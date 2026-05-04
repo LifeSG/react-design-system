@@ -69,7 +69,7 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("InputSelect", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("basic");
+            await story.init("form-variants");
         });
 
         test("Visual", async ({ story }) => {
