@@ -5,6 +5,7 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
+import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
 import { InputSelect } from "../input-select";
@@ -215,7 +216,7 @@ const Component = (
                     <PageItem
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
-                        $selected={active}
+                        className={clsx(active && "pageItemSelected")}
                         aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
@@ -257,7 +258,7 @@ const Component = (
                     <PageItem
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
-                        $selected={active}
+                        className={clsx(active && "pageItemSelected")}
                         aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
@@ -352,7 +353,6 @@ const Component = (
                             onClick={firstPaginationItem}
                             disabled={isFirstPage}
                             focusHighlight={false}
-                            $position="left"
                             aria-label="First page"
                             focusOutline="browser"
                         >
@@ -363,7 +363,6 @@ const Component = (
                         onClick={prevPaginationItem}
                         disabled={isFirstPage}
                         focusHighlight={false}
-                        $position="left"
                         aria-label="Previous page"
                         focusOutline="browser"
                     >
@@ -376,7 +375,6 @@ const Component = (
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
                         focusHighlight={false}
-                        $position="right"
                         aria-label="Next page"
                         focusOutline="browser"
                     >
@@ -387,7 +385,6 @@ const Component = (
                             onClick={lastPaginationItem}
                             disabled={isLastPage}
                             focusHighlight={false}
-                            $position="right"
                             aria-label="Last page"
                             focusOutline="browser"
                         >

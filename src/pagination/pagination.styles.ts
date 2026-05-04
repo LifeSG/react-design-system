@@ -1,20 +1,9 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Input } from "../input";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $selected: boolean;
-}
-interface ButtonProps {
-    $position: string;
-}
-
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -67,7 +56,7 @@ export const EllipsisButton = styled(ClickableIcon)`
     }
 `;
 
-export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
+export const NavigationButton = styled(ClickableIcon)`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -97,50 +86,45 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     }
 `;
 
-export const PageItem = styled.button<StyleProps>`
+export const PageItem = styled.button`
     outline: none;
     margin: ${Spacing["spacing-4"]};
     box-shadow: none;
-    border: ${Border["width-010"]} ${Border.solid}
-        ${(props) =>
-            css`
-                ${props.$selected ? Colour["bg-primary"] : Colour.border}
-            `};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     border-radius: ${Radius.sm};
     min-width: 2.5rem;
     height: 2.5rem;
     padding: 0 ${Spacing["spacing-8"]};
 
-    background: ${(props) =>
-        props.$selected ? Colour["bg-primary"] : Colour.bg};
+    background: ${Colour.bg};
     cursor: pointer;
 
     ${Font["body-baseline-regular"]};
     text-align: center;
-    color: ${(props) =>
-        props.$selected ? Colour["text-inverse"] : Colour.text};
+    color: ${Colour.text};
 
-    ${(props) =>
-        props.$selected
-            ? css`
-                  font-weight: ${Font.Spec["weight-bold"]};
+    &:hover,
+    &:focus-visible {
+        border-color: ${Colour["bg-hover"]};
+        background: ${Colour["bg-hover"]};
+        color: ${Colour["text-hover"]};
+        font-weight: ${Font.Spec["weight-semibold"]};
+    }
 
-                  &:hover,
-                  &:focus-visible {
-                      border-color: ${Colour["bg-selected-strongest-hover"]};
-                      background: ${Colour["bg-selected-strongest-hover"]};
-                      color: ${Colour["text-inverse"]};
-                  }
-              `
-            : css`
-                  &:hover,
-                  &:focus-visible {
-                      border-color: ${Colour["bg-hover"]};
-                      background: ${Colour["bg-hover"]};
-                      color: ${Colour["text-hover"]};
-                      font-weight: ${Font.Spec["weight-semibold"]};
-                  }
-              `}
+    &.pageItemSelected {
+        border-color: ${Colour["bg-primary"]};
+        background: ${Colour["bg-primary"]};
+        color: ${Colour["text-inverse"]};
+        font-weight: ${Font.Spec["weight-bold"]};
+
+        &:hover,
+        &:focus-visible {
+            border-color: ${Colour["bg-selected-strongest-hover"]};
+            background: ${Colour["bg-selected-strongest-hover"]};
+            color: ${Colour["text-inverse"]};
+            font-weight: ${Font.Spec["weight-bold"]};
+        }
+    }
 `;
 
 export const EllipsisContainer = styled.div`
