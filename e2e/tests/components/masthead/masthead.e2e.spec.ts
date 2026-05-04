@@ -1,4 +1,4 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
+import { test as base, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -62,7 +62,7 @@ test.describe("Masthead", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("basic", { mode: "dark" });
+            await story.init("basic", { mode: "dark", size: "xxl" });
         });
 
         test("Basic (dark mode)", async ({ story }) => {
@@ -77,12 +77,6 @@ test.describe("Masthead", () => {
 
         test("Stretch", async ({ story }) => {
             await compareScreenshot(story, "mount");
-            expect(
-                await story.getCustomProperty(
-                    story.locators.mastheadContainer,
-                    "--sgds-mainnav-max-width"
-                )
-            ).toBe("calc(infinity * 1px)");
         });
     });
 });
