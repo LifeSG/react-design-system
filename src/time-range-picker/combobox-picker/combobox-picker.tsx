@@ -1,8 +1,9 @@
 import type { OpenChangeReason } from "@floating-ui/react";
+import { CrossIcon } from "@lifesg/react-icons/cross";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FormErrorMessage } from "../../form/form-label";
-import { ClearIcon } from "../../input/input.style";
+import { clearIcon } from "../../input/input.styles";
 import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { concatIds, VisuallyHidden } from "../../shared/accessibility";
 import { DropdownListState } from "../../shared/dropdown-list";
@@ -340,7 +341,7 @@ export const ComboboxPicker = ({
                     type="button"
                     aria-label="Clear"
                 >
-                    <ClearIcon aria-hidden />
+                    <CrossIcon className={clearIcon} aria-hidden />
                 </ClearIconContainer>
             );
         }

@@ -21,6 +21,16 @@ describe("Input", () => {
         expect(screen.queryByTestId("input")).toHaveValue("test");
     });
 
+    it("should call onClear when clear button is clicked", () => {
+        const mockOnClear = jest.fn();
+        render(<Input value="test value" onClear={mockOnClear} allowClear />);
+
+        const clearButton = screen.getByRole("button");
+        fireEvent.click(clearButton);
+
+        expect(mockOnClear).toHaveBeenCalledTimes(1);
+    });
+
     describe("tel type with spacing", () => {
         it("should format value and preserve caret position", async () => {
             render(<Input type="tel" spacing={2} value="123456" />);

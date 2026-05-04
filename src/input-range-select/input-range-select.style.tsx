@@ -1,10 +1,16 @@
 import styled from "styled-components";
 
-import { ClearButton } from "../input/input.style";
 import { InputWrapper } from "../shared/input-wrapper";
+import { Colour, Spacing } from "../theme";
 import { V3_Colour, V3_Spacing } from "../v3_theme";
 
-export const ClearIconContainer = styled(ClearButton)`
+export const ClearIconContainer = styled.button`
+    height: auto;
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+    cursor: pointer;
+    color: ${Colour.icon};
+
+    /* Position styles */
     position: absolute;
     right: 0;
     padding-left: ${V3_Spacing["spacing-8"]};
