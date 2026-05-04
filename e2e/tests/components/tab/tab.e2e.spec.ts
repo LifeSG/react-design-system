@@ -5,22 +5,18 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "tab";
 
     public readonly locators: {
-        component: {
-            firstTab: Locator;
-            secondTab: Locator;
-            thirdTab: Locator;
-        };
+        firstTab: Locator;
+        secondTab: Locator;
+        thirdTab: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
-            component: {
-                firstTab: page.getByRole("tab", { name: "Section A" }),
-                secondTab: page.getByRole("tab", { name: "Section B" }),
-                thirdTab: page.getByRole("tab", { name: "Section C" }),
-            },
+            firstTab: page.getByRole("tab", { name: "Section A" }),
+            secondTab: page.getByRole("tab", { name: "Section B" }),
+            thirdTab: page.getByRole("tab", { name: "Section C" }),
         };
     }
 }
@@ -60,19 +56,19 @@ test.describe("Tab", () => {
     });
 
     test("Keyboard navigation", async ({ story }) => {
-        await story.locators.component.firstTab.focus();
+        await story.locators.firstTab.focus();
         await story.page.keyboard.press("ArrowRight");
         await story.page.keyboard.press("ArrowRight");
 
-        await expect(story.locators.component.thirdTab).toBeFocused();
+        await expect(story.locators.thirdTab).toBeFocused();
 
         await story.page.keyboard.press("ArrowLeft");
 
-        await expect(story.locators.component.secondTab).toBeFocused();
+        await expect(story.locators.secondTab).toBeFocused();
 
         await story.page.keyboard.press("Space");
 
-        await expect(story.locators.component.secondTab).toMatchAriaSnapshot(
+        await expect(story.locators.secondTab).toMatchAriaSnapshot(
             '- tab "Section B" [selected]'
         );
     });

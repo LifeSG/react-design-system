@@ -54,7 +54,7 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         // common locators for elements within the component
-        component: {
+        internal: {
             dropdownList: Locator;
             clearButton: Locator;
         };
@@ -66,7 +66,7 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            component: {
+            internal: {
                 dropdownList: page.getByTestId("..."),
                 clearButton: page.getByRole("..."),
             },

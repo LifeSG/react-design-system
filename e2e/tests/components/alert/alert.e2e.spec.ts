@@ -5,7 +5,7 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "alert";
 
     public readonly locators: {
-        component: {
+        internal: {
             showMoreBtn: Locator;
             showLessBtn: Locator;
             actionLink: Locator;
@@ -19,7 +19,7 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            component: {
+            internal: {
                 showMoreBtn: page.getByRole("button", { name: "Show more" }),
                 showLessBtn: page.getByRole("button", { name: "Show less" }),
                 actionLink: page.getByTestId("action-link"),
@@ -148,7 +148,7 @@ test.describe("Alert", () => {
             });
 
             await test.step("Click 'Show more': expands content", async () => {
-                await story.locators.component.showMoreBtn.click();
+                await story.locators.internal.showMoreBtn.click();
 
                 await compareScreenshot(story, "expanded");
 
@@ -159,11 +159,9 @@ test.describe("Alert", () => {
             });
 
             await test.step("Click 'Show less': collapses content", async () => {
-                await story.locators.component.showLessBtn.click();
+                await story.locators.internal.showLessBtn.click();
 
-                await expect(
-                    story.locators.component.showMoreBtn
-                ).toBeVisible();
+                await expect(story.locators.internal.showMoreBtn).toBeVisible();
             });
         });
     });
@@ -178,51 +176,39 @@ test.describe("Alert", () => {
                 await story.locators.beforeAlert.focus();
                 await story.page.keyboard.press("Tab");
 
-                await expect(
-                    story.locators.component.showMoreBtn
-                ).toBeFocused();
+                await expect(story.locators.internal.showMoreBtn).toBeFocused();
             });
 
             await test.step("'Show more' button is toggled with 'Enter' key", async () => {
                 await story.page.keyboard.press("Enter");
 
-                await expect(
-                    story.locators.component.showLessBtn
-                ).toBeVisible();
+                await expect(story.locators.internal.showLessBtn).toBeVisible();
 
                 await story.page.keyboard.press("Enter");
 
-                await expect(
-                    story.locators.component.showMoreBtn
-                ).toBeVisible();
+                await expect(story.locators.internal.showMoreBtn).toBeVisible();
             });
 
             await test.step("'Show more' button is toggled with 'Space' key", async () => {
                 await story.page.keyboard.press("Space");
 
-                await expect(
-                    story.locators.component.showLessBtn
-                ).toBeVisible();
+                await expect(story.locators.internal.showLessBtn).toBeVisible();
 
                 await story.page.keyboard.press("Space");
 
-                await expect(
-                    story.locators.component.showMoreBtn
-                ).toBeVisible();
+                await expect(story.locators.internal.showMoreBtn).toBeVisible();
             });
 
             await test.step("Expand content", async () => {
                 await story.page.keyboard.press("Space");
 
-                await expect(
-                    story.locators.component.showLessBtn
-                ).toBeVisible();
+                await expect(story.locators.internal.showLessBtn).toBeVisible();
             });
 
             await test.step("Tab focuses 'Learn more' link", async () => {
                 await story.page.keyboard.press("Tab");
 
-                await expect(story.locators.component.actionLink).toBeFocused();
+                await expect(story.locators.internal.actionLink).toBeFocused();
             });
 
             await test.step("Tab moves focus to next element after alert", async () => {
