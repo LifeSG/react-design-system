@@ -224,7 +224,9 @@ export const InternalCalendarYear = ({
                             interactive &&
                                 variant !== "selected-year" &&
                                 styles.yearCellDefaultHover,
-                            interactive && styles.yearCellSelectedHover
+                            interactive &&
+                                variant === "selected-year" &&
+                                styles.yearCellSelectedHover
                         )}
                         onClick={() => handleYearClick(date, !interactive)}
                         onKeyDown={(event) => {
