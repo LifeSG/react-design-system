@@ -45,8 +45,7 @@ export const titleHidden = css`
 `;
 
 export const expandCollapseLink = css`
-    margin: -${Spacing["spacing-16"]} -${Spacing["spacing-16"]} -${Spacing[
-            "spacing-16"
-        ]} 0px;
+    margin: calc(${Spacing["spacing-16"]} * -1);
+    margin-left: 0px;
     white-space: nowrap;
 `;
