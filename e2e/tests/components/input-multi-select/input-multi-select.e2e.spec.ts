@@ -110,177 +110,169 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("InputMultiSelect", () => {
     test.describe("Form", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("form-variants");
-            });
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants");
+        });
 
-            test("Visual", async ({ story }) => {
-                await test.step("Default state", async () => {
-                    await expect(
-                        story.locators.component.dropdownContainer
-                    ).not.toBeVisible();
-
-                    await compareScreenshot(story, "mount", {
-                        locator: story.locators.form.default,
-                    });
-
-                    await story.openDropdown(story.locators.form.default);
-                    await expect(story.getOption("Option A")).toBeVisible();
-                    await compareScreenshot(story, "open", {
-                        fullscreen: true,
-                    });
-
-                    await story.page
-                        .getByRole("button", { name: "Select all" })
-                        .click();
-                    await expect(story.locators.form.default).toContainText(
-                        "All selected"
-                    );
-                    await compareScreenshot(story, "select-all", {
-                        fullscreen: true,
-                    });
-
-                    await story.page
-                        .getByRole("button", { name: "Clear all" })
-                        .click();
-                    await expect(story.locators.form.default).toHaveText(
-                        "Select"
-                    );
-                    await compareScreenshot(story, "clear-all", {
-                        fullscreen: true,
-                    });
-
-                    await story.page.mouse.click(0, 0);
-                });
-
-                await test.step("Selected state", async () => {
-                    await expect(story.locators.form.selected).toContainText(
-                        "2 selected"
-                    );
-                    await compareScreenshot(story, "selected", {
-                        locator: story.locators.form.selected,
-                    });
-                });
-
-                await test.step("Error state", async () => {
-                    await compareScreenshot(story, "error", {
-                        locator: story.locators.form.error,
-                    });
-                });
-            });
-
-            test("Readonly disabled", async ({ story }) => {
-                await expect(story.locators.form.readonly).not.toBeDisabled();
-
-                await story.locators.form.readonly.click();
+        test("Visual", async ({ story }) => {
+            await test.step("Default state", async () => {
                 await expect(
                     story.locators.component.dropdownContainer
                 ).not.toBeVisible();
 
-                await story.locators.form.readonly.focus();
-                await story.page.keyboard.press("Enter");
-                await expect(
-                    story.locators.component.dropdownContainer
-                ).not.toBeVisible();
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.form.default,
+                });
 
-                await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
-                            - combobox [disabled]
-                        `);
-
-                await story.locators.form.disabled.click();
-                await expect(
-                    story.locators.component.dropdownContainer
-                ).not.toBeVisible();
-            });
-
-            test("Custom labels", async ({ story }) => {
-                await story.openDropdown(story.locators.form.customLabel);
-
-                await compareScreenshot(story, "multi-selected-clear-all", {
+                await story.openDropdown(story.locators.form.default);
+                await expect(story.getOption("Option A")).toBeVisible();
+                await compareScreenshot(story, "open", {
                     fullscreen: true,
                 });
-                await story.page
-                    .getByRole("button", { name: "Custom clear all" })
-                    .click();
 
+                await story.page
+                    .getByRole("button", { name: "Select all" })
+                    .click();
+                await expect(story.locators.form.default).toContainText(
+                    "All selected"
+                );
                 await compareScreenshot(story, "select-all", {
                     fullscreen: true,
                 });
 
                 await story.page
-                    .getByRole("button", { name: "Custom select all" })
+                    .getByRole("button", { name: "Clear all" })
                     .click();
-
-                await compareScreenshot(story, "all-selected", {
+                await expect(story.locators.form.default).toHaveText("Select");
+                await compareScreenshot(story, "clear-all", {
                     fullscreen: true,
                 });
+
+                await story.page.mouse.click(0, 0);
+            });
+
+            await test.step("Selected state", async () => {
+                await expect(story.locators.form.selected).toContainText(
+                    "2 selected"
+                );
+                await compareScreenshot(story, "selected", {
+                    locator: story.locators.form.selected,
+                });
+            });
+
+            await test.step("Error state", async () => {
+                await compareScreenshot(story, "error", {
+                    locator: story.locators.form.error,
+                });
+            });
+        });
+
+        test("Readonly disabled", async ({ story }) => {
+            await expect(story.locators.form.readonly).not.toBeDisabled();
+
+            await story.locators.form.readonly.click();
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
+
+            await story.locators.form.readonly.focus();
+            await story.page.keyboard.press("Enter");
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
+
+            await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
+                            - combobox [disabled]
+                        `);
+
+            await story.locators.form.disabled.click();
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
+        });
+
+        test("Custom labels", async ({ story }) => {
+            await story.openDropdown(story.locators.form.customLabel);
+
+            await compareScreenshot(story, "multi-selected-clear-all", {
+                fullscreen: true,
+            });
+            await story.page
+                .getByRole("button", { name: "Custom clear all" })
+                .click();
+
+            await compareScreenshot(story, "select-all", {
+                fullscreen: true,
+            });
+
+            await story.page
+                .getByRole("button", { name: "Custom select all" })
+                .click();
+
+            await compareScreenshot(story, "all-selected", {
+                fullscreen: true,
             });
         });
     });
 
     test.describe("Standalone", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("standalone");
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone");
+        });
+
+        test("Visual", async ({ story }) => {
+            await test.step("Default state", async () => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.standalone.default,
+                });
+
+                await story.openDropdown(story.locators.standalone.default);
+                await compareScreenshot(story, "open", {
+                    fullscreen: true,
+                });
+
+                await story.page.mouse.click(0, 0);
             });
 
-            test("Visual", async ({ story }) => {
-                await test.step("Default state", async () => {
-                    await compareScreenshot(story, "mount", {
-                        locator: story.locators.standalone.default,
-                    });
-
-                    await story.openDropdown(story.locators.standalone.default);
-                    await compareScreenshot(story, "open", {
-                        fullscreen: true,
-                    });
-
-                    await story.page.mouse.click(0, 0);
-                });
-
-                await test.step("Selected state", async () => {
-                    await expect(
-                        story.locators.standalone.selected
-                    ).toContainText("2 selected");
-                    await compareScreenshot(story, "selected", {
-                        locator: story.locators.standalone.selected,
-                    });
-                });
-
-                await test.step("Error state", async () => {
-                    await compareScreenshot(story, "error", {
-                        locator: story.locators.standalone.error,
-                    });
+            await test.step("Selected state", async () => {
+                await expect(story.locators.standalone.selected).toContainText(
+                    "2 selected"
+                );
+                await compareScreenshot(story, "selected", {
+                    locator: story.locators.standalone.selected,
                 });
             });
 
-            test("Readonly disabled", async ({ story }) => {
-                await expect(
-                    story.locators.standalone.readonly
-                ).not.toBeDisabled();
+            await test.step("Error state", async () => {
+                await compareScreenshot(story, "error", {
+                    locator: story.locators.standalone.error,
+                });
+            });
+        });
 
-                await story.locators.standalone.readonly.click();
-                await expect(
-                    story.locators.component.dropdownContainer
-                ).not.toBeVisible();
+        test("Readonly disabled", async ({ story }) => {
+            await expect(story.locators.standalone.readonly).not.toBeDisabled();
 
-                await story.locators.standalone.readonly.focus();
-                await story.page.keyboard.press("Enter");
-                await expect(
-                    story.locators.component.dropdownContainer
-                ).not.toBeVisible();
+            await story.locators.standalone.readonly.click();
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
 
-                await expect(story.locators.standalone.disabled)
-                    .toMatchAriaSnapshot(`
+            await story.locators.standalone.readonly.focus();
+            await story.page.keyboard.press("Enter");
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
+
+            await expect(story.locators.standalone.disabled)
+                .toMatchAriaSnapshot(`
                             - combobox [disabled]
                         `);
 
-                await story.locators.standalone.disabled.click();
-                await expect(
-                    story.locators.component.dropdownContainer
-                ).not.toBeVisible();
-            });
+            await story.locators.standalone.disabled.click();
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
         });
     });
 
@@ -371,138 +363,122 @@ test.describe("InputMultiSelect", () => {
         });
     });
 
-    test.describe("", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("with-search");
-            });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("with-search");
+        });
 
-            test("Keyboard interaction", async ({ story }) => {
-                await story.locators.withSearch.default
-                    .getByTestId("selector")
-                    .focus();
-                await story.page.keyboard.press("Enter");
+        test("Keyboard interaction", async ({ story }) => {
+            await story.locators.withSearch.default
+                .getByTestId("selector")
+                .focus();
+            await story.page.keyboard.press("Enter");
 
-                await expect(
-                    story.locators.component.dropdownList
-                ).toBeVisible();
-                await expect(
-                    story.locators.component.searchInput
-                ).toBeFocused();
+            await expect(story.locators.component.dropdownList).toBeVisible();
+            await expect(story.locators.component.searchInput).toBeFocused();
 
-                await story.page.keyboard.press("ArrowDown");
-                await expect(story.getOption("Option A")).toBeFocused();
+            await story.page.keyboard.press("ArrowDown");
+            await expect(story.getOption("Option A")).toBeFocused();
 
-                await story.page.keyboard.press("Escape");
-                await expect(
-                    story.locators.component.dropdownContainer
-                ).not.toBeVisible();
-                await expect(
-                    story.locators.withSearch.default.getByTestId("selector")
-                ).toBeFocused();
-            });
+            await story.page.keyboard.press("Escape");
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
+            await expect(
+                story.locators.withSearch.default.getByTestId("selector")
+            ).toBeFocused();
         });
     });
 
-    test.describe("", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("form-variants");
-                await story.openDropdown(story.locators.form.selected);
-            });
-
-            test("Focus", async ({ story }) => {
-                await test.step("Item", async () => {
-                    await story.getOption("Option C").hover();
-                    await compareScreenshot(story, "item", {
-                        fullscreen: true,
-                    });
-                });
-
-                await test.step("Selected item", async () => {
-                    await story.getOption("Option A").hover();
-                    await compareScreenshot(story, "selected-item", {
-                        fullscreen: true,
-                    });
-                });
-            });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants");
+            await story.openDropdown(story.locators.form.selected);
         });
-    });
 
-    test.describe("", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("virtualization");
+        test("Focus", async ({ story }) => {
+            await test.step("Item", async () => {
+                await story.getOption("Option C").hover();
+                await compareScreenshot(story, "item", {
+                    fullscreen: true,
+                });
             });
 
-            test("Virtualization", async ({ story }) => {
-                await story.openDropdown(story.locators.multiSelect);
-                await story.locators.component.searchInput.fill("Option 4999");
-                await expect(story.getOption("Option 4999")).toBeVisible();
-
-                await compareScreenshot(story, "filtered", {
+            await test.step("Selected item", async () => {
+                await story.getOption("Option A").hover();
+                await compareScreenshot(story, "selected-item", {
                     fullscreen: true,
                 });
             });
         });
     });
 
-    test.describe("", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("grid-layout");
-            });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("virtualization");
+        });
 
-            test("Grid Layout", async ({ story }) => {
-                await compareScreenshot(story, "mount");
+        test("Virtualization", async ({ story }) => {
+            await story.openDropdown(story.locators.multiSelect);
+            await story.locators.component.searchInput.fill("Option 4999");
+            await expect(story.getOption("Option 4999")).toBeVisible();
+
+            await compareScreenshot(story, "filtered", {
+                fullscreen: true,
             });
         });
     });
 
-    test.describe("", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("custom-cta");
-            });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout");
+        });
 
-            test("Custom CTA", async ({ story }) => {
-                await story.openDropdown(story.locators.multiSelect);
-                await expect(
-                    story.locators.component.customCtaButton
-                ).toBeVisible();
-
-                await compareScreenshot(story, "mount", {
-                    fullscreen: true,
-                });
-
-                await story.locators.component.customCtaButton.click();
-                await expect(
-                    story.locators.component.dropdownContainer
-                ).not.toBeVisible();
-            });
+        test("Grid Layout", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
-    test.describe("", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("variants");
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-cta");
+        });
+
+        test("Custom CTA", async ({ story }) => {
+            await story.openDropdown(story.locators.multiSelect);
+            await expect(
+                story.locators.component.customCtaButton
+            ).toBeVisible();
+
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
             });
 
-            test("Variants", async ({ story }) => {
-                await compareScreenshot(story, "mount");
+            await story.locators.component.customCtaButton.click();
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
+        });
+    });
 
-                await story.openDropdown(story.locators.variants.default);
-                await compareScreenshot(story, "open-default", {
-                    fullscreen: true,
-                });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("variants");
+        });
 
-                await story.page.mouse.click(0, 0);
+        test("Variants", async ({ story }) => {
+            await compareScreenshot(story, "mount");
 
-                await story.openDropdown(story.locators.variants.withSearch);
-                await compareScreenshot(story, "open-with-search", {
-                    fullscreen: true,
-                });
+            await story.openDropdown(story.locators.variants.default);
+            await compareScreenshot(story, "open-default", {
+                fullscreen: true,
+            });
+
+            await story.page.mouse.click(0, 0);
+
+            await story.openDropdown(story.locators.variants.withSearch);
+            await compareScreenshot(story, "open-with-search", {
+                fullscreen: true,
             });
         });
     });
