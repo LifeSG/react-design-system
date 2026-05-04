@@ -23,6 +23,8 @@ class StoryPage extends AbstractStoryPage {
         ) => Locator;
         firstPageButton: (pagination: Locator) => Locator;
         lastPageButton: (pagination: Locator) => Locator;
+        focusTargetBefore: Locator;
+        focusTargetAfter: Locator;
     };
 
     constructor(page: Page) {
@@ -56,6 +58,8 @@ class StoryPage extends AbstractStoryPage {
                 pagination.getByRole("button", { name: "First page" }),
             lastPageButton: (pagination) =>
                 pagination.getByRole("button", { name: "Last page" }),
+            focusTargetBefore: page.getByTestId("focus-target-before"),
+            focusTargetAfter: page.getByTestId("focus-target-after"),
         };
     }
 }
@@ -433,6 +437,87 @@ test.describe("Pagination", () => {
 
             test("States (mobile)", async ({ story }) => {
                 await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("interaction");
+        });
+
+        test("Keyboard navigation", async ({ story }) => {
+            const pagination = story.locators.paginationMiddle;
+
+            await test.step("Focus on pagination", async () => {
+                await story.locators.focusTargetBefore.focus();
+            });
+
+            await test.step("Tab to first page button", async () => {
+                await story.page.keyboard.press("Tab");
+
+                await expect(
+                    story.locators.firstPageButton(pagination)
+                ).toBeFocused();
+                await compareScreenshot(story, "focus-first-page-button", {
+                    locator: pagination,
+                });
+            });
+
+            await test.step("Tab to prev button", async () => {
+                await story.page.keyboard.press("Tab");
+
+                await expect(
+                    story.locators.prevButton(pagination)
+                ).toBeFocused();
+                await compareScreenshot(story, "focus-prev-button", {
+                    locator: pagination,
+                });
+            });
+
+            await test.step("Tab to page button", async () => {
+                await story.page.keyboard.press("Tab");
+
+                await expect(
+                    story.locators.pageButton(pagination, 1, 20)
+                ).toBeFocused();
+                await compareScreenshot(story, "focus-page-button", {
+                    locator: pagination,
+                });
+            });
+
+            await test.step("Tab to ellipsis", async () => {
+                await story.page.keyboard.press("Tab");
+
+                await expect(
+                    story.locators.ellipsisBackward(pagination)
+                ).toBeFocused();
+            });
+
+            await test.step("Tab to active page button", async () => {
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+
+                await expect(
+                    story.locators.pageButton(pagination, 10, 20)
+                ).toBeFocused();
+            });
+
+            await test.step("Tab to page size selector", async () => {
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+                await story.page.keyboard.press("Tab");
+
+                await expect(
+                    story.locators.internal.pageSizeSelector
+                ).toBeFocused();
+                await compareScreenshot(story, "focus-page-size-selector", {
+                    locator: pagination,
+                });
             });
         });
     });
