@@ -20,6 +20,7 @@ class StoryPage extends AbstractStoryPage {
             readonly: Locator;
             disabled: Locator;
             error: Locator;
+            customLabel: Locator;
         };
         standalone: {
             default: Locator;
@@ -31,6 +32,12 @@ class StoryPage extends AbstractStoryPage {
         variants: {
             default: Locator;
             withSearch: Locator;
+        };
+        withSearch: {
+            default: Locator;
+            withCustomNoResultLabel: Locator;
+            withCustomNoResultDescription: Locator;
+            withCustomSearchPlaceholder: Locator;
         };
         multiSelect: Locator;
     };
@@ -61,10 +68,23 @@ class StoryPage extends AbstractStoryPage {
                 readonly: page.getByTestId("form-readonly-base"),
                 disabled: page.getByTestId("form-disabled-base"),
                 error: page.getByTestId("form-error-base"),
+                customLabel: page.getByTestId("form-custom-label-base"),
             },
             variants: {
                 default: page.getByTestId("small-default"),
                 withSearch: page.getByTestId("small-with-search"),
+            },
+            withSearch: {
+                default: page.getByTestId("search-default"),
+                withCustomNoResultLabel: page.getByTestId(
+                    "search-with-custom-no-result-label"
+                ),
+                withCustomNoResultDescription: page.getByTestId(
+                    "search-with-custom-no-result-description"
+                ),
+                withCustomSearchPlaceholder: page.getByTestId(
+                    "search-with-custom-search-placeholder"
+                ),
             },
             multiSelect: page.getByTestId("multi-select"),
         };
@@ -138,7 +158,9 @@ test.describe("InputMultiSelect", () => {
                     await expect(story.locators.form.selected).toContainText(
                         "2 selected"
                     );
-                    await compareScreenshot(story, "selected");
+                    await compareScreenshot(story, "selected", {
+                        locator: story.locators.form.selected,
+                    });
                 });
 
                 await test.step("Error state", async () => {
@@ -171,25 +193,26 @@ test.describe("InputMultiSelect", () => {
                     story.locators.component.dropdownContainer
                 ).not.toBeVisible();
             });
-        });
 
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("with-search");
-            });
+            test("Custom labels", async ({ story }) => {
+                await story.openDropdown(story.locators.form.customLabel);
 
-            test("Searchable and no search result", async ({ story }) => {
-                await story.openDropdown(story.locators.multiSelect);
-                await expect(
-                    story.locators.component.searchInput
-                ).toBeFocused();
-                await compareScreenshot(story, "searchable", {
+                await compareScreenshot(story, "multi-selected-clear-all", {
+                    fullscreen: true,
+                });
+                await story.page
+                    .getByRole("button", { name: "Custom clear all" })
+                    .click();
+
+                await compareScreenshot(story, "select-all", {
                     fullscreen: true,
                 });
 
-                await story.locators.component.searchInput.fill("zzzz");
-                await expect(story.locators.component.noResults).toBeVisible();
-                await compareScreenshot(story, "search-no-result", {
+                await story.page
+                    .getByRole("button", { name: "Custom select all" })
+                    .click();
+
+                await compareScreenshot(story, "all-selected", {
                     fullscreen: true,
                 });
             });
@@ -263,6 +286,72 @@ test.describe("InputMultiSelect", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("with-search");
+        });
+
+        test("With search", async ({ story }) => {
+            await test.step("Default", async () => {
+                await story.openDropdown(story.locators.withSearch.default);
+                await expect(
+                    story.locators.component.searchInput
+                ).toBeFocused();
+                await compareScreenshot(story, "default-open", {
+                    fullscreen: true,
+                });
+
+                await story.locators.component.searchInput.fill("zzzz");
+                await expect(story.locators.component.noResults).toBeVisible();
+                await compareScreenshot(story, "default-no-result", {
+                    fullscreen: true,
+                });
+                await story.page.mouse.click(0, 0);
+            });
+
+            await test.step("Custom no result label", async () => {
+                await story.openDropdown(
+                    story.locators.withSearch.withCustomNoResultLabel
+                );
+                await expect(
+                    story.locators.component.searchInput
+                ).toBeFocused();
+
+                await story.locators.component.searchInput.fill("zzzz");
+                await expect(story.locators.component.noResults).toBeVisible();
+                await compareScreenshot(story, "custom-no-result-label", {
+                    fullscreen: true,
+                });
+                await story.page.mouse.click(0, 0);
+            });
+
+            await test.step("Custom no result description", async () => {
+                await story.openDropdown(
+                    story.locators.withSearch.withCustomNoResultDescription
+                );
+                await expect(
+                    story.locators.component.searchInput
+                ).toBeFocused();
+
+                await story.locators.component.searchInput.fill("zzzz");
+                await expect(story.locators.component.noResults).toBeVisible();
+                await compareScreenshot(story, "custom-no-result-description", {
+                    fullscreen: true,
+                });
+                await story.page.mouse.click(0, 0);
+            });
+
+            await test.step("Custom search placeholder", async () => {
+                await story.openDropdown(
+                    story.locators.withSearch.withCustomSearchPlaceholder
+                );
+                await compareScreenshot(story, "custom-search-placeholder", {
+                    fullscreen: true,
+                });
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("max-selectable");
         });
 
@@ -289,7 +378,9 @@ test.describe("InputMultiSelect", () => {
             });
 
             test("Keyboard interaction", async ({ story }) => {
-                await story.locators.component.selector.focus();
+                await story.locators.withSearch.default
+                    .getByTestId("selector")
+                    .focus();
                 await story.page.keyboard.press("Enter");
 
                 await expect(
@@ -306,7 +397,9 @@ test.describe("InputMultiSelect", () => {
                 await expect(
                     story.locators.component.dropdownContainer
                 ).not.toBeVisible();
-                await expect(story.locators.component.selector).toBeFocused();
+                await expect(
+                    story.locators.withSearch.default.getByTestId("selector")
+                ).toBeFocused();
             });
         });
     });
