@@ -307,12 +307,14 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
 
     const renderColumnHeaders = () => {
         // Don't render first column if there are no rows
-        return hourlyIntervals.map((columnHeader: string) => {
+        return hourlyIntervals.map((columnHeader: string, index: number) => {
             return (
                 <ColumnHeader
                     key={`${columnHeader}-column-key`}
                     data-testid={`${columnHeader}-column`}
-                    aria-hidden
+                    role="columnheader"
+                    aria-colindex={index * 4 + 2}
+                    aria-colspan={4}
                 >
                     <ColumnHeaderTitle weight={"semibold"}>
                         {columnHeader}
@@ -359,12 +361,8 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     const renderLazyLoadRow = () => {
         if (loading || !loadMore) return;
         return (
-            <TimeTableRow role="row" aria-rowindex={rowData.length + 2}>
-                <RowHeader
-                    $isScrolled={isScrolledX}
-                    role="rowheader"
-                    aria-colindex={1}
-                >
+            <TimeTableRow>
+                <RowHeader $isScrolled={isScrolledX}>
                     <LoadingBar />
                 </RowHeader>
                 <LoadingWrapper data-testid="lazy-loader" role="presentation">
@@ -372,9 +370,6 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                         <LoadingCell
                             key={`lazy-load-cell-${index}`}
                             $width={intervalWidth * 4}
-                            role="gridcell"
-                            aria-colindex={index * 4 + 2}
-                            aria-colspan={4}
                         >
                             <LoadingBar />
                         </LoadingCell>
@@ -451,6 +446,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                 aria-label={timetableAriaLabel}
                 aria-rowcount={ariaRowCount}
                 aria-colcount={ariaColCount}
+                aria-busy={loadMore}
                 tabIndex={0}
             >
                 <TimeTableHeaderRow

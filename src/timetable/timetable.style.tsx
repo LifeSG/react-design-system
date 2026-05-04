@@ -61,6 +61,7 @@ export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     overflow: scroll;
     position: relative;
     padding-bottom: ${(props) => (props.$allRecordsLoaded ? "0" : "128px")};
+    isolation: isolate;
     ${(props) => {
         if (props.$loading) {
             return css`
@@ -148,9 +149,6 @@ export const ColumnHeaderTitle = styled(Typography.BodySM)`
 `;
 
 export const TimeTableBody = styled.div`
-    display: grid;
-    align-content: start;
-    grid-auto-rows: ${ROW_HEIGHT}px;
     width: max-content;
     min-width: 100%;
 `;

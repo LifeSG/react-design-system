@@ -99,7 +99,6 @@ const Component = ({
             >
                 <Wrapper>
                     <Block
-                        aria-hidden={isFocusable ? true : undefined}
                         $width={adjustedCellWidth}
                         $status={status}
                         $mainColor={rowBarColor.mainColor}
