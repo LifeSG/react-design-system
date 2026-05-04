@@ -358,4 +358,82 @@ test.describe("Pagination", () => {
             });
         });
     });
+
+    test.describe("showFirstAndLastNav=true", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("first-last-nav");
+            });
+
+            test("States", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+
+            test("Hover states", async ({ story }) => {
+                await test.step("Hover first page button", async () => {
+                    const button = story.locators.firstPageButton(
+                        story.locators.paginationMiddle
+                    );
+                    await button.hover();
+                    await compareScreenshot(story, "hover-first-page", {
+                        locator: button,
+                    });
+                });
+
+                await test.step("Hover last page button", async () => {
+                    const button = story.locators.lastPageButton(
+                        story.locators.paginationMiddle
+                    );
+                    await button.hover();
+                    await compareScreenshot(story, "hover-last-page", {
+                        locator: button,
+                    });
+                });
+
+                await test.step("Hover disabled first page button", async () => {
+                    const button = story.locators.firstPageButton(
+                        story.locators.paginationFirst
+                    );
+                    await button.hover();
+                    await compareScreenshot(
+                        story,
+                        "hover-disabled-first-page",
+                        {
+                            locator: button,
+                        }
+                    );
+                });
+
+                await test.step("Hover disabled last page button", async () => {
+                    const button = story.locators.lastPageButton(
+                        story.locators.paginationLast
+                    );
+                    await button.hover();
+                    await compareScreenshot(story, "hover-disabled-last-page", {
+                        locator: button,
+                    });
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("first-last-nav", { mode: "dark" });
+            });
+
+            test("States (dark mode)", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("first-last-nav", { size: "mobile" });
+            });
+
+            test("States (mobile)", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
 });
