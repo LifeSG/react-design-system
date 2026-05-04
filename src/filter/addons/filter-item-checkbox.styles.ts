@@ -2,25 +2,25 @@ import styled, { css } from "styled-components";
 
 import { Button } from "../../button";
 import { Checkbox } from "../../checkbox";
+import { Colour, Font, MediaQuery, Spacing } from "../../theme";
 import { Toggle } from "../../toggle";
-import { V3_Colour, V3_Font, V3_MediaQuery, V3_Spacing } from "../../v3_theme";
 import { FilterItem } from "../filter-item";
 
 export const StyledFilterItem = styled(FilterItem)`
-    padding: 0 0 ${V3_Spacing["spacing-16"]};
+    padding: 0 0 ${Spacing["spacing-16"]};
 
     [data-id="content-container"] {
         position: relative; // to get the item position relative to this parent
-        padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-8"]} 0;
+        padding: ${Spacing["spacing-8"]} ${Spacing["spacing-8"]} 0;
 
-        ${V3_MediaQuery.MaxWidth.lg} {
-            padding: ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-20"]}
-                ${V3_Spacing["spacing-8"]};
+        ${MediaQuery.MaxWidth.lg} {
+            padding: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]}
+                ${Spacing["spacing-8"]};
         }
     }
 
     [data-id="minimise-button"] {
-        margin: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-20"]} 0;
+        margin: ${Spacing["spacing-8"]} ${Spacing["spacing-20"]} 0;
     }
 `;
 
@@ -30,11 +30,11 @@ export const Group = styled.div<{
     display: flex;
     flex-direction: column;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: row;
         flex-wrap: wrap;
         gap: ${(props) =>
-            props.$isMobileToggleMode ? V3_Spacing["spacing-16"] : 0};
+            props.$isMobileToggleMode ? Spacing["spacing-16"] : 0};
     }
 `;
 
@@ -50,32 +50,32 @@ export const Item = styled.label<{
     position: relative;
     width: 100%;
     min-height: 1.5rem;
-    padding: ${V3_Spacing["spacing-8"]} ${V3_Spacing["spacing-12"]};
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-12"]};
     ${(props) =>
         props.$level &&
         css`
             padding-left: calc(
-                ${V3_Spacing["spacing-12"]} + ${props.$level} *
-                    ${V3_Spacing["spacing-32"]}
+                ${Spacing["spacing-12"]} + ${props.$level} *
+                    ${Spacing["spacing-32"]}
             );
         `}
 
     cursor: pointer;
-    ${V3_Font["body-md-regular"]}
-    color: ${V3_Colour["text"]};
+    ${Font["body-md-regular"]}
+    color: ${Colour["text"]};
     ${(props) =>
         props.$selected &&
         css`
-            color: ${V3_Colour["text-selected"]};
+            color: ${Colour["text-selected"]};
         `}
-    ${V3_MediaQuery.MaxWidth.lg} {
-        padding: ${V3_Spacing["spacing-8"]};
+    ${MediaQuery.MaxWidth.lg} {
+        padding: ${Spacing["spacing-8"]};
         ${(props) =>
             props.$level &&
             css`
                 padding-left: calc(
-                    ${V3_Spacing["spacing-8"]} + ${props.$level} *
-                        ${V3_Spacing["spacing-32"]}
+                    ${Spacing["spacing-8"]} + ${props.$level} *
+                        ${Spacing["spacing-32"]}
                 );
             `}
     }
@@ -83,7 +83,7 @@ export const Item = styled.label<{
 
 export const StyledCheckbox = styled(Checkbox)`
     flex-shrink: 0;
-    margin-right: ${V3_Spacing["spacing-8"]};
+    margin-right: ${Spacing["spacing-8"]};
 `;
 
 export const StyledToggle = styled(Toggle)<{ $visible: boolean }>`
@@ -94,10 +94,10 @@ export const StyledToggle = styled(Toggle)<{ $visible: boolean }>`
 export const SelectAllButton = styled(Button.Small)`
     height: fit-content;
     padding: 0;
-    margin: ${V3_Spacing["spacing-16"]} 0 ${V3_Spacing["spacing-8"]}
-        ${V3_Spacing["spacing-12"]};
+    margin: ${Spacing["spacing-16"]} 0 ${Spacing["spacing-8"]}
+        ${Spacing["spacing-12"]};
 
-    ${V3_MediaQuery.MaxWidth.lg} {
-        margin: 0 0 ${V3_Spacing["spacing-16"]} 0;
+    ${MediaQuery.MaxWidth.lg} {
+        margin: 0 0 ${Spacing["spacing-16"]} 0;
     }
 `;

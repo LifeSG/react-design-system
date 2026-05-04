@@ -1,23 +1,16 @@
 import styled from "styled-components";
 
 import { Button } from "../button";
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_Radius,
-    V3_Spacing,
-} from "../v3_theme";
+import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // CONTAINER STYLES
 // =============================================================================
 
 export const DesktopContainer = styled.div`
-    background-color: ${V3_Colour["bg"]};
-    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
-    border-radius: ${V3_Radius["md"]};
+    background-color: ${Colour["bg"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["md"]};
     overflow: hidden;
     width: 100%;
 `;
@@ -30,19 +23,19 @@ export const FilterHeader = styled.div`
     display: flex;
     align-items: center;
 
-    background-color: ${V3_Colour["bg"]};
+    background-color: ${Colour["bg"]};
 `;
 
 export const FilterTitle = styled.h2`
-    ${V3_Font["heading-xs-semibold"]}
+    ${Font["heading-xs-semibold"]}
     flex: 1;
-    margin: ${V3_Spacing["spacing-24"]} 0 ${V3_Spacing["spacing-24"]}
-        ${V3_Spacing["spacing-20"]};
+    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
+        ${Spacing["spacing-20"]};
 `;
 
 export const FilterClearButton = styled(Button.Small)`
     background-color: transparent;
-    padding-right: ${V3_Spacing["spacing-20"]};
-    padding-left: ${V3_Spacing["spacing-20"]};
+    padding-right: ${Spacing["spacing-20"]};
+    padding-left: ${Spacing["spacing-20"]};
     height: 100%;
 `;
