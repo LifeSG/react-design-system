@@ -13,6 +13,14 @@ const eslintConfig = defineConfig([
         },
         rules: {
             "local/import-path-preferences": "warn",
+            "no-restricted-syntax": [
+                "error",
+                {
+                    selector: "JSXAttribute[name.name='style']",
+                    message:
+                        "Inline styles are not allowed in e2e/nextjs-app. Use CSS modules instead.",
+                },
+            ],
         },
     },
     // Override default ignores of eslint-config-next.
