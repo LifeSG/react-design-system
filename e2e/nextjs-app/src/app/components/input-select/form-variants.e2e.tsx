@@ -16,7 +16,6 @@ export default function Story() {
                 data-testid="input-select-default"
                 label="Default"
                 options={OPTIONS}
-                enableSearch
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 displayValueExtractor={(item) => item.label}
@@ -50,6 +49,16 @@ export default function Story() {
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 displayValueExtractor={(item) => item.label}
+            />
+
+            <Form.Select
+                data-testid="input-select-error"
+                label="Error"
+                options={OPTIONS}
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+                displayValueExtractor={(item) => item.label}
+                errorMessage="Selection is required"
             />
         </div>
     );

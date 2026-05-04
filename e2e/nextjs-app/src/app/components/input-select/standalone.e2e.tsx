@@ -13,19 +13,44 @@ export default function Story() {
     return (
         <div className="story-column-container">
             <InputSelect
-                data-testid="input-select"
+                data-testid="input-select-default"
                 options={OPTIONS}
-                placeholder="Select"
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 displayValueExtractor={(item) => item.label}
             />
 
             <InputSelect
-                data-testid="input-select-search"
+                data-testid="input-select-selected"
                 options={OPTIONS}
-                placeholder="Searchable"
-                enableSearch
+                selectedOption={OPTIONS[1]}
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+                displayValueExtractor={(item) => item.label}
+            />
+
+            <InputSelect
+                data-testid="input-select-readonly"
+                options={OPTIONS}
+                readOnly
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+                displayValueExtractor={(item) => item.label}
+            />
+
+            <InputSelect
+                data-testid="input-select-disabled"
+                options={OPTIONS}
+                disabled
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+                displayValueExtractor={(item) => item.label}
+            />
+
+            <InputSelect
+                data-testid="input-select-error"
+                error
+                options={OPTIONS}
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 displayValueExtractor={(item) => item.label}
