@@ -16,7 +16,7 @@ import {
     LogoSection,
     StyledFooterLink,
     TopSection,
-} from "./footer.style";
+} from "./footer.styles";
 import { DownloadApp } from "./footer-download-app";
 import type { InternalDisclaimerLinks } from "./footer-helper";
 import { FooterHelper } from "./footer-helper";
