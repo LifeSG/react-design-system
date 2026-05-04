@@ -66,7 +66,9 @@ test.describe("Timepicker", () => {
                 `);
             });
 
-            await compareScreenshot(story, "dropdown-open");
+            await compareScreenshot(story, "dropdown-open", {
+                fullscreen: true,
+            });
         });
     });
 
