@@ -14,14 +14,7 @@ import type {
     FilterItemCheckboxOptionProps,
     FilterItemCheckboxProps,
 } from "../types";
-import {
-    Group,
-    Item,
-    SelectAllButton,
-    StyledCheckbox,
-    StyledFilterItem,
-    StyledToggle,
-} from "./filter-item-checkbox.styles";
+import * as styles from "./filter-item-checkbox.styles";
 import {
     buildKeyPath,
     flattenNestedOptions,
@@ -311,7 +304,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         const { checked, indeterminate } = getCheckboxState(flatOption);
 
         return (
-            <StyledCheckbox
+            <styles.StyledCheckbox
                 displaySize="small"
                 checked={checked}
                 indeterminate={indeterminate}
@@ -345,7 +338,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             : {};
 
         return (
-            <Item
+            <styles.Item
                 key={buildKeyPath(option.keyPath)}
                 as={isNested ? "div" : "label"}
                 role={isNested ? "treeitem" : undefined}
@@ -360,7 +353,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             >
                 {renderCheckboxIcon(originalItem, option)}
                 {optionLabel}
-            </Item>
+            </styles.Item>
         );
     };
 
@@ -374,7 +367,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         const optionValue = getValue(originalItem);
         const checked = !!selected.find((s) => getValue(s) === optionValue);
         return (
-            <StyledToggle
+            <styles.StyledToggle
                 key={optionValue}
                 type="checkbox"
                 checked={checked}
@@ -386,7 +379,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                 useContentWidth={useToggleContentWidth}
             >
                 {optionLabel}
-            </StyledToggle>
+            </styles.StyledToggle>
         );
     };
 
@@ -395,7 +388,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             return null;
         }
         return (
-            <SelectAllButton
+            <styles.SelectAllButton
                 styleType="link"
                 type="button"
                 onClick={handleSelectClearAll}
@@ -408,12 +401,12 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                 }
             >
                 {selected.length ? "Clear all" : "Select all"}
-            </SelectAllButton>
+            </styles.SelectAllButton>
         );
     };
 
     return (
-        <StyledFilterItem
+        <styles.StyledFilterItem
             minimisable={
                 minimisableOptions
                     ? isMobileToggleMode // set minimisable base on mobile toggle mode
@@ -427,7 +420,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             {(_, { minimised }) => (
                 <>
                     {renderSelectClearAllButton()}
-                    <Group
+                    <styles.Group
                         role={isNested ? "tree" : "group"}
                         aria-label={filterItemProps.title}
                         aria-multiselectable={true}
@@ -439,10 +432,10 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                                 ? renderToggle(option, i, minimised)
                                 : renderCheckbox(option, i, minimised)
                         )}
-                    </Group>
+                    </styles.Group>
                 </>
             )}
-        </StyledFilterItem>
+        </styles.StyledFilterItem>
     );
 };
 

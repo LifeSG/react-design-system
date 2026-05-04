@@ -1,13 +1,8 @@
 import { useRef } from "react";
 
-import { FilterBody } from "./filter.styles";
+import * as filterStyles from "./filter.styles";
 import { FilterContext } from "./filter-context";
-import {
-    DesktopContainer,
-    FilterClearButton,
-    FilterHeader,
-    FilterTitle,
-} from "./filter-sidebar.styles";
+import * as styles from "./filter-sidebar.styles";
 import type { FilterSidebarProps } from "./types";
 
 export const FilterSidebar = ({
@@ -27,15 +22,15 @@ export const FilterSidebar = ({
 
     return (
         <FilterContext.Provider value={{ mode: "default", rootNode: nodeRef }}>
-            <DesktopContainer
+            <styles.DesktopContainer
                 data-id="filter-desktop"
                 data-testid="filter-desktop"
                 ref={nodeRef}
                 {...otherProps}
             >
-                <FilterHeader>
-                    <FilterTitle>{labels.title}</FilterTitle>
-                    <FilterClearButton
+                <styles.FilterHeader>
+                    <styles.FilterTitle>{labels.title}</styles.FilterTitle>
+                    <styles.FilterClearButton
                         styleType="link"
                         type="button"
                         onClick={() => onClear?.()}
@@ -43,10 +38,10 @@ export const FilterSidebar = ({
                         aria-label={`clear ${labels.title}`}
                     >
                         {labels.clear}
-                    </FilterClearButton>
-                </FilterHeader>
-                <FilterBody>{children}</FilterBody>
-            </DesktopContainer>
+                    </styles.FilterClearButton>
+                </styles.FilterHeader>
+                <filterStyles.FilterBody>{children}</filterStyles.FilterBody>
+            </styles.DesktopContainer>
         </FilterContext.Provider>
     );
 };

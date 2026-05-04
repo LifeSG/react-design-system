@@ -4,22 +4,9 @@ import { useEffect, useRef, useState } from "react";
 
 import { Overlay } from "../overlay";
 import { inertValue } from "../shared/accessibility";
-import {
-    FilterBody,
-    FilterDoneButton,
-    FilterFooter,
-    FilterHeaderButton,
-} from "./filter.styles";
+import * as filterStyles from "./filter.styles";
 import { FilterContext } from "./filter-context";
-import {
-    FilterButton,
-    FilterClearButton,
-    FilterHeader,
-    FilterTitle,
-    FloatingWrapper,
-    MobileContainer,
-    MobileOverlayContainer,
-} from "./filter-modal.styles";
+import * as styles from "./filter-modal.styles";
 import type { FilterModalProps } from "./types";
 
 export const FilterModal = ({
@@ -76,7 +63,7 @@ export const FilterModal = ({
     return (
         <FilterContext.Provider value={{ mode: "mobile", rootNode: nodeRef }}>
             <div {...otherProps}>
-                <FilterButton
+                <styles.FilterButton
                     data-testid="filter-show-button"
                     styleType={toggleFilterButtonStyle}
                     onClick={handleShowFilter}
@@ -84,28 +71,30 @@ export const FilterModal = ({
                     icon={<FilterIcon />}
                 >
                     {labels.toggle}
-                </FilterButton>
+                </styles.FilterButton>
             </div>
             <Overlay show={visible} disableTransition>
-                <FloatingWrapper inert={inertValue(!visible)}>
+                <styles.FloatingWrapper inert={inertValue(!visible)}>
                     <FloatingFocusManager context={context} disabled={!visible}>
-                        <MobileOverlayContainer
+                        <styles.MobileOverlayContainer
                             data-id="filter-mobile"
                             data-testid="filter-mobile"
                             ref={refs.setFloating}
                         >
-                            <MobileContainer ref={nodeRef} tabIndex={0}>
-                                <FilterHeader $insetTop={insets?.top}>
-                                    <FilterHeaderButton
+                            <styles.MobileContainer ref={nodeRef} tabIndex={0}>
+                                <styles.FilterHeader $insetTop={insets?.top}>
+                                    <filterStyles.FilterHeaderButton
                                         onClick={handleDismiss}
                                         focusOutline="browser"
                                         focusHighlight={false}
                                         aria-label={`close ${labels.title}`}
                                     >
                                         <CrossIcon />
-                                    </FilterHeaderButton>
-                                    <FilterTitle>{labels.title}</FilterTitle>
-                                    <FilterClearButton
+                                    </filterStyles.FilterHeaderButton>
+                                    <styles.FilterTitle>
+                                        {labels.title}
+                                    </styles.FilterTitle>
+                                    <styles.FilterClearButton
                                         styleType="link"
                                         type="button"
                                         onClick={() => onClear?.()}
@@ -113,18 +102,24 @@ export const FilterModal = ({
                                         aria-label={`clear ${labels.title}`}
                                     >
                                         {labels.clear}
-                                    </FilterClearButton>
-                                </FilterHeader>
-                                <FilterBody>{children}</FilterBody>
-                                <FilterFooter $insetBottom={insets?.bottom}>
-                                    <FilterDoneButton onClick={handleDone}>
+                                    </styles.FilterClearButton>
+                                </styles.FilterHeader>
+                                <filterStyles.FilterBody>
+                                    {children}
+                                </filterStyles.FilterBody>
+                                <filterStyles.FilterFooter
+                                    $insetBottom={insets?.bottom}
+                                >
+                                    <filterStyles.FilterDoneButton
+                                        onClick={handleDone}
+                                    >
                                         {labels.done}
-                                    </FilterDoneButton>
-                                </FilterFooter>
-                            </MobileContainer>
-                        </MobileOverlayContainer>
+                                    </filterStyles.FilterDoneButton>
+                                </filterStyles.FilterFooter>
+                            </styles.MobileContainer>
+                        </styles.MobileOverlayContainer>
                     </FloatingFocusManager>
-                </FloatingWrapper>
+                </styles.FloatingWrapper>
             </Overlay>
         </FilterContext.Provider>
     );
