@@ -13,25 +13,6 @@ export default function Story() {
     return (
         <div className="story-column-container">
             <Form.Select
-                data-testid="input-select-default"
-                label="Default"
-                options={OPTIONS}
-                valueExtractor={(item) => item.value}
-                listExtractor={(item) => item.label}
-                displayValueExtractor={(item) => item.label}
-            />
-
-            <Form.Select
-                data-testid="input-select-default-search"
-                label="Default searchable"
-                options={OPTIONS}
-                enableSearch
-                valueExtractor={(item) => item.value}
-                listExtractor={(item) => item.label}
-                displayValueExtractor={(item) => item.label}
-            />
-
-            <Form.Select
                 data-testid="input-select-small-default"
                 label="Small default"
                 options={OPTIONS}

@@ -30,6 +30,10 @@ class StoryPage extends AbstractStoryPage {
             middle: Locator;
             end: Locator;
         };
+        variants: {
+            default: Locator;
+            withSearch: Locator;
+        };
         cta: Locator;
         virtualization: Locator;
     };
@@ -62,6 +66,10 @@ class StoryPage extends AbstractStoryPage {
             truncation: {
                 middle: page.getByTestId("input-select-truncation-middle"),
                 end: page.getByTestId("input-select-truncation-end"),
+            },
+            variants: {
+                default: page.getByTestId("input-select-small-default"),
+                withSearch: page.getByTestId("input-select-small-search"),
             },
             cta: page.getByTestId("input-select-cta-base"),
             virtualization: page.getByTestId("input-select-virtualization"),
@@ -360,6 +368,18 @@ test.describe("InputSelect", () => {
 
         test("Variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
+
+            await story.openDropdown(story.locators.variants.default);
+            await compareScreenshot(story, "open-default", {
+                fullscreen: true,
+            });
+
+            await story.page.mouse.click(0, 0);
+
+            await story.openDropdown(story.locators.variants.withSearch);
+            await compareScreenshot(story, "open-with-search", {
+                fullscreen: true,
+            });
         });
     });
 
