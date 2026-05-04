@@ -5,14 +5,16 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
 
 import { InputSelect } from "../input-select";
 import { VisuallyHidden } from "../shared/accessibility";
+import {
+    Breakpoint,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
 import { SimpleIdGenerator, useIsMounted } from "../util";
-import { V3_Breakpoint } from "../v3_theme";
 import {
     EllipsisButton,
     EllipsisContainer,
@@ -51,12 +53,8 @@ const Component = (
     // =============================================================================
 
     const isMounted = useIsMounted();
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
-
-    const isMobile = useMediaQuery({
-        maxWidth: mobileBreakpoint,
-    });
+    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");

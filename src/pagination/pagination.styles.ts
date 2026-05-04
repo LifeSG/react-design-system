@@ -2,15 +2,8 @@ import styled, { css } from "styled-components";
 
 import { Input } from "../input";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Radius,
-    V3_Spacing,
-} from "../v3_theme";
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -35,7 +28,7 @@ export const PaginationList = styled.div`
     display: flex;
     align-items: center;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         align-self: center;
     }
 `;
@@ -51,12 +44,12 @@ export const EllipsisButton = styled(ClickableIcon)`
     align-items: center;
 
     outline: none;
-    border-radius: ${V3_Radius["sm"]};
+    border-radius: ${Radius.sm};
     height: 2.5rem;
     width: 2.5rem;
-    padding: 0 ${V3_Spacing["spacing-8"]};
+    padding: 0 ${Spacing["spacing-8"]};
 
-    color: ${V3_Colour["icon-primary"]};
+    color: ${Colour["icon-primary"]};
 
     svg {
         height: 1.25rem;
@@ -64,13 +57,13 @@ export const EllipsisButton = styled(ClickableIcon)`
     }
 
     &:disabled {
-        color: ${V3_Colour["icon-disabled-subtle"]};
+        color: ${Colour["icon-disabled-subtle"]};
         cursor: not-allowed;
     }
 
     &:hover,
     &:focus-visible {
-        background-color: ${V3_Colour["bg-hover"]};
+        background-color: ${Colour["bg-hover"]};
     }
 `;
 
@@ -80,13 +73,13 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     align-items: center;
 
     outline: none;
-    margin: ${V3_Spacing["spacing-4"]};
-    border-radius: ${V3_Radius["sm"]};
+    margin: ${Spacing["spacing-4"]};
+    border-radius: ${Radius.sm};
     height: 2.5rem;
     width: 2.5rem;
-    padding: 0 ${V3_Spacing["spacing-8"]};
+    padding: 0 ${Spacing["spacing-8"]};
 
-    color: ${V3_Colour["icon-primary"]};
+    color: ${Colour["icon-primary"]};
 
     svg {
         height: 1.25rem;
@@ -94,58 +87,58 @@ export const NavigationButton = styled(ClickableIcon)<ButtonProps>`
     }
 
     &:disabled {
-        color: ${V3_Colour["icon-disabled-subtle"]};
+        color: ${Colour["icon-disabled-subtle"]};
         cursor: not-allowed;
     }
 
     &:not(:disabled):hover,
     &:not(:disabled):focus-visible {
-        background: ${V3_Colour["bg-hover"]};
+        background: ${Colour["bg-hover"]};
     }
 `;
 
 export const PageItem = styled.button<StyleProps>`
     outline: none;
-    margin: ${V3_Spacing["spacing-4"]};
+    margin: ${Spacing["spacing-4"]};
     box-shadow: none;
-    border: ${V3_Border["width-010"]} ${V3_Border.solid}
+    border: ${Border["width-010"]} ${Border.solid}
         ${(props) =>
             css`
-                ${props.$selected ? V3_Colour["bg-primary"] : V3_Colour.border}
+                ${props.$selected ? Colour["bg-primary"] : Colour.border}
             `};
-    border-radius: ${V3_Radius["sm"]};
+    border-radius: ${Radius.sm};
     min-width: 2.5rem;
     height: 2.5rem;
-    padding: 0 ${V3_Spacing["spacing-8"]};
+    padding: 0 ${Spacing["spacing-8"]};
 
     background: ${(props) =>
-        props.$selected ? V3_Colour["bg-primary"] : V3_Colour.bg};
+        props.$selected ? Colour["bg-primary"] : Colour.bg};
     cursor: pointer;
 
-    ${V3_Font["body-baseline-regular"]};
+    ${Font["body-baseline-regular"]};
     text-align: center;
     color: ${(props) =>
-        props.$selected ? V3_Colour["text-inverse"] : V3_Colour.text};
+        props.$selected ? Colour["text-inverse"] : Colour.text};
 
     ${(props) =>
         props.$selected
             ? css`
-                  font-weight: ${V3_Font.Spec["weight-bold"]};
+                  font-weight: ${Font.Spec["weight-bold"]};
 
                   &:hover,
                   &:focus-visible {
-                      border-color: ${V3_Colour["bg-selected-strongest-hover"]};
-                      background: ${V3_Colour["bg-selected-strongest-hover"]};
-                      color: ${V3_Colour["text-inverse"]};
+                      border-color: ${Colour["bg-selected-strongest-hover"]};
+                      background: ${Colour["bg-selected-strongest-hover"]};
+                      color: ${Colour["text-inverse"]};
                   }
               `
             : css`
                   &:hover,
                   &:focus-visible {
-                      border-color: ${V3_Colour["bg-hover"]};
-                      background: ${V3_Colour["bg-hover"]};
-                      color: ${V3_Colour["text-hover"]};
-                      font-weight: ${V3_Font.Spec["weight-semibold"]};
+                      border-color: ${Colour["bg-hover"]};
+                      background: ${Colour["bg-hover"]};
+                      color: ${Colour["text-hover"]};
+                      font-weight: ${Font.Spec["weight-semibold"]};
                   }
               `}
 `;
@@ -157,8 +150,8 @@ export const EllipsisContainer = styled.div`
     justify-content: center;
     align-items: center;
 
-    margin: ${V3_Spacing["spacing-4"]};
-    border-radius: ${V3_Radius["sm"]};
+    margin: ${Spacing["spacing-4"]};
+    border-radius: ${Radius.sm};
     width: 2.5rem;
     height: 2.5rem;
 
@@ -170,9 +163,9 @@ export const PaginationMobileInput = styled.div`
     justify-content: center;
     align-items: center;
 
-    margin: ${V3_Spacing["spacing-4"]};
+    margin: ${Spacing["spacing-4"]};
 
-    color: ${V3_Colour.text};
+    color: ${Colour.text};
 `;
 
 export const Label = styled(Typography.BodyBL)`
@@ -180,24 +173,24 @@ export const Label = styled(Typography.BodyBL)`
 `;
 
 export const LabelDivider = styled(Typography.BodyBL)`
-    margin: 0 ${V3_Spacing["spacing-16"]};
+    margin: 0 ${Spacing["spacing-16"]};
     white-space: nowrap;
 `;
 
 export const InputView = styled(Input)`
     width: 3.5rem;
     height: 2.5rem;
-    ${V3_Font["body-baseline-regular"]};
+    ${Font["body-baseline-regular"]};
 
     input {
-        padding: 0 ${V3_Spacing["spacing-8"]};
+        padding: 0 ${Spacing["spacing-8"]};
         text-align: center;
     }
 `;
 
 export const Hover = styled.div`
     position: absolute;
-    top: -${V3_Spacing["spacing-8"]};
+    top: calc(${Spacing["spacing-8"]} * -1);
     transform: translateY(-100%);
 
     display: flex;
@@ -205,17 +198,17 @@ export const Hover = styled.div`
     justify-content: center;
 
     border: none;
-    border-radius: ${V3_Radius["sm"]};
+    border-radius: ${Radius.sm};
     width: max-content;
-    padding: ${V3_Spacing["spacing-4"]} ${V3_Spacing["spacing-12"]};
+    padding: ${Spacing["spacing-4"]} ${Spacing["spacing-12"]};
 
-    background-color: ${V3_Colour["bg-hover"]};
+    background-color: ${Colour["bg-hover"]};
 
-    ${V3_Font["body-xs-regular"]}
-    color: ${V3_Colour["text-hover"]};
+    ${Font["body-xs-regular"]}
+    color: ${Colour["text-hover"]};
 `;
 
 export const InputSelectWrapper = styled.div`
-    margin-left: ${V3_Spacing["spacing-4"]};
+    margin-left: ${Spacing["spacing-4"]};
     width: 10rem;
 `;
