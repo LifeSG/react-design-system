@@ -232,25 +232,25 @@ test.describe("InputMultiSelect", () => {
         });
     });
 
-    test.describe("Standalone", () => {
+    test.describe("", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("standalone");
             });
 
-            test("", async ({ story }) => {
+            test("Standalone", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
         });
     });
 
-    test.describe("Virtualization", () => {
+    test.describe("", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("virtualization");
             });
 
-            test("", async ({ story }) => {
+            test("Virtualization", async ({ story }) => {
                 await story.openDropdown();
                 await story.locators.component.searchInput.fill("Option 4999");
                 await expect(story.getOption("Option 4999")).toBeVisible();
@@ -262,25 +262,25 @@ test.describe("InputMultiSelect", () => {
         });
     });
 
-    test.describe("Grid Layout", () => {
+    test.describe("", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("grid-layout");
             });
 
-            test("", async ({ story }) => {
+            test("Grid Layout", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
         });
     });
 
-    test.describe("Custom CTA", () => {
+    test.describe("", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("custom-cta");
             });
 
-            test("", async ({ story }) => {
+            test("Custom CTA", async ({ story }) => {
                 await story.openDropdown();
                 await expect(
                     story.locators.component.customCtaButton
@@ -298,13 +298,13 @@ test.describe("InputMultiSelect", () => {
         });
     });
 
-    test.describe("Variants", () => {
+    test.describe("", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("variants");
             });
 
-            test("", async ({ story }) => {
+            test("Variants", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
         });
