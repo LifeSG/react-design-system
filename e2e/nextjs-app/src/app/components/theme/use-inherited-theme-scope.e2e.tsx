@@ -27,6 +27,7 @@ const PortalledComponent = (props: React.HTMLAttributes<HTMLDivElement>) => {
 
     return mounted
         ? createPortal(
+              // eslint-disable-next-line no-restricted-syntax
               <div {...props} {...themeProps} style={{ ...themeStyle }}>
                   <div ref={styledElementRef}></div>
               </div>,

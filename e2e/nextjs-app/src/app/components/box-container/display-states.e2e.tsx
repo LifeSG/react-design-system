@@ -1,5 +1,6 @@
 "use client";
 import { BoxContainer } from "@lifesg/react-design-system/box-container";
+import styles from "./box-container.module.css";
 
 export default function Story() {
     return (
@@ -9,7 +10,7 @@ export default function Story() {
                 displayState="error"
                 data-testid="box-container-error"
             >
-                <div style={{ padding: "2rem" }}>
+                <div className={styles.content}>
                     <p>
                         This container has an error display state with a red
                         error icon.
@@ -22,7 +23,7 @@ export default function Story() {
                 displayState="warning"
                 data-testid="box-container-warning"
             >
-                <div style={{ padding: "2rem" }}>
+                <div className={styles.content}>
                     <p>
                         This container has a warning display state with an amber
                         warning icon.
@@ -35,7 +36,7 @@ export default function Story() {
                 displayState="default"
                 data-testid="box-container-default"
             >
-                <div style={{ padding: "2rem" }}>
+                <div className={styles.content}>
                     <p>
                         This container has default display state with no icon.
                     </p>

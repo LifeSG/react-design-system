@@ -1,5 +1,6 @@
 "use client";
 import { BoxContainer } from "@lifesg/react-design-system/box-container";
+import styles from "./box-container.module.css";
 
 export default function Story() {
     return (
@@ -10,10 +11,7 @@ export default function Story() {
                 expanded={false}
                 data-testid="box-container-collapsed"
             >
-                <div
-                    style={{ padding: "2rem" }}
-                    data-testid="content-collapsed"
-                >
+                <div className={styles.content} data-testid="content-collapsed">
                     <p>Lorem ipsum dolor sit amet</p>
                 </div>
             </BoxContainer>
@@ -24,7 +22,7 @@ export default function Story() {
                 expanded={true}
                 data-testid="box-container-expanded"
             >
-                <div style={{ padding: "2rem" }} data-testid="content-expanded">
+                <div className={styles.content} data-testid="content-expanded">
                     <p>Lorem ipsum dolor sit amet</p>
                 </div>
             </BoxContainer>

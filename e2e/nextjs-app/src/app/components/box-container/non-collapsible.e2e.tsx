@@ -1,5 +1,6 @@
 "use client";
 import { BoxContainer } from "@lifesg/react-design-system/box-container";
+import styles from "./box-container.module.css";
 
 export default function Story() {
     return (
@@ -8,7 +9,7 @@ export default function Story() {
             collapsible={false}
             data-testid="box-container-non-collapsible"
         >
-            <div style={{ padding: "2rem" }}>
+            <div className={styles.content}>
                 <p>Lorem ipsum dolor sit amet</p>
             </div>
         </BoxContainer>
