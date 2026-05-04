@@ -8,29 +8,18 @@ import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal"
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
+import { Input } from "../input";
 import { InputSelect } from "../input-select";
 import { VisuallyHidden } from "../shared/accessibility";
+import { ClickableIcon } from "../shared/clickable-icon";
 import {
     Breakpoint,
     useDesignToken,
     useSafeMaxWidthMediaQuery,
 } from "../theme";
+import { Typography } from "../typography";
 import { SimpleIdGenerator, useIsMounted } from "../util";
-import {
-    EllipsisButton,
-    EllipsisContainer,
-    Hover,
-    InputSelectWrapper,
-    InputView,
-    Label,
-    LabelDivider,
-    NavigationButton,
-    PageItem,
-    PaginationList,
-    PaginationMenu,
-    PaginationMobileInput,
-    PaginationWrapper,
-} from "./pagination.styles";
+import * as styles from "./pagination.styles";
 import type { PageSizeItemProps, PaginationProps } from "./types";
 
 const Component = (
@@ -213,17 +202,20 @@ const Component = (
             const active = activePage === pageIndex;
             if (totalPages <= totalRange) {
                 return (
-                    <PageItem
+                    <button
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
-                        className={clsx(active && "pageItemSelected")}
+                        className={clsx(
+                            styles.pageItem,
+                            active && styles.pageItemSelected
+                        )}
                         aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
                     >
                         {pageIndex}
-                    </PageItem>
+                    </button>
                 );
             }
 
@@ -255,17 +247,20 @@ const Component = (
                 pageIndex > totalPages - boundaryRange;
             if (paginationStart || paginationMiddle || paginationEnd) {
                 return (
-                    <PageItem
+                    <button
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
-                        className={clsx(active && "pageItemSelected")}
+                        className={clsx(
+                            styles.pageItem,
+                            active && styles.pageItemSelected
+                        )}
                         aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
                     >
                         {pageIndex}
-                    </PageItem>
+                    </button>
                 );
             }
 
@@ -274,8 +269,9 @@ const Component = (
     };
 
     const renderStartEllipsis = (pageIndex: number) => (
-        <EllipsisContainer key={pageIndex}>
-            <EllipsisButton
+        <div key={pageIndex} className={styles.ellipsisContainer}>
+            <ClickableIcon
+                className={styles.ellipsisButton}
                 focusHighlight={false}
                 focusOutline="browser"
                 aria-label={"Previous 5 pages"}
@@ -290,14 +286,17 @@ const Component = (
                 ) : (
                     <EllipsisHorizontalIcon aria-hidden />
                 )}
-            </EllipsisButton>
-            {hoverLeftButton && <Hover>Previous 5 pages</Hover>}
-        </EllipsisContainer>
+            </ClickableIcon>
+            {hoverLeftButton && (
+                <div className={styles.hover}>Previous 5 pages</div>
+            )}
+        </div>
     );
 
     const renderEndEllipsis = (pageIndex: number) => (
-        <EllipsisContainer key={pageIndex}>
-            <EllipsisButton
+        <div key={pageIndex} className={styles.ellipsisContainer}>
+            <ClickableIcon
+                className={styles.ellipsisButton}
                 focusHighlight={false}
                 focusOutline="browser"
                 aria-label={"Next 5 pages"}
@@ -312,15 +311,18 @@ const Component = (
                 ) : (
                     <EllipsisHorizontalIcon aria-hidden />
                 )}
-            </EllipsisButton>
-            {hoverRightButton && <Hover>Next 5 pages</Hover>}
-        </EllipsisContainer>
+            </ClickableIcon>
+            {hoverRightButton && (
+                <div className={styles.hover}>Next 5 pages</div>
+            )}
+        </div>
     );
 
     const renderMobile = () => (
-        <PaginationMobileInput>
+        <div className={styles.paginationMobileInput}>
             <form onSubmit={handleInputSubmit}>
-                <InputView
+                <Input
+                    className={styles.inputView}
                     value={inputText}
                     onChange={handleInput}
                     autoComplete="off"
@@ -330,14 +332,18 @@ const Component = (
                     aria-label={`Page ${activePage} of ${totalPages}`}
                 />
             </form>
-            <LabelDivider>/</LabelDivider>
-            <Label>{totalPages}</Label>
-        </PaginationMobileInput>
+            <Typography.BodyBL className={styles.labelDivider}>
+                /
+            </Typography.BodyBL>
+            <Typography.BodyBL className={styles.label}>
+                {totalPages}
+            </Typography.BodyBL>
+        </div>
     );
 
     return (
-        <PaginationWrapper
-            className={className}
+        <nav
+            className={clsx(styles.paginationWrapper, className)}
             ref={ref}
             id={id || "pagination-wrapper"}
             data-testid={dataTestId || "pagination"}
@@ -346,10 +352,11 @@ const Component = (
             <VisuallyHidden id={paginationId} aria-hidden>
                 pagination
             </VisuallyHidden>
-            <PaginationList>
-                <PaginationMenu>
+            <div className={styles.paginationList}>
+                <div className={styles.paginationMenu}>
                     {showFirstAndLastNav && (
-                        <NavigationButton
+                        <ClickableIcon
+                            className={styles.navigationButton}
                             onClick={firstPaginationItem}
                             disabled={isFirstPage}
                             focusHighlight={false}
@@ -357,9 +364,10 @@ const Component = (
                             focusOutline="browser"
                         >
                             <ChevronLineLeftIcon aria-hidden />
-                        </NavigationButton>
+                        </ClickableIcon>
                     )}
-                    <NavigationButton
+                    <ClickableIcon
+                        className={styles.navigationButton}
                         onClick={prevPaginationItem}
                         disabled={isFirstPage}
                         focusHighlight={false}
@@ -367,11 +375,12 @@ const Component = (
                         focusOutline="browser"
                     >
                         <ChevronLeftIcon aria-hidden />
-                    </NavigationButton>
+                    </ClickableIcon>
                     {isMounted && isMobile
                         ? renderMobile()
                         : renderPaginationItems()}
-                    <NavigationButton
+                    <ClickableIcon
+                        className={styles.navigationButton}
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
                         focusHighlight={false}
@@ -379,9 +388,10 @@ const Component = (
                         focusOutline="browser"
                     >
                         <ChevronRightIcon aria-hidden />
-                    </NavigationButton>
+                    </ClickableIcon>
                     {showFirstAndLastNav && (
-                        <NavigationButton
+                        <ClickableIcon
+                            className={styles.navigationButton}
                             onClick={lastPaginationItem}
                             disabled={isLastPage}
                             focusHighlight={false}
@@ -389,12 +399,12 @@ const Component = (
                             focusOutline="browser"
                         >
                             <ChevronLineRightIcon aria-hidden />
-                        </NavigationButton>
+                        </ClickableIcon>
                     )}
-                </PaginationMenu>
-            </PaginationList>
+                </div>
+            </div>
             {showPageSizeChanger && !isMobile && (
-                <InputSelectWrapper>
+                <div className={styles.inputSelectWrapper}>
                     <VisuallyHidden id={`${paginationId}-page-size`}>
                         Items per page
                     </VisuallyHidden>
@@ -407,9 +417,9 @@ const Component = (
                         selectedOption={selectedOption}
                         onSelectOption={handleListItemClick}
                     />
-                </InputSelectWrapper>
+                </div>
             )}
-        </PaginationWrapper>
+        </nav>
     );
 };
 export const Pagination = React.forwardRef(Component);

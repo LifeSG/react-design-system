@@ -1,17 +1,14 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Input } from "../input";
-import { ClickableIcon } from "../shared/clickable-icon";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
-import { Typography } from "../typography";
 // =============================================================================
 // STYLING
 // =============================================================================
-export const PaginationWrapper = styled.nav`
+export const paginationWrapper = css`
     display: flex;
 `;
 
-export const PaginationList = styled.div`
+export const paginationList = css`
     align-self: flex-start;
 
     display: flex;
@@ -22,12 +19,12 @@ export const PaginationList = styled.div`
     }
 `;
 
-export const PaginationMenu = styled.div`
+export const paginationMenu = css`
     display: inline-flex;
     align-items: center;
 `;
 
-export const EllipsisButton = styled(ClickableIcon)`
+export const ellipsisButton = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -56,7 +53,7 @@ export const EllipsisButton = styled(ClickableIcon)`
     }
 `;
 
-export const NavigationButton = styled(ClickableIcon)`
+export const navigationButton = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,7 +83,7 @@ export const NavigationButton = styled(ClickableIcon)`
     }
 `;
 
-export const PageItem = styled.button`
+export const pageItem = css`
     outline: none;
     margin: ${Spacing["spacing-4"]};
     box-shadow: none;
@@ -110,24 +107,24 @@ export const PageItem = styled.button`
         color: ${Colour["text-hover"]};
         font-weight: ${Font.Spec["weight-semibold"]};
     }
+`;
 
-    &.pageItemSelected {
-        border-color: ${Colour["bg-primary"]};
-        background: ${Colour["bg-primary"]};
+export const pageItemSelected = css`
+    border-color: ${Colour["bg-primary"]};
+    background: ${Colour["bg-primary"]};
+    color: ${Colour["text-inverse"]};
+    font-weight: ${Font.Spec["weight-bold"]};
+
+    &:hover,
+    &:focus-visible {
+        border-color: ${Colour["bg-selected-strongest-hover"]};
+        background: ${Colour["bg-selected-strongest-hover"]};
         color: ${Colour["text-inverse"]};
         font-weight: ${Font.Spec["weight-bold"]};
-
-        &:hover,
-        &:focus-visible {
-            border-color: ${Colour["bg-selected-strongest-hover"]};
-            background: ${Colour["bg-selected-strongest-hover"]};
-            color: ${Colour["text-inverse"]};
-            font-weight: ${Font.Spec["weight-bold"]};
-        }
     }
 `;
 
-export const EllipsisContainer = styled.div`
+export const ellipsisContainer = css`
     position: relative;
 
     display: flex;
@@ -142,7 +139,7 @@ export const EllipsisContainer = styled.div`
     cursor: pointer;
 `;
 
-export const PaginationMobileInput = styled.div`
+export const paginationMobileInput = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -152,16 +149,16 @@ export const PaginationMobileInput = styled.div`
     color: ${Colour.text};
 `;
 
-export const Label = styled(Typography.BodyBL)`
+export const label = css`
     white-space: nowrap;
 `;
 
-export const LabelDivider = styled(Typography.BodyBL)`
+export const labelDivider = css`
     margin: 0 ${Spacing["spacing-16"]};
     white-space: nowrap;
 `;
 
-export const InputView = styled(Input)`
+export const inputView = css`
     width: 3.5rem;
     height: 2.5rem;
     ${Font["body-baseline-regular"]};
@@ -172,7 +169,7 @@ export const InputView = styled(Input)`
     }
 `;
 
-export const Hover = styled.div`
+export const hover = css`
     position: absolute;
     top: calc(${Spacing["spacing-8"]} * -1);
     transform: translateY(-100%);
@@ -192,7 +189,7 @@ export const Hover = styled.div`
     color: ${Colour["text-hover"]};
 `;
 
-export const InputSelectWrapper = styled.div`
+export const inputSelectWrapper = css`
     margin-left: ${Spacing["spacing-4"]};
     width: 10rem;
 `;
