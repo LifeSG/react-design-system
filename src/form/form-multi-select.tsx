@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { InputMultiSelect } from "../input-multi-select/input-multi-select";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormMultiSelectProps } from "./types";
-import { SimpleIdGenerator } from "../util";
 
 export const FormMultiSelect = <T, V>({
     label,
@@ -25,10 +24,8 @@ export const FormMultiSelect = <T, V>({
     variant,
     ...otherProps
 }: FormMultiSelectProps<T, V>): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-field-${SimpleIdGenerator.generate()}`
-    );
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-field-${internalId}`;
     return (
         <FormWrapper
             id={inputId}

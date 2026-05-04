@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { InputRangeSelect } from "../input-range-select/input-range-select";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputRangeSelectProps } from "./types";
-import { SimpleIdGenerator } from "../util";
 
 export const FormRangeSelect = <T, V>({
     label,
@@ -24,7 +23,7 @@ export const FormRangeSelect = <T, V>({
     xxlCols,
     ...otherProps
 }: FormInputRangeSelectProps<T, V>): JSX.Element => {
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const inputId = id ?? `form-field-range-select-${internalId}`;
 
     return (

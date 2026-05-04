@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { InputSlider } from "../input-slider";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormSliderProps } from "./types";
 
@@ -23,7 +22,7 @@ export const FormSlider = ({
     xxlCols,
     ...otherProps
 }: FormSliderProps): JSX.Element => {
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const inputId = id ?? `form-slider-${internalId}`;
 
     return (

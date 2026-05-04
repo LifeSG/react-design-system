@@ -1,6 +1,8 @@
-import { useEffect, useMemo, useRef, useState } from "react";
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
+import { useEffect, useMemo, useRef, useState } from "react";
+import { concatIds } from "../shared/accessibility";
 import { Typography } from "../typography";
+import { useId } from "../util";
 import {
     Bar,
     Histogram,
@@ -9,8 +11,6 @@ import {
     Slider,
 } from "./histogram-slider.styles";
 import { HistogramSliderProps } from "./types";
-import { SimpleIdGenerator } from "../util";
-import { concatIds } from "../shared/accessibility";
 
 const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
@@ -45,7 +45,7 @@ export const HistogramSlider = ({
     const [selection, setSelection] = useState<[number, number]>(
         initSelection()
     );
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const announcementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
         null
     );

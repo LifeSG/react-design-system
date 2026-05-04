@@ -1,7 +1,7 @@
 import React, { useEffect, useMemo, useRef, useState } from "react";
 import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
-import { SimpleIdGenerator, StringHelper, useNextInputState } from "../util";
+import { StringHelper, useId, useNextInputState } from "../util";
 import { UnitNumberInputProps } from "./types";
 import {
     FloorInput,
@@ -37,7 +37,7 @@ export const UnitNumberInput = ({
     const [floorValue, _setFloorValue] = useState<string>("");
     const [unitValue, _setUnitValue] = useState<string>("");
     const [currentFocus, _setCurrentFocus] = useState<FieldType>("none");
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const floorLabelId = `${internalId}-floor-label`;
     const unitLabelId = `${internalId}-unit-label`;
     const liveMessageId = `${internalId}-live-message`;
@@ -355,7 +355,9 @@ export const UnitNumberInput = ({
                 autoComplete={autoComplete}
                 styleType="no-border"
             />
-            <VisuallyHidden aria-hidden id={unitLabelId}>Enter unit number</VisuallyHidden>
+            <VisuallyHidden aria-hidden id={unitLabelId}>
+                Enter unit number
+            </VisuallyHidden>
             {/** Live message for AT reader to read with the combination of prefix and current value for both floor input and unit input */}
             <VisuallyHidden id={liveMessageId} aria-live="polite">
                 {liveMessage}

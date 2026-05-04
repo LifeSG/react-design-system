@@ -8,7 +8,7 @@ import {
 import { LabelContainer } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { Typography } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import {
     HistogramSliderDropdownContainer,
     Label,
@@ -57,7 +57,7 @@ export const SelectHistogram = ({
     );
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);

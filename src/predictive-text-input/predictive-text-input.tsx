@@ -1,13 +1,13 @@
 import debounce from "lodash/debounce";
 import React, { useCallback, useEffect, useRef, useState } from "react";
+import { VisuallyHidden, concatIds } from "src/shared/accessibility";
+import { Input } from "../input";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list";
+import { ItemsLoadStateType } from "../shared/dropdown-list/types";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
-import { Input } from "../input";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { PredictiveTextInputProps } from "./types";
-import { ItemsLoadStateType } from "../shared/dropdown-list/types";
-import { VisuallyHidden, concatIds } from "src/shared/accessibility";
 
 export const PredictiveTextInput = <T, V>({
     className,
@@ -58,7 +58,7 @@ export const PredictiveTextInput = <T, V>({
     const [isOpen, setIsOpen] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
 
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const [resultAnnouncement, setResultAnnouncement] = useState<string | null>(
         null
     );

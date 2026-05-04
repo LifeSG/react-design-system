@@ -1,6 +1,8 @@
-import React, { useEffect, useState } from "react";
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
+import React, { useEffect, useState } from "react";
+import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import { Colour } from "../theme";
+import { useId } from "../util";
 import {
     IndicatorLabelContainer,
     Knob,
@@ -12,8 +14,6 @@ import {
     Wrapper,
 } from "./input-range-slider.styles";
 import { InputRangeSliderProps } from "./types";
-import { SimpleIdGenerator } from "../util";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
 
 export const InputRangeSlider = ({
     id,
@@ -49,7 +49,7 @@ export const InputRangeSlider = ({
     const [focusedThumbIndex, setFocusedThumbIndex] = useState<number | null>(
         null
     );
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const trackColors = getTrackColors();
     const indicatorTextId = `${internalId}-indicator`;
     const instructionTextId = `${internalId}-instruction`;

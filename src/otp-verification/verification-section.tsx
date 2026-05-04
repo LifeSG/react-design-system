@@ -1,10 +1,12 @@
-import { useContext, useState } from "react";
+import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
+import { concatIds } from "../shared/accessibility";
 import { Breakpoint } from "../theme";
 import { Typography } from "../typography";
+import { useId } from "../util";
 import { VerificationSectionProps } from "./internal-types";
 import { EmailThumbnail, PhoneThumbnail } from "./thumbnail";
 import {
@@ -14,8 +16,6 @@ import {
     VerifyButton,
     VerifyInputWrapper,
 } from "./verification-section-styles";
-import { concatIds } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
 
 export const VerificationSection = ({
     id,
@@ -38,7 +38,7 @@ export const VerificationSection = ({
         maxWidth: Breakpoint["sm-max"]({ theme }),
     });
     const thumbnailSize = isMobile ? 64 : 120;
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
 
     const titleId = `${internalId}-title`;
     const messageId = `${internalId}-message`;

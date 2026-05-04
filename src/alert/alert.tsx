@@ -5,8 +5,8 @@ import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import { TickCircleFillIcon } from "@lifesg/react-icons/tick-circle-fill";
 import { useCallback, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { SimpleIdGenerator } from "../util";
 import { inertValue } from "../shared/accessibility";
+import { useId } from "../util";
 import {
     ActionLinkText,
     AlertIconWrapper,
@@ -39,7 +39,7 @@ export const Alert = ({
     const [renderShowMore, setRenderShowMore] = useState<boolean>(false);
     const { height: contentHeight, ref: contentRef } =
         useResizeDetector<HTMLDivElement>();
-    const [contentId] = useState(() => SimpleIdGenerator.generate());
+    const contentId = useId();
 
     // =============================================================================
     // HELPERS

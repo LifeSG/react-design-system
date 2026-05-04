@@ -1,5 +1,4 @@
-import { useState } from "react";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { Label, Section } from "./menu-section.styles";
 import { MenuSectionProps } from "./types";
 
@@ -13,7 +12,7 @@ export const MenuSection = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
 
     // =============================================================================
     // RENDER FUNCTIONS

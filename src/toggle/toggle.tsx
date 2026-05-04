@@ -2,7 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import { useEffect, useMemo, useRef, useState } from "react";
 import { ToggleIconType } from "../shared/toggle-icon/toggle-icon";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import {
     AlertContainer,
     Children,
@@ -62,7 +62,7 @@ export const Toggle = ({
         const hasErrorElement = !Array.isArray(errors) && !!errors;
         return hasErrorList || hasErrorElement;
     }, [errors]);
-    const [uniqueId] = useState(SimpleIdGenerator.generate());
+    const uniqueId = useId();
     const generatedId = id ? `${id}` : `tg-${uniqueId}`;
 
     const inputRef = useRef<HTMLInputElement>(null);

@@ -5,13 +5,13 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-import React, { useContext, useEffect, useRef, useState } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { InputSelect } from "../input-select";
 import { VisuallyHidden } from "../shared/accessibility";
 import { Breakpoint } from "../theme";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import {
     EllipsisButton,
     EllipsisContainer,
@@ -73,8 +73,8 @@ const Component = (
     const boundaryRange = 1;
     const siblingRange = 1;
 
-    const internalId = useRef(SimpleIdGenerator.generate());
-    const paginationId = `${internalId.current}-pagination`;
+    const internalId = useId();
+    const paginationId = `${internalId}-pagination`;
 
     const totalPages = Math.ceil(totalItems / pageSizeLocal);
     const isFirstPage = activePage === 1;

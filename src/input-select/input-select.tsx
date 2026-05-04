@@ -12,7 +12,7 @@ import {
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
 import { InputSelectProps } from "./types";
 
@@ -61,7 +61,7 @@ export const InputSelect = <T, V>({
     const [selected, setSelected] = useState<T | undefined>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);

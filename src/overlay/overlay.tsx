@@ -5,7 +5,7 @@ import {
 } from "@floating-ui/react";
 import React, { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { Root, Wrapper } from "./overlay.styles";
 import { OverlayProps } from "./types";
 import { useFloatingParent } from "./use-floating-context";
@@ -28,7 +28,7 @@ const OverlayComponent = ({
     // =============================================================================
     const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
     const [isStacked, _setIsStacked] = useState<boolean>();
-    const [uid] = useState(() => SimpleIdGenerator.generate());
+    const uid = useId();
     const nodeId = useFloatingNodeId();
 
     const stacked = useRef<boolean>();

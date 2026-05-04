@@ -1,8 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
-import { TypographyWeight } from "../typography";
 import { Menu as DesktopMenu } from "../menu";
+import { TypographyWeight } from "../typography";
 import { Menu as MobileMenu } from "./menu";
 
+import { useId } from "../util";
 import {
     ChevronIcon,
     ExpandCollapseButton,
@@ -16,7 +17,6 @@ import {
     Wrapper,
 } from "./navbar-items.styles";
 import { NavItemCommonProps, NavItemLinkProps, NavItemProps } from "./types";
-import { SimpleIdGenerator } from "../util";
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -49,7 +49,7 @@ export const NavbarItems = <T,>({
         null
     );
     const listRef = useRef<HTMLUListElement>(null);
-    const [instanceId] = useState(() => SimpleIdGenerator.generate());
+    const instanceId = useId();
 
     // =============================================================================
     // HELPERS

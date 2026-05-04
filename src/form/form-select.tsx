@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { InputSelect } from "../input-select";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormInputSelectProps } from "./types";
-import { SimpleIdGenerator } from "../util";
 
 export const FormSelect = <T, V>({
     label,
@@ -25,10 +24,8 @@ export const FormSelect = <T, V>({
     variant,
     ...otherProps
 }: FormInputSelectProps<T, V>): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-field-${SimpleIdGenerator.generate()}`
-    );
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-field-${internalId}`;
     return (
         <FormWrapper
             id={inputId}

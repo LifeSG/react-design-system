@@ -1,6 +1,8 @@
+import { useSpring } from "@react-spring/web";
 import React, { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "@react-spring/web";
+import { inertValue } from "../../shared/accessibility";
+import { useId } from "../../util";
 import {
     BaseProps,
     LinkListEagerProps,
@@ -15,8 +17,6 @@ import {
     ViewMoreIcon,
 } from "../link-list.styles";
 import { LinkListItems } from "./common";
-import { SimpleIdGenerator } from "../../util";
-import { inertValue } from "../../shared/accessibility";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListEagerProps, "loadMode">;
@@ -39,7 +39,7 @@ export const EagerLinkList = <T,>({
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
 
-    const [id] = useState(() => SimpleIdGenerator.generate());
+    const id = useId();
 
     // =============================================================================
     // EVENT HANDLERS

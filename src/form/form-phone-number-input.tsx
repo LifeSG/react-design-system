@@ -1,6 +1,5 @@
-import { useState } from "react";
 import { PhoneNumberInput } from "../phone-number-input/phone-number-input";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormPhoneNumberInputProps } from "./types";
 
@@ -23,10 +22,8 @@ export const FormPhoneNumberInput = ({
     xxlCols,
     ...otherProps
 }: FormPhoneNumberInputProps): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-phone-number-input-${SimpleIdGenerator.generate()}`
-    );
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-phone-number-input-${internalId}`;
 
     return (
         <FormWrapper

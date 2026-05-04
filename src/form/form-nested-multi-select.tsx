@@ -1,8 +1,7 @@
-import { useState } from "react";
 import { InputNestedMultiSelect } from "../input-nested-multi-select";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import { FormNestedMultiSelectProps } from "./types";
-import { SimpleIdGenerator } from "../util";
 
 export const FormNestedMultiSelect = <V1, V2, V3>({
     label,
@@ -23,10 +22,8 @@ export const FormNestedMultiSelect = <V1, V2, V3>({
     xxlCols,
     ...otherProps
 }: FormNestedMultiSelectProps<V1, V2, V3>): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-field-${SimpleIdGenerator.generate()}`
-    );
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-field-${internalId}`;
     return (
         <FormWrapper
             id={inputId}
