@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
+import type { ThemeType } from "../theme/types";
 import type { TypographyLinkProps } from "../typography";
-import type { V3_ResourceScheme } from "../v3_theme/types";
 import { getDefaultDisclaimerLinks } from "./footer-disclaimer-links-data";
 import type { DisclaimerLinks } from "./types";
 
@@ -15,7 +15,7 @@ export interface InternalDisclaimerLinks {
 export class FooterHelper {
     public static getCopyrightInfo(
         lastUpdated: Date = new Date(),
-        resourceScheme: V3_ResourceScheme | undefined
+        resourceScheme: ThemeType | undefined
     ): string {
         const copyrightText = FooterHelper.getCopyrightText(resourceScheme);
         const copyright = `${new Date().getFullYear()} ${copyrightText}`;
@@ -25,7 +25,7 @@ export class FooterHelper {
     }
 
     private static getCopyrightText(
-        resourceScheme: V3_ResourceScheme | undefined
+        resourceScheme: ThemeType | undefined
     ): string {
         switch (resourceScheme) {
             case "lifesg":
@@ -44,7 +44,7 @@ export class FooterHelper {
     }
 
     public static getFooterLogoAttribute(
-        resourceScheme?: V3_ResourceScheme
+        resourceScheme?: ThemeType
     ): React.ImgHTMLAttributes<HTMLImageElement> {
         switch (resourceScheme) {
             case "lifesg":
@@ -85,7 +85,7 @@ export class FooterHelper {
     }
 
     public static getDisclaimerLinks(
-        resourceScheme: V3_ResourceScheme | undefined,
+        resourceScheme: ThemeType | undefined,
         customDisclaimerLinks: DisclaimerLinks | undefined
     ): InternalDisclaimerLinks {
         const defaultDisclaimerLinks =

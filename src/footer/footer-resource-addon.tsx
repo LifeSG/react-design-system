@@ -1,7 +1,7 @@
 import { useTheme } from "styled-components";
 
 import { Typography } from "../typography";
-import { Img, Items } from "./footer-resource-addon.styles";
+import * as styles from "./footer-resource-addon.styles";
 
 export const ResourceAddon = (): JSX.Element => {
     const theme = useTheme();
@@ -18,20 +18,20 @@ export const ResourceAddon = (): JSX.Element => {
                             My Legacy is a LifeSG initiative, brought to you by
                             the following government agencies:
                         </Typography.BodyMD>
-                        <Items>
-                            <Img
+                        <styles.Items>
+                            <styles.Img
                                 data-testid="footer-govtech-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/govtech-logo.png"
                                 alt="GovTech Singapore"
                                 style={{ height: "4.5rem" }}
                             />
-                            <Img
+                            <styles.Img
                                 data-testid="footer-psd-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/psd-logo.png"
                                 alt="Public Service Division"
                                 style={{ height: "3.5rem" }}
                             />
-                        </Items>
+                        </styles.Items>
                     </>
                 );
             default:

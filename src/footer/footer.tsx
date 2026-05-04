@@ -5,6 +5,7 @@ import { ThemeContext } from "styled-components";
 
 import { Divider } from "../divider";
 import { Layout } from "../layout";
+import type { ThemeType } from "../theme/types";
 import { Typography } from "../typography";
 import * as styles from "./footer.styles";
 import { DownloadApp } from "./footer-download-app";
@@ -60,7 +61,7 @@ export const Footer = <T,>({
     // =============================================================================
     const renderDisclaimerLinks = () => {
         const links = FooterHelper.getDisclaimerLinks(
-            theme?.resourceScheme,
+            theme?.resourceScheme as ThemeType,
             disclaimerLinks
         );
 
@@ -104,7 +105,9 @@ export const Footer = <T,>({
 
         if (links || showDownloadAddon) {
             const { src, ...otherLogoAttributes } =
-                FooterHelper.getFooterLogoAttribute(theme?.resourceScheme);
+                FooterHelper.getFooterLogoAttribute(
+                    theme?.resourceScheme as ThemeType
+                );
             component = (
                 <>
                     {(logoSrc || src) && !hideLogo && (
@@ -200,7 +203,7 @@ export const Footer = <T,>({
                                 &copy;{" "}
                                 {FooterHelper.getCopyrightInfo(
                                     lastUpdated,
-                                    theme?.resourceScheme
+                                    theme?.resourceScheme as ThemeType
                                 )}
                             </>
                         )}
