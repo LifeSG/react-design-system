@@ -14,6 +14,13 @@ class StoryPage extends AbstractStoryPage {
             noResults: Locator;
             customCtaButton: Locator;
         };
+        form: {
+            default: Locator;
+            selected: Locator;
+            readonly: Locator;
+            disabled: Locator;
+            error: Locator;
+        };
         standalone: {
             default: Locator;
             selected: Locator;
@@ -44,6 +51,13 @@ class StoryPage extends AbstractStoryPage {
                 disabled: page.getByTestId("standalone-disabled"),
                 error: page.getByTestId("standalone-error"),
             },
+            form: {
+                default: page.getByTestId("form-default-base"),
+                selected: page.getByTestId("form-selected-base"),
+                readonly: page.getByTestId("form-readonly-base"),
+                disabled: page.getByTestId("form-disabled-base"),
+                error: page.getByTestId("form-error-base"),
+            },
             multiSelect: page.getByTestId("multi-select"),
         };
     }
@@ -70,40 +84,84 @@ test.describe("InputMultiSelect", () => {
     test.describe("Form", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("default");
+                await story.init("form-variants");
             });
 
-            test("States", async ({ story }) => {
+            test("Visual", async ({ story }) => {
+                await test.step("Default state", async () => {
+                    await expect(
+                        story.locators.component.dropdownContainer
+                    ).not.toBeVisible();
+
+                    await compareScreenshot(story, "mount", {
+                        locator: story.locators.form.default,
+                    });
+
+                    await story.openDropdown(story.locators.form.default);
+                    await expect(story.getOption("Option A")).toBeVisible();
+                    await compareScreenshot(story, "open", {
+                        fullscreen: true,
+                    });
+
+                    await story.page
+                        .getByRole("button", { name: "Select all" })
+                        .click();
+                    await expect(story.locators.form.default).toContainText(
+                        "All selected"
+                    );
+                    await compareScreenshot(story, "select-all", {
+                        fullscreen: true,
+                    });
+
+                    await story.page
+                        .getByRole("button", { name: "Clear all" })
+                        .click();
+                    await expect(story.locators.form.default).toHaveText(
+                        "Select"
+                    );
+                    await compareScreenshot(story, "clear-all", {
+                        fullscreen: true,
+                    });
+
+                    await story.page.mouse.click(0, 0);
+                });
+
+                await test.step("Selected state", async () => {
+                    await expect(story.locators.form.selected).toContainText(
+                        "2 selected"
+                    );
+                    await compareScreenshot(story, "selected");
+                });
+
+                await test.step("Error state", async () => {
+                    await compareScreenshot(story, "error", {
+                        locator: story.locators.form.error,
+                    });
+                });
+            });
+
+            test("Readonly disabled", async ({ story }) => {
+                await expect(story.locators.form.readonly).not.toBeDisabled();
+
+                await story.locators.form.readonly.click();
                 await expect(
                     story.locators.component.dropdownContainer
                 ).not.toBeVisible();
-                await compareScreenshot(story, "closed");
 
-                await story.openDropdown(story.locators.multiSelect);
-                await expect(story.getOption("Option A")).toBeVisible();
-                await compareScreenshot(story, "open", {
-                    fullscreen: true,
-                });
+                await story.locators.form.readonly.focus();
+                await story.page.keyboard.press("Enter");
+                await expect(
+                    story.locators.component.dropdownContainer
+                ).not.toBeVisible();
 
-                await story.page
-                    .getByRole("button", { name: "Select all" })
-                    .click();
-                await expect(story.locators.component.selector).toContainText(
-                    "All selected"
-                );
-                await compareScreenshot(story, "select-all", {
-                    fullscreen: true,
-                });
+                await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
+                            - combobox [disabled]
+                        `);
 
-                await story.page
-                    .getByRole("button", { name: "Clear all" })
-                    .click();
-                await expect(story.locators.component.selector).toHaveText(
-                    "Select"
-                );
-                await compareScreenshot(story, "clear-all", {
-                    fullscreen: true,
-                });
+                await story.locators.form.disabled.click();
+                await expect(
+                    story.locators.component.dropdownContainer
+                ).not.toBeVisible();
             });
         });
 
@@ -128,122 +186,6 @@ test.describe("InputMultiSelect", () => {
                 });
             });
         });
-
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("selected");
-            });
-
-            test("Selected", async ({ story }) => {
-                await expect(story.locators.multiSelect).toContainText(
-                    "2 selected"
-                );
-                await compareScreenshot(story, "mount");
-            });
-        });
-
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("disabled");
-            });
-
-            test("Disabled", async ({ story }) => {
-                await expect(story.locators.component.selector).toBeDisabled();
-                await compareScreenshot(story, "mount");
-            });
-        });
-
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("readonly");
-            });
-
-            test("Readonly", async ({ story }) => {
-                await compareScreenshot(story, "mount");
-            });
-        });
-
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("max-selectable");
-            });
-
-            test("Max selection", async ({ story }) => {
-                await story.openDropdown(story.locators.multiSelect);
-                await expect(story.locators.component.dropdownList)
-                    .toMatchAriaSnapshot(`
-                    - listbox:
-                      - option "Option A" [selected]
-                      - option "Option B" [selected]
-                      - option "Option C" [disabled]
-                      - option "Option D"
-                `);
-                await compareScreenshot(story, "max-selection", {
-                    fullscreen: true,
-                });
-            });
-        });
-    });
-
-    test.describe("Keyboard interaction", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("with-search");
-            });
-
-            test("Open navigate and dismiss with keyboard", async ({
-                story,
-            }) => {
-                await story.locators.component.selector.focus();
-                await story.page.keyboard.press("Enter");
-
-                await expect(
-                    story.locators.component.dropdownList
-                ).toBeVisible();
-                await expect(
-                    story.locators.component.searchInput
-                ).toBeFocused();
-
-                await story.page.keyboard.press("ArrowDown");
-                await expect(story.getOption("Option A")).toBeFocused();
-
-                await story.page.keyboard.press("Escape");
-                await expect(
-                    story.locators.component.dropdownContainer
-                ).not.toBeVisible();
-                await expect(story.locators.component.selector).toBeFocused();
-            });
-        });
-    });
-
-    test.describe("Focus interaction", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("default");
-                await story.openDropdown(story.locators.multiSelect);
-            });
-
-            test("Item", async ({ story }) => {
-                await story.getOption("Option B").hover();
-                await compareScreenshot(story, "focus-item", {
-                    fullscreen: true,
-                });
-            });
-        });
-
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("selected");
-                await story.openDropdown(story.locators.multiSelect);
-            });
-
-            test("Selected item", async ({ story }) => {
-                await story.getOption("Option A").hover();
-                await compareScreenshot(story, "focus-selected-item", {
-                    fullscreen: true,
-                });
-            });
-        });
     });
 
     test.describe("Standalone", () => {
@@ -253,26 +195,32 @@ test.describe("InputMultiSelect", () => {
             });
 
             test("Visual", async ({ story }) => {
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.standalone.default,
+                await test.step("Default state", async () => {
+                    await compareScreenshot(story, "mount", {
+                        locator: story.locators.standalone.default,
+                    });
+
+                    await story.openDropdown(story.locators.standalone.default);
+                    await compareScreenshot(story, "open", {
+                        fullscreen: true,
+                    });
+
+                    await story.page.mouse.click(0, 0);
                 });
 
-                await story.openDropdown(story.locators.standalone.default);
-                await compareScreenshot(story, "open", {
-                    fullscreen: true,
+                await test.step("Selected state", async () => {
+                    await expect(
+                        story.locators.standalone.selected
+                    ).toContainText("2 selected");
+                    await compareScreenshot(story, "selected", {
+                        locator: story.locators.standalone.selected,
+                    });
                 });
 
-                await story.page.mouse.click(0, 0);
-
-                await expect(story.locators.standalone.selected).toContainText(
-                    "1 selected"
-                );
-                await compareScreenshot(story, "selected", {
-                    locator: story.locators.standalone.selected,
-                });
-
-                await compareScreenshot(story, "error", {
-                    locator: story.locators.standalone.error,
+                await test.step("Error state", async () => {
+                    await compareScreenshot(story, "error", {
+                        locator: story.locators.standalone.error,
+                    });
                 });
             });
 
@@ -301,6 +249,81 @@ test.describe("InputMultiSelect", () => {
                 await expect(
                     story.locators.component.dropdownContainer
                 ).not.toBeVisible();
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("max-selectable");
+        });
+
+        test("Max selection", async ({ story }) => {
+            await story.openDropdown(story.locators.multiSelect);
+            await expect(story.locators.component.dropdownList)
+                .toMatchAriaSnapshot(`
+                - listbox:
+                  - option "Option A" [selected]
+                  - option "Option B" [selected]
+                  - option "Option C" [disabled]
+                  - option "Option D"
+            `);
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe("", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-search");
+            });
+
+            test("Keyboard interaction", async ({ story }) => {
+                await story.locators.component.selector.focus();
+                await story.page.keyboard.press("Enter");
+
+                await expect(
+                    story.locators.component.dropdownList
+                ).toBeVisible();
+                await expect(
+                    story.locators.component.searchInput
+                ).toBeFocused();
+
+                await story.page.keyboard.press("ArrowDown");
+                await expect(story.getOption("Option A")).toBeFocused();
+
+                await story.page.keyboard.press("Escape");
+                await expect(
+                    story.locators.component.dropdownContainer
+                ).not.toBeVisible();
+                await expect(story.locators.component.selector).toBeFocused();
+            });
+        });
+    });
+
+    test.describe("", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants");
+                await story.openDropdown(story.locators.form.selected);
+            });
+
+            test("Focus", async ({ story }) => {
+                await test.step("Item", async () => {
+                    await story.getOption("Option C").hover();
+                    await compareScreenshot(story, "item", {
+                        fullscreen: true,
+                    });
+                });
+
+                await test.step("Selected item", async () => {
+                    await story.getOption("Option A").hover();
+                    await compareScreenshot(story, "selected-item", {
+                        fullscreen: true,
+                    });
+                });
             });
         });
     });

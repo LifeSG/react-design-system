@@ -1,30 +1,32 @@
 "use client";
 
-import { InputMultiSelect } from "@lifesg/react-design-system/input-multi-select";
 import { OPTIONS } from "./mock";
+import { Form } from "@lifesg/react-design-system";
 
 export default function Story() {
     return (
         <div className="story-column-container">
-            <InputMultiSelect
-                data-testid="standalone-default"
+            <Form.MultiSelect
+                data-testid="form-default"
+                label="Default"
                 options={OPTIONS}
-                placeholder="Default multi select"
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
             />
 
-            <InputMultiSelect
-                data-testid="standalone-readonly"
+            <Form.MultiSelect
+                data-testid="form-readonly"
                 readOnly
+                label="Readonly"
                 options={OPTIONS}
                 placeholder="Readonly multi select"
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
             />
 
-            <InputMultiSelect
-                data-testid="standalone-selected"
+            <Form.MultiSelect
+                data-testid="form-selected"
+                label="Selected"
                 options={OPTIONS}
                 selectedOptions={[OPTIONS[0], OPTIONS[1]]}
                 placeholder="Preselected multi select"
@@ -32,8 +34,9 @@ export default function Story() {
                 listExtractor={(item) => item.label}
             />
 
-            <InputMultiSelect
-                data-testid="standalone-disabled"
+            <Form.MultiSelect
+                data-testid="form-disabled"
+                label="Disabled"
                 options={OPTIONS}
                 disabled
                 placeholder="Disabled multi select"
@@ -41,10 +44,11 @@ export default function Story() {
                 listExtractor={(item) => item.label}
             />
 
-            <InputMultiSelect
-                data-testid="standalone-error"
+            <Form.MultiSelect
+                data-testid="form-error"
+                label="Error"
                 options={OPTIONS}
-                error
+                errorMessage="Selection is required"
                 placeholder="Error multi select"
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
