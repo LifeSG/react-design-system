@@ -3,7 +3,7 @@ import {
     AppStoreLink,
     Label,
     Wrapper,
-} from "./footer-download-app.style";
+} from "./footer-download-app.styles";
 
 const APP_STORE_ICON =
     "https://assets.life.gov.sg/react-design-system/img/download/apple-app-store.png";
