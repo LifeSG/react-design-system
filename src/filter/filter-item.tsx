@@ -7,18 +7,7 @@ import { PopoverAddon } from "../form/form-label-addon";
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import { useId } from "../util";
 import { FilterContext } from "./filter-context";
-import {
-    ChevronIcon,
-    Divider,
-    ExpandableItem,
-    FilterItemBody,
-    FilterItemExpandButton,
-    FilterItemHeader,
-    FilterItemMinimiseButton,
-    FilterItemTitle,
-    FilterItemWrapper,
-    MinimisableContent,
-} from "./filter-item.styles";
+import * as styles from "./filter-item.styles";
 import type { FilterItemProps } from "./types";
 
 export const FilterItem = ({
@@ -118,29 +107,29 @@ export const FilterItem = ({
     };
 
     return (
-        <FilterItemWrapper
+        <styles.FilterItemWrapper
             $isMobile={isMobile}
             $collapsible={collapsible}
             aria-labelledby={titleId}
         >
-            <Divider
+            <styles.Divider
                 $isMobile={isMobile}
                 $showDivider={showDivider}
                 $showMobileDivider={showMobileDivider}
             />
             {(title || collapsible) && (
-                <FilterItemHeader $isMobile={isMobile}>
+                <styles.FilterItemHeader $isMobile={isMobile}>
                     {title && (
-                        <FilterItemTitle
+                        <styles.FilterItemTitle
                             id={titleId}
                             data-testid="filter-item-title"
                             $isMobile={isMobile}
                         >
                             {title} {addon && renderAddon()}
-                        </FilterItemTitle>
+                        </styles.FilterItemTitle>
                     )}
                     {collapsible && (
-                        <FilterItemExpandButton
+                        <styles.FilterItemExpandButton
                             data-testid={"expand-collapse-button"}
                             focusHighlight={false}
                             focusOutline="browser"
@@ -150,12 +139,15 @@ export const FilterItem = ({
                             aria-controls={contentId}
                         >
                             {title && <VisuallyHidden>{title}</VisuallyHidden>}
-                            <ChevronIcon $expanded={expanded} aria-hidden />
-                        </FilterItemExpandButton>
+                            <styles.ChevronIcon
+                                $expanded={expanded}
+                                aria-hidden
+                            />
+                        </styles.FilterItemExpandButton>
                     )}
-                </FilterItemHeader>
+                </styles.FilterItemHeader>
             )}
-            <ExpandableItem
+            <styles.ExpandableItem
                 id={contentId}
                 data-testid={"expandable-container"}
                 data-expanded={expanded}
@@ -163,8 +155,8 @@ export const FilterItem = ({
                 inert={inertValue(!expanded)}
             >
                 <div ref={itemResizeDetector.ref}>
-                    <FilterItemBody {...otherProps}>
-                        <MinimisableContent
+                    <styles.FilterItemBody {...otherProps}>
+                        <styles.MinimisableContent
                             data-testid="minimisable-container"
                             $height={contentHeight}
                             $minimisable={minimisable}
@@ -178,9 +170,9 @@ export const FilterItem = ({
                                         : children}
                                 </div>
                             </div>
-                        </MinimisableContent>
+                        </styles.MinimisableContent>
                         {minimisable && (
-                            <FilterItemMinimiseButton
+                            <styles.FilterItemMinimiseButton
                                 data-id="minimise-button"
                                 styleType="link"
                                 type="button"
@@ -192,12 +184,12 @@ export const FilterItem = ({
                                 <span aria-hidden>
                                     View {contentMinimised ? "more" : "less"}
                                 </span>
-                            </FilterItemMinimiseButton>
+                            </styles.FilterItemMinimiseButton>
                         )}
-                    </FilterItemBody>
+                    </styles.FilterItemBody>
                 </div>
-            </ExpandableItem>
-        </FilterItemWrapper>
+            </styles.ExpandableItem>
+        </styles.FilterItemWrapper>
     );
 };
 
