@@ -65,7 +65,7 @@ export const compareScreenshot = async (
             throw new Error("Could not get bounding box for locator");
         }
 
-        await expect(storyPage.page).toHaveScreenshot(`${name}.png`, {
+        await expect.soft(storyPage.page).toHaveScreenshot(`${name}.png`, {
             // Adding a 10px boundary around the element to capture any shadows or outlines
             clip: {
                 x: Math.max(0, box.x - 10),
@@ -82,7 +82,7 @@ export const compareScreenshot = async (
         ? storyPage.page
         : storyPage.page.locator("body");
 
-    await expect(target).toHaveScreenshot(`${name}.png`, {
+    await expect.soft(target).toHaveScreenshot(`${name}.png`, {
         fullPage: options?.fullscreen ?? false,
         threshold: 0.01, // Strict colour matching
     });
