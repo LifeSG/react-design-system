@@ -1,10 +1,14 @@
-import { test as base, Locator, Page } from "@playwright/test";
+import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "pagination";
 
     public readonly locators: {
+        internal: {
+            pageSizeSelector: Locator;
+            pageSizeDropdown: Locator;
+        };
         paginationFirst: Locator;
         paginationMiddle: Locator;
         paginationLast: Locator;
@@ -17,12 +21,18 @@ class StoryPage extends AbstractStoryPage {
             pageNumber: number,
             totalPages: number
         ) => Locator;
+        firstPageButton: (pagination: Locator) => Locator;
+        lastPageButton: (pagination: Locator) => Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
+            internal: {
+                pageSizeSelector: page.getByRole("combobox"),
+                pageSizeDropdown: page.getByTestId("dropdown-container"),
+            },
             paginationFirst: page.getByTestId("pagination-first"),
             paginationMiddle: page.getByTestId("pagination-middle"),
             paginationLast: page.getByTestId("pagination-last"),
@@ -42,6 +52,10 @@ class StoryPage extends AbstractStoryPage {
                 pagination.getByRole("button", {
                     name: `page ${pageNumber} of ${totalPages}`,
                 }),
+            firstPageButton: (pagination) =>
+                pagination.getByRole("button", { name: "First page" }),
+            lastPageButton: (pagination) =>
+                pagination.getByRole("button", { name: "Last page" }),
         };
     }
 }
@@ -291,6 +305,54 @@ test.describe("Pagination", () => {
                     await button.hover();
                     await compareScreenshot(story, "hover-unselected-page", {
                         locator: button,
+                    });
+                });
+            });
+        });
+    });
+
+    test.describe("showPageSizeChanger=true", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("page-size-changer");
+            });
+
+            test("Desktop", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+
+                await test.step("Click selector to open dropdown", async () => {
+                    await story.locators.internal.pageSizeSelector.click();
+
+                    await compareScreenshot(story, "dropdown-open", {
+                        fullscreen: true,
+                    });
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("page-size-changer", { size: "mobile" });
+            });
+
+            test("Mobile", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("page-size-changer", { mode: "dark" });
+            });
+
+            test("Dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+
+                await test.step("Click selector to open dropdown", async () => {
+                    await story.locators.internal.pageSizeSelector.click();
+
+                    await compareScreenshot(story, "dropdown-open", {
+                        fullscreen: true,
                     });
                 });
             });
