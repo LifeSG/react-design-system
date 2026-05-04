@@ -16,20 +16,22 @@ export const ResourceAddon = (): JSX.Element => {
                             My Legacy is a LifeSG initiative, brought to you by
                             the following government agencies:
                         </Typography.BodyMD>
-                        <styles.Items>
-                            <styles.Img
+                        <div className={styles.items}>
+                            <img
+                                className={styles.img}
                                 data-testid="footer-govtech-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/govtech-logo.png"
                                 alt="GovTech Singapore"
                                 style={{ height: "4.5rem" }}
                             />
-                            <styles.Img
+                            <img
+                                className={styles.img}
                                 data-testid="footer-psd-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/psd-logo.png"
                                 alt="Public Service Division"
                                 style={{ height: "3.5rem" }}
                             />
-                        </styles.Items>
+                        </div>
                     </>
                 );
             default:

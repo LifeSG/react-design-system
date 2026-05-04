@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { ComponentToken, MediaQuery, Spacing } from "../theme";
 
-export const Wrapper = styled.div`
+export const wrapper = css`
     display: flex;
     align-items: flex-start;
     flex-direction: column;
@@ -13,7 +13,7 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Label = styled.div`
+export const label = css`
     margin-bottom: ${Spacing["spacing-16"]};
     color: ${ComponentToken.Footer["colour-text"]};
     font-weight: 600;
@@ -21,14 +21,14 @@ export const Label = styled.div`
     line-height: 1.5rem;
 `;
 
-export const AppButtonsWrapper = styled.div`
+export const appButtonsWrapper = css`
     display: flex;
     flex-wrap: wrap;
     row-gap: ${Spacing["spacing-16"]};
     column-gap: ${Spacing["spacing-16"]};
 `;
 
-export const AppStoreLink = styled.a`
+export const appStoreLink = css`
     img {
         width: auto;
         height: 3.75rem;

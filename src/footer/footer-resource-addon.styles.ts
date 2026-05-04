@@ -1,13 +1,13 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Spacing } from "../theme";
 
-export const Img = styled.img`
+export const img = css`
     max-height: ${Spacing["spacing-72"]};
     max-width: 100%;
 `;
 
-export const Items = styled.div`
+export const items = css`
     display: flex;
     align-items: flex-start;
     gap: ${Spacing["spacing-32"]};
