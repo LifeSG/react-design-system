@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
 import { ComponentToken, MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 export const Wrapper = styled.div`
     display: flex;
@@ -14,9 +13,12 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Label = styled(Typography.BodyMD)`
+export const Label = styled.div`
     margin-bottom: ${Spacing["spacing-16"]};
     color: ${ComponentToken.Footer["colour-text"]};
+    font-weight: 600;
+    font-size: 1rem;
+    line-height: 1.5rem;
 `;
 
 export const AppButtonsWrapper = styled.div`
