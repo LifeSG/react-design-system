@@ -2,7 +2,10 @@
 
 import { Form } from "@lifesg/react-design-system/form";
 
-const LONG_OPTIONS = ["fringilla urna porttitor rhoncus ".repeat(10)];
+const LONG_OPTIONS = [
+    "fringilla urna porttitor rhoncus ".repeat(10),
+    "lorem ipsum dolor sit amet consectetur adipiscing elit ".repeat(2),
+];
 
 export default function Story() {
     return (
