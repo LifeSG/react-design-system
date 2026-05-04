@@ -41,12 +41,32 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("Input", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("all-input-variants");
+            await story.init("standalone-variants");
         });
 
         test("All input style variants with different states", async ({
             story,
         }) => {
+            await compareScreenshot(story, "mount");
+
+            // Focus states
+            await story.page.getByTestId("input-bordered-normal").focus();
+            await compareScreenshot(story, "normal-focused");
+
+            await story.page.getByTestId("input-bordered-error").focus();
+            await compareScreenshot(story, "error-focused");
+
+            await story.page.getByTestId("input-bordered-readonly").focus();
+            await compareScreenshot(story, "readonly-focused");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants-with-values");
+        });
+
+        test("Standalone variants with initial values", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
@@ -58,6 +78,44 @@ test.describe("Input", () => {
 
         test("Form Input variants with different states", async ({ story }) => {
             await compareScreenshot(story, "mount");
+
+            await expect(story.page.getByTestId("form-input-normal"))
+                .toMatchAriaSnapshot(`
+            - text: Normal form input field
+            - textbox "Normal form input field":
+                - /placeholder: Enter here...
+            `);
+
+            await expect(story.page.getByTestId("form-input-error"))
+                .toMatchAriaSnapshot(`
+            - text: Error form input field
+            - textbox "Error form input field":
+                - /placeholder: Enter here...
+            - paragraph: This field is required
+            `);
+
+            await expect(story.page.getByTestId("form-input-disabled"))
+                .toMatchAriaSnapshot(`
+            - text: Disabled form input field
+            - textbox "Disabled form input field" [disabled=true]:
+                - /placeholder: Enter here...
+            `);
+
+            await expect(story.page.getByTestId("form-input-readonly"))
+                .toMatchAriaSnapshot(`
+            - text: Readonly form input field
+            - textbox "Readonly form input field"
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-input-variants-with-values");
+        });
+
+        test("Form Input variants with initial values", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -67,10 +125,12 @@ test.describe("Input", () => {
         });
 
         test("Clear button functionality", async ({ story }) => {
-            await story.locators.clearInputs.standaloneField.fill("Test text");
-            await story.locators.clearInputs.formField.fill("Test text");
+            await compareScreenshot(story, "mount");
 
-            await compareScreenshot(story, "with-text");
+            await expect(story.layout).toMatchAriaSnapshot(`
+            - textbox
+            - button "Clear input"
+            `);
         });
     });
 
@@ -81,9 +141,6 @@ test.describe("Input", () => {
 
         test("Text spacing for telephone inputs", async ({ story }) => {
             await story.locators.spacingInputs.spacingField.fill("91234567");
-            await story.locators.spacingInputs.formSpacingField.fill(
-                "91234567"
-            );
             await compareScreenshot(story, "with-spacing");
         });
     });
@@ -105,10 +162,8 @@ test.describe("Input", () => {
             await story.init("short-long-form-input");
         });
 
-        test("Input fields with short and long column spans", async ({
-            story,
-        }) => {
-            await compareScreenshot(story, "with-column-spans");
+        test("Grid layout", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 });

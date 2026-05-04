@@ -136,7 +136,6 @@ const Component = (
                     onChange={handleChange}
                     type={type}
                     readOnly={readOnly || disabled}
-                    disabled={disabled}
                     className={inputClassName}
                     {...otherProps}
                 />
