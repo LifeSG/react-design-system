@@ -2,30 +2,33 @@
 
 import { Input } from "@lifesg/react-design-system/input";
 
+const value =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.";
+
 export default function Story() {
     return (
         <div className="story-column-container story-background">
             <Input
-                data-testid="input-default"
+                data-testid="input-normal"
                 styleType="no-border"
-                placeholder="Default placeholder"
+                value={value}
             />
             <Input
                 data-testid="input-disabled"
                 styleType="no-border"
-                placeholder="Disabled placeholder"
+                value={value}
                 disabled
             />
             <Input
                 data-testid="input-readonly"
                 styleType="no-border"
-                placeholder="Readonly placeholder"
+                value={value}
                 readOnly
             />
             <Input
-                styleType="no-border"
                 data-testid="input-error"
-                placeholder="Error placeholder"
+                styleType="no-border"
+                value={value}
                 error
             />
         </div>
