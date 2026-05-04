@@ -1,6 +1,6 @@
 import styled from "styled-components";
 
-import { V3_Colour } from "../v3_theme";
+import { Colour } from "../theme";
 
 //=============================================================================
 // STYLING
@@ -17,5 +17,5 @@ export const Divider = styled.li`
     margin-top: 1rem;
     width: 6.5rem;
     height: 1px;
-    background-color: ${V3_Colour.border};
+    background-color: ${Colour["border"]};
 `;

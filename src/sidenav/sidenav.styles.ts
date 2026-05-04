@@ -1,7 +1,6 @@
 import styled from "styled-components";
 
-import { Colour } from "../theme";
-import { V3_Border, V3_Colour, V3_MediaQuery } from "../v3_theme";
+import { Border, Colour, MediaQuery } from "../theme";
 
 //=============================================================================
 // STYLE INTERFACE
@@ -25,7 +24,7 @@ const Container = styled.nav`
     align-items: center;
     overflow-y: auto;
     width: 8.5rem;
-    border: ${V3_Border["width-010"]} ${V3_Border["solid"]} ${V3_Colour.border};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     background-color: ${Colour["bg-primary-subtlest"]};
     padding: 0.5rem 0 1.5rem 0;
 `;
@@ -34,7 +33,7 @@ export const DesktopContainer = styled(Container)`
     height: 100vh;
     left: 0;
     top: 0;
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         display: none;
         visibility: hidden;
     }
@@ -43,7 +42,7 @@ export const DesktopContainer = styled(Container)`
 export const MobileContainer = styled(Container)`
     display: none;
     visibility: hidden;
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         display: none; // NOTE: Since mobile view not supported yet
     }
 `;
