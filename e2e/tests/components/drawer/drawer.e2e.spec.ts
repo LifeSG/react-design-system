@@ -48,18 +48,6 @@ test.describe("Drawer", () => {
             await compareScreenshot(story, "open", { fullscreen: true });
         });
 
-        test("Default (mobile)", async ({ story }) => {
-            await story.page.setViewportSize(viewport.mobile);
-            await story.open();
-            await compareScreenshot(story, "open-mobile", { fullscreen: true });
-        });
-
-        test("Default (dark mode)", async ({ story }) => {
-            await story.page.emulateMedia({ colorScheme: "dark" });
-            await story.open();
-            await compareScreenshot(story, "open-dark", { fullscreen: true });
-        });
-
         test("Close via close button", async ({ story }) => {
             await story.open();
 
@@ -106,6 +94,29 @@ test.describe("Drawer", () => {
                     - paragraph: Drawer content
                     - button "Close drawer"
             `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { size: "mobile" });
+        });
+
+        test("Default (mobile)", async ({ story }) => {
+            await story.open();
+            await compareScreenshot(story, "open-mobile", { fullscreen: true });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { mode: "dark" });
+        });
+
+        test("Default (dark mode)", async ({ story }) => {
+            await story.page.emulateMedia({ colorScheme: "dark" });
+            await story.open();
+            await compareScreenshot(story, "open-dark", { fullscreen: true });
         });
     });
 
