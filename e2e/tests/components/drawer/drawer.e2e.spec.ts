@@ -129,9 +129,8 @@ test.describe("Drawer", () => {
             await story.open();
 
             const content = story.page.locator('[class*="content"]');
-            await content.evaluate((el) => {
-                el.scrollTop = el.scrollHeight;
-            });
+            await content.hover();
+            await story.page.mouse.wheel(0, 2000);
 
             await compareScreenshot(story, "sticky-scrolled", {
                 fullscreen: true,
