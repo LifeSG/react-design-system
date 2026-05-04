@@ -383,7 +383,7 @@ const Component = (
                 <button
                     className={clsx(
                         styles.dropdownButton,
-                        currentView !== "default" && styles.dropdownButtonHidden
+                        currentView !== "default" && styles.hidden
                     )}
                     aria-label={`${fullMonthLabel}, Select month`}
                     type="button"
@@ -521,26 +521,28 @@ const Component = (
 
         return (
             <div className={styles.actionButtonSection}>
-                <Button.Small
+                <Button
                     className={styles.actionButton}
                     ref={cancelButtonRef}
                     data-testid="cancel-button"
                     styleType="light"
                     type="button"
                     onClick={handleCancelButton}
+                    sizeType="small"
                 >
                     Cancel
-                </Button.Small>
-                <Button.Small
+                </Button>
+                <Button
                     className={styles.actionButton}
                     data-testid="done-button"
                     ref={doneButtonRef}
                     type="button"
                     onClick={() => handleDoneButton(disabled)}
                     disabled={disabled}
+                    sizeType="small"
                 >
                     Done
-                </Button.Small>
+                </Button>
             </div>
         );
     };
@@ -572,7 +574,7 @@ const Component = (
                     <div
                         className={clsx(
                             styles.optionsOverlay,
-                            isDefaultView && styles.optionsOverlayHidden
+                            isDefaultView && styles.hidden
                         )}
                     >
                         {renderOptionsOverlay()}

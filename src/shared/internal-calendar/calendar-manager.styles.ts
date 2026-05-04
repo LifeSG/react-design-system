@@ -63,7 +63,7 @@ export const optionsOverlay = css`
     padding-right: var(${calendarDropdownStyles.tokens.horizontalInset});
 `;
 
-export const optionsOverlayHidden = css`
+export const hidden = css`
     display: none;
 `;
 
@@ -96,10 +96,6 @@ export const dropdownButton = css`
     padding: 0.5rem;
     background: transparent;
     cursor: pointer;
-`;
-
-export const dropdownButtonHidden = css`
-    display: none;
 `;
 
 export const dropdownText = css`
