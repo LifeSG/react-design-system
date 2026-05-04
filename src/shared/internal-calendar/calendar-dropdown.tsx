@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
 
 import { useApplyStyle } from "../../theme";
+import { mergeRefs } from "../../util";
 import { useDropdownRender } from "../dropdown-wrapper";
 import * as styles from "./calendar-dropdown.styles";
 import { InternalCalendar } from "./internal-calendar";
@@ -24,17 +25,11 @@ const Component = (
         ...positioningStyles,
     });
 
-    const setRef = (el: HTMLDivElement | null) => {
-        (wrapperRef as React.MutableRefObject<HTMLDivElement | null>).current =
-            el;
-        setFloatingRef(el);
-    };
-
     return (
         <div
             className={styles.calendarWrapper}
             data-testid="calendar-dropdown"
-            ref={setRef}
+            ref={mergeRefs(setFloatingRef, wrapperRef)}
             {...getFloatingProps()}
         >
             <InternalCalendar ref={ref} {...props} />
