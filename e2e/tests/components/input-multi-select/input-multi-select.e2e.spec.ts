@@ -275,6 +275,33 @@ test.describe("InputMultiSelect", () => {
                     locator: story.locators.standalone.error,
                 });
             });
+
+            test("Readonly disabled", async ({ story }) => {
+                await expect(
+                    story.locators.standalone.readonly
+                ).not.toBeDisabled();
+
+                await story.locators.standalone.readonly.click();
+                await expect(
+                    story.locators.component.dropdownContainer
+                ).not.toBeVisible();
+
+                await story.locators.standalone.readonly.focus();
+                await story.page.keyboard.press("Enter");
+                await expect(
+                    story.locators.component.dropdownContainer
+                ).not.toBeVisible();
+
+                await expect(story.locators.standalone.disabled)
+                    .toMatchAriaSnapshot(`
+                            - combobox [disabled]
+                        `);
+
+                await story.locators.standalone.disabled.click();
+                await expect(
+                    story.locators.component.dropdownContainer
+                ).not.toBeVisible();
+            });
         });
     });
 
