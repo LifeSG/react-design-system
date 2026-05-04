@@ -403,4 +403,16 @@ test.describe("RangeSlider", () => {
             await compareScreenshot(story, "mount");
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("labels", { mode: "dark" });
+        });
+
+        test("Slider labels and indicator label (dark mode)", async ({
+            story,
+        }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
 });

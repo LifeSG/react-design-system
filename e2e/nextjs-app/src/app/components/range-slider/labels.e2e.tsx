@@ -3,7 +3,7 @@ import { InputRangeSlider } from "@lifesg/react-design-system/input-range-slider
 
 export default function Story() {
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <InputRangeSlider
                 value={[20, 70]}
                 showSliderLabels
