@@ -32,6 +32,12 @@ export const FullWidthDivider = styled(Divider)`
 export const TopSection = styled(Layout.Content)`
     padding: ${Spacing["spacing-64"]} 0;
 
+    &.topSectionStretched {
+        [data-id="container"] {
+            max-width: none;
+        }
+    }
+
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-32"]} 0;
 
@@ -129,6 +135,12 @@ export const BottomSection = styled(Layout.Content)`
 
     [data-id="container"] {
         column-gap: ${Spacing["spacing-32"]};
+    }
+
+    &.bottomSectionStretched {
+        [data-id="container"] {
+            max-width: none;
+        }
     }
 
     ${MediaQuery.MaxWidth.lg} {

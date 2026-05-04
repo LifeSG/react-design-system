@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type React from "react";
 import { useContext } from "react";
 import { ThemeContext } from "styled-components";
@@ -35,6 +36,7 @@ export const Footer = <T,>({
     onFooterLinkClick,
     layout = "default",
     hideLogo,
+    className,
     ...otherProps
 }: FooterProps<T>) => {
     // =============================================================================
@@ -159,7 +161,11 @@ export const Footer = <T,>({
         if (component) {
             return (
                 <>
-                    <TopSection stretch={isStretch}>{component}</TopSection>
+                    <TopSection
+                        className={clsx(isStretch && "topSectionStretched")}
+                    >
+                        {component}
+                    </TopSection>
                     <FullWidthDivider />
                 </>
             );
@@ -168,9 +174,11 @@ export const Footer = <T,>({
         return null;
     };
     return (
-        <BaseFooter {...otherProps}>
+        <BaseFooter {...otherProps} className={className}>
             {renderTopSection()}
-            <BottomSection stretch={isStretch}>
+            <BottomSection
+                className={clsx(isStretch && "bottomSectionStretched")}
+            >
                 <BottomSectionContent key="disclaimer">
                     {renderDisclaimerLinks()}
                 </BottomSectionContent>
