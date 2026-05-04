@@ -2,7 +2,7 @@ import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
-    protected readonly component = "multi-select";
+    protected readonly component = "input-multi-select";
 
     public readonly locators: {
         component: {
@@ -13,6 +13,13 @@ class StoryPage extends AbstractStoryPage {
             listItems: Locator;
             noResults: Locator;
             customCtaButton: Locator;
+        };
+        standalone: {
+            default: Locator;
+            selected: Locator;
+            readonly: Locator;
+            disabled: Locator;
+            error: Locator;
         };
         multiSelect: Locator;
     };
@@ -30,6 +37,13 @@ class StoryPage extends AbstractStoryPage {
                 noResults: page.getByTestId("list-no-results"),
                 customCtaButton: page.getByTestId("custom-cta-button"),
             },
+            standalone: {
+                default: page.getByTestId("standalone-default"),
+                selected: page.getByTestId("standalone-selected"),
+                readonly: page.getByTestId("standalone-readonly"),
+                disabled: page.getByTestId("standalone-disabled"),
+                error: page.getByTestId("standalone-error"),
+            },
             multiSelect: page.getByTestId("multi-select"),
         };
     }
@@ -38,8 +52,8 @@ class StoryPage extends AbstractStoryPage {
         return this.page.getByRole("option", { name, exact: true });
     }
 
-    public async openDropdown() {
-        await this.locators.multiSelect.click();
+    public async openDropdown(multiSelect: Locator) {
+        await multiSelect.click();
         await expect(this.locators.component.dropdownContainer).toBeVisible();
         await expect(this.locators.component.dropdownList).toBeVisible();
     }
@@ -53,7 +67,7 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("InputMultiSelect", () => {
-    test.describe("Visual", () => {
+    test.describe("Form", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default");
@@ -65,7 +79,7 @@ test.describe("InputMultiSelect", () => {
                 ).not.toBeVisible();
                 await compareScreenshot(story, "closed");
 
-                await story.openDropdown();
+                await story.openDropdown(story.locators.multiSelect);
                 await expect(story.getOption("Option A")).toBeVisible();
                 await compareScreenshot(story, "open", {
                     fullscreen: true,
@@ -99,7 +113,7 @@ test.describe("InputMultiSelect", () => {
             });
 
             test("Searchable and no search result", async ({ story }) => {
-                await story.openDropdown();
+                await story.openDropdown(story.locators.multiSelect);
                 await expect(
                     story.locators.component.searchInput
                 ).toBeFocused();
@@ -155,7 +169,7 @@ test.describe("InputMultiSelect", () => {
             });
 
             test("Max selection", async ({ story }) => {
-                await story.openDropdown();
+                await story.openDropdown(story.locators.multiSelect);
                 await expect(story.locators.component.dropdownList)
                     .toMatchAriaSnapshot(`
                     - listbox:
@@ -206,7 +220,7 @@ test.describe("InputMultiSelect", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default");
-                await story.openDropdown();
+                await story.openDropdown(story.locators.multiSelect);
             });
 
             test("Item", async ({ story }) => {
@@ -220,7 +234,7 @@ test.describe("InputMultiSelect", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("selected");
-                await story.openDropdown();
+                await story.openDropdown(story.locators.multiSelect);
             });
 
             test("Selected item", async ({ story }) => {
@@ -232,14 +246,34 @@ test.describe("InputMultiSelect", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe("Standalone", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("standalone");
             });
 
-            test("Standalone", async ({ story }) => {
-                await compareScreenshot(story, "mount");
+            test("Visual", async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.standalone.default,
+                });
+
+                await story.openDropdown(story.locators.standalone.default);
+                await compareScreenshot(story, "open", {
+                    fullscreen: true,
+                });
+
+                await story.page.mouse.click(0, 0);
+
+                await expect(story.locators.standalone.selected).toContainText(
+                    "1 selected"
+                );
+                await compareScreenshot(story, "selected", {
+                    locator: story.locators.standalone.selected,
+                });
+
+                await compareScreenshot(story, "error", {
+                    locator: story.locators.standalone.error,
+                });
             });
         });
     });
@@ -251,7 +285,7 @@ test.describe("InputMultiSelect", () => {
             });
 
             test("Virtualization", async ({ story }) => {
-                await story.openDropdown();
+                await story.openDropdown(story.locators.multiSelect);
                 await story.locators.component.searchInput.fill("Option 4999");
                 await expect(story.getOption("Option 4999")).toBeVisible();
 
@@ -281,7 +315,7 @@ test.describe("InputMultiSelect", () => {
             });
 
             test("Custom CTA", async ({ story }) => {
-                await story.openDropdown();
+                await story.openDropdown(story.locators.multiSelect);
                 await expect(
                     story.locators.component.customCtaButton
                 ).toBeVisible();

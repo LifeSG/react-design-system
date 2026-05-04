@@ -15,10 +15,10 @@ export default function Story() {
             />
 
             <InputMultiSelect
-                data-testid="standalone-search"
+                data-testid="standalone-readonly"
+                readOnly
                 options={OPTIONS}
-                placeholder="Searchable multi select"
-                enableSearch
+                placeholder="Readonly multi select"
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
             />
@@ -28,7 +28,24 @@ export default function Story() {
                 options={OPTIONS}
                 selectedOptions={[OPTIONS[1]]}
                 placeholder="Preselected multi select"
-                enableSearch
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+            />
+
+            <InputMultiSelect
+                data-testid="standalone-disabled"
+                options={OPTIONS}
+                disabled
+                placeholder="Disabled multi select"
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+            />
+
+            <InputMultiSelect
+                data-testid="standalone-error"
+                options={OPTIONS}
+                error
+                placeholder="Error multi select"
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
             />
