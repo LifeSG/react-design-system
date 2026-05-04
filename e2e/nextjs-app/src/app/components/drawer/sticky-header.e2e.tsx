@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@lifesg/react-design-system/button";
 import { Drawer } from "@lifesg/react-design-system/drawer";
 import { Typography } from "@lifesg/react-design-system/typography";
+import styles from "./drawer.module.css";
 
 export default function Story() {
     const [show, setShow] = useState(false);
@@ -17,11 +18,11 @@ export default function Story() {
                 onClose={() => setShow(false)}
                 onOverlayClick={() => setShow(false)}
             >
-                <div style={{ padding: "1rem" }}>
+                <div data-testid="drawer-content" className={styles.content}>
                     {Array.from({ length: 20 }).map((_, i) => (
                         <Typography.BodyBL
                             key={i}
-                            style={{ marginBottom: "1rem" }}
+                            className={styles["item-margin-bottom"]}
                         >
                             Paragraph {i + 1}: Lorem ipsum dolor sit amet,
                             consectetur adipiscing elit, sed do eiusmod tempor

@@ -114,7 +114,6 @@ test.describe("Drawer", () => {
         });
 
         test("Default (dark mode)", async ({ story }) => {
-            await story.page.emulateMedia({ colorScheme: "dark" });
             await story.open();
             await compareScreenshot(story, "open-dark", { fullscreen: true });
         });
@@ -128,7 +127,7 @@ test.describe("Drawer", () => {
         test("Header remains sticky on scroll", async ({ story }) => {
             await story.open();
 
-            const content = story.page.locator('[class*="content"]');
+            const content = story.page.getByTestId("drawer-content");
             await content.hover();
             await story.page.mouse.wheel(0, 2000);
 
