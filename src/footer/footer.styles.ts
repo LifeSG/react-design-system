@@ -1,19 +1,16 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Divider } from "../divider";
-import { Layout } from "../layout";
 import { ComponentToken, MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 // =============================================================================
 // GENERIC
 // =============================================================================
 
-export const BaseFooter = styled.footer`
+export const baseFooter = css`
     background: ${ComponentToken.Footer["colour-bg"]};
 `;
 
-export const StyledFooterLink = styled(Typography.LinkMD)`
+export const styledFooterLink = css`
     color: ${ComponentToken.Footer["link-colour-text"]};
 
     &:hover {
@@ -25,18 +22,12 @@ export const StyledFooterLink = styled(Typography.LinkMD)`
 // TOP SECTION
 // =============================================================================
 
-export const FullWidthDivider = styled(Divider)`
+export const fullWidthDivider = css`
     width: 100%;
 `;
 
-export const TopSection = styled(Layout.Content)`
+export const topSection = css`
     padding: ${Spacing["spacing-64"]} 0;
-
-    &.topSectionStretched {
-        [data-id="container"] {
-            max-width: none;
-        }
-    }
 
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-32"]} 0;
@@ -48,7 +39,13 @@ export const TopSection = styled(Layout.Content)`
     }
 `;
 
-export const LogoSection = styled.div`
+export const sectionStretched = css`
+    [data-id="container"] {
+        max-width: none;
+    }
+`;
+
+export const logoSection = css`
     display: flex;
     width: fit-content;
     margin-right: ${Spacing["spacing-64"]};
@@ -65,7 +62,7 @@ export const LogoSection = styled.div`
     }
 `;
 
-export const LinkSectionWrapper = styled.div`
+export const linkSectionWrapper = css`
     display: flex;
     gap: ${Spacing["spacing-32"]};
     flex: 1 1 auto;
@@ -76,7 +73,7 @@ export const LinkSectionWrapper = styled.div`
     }
 `;
 
-export const LinkSection = styled.ul`
+export const linkSection = css`
     flex: 1 1 50%;
     list-style-type: none;
 
@@ -116,7 +113,7 @@ export const LinkSection = styled.ul`
     }
 `;
 
-export const AddonSection = styled.div`
+export const addonSection = css`
     flex: 0 1 33%;
     margin-left: auto;
 
@@ -130,17 +127,11 @@ export const AddonSection = styled.div`
 // BOTTOM SECTION
 // =============================================================================
 
-export const BottomSection = styled(Layout.Content)`
+export const bottomSection = css`
     padding: ${Spacing["spacing-20"]} 0;
 
     [data-id="container"] {
         column-gap: ${Spacing["spacing-32"]};
-    }
-
-    &.bottomSectionStretched {
-        [data-id="container"] {
-            max-width: none;
-        }
     }
 
     ${MediaQuery.MaxWidth.lg} {
@@ -153,7 +144,7 @@ export const BottomSection = styled(Layout.Content)`
     }
 `;
 
-export const BottomSectionContent = styled.div`
+export const bottomSectionContent = css`
     flex: 1 1 50%;
     display: flex;
 
@@ -165,7 +156,7 @@ export const BottomSectionContent = styled.div`
     }
 `;
 
-export const CopyrightSection = styled(BottomSectionContent)`
+export const copyrightSection = css`
     justify-content: flex-end;
 
     ${MediaQuery.MaxWidth.lg} {
@@ -174,11 +165,11 @@ export const CopyrightSection = styled(BottomSectionContent)`
     }
 `;
 
-export const CopyrightText = styled(Typography.BodyXS)`
+export const copyrightText = css`
     color: ${ComponentToken.Footer["colour-text"]};
 `;
 
-export const DisclaimerTextLink = styled(Typography.LinkXS)`
+export const disclaimerTextLink = css`
     color: ${ComponentToken.Footer["disclaimer-link-colour-text"]};
     &:not(:last-child) {
         margin-right: ${Spacing["spacing-16"]};

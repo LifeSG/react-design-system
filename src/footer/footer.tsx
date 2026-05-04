@@ -3,21 +3,10 @@ import type React from "react";
 import { useContext } from "react";
 import { ThemeContext } from "styled-components";
 
-import {
-    AddonSection,
-    BaseFooter,
-    BottomSection,
-    BottomSectionContent,
-    CopyrightSection,
-    CopyrightText,
-    DisclaimerTextLink,
-    FullWidthDivider,
-    LinkSection,
-    LinkSectionWrapper,
-    LogoSection,
-    StyledFooterLink,
-    TopSection,
-} from "./footer.styles";
+import { Divider } from "../divider";
+import { Layout } from "../layout";
+import { Typography } from "../typography";
+import * as styles from "./footer.styles";
 import { DownloadApp } from "./footer-download-app";
 import type { InternalDisclaimerLinks } from "./footer-helper";
 import { FooterHelper } from "./footer-helper";
@@ -78,9 +67,10 @@ export const Footer = <T,>({
         return (Object.keys(links) as (keyof InternalDisclaimerLinks)[]).map(
             (key) => {
                 return (
-                    <DisclaimerTextLink
+                    <Typography.LinkXS
                         key={key}
                         underlineStyle="none"
+                        className={styles.disclaimerTextLink}
                         {...links[key]}
                     />
                 );
@@ -94,8 +84,9 @@ export const Footer = <T,>({
 
             return (
                 <li key={index}>
-                    <StyledFooterLink
+                    <Typography.LinkMD
                         underlineStyle="none"
+                        className={styles.styledFooterLink}
                         {...otherProps}
                         onClick={(event) => handleLinkClick(event, link)}
                     />
@@ -117,42 +108,47 @@ export const Footer = <T,>({
             component = (
                 <>
                     {(logoSrc || src) && !hideLogo && (
-                        <LogoSection data-testid="logo-section">
+                        <div
+                            data-testid="logo-section"
+                            className={styles.logoSection}
+                        >
                             <img
                                 src={logoSrc || src}
                                 data-testid="logo"
                                 {...otherLogoAttributes}
                             />
-                        </LogoSection>
+                        </div>
                     )}
-                    <LinkSectionWrapper>
+                    <div className={styles.linkSectionWrapper}>
                         {links?.[0] && (
-                            <LinkSection
+                            <ul
                                 key="link-col-1"
                                 data-testid="link-col-1"
+                                className={styles.linkSection}
                             >
                                 {renderFooterLinks(links[0])}
-                            </LinkSection>
+                            </ul>
                         )}
                         {links?.[1] && (
-                            <LinkSection
+                            <ul
                                 key="link-col-2"
                                 data-testid="link-col-2"
+                                className={styles.linkSection}
                             >
                                 {renderFooterLinks(links[1])}
-                            </LinkSection>
+                            </ul>
                         )}
-                    </LinkSectionWrapper>
+                    </div>
                     {showDownloadAddon && (
-                        <AddonSection>
+                        <div className={styles.addonSection}>
                             <DownloadApp />
-                        </AddonSection>
+                        </div>
                     )}
                     {/* when showDownloadAddon and showResourceAddon are enabled, showDownloadAddon should take priority to being rendered */}
                     {!showDownloadAddon && showResourceAddon && (
-                        <AddonSection>
+                        <div className={styles.addonSection}>
                             <ResourceAddon />
-                        </AddonSection>
+                        </div>
                     )}
                 </>
             );
@@ -161,12 +157,15 @@ export const Footer = <T,>({
         if (component) {
             return (
                 <>
-                    <TopSection
-                        className={clsx(isStretch && "topSectionStretched")}
+                    <Layout.Content
+                        className={clsx(
+                            styles.topSection,
+                            isStretch && styles.sectionStretched
+                        )}
                     >
                         {component}
-                    </TopSection>
-                    <FullWidthDivider />
+                    </Layout.Content>
+                    <Divider className={styles.fullWidthDivider} />
                 </>
             );
         }
@@ -174,16 +173,28 @@ export const Footer = <T,>({
         return null;
     };
     return (
-        <BaseFooter {...otherProps} className={className}>
+        <footer {...otherProps} className={clsx(styles.baseFooter, className)}>
             {renderTopSection()}
-            <BottomSection
-                className={clsx(isStretch && "bottomSectionStretched")}
+            <Layout.Content
+                className={clsx(
+                    styles.bottomSection,
+                    isStretch && styles.sectionStretched
+                )}
             >
-                <BottomSectionContent key="disclaimer">
+                <div key="disclaimer" className={styles.bottomSectionContent}>
                     {renderDisclaimerLinks()}
-                </BottomSectionContent>
-                <CopyrightSection key="copyright">
-                    <CopyrightText data-testid={"copyright-text"}>
+                </div>
+                <div
+                    key="copyright"
+                    className={clsx(
+                        styles.bottomSectionContent,
+                        styles.copyrightSection
+                    )}
+                >
+                    <Typography.BodyXS
+                        data-testid={"copyright-text"}
+                        className={styles.copyrightText}
+                    >
                         {copyrightInfo || (
                             <>
                                 &copy;{" "}
@@ -193,9 +204,9 @@ export const Footer = <T,>({
                                 )}
                             </>
                         )}
-                    </CopyrightText>
-                </CopyrightSection>
-            </BottomSection>
-        </BaseFooter>
+                    </Typography.BodyXS>
+                </div>
+            </Layout.Content>
+        </footer>
     );
 };
