@@ -1,8 +1,10 @@
-import { useContext, useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import { useEffect } from "react";
 
-import { V3_Breakpoint } from "../v3_theme";
+import {
+    Breakpoint,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
 import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
 import { FilterItem } from "./filter-item";
 import { FilterItemPage } from "./filter-item-page";
@@ -23,9 +25,8 @@ export const Filter = ({
     "data-testid": testId,
     ...props
 }: FilterProps) => {
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["lg-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const mobileBreakpoint = useDesignToken(Breakpoint["lg-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
 
     useEffect(() => {
         if (!isMobile) {

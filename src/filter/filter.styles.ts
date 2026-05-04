@@ -2,7 +2,7 @@ import styled from "styled-components";
 
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { V3_Border, V3_Colour, V3_Spacing } from "../v3_theme";
+import { Border, Colour, Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -27,9 +27,9 @@ export const FilterBody = styled.div`
 // =============================================================================
 
 export const FilterHeaderButton = styled(ClickableIcon)`
-    padding: ${V3_Spacing["spacing-24"]} ${V3_Spacing["spacing-20"]};
+    padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     margin-right: auto;
-    color: ${V3_Colour["icon"]};
+    color: ${Colour["icon"]};
 
     svg {
         height: 1.5rem;
@@ -37,7 +37,7 @@ export const FilterHeaderButton = styled(ClickableIcon)`
     }
 
     &:hover {
-        color: ${V3_Colour["icon-hover"]};
+        color: ${Colour["icon-hover"]};
     }
 `;
 
@@ -46,10 +46,9 @@ export const FilterHeaderButton = styled(ClickableIcon)`
 // =============================================================================
 
 export const FilterFooter = styled.div<FilterFooterProps>`
-    padding: ${V3_Spacing["spacing-24"]} ${V3_Spacing["spacing-20"]};
-    background-color: ${V3_Colour["bg"]};
-    border-top: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
+    padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
+    background-color: ${Colour["bg"]};
+    border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     ${(props) =>
         props.$insetBottom && `padding-bottom: ${props.$insetBottom}px;`}
 `;
