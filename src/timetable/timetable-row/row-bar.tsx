@@ -17,6 +17,7 @@ interface RowBarProps extends TimeTableRowData {
 
 export const RowBar = ({
     id,
+    name,
     timetableMinTime,
     timetableMaxTime,
     rowMinTime,
@@ -42,6 +43,23 @@ export const RowBar = ({
         time2: dayjs.Dayjs
     ): boolean => {
         return time1.get("hour") == time2.get("hour");
+    };
+
+    const getAriaColIndex = (time: string) => {
+        return (
+            (TimeHelper.timeToMinutes(time) -
+                TimeHelper.timeToMinutes(timetableMinTime)) /
+                ROW_INTERVAL +
+            2
+        );
+    };
+
+    const getAriaColSpan = (startTime: string, endTime: string) => {
+        return (
+            (TimeHelper.timeToMinutes(endTime) -
+                TimeHelper.timeToMinutes(startTime)) /
+            ROW_INTERVAL
+        );
     };
 
     const rowCellArray = useMemo(() => {
@@ -98,7 +116,12 @@ export const RowBar = ({
                 ROW_INTERVAL,
                 true
             );
-            rowCellArray.push({ ...cell, roundedStartTime, roundedEndTime });
+            rowCellArray.push({
+                ...cell,
+                roundedStartTime,
+                roundedEndTime,
+                isFocusable: true,
+            });
 
             const nextSlotStartTime =
                 rowCells[index + 1]?.startTime || roundedMaxTime; // Get next cell start time, if next cell don't exist, use current row max time
@@ -179,12 +202,20 @@ export const RowBar = ({
     ]);
 
     return (
-        <RowCellContainer data-testid="timetable-row">
+        <RowCellContainer data-testid="timetable-row" role="presentation">
             {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell
                         key={`${index}-row-cell-key`}
                         {...cell}
+                        ariaColIndex={getAriaColIndex(
+                            cell.roundedStartTime || cell.startTime
+                        )}
+                        ariaColSpan={getAriaColSpan(
+                            cell.roundedStartTime || cell.startTime,
+                            cell.roundedEndTime || cell.endTime
+                        )}
+                        rowName={name}
                         intervalWidth={intervalWidth}
                         rowBarColor={rowBarColor}
                         containerRef={containerRef}

@@ -12,11 +12,7 @@ import {
 
 interface ColumnHeaderRowProps {
     $numOfColumns: number;
-    $isScrolled: boolean;
-}
-
-interface RowHeaderColumnProps {
-    $numOfRows: number;
+    $intervalWidth: number;
     $isScrolled: boolean;
 }
 
@@ -46,10 +42,6 @@ interface LoadingCellWrapperProps {
     $width: number;
 }
 
-interface ContentContainerPopoverProps {
-    $numOfRows: number;
-}
-
 interface LoaderProps {
     $isEmptyContent: boolean;
 }
@@ -65,10 +57,11 @@ export const EmptyTableContainer = styled.div`
 
 export const TimeTableContainer = styled.div<TimeTableContainerProps>`
     display: grid;
+    align-content: start;
     overflow: scroll;
     position: relative;
-    grid-template-columns: ${ROW_HEADER_WIDTH}px fit-content(100%);
     padding-bottom: ${(props) => (props.$allRecordsLoaded ? "0" : "128px")};
+    isolation: isolate;
     ${(props) => {
         if (props.$loading) {
             return css`
@@ -87,6 +80,7 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
     left: 0;
     background-color: ${Colour["bg"]};
     width: ${ROW_HEADER_WIDTH}px;
+    height: ${ROW_HEIGHT}px;
     z-index: 2;
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     ${(props) => {
@@ -111,26 +105,27 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
     }};
 `;
 
-export const RowHeaderColumn = styled.div<RowHeaderColumnProps>`
+export const TimeTableHeaderRow = styled.div`
     display: grid;
     position: sticky;
-    grid-column: 1 / 2;
-    left: 0;
-    z-index: 1;
+    top: 0;
+    z-index: 4;
     background-color: ${Colour["bg"]};
-    grid-template-rows: repeat(${(props) => props.$numOfRows}, ${ROW_HEIGHT}px);
+    grid-template-columns: ${ROW_HEADER_WIDTH}px max-content;
+    width: max-content;
+    min-width: 100%;
+    height: ${ROW_HEIGHT}px;
 `;
 
 export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
     display: grid;
-    position: sticky;
-    grid-column: 2 / 3;
-    grid-row: 1 / 2;
-    top: 0;
-    z-index: 1;
     background-color: ${Colour["bg"]};
-    grid-template-columns: repeat(${(props) => props.$numOfColumns}, 1fr);
-    width: 100%;
+    height: ${ROW_HEIGHT}px;
+    grid-template-columns: repeat(
+        ${(props) => props.$numOfColumns},
+        ${(props) =>
+            Math.max(props.$intervalWidth * 4, MIN_HOURLY_INTERVAL_WIDTH)}px
+    );
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
@@ -144,17 +139,26 @@ export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
 
 export const ColumnHeader = styled.div`
     min-width: ${MIN_HOURLY_INTERVAL_WIDTH}px;
-    align-content: end;
-    margin-bottom: ${Spacing["spacing-4"]};
+    display: flex;
+    align-items: flex-end;
+    padding-bottom: ${Spacing["spacing-4"]};
 `;
 
 export const ColumnHeaderTitle = styled(Typography.BodySM)`
     color: ${Colour["text-subtler"]};
 `;
 
-export const ContentContainer = styled.div<ContentContainerPopoverProps>`
+export const TimeTableBody = styled.div`
+    width: max-content;
+    min-width: 100%;
+`;
+
+export const TimeTableRow = styled.div`
     display: grid;
-    grid-template-rows: repeat(${(props) => props.$numOfRows}, ${ROW_HEIGHT}px);
+    grid-template-columns: ${ROW_HEADER_WIDTH}px max-content;
+    width: max-content;
+    min-width: 100%;
+    height: ${ROW_HEIGHT}px;
 `;
 
 export const RowHeader = styled.div<RowHeaderProps>`
@@ -165,6 +169,7 @@ export const RowHeader = styled.div<RowHeaderProps>`
     position: sticky;
     left: 0;
     background-color: ${Colour["bg"]};
+    z-index: 3;
     width: ${ROW_HEADER_WIDTH}px;
     height: ${ROW_HEIGHT}px;
     text-align: right;

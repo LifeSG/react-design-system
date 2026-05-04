@@ -537,7 +537,7 @@ export const CustomCellColors: StoryObj<Component> = {
             <StyledTimeTable
                 date={date}
                 minTime={"08:00"}
-                maxTime={"16:00"}
+                maxTime={"18:00"}
                 rowData={customColorData}
                 loading={false}
                 onNextDayClick={onNextDayClick}
