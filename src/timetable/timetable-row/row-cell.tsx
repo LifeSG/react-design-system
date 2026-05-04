@@ -1,6 +1,6 @@
 import dayjs from "dayjs";
 import React, { RefObject } from "react";
-import { concatIds } from "../../shared/accessibility";
+import { VisuallyHidden, concatIds } from "../../shared/accessibility";
 import { DateHelper } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
@@ -85,51 +85,55 @@ const Component = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    return (
+    const renderCellContent = () => (
         <WithOptionalPopover customPopover={customPopover}>
-            <BlockContainer
-                key={`block-container-key`}
-                data-testid={`block-container`}
-                $isOnTheHour={isOnTheHour}
-                role="gridcell"
-                aria-colindex={ariaColIndex}
-                aria-colspan={ariaColSpan}
-                aria-label={rowAriaLabel}
-                tabIndex={isFocusable ? 0 : undefined}
-            >
-                <Wrapper>
-                    <Block
-                        $width={adjustedCellWidth}
-                        $status={status}
-                        $mainColor={rowBarColor.mainColor}
-                        $altColor={rowBarColor.alternateColor}
-                        $isClickable={isClickable}
-                        $customMainColor={cellStyleAttributes?.backgroundColor}
-                        $customAltColor={
-                            cellStyleAttributes?.altBackgroundColor
-                        }
-                        $customHoverColor={
-                            cellStyleAttributes?.hoverBackgroundColor
-                        }
-                        $customAltHoverColor={
-                            cellStyleAttributes?.altHoverBackgroundColor
-                        }
-                        $styleType={cellStyleAttributes?.styleType}
-                        onClick={handleCellClick}
-                    >
-                        {title && (
-                            <BlockTitle weight={"semibold"}>{title}</BlockTitle>
-                        )}
-                        {subtitle && (
-                            <BlockDescription weight={"bold"}>
-                                {subtitle}
-                            </BlockDescription>
-                        )}
-                    </Block>
-                    <Gap />
-                </Wrapper>
-            </BlockContainer>
+            <Wrapper>
+                <Block
+                    $width={adjustedCellWidth}
+                    $status={status}
+                    $mainColor={rowBarColor.mainColor}
+                    $altColor={rowBarColor.alternateColor}
+                    $isClickable={isClickable}
+                    $customMainColor={cellStyleAttributes?.backgroundColor}
+                    $customAltColor={cellStyleAttributes?.altBackgroundColor}
+                    $customHoverColor={
+                        cellStyleAttributes?.hoverBackgroundColor
+                    }
+                    $customAltHoverColor={
+                        cellStyleAttributes?.altHoverBackgroundColor
+                    }
+                    $styleType={cellStyleAttributes?.styleType}
+                    tabIndex={isFocusable ? 0 : undefined}
+                    onClick={handleCellClick}
+                >
+                    <VisuallyHidden>{rowAriaLabel}</VisuallyHidden>
+                    {title && (
+                        <BlockTitle weight={"semibold"} aria-hidden>
+                            {title}
+                        </BlockTitle>
+                    )}
+                    {subtitle && (
+                        <BlockDescription weight={"bold"} aria-hidden>
+                            {subtitle}
+                        </BlockDescription>
+                    )}
+                </Block>
+                <Gap />
+            </Wrapper>
         </WithOptionalPopover>
+    );
+
+    return (
+        <BlockContainer
+            key={`block-container-key`}
+            data-testid={`block-container`}
+            $isOnTheHour={isOnTheHour}
+            role="gridcell"
+            aria-colindex={ariaColIndex}
+            aria-colspan={ariaColSpan}
+        >
+            {renderCellContent()}
+        </BlockContainer>
     );
 };
 

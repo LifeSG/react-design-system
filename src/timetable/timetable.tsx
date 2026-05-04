@@ -307,21 +307,17 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
 
     const renderColumnHeaders = () => {
         // Don't render first column if there are no rows
-        return hourlyIntervals.map((columnHeader: string, index: number) => {
-            return (
-                <ColumnHeader
-                    key={`${columnHeader}-column-key`}
-                    data-testid={`${columnHeader}-column`}
-                    role="columnheader"
-                    aria-colindex={index * 4 + 2}
-                    aria-colspan={4}
-                >
-                    <ColumnHeaderTitle weight={"semibold"}>
-                        {columnHeader}
-                    </ColumnHeaderTitle>
-                </ColumnHeader>
-            );
-        });
+
+        return hourlyIntervals.map((columnHeader: string) => (
+            <ColumnHeader
+                key={`${columnHeader}-column-key`}
+                data-testid={`${columnHeader}-column`}
+            >
+                <ColumnHeaderTitle weight={"semibold"}>
+                    {columnHeader}
+                </ColumnHeaderTitle>
+            </ColumnHeader>
+        ));
     };
 
     const renderRows = () => {

@@ -159,21 +159,26 @@ describe("TimeTable", () => {
         const cells = screen.getAllByTestId("block-container");
         const blockedCell = cells[0];
         const filledCell = cells[1];
+        const blockedPopoverTrigger = blockedCell.firstElementChild!;
+        const filledPopoverTrigger = filledCell.firstElementChild!;
+
+        expect(blockedCell).toHaveAttribute("role", "gridcell");
+        expect(filledCell).toHaveAttribute("role", "gridcell");
 
         fireEvent.mouseEnter(firstRowHeader.parentElement!);
         expect(screen.queryByText("row header popover")).toBeVisible();
         expect(screen.queryByTestId("popover")).toBeInTheDocument();
         fireEvent.mouseLeave(firstRowHeader.parentElement!);
 
-        fireEvent.mouseEnter(blockedCell.parentElement!);
+        fireEvent.mouseEnter(blockedPopoverTrigger);
         expect(screen.queryByText("out of range cell popover")).toBeVisible();
         expect(screen.queryByTestId("popover")).toBeInTheDocument();
-        fireEvent.mouseLeave(blockedCell.parentElement!);
+        fireEvent.mouseLeave(blockedPopoverTrigger);
 
-        fireEvent.mouseEnter(filledCell.parentElement!);
+        fireEvent.mouseEnter(filledPopoverTrigger);
         expect(screen.queryByText("row cell popover")).toBeVisible();
         expect(screen.queryByTestId("popover")).toBeInTheDocument();
-        fireEvent.mouseLeave(filledCell.parentElement!);
+        fireEvent.mouseLeave(filledPopoverTrigger);
     });
 
     it("should trigger onRowNameClick if row header name are clicked", () => {
@@ -294,11 +299,15 @@ describe("TimeTable", () => {
             />
         );
 
-        const tabbableCells = screen
-            .getAllByTestId("block-container")
-            .filter((cell) => cell.getAttribute("tabindex") === "0");
+        const rowCells = screen.getAllByTestId("block-container");
+        const tabbableCells = rowCells
+            .map((cell) => cell.querySelector("[tabindex='0']"))
+            .filter((cell): cell is HTMLElement => !!cell);
 
         expect(tabbableCells).toHaveLength(2);
+        expect(
+            rowCells.some((cell) => cell.getAttribute("tabindex") === "0")
+        ).toBe(false);
 
         for (const cell of tabbableCells) {
             cell.focus();
