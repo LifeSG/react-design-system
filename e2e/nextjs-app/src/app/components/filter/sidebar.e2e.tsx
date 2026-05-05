@@ -1,12 +1,9 @@
 "use client";
 import { Filter } from "@lifesg/react-design-system/filter";
 import { Typography } from "@lifesg/react-design-system";
+import { getOptions } from "./options";
 
-const OPTIONS = [
-    { value: "option-1", label: "Option 1" },
-    { value: "option-2", label: "Option 2" },
-    { value: "option-3", label: "Option 3" },
-];
+const OPTIONS = getOptions(3);
 
 export default function Story() {
     return (
