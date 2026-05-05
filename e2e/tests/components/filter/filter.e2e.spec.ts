@@ -1,4 +1,4 @@
-import { test as base, Locator, Page } from "@playwright/test";
+import { expect, test as base, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -94,6 +94,117 @@ test.describe("Filter", () => {
             await story.locators.showButton.click();
             await compareScreenshot(story, "modal-open", {
                 locator: story.locators.modal,
+            });
+        });
+    });
+
+    test.describe("Checkbox", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("checkbox-flat");
+            });
+
+            test("Flat options selection", async ({ story }) => {
+                const item =
+                    story.locators.sidebar.getByTestId("item-checkbox");
+                await item.getByRole("checkbox", { name: "Option 1" }).click();
+                await item.getByRole("checkbox", { name: "Option 3" }).click();
+
+                await expect(
+                    item.getByRole("checkbox", { name: "Option 1" })
+                ).toBeChecked();
+                await expect(
+                    item.getByRole("checkbox", { name: "Option 2" })
+                ).not.toBeChecked();
+                await expect(
+                    item.getByRole("checkbox", { name: "Option 3" })
+                ).toBeChecked();
+
+                await compareScreenshot(story, "selected", {
+                    locator: story.locators.sidebar,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("checkbox-nested");
+            });
+
+            test("Nested options indeterminate state", async ({ story }) => {
+                const tree = story.locators.sidebar.getByRole("tree", {
+                    name: "Nested categories",
+                });
+                const banana = tree.getByRole("treeitem", { name: "Banana" });
+
+                await test.step("Selecting one child sets parent to mixed", async () => {
+                    await banana.click();
+                    await compareScreenshot(story, "indeterminate", {
+                        locator: story.locators.sidebar,
+                    });
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("checkbox-minimisable");
+            });
+
+            test("Minimisable view more and less", async ({ story }) => {
+                const item =
+                    story.locators.sidebar.getByTestId("item-checkbox");
+                const viewMoreButton = item.getByRole("button", {
+                    name: /view more/i,
+                });
+                const viewLessButton = item.getByRole("button", {
+                    name: /view less/i,
+                });
+
+                await expect(viewMoreButton).toBeVisible();
+                await expect(
+                    item.getByRole("checkbox", { name: "Option 8" })
+                ).not.toBeInViewport();
+                await compareScreenshot(story, "minimised", {
+                    locator: story.locators.sidebar,
+                });
+
+                await viewMoreButton.click();
+
+                await expect(viewLessButton).toBeVisible();
+                await expect(
+                    item.getByRole("checkbox", { name: "Option 8" })
+                ).toBeInViewport();
+                await compareScreenshot(story, "expanded", {
+                    locator: story.locators.sidebar,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("checkbox-mobile", { size: "mobile" });
+                await story.locators.showButton.click();
+            });
+
+            test("Mobile checkbox display when showAsCheckboxInMobile", async ({
+                story,
+            }) => {
+                const item = story.locators.modal.getByTestId(
+                    "item-checkbox-checkbox"
+                );
+                const pillItem = story.locators.modal.getByTestId(
+                    "item-checkbox-toggle"
+                );
+                await pillItem
+                    .getByRole("checkbox", { name: "Option 1" })
+                    .click();
+                await item.getByRole("checkbox", { name: "Option 1" }).click();
+                await item.getByRole("checkbox", { name: "Option 2" }).click();
+
+                await compareScreenshot(story, "checkbox-selected", {
+                    locator: story.locators.modal,
+                });
             });
         });
     });
