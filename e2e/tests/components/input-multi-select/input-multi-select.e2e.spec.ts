@@ -29,7 +29,7 @@ class StoryPage extends AbstractStoryPage {
             disabled: Locator;
             error: Locator;
         };
-        variants: {
+        smallVariants: {
             default: Locator;
             withSearch: Locator;
         };
@@ -70,7 +70,7 @@ class StoryPage extends AbstractStoryPage {
                 error: page.getByTestId("form-error-base"),
                 customLabel: page.getByTestId("form-custom-label-base"),
             },
-            variants: {
+            smallVariants: {
                 default: page.getByTestId("small-default"),
                 withSearch: page.getByTestId("small-with-search"),
             },
@@ -463,20 +463,20 @@ test.describe("InputMultiSelect", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("variants");
+            await story.init("small-variants");
         });
 
-        test("Variants", async ({ story }) => {
+        test("Small-Variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
 
-            await story.openDropdown(story.locators.variants.default);
+            await story.openDropdown(story.locators.smallVariants.default);
             await compareScreenshot(story, "open-default", {
                 fullscreen: true,
             });
 
             await story.page.mouse.click(0, 0);
 
-            await story.openDropdown(story.locators.variants.withSearch);
+            await story.openDropdown(story.locators.smallVariants.withSearch);
             await compareScreenshot(story, "open-with-search", {
                 fullscreen: true,
             });
