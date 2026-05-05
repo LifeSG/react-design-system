@@ -1,6 +1,7 @@
 "use client";
 import { BoxContainer } from "@lifesg/react-design-system/box-container";
 import { Button } from "@lifesg/react-design-system/button";
+import styles from "./box-container.module.css";
 
 export default function Story() {
     const handleEdit = () => {
@@ -11,17 +12,17 @@ export default function Story() {
         <BoxContainer
             title="Container with call-to-action"
             callToActionComponent={
-                <Button.Default
+                <Button
                     styleType="light"
                     onClick={handleEdit}
                     data-testid="cta-button"
                 >
                     Edit
-                </Button.Default>
+                </Button>
             }
             data-testid="box-container-cta"
         >
-            <div style={{ padding: "2rem" }}>
+            <div className={styles.content}>
                 <p>This container has a call-to-action button in the header.</p>
             </div>
         </BoxContainer>

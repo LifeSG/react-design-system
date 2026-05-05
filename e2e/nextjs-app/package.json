@@ -7,6 +7,9 @@
         "build": "next build",
         "start": "next start",
         "lint": "eslint",
+        "lint:src": "eslint 'src/**/*.{ts,tsx,js,jsx}'",
+        "lint:src:fix": "eslint 'src/**/*.{ts,tsx,js,jsx}' --fix",
+        "lint:staged:fix": "eslint --fix",
         "use-published": "npm i @lifesg/react-design-system@latest && rm -rf .next"
     },
     "dependencies": {

@@ -30,7 +30,7 @@ export default function Story() {
     const fadeColorRight = ["blue", "green"];
 
     return (
-        <div className="story-column-container" style={{ gap: "2rem" }}>
+        <div className="story-column-container">
             <div>
                 <h3>Fade Left Only</h3>
                 <Breadcrumb

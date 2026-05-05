@@ -4,6 +4,7 @@ import { useState } from "react";
 import { Button } from "@lifesg/react-design-system/button";
 import { Drawer } from "@lifesg/react-design-system/drawer";
 import { Typography } from "@lifesg/react-design-system/typography";
+import styles from "./drawer.module.css";
 
 export default function Story() {
     const [show, setShow] = useState(false);
@@ -18,8 +19,8 @@ export default function Story() {
                 onClose={() => setShow(false)}
                 onOverlayClick={() => setShow(false)}
             >
-                <div style={{ padding: "1rem" }}>
-                    <Typography.BodyBL>Drawer content</Typography.BodyBL>
+                <div className={styles["content"]}>
+                    <Typography.BodyBL>Drawer content </Typography.BodyBL>
                 </div>
             </Drawer>
         </>
