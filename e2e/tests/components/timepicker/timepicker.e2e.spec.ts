@@ -1,6 +1,5 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
-import { viewport } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "timepicker";
@@ -73,7 +72,57 @@ test.describe("Timepicker", () => {
             await test.step("Fill value", async () => {
                 await story.page.getByTestId("hour-increment-button").click();
                 await story.page.getByTestId("minute-increment-button").click();
-                await story.page.waitForTimeout(5000);
+            });
+
+            await compareScreenshot(story, "selected", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe("Standalone dark", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("timepicker-variants-24hr", { mode: "dark" });
+        });
+
+        test("Visual", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+
+            await story.page
+                .getByTestId("timepicker-default")
+                .getByTestId("timepicker-selector")
+                .focus();
+            await compareScreenshot(story, "default-focus");
+
+            await story.page
+                .getByTestId("timepicker-readonly")
+                .getByTestId("timepicker-selector")
+                .focus();
+            await compareScreenshot(story, "readonly-focus");
+
+            await story.page
+                .getByTestId("timepicker-error")
+                .getByTestId("timepicker-selector")
+                .focus();
+            await compareScreenshot(story, "error-focus");
+        });
+
+        test("Dropdown", async ({ story }) => {
+            await test.step("Open dropdown", async () => {
+                await story.locators.defaultSelector.click();
+                await expect(story.locators.defaultSelector)
+                    .toMatchAriaSnapshot(`
+                    - combobox "HH:MM" [expanded=true]
+                `);
+            });
+
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
+
+            await test.step("Fill value", async () => {
+                await story.page.getByTestId("hour-increment-button").click();
+                await story.page.getByTestId("minute-increment-button").click();
             });
 
             await compareScreenshot(story, "selected", {
@@ -114,6 +163,20 @@ test.describe("Timepicker", () => {
                 });
 
                 await compareScreenshot(story, "open");
+            });
+        });
+    });
+
+    test.describe("Form dark", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-timepicker-variants-24hr", {
+                    mode: "dark",
+                });
+            });
+
+            test("Visual", async ({ story }) => {
+                await compareScreenshot(story, "form-mount");
             });
         });
     });

@@ -18,6 +18,7 @@ export default function Story() {
                 format="12hr"
                 value="18:00"
                 readOnly
+                id="example-id"
             />
         </div>
     );
