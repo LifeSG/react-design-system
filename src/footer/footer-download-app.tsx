@@ -8,7 +8,7 @@ const PLAY_STORE_ICON =
 
 export const DownloadApp = () => (
     <div className={styles.wrapper} data-testid="download-app-section">
-        <Typography.BodyMD className={styles.label}>
+        <Typography.BodyMD className={styles.label} weight="semibold">
             Download the app
         </Typography.BodyMD>
         <div className={styles.appButtonsWrapper}>
