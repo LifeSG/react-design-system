@@ -140,13 +140,25 @@ const plugins = [
     // Handles external SGDS web component CSS from node_modules.
     // Ensures SGDS styles are bundled and output to a fixed path for masthead usage.
     libStylePlugin({
-        include: ["node_modules/@govtechsg/sgds-web-component/**/*.css"],
+        include: ["node_modules/@govtechsg/sgds-web-component/themes/day.css"],
         postCssPlugins: [postcssImports()],
         customCSSInjectedPath: () => {
-            return "/sgds.css";
+            return "/sgds-day.css";
         },
         customCSSPath: () => {
-            return "/masthead/sgds.css";
+            return "/masthead/sgds-day.css";
+        },
+    }),
+    libStylePlugin({
+        include: [
+            "node_modules/@govtechsg/sgds-web-component/themes/night.css",
+        ],
+        postCssPlugins: [postcssImports()],
+        customCSSInjectedPath: () => {
+            return "/sgds-night.css";
+        },
+        customCSSPath: () => {
+            return "/masthead/sgds-night.css";
         },
     }),
     wyw({
