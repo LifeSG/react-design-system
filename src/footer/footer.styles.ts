@@ -10,7 +10,7 @@ export const baseFooter = css`
     background: ${ComponentToken.Footer["colour-bg"]};
 `;
 
-export const styledFooterLink = css`
+export const footerLink = css`
     color: ${ComponentToken.Footer["link-colour-text"]};
 
     &:hover {
@@ -36,12 +36,6 @@ export const topSection = css`
             flex-direction: column;
             gap: ${Spacing["spacing-32"]};
         }
-    }
-`;
-
-export const sectionStretched = css`
-    [data-id="container"] {
-        max-width: none;
     }
 `;
 

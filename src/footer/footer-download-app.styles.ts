@@ -16,9 +16,6 @@ export const wrapper = css`
 export const label = css`
     margin-bottom: ${Spacing["spacing-16"]};
     color: ${ComponentToken.Footer["colour-text"]};
-    font-weight: 600;
-    font-size: 1rem;
-    line-height: 1.5rem;
 `;
 
 export const appButtonsWrapper = css`

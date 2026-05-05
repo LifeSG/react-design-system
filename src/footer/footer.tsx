@@ -86,7 +86,7 @@ export const Footer = <T,>({
                 <li key={index}>
                     <Typography.LinkMD
                         underlineStyle="none"
-                        className={styles.styledFooterLink}
+                        className={styles.footerLink}
                         {...otherProps}
                         onClick={(event) => handleLinkClick(event, link)}
                     />
@@ -162,10 +162,8 @@ export const Footer = <T,>({
             return (
                 <>
                     <Layout.Content
-                        className={clsx(
-                            styles.topSection,
-                            isStretch && styles.sectionStretched
-                        )}
+                        className={styles.topSection}
+                        stretch={isStretch}
                     >
                         {component}
                     </Layout.Content>
@@ -180,10 +178,8 @@ export const Footer = <T,>({
         <footer {...otherProps} className={clsx(styles.baseFooter, className)}>
             {renderTopSection()}
             <Layout.Content
-                className={clsx(
-                    styles.bottomSection,
-                    isStretch && styles.sectionStretched
-                )}
+                className={styles.bottomSection}
+                stretch={isStretch}
             >
                 <div key="disclaimer" className={styles.bottomSectionContent}>
                     {renderDisclaimerLinks()}

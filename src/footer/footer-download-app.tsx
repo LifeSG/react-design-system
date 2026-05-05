@@ -1,3 +1,4 @@
+import { Typography } from "../typography";
 import * as styles from "./footer-download-app.styles";
 
 const APP_STORE_ICON =
@@ -7,7 +8,9 @@ const PLAY_STORE_ICON =
 
 export const DownloadApp = () => (
     <div className={styles.wrapper} data-testid="download-app-section">
-        <div className={styles.label}>Download the app</div>
+        <Typography.BodyMD className={styles.label}>
+            Download the app
+        </Typography.BodyMD>
         <div className={styles.appButtonsWrapper}>
             <a
                 className={styles.appStoreLink}
