@@ -10,6 +10,7 @@ export default function Story() {
                 data-testid="form-default"
                 label="Default"
                 options={OPTIONS}
+                placeholder="Default multi select"
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
             />

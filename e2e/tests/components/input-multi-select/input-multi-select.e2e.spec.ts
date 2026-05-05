@@ -114,57 +114,85 @@ test.describe("InputMultiSelect", () => {
             await story.init("form-variants");
         });
 
-        test("Visual", async ({ story }) => {
-            await test.step("Default state", async () => {
-                await expect(
-                    story.locators.component.dropdownContainer
-                ).not.toBeVisible();
+        test("Default", async ({ story }) => {
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
 
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.form.default,
-                });
+            await compareScreenshot(story, "mount", {
+                locator: story.locators.form.default,
+            });
+            await expect(story.locators.form.default).toMatchAriaSnapshot(`
+                - combobox "Default": Default multi select
+            `);
 
-                await story.openDropdown(story.locators.form.default);
-                await expect(story.getOption("Option A")).toBeVisible();
-                await compareScreenshot(story, "open", {
-                    fullscreen: true,
-                });
+            await story.openDropdown(story.locators.form.default);
+            await expect(story.getOption("Option A")).toBeVisible();
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
+            await expect(story.locators.component.dropdownContainer)
+                .toMatchAriaSnapshot(`
+                    - status
+                    - group:
+                        - button "Select all"
+                        - listbox:
+                            - option "Option A"
+                            - option "Option B"
+                            - option "Option C"
+                            - option "Option D"
+            `);
 
-                await story.page
-                    .getByRole("button", { name: "Select all" })
-                    .click();
-                await expect(story.locators.form.default).toContainText(
-                    "All selected"
-                );
-                await compareScreenshot(story, "select-all", {
-                    fullscreen: true,
-                });
+            await story.page
+                .getByRole("button", { name: "Select all" })
+                .click();
+            await expect(story.locators.form.default).toContainText(
+                "All selected"
+            );
+            await compareScreenshot(story, "select-all", {
+                fullscreen: true,
+            });
+            await expect(story.locators.component.dropdownContainer)
+                .toMatchAriaSnapshot(`
+                    - status
+                    - group:
+                        - button "Clear all"
+                        - listbox:
+                            - option "Option A" [selected]
+                            - option "Option B" [selected]
+                            - option "Option C" [selected]
+                            - option "Option D" [selected]
+            `);
 
-                await story.page
-                    .getByRole("button", { name: "Clear all" })
-                    .click();
-                await expect(story.locators.form.default).toHaveText("Select");
-                await compareScreenshot(story, "clear-all", {
-                    fullscreen: true,
-                });
-
-                await story.page.mouse.click(0, 0);
+            await story.page.getByRole("button", { name: "Clear all" }).click();
+            await expect(story.locators.form.default).toHaveText(
+                "Default multi select"
+            );
+            await compareScreenshot(story, "clear-all", {
+                fullscreen: true,
             });
 
-            await test.step("Selected state", async () => {
-                await expect(story.locators.form.selected).toContainText(
-                    "2 selected"
-                );
-                await compareScreenshot(story, "selected", {
-                    locator: story.locators.form.selected,
-                });
+            await story.page.mouse.click(0, 0);
+        });
+
+        test("Selected", async ({ story }) => {
+            await expect(story.locators.form.selected).toContainText(
+                "2 selected"
+            );
+            await compareScreenshot(story, "selected", {
+                locator: story.locators.form.selected,
+            });
+        });
+
+        test("Error", async ({ story }) => {
+            await compareScreenshot(story, "error", {
+                locator: story.locators.form.error,
             });
 
-            await test.step("Error state", async () => {
-                await compareScreenshot(story, "error", {
-                    locator: story.locators.form.error,
-                });
-            });
+            await expect(story.locators.form.readonly).toMatchAriaSnapshot(`
+                - combobox "Error": Error multi select
+                    - Selection is required
+            `);
         });
 
         test("Readonly disabled", async ({ story }) => {
@@ -174,6 +202,9 @@ test.describe("InputMultiSelect", () => {
             await expect(
                 story.locators.component.dropdownContainer
             ).not.toBeVisible();
+            await expect(story.locators.form.readonly).toMatchAriaSnapshot(`
+                - combobox "Readonly": Readonly multi select
+            `);
 
             await story.locators.form.readonly.focus();
             await story.page.keyboard.press("Enter");
@@ -189,6 +220,9 @@ test.describe("InputMultiSelect", () => {
             await expect(
                 story.locators.component.dropdownContainer
             ).not.toBeVisible();
+            await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
+                    - combobox "Disabled" [disabled]: Disabled multi select
+            `);
         });
 
         test("Custom labels", async ({ story }) => {
