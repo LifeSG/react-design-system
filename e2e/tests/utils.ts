@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from "@playwright/test";
+import test, { expect, Locator, Page } from "@playwright/test";
 import { viewport } from "./consts";
 
 export abstract class AbstractStoryPage {
@@ -44,6 +44,17 @@ export abstract class AbstractStoryPage {
         );
 
         await expect(this.layout).toBeVisible();
+
+        if (await this.page.locator("#devtools-indicator").isVisible()) {
+            console.warn(
+                "DevTools indicator is visible, collapsing it to avoid interference with screenshots. Please check the console logs for more details."
+            );
+
+            await this.page
+                .locator("#devtools-indicator")
+                .getByRole("button", { name: "Collapse issues badge" })
+                .click();
+        }
     }
 }
 
