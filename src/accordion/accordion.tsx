@@ -1,12 +1,9 @@
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useState } from "react";
 
-import {
-    Content,
-    ExpandCollapseLink,
-    Title,
-    TitleWrapper,
-} from "./accordion.style";
+import { Button } from "../button";
+import * as styles from "./accordion.styles";
 import { AccordionContext } from "./accordion-context";
 import { AccordionItem } from "./accordion-item";
 import type { AccordionProps } from "./types";
@@ -89,14 +86,16 @@ const AccordionBase = ({
 
     const renderCollapseExpandAll = () => {
         return (
-            <ExpandCollapseLink
+            <Button
+                className={styles.expandCollapseLink}
                 data-testid="accordion-expand-collapse-button"
                 onClick={handleExpandCollapseClick}
                 styleType="link"
                 type="button"
+                sizeType="small"
             >
                 {expandAll ? "Hide all" : "Show all"}
-            </ExpandCollapseLink>
+            </Button>
         );
     };
 
@@ -106,21 +105,28 @@ const AccordionBase = ({
         }
 
         return (
-            <TitleWrapper
-                $showTitleInMobile={showTitleInMobile}
-                $hasExpandAll={enableExpandAll}
+            <div
+                className={clsx(
+                    styles.titleWrapper,
+                    !showTitleInMobile &&
+                        !enableExpandAll &&
+                        styles.titleWrapperHidden
+                )}
             >
                 {title && (
-                    <Title
-                        $showInMobile={showTitleInMobile}
+                    <h2
+                        className={clsx(
+                            styles.title,
+                            !showTitleInMobile && styles.titleHidden
+                        )}
                         data-testid="accordion-title"
                         aria-level={headingLevel}
                     >
                         {title}
-                    </Title>
+                    </h2>
                 )}
                 {enableExpandAll && renderCollapseExpandAll()}
-            </TitleWrapper>
+            </div>
         );
     };
 
@@ -138,10 +144,14 @@ const AccordionBase = ({
                 itemState,
             }}
         >
-            <Content id={id} data-testid={testId} className={className}>
+            <div
+                id={id}
+                data-testid={testId}
+                className={clsx(styles.accordionWrapper, className)}
+            >
                 {renderTitleWrapper()}
                 {children}
-            </Content>
+            </div>
         </AccordionContext.Provider>
     );
 };

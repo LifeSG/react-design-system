@@ -35,17 +35,3 @@ export interface AccordionItemApi {
 }
 
 export type AccordionItemHandle = HTMLDivElement & AccordionItemApi;
-
-/**
- * Transient props are denoted with $
- * See more https://styled-components.com/docs/api#transient-props
- */
-
-export interface TitleStyleProps {
-    $showInMobile?: boolean | undefined;
-}
-
-export interface TitleWrapperStyleProps {
-    $showTitleInMobile: boolean;
-    $hasExpandAll: boolean;
-}
