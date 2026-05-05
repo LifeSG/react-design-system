@@ -11,7 +11,7 @@ import { ThemeContext } from "styled-components";
 
 import { InputSelect } from "../input-select";
 import { VisuallyHidden } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
+import { SimpleIdGenerator, useIsMounted } from "../util";
 import { V3_Breakpoint } from "../v3_theme";
 import {
     EllipsisButton,
@@ -50,6 +50,7 @@ const Component = (
     // CONST, STATE, REF
     // =============================================================================
 
+    const isMounted = useIsMounted();
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
 
@@ -370,7 +371,9 @@ const Component = (
                     >
                         <ChevronLeftIcon aria-hidden />
                     </NavigationButton>
-                    {isMobile ? renderMobile() : renderPaginationItems()}
+                    {isMounted && isMobile
+                        ? renderMobile()
+                        : renderPaginationItems()}
                     <NavigationButton
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
