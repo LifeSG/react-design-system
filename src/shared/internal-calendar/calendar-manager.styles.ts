@@ -112,7 +112,10 @@ export const headerArrowButton = css`
     }
 `;
 
-export const dropdownHidden = css`
+// -----------------------------------------------------------------------------
+// COMMON
+// -----------------------------------------------------------------------------
+export const hidden = css`
     display: none;
 `;
 
