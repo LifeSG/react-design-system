@@ -3,11 +3,8 @@ import type { DisclaimerLinks, FooterLinkProps } from "src/footer";
 import { Footer } from "src/footer";
 import type { InternalDisclaimerLinks } from "src/footer/footer-helper";
 import { FooterHelper } from "src/footer/footer-helper";
+import { ThemeProvider, type ThemeType } from "src/theme";
 import type { KeyOf } from "src/util/utility-types";
-import type { V3_ResourceScheme } from "src/v3_theme";
-import { ThemeProvider } from "styled-components";
-
-import { MOCK_THEME } from "../v3_theme/mock-theme-data";
 
 // =============================================================================
 // UNIT TESTS
@@ -170,7 +167,7 @@ describe("Footer", () => {
             expect(copyrightText.textContent).not.toContain("Last updated");
         });
 
-        it.each<[V3_ResourceScheme, string]>([
+        it.each<[ThemeType, string]>([
             ["lifesg", "© 2023 LifeSG, Government of Singapore"],
             ["bookingsg", "© 2023 BookingSG, Government of Singapore"],
             ["mylegacy", "© 2023 MyLegacy@LifeSG, Government of Singapore"],
@@ -180,10 +177,10 @@ describe("Footer", () => {
             ],
             ["imda", "© 2023 IMDA, Government of Singapore"],
         ])(
-            "should render the copyright information for %s resourceScheme by default",
-            (resourceScheme, expected) => {
+            "should render the copyright information for %s theme by default",
+            (theme, expected) => {
                 render(
-                    <ThemeProvider theme={{ ...MOCK_THEME, resourceScheme }}>
+                    <ThemeProvider theme={theme}>
                         <Footer />
                     </ThemeProvider>
                 );
@@ -213,7 +210,7 @@ describe("Footer", () => {
                 "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
 
             render(
-                <ThemeProvider theme={MOCK_THEME}>
+                <ThemeProvider theme="lifesg">
                     <Footer links={CUSTOM_LINKS} />
                 </ThemeProvider>
             );
