@@ -63,10 +63,6 @@ export const optionsOverlay = css`
     padding-right: var(${calendarDropdownStyles.tokens.horizontalInset});
 `;
 
-export const hidden = css`
-    display: none;
-`;
-
 // -----------------------------------------------------------------------------
 // HEADER
 // -----------------------------------------------------------------------------
@@ -114,6 +110,10 @@ export const headerArrowButton = css`
     &:disabled {
         cursor: not-allowed;
     }
+`;
+
+export const dropdownHidden = css`
+    display: none;
 `;
 
 // -----------------------------------------------------------------------------

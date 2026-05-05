@@ -383,7 +383,7 @@ const Component = (
                 <button
                     className={clsx(
                         styles.dropdownButton,
-                        currentView !== "default" && styles.hidden
+                        currentView !== "default" && styles.dropdownHidden
                     )}
                     aria-label={`${fullMonthLabel}, Select month`}
                     type="button"
@@ -574,7 +574,7 @@ const Component = (
                     <div
                         className={clsx(
                             styles.optionsOverlay,
-                            isDefaultView && styles.hidden
+                            isDefaultView && styles.dropdownHidden
                         )}
                     >
                         {renderOptionsOverlay()}
