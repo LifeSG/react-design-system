@@ -95,6 +95,7 @@ export const SidenavDrawerItem = ({
                 )}
             </BasicButton>
             <animated.div
+                data-testid="drawer-subitem-container"
                 className={styles.drawerSubitemContainer}
                 style={contentAnimationProps}
             >
