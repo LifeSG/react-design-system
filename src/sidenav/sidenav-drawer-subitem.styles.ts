@@ -1,15 +1,12 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
 import { Colour, Font, Radius } from "../theme";
 
 //=============================================================================
 // STYLING
 //=============================================================================
-export const Container = styled.li``;
-
-export const LinkButton = styled(BasicButton)`
+export const linkButton = css`
     width: 100%;
     padding: 0.75rem 1rem;
     border-radius: ${Radius["md"]};

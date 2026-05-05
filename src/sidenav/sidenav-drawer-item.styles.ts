@@ -1,29 +1,12 @@
-import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import { animated } from "@react-spring/web";
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
 import { Colour, Font, Motion, Radius } from "../theme";
 
 //=============================================================================
-// STYLE INTERFACE
-//=============================================================================
-interface LinkButtonStyleProp {
-    $highlight?: boolean | undefined;
-    $noChildren?: boolean | undefined;
-}
-
-interface IconStyleProp {
-    $expanded?: boolean | undefined;
-}
-
-//=============================================================================
 // STYLING
 //=============================================================================
-export const Container = animated(styled.li``);
-
-export const LinkButton = styled(BasicButton)<LinkButtonStyleProp>`
+export const linkButton = css`
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -36,38 +19,37 @@ export const LinkButton = styled(BasicButton)<LinkButtonStyleProp>`
     ${Font["body-md-semibold"]}
     color: ${Colour["text"]};
 
-    ${(props) =>
-        props.$noChildren
-            ? css`
-                  &:hover,
-                  &:focus {
-                      background: ${Colour["bg-hover"]};
-                      color: ${Colour["text-hover"]};
-                  }
-              `
-            : css`
-                  &:hover,
-                  &:focus {
-                      background: ${Colour["bg-hover-strong"]};
-                  }
-              `}
+    &:hover,
+    &:focus {
+        background: ${Colour["bg-hover-strong"]};
+    }
+
+    &.linkButtonNoChildren {
+        &:hover,
+        &:focus {
+            background: ${Colour["bg-hover"]};
+            color: ${Colour["text-hover"]};
+        }
+    }
 `;
 
-export const DrawerSubitemContainer = animated(styled.div`
+export const drawerSubitemContainer = css`
     margin: 0.125rem 0 0.125rem 0.5rem;
     overflow: hidden;
-`);
-
-export const ChevronIcon = styled(ChevronUpIcon)<IconStyleProp>`
-    flex-shrink: 0;
-    color: ${Colour["icon"]};
-    transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
-    transition: transform ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
-export const TextElement = styled.span`
+export const chevronIcon = css`
+    flex-shrink: 0;
+    color: ${Colour["icon"]};
+    transform: rotate(180deg);
+    transition: transform ${Motion["duration-150"]} ${Motion["ease-default"]};
+
+    &.chevronIconExpanded {
+        transform: rotate(0deg);
+    }
+`;
+
+export const textElement = css`
     ${lineClampCss(2)}
     text-align: left;
 `;
-
-export const DrawerContent = animated(styled.ul``);

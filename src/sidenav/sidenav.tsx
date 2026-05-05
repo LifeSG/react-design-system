@@ -1,7 +1,8 @@
+import clsx from "clsx";
 import { useRef, useState } from "react";
 
 import { useId } from "../util";
-import { DesktopContainer, MobileContainer, Wrapper } from "./sidenav.styles";
+import * as styles from "./sidenav.styles";
 import type { SidenavContextItem } from "./sidenav-context";
 import { SidenavContext } from "./sidenav-context";
 import { SidenavDrawerItem } from "./sidenav-drawer-item";
@@ -14,6 +15,7 @@ const SidenavBase = ({
     fixed = true,
     children,
     "aria-label": ariaLabel = "Sidebar",
+    className,
     ...otherProps
 }: SidenavProps) => {
     // =============================================================================
@@ -49,13 +51,33 @@ const SidenavBase = ({
                 setPreviouslySelectedItemId,
             }}
         >
-            <Wrapper $fixed={fixed} ref={wrapperRef} {...otherProps}>
-                <DesktopContainer ref={menuRef} aria-label={ariaLabel}>
+            <div
+                ref={wrapperRef}
+                {...otherProps}
+                className={clsx(
+                    styles.wrapper,
+                    fixed && "wrapperFixed",
+                    className
+                )}
+            >
+                <nav
+                    ref={menuRef}
+                    aria-label={ariaLabel}
+                    className={clsx(
+                        styles.containerBase,
+                        styles.desktopContainer
+                    )}
+                >
                     {children}
-                </DesktopContainer>
+                </nav>
                 {/** NOTE: Since mobile view not supported yet, children will not be rendered */}
-                <MobileContainer></MobileContainer>
-            </Wrapper>
+                <nav
+                    className={clsx(
+                        styles.containerBase,
+                        styles.mobileContainer
+                    )}
+                ></nav>
+            </div>
         </SidenavContext.Provider>
     );
 };

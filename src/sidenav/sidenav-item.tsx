@@ -12,19 +12,16 @@ import {
     useInteractions,
     useTransitionStyles,
 } from "@floating-ui/react";
+import clsx from "clsx";
 import type { HTMLAttributes } from "react";
 import { useContext, useEffect, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { BasicButton } from "../shared/input-wrapper";
 import { useInheritedThemeScope } from "../theme/theme-provider/hooks";
+import { Typography } from "../typography";
 import { SidenavContext } from "./sidenav-context";
-import {
-    Container,
-    DefaultButton,
-    DesktopDrawer,
-    IconContainer,
-    TitleText,
-} from "./sidenav-item.styles";
+import * as styles from "./sidenav-item.styles";
 import type { SidenavItemProps } from "./types";
 
 export const SidenavItem = ({
@@ -33,6 +30,7 @@ export const SidenavItem = ({
     title,
     onClick,
     selected,
+    className,
     ...otherProps
 }: SidenavItemProps) => {
     // =========================================================================
@@ -118,7 +116,8 @@ export const SidenavItem = ({
         dismiss,
     ]);
 
-    const { isMounted, styles } = useTransitionStyles(context);
+    const { isMounted, styles: transitionStyles } =
+        useTransitionStyles(context);
     const { themeProps, themeStyle } = useInheritedThemeScope(isMounted);
 
     // =========================================================================
@@ -196,20 +195,28 @@ export const SidenavItem = ({
         : {};
 
     return (
-        <Container>
-            <DefaultButton
+        <li className={styles.container}>
+            <BasicButton
                 type="button"
                 ref={setAnchorRef}
                 aria-current={isSelected ? "page" : undefined}
                 {...ariaControlProps}
                 {...otherProps}
-                $highlight={isSelected || isCurrent}
+                className={clsx(
+                    styles.defaultButton,
+                    (isSelected || isCurrent) && "defaultButtonHighlight",
+                    className
+                )}
                 {...getReferenceProps()}
                 onMouseLeave={handleMouseLeave}
             >
-                <IconContainer aria-hidden>{icon}</IconContainer>
-                <TitleText inline>{title}</TitleText>
-            </DefaultButton>
+                <span aria-hidden className={styles.iconContainer}>
+                    {icon}
+                </span>
+                <Typography.BodyXS inline className={styles.titleText}>
+                    {title}
+                </Typography.BodyXS>
+            </BasicButton>
             {isMounted && (
                 <FloatingPortal>
                     <FloatingFocusManager
@@ -228,19 +235,21 @@ export const SidenavItem = ({
                             }}
                             {...getFloatingProps()}
                         >
-                            <DesktopDrawer
-                                style={styles}
-                                $showDrawer={isOpen}
-                                $showShadow={
-                                    isCurrent || (isSelected && !currentItem)
-                                }
+                            <ul
+                                style={transitionStyles}
+                                className={clsx(
+                                    styles.desktopDrawer,
+                                    (isCurrent ||
+                                        (isSelected && !currentItem)) &&
+                                        "desktopDrawerShowShadow"
+                                )}
                             >
                                 {children}
-                            </DesktopDrawer>
+                            </ul>
                         </div>
                     </FloatingFocusManager>
                 </FloatingPortal>
             )}
-        </Container>
+        </li>
     );
 };

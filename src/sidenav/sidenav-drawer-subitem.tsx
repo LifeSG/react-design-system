@@ -1,13 +1,16 @@
+import clsx from "clsx";
 import { useContext } from "react";
 
+import { BasicButton } from "../shared/input-wrapper";
 import { SidenavContext } from "./sidenav-context";
-import { Container, LinkButton } from "./sidenav-drawer-subitem.styles";
+import * as styles from "./sidenav-drawer-subitem.styles";
 import type { SidenavDrawerSubitemProps } from "./types";
 
 export const SidenavDrawerSubitem = ({
     id,
     title,
     onClick,
+    className,
     ...otherProps
 }: SidenavDrawerSubitemProps) => {
     // =============================================================================
@@ -36,10 +39,14 @@ export const SidenavDrawerSubitem = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Container {...otherProps}>
-            <LinkButton type="button" onClick={handleOnClick}>
+        <li {...otherProps} className={clsx(className)}>
+            <BasicButton
+                type="button"
+                onClick={handleOnClick}
+                className={styles.linkButton}
+            >
                 {title}
-            </LinkButton>
-        </Container>
+            </BasicButton>
+        </li>
     );
 };

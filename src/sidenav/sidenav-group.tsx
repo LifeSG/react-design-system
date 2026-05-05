@@ -1,18 +1,23 @@
-import { Container, Divider } from "./sidenav-group.styles";
+import clsx from "clsx";
+
+import * as styles from "./sidenav-group.styles";
 import type { SidenavGroupProps } from "./types";
 
 export const SidenavGroup = ({
     separator,
     children,
+    className,
     ...otherProps
 }: SidenavGroupProps) => {
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Container {...otherProps}>
+        <ul {...otherProps} className={clsx(styles.container, className)}>
             {children}
-            {separator && <Divider data-testid="divider" />}
-        </Container>
+            {separator && (
+                <li data-testid="divider" className={styles.divider} />
+            )}
+        </ul>
     );
 };

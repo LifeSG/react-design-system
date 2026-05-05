@@ -1,24 +1,21 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, MediaQuery } from "../theme";
 
 //=============================================================================
-// STYLE INTERFACE
-//=============================================================================
-interface StyleProps {
-    $fixed?: boolean;
-}
-
-//=============================================================================
 // STYLING
 //=============================================================================
-export const Wrapper = styled.div<StyleProps>`
+export const wrapper = css`
     display: flex;
-    position: ${(props) => (props.$fixed ? "fixed" : "relative")};
+    position: relative;
     width: fit-content;
+
+    &.wrapperFixed {
+        position: fixed;
+    }
 `;
 
-const Container = styled.nav`
+export const containerBase = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -29,7 +26,7 @@ const Container = styled.nav`
     padding: 0.5rem 0 1.5rem 0;
 `;
 
-export const DesktopContainer = styled(Container)`
+export const desktopContainer = css`
     height: 100vh;
     left: 0;
     top: 0;
@@ -39,10 +36,10 @@ export const DesktopContainer = styled(Container)`
     }
 `;
 
-export const MobileContainer = styled(Container)`
+export const mobileContainer = css`
     display: none;
     visibility: hidden;
     ${MediaQuery.MaxWidth.sm} {
-        display: none; // NOTE: Since mobile view not supported yet
+        display: none; /* NOTE: Since mobile view not supported yet */
     }
 `;

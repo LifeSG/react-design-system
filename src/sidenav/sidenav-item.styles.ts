@@ -1,30 +1,16 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
 import { Border, Colour, Font, Motion, Radius, Shadow } from "../theme";
-import { Typography } from "../typography";
-
-//=============================================================================
-// STYLE INTERFACE
-//=============================================================================
-interface StyleProps {
-    $highlight: boolean;
-}
-
-interface DrawerStyleProps {
-    $showDrawer: boolean;
-    $showShadow: boolean;
-}
 
 //=============================================================================
 // STYLING
 //=============================================================================
-export const Container = styled.li`
+export const container = css`
     width: 100%;
 `;
 
-export const IconContainer = styled.span`
+export const iconContainer = css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -40,13 +26,13 @@ export const IconContainer = styled.span`
     }
 `;
 
-export const TitleText = styled(Typography.BodyXS)`
+export const titleText = css`
     ${lineClampCss(2)}
     margin-top: 0.25rem;
     transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
 `;
 
-export const DefaultButton = styled(BasicButton)<StyleProps>`
+export const defaultButton = css`
     width: 100%;
     margin-top: 1rem;
     cursor: pointer;
@@ -58,31 +44,29 @@ export const DefaultButton = styled(BasicButton)<StyleProps>`
 
     &:hover,
     &:focus {
-        ${IconContainer} {
+        .${iconContainer} {
             background-color: ${Colour["bg-hover"]};
         }
 
-        ${TitleText} {
+        .${titleText} {
             ${Font["body-xs-semibold"]}
             color: ${Colour["text-hover"]};
         }
     }
 
-    ${(props) =>
-        props.$highlight &&
-        css`
-            ${IconContainer} {
-                background-color: ${Colour["bg-hover"]};
-            }
+    &.defaultButtonHighlight {
+        .${iconContainer} {
+            background-color: ${Colour["bg-hover"]};
+        }
 
-            ${TitleText} {
-                ${Font["body-xs-semibold"]}
-                color: ${Colour["text-selected"]};
-            }
-        `}
+        .${titleText} {
+            ${Font["body-xs-semibold"]}
+            color: ${Colour["text-selected"]};
+        }
+    }
 `;
 
-export const DesktopDrawer = styled.ul<DrawerStyleProps>`
+export const desktopDrawer = css`
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -94,10 +78,9 @@ export const DesktopDrawer = styled.ul<DrawerStyleProps>`
     border-top-right-radius: ${Radius["md"]};
     border-bottom-right-radius: ${Radius["md"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    ${(props) =>
-        props.$showShadow &&
-        css`
-            box-shadow: ${Shadow["xs-subtle"]};
-            clip-path: inset(0 -6px 0 0);
-        `}
+
+    &.desktopDrawerShowShadow {
+        box-shadow: ${Shadow["xs-subtle"]};
+        clip-path: inset(0 -6px 0 0);
+    }
 `;
