@@ -466,7 +466,7 @@ test.describe("InputMultiSelect", () => {
             await story.init("small-variants");
         });
 
-        test("Small-Variants", async ({ story }) => {
+        test("Small Variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
 
             await story.openDropdown(story.locators.smallVariants.default);
