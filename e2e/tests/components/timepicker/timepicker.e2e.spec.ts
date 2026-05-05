@@ -1,5 +1,6 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import { viewport } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "timepicker";
@@ -29,15 +30,14 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Timepicker", () => {
-    test.describe("Standalone Timepicker", () => {
+    test.describe("Standalone", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("timepicker-variants-24hr");
         });
 
-        test("Standalone mount", async ({ story }) => {
+        test("Visual", async ({ story }) => {
             await compareScreenshot(story, "mount");
 
-            // Focus states
             await story.page
                 .getByTestId("timepicker-default")
                 .getByTestId("timepicker-selector")
@@ -57,7 +57,7 @@ test.describe("Timepicker", () => {
             await compareScreenshot(story, "error-focus");
         });
 
-        test("Standalone timepicker dropdown", async ({ story }) => {
+        test("Dropdown", async ({ story }) => {
             await test.step("Open dropdown", async () => {
                 await story.locators.defaultSelector.click();
                 await expect(story.locators.defaultSelector)
@@ -66,23 +66,45 @@ test.describe("Timepicker", () => {
                 `);
             });
 
-            await compareScreenshot(story, "dropdown-open", {
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
+
+            await test.step("Fill value", async () => {
+                await story.page.getByTestId("hour-increment-button").click();
+                await story.page.getByTestId("minute-increment-button").click();
+                await story.page.waitForTimeout(5000);
+            });
+
+            await compareScreenshot(story, "selected", {
                 fullscreen: true,
             });
         });
     });
 
-    test.describe("Form Timepicker", () => {
+    test.describe("Standalone mobile", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("timepicker-variants-24hr", {
+                size: "mobile",
+            });
+        });
+
+        test("Visual", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe("Form", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("form-timepicker-variants-24hr");
             });
 
-            test("All form variants mount", async ({ story }) => {
+            test("Visual", async ({ story }) => {
                 await compareScreenshot(story, "form-mount");
             });
 
-            test("Form timepicker dropdown", async ({ story }) => {
+            test("Dropdown", async ({ story }) => {
                 await test.step("Open dropdown", async () => {
                     await story.locators.formDefaultSelector.click();
                     await expect(story.locators.formDefaultSelector)
@@ -91,14 +113,26 @@ test.describe("Timepicker", () => {
                     `);
                 });
 
-                await compareScreenshot(story, "form-dropdown-open");
+                await compareScreenshot(story, "open");
             });
+        });
+    });
+
+    test.describe("Form mobile", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-timepicker-variants-24hr", {
+                size: "mobile",
+            });
+        });
+
+        test("Visual", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
     test.describe("Timepicker 12hr format", () => {
         test.beforeEach(async ({ story }) => {
-            await story.init("timepicker-12hr-default");
+            await story.init("timepicker-12hr-variants");
         });
 
         test("12hr default mount", async ({ story }) => {
@@ -106,19 +140,19 @@ test.describe("Timepicker", () => {
         });
     });
 
-    test.describe("Form Timepicker Grid", () => {
+    test.describe("", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("form-timepicker-grid");
             });
 
-            test("Form timepicker length variants mount", async ({ story }) => {
+            test("Grid", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
         });
     });
 
-    test.describe("Timepicker With Values", () => {
+    test.describe("", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("timepicker-with-values");
         });
@@ -128,13 +162,13 @@ test.describe("Timepicker", () => {
         });
     });
 
-    test.describe("Form Timepicker With Values", () => {
+    test.describe("", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("form-timepicker-with-values");
         });
 
         test("Form with values", async ({ story }) => {
-            await compareScreenshot(story, "form-with-values-mount");
+            await compareScreenshot(story, "mount");
         });
     });
 });

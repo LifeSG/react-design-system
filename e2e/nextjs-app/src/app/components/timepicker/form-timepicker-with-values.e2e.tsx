@@ -19,13 +19,6 @@ export default function Story() {
             />
 
             <Form.Timepicker
-                data-testid="form-timepicker-readonly"
-                label="Read-only State"
-                value="18:00"
-                readOnly
-            />
-
-            <Form.Timepicker
                 data-testid="form-timepicker-error"
                 label="Error State"
                 value="18:00"
