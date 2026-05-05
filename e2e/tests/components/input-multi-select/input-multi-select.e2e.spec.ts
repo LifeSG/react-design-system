@@ -247,6 +247,92 @@ test.describe("InputMultiSelect", () => {
         });
     });
 
+    test.describe("", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", { size: "mobile" });
+        });
+
+        test("Form Mobile", async ({ story }) => {
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
+
+            await compareScreenshot(story, "mount", {
+                locator: story.locators.form.default,
+            });
+            await expect(story.locators.form.default).toMatchAriaSnapshot(`
+                - combobox "Default": Default multi select
+            `);
+
+            await story.openDropdown(story.locators.form.default);
+            await expect(story.getOption("Option A")).toBeVisible();
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
+
+            await story.page
+                .getByRole("button", { name: "Select all" })
+                .click();
+            await expect(story.locators.form.default).toContainText(
+                "All selected"
+            );
+            await compareScreenshot(story, "select-all", {
+                fullscreen: true,
+            });
+
+            await story.page.getByRole("button", { name: "Clear all" }).click();
+            await expect(story.locators.form.default).toHaveText(
+                "Default multi select"
+            );
+            await compareScreenshot(story, "clear-all", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe("", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", { mode: "dark" });
+        });
+
+        test("Form Dark Mode", async ({ story }) => {
+            await expect(
+                story.locators.component.dropdownContainer
+            ).not.toBeVisible();
+
+            await compareScreenshot(story, "mount", {
+                locator: story.locators.form.default,
+            });
+            await expect(story.locators.form.default).toMatchAriaSnapshot(`
+                - combobox "Default": Default multi select
+            `);
+
+            await story.openDropdown(story.locators.form.default);
+            await expect(story.getOption("Option A")).toBeVisible();
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
+
+            await story.page
+                .getByRole("button", { name: "Select all" })
+                .click();
+            await expect(story.locators.form.default).toContainText(
+                "All selected"
+            );
+            await compareScreenshot(story, "select-all", {
+                fullscreen: true,
+            });
+
+            await story.page.getByRole("button", { name: "Clear all" }).click();
+            await expect(story.locators.form.default).toHaveText(
+                "Default multi select"
+            );
+            await compareScreenshot(story, "clear-all", {
+                fullscreen: true,
+            });
+        });
+    });
+
     test.describe("Standalone", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("standalone");
