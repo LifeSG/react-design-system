@@ -171,21 +171,19 @@ test.describe("InputMultiSelect", () => {
             await compareScreenshot(story, "clear-all", {
                 fullscreen: true,
             });
-
-            await story.page.mouse.click(0, 0);
         });
 
         test("Selected", async ({ story }) => {
             await expect(story.locators.form.selected).toContainText(
                 "2 selected"
             );
-            await compareScreenshot(story, "selected", {
+            await compareScreenshot(story, "state", {
                 locator: story.locators.form.selected,
             });
         });
 
         test("Error", async ({ story }) => {
-            await compareScreenshot(story, "error", {
+            await compareScreenshot(story, "state", {
                 locator: story.locators.form.error,
             });
 
@@ -213,15 +211,15 @@ test.describe("InputMultiSelect", () => {
             ).not.toBeVisible();
 
             await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
-                            - combobox [disabled]
-                        `);
+                - combobox [disabled]
+            `);
 
             await story.locators.form.disabled.click();
             await expect(
                 story.locators.component.dropdownContainer
             ).not.toBeVisible();
             await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
-                    - combobox "Disabled" [disabled]: Disabled multi select
+                - combobox "Disabled" [disabled]: Disabled multi select
             `);
         });
 
@@ -310,96 +308,121 @@ test.describe("InputMultiSelect", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("With search", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("with-search");
         });
 
-        test("With search", async ({ story }) => {
-            await test.step("Default", async () => {
-                await story.openDropdown(story.locators.withSearch.default);
-                await expect(
-                    story.locators.component.searchInput
-                ).toBeFocused();
-                await compareScreenshot(story, "default-open", {
-                    fullscreen: true,
-                });
-
-                await story.locators.component.searchInput.fill("zzzz");
-                await expect(story.locators.component.noResults).toBeVisible();
-                await compareScreenshot(story, "default-no-result", {
-                    fullscreen: true,
-                });
-                await story.page.mouse.click(0, 0);
-            });
-
-            await test.step("Custom no result label", async () => {
-                await story.openDropdown(
-                    story.locators.withSearch.withCustomNoResultLabel
-                );
-                await expect(
-                    story.locators.component.searchInput
-                ).toBeFocused();
-
-                await story.locators.component.searchInput.fill("zzzz");
-                await expect(story.locators.component.noResults).toBeVisible();
-                await compareScreenshot(story, "custom-no-result-label", {
-                    fullscreen: true,
-                });
-                await story.page.mouse.click(0, 0);
-            });
-
-            await test.step("Custom no result description", async () => {
-                await story.openDropdown(
-                    story.locators.withSearch.withCustomNoResultDescription
-                );
-                await expect(
-                    story.locators.component.searchInput
-                ).toBeFocused();
-
-                await story.locators.component.searchInput.fill("zzzz");
-                await expect(story.locators.component.noResults).toBeVisible();
-                await compareScreenshot(story, "custom-no-result-description", {
-                    fullscreen: true,
-                });
-                await story.page.mouse.click(0, 0);
-            });
-
-            await test.step("Custom search placeholder", async () => {
-                await story.openDropdown(
-                    story.locators.withSearch.withCustomSearchPlaceholder
-                );
-                await compareScreenshot(story, "custom-search-placeholder", {
-                    fullscreen: true,
-                });
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("max-selectable");
-        });
-
-        test("Max selection", async ({ story }) => {
-            await story.openDropdown(story.locators.multiSelect);
-            await expect(story.locators.component.dropdownList)
-                .toMatchAriaSnapshot(`
-                - listbox:
-                  - option "Option A" [selected]
-                  - option "Option B" [selected]
-                  - option "Option C" [disabled]
-                  - option "Option D"
-            `);
+        test("Default", async ({ story }) => {
+            await story.openDropdown(story.locators.withSearch.default);
+            await expect(story.locators.component.searchInput).toBeFocused();
             await compareScreenshot(story, "open", {
                 fullscreen: true,
             });
-        });
-    });
+            await expect(story.locators.component.dropdownContainer)
+                .toMatchAriaSnapshot(`
+                    - status
+                    - group:
+                        - textbox "Enter text to search":
+                            - /placeholder: Search
+                        - button "Select all"
+                        - listbox:
+                            - option "Option A"
+                            - option "Option B"
+                            - option "Option C"
+                            - option "Option D"
+            `);
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("with-search");
+            await story.locators.component.searchInput.fill("zzzz");
+            await expect(story.locators.component.noResults).toBeVisible();
+            await compareScreenshot(story, "no-result", {
+                fullscreen: true,
+            });
+            await expect(story.locators.component.dropdownContainer)
+                .toMatchAriaSnapshot(`
+                    - status
+                    - group:
+                        - textbox "Enter text to search":
+                            - /placeholder: Search
+                            - text: zzzz
+                        - button "Clear search"
+                        - img
+                        - text: No results found.
+                        - listbox
+            `);
+        });
+
+        test("Custom no result label", async ({ story }) => {
+            await story.openDropdown(
+                story.locators.withSearch.withCustomNoResultLabel
+            );
+            await expect(story.locators.component.searchInput).toBeFocused();
+
+            await story.locators.component.searchInput.fill("zzzz");
+            await expect(story.locators.component.noResults).toBeVisible();
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+            await expect(story.locators.component.dropdownContainer)
+                .toMatchAriaSnapshot(`
+                    - status
+                    - group:
+                        - textbox "Enter text to search":
+                            - /placeholder: Search
+                            - text: zzzz
+                        - button "Clear search"
+                        - img
+                        - text: Custom no result found.
+                        - listbox
+            `);
+        });
+
+        test("Custom no result description", async ({ story }) => {
+            await story.openDropdown(
+                story.locators.withSearch.withCustomNoResultDescription
+            );
+            await expect(story.locators.component.searchInput).toBeFocused();
+
+            await story.locators.component.searchInput.fill("zzzz");
+            await expect(story.locators.component.noResults).toBeVisible();
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+            await expect(story.locators.component.dropdownContainer)
+                .toMatchAriaSnapshot(`
+                    - status
+                    - group:
+                        - textbox "Enter text to search":
+                            - /placeholder: Search
+                            - text: zzzz
+                        - button "Clear search"
+                        - img
+                        - text: No results found. Custom no result found description.
+                            This can be used to provide more context to users when there are no search results.
+                        - listbox
+            `);
+        });
+
+        test("Custom search placeholder", async ({ story }) => {
+            await story.openDropdown(
+                story.locators.withSearch.withCustomSearchPlaceholder
+            );
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+            await expect(story.locators.component.dropdownContainer)
+                .toMatchAriaSnapshot(`
+                    - status
+                    - group:
+                        - textbox "Enter text to search":
+                            - /placeholder: Custom search placeholder
+                        - button "Select all"
+                        - listbox:
+                            - option "Option A"
+                            - option "Option B"
+                            - option "Option C"
+                            - option "Option D"
+            `);
         });
 
         test("Keyboard interaction", async ({ story }) => {
@@ -421,6 +444,27 @@ test.describe("InputMultiSelect", () => {
             await expect(
                 story.locators.withSearch.default.getByTestId("selector")
             ).toBeFocused();
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("max-selectable");
+        });
+
+        test("Max selection", async ({ story }) => {
+            await story.openDropdown(story.locators.multiSelect);
+            await expect(story.locators.component.dropdownList)
+                .toMatchAriaSnapshot(`
+                - listbox:
+                  - option "Option A" [selected]
+                  - option "Option B" [selected]
+                  - option "Option C" [disabled]
+                  - option "Option D"
+            `);
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
         });
     });
 
