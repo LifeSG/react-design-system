@@ -14,9 +14,44 @@ export const inputSection = css`
 `;
 
 export const baseInput = css`
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
+    display: block;
+    background: transparent;
+    border: none;
+    outline: none;
+    box-shadow: none;
+    padding: 0;
+    margin: 0;
     text-align: center;
     position: absolute;
     inset: 0;
+
+    &:disabled {
+        color: ${Colour["text-subtler"]};
+
+        &:hover {
+            cursor: not-allowed;
+        }
+    }
+
+    &::placeholder,
+    &::-webkit-input-placeholder {
+        color: ${Colour["text-subtler"]};
+    }
+
+    // Chrome, Safari, Edge, Opera
+    &::-webkit-outer-spin-button,
+    &::-webkit-inner-spin-button {
+        -webkit-appearance: none;
+        margin: 0;
+    }
+
+    // Safari (remove top shadow)
+    --webkit-appearance: none;
+
+    // Firefox
+    --moz-appearance: textfield;
 `;
 
 export const baseInputHover = css`

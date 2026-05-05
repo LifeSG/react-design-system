@@ -4,7 +4,6 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 
 import { DateInputHelper, StringHelper, useStateRef } from "../../util";
-import { basicInput } from "../input-wrapper/input-wrapper.styles";
 import * as styles from "./standalone-date-input.styles";
 
 dayjs.extend(customParseFormat);
@@ -376,7 +375,6 @@ export const Component = (
                             currentFocus === names[0] && !readOnly ? "" : "DD"
                         }
                         className={clsx(
-                            basicInput,
                             styles.baseInput,
                             !!hoverValue && styles.baseInputHover
                         )}
@@ -419,7 +417,6 @@ export const Component = (
                             currentFocus === names[1] && !readOnly ? "" : "MM"
                         }
                         className={clsx(
-                            basicInput,
                             styles.baseInput,
                             !!hoverValue && styles.baseInputHover
                         )}
@@ -462,7 +459,6 @@ export const Component = (
                             currentFocus === names[2] && !readOnly ? "" : "YYYY"
                         }
                         className={clsx(
-                            basicInput,
                             styles.baseInput,
                             !!hoverValue && styles.baseInputHover
                         )}
