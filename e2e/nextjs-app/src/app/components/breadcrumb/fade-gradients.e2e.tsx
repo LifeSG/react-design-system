@@ -1,6 +1,5 @@
 "use client";
 import { Breadcrumb } from "@lifesg/react-design-system/breadcrumb";
-import styles from "./breadcrumb.module.css";
 
 export default function Story() {
     const longLinks = [
@@ -31,7 +30,7 @@ export default function Story() {
     const fadeColorRight = ["blue", "green"];
 
     return (
-        <div className={`story-column-container ${styles["container-gap"]}`}>
+        <div className="story-column-container">
             <div>
                 <h3>Fade Left Only</h3>
                 <Breadcrumb
