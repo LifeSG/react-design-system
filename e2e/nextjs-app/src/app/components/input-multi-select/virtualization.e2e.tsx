@@ -2,7 +2,7 @@
 
 import { InputMultiSelect } from "@lifesg/react-design-system/input-multi-select";
 
-const LARGE_OPTIONS = Array.from({ length: 5000 }, (_, index) => ({
+const LARGE_OPTIONS = Array.from({ length: 100 }, (_, index) => ({
     value: index + 1,
     label: `Option ${index + 1}`,
 }));

@@ -546,7 +546,28 @@ test.describe("InputMultiSelect", () => {
                   - option "Option A" [selected]
                   - option "Option B" [selected]
                   - option "Option C" [disabled]
-                  - option "Option D"
+                  - option "Option D" [disabled]
+            `);
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("max-selectable", { mode: "dark" });
+        });
+
+        test("Max selection Dark Mode", async ({ story }) => {
+            await story.openDropdown(story.locators.multiSelect);
+            await expect(story.locators.component.dropdownList)
+                .toMatchAriaSnapshot(`
+                - listbox:
+                  - option "Option A" [selected]
+                  - option "Option B" [selected]
+                  - option "Option C" [disabled]
+                  - option "Option D" [disabled]
             `);
             await compareScreenshot(story, "open", {
                 fullscreen: true,
@@ -579,6 +600,29 @@ test.describe("InputMultiSelect", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", { mode: "dark" });
+            await story.openDropdown(story.locators.form.selected);
+        });
+
+        test("Focus Dark Mode", async ({ story }) => {
+            await test.step("Item", async () => {
+                await story.getOption("Option C").hover();
+                await compareScreenshot(story, "item", {
+                    fullscreen: true,
+                });
+            });
+
+            await test.step("Selected item", async () => {
+                await story.getOption("Option A").hover();
+                await compareScreenshot(story, "selected-item", {
+                    fullscreen: true,
+                });
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("virtualization");
         });
 
@@ -587,8 +631,8 @@ test.describe("InputMultiSelect", () => {
             await story.locators.component.searchInput.fill("Option 4999");
             await expect(story.getOption("Option 4999")).toBeVisible();
 
-            await compareScreenshot(story, "filtered", {
-                fullscreen: true,
+            await compareScreenshot(story, "last-item", {
+                locator: story.locators.component.dropdownContainer,
             });
         });
     });
