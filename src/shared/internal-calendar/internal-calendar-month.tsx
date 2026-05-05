@@ -206,7 +206,9 @@ export const InternalCalendarMonth = ({
                             interactive &&
                                 variant !== "selected-month" &&
                                 styles.monthCellDefaultHover,
-                            interactive && styles.monthCellSelectedHover
+                            interactive &&
+                                variant === "selected-month" &&
+                                styles.monthCellSelectedHover
                         )}
                         onClick={() => handleMonthClick(date, !interactive)}
                         onKeyDown={(event) => {
