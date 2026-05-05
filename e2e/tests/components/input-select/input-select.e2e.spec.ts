@@ -5,7 +5,7 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "input-select";
 
     public readonly locators: {
-        component: {
+        internal: {
             ctaButton: Locator;
             dropdownContainer: Locator;
             dropdownList: Locator;
@@ -42,7 +42,7 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            component: {
+            internal: {
                 ctaButton: page.getByTestId("cta-button"),
                 dropdownContainer: page.getByTestId("dropdown-container"),
                 dropdownList: page.getByTestId("dropdown-list"),
@@ -81,15 +81,15 @@ class StoryPage extends AbstractStoryPage {
     }
 
     public getActiveOption() {
-        return this.locators.component.dropdownList.locator(
+        return this.locators.internal.dropdownList.locator(
             '[role="option"][tabindex="0"]'
         );
     }
 
     public async openDropdown(select: Locator) {
         await select.click();
-        await expect(this.locators.component.dropdownContainer).toBeVisible();
-        await expect(this.locators.component.dropdownList).toBeVisible();
+        await expect(this.locators.internal.dropdownContainer).toBeVisible();
+        await expect(this.locators.internal.dropdownList).toBeVisible();
     }
 }
 
@@ -135,13 +135,13 @@ test.describe("InputSelect", () => {
 
             await story.locators.form.readonly.click();
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
 
             await story.locators.form.readonly.focus();
             await story.page.keyboard.press("Enter");
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
 
             await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
@@ -150,7 +150,7 @@ test.describe("InputSelect", () => {
 
             await story.locators.form.disabled.click();
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
         });
     });
@@ -189,13 +189,13 @@ test.describe("InputSelect", () => {
 
             await story.locators.standalone.readonly.click();
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
 
             await story.locators.standalone.readonly.focus();
             await story.page.keyboard.press("Enter");
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
 
             await expect(story.locators.standalone.disabled)
@@ -205,7 +205,7 @@ test.describe("InputSelect", () => {
 
             await story.locators.standalone.disabled.click();
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
         });
     });
@@ -220,7 +220,7 @@ test.describe("InputSelect", () => {
 
             await story.page.keyboard.press("Enter");
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).toBeVisible();
 
             await story.page.keyboard.press("ArrowDown");
@@ -229,7 +229,7 @@ test.describe("InputSelect", () => {
 
             await story.page.keyboard.press("Escape");
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
         });
 
@@ -243,7 +243,7 @@ test.describe("InputSelect", () => {
 
             await story.getOption("Option B").click();
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
             await expect(story.locators.form.default).toContainText("Option B");
 
@@ -266,14 +266,14 @@ test.describe("InputSelect", () => {
                 fullscreen: true,
             });
 
-            await story.locators.component.searchInput.fill("zzzz");
-            await expect(story.locators.component.noResults).toBeVisible();
+            await story.locators.internal.searchInput.fill("zzzz");
+            await expect(story.locators.internal.noResults).toBeVisible();
             await compareScreenshot(story, "search-no-results", {
                 fullscreen: true,
             });
 
-            await story.locators.component.searchInput.fill("");
-            await expect(story.locators.component.noResults).not.toBeVisible();
+            await story.locators.internal.searchInput.fill("");
+            await expect(story.locators.internal.noResults).not.toBeVisible();
             await expect(story.getOption("Option A")).toBeVisible();
 
             await compareScreenshot(story, "search-cleared", {
@@ -313,15 +313,15 @@ test.describe("InputSelect", () => {
             await story.openDropdown(story.locators.virtualization);
 
             const before =
-                await story.locators.component.dropdownContainer.boundingBox();
-            await expect(story.locators.component.searchInput).toBeFocused();
+                await story.locators.internal.dropdownContainer.boundingBox();
+            await expect(story.locators.internal.searchInput).toBeFocused();
 
-            await story.locators.component.searchInput.fill("Option 49999");
+            await story.locators.internal.searchInput.fill("Option 49999");
             await expect(story.getOption("Option 49999")).toBeVisible();
-            await expect(story.locators.component.searchInput).toBeFocused();
+            await expect(story.locators.internal.searchInput).toBeFocused();
 
             const after =
-                await story.locators.component.dropdownContainer.boundingBox();
+                await story.locators.internal.dropdownContainer.boundingBox();
             expect(before).not.toBeNull();
             expect(after).not.toBeNull();
             expect(
@@ -334,7 +334,7 @@ test.describe("InputSelect", () => {
 
             await story.getOption("Option 49999").click();
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
             await expect(story.locators.virtualization).toContainText(
                 "Option 49999"
@@ -349,14 +349,14 @@ test.describe("InputSelect", () => {
 
         test("Custom CTA", async ({ story }) => {
             await story.openDropdown(story.locators.cta);
-            await expect(story.locators.component.ctaButton).toBeVisible();
+            await expect(story.locators.internal.ctaButton).toBeVisible();
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
 
-            await story.locators.component.ctaButton.click();
+            await story.locators.internal.ctaButton.click();
             await expect(
-                story.locators.component.dropdownContainer
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
         });
     });

@@ -6,7 +6,7 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "drawer";
 
     public readonly locators: {
-        component: {
+        internal: {
             closeButton: Locator;
             openButton: Locator;
         };
@@ -16,7 +16,7 @@ class StoryPage extends AbstractStoryPage {
     constructor(page: Page) {
         super(page);
         this.locators = {
-            component: {
+            internal: {
                 closeButton: page.getByRole("button", { name: "Close drawer" }),
                 openButton: page.getByRole("button", { name: "Open drawer" }),
             },
@@ -25,7 +25,7 @@ class StoryPage extends AbstractStoryPage {
     }
 
     async open() {
-        await this.locators.component.openButton.click();
+        await this.locators.internal.openButton.click();
         await expect(this.locators.drawer).toBeVisible();
     }
 }
@@ -51,7 +51,7 @@ test.describe("Drawer", () => {
         test("Close via close button", async ({ story }) => {
             await story.open();
 
-            await story.locators.component.closeButton.click();
+            await story.locators.internal.closeButton.click();
 
             await expect(story.locators.drawer).not.toBeVisible();
         });
@@ -82,7 +82,7 @@ test.describe("Drawer", () => {
 
             await story.page.keyboard.press("Tab");
 
-            await expect(story.locators.component.closeButton).toBeFocused();
+            await expect(story.locators.internal.closeButton).toBeFocused();
         });
 
         test("Accessibility tree when open", async ({ story }) => {
