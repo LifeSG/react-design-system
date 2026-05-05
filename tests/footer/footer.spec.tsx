@@ -139,6 +139,24 @@ describe("Footer", () => {
             expect(defaultPrivacyText).toBeInTheDocument();
             expect(overridenPrivacyText).not.toBeInTheDocument();
         });
+
+        it("should support partial custom disclaimer links", () => {
+            const disclaimerLinks: DisclaimerLinks = {
+                privacy: {
+                    href: "https://test.com/privacy",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                },
+            };
+
+            render(<Footer disclaimerLinks={disclaimerLinks} />);
+
+            const privacyLink = getAnchorElement("Privacy Statement");
+
+            expect(privacyLink.href).toBe("https://test.com/privacy");
+            expect(privacyLink.target).toBe("_blank");
+            expect(privacyLink.rel).toBe("noopener noreferrer");
+        });
     });
 
     describe("copyrightInfo", () => {

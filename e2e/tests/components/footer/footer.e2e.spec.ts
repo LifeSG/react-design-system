@@ -88,22 +88,4 @@ test.describe("Footer", () => {
             await compareScreenshot(story, "mount");
         });
     });
-
-    // test.describe(() => {
-    //     test.beforeEach(async ({ story }) => {
-    //         await story.init("custom-disclaimer");
-    //     });
-
-    //     //Unit test
-    //     test("Custom disclaimer links", async ({ story }) => {
-    //         await compareScreenshot(story, "mount");
-
-    //         await expect(
-    //             story.page.getByRole("link", { name: "Privacy Statement" })
-    //         ).toMatchAriaSnapshot(`
-    //         - link "Privacy Statement":
-    //             - /url: https://www.test.com
-    //         `);
-    //     });
-    // });
 });
