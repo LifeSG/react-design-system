@@ -6,7 +6,9 @@ export function proxy(request: NextRequest) {
     const isDev = process.env.NODE_ENV === "development";
     const cspHeader = `
         default-src 'self';
-        script-src 'self' 'nonce-${nonce}' ${isDev ? "'unsafe-eval'" : ""};
+        script-src 'self' 'nonce-${nonce}' ${
+        isDev ? "'unsafe-eval'" : ""
+    } https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3/components/Masthead/index.umd.js;
         style-src 'self' 'nonce-${nonce}' ${
         isDev ? "'unsafe-inline'" : ""
     } https://assets.life.gov.sg;
