@@ -31,6 +31,21 @@ test.describe("Footer", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("default-layout", { mode: "dark" });
+        });
+
+        for (const theme of THEME_TYPES) {
+            test(`${theme} dark theme`, async ({ story }) => {
+                await story.page.goto(
+                    `/components/footer/default-layout?theme=${theme}`
+                );
+                await compareScreenshot(story, "mount");
+            });
+        }
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("minimal");
         });
 
@@ -41,10 +56,30 @@ test.describe("Footer", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("minimal", { mode: "dark" });
+        });
+
+        test("Minimal layout dark", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("mylegacy-footer");
         });
 
         test("MyLegacy layout", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("mylegacy-footer", { mode: "dark" });
+        });
+
+        test("MyLegacy layout dark", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
