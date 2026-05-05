@@ -1,5 +1,10 @@
 "use client";
-import { ThemeProvider } from "@lifesg/react-design-system/theme";
+import { useSearchParams } from "next/navigation";
+import {
+    ThemeProvider,
+    THEME_TYPES,
+    type ThemeType,
+} from "@lifesg/react-design-system/theme";
 import {
     V3_DSThemeProvider,
     V3_LifeSGTheme,
@@ -24,6 +29,14 @@ export default function Layout({
 }: Readonly<{
     children: React.ReactNode;
 }>) {
+    const searchParams = useSearchParams();
+    const themeParam = searchParams.get("theme");
+
+    const theme: ThemeType | undefined =
+        themeParam && THEME_TYPES.includes(themeParam as ThemeType)
+            ? (themeParam as ThemeType)
+            : undefined;
+
     return (
         <>
             <link
@@ -36,14 +49,25 @@ export default function Layout({
                 href="https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css"
             />
             <V3_DSThemeProvider theme={V3_LifeSGTheme}>
-                <ThemeProvider>
-                    <div
-                        data-testid="story-layout"
-                        className={styles["story-layout"]}
-                    >
-                        {children}
-                    </div>
-                </ThemeProvider>
+                {theme ? (
+                    <ThemeProvider theme={theme}>
+                        <div
+                            data-testid="story-layout"
+                            className={styles["story-layout"]}
+                        >
+                            {children}
+                        </div>
+                    </ThemeProvider>
+                ) : (
+                    <ThemeProvider>
+                        <div
+                            data-testid="story-layout"
+                            className={styles["story-layout"]}
+                        >
+                            {children}
+                        </div>
+                    </ThemeProvider>
+                )}
             </V3_DSThemeProvider>
         </>
     );
