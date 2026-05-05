@@ -66,7 +66,7 @@ describe("Sidenav", () => {
 
         const element = screen.getByTestId("side-nav");
         expect(element).toBeInTheDocument();
-        expect(element).toHaveStyle({ position: "fixed" });
+        expect(element).toHaveClass("wrapperFixed");
     });
 
     it("should render multiple groups correctly", () => {
