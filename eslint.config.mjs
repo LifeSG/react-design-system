@@ -176,6 +176,7 @@ export default defineConfig([
         rules: {
             "local/import-path-preferences": "warn",
             "local/style-namespace-import": "warn",
+            "local/no-negative-linaria-interpolation": "error",
             "react-hooks/exhaustive-deps": [
                 "warn",
                 {
