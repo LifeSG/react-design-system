@@ -10,6 +10,7 @@ export default function Story() {
 
     return (
         <div className="story-column-container">
+            <button data-testid="focus-target-before">before</button>
             <InputRangeSlider
                 value={value}
                 onChange={handleChange}
@@ -27,6 +28,7 @@ export default function Story() {
                 Max value:{" "}
                 <span data-testid="range-slider-max-value">{value[1]}</span>
             </p>
+            <button data-testid="focus-target-after">after</button>
         </div>
     );
 }
