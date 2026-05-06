@@ -1,80 +1,60 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { animated } from "@react-spring/web";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, Font, Motion, Spacing } from "../theme";
 
-// =============================================================================
-// STYLES INTERFACE
-// =============================================================================
-interface StyleProps {
-    $collapsible?: boolean;
-    $expanded?: boolean;
-    $isMobile?: boolean;
-}
-
-interface DividerStyleProps {
-    $showDivider: boolean;
-    $showMobileDivider: boolean;
-    $isMobile?: boolean;
-}
-
-interface MinimisableContentProps {
-    $height?: number;
-    $minimisable: boolean;
-}
-
-interface FilterItemHeaderStyleProps {
-    $isMobile?: boolean;
-}
-interface FilterItemTitleStyleProps {
-    $isMobile?: boolean;
-}
+export const tokens = {
+    minimisableContent: {
+        height: "--fds-internal-filter-minimisableContent-height",
+    },
+} as const;
 
 // =============================================================================
 // FILTER ITEM STYLES
 // =============================================================================
 
-export const FilterItemWrapper = styled.div<StyleProps>`
-    background-color: ${(props) =>
-        props.$collapsible ? Colour["bg-strong"] : Colour["bg"]};
-    ${(props) =>
-        props.$isMobile &&
-        css`
-            background-color: ${Colour["bg-strong"]};
-        `}
+export const FilterItemWrapper = styled.div`
+    background-color: ${Colour["bg"]};
+
+    &.filterItemWrapperCollapsible {
+        background-color: ${Colour["bg-strong"]};
+    }
+
+    &.filterItemWrapperMobile {
+        background-color: ${Colour["bg-strong"]};
+    }
 `;
 
-export const Divider = styled.div<DividerStyleProps>`
-    display: ${(props) => (props.$showDivider ? "block" : "none")};
+export const Divider = styled.div`
+    display: none;
     height: 1px;
     background-color: ${Colour["border"]};
 
-    ${(props) =>
-        props.$isMobile &&
-        css`
-            display: ${props.$showMobileDivider ? "block" : "none"};
-            margin: 0 ${Spacing["spacing-16"]};
-        `}
+    &.dividerVisible {
+        display: block;
+    }
+
+    &.dividerMobile {
+        margin: 0 ${Spacing["spacing-16"]};
+    }
 `;
 
 // -----------------------------------------------------------------------------
 // HEADER STYLES
 // -----------------------------------------------------------------------------
 
-export const FilterItemHeader = styled.div<FilterItemHeaderStyleProps>`
+export const FilterItemHeader = styled.div`
     display: flex;
     align-items: center;
 
     background-color: ${Colour["bg"]};
 
-    ${(props) =>
-        props.$isMobile &&
-        css`
-            background-color: transparent;
-        `}
+    &.filterItemHeaderMobile {
+        background-color: transparent;
+    }
 `;
 
 export const FilterItemExpandButton = styled(ClickableIcon)`
@@ -86,30 +66,32 @@ export const FilterItemExpandButton = styled(ClickableIcon)`
     }
 `;
 
-export const ChevronIcon = styled(ChevronDownIcon)<StyleProps>`
+export const ChevronIcon = styled(ChevronDownIcon)`
     height: ${Font.Spec["body-size-baseline"]};
     width: ${Font.Spec["body-size-baseline"]};
 
-    transform: rotate(${(props) => (props.$expanded ? 180 : 0)}deg);
+    transform: rotate(0deg);
     transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};
+
+    &.chevronIconExpanded {
+        transform: rotate(180deg);
+    }
 `;
 
-export const FilterItemTitle = styled.h3<FilterItemTitleStyleProps>`
+export const FilterItemTitle = styled.h3`
     ${Font["heading-xs-semibold"]}
     color: ${Colour["text"]};
 
     margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
         ${Spacing["spacing-20"]};
 
-    ${(props) =>
-        props.$isMobile &&
-        css`
-            ${Font["body-md-semibold"]}
-            color: ${Colour["text-subtle"]};
+    &.filterItemTitleMobile {
+        ${Font["body-md-semibold"]}
+        color: ${Colour["text-subtle"]};
 
-            margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
-                ${Spacing["spacing-20"]};
-        `}
+        margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
+            ${Spacing["spacing-20"]};
+    }
 `;
 
 // -----------------------------------------------------------------------------
@@ -124,9 +106,13 @@ export const FilterItemBody = styled.div`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
 `;
 
-export const MinimisableContent = animated(styled.div<MinimisableContentProps>`
-    ${(props) => props.$minimisable && "overflow: hidden;"}
-    ${(props) => props.$height && `height: ${props.$height}px;`}
+export const MinimisableContent = animated(styled.div`
+    ${tokens.minimisableContent.height}: initial;
+    height: var(${tokens.minimisableContent.height});
+
+    &.minimisableContentMinimisable {
+        overflow: hidden;
+    }
 `);
 
 export const FilterItemMinimiseButton = styled(Button.Small)`

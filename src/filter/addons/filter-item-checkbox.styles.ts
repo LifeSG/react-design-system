@@ -1,10 +1,16 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button } from "../../button";
 import { Checkbox } from "../../checkbox";
 import { Colour, Font, MediaQuery, Spacing } from "../../theme";
 import { Toggle } from "../../toggle";
 import { FilterItem } from "../filter-item";
+
+export const tokens = {
+    item: {
+        level: "--fds-internal-filter-itemCheckboxItem-level",
+    },
+} as const;
 
 export const StyledFilterItem = styled(FilterItem)`
     padding: 0 0 ${Spacing["spacing-16"]};
@@ -24,60 +30,56 @@ export const StyledFilterItem = styled(FilterItem)`
     }
 `;
 
-export const Group = styled.div<{
-    $isMobileToggleMode: boolean;
-}>`
+export const Group = styled.div`
     display: flex;
     flex-direction: column;
 
     ${MediaQuery.MaxWidth.lg} {
         flex-direction: row;
         flex-wrap: wrap;
-        gap: ${(props) =>
-            props.$isMobileToggleMode ? Spacing["spacing-16"] : 0};
+        gap: 0;
+    }
+
+    &.groupMobileToggleMode {
+        ${MediaQuery.MaxWidth.lg} {
+            gap: ${Spacing["spacing-16"]};
+        }
     }
 `;
 
-export const Item = styled.label<{
-    $visible: boolean;
-    $selected: boolean;
-    $level?: number;
-}>`
+export const Item = styled.label`
+    ${tokens.item.level}: 0;
+
     display: flex;
     align-items: flex-start;
-    ${(props) => !props.$visible && "display: none;"}
 
     position: relative;
     width: 100%;
     min-height: 1.5rem;
     padding: ${Spacing["spacing-8"]} ${Spacing["spacing-12"]};
-    ${(props) =>
-        props.$level &&
-        css`
-            padding-left: calc(
-                ${Spacing["spacing-12"]} + ${props.$level} *
-                    ${Spacing["spacing-32"]}
-            );
-        `}
+    padding-left: calc(
+        ${Spacing["spacing-12"]} + var(${tokens.item.level}) *
+            ${Spacing["spacing-32"]}
+    );
 
     cursor: pointer;
     ${Font["body-md-regular"]}
     color: ${Colour["text"]};
-    ${(props) =>
-        props.$selected &&
-        css`
-            color: ${Colour["text-selected"]};
-        `}
+
+    &.itemHidden {
+        display: none;
+    }
+
+    &.itemSelected {
+        color: ${Colour["text-selected"]};
+    }
+
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-8"]};
-        ${(props) =>
-            props.$level &&
-            css`
-                padding-left: calc(
-                    ${Spacing["spacing-8"]} + ${props.$level} *
-                        ${Spacing["spacing-32"]}
-                );
-            `}
+        padding-left: calc(
+            ${Spacing["spacing-8"]} + var(${tokens.item.level}) *
+                ${Spacing["spacing-32"]}
+        );
     }
 `;
 
@@ -86,9 +88,12 @@ export const StyledCheckbox = styled(Checkbox)`
     margin-right: ${Spacing["spacing-8"]};
 `;
 
-export const StyledToggle = styled(Toggle)<{ $visible: boolean }>`
-    ${(props) => !props.$visible && "visibility: hidden;"}
+export const StyledToggle = styled(Toggle)`
     min-width: 5rem;
+
+    &.styledToggleHidden {
+        visibility: hidden;
+    }
 `;
 
 export const SelectAllButton = styled(Button.Small)`

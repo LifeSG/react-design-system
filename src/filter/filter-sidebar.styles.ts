@@ -33,7 +33,7 @@ export const FilterTitle = styled.h2`
         ${Spacing["spacing-20"]};
 `;
 
-export const FilterClearButton = styled(Button.Small)`
+export const FilterClearButton = styled(Button)`
     background-color: transparent;
     padding-right: ${Spacing["spacing-20"]};
     padding-left: ${Spacing["spacing-20"]};
