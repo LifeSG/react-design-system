@@ -98,6 +98,46 @@ test.describe("Filter", () => {
         });
     });
 
+    test.describe(() => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("item-minimisable");
+            });
+
+            test("Minimisable content", async ({ story }) => {
+                const item =
+                    story.locators.sidebar.getByTestId("item-minimised");
+                const customItem = story.locators.sidebar.getByTestId(
+                    "item-minimised-custom"
+                );
+
+                await compareScreenshot(story, "minimised", {
+                    locator: story.locators.sidebar,
+                });
+
+                await test.step("Expand both items", async () => {
+                    await item
+                        .getByRole("button", { name: /view more/i })
+                        .click();
+                    await customItem
+                        .getByRole("button", { name: /view more/i })
+                        .click();
+
+                    await expect(
+                        item.getByRole("button", { name: /view less/i })
+                    ).toBeVisible();
+                    await expect(
+                        customItem.getByRole("button", { name: /view less/i })
+                    ).toBeVisible();
+                });
+
+                await compareScreenshot(story, "expanded", {
+                    locator: story.locators.sidebar,
+                });
+            });
+        });
+    });
+
     test.describe("Checkbox", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
