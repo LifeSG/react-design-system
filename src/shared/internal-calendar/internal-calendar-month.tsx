@@ -1,9 +1,10 @@
+import clsx from "clsx";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { CalendarHelper } from "../../util/calendar-helper";
-import { MonthCell, Wrapper } from "./internal-calendar-month.style";
+import * as styles from "./internal-calendar-month.styles";
 import type { FocusType, InternalCalendarProps } from "./types";
 
 export type MonthVariant = "default" | "current-month" | "selected-month";
@@ -176,7 +177,7 @@ export const InternalCalendarMonth = ({
     if (!months.length) return null;
 
     return (
-        <Wrapper onBlur={handleOnBlur}>
+        <div className={styles.wrapper} onBlur={handleOnBlur}>
             {months.map((date, index) => {
                 const {
                     disabledDisplay,
@@ -187,25 +188,37 @@ export const InternalCalendarMonth = ({
                 } = generateMonthStatus(date);
 
                 return (
-                    <MonthCell
+                    <div
                         ref={(el) => (monthRefs.current[index] = el)}
                         tabIndex={tabIndex}
                         role="button"
                         aria-disabled={!interactive}
                         aria-selected={variant === "selected-month"}
                         key={month}
-                        $variant={variant}
-                        $disabledDisplay={disabledDisplay}
-                        $interactive={interactive}
+                        className={clsx(
+                            styles.monthCell,
+                            disabledDisplay && styles.monthCellDisabledDisplay,
+                            interactive && styles.monthCellInteractive,
+                            variant === "current-month" &&
+                                styles.monthCellCurrentMonth,
+                            variant === "selected-month" &&
+                                styles.monthCellSelectedMonth,
+                            interactive &&
+                                variant !== "selected-month" &&
+                                styles.monthCellDefaultHover,
+                            interactive &&
+                                variant === "selected-month" &&
+                                styles.monthCellSelectedHover
+                        )}
                         onClick={() => handleMonthClick(date, !interactive)}
                         onKeyDown={(event) => {
                             handleKeyDown(event, date, !interactive);
                         }}
                     >
                         {month}
-                    </MonthCell>
+                    </div>
                 );
             })}
-        </Wrapper>
+        </div>
     );
 };

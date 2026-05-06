@@ -1,9 +1,10 @@
+import clsx from "clsx";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import { useEffect, useMemo, useRef, useState } from "react";
 
 import { CalendarHelper } from "../../util/calendar-helper";
-import { Wrapper, YearCell } from "./internal-calendar-year.style";
+import * as styles from "./internal-calendar-year.styles";
 import type { FocusType, InternalCalendarProps } from "./types";
 
 export type YearVariant =
@@ -189,7 +190,7 @@ export const InternalCalendarYear = ({
     if (!years.length) return null;
 
     return (
-        <Wrapper onBlur={handleOnBlur}>
+        <div className={styles.wrapper} onBlur={handleOnBlur}>
             {years.map((date, index) => {
                 const {
                     disabledDisplay,
@@ -200,7 +201,7 @@ export const InternalCalendarYear = ({
                 } = generateYearStatus(date);
 
                 return (
-                    <YearCell
+                    <div
                         ref={(el) => {
                             yearRefs.current[index] = el;
                         }}
@@ -210,18 +211,32 @@ export const InternalCalendarYear = ({
                         aria-disabled={!interactive}
                         aria-selected={variant === "selected-year"}
                         key={year}
-                        $variant={variant}
-                        $disabledDisplay={disabledDisplay}
-                        $interactive={!!interactive}
+                        className={clsx(
+                            styles.yearCell,
+                            disabledDisplay && styles.yearCellDisabledDisplay,
+                            interactive && styles.yearCellInteractive,
+                            variant === "other-decade" &&
+                                styles.yearCellOtherDecade,
+                            variant === "current-year" &&
+                                styles.yearCellCurrentYear,
+                            variant === "selected-year" &&
+                                styles.yearCellSelectedYear,
+                            interactive &&
+                                variant !== "selected-year" &&
+                                styles.yearCellDefaultHover,
+                            interactive &&
+                                variant === "selected-year" &&
+                                styles.yearCellSelectedHover
+                        )}
                         onClick={() => handleYearClick(date, !interactive)}
                         onKeyDown={(event) => {
                             handleKeyDownPress(event, date, !interactive);
                         }}
                     >
                         {year}
-                    </YearCell>
+                    </div>
                 );
             })}
-        </Wrapper>
+        </div>
     );
 };

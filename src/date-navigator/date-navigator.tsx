@@ -1,13 +1,12 @@
+import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import dayjs from "dayjs";
 import { useState } from "react";
 
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { CalendarDropdown } from "../shared/internal-calendar";
-import {
-    ArrowLeft,
-    ArrowRight,
-} from "../shared/internal-calendar/calendar-manager.style";
+import * as calendarManagerStyles from "../shared/internal-calendar/calendar-manager.styles";
 import { CalendarHelper, DateHelper } from "../util";
 import {
     Container,
@@ -143,7 +142,11 @@ export const DateNavigator = ({
                         onClick={navigatePrevious}
                         styleType="light"
                         sizeType="small"
-                        icon={<ArrowLeft />}
+                        icon={
+                            <ChevronLeftIcon
+                                className={calendarManagerStyles.icon}
+                            />
+                        }
                     />
                 }
                 <StyledDateTextButton
@@ -167,7 +170,11 @@ export const DateNavigator = ({
                         onClick={navigateNext}
                         styleType="light"
                         sizeType="small"
-                        icon={<ArrowRight />}
+                        icon={
+                            <ChevronRightIcon
+                                className={calendarManagerStyles.icon}
+                            />
+                        }
                     />
                 }
             </Container>

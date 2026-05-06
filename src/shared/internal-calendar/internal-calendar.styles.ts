@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { V3_Colour } from "../../v3_theme";
+import { Colour } from "../../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
+export const container = css`
     width: 100%;
-    background: ${V3_Colour.bg};
+    background: ${Colour["bg"]};
 `;

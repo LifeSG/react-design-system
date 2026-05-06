@@ -2,6 +2,7 @@ import { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 
 import { InternalCalendar } from "../shared/internal-calendar";
+import * as calendarDropdownStyles from "../shared/internal-calendar/calendar-dropdown.styles";
 import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../v3_theme";
 import type { CalendarProps } from "./types";
 
@@ -115,9 +116,13 @@ interface StyleProps {
 // STYLING
 // =============================================================================
 const Wrapper = styled.div<StyleProps>`
-    --vertical-inset: ${V3_Spacing["spacing-24"]};
-    --horizontal-inset: ${V3_Spacing["spacing-32"]};
-    --header-bottom-spacing: ${V3_Spacing["spacing-8"]};
+    ${calendarDropdownStyles.tokens.verticalInset}: ${V3_Spacing["spacing-24"]};
+    ${calendarDropdownStyles.tokens.horizontalInset}: ${V3_Spacing[
+        "spacing-32"
+    ]};
+    ${calendarDropdownStyles.tokens.headerBottomSpacing}: ${V3_Spacing[
+        "spacing-8"
+    ]};
 
     width: 41rem;
 
