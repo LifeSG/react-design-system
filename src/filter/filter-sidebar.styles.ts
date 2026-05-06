@@ -20,8 +20,8 @@ export const filterHeader = css`
 export const filterTitle = css`
     ${Font["heading-xs-semibold"]}
     flex: 1;
-    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
-        ${Spacing["spacing-20"]};
+    margin: ${Spacing["spacing-24"]} 0;
+    margin-left: ${Spacing["spacing-20"]};
 `;
 
 export const filterClearButton = css`

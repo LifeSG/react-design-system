@@ -99,6 +99,7 @@ export const selectAllButton = css`
         ${Spacing["spacing-12"]};
 
     ${MediaQuery.MaxWidth.lg} {
-        margin: 0 0 ${Spacing["spacing-16"]} 0;
+        margin: 0;
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 `;
