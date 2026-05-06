@@ -66,8 +66,8 @@ export const filterItemTitle = css`
     ${Font["heading-xs-semibold"]}
     color: ${Colour["text"]};
 
-    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
-        ${Spacing["spacing-20"]};
+    margin: ${Spacing["spacing-24"]} 0;
+    margin-left: ${Spacing["spacing-20"]};
 `;
 
 export const filterItemTitleMobile = css`
