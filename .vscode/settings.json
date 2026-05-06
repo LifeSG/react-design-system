@@ -16,7 +16,15 @@
         "typescript",
         "typescriptreact"
     ],
-    "stylelint.validate": ["css", "postcss", "scss", "less"],
+    "stylelint.validate": [
+        "css",
+        "postcss",
+        "scss",
+        "less",
+        "typescript",
+        "typescriptreact"
+    ],
+    "stylelint.configFile": "stylelint.config.cjs",
     "auto-close-tag.activationOnLanguage": [
         "html",
         "javascriptreact",

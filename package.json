@@ -36,8 +36,8 @@
         "lint": "npm run lint:js && npm run lint:css",
         "lint:js": "eslint '**/*.{ts,tsx,js,jsx}' && npm --prefix e2e/nextjs-app run lint:src",
         "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix && npm --prefix e2e/nextjs-app run lint:src:fix",
-        "lint:css": "stylelint '**/*.css'",
-        "lint:css:fix": "stylelint '**/*.css' --fix",
+        "lint:css": "stylelint --config stylelint.config.cjs '**/*.css' '**/*.styles.ts'",
+        "lint:css:fix": "stylelint --config stylelint.config.cjs '**/*.css' '**/*.styles.ts' --fix",
         "test:eslint-rules": "node tests/eslint-rules/import-path-preferences.rule-test.mjs"
     },
     "repository": {
@@ -80,6 +80,7 @@
         "@lifesg/react-icons": "^1.12.0",
         "@linaria/babel-preset": "^5.0.4",
         "@linaria/core": "^7.0.0",
+        "@linaria/postcss-linaria": "^7.0.0",
         "@playwright/test": "^1.58.2",
         "@rollup/plugin-commonjs": "^25.0.7",
         "@rollup/plugin-image": "^3.0.3",
@@ -192,7 +193,10 @@
             "npm --prefix e2e/nextjs-app run lint:staged:fix --"
         ],
         "*.{css,module.css}": [
-            "stylelint --fix"
+            "stylelint --config stylelint.config.cjs --fix"
+        ],
+        "*.styles.ts": [
+            "stylelint --config stylelint.config.cjs --fix"
         ]
     }
 }
