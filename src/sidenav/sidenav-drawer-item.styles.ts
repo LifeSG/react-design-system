@@ -23,13 +23,13 @@ export const linkButton = css`
     &:focus {
         background: ${Colour["bg-hover-strong"]};
     }
+`;
 
-    &.linkButtonNoChildren {
-        &:hover,
-        &:focus {
-            background: ${Colour["bg-hover"]};
-            color: ${Colour["text-hover"]};
-        }
+export const linkButtonNoChildren = css`
+    &:hover,
+    &:focus {
+        background: ${Colour["bg-hover"]};
+        color: ${Colour["text-hover"]};
     }
 `;
 
@@ -43,10 +43,10 @@ export const chevronIcon = css`
     color: ${Colour["icon"]};
     transform: rotate(180deg);
     transition: transform ${Motion["duration-150"]} ${Motion["ease-default"]};
+`;
 
-    &.chevronIconExpanded {
-        transform: rotate(0deg);
-    }
+export const chevronIconExpanded = css`
+    transform: rotate(0deg);
 `;
 
 export const textElement = css`

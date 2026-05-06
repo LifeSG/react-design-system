@@ -79,7 +79,7 @@ export const SidenavDrawerItem = ({
                 onClick={handleOnClick}
                 className={clsx(
                     styles.linkButton,
-                    !children && "linkButtonNoChildren"
+                    !children && styles.linkButtonNoChildren
                 )}
                 {...ariaControlProps}
             >
@@ -89,7 +89,7 @@ export const SidenavDrawerItem = ({
                         aria-hidden
                         className={clsx(
                             styles.chevronIcon,
-                            expanded && "chevronIconExpanded"
+                            expanded && styles.chevronIconExpanded
                         )}
                     />
                 )}
