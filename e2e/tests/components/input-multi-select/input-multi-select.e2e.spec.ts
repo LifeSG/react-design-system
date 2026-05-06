@@ -628,11 +628,16 @@ test.describe("InputMultiSelect", () => {
 
         test("Virtualization", async ({ story }) => {
             await story.openDropdown(story.locators.multiSelect);
-            await story.locators.component.searchInput.fill("Option 4999");
-            await expect(story.getOption("Option 4999")).toBeVisible();
+
+            await story.scrollWithWheelUntil({
+                scrollTarget: story.locators.component.dropdownList,
+                until: async () => story.getOption("Option 100").isVisible(),
+            });
+
+            await expect(story.getOption("Option 1")).not.toBeVisible();
 
             await compareScreenshot(story, "last-item", {
-                locator: story.locators.component.dropdownContainer,
+                fullscreen: true,
             });
         });
     });
