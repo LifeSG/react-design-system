@@ -33,6 +33,7 @@ export const FilterSidebar = ({
                     <styles.FilterClearButton
                         styleType="link"
                         type="button"
+                        sizeType="small"
                         onClick={() => onClear?.()}
                         disabled={clearButtonDisabled}
                         aria-label={`clear ${labels.title}`}

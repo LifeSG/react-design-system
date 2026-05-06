@@ -1,9 +1,11 @@
 import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 
 import { Overlay } from "../overlay";
 import { inertValue } from "../shared/accessibility";
+import { useApplyStyle } from "../theme";
 import * as filterStyles from "./filter.styles";
 import { FilterContext } from "./filter-context";
 import * as styles from "./filter-modal.styles";
@@ -26,8 +28,22 @@ export const FilterModal = ({
 }: FilterModalProps) => {
     const { context, refs } = useFloating();
     const nodeRef = useRef<HTMLDivElement>(null);
+    const headerRef = useRef<HTMLDivElement>(null);
+    const footerRef = useRef<HTMLDivElement>(null);
 
     const [visible, setVisible] = useState(false);
+
+    useApplyStyle(headerRef, {
+        [styles.tokens.filterHeader.insetTop]: insets?.top
+            ? `${insets.top}px`
+            : null,
+    });
+
+    useApplyStyle(footerRef, {
+        [filterStyles.tokens.filterFooter.insetBottom]: insets?.bottom
+            ? `${insets.bottom}px`
+            : null,
+    });
 
     const handleShow = () => setVisible(true);
     const handleDismiss = () => {
@@ -82,7 +98,13 @@ export const FilterModal = ({
                             ref={refs.setFloating}
                         >
                             <styles.MobileContainer ref={nodeRef} tabIndex={0}>
-                                <styles.FilterHeader $insetTop={insets?.top}>
+                                <styles.FilterHeader
+                                    ref={headerRef}
+                                    className={clsx(
+                                        insets?.top &&
+                                            "filterHeaderWithInsetTop"
+                                    )}
+                                >
                                     <filterStyles.FilterHeaderButton
                                         onClick={handleDismiss}
                                         focusOutline="browser"
@@ -108,7 +130,11 @@ export const FilterModal = ({
                                     {children}
                                 </filterStyles.FilterBody>
                                 <filterStyles.FilterFooter
-                                    $insetBottom={insets?.bottom}
+                                    ref={footerRef}
+                                    className={clsx(
+                                        insets?.bottom &&
+                                            "filterFooterWithInsetBottom"
+                                    )}
                                 >
                                     <filterStyles.FilterDoneButton
                                         onClick={handleDone}

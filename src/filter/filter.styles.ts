@@ -4,13 +4,11 @@ import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Border, Colour, Spacing } from "../theme";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-
-type FilterFooterProps = {
-    $insetBottom?: number | undefined;
-};
+export const tokens = {
+    filterFooter: {
+        insetBottom: "--fds-internal-filter-filterFooter-insetBottom",
+    },
+} as const;
 
 // =============================================================================
 // CONTAINER STYLES
@@ -45,12 +43,14 @@ export const FilterHeaderButton = styled(ClickableIcon)`
 // COMPONENT STYLES
 // =============================================================================
 
-export const FilterFooter = styled.div<FilterFooterProps>`
+export const FilterFooter = styled.div`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     background-color: ${Colour["bg"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    ${(props) =>
-        props.$insetBottom && `padding-bottom: ${props.$insetBottom}px;`}
+
+    &.filterFooterWithInsetBottom {
+        padding-bottom: var(${tokens.filterFooter.insetBottom});
+    }
 `;
 
 export const FilterDoneButton = styled(Button.Default)`
