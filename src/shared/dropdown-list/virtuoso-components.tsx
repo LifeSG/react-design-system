@@ -1,4 +1,4 @@
-import type { ComponentProps} from "react";
+import type { ComponentProps } from "react";
 import { forwardRef } from "react";
 import type { Components } from "react-virtuoso";
 

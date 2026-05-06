@@ -60,9 +60,7 @@ test.describe("Form.Label", () => {
             await story.init("form-label");
         });
 
-        test("Popover addon behaviour", async ({
-            story,
-        }) => {
+        test("Popover addon behaviour", async ({ story }) => {
             await test.step("Popover content is not initially visible", async () => {
                 await expect(
                     story.locators.labelAddonPopoverContent
