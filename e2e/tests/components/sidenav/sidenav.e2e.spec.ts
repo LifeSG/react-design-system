@@ -55,7 +55,7 @@ test.describe("Sidenav", () => {
         });
 
         test("Default states", async ({ story }) => {
-            await compareScreenshot(story, "mount", { fullscreen: true });
+            await compareScreenshot(story, "mount");
         });
 
         test("Navigation accessibility tree", async ({ story }) => {
@@ -74,7 +74,7 @@ test.describe("Sidenav", () => {
 
         test("Drawer open on click", async ({ story }) => {
             await story.openDrawer();
-            await compareScreenshot(story, "drawer-open", { fullscreen: true });
+            await compareScreenshot(story, "drawer-open");
         });
 
         test("Navigation accessibility tree when open", async ({ story }) => {
@@ -155,14 +155,12 @@ test.describe("Sidenav", () => {
         });
 
         test("Default states dark mode", async ({ story }) => {
-            await compareScreenshot(story, "mount-dark", { fullscreen: true });
+            await compareScreenshot(story, "mount-dark");
         });
 
         test("Drawer open dark mode", async ({ story }) => {
             await story.openDrawer();
-            await compareScreenshot(story, "drawer-open-dark", {
-                fullscreen: true,
-            });
+            await compareScreenshot(story, "drawer-open-dark");
         });
     });
 
@@ -172,9 +170,7 @@ test.describe("Sidenav", () => {
         });
 
         test("Default states", async ({ story }) => {
-            await compareScreenshot(story, "mount-no-drawer", {
-                fullscreen: true,
-            });
+            await compareScreenshot(story, "mount-no-drawer");
         });
 
         test("Navigation structure", async ({ story }) => {
