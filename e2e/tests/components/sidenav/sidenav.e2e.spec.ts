@@ -106,6 +106,9 @@ test.describe("Sidenav", () => {
             await story.openDrawer();
 
             await test.step("Subitems visible when expanded by default", async () => {
+                await compareScreenshot(story, "drawer-item-expanded", {
+                    locator: story.locators.drawer,
+                });
                 await expect(
                     story.locators.drawerSubitemContainer
                 ).toBeVisible();
@@ -126,6 +129,21 @@ test.describe("Sidenav", () => {
                 await expect(
                     story.locators.drawerSubitemContainer
                 ).toBeVisible();
+            });
+
+            await test.step("Expanded subitems aria snapshot", async () => {
+                await expect(story.locators.drawer).toMatchAriaSnapshot(`
+                    - list:
+                        - listitem:
+                            - button "All Users"
+                        - listitem:
+                            - button "User Groups" [expanded=true]
+                            - list:
+                                - listitem:
+                                    - button "Admins"
+                                - listitem:
+                                    - button "Members"
+                `);
             });
         });
 
