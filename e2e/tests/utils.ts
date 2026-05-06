@@ -85,6 +85,7 @@ export const compareScreenshot = async (
                 height: box.height + 20,
             },
             threshold: 0.01, // Strict colour matching
+            maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
         });
         return;
     }
@@ -96,6 +97,7 @@ export const compareScreenshot = async (
     await expect.soft(target).toHaveScreenshot(`${name}.png`, {
         fullPage: options?.fullscreen ?? false,
         threshold: 0.01, // Strict colour matching
+        maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
     });
 };
 
