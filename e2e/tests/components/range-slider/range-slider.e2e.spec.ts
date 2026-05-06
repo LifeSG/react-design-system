@@ -16,6 +16,8 @@ class StoryPage extends AbstractStoryPage {
         error: Locator;
         prefilled: Locator;
         interaction: Locator;
+        focusTargetBefore: Locator;
+        focusTargetAfter: Locator;
     };
 
     constructor(page: Page) {
@@ -35,6 +37,8 @@ class StoryPage extends AbstractStoryPage {
             error: page.getByTestId("range-slider-error"),
             prefilled: page.getByTestId("range-slider-prefilled"),
             interaction: page.getByTestId("range-slider-interaction"),
+            focusTargetBefore: page.getByTestId("focus-target-before"),
+            focusTargetAfter: page.getByTestId("focus-target-after"),
         };
     }
 
@@ -307,6 +311,7 @@ test.describe("RangeSlider", () => {
     test.describe("Keyboard navigation", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("interaction");
+            await story.locators.focusTargetBefore.focus();
         });
 
         test("Tab to focus thumbs", async ({ story }) => {
