@@ -104,7 +104,7 @@ test.describe("Filter", () => {
                 await story.init("item-minimisable");
             });
 
-            test("Minimisable content", async ({ story }) => {
+            test("Minimisable item", async ({ story }) => {
                 const item =
                     story.locators.sidebar.getByTestId("item-minimised");
                 const customItem = story.locators.sidebar.getByTestId(
@@ -144,7 +144,7 @@ test.describe("Filter", () => {
                 await story.init("checkbox-flat");
             });
 
-            test("Flat options selection", async ({ story }) => {
+            test("Flat options", async ({ story }) => {
                 const item =
                     story.locators.sidebar.getByTestId("item-checkbox");
                 await item.getByRole("checkbox", { name: "Option 1" }).click();
@@ -171,7 +171,7 @@ test.describe("Filter", () => {
                 await story.init("checkbox-nested");
             });
 
-            test("Nested options indeterminate state", async ({ story }) => {
+            test("Nested options", async ({ story }) => {
                 const tree = story.locators.sidebar.getByRole("tree", {
                     name: "Nested categories",
                 });
@@ -191,7 +191,7 @@ test.describe("Filter", () => {
                 await story.init("checkbox-minimisable");
             });
 
-            test("Minimisable view more and less", async ({ story }) => {
+            test("Minimisable options", async ({ story }) => {
                 const item =
                     story.locators.sidebar.getByTestId("item-checkbox");
                 const viewMoreButton = item.getByRole("button", {
@@ -227,7 +227,7 @@ test.describe("Filter", () => {
                 await story.locators.showButton.click();
             });
 
-            test("Mobile checkbox display when showAsCheckboxInMobile", async ({
+            test("showAsCheckboxInMobile options", async ({
                 story,
             }) => {
                 const item = story.locators.modal.getByTestId(
