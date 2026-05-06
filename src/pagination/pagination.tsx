@@ -271,7 +271,7 @@ const Component = (
     const renderStartEllipsis = (pageIndex: number) => (
         <div key={pageIndex} className={styles.ellipsisContainer}>
             <ClickableIcon
-                className={styles.ellipsisButton}
+                className={styles.iconButton}
                 focusHighlight={false}
                 focusOutline="browser"
                 aria-label={"Previous 5 pages"}
@@ -296,7 +296,7 @@ const Component = (
     const renderEndEllipsis = (pageIndex: number) => (
         <div key={pageIndex} className={styles.ellipsisContainer}>
             <ClickableIcon
-                className={styles.ellipsisButton}
+                className={styles.iconButton}
                 focusHighlight={false}
                 focusOutline="browser"
                 aria-label={"Next 5 pages"}
@@ -356,7 +356,10 @@ const Component = (
                 <div className={styles.paginationMenu}>
                     {showFirstAndLastNav && (
                         <ClickableIcon
-                            className={styles.navigationButton}
+                            className={clsx(
+                                styles.iconButton,
+                                styles.iconButtonNavigation
+                            )}
                             onClick={firstPaginationItem}
                             disabled={isFirstPage}
                             focusHighlight={false}
@@ -367,7 +370,10 @@ const Component = (
                         </ClickableIcon>
                     )}
                     <ClickableIcon
-                        className={styles.navigationButton}
+                        className={clsx(
+                            styles.iconButton,
+                            styles.iconButtonNavigation
+                        )}
                         onClick={prevPaginationItem}
                         disabled={isFirstPage}
                         focusHighlight={false}
@@ -380,7 +386,10 @@ const Component = (
                         ? renderMobile()
                         : renderPaginationItems()}
                     <ClickableIcon
-                        className={styles.navigationButton}
+                        className={clsx(
+                            styles.iconButton,
+                            styles.iconButtonNavigation
+                        )}
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
                         focusHighlight={false}
@@ -391,7 +400,10 @@ const Component = (
                     </ClickableIcon>
                     {showFirstAndLastNav && (
                         <ClickableIcon
-                            className={styles.navigationButton}
+                            className={clsx(
+                                styles.iconButton,
+                                styles.iconButtonNavigation
+                            )}
                             onClick={lastPaginationItem}
                             disabled={isLastPage}
                             focusHighlight={false}

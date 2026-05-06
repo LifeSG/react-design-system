@@ -24,42 +24,12 @@ export const paginationMenu = css`
     align-items: center;
 `;
 
-export const ellipsisButton = css`
+export const iconButton = css`
     display: flex;
     justify-content: center;
     align-items: center;
 
     outline: none;
-    border-radius: ${Radius.sm};
-    height: 2.5rem;
-    width: 2.5rem;
-    padding: 0 ${Spacing["spacing-8"]};
-
-    color: ${Colour["icon-primary"]};
-
-    svg {
-        height: 1.25rem;
-        width: 1.25rem;
-    }
-
-    &:disabled {
-        color: ${Colour["icon-disabled-subtle"]};
-        cursor: not-allowed;
-    }
-
-    &:hover,
-    &:focus-visible {
-        background-color: ${Colour["bg-hover"]};
-    }
-`;
-
-export const navigationButton = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
-
-    outline: none;
-    margin: ${Spacing["spacing-4"]};
     border-radius: ${Radius.sm};
     height: 2.5rem;
     width: 2.5rem;
@@ -81,6 +51,10 @@ export const navigationButton = css`
     &:not(:disabled):focus-visible {
         background: ${Colour["bg-hover"]};
     }
+`;
+
+export const iconButtonNavigation = css`
+    margin: ${Spacing["spacing-4"]};
 `;
 
 export const pageItem = css`
@@ -132,9 +106,6 @@ export const ellipsisContainer = css`
     align-items: center;
 
     margin: ${Spacing["spacing-4"]};
-    border-radius: ${Radius.sm};
-    width: 2.5rem;
-    height: 2.5rem;
 
     cursor: pointer;
 `;
