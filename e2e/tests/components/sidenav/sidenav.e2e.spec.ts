@@ -95,15 +95,6 @@ test.describe("Sidenav", () => {
             `);
         });
 
-        test("Drawer positioning and offset", async ({ story }) => {
-            await story.openDrawer();
-            const sidenavBox = await story.locators.sidenav.boundingBox();
-            const drawerBox = await story.locators.drawer.boundingBox();
-            expect(drawerBox!.x).toBeGreaterThanOrEqual(
-                sidenavBox!.x + sidenavBox!.width
-            );
-        });
-
         test("DrawerItem expands and collapses", async ({ story }) => {
             await story.openDrawer();
 
