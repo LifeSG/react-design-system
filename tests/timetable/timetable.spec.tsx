@@ -152,27 +152,30 @@ describe("TimeTable", () => {
             />
         );
 
-        const rowHeaderParent = screen.getByTestId("row-header-column-id");
-        const firstRowHeader = rowHeaderParent.firstElementChild!;
-        const contentContainer = screen.getByTestId("content-container-id");
-        const firstRowBar = contentContainer.firstElementChild!;
-        const blockedCell = firstRowBar.children[0];
-        const filledCell = firstRowBar.children[1];
+        const firstRowHeader = screen.getByTestId("0-row-header-title");
+        const cells = screen.getAllByTestId("block-container");
+        const blockedCell = cells[0];
+        const filledCell = cells[1];
+        const blockedPopoverTrigger = blockedCell.firstElementChild!;
+        const filledPopoverTrigger = filledCell.firstElementChild!;
 
-        fireEvent.mouseEnter(firstRowHeader);
+        expect(blockedCell).toHaveAttribute("role", "gridcell");
+        expect(filledCell).toHaveAttribute("role", "gridcell");
+
+        fireEvent.mouseEnter(firstRowHeader.parentElement!);
         expect(screen.queryByText("row header popover")).toBeVisible();
         expect(screen.queryByTestId("popover")).toBeInTheDocument();
-        fireEvent.mouseLeave(firstRowHeader);
+        fireEvent.mouseLeave(firstRowHeader.parentElement!);
 
-        fireEvent.mouseEnter(blockedCell);
+        fireEvent.mouseEnter(blockedPopoverTrigger);
         expect(screen.queryByText("out of range cell popover")).toBeVisible();
         expect(screen.queryByTestId("popover")).toBeInTheDocument();
-        fireEvent.mouseLeave(blockedCell);
+        fireEvent.mouseLeave(blockedPopoverTrigger);
 
-        fireEvent.mouseEnter(filledCell);
+        fireEvent.mouseEnter(filledPopoverTrigger);
         expect(screen.queryByText("row cell popover")).toBeVisible();
         expect(screen.queryByTestId("popover")).toBeInTheDocument();
-        fireEvent.mouseLeave(filledCell);
+        fireEvent.mouseLeave(filledPopoverTrigger);
     });
 
     it("should trigger onRowNameClick if row header name are clicked", () => {
@@ -277,6 +280,36 @@ describe("TimeTable", () => {
                 '[data-testid="block-container"]'
             ).length
         ).toBe(1);
+    });
+
+    it("should allow each tabbable row cell to receive focus", () => {
+        render(
+            <TimeTable
+                date={timeTableMockProps.date}
+                minTime="07:00:00"
+                maxTime="09:00:00"
+                rowData={buildMockRowData(2)}
+                loading={false}
+                emptyContentMessage={timeTableMockProps.emptyContentMessage}
+                onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
+                onNextDayClick={timeTableMockProps.onNextDayClick}
+            />
+        );
+
+        const rowCells = screen.getAllByTestId("block-container");
+        const tabbableCells = rowCells
+            .map((cell) => cell.querySelector("[tabindex='0']"))
+            .filter((cell): cell is HTMLElement => !!cell);
+
+        expect(tabbableCells).toHaveLength(2);
+        expect(
+            rowCells.some((cell) => cell.getAttribute("tabindex") === "0")
+        ).toBe(false);
+
+        for (const cell of tabbableCells) {
+            cell.focus();
+            expect(cell).toHaveFocus();
+        }
     });
 });
 

@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { TextareaBase } from "../input-textarea/textarea";
 import { TextareaCounter } from "../input-textarea/textarea-counter";
 import type { TextareaRef } from "../input-textarea/types";
+import { useId } from "../util";
 import { FormErrorMessage } from "./form-label";
 import * as styles from "./form-textarea.styles";
 import { FormWrapper } from "./form-wrapper";
@@ -19,7 +20,7 @@ const FormTextareaComponent = (
         label,
         value,
         errorMessage,
-        id = "form-textarea",
+        id,
         "data-error-testid": errorTestId,
         "data-testid": testId,
         onChange,
@@ -37,6 +38,9 @@ const FormTextareaComponent = (
         ...otherProps
     } = props;
 
+    const internalId = useId();
+    const inputId = id ?? `form-textarea-${internalId}`;
+
     const [stateValue, setStateValue] = useState<
         string | number | readonly string[] | undefined
     >(value);
@@ -53,7 +57,10 @@ const FormTextareaComponent = (
     // =============================================================================
 
     const getErrorTestMessageId = () => {
-        return errorTestId || (id ? `${id}-error-message` : "error-message");
+        return (
+            errorTestId ||
+            (inputId ? `${inputId}-error-message` : "error-message")
+        );
     };
 
     // =============================================================================
@@ -95,7 +102,8 @@ const FormTextareaComponent = (
 
     return (
         <FormWrapper
-            id={id}
+            id={inputId}
+            data-testid={testId}
             label={label}
             layoutType={layoutType}
             xxsCols={xxsCols}
@@ -107,8 +115,8 @@ const FormTextareaComponent = (
             xxlCols={xxlCols}
         >
             <TextareaBase
-                id={`${id}-base`}
-                data-testid={testId || id}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
                 value={stateValue}
                 error={!!errorMessage}
                 onChange={handleChange}

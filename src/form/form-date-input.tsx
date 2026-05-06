@@ -1,7 +1,5 @@
-import { useState } from "react";
-
 import { DateInput } from "../date-input";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import type { FormDateInputProps } from "./types";
 
@@ -21,10 +19,8 @@ export const FormDateInput = ({
     xxlCols,
     ...otherProps
 }: FormDateInputProps): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-date-input-${SimpleIdGenerator.generate()}`
-    );
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-date-input-${internalId}`;
 
     return (
         <FormWrapper

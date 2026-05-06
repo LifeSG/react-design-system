@@ -1,7 +1,5 @@
-import { useState } from "react";
-
 import { DateRangeInput } from "../date-range-input";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import type { FormDateRangeInputProps } from "./types";
 
@@ -21,10 +19,8 @@ export const FormDateRangeInput = ({
     xxlCols,
     ...otherProps
 }: FormDateRangeInputProps): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-date-range-input-${SimpleIdGenerator.generate()}`
-    );
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-date-range-input-${internalId}`;
 
     return (
         <FormWrapper

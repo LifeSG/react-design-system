@@ -5,10 +5,10 @@
  */
 
 import type { ElementType } from "react";
-import { Children, cloneElement, useState } from "react";
+import { Children, cloneElement } from "react";
 
 import { ColDiv } from "../layout/col-div";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormErrorMessage, FormLabel } from "./form-label";
 import * as styles from "./form-wrapper.styles";
 import type { FormElementLayoutType, FormWrapperProps } from "./types";
@@ -34,7 +34,7 @@ export const FormWrapper = ({
     // =============================================================================
     const updatedLayoutType = getLayoutType();
     const errorMessage = typeof eRaw === "string" ? eRaw.trim() : eRaw;
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const labelId = `${id ?? internalId}-label`; // matches FormLabel
     const subtitleId = `${id ?? internalId}-label-subtitle`; // matches FormLabel
     const errorMessageId = `${id ?? internalId}-error-message`;

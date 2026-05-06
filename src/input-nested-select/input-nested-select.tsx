@@ -19,8 +19,8 @@ import {
     PlaceholderLabel,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
-import { InputBox } from "../shared/input-wrapper";
-import { SimpleIdGenerator, StringHelper } from "../util";
+import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import { StringHelper, useId } from "../util";
 import type {
     InputNestedSelectProps,
     L1OptionProps,
@@ -87,7 +87,7 @@ export const InputNestedSelect = <V1, V2, V3>({
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
 
     const nodeRef = useRef<HTMLDivElement>(null);
     const selectorRef = useRef<HTMLButtonElement>(null);

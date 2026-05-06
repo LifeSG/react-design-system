@@ -277,7 +277,9 @@ describe("FileUpload", () => {
             );
 
             expect(screen.getByText("Photo description")).toBeInTheDocument();
-            expect(rendered.getByTestId("some-textarea")).toBeInTheDocument();
+            expect(
+                rendered.getByTestId("some-textarea-base")
+            ).toBeInTheDocument();
 
             const saveButton = rendered.getByTestId("some-save-button");
             const cancelButton = rendered.getByTestId("some-cancel-button");
@@ -300,7 +302,7 @@ describe("FileUpload", () => {
             expect(saveButton).toBeDisabled();
 
             // Enter value
-            const textarea = rendered.getByTestId("some-textarea");
+            const textarea = rendered.getByTestId("some-textarea-base");
             fireEvent.change(textarea, { target: { value: "Hello world" } });
             expect(saveButton).not.toBeDisabled();
         });
@@ -337,7 +339,7 @@ describe("FileUpload", () => {
                 />
             );
 
-            const textarea = rendered.getByTestId("some-textarea");
+            const textarea = rendered.getByTestId("some-textarea-base");
             fireEvent.change(textarea, { target: { value: "Hello world" } });
             fireEvent.click(rendered.getByTestId("some-save-button"));
 

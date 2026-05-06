@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { inertValue } from "../../shared/accessibility";
-import { SimpleIdGenerator } from "../../util";
+import { useId } from "../../util";
 import type {
     BaseProps,
     LinkListEagerProps,
@@ -41,7 +41,7 @@ export const EagerLinkList = <T,>({
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
 
-    const [id] = useState(() => SimpleIdGenerator.generate());
+    const id = useId();
 
     // =============================================================================
     // EVENT HANDLERS

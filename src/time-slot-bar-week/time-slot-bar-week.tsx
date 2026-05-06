@@ -149,6 +149,7 @@ export const TimeSlotBarWeek = ({
                 getYearHeaderLabel={(calendarDate) =>
                     dayjs(calendarDate).endOf("week").format("YYYY")
                 }
+                isFocusable={true}
             >
                 {({ calendarDate }) => {
                     return renderTimeSlotWeekDays(calendarDate);

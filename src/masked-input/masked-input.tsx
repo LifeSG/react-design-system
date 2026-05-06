@@ -4,7 +4,7 @@ import { isEmpty } from "lodash";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
-import { SimpleIdGenerator, StringHelper } from "../util";
+import { StringHelper, useId } from "../util";
 import {
     ClickableErrorWrapper,
     ErrorIcon,
@@ -56,7 +56,7 @@ const Component = (
     const isEmptyReadOnlyState = readOnly && isEmpty(value);
     const [isMasked, setIsMasked] = useState<boolean>(!disableMask);
     const [updatedValue, setUpdatedValue] = useState<string>(value || "");
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const valueId = `${otherProps.id ?? internalId}-value`;
 
     const inputRef = useRef<HTMLInputElement>(null);

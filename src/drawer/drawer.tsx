@@ -12,7 +12,7 @@ import { useEffect, useRef, useState } from "react";
 import { Overlay } from "../overlay";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Typography } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import * as styles from "./drawer.styles";
 import type { DrawerProps } from "./types";
 
@@ -29,7 +29,7 @@ export const Drawer = ({
     // CONST, STATE, REFS
     // =========================================================================
     const [showOverlay, setShowOverlay] = useState(show);
-    const [id] = useState(() => SimpleIdGenerator.generate());
+    const id = useId();
     const initialFocusRef = useRef<HTMLHeadingElement>(null);
 
     // =========================================================================

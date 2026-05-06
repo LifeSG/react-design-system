@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { concatIds } from "../shared/accessibility";
 import { Typography } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import {
     Bar,
     Histogram,
@@ -46,7 +46,7 @@ export const HistogramSlider = ({
     const [selection, setSelection] = useState<[number, number]>(
         initSelection()
     );
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const announcementTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(
         null
     );

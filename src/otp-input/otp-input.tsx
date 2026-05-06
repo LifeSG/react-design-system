@@ -9,7 +9,7 @@ import {
 
 import { FormErrorMessage } from "../form/form-label";
 import { VisuallyHidden } from "../shared/accessibility";
-import { SimpleIdGenerator, StringHelper } from "../util";
+import { StringHelper, useId } from "../util";
 import {
     CTAButton,
     InputContainer,
@@ -58,7 +58,7 @@ const Component = (
     );
     const [countDown, setCountDown] = useState<number>(cooldownDuration);
     const [lastCtaTimestamp, setLastCtaTimestamp] = useState<Date>(new Date());
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
 
     const hasError = !!errorMessage;
     const errorId = `${internalId}-error`;

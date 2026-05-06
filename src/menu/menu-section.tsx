@@ -1,8 +1,7 @@
 import clsx from "clsx";
-import { useState } from "react";
 
 import { Typography } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import * as styles from "./menu-section.styles";
 import type { MenuSectionProps } from "./types";
 
@@ -17,7 +16,7 @@ export const MenuSection = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
 
     // =============================================================================
     // RENDER FUNCTIONS

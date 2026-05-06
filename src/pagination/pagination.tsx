@@ -6,7 +6,7 @@ import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
 import clsx from "clsx";
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 
 import { Input } from "../input";
 import { InputSelect } from "../input-select";
@@ -18,7 +18,7 @@ import {
     useSafeMaxWidthMediaQuery,
 } from "../theme";
 import { Typography } from "../typography";
-import { SimpleIdGenerator, useIsMounted } from "../util";
+import { useId, useIsMounted } from "../util";
 import * as styles from "./pagination.styles";
 import type { PageSizeItemProps, PaginationProps } from "./types";
 
@@ -63,8 +63,8 @@ const Component = (
     const boundaryRange = 1;
     const siblingRange = 1;
 
-    const internalId = useRef(SimpleIdGenerator.generate());
-    const paginationId = `${internalId.current}-pagination`;
+    const internalId = useId();
+    const paginationId = `${internalId}-pagination`;
 
     const totalPages = Math.ceil(totalItems / pageSizeLocal);
     const isFirstPage = activePage === 1;

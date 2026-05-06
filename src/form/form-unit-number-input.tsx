@@ -1,7 +1,5 @@
-import { useState } from "react";
-
 import { UnitNumberInput } from "../unit-number";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import type { FormUnitNumberInputProps } from "./types";
 
@@ -21,10 +19,8 @@ export const FormUnitNumberInput = ({
     xxlCols,
     ...otherProps
 }: FormUnitNumberInputProps): JSX.Element => {
-    const [internalId] = useState(
-        () => `form-unit-number-input-${SimpleIdGenerator.generate()}`
-    );
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-unit-number-input-${internalId}`;
     return (
         <FormWrapper
             id={inputId}

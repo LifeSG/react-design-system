@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { MaskedInput } from "../masked-input/masked-input";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import type { FormMaskedInputProps } from "./types";
 
@@ -19,7 +19,7 @@ const Component = (
         ...otherProps
     } = props;
 
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const inputId = id ?? `form-field-masked-input-${internalId}`;
 
     return (

@@ -8,7 +8,7 @@ import { Checkbox } from "../checkbox";
 import { ErrorDisplay } from "../error-display";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { useEventListener } from "../util/use-event-listener";
 import {
     ActionBar,
@@ -62,7 +62,7 @@ export const DataTable = ({
     const headerRef = useRef<HTMLTableSectionElement>(null);
     const actionBarRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const keyColumns = headers.filter(
         (header): header is Exclude<HeaderProps, string> => {
             return typeof header !== "string" && !!header.keyColumn;

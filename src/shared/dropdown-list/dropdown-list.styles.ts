@@ -86,10 +86,6 @@ export const list = css`
     padding: ${Spacing["spacing-8"]};
 `;
 
-export const listbox = css`
-    list-style-type: none;
-`;
-
 // -----------------------------------------------------------------------------
 // LIST ITEM STYLES
 // -----------------------------------------------------------------------------

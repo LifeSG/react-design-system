@@ -1,8 +1,6 @@
-import { useState } from "react";
-
 import { VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import {
     ChildContainer,
     Image,
@@ -26,7 +24,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         onSubmit,
         ...otherProps
     } = props;
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const descriptionId = `${internalId}-description`;
     const bannerSrc = imgSrc ?? FeedbackRatingData.IMG;
     const componentDescription =

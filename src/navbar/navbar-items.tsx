@@ -3,7 +3,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { Menu as DesktopMenu } from "../menu";
 import type { TypographyWeight } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { Menu as MobileMenu } from "./menu";
 import {
     ChevronIcon,
@@ -54,7 +54,7 @@ export const NavbarItems = <T,>({
         null
     );
     const listRef = useRef<HTMLUListElement>(null);
-    const [instanceId] = useState(() => SimpleIdGenerator.generate());
+    const instanceId = useId();
 
     // =============================================================================
     // HELPERS
