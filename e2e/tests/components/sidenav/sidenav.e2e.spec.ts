@@ -130,20 +130,36 @@ test.describe("Sidenav", () => {
         });
 
         test("Keyboard navigation", async ({ story }) => {
+            await story.page.locator("body").click();
+
             await test.step("Tab to first item", async () => {
                 await story.page.keyboard.press("Tab");
                 await expect(story.locators.itemDashboard).toBeFocused();
             });
 
-            await test.step("Tab to item with children, drawer opens", async () => {
+            await test.step("Tab to item with children", async () => {
                 await story.page.keyboard.press("Tab");
                 await expect(story.locators.itemUsers).toBeFocused();
+            });
+
+            await test.step("Enter opens drawer", async () => {
+                await story.page.keyboard.press("Enter");
                 await expect(story.locators.drawer).toBeVisible();
             });
 
             await test.step("Tab moves focus into drawer", async () => {
                 await story.page.keyboard.press("Tab");
                 await expect(story.locators.drawerItemAllUsers).toBeFocused();
+            });
+
+            await test.step("Shift+Tab moves focus back to sidenav item", async () => {
+                await story.page.keyboard.press("Shift+Tab");
+                await expect(story.locators.itemUsers).toBeFocused();
+            });
+
+            await test.step("Shift+Tab moves focus to previous item", async () => {
+                await story.page.keyboard.press("Shift+Tab");
+                await expect(story.locators.itemDashboard).toBeFocused();
             });
         });
     });
