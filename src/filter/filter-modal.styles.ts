@@ -1,6 +1,5 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
 import { Colour, Font, Spacing } from "../theme";
 
 export const tokens = {
@@ -9,11 +8,7 @@ export const tokens = {
     },
 } as const;
 
-// =============================================================================
-// CONTAINER STYLES
-// =============================================================================
-
-export const MobileContainer = styled.div`
+export const mobileContainer = css`
     background-color: ${Colour["bg-strong"]};
     height: 100%;
     width: 100%;
@@ -21,47 +16,39 @@ export const MobileContainer = styled.div`
     flex-direction: column;
 `;
 
-export const MobileOverlayContainer = styled.div`
+export const mobileOverlayContainer = css`
     background-color: ${Colour["bg"]};
     height: 100%;
     width: 100%;
 `;
 
-export const FloatingWrapper = styled.div`
+export const floatingWrapper = css`
     height: 100%;
 `;
 
-// =============================================================================
-// HEADER STYLES
-// =============================================================================
-
-export const FilterHeader = styled.div`
+export const filterHeader = css`
     display: flex;
     align-items: center;
     background-color: ${Colour["bg"]};
-
-    &.filterHeaderWithInsetTop {
-        padding-top: var(${tokens.filterHeader.insetTop});
-    }
 `;
 
-export const FilterTitle = styled.h2`
+export const filterHeaderWithInsetTop = css`
+    padding-top: var(${tokens.filterHeader.insetTop});
+`;
+
+export const filterTitle = css`
     ${Font["heading-xs-semibold"]}
     flex: 1;
     text-align: center;
     margin: ${Spacing["spacing-24"]} 0;
 `;
 
-export const FilterClearButton = styled(Button.Small)`
+export const filterClearButton = css`
     background-color: transparent;
     height: 100%;
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
 `;
 
-// =============================================================================
-// COMPONENT STYLES
-// =============================================================================
-
-export const FilterButton = styled(Button)`
+export const filterButton = css`
     width: 100%;
 `;

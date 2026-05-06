@@ -1,9 +1,5 @@
-import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
-import { animated } from "@react-spring/web";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
-import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, Font, Motion, Spacing } from "../theme";
 
 export const tokens = {
@@ -12,52 +8,40 @@ export const tokens = {
     },
 } as const;
 
-// =============================================================================
-// FILTER ITEM STYLES
-// =============================================================================
-
-export const FilterItemWrapper = styled.div`
+export const filterItemWrapper = css`
     background-color: ${Colour["bg"]};
-
-    &.filterItemWrapperCollapsible {
-        background-color: ${Colour["bg-strong"]};
-    }
-
-    &.filterItemWrapperMobile {
-        background-color: ${Colour["bg-strong"]};
-    }
 `;
 
-export const Divider = styled.div`
+export const filterItemWrapperStrong = css`
+    background-color: ${Colour["bg-strong"]};
+`;
+
+export const divider = css`
     display: none;
     height: 1px;
     background-color: ${Colour["border"]};
-
-    &.dividerVisible {
-        display: block;
-    }
-
-    &.dividerMobile {
-        margin: 0 ${Spacing["spacing-16"]};
-    }
 `;
 
-// -----------------------------------------------------------------------------
-// HEADER STYLES
-// -----------------------------------------------------------------------------
+export const dividerVisible = css`
+    display: block;
+`;
 
-export const FilterItemHeader = styled.div`
+export const dividerMobile = css`
+    margin: 0 ${Spacing["spacing-16"]};
+`;
+
+export const filterItemHeader = css`
     display: flex;
     align-items: center;
 
     background-color: ${Colour["bg"]};
-
-    &.filterItemHeaderMobile {
-        background-color: transparent;
-    }
 `;
 
-export const FilterItemExpandButton = styled(ClickableIcon)`
+export const filterItemHeaderMobile = css`
+    background-color: transparent;
+`;
+
+export const filterItemExpandButton = css`
     margin: 0 0 0 auto;
 
     color: ${Colour["icon"]};
@@ -66,56 +50,52 @@ export const FilterItemExpandButton = styled(ClickableIcon)`
     }
 `;
 
-export const ChevronIcon = styled(ChevronDownIcon)`
+export const chevronIcon = css`
     height: ${Font.Spec["body-size-baseline"]};
     width: ${Font.Spec["body-size-baseline"]};
 
     transform: rotate(0deg);
     transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};
-
-    &.chevronIconExpanded {
-        transform: rotate(180deg);
-    }
 `;
 
-export const FilterItemTitle = styled.h3`
+export const chevronIconExpanded = css`
+    transform: rotate(180deg);
+`;
+
+export const filterItemTitle = css`
     ${Font["heading-xs-semibold"]}
     color: ${Colour["text"]};
 
     margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
         ${Spacing["spacing-20"]};
-
-    &.filterItemTitleMobile {
-        ${Font["body-md-semibold"]}
-        color: ${Colour["text-subtle"]};
-
-        margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
-            ${Spacing["spacing-20"]};
-    }
 `;
 
-// -----------------------------------------------------------------------------
-// CONTENT STYLES
-// -----------------------------------------------------------------------------
+export const filterItemTitleMobile = css`
+    ${Font["body-md-semibold"]}
+    color: ${Colour["text-subtle"]};
 
-export const ExpandableItem = animated(styled.div`
+    margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
+        ${Spacing["spacing-20"]};
+`;
+
+export const expandableItem = css`
     overflow: hidden;
-`);
+`;
 
-export const FilterItemBody = styled.div`
+export const filterItemBody = css`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
 `;
 
-export const MinimisableContent = animated(styled.div`
+export const minimisableContent = css`
     ${tokens.minimisableContent.height}: initial;
     height: var(${tokens.minimisableContent.height});
+`;
 
-    &.minimisableContentMinimisable {
-        overflow: hidden;
-    }
-`);
+export const minimisableContentMinimisable = css`
+    overflow: hidden;
+`;
 
-export const FilterItemMinimiseButton = styled(Button.Small)`
+export const filterItemMinimiseButton = css`
     height: fit-content;
     padding: 0;
     margin: ${Spacing["spacing-16"]} 0 0 0;

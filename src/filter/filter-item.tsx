@@ -1,11 +1,14 @@
-import { useSpring } from "@react-spring/web";
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { animated, useSpring } from "@react-spring/web";
 import clsx from "clsx";
 import isNil from "lodash/isNil";
 import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { Button } from "../button";
 import { PopoverAddon } from "../form/form-label-addon";
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { useApplyStyle } from "../theme";
 import { useId } from "../util";
 import { FilterContext } from "./filter-context";
@@ -116,37 +119,43 @@ export const FilterItem = ({
     };
 
     return (
-        <styles.FilterItemWrapper
+        <div
             aria-labelledby={titleId}
             className={clsx(
-                collapsible && "filterItemWrapperCollapsible",
-                isMobile && "filterItemWrapperMobile"
+                styles.filterItemWrapper,
+                (collapsible || isMobile) && styles.filterItemWrapperStrong
             )}
         >
-            <styles.Divider
+            <div
                 className={clsx(
+                    styles.divider,
                     (isMobile ? showMobileDivider : showDivider) &&
-                        "dividerVisible",
-                    isMobile && "dividerMobile"
+                        styles.dividerVisible,
+                    isMobile && styles.dividerMobile
                 )}
             />
             {(title || collapsible) && (
-                <styles.FilterItemHeader
-                    className={clsx(isMobile && "filterItemHeaderMobile")}
+                <div
+                    className={clsx(
+                        styles.filterItemHeader,
+                        isMobile && styles.filterItemHeaderMobile
+                    )}
                 >
                     {title && (
-                        <styles.FilterItemTitle
+                        <h3
                             id={titleId}
                             data-testid="filter-item-title"
                             className={clsx(
-                                isMobile && "filterItemTitleMobile"
+                                styles.filterItemTitle,
+                                isMobile && styles.filterItemTitleMobile
                             )}
                         >
                             {title} {addon && renderAddon()}
-                        </styles.FilterItemTitle>
+                        </h3>
                     )}
                     {collapsible && (
-                        <styles.FilterItemExpandButton
+                        <ClickableIcon
+                            className={styles.filterItemExpandButton}
                             data-testid={"expand-collapse-button"}
                             focusHighlight={false}
                             focusOutline="browser"
@@ -156,17 +165,19 @@ export const FilterItem = ({
                             aria-controls={contentId}
                         >
                             {title && <VisuallyHidden>{title}</VisuallyHidden>}
-                            <styles.ChevronIcon
+                            <ChevronDownIcon
                                 aria-hidden
                                 className={clsx(
-                                    expanded && "chevronIconExpanded"
+                                    styles.chevronIcon,
+                                    expanded && styles.chevronIconExpanded
                                 )}
                             />
-                        </styles.FilterItemExpandButton>
+                        </ClickableIcon>
                     )}
-                </styles.FilterItemHeader>
+                </div>
             )}
-            <styles.ExpandableItem
+            <animated.div
+                className={styles.expandableItem}
                 id={contentId}
                 data-testid={"expandable-container"}
                 data-expanded={expanded}
@@ -174,12 +185,20 @@ export const FilterItem = ({
                 inert={inertValue(!expanded)}
             >
                 <div ref={itemResizeDetector.ref}>
-                    <styles.FilterItemBody {...otherProps}>
-                        <styles.MinimisableContent
+                    <div
+                        className={clsx(
+                            styles.filterItemBody,
+                            otherProps.className
+                        )}
+                        {...otherProps}
+                    >
+                        <div
                             ref={minimisableContentRef}
                             data-testid="minimisable-container"
                             className={clsx(
-                                minimisable && "minimisableContentMinimisable"
+                                styles.minimisableContent,
+                                minimisable &&
+                                    styles.minimisableContentMinimisable
                             )}
                         >
                             <div ref={contentResizeDetector.ref}>
@@ -191,10 +210,12 @@ export const FilterItem = ({
                                         : children}
                                 </div>
                             </div>
-                        </styles.MinimisableContent>
+                        </div>
                         {minimisable && (
-                            <styles.FilterItemMinimiseButton
+                            <Button
+                                className={styles.filterItemMinimiseButton}
                                 data-id="minimise-button"
+                                sizeType="small"
                                 styleType="link"
                                 type="button"
                                 onClick={handleMinimise}
@@ -205,12 +226,12 @@ export const FilterItem = ({
                                 <span aria-hidden>
                                     View {contentMinimised ? "more" : "less"}
                                 </span>
-                            </styles.FilterItemMinimiseButton>
+                            </Button>
                         )}
-                    </styles.FilterItemBody>
+                    </div>
                 </div>
-            </styles.ExpandableItem>
-        </styles.FilterItemWrapper>
+            </animated.div>
+        </div>
     );
 };
 

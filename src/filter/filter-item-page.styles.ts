@@ -1,12 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour } from "../theme";
 
-// =============================================================================
-// FILTER ITEM PAGE STYLES
-// =============================================================================
-
-export const FilterItemPageContainer = styled.div`
+export const filterItemPageContainer = css`
     background-color: ${Colour["bg"]};
     height: 100%;
     width: 100%;
