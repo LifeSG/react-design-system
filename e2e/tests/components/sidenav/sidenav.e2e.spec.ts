@@ -58,7 +58,7 @@ test.describe("Sidenav", () => {
             await compareScreenshot(story, "mount", { fullscreen: true });
         });
 
-        test("Navigation structure", async ({ story }) => {
+        test("Navigation accessibility tree", async ({ story }) => {
             await expect(story.locators.sidenav).toMatchAriaSnapshot(`
                 - navigation "Sidebar":
                     - list:
@@ -77,19 +77,28 @@ test.describe("Sidenav", () => {
             await compareScreenshot(story, "drawer-open", { fullscreen: true });
         });
 
-        test("Drawer accessibility tree when open", async ({ story }) => {
+        test("Navigation accessibility tree when open", async ({ story }) => {
             await story.openDrawer();
-            await expect(story.locators.drawer).toMatchAriaSnapshot(`
-                - list:
-                    - listitem:
-                        - button "All Users"
-                    - listitem:
-                        - button "User Groups" [expanded=true]
-                        - list:
-                            - listitem:
-                                - button "Admins"
-                            - listitem:
-                                - button "Members"
+            await expect(story.locators.sidenav).toMatchAriaSnapshot(`
+                - navigation "Sidebar":
+                    - list:
+                        - listitem:
+                            - button "Dashboard"
+                        - listitem:
+                            - button "Users" [expanded=true]
+                            - list:
+                                - listitem:
+                                    - button "All Users"
+                                - listitem:
+                                    - button "User Groups" [expanded=true]
+                                    - list:
+                                        - listitem:
+                                            - button "Admins"
+                                        - listitem:
+                                            - button "Members"
+                    - list:
+                        - listitem:
+                            - button "Settings"
             `);
         });
 
