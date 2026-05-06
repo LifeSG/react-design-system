@@ -10,7 +10,7 @@ export const tokens = {
     secondaryText: {
         maxLines: "--fds-internal-dropdownLabel-secondaryText-maxLines",
     },
-} as const;
+};
 
 // =============================================================================
 // STYLING
