@@ -108,7 +108,7 @@ test.describe("Sidenav", () => {
             await test.step("Subitems visible when expanded by default", async () => {
                 await expect(
                     story.locators.drawerSubitemContainer
-                ).not.toHaveCSS("height", "0px");
+                ).toBeVisible();
             });
 
             await test.step("Collapse drawer item hides subitems", async () => {
@@ -116,17 +116,16 @@ test.describe("Sidenav", () => {
                 await compareScreenshot(story, "drawer-item-collapsed", {
                     locator: story.locators.drawer,
                 });
-                await expect(story.locators.drawerSubitemContainer).toHaveCSS(
-                    "height",
-                    "0px"
-                );
+                await expect(
+                    story.locators.drawerSubitemContainer
+                ).not.toBeVisible();
             });
 
             await test.step("Expand drawer item shows subitems again", async () => {
                 await story.locators.drawerItemUserGroups.click();
                 await expect(
                     story.locators.drawerSubitemContainer
-                ).not.toHaveCSS("height", "0px");
+                ).toBeVisible();
             });
         });
 
