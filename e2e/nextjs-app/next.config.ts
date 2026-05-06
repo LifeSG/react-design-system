@@ -3,9 +3,11 @@ import type { NextConfig } from "next";
 import path from "node:path";
 
 const ciConfig: NextConfig = {
-    turbopack: {
-        root: path.join(__dirname),
-    },
+    // FIXME: BOOKINGSG-9316: Turbopack is currently disabled due to an issue with CSS load order. Re-enable once the issue is resolved.
+    // turbopack: {
+    //     root: path.join(__dirname),
+    // },
+    outputFileTracingRoot: path.join(__dirname),
     typescript: {
         tsconfigPath: "tsconfig.ci.json",
     },
@@ -17,12 +19,14 @@ const ciConfig: NextConfig = {
 
 const devConfig: LinariaConfig = withLinaria({
     devIndicators: false,
-    turbopack: {
-        root: path.join(__dirname, "../../"),
-        resolveAlias: {
-            "@lifesg/react-design-system": "../../src",
-        },
-    },
+    // FIXME: BOOKINGSG-9316: Turbopack is currently disabled due to an issue with CSS load order. Re-enable once the issue is resolved.
+    // turbopack: {
+    //     root: path.join(__dirname, "../../"),
+    //     resolveAlias: {
+    //         "@lifesg/react-design-system": "../../src",
+    //     },
+    // },
+    outputFileTracingRoot: path.join(__dirname, "../../"),
     typescript: {
         tsconfigPath: "tsconfig.json",
     },
