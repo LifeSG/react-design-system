@@ -122,7 +122,9 @@ test.describe("InputMultiSelect", () => {
             await compareScreenshot(story, "mount", {
                 locator: story.locators.form.default,
             });
-            await expect(story.locators.form.default).toMatchAriaSnapshot(`
+            await expect(story.page.getByTestId("form-default"))
+                .toMatchAriaSnapshot(`
+                    - text: Default
                 - combobox "Default": Default multi select
             `);
 
@@ -187,9 +189,11 @@ test.describe("InputMultiSelect", () => {
                 locator: story.locators.form.error,
             });
 
-            await expect(story.locators.form.readonly).toMatchAriaSnapshot(`
+            await expect(story.page.getByTestId("form-error"))
+                .toMatchAriaSnapshot(`
+                - text: Error
                 - combobox "Error": Error multi select
-                    - Selection is required
+                - paragraph: Selection is required
             `);
         });
 
