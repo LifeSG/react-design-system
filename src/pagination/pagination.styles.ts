@@ -154,7 +154,7 @@ export const hover = css`
     width: max-content;
     padding: ${Spacing["spacing-4"]} ${Spacing["spacing-12"]};
 
-    background-color: ${Colour["bg-hover"]};
+    background: ${Colour["bg-hover"]};
 
     ${Font["body-xs-regular"]}
     color: ${Colour["text-hover"]};
