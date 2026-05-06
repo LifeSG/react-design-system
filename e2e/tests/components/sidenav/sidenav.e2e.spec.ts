@@ -14,7 +14,6 @@ class StoryPage extends AbstractStoryPage {
         drawerItemUserGroups: Locator;
         drawerSubitemAdmins: Locator;
         drawerSubitemContainer: Locator;
-        clickedId: Locator;
     };
 
     constructor(page: Page) {
@@ -33,7 +32,6 @@ class StoryPage extends AbstractStoryPage {
             drawerSubitemContainer: page
                 .getByTestId("drawer-subitem-container")
                 .nth(1),
-            clickedId: page.getByTestId("clicked-id"),
         };
     }
 
@@ -51,7 +49,7 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Sidenav", () => {
-    test.describe(() => {
+    test.describe("Default (with drawer)", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("default");
         });
@@ -142,13 +140,46 @@ test.describe("Sidenav", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("Default (with drawer) dark mode", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("default", { mode: "dark" });
         });
 
         test("Default states dark mode", async ({ story }) => {
             await compareScreenshot(story, "mount-dark", { fullscreen: true });
+        });
+
+        test("Drawer open dark mode", async ({ story }) => {
+            await story.openDrawer();
+            await compareScreenshot(story, "drawer-open-dark", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe("No drawer", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("no-drawer");
+        });
+
+        test("Default states", async ({ story }) => {
+            await compareScreenshot(story, "mount-no-drawer", {
+                fullscreen: true,
+            });
+        });
+
+        test("Navigation structure", async ({ story }) => {
+            await expect(story.locators.sidenav).toMatchAriaSnapshot(`
+                - navigation "Sidebar":
+                    - list:
+                        - listitem:
+                            - button "Dashboard"
+                        - listitem:
+                            - button "Users"
+                    - list:
+                        - listitem:
+                            - button "Settings"
+            `);
         });
     });
 });
