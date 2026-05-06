@@ -202,4 +202,14 @@ test.describe("Sidenav", () => {
             `);
         });
     });
+
+    test.describe("Mobile", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { size: "mobile" });
+        });
+
+        test("Desktop sidenav is not rendered on mobile", async ({ story }) => {
+            await expect(story.locators.sidenav).not.toBeVisible();
+        });
+    });
 });
