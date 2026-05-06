@@ -56,6 +56,37 @@ export abstract class AbstractStoryPage {
                 .click();
         }
     }
+
+    public async scrollWithWheelUntil(options: {
+        scrollTarget: Locator;
+        until: () => Promise<boolean>;
+        deltaX?: number;
+        deltaY?: number;
+        maxAttempts?: number;
+    }) {
+        const {
+            scrollTarget,
+            until,
+            deltaX = 0,
+            deltaY = 240,
+            maxAttempts = 12,
+        } = options;
+
+        await scrollTarget.hover();
+        await expect
+            .poll(async () => {
+                for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
+                    if (await until()) {
+                        return true;
+                    }
+
+                    await this.page.mouse.wheel(deltaX, deltaY);
+                }
+
+                return await until();
+            })
+            .toBe(true);
+    }
 }
 
 /**

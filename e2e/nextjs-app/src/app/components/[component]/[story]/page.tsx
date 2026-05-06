@@ -16,9 +16,9 @@ export default async function Page({
                 "date-range-input",
                 "date-input",
                 "select",
+                "input-multi-select",
                 "input-select",
                 "nested-select",
-                "multi-select",
                 "nested-multi-select",
             ].includes(component),
         }
