@@ -5,29 +5,21 @@ import { ChevronLineLeftIcon } from "@lifesg/react-icons/chevron-line-left";
 import { ChevronLineRightIcon } from "@lifesg/react-icons/chevron-line-right";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import { EllipsisHorizontalIcon } from "@lifesg/react-icons/ellipsis-horizontal";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import clsx from "clsx";
+import React, { useEffect, useRef, useState } from "react";
 
+import { Input } from "../input";
 import { InputSelect } from "../input-select";
 import { VisuallyHidden } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
-import { V3_Breakpoint } from "../v3_theme";
+import { ClickableIcon } from "../shared/clickable-icon";
 import {
-    EllipsisButton,
-    EllipsisContainer,
-    Hover,
-    InputSelectWrapper,
-    InputView,
-    Label,
-    LabelDivider,
-    NavigationButton,
-    PageItem,
-    PaginationList,
-    PaginationMenu,
-    PaginationMobileInput,
-    PaginationWrapper,
-} from "./pagination.styles";
+    Breakpoint,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
+import { Typography } from "../typography";
+import { SimpleIdGenerator, useIsMounted } from "../util";
+import * as styles from "./pagination.styles";
 import type { PageSizeItemProps, PaginationProps } from "./types";
 
 const Component = (
@@ -50,12 +42,9 @@ const Component = (
     // CONST, STATE, REF
     // =============================================================================
 
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
-
-    const isMobile = useMediaQuery({
-        maxWidth: mobileBreakpoint,
-    });
+    const isMounted = useIsMounted();
+    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
@@ -213,17 +202,20 @@ const Component = (
             const active = activePage === pageIndex;
             if (totalPages <= totalRange) {
                 return (
-                    <PageItem
+                    <button
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
-                        $selected={active}
+                        className={clsx(
+                            styles.pageItem,
+                            active && styles.pageItemSelected
+                        )}
                         aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
                     >
                         {pageIndex}
-                    </PageItem>
+                    </button>
                 );
             }
 
@@ -255,17 +247,20 @@ const Component = (
                 pageIndex > totalPages - boundaryRange;
             if (paginationStart || paginationMiddle || paginationEnd) {
                 return (
-                    <PageItem
+                    <button
                         key={pageIndex}
                         onClick={() => handlePaginationItemClick(pageIndex)}
-                        $selected={active}
+                        className={clsx(
+                            styles.pageItem,
+                            active && styles.pageItemSelected
+                        )}
                         aria-label={`page ${pageIndex} of ${totalPages}`}
                         aria-current={active ? "page" : false}
                         onMouseOver={closeAllTooltips}
                         onFocus={closeAllTooltips}
                     >
                         {pageIndex}
-                    </PageItem>
+                    </button>
                 );
             }
 
@@ -274,8 +269,9 @@ const Component = (
     };
 
     const renderStartEllipsis = (pageIndex: number) => (
-        <EllipsisContainer key={pageIndex}>
-            <EllipsisButton
+        <div key={pageIndex} className={styles.ellipsisContainer}>
+            <ClickableIcon
+                className={styles.iconButton}
                 focusHighlight={false}
                 focusOutline="browser"
                 aria-label={"Previous 5 pages"}
@@ -290,14 +286,17 @@ const Component = (
                 ) : (
                     <EllipsisHorizontalIcon aria-hidden />
                 )}
-            </EllipsisButton>
-            {hoverLeftButton && <Hover>Previous 5 pages</Hover>}
-        </EllipsisContainer>
+            </ClickableIcon>
+            {hoverLeftButton && (
+                <div className={styles.hover}>Previous 5 pages</div>
+            )}
+        </div>
     );
 
     const renderEndEllipsis = (pageIndex: number) => (
-        <EllipsisContainer key={pageIndex}>
-            <EllipsisButton
+        <div key={pageIndex} className={styles.ellipsisContainer}>
+            <ClickableIcon
+                className={styles.iconButton}
                 focusHighlight={false}
                 focusOutline="browser"
                 aria-label={"Next 5 pages"}
@@ -312,15 +311,18 @@ const Component = (
                 ) : (
                     <EllipsisHorizontalIcon aria-hidden />
                 )}
-            </EllipsisButton>
-            {hoverRightButton && <Hover>Next 5 pages</Hover>}
-        </EllipsisContainer>
+            </ClickableIcon>
+            {hoverRightButton && (
+                <div className={styles.hover}>Next 5 pages</div>
+            )}
+        </div>
     );
 
     const renderMobile = () => (
-        <PaginationMobileInput>
+        <div className={styles.paginationMobileInput}>
             <form onSubmit={handleInputSubmit}>
-                <InputView
+                <Input
+                    className={styles.inputView}
                     value={inputText}
                     onChange={handleInput}
                     autoComplete="off"
@@ -330,14 +332,18 @@ const Component = (
                     aria-label={`Page ${activePage} of ${totalPages}`}
                 />
             </form>
-            <LabelDivider>/</LabelDivider>
-            <Label>{totalPages}</Label>
-        </PaginationMobileInput>
+            <Typography.BodyBL className={styles.labelDivider}>
+                /
+            </Typography.BodyBL>
+            <Typography.BodyBL className={styles.label}>
+                {totalPages}
+            </Typography.BodyBL>
+        </div>
     );
 
     return (
-        <PaginationWrapper
-            className={className}
+        <nav
+            className={clsx(styles.paginationWrapper, className)}
             ref={ref}
             id={id || "pagination-wrapper"}
             data-testid={dataTestId || "pagination"}
@@ -346,57 +352,71 @@ const Component = (
             <VisuallyHidden id={paginationId} aria-hidden>
                 pagination
             </VisuallyHidden>
-            <PaginationList>
-                <PaginationMenu>
+            <div className={styles.paginationList}>
+                <div className={styles.paginationMenu}>
                     {showFirstAndLastNav && (
-                        <NavigationButton
+                        <ClickableIcon
+                            className={clsx(
+                                styles.iconButton,
+                                styles.iconButtonNavigation
+                            )}
                             onClick={firstPaginationItem}
                             disabled={isFirstPage}
                             focusHighlight={false}
-                            $position="left"
                             aria-label="First page"
                             focusOutline="browser"
                         >
                             <ChevronLineLeftIcon aria-hidden />
-                        </NavigationButton>
+                        </ClickableIcon>
                     )}
-                    <NavigationButton
+                    <ClickableIcon
+                        className={clsx(
+                            styles.iconButton,
+                            styles.iconButtonNavigation
+                        )}
                         onClick={prevPaginationItem}
                         disabled={isFirstPage}
                         focusHighlight={false}
-                        $position="left"
                         aria-label="Previous page"
                         focusOutline="browser"
                     >
                         <ChevronLeftIcon aria-hidden />
-                    </NavigationButton>
-                    {isMobile ? renderMobile() : renderPaginationItems()}
-                    <NavigationButton
+                    </ClickableIcon>
+                    {isMounted && isMobile
+                        ? renderMobile()
+                        : renderPaginationItems()}
+                    <ClickableIcon
+                        className={clsx(
+                            styles.iconButton,
+                            styles.iconButtonNavigation
+                        )}
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
                         focusHighlight={false}
-                        $position="right"
                         aria-label="Next page"
                         focusOutline="browser"
                     >
                         <ChevronRightIcon aria-hidden />
-                    </NavigationButton>
+                    </ClickableIcon>
                     {showFirstAndLastNav && (
-                        <NavigationButton
+                        <ClickableIcon
+                            className={clsx(
+                                styles.iconButton,
+                                styles.iconButtonNavigation
+                            )}
                             onClick={lastPaginationItem}
                             disabled={isLastPage}
                             focusHighlight={false}
-                            $position="right"
                             aria-label="Last page"
                             focusOutline="browser"
                         >
                             <ChevronLineRightIcon aria-hidden />
-                        </NavigationButton>
+                        </ClickableIcon>
                     )}
-                </PaginationMenu>
-            </PaginationList>
+                </div>
+            </div>
             {showPageSizeChanger && !isMobile && (
-                <InputSelectWrapper>
+                <div className={styles.inputSelectWrapper}>
                     <VisuallyHidden id={`${paginationId}-page-size`}>
                         Items per page
                     </VisuallyHidden>
@@ -409,9 +429,9 @@ const Component = (
                         selectedOption={selectedOption}
                         onSelectOption={handleListItemClick}
                     />
-                </InputSelectWrapper>
+                </div>
             )}
-        </PaginationWrapper>
+        </nav>
     );
 };
 export const Pagination = React.forwardRef(Component);
