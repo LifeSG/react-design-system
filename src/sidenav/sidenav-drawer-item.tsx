@@ -99,9 +99,9 @@ export const SidenavDrawerItem = ({
                 className={styles.drawerSubitemContainer}
                 style={contentAnimationProps}
             >
-                <animated.ul id={subitemId} ref={childRef}>
+                <ul id={subitemId} ref={childRef}>
                     {children}
-                </animated.ul>
+                </ul>
             </animated.div>
         </animated.li>
     );
