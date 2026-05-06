@@ -125,7 +125,7 @@ test.describe("InputMultiSelect", () => {
             await expect(story.page.getByTestId("form-default"))
                 .toMatchAriaSnapshot(`
                     - text: Default
-                - combobox "Default": Default multi select
+                    - combobox "Default": Default multi select
             `);
 
             await story.openDropdown(story.locators.form.default);
@@ -639,6 +639,8 @@ test.describe("InputMultiSelect", () => {
             });
 
             await expect(story.getOption("Option 1")).not.toBeVisible();
+
+            await story.getOption("Option 100").hover();
 
             await compareScreenshot(story, "last-item", {
                 fullscreen: true,
