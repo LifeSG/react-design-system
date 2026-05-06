@@ -3,8 +3,10 @@ import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 
+import { Button } from "../button";
 import { Overlay } from "../overlay";
 import { inertValue } from "../shared/accessibility";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { useApplyStyle } from "../theme";
 import * as filterStyles from "./filter.styles";
 import { FilterContext } from "./filter-context";
@@ -24,6 +26,7 @@ export const FilterModal = ({
     toggleFilterButtonLabel: _toggleFilterButtonLabel,
     headerTitle: _headerTitle,
     doneButtonLabel: _doneButtonLabel,
+    className,
     ...otherProps
 }: FilterModalProps) => {
     const { context, refs } = useFloating();
@@ -78,8 +81,9 @@ export const FilterModal = ({
 
     return (
         <FilterContext.Provider value={{ mode: "mobile", rootNode: nodeRef }}>
-            <div {...otherProps}>
-                <styles.FilterButton
+            <div className={className} {...otherProps}>
+                <Button
+                    className={styles.filterButton}
                     data-testid="filter-show-button"
                     styleType={toggleFilterButtonStyle}
                     onClick={handleShowFilter}
@@ -87,65 +91,83 @@ export const FilterModal = ({
                     icon={<FilterIcon />}
                 >
                     {labels.toggle}
-                </styles.FilterButton>
+                </Button>
             </div>
             <Overlay show={visible} disableTransition>
-                <styles.FloatingWrapper inert={inertValue(!visible)}>
+                <div
+                    className={styles.floatingWrapper}
+                    inert={inertValue(!visible)}
+                >
                     <FloatingFocusManager context={context} disabled={!visible}>
-                        <styles.MobileOverlayContainer
+                        <div
+                            className={styles.mobileOverlayContainer}
                             data-id="filter-mobile"
                             data-testid="filter-mobile"
                             ref={refs.setFloating}
                         >
-                            <styles.MobileContainer ref={nodeRef} tabIndex={0}>
-                                <styles.FilterHeader
+                            <div
+                                className={styles.mobileContainer}
+                                ref={nodeRef}
+                                tabIndex={0}
+                            >
+                                <div
                                     ref={headerRef}
                                     className={clsx(
+                                        styles.filterHeader,
                                         insets?.top &&
-                                            "filterHeaderWithInsetTop"
+                                            styles.filterHeaderWithInsetTop
                                     )}
                                 >
-                                    <filterStyles.FilterHeaderButton
+                                    <ClickableIcon
+                                        className={
+                                            filterStyles.filterHeaderButton
+                                        }
                                         onClick={handleDismiss}
                                         focusOutline="browser"
                                         focusHighlight={false}
                                         aria-label={`close ${labels.title}`}
                                     >
                                         <CrossIcon />
-                                    </filterStyles.FilterHeaderButton>
-                                    <styles.FilterTitle>
+                                    </ClickableIcon>
+                                    <h2 className={styles.filterTitle}>
                                         {labels.title}
-                                    </styles.FilterTitle>
-                                    <styles.FilterClearButton
+                                    </h2>
+                                    <Button
+                                        className={styles.filterClearButton}
                                         styleType="link"
                                         type="button"
+                                        sizeType="small"
                                         onClick={() => onClear?.()}
                                         disabled={clearButtonDisabled}
                                         aria-label={`clear ${labels.title}`}
                                     >
                                         {labels.clear}
-                                    </styles.FilterClearButton>
-                                </styles.FilterHeader>
-                                <filterStyles.FilterBody>
+                                    </Button>
+                                </div>
+                                <div className={filterStyles.filterBody}>
                                     {children}
-                                </filterStyles.FilterBody>
-                                <filterStyles.FilterFooter
+                                </div>
+                                <div
                                     ref={footerRef}
                                     className={clsx(
+                                        filterStyles.filterFooter,
                                         insets?.bottom &&
-                                            "filterFooterWithInsetBottom"
+                                            filterStyles.filterFooterWithInsetBottom
                                     )}
                                 >
-                                    <filterStyles.FilterDoneButton
+                                    <Button
+                                        className={
+                                            filterStyles.filterDoneButton
+                                        }
                                         onClick={handleDone}
                                     >
                                         {labels.done}
-                                    </filterStyles.FilterDoneButton>
-                                </filterStyles.FilterFooter>
-                            </styles.MobileContainer>
-                        </styles.MobileOverlayContainer>
+                                    </Button>
+                                </div>
+                            </div>
+                        </div>
                     </FloatingFocusManager>
-                </styles.FloatingWrapper>
+                </div>
             </Overlay>
         </FilterContext.Provider>
     );

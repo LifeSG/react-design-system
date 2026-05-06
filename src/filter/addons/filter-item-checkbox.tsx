@@ -10,7 +10,11 @@ import {
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { Button } from "../../button";
+import { Checkbox } from "../../checkbox";
+import { Toggle } from "../../toggle";
 import { FilterContext } from "../filter-context";
+import { FilterItem } from "../filter-item";
 import type {
     FilterItemCheckboxOptionProps,
     FilterItemCheckboxProps,
@@ -305,7 +309,8 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         const { checked, indeterminate } = getCheckboxState(flatOption);
 
         return (
-            <styles.StyledCheckbox
+            <Checkbox
+                className={styles.styledCheckbox}
                 displaySize="small"
                 checked={checked}
                 indeterminate={indeterminate}
@@ -338,23 +343,25 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
               }
             : {};
 
+        const ItemTag = isNested ? "div" : "label";
+
         return (
-            <styles.Item
+            <ItemTag
                 key={buildKeyPath(option.keyPath)}
-                as={isNested ? "div" : "label"}
                 role={isNested ? "treeitem" : undefined}
                 {...treeItemAriaAttributes}
                 onClick={isNested ? handleItemClick(originalItem) : undefined}
                 onKeyDown={handleListItemKeyDown(originalItem)}
                 tabIndex={isNested ? 0 : undefined}
                 className={clsx(
-                    !isVisible && "itemHidden",
-                    isSelected && "itemSelected"
+                    styles.item,
+                    !isVisible && styles.itemHidden,
+                    isSelected && styles.itemSelected
                 )}
-                ref={(el: HTMLLabelElement | null) => {
+                ref={(el: HTMLElement | null) => {
                     if (index === 4) {
                         (
-                            lastVisibleElement as React.MutableRefObject<HTMLLabelElement | null>
+                            lastVisibleElement as React.MutableRefObject<HTMLElement | null>
                         ).current = el;
                     }
                     if (el) {
@@ -371,7 +378,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             >
                 {renderCheckboxIcon(originalItem, option)}
                 {optionLabel}
-            </styles.Item>
+            </ItemTag>
         );
     };
 
@@ -388,16 +395,19 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             !minimised ||
             (!!minimisedHeight && index <= lastVisibleElementIndex);
         return (
-            <styles.StyledToggle
+            <Toggle
                 key={optionValue}
                 type="checkbox"
                 checked={checked}
-                className={clsx(!isVisible && "styledToggleHidden")}
+                className={clsx(
+                    styles.styledToggle,
+                    !isVisible && styles.styledToggleHidden
+                )}
                 onChange={handleItemClick(originalItem)}
                 useContentWidth={useToggleContentWidth}
             >
                 {optionLabel}
-            </styles.StyledToggle>
+            </Toggle>
         );
     };
 
@@ -406,9 +416,11 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             return null;
         }
         return (
-            <styles.SelectAllButton
+            <Button
+                className={styles.selectAllButton}
                 styleType="link"
                 type="button"
+                sizeType="small"
                 onClick={handleSelectClearAll}
                 aria-label={
                     selected.length
@@ -419,12 +431,13 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                 }
             >
                 {selected.length ? "Clear all" : "Select all"}
-            </styles.SelectAllButton>
+            </Button>
         );
     };
 
     return (
-        <styles.StyledFilterItem
+        <FilterItem
+            className={styles.styledFilterItem}
             minimisable={
                 minimisableOptions
                     ? isMobileToggleMode // set minimisable base on mobile toggle mode
@@ -438,13 +451,14 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             {(_, { minimised }) => (
                 <>
                     {renderSelectClearAllButton()}
-                    <styles.Group
+                    <div
                         role={isNested ? "tree" : "group"}
                         aria-label={filterItemProps.title}
                         aria-multiselectable={true}
                         ref={parentRef}
                         className={clsx(
-                            isMobileToggleMode && "groupMobileToggleMode"
+                            styles.group,
+                            isMobileToggleMode && styles.groupMobileToggleMode
                         )}
                     >
                         {flattenedOptions.map((option, i) =>
@@ -452,10 +466,10 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                                 ? renderToggle(option, i, minimised)
                                 : renderCheckbox(option, i, minimised)
                         )}
-                    </styles.Group>
+                    </div>
                 </>
             )}
-        </styles.StyledFilterItem>
+        </FilterItem>
     );
 };
 

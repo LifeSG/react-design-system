@@ -1,5 +1,7 @@
+import clsx from "clsx";
 import { useRef } from "react";
 
+import { Button } from "../button";
 import * as filterStyles from "./filter.styles";
 import { FilterContext } from "./filter-context";
 import * as styles from "./filter-sidebar.styles";
@@ -11,6 +13,7 @@ export const FilterSidebar = ({
     clearButtonDisabled = false,
     children,
     headerTitle: _headerTitle,
+    className,
     ...otherProps
 }: FilterSidebarProps) => {
     const nodeRef = useRef<HTMLDivElement>(null);
@@ -22,15 +25,17 @@ export const FilterSidebar = ({
 
     return (
         <FilterContext.Provider value={{ mode: "default", rootNode: nodeRef }}>
-            <styles.DesktopContainer
+            <div
                 data-id="filter-desktop"
                 data-testid="filter-desktop"
                 ref={nodeRef}
+                className={clsx(styles.desktopContainer, className)}
                 {...otherProps}
             >
-                <styles.FilterHeader>
-                    <styles.FilterTitle>{labels.title}</styles.FilterTitle>
-                    <styles.FilterClearButton
+                <div className={styles.filterHeader}>
+                    <h2 className={styles.filterTitle}>{labels.title}</h2>
+                    <Button
+                        className={styles.filterClearButton}
                         styleType="link"
                         type="button"
                         sizeType="small"
@@ -39,10 +44,10 @@ export const FilterSidebar = ({
                         aria-label={`clear ${labels.title}`}
                     >
                         {labels.clear}
-                    </styles.FilterClearButton>
-                </styles.FilterHeader>
-                <filterStyles.FilterBody>{children}</filterStyles.FilterBody>
-            </styles.DesktopContainer>
+                    </Button>
+                </div>
+                <div className={filterStyles.filterBody}>{children}</div>
+            </div>
         </FilterContext.Provider>
     );
 };

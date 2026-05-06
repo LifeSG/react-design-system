@@ -1,7 +1,5 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
-import { ClickableIcon } from "../shared/clickable-icon";
 import { Border, Colour, Spacing } from "../theme";
 
 export const tokens = {
@@ -10,21 +8,13 @@ export const tokens = {
     },
 } as const;
 
-// =============================================================================
-// CONTAINER STYLES
-// =============================================================================
-
-export const FilterBody = styled.div`
+export const filterBody = css`
     flex: 1;
     width: 100%;
     overflow-y: auto;
 `;
 
-// =============================================================================
-// HEADER STYLES
-// =============================================================================
-
-export const FilterHeaderButton = styled(ClickableIcon)`
+export const filterHeaderButton = css`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     margin-right: auto;
     color: ${Colour["icon"]};
@@ -39,20 +29,16 @@ export const FilterHeaderButton = styled(ClickableIcon)`
     }
 `;
 
-// =============================================================================
-// COMPONENT STYLES
-// =============================================================================
-
-export const FilterFooter = styled.div`
+export const filterFooter = css`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     background-color: ${Colour["bg"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-
-    &.filterFooterWithInsetBottom {
-        padding-bottom: var(${tokens.filterFooter.insetBottom});
-    }
 `;
 
-export const FilterDoneButton = styled(Button.Default)`
+export const filterFooterWithInsetBottom = css`
+    padding-bottom: var(${tokens.filterFooter.insetBottom});
+`;
+
+export const filterDoneButton = css`
     width: 100%;
 `;

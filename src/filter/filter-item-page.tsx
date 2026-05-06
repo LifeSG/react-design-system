@@ -1,5 +1,7 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 
+import { Button } from "../button";
+import { ClickableIcon } from "../shared/clickable-icon";
 import * as filterStyles from "./filter.styles";
 import * as styles from "./filter-item-page.styles";
 import type { FilterPageProps } from "./types";
@@ -10,22 +12,27 @@ export const FilterItemPage = ({
     children,
 }: FilterPageProps) => {
     return (
-        <styles.FilterItemPageContainer>
-            <filterStyles.FilterHeaderButton
+        <div className={styles.filterItemPageContainer}>
+            <ClickableIcon
+                className={filterStyles.filterHeaderButton}
                 onClick={onDismiss}
                 focusOutline="browser"
                 focusHighlight={false}
                 aria-label="Dismiss"
             >
                 <ChevronLeftIcon />
-            </filterStyles.FilterHeaderButton>
-            <filterStyles.FilterBody>{children}</filterStyles.FilterBody>
-            <filterStyles.FilterFooter>
-                <filterStyles.FilterDoneButton onClick={onDone} type="button">
+            </ClickableIcon>
+            <div className={filterStyles.filterBody}>{children}</div>
+            <div className={filterStyles.filterFooter}>
+                <Button
+                    className={filterStyles.filterDoneButton}
+                    onClick={onDone}
+                    type="button"
+                >
                     Done
-                </filterStyles.FilterDoneButton>
-            </filterStyles.FilterFooter>
-        </styles.FilterItemPageContainer>
+                </Button>
+            </div>
+        </div>
     );
 };
 
