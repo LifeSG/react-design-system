@@ -9,7 +9,7 @@ export const inputBox = css`
 
     &:focus-within,
     &[data-focused="true"] {
-        outline: ${Border["width-020"]};
+        outline: ${Border["width-020"]} ${Border["solid"]} ${Colour["border-focus"]};
         outline-offset: -1px;
     }
 `;

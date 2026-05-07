@@ -63,6 +63,7 @@ export const listSize: Record<TextListSize, string> = {
 };
 
 export const orderedList = css`
+    ${tokens.orderedListCounterStyle}: decimal;
     ${tokens.orderedListCounterSeparator}: ")";
 
     margin-left: 3em;
@@ -80,8 +81,7 @@ export const orderedList = css`
     li::before {
         position: absolute;
         left: -2em;
-        content: counter(list, var(${tokens.orderedListCounterStyle}, decimal))
-            var(/* ${tokens.orderedListCounterSeparator}:3 */);
+        content: counter(list, var(${tokens.orderedListCounterStyle})) var(${tokens.orderedListCounterSeparator});
         counter-increment: list;
     }
 

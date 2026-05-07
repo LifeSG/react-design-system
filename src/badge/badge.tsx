@@ -38,8 +38,8 @@ export const Badge = ({
     const wrapperRef = useRef<HTMLDivElement>(null);
 
     useApplyStyle(wrapperRef, {
-        [styles.tokens.wrapper.offsetX]: badgeOffset?.[0],
-        [styles.tokens.wrapper.offsetY]: badgeOffset?.[1],
+        [styles.tokens.wrapper.offsetX]: badgeOffset?.[0] ?? "0px",
+        [styles.tokens.wrapper.offsetY]: badgeOffset?.[1] ?? "0px",
     });
 
     // =============================================================================

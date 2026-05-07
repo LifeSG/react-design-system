@@ -28,7 +28,7 @@ export const fadeLeft = css`
         background-image: linear-gradient(
             to right,
             var(${tokens.backgroundColor}, ${Colour.bg}),
-            rgb(255 255 255 0.1%)
+            rgb(255 255 255 / 0.1%)
         );
     }
 `;
@@ -37,7 +37,11 @@ export const fadeRight = css`
     right: 0;
 
     ${MediaQuery.MaxWidth.lg} {
-        background-image: linear-gradient(to left, var(${tokens.backgroundColor}, ${Colour.bg}), rgb(255 255 255 0.1%));
+        background-image: linear-gradient(
+            to left,
+            var(${tokens.backgroundColor}, ${Colour.bg}),
+            rgb(255 255 255 / 0.1%)
+        );
     }
 `;
 

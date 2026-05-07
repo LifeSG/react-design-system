@@ -31,10 +31,13 @@ export const badgeOverlay = css`
 export const badgeWrapper = css``;
 
 export const badgeWrapperIsOverlay = css`
+    ${tokens.wrapper.offsetX}: 0px;
+    ${tokens.wrapper.offsetY}: 0px;
+
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(50%, -25%) translate(var(${tokens.wrapper.offsetX}, 0), var(${tokens.wrapper.offsetY}, 0));
+    transform: translate(50%, -25%) translate(var(${tokens.wrapper.offsetX}), var(${tokens.wrapper.offsetY}));
 `;
 
 export const badge = css`

@@ -66,7 +66,7 @@ export const optionsOverlay = css`
 export const header = css`
     display: flex;
     justify-content: space-between;
-    padding: 0 var(${calendarDropdownTokens.horizontalInset}) var(${calendarDropdownTokens.headerBottomSpacing}));
+    padding: 0 var(${calendarDropdownTokens.horizontalInset}) var(${calendarDropdownTokens.headerBottomSpacing});
 `;
 
 export const headerInputDropdown = css`

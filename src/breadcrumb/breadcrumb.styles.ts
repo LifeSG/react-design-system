@@ -62,7 +62,7 @@ export const fadeLeft = css`
         background-image: linear-gradient(
             to right,
             var(${tokens.fade.backgroundColor}, ${Colour.bg}),
-            rgb(255 255 255 0.1%)
+            rgb(255 255 255 / 0.1%)
         );
     }
 `;
@@ -73,7 +73,7 @@ export const fadeRight = css`
         background-image: linear-gradient(
             to left,
             var(${tokens.fade.backgroundColor}, ${Colour.bg}),
-            rgb(255 255 255 0.1%)
+            rgb(255 255 255 / 0.1%)
         );
     }
 `;

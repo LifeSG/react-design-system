@@ -79,7 +79,7 @@ export const sliderThumb = css`
     outline: none;
 
     &:focus .${knob}::after, &[data-focused="true"] .${knob}::after {
-        outline: ${Border["width-040"]};
+        outline: ${Border["width-040"]} ${Border["solid"]} ${Colour["border-selected"]};
         outline-offset: -1px;
     }
 `;
