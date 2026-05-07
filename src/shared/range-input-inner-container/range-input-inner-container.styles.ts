@@ -4,9 +4,9 @@ import { Colour, Font, Motion, Spacing } from "../../theme";
 
 export const wrapper = css`
     position: relative;
-    height: 100%;
     display: flex;
     flex: 1;
+    height: 100%;
 `;
 
 export const wrapperWrap = css`
@@ -15,11 +15,10 @@ export const wrapperWrap = css`
 
     [data-id="range-container-elem1-container"],
     [data-id="range-container-elem2-container"] {
-        // 100% - Icon size - 2padding
-        max-width: calc(
-            100% - ${Font.Spec["body-size-baseline"]} - ${Spacing["spacing-16"]}
-        );
         flex: unset;
+
+        /* 100% - Icon size - 2padding */
+        max-width: calc(100% - ${Font.Spec["body-size-baseline"]} calc(${Spacing["spacing-16"]} * -1));
     }
 
     [data-id="range-container-elem2-container"] {
@@ -34,31 +33,32 @@ export const elementContainer = css`
 `;
 
 export const arrowRight = css`
-    color: ${Colour["icon"]};
+    flex-shrink: 0;
+    align-self: center;
     width: ${Font.Spec["body-size-baseline"]};
     height: ${Font.Spec["body-size-baseline"]};
-    flex-shrink: 0;
     margin: 0 ${Spacing["spacing-8"]};
-    align-self: center;
+    color: ${Colour["icon"]};
 `;
 
 export const lineBreak = css`
-    width: 100%; // Force next flex item to break to next line
+    /* Force next flex item to break to next line */
+    width: 100%;
 `;
 
 export const indicator = css`
     position: absolute;
-    background: ${Colour["border-focus-strong"]};
-    height: 2px;
-    // half - half padding - half icon width
-    width: calc(
-        50% - ${Spacing["spacing-8"]} - (${Font.Spec["body-size-baseline"]} / 2)
-    );
-    transition: left ${Motion["duration-350"]} ${Motion["ease-standard"]},
-        opacity ${Motion["duration-350"]} ${Motion["ease-standard"]};
-    left: 0;
     bottom: 0;
+    left: 0;
+
+    /* half - half padding - half icon width */
+    width: calc(50% - ${Spacing["spacing-8"]} - (${Font.Spec["body-size-baseline"]} / 2));
+    height: 2px;
+    background: ${Colour["border-focus-strong"]};
     opacity: 0;
+    transition-timing-function: ${Motion["ease-standard"]}, ${Motion["ease-standard"]};
+    transition-duration: ${Motion["duration-350"]}, ${Motion["duration-350"]};
+    transition-property: left, opacity;
 
     &[data-position="start"] {
         opacity: 1;

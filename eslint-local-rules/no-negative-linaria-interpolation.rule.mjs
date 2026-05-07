@@ -33,6 +33,23 @@ export const noNegativeLinariaInterpolationRule = {
                     // applied before interpolation and compiles to invalid CSS values.
                     const negativePrefixMatch = beforeExpression.match(/-\s*$/);
                     if (negativePrefixMatch) {
+                        const beforeMinus = beforeExpression.slice(
+                            0,
+                            beforeExpression.length -
+                                negativePrefixMatch[0].length
+                        );
+                        const previousNonWhitespace =
+                            beforeMinus.match(/\S\s*$/)?.[0]?.trim() || "";
+
+                        // Only flag unary negatives like `: -${x}` or `(-${x}`.
+                        // Skip binary subtraction contexts like `100% - ${x}`.
+                        if (
+                            previousNonWhitespace &&
+                            ![":", "(", ","].includes(previousNonWhitespace)
+                        ) {
+                            continue;
+                        }
+
                         context.report({
                             node: template.expressions[i],
                             messageId: "negativeLinariaInterpolation",

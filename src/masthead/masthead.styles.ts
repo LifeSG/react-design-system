@@ -2,11 +2,8 @@ import { css } from "@linaria/core";
 
 import { Breakpoint, MediaQuery } from "../theme";
 
-// =============================================================================
-// STYLING
-// =============================================================================
 export const wrapper = css`
-    // matches Layout.Container
+    /* matches Layout.Container */
     --sgds-mainnav-padding-x: ${Breakpoint["xxl-margin"]};
     --sgds-mainnav-mobile-padding-x: ${Breakpoint["xxl-margin"]};
     --sgds-mainnav-max-width: 1440px;

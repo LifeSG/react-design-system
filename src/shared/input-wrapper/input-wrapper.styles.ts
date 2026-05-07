@@ -3,22 +3,21 @@ import { css } from "@linaria/core";
 import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 
 export const inputBox = css`
+    background: ${Colour["bg"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
-    background: ${Colour["bg"]};
 
     &:focus-within,
     &[data-focused="true"] {
+        outline: ${Border["width-020"]};
         outline-offset: -1px;
-        outline: ${Border["width-020"]} ${Border["solid"]}
-            ${Colour["border-focus"]};
     }
 `;
 
 export const inputBoxReadOnly = css`
-    border-color: transparent;
     padding: 0;
     background: transparent !important;
+    border-color: transparent;
 
     &:focus-within,
     &[data-focused="true"] {
@@ -27,8 +26,8 @@ export const inputBoxReadOnly = css`
 `;
 
 export const inputBoxDisabled = css`
-    background: ${Colour["bg-disabled"]};
     cursor: not-allowed;
+    background: ${Colour["bg-disabled"]};
 
     &:focus-within,
     &[data-focused="true"] {
@@ -46,8 +45,8 @@ export const inputBoxError = css`
 `;
 
 export const inputBoxNoBorder = css`
-    border-color: transparent;
     background: transparent;
+    border-color: transparent;
 
     &:focus-within,
     &[data-focused="true"] {
@@ -56,11 +55,11 @@ export const inputBoxNoBorder = css`
 `;
 
 export const inputWrapper = css`
+    position: relative;
     display: flex;
     align-items: center;
-    position: relative;
-    height: max-content;
     width: 100%;
+    height: max-content;
     padding: 0 ${Spacing["spacing-16"]} 0 ${Spacing["spacing-16"]};
 `;
 
@@ -74,14 +73,14 @@ export const inputWrapperPositionRight = css`
 
 export const basicInput = css`
     ${Font["body-baseline-regular"]}
-    color: ${Colour["text"]};
     display: block;
-    background: transparent;
-    border: none;
-    outline: none;
-    box-shadow: none;
     padding: 0;
     margin: 0;
+    color: ${Colour["text"]};
+    outline: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
 
     &:disabled {
         color: ${Colour["text-subtler"]};
@@ -96,17 +95,17 @@ export const basicInput = css`
         color: ${Colour["text-subtler"]};
     }
 
-    // Chrome, Safari, Edge, Opera
+    /* Chrome, Safari, Edge, Opera */
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
         margin: 0;
+        appearance: none;
     }
 
-    // Safari (remove top shadow)
+    /* Safari (remove top shadow) */
     --webkit-appearance: none;
 
-    // Firefox
+    /* Firefox */
     --moz-appearance: textfield;
 `;
 
@@ -115,9 +114,9 @@ export const basicInputSmall = css`
 `;
 
 export const basicButton = css`
+    outline: none;
     background: transparent;
     border: none;
-    outline: none;
 
     &:focus,
     &:active {
@@ -125,8 +124,7 @@ export const basicButton = css`
     }
 
     &:focus-visible {
-        outline: ${Border["width-010"]} ${Border["solid"]}
-            ${Colour["border-focus"]};
+        outline: ${Border["width-010"]} ${Border["solid"]} ${Colour["border-focus"]};
         border-radius: ${Radius["sm"]};
     }
 `;

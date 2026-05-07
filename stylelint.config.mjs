@@ -19,6 +19,12 @@ export default {
                 ignoreSelectors: ["::-webkit-input-placeholder"],
             },
         ],
+        "property-no-vendor-prefix": [
+            true,
+            {
+                ignoreProperties: ["-webkit-appearance"],
+            },
+        ],
 
         "@stylistic/color-hex-case": "upper",
         "@stylistic/indentation": 4,
@@ -35,7 +41,6 @@ export default {
             files: ["**/*.ts", "**/*.tsx"],
             customSyntax: "@linaria/postcss-linaria",
             rules: {
-                "property-no-vendor-prefix": true,
                 "string-no-newline": true,
                 "value-no-vendor-prefix": true,
                 "no-empty-source": null,

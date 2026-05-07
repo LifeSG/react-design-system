@@ -197,6 +197,18 @@ export const box = css\`
 `,
             },
             {
+                name: "subtraction interpolation in calc is allowed",
+                filename: "/repo/src/button/button.styles.ts",
+                code: `import { css } from "@linaria/core";
+
+const spacing = "8px";
+
+export const box = css\`
+    max-width: calc(100% - \${spacing});
+\`;
+`,
+            },
+            {
                 name: "non-css tagged template is ignored",
                 filename: "/repo/src/button/button.styles.ts",
                 code: `const spacing = "8px";
