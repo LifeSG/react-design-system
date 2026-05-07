@@ -55,6 +55,12 @@ export default {
                 // empty class node during parsing.
                 "selector-class-pattern": null,
 
+                // Linaria interpolations in font-family become placeholders
+                // (e.g. pcss-lin1), which trigger false positives for both
+                // quote and generic-family checks.
+                "font-family-name-quotes": null,
+                "font-family-no-missing-generic-family-keyword": null,
+
                 // Ignore Linaria placeholder values like pcss-lin0 and -pcss-lin1.
                 "declaration-property-value-no-unknown": [
                     true,
