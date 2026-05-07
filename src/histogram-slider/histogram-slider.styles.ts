@@ -1,12 +1,7 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { InputRangeSlider } from "../input-range-slider";
 import { Colour, Radius, Spacing } from "../theme";
-
-interface BarStyleProps {
-    $selected: boolean;
-    $disabled: boolean | undefined;
-}
 
 export const Label = styled.div`
     display: flex;
@@ -26,25 +21,24 @@ export const Histogram = styled.div`
     padding: 0 0.4375rem;
 `;
 
-export const Bar = styled.div<BarStyleProps>`
+export const Bar = styled.div`
     flex: 1;
     border-radius: ${Radius["sm"]} ${Radius["sm"]} 0 0;
     border: 0.5px solid transparent; // space between bars
     background-clip: content-box;
+    background-color: ${Colour["bg-strongest"]};
 
-    ${(props) => {
-        let color: string = Colour["bg-strongest"];
-        if (props.$disabled && props.$selected) {
-            color = Colour["bg-selected-stronger-disabled"];
-        } else if (props.$disabled) {
-            color = Colour["bg-disabled"];
-        } else if (props.$selected) {
-            color = Colour["bg-selected-stronger"];
-        }
-        return css`
-            background-color: ${color};
-        `;
-    }}
+    &.barDisabled {
+        background-color: ${Colour["bg-disabled"]};
+    }
+
+    &.barSelected {
+        background-color: ${Colour["bg-selected-stronger"]};
+    }
+
+    &.barSelectedDisabled {
+        background-color: ${Colour["bg-selected-stronger-disabled"]};
+    }
 `;
 
 export const Slider = styled(InputRangeSlider)`
