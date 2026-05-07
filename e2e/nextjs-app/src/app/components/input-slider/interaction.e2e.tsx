@@ -19,7 +19,6 @@ export default function Story() {
             <p>
                 Value: <span data-testid="slider-value">{value}</span>
             </p>
-            <button data-testid="focus-target-after">after</button>
         </div>
     );
 }

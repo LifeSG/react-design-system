@@ -8,7 +8,6 @@ class StoryPage extends AbstractStoryPage {
         internal: {
             slider: Locator;
             thumb: Locator;
-            track: Locator;
         };
         default: Locator;
         disabled: Locator;
@@ -16,7 +15,6 @@ class StoryPage extends AbstractStoryPage {
         error: Locator;
         interaction: Locator;
         focusTargetBefore: Locator;
-        focusTargetAfter: Locator;
     };
 
     constructor(page: Page) {
@@ -26,7 +24,6 @@ class StoryPage extends AbstractStoryPage {
             internal: {
                 slider: page.getByRole("slider"),
                 thumb: page.getByTestId("slider-thumb-0"),
-                track: page.getByTestId("slider-track-0"),
             },
             default: page.getByTestId("slider-default"),
             disabled: page.getByTestId("slider-disabled"),
@@ -34,7 +31,6 @@ class StoryPage extends AbstractStoryPage {
             error: page.getByTestId("slider-error"),
             interaction: page.getByTestId("slider-interaction"),
             focusTargetBefore: page.getByTestId("focus-target-before"),
-            focusTargetAfter: page.getByTestId("focus-target-after"),
         };
     }
 
