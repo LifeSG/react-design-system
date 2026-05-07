@@ -46,12 +46,12 @@ test.describe("Filter", () => {
         });
 
         test("Sidebar", async ({ story }) => {
-            await compareScreenshot(story, "mount-collapsed", {
+            await compareScreenshot(story, "collapsed", {
                 locator: story.locators.sidebar,
             });
             await story.expandAllItems();
             await story.page.waitForTimeout(700);
-            await compareScreenshot(story, "mount-expanded", {
+            await compareScreenshot(story, "expanded", {
                 locator: story.locators.sidebar,
             });
         });
