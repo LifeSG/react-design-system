@@ -37,6 +37,12 @@ export default {
                 ],
                 "no-invalid-double-slash-comments": true,
 
+                // Linaria class names are auto-generated at build time; the
+                // selector-class-pattern rule cannot validate interpolated
+                // selectors like .${knob} because postcss-linaria exposes an
+                // empty class node during parsing.
+                "selector-class-pattern": null,
+
                 // Ignore Linaria placeholder values like pcss-lin0 and -pcss-lin1.
                 "declaration-property-value-no-unknown": [
                     true,
