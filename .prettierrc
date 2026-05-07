@@ -1,16 +1,22 @@
 {
-	"trailingComma": "es5",
-	"tabWidth": 4,
-	"semi": true,
-	"singleQuote": false,
-	"bracketSpacing": true,
-	"arrowParens": "always",
-	"overrides": [
-		{
-			"files": ".github/**/*.yml",
-			"options": {
-				"tabWidth": 2
-			}
-		}
-	]
+    "trailingComma": "es5",
+    "tabWidth": 4,
+    "semi": true,
+    "singleQuote": false,
+    "bracketSpacing": true,
+    "arrowParens": "always",
+    "overrides": [
+        {
+            "files": "**/*.styles.ts",
+            "options": {
+                "printWidth": 120
+            }
+        },
+        {
+            "files": ".github/**/*.yml",
+            "options": {
+                "tabWidth": 2
+            }
+        }
+    ]
 }
