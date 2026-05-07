@@ -7,6 +7,18 @@ export default {
         "selector-max-id": 0,
         "custom-property-empty-line-before": "never",
         "color-hex-length": "long",
+        "selector-pseudo-class-no-unknown": [
+            true,
+            {
+                ignorePseudoClasses: ["global"],
+            },
+        ],
+        "selector-no-vendor-prefix": [
+            true,
+            {
+                ignoreSelectors: ["::-webkit-input-placeholder"],
+            },
+        ],
 
         "@stylistic/color-hex-case": "upper",
         "@stylistic/indentation": 4,
