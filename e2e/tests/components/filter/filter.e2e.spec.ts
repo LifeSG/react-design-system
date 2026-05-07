@@ -1,5 +1,9 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    waitForAnimationEnd,
+} from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "filter";
@@ -50,7 +54,7 @@ test.describe("Filter", () => {
                 locator: story.locators.sidebar,
             });
             await story.expandAllItems();
-            await story.page.waitForTimeout(700);
+            await waitForAnimationEnd(story.locators.sidebar);
             await compareScreenshot(story, "expanded", {
                 locator: story.locators.sidebar,
             });
@@ -64,7 +68,7 @@ test.describe("Filter", () => {
 
         test("Sidebar (dark mode)", async ({ story }) => {
             await story.expandAllItems();
-            await story.page.waitForTimeout(700);
+            await waitForAnimationEnd(story.locators.sidebar);
             await compareScreenshot(story, "mount", {
                 locator: story.locators.sidebar,
                 fullscreen: true,

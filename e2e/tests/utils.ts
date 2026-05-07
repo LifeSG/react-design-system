@@ -148,3 +148,9 @@ export const applyMockedTimestamp = async (
 
     await clock.install({ time: mockedDate });
 };
+
+export const waitForAnimationEnd = async (locator: Locator) => {
+    const handle = await locator.elementHandle();
+    await handle?.waitForElementState("stable");
+    await handle?.dispose();
+};
