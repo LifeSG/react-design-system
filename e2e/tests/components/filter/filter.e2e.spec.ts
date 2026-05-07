@@ -12,15 +12,43 @@ class StoryPage extends AbstractStoryPage {
         sidebar: Locator;
         modal: Locator;
         showButton: Locator;
+        minimisableItem: Locator;
+        minimisableCustomItem: Locator;
+        minimisableItemViewMoreButton: Locator;
+        minimisableItemViewLessButton: Locator;
+        minimisableCustomItemViewMoreButton: Locator;
+        minimisableCustomItemViewLessButton: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
+        const sidebar = page.getByTestId("filter-desktop");
+        const minimisableItem = sidebar.getByTestId("item-minimised");
+        const minimisableCustomItem = sidebar.getByTestId(
+            "item-minimised-custom"
+        );
+
         this.locators = {
-            sidebar: page.getByTestId("filter-desktop"),
+            sidebar,
             modal: page.getByTestId("filter-mobile"),
             showButton: page.getByTestId("filter-show-button"),
+            minimisableItem,
+            minimisableCustomItem,
+            minimisableItemViewMoreButton: minimisableItem.getByRole("button", {
+                name: /view more/i,
+            }),
+            minimisableItemViewLessButton: minimisableItem.getByRole("button", {
+                name: /view less/i,
+            }),
+            minimisableCustomItemViewMoreButton:
+                minimisableCustomItem.getByRole("button", {
+                    name: /view more/i,
+                }),
+            minimisableCustomItemViewLessButton:
+                minimisableCustomItem.getByRole("button", {
+                    name: /view less/i,
+                }),
         };
     }
 
@@ -101,27 +129,22 @@ test.describe("Filter", () => {
             });
 
             test("Minimisable item", async ({ story }) => {
-                const item =
-                    story.locators.sidebar.getByTestId("item-minimised");
-                const customItem = story.locators.sidebar.getByTestId(
-                    "item-minimised-custom"
-                );
+                const {
+                    minimisableItemViewMoreButton,
+                    minimisableItemViewLessButton,
+                    minimisableCustomItemViewMoreButton,
+                    minimisableCustomItemViewLessButton,
+                } = story.locators;
 
                 await compareScreenshot(story, "minimised");
 
                 await test.step("Expand both items", async () => {
-                    await item
-                        .getByRole("button", { name: /view more/i })
-                        .click();
-                    await customItem
-                        .getByRole("button", { name: /view more/i })
-                        .click();
+                    await minimisableItemViewMoreButton.click();
+                    await minimisableCustomItemViewMoreButton.click();
 
+                    await expect(minimisableItemViewLessButton).toBeVisible();
                     await expect(
-                        item.getByRole("button", { name: /view less/i })
-                    ).toBeVisible();
-                    await expect(
-                        customItem.getByRole("button", { name: /view less/i })
+                        minimisableCustomItemViewLessButton
                     ).toBeVisible();
                 });
 
