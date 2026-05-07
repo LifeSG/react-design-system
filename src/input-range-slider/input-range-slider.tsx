@@ -454,14 +454,12 @@ export const InputRangeSlider = ({
                 minDistance={minRange}
                 aria-hidden
                 className={styles.slider}
-                renderThumb={(
-                    thumbProps: React.HTMLAttributes<HTMLDivElement>,
-                    state
-                ) => {
+                renderThumb={(thumbProps, state) => {
                     return (
                         <Thumb
                             data-testid={`slider-thumb-${state.index}`}
                             {...thumbProps}
+                            key={thumbProps.key}
                             tabIndex={-1}
                             aria-hidden
                             focused={focusedThumbIndex === state.index}
@@ -470,14 +468,12 @@ export const InputRangeSlider = ({
                         />
                     );
                 }}
-                renderTrack={(
-                    trackProps: React.HTMLAttributes<HTMLDivElement>,
-                    state
-                ) => {
+                renderTrack={(trackProps, state) => {
                     return (
                         <Track
                             data-testid={`slider-track-${state.index}`}
                             {...trackProps}
+                            key={trackProps.key}
                             color={trackColors[state.index]}
                         />
                     );
