@@ -6,6 +6,9 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         defaultSelector: Locator;
+        disabledSelector: Locator;
+        readonlySelector: Locator;
+        errorSelector: Locator;
         formDefaultSelector: Locator;
     };
 
@@ -14,6 +17,9 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             defaultSelector: page.getByTestId("timepicker-default"),
+            disabledSelector: page.getByTestId("timepicker-disabled"),
+            readonlySelector: page.getByTestId("timepicker-readonly"),
+            errorSelector: page.getByTestId("timepicker-error"),
             formDefaultSelector: page.getByTestId(
                 "form-timepicker-default-base"
             ),
@@ -36,24 +42,44 @@ test.describe("Timepicker", () => {
 
         test("Visual", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
 
-            await story.page
-                .getByTestId("timepicker-default")
-                .getByTestId("timepicker-selector")
-                .focus();
-            await compareScreenshot(story, "default-focus");
+        test("Focus", async ({ story }) => {
+            await test.step("Default state", async () => {
+                await story.locators.defaultSelector
+                    .getByTestId("timepicker-selector")
+                    .focus();
+                await compareScreenshot(story, "default", {
+                    locator: story.locators.defaultSelector,
+                });
+            });
 
-            await story.page
-                .getByTestId("timepicker-readonly")
-                .getByTestId("timepicker-selector")
-                .focus();
-            await compareScreenshot(story, "readonly-focus");
+            await test.step("Disabled state", async () => {
+                await story.locators.disabledSelector
+                    .getByTestId("timepicker-selector")
+                    .focus();
+                await compareScreenshot(story, "disabled", {
+                    locator: story.locators.disabledSelector,
+                });
+            });
 
-            await story.page
-                .getByTestId("timepicker-error")
-                .getByTestId("timepicker-selector")
-                .focus();
-            await compareScreenshot(story, "error-focus");
+            await test.step("Readonly state", async () => {
+                await story.locators.readonlySelector
+                    .getByTestId("timepicker-selector")
+                    .focus();
+                await compareScreenshot(story, "readonly", {
+                    locator: story.locators.readonlySelector,
+                });
+            });
+
+            await test.step("Error state", async () => {
+                await story.locators.errorSelector
+                    .getByTestId("timepicker-selector")
+                    .focus();
+                await compareScreenshot(story, "error", {
+                    locator: story.locators.errorSelector,
+                });
+            });
         });
 
         test("Dropdown", async ({ story }) => {
@@ -87,24 +113,44 @@ test.describe("Timepicker", () => {
 
         test("Visual", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
 
-            await story.page
-                .getByTestId("timepicker-default")
-                .getByTestId("timepicker-selector")
-                .focus();
-            await compareScreenshot(story, "default-focus");
+        test("Focus", async ({ story }) => {
+            await test.step("Default state", async () => {
+                await story.locators.defaultSelector
+                    .getByTestId("timepicker-selector")
+                    .focus();
+                await compareScreenshot(story, "default", {
+                    locator: story.locators.defaultSelector,
+                });
+            });
 
-            await story.page
-                .getByTestId("timepicker-readonly")
-                .getByTestId("timepicker-selector")
-                .focus();
-            await compareScreenshot(story, "readonly-focus");
+            await test.step("Disabled state", async () => {
+                await story.locators.disabledSelector
+                    .getByTestId("timepicker-selector")
+                    .focus();
+                await compareScreenshot(story, "disabled", {
+                    locator: story.locators.disabledSelector,
+                });
+            });
 
-            await story.page
-                .getByTestId("timepicker-error")
-                .getByTestId("timepicker-selector")
-                .focus();
-            await compareScreenshot(story, "error-focus");
+            await test.step("Readonly state", async () => {
+                await story.locators.readonlySelector
+                    .getByTestId("timepicker-selector")
+                    .focus();
+                await compareScreenshot(story, "readonly", {
+                    locator: story.locators.readonlySelector,
+                });
+            });
+
+            await test.step("Error state", async () => {
+                await story.locators.errorSelector
+                    .getByTestId("timepicker-selector")
+                    .focus();
+                await compareScreenshot(story, "error", {
+                    locator: story.locators.errorSelector,
+                });
+            });
         });
 
         test("Dropdown", async ({ story }) => {

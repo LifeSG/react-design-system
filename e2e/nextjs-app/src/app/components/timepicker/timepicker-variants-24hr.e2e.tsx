@@ -4,7 +4,7 @@ import { Timepicker } from "@lifesg/react-design-system/timepicker";
 
 export default function Story() {
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <div>
                 <Timepicker data-testid="timepicker-default" />
             </div>

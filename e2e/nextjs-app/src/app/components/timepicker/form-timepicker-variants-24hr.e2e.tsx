@@ -6,7 +6,7 @@ export default function Story() {
     const ID = "example-id";
 
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <Form.Timepicker
                 data-testid="form-timepicker-default"
                 label="Default State"
