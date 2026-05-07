@@ -1,8 +1,8 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { Input } from "../input";
 import type { InputRef } from "../input/types";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import type { FormInputProps } from "./types";
 
@@ -24,11 +24,8 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
         ...otherProps
     } = props;
 
-    const [internalId] = useState(
-        () => `form-field-${SimpleIdGenerator.generate()}`
-    );
-
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-field-${internalId}`;
 
     return (
         <FormWrapper

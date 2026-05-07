@@ -10,7 +10,7 @@ import { DropdownListState } from "../../shared/dropdown-list";
 import { DropdownList } from "../../shared/dropdown-list/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
-import { SimpleIdGenerator } from "../../util";
+import { useId } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { SelectorInput, Wrapper } from "../common.styles";
 import type { TimeRangePickerProps, TimeRangePickerValue } from "../types";
@@ -48,7 +48,7 @@ export const ComboboxPicker = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const [activeTimeSelector, setActiveTimeSelector] =
         useState<TimeRangeInputType | null>(null);
     const [dropdownOpen, setDropdownOpen] = useState<boolean>(false);

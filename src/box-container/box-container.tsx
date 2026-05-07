@@ -11,7 +11,7 @@ import {
     useDesignToken,
     useSafeMaxWidthMediaQuery,
 } from "../theme";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import * as styles from "./box-container.styles";
 import type { BoxContainerProps } from "./types";
 
@@ -38,9 +38,9 @@ export const BoxContainer = ({
     const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
     const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const interactiveHeader = clickableHeader && collapsible;
-    const internalId = useRef(SimpleIdGenerator.generate());
-    const contentId = `${internalId.current}-content`;
-    const headerId = `${internalId.current}-header`;
+    const internalId = useId();
+    const contentId = `${internalId}-content`;
+    const headerId = `${internalId}-header`;
     const handleIconRef = useRef<HTMLDivElement>(null);
 
     // =============================================================================

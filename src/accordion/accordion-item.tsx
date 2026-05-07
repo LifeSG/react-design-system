@@ -13,7 +13,7 @@ import {
 import { useResizeDetector } from "react-resize-detector";
 
 import { inertValue } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { AccordionContext } from "./accordion-context";
 import * as styles from "./accordion-item.styles";
 import type {
@@ -47,7 +47,7 @@ function Component(
         onItemDeregister,
     } = useContext(AccordionContext);
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const contentId = `${internalId}-content`;
     const { height, ref: resizeDetectorRef } = useResizeDetector();
     const expanded =

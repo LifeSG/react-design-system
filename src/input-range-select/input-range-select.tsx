@@ -13,7 +13,7 @@ import {
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { BasicButton } from "../shared/input-wrapper";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
 import {
     ClearIconContainer,
@@ -74,7 +74,7 @@ export const InputRangeSelect = <T, V>({
     };
     const dropdownRef = useRef<DropdownListApi>(null);
 
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const listboxId = `${internalId}-range-listbox`;
     const fromLabelId = `${internalId}-from-label`;
     const toLabelId = `${internalId}-to-label`;

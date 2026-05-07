@@ -3,7 +3,7 @@ import { useEffect, useMemo, useRef, useState } from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { InputWrapper } from "../shared/input-wrapper";
-import { SimpleIdGenerator, StringHelper, useNextInputState } from "../util";
+import { StringHelper, useId, useNextInputState } from "../util";
 import type { UnitNumberInputProps } from "./types";
 import {
     FloorInput,
@@ -39,7 +39,7 @@ export const UnitNumberInput = ({
     const [floorValue, _setFloorValue] = useState<string>("");
     const [unitValue, _setUnitValue] = useState<string>("");
     const [currentFocus, _setCurrentFocus] = useState<FieldType>("none");
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const floorLabelId = `${internalId}-floor-label`;
     const unitLabelId = `${internalId}-unit-label`;
     const liveMessageId = `${internalId}-live-message`;

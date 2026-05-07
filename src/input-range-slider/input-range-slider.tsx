@@ -7,7 +7,7 @@ import ReactSlider from "react-slider";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { Colour } from "../theme";
 import { Typography } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import * as styles from "./input-range-slider.styles";
 import { Thumb, Track } from "./slider-components";
 import type { InputRangeSliderProps } from "./types";
@@ -47,7 +47,7 @@ export const InputRangeSlider = ({
     const [focusedThumbIndex, setFocusedThumbIndex] = useState<number | null>(
         null
     );
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const trackColors = getTrackColors();
     const indicatorTextId = `${internalId}-indicator`;
     const instructionTextId = `${internalId}-instruction`;

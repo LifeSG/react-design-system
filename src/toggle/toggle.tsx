@@ -8,7 +8,7 @@ import { Markup } from "../markup";
 import { TextList } from "../text-list";
 import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import * as styles from "./toggle.styles";
 import type { ToggleIconType } from "./toggle-icon";
 import { ToggleIcon } from "./toggle-icon";
@@ -53,7 +53,7 @@ export const Toggle = ({
         const hasErrorElement = !Array.isArray(errors) && !!errors;
         return hasErrorList || hasErrorElement;
     }, [errors]);
-    const [uniqueId] = useState(SimpleIdGenerator.generate());
+    const uniqueId = useId();
     const generatedId = id ? `${id}` : `tg-${uniqueId}`;
 
     const inputRef = useRef<HTMLInputElement>(null);

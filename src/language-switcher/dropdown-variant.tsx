@@ -12,7 +12,7 @@ import {
 } from "../shared/dropdown-list/dropdown-list.styles";
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
 import {
     DropdownItem,
@@ -36,11 +36,11 @@ export const DropdownVariant = ({
     // =========================================================================
     const [isOpen, setIsOpen] = useState(false);
     const [focusedIndex, setFocusedIndex] = useState(-1);
-    const [listboxId] = useState(
-        () => `listbox-${SimpleIdGenerator.generate()}`
-    );
     const triggerRef = useRef<HTMLButtonElement>(null);
     const itemRefs = useRef<(HTMLLIElement | null)[]>([]);
+
+    const id = useId();
+    const listboxId = `listbox-${id}`;
 
     // =========================================================================
     // EFFECTS

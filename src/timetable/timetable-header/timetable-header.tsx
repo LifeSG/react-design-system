@@ -77,6 +77,7 @@ export const TimeTableHeader = ({
                 {onRefresh && (
                     <StyledRefreshButton
                         data-testid="timetable-records-refresh-btn"
+                        aria-label="Refresh timetable records"
                         styleType="light"
                         sizeType="small"
                         disabled={loading}

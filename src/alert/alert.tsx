@@ -12,7 +12,7 @@ import { Markup } from "../markup";
 import { inertValue } from "../shared/accessibility";
 import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import * as styles from "./alert.styles";
 import type { AlertProps } from "./types";
 
@@ -59,7 +59,7 @@ export const Alert = ({
     const [renderShowMore, setRenderShowMore] = useState<boolean>(false);
     const { height: contentHeight, ref: contentRef } =
         useResizeDetector<HTMLDivElement>();
-    const [contentId] = useState(() => SimpleIdGenerator.generate());
+    const contentId = useId();
     const containerRef = useRef<HTMLDivElement>(null);
     const isCollapsed = isContentOutsideCollapsibleZone();
 

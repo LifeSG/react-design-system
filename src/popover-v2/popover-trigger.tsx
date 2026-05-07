@@ -25,7 +25,7 @@ import {
     useInheritedThemeScope,
     useSafeMaxWidthMediaQuery,
 } from "../theme";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { PopoverV2 } from "./popover";
 import * as styles from "./popover-trigger.styles";
 import type { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
@@ -59,8 +59,8 @@ export const PopoverTrigger = ({
     const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
     const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
     const [availableHeight, setAvailableHeight] = useState(0);
-    const internalId = useRef(SimpleIdGenerator.generate());
-    const popoverContainerId = `${internalId.current}-popover`;
+    const internalId = useId();
+    const popoverContainerId = `${internalId}-popover`;
 
     const { refs, floatingStyles, context } = useFloating({
         open: visible,
@@ -157,6 +157,10 @@ export const PopoverTrigger = ({
     };
 
     const handleBlur = (e: React.FocusEvent<HTMLElement>) => {
+        // On mobile, ModalV2 handles its own dismiss via onMobileClose
+        if (isModal || (isMobile && typeof popoverContent !== "function"))
+            return;
+
         const next =
             (e.relatedTarget as Node | null) ??
             (document.activeElement as Node | null);

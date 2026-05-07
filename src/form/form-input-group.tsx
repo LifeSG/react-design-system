@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { InputGroup } from "../input-group";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import type { FormInputGroupProps } from "./types";
 
@@ -26,11 +26,8 @@ const Component = <T, V>(
         ...otherProps
     } = props;
 
-    const [internalId] = useState(
-        () => `form-field-${SimpleIdGenerator.generate()}`
-    );
-
-    const inputId = id ?? internalId;
+    const internalId = useId();
+    const inputId = id ?? `form-field-${internalId}`;
 
     return (
         <FormWrapper

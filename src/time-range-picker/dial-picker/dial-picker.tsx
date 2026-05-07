@@ -5,7 +5,7 @@ import type { DropdownRenderProps } from "../../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { TimepickerDropdown } from "../../shared/timepicker-dropdown/timepicker-dropdown";
-import { SimpleIdGenerator } from "../../util";
+import { useId } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
 import type { TimeRangePickerProps, TimeRangePickerValue } from "../types";
@@ -41,7 +41,7 @@ export const DialPicker = ({
 
     const enabled = !readOnly && !disabled;
     const nodeRef = useRef<HTMLDivElement>(null);
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const startLabelId = `${internalId}-start-label`;
     const endLabelId = `${internalId}-end-label`;
 

@@ -1,6 +1,7 @@
 import styled, { css } from "styled-components";
 
-import { V3_Colour, V3_Font } from "../v3_theme";
+import { Colour, Font } from "../theme";
+import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -21,14 +22,20 @@ export const HeaderCellWeek = styled.div`
     margin-bottom: 0.188rem;
 `;
 
+export const HeaderRow = styled.div`
+    grid-column: 1 / -1;
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+`;
+
 export const DayLabel = styled.div<LabelStyleProps>`
-    ${V3_Font["body-xs-semibold"]}
-    color:${V3_Colour["text"]};
+    ${Font["body-xs-semibold"]}
+    color:${Colour["text"]};
 
     ${(props) =>
         props.$disabled &&
         css`
-            color: ${V3_Colour["text-disabled-subtlest"]};
+            color: ${Colour["text-disabled-subtlest"]};
         `};
 `;
 
@@ -45,16 +52,26 @@ export const ColumnWeekCell = styled.div`
 `;
 
 export const TimeSlotText = styled.div`
-    ${V3_Font["body-xs-semibold"]}
+    ${Font["body-xs-semibold"]}
     margin: 1rem 0rem;
     display: flex;
     flex-direction: column;
     align-items: center;
     text-align: center;
     max-width: 2.5rem;
-    color: ${V3_Colour.text};
+    color: ${Colour["text"]};
     span {
         display: block;
+    }
+`;
+
+export const TimeSlotComponent = styled(TimeSlot)`
+    position: relative;
+
+    &:focus-within {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 2px;
+        z-index: 1;
     }
 `;
 

@@ -9,7 +9,7 @@ import {
     PlaceholderLabel,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import {
     Divider,
     FieldInput,
@@ -75,7 +75,7 @@ export const Component = <T, V>(
     const [selected, setSelected] = useState<T | undefined>(selectedOption);
     const [showOptions, setShowOptions] = useState<boolean>(false);
     const [focused, setFocused] = useState<boolean>(false);
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const listboxId = `${internalId}-listbox`;
     const instructionId = `${internalId}-instruction`;
     const comboboxLabelId = `${internalId}-combobox-label`;

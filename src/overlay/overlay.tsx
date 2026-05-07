@@ -9,7 +9,7 @@ import { useEffect, useRef, useState } from "react";
 import ReactDOM from "react-dom";
 
 import { useApplyStyle, useInheritedThemeScope } from "../theme";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import * as styles from "./overlay.styles";
 import type { OverlayProps } from "./types";
 import { useFloatingParent } from "./use-floating-context";
@@ -32,7 +32,7 @@ const OverlayComponent = ({
     // =============================================================================
     const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
     const [isStacked, _setIsStacked] = useState<boolean>();
-    const [uid] = useState(() => SimpleIdGenerator.generate());
+    const uid = useId();
     const nodeId = useFloatingNodeId();
 
     const stacked = useRef<boolean>();

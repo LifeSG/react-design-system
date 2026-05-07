@@ -8,7 +8,7 @@ import { DropdownList, DropdownListState } from "../shared/dropdown-list";
 import type { ItemsLoadStateType } from "../shared/dropdown-list/types";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { InputWrapper } from "../shared/input-wrapper";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import type { PredictiveTextInputProps } from "./types";
 
 export const PredictiveTextInput = <T, V>({
@@ -60,7 +60,7 @@ export const PredictiveTextInput = <T, V>({
     const [isOpen, setIsOpen] = useState(false);
     const [isFocused, setIsFocused] = useState(false);
 
-    const [internalId] = useState<string>(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const [resultAnnouncement, setResultAnnouncement] = useState<string | null>(
         null
     );

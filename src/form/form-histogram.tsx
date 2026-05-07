@@ -1,7 +1,5 @@
-import { useState } from "react";
-
 import { HistogramSlider } from "../histogram-slider";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 import type { FormHistogramSliderProps } from "./types";
 
@@ -21,7 +19,7 @@ export const FormHistogramSlider = ({
     xxlCols,
     ...otherProps
 }: FormHistogramSliderProps): JSX.Element => {
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const inputId = id ?? `form-histogram-slider-${internalId}`;
 
     return (

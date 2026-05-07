@@ -1,7 +1,7 @@
-import React, { useState } from "react";
+import React from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
-import { SimpleIdGenerator } from "../util";
+import { useId } from "../util";
 import {
     AddonWrapper,
     LabelAddonContainer,
@@ -31,7 +31,7 @@ const Component = <T, V>(
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [internalId] = useState(() => SimpleIdGenerator.generate());
+    const internalId = useId();
     const addonId = `${internalId}-addon`;
     const ariaLabelId = `${internalId}-ariaLabelId`;
 
