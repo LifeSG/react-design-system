@@ -65,8 +65,6 @@ export const header = css`
         gap: ${Spacing["spacing-8"]};
         padding-top: ${Spacing["spacing-32"]};
         padding-right: ${Spacing["spacing-20"]};
-        padding-bottom: ${Spacing["spacing-16"]};
-        /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
         padding-left: calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-24"]});
     }
 `;

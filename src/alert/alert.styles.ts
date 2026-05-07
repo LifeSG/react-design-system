@@ -148,6 +148,7 @@ export const textWrapperContainerCollapsed = css`
 
     max-height: var(${tokens.maxCollapsedHeight});
     overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
 `;
 

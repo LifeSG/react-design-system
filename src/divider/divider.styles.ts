@@ -14,6 +14,7 @@ export const tokens = {
 
 export const lineBase = css`
     ${tokens.thickness}: initial;
+    ${tokens.color}: initial;
 
     width: 100%;
     height: var(${tokens.thickness}, 1px);
@@ -28,6 +29,8 @@ export const solidLine = css`
 `;
 
 export const dashedLine = css`
+    ${tokens.backgroundImage}: initial;
+
     background-color: transparent;
     background-image: var(${tokens.backgroundImage});
     background-repeat: repeat-x;

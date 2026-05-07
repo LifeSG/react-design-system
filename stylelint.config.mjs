@@ -22,7 +22,7 @@ export default {
         "property-no-vendor-prefix": [
             true,
             {
-                ignoreProperties: ["-webkit-appearance"],
+                ignoreProperties: ["-webkit-appearance", "-webkit-mask-image"],
             },
         ],
 

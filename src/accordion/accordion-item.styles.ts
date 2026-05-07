@@ -56,7 +56,7 @@ export const titleSmall = css`
 
 export const iconContainer = css`
     transform: rotate(180deg);
-    transition: transform ${Motion["duration-250"]};
+    transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
 `;
 
 export const iconContainerExpanded = css`

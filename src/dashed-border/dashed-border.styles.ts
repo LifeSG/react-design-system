@@ -7,6 +7,10 @@ export const tokens = {
 } as const;
 
 export const root = css`
+    ${tokens.rootRadius}: initial;
+    ${tokens.rootBackgroundColor}: initial;
+    ${tokens.overlayBackgroundImage}: initial;
+
     position: relative;
     overflow: hidden;
     background-color: var(${tokens.rootBackgroundColor}, transparent);
