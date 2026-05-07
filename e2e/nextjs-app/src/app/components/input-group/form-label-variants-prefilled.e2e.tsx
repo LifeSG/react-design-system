@@ -6,7 +6,7 @@ export default function Story() {
     const ID = "mockID";
 
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <Form.InputGroup
                 data-testid="form-input-group-label-default"
                 label="Form label variant"

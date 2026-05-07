@@ -6,10 +6,13 @@ export default function Story() {
     const ID = "mockID";
 
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <Form.InputGroup
                 data-testid="form-input-group-label-default"
-                label="Form label variant"
+                label={{
+                    children: "Default",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter an amount"
                 addon={{
                     attributes: { value: "$" },
@@ -19,7 +22,10 @@ export default function Story() {
 
             <Form.InputGroup
                 data-testid="form-input-group-label-right"
-                label="Form label variant (right)"
+                label={{
+                    children: "Default (Right Label)",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter an amount"
                 addon={{
                     position: "right",
@@ -30,7 +36,10 @@ export default function Story() {
 
             <Form.InputGroup
                 data-testid="form-input-group-label-disabled"
-                label="Form label variant disabled state"
+                label={{
+                    children: "Disabled",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter an amount"
                 disabled
                 addon={{
@@ -41,7 +50,10 @@ export default function Story() {
 
             <Form.InputGroup
                 data-testid="form-input-group-label-readonly"
-                label="Form label variant readonly state"
+                label={{
+                    children: "Readonly",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter an amount"
                 readOnly
                 addon={{
@@ -52,7 +64,10 @@ export default function Story() {
 
             <Form.InputGroup
                 data-testid="form-input-group-label-error"
-                label="Form label variant error state"
+                label={{
+                    children: "Error",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter an amount"
                 errorMessage="Sample error message"
                 addon={{

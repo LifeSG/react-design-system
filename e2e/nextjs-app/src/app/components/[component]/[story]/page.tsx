@@ -20,6 +20,7 @@ export default async function Page({
                 "input-select",
                 "nested-select",
                 "nested-multi-select",
+                "input-group",
             ].includes(component),
         }
     );
