@@ -50,14 +50,10 @@ test.describe("Filter", () => {
         });
 
         test("Sidebar", async ({ story }) => {
-            await compareScreenshot(story, "collapsed", {
-                locator: story.locators.sidebar,
-            });
+            await compareScreenshot(story, "collapsed");
             await story.expandAllItems();
             await waitForAnimationEnd(story.locators.sidebar);
-            await compareScreenshot(story, "expanded", {
-                locator: story.locators.sidebar,
-            });
+            await compareScreenshot(story, "expanded");
         });
     });
 
@@ -69,10 +65,7 @@ test.describe("Filter", () => {
         test("Sidebar (dark mode)", async ({ story }) => {
             await story.expandAllItems();
             await waitForAnimationEnd(story.locators.sidebar);
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.sidebar,
-                fullscreen: true,
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -83,9 +76,7 @@ test.describe("Filter", () => {
 
         test("Modal open state", async ({ story }) => {
             await story.locators.showButton.click();
-            await compareScreenshot(story, "modal-open", {
-                locator: story.locators.modal,
-            });
+            await compareScreenshot(story, "modal-open", { fullscreen: true });
         });
     });
 
@@ -96,9 +87,7 @@ test.describe("Filter", () => {
 
         test("Modal open state (dark mode)", async ({ story }) => {
             await story.locators.showButton.click();
-            await compareScreenshot(story, "modal-open", {
-                locator: story.locators.modal,
-            });
+            await compareScreenshot(story, "modal-open", { fullscreen: true });
         });
     });
 
@@ -115,9 +104,7 @@ test.describe("Filter", () => {
                     "item-minimised-custom"
                 );
 
-                await compareScreenshot(story, "minimised", {
-                    locator: story.locators.sidebar,
-                });
+                await compareScreenshot(story, "minimised");
 
                 await test.step("Expand both items", async () => {
                     await item
@@ -135,9 +122,7 @@ test.describe("Filter", () => {
                     ).toBeVisible();
                 });
 
-                await compareScreenshot(story, "expanded", {
-                    locator: story.locators.sidebar,
-                });
+                await compareScreenshot(story, "expanded");
             });
         });
     });
