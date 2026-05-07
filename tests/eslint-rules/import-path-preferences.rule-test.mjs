@@ -1,7 +1,7 @@
 import tsParser from "@typescript-eslint/parser";
 import { RuleTester } from "eslint";
 
-import localRules from "../../eslint-local-rules/import-path-preferences.mjs";
+import localRules from "../../eslint-local-rules/index.mjs";
 
 const rule = localRules.rules["import-path-preferences"];
 const styleNamespaceImportRule = localRules.rules["style-namespace-import"];
