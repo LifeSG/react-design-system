@@ -53,16 +53,16 @@ export const defaultButton = css`
             color: ${Colour["text-hover"]};
         }
     }
+`;
 
-    &.defaultButtonHighlight {
-        .${iconContainer} {
-            background-color: ${Colour["bg-hover"]};
-        }
+export const defaultButtonHighlight = css`
+    .${iconContainer} {
+        background-color: ${Colour["bg-hover"]};
+    }
 
-        .${titleText} {
-            ${Font["body-xs-semibold"]}
-            color: ${Colour["text-selected"]};
-        }
+    .${titleText} {
+        ${Font["body-xs-semibold"]}
+        color: ${Colour["text-selected"]};
     }
 `;
 
@@ -78,9 +78,9 @@ export const desktopDrawer = css`
     border-top-right-radius: ${Radius["md"]};
     border-bottom-right-radius: ${Radius["md"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+`;
 
-    &.desktopDrawerShowShadow {
-        box-shadow: ${Shadow["xs-subtle"]};
-        clip-path: inset(0 -6px 0 0);
-    }
+export const desktopDrawerShowShadow = css`
+    box-shadow: ${Shadow["xs-subtle"]};
+    clip-path: inset(0 -6px 0 0);
 `;

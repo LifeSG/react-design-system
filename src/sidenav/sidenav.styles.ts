@@ -9,10 +9,10 @@ export const wrapper = css`
     display: flex;
     position: relative;
     width: fit-content;
+`;
 
-    &.wrapperFixed {
-        position: fixed;
-    }
+export const wrapperFixed = css`
+    position: fixed;
 `;
 
 export const containerBase = css`

@@ -56,7 +56,7 @@ const SidenavBase = ({
                 {...otherProps}
                 className={clsx(
                     styles.wrapper,
-                    fixed && "wrapperFixed",
+                    fixed && styles.wrapperFixed,
                     className
                 )}
             >

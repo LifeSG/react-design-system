@@ -204,7 +204,7 @@ export const SidenavItem = ({
                 {...otherProps}
                 className={clsx(
                     styles.defaultButton,
-                    (isSelected || isCurrent) && "defaultButtonHighlight",
+                    (isSelected || isCurrent) && styles.defaultButtonHighlight,
                     className
                 )}
                 {...getReferenceProps()}
@@ -241,7 +241,7 @@ export const SidenavItem = ({
                                     styles.desktopDrawer,
                                     (isCurrent ||
                                         (isSelected && !currentItem)) &&
-                                        "desktopDrawerShowShadow"
+                                        styles.desktopDrawerShowShadow
                                 )}
                             >
                                 {children}
