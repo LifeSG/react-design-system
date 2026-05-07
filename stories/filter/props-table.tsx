@@ -377,11 +377,7 @@ const FILTER_ITEM_DATA: ApiTableSectionProps[] = [
                 description:
                     "Specifies the height of the filter item when minimised",
                 propTypes: ["number"],
-                defaultValue: (
-                    <code>
-                        Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
-                    </code>
-                ),
+                defaultValue: "50% of content height",
             },
             {
                 name: "title",
