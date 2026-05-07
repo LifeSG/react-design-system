@@ -48,7 +48,7 @@ export default {
                     true,
                     {
                         ignoreProperties: {
-                            "/.+/": [/(?:^|\s)-?pcss-lin\d+(?:\s|$)/],
+                            "/.+/": [/(?:^|[\s(,])-?pcss-lin\d+(?=$|[\s),])/],
                         },
                     },
                 ],
