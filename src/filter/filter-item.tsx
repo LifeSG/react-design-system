@@ -123,7 +123,7 @@ export const FilterItem = ({
             aria-labelledby={titleId}
             className={clsx(
                 styles.filterItemWrapper,
-                (collapsible || isMobile) && styles.filterItemWrapperStrong
+                (collapsible || isMobile) && styles.filterItemWrapperDarker
             )}
         >
             <div

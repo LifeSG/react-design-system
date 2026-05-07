@@ -8,11 +8,19 @@ export const tokens = {
     },
 } as const;
 
+// =============================================================================
+// CONTAINER STYLES
+// =============================================================================
+
 export const filterBody = css`
     flex: 1;
     width: 100%;
     overflow-y: auto;
 `;
+
+// =============================================================================
+// HEADER STYLES
+// =============================================================================
 
 export const filterHeaderButton = css`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
@@ -29,6 +37,10 @@ export const filterHeaderButton = css`
     }
 `;
 
+// =============================================================================
+// COMPONENT STYLES
+// =============================================================================
+
 export const filterFooter = css`
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     background-color: ${Colour["bg"]};
@@ -36,6 +48,7 @@ export const filterFooter = css`
 `;
 
 export const filterFooterWithInsetBottom = css`
+    ${tokens.filterFooter.insetBottom}: initial;
     padding-bottom: var(${tokens.filterFooter.insetBottom});
 `;
 

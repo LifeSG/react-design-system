@@ -8,6 +8,10 @@ export const tokens = {
     },
 } as const;
 
+// =============================================================================
+// CONTAINER STYLES
+// =============================================================================
+
 export const mobileContainer = css`
     background-color: ${Colour["bg-strong"]};
     height: 100%;
@@ -26,6 +30,10 @@ export const floatingWrapper = css`
     height: 100%;
 `;
 
+// =============================================================================
+// HEADER STYLES
+// =============================================================================
+
 export const filterHeader = css`
     display: flex;
     align-items: center;
@@ -33,6 +41,7 @@ export const filterHeader = css`
 `;
 
 export const filterHeaderWithInsetTop = css`
+    ${tokens.filterHeader.insetTop}: initial;
     padding-top: var(${tokens.filterHeader.insetTop});
 `;
 
@@ -48,6 +57,10 @@ export const filterClearButton = css`
     height: 100%;
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
 `;
+
+// =============================================================================
+// COMPONENT STYLES
+// =============================================================================
 
 export const filterButton = css`
     width: 100%;

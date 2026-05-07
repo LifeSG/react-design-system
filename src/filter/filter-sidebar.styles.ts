@@ -2,6 +2,10 @@ import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
+// =============================================================================
+// CONTAINER STYLES
+// =============================================================================
+
 export const desktopContainer = css`
     background-color: ${Colour["bg"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
@@ -9,6 +13,10 @@ export const desktopContainer = css`
     overflow: hidden;
     width: 100%;
 `;
+
+// =============================================================================
+// HEADER STYLES
+// =============================================================================
 
 export const filterHeader = css`
     display: flex;

@@ -8,11 +8,15 @@ export const tokens = {
     },
 } as const;
 
+// =============================================================================
+// FILTER ITEM STYLES
+// =============================================================================
+
 export const filterItemWrapper = css`
     background-color: ${Colour["bg"]};
 `;
 
-export const filterItemWrapperStrong = css`
+export const filterItemWrapperDarker = css`
     background-color: ${Colour["bg-strong"]};
 `;
 
@@ -29,6 +33,10 @@ export const dividerVisible = css`
 export const dividerMobile = css`
     margin: 0 ${Spacing["spacing-16"]};
 `;
+
+// =============================================================================
+// HEADER STYLES
+// =============================================================================
 
 export const filterItemHeader = css`
     display: flex;
@@ -77,6 +85,10 @@ export const filterItemTitleMobile = css`
     margin: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]} 0
         ${Spacing["spacing-20"]};
 `;
+
+// =============================================================================
+// CONTENT STYLES
+// =============================================================================
 
 export const expandableItem = css`
     overflow: hidden;
