@@ -18,6 +18,12 @@ class StoryPage extends AbstractStoryPage {
         minimisableItemViewLessButton: Locator;
         minimisableCustomItemViewMoreButton: Locator;
         minimisableCustomItemViewLessButton: Locator;
+        itemNoDivider: Locator;
+        itemWithDivider: Locator;
+        itemDefault: Locator;
+        itemNoTitleCollapsible: Locator;
+        itemNoTitleNotCollapsible: Locator;
+        itemNotCollapsible: Locator;
     };
 
     constructor(page: Page) {
@@ -49,6 +55,16 @@ class StoryPage extends AbstractStoryPage {
                 minimisableCustomItem.getByRole("button", {
                     name: /view less/i,
                 }),
+            itemNoDivider: sidebar.getByTestId("item-no-divider"),
+            itemWithDivider: sidebar.getByTestId("item-with-divider"),
+            itemDefault: sidebar.getByTestId("item-default"),
+            itemNoTitleCollapsible: sidebar.getByTestId(
+                "item-no-title-collapsible"
+            ),
+            itemNoTitleNotCollapsible: sidebar.getByTestId(
+                "item-no-title-not-collapsible"
+            ),
+            itemNotCollapsible: sidebar.getByTestId("item-not-collapsible"),
         };
     }
 
@@ -150,6 +166,19 @@ test.describe("Filter", () => {
 
                 await compareScreenshot(story, "expanded");
             });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("item-configurations");
+        });
+
+        test("Filter item configurations", async ({ story }) => {
+            await compareScreenshot(story, "collapsed-all");
+            await story.expandAllItems();
+            await waitForAnimationEnd(story.locators.sidebar);
+            await compareScreenshot(story, "expanded-all");
         });
     });
 });
