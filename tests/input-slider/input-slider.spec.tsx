@@ -27,20 +27,19 @@ describe("InputSlider", () => {
     it("should render default component", () => {
         render(<InputSlider />);
 
-        expect(screen.queryByRole("slider")).toBeInTheDocument();
-        expect(screen.queryByTestId("slider-thumb-0")).toHaveAttribute(
-            "aria-valuenow",
-            "0"
-        );
+        expect(screen.getByRole("slider")).toHaveValue("0");
     });
 
     it("should render component with value", () => {
         render(<InputSlider min={1} max={10} value={5} />);
 
-        expect(screen.queryByTestId("slider-thumb-0")).toHaveAttribute(
-            "aria-valuenow",
-            "5"
-        );
+        expect(screen.getByRole("slider")).toHaveValue("5");
+    });
+
+    it("should forward className to the root element", () => {
+        render(<InputSlider data-testid="input" className="custom-class" />);
+
+        expect(screen.getByTestId("input")).toHaveClass("custom-class");
     });
 
     it("should handle change", () => {
