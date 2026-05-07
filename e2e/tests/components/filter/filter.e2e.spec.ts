@@ -63,9 +63,10 @@ test.describe("Filter", () => {
         });
 
         test("Sidebar (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "collapsed");
             await story.expandAllItems();
             await waitForAnimationEnd(story.locators.sidebar);
-            await compareScreenshot(story, "mount");
+            await compareScreenshot(story, "expanded");
         });
     });
 
@@ -75,8 +76,9 @@ test.describe("Filter", () => {
         });
 
         test("Modal open state", async ({ story }) => {
+            await compareScreenshot(story, "closed");
             await story.locators.showButton.click();
-            await compareScreenshot(story, "modal-open", { fullscreen: true });
+            await compareScreenshot(story, "open", { fullscreen: true });
         });
     });
 
@@ -86,8 +88,9 @@ test.describe("Filter", () => {
         });
 
         test("Modal open state (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "closed");
             await story.locators.showButton.click();
-            await compareScreenshot(story, "modal-open", { fullscreen: true });
+            await compareScreenshot(story, "open", { fullscreen: true });
         });
     });
 
