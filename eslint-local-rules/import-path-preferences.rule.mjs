@@ -13,7 +13,6 @@ const RELATIVE_STORYBOOK_COMMON_PATTERN =
 const SRC_IN_STORIES_OR_TESTS_PATTERN = /^(?:\.\.\/)+src(?:\/|$)/;
 const STORYBOOK_COMMON_IN_STORIES_PATTERN =
     /^(?:(?:\.\.\/)+|\.\/)storybook-common(?:\/|$)/;
-const SAME_DIR_STYLE_MODULE_IMPORT_PATTERN = /^\.\/[^/]+\.styles$/;
 
 function normalizePath(filePath) {
     return filePath.replaceAll("\\", "/");
@@ -38,20 +37,6 @@ function getQuote(rawSource) {
     if (!rawSource || rawSource.length < 2) return '"';
     const quote = rawSource[0];
     return quote === "'" || quote === '"' ? quote : '"';
-}
-
-function getStyleNamespaceLocalName(node) {
-    const namespaceSpecifier = node.specifiers.find(
-        (specifier) => specifier.type === "ImportNamespaceSpecifier"
-    );
-    if (namespaceSpecifier) return namespaceSpecifier.local.name;
-
-    const defaultSpecifier = node.specifiers.find(
-        (specifier) => specifier.type === "ImportDefaultSpecifier"
-    );
-    if (defaultSpecifier) return defaultSpecifier.local.name;
-
-    return "styles";
 }
 
 function toKebabCase(value) {
@@ -201,7 +186,7 @@ function getMessageId(zone, importSource) {
     return null;
 }
 
-const importPathPreferencesRule = {
+export const importPathPreferencesRule = {
     meta: {
         type: "suggestion",
         docs: {
@@ -257,132 +242,5 @@ const importPathPreferencesRule = {
         return {
             ImportDeclaration: validateImportSource,
         };
-    },
-};
-
-const styleNamespaceImportRule = {
-    meta: {
-        type: "suggestion",
-        docs: {
-            description:
-                "Enforce namespace imports for style modules (*.styles).",
-        },
-        fixable: "code",
-        schema: [],
-        messages: {
-            namespaceStyleImport:
-                "Import style modules using a namespace import (e.g. import * as styles from './component.styles').",
-        },
-    },
-    create(context) {
-        return {
-            ImportDeclaration(node) {
-                if (!node?.source || typeof node.source.value !== "string") {
-                    return;
-                }
-
-                const importSource = node.source.value;
-                if (!SAME_DIR_STYLE_MODULE_IMPORT_PATTERN.test(importSource)) {
-                    return;
-                }
-
-                // Type-only imports are ignored to avoid rewriting TS type flows.
-                if (node.importKind === "type") return;
-
-                // Side-effect imports are allowed (no bindings to enforce).
-                if (!node.specifiers.length) return;
-
-                const hasOnlyNamespaceSpecifiers = node.specifiers.every(
-                    (specifier) => specifier.type === "ImportNamespaceSpecifier"
-                );
-                if (hasOnlyNamespaceSpecifiers) return;
-
-                context.report({
-                    node,
-                    messageId: "namespaceStyleImport",
-                    // TODO: Autofix is disabled until linaria migration is complete.
-
-                    // fix(fixer) {
-                    //     const quote = getQuote(node.source.raw);
-                    //     const localName = getStyleNamespaceLocalName(node);
-                    //     const fixedImport = `import * as ${localName} from ${quote}${importSource}${quote};`;
-                    //     return fixer.replaceText(node, fixedImport);
-                    // },
-                });
-            },
-        };
-    },
-};
-
-const noNegativeLinariaInterpolationRule = {
-    meta: {
-        type: "problem",
-        docs: {
-            description:
-                "Disallow negative Linaria interpolations like -${token} in css templates.",
-        },
-        fixable: "code",
-        schema: [],
-        messages: {
-            negativeLinariaInterpolation:
-                "Avoid -${...} in Linaria css templates. Use calc(${...} * -1) instead.",
-        },
-    },
-    create(context) {
-        return {
-            TaggedTemplateExpression(node) {
-                // Only lint Linaria `css` tagged template literals.
-                if (
-                    node.tag.type !== "Identifier" ||
-                    node.tag.name !== "css" ||
-                    node.quasi.type !== "TemplateLiteral"
-                ) {
-                    return;
-                }
-
-                const template = node.quasi;
-                for (let i = 0; i < template.expressions.length; i += 1) {
-                    const beforeExpression = template.quasis[i]?.value?.raw;
-                    if (!beforeExpression) continue;
-
-                    // Detect patterns like `...: -${token};` where unary minus is
-                    // applied before interpolation and compiles to invalid CSS values.
-                    const negativePrefixMatch = beforeExpression.match(/-\s*$/);
-                    if (negativePrefixMatch) {
-                        context.report({
-                            node: template.expressions[i],
-                            messageId: "negativeLinariaInterpolation",
-                            fix(fixer) {
-                                const expression = template.expressions[i];
-                                const negativePrefixLength =
-                                    negativePrefixMatch[0].length;
-                                // Replace from the trailing `-${` prefix to the closing `}`
-                                // of the interpolation with `calc(${expr} * -1)`.
-                                const replacementStart =
-                                    expression.range[0] -
-                                    negativePrefixLength -
-                                    2;
-                                const replacementEnd = expression.range[1] + 1;
-                                const expressionText =
-                                    context.sourceCode.getText(expression);
-
-                                return fixer.replaceTextRange(
-                                    [replacementStart, replacementEnd],
-                                    `calc($\{${expressionText}} * -1)`
-                                );
-                            },
-                        });
-                    }
-                }
-            },
-        };
-    },
-};
-
-export default {
-    rules: {
-        "import-path-preferences": importPathPreferencesRule,
-        "style-namespace-import": styleNamespaceImportRule,
-        "no-negative-linaria-interpolation": noNegativeLinariaInterpolationRule,
     },
 };
