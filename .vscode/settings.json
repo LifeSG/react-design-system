@@ -24,7 +24,7 @@
         "typescript",
         "typescriptreact"
     ],
-    "stylelint.configFile": "stylelint.config.mjs",
+    "stylelint.configFile": "${workspaceFolder}/stylelint.config.mjs",
     "auto-close-tag.activationOnLanguage": [
         "html",
         "javascriptreact",
