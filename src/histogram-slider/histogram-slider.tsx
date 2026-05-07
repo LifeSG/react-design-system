@@ -1,9 +1,10 @@
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import clsx from "clsx";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { createRef, useEffect, useMemo, useRef, useState } from "react";
 
 import { InputRangeSlider } from "../input-range-slider";
 import { concatIds } from "../shared/accessibility";
+import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import * as styles from "./histogram-slider.styles";
@@ -70,6 +71,14 @@ export const HistogramSlider = ({
         }
         return items;
     }, [bins, interval]);
+
+    const barRefs = useMemo(() => {
+        const refs: { [key: number]: React.RefObject<HTMLDivElement> } = {};
+        items.forEach((item, index) => {
+            refs[index] = createRef<HTMLDivElement>();
+        });
+        return refs;
+    }, [items]);
 
     // =========================================================================
     // EFFECTS
@@ -184,6 +193,14 @@ export const HistogramSlider = ({
                             item.minValue >= selection[0] &&
                             item.minValue < selection[1];
                         const isDisabled = disabled || readOnly;
+                        const barRef = barRefs[i];
+
+                        useApplyStyle(barRef, {
+                            height: ratio
+                                ? `calc(calc(100% - 0.25rem) * ${ratio} + 0.25rem)`
+                                : 0,
+                        });
+
                         return (
                             <div
                                 key={i}
@@ -195,11 +212,7 @@ export const HistogramSlider = ({
                                         (isDisabled && styles.barDisabled) ||
                                         (isSelected && styles.barSelected)
                                 )}
-                                style={{
-                                    height: ratio
-                                        ? `calc(calc(100% - 0.25rem) * ${ratio} + 0.25rem)`
-                                        : 0,
-                                }}
+                                ref={barRef}
                             />
                         );
                     })}
