@@ -5,8 +5,8 @@ export const tokens = {
 };
 
 export const section = css`
-    display: block;
     position: relative;
+    display: block;
 `;
 
 export const sectionStretched = css``;

@@ -6,35 +6,33 @@ import { Border, Colour, Font, Motion, Radius } from "../../theme";
 // STYLING
 // =============================================================================
 export const wrapper = css`
+    display: grid;
+    grid-template-rows: repeat(6, 2.5rem);
+    grid-template-columns: repeat(2, 1fr);
+    gap: 0.5rem 0;
+    place-content: center center;
     width: 100%;
     height: 100%;
-    display: grid;
-    grid-template-columns: repeat(2, 1fr);
-    grid-template-rows: repeat(6, 2.5rem);
-    align-content: center;
-    justify-content: center;
-
-    gap: 0.5rem 0;
 `;
 
 export const monthCell = css`
     display: flex;
     align-items: center;
     justify-content: center;
-    border-radius: ${Radius["md"]};
     margin: 0 0.5rem;
-    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    color: ${Colour["text"]};
+    cursor: default;
+    background-clip: border-box;
 
     ${Font["body-md-regular"]}
     border: ${Border["width-010"]} ${Border["solid"]} transparent;
-    background-clip: border-box;
-    color: ${Colour["text"]};
-    cursor: default;
+    border-radius: ${Radius["md"]};
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
 export const monthCellDisabledDisplay = css`
-    cursor: not-allowed;
     color: ${Colour["text-disabled-subtlest"]};
+    cursor: not-allowed;
 `;
 
 export const monthCellInteractive = css`
@@ -42,30 +40,30 @@ export const monthCellInteractive = css`
 `;
 
 export const monthCellCurrentMonth = css`
-    color: ${Colour["text-primary"]};
     font-weight: ${Font.Spec["weight-semibold"]};
+    color: ${Colour["text-primary"]};
 `;
 
 export const monthCellSelectedMonth = css`
+    font-weight: ${Font.Spec["weight-semibold"]};
+    color: ${Colour["text-selected"]};
     background: ${Colour["bg-selected"]};
     border-color: ${Colour["border-selected"]};
-    color: ${Colour["text-selected"]};
-    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
 export const monthCellDefaultHover = css`
     &:hover {
-        background: ${Colour["bg-hover"]};
-        color: ${Colour["text-hover"]};
         font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-hover"]};
+        background: ${Colour["bg-hover"]};
     }
 `;
 
 export const monthCellSelectedHover = css`
     &:hover {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-selected-hover"]};
         background: ${Colour["bg-selected-hover"]};
         border-color: ${Colour["border-selected-hover"]};
-        color: ${Colour["text-selected-hover"]};
-        font-weight: ${Font.Spec["weight-semibold"]};
     }
 `;

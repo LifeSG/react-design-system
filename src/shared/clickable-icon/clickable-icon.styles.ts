@@ -4,21 +4,21 @@ import { Colour, Spacing } from "../../theme";
 
 export const main = css`
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     padding: ${Spacing["spacing-24"]};
+    cursor: pointer;
     background-color: transparent;
     border: none;
-    cursor: pointer;
 
     img {
-        height: 1rem;
         width: 1rem;
+        height: 1rem;
     }
 
     svg {
-        height: 1.125rem;
         width: 1.125rem;
+        height: 1.125rem;
     }
 `;
 

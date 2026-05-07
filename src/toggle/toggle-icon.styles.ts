@@ -6,15 +6,15 @@ import { Colour } from "../theme";
 // STYLING
 // =============================================================================
 export const wrapperBase = css`
-    height: 1.625rem;
-    width: 1.625rem;
-    margin-right: 0.5rem;
     flex-shrink: 0;
+    width: 1.625rem;
+    height: 1.625rem;
+    margin-right: 0.5rem;
     color: ${Colour["icon-subtle"]};
 
     svg {
-        height: 100%;
         width: 100%;
+        height: 100%;
     }
 `;
 

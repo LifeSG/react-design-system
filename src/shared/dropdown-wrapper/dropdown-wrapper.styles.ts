@@ -15,8 +15,8 @@ export const labelContainer = css`
 
 export const valueLabel = css`
     ${Font["body-baseline-regular"]}
-    text-align: left;
     overflow: hidden;
+    text-align: left;
 
     &[data-variant="small"] {
         ${Font["body-md-regular"]}

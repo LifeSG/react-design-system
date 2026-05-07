@@ -26,8 +26,8 @@ export const titleWrapperHidden = css`
 
 export const title = css`
     display: flex;
-    align-self: flex-start;
     flex: 1;
+    align-self: flex-start;
 
     ${Font["heading-md-bold"]}
     color: ${Colour["text"]};
@@ -46,6 +46,6 @@ export const titleHidden = css`
 
 export const expandCollapseLink = css`
     margin: calc(${Spacing["spacing-16"]} * -1);
-    margin-left: 0px;
+    margin-left: 0;
     white-space: nowrap;
 `;

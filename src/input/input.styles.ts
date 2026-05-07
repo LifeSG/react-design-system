@@ -29,8 +29,8 @@ export const inputElementPaddingRight = css`
 export const clearButton = css`
     height: auto;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
-    cursor: pointer;
     color: ${Colour.icon};
+    cursor: pointer;
 `;
 
 export const clearButtonNoBorder = css`
@@ -38,8 +38,8 @@ export const clearButtonNoBorder = css`
 `;
 
 export const clearIcon = css`
-    height: 1.25rem;
     width: 1.25rem;
+    height: 1.25rem;
     vertical-align: middle;
 `;
 
@@ -55,9 +55,9 @@ export const defaultWrapper = css`
 `;
 
 export const defaultWrapperReadOnly = css`
-    border-color: transparent;
     padding: 0;
     background: transparent !important;
+    border-color: transparent;
 
     &:focus-within {
         outline-color: ${Colour["border-focus"]};
@@ -65,8 +65,8 @@ export const defaultWrapperReadOnly = css`
 `;
 
 export const defaultWrapperDisabled = css`
-    background: ${Colour["bg-disabled"]};
     cursor: not-allowed;
+    background: ${Colour["bg-disabled"]};
 
     &:focus-within {
         outline-color: ${Colour["border-disabled"]};

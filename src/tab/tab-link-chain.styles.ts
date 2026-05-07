@@ -1,13 +1,6 @@
 import { css } from "@linaria/core";
 
-import {
-    Border,
-    Colour,
-    Font,
-    MediaQuery,
-    Radius,
-    Spacing,
-} from "../theme/tokens";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme/tokens";
 
 export const tokens = {
     chainItem: {
@@ -23,9 +16,10 @@ export const chain = css`
 
 export const chainFullWidthIndicator = css`
     &::after {
-        content: "";
-        height: inherit;
         flex-grow: 1;
+        height: inherit;
+        content: "";
+
         /* follows the border in ChainItem */
         border-bottom: ${Border["width-040"]} ${Border.solid} ${Colour.border};
     }
@@ -33,11 +27,11 @@ export const chainFullWidthIndicator = css`
 
 export const chainItem = css`
     display: flex;
-    justify-content: center;
     flex-shrink: 0;
+    justify-content: center;
+    width: var(${tokens.chainItem.width}, auto);
     border-bottom: ${Border["width-040"]} ${Border.solid} ${Colour.border};
     ${tokens.chainItem.width}: initial;
-    width: var(${tokens.chainItem.width}, auto);
 
     ${MediaQuery.MaxWidth.sm} {
         flex: 1;
@@ -59,11 +53,10 @@ export const chainLink = css`
     /* position: relative; */
     flex-direction: row;
     gap: 0.5rem;
-    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-16"]}
-        ${Spacing["spacing-20"]};
-    cursor: pointer;
-    width: 100%;
     justify-content: center;
+    width: 100%;
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
+    cursor: pointer;
 
     &:focus-within {
         outline: 2px solid ${Colour["focus-ring"]};
@@ -81,13 +74,13 @@ export const labelContainer = css`
 `;
 
 export const label = css`
-    border: none;
     background: none;
+    border: none;
 
     ${MediaQuery.MaxWidth.sm} {
         max-width: 20ch;
-        text-overflow: ellipsis;
         overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
     }
 `;
@@ -106,13 +99,13 @@ export const deselectedLabelActive = css`
 export const selectedLabel = css`
     ${Font["body-baseline-semibold"]}
     color: ${Colour["text-primary"]};
-    opacity: 0;
     outline: none;
+    opacity: 0;
 
     ${MediaQuery.MaxWidth.sm} {
         max-width: 20ch;
-        text-overflow: ellipsis;
         overflow: hidden;
+        text-overflow: ellipsis;
         white-space: nowrap;
     }
 `;

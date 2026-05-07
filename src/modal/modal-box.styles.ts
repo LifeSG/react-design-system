@@ -8,10 +8,10 @@ export const box = css`
     flex-direction: column;
     width: 40rem;
     max-height: 70%;
-    background: ${Colour.bg};
-    box-shadow: ${Shadow["lg-strong"]};
-    border-radius: ${Radius["lg"]};
     overflow: hidden;
+    background: ${Colour.bg};
+    border-radius: ${Radius["lg"]};
+    box-shadow: ${Shadow["lg-strong"]};
 
     ${MediaQuery.MaxWidth.md} {
         width: 90%;
@@ -27,8 +27,8 @@ export const closeButton = css`
     color: ${Colour.icon};
 
     svg {
-        height: 2rem;
         width: 2rem;
+        height: 2rem;
     }
 
     ${MediaQuery.MaxWidth.sm} {

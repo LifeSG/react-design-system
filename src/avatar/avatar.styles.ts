@@ -6,11 +6,11 @@ import { Colour } from "../theme";
 // STYLING
 // =============================================================================
 export const avatarDisplay = css`
-    border-radius: 50%;
-    background-color: ${Colour["bg-primary-subtler"]};
+    display: flex;
     align-items: center;
     justify-content: center;
-    display: flex;
+    background-color: ${Colour["bg-primary-subtler"]};
+    border-radius: 50%;
 `;
 
 export const avatarDisplayDefault = css`

@@ -7,22 +7,22 @@ export const main = css`
     flex: 1;
     flex-direction: column;
     gap: 0.5rem;
-    justify-content: center;
     align-items: center;
-    padding: 1.5rem 1rem;
-    background-color: ${Colour.bg};
-    border: ${Border["width-010"]} ${Border.solid} transparent;
-    border-radius: ${Radius["md"]};
-    cursor: pointer;
+    justify-content: center;
     max-width: 13rem;
-    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
+    padding: 1.5rem 1rem;
     ${Font["body-baseline-semibold"]}
     color: ${Colour["text"]};
     overflow-wrap: anywhere;
+    cursor: pointer;
+    background-color: ${Colour.bg};
+    border: ${Border["width-010"]} ${Border.solid} transparent;
+    border-radius: ${Radius["md"]};
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
 
     img {
-        min-width: 3.5rem;
         width: 3.5rem;
+        min-width: 3.5rem;
         height: 3.5rem;
         object-fit: contain;
     }
@@ -32,8 +32,8 @@ export const main = css`
     }
 
     ${MediaQuery.MaxWidth.sm} {
-        padding: 0.5rem 0.25rem;
         gap: 0.25rem;
+        padding: 0.5rem 0.25rem;
         ${Font["body-md-semibold"]}
     }
 `;

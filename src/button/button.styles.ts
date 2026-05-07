@@ -1,31 +1,23 @@
 import { css } from "@linaria/core";
 
-import {
-    Border,
-    Colour,
-    Font,
-    MediaQuery,
-    Motion,
-    Radius,
-    Spacing,
-} from "../theme";
+import { Border, Colour, Font, MediaQuery, Motion, Radius, Spacing } from "../theme";
 
 export const main = css`
-    border: ${Border["width-010"]} ${Border["solid"]} transparent;
-    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
-    cursor: pointer;
     display: flex;
+    gap: 0.5rem;
     align-items: center;
     justify-content: center;
     padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
-    gap: 0.5rem;
+    cursor: pointer;
+    border: ${Border["width-010"]} ${Border["solid"]} transparent;
     border-radius: ${Radius.sm};
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
 
     svg,
     img {
         flex-shrink: 0;
-        height: 1em;
         width: 1em;
+        height: 1em;
     }
 `;
 
@@ -41,8 +33,9 @@ export const mainHasMinWidth = css`
 // BUTTON STYLE + TEXT COLOR
 // -------------------------------------------------------------------------
 export const mainStyleDefault = css`
-    background-color: ${Colour["bg-primary"]};
     color: ${Colour["text-inverse"]};
+    background-color: ${Colour["bg-primary"]};
+
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -52,8 +45,9 @@ export const mainStyleDefault = css`
 `;
 
 export const mainStyleDefaultDanger = css`
-    background-color: ${Colour["bg-error-strong"]};
     color: ${Colour["text-inverse"]};
+    background-color: ${Colour["bg-error-strong"]};
+
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -63,9 +57,10 @@ export const mainStyleDefaultDanger = css`
 `;
 
 export const mainStyleSecondary = css`
+    color: ${Colour["text-primary"]};
     background-color: ${Colour.bg};
     border-color: ${Colour["border-primary"]};
-    color: ${Colour["text-primary"]};
+
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -75,9 +70,10 @@ export const mainStyleSecondary = css`
 `;
 
 export const mainStyleSecondaryDanger = css`
+    color: ${Colour["text-error"]};
     background-color: ${Colour.bg};
     border-color: ${Colour["border-error-strong"]};
-    color: ${Colour["text-error"]};
+
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -87,9 +83,10 @@ export const mainStyleSecondaryDanger = css`
 `;
 
 export const mainStyleLight = css`
+    color: ${Colour["text-primary"]};
     background-color: ${Colour.bg};
     border-color: ${Colour.border};
-    color: ${Colour["text-primary"]};
+
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -99,9 +96,10 @@ export const mainStyleLight = css`
 `;
 
 export const mainStyleLightDanger = css`
+    color: ${Colour["text-error"]};
     background-color: ${Colour.bg};
     border-color: ${Colour.border};
-    color: ${Colour["text-error"]};
+
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -111,8 +109,9 @@ export const mainStyleLightDanger = css`
 `;
 
 export const mainStyleLink = css`
-    background-color: transparent;
     color: ${Colour["text-primary"]};
+    background-color: transparent;
+
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -122,8 +121,9 @@ export const mainStyleLink = css`
 `;
 
 export const mainStyleLinkDanger = css`
-    background-color: transparent;
     color: ${Colour["text-error"]};
+    background-color: transparent;
+
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -133,9 +133,10 @@ export const mainStyleLinkDanger = css`
 `;
 
 export const mainStyleDisabled = css`
-    background-color: ${Colour["bg-disabled"]};
-    cursor: not-allowed;
     color: ${Colour["text-disabled"]};
+    cursor: not-allowed;
+    background-color: ${Colour["bg-disabled"]};
+
     &:hover {
         box-shadow: none;
     }
@@ -153,8 +154,8 @@ export const mainSizeDefault = css`
 `;
 
 export const mainSizeDefaultIconOnly = css`
-    height: 3rem;
     width: 3rem;
+    height: 3rem;
 `;
 
 export const mainSizeSmall = css`
@@ -166,8 +167,8 @@ export const mainSizeSmall = css`
 `;
 
 export const mainSizeSmallIconOnly = css`
-    height: 2.5rem;
     width: 2.5rem;
+    height: 2.5rem;
 `;
 
 export const mainSizeLarge = css`
@@ -179,8 +180,8 @@ export const mainSizeLarge = css`
 `;
 
 export const mainSizeLargeIconOnly = css`
-    height: 4rem;
     width: 4rem;
+    height: 4rem;
 `;
 
 export const spinnerHasChildren = css`

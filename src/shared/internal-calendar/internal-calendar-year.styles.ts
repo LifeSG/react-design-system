@@ -6,33 +6,33 @@ import { Border, Colour, Font, Motion, Radius } from "../../theme";
 // STYLING
 // =============================================================================
 export const wrapper = css`
-    width: 100%;
-    height: 100%;
     display: grid;
+    grid-template-columns: repeat(3, 1fr);
     align-content: center;
     align-items: center;
-    grid-template-columns: repeat(3, 1fr);
+    width: 100%;
+    height: 100%;
 `;
 
 export const yearCell = css`
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 1rem 0.5rem;
-    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
+    justify-content: center;
     padding: 0.5rem;
+    margin: 1rem 0.5rem;
+    color: ${Colour["text"]};
+    cursor: default;
+    background-clip: border-box;
+    border: ${Border["width-010"]} ${Border["solid"]} transparent;
 
     ${Font["body-md-regular"]}
     border-radius: ${Radius["md"]};
-    border: ${Border["width-010"]} ${Border["solid"]} transparent;
-    background-clip: border-box;
-    color: ${Colour["text"]};
-    cursor: default;
+    transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
 export const yearCellDisabledDisplay = css`
-    cursor: not-allowed;
     color: ${Colour["text-disabled-subtlest"]};
+    cursor: not-allowed;
 `;
 
 export const yearCellInteractive = css`
@@ -44,30 +44,30 @@ export const yearCellOtherDecade = css`
 `;
 
 export const yearCellCurrentYear = css`
-    color: ${Colour["text-primary"]};
     font-weight: ${Font.Spec["weight-semibold"]};
+    color: ${Colour["text-primary"]};
 `;
 
 export const yearCellSelectedYear = css`
+    font-weight: ${Font.Spec["weight-semibold"]};
+    color: ${Colour["text-selected"]};
     background: ${Colour["bg-selected"]};
     border-color: ${Colour["border-selected"]};
-    color: ${Colour["text-selected"]};
-    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
 export const yearCellDefaultHover = css`
     &:hover {
-        background: ${Colour["bg-hover"]};
-        color: ${Colour["text-hover"]};
         font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-hover"]};
+        background: ${Colour["bg-hover"]};
     }
 `;
 
 export const yearCellSelectedHover = css`
     &:hover {
+        font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-selected-hover"]};
         background: ${Colour["bg-selected-hover"]};
         border-color: ${Colour["border-selected-hover"]};
-        color: ${Colour["text-selected-hover"]};
-        font-weight: ${Font.Spec["weight-semibold"]};
     }
 `;

@@ -1,13 +1,6 @@
 import { css } from "@linaria/core";
 
-import {
-    Border,
-    Breakpoint,
-    Colour,
-    MediaQuery,
-    Radius,
-    Shadow,
-} from "../theme/tokens";
+import { Border, Breakpoint, Colour, MediaQuery, Radius, Shadow } from "../theme/tokens";
 
 export const tokens = {
     panel: {
@@ -19,16 +12,19 @@ export const tokens = {
 } as const;
 
 export const panel = css`
-    border-radius: ${Radius["md"]};
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    background: ${Colour["bg"]};
-    box-shadow: ${Shadow["md-subtle"]};
-
     ${tokens.panel.maxHeight}: initial;
     ${tokens.panel.overflow}: initial;
     ${tokens.panel.xSpacing}: 0px;
-    ${tokens.panel.availableWidth}: calc(100vw - var(${tokens.panel
-        .xSpacing}) * 2);
+    ${tokens.panel.availableWidth}: calc(100vw - var(${tokens.panel.xSpacing}) * 2);
+
+    min-width: min(15rem, var(${tokens.panel.availableWidth}));
+    max-width: min(24rem, var(${tokens.panel.availableWidth}));
+    max-height: var(${tokens.panel.maxHeight});
+    overflow-y: var(${tokens.panel.overflow});
+    background: ${Colour["bg"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["md"]};
+    box-shadow: ${Shadow["md-subtle"]};
 
     ${MediaQuery.MaxWidth.sm} {
         ${tokens.panel.xSpacing}: ${Breakpoint["sm-margin"]}px;
@@ -41,11 +37,6 @@ export const panel = css`
     ${MediaQuery.MaxWidth.xxs} {
         ${tokens.panel.xSpacing}: ${Breakpoint["xxs-margin"]}px;
     }
-
-    min-width: min(15rem, var(${tokens.panel.availableWidth}));
-    max-width: min(24rem, var(${tokens.panel.availableWidth}));
-    max-height: var(${tokens.panel.maxHeight});
-    overflow-y: var(${tokens.panel.overflow});
 
     &:focus {
         outline: none;
@@ -61,8 +52,8 @@ export const panel = css`
 
     &::-webkit-scrollbar-thumb {
         background: ${Colour["bg-inverse-subtlest"]};
+        background-clip: padding-box;
         border: 5px solid transparent;
         border-radius: ${Radius["full"]};
-        background-clip: padding-box;
     }
 `;

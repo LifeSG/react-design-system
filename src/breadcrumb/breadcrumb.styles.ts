@@ -13,8 +13,8 @@ export const tokens = {
 // =============================================================================
 export const wrapper = css`
     position: relative;
-    width: 100%;
     z-index: 1;
+    width: 100%;
     margin: ${Spacing["spacing-32"]} 0;
 
     ${MediaQuery.MaxWidth.xl} {
@@ -28,13 +28,12 @@ export const wrapper = css`
 
 export const content = css`
     display: inline-flex;
-    width: 100%;
     flex-wrap: wrap;
-    white-space: nowrap;
+    width: 100%;
     margin-left: calc(${Spacing["spacing-8"]} * -1);
+    overflow: scroll hidden;
     font-size: ${Font.Spec["body-size-md"]};
-    overflow-x: scroll;
-    overflow-y: hidden;
+    white-space: nowrap;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
     &::-webkit-scrollbar {
@@ -48,12 +47,13 @@ export const content = css`
 
 export const fade = css`
     ${tokens.fade.backgroundColor}: initial;
-    width: ${Spacing["spacing-64"]};
-    height: calc(1lh + ${Spacing["spacing-4"]});
+
     position: absolute;
     top: 50%;
-    transform: translateY(-50%);
+    width: ${Spacing["spacing-64"]};
+    height: calc(1lh + ${Spacing["spacing-4"]});
     pointer-events: none;
+    transform: translateY(-50%);
 `;
 
 export const fadeLeft = css`
@@ -62,7 +62,7 @@ export const fadeLeft = css`
         background-image: linear-gradient(
             to right,
             var(${tokens.fade.backgroundColor}, ${Colour.bg}),
-            rgba(255, 255, 255, 0.001)
+            rgb(255 255 255 0.1%)
         );
     }
 `;
@@ -73,7 +73,7 @@ export const fadeRight = css`
         background-image: linear-gradient(
             to left,
             var(${tokens.fade.backgroundColor}, ${Colour.bg}),
-            rgba(255, 255, 255, 0.001)
+            rgb(255 255 255 0.1%)
         );
     }
 `;
@@ -82,13 +82,13 @@ export const item = css`
     display: flex;
     flex-direction: row;
     align-items: center;
-    line-height: inherit;
     font-size: inherit;
+    line-height: inherit;
 `;
 
 export const caret = css`
-    height: 1em;
     width: 1em;
+    height: 1em;
     color: ${Colour["icon-subtle"]};
 `;
 

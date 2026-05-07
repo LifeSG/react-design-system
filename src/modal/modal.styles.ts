@@ -10,20 +10,20 @@ export const tokens = {
 } as const;
 
 export const container = css`
-    position: relative;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-
     ${tokens.container.verticalHeight}: initial;
     ${tokens.container.offsetTop}: initial;
 
+    position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+
     ${MediaQuery.MaxWidth.sm} {
+        top: var(${tokens.container.offsetTop}, 0);
         height: calc(var(${tokens.container.verticalHeight}, 1vh) * 100);
-        top: var(${tokens.container.offsetTop}, 0px);
     }
 `;
 

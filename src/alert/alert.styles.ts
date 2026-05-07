@@ -3,16 +3,15 @@ import { css } from "@linaria/core";
 import { Border, Colour, Font, Motion, Spacing } from "../theme/tokens";
 
 export const tokens = {
-    maxCollapsedHeight:
-        "--fds-internal-alert-textWrapperContainer-maxCollapsedHeight",
+    maxCollapsedHeight: "--fds-internal-alert-textWrapperContainer-maxCollapsedHeight",
 };
 
 // =============================================================================
 // WRAPPER
 // =============================================================================
 export const wrapper = css`
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     display: flex;
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     border-left: ${Border["width-020"]} ${Border["solid"]};
 `;
 
@@ -104,8 +103,8 @@ export const actionLinkText = css`
     align-self: flex-start;
 
     svg {
-        height: 1rem;
         width: 1rem;
+        height: 1rem;
         margin-left: ${Spacing["spacing-4"]};
     }
 `;
@@ -125,8 +124,8 @@ export const actionLinkTextSmall = css`
 // =============================================================================
 export const contentContainer = css`
     display: flex;
-    flex-direction: column;
     flex: 1;
+    flex-direction: column;
     overflow-wrap: anywhere;
 `;
 
@@ -135,8 +134,8 @@ export const contentContainer = css`
 // =============================================================================
 export const textWrapperContainer = css`
     display: flex;
-    flex-direction: column;
     flex: 1;
+    flex-direction: column;
     order: 1;
 `;
 
@@ -146,9 +145,9 @@ export const textWrapperContainerShowMoreWithLink = css`
 
 export const textWrapperContainerCollapsed = css`
     ${tokens.maxCollapsedHeight}: initial;
+
     max-height: var(${tokens.maxCollapsedHeight});
     overflow: hidden;
-    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
     mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
 `;
 
@@ -164,18 +163,16 @@ export const textWrapper = css`
 // =============================================================================
 export const showMoreButton = css`
     display: flex;
+    gap: ${Spacing["spacing-4"]};
     align-items: center;
     align-self: flex-start;
-    gap: ${Spacing["spacing-4"]};
-    margin-top: ${Spacing["spacing-8"]};
     order: 2;
-
+    margin-top: ${Spacing["spacing-8"]};
+    color: ${Colour["text-primary"]};
     cursor: pointer;
     user-select: none;
-    border: none;
     background: transparent;
-
-    color: ${Colour["text-primary"]};
+    border: none;
 `;
 
 export const showMoreButtonDefault = css`

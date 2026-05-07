@@ -5,25 +5,25 @@ import { Colour, Motion } from "../theme";
 export const classes = {} as const;
 
 export const container = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
     &[data-display-size="small"] {
-        height: 1.5rem;
         width: 1.5rem;
+        height: 1.5rem;
     }
 
     &[data-display-size="default"] {
-        height: 2rem;
         width: 2rem;
+        height: 2rem;
     }
 `;
 
 export const icon = css`
-    height: 100%;
     width: 100%;
+    height: 100%;
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
 `;
 
@@ -45,12 +45,11 @@ export const checkedIconDisabled = css`
 
 export const input = css`
     position: absolute;
-    height: 100%;
-    width: 100%;
-    cursor: not-allowed;
     z-index: 1;
-
+    width: 100%;
+    height: 100%;
     appearance: none;
+    cursor: not-allowed;
     background: transparent;
     border: none;
 `;

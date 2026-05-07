@@ -13,6 +13,7 @@ export const tokens = {
 
 export const typographyBase = css`
     ${tokens.typographyBase.maxLines}: initial;
+
     font-family: ${Font.Spec["font-family"]};
     font-variant: ${Font.Spec["font-variant"]};
     color: ${Colour.text};
@@ -56,8 +57,8 @@ export const noUnderline = css`
 `;
 
 export const externalIcon = css`
-    height: 1lh;
     width: 1em;
+    height: 1lh;
     margin-left: 0.4em;
     vertical-align: middle;
 `;

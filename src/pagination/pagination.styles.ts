@@ -9,10 +9,9 @@ export const paginationWrapper = css`
 `;
 
 export const paginationList = css`
-    align-self: flex-start;
-
     display: flex;
     align-items: center;
+    align-self: flex-start;
 
     ${MediaQuery.MaxWidth.lg} {
         align-self: center;
@@ -26,20 +25,18 @@ export const paginationMenu = css`
 
 export const iconButton = css`
     display: flex;
-    justify-content: center;
     align-items: center;
-
+    justify-content: center;
+    width: 2.5rem;
+    height: 2.5rem;
+    padding: 0 ${Spacing["spacing-8"]};
+    color: ${Colour["icon-primary"]};
     outline: none;
     border-radius: ${Radius.sm};
-    height: 2.5rem;
-    width: 2.5rem;
-    padding: 0 ${Spacing["spacing-8"]};
-
-    color: ${Colour["icon-primary"]};
 
     svg {
-        height: 1.25rem;
         width: 1.25rem;
+        height: 1.25rem;
     }
 
     &:disabled {
@@ -58,65 +55,59 @@ export const iconButtonNavigation = css`
 `;
 
 export const pageItem = css`
-    outline: none;
-    margin: ${Spacing["spacing-4"]};
-    box-shadow: none;
-    border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-    border-radius: ${Radius.sm};
     min-width: 2.5rem;
     height: 2.5rem;
     padding: 0 ${Spacing["spacing-8"]};
-
-    background: ${Colour.bg};
-    cursor: pointer;
+    margin: ${Spacing["spacing-4"]};
+    color: ${Colour.text};
 
     ${Font["body-baseline-regular"]};
     text-align: center;
-    color: ${Colour.text};
+    cursor: pointer;
+    outline: none;
+    background: ${Colour.bg};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-radius: ${Radius.sm};
+    box-shadow: none;
 
     &:hover,
     &:focus-visible {
-        border-color: ${Colour["bg-hover"]};
-        background: ${Colour["bg-hover"]};
-        color: ${Colour["text-hover"]};
         font-weight: ${Font.Spec["weight-semibold"]};
+        color: ${Colour["text-hover"]};
+        background: ${Colour["bg-hover"]};
+        border-color: ${Colour["bg-hover"]};
     }
 `;
 
 export const pageItemSelected = css`
-    border-color: ${Colour["bg-primary"]};
-    background: ${Colour["bg-primary"]};
-    color: ${Colour["text-inverse"]};
     font-weight: ${Font.Spec["weight-bold"]};
+    color: ${Colour["text-inverse"]};
+    background: ${Colour["bg-primary"]};
+    border-color: ${Colour["bg-primary"]};
 
     &:hover,
     &:focus-visible {
-        border-color: ${Colour["bg-selected-strongest-hover"]};
-        background: ${Colour["bg-selected-strongest-hover"]};
-        color: ${Colour["text-inverse"]};
         font-weight: ${Font.Spec["weight-bold"]};
+        color: ${Colour["text-inverse"]};
+        background: ${Colour["bg-selected-strongest-hover"]};
+        border-color: ${Colour["bg-selected-strongest-hover"]};
     }
 `;
 
 export const ellipsisContainer = css`
     position: relative;
-
     display: flex;
-    justify-content: center;
     align-items: center;
-
+    justify-content: center;
     margin: ${Spacing["spacing-4"]};
-
     cursor: pointer;
 `;
 
 export const paginationMobileInput = css`
     display: flex;
-    justify-content: center;
     align-items: center;
-
+    justify-content: center;
     margin: ${Spacing["spacing-4"]};
-
     color: ${Colour.text};
 `;
 
@@ -143,24 +134,21 @@ export const inputView = css`
 export const hover = css`
     position: absolute;
     top: calc(${Spacing["spacing-8"]} * -1);
-    transform: translateY(-100%);
-
     display: flex;
     align-items: center;
     justify-content: center;
-
-    border: none;
-    border-radius: ${Radius.sm};
     width: max-content;
     padding: ${Spacing["spacing-4"]} ${Spacing["spacing-12"]};
 
-    background: ${Colour["bg-hover"]};
-
     ${Font["body-xs-regular"]}
     color: ${Colour["text-hover"]};
+    background: ${Colour["bg-hover"]};
+    border: none;
+    border-radius: ${Radius.sm};
+    transform: translateY(-100%);
 `;
 
 export const inputSelectWrapper = css`
-    margin-left: ${Spacing["spacing-4"]};
     width: 10rem;
+    margin-left: ${Spacing["spacing-4"]};
 `;

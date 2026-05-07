@@ -3,8 +3,7 @@ import { css } from "@linaria/core";
 import { MediaQuery, Motion } from "../theme";
 
 const CLOSED_POSITION_OFFSET = "-3%";
-const IS_INITIAL_OR_CLOSE =
-    ':is([data-status="initial"], [data-status="close"])';
+const IS_INITIAL_OR_CLOSE = ':is([data-status="initial"], [data-status="close"])';
 
 export const tokens = {
     container: {
@@ -14,18 +13,17 @@ export const tokens = {
 } as const;
 
 export const container = css`
-    position: relative;
-    width: 100%;
-    height: 100%;
-
-    overflow: auto;
-
     ${tokens.container.verticalHeight}: initial;
     ${tokens.container.offsetTop}: initial;
 
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+
     ${MediaQuery.MaxWidth.sm} {
+        top: var(${tokens.container.offsetTop}, 0);
         height: calc(var(${tokens.container.verticalHeight}, 1vh) * 100);
-        top: var(${tokens.container.offsetTop}, 0px);
     }
 
     &[data-status="initial"] {
@@ -78,14 +76,14 @@ export const container = css`
 
 export const scrollContainer = css`
     display: flex;
-    justify-content: center;
     align-items: center;
+    justify-content: center;
     min-height: 100%;
     pointer-events: none;
 `;
 
 export const modalContainer = css`
-    pointer-events: auto;
     width: 100%;
+    pointer-events: auto;
     outline: none;
 `;

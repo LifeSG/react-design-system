@@ -23,15 +23,15 @@ export const listItemContainerHidden = css`
 `;
 
 export const listItem = css`
-    flex: 1;
     display: flex;
-    align-items: flex-start;
+    flex: 1;
     gap: ${Spacing["spacing-8"]};
+    align-items: flex-start;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
-    cursor: pointer;
     overflow: hidden;
-    border-radius: ${Radius["none"]};
+    cursor: pointer;
     outline: none;
+    border-radius: ${Radius["none"]};
 `;
 
 export const listItemToggleable = css`
@@ -44,8 +44,9 @@ export const listItemActive = css`
 
 export const indent = css`
     ${tokens.level}: 0;
-    height: 1px;
+
     width: calc((1lh + ${Spacing["spacing-8"]}) * var(${tokens.level}));
+    height: 1px;
 `;
 
 export const expandButton = css`
@@ -57,8 +58,7 @@ export const expandButton = css`
     svg {
         width: 1lh;
         height: 1lh;
-        transition: transform ${Motion["duration-350"]}
-            ${Motion["ease-standard"]};
+        transition: transform ${Motion["duration-350"]} ${Motion["ease-standard"]};
     }
 `;
 
@@ -75,11 +75,11 @@ export const unexpandableIndicator = css`
 `;
 
 export const selectionIndicator = css`
-    flex-shrink: 0;
-    height: 1lh;
-    width: ${Spacing["spacing-16"]};
     display: flex;
+    flex-shrink: 0;
     justify-content: center;
+    width: ${Spacing["spacing-16"]};
+    height: 1lh;
 `;
 
 export const selectionIndicatorNested = css`
@@ -88,7 +88,7 @@ export const selectionIndicatorNested = css`
 
 export const checkboxMixedIndicator = css`
     flex-shrink: 0;
-    height: 1lh;
     width: 1lh;
+    height: 1lh;
     color: ${Colour["icon-selected"]};
 `;

@@ -5,11 +5,11 @@ export const tokens = {
 } as const;
 
 export const container = css`
-    ${tokens.containerColor}: initial;
     margin: 0 auto;
+    ${tokens.containerColor}: initial;
 `;
 
 export const placeholder = css`
-    height: 200px;
     width: 200px;
+    height: 200px;
 `;

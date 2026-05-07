@@ -1,14 +1,6 @@
 import { css } from "@linaria/core";
 
-import {
-    Border,
-    Breakpoint,
-    Colour,
-    Font,
-    MediaQuery,
-    Radius,
-    Spacing,
-} from "../../theme";
+import { Border, Breakpoint, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
 import * as elementWithDropdownStyles from "../dropdown-wrapper/element-with-dropdown.styles";
 
 export const tokens = {
@@ -24,20 +16,24 @@ export const tokens = {
 // MAIN STYLES
 // -----------------------------------------------------------------------------
 export const container = css`
+    ${elementWithDropdownStyles.tokens.availableHeight}: initial;
+    ${tokens.xSpacing}: 0;
+    ${tokens.availableWidth}: calc(100vw - var(${tokens.xSpacing}) * 2);
+
     ${Font["body-baseline-regular"]}
+    width: var(${tokens.containerWidth});
+    min-width: var(${tokens.containerMinWidth}, min(23rem, var(${tokens.availableWidth})));
+    max-width: var(${tokens.availableWidth});
+    max-height: min(27rem, var(${elementWithDropdownStyles.tokens.availableHeight}, 9999px));
+    overflow: hidden;
+    overflow-y: auto;
+    background: ${Colour["bg"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
-    background: ${Colour["bg"]};
-
-    ${tokens.xSpacing}: 0px;
-    ${elementWithDropdownStyles.tokens.availableHeight}: initial;
-    ${tokens.availableWidth}: calc(
-        100vw - var(${tokens.xSpacing}) * 2
-    );
 
     ${MediaQuery.MaxWidth.sm} {
-        ${tokens.xSpacing}: ${Breakpoint["sm-margin"]};
         max-height: 15rem;
+        ${tokens.xSpacing}: ${Breakpoint["sm-margin"]};
     }
 
     ${MediaQuery.MaxWidth.xs} {
@@ -47,19 +43,6 @@ export const container = css`
     ${MediaQuery.MaxWidth.xxs} {
         ${tokens.xSpacing}: ${Breakpoint["xxs-margin"]};
     }
-
-    max-width: var(${tokens.availableWidth});
-    min-width: var(
-        ${tokens.containerMinWidth},
-        min(23rem, var(${tokens.availableWidth}))
-    );
-    width: var(${tokens.containerWidth});
-    max-height: min(
-        27rem,
-        var(${elementWithDropdownStyles.tokens.availableHeight}, 9999px)
-    );
-    overflow: hidden;
-    overflow-y: auto;
 
     &::-webkit-scrollbar {
         width: 14px;
@@ -71,9 +54,9 @@ export const container = css`
 
     &::-webkit-scrollbar-thumb {
         background: ${Colour["bg-inverse-subtlest"]};
+        background-clip: padding-box;
         border: 5px solid transparent;
         border-radius: ${Radius["full"]};
-        background-clip: padding-box;
     }
 `;
 
@@ -82,8 +65,8 @@ export const containerVariantSmall = css`
 `;
 
 export const list = css`
-    background: transparent;
     padding: ${Spacing["spacing-8"]};
+    background: transparent;
 `;
 
 export const listbox = css`
@@ -95,13 +78,13 @@ export const listbox = css`
 // -----------------------------------------------------------------------------
 export const listItem = css`
     display: flex;
-    align-items: flex-start;
     gap: ${Spacing["spacing-8"]};
+    align-items: flex-start;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
     cursor: pointer;
+    outline: none;
     border: none;
     border-radius: ${Radius["none"]};
-    outline: none;
 `;
 
 export const listItemActive = css`
@@ -118,8 +101,8 @@ export const listItemDisabled = css`
 
 export const baseIndicatorStyle = css`
     flex-shrink: 0;
-    height: 1lh;
     width: 1rem;
+    height: 1lh;
 `;
 
 export const selectedIndicator = css`
@@ -128,8 +111,8 @@ export const selectedIndicator = css`
 
 export const baseCheckboxIndicatorStyle = css`
     flex-shrink: 0;
-    height: 1lh;
     width: 1lh;
+    height: 1lh;
 `;
 
 export const checkboxSelectedIndicator = css`
@@ -148,16 +131,16 @@ export const checkboxDisabledIndicator = css`
 // ELEMENT STYLES
 // -----------------------------------------------------------------------------
 export const selectAllContainer = css`
-    width: 100%;
     display: flex;
     justify-content: flex-end;
+    width: 100%;
 `;
 
 export const baseButton = css`
-    cursor: pointer;
     overflow: hidden;
-    color: ${Colour["text-primary"]};
     font-size: inherit;
+    color: ${Colour["text-primary"]};
+    cursor: pointer;
 `;
 
 export const selectAllButton = css`
@@ -170,18 +153,18 @@ export const tryAgainButton = css`
 `;
 
 export const resultStateContainer = css`
-    width: 100%;
     display: flex;
-    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     align-items: center;
+    width: 100%;
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     color: ${Colour["text"]};
 `;
 
 export const labelIcon = css`
+    width: 1em;
+    height: 1em;
     margin-right: ${Spacing["spacing-4"]};
     color: ${Colour["icon-error"]};
-    height: 1em;
-    width: 1em;
 `;
 
 export const spinner = css`
@@ -190,7 +173,7 @@ export const spinner = css`
 `;
 
 export const noResultDescContainer = css`
-    color: ${Colour["text-subtle"]};
     padding: 0 ${Spacing["spacing-16"]};
     padding-bottom: ${Spacing["spacing-12"]};
+    color: ${Colour["text-subtle"]};
 `;

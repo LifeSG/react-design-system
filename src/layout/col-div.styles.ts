@@ -28,36 +28,33 @@ export const tokens = {
 
 export const colDiv = css`
     ${Object.values(tokens)
-        .map((token) => `${token}: initial;`)
+        .map((token) => token + ": initial;")
         .join("")}
 
     position: relative;
-
-    grid-column: var(${tokens.xxsStart}, auto) /
-        var(${tokens.xxsEnd}, span var(${tokens.xxsSpan}, 1));
+    grid-column: var(${tokens.xxsStart}, auto) / var(${tokens.xxsEnd}, span var(${tokens.xxsSpan}, 1));
 
     ${MediaQuery.MinWidth.xs} {
-        grid-column: var(${tokens.xsStart}, auto) /
-            var(${tokens.xsEnd}, span var(${tokens.xsSpan}, 1));
+        grid-column: var(${tokens.xsStart}, auto) / var(${tokens.xsEnd}, span var(${tokens.xsSpan}, 1));
     }
+
     ${MediaQuery.MinWidth.sm} {
-        grid-column: var(${tokens.smStart}, auto) /
-            var(${tokens.smEnd}, span var(${tokens.smSpan}, 1));
+        grid-column: var(${tokens.smStart}, auto) / var(${tokens.smEnd}, span var(${tokens.smSpan}, 1));
     }
+
     ${MediaQuery.MinWidth.md} {
-        grid-column: var(${tokens.mdStart}, auto) /
-            var(${tokens.mdEnd}, span var(${tokens.mdSpan}, 1));
+        grid-column: var(${tokens.mdStart}, auto) / var(${tokens.mdEnd}, span var(${tokens.mdSpan}, 1));
     }
+
     ${MediaQuery.MinWidth.lg} {
-        grid-column: var(${tokens.lgStart}, auto) /
-            var(${tokens.lgEnd}, span var(${tokens.lgSpan}, 1));
+        grid-column: var(${tokens.lgStart}, auto) / var(${tokens.lgEnd}, span var(${tokens.lgSpan}, 1));
     }
+
     ${MediaQuery.MinWidth.xl} {
-        grid-column: var(${tokens.xlStart}, auto) /
-            var(${tokens.xlEnd}, span var(${tokens.xlSpan}, 1));
+        grid-column: var(${tokens.xlStart}, auto) / var(${tokens.xlEnd}, span var(${tokens.xlSpan}, 1));
     }
+
     ${MediaQuery.MinWidth.xxl} {
-        grid-column: var(${tokens.xxlStart}, auto) /
-            var(${tokens.xxlEnd}, span var(${tokens.xxlSpan}, 1));
+        grid-column: var(${tokens.xxlStart}, auto) / var(${tokens.xxlEnd}, span var(${tokens.xxlSpan}, 1));
     }
 `;
