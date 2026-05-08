@@ -8,6 +8,7 @@ export default function Story() {
             <Filter
                 data-testid="filter"
                 customLabels={{ headerTitle: "Filter Sidebar" }}
+                clearButtonDisabled={true}
             >
                 <Filter.Item
                     title="Item with title"

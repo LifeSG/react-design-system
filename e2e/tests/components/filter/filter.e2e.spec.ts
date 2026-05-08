@@ -30,6 +30,8 @@ class StoryPage extends AbstractStoryPage {
         pageDoneButton: Locator;
         pageDismissCount: Locator;
         pageDoneCount: Locator;
+        sidebarClearButton: Locator;
+        modalClearButton: Locator;
     };
 
     constructor(page: Page) {
@@ -78,6 +80,12 @@ class StoryPage extends AbstractStoryPage {
             pageDoneButton: page.getByRole("button", { name: "Done" }),
             pageDismissCount: page.getByTestId("dismiss-count"),
             pageDoneCount: page.getByTestId("done-count"),
+            sidebarClearButton: sidebar.getByRole("button", {
+                name: /clear filter sidebar/i,
+            }),
+            modalClearButton: modal.getByRole("button", {
+                name: /clear filter modal/i,
+            }),
         };
     }
 
@@ -143,6 +151,11 @@ test.describe("Filter", () => {
             await addonTriggerButton.click();
             await compareScreenshot(story, "open");
         });
+
+        test("Disabled clear button", async ({ story }) => {
+            const { sidebarClearButton } = story.locators;
+            await expect(sidebarClearButton).toBeDisabled();
+        });
     });
 
     test.describe("", () => {
@@ -177,6 +190,12 @@ test.describe("Filter", () => {
             await compareScreenshot(story, "open", {
                 fullscreen: true,
             });
+        });
+
+        test("Enabled clear button", async ({ story }) => {
+            const { showButton, modalClearButton } = story.locators;
+            await showButton.click();
+            await expect(modalClearButton).not.toBeDisabled();
         });
     });
 
