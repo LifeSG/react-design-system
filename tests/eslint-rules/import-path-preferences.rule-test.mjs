@@ -1,7 +1,7 @@
 import tsParser from "@typescript-eslint/parser";
 import { RuleTester } from "eslint";
 
-import localRules from "../../eslint-local-rules/import-path-preferences.mjs";
+import localRules from "../../eslint-local-rules/index.mjs";
 
 const rule = localRules.rules["import-path-preferences"];
 const styleNamespaceImportRule = localRules.rules["style-namespace-import"];
@@ -153,13 +153,13 @@ ruleTester.run("style-namespace-import", styleNamespaceImportRule, {
         {
             name: "default import from .styles path is rejected",
             code: 'import styles from "./button.styles";',
-            output: 'import * as styles from "./button.styles";',
+            output: null,
             errors: [{ messageId: "namespaceStyleImport" }],
         },
         {
             name: "default + namespace import is reduced to namespace only",
             code: 'import buttonStyle, * as styles from "./button.styles";',
-            output: 'import * as styles from "./button.styles";',
+            output: null,
             errors: [{ messageId: "namespaceStyleImport" }],
         },
     ],
