@@ -4,16 +4,13 @@ import clsx from "clsx";
 import dayjs from "dayjs";
 import { useState } from "react";
 
+import { Button } from "../button";
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { CalendarDropdown } from "../shared/internal-calendar";
 import * as calendarManagerStyles from "../shared/internal-calendar/calendar-manager.styles";
 import { CalendarHelper, DateHelper } from "../util";
-import {
-    Container,
-    HeaderArrowButton,
-    StyledDateTextButton,
-} from "./date-navigator.styles";
+import * as styles from "./date-navigator.styles";
 import type { DateNavigatorProps } from "./types";
 
 export const DateNavigator = ({
@@ -135,9 +132,10 @@ export const DateNavigator = ({
                   };
 
         return (
-            <Container {...otherProps} className={clsx(className)}>
+            <div {...otherProps} className={clsx(styles.container, className)}>
                 {
-                    <HeaderArrowButton
+                    <Button
+                        className={styles.headerArrowButton}
                         data-testid="date-navigator-left-arrow-btn"
                         disabled={loading || isLeftArrowDisabled()}
                         aria-label={ariaLabel.left}
@@ -151,25 +149,27 @@ export const DateNavigator = ({
                         }
                     />
                 }
-                <StyledDateTextButton
+                <Button
                     onClick={() =>
                         !!onCalendarDateSelect &&
                         !loading &&
                         setIsCalendarOpen(!isCalendarOpen)
                     }
                     className={clsx(
+                        styles.dateTextButton,
                         !!onCalendarDateSelect &&
                             !loading &&
-                            "styledDateTextButtonEnableDateClick"
+                            styles.dateTextButtonEnableDateClick
                     )}
                     data-testid="date-navigator-date-text"
                     styleType="link"
                     disabled={!onCalendarDateSelect || loading}
                 >
                     {getDisplayText()}
-                </StyledDateTextButton>
+                </Button>
                 {
-                    <HeaderArrowButton
+                    <Button
+                        className={styles.headerArrowButton}
                         data-testid="date-navigator-right-arrow-btn"
                         disabled={loading || isRightArrowDisabled()}
                         aria-label={ariaLabel.right}
@@ -183,7 +183,7 @@ export const DateNavigator = ({
                         }
                     />
                 }
-            </Container>
+            </div>
         );
     };
 

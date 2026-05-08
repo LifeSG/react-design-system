@@ -1,13 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
 import { Colour, Radius, Spacing } from "../theme";
 
-export const HeaderArrowButton = styled(Button)`
-    margin: ${Spacing["spacing-8"]};
-`;
-
-export const Container = styled.div`
+export const container = css`
     display: flex;
     position: relative;
     align-items: center;
@@ -16,7 +11,11 @@ export const Container = styled.div`
     border-radius: ${Radius["sm"]};
 `;
 
-export const StyledDateTextButton = styled(Button.Default)`
+export const headerArrowButton = css`
+    margin: ${Spacing["spacing-8"]};
+`;
+
+export const dateTextButton = css`
     color: ${Colour["text"]};
     white-space: nowrap;
     display: inline-block;
@@ -27,14 +26,14 @@ export const StyledDateTextButton = styled(Button.Default)`
     background: transparent;
     height: unset;
     cursor: default;
+`;
 
-    &.styledDateTextButtonEnableDateClick {
-        color: ${Colour["text-primary"]};
+export const dateTextButtonEnableDateClick = css`
+    color: ${Colour["text-primary"]};
 
-        &:hover {
-            cursor: pointer;
-            text-decoration: underline;
-            text-underline-position: under;
-        }
+    &:hover {
+        cursor: pointer;
+        text-decoration: underline;
+        text-underline-position: under;
     }
 `;
