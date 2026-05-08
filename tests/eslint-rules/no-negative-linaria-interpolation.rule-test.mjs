@@ -20,6 +20,16 @@ ruleTester.run(
     {
         valid: [
             {
+                name: "negative value allowed",
+                filename: "/repo/src/button/button.styles.ts",
+                code: `import { css } from "@linaria/core";
+
+export const box = css\`
+    padding: -8px;
+\`;
+`,
+            },
+            {
                 name: "positive interpolation is allowed",
                 filename: "/repo/src/button/button.styles.ts",
                 code: `import { css } from "@linaria/core";
