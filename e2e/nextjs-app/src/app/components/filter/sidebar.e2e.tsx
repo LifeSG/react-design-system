@@ -1,9 +1,6 @@
 "use client";
 import { Filter } from "@lifesg/react-design-system/filter";
 import { Typography } from "@lifesg/react-design-system";
-import { getOptions } from "./options";
-
-const OPTIONS = getOptions(3);
 
 export default function Story() {
     return (
@@ -25,11 +22,6 @@ export default function Story() {
                 >
                     <Typography.BodySM>Content goes here</Typography.BodySM>
                 </Filter.Item>
-                <Filter.Checkbox
-                    title="Checkbox item"
-                    options={OPTIONS}
-                    data-testid="item-checkbox"
-                />
             </Filter>
         </div>
     );

@@ -101,8 +101,8 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Filter", () => {
-    test.describe("Default responsive behaviour", () => {
-        test("Renders as sidebar on desktop", async ({ story }) => {
+    test.describe("Default", () => {
+        test("Desktop", async ({ story }) => {
             await story.init("default", { size: "desktop" });
 
             await expect(story.locators.sidebar).toBeVisible();
@@ -110,14 +110,14 @@ test.describe("Filter", () => {
             await expect(story.locators.showButton).toBeHidden();
         });
 
-        test("Renders as modal trigger on tablet", async ({ story }) => {
+        test("Tablet", async ({ story }) => {
             await story.init("default", { size: "tablet" });
 
             await expect(story.locators.sidebar).toBeHidden();
             await expect(story.locators.showButton).toBeVisible();
         });
 
-        test("Renders as modal trigger on mobile", async ({ story }) => {
+        test("Mobile", async ({ story }) => {
             await story.init("default", { size: "mobile" });
 
             await expect(story.locators.sidebar).toBeHidden();
@@ -125,19 +125,19 @@ test.describe("Filter", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("Sidebar", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("sidebar");
         });
 
-        test("Sidebar", async ({ story }) => {
+        test("Default", async ({ story }) => {
             await compareScreenshot(story, "collapsed");
             await story.expandAllItems();
             await waitForAnimationEnd(story.locators.sidebar);
             await compareScreenshot(story, "expanded");
         });
 
-        test("Tooltip in sidebar", async ({ story }) => {
+        test("Tooltip", async ({ story }) => {
             const { addonTriggerButton } = story.locators;
 
             await addonTriggerButton.click();
@@ -145,7 +145,7 @@ test.describe("Filter", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("sidebar", { mode: "dark" });
         });
@@ -158,18 +158,18 @@ test.describe("Filter", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("Modal", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("modal", { size: "mobile" });
         });
 
-        test("Modal open state", async ({ story }) => {
+        test("Default", async ({ story }) => {
             await compareScreenshot(story, "closed");
             await story.locators.showButton.click();
             await compareScreenshot(story, "open", { fullscreen: true });
         });
 
-        test("Tooltip in modal", async ({ story }) => {
+        test("Tooltip", async ({ story }) => {
             const { showButton, addonTriggerButton } = story.locators;
 
             await showButton.click();
@@ -185,7 +185,7 @@ test.describe("Filter", () => {
             await story.init("modal", { size: "mobile", mode: "dark" });
         });
 
-        test("Modal open state (dark mode)", async ({ story }) => {
+        test("Modal (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "closed");
             await story.locators.showButton.click();
             await compareScreenshot(story, "open", { fullscreen: true });
@@ -228,7 +228,7 @@ test.describe("Filter", () => {
             await story.init("item-configurations");
         });
 
-        test("Filter item configurations", async ({ story }) => {
+        test("Item configurations", async ({ story }) => {
             await compareScreenshot(story, "collapsed-all");
             await story.expandAllItems();
             await waitForAnimationEnd(story.locators.sidebar);
@@ -242,7 +242,7 @@ test.describe("Filter", () => {
                 await story.init("page");
             });
 
-            test("Page", async ({ story }) => {
+            test("Default", async ({ story }) => {
                 await compareScreenshot(story, "mount", {
                     locator: story.locators.pageWrapper,
                 });

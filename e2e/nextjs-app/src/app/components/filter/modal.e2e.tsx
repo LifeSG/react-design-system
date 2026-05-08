@@ -1,46 +1,10 @@
 "use client";
-import { DateInput } from "@lifesg/react-design-system/date-input";
 import { Filter } from "@lifesg/react-design-system/filter";
-import { Input } from "@lifesg/react-design-system/input";
-import { useState } from "react";
-
-type MobileFilterProps = {
-    mode: "mobile";
-    onChange: (value: string) => void;
-    value?: string;
-};
-
-function SearchFilter({ onChange, value = "" }: MobileFilterProps) {
-    return (
-        <Input
-            data-testid="search-filter"
-            placeholder="Search"
-            value={value}
-            onChange={(event) => onChange(event.currentTarget.value)}
-        />
-    );
-}
-
-function DateFilter({ onChange, value = "" }: MobileFilterProps) {
-    return (
-        <DateInput
-            data-testid="date-filter"
-            value={value}
-            onChange={onChange}
-        />
-    );
-}
+import { Typography } from "@lifesg/react-design-system";
 
 export default function Story() {
-    const [searchValue, setSearchValue] = useState("");
-    const [dateValue, setDateValue] = useState("");
-
     return (
         <Filter.Modal
-            onClear={() => {
-                setSearchValue("");
-                setDateValue("");
-            }}
             onDismiss={() => {}}
             onDone={() => {}}
             customLabels={{
@@ -57,18 +21,10 @@ export default function Story() {
                     content: "More info about this filter item",
                 }}
             >
-                <SearchFilter
-                    mode="mobile"
-                    onChange={setSearchValue}
-                    value={searchValue}
-                />
+                <Typography.BodySM>Search content</Typography.BodySM>
             </Filter.Item>
             <Filter.Item title="Date" data-testid="item-date">
-                <DateFilter
-                    mode="mobile"
-                    onChange={setDateValue}
-                    value={dateValue}
-                />
+                <Typography.BodySM>Date content</Typography.BodySM>
             </Filter.Item>
         </Filter.Modal>
     );
