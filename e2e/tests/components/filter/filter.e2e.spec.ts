@@ -25,6 +25,11 @@ class StoryPage extends AbstractStoryPage {
         itemNoTitleNotCollapsible: Locator;
         itemNotCollapsible: Locator;
         addonTriggerButton: Locator;
+        pageWrapper: Locator;
+        pageDismissButton: Locator;
+        pageDoneButton: Locator;
+        pageDismissCount: Locator;
+        pageDoneCount: Locator;
     };
 
     constructor(page: Page) {
@@ -68,6 +73,11 @@ class StoryPage extends AbstractStoryPage {
             ),
             itemNotCollapsible: sidebar.getByTestId("item-not-collapsible"),
             addonTriggerButton: page.getByRole("button", { name: "More info" }),
+            pageWrapper: page.getByTestId("page-wrapper"),
+            pageDismissButton: page.getByRole("button", { name: "Dismiss" }),
+            pageDoneButton: page.getByRole("button", { name: "Done" }),
+            pageDismissCount: page.getByTestId("dismiss-count"),
+            pageDoneCount: page.getByTestId("done-count"),
         };
     }
 
@@ -114,7 +124,7 @@ test.describe("Filter", () => {
             await expect(story.locators.showButton).toBeVisible();
         });
     });
-    
+
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("sidebar");
@@ -223,6 +233,59 @@ test.describe("Filter", () => {
             await story.expandAllItems();
             await waitForAnimationEnd(story.locators.sidebar);
             await compareScreenshot(story, "expanded-all");
+        });
+    });
+
+    test.describe("Page", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("page");
+            });
+
+            test("Page", async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.pageWrapper,
+                });
+            });
+
+            test("onDismiss", async ({ story }) => {
+                const { pageDismissButton, pageDismissCount } = story.locators;
+
+                await expect(pageDismissCount).toHaveText("Dismiss count: 0");
+                await pageDismissButton.click();
+                await expect(pageDismissCount).toHaveText("Dismiss count: 1");
+            });
+
+            test("onDone", async ({ story }) => {
+                const { pageDoneButton, pageDoneCount } = story.locators;
+
+                await expect(pageDoneCount).toHaveText("Done count: 0");
+                await pageDoneButton.click();
+                await expect(pageDoneCount).toHaveText("Done count: 1");
+            });
+
+            test("Accessibility", async ({ story }) => {
+                await expect(story.locators.pageWrapper)
+                    .toMatchAriaSnapshot(`- button "Dismiss":
+                    - img
+                    - paragraph: Custom filter page content
+                    - paragraph: "Dismiss count: 0"
+                    - paragraph: "Done count: 0"
+                    - button "Done"
+                    `);
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("page", { mode: "dark" });
+        });
+
+        test("Page (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                locator: story.locators.pageWrapper,
+            });
         });
     });
 });
