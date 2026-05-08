@@ -27,6 +27,7 @@ export const FilterItem = ({
     title,
     addon,
     children,
+    className,
     ...otherProps
 }: FilterItemProps) => {
     // =============================================================================
@@ -186,10 +187,7 @@ export const FilterItem = ({
             >
                 <div ref={itemResizeDetector.ref}>
                     <div
-                        className={clsx(
-                            styles.filterItemBody,
-                            otherProps.className
-                        )}
+                        className={clsx(styles.filterItemBody, className)}
                         {...otherProps}
                     >
                         <div
