@@ -9,10 +9,15 @@ class StoryPage extends AbstractStoryPage {
             slider: (index: number) => Locator;
             thumb: (index: number) => Locator;
         };
-        default: Locator;
-        disabled: Locator;
-        readonly: Locator;
-        rangeLabels: Locator;
+        formDefault: Locator;
+        formDefaultBase: Locator;
+        formDisabled: Locator;
+        formDisabledBase: Locator;
+        formReadonly: Locator;
+        formReadonlyBase: Locator;
+        standaloneDefault: Locator;
+        standaloneDisabled: Locator;
+        standaloneReadonly: Locator;
         interaction: Locator;
         focusTargetBefore: Locator;
         empty: Locator;
@@ -30,10 +35,21 @@ class StoryPage extends AbstractStoryPage {
                 thumb: (index: number) =>
                     page.getByTestId(`slider-thumb-${index}`),
             },
-            default: page.getByTestId("histogram-slider-default"),
-            disabled: page.getByTestId("histogram-slider-disabled"),
-            readonly: page.getByTestId("histogram-slider-readonly"),
-            rangeLabels: page.getByTestId("histogram-slider-range-labels"),
+            formDefault: page.getByTestId("form-histogram-slider-default"),
+            formDefaultBase: page.getByTestId(
+                "form-histogram-slider-default-base"
+            ),
+            formDisabled: page.getByTestId("form-histogram-slider-disabled"),
+            formDisabledBase: page.getByTestId(
+                "form-histogram-slider-disabled-base"
+            ),
+            formReadonly: page.getByTestId("form-histogram-slider-readonly"),
+            formReadonlyBase: page.getByTestId(
+                "form-histogram-slider-readonly-base"
+            ),
+            standaloneDefault: page.getByTestId("histogram-slider-default"),
+            standaloneDisabled: page.getByTestId("histogram-slider-disabled"),
+            standaloneReadonly: page.getByTestId("histogram-slider-readonly"),
             interaction: page.getByTestId("histogram-slider-interaction"),
             focusTargetBefore: page.getByTestId("focus-target-before"),
             empty: page.getByTestId("histogram-slider-empty"),
@@ -89,114 +105,212 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("HistogramSlider", () => {
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants");
+    test.describe("Form variants", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants");
+            });
+
+            test("Form.HistogramSlider variants", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+
+                await story.hasRangeDescription(story.locators.formDefault);
+                await story.hasRangeDescription(story.locators.formDisabled);
+                await story.hasRangeDescription(story.locators.formReadonly);
+
+                await expect(
+                    story.locators.formDefault.getByRole("slider").first()
+                ).toBeEnabled();
+                await expect(
+                    story.locators.formDisabled.getByRole("slider").first()
+                ).toBeDisabled();
+                await expect(
+                    story.locators.formReadonly.getByRole("slider").first()
+                ).toBeEnabled();
+            });
         });
 
-        test("All variants", async ({ story }) => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants", { size: "mobile" });
+            });
+
+            test("Form.HistogramSlider variants (mobile)", async ({
+                story,
+            }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants", { mode: "dark" });
+            });
+
+            test("Form.HistogramSlider variants (dark mode)", async ({
+                story,
+            }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    test.describe("Form variants prefilled", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants-prefilled");
+            });
+
+            test("Form.HistogramSlider variants prefilled", async ({
+                story,
+            }) => {
+                await compareScreenshot(story, "mount");
+
+                await story.hasRangeDescription(story.locators.formDefault);
+                await story.hasRangeDescription(story.locators.formDisabled);
+                await story.hasRangeDescription(story.locators.formReadonly);
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants-prefilled", { mode: "dark" });
+            });
+
+            test("Form.HistogramSlider variants prefilled (dark mode)", async ({
+                story,
+            }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    test.describe("Standalone variants", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("standalone-variants");
+            });
+
+            test("Standalone variants", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+
+            test("Focus states", async ({ story }) => {
+                await story.locators.standaloneDefault
+                    .getByRole("slider")
+                    .first()
+                    .focus();
+                await compareScreenshot(story, "default", {
+                    locator: story.locators.standaloneDefault,
+                });
+
+                await story.locators.standaloneReadonly
+                    .getByRole("slider")
+                    .first()
+                    .focus();
+                await compareScreenshot(story, "readonly", {
+                    locator: story.locators.standaloneReadonly,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("standalone-variants", { mode: "dark" });
+            });
+
+            test("Focus states (dark mode)", async ({ story }) => {
+                await story.locators.standaloneDefault
+                    .getByRole("slider")
+                    .first()
+                    .focus();
+                await compareScreenshot(story, "default", {
+                    locator: story.locators.standaloneDefault,
+                });
+
+                await story.locators.standaloneReadonly
+                    .getByRole("slider")
+                    .first()
+                    .focus();
+                await compareScreenshot(story, "readonly", {
+                    locator: story.locators.standaloneReadonly,
+                });
+            });
+        });
+    });
+
+    test.describe("Grid layout", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout");
+        });
+
+        test("Grid layout", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
 
-    test.describe(() => {
+    test.describe("Bar colour states", () => {
         test.beforeEach(async ({ story }) => {
-            await story.init("variants", { mode: "dark" });
-        });
-
-        test("All variants (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants", { size: "mobile" });
-        });
-
-        test("All variants (mobile)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants");
+            await story.init("form-variants-prefilled");
         });
 
         test("Bar colour states", async ({ story }) => {
             await test.step("Default — unselected and selected bars", async () => {
                 await compareScreenshot(story, "bars-default", {
-                    locator: story.locators.default,
+                    locator: story.locators.formDefault,
                 });
 
-                await expect(story.locators.default).toMatchAriaSnapshot(`
-                    - group:
-                        - text: Use left and right arrow keys to adjust the slider. 68% of results available in the range you specified.Minimum value
-                        - slider "Minimum value": "2"
-                        - text: 68% of results available in the range you specified.Maximum value
-                        - slider "Maximum value": "4"
-                `);
+                await expect(story.locators.formDefaultBase)
+                    .toMatchAriaSnapshot(`
+                        - group:
+                            - group "Default":
+                                - text: Use left and right arrow keys to adjust the slider. 68% of results available in the range you specified.Minimum value
+                                - slider "Default Minimum value": "2"
+                                - text: 68% of results available in the range you specified.Maximum value
+                                - slider "Default Maximum value": "4"
+                    `);
 
-                await story.hasRangeDescription(story.locators.default);
-                await story.hasRangeDescription(story.locators.rangeLabels);
+                await story.hasRangeDescription(story.locators.formDefault);
             });
 
             await test.step("Disabled — all bars use disabled colour", async () => {
                 await compareScreenshot(story, "bars-disabled", {
-                    locator: story.locators.disabled,
+                    locator: story.locators.formDisabled,
                 });
 
-                await expect(story.locators.disabled).toMatchAriaSnapshot(`
-                    - group [disabled]:
-                        - text: 68% of results available in the range you specified.Minimum value
-                        - slider "Minimum value" [disabled]: "2"
-                        - text: 68% of results available in the range you specified.Maximum value
-                        - slider "Maximum value" [disabled]: "4"
-                `);
+                await expect(story.locators.formDisabledBase)
+                    .toMatchAriaSnapshot(`
+                        - group:
+                            - group "Disabled" [disabled]:
+                                - text: 68% of results available in the range you specified.Minimum value
+                                - slider "Disabled Minimum value" [disabled]: "2"
+                                - text: 68% of results available in the range you specified.Maximum value
+                                - slider "Disabled Maximum value" [disabled]: "4"
+                    `);
 
-                await story.hasRangeDescription(story.locators.disabled);
-                await story.hasRangeDescription(story.locators.rangeLabels);
+                await story.hasRangeDescription(story.locators.formDisabled);
             });
 
-            await test.step("ReadOnly — all bars use disabled colour", async () => {
+            await test.step("Readonly — all bars use disabled colour", async () => {
                 await compareScreenshot(story, "bars-readonly", {
-                    locator: story.locators.readonly,
+                    locator: story.locators.formReadonly,
                 });
 
-                await expect(story.locators.readonly).toMatchAriaSnapshot(`
-                    - group:
-                        - text: 68% of results available in the range you specified.Minimum value
-                        - slider "Minimum value": "2"
-                        - text: 68% of results available in the range you specified.Maximum value
-                        - slider "Maximum value": "4"
-                `);
+                await expect(story.locators.formReadonlyBase)
+                    .toMatchAriaSnapshot(`
+                        - group:
+                            - group "Readonly":
+                                - text: 68% of results available in the range you specified.Minimum value
+                                - slider "Readonly Minimum value": "2"
+                                - text: 68% of results available in the range you specified.Maximum value
+                                - slider "Readonly Maximum value": "4"
+                    `);
 
-                await story.hasRangeDescription(story.locators.readonly);
-                await story.hasRangeDescription(story.locators.rangeLabels);
+                await story.hasRangeDescription(story.locators.formReadonly);
             });
         });
     });
 
-    // =========================================================================
-    // FOCUS STATE
-    // =========================================================================
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants");
-        });
-
-        test("Focus state", async ({ story }) => {
-            await story.locators.default.getByRole("slider").first().focus();
-            await compareScreenshot(story, "focus-default", {
-                locator: story.locators.default,
-            });
-        });
-    });
-
-    // =========================================================================
-    // MOUSE INTERACTION
-    // =========================================================================
     test.describe("Mouse interaction", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("interaction");
@@ -263,9 +377,6 @@ test.describe("HistogramSlider", () => {
         });
     });
 
-    // =========================================================================
-    // KEYBOARD NAVIGATION
-    // =========================================================================
     test.describe("Keyboard navigation", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("interaction");
@@ -332,10 +443,7 @@ test.describe("HistogramSlider", () => {
         });
     });
 
-    // =========================================================================
-    // EMPTY VIEW
-    // =========================================================================
-    test.describe(() => {
+    test.describe("Empty view", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("empty-view");
         });
