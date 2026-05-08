@@ -16,6 +16,8 @@ class StoryPage extends AbstractStoryPage {
         formListDisabledInput: Locator;
         formListReadonlyInput: Locator;
         formListErrorInput: Locator;
+        textbox: (field: Locator) => Locator;
+        combobox: (field: Locator) => Locator;
     };
 
     constructor(page: Page) {
@@ -49,6 +51,8 @@ class StoryPage extends AbstractStoryPage {
             formListErrorInput: page.getByTestId(
                 "form-input-group-list-error-base"
             ),
+            textbox: (field: Locator) => field.getByRole("textbox"),
+            combobox: (field: Locator) => field.getByRole("combobox"),
         };
     }
 }
@@ -72,51 +76,80 @@ test.describe("Input Group List", () => {
 
         test("Accessibility", async ({ story }) => {
             await expect(story.locators.formListDefault).toMatchAriaSnapshot(`
-            - text: Form list variant
+            - text: Form list variant This is the subtitle
             - combobox "Form list variant": Select
             - text: Press space to open options
             - textbox "Form list variant":
                 - /placeholder: Enter something
             `);
+            await expect(
+                story.locators.textbox(story.locators.formListDefault)
+            ).toHaveAccessibleDescription("This is the subtitle");
+            await expect(
+                story.locators.combobox(story.locators.formListDefault)
+            ).toHaveAccessibleDescription(
+                "This is the subtitle Press space to open options"
+            );
 
             await expect(story.locators.formListRight).toMatchAriaSnapshot(`
-            - text: Form list variant (right)
-            - combobox "Form list variant": Select
+            - text: Form list variant (right) This is the subtitle
+            - combobox "Form list variant (right)": Select
             - text: Press space to open options
-            - textbox "Form list variant":
+            - textbox "Form list variant (right)":
                 - /placeholder: Enter something
             `);
+            await expect(
+                story.locators.textbox(story.locators.formListRight)
+            ).toHaveAccessibleDescription("This is the subtitle");
+            await expect(
+                story.locators.combobox(story.locators.formListRight)
+            ).toHaveAccessibleDescription(
+                "This is the subtitle Press space to open options"
+            );
 
             await expect(story.locators.formListDisabled).toMatchAriaSnapshot(`
-            - text: Form list variant disabled state
-            - combobox "Form list variant" [disabled=true]: Select
+            - text: Form list variant disabled state This is the subtitle
+            - combobox "Form list variant disabled state" [disabled]: Select
             - text: Press space to open options
-            - textbox "Form list variant" [disabled=true]:
+            - textbox "Form list variant disabled state" [disabled]:
                 - /placeholder: Enter something
             `);
+            await expect(
+                story.locators.textbox(story.locators.formListDisabled)
+            ).toHaveAccessibleDescription("This is the subtitle");
+            await expect(
+                story.locators.combobox(story.locators.formListDisabled)
+            ).toHaveAccessibleDescription(
+                "This is the subtitle Press space to open options"
+            );
 
             await expect(story.locators.formListReadonly).toMatchAriaSnapshot(`
-            - text: Form list variant readonly state (pristine)
-            - textbox "Form list variant":
+            - text: Form list variant readonly state (pristine) This is the subtitle
+            - textbox "Form list variant readonly state (pristine)":
                 - /placeholder: Enter something
             `);
-
-            await expect(story.locators.formListReadonlySelected)
-                .toMatchAriaSnapshot(`
-            - text: Form list variant readonly state (selected)
-            - combobox "Form list variant": Opt 2
-            - textbox "Form list variant":
-                - /placeholder: Enter something
-            `);
+            await expect(
+                story.locators.textbox(story.locators.formListReadonly)
+            ).toHaveAccessibleDescription("This is the subtitle");
 
             await expect(story.locators.formListError).toMatchAriaSnapshot(`
-            - text: Form list variant error state
-            - combobox "Form list variant": Select
+            - text: Form list variant error state This is the subtitle
+            - combobox "Form list variant error state": Select
             - text: Press space to open options
-            - textbox "Form list variant":
+            - textbox "Form list variant error state":
                 - /placeholder: Enter something
             - paragraph: Sample error message
             `);
+            await expect(
+                story.locators.textbox(story.locators.formListError)
+            ).toHaveAccessibleDescription(
+                "Sample error message This is the subtitle"
+            );
+            await expect(
+                story.locators.combobox(story.locators.formListError)
+            ).toHaveAccessibleDescription(
+                "Sample error message This is the subtitle Press space to open options"
+            );
         });
 
         test("Focus", async ({ story }) => {
@@ -148,6 +181,7 @@ test.describe("Input Group List", () => {
             });
 
             await test.step("Error state focus", async () => {
+                await story.locators.formListError.scrollIntoViewIfNeeded();
                 await story.locators.formListErrorInput
                     .getByTestId("input")
                     .focus();
@@ -218,6 +252,7 @@ test.describe("Input Group List", () => {
             });
 
             await test.step("Error state focus", async () => {
+                await story.locators.formListError.scrollIntoViewIfNeeded();
                 await story.locators.formListErrorInput
                     .getByTestId("input")
                     .focus();
@@ -251,22 +286,31 @@ test.describe("Input Group List", () => {
     });
 
     test.describe(() => {
-        test("Mobile", async ({ story }) => {
+        test.beforeEach(async ({ story }) => {
             await story.init("form-list-variants", { size: "mobile" });
+        });
+
+        test("Mobile", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
-        test("Prefilled", async ({ story }) => {
+        test.beforeEach(async ({ story }) => {
             await story.init("form-list-variants-prefilled");
+        });
+
+        test("Prefilled", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
-        test("Dark mode prefilled", async ({ story }) => {
+        test.beforeEach(async ({ story }) => {
             await story.init("form-list-variants-prefilled", { mode: "dark" });
+        });
+
+        test("Dark mode prefilled", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });

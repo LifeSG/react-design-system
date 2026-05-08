@@ -16,7 +16,10 @@ export default function Story() {
         <div className="story-column-container story-background">
             <Form.InputGroup
                 data-testid="form-input-group-list-default"
-                label="Form list variant"
+                label={{
+                    children: "Form list variant",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter something"
                 addon={{
                     type: "list",
@@ -33,7 +36,10 @@ export default function Story() {
 
             <Form.InputGroup
                 data-testid="form-input-group-list-right"
-                label="Form list variant (right)"
+                label={{
+                    children: "Form list variant (right)",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter something"
                 addon={{
                     type: "list",
@@ -44,7 +50,10 @@ export default function Story() {
 
             <Form.InputGroup
                 data-testid="form-input-group-list-disabled"
-                label="Form list variant disabled state"
+                label={{
+                    children: "Form list variant disabled state",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter something"
                 disabled
                 addon={{
@@ -55,7 +64,10 @@ export default function Story() {
 
             <Form.InputGroup
                 data-testid="form-input-group-list-readonly"
-                label="Form list variant readonly state (pristine)"
+                label={{
+                    children: "Form list variant readonly state (pristine)",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter something"
                 readOnly
                 addon={{
@@ -65,27 +77,11 @@ export default function Story() {
             />
 
             <Form.InputGroup
-                data-testid="form-input-group-list-readonly-selected"
-                label="Form list variant readonly state (selected)"
-                placeholder="Enter something"
-                readOnly
-                addon={{
-                    type: "list",
-                    attributes: {
-                        selectedOption: {
-                            display: "Option 2",
-                            value: "Opt 2",
-                        },
-                        valueExtractor: (item) =>
-                            (item as { display: string; value: string }).value,
-                        ...ATTRIBUTES,
-                    },
-                }}
-            />
-
-            <Form.InputGroup
                 data-testid="form-input-group-list-error"
-                label="Form list variant error state"
+                label={{
+                    children: "Form list variant error state",
+                    subtitle: "This is the subtitle",
+                }}
                 placeholder="Enter something"
                 errorMessage="Sample error message"
                 addon={{

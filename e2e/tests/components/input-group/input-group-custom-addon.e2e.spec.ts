@@ -140,24 +140,33 @@ test.describe("Input Group Custom", () => {
     });
 
     test.describe(() => {
-        test("Mobile", async ({ story }) => {
+        test.beforeEach(async ({ story }) => {
             await story.init("form-custom-variants", { size: "mobile" });
-            await compareScreenshot(story, "mount-mobile");
         });
-    });
 
-    test.describe(() => {
-        test("Prefilled", async ({ story }) => {
-            await story.init("form-custom-variants-prefilled");
+        test("Mobile", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
-        test("Dark mode prefilled", async ({ story }) => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-custom-variants-prefilled");
+        });
+
+        test("Prefilled", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("form-custom-variants-prefilled", {
                 mode: "dark",
             });
+        });
+
+        test("Dark mode prefilled", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
