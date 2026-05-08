@@ -6,16 +6,36 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "date-navigator";
 
     public readonly locators: {
+        internal: (container: Locator) => {
+            leftArrow: Locator;
+            rightArrow: Locator;
+            dateText: Locator;
+            calendarDropdown: Locator;
+        };
         dateNavigatorDefault: Locator;
         dateNavigatorShortForm: Locator;
         dateNavigatorShowToday: Locator;
         dateNavigatorWeekView: Locator;
+        dateNavigatorAtMin: Locator;
+        dateNavigatorAtMax: Locator;
+        dateNavigatorLoading: Locator;
+        dateNavigatorWithCalendar: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
+            internal: (container) => ({
+                leftArrow: container.getByTestId(
+                    "date-navigator-left-arrow-btn"
+                ),
+                rightArrow: container.getByTestId(
+                    "date-navigator-right-arrow-btn"
+                ),
+                dateText: container.getByTestId("date-navigator-date-text"),
+                calendarDropdown: container.getByTestId("calendar-dropdown"),
+            }),
             dateNavigatorDefault: page.getByTestId("date-navigator-default"),
             dateNavigatorShortForm: page.getByTestId(
                 "date-navigator-short-form"
@@ -24,6 +44,12 @@ class StoryPage extends AbstractStoryPage {
                 "date-navigator-show-today"
             ),
             dateNavigatorWeekView: page.getByTestId("date-navigator-week-view"),
+            dateNavigatorAtMin: page.getByTestId("date-navigator-at-min"),
+            dateNavigatorAtMax: page.getByTestId("date-navigator-at-max"),
+            dateNavigatorLoading: page.getByTestId("date-navigator-loading"),
+            dateNavigatorWithCalendar: page.getByTestId(
+                "date-navigator-with-calendar"
+            ),
         };
     }
 }
@@ -107,6 +133,83 @@ test.describe("DateNavigator", () => {
                   - button "5 Apr - 11 Apr, 2026"
                   - button "Next week"
             `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("min-max-date", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Min and max date", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("with-calendar", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("With calendar", async ({ story }) => {
+            const dateNavigator = story.locators.internal(
+                story.locators.dateNavigatorWithCalendar
+            );
+
+            await compareScreenshot(story, "mount");
+
+            await dateNavigator.dateText.hover();
+
+            await compareScreenshot(story, "hover");
+
+            await dateNavigator.dateText.click();
+
+            await compareScreenshot(story, "calendar-open", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("with-calendar", {
+                mockedTimestamp: fixedTimestamp,
+                mode: "dark",
+            });
+        });
+
+        test("With calendar (dark mode)", async ({ story }) => {
+            const dateNavigator = story.locators.internal(
+                story.locators.dateNavigatorWithCalendar
+            );
+
+            await compareScreenshot(story, "mount");
+
+            await dateNavigator.dateText.hover();
+
+            await compareScreenshot(story, "hover");
+
+            await dateNavigator.dateText.click();
+
+            await compareScreenshot(story, "calendar-open", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("loading", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Loading state", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 });
