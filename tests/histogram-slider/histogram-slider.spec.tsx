@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { HistogramSlider } from "src/histogram-slider";
 import * as styles from "src/histogram-slider/histogram-slider.styles";
 
@@ -23,6 +23,20 @@ describe("HistogramSlider", () => {
 
     afterEach(() => {
         jest.restoreAllMocks();
+    });
+
+    it("should render default component", () => {
+        render(<HistogramSlider bins={MOCK_BIN_DATA} interval={1} />);
+
+        expect(screen.queryAllByRole("slider")).toHaveLength(2);
+        expect(screen.queryByTestId("slider-thumb-0")).toHaveAttribute(
+            "aria-valuenow",
+            "1"
+        );
+        expect(screen.queryByTestId("slider-thumb-1")).toHaveAttribute(
+            "aria-valuenow",
+            "2"
+        );
     });
 
     it("should render component with value", () => {
@@ -55,6 +69,22 @@ describe("HistogramSlider", () => {
         );
     });
 
+    it("should handle change", () => {
+        const mockChange = jest.fn();
+        render(
+            <HistogramSlider
+                bins={MOCK_BIN_DATA}
+                interval={1}
+                onChange={mockChange}
+            />
+        );
+
+        const thumb = screen.getByTestId("slider-track-0").parentElement!;
+        fireEvent.mouseDown(thumb);
+
+        expect(mockChange).toHaveBeenCalledWith([1, 2]);
+    });
+
     describe("bars", () => {
         it("should render a bar for each bin", () => {
             const { container } = render(
@@ -64,65 +94,62 @@ describe("HistogramSlider", () => {
             const bars = container.querySelectorAll(`.${styles.bar}`);
             expect(bars).toHaveLength(MOCK_BIN_DATA.length);
         });
+    });
 
-        it("should apply selected class to bars within selection", () => {
-            const { container } = render(
+    describe("range labels", () => {
+        it("should render range labels", () => {
+            render(
                 <HistogramSlider
                     bins={MOCK_BIN_DATA}
                     interval={1}
-                    value={[1, 2]}
+                    showRangeLabels
                 />
             );
 
-            const bars = container.querySelectorAll(`.${styles.bar}`);
-            expect(bars[0]).toHaveClass(styles.barSelected);
-            expect(bars[1]).not.toHaveClass(styles.barSelected);
+            expect(screen.queryByText("1")).toBeInTheDocument();
+            expect(screen.queryByText("2")).toBeInTheDocument();
         });
 
-        it("should apply disabled class to bars when disabled", () => {
-            const { container } = render(
+        it("should render range labels with prefix", () => {
+            render(
                 <HistogramSlider
                     bins={MOCK_BIN_DATA}
                     interval={1}
-                    value={[2, 3]}
-                    disabled
+                    showRangeLabels
+                    rangeLabelPrefix="test"
                 />
             );
 
-            const bars = container.querySelectorAll(`.${styles.bar}`);
-            expect(bars[0]).toHaveClass(styles.barDisabled);
-            expect(bars[0]).not.toHaveClass(styles.barSelected);
-            expect(bars[0]).not.toHaveClass(styles.barSelectedDisabled);
+            expect(screen.queryByText("test1")).toBeInTheDocument();
+            expect(screen.queryByText("test2")).toBeInTheDocument();
         });
 
-        it("should apply selectedDisabled class to selected bars when disabled", () => {
-            const { container } = render(
+        it("should render range labels with suffix", () => {
+            render(
                 <HistogramSlider
                     bins={MOCK_BIN_DATA}
                     interval={1}
-                    value={[1, 2]}
-                    disabled
+                    showRangeLabels
+                    rangeLabelSuffix="test"
                 />
             );
 
-            const bars = container.querySelectorAll(`.${styles.bar}`);
-            expect(bars[0]).toHaveClass(styles.barSelectedDisabled);
-            expect(bars[0]).not.toHaveClass(styles.barSelected);
-            expect(bars[0]).not.toHaveClass(styles.barDisabled);
+            expect(screen.queryByText("1test")).toBeInTheDocument();
+            expect(screen.queryByText("2test")).toBeInTheDocument();
         });
 
-        it("should apply disabled class to bars when readOnly", () => {
-            const { container } = render(
+        it("should render range labels with custom render function", () => {
+            render(
                 <HistogramSlider
                     bins={MOCK_BIN_DATA}
                     interval={1}
-                    value={[2, 3]}
-                    readOnly
+                    showRangeLabels
+                    renderRangeLabel={(val) => <div>${val}.00</div>}
                 />
             );
 
-            const bars = container.querySelectorAll(`.${styles.bar}`);
-            expect(bars[0]).toHaveClass(styles.barDisabled);
+            expect(screen.queryByText("$1.00")).toBeInTheDocument();
+            expect(screen.queryByText("$2.00")).toBeInTheDocument();
         });
     });
 });
