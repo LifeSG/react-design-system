@@ -91,6 +91,30 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Filter", () => {
+    test.describe("Default responsive behaviour", () => {
+        test("Renders as sidebar on desktop", async ({ story }) => {
+            await story.init("default", { size: "desktop" });
+
+            await expect(story.locators.sidebar).toBeVisible();
+            await expect(story.locators.modal).toBeHidden();
+            await expect(story.locators.showButton).toBeHidden();
+        });
+
+        test("Renders as modal trigger on tablet", async ({ story }) => {
+            await story.init("default", { size: "tablet" });
+
+            await expect(story.locators.sidebar).toBeHidden();
+            await expect(story.locators.showButton).toBeVisible();
+        });
+
+        test("Renders as modal trigger on mobile", async ({ story }) => {
+            await story.init("default", { size: "mobile" });
+
+            await expect(story.locators.sidebar).toBeHidden();
+            await expect(story.locators.showButton).toBeVisible();
+        });
+    });
+    
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("sidebar");
