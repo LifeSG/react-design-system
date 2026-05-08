@@ -67,35 +67,32 @@ test.describe("Sidenav", () => {
             `);
         });
 
-        test("Navigation accessibility tree when open", async ({ story }) => {
-            await story.locators.itemUsers.click();
-            await expect(story.locators.sidenav).toMatchAriaSnapshot(`
-                - navigation "Sidebar":
-                    - list:
-                        - listitem:
-                            - button "Dashboard"
-                        - listitem:
-                            - button "Users" [expanded=true]
-                            - list:
-                                - listitem:
-                                    - button "All Users"
-                                - listitem:
-                                    - button "User Groups" [expanded=true]
-                                    - list:
-                                        - listitem:
-                                            - button "Admins"
-                                        - listitem:
-                                            - button "Members"
-                    - list:
-                        - listitem:
-                            - button "Settings"
-            `);
-        });
-
         test("Click interaction", async ({ story }) => {
             await test.step("Drawer open on click", async () => {
                 await story.locators.itemUsers.click();
                 await compareScreenshot(story, "drawer-open");
+
+                await expect(story.locators.sidenav).toMatchAriaSnapshot(`
+                    - navigation "Sidebar":
+                        - list:
+                            - listitem:
+                                - button "Dashboard"
+                            - listitem:
+                                - button "Users" [expanded=true]
+                                - list:
+                                    - listitem:
+                                        - button "All Users"
+                                    - listitem:
+                                        - button "User Groups" [expanded=true]
+                                        - list:
+                                            - listitem:
+                                                - button "Admins"
+                                            - listitem:
+                                                - button "Members"
+                        - list:
+                            - listitem:
+                                - button "Settings"
+                `);
             });
 
             await test.step("Subitems visible when expanded by default", async () => {
