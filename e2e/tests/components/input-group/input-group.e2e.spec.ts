@@ -13,9 +13,6 @@ class StoryPage extends AbstractStoryPage {
         clearLabelRight: Locator;
         clearCustomRight: Locator;
         clearListRight: Locator;
-        borderlessDefaultInput: Locator;
-        borderlessReadonlyInput: Locator;
-        borderlessDisabledInput: Locator;
         textbox: (field: Locator) => Locator;
         combobox: (field: Locator) => Locator;
     };
@@ -41,15 +38,6 @@ class StoryPage extends AbstractStoryPage {
             ),
             clearListRight: page.getByTestId(
                 "form-input-group-list-right-clear"
-            ),
-            borderlessDefaultInput: page.getByTestId(
-                "form-input-group-label-borderless"
-            ),
-            borderlessReadonlyInput: page.getByTestId(
-                "form-input-group-label-borderless-readonly"
-            ),
-            borderlessDisabledInput: page.getByTestId(
-                "form-input-group-label-borderless-disabled"
             ),
             textbox: (field: Locator) => field.getByRole("textbox"),
             combobox: (field: Locator) => field.getByRole("combobox"),

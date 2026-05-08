@@ -9,10 +9,8 @@ class StoryPage extends AbstractStoryPage {
         formListRight: Locator;
         formListDisabled: Locator;
         formListReadonly: Locator;
-        formListReadonlySelected: Locator;
         formListError: Locator;
         formListDefaultInput: Locator;
-        formListRightInput: Locator;
         formListDisabledInput: Locator;
         formListReadonlyInput: Locator;
         formListErrorInput: Locator;
@@ -32,15 +30,9 @@ class StoryPage extends AbstractStoryPage {
             formListReadonly: page.getByTestId(
                 "form-input-group-list-readonly"
             ),
-            formListReadonlySelected: page.getByTestId(
-                "form-input-group-list-readonly-selected"
-            ),
             formListError: page.getByTestId("form-input-group-list-error"),
             formListDefaultInput: page.getByTestId(
                 "form-input-group-list-default-base"
-            ),
-            formListRightInput: page.getByTestId(
-                "form-input-group-list-right-base"
             ),
             formListDisabledInput: page.getByTestId(
                 "form-input-group-list-disabled-base"

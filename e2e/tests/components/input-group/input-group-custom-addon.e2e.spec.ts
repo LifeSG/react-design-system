@@ -6,7 +6,6 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         formCustomDefault: Locator;
-        formCustomRight: Locator;
         formCustomDisabled: Locator;
         formCustomReadonly: Locator;
         formCustomError: Locator;
@@ -17,9 +16,6 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             formCustomDefault: page.getByTestId("form-input-group-custom-base"),
-            formCustomRight: page.getByTestId(
-                "form-input-group-custom-right-base"
-            ),
             formCustomDisabled: page.getByTestId(
                 "form-input-group-custom-disabled-base"
             ),
