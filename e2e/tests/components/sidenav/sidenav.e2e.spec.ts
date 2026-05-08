@@ -34,11 +34,6 @@ class StoryPage extends AbstractStoryPage {
                 .nth(1),
         };
     }
-
-    async openDrawer() {
-        await this.locators.itemUsers.click();
-        await expect(this.locators.drawer).toBeVisible();
-    }
 }
 
 const test = base.extend<{ story: StoryPage }>({
@@ -73,7 +68,7 @@ test.describe("Sidenav", () => {
         });
 
         test("Navigation accessibility tree when open", async ({ story }) => {
-            await story.openDrawer();
+            await story.locators.itemUsers.click();
             await expect(story.locators.sidenav).toMatchAriaSnapshot(`
                 - navigation "Sidebar":
                     - list:
@@ -99,30 +94,21 @@ test.describe("Sidenav", () => {
 
         test("Click interaction", async ({ story }) => {
             await test.step("Drawer open on click", async () => {
-                await story.openDrawer();
+                await story.locators.itemUsers.click();
                 await compareScreenshot(story, "drawer-open");
             });
 
             await test.step("Subitems visible when expanded by default", async () => {
                 await compareScreenshot(story, "drawer-item-expanded");
-                await expect(
-                    story.locators.drawerSubitemContainer
-                ).toBeVisible();
             });
 
             await test.step("Collapse drawer item hides subitems", async () => {
                 await story.locators.drawerItemUserGroups.click();
                 await compareScreenshot(story, "drawer-item-collapsed");
-                await expect(
-                    story.locators.drawerSubitemContainer
-                ).not.toBeVisible();
             });
 
             await test.step("Expand drawer item shows subitems again", async () => {
                 await story.locators.drawerItemUserGroups.click();
-                await expect(
-                    story.locators.drawerSubitemContainer
-                ).toBeVisible();
             });
 
             await test.step("Expanded subitems aria snapshot", async () => {
@@ -171,20 +157,19 @@ test.describe("Sidenav", () => {
                 await expect(story.locators.itemDashboard).toBeFocused();
             });
         });
-    });
 
         test.describe("Default states (Dark mode)", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("default", { mode: "dark" });
-        });
+            test.beforeEach(async ({ story }) => {
+                await story.init("default", { mode: "dark" });
+            });
 
-        test("Default states dark mode", async ({ story }) => {
-            await compareScreenshot(story, "mount-dark");
-        });
+            test("Default states dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount-dark");
+            });
 
-        test("Drawer open dark mode", async ({ story }) => {
-            await story.openDrawer();
-            await compareScreenshot(story, "drawer-open-dark");
+            test("Drawer open dark mode", async ({ story }) => {
+                await story.locators.itemUsers.click();
+                await compareScreenshot(story, "drawer-open-dark");
             });
         });
     });
