@@ -1,5 +1,6 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { useState } from "react";
 
@@ -27,6 +28,7 @@ export const DateNavigator = ({
     onRightArrowClick,
     onCalendarDateSelect,
     dropdownRootNode,
+    className,
     ...otherProps
 }: DateNavigatorProps) => {
     // =============================================================================
@@ -133,7 +135,7 @@ export const DateNavigator = ({
                   };
 
         return (
-            <Container {...otherProps}>
+            <Container {...otherProps} className={clsx(className)}>
                 {
                     <HeaderArrowButton
                         data-testid="date-navigator-left-arrow-btn"
@@ -155,7 +157,11 @@ export const DateNavigator = ({
                         !loading &&
                         setIsCalendarOpen(!isCalendarOpen)
                     }
-                    $enableDateClick={!!onCalendarDateSelect && !loading}
+                    className={clsx(
+                        !!onCalendarDateSelect &&
+                            !loading &&
+                            "styledDateTextButtonEnableDateClick"
+                    )}
                     data-testid="date-navigator-date-text"
                     styleType="link"
                     disabled={!onCalendarDateSelect || loading}

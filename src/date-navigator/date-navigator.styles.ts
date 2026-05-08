@@ -1,11 +1,7 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button } from "../button";
 import { Colour, Radius, Spacing } from "../theme";
-
-interface StyledDateTextProps {
-    $enableDateClick?: boolean;
-}
 
 export const HeaderArrowButton = styled(Button)`
     margin: ${Spacing["spacing-8"]};
@@ -20,9 +16,8 @@ export const Container = styled.div`
     border-radius: ${Radius["sm"]};
 `;
 
-export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
-    color: ${(props) =>
-        props.$enableDateClick ? Colour["text-primary"] : Colour["text"]};
+export const StyledDateTextButton = styled(Button.Default)`
+    color: ${Colour["text"]};
     white-space: nowrap;
     display: inline-block;
     text-wrap: auto;
@@ -33,15 +28,13 @@ export const StyledDateTextButton = styled(Button.Default)<StyledDateTextProps>`
     height: unset;
     cursor: default;
 
-    ${(props) => {
-        if (props.$enableDateClick) {
-            return css`
-                &:hover {
-                    cursor: pointer;
-                    text-decoration: underline;
-                    text-underline-position: under;
-                }
-            `;
+    &.styledDateTextButtonEnableDateClick {
+        color: ${Colour["text-primary"]};
+
+        &:hover {
+            cursor: pointer;
+            text-decoration: underline;
+            text-underline-position: under;
         }
-    }}
+    }
 `;
