@@ -195,10 +195,10 @@ test.describe("Sidenav", () => {
         });
 
         test("Default states", async ({ story }) => {
-            await compareScreenshot(story, "mount-no-drawer");
+            await compareScreenshot(story, "mount");
         });
 
-        test("Navigation structure", async ({ story }) => {
+        test("Navigation accessibility tree", async ({ story }) => {
             await expect(story.locators.sidenav).toMatchAriaSnapshot(`
                 - navigation "Sidebar":
                     - list:
