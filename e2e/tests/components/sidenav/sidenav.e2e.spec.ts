@@ -106,9 +106,7 @@ test.describe("Sidenav", () => {
             await story.openDrawer();
 
             await test.step("Subitems visible when expanded by default", async () => {
-                await compareScreenshot(story, "drawer-item-expanded", {
-                    locator: story.locators.drawer,
-                });
+                await compareScreenshot(story, "drawer-item-expanded");
                 await expect(
                     story.locators.drawerSubitemContainer
                 ).toBeVisible();
@@ -116,9 +114,7 @@ test.describe("Sidenav", () => {
 
             await test.step("Collapse drawer item hides subitems", async () => {
                 await story.locators.drawerItemUserGroups.click();
-                await compareScreenshot(story, "drawer-item-collapsed", {
-                    locator: story.locators.drawer,
-                });
+                await compareScreenshot(story, "drawer-item-collapsed");
                 await expect(
                     story.locators.drawerSubitemContainer
                 ).not.toBeVisible();
