@@ -38,7 +38,7 @@
         "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix && npm --prefix e2e/nextjs-app run lint:src:fix",
         "lint:css": "stylelint '**/*.css'",
         "lint:css:fix": "stylelint '**/*.css' --fix",
-        "test:eslint-rules": "node tests/eslint-rules/import-path-preferences.rule-test.mjs"
+        "test:eslint-rules": "node tests/eslint-rules/run-eslint-rule-tests.mjs"
     },
     "repository": {
         "type": "git",

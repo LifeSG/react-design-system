@@ -1,5 +1,18 @@
+import tsParser from "@typescript-eslint/parser";
+import { RuleTester } from "eslint";
+
+import localRules from "../../eslint-local-rules/index.mjs";
+
 const noNegativeLinariaInterpolationRule =
     localRules.rules["no-negative-linaria-interpolation"];
+
+const ruleTester = new RuleTester({
+    languageOptions: {
+        parser: tsParser,
+        ecmaVersion: 2020,
+        sourceType: "module",
+    },
+});
 
 ruleTester.run(
     "no-negative-linaria-interpolation",
