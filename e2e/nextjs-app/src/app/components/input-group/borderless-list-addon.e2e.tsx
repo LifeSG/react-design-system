@@ -1,7 +1,6 @@
 "use client";
 
 import { InputGroup } from "@lifesg/react-design-system/input-group";
-import { MagnifierIcon } from "@lifesg/react-icons";
 
 const LIST_ATTRIBUTES = {
     options: [
@@ -18,29 +17,7 @@ export default function Story() {
     return (
         <div className="story-column-container story-background">
             <InputGroup
-                data-testid="form-input-group-label-borderless"
-                value="Default borderless label variant"
-                noBorder
-                addon={{
-                    type: "label",
-                    attributes: { value: "$" },
-                }}
-            />
-
-            <InputGroup
-                data-testid="form-input-group-custom-borderless"
-                value="Default borderless custom variant"
-                noBorder
-                addon={{
-                    type: "custom",
-                    attributes: {
-                        children: <MagnifierIcon />,
-                    },
-                }}
-            />
-
-            <InputGroup
-                data-testid="form-input-group-list-borderless"
+                data-testid="input-group-list-borderless-default"
                 value="Default borderless list variant"
                 noBorder
                 addon={{
@@ -50,25 +27,47 @@ export default function Story() {
             />
 
             <InputGroup
-                data-testid="form-input-group-label-disabled-borderless"
-                value="Disabled borderless label variant"
+                data-testid="input-group-list-borderless-right"
+                value="Default borderless list variant (right)"
                 noBorder
                 addon={{
-                    type: "label",
-                    attributes: { value: "$" },
+                    position: "right",
+                    type: "list",
+                    attributes: { ...LIST_ATTRIBUTES },
                 }}
-                disabled
             />
 
             <InputGroup
-                data-testid="form-input-group-label-readonly-borderless"
-                value="Readonly borderless label variant"
+                data-testid="input-group-list-borderless-disabled"
+                value="Disabled borderless list variant"
                 noBorder
+                disabled
                 addon={{
-                    type: "label",
-                    attributes: { value: "$" },
+                    type: "list",
+                    attributes: { ...LIST_ATTRIBUTES },
                 }}
+            />
+
+            <InputGroup
+                data-testid="input-group-list-borderless-readonly"
+                value="Readonly borderless list variant"
+                noBorder
                 readOnly
+                addon={{
+                    type: "list",
+                    attributes: { ...LIST_ATTRIBUTES },
+                }}
+            />
+
+            <InputGroup
+                data-testid="input-group-list-borderless-error"
+                value="Error borderless list variant"
+                noBorder
+                error
+                addon={{
+                    type: "list",
+                    attributes: { ...LIST_ATTRIBUTES },
+                }}
             />
         </div>
     );
