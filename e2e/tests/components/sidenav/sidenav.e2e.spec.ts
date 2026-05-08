@@ -49,7 +49,7 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Sidenav", () => {
-    test.describe("Default (with drawer)", () => {
+    test.describe("With drawer", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("default");
         });
@@ -178,7 +178,7 @@ test.describe("Sidenav", () => {
         });
     });
 
-    test.describe("Default (with drawer) dark mode", () => {
+    test.describe("With drawer dark mode", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("default", { mode: "dark" });
         });
