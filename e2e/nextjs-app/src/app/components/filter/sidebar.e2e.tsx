@@ -9,7 +9,11 @@ export default function Story() {
                 data-testid="filter"
                 customLabels={{ headerTitle: "Filter Sidebar" }}
             >
-                <Filter.Item title="Item with title" data-testid="item-title">
+                <Filter.Item
+                    title="Item with title"
+                    data-testid="item-title"
+                    showDivider={false}
+                >
                     <Typography.BodySM>Content goes here</Typography.BodySM>
                 </Filter.Item>
                 <Filter.Item
