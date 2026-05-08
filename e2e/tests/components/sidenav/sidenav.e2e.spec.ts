@@ -173,7 +173,7 @@ test.describe("Sidenav", () => {
         });
     });
 
-    test.describe("With drawer dark mode", () => {
+        test.describe("Default states (Dark mode)", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("default", { mode: "dark" });
         });
@@ -185,6 +185,7 @@ test.describe("Sidenav", () => {
         test("Drawer open dark mode", async ({ story }) => {
             await story.openDrawer();
             await compareScreenshot(story, "drawer-open-dark");
+            });
         });
     });
 
