@@ -15,6 +15,10 @@ export const headerArrowButton = css`
     margin: ${Spacing["spacing-8"]};
 `;
 
+export const headerArrowButtonIcon = css`
+    color: ${Colour["icon"]};
+`;
+
 export const dateTextButton = css`
     color: ${Colour["text"]};
     white-space: nowrap;

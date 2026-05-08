@@ -8,7 +8,6 @@ import { Button } from "../button";
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { CalendarDropdown } from "../shared/internal-calendar";
-import * as calendarManagerStyles from "../shared/internal-calendar/calendar-manager.styles";
 import { CalendarHelper, DateHelper } from "../util";
 import * as styles from "./date-navigator.styles";
 import type { DateNavigatorProps } from "./types";
@@ -144,7 +143,7 @@ export const DateNavigator = ({
                         sizeType="small"
                         icon={
                             <ChevronLeftIcon
-                                className={calendarManagerStyles.icon}
+                                className={styles.headerArrowButtonIcon}
                             />
                         }
                     />
@@ -178,7 +177,7 @@ export const DateNavigator = ({
                         sizeType="small"
                         icon={
                             <ChevronRightIcon
-                                className={calendarManagerStyles.icon}
+                                className={styles.headerArrowButtonIcon}
                             />
                         }
                     />
