@@ -20,6 +20,19 @@ describe("Calendar", () => {
             expect(screen.getByTestId("calendar-content")).toBeInTheDocument();
         });
 
+        it("appends consumer className to the wrapper", () => {
+            render(
+                <Calendar
+                    className="consumer-calendar-class"
+                    data-testid="calendar-wrapper"
+                />
+            );
+
+            expect(screen.getByTestId("calendar-wrapper").className).toContain(
+                "consumer-calendar-class"
+            );
+        });
+
         it("renders the selected date when value prop is provided on single variant", () => {
             render(<Calendar value="2024-02-15" />);
 
