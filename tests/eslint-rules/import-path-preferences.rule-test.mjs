@@ -153,6 +153,8 @@ ruleTester.run("style-namespace-import", styleNamespaceImportRule, {
         {
             name: "default import from .styles path is rejected",
             code: 'import styles from "./button.styles";',
+            // TODO: Autofix is disabled until linaria migration is complete.
+            // output: 'import * as styles from "./button.styles";',
             output: null,
             errors: [{ messageId: "namespaceStyleImport" }],
         },
