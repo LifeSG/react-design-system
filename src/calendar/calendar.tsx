@@ -80,9 +80,10 @@ export const Calendar = (props: CalendarProps) => {
     // RENDER FUNCTION
     // =============================================================================
     return (
-        <styles.Wrapper
+        <div
             className={clsx(
-                styleType === "bordered" && "calendarWrapperBordered",
+                styles.wrapper,
+                styleType === "bordered" && styles.wrapperBordered,
                 className
             )}
             id={id}
@@ -106,6 +107,6 @@ export const Calendar = (props: CalendarProps) => {
                 minSelectable={minSelectable}
                 maxSelectable={maxSelectable}
             />
-        </styles.Wrapper>
+        </div>
     );
 };
