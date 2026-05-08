@@ -1,0 +1,7 @@
+{
+  "name": "@lifesg/react-design-system/toast",
+  "private": true,
+  "main": "../cjs/index.js",
+  "module": "./index.js",
+  "types": "./index.d.ts"
+}
