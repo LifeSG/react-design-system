@@ -1,6 +1,6 @@
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import clsx from "clsx";
-import { createRef, useEffect, useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { InputRangeSlider } from "../input-range-slider";
 import { concatIds } from "../shared/accessibility";
@@ -8,7 +8,7 @@ import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import * as styles from "./histogram-slider.styles";
-import type { HistogramSliderProps } from "./types";
+import type { HistogramBinProps, HistogramSliderProps } from "./types";
 
 const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
@@ -71,14 +71,6 @@ export const HistogramSlider = ({
         }
         return items;
     }, [bins, interval]);
-
-    const barRefs = useMemo(() => {
-        const refs: { [key: number]: React.RefObject<HTMLDivElement> } = {};
-        items.forEach((item, index) => {
-            refs[index] = createRef<HTMLDivElement>();
-        });
-        return refs;
-    }, [items]);
 
     // =========================================================================
     // EFFECTS
@@ -187,35 +179,18 @@ export const HistogramSlider = ({
         return (
             <>
                 <div className={styles.histogram}>
-                    {items.map((item, i) => {
-                        const ratio = item.count / maxCount;
-                        const isSelected =
-                            item.minValue >= selection[0] &&
-                            item.minValue < selection[1];
-                        const isDisabled = disabled || readOnly;
-                        const barRef = barRefs[i];
-
-                        useApplyStyle(barRef, {
-                            height: ratio
-                                ? `calc(calc(100% - 0.25rem) * ${ratio} + 0.25rem)`
-                                : 0,
-                        });
-
-                        return (
-                            <div
-                                key={i}
-                                className={clsx(
-                                    styles.bar,
-                                    (isDisabled &&
-                                        isSelected &&
-                                        styles.barSelectedDisabled) ||
-                                        (isDisabled && styles.barDisabled) ||
-                                        (isSelected && styles.barSelected)
-                                )}
-                                ref={barRef}
-                            />
-                        );
-                    })}
+                    {items.map((item, i) => (
+                        <HistogramBar
+                            key={i}
+                            item={item}
+                            maxCount={maxCount}
+                            isSelected={
+                                item.minValue >= selection[0] &&
+                                item.minValue < selection[1]
+                            }
+                            isDisabled={disabled || readOnly}
+                        />
+                    ))}
                 </div>
                 <InputRangeSlider
                     min={minValue}
@@ -254,5 +229,41 @@ export const HistogramSlider = ({
                 ? renderEmptyView()
                 : renderHistogramSlider()}
         </div>
+    );
+};
+
+// =============================================================================
+// SUB COMPONENT
+// =============================================================================
+interface HistogramBarProps {
+    item: HistogramBinProps;
+    maxCount: number;
+    isSelected: boolean;
+    isDisabled: boolean | undefined;
+}
+
+const HistogramBar = ({
+    item,
+    maxCount,
+    isSelected,
+    isDisabled,
+}: HistogramBarProps) => {
+    const ratio = item.count / maxCount;
+    const barRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(barRef, {
+        height: ratio ? `calc(calc(100% - 0.25rem) * ${ratio} + 0.25rem)` : "0",
+    });
+
+    return (
+        <div
+            className={clsx(
+                styles.bar,
+                isDisabled && isSelected && styles.barSelectedDisabled,
+                isDisabled && styles.barDisabled,
+                isSelected && styles.barSelected
+            )}
+            ref={barRef}
+        />
     );
 };
