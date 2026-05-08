@@ -8,7 +8,6 @@ export default function Story() {
             <Form.HistogramSlider
                 bins={MOCK_BINS}
                 interval={1}
-                value={[2, 4]}
                 label={{
                     children: "Default",
                     subtitle: "This is the subtitle",
@@ -19,7 +18,6 @@ export default function Story() {
             <Form.HistogramSlider
                 bins={MOCK_BINS}
                 interval={1}
-                value={[2, 4]}
                 disabled
                 label={{
                     children: "Disabled",
@@ -31,7 +29,6 @@ export default function Story() {
             <Form.HistogramSlider
                 bins={MOCK_BINS}
                 interval={1}
-                value={[2, 4]}
                 readOnly
                 label={{
                     children: "Readonly",

@@ -1,6 +1,7 @@
 "use client";
 import { HistogramSlider } from "@lifesg/react-design-system/histogram-slider";
 import { useState } from "react";
+import { MOCK_BINS } from "./histogram-slider-shared";
 
 export default function Story() {
     const [value, setValue] = useState<[number, number]>([2, 4]);
