@@ -72,11 +72,6 @@ test.describe("Sidenav", () => {
             `);
         });
 
-        test("Drawer open on click", async ({ story }) => {
-            await story.openDrawer();
-            await compareScreenshot(story, "drawer-open");
-        });
-
         test("Navigation accessibility tree when open", async ({ story }) => {
             await story.openDrawer();
             await expect(story.locators.sidenav).toMatchAriaSnapshot(`
@@ -102,8 +97,11 @@ test.describe("Sidenav", () => {
             `);
         });
 
-        test("DrawerItem expands and collapses", async ({ story }) => {
-            await story.openDrawer();
+        test("Click interaction", async ({ story }) => {
+            await test.step("Drawer open on click", async () => {
+                await story.openDrawer();
+                await compareScreenshot(story, "drawer-open");
+            });
 
             await test.step("Subitems visible when expanded by default", async () => {
                 await compareScreenshot(story, "drawer-item-expanded");
