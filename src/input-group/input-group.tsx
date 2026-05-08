@@ -31,11 +31,9 @@ const Component = <T, V>(
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [internalId] = useId();
-    const addonId = `${otherProps.id ? otherProps.id : internalId}-addon`;
-    const ariaLabelId = `${
-        otherProps.id ? otherProps.id : internalId
-    }-ariaLabelId`;
+    const internalId = useId();
+    const addonId = `${internalId}-addon`;
+    const ariaLabelId = `${internalId}-ariaLabelId`;
 
     // =============================================================================
     // RENDER FUNCTIONS

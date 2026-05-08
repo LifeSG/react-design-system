@@ -3,8 +3,6 @@
 import { Form } from "@lifesg/react-design-system/form";
 
 export default function Story() {
-    const ID = "mockID";
-
     return (
         <div className="story-column-container story-background">
             <Form.InputGroup
@@ -17,7 +15,6 @@ export default function Story() {
                 addon={{
                     attributes: { value: "$" },
                 }}
-                id={ID}
             />
 
             <Form.InputGroup
@@ -31,7 +28,6 @@ export default function Story() {
                     position: "right",
                     attributes: { value: "kg" },
                 }}
-                id={ID}
             />
 
             <Form.InputGroup
@@ -45,7 +41,6 @@ export default function Story() {
                 addon={{
                     attributes: { value: "$" },
                 }}
-                id={ID}
             />
 
             <Form.InputGroup
@@ -59,7 +54,6 @@ export default function Story() {
                 addon={{
                     attributes: { value: "$" },
                 }}
-                id={ID}
             />
 
             <Form.InputGroup
@@ -73,7 +67,6 @@ export default function Story() {
                 addon={{
                     attributes: { value: "$" },
                 }}
-                id={ID}
             />
         </div>
     );

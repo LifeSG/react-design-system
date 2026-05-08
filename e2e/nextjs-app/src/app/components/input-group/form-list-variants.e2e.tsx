@@ -12,8 +12,6 @@ const ATTRIBUTES = {
 };
 
 export default function Story() {
-    const ID = "mockID";
-
     return (
         <div className="story-column-container story-background">
             <Form.InputGroup
@@ -31,7 +29,6 @@ export default function Story() {
                         ...ATTRIBUTES,
                     },
                 }}
-                id={ID}
             />
 
             <Form.InputGroup
@@ -43,7 +40,6 @@ export default function Story() {
                     position: "right",
                     attributes: { ...ATTRIBUTES },
                 }}
-                id={ID}
             />
 
             <Form.InputGroup
@@ -55,7 +51,6 @@ export default function Story() {
                     type: "list",
                     attributes: { ...ATTRIBUTES },
                 }}
-                id={ID}
             />
 
             <Form.InputGroup
@@ -67,7 +62,6 @@ export default function Story() {
                     type: "list",
                     attributes: { ...ATTRIBUTES },
                 }}
-                id={ID}
             />
 
             <Form.InputGroup
@@ -87,7 +81,6 @@ export default function Story() {
                         ...ATTRIBUTES,
                     },
                 }}
-                id={ID}
             />
 
             <Form.InputGroup
@@ -99,7 +92,6 @@ export default function Story() {
                     type: "list",
                     attributes: { ...ATTRIBUTES },
                 }}
-                id={ID}
             />
         </div>
     );
