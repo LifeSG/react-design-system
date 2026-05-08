@@ -12,7 +12,7 @@ import {
     Container,
     HeaderArrowButton,
     StyledDateTextButton,
-} from "./date-navigator.style";
+} from "./date-navigator.styles";
 import type { DateNavigatorProps } from "./types";
 
 export const DateNavigator = ({
