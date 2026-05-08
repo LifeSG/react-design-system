@@ -152,12 +152,9 @@ test.describe("Sidenav", () => {
             });
 
             await test.step("Tab to item with children", async () => {
+                await expect(story.locators.drawer).not.toBeVisible();
                 await story.page.keyboard.press("Tab");
                 await expect(story.locators.itemUsers).toBeFocused();
-            });
-
-            await test.step("Enter opens drawer", async () => {
-                await story.page.keyboard.press("Enter");
                 await expect(story.locators.drawer).toBeVisible();
             });
 
