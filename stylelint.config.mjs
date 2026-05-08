@@ -1,5 +1,9 @@
 export default {
-    extends: ["stylelint-config-standard", "stylelint-config-recess-order"],
+    extends: [
+        "stylelint-config-standard",
+        // To be enabled once migration to v4 is finished.
+        // "stylelint-config-recess-order"
+    ],
     plugins: ["@stylistic/stylelint-plugin"],
     rules: {
         "declaration-block-no-duplicate-properties": true,
