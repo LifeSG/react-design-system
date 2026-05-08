@@ -36,8 +36,8 @@
         "lint": "npm run lint:js && npm run lint:css",
         "lint:js": "eslint '**/*.{ts,tsx,js,jsx}' && npm --prefix e2e/nextjs-app run lint:src",
         "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix && npm --prefix e2e/nextjs-app run lint:src:fix",
-        "lint:css": "stylelint --config stylelint.config.mjs '**/*.css' '**/*.styles.ts'",
-        "lint:css:fix": "stylelint --config stylelint.config.mjs '**/*.css' '**/*.styles.ts' --fix",
+        "lint:css": "stylelint '**/*.css' '**/*.styles.ts'",
+        "lint:css:fix": "stylelint '**/*.css' '**/*.styles.ts' --fix",
         "test:eslint-rules": "node tests/eslint-rules/import-path-preferences.rule-test.mjs"
     },
     "repository": {
@@ -193,10 +193,10 @@
             "npm --prefix e2e/nextjs-app run lint:staged:fix --"
         ],
         "*.{css,module.css}": [
-            "stylelint --config stylelint.config.mjs --fix"
+            "stylelint --fix"
         ],
         "*.styles.ts": [
-            "stylelint --config stylelint.config.mjs --fix"
+            "stylelint --fix"
         ]
     }
 }
