@@ -1,6 +1,7 @@
 import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
 import clsx from "clsx";
+import isNumber from "lodash/isNumber";
 import { useEffect, useRef, useState } from "react";
 
 import { Button } from "../button";
@@ -37,13 +38,13 @@ export const FilterModal = ({
     const [visible, setVisible] = useState(false);
 
     useApplyStyle(headerRef, {
-        [styles.tokens.filterHeader.insetTop]: insets?.top
+        [styles.tokens.filterHeader.insetTop]: isNumber(insets?.top)
             ? `${insets.top}px`
             : null,
     });
 
     useApplyStyle(footerRef, {
-        [filterStyles.tokens.filterFooter.insetBottom]: insets?.bottom
+        [filterStyles.tokens.filterFooter.insetBottom]: isNumber(insets?.bottom)
             ? `${insets.bottom}px`
             : null,
     });
@@ -114,7 +115,7 @@ export const FilterModal = ({
                                     ref={headerRef}
                                     className={clsx(
                                         styles.filterHeader,
-                                        insets?.top &&
+                                        isNumber(insets?.top) &&
                                             styles.filterHeaderWithInsetTop
                                     )}
                                 >
@@ -151,7 +152,7 @@ export const FilterModal = ({
                                     ref={footerRef}
                                     className={clsx(
                                         filterStyles.filterFooter,
-                                        insets?.bottom &&
+                                        isNumber(insets?.bottom) &&
                                             filterStyles.filterFooterWithInsetBottom
                                     )}
                                 >
