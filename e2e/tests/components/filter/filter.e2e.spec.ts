@@ -24,12 +24,14 @@ class StoryPage extends AbstractStoryPage {
         itemNoTitleCollapsible: Locator;
         itemNoTitleNotCollapsible: Locator;
         itemNotCollapsible: Locator;
+        addonTriggerButton: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         const sidebar = page.getByTestId("filter-desktop");
+        const modal = page.getByTestId("filter-mobile");
         const minimisableItem = sidebar.getByTestId("item-minimised");
         const minimisableCustomItem = sidebar.getByTestId(
             "item-minimised-custom"
@@ -37,7 +39,7 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             sidebar,
-            modal: page.getByTestId("filter-mobile"),
+            modal,
             showButton: page.getByTestId("filter-show-button"),
             minimisableItem,
             minimisableCustomItem,
@@ -65,6 +67,7 @@ class StoryPage extends AbstractStoryPage {
                 "item-no-title-not-collapsible"
             ),
             itemNotCollapsible: sidebar.getByTestId("item-not-collapsible"),
+            addonTriggerButton: page.getByRole("button", { name: "More info" }),
         };
     }
 
@@ -99,6 +102,13 @@ test.describe("Filter", () => {
             await waitForAnimationEnd(story.locators.sidebar);
             await compareScreenshot(story, "expanded");
         });
+
+        test("Tooltip in sidebar", async ({ story }) => {
+            const { addonTriggerButton } = story.locators;
+
+            await addonTriggerButton.click();
+            await compareScreenshot(story, "open");
+        });
     });
 
     test.describe(() => {
@@ -123,6 +133,16 @@ test.describe("Filter", () => {
             await compareScreenshot(story, "closed");
             await story.locators.showButton.click();
             await compareScreenshot(story, "open", { fullscreen: true });
+        });
+
+        test("Tooltip in modal", async ({ story }) => {
+            const { showButton, addonTriggerButton } = story.locators;
+
+            await showButton.click();
+            await addonTriggerButton.click();
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
         });
     });
 

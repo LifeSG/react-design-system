@@ -49,7 +49,14 @@ export default function Story() {
                 doneButtonLabel: "Apply",
             }}
         >
-            <Filter.Item title="Search" data-testid="item-search">
+            <Filter.Item
+                title="Search"
+                data-testid="item-search"
+                addon={{
+                    type: "popover",
+                    content: "More info about this filter item",
+                }}
+            >
                 <SearchFilter
                     mode="mobile"
                     onChange={setSearchValue}
