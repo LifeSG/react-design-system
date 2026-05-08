@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Colour, Radius, Spacing } from "../theme";
+import { Colour, Font, Radius, Spacing } from "../theme";
 
 export const container = css`
     display: flex;
@@ -20,22 +20,17 @@ export const headerArrowButtonIcon = css`
 `;
 
 export const dateTextButton = css`
+    ${Font["body-baseline-semibold"]}
     color: ${Colour["text"]};
-    white-space: nowrap;
-    display: inline-block;
-    text-wrap: auto;
-    text-align: center;
-    margin: 0;
-    padding: 0;
-    background: transparent;
-    height: unset;
     cursor: default;
-`;
 
-export const dateTextButtonEnableDateClick = css`
-    color: ${Colour["text-primary"]};
+    &:not(:disabled) {
+        color: ${Colour["text-primary"]};
+    }
 
-    &:hover {
+    &:not(:disabled):hover,
+    &:not(:disabled):focus {
+        outline: none;
         cursor: pointer;
         text-decoration: underline;
         text-underline-position: under;

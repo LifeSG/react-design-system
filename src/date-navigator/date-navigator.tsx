@@ -7,6 +7,7 @@ import { useState } from "react";
 import { Button } from "../button";
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import { BasicButton } from "../shared/input-wrapper";
 import { CalendarDropdown } from "../shared/internal-calendar";
 import { CalendarHelper, DateHelper } from "../util";
 import * as styles from "./date-navigator.styles";
@@ -132,56 +133,42 @@ export const DateNavigator = ({
 
         return (
             <div {...otherProps} className={clsx(styles.container, className)}>
-                {
-                    <Button
-                        className={styles.headerArrowButton}
-                        data-testid="date-navigator-left-arrow-btn"
-                        disabled={loading || isLeftArrowDisabled()}
-                        aria-label={ariaLabel.left}
-                        onClick={navigatePrevious}
-                        styleType="light"
-                        sizeType="small"
-                        icon={
-                            <ChevronLeftIcon
-                                className={styles.headerArrowButtonIcon}
-                            />
-                        }
-                    />
-                }
                 <Button
-                    onClick={() =>
-                        !!onCalendarDateSelect &&
-                        !loading &&
-                        setIsCalendarOpen(!isCalendarOpen)
+                    className={styles.headerArrowButton}
+                    data-testid="date-navigator-left-arrow-btn"
+                    disabled={loading || isLeftArrowDisabled()}
+                    aria-label={ariaLabel.left}
+                    onClick={navigatePrevious}
+                    styleType="light"
+                    sizeType="small"
+                    icon={
+                        <ChevronLeftIcon
+                            className={styles.headerArrowButtonIcon}
+                        />
                     }
-                    className={clsx(
-                        styles.dateTextButton,
-                        !!onCalendarDateSelect &&
-                            !loading &&
-                            styles.dateTextButtonEnableDateClick
-                    )}
+                />
+                <BasicButton
+                    onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                    className={styles.dateTextButton}
                     data-testid="date-navigator-date-text"
-                    styleType="link"
                     disabled={!onCalendarDateSelect || loading}
                 >
                     {getDisplayText()}
-                </Button>
-                {
-                    <Button
-                        className={styles.headerArrowButton}
-                        data-testid="date-navigator-right-arrow-btn"
-                        disabled={loading || isRightArrowDisabled()}
-                        aria-label={ariaLabel.right}
-                        onClick={navigateNext}
-                        styleType="light"
-                        sizeType="small"
-                        icon={
-                            <ChevronRightIcon
-                                className={styles.headerArrowButtonIcon}
-                            />
-                        }
-                    />
-                }
+                </BasicButton>
+                <Button
+                    className={styles.headerArrowButton}
+                    data-testid="date-navigator-right-arrow-btn"
+                    disabled={loading || isRightArrowDisabled()}
+                    aria-label={ariaLabel.right}
+                    onClick={navigateNext}
+                    styleType="light"
+                    sizeType="small"
+                    icon={
+                        <ChevronRightIcon
+                            className={styles.headerArrowButtonIcon}
+                        />
+                    }
+                />
             </div>
         );
     };
