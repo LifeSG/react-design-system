@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { Input } from "../input";
-import { LabelAddonContainer } from "../input-group/input-group.style";
+import { LabelAddonContainer } from "../input-group/input-group.styles";
 import { Typography } from "../typography";
 import { V3_Colour } from "../v3_theme";
 

@@ -17,7 +17,7 @@ import {
     FieldWrapper,
     SelectorReadOnly,
     StyledExpandableElement,
-} from "./input-group-list-addon.style";
+} from "./input-group-list-addon.styles";
 import type { InputGroupProps, ListAddon } from "./types";
 
 export const Component = <T, V>(

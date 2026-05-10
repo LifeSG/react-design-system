@@ -7,7 +7,7 @@ import {
     LabelAddonContainer,
     MainInput,
     NoAddonWrapper,
-} from "./input-group.style";
+} from "./input-group.styles";
 import { InputGroupListAddon } from "./input-group-list-addon";
 import type {
     CustomAddon,
