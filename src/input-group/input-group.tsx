@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
@@ -44,10 +45,12 @@ const Component = <T, V>(
             error={error}
             readOnly={otherProps.readOnly}
             noBorder={noBorder}
-            $readOnly={otherProps.readOnly}
             data-testid={otherProps["data-testid"]}
-            className={className}
-            $noBorder={noBorder}
+            className={clsx(
+                otherProps.readOnly && "noAddonWrapperReadOnly",
+                noBorder && "noAddonWrapperNoBorder",
+                className
+            )}
         >
             <MainInput
                 ref={ref}
@@ -92,18 +95,27 @@ const Component = <T, V>(
                             disabled={otherProps.disabled}
                             readOnly={otherProps.readOnly}
                             noBorder={noBorder}
-                            $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
-                            $position={position}
-                            className={className}
-                            $noBorder={noBorder}
+                            className={clsx(
+                                otherProps.readOnly && "addonWrapperReadOnly",
+                                noBorder && "addonWrapperNoBorder",
+                                position === "right" &&
+                                    "addonWrapperPositionRight",
+                                className
+                            )}
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
                                 id={addonId}
-                                $disabled={otherProps.disabled}
-                                $readOnly={otherProps.readOnly}
-                                $position={position}
+                                className={clsx(
+                                    otherProps.disabled &&
+                                        "labelAddonContainerDisabled",
+                                    otherProps.readOnly &&
+                                        "labelAddonContainerReadOnly",
+                                    position === "right" &&
+                                        "labelAddonContainerPositionRight",
+                                    className
+                                )}
                             >
                                 {customAddon.children}
                             </LabelAddonContainer>
@@ -138,18 +150,26 @@ const Component = <T, V>(
                             error={error}
                             readOnly={otherProps.readOnly}
                             noBorder={noBorder}
-                            $readOnly={otherProps.readOnly}
                             data-testid={otherProps["data-testid"]}
-                            $position={position}
-                            className={className}
-                            $noBorder={noBorder}
+                            className={clsx(
+                                otherProps.readOnly && "addonWrapperReadOnly",
+                                noBorder && "addonWrapperNoBorder",
+                                position === "right" &&
+                                    "addonWrapperPositionRight",
+                                className
+                            )}
                         >
                             <LabelAddonContainer
                                 data-testid="addon"
                                 id={addonId}
-                                $disabled={otherProps.disabled}
-                                $readOnly={otherProps.readOnly}
-                                $position={position}
+                                className={clsx(
+                                    otherProps.disabled &&
+                                        "labelAddonContainerDisabled",
+                                    otherProps.readOnly &&
+                                        "labelAddonContainerReadOnly",
+                                    position === "right" &&
+                                        "labelAddonContainerPositionRight"
+                                )}
                             >
                                 {labelAddon.value}
                             </LabelAddonContainer>

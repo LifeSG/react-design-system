@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
@@ -31,6 +32,7 @@ export const UnitNumberInput = ({
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     "aria-invalid": ariaInvalid,
+    className,
     ...otherProps
 }: UnitNumberInputProps) => {
     // =============================================================================
@@ -405,8 +407,11 @@ export const UnitNumberInput = ({
         >
             <HashContainer
                 data-testid="addon"
-                $disabled={disabled}
-                $readOnly={readOnly}
+                className={clsx(
+                    disabled && "labelAddonContainerDisabled",
+                    readOnly && "labelAddonContainerReadOnly",
+                    className
+                )}
             >
                 #
             </HashContainer>

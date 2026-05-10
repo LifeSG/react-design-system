@@ -1,55 +1,57 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Input } from "../input/input";
 import { InputBox } from "../shared/input-wrapper";
 import { Colour, Font, Spacing } from "../theme";
-import type { InputGroupAddonPosition } from "./types";
-
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-
-// Need to export since the component could be extended
-export interface AddonStyleProps {
-    $disabled?: boolean;
-    $error?: boolean;
-    $readOnly?: boolean;
-    $position?: InputGroupAddonPosition;
-    $noBorder?: boolean;
-}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const AddonWrapper = styled(InputBox)<AddonStyleProps>`
+export const AddonWrapper = styled(InputBox)`
     display: flex;
     align-items: center;
     width: 100%;
-    padding: 0
-        ${(props) =>
-            props.$readOnly || props.$noBorder ? "0" : Spacing["spacing-16"]};
-    flex-direction: ${(props) =>
-        props.$position === "right" ? "row-reverse" : "row"};
+    padding: 0 ${Spacing["spacing-16"]};
+
+    &.addonWrapperReadOnly {
+        padding: 0;
+    }
+
+    &.addonWrapperNoBorder {
+        padding: 0;
+    }
+
+    &.addonWrapperPositionRight {
+        flex-direction: row-reverse;
+    }
 `;
 
-export const NoAddonWrapper = styled(InputBox)<AddonStyleProps>`
+export const NoAddonWrapper = styled(InputBox)`
     display: flex;
     position: relative;
     width: 100%;
-    padding: 0
-        ${(props) =>
-            props.$readOnly || props.$noBorder ? "0" : Spacing["spacing-16"]};
-    flex-direction: ${(props) =>
-        props.$position === "right" ? "row-reverse" : "row"};
+    padding: 0 ${Spacing["spacing-16"]};
+
+    &.noAddonWrapperReadOnly {
+        padding: 0;
+    }
+
+    &.noAddonWrapperNoBorder {
+        padding: 0;
+    }
+
+    &.noAddonWrapperPositionRight {
+        flex-direction: row-reverse;
+    }
 `;
 
 export const MainInput = styled(Input)``;
 
-export const LabelAddonContainer = styled.div<AddonStyleProps>`
+export const LabelAddonContainer = styled.div`
     position: relative;
     display: flex;
     align-items: center;
+    margin-right: ${Spacing["spacing-12"]};
 
     ${Font["body-baseline-regular"]}
     color: ${Colour["text"]};
@@ -60,29 +62,21 @@ export const LabelAddonContainer = styled.div<AddonStyleProps>`
         width: 1em;
     }
 
-    ${(props) => {
-        if (props.$disabled) {
-            return css`
-                color: ${Colour["text-subtler"]};
-            `;
-        }
-    }}
+    &.labelAddonContainerDisabled {
+        color: ${Colour["text-subtler"]};
+    }
 
-    ${(props) => {
-        switch (props.$position) {
-            case "right":
-                return css`
-                    margin-left: ${props.$readOnly
-                        ? Spacing["spacing-4"]
-                        : Spacing["spacing-12"]};
-                `;
-            case "left":
-            default:
-                return css`
-                    margin-right: ${props.$readOnly
-                        ? Spacing["spacing-4"]
-                        : Spacing["spacing-12"]};
-                `;
-        }
-    }};
+    &.labelAddonContainerPositionRight {
+        margin-right: 0;
+        margin-left: ${Spacing["spacing-12"]};
+    }
+
+    &.labelAddonContainerReadOnly {
+        margin-right: ${Spacing["spacing-4"]};
+    }
+
+    &.labelAddonContainerPositionRight.labelAddonContainerReadOnly {
+        margin-right: 0;
+        margin-left: ${Spacing["spacing-4"]};
+    }
 `;

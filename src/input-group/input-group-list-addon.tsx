@@ -1,4 +1,5 @@
 import type { OpenChangeReason } from "@floating-ui/react";
+import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
@@ -208,8 +209,12 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
                     aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     aria-invalid={ariaInvalid}
-                    $noBorder={noBorder}
-                    $position={position}
+                    className={clsx(
+                        noBorder &&
+                            (position === "right"
+                                ? "expandableElementNoBorderRight"
+                                : "expandableElementNoBorderLeft")
+                    )}
                 >
                     {renderSelectorContent()}
                 </StyledExpandableElement>
@@ -289,16 +294,17 @@ export const Component = <T, V>(
                 focused={focused}
                 disabled={disabled}
                 readOnly={readOnly}
-                $readOnly={readOnly}
                 error={error}
-                $position={position}
                 ref={nodeRef}
-                className={className}
-                data-testid={testId}
                 noBorder={noBorder}
+                data-testid={testId}
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
+                className={clsx(
+                    position === "right" && "fieldWrapperPositionRight",
+                    className
+                )}
             >
                 <VisuallyHidden aria-hidden id={comboboxLabelId}>
                     {comboboxAriaLabel}
@@ -306,15 +312,20 @@ export const Component = <T, V>(
                 <FieldSelector data-testid={selectorTestId}>
                     {renderSelector()}
                 </FieldSelector>
-                <Divider $readOnly={readOnly} $position={position} />
+                <Divider
+                    className={clsx(
+                        readOnly && "dividerReadOnly",
+                        position === "right"
+                            ? "dividerPositionRight"
+                            : "dividerPositionLeft"
+                    )}
+                />
                 <VisuallyHidden aria-hidden id={textboxLabelId}>
                     {textboxAriaLabel}
                 </VisuallyHidden>
                 <FieldInput
                     ref={ref}
                     {...otherProps}
-                    $position={position}
-                    $noBorder={noBorder}
                     readOnly={readOnly}
                     disabled={disabled}
                     error={error}
@@ -324,6 +335,19 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, textboxLabelId)}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
+                    className={clsx(
+                        readOnly && "fieldInputReadOnly",
+                        !readOnly &&
+                            noBorder &&
+                            (position === "right"
+                                ? "fieldInputNoBorderRight"
+                                : "fieldInputNoBorderLeft"),
+                        !readOnly &&
+                            !noBorder &&
+                            (position === "right"
+                                ? "fieldInputPositionRight"
+                                : "fieldInputPositionLeft")
+                    )}
                 />
             </FieldWrapper>
         </DropdownListState>

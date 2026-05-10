@@ -1,101 +1,56 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Input } from "../input";
 import { ExpandableElement } from "../shared/dropdown-list";
 import { InputBox } from "../shared/input-wrapper";
 import { Colour, Spacing } from "../theme";
-import type { InputGroupAddonPosition } from "./types";
-
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $readOnly?: boolean;
-    $expanded?: boolean;
-    $position?: InputGroupAddonPosition;
-    $noBorder?: boolean;
-}
-
-interface DividerStyleProps {
-    $readOnly?: boolean;
-    $position?: InputGroupAddonPosition;
-}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const FieldWrapper = styled(InputBox)<StyleProps>`
+export const FieldWrapper = styled(InputBox)`
     display: flex;
     align-items: center;
 
-    ${(props) => {
-        switch (props.$position) {
-            case "right":
-                return css`
-                    flex-direction: row-reverse;
-                `;
-            default:
-                return css`
-                    flex-direction: row;
-                `;
-        }
-    }}
+    &.fieldWrapperPositionRight {
+        flex-direction: row-reverse;
+    }
 `;
 
-export const StyledExpandableElement = styled(ExpandableElement)<StyleProps>`
-    ${(props) => {
-        if (props.$noBorder) {
-            switch (props.$position) {
-                case "right":
-                    return css`
-                        padding-right: 0;
-                    `;
-                default:
-                    return css`
-                        padding-left: 0;
-                    `;
-            }
-        }
-    }}
+export const StyledExpandableElement = styled(ExpandableElement)`
+    &.expandableElementNoBorderRight {
+        padding-right: 0;
+    }
+
+    &.expandableElementNoBorderLeft {
+        padding-left: 0;
+    }
 `;
 
 export const FieldSelector = styled.div`
     flex: 0 0 auto;
 `;
 
-export const FieldInput = styled(Input)<StyleProps>`
-    ${(props) => {
-        if (props.readOnly) {
-            return css`
-                padding: 0;
-            `;
-        }
+export const FieldInput = styled(Input)`
+    &.fieldInputReadOnly {
+        padding: 0;
+    }
 
-        if (props.$noBorder) {
-            switch (props.$position) {
-                case "right":
-                    return css`
-                        padding-left: 0;
-                    `;
-                default:
-                    return css`
-                        padding-right: 0;
-                    `;
-            }
-        }
+    &.fieldInputNoBorderRight {
+        padding-left: 0;
+    }
 
-        switch (props.$position) {
-            case "right":
-                return css`
-                    padding-left: ${Spacing["spacing-16"]};
-                `;
-            default:
-                return css`
-                    padding-right: ${Spacing["spacing-16"]};
-                `;
-        }
-    }}
+    &.fieldInputNoBorderLeft {
+        padding-right: 0;
+    }
+
+    &.fieldInputPositionRight {
+        padding-left: ${Spacing["spacing-16"]};
+    }
+
+    &.fieldInputPositionLeft {
+        padding-right: ${Spacing["spacing-16"]};
+    }
 `;
 
 export const SelectorReadOnly = styled.div`
@@ -108,30 +63,21 @@ export const SelectorReadOnly = styled.div`
     color: ${Colour["text"]};
 `;
 
-export const Divider = styled.div<DividerStyleProps>`
+export const Divider = styled.div`
     width: 1px;
     background: ${Colour["border"]};
     flex-shrink: 0;
     height: 1.25rem;
 
-    ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                display: none;
-            `;
-        }
-    }}
+    &.dividerReadOnly {
+        display: none;
+    }
 
-    ${(props) => {
-        switch (props.$position) {
-            case "right":
-                return css`
-                    margin-left: ${Spacing["spacing-12"]};
-                `;
-            default:
-                return css`
-                    margin-right: ${Spacing["spacing-12"]};
-                `;
-        }
-    }}
+    &.dividerPositionRight {
+        margin-left: ${Spacing["spacing-12"]};
+    }
+
+    &.dividerPositionLeft {
+        margin-right: ${Spacing["spacing-12"]};
+    }
 `;
