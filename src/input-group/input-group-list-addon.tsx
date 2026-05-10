@@ -2,23 +2,22 @@ import type { OpenChangeReason } from "@floating-ui/react";
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
+import { Input } from "../input";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list";
+import {
+    DropdownList,
+    DropdownListState,
+    ExpandableElement,
+} from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
     PlaceholderLabel,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
+import { InputBox } from "../shared/input-wrapper";
 import { useId } from "../util";
-import {
-    Divider,
-    FieldInput,
-    FieldSelector,
-    FieldWrapper,
-    SelectorReadOnly,
-    StyledExpandableElement,
-} from "./input-group-list-addon.styles";
+import * as styles from "./input-group-list-addon.styles";
 import type { InputGroupProps, ListAddon } from "./types";
 
 export const Component = <T, V>(
@@ -199,7 +198,7 @@ export const Component = <T, V>(
     const renderElement = () => {
         return (
             <div>
-                <StyledExpandableElement
+                <ExpandableElement
                     ref={selectorRef}
                     disabled={disabled}
                     expanded={showOptions}
@@ -211,13 +210,15 @@ export const Component = <T, V>(
                     aria-invalid={ariaInvalid}
                     className={clsx(
                         noBorder &&
-                            (position === "right"
-                                ? "expandableElementNoBorderRight"
-                                : "expandableElementNoBorderLeft")
+                            position === "right" &&
+                            styles.expandableElementNoBorderRight,
+                        noBorder &&
+                            position !== "right" &&
+                            styles.expandableElementNoBorderLeft
                     )}
                 >
                     {renderSelectorContent()}
-                </StyledExpandableElement>
+                </ExpandableElement>
                 <VisuallyHidden id={instructionId}>
                     Press space to open options
                 </VisuallyHidden>
@@ -252,7 +253,7 @@ export const Component = <T, V>(
     const renderSelector = () => {
         if (readOnly) {
             return selected ? (
-                <SelectorReadOnly
+                <div
                     data-testid="selector-label"
                     tabIndex={0}
                     role="combobox"
@@ -262,9 +263,10 @@ export const Component = <T, V>(
                     aria-labelledby={ariaLabelledBy}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
+                    className={styles.selectorReadOnly}
                 >
                     <ValueLabel>{getDisplayValue()}</ValueLabel>
-                </SelectorReadOnly>
+                </div>
             ) : null;
         } else {
             return (
@@ -290,7 +292,7 @@ export const Component = <T, V>(
 
     return (
         <DropdownListState>
-            <FieldWrapper
+            <InputBox
                 focused={focused}
                 disabled={disabled}
                 readOnly={readOnly}
@@ -302,28 +304,33 @@ export const Component = <T, V>(
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
                 className={clsx(
-                    position === "right" && "fieldWrapperPositionRight",
+                    styles.fieldWrapper,
+                    position === "right" && styles.fieldWrapperPositionRight,
                     className
                 )}
             >
                 <VisuallyHidden aria-hidden id={comboboxLabelId}>
                     {comboboxAriaLabel}
                 </VisuallyHidden>
-                <FieldSelector data-testid={selectorTestId}>
+                <div
+                    data-testid={selectorTestId}
+                    className={styles.fieldSelector}
+                >
                     {renderSelector()}
-                </FieldSelector>
-                <Divider
+                </div>
+                <div
                     className={clsx(
-                        readOnly && "dividerReadOnly",
+                        styles.divider,
+                        readOnly && styles.dividerReadOnly,
                         position === "right"
-                            ? "dividerPositionRight"
-                            : "dividerPositionLeft"
+                            ? styles.dividerPositionRight
+                            : styles.dividerPositionLeft
                     )}
                 />
                 <VisuallyHidden aria-hidden id={textboxLabelId}>
                     {textboxAriaLabel}
                 </VisuallyHidden>
-                <FieldInput
+                <Input
                     ref={ref}
                     {...otherProps}
                     readOnly={readOnly}
@@ -336,20 +343,20 @@ export const Component = <T, V>(
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
                     className={clsx(
-                        readOnly && "fieldInputReadOnly",
+                        readOnly && styles.fieldInputReadOnly,
                         !readOnly &&
                             noBorder &&
                             (position === "right"
-                                ? "fieldInputNoBorderRight"
-                                : "fieldInputNoBorderLeft"),
+                                ? styles.fieldInputNoBorderRight
+                                : styles.fieldInputNoBorderLeft),
                         !readOnly &&
                             !noBorder &&
                             (position === "right"
-                                ? "fieldInputPositionRight"
-                                : "fieldInputPositionLeft")
+                                ? styles.fieldInputPositionRight
+                                : styles.fieldInputPositionLeft)
                     )}
                 />
-            </FieldWrapper>
+            </InputBox>
         </DropdownListState>
     );
 };

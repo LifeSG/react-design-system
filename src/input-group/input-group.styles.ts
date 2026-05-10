@@ -1,53 +1,45 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Input } from "../input/input";
-import { InputBox } from "../shared/input-wrapper";
 import { Colour, Font, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const AddonWrapper = styled(InputBox)`
+export const addonWrapper = css`
     display: flex;
     align-items: center;
     width: 100%;
     padding: 0 ${Spacing["spacing-16"]};
-
-    &.addonWrapperReadOnly {
-        padding: 0;
-    }
-
-    &.addonWrapperNoBorder {
-        padding: 0;
-    }
-
-    &.addonWrapperPositionRight {
-        flex-direction: row-reverse;
-    }
 `;
 
-export const NoAddonWrapper = styled(InputBox)`
+export const addonWrapperReadOnly = css`
+    padding: 0;
+`;
+
+export const addonWrapperNoBorder = css`
+    padding: 0;
+`;
+
+export const addonWrapperPositionRight = css`
+    flex-direction: row-reverse;
+`;
+
+export const noAddonWrapper = css`
     display: flex;
     position: relative;
     width: 100%;
     padding: 0 ${Spacing["spacing-16"]};
-
-    &.noAddonWrapperReadOnly {
-        padding: 0;
-    }
-
-    &.noAddonWrapperNoBorder {
-        padding: 0;
-    }
-
-    &.noAddonWrapperPositionRight {
-        flex-direction: row-reverse;
-    }
 `;
 
-export const MainInput = styled(Input)``;
+export const noAddonWrapperReadOnly = css`
+    padding: 0;
+`;
 
-export const LabelAddonContainer = styled.div`
+export const noAddonWrapperNoBorder = css`
+    padding: 0;
+`;
+
+export const labelAddonContainer = css`
     position: relative;
     display: flex;
     align-items: center;
@@ -61,22 +53,22 @@ export const LabelAddonContainer = styled.div`
         height: 1em;
         width: 1em;
     }
+`;
 
-    &.labelAddonContainerDisabled {
-        color: ${Colour["text-subtler"]};
-    }
+export const labelAddonContainerDisabled = css`
+    color: ${Colour["text-subtler"]};
+`;
 
-    &.labelAddonContainerPositionRight {
-        margin-right: 0;
-        margin-left: ${Spacing["spacing-12"]};
-    }
+export const labelAddonContainerReadOnly = css`
+    margin-right: ${Spacing["spacing-4"]};
+`;
 
-    &.labelAddonContainerReadOnly {
-        margin-right: ${Spacing["spacing-4"]};
-    }
+export const labelAddonContainerPositionRight = css`
+    margin-right: 0;
+    margin-left: ${Spacing["spacing-12"]};
+`;
 
-    &.labelAddonContainerPositionRight.labelAddonContainerReadOnly {
-        margin-right: 0;
-        margin-left: ${Spacing["spacing-4"]};
-    }
+export const labelAddonContainerPositionRightReadOnly = css`
+    margin-right: 0;
+    margin-left: ${Spacing["spacing-4"]};
 `;

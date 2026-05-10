@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
 import { Input } from "../input";
-import { LabelAddonContainer } from "../input-group/input-group.styles";
 import { Typography } from "../typography";
 import { V3_Colour } from "../v3_theme";
 
@@ -16,7 +15,7 @@ interface LabelStyleProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const HashContainer = styled(LabelAddonContainer)`
+export const HashContainer = styled.div`
     margin-right: 0.5rem;
 `;
 

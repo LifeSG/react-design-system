@@ -1,60 +1,52 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Input } from "../input";
-import { ExpandableElement } from "../shared/dropdown-list";
-import { InputBox } from "../shared/input-wrapper";
 import { Colour, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const FieldWrapper = styled(InputBox)`
+export const fieldWrapper = css`
     display: flex;
     align-items: center;
-
-    &.fieldWrapperPositionRight {
-        flex-direction: row-reverse;
-    }
 `;
 
-export const StyledExpandableElement = styled(ExpandableElement)`
-    &.expandableElementNoBorderRight {
-        padding-right: 0;
-    }
-
-    &.expandableElementNoBorderLeft {
-        padding-left: 0;
-    }
+export const fieldWrapperPositionRight = css`
+    flex-direction: row-reverse;
 `;
 
-export const FieldSelector = styled.div`
+export const expandableElementNoBorderRight = css`
+    padding-right: 0;
+`;
+
+export const expandableElementNoBorderLeft = css`
+    padding-left: 0;
+`;
+
+export const fieldSelector = css`
     flex: 0 0 auto;
 `;
 
-export const FieldInput = styled(Input)`
-    &.fieldInputReadOnly {
-        padding: 0;
-    }
-
-    &.fieldInputNoBorderRight {
-        padding-left: 0;
-    }
-
-    &.fieldInputNoBorderLeft {
-        padding-right: 0;
-    }
-
-    &.fieldInputPositionRight {
-        padding-left: ${Spacing["spacing-16"]};
-    }
-
-    &.fieldInputPositionLeft {
-        padding-right: ${Spacing["spacing-16"]};
-    }
+export const fieldInputReadOnly = css`
+    padding: 0;
 `;
 
-export const SelectorReadOnly = styled.div`
-    padding: 10px 0; // TODO: confirm vertical spacing
+export const fieldInputNoBorderRight = css`
+    padding-left: 0;
+`;
+
+export const fieldInputNoBorderLeft = css`
+    padding-right: 0;
+`;
+
+export const fieldInputPositionRight = css`
+    padding-left: ${Spacing["spacing-16"]};
+`;
+
+export const fieldInputPositionLeft = css`
+    padding-right: ${Spacing["spacing-16"]};
+`;
+
+export const selectorReadOnly = css`
     display: flex;
     align-items: center;
     padding: 0;
@@ -63,21 +55,21 @@ export const SelectorReadOnly = styled.div`
     color: ${Colour["text"]};
 `;
 
-export const Divider = styled.div`
+export const divider = css`
     width: 1px;
     background: ${Colour["border"]};
     flex-shrink: 0;
     height: 1.25rem;
+`;
 
-    &.dividerReadOnly {
-        display: none;
-    }
+export const dividerReadOnly = css`
+    display: none;
+`;
 
-    &.dividerPositionRight {
-        margin-left: ${Spacing["spacing-12"]};
-    }
+export const dividerPositionRight = css`
+    margin-left: ${Spacing["spacing-12"]};
+`;
 
-    &.dividerPositionLeft {
-        margin-right: ${Spacing["spacing-12"]};
-    }
+export const dividerPositionLeft = css`
+    margin-right: ${Spacing["spacing-12"]};
 `;

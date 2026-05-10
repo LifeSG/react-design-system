@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import * as inputGroupStyles from "../input-group/input-group.styles";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { InputWrapper } from "../shared/input-wrapper";
 import { StringHelper, useId, useNextInputState } from "../util";
@@ -408,8 +409,9 @@ export const UnitNumberInput = ({
             <HashContainer
                 data-testid="addon"
                 className={clsx(
-                    disabled && "labelAddonContainerDisabled",
-                    readOnly && "labelAddonContainerReadOnly",
+                    inputGroupStyles.labelAddonContainer,
+                    disabled && inputGroupStyles.labelAddonContainerDisabled,
+                    readOnly && inputGroupStyles.labelAddonContainerReadOnly,
                     className
                 )}
             >
