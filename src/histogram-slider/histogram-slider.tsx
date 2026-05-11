@@ -1,17 +1,14 @@
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
+import clsx from "clsx";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import { InputRangeSlider } from "../input-range-slider";
 import { concatIds } from "../shared/accessibility";
+import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
-import {
-    Bar,
-    Histogram,
-    Label,
-    Separator,
-    Slider,
-} from "./histogram-slider.styles";
-import type { HistogramSliderProps } from "./types";
+import * as styles from "./histogram-slider.styles";
+import type { HistogramBinProps, HistogramSliderProps } from "./types";
 
 const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
@@ -31,6 +28,7 @@ export const HistogramSlider = ({
     onChangeEnd,
     renderEmptyView,
     renderRangeLabel,
+    className,
     ...otherProps
 }: HistogramSliderProps) => {
     // =========================================================================
@@ -180,27 +178,21 @@ export const HistogramSlider = ({
 
         return (
             <>
-                <Histogram>
-                    {items.map((item, i) => {
-                        const ratio = item.count / maxCount;
-                        return (
-                            <Bar
-                                key={i}
-                                style={{
-                                    height: ratio
-                                        ? `calc(calc(100% - 0.25rem) * ${ratio} + 0.25rem)`
-                                        : 0,
-                                }}
-                                $selected={
-                                    item.minValue >= selection[0] &&
-                                    item.minValue < selection[1]
-                                }
-                                $disabled={disabled || readOnly}
-                            />
-                        );
-                    })}
-                </Histogram>
-                <Slider
+                <div className={styles.histogram}>
+                    {items.map((item, i) => (
+                        <HistogramBar
+                            key={i}
+                            item={item}
+                            maxCount={maxCount}
+                            isSelected={
+                                item.minValue >= selection[0] &&
+                                item.minValue < selection[1]
+                            }
+                            isDisabled={disabled || readOnly}
+                        />
+                    ))}
+                </div>
+                <InputRangeSlider
                     min={minValue}
                     max={maxValue + interval}
                     step={interval}
@@ -218,23 +210,61 @@ export const HistogramSlider = ({
                     aria-labelledby={ariaLabelledBy}
                     onChange={handleChange}
                     onChangeEnd={handleChangeEnd}
+                    className={styles.slider}
                 />
             </>
         );
     };
 
     return (
-        <div role="group" {...otherProps}>
+        <div role="group" {...otherProps} className={className}>
             {showRangeLabels && (
-                <Label id={rangeLabelId}>
+                <div id={rangeLabelId} className={styles.label}>
                     {renderRangeItem(selection[0])}
-                    <Separator>-</Separator>
+                    <div className={styles.separator}>-</div>
                     {renderRangeItem(selection[1])}
-                </Label>
+                </div>
             )}
             {items.every((item) => item.count === 0) && renderEmptyView
                 ? renderEmptyView()
                 : renderHistogramSlider()}
         </div>
+    );
+};
+
+// =============================================================================
+// SUB COMPONENT
+// =============================================================================
+interface HistogramBarProps {
+    item: HistogramBinProps;
+    maxCount: number;
+    isSelected: boolean;
+    isDisabled: boolean | undefined;
+}
+
+const HistogramBar = ({
+    item,
+    maxCount,
+    isSelected,
+    isDisabled,
+}: HistogramBarProps) => {
+    const ratio = item.count / maxCount;
+    const barRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(barRef, {
+        height: ratio ? `calc(calc(100% - 0.25rem) * ${ratio} + 0.25rem)` : "0",
+    });
+
+    return (
+        <div
+            data-testid="histogram-bar"
+            className={clsx(
+                styles.bar,
+                isDisabled && isSelected && styles.barSelectedDisabled,
+                isDisabled && styles.barDisabled,
+                isSelected && styles.barSelected
+            )}
+            ref={barRef}
+        />
     );
 };
