@@ -212,33 +212,29 @@ test.describe("Filter", () => {
     });
 
     test.describe(() => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("item-minimisable");
+        test.beforeEach(async ({ story }) => {
+            await story.init("item-minimisable");
+        });
+
+        test("Minimisable item", async ({ story }) => {
+            const {
+                minimisableItemViewMoreButton,
+                minimisableItemViewLessButton,
+                minimisableCustomItemViewMoreButton,
+                minimisableCustomItemViewLessButton,
+            } = story.locators;
+
+            await compareScreenshot(story, "minimised");
+
+            await test.step("Expand both items", async () => {
+                await minimisableItemViewMoreButton.click();
+                await minimisableCustomItemViewMoreButton.click();
+
+                await expect(minimisableItemViewLessButton).toBeVisible();
+                await expect(minimisableCustomItemViewLessButton).toBeVisible();
             });
 
-            test("Minimisable item", async ({ story }) => {
-                const {
-                    minimisableItemViewMoreButton,
-                    minimisableItemViewLessButton,
-                    minimisableCustomItemViewMoreButton,
-                    minimisableCustomItemViewLessButton,
-                } = story.locators;
-
-                await compareScreenshot(story, "minimised");
-
-                await test.step("Expand both items", async () => {
-                    await minimisableItemViewMoreButton.click();
-                    await minimisableCustomItemViewMoreButton.click();
-
-                    await expect(minimisableItemViewLessButton).toBeVisible();
-                    await expect(
-                        minimisableCustomItemViewLessButton
-                    ).toBeVisible();
-                });
-
-                await compareScreenshot(story, "expanded");
-            });
+            await compareScreenshot(story, "expanded");
         });
     });
 
