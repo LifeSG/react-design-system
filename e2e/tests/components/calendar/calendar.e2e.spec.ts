@@ -201,4 +201,21 @@ test.describe("Calendar", () => {
             await expect(story.locators.selectedValue).toHaveText("2026-04-11");
         });
     });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("active-month-only", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Active month only", async ({ story }) => {
+            await expect(
+                story.page.getByRole("gridcell", {
+                    name: /March 2026/i,
+                })
+            ).toHaveCount(0);
+
+            await compareScreenshot(story, "active-month-only");
+        });
+    });
 });
