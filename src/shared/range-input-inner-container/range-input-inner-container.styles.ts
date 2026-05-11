@@ -17,8 +17,7 @@ export const wrapperWrap = css`
     [data-id="range-container-elem2-container"] {
         // 100% - Icon size - 2padding
         max-width: calc(
-            100% - ${Font.Spec["body-size-baseline"]}
-                calc(${Spacing["spacing-16"]} * -1)
+            100% - ${Font.Spec["body-size-baseline"]} - ${Spacing["spacing-16"]}
         );
         flex: unset;
     }

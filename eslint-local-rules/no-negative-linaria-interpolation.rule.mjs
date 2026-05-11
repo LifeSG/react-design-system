@@ -26,6 +26,7 @@ export const noNegativeLinariaInterpolationRule = {
 
                 const template = node.quasi;
                 for (let i = 0; i < template.expressions.length; i += 1) {
+                    // static string part before the i-th interpolation
                     const beforeExpression = template.quasis[i]?.value?.raw;
                     if (!beforeExpression) continue;
 
@@ -47,6 +48,13 @@ export const noNegativeLinariaInterpolationRule = {
                             previousNonWhitespace &&
                             ![":", "(", ","].includes(previousNonWhitespace)
                         ) {
+                            continue;
+                        }
+
+                        // When the static string part between two interpolations
+                        // is only whitespace (e.g. `} - ${`), the `-` is a
+                        // binary subtraction from the previous interpolation's value.
+                        if (!previousNonWhitespace && i > 0) {
                             continue;
                         }
 

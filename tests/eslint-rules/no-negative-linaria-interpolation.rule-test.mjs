@@ -66,6 +66,19 @@ export const box = css\`
 `,
             },
             {
+                name: "multiple chained subtractions in calc are allowed",
+                filename: "/repo/src/button/button.styles.ts",
+                code: `import { css } from "@linaria/core";
+
+const a = "8px";
+const b = "4px";
+
+export const box = css\`
+    max-width: calc(100% - \${a} - \${b});
+\`;
+`,
+            },
+            {
                 name: "non-css tagged template is ignored",
                 filename: "/repo/src/button/button.styles.ts",
                 code: `const spacing = "8px";
