@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Radius, Spacing } from "../theme";
 
@@ -11,7 +11,7 @@ const fontColor = Colour["text"];
 // =============================================================================
 // STYLES
 // =============================================================================
-export const TableWrapper = styled.div`
+export const tableWrapper = css`
     overflow: auto;
     border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
     border-radius: ${Radius["md"]};
@@ -26,18 +26,14 @@ export const TableWrapper = styled.div`
     }
 `;
 
-TableWrapper.displayName = "Table.Container";
-
-export const TableComponent = styled.table`
+export const tableComponent = css`
     text-align: left;
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
 `;
 
-TableComponent.displayName = "Table.Table";
-
-export const TableBody = styled.tbody`
+export const tableBody = css`
     :where(tr:last-child) {
         td {
             border-bottom: none;
@@ -45,7 +41,7 @@ export const TableBody = styled.tbody`
     }
 `;
 
-export const HeaderCell = styled.th`
+export const headerCell = css`
     padding: ${Spacing["spacing-20"]} ${Spacing["spacing-16"]};
     text-align: left;
     cursor: default;
@@ -63,12 +59,12 @@ export const HeaderCell = styled.th`
     }
 `;
 
-export const BodyRow = styled.tr`
+export const bodyRow = css`
     background-color: ${Colour["bg"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
 `;
 
-export const BodyCell = styled.td`
+export const bodyCell = css`
     padding: ${Spacing["spacing-20"]} ${Spacing["spacing-16"]};
     vertical-align: middle;
     color: ${fontColor};
