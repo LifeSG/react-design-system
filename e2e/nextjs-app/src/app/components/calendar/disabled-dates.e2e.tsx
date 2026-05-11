@@ -11,7 +11,7 @@ export default function Story() {
     return (
         <div className="story-column-container">
             <Calendar
-                data-testid="calendar-disabled-dates"
+                data-testid="calendar"
                 value={selectedDate}
                 disabledDates={DISABLED_DATES}
                 onChange={setSelectedDate}

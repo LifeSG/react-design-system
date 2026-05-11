@@ -11,6 +11,8 @@ export default function Story() {
             <Calendar
                 data-testid="calendar"
                 value={selectedDate}
+                minDate="2026-04-10"
+                maxDate="2026-04-20"
                 onChange={setSelectedDate}
             />
             <p data-testid="selected-value">{selectedDate || "none"}</p>

@@ -9,7 +9,7 @@ export default function Story() {
     return (
         <div className="story-column-container">
             <Calendar
-                data-testid="calendar-default-multi"
+                data-testid="calendar"
                 variant="multi"
                 values={selectedValues}
                 onChange={setSelectedValues}
