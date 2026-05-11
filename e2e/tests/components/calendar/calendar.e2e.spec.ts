@@ -201,6 +201,7 @@ test.describe("Calendar", () => {
             await expect(story.locators.selectedValue).toHaveText("2026-04-11");
         });
     });
+
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("active-month-only", {
@@ -208,7 +209,7 @@ test.describe("Calendar", () => {
             });
         });
 
-        test("Active month only", async ({ story }) => {
+        test("Active Month Only", async ({ story }) => {
             await expect(
                 story.page.getByRole("gridcell", {
                     name: /March 2026/i,
@@ -216,6 +217,20 @@ test.describe("Calendar", () => {
             ).toHaveCount(0);
 
             await compareScreenshot(story, "active-month-only");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("no-border", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("No Border Variant", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
         });
     });
 });
