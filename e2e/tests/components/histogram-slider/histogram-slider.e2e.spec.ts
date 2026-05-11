@@ -15,6 +15,8 @@ class StoryPage extends AbstractStoryPage {
         formDisabledBase: Locator;
         formReadonly: Locator;
         formReadonlyBase: Locator;
+        formError: Locator;
+        formErrorBase: Locator;
         standaloneDefault: Locator;
         standaloneDisabled: Locator;
         standaloneReadonly: Locator;
@@ -47,6 +49,8 @@ class StoryPage extends AbstractStoryPage {
             formReadonlyBase: page.getByTestId(
                 "form-histogram-slider-readonly-base"
             ),
+            formError: page.getByTestId("form-histogram-slider-error"),
+            formErrorBase: page.getByTestId("form-histogram-slider-error-base"),
             standaloneDefault: page.getByTestId("histogram-slider-default"),
             standaloneDisabled: page.getByTestId("histogram-slider-disabled"),
             standaloneReadonly: page.getByTestId("histogram-slider-readonly"),
@@ -166,9 +170,49 @@ test.describe("HistogramSlider", () => {
             }) => {
                 await compareScreenshot(story, "mount");
 
+                await expect(story.locators.formDefaultBase)
+                    .toMatchAriaSnapshot(`
+                        - group:
+                            - group "Default":
+                                - text: Use left and right arrow keys to adjust the slider. 68% of results available in the range you specified.Minimum value
+                                - slider "Default Minimum value": "2"
+                                - text: 68% of results available in the range you specified.Maximum value
+                                - slider "Default Maximum value": "4"
+                    `);
+
+                await expect(story.locators.formDisabledBase)
+                    .toMatchAriaSnapshot(`
+                        - group:
+                            - group "Disabled" [disabled]:
+                                - text: 68% of results available in the range you specified.Minimum value
+                                - slider "Disabled Minimum value" [disabled]: "2"
+                                - text: 68% of results available in the range you specified.Maximum value
+                                - slider "Disabled Maximum value" [disabled]: "4"
+                    `);
+
+                await expect(story.locators.formReadonlyBase)
+                    .toMatchAriaSnapshot(`
+                        - group:
+                            - group "Readonly":
+                                - text: 68% of results available in the range you specified.Minimum value
+                                - slider "Readonly Minimum value": "2"
+                                - text: 68% of results available in the range you specified.Maximum value
+                                - slider "Readonly Maximum value": "4"
+                    `);
+
+                await expect(story.locators.formErrorBase).toMatchAriaSnapshot(`
+                        - group:
+                            - group "Error":
+                                - text: Use left and right arrow keys to adjust the slider. 68% of results available in the range you specified.Minimum value
+                                - slider "Error Minimum value": "2"
+                                - text: 68% of results available in the range you specified.Maximum value
+                                - slider "Error Maximum value": "4"
+                    `);
+
                 await story.hasRangeDescription(story.locators.formDefault);
                 await story.hasRangeDescription(story.locators.formDisabled);
                 await story.hasRangeDescription(story.locators.formReadonly);
+                await story.hasRangeDescription(story.locators.formError);
             });
         });
 
@@ -246,68 +290,6 @@ test.describe("HistogramSlider", () => {
 
         test("Grid layout", async ({ story }) => {
             await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe("Bar colour states", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("form-variants-prefilled");
-        });
-
-        test("Bar colour states", async ({ story }) => {
-            await test.step("Default — unselected and selected bars", async () => {
-                await compareScreenshot(story, "bars-default", {
-                    locator: story.locators.formDefault,
-                });
-
-                await expect(story.locators.formDefaultBase)
-                    .toMatchAriaSnapshot(`
-                        - group:
-                            - group "Default":
-                                - text: Use left and right arrow keys to adjust the slider. 68% of results available in the range you specified.Minimum value
-                                - slider "Default Minimum value": "2"
-                                - text: 68% of results available in the range you specified.Maximum value
-                                - slider "Default Maximum value": "4"
-                    `);
-
-                await story.hasRangeDescription(story.locators.formDefault);
-            });
-
-            await test.step("Disabled — all bars use disabled colour", async () => {
-                await compareScreenshot(story, "bars-disabled", {
-                    locator: story.locators.formDisabled,
-                });
-
-                await expect(story.locators.formDisabledBase)
-                    .toMatchAriaSnapshot(`
-                        - group:
-                            - group "Disabled" [disabled]:
-                                - text: 68% of results available in the range you specified.Minimum value
-                                - slider "Disabled Minimum value" [disabled]: "2"
-                                - text: 68% of results available in the range you specified.Maximum value
-                                - slider "Disabled Maximum value" [disabled]: "4"
-                    `);
-
-                await story.hasRangeDescription(story.locators.formDisabled);
-            });
-
-            await test.step("Readonly — all bars use disabled colour", async () => {
-                await compareScreenshot(story, "bars-readonly", {
-                    locator: story.locators.formReadonly,
-                });
-
-                await expect(story.locators.formReadonlyBase)
-                    .toMatchAriaSnapshot(`
-                        - group:
-                            - group "Readonly":
-                                - text: 68% of results available in the range you specified.Minimum value
-                                - slider "Readonly Minimum value": "2"
-                                - text: 68% of results available in the range you specified.Maximum value
-                                - slider "Readonly Maximum value": "4"
-                    `);
-
-                await story.hasRangeDescription(story.locators.formReadonly);
-            });
         });
     });
 

@@ -37,6 +37,17 @@ export default function Story() {
                 ariaLabels={["Minimum value", "Maximum value"]}
                 data-testid="form-histogram-slider-readonly"
             />
+            <Form.HistogramSlider
+                bins={MOCK_BINS}
+                interval={1}
+                errorMessage="This is the error state"
+                label={{
+                    children: "Error",
+                    subtitle: "This is the subtitle",
+                }}
+                ariaLabels={["Minimum value", "Maximum value"]}
+                data-testid="form-histogram-slider-error"
+            />
         </div>
     );
 }
