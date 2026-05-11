@@ -220,6 +220,68 @@ test.describe("Calendar", () => {
         });
     });
 
+    test.describe("Focused & Hovered States", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default-single", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Focus on active date", async ({ story }) => {
+                await story.getDayCell(15).focus();
+
+                await compareScreenshot(story, "state");
+            });
+
+            test("Focus on today date", async ({ story }) => {
+                await story.getDayCell(8).focus();
+
+                await compareScreenshot(story, "state");
+            });
+
+            test("Focus on selected date", async ({ story }) => {
+                await story.getDayCell(15).click();
+                await story.getDayCell(15).focus();
+
+                await compareScreenshot(story, "state");
+            });
+
+            test("Hover on previous month date", async ({ story }) => {
+                await story.page
+                    .getByRole("gridcell", {
+                        name: "31 March 2026 Tuesday, Available",
+                    })
+                    .first()
+                    .hover();
+
+                await compareScreenshot(story, "state");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("disabled-dates", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Focus on disabled date", async ({ story }) => {
+                await story.getDayCell(15, "Unavailable").focus();
+
+                await compareScreenshot(story, "state");
+            });
+
+            test("Hover on disabled date", async ({ story }) => {
+                await story
+                    .getDayCell(15, "Unavailable")
+                    .hover({ force: true });
+
+                await compareScreenshot(story, "state");
+            });
+        });
+    });
+
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("no-border", {
