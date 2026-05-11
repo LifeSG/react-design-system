@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { V3_Colour } from "../v3_theme";
+import { Colour } from "../theme";
 
 //=============================================================================
 // STYLING
 //=============================================================================
-export const Container = styled.ul`
+export const container = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -13,9 +13,9 @@ export const Container = styled.ul`
     list-style: none;
 `;
 
-export const Divider = styled.li`
+export const divider = css`
     margin-top: 1rem;
     width: 6.5rem;
     height: 1px;
-    background-color: ${V3_Colour.border};
+    background-color: ${Colour["border"]};
 `;

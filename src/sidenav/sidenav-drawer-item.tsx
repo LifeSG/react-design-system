@@ -1,17 +1,13 @@
-import { useSpring } from "@react-spring/web";
+import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
+import { animated, useSpring } from "@react-spring/web";
+import clsx from "clsx";
 import type { HTMLAttributes } from "react";
 import { useContext, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { BasicButton } from "../shared/input-wrapper";
 import { SidenavContext } from "./sidenav-context";
-import {
-    ChevronIcon,
-    Container,
-    DrawerContent,
-    DrawerSubitemContainer,
-    LinkButton,
-    TextElement,
-} from "./sidenav-drawer-item.styles";
+import * as styles from "./sidenav-drawer-item.styles";
 import type { SidenavDrawerItemProps } from "./types";
 
 export const SidenavDrawerItem = ({
@@ -19,13 +15,13 @@ export const SidenavDrawerItem = ({
     title,
     onClick,
     children,
+    className,
     ...otherProps
 }: SidenavDrawerItemProps) => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
     const [expanded, setExpanded] = useState<boolean>(true);
-    const [highlight, setHighlight] = useState<boolean>(false);
     const {
         currentItem,
         setSelectedItem,
@@ -49,14 +45,6 @@ export const SidenavDrawerItem = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleMouseEnter = () => {
-        setHighlight(true);
-    };
-
-    const handleMouseLeave = () => {
-        setHighlight(false);
-    };
-
     const handleOnClick = () => {
         if (children) {
             setExpanded(!expanded);
@@ -81,27 +69,40 @@ export const SidenavDrawerItem = ({
         : {};
 
     return (
-        <Container
-            onMouseEnter={handleMouseEnter}
-            onMouseLeave={handleMouseLeave}
+        <animated.li
             {...otherProps}
+            className={className}
             style={containerAnimationProps}
         >
-            <LinkButton
+            <BasicButton
                 type="button"
                 onClick={handleOnClick}
-                $highlight={highlight && expanded}
-                $noChildren={!children}
+                className={clsx(
+                    styles.linkButton,
+                    !children && styles.linkButtonNoChildren
+                )}
                 {...ariaControlProps}
             >
-                <TextElement>{title}</TextElement>
-                {children && <ChevronIcon aria-hidden $expanded={expanded} />}
-            </LinkButton>
-            <DrawerSubitemContainer style={contentAnimationProps}>
-                <DrawerContent id={subitemId} ref={childRef}>
+                <span className={styles.textElement}>{title}</span>
+                {children && (
+                    <ChevronUpIcon
+                        aria-hidden
+                        className={clsx(
+                            styles.chevronIcon,
+                            expanded && styles.chevronIconExpanded
+                        )}
+                    />
+                )}
+            </BasicButton>
+            <animated.div
+                data-testid="drawer-subitem-container"
+                className={styles.drawerSubitemContainer}
+                style={contentAnimationProps}
+            >
+                <ul id={subitemId} ref={childRef}>
                     {children}
-                </DrawerContent>
-            </DrawerSubitemContainer>
-        </Container>
+                </ul>
+            </animated.div>
+        </animated.li>
     );
 };
