@@ -20,6 +20,7 @@ export default function Story() {
                     type: "popover",
                     content: "More info about this filter item",
                 }}
+                showMobileDivider={false}
             >
                 <Typography.BodySM>Search content</Typography.BodySM>
             </Filter.Item>
