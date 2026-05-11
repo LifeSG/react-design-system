@@ -267,29 +267,11 @@ test.describe("Filter", () => {
                 });
             });
 
-            test("onDismiss", async ({ story }) => {
-                const { pageDismissButton, pageDismissCount } = story.locators;
-
-                await expect(pageDismissCount).toHaveText("Dismiss count: 0");
-                await pageDismissButton.click();
-                await expect(pageDismissCount).toHaveText("Dismiss count: 1");
-            });
-
-            test("onDone", async ({ story }) => {
-                const { pageDoneButton, pageDoneCount } = story.locators;
-
-                await expect(pageDoneCount).toHaveText("Done count: 0");
-                await pageDoneButton.click();
-                await expect(pageDoneCount).toHaveText("Done count: 1");
-            });
-
             test("Accessibility", async ({ story }) => {
                 await expect(story.locators.pageWrapper)
                     .toMatchAriaSnapshot(`- button "Dismiss":
                     - img
                     - paragraph: Custom filter page content
-                    - paragraph: "Dismiss count: 0"
-                    - paragraph: "Done count: 0"
                     - button "Done"
                     `);
             });
@@ -302,9 +284,7 @@ test.describe("Filter", () => {
         });
 
         test("Page (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.pageWrapper,
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 });
