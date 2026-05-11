@@ -6,23 +6,22 @@ import type { TextListSize } from "./types";
 export const tokens = {
     listBottomMargin: "--fds-internal-textList-list-bottomMargin",
     orderedListCounterStyle: "--fds-internal-textList-orderedList-counterStyle",
-    orderedListCounterSeparator:
-        "--fds-internal-textList-orderedList-counterSeparator",
+    orderedListCounterSeparator: "--fds-internal-textList-orderedList-counterSeparator",
     orderedListStartValue: "--fds-internal-textList-orderedList-startValue",
     unorderedListBulletType: "--fds-internal-textList-unorderedList-bulletType",
 };
 
 export const listBase = css`
     ${tokens.listBottomMargin}: 0rem;
+
     margin-bottom: var(${tokens.listBottomMargin});
-
-    // Counter matters
-    counter-reset: list;
-
     font-weight: ${Font.Spec["weight-regular"]};
     color: ${Colour.text};
 
-    // nested lists styling
+    /* Counter matters */
+    counter-reset: list;
+
+    /* nested lists styling */
     ol,
     ul {
         margin-top: 0.5rem;
@@ -64,6 +63,7 @@ export const listSize: Record<TextListSize, string> = {
 };
 
 export const orderedList = css`
+    ${tokens.orderedListCounterStyle}: decimal;
     ${tokens.orderedListCounterSeparator}: ")";
 
     margin-left: 3em;
@@ -78,21 +78,20 @@ export const orderedList = css`
         position: relative;
     }
 
-    li:before {
-        counter-increment: list;
-        content: counter(list, var(${tokens.orderedListCounterStyle}, decimal))
-            var(${tokens.orderedListCounterSeparator});
+    li::before {
         position: absolute;
         left: -2em;
+        content: counter(list, var(${tokens.orderedListCounterStyle})) var(${tokens.orderedListCounterSeparator});
+        counter-increment: list;
     }
 
-    ul > li:before {
+    ul > li::before {
         content: "";
     }
 `;
 
 export const orderedListReversed = css`
-    li:before {
+    li::before {
         counter-increment: list -1;
     }
 `;
@@ -112,7 +111,7 @@ export const unorderedListCustomIcon = css`
 
     & > li {
         display: flex;
-        align-items: flex-start;
         gap: 0.5em;
+        align-items: flex-start;
     }
 `;

@@ -10,16 +10,16 @@ export const labelContainer = css`
 `;
 
 export const label = css`
-    color: ${Colour["text-subtle"]};
     display: inline-block;
     ${Font["form-label"]}
     font-weight: ${Font.Spec["weight-semibold"]};
+    color: ${Colour["text-subtle"]};
 `;
 
 export const errorIcon = css`
-    height: 1lh;
-    width: 1em;
     flex-shrink: 0;
+    width: 1em;
+    height: 1lh;
     color: ${Colour["icon-error-strong"]};
 `;
 
@@ -31,14 +31,14 @@ export const errorMessageContainer = css`
 `;
 
 export const errorMessage = css`
-    color: ${Colour["text-error"]};
     ${Font["body-sm-semibold"]}
     margin-bottom: 0;
+    color: ${Colour["text-error"]};
     outline: none;
 `;
 
 export const subtitle = css`
     ${Font["form-description"]}
-    color: ${Colour["text-subtler"]};
     display: block;
+    color: ${Colour["text-subtler"]};
 `;

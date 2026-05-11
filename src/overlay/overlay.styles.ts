@@ -16,12 +16,12 @@ export const tokens = {
 
 export const root = css`
     position: fixed;
-    left: 0;
     top: 0;
-    height: 0;
-    width: 0;
-    visibility: hidden;
+    left: 0;
     z-index: var(${tokens.root.zIndex});
+    visibility: hidden;
+    width: 0;
+    height: 0;
 
     :global() {
         .${tokens.global.overlayOpenClass} {
@@ -44,15 +44,15 @@ export const root = css`
 `;
 
 export const rootShow = css`
-    height: 100%;
-    width: 100vw;
     visibility: visible;
+    width: 100vw;
+    height: 100%;
 `;
 
 export const wrapper = css`
     position: absolute;
-    left: 0;
     top: 0;
+    left: 0;
     background-color: ${Colour["overlay-strong"]};
     backdrop-filter: none;
     transition: opacity 200ms ease;
@@ -68,19 +68,19 @@ export const wrapperBackgroundBlur = css`
 
 export const wrapperShow = css`
     visibility: visible;
-    opacity: 1;
-    pointer-events: auto;
-    height: 100%;
     width: 100vw;
+    height: 100%;
+    pointer-events: auto;
+    opacity: 1;
 `;
 
 export const wrapperHide = css`
     visibility: hidden;
+    width: 0;
+    height: 0;
+    pointer-events: none;
     opacity: 0;
     transition-delay: 400ms;
-    pointer-events: none;
-    height: 0;
-    width: 0;
 `;
 
 export const wrapperDisableTransition = css`

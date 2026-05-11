@@ -1,14 +1,6 @@
 import { css } from "@linaria/core";
 
-import {
-    Border,
-    Colour,
-    Font,
-    MediaQuery,
-    Motion,
-    Radius,
-    Spacing,
-} from "../theme";
+import { Border, Colour, Font, MediaQuery, Motion, Radius, Spacing } from "../theme";
 
 export const handleIconContainer = css`
     transition: ${Motion["duration-250"]} ${Motion["ease-default"]};
@@ -23,9 +15,9 @@ export const handleIconContainerCollapsed = css`
 `;
 
 export const container = css`
+    margin-bottom: ${Spacing["spacing-32"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
-    margin-bottom: ${Spacing["spacing-32"]};
 `;
 
 export const expandable = css`
@@ -41,14 +33,14 @@ export const childContainer = css`
 `;
 
 export const header = css`
-    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
     display: flex;
     align-items: center;
     justify-content: space-between;
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
 
     ${MediaQuery.MaxWidth.sm} {
-        padding: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
         display: block;
+        padding: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
     }
 `;
 
@@ -58,12 +50,11 @@ export const headerInteractive = css`
 
 export const labelText = css`
     ${Font["heading-sm-semibold"]}
-    color: ${Colour["text"]};
-    word-wrap: break-word;
-    overflow-wrap: anywhere;
     display: flex;
     align-items: center;
     margin-right: ${Spacing["spacing-16"]};
+    color: ${Colour["text"]};
+    overflow-wrap: anywhere;
 `;
 
 export const labelWrapper = css`
@@ -71,11 +62,11 @@ export const labelWrapper = css`
 `;
 
 export const alertIcon = css`
-    height: ${Font.Spec["heading-size-sm"]};
-    width: ${Font.Spec["heading-size-sm"]};
-    align-self: center;
-    margin-right: ${Spacing["spacing-40"]};
     flex-shrink: 0;
+    align-self: center;
+    width: ${Font.Spec["heading-size-sm"]};
+    height: ${Font.Spec["heading-size-sm"]};
+    margin-right: ${Spacing["spacing-40"]};
 
     ${MediaQuery.MaxWidth.sm} {
         margin-right: 0;
@@ -103,30 +94,31 @@ export const callToActionContainerCollapsible = css`
     margin-right: ${Spacing["spacing-40"]};
 
     ${MediaQuery.MaxWidth.sm} {
-        margin-right: 0;
         margin-top: ${Spacing["spacing-16"]};
+        margin-right: 0;
     }
 `;
 
 export const handle = css`
-    background: transparent;
-    border: none;
-    cursor: pointer;
-    padding: ${Spacing["spacing-16"]};
-    margin: calc(${Spacing["spacing-16"]} * -1);
     display: flex;
     align-items: center;
+    padding: ${Spacing["spacing-16"]};
+    margin: calc(${Spacing["spacing-16"]} * -1);
+    cursor: pointer;
+    background: transparent;
+    border: none;
 
     ${MediaQuery.MaxWidth.sm} {
-        margin: calc(${Spacing["spacing-16"]} * -1)
-            calc(${Spacing["spacing-16"]} * -1)
-            calc(${Spacing["spacing-16"]} * -1) 0;
+        margin-top: calc(${Spacing["spacing-16"]} * -1);
+        margin-right: calc(${Spacing["spacing-16"]} * -1);
+        margin-bottom: calc(${Spacing["spacing-16"]} * -1);
+        /* stylelint-disable-next-line declaration-block-no-redundant-longhand-properties */
         margin-left: auto;
     }
 `;
 
 export const handleIcon = css`
-    color: ${Colour["icon"]};
-    height: ${Font.Spec["heading-size-sm"]};
     width: ${Font.Spec["heading-size-sm"]};
+    height: ${Font.Spec["heading-size-sm"]};
+    color: ${Colour["icon"]};
 `;

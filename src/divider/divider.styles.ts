@@ -13,20 +13,25 @@ export const tokens = {
 } as const;
 
 export const lineBase = css`
+    ${tokens.thickness}: initial;
+    ${tokens.color}: initial;
+
     width: 100%;
+    height: var(${tokens.thickness}, 1px);
     margin: 0;
     border: none;
-    ${tokens.thickness}: initial;
-    height: var(${tokens.thickness}, 1px);
 `;
 
 export const solidLine = css`
     ${tokens.color}: initial;
+
     background-color: var(${tokens.color}, ${Colour.border});
 `;
 
 export const dashedLine = css`
+    ${tokens.backgroundImage}: initial;
+
     background-color: transparent;
-    background-repeat: repeat-x;
     background-image: var(${tokens.backgroundImage});
+    background-repeat: repeat-x;
 `;

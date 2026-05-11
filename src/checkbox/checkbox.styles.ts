@@ -11,16 +11,16 @@ export const icon = css`
         0% {
             opacity: 0;
         }
+
         100% {
             opacity: 1;
         }
     }
 
-    animation: ${Motion["duration-150"]} ${Motion["ease-default"]}
-        checkbox-icon-fade-in;
     width: 100%;
     height: 100%;
     transition: color ${Motion["duration-150"]} ${Motion["ease-default"]};
+    animation: ${Motion["duration-150"]} ${Motion["ease-default"]} checkbox-icon-fade-in;
 `;
 
 export const uncheckedIcon = css`
@@ -36,31 +36,31 @@ export const iconDisabled = css`
 `;
 
 export const container = css`
-    display: flex;
-    justify-content: center;
-    align-items: center;
     position: relative;
-    height: 2rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     width: 2rem;
+    height: 2rem;
 
     input:focus-visible + svg {
         outline: 2px solid ${Colour["focus-ring"]};
-        outline-offset: 0px;
+        outline-offset: 0;
         border-radius: 4px;
     }
 `;
 
 export const containerSmall = css`
-    height: 1.5rem;
     width: 1.5rem;
+    height: 1.5rem;
 `;
 
 export const input = css`
     position: absolute;
-    opacity: 0;
     width: 100%;
     height: 100%;
     cursor: pointer;
+    opacity: 0;
 `;
 
 export const inputActive = css`

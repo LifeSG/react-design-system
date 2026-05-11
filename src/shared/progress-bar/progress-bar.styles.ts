@@ -12,11 +12,10 @@ export const bar = css`
     width: 100%;
     height: 8px;
     background: transparent;
-
+    border-color: var(${tokens.barColour});
     border-style: ${Border["solid"]};
     border-width: ${Border["width-010"]};
     border-radius: ${Radius["sm"]};
-    border-color: var(${tokens.barColour});
 
     progress {
         position: absolute;
@@ -27,14 +26,14 @@ export const bar = css`
         opacity: 0;
     }
 
-    &:after {
-        content: "";
+    &::after {
         position: absolute;
         top: 0;
         bottom: 0;
         left: 0;
-        border-radius: inherit;
-        background: var(${tokens.barColour});
         width: var(${tokens.barWidth});
+        content: "";
+        background: var(${tokens.barColour});
+        border-radius: inherit;
     }
 `;

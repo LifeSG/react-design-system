@@ -3,11 +3,11 @@ import { css } from "@linaria/core";
 import { Colour, MediaQuery, Spacing } from "../theme";
 
 export const container = css`
+    position: relative;
     display: flex;
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    position: relative;
 `;
 
 export const img = css`
@@ -52,8 +52,8 @@ export const descriptionContainer = css`
 `;
 
 export const actionButton = css`
-    margin: ${Spacing["spacing-32"]} auto 0;
     width: 21rem;
+    margin: ${Spacing["spacing-32"]} auto 0;
 
     ${MediaQuery.MaxWidth.sm} {
         width: 100%;

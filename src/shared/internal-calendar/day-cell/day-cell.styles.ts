@@ -3,10 +3,10 @@ import { css } from "@linaria/core";
 import { Border, Colour, Font, Motion, Radius } from "../../../theme/tokens";
 
 export const cell = css`
+    position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    position: relative;
     width: 100%;
     height: 2.5rem;
 `;
@@ -155,12 +155,12 @@ export const label = css`
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 2.5rem;
     width: 2.5rem;
+    height: 2.5rem;
+    color: ${Colour["text"]};
+    pointer-events: none;
     ${Font["body-md-regular"]}
     transition: ${Motion["duration-150"]} ${Motion["ease-default"]};
-    pointer-events: none;
-    color: ${Colour["text"]};
 
     &[data-day-cell-state="interactive"] {
         pointer-events: auto;
@@ -205,9 +205,9 @@ export const label = css`
 
 export const indicator = css`
     position: absolute;
+    bottom: 4px;
     width: 4px;
     height: 4px;
-    background-color: currentColor;
+    background-color: currentcolor;
     border-radius: 100%;
-    bottom: 4px;
 `;

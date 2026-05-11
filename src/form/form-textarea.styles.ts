@@ -11,8 +11,8 @@ export const labelContainer = css`
 export const errorMessageContainer = css`
     display: flex;
     flex: 1;
-    margin-right: ${Spacing["spacing-12"]};
     gap: ${Spacing["spacing-4"]};
+    margin-right: ${Spacing["spacing-12"]};
 `;
 
 export const errorMessageLabel = css`

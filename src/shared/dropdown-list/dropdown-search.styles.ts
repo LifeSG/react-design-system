@@ -7,10 +7,10 @@ import { Colour, Font, Radius, Spacing } from "../../theme";
 // =============================================================================
 
 export const container = css`
-    background: ${Colour["bg-strong"]};
-    border-radius: ${Radius["sm"]};
     display: flex;
     align-items: center;
+    background: ${Colour["bg-strong"]};
+    border-radius: ${Radius["sm"]};
     ${Font["body-baseline-regular"]}
 `;
 
@@ -19,10 +19,10 @@ export const containerVariantSmall = css`
 `;
 
 export const searchBox = css`
-    flex: 1;
     display: flex;
-    align-items: center;
+    flex: 1;
     gap: ${Spacing["spacing-8"]};
+    align-items: center;
     padding: 10px ${Spacing["spacing-8"]};
 `;
 
@@ -35,25 +35,25 @@ export const searchInput = css`
 `;
 
 export const searchIcon = css`
-    color: ${Colour["icon"]};
     flex-shrink: 0;
-    height: 1em;
     width: 1em;
+    height: 1em;
+    color: ${Colour["icon"]};
 `;
 
 export const clearButton = css`
+    box-sizing: content-box;
     flex-shrink: 0;
     align-self: stretch;
-    box-sizing: content-box;
     padding: ${Spacing["spacing-8"]};
-    margin-left: -${Spacing["spacing-8"]};
+    margin-left: calc(${Spacing["spacing-8"]} * -1);
+    font-size: inherit;
     color: ${Colour["icon"]};
     cursor: pointer;
-    font-size: inherit;
 
     svg {
         flex-shrink: 0;
-        height: 1em;
         width: 1em;
+        height: 1em;
     }
 `;

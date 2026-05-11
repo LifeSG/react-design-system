@@ -12,13 +12,13 @@ export const wrapper = css`
 `;
 
 export const fade = css`
-    width: 64px;
-    height: 100%;
-    top: 0;
     position: absolute;
-    pointer-events: none;
+    top: 0;
     display: flex;
     align-items: center;
+    width: 64px;
+    height: 100%;
+    pointer-events: none;
 `;
 
 export const fadeLeft = css`
@@ -28,7 +28,7 @@ export const fadeLeft = css`
         background-image: linear-gradient(
             to right,
             var(${tokens.backgroundColor}, ${Colour.bg}),
-            rgba(255, 255, 255, 0.001)
+            rgb(255 255 255 / 0.1%)
         );
     }
 `;
@@ -40,7 +40,7 @@ export const fadeRight = css`
         background-image: linear-gradient(
             to left,
             var(${tokens.backgroundColor}, ${Colour.bg}),
-            rgba(255, 255, 255, 0.001)
+            rgb(255 255 255 / 0.1%)
         );
     }
 `;
@@ -49,8 +49,7 @@ export const content = css`
     position: relative;
     width: 100%;
     height: 100%;
-    overflow-x: scroll;
-    overflow-y: hidden;
+    overflow: scroll hidden;
     white-space: nowrap;
     scrollbar-width: none; /* Firefox */
     -ms-overflow-style: none; /* IE 10+ */
@@ -64,10 +63,10 @@ export const fadeIndicatorButton = css`
 
     ${MediaQuery.MaxWidth.lg} {
         display: flex;
-        height: 100%;
-        width: 100%;
-        padding: unset;
         align-items: center;
+        width: 100%;
+        height: 100%;
+        padding: unset;
 
         svg {
             color: ${Colour["icon"]};

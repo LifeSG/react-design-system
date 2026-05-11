@@ -11,10 +11,6 @@ export const tokens = {
     },
 } as const;
 
-// =============================================================================
-// STYLING
-// =============================================================================
-
 export const headerContainer = css`
     display: flex;
     align-items: flex-start;
@@ -24,10 +20,10 @@ export const headerContainer = css`
 export const textContainer = css`
     display: flex;
     flex-direction: column;
-    overflow-wrap: anywhere;
     width: 100%;
     overflow: hidden;
     color: ${Colour.text};
+    overflow-wrap: anywhere;
 `;
 
 export const toggleTextContainerSelected = css`
@@ -41,14 +37,14 @@ export const toggleTextContainerDisabledSelected = css`
 export const container = css`
     position: relative;
     display: inline-flex;
-    min-width: 10.375rem;
-    border-radius: ${Radius["sm"]};
-    border-width: 1px;
-    border-style: solid;
-    overflow: hidden;
     flex-direction: column;
+    min-width: 10.375rem;
     height: fit-content;
+    overflow: hidden;
     background: ${Colour.bg};
+    border-style: solid;
+    border-width: 1px;
+    border-radius: ${Radius["sm"]};
 
     &:focus-within {
         outline: 2px solid ${Colour["focus-ring"]};
@@ -69,8 +65,8 @@ export const colorBorderError = css`
 `;
 
 export const toggleContainerNoBorderDisabledSelected = css`
-    border: none;
     background: ${Colour["bg-selected-disabled"]};
+    border: none;
 `;
 
 export const toggleContainerNoBorderDisabled = css`
@@ -78,8 +74,8 @@ export const toggleContainerNoBorderDisabled = css`
 `;
 
 export const toggleContainerNoBorderSelected = css`
-    border: none;
     background: ${Colour["bg-selected"]};
+    border: none;
 `;
 
 export const toggleContainerNoBorder = css`
@@ -91,18 +87,18 @@ export const toggleContainerError = css`
 `;
 
 export const toggleContainerDisabledSelected = css`
-    border-color: ${Colour["border-selected-disabled"]};
     background: ${Colour["bg-selected-disabled"]};
+    border-color: ${Colour["border-selected-disabled"]};
 `;
 
 export const toggleContainerDisabled = css`
-    border-color: ${Colour["border-disabled"]};
     background: ${Colour["bg-disabled"]};
+    border-color: ${Colour["border-disabled"]};
 `;
 
 export const toggleContainerSelected = css`
-    border-color: ${Colour["border-selected"]};
     background: ${Colour["bg-selected"]};
+    border-color: ${Colour["border-selected"]};
 `;
 
 export const toggleContainerHoverSelected = css`
@@ -135,17 +131,17 @@ export const toggleContainerHoverDefault = css`
 
 export const input = css`
     position: absolute;
-    height: 100%;
-    width: 100%;
-    cursor: pointer;
     top: 0;
     left: 0;
-    opacity: 0;
+    width: 100%;
+    height: 100%;
 
     /* Hide appearance but keep it focusable using keyboard interactions */
     appearance: none;
+    cursor: pointer;
     background: transparent;
     border: none;
+    opacity: 0;
 `;
 
 export const toggleInputDisabled = css`
@@ -157,20 +153,21 @@ export const inputContainer = css`
 `;
 
 export const label = css`
-    overflow: hidden;
-    display: -webkit-box;
-    text-overflow: ellipsis;
-    -webkit-box-orient: vertical;
-    overflow-wrap: break-word;
-
     ${tokens.label.desktopLineClamp}: initial;
     ${tokens.label.tabletLineClamp}: initial;
     ${tokens.label.mobileLineClamp}: initial;
 
+    display: -webkit-box;
+    overflow: hidden;
+    text-overflow: ellipsis;
     -webkit-line-clamp: var(${tokens.label.desktopLineClamp}, none);
+    overflow-wrap: break-word;
+    -webkit-box-orient: vertical;
+
     ${MediaQuery.MaxWidth.lg} {
         -webkit-line-clamp: var(${tokens.label.tabletLineClamp}, none);
     }
+
     ${MediaQuery.MaxWidth.sm} {
         -webkit-line-clamp: var(${tokens.label.mobileLineClamp}, none);
     }
@@ -186,10 +183,12 @@ export const toggleLabelSelected = css`
 
 export const subLabel = css`
     ${Font["body-md-regular"]}
+    /* forces sublabel to render above the input */
+    z-index: 1;
     margin-top: 0.5rem;
 
-    z-index: 1; // forces sublabel to render above the input
-    pointer-events: none; // to allow click events to be passed to the input
+    /* to allow click events to be passed to the input */
+    pointer-events: none;
 
     strong,
     b {
@@ -198,26 +197,26 @@ export const subLabel = css`
 `;
 
 export const indicatorLabelContainer = css`
-    display: flex;
-    height: 100%;
-    width: 100%;
     position: relative;
+    display: flex;
+    width: 100%;
+    height: 100%;
     padding: 0.6875rem 1rem;
 `;
 
 export const indicatorLabelContainerAddPadding = css`
-    padding: 0.6875rem 0rem 0.6875rem 1rem;
+    padding: 0.6875rem 0 0.6875rem 1rem;
 `;
 
 export const removeButton = css`
-    color: ${Colour["text-error"]};
-    white-space: nowrap;
     ${Font["body-md-semibold"]}
     height: fit-content;
     padding: 0.6875rem 1rem 0.6875rem 0.5rem;
-    border: none;
-    background: none;
+    color: ${Colour["text-error"]};
+    white-space: nowrap;
     cursor: pointer;
+    background: none;
+    border: none;
 `;
 
 export const disabledColorCursor = css`
@@ -226,16 +225,16 @@ export const disabledColorCursor = css`
 `;
 
 export const expandButton = css`
-    color: ${Colour["text-primary"]};
     ${Font["body-baseline-semibold"]}
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    border: none;
-    background-color: ${Colour.bg};
-    cursor: pointer;
-    padding: 0 1rem 0.6875rem 1rem;
     width: 100%;
+    padding: 0 1rem 0.6875rem;
+    color: ${Colour["text-primary"]};
+    cursor: pointer;
+    background-color: ${Colour.bg};
+    border: none;
 
     svg {
         width: 1em;
@@ -250,19 +249,19 @@ export const expandButtonPaddingTopRequired = css`
 
 export const errorContainer = css`
     width: 100%;
+    padding: 0.6875rem 1rem 0.5rem;
     color: ${Colour["text-error"]};
-    border: none;
-    background: ${Colour.bg};
     cursor: pointer;
-    padding: 0.6875rem 1rem 0.5rem 1rem;
+    background: ${Colour.bg};
+    border: none;
 `;
 
 export const children = css`
     padding: 0 1rem;
     padding-top: 0.6875rem;
     padding-bottom: 0.5rem;
-    background-color: ${Colour.bg};
     color: ${Colour.text};
+    background-color: ${Colour.bg};
 `;
 
 export const childrenIsFinalItem = css`

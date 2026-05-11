@@ -3,9 +3,9 @@ import { css } from "@linaria/core";
 import { Border, Colour, Radius, Shadow, Spacing } from "../theme";
 
 export const card = css`
-    border-radius: ${Radius["md"]};
-    background: ${Colour.bg};
     padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
+    background: ${Colour.bg};
+    border-radius: ${Radius["md"]};
 `;
 
 export const cardDarkMode = css`

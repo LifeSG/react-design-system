@@ -3,10 +3,10 @@ import { css } from "@linaria/core";
 import { Colour, Font } from "../../../theme";
 
 export const wrapper = css`
-    width: 100%;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     row-gap: 0.25rem;
+    width: 100%;
 `;
 
 export const headerCell = css`
@@ -14,14 +14,14 @@ export const headerCell = css`
     align-items: center;
     justify-content: center;
     height: 2.5rem;
-    pointer-events: none;
-    user-select: none;
 
     ${Font["body-sm-semibold"]}
     color: ${Colour["text"]};
+    pointer-events: none;
+    user-select: none;
 `;
 
 export const rowDayCell = css`
-    grid-column: 1 / -1;
     display: flex;
+    grid-column: 1 / -1;
 `;

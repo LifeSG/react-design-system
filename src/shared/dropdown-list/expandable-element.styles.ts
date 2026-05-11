@@ -8,8 +8,8 @@ import { Colour, Font, Motion, Spacing } from "../../theme";
 
 export const selector = css`
     display: flex;
-    align-items: center;
     gap: ${Spacing["spacing-8"]};
+    align-items: center;
     width: 100%;
 
     ${Font["body-baseline-regular"]}
@@ -44,9 +44,9 @@ export const iconContainer = css`
     transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
 
     svg {
-        color: ${Colour["icon"]};
-        height: 1em;
         width: 1em;
+        height: 1em;
+        color: ${Colour["icon"]};
     }
 `;
 

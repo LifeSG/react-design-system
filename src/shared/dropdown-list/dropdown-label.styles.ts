@@ -20,9 +20,9 @@ export const tokens = {
 // PRIMARY TEXT
 // -----------------------------------------------------------------------------
 export const primaryText = css`
+    width: 100%;
     font-weight: ${Font.Spec["weight-regular"]};
     color: ${Colour["text"]};
-    width: 100%;
     overflow-wrap: break-word;
 `;
 
@@ -51,8 +51,8 @@ export const primaryTextTruncateEnd = css`
 // SECONDARY TEXT
 // -----------------------------------------------------------------------------
 export const secondaryText = css`
-    color: ${Colour["text-subtlest"]};
     width: 100%;
+    color: ${Colour["text-subtlest"]};
     overflow-wrap: break-word;
 `;
 
@@ -85,9 +85,9 @@ export const matchedText = css`
 // LABEL
 // -----------------------------------------------------------------------------
 export const label = css`
-    text-align: left;
     width: 100%;
     overflow: hidden;
+    text-align: left;
     overflow-wrap: break-word;
     ${Font["body-baseline-regular"]}
 `;
@@ -117,9 +117,9 @@ export const truncateFirstLine = css`
 
 export const truncateSecondLine = css`
     text-overflow: ellipsis;
+    text-align: right;
     white-space: nowrap;
     direction: rtl;
-    text-align: right;
 `;
 
 export const truncateLineSingle = css`

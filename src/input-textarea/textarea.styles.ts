@@ -8,24 +8,22 @@ export const wrapper = css`
 `;
 
 export const element = css`
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    border-radius: ${Radius["sm"]};
-    background: ${Colour.bg};
-    outline: none;
-    overflow: auto;
-
     display: block;
-    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     width: 100%;
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+    overflow: auto;
 
     ${Font["body-baseline-regular"]}
     color: ${Colour["text"]};
+    outline: none;
+    background: ${Colour.bg};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
 
     &:focus,
     &:active {
+        outline: ${Border["width-020"]} ${Border["solid"]} ${Colour["border-focus"]};
         outline-offset: -1px;
-        outline: ${Border["width-020"]} ${Border["solid"]}
-            ${Colour["border-focus"]};
     }
 
     &::placeholder,
@@ -43,16 +41,16 @@ export const element = css`
 
     &::-webkit-scrollbar-thumb {
         background: ${Colour["bg-inverse-subtlest"]};
+        background-clip: padding-box;
         border: 5px solid transparent;
         border-radius: ${Radius["full"]};
-        background-clip: padding-box;
     }
 `;
 
 export const elementReadOnly = css`
-    border-color: transparent;
-    background: transparent !important;
     padding: ${Spacing["spacing-12"]} 0;
+    background: transparent !important;
+    border-color: transparent;
 
     &:focus,
     &:active {
@@ -61,8 +59,8 @@ export const elementReadOnly = css`
 `;
 
 export const elementDisabled = css`
-    background: ${Colour["bg-disabled"]};
     cursor: not-allowed;
+    background: ${Colour["bg-disabled"]};
 
     &:focus,
     &:active {

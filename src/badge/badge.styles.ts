@@ -31,23 +31,22 @@ export const badgeOverlay = css`
 export const badgeWrapper = css``;
 
 export const badgeWrapperIsOverlay = css`
+    ${tokens.wrapper.offsetX}: 0px;
+    ${tokens.wrapper.offsetY}: 0px;
+
     position: absolute;
     top: 0;
     right: 0;
-    transform: translate(50%, -25%)
-        translate(
-            var(${tokens.wrapper.offsetX}, 0px),
-            var(${tokens.wrapper.offsetY}, 0px)
-        );
+    transform: translate(50%, -25%) translate(var(${tokens.wrapper.offsetX}), var(${tokens.wrapper.offsetY}));
 `;
 
 export const badge = css`
-    background-color: ${Colour["bg-primary"]};
-    color: ${Colour["text-inverse"]};
     display: flex;
     align-items: center;
     justify-content: center;
     width: fit-content;
+    color: ${Colour["text-inverse"]};
+    background-color: ${Colour["bg-primary"]};
 
     &[data-variant="number"] {
         ${numberBadgeStyles}
@@ -70,14 +69,14 @@ export const badge = css`
     }
 
     &[data-variant="square-number"] {
+        padding: 0.25rem 0.4375rem;
         ${numberBadgeStyles}
         border-radius: ${Radius.sm};
-        padding: 0.25rem 0.4375rem;
     }
 
     &[data-variant="square-number"][data-color="default"] {
-        background-color: ${Colour["bg-primary-subtler"]};
         color: ${Colour["text-primary"]};
+        background-color: ${Colour["bg-primary-subtler"]};
     }
 
     &[data-color="important"] {

@@ -1,14 +1,6 @@
 import { css } from "@linaria/core";
 
-import {
-    Border,
-    Colour,
-    Font,
-    MediaQuery,
-    Motion,
-    Radius,
-    Spacing,
-} from "../theme";
+import { Border, Colour, Font, MediaQuery, Motion, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
@@ -23,20 +15,19 @@ export const containerExpanded = css`
 `;
 
 export const expandCollapseButton = css`
+    display: flex;
+    flex-direction: row;
+    gap: ${Spacing["spacing-48"]};
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    padding: ${Spacing["spacing-16"]} 0;
+    text-align: left;
+    user-select: text;
+    outline: none;
     background: transparent;
     border: none;
     border-radius: ${Radius["sm"]};
-    outline: none;
-    text-align: left;
-    user-select: text;
-
-    width: 100%;
-    display: flex;
-    flex-direction: row;
-    align-items: center;
-    justify-content: space-between;
-    gap: ${Spacing["spacing-48"]};
-    padding: ${Spacing["spacing-16"]} 0;
 
     &:focus-visible {
         outline: 2px solid ${Colour["focus-ring"]};
@@ -54,8 +45,8 @@ export const expandCollapseButtonCollapsible = css`
 
 export const title = css`
     flex: 1;
-    transition: all ${Motion["duration-250"]} ${Motion["ease-standard"]};
     color: ${Colour["text"]};
+    transition: all ${Motion["duration-250"]} ${Motion["ease-standard"]};
     ${Font["heading-sm-bold"]}
 `;
 
@@ -65,7 +56,7 @@ export const titleSmall = css`
 
 export const iconContainer = css`
     transform: rotate(180deg);
-    transition: transform ${Motion["duration-250"]}${Motion["ease-default"]};
+    transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
 `;
 
 export const iconContainerExpanded = css`
@@ -73,8 +64,8 @@ export const iconContainerExpanded = css`
 `;
 
 export const chevronIcon = css`
-    height: 1.25rem;
     width: 1.25rem;
+    height: 1.25rem;
     color: ${Colour["icon-primary"]};
 `;
 

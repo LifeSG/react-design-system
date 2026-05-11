@@ -3,8 +3,8 @@ import { css } from "@linaria/core";
 import { Colour } from "../../theme";
 
 export const popoverInlineText = css`
-    color: ${Colour["text-primary"]};
     font-weight: 600;
+    color: ${Colour["text-primary"]};
     text-underline-position: under;
 
     &[data-underline-style="underline"] {
@@ -31,8 +31,8 @@ export const popoverInlineText = css`
     }
 
     svg {
-        height: 1lh; /* align vertically */
         width: 1em; /* scale icon with font size */
+        height: 1lh; /* align vertically */
         vertical-align: top;
     }
 `;

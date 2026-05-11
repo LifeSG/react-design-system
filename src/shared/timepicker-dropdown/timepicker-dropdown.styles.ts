@@ -19,11 +19,10 @@ export const root = css`
 
 export const container = css`
     position: relative;
-    width: 100%;
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-20"]}
-        ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
     display: flex;
     flex-direction: column;
+    width: 100%;
+    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-20"]} ${Spacing["spacing-24"]};
     background: ${Colour["bg"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
@@ -43,9 +42,9 @@ export const inputSection = css`
 export const controlSection = css`
     display: flex;
     flex-direction: row-reverse;
+    gap: ${Spacing["spacing-8"]};
     justify-content: flex-start;
     margin-top: ${Spacing["spacing-16"]};
-    gap: ${Spacing["spacing-8"]};
 
     ${MediaQuery.MaxWidth.xxs} {
         flex-direction: column;
@@ -62,8 +61,8 @@ export const hourMinuteSection = css`
     margin-right: ${Spacing["spacing-32"]};
 
     ${MediaQuery.MaxWidth.xxs} {
-        margin-right: 0;
         width: 100%;
+        margin-right: 0;
     }
 `;
 
@@ -97,8 +96,8 @@ export const switchButton = css`
     color: ${Colour["icon"]};
 
     svg {
-        height: 1rem;
         width: 1rem;
+        height: 1rem;
     }
 
     &:hover {
@@ -113,11 +112,11 @@ export const dividerLabel = css`
 `;
 
 export const timeInputBox = css`
-    height: calc(3rem - 2px);
-    width: 5rem;
     display: flex;
     align-items: center;
     justify-content: center;
+    width: 5rem;
+    height: calc(3rem - 2px);
 
     ${MediaQuery.MaxWidth.xxs} {
         width: 100%;
@@ -125,8 +124,8 @@ export const timeInputBox = css`
 `;
 
 export const timeInput = css`
-    text-align: center;
     width: 100%;
+    text-align: center;
 
     &:focus::placeholder {
         color: transparent;
@@ -134,8 +133,8 @@ export const timeInput = css`
 `;
 
 export const timePeriodToggle = css`
-    min-width: 5rem;
     flex: 1;
+    min-width: 5rem;
 `;
 
 // -----------------------------------------------------------------------------

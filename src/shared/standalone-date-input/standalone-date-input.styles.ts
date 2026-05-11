@@ -2,30 +2,26 @@ import { css } from "@linaria/core";
 
 import { Colour, Font, Spacing } from "../../theme";
 
-// =============================================================================
-// STYLING
-// =============================================================================
 export const inputSection = css`
-    display: flex;
-    align-items: center;
     position: relative;
-
+    display: flex;
     flex: 1;
+    align-items: center;
 `;
 
 export const baseInput = css`
     ${Font["body-baseline-regular"]}
-    color: ${Colour["text"]};
-    display: block;
-    background: transparent;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-    text-align: center;
     position: absolute;
     inset: 0;
+    display: block;
+    padding: 0;
+    margin: 0;
+    color: ${Colour["text"]};
+    text-align: center;
+    outline: none;
+    background: transparent;
+    border: none;
+    box-shadow: none;
 
     &:disabled {
         color: ${Colour["text-subtler"]};
@@ -40,17 +36,17 @@ export const baseInput = css`
         color: ${Colour["text-subtler"]};
     }
 
-    // Chrome, Safari, Edge, Opera
+    /* Chrome, Safari, Edge, Opera */
     &::-webkit-outer-spin-button,
     &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
         margin: 0;
+        -webkit-appearance: none;
     }
 
-    // Safari (remove top shadow)
+    /* Safari (remove top shadow) */
     --webkit-appearance: none;
 
-    // Firefox
+    /* Firefox */
     --moz-appearance: textfield;
 `;
 
@@ -72,19 +68,19 @@ export const dividerHover = css`
 
 export const inputContainer = css`
     display: flex;
-    align-items: center;
     gap: ${Spacing["spacing-4"]};
+    align-items: center;
 `;
 
 export const inputSizerBase = css`
-    display: inline-block;
     position: relative;
+    display: inline-block;
 
     &::after {
         ${Font["body-baseline-regular"]}
         visibility: hidden;
-        pointer-events: none;
         white-space: pre;
+        pointer-events: none;
     }
 `;
 
@@ -108,18 +104,18 @@ export const yearInputSizer = css`
 
 export const placeholder = css`
     ${Font["body-baseline-regular"]}
-    background-color: ${Colour["bg"]};
-    color: ${Colour["text-subtler"]};
     position: absolute;
     display: flex;
     align-items: center;
     width: 100%;
     height: 100%;
+    color: ${Colour["text-subtler"]};
+    background-color: ${Colour["bg"]};
 `;
 
 export const placeholderDisabled = css`
-    background-color: ${Colour["bg-disabled"]};
     cursor: not-allowed;
+    background-color: ${Colour["bg-disabled"]};
 `;
 
 export const placeholderHide = css`

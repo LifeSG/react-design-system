@@ -4,8 +4,7 @@ import { Border, Colour, Radius, Shadow, Spacing } from "../theme";
 
 export const tokens = {
     track: {
-        backgroundColor:
-            "--fds-internal-inputRangeSlider-track-backgroundColor",
+        backgroundColor: "--fds-internal-inputRangeSlider-track-backgroundColor",
     },
 };
 
@@ -14,10 +13,10 @@ export const wrapper = css`
 `;
 
 export const labelContainer = css`
-    margin-top: ${Spacing["spacing-8"]};
     display: flex;
-    justify-content: space-between;
     gap: ${Spacing["spacing-8"]};
+    justify-content: space-between;
+    margin-top: ${Spacing["spacing-8"]};
 `;
 
 export const indicatorLabelContainer = css`
@@ -29,33 +28,31 @@ export const labelText = css`
 `;
 
 export const slider = css`
-    height: 0.875rem;
     position: relative;
+    height: 0.875rem;
 `;
 
 export const knob = css`
-    height: 2.5rem;
-    width: 2.5rem;
     position: absolute;
     top: 50%;
     left: 50%;
+    width: 2.5rem;
+    height: 2.5rem;
     transform: translate(-50%, -50%);
 
     &::after {
-        content: "";
-        display: block;
-        height: 0.875rem;
-        width: 0.875rem;
         position: absolute;
         top: 50%;
         left: 50%;
-        transform: translate(-50%, -50%);
-
+        display: block;
+        width: 0.875rem;
+        height: 0.875rem;
+        content: "";
         background-color: ${Colour["bg"]};
-        box-shadow: ${Shadow["sm-subtle"]};
-        border: ${Border["width-010"]} ${Border["solid"]}
-            ${Colour["border-strong"]};
+        border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border-strong"]};
         border-radius: ${Radius["full"]};
+        box-shadow: ${Shadow["sm-subtle"]};
+        transform: translate(-50%, -50%);
     }
 `;
 
@@ -76,27 +73,23 @@ export const knobInteractive = css`
 `;
 
 export const sliderThumb = css`
-    height: 0.875rem;
-    width: 0.875rem;
     position: relative;
+    width: 0.875rem;
+    height: 0.875rem;
     outline: none;
 
     &:focus .${knob}::after, &[data-focused="true"] .${knob}::after {
+        outline: ${Border["width-040"]} ${Border["solid"]} ${Colour["border-selected"]};
         outline-offset: -1px;
-        outline: ${Border["width-040"]} ${Border["solid"]}
-            ${Colour["border-selected"]};
     }
 `;
 
 export const sliderTrack = css`
-    height: 0.25rem;
-    top: 50%;
-    transform: translateY(-50%);
-    border-radius: ${Radius["full"]};
-
     ${tokens.track.backgroundColor}: initial;
-    background: var(
-        ${tokens.track.backgroundColor},
-        ${Colour["border-strong"]}
-    );
+
+    top: 50%;
+    height: 0.25rem;
+    background: var(${tokens.track.backgroundColor});
+    border-radius: ${Radius["full"]};
+    transform: translateY(-50%);
 `;

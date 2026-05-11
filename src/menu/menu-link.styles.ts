@@ -9,23 +9,19 @@ export const menuLinkDiv = css`
 `;
 
 export const link = css`
-    color: ${Colour["text"]};
-
     margin: 0 ${Spacing["spacing-8"]};
-
-    border: ${Border["solid"]} transparent;
-    border-width: ${Spacing["spacing-8"]} ${Spacing["spacing-8"]};
-
-    border-radius: ${Radius["md"]};
-
+    color: ${Colour["text"]};
     ${lineClampCss(2)}
     white-space: pre-wrap;
+    border: ${Border["solid"]} transparent;
+    border-width: ${Spacing["spacing-8"]} ${Spacing["spacing-8"]};
+    border-radius: ${Radius["md"]};
 
     &:hover,
     &:active,
     &:focus {
-        background-color: ${Colour["bg-hover"]};
         color: ${Colour["text"]};
+        background-color: ${Colour["bg-hover"]};
     }
 
     &:focus-visible {

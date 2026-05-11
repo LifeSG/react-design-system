@@ -33,18 +33,20 @@ export const popoverCard = css`
 
     &::-webkit-scrollbar-thumb {
         background: ${Colour["bg-inverse-subtlest"]};
+        background-clip: padding-box;
         border: 5px solid transparent;
         border-radius: ${Radius.full};
-        background-clip: padding-box;
     }
 `;
 
 export const popoverCardWithMaxHeight = css`
     ${tokens.popoverCard.maxHeight}: initial;
+
     max-height: var(${tokens.popoverCard.maxHeight});
 `;
 
 export const popoverCardWithOverflow = css`
     ${tokens.popoverCard.overflowY}: initial;
+
     overflow-y: var(${tokens.popoverCard.overflowY});
 `;
