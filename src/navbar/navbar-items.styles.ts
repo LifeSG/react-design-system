@@ -2,9 +2,8 @@ import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled, { css } from "styled-components";
 
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Colour, ComponentToken, Font, MediaQuery } from "../theme";
 import type { TypographyWeight } from "../typography";
-import { V3_Colour, V3_Font, V3_MediaQuery } from "../v3_theme";
-import { V3_ThemeNavbar } from "../v3_theme/components/theme-helper";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -33,7 +32,7 @@ export const Wrapper = styled.ul<WrapperStyleProps>`
 
     ${(props) => props.$alignLeft && "margin-right: auto;"}
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;
@@ -42,7 +41,7 @@ export const MobileWrapper = styled.ul`
     display: none;
     list-style: none;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
         flex-direction: column;
         overflow: hidden;
@@ -61,7 +60,7 @@ export const LinkItem = styled.li<ItemStyleProps>`
         margin-left: ${(props) => (props.$hiddenBranding ? "-0.5rem" : "0")};
     }
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
         padding: 0.125rem 0;
         width: 100%;
@@ -70,13 +69,13 @@ export const LinkItem = styled.li<ItemStyleProps>`
 `;
 
 const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
-    ${(props) => V3_Font[`body-md-${props.weight}`]}
+    ${(props) => Font[`body-md-${props.weight}`]}
 
     display: flex;
     position: relative;
     align-items: center;
     text-align: center;
-    color: ${V3_ThemeNavbar["navbar-link-colour-text"]};
+    color: ${ComponentToken.Navbar["link-colour-text"]};
     height: 100%;
 
     &:active,
@@ -84,11 +83,11 @@ const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
     &:focus {
         color: ${(props) =>
             props.$selected
-                ? V3_ThemeNavbar["navbar-link-colour-text-selected-hover"]
-                : V3_ThemeNavbar["navbar-link-colour-text-hover"]};
+                ? ComponentToken.Navbar["link-colour-text-selected-hover"]
+                : ComponentToken.Navbar["link-colour-text-hover"]};
     }
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 100%;
         padding: 0.5rem 1rem;
         text-align: left;
@@ -132,13 +131,13 @@ export const LinkIndicator = styled.div<StyleProps>`
     left: 0;
     right: 0;
     height: 0.25rem;
-    background-color: ${V3_Colour["border-selected"]};
+    background-color: ${Colour["border-selected"]};
 
     &:hover {
-        ${(props) => props.$selected && V3_Colour["border-selected-hover"]};
+        ${(props) => props.$selected && Colour["border-selected-hover"]};
     }
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         left: 0;
         right: unset;
         top: 0;
@@ -163,11 +162,11 @@ export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
 export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
     height: 1.25rem;
     width: 1.25rem;
-    color: ${V3_Colour.icon};
+    color: ${Colour.icon};
     &:hover {
         ${(props) =>
             props.$selected
-                ? V3_Colour["icon-selected-hover"]
-                : V3_Colour["icon-hover"]};
+                ? Colour["icon-selected-hover"]
+                : Colour["icon-hover"]};
     }
 `;

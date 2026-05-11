@@ -12,7 +12,8 @@ import { ThemeContext } from "styled-components";
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
-import { V3_Breakpoint } from "../v3_theme";
+import type { ThemeType } from "../theme";
+import { Breakpoint, parsePxOrRemValue, useDesignToken } from "../theme";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
 import * as styles from "./navbar.styles";
@@ -66,8 +67,11 @@ const Component = <T,>(
     const isStretch = layout === "stretch";
     const elementRef = useRef<HTMLDivElement>(null);
     const theme = useContext(ThemeContext);
-    const defaultResource = getDefaultResourceLogo(theme?.resourceScheme);
-    const tabletWidth = V3_Breakpoint["lg-max"]({ theme });
+    const defaultResource = getDefaultResourceLogo(
+        theme?.resourceScheme as ThemeType | undefined
+    );
+    const tabletWidthToken = useDesignToken(Breakpoint["lg-max"]);
+    const tabletWidth = parsePxOrRemValue(tabletWidthToken || "1200px");
 
     const primary = resources?.primary || defaultResource.primary;
     const secondary = resources?.secondary;
