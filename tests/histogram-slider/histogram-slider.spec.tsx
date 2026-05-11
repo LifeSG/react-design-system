@@ -1,6 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { HistogramSlider } from "src/histogram-slider";
-import * as styles from "src/histogram-slider/histogram-slider.styles";
 
 // =============================================================================
 // UNIT TESTS
@@ -87,11 +86,9 @@ describe("HistogramSlider", () => {
 
     describe("bars", () => {
         it("should render a bar for each bin", () => {
-            const { container } = render(
-                <HistogramSlider bins={MOCK_BIN_DATA} interval={1} />
-            );
+            render(<HistogramSlider bins={MOCK_BIN_DATA} interval={1} />);
 
-            const bars = container.querySelectorAll(`.${styles.bar}`);
+            const bars = screen.getAllByTestId("histogram-bar");
             expect(bars).toHaveLength(MOCK_BIN_DATA.length);
         });
     });

@@ -257,6 +257,7 @@ const HistogramBar = ({
 
     return (
         <div
+            data-testid="histogram-bar"
             className={clsx(
                 styles.bar,
                 isDisabled && isSelected && styles.barSelectedDisabled,
