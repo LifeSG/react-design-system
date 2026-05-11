@@ -216,7 +216,7 @@ test.describe("Calendar", () => {
                 })
             ).toHaveCount(0);
 
-            await compareScreenshot(story, "active-month-only");
+            await compareScreenshot(story, "mount");
         });
     });
 
