@@ -13,6 +13,7 @@ export default async function Page({
         {
             ssr: ![
                 "badge",
+                "calendar",
                 "date-range-input",
                 "date-input",
                 "select",
