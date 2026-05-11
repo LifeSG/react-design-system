@@ -410,10 +410,10 @@ export const UnitNumberInput = ({
                 data-testid="addon"
                 className={clsx(
                     inputGroupStyles.labelAddonContainer,
-                    disabled && inputGroupStyles.labelAddonContainerDisabled,
-                    readOnly && inputGroupStyles.labelAddonContainerReadOnly,
                     className
                 )}
+                data-disabled={disabled}
+                data-read-only={readOnly}
             >
                 #
             </HashContainer>

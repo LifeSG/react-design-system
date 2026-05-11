@@ -10,18 +10,18 @@ export const addonWrapper = css`
     align-items: center;
     width: 100%;
     padding: 0 ${Spacing["spacing-16"]};
-`;
 
-export const addonWrapperReadOnly = css`
-    padding: 0;
-`;
+    &[data-read-only] {
+        padding: 0;
+    }
 
-export const addonWrapperNoBorder = css`
-    padding: 0;
-`;
+    &[data-no-border] {
+        padding: 0;
+    }
 
-export const addonWrapperPositionRight = css`
-    flex-direction: row-reverse;
+    &[data-position="right"] {
+        flex-direction: row-reverse;
+    }
 `;
 
 export const noAddonWrapper = css`
@@ -29,14 +29,14 @@ export const noAddonWrapper = css`
     position: relative;
     width: 100%;
     padding: 0 ${Spacing["spacing-16"]};
-`;
 
-export const noAddonWrapperReadOnly = css`
-    padding: 0;
-`;
+    &[data-read-only] {
+        padding: 0;
+    }
 
-export const noAddonWrapperNoBorder = css`
-    padding: 0;
+    &[data-no-border] {
+        padding: 0;
+    }
 `;
 
 export const labelAddonContainer = css`
@@ -53,22 +53,22 @@ export const labelAddonContainer = css`
         height: 1em;
         width: 1em;
     }
-`;
 
-export const labelAddonContainerDisabled = css`
-    color: ${Colour["text-subtler"]};
-`;
+    &[data-disabled] {
+        color: ${Colour["text-subtler"]};
+    }
 
-export const labelAddonContainerReadOnly = css`
-    margin-right: ${Spacing["spacing-4"]};
-`;
+    &[data-read-only] {
+        margin-right: ${Spacing["spacing-4"]};
+    }
 
-export const labelAddonContainerPositionRight = css`
-    margin-right: 0;
-    margin-left: ${Spacing["spacing-12"]};
-`;
+    &[data-position="right"] {
+        margin-right: 0;
+        margin-left: ${Spacing["spacing-12"]};
+    }
 
-export const labelAddonContainerPositionRightReadOnly = css`
-    margin-right: 0;
-    margin-left: ${Spacing["spacing-4"]};
+    &[data-position="right"][data-read-only] {
+        margin-right: 0;
+        margin-left: ${Spacing["spacing-4"]};
+    }
 `;

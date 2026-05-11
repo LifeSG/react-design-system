@@ -43,16 +43,58 @@ const Component = <T, V>(
             readOnly={otherProps.readOnly}
             noBorder={noBorder}
             data-testid={otherProps["data-testid"]}
-            className={clsx(
-                styles.noAddonWrapper,
-                otherProps.readOnly && styles.noAddonWrapperReadOnly,
-                noBorder && styles.noAddonWrapperNoBorder,
-                className
-            )}
+            className={clsx(styles.noAddonWrapper, className)}
+            data-read-only={otherProps.readOnly}
+            data-no-border={noBorder}
         >
             <Input
                 ref={ref}
                 {...otherProps}
+                data-testid="input"
+                styleType="no-border"
+            />
+        </InputBox>
+    );
+
+    const renderWithAddon = (
+        addonContent: React.ReactNode,
+        position: "left" | "right",
+        allowClear?: boolean
+    ) => (
+        <InputBox
+            disabled={otherProps.disabled}
+            error={error}
+            readOnly={otherProps.readOnly}
+            noBorder={noBorder}
+            data-testid={otherProps["data-testid"]}
+            className={clsx(styles.addonWrapper, className)}
+            data-read-only={otherProps.readOnly}
+            data-no-border={noBorder}
+            data-position={position}
+        >
+            <div
+                data-testid="addon"
+                id={addonId}
+                className={styles.labelAddonContainer}
+                data-disabled={otherProps.disabled}
+                data-read-only={otherProps.readOnly}
+                data-position={position}
+            >
+                {addonContent}
+            </div>
+            <VisuallyHidden aria-hidden id={ariaLabelId}>
+                {ariaLabel}
+            </VisuallyHidden>
+            <Input
+                ref={ref}
+                {...otherProps}
+                aria-labelledby={concatIds(
+                    ariaLabelId,
+                    ariaLabelledBy,
+                    addonId
+                )}
+                allowClear={allowClear && position !== "right"}
+                error={error}
                 data-testid="input"
                 styleType="no-border"
             />
@@ -87,59 +129,10 @@ const Component = <T, V>(
             case "custom": {
                 const customAddon = addon.attributes as CustomAddon;
                 if (customAddon.children) {
-                    return (
-                        <InputBox
-                            error={error}
-                            disabled={otherProps.disabled}
-                            readOnly={otherProps.readOnly}
-                            noBorder={noBorder}
-                            data-testid={otherProps["data-testid"]}
-                            className={clsx(
-                                styles.addonWrapper,
-                                otherProps.readOnly &&
-                                    styles.addonWrapperReadOnly,
-                                noBorder && styles.addonWrapperNoBorder,
-                                position === "right" &&
-                                    styles.addonWrapperPositionRight,
-                                className
-                            )}
-                        >
-                            <div
-                                data-testid="addon"
-                                id={addonId}
-                                className={clsx(
-                                    styles.labelAddonContainer,
-                                    otherProps.disabled &&
-                                        styles.labelAddonContainerDisabled,
-                                    otherProps.readOnly &&
-                                        (position === "right"
-                                            ? styles.labelAddonContainerPositionRightReadOnly
-                                            : styles.labelAddonContainerReadOnly),
-                                    !otherProps.readOnly &&
-                                        position === "right" &&
-                                        styles.labelAddonContainerPositionRight,
-                                    className
-                                )}
-                            >
-                                {customAddon.children}
-                            </div>
-                            <VisuallyHidden aria-hidden id={ariaLabelId}>
-                                {ariaLabel}
-                            </VisuallyHidden>
-                            <Input
-                                ref={ref}
-                                {...otherProps}
-                                aria-labelledby={concatIds(
-                                    ariaLabelId,
-                                    ariaLabelledBy,
-                                    addonId
-                                )}
-                                allowClear={allowClear && position !== "right"}
-                                error={error}
-                                data-testid="input"
-                                styleType="no-border"
-                            />
-                        </InputBox>
+                    return renderWithAddon(
+                        customAddon.children,
+                        position,
+                        allowClear
                     );
                 } else {
                     return renderNoAddons();
@@ -148,59 +141,10 @@ const Component = <T, V>(
             default: {
                 const labelAddon = addon.attributes as LabelAddon;
                 if (labelAddon.value) {
-                    return (
-                        <InputBox
-                            disabled={otherProps.disabled}
-                            error={error}
-                            readOnly={otherProps.readOnly}
-                            noBorder={noBorder}
-                            data-testid={otherProps["data-testid"]}
-                            className={clsx(
-                                styles.addonWrapper,
-                                otherProps.readOnly &&
-                                    styles.addonWrapperReadOnly,
-                                noBorder && styles.addonWrapperNoBorder,
-                                position === "right" &&
-                                    styles.addonWrapperPositionRight,
-                                className
-                            )}
-                        >
-                            <div
-                                data-testid="addon"
-                                id={addonId}
-                                className={clsx(
-                                    styles.labelAddonContainer,
-                                    otherProps.disabled &&
-                                        styles.labelAddonContainerDisabled,
-                                    otherProps.readOnly &&
-                                        (position === "right"
-                                            ? styles.labelAddonContainerPositionRightReadOnly
-                                            : styles.labelAddonContainerReadOnly),
-                                    !otherProps.readOnly &&
-                                        position === "right" &&
-                                        styles.labelAddonContainerPositionRight,
-                                    className
-                                )}
-                            >
-                                {labelAddon.value}
-                            </div>
-                            <VisuallyHidden aria-hidden id={ariaLabelId}>
-                                {ariaLabel}
-                            </VisuallyHidden>
-                            <Input
-                                ref={ref}
-                                {...otherProps}
-                                aria-labelledby={concatIds(
-                                    ariaLabelId,
-                                    ariaLabelledBy,
-                                    addonId
-                                )}
-                                allowClear={allowClear && position !== "right"}
-                                error={error}
-                                data-testid="input"
-                                styleType="no-border"
-                            />
-                        </InputBox>
+                    return renderWithAddon(
+                        labelAddon.value,
+                        position,
+                        allowClear
                     );
                 } else {
                     return renderNoAddons();
