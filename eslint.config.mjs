@@ -10,7 +10,7 @@ import pluginSimpleImportSort from "eslint-plugin-simple-import-sort";
 import storybook from "eslint-plugin-storybook";
 import globals from "globals";
 
-import localRules from "./eslint-local-rules/import-path-preferences.mjs";
+import localRules from "./eslint-local-rules/index.mjs";
 
 const sourceFileGlobs = ["**/*.{js,jsx,mjs,cjs,ts,tsx}"];
 const reactSourceFileGlobs = ["**/*.{js,jsx,ts,tsx}"];
@@ -176,6 +176,7 @@ export default defineConfig([
         rules: {
             "local/import-path-preferences": "warn",
             "local/style-namespace-import": "warn",
+            "local/no-negative-linaria-interpolation": "error",
             "react-hooks/exhaustive-deps": [
                 "warn",
                 {
