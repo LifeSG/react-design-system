@@ -1,15 +1,8 @@
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { Brand } from "./brand";
-import {
-    CloseButton,
-    CloseIcon,
-    Container,
-    Content,
-    TopBar,
-    Wrapper,
-} from "./drawer.styles";
-import { NavBrandContainer, NavSeparator } from "./navbar.styles";
+import * as styles from "./drawer.styles";
+import * as navbarStyles from "./navbar.styles";
 import type { NavbarDrawerProps } from "./types";
 
 const Component = (
@@ -104,7 +97,7 @@ const Component = (
                 )}
                 {secondary && (
                     <>
-                        <NavSeparator />
+                        <navbarStyles.NavSeparator />
                         <Brand
                             resources={secondary}
                             compress
@@ -120,23 +113,23 @@ const Component = (
     };
 
     const renderTopBar = () => (
-        <TopBar>
-            <NavBrandContainer data-id="drawer-brand-container">
+        <styles.TopBar>
+            <navbarStyles.NavBrandContainer data-id="drawer-brand-container">
                 {!hideNavBranding && renderBrand()}
-            </NavBrandContainer>
-            <CloseButton
+            </navbarStyles.NavBrandContainer>
+            <styles.CloseButton
                 onClick={onClose}
                 focusHighlight={false}
                 aria-label="Close nav menu"
             >
-                <CloseIcon />
-            </CloseButton>
-        </TopBar>
+                <styles.CloseIcon />
+            </styles.CloseButton>
+        </styles.TopBar>
     );
 
     return (
-        <Wrapper ref={ref} data-testid="drawer">
-            <Container
+        <styles.Wrapper ref={ref} data-testid="drawer">
+            <styles.Container
                 ref={containerRef}
                 $show={show}
                 $viewHeight={viewHeight}
@@ -144,12 +137,12 @@ const Component = (
                 tabIndex={show ? 0 : -1}
                 aria-label={drawerLabel}
             >
-                <Content>
+                <styles.Content>
                     {renderTopBar()}
                     {children}
-                </Content>
-            </Container>
-        </Wrapper>
+                </styles.Content>
+            </styles.Container>
+        </styles.Wrapper>
     );
 };
 

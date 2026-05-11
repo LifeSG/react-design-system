@@ -2,17 +2,7 @@ import findIndex from "lodash/findIndex";
 import type React from "react";
 
 import type { ButtonProps } from "../button/types";
-import {
-    ActionButton,
-    ButtonItem,
-    DownloadAppImageLink,
-    DownloadAppImageLinkWrapper,
-    DownloadAppTitle,
-    DownloadAppWrapper,
-    DrawerWrapper,
-    MobileWrapper,
-    Wrapper,
-} from "./navbar-action-buttons.styles";
+import * as styles from "./navbar-action-buttons.styles";
 import type { NavbarActionButtonsProps, NavbarButtonProps } from "./types";
 
 const APP_STORE_ICON =
@@ -93,12 +83,12 @@ export const NavbarActionButtons = ({
     // =============================================================================
     const renderDownloadAppMobileView = (args?: ButtonProps) => {
         return (
-            <DownloadAppWrapper>
-                <DownloadAppTitle weight="semibold">
+            <styles.DownloadAppWrapper>
+                <styles.DownloadAppTitle weight="semibold">
                     {(args && args.children) || "Download the app"}
-                </DownloadAppTitle>
-                <DownloadAppImageLinkWrapper>
-                    <DownloadAppImageLink
+                </styles.DownloadAppTitle>
+                <styles.DownloadAppImageLinkWrapper>
+                    <styles.DownloadAppImageLink
                         href="https://apps.apple.com/sg/app/moments-of-life/id1383218758"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -106,8 +96,8 @@ export const NavbarActionButtons = ({
                         onClick={handleDownloadAppImageLinkClick}
                     >
                         <img src={APP_STORE_ICON} alt="apple-app-store" />
-                    </DownloadAppImageLink>
-                    <DownloadAppImageLink
+                    </styles.DownloadAppImageLink>
+                    <styles.DownloadAppImageLink
                         href="https://play.google.com/store/apps/details?id=sg.gov.app.mol&hl=en_SG"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -115,9 +105,9 @@ export const NavbarActionButtons = ({
                         onClick={handleDownloadAppImageLinkClick}
                     >
                         <img src={PLAY_STORE_ICON} alt="google-play-store" />
-                    </DownloadAppImageLink>
-                </DownloadAppImageLinkWrapper>
-            </DownloadAppWrapper>
+                    </styles.DownloadAppImageLink>
+                </styles.DownloadAppImageLinkWrapper>
+            </styles.DownloadAppWrapper>
         );
     };
 
@@ -140,14 +130,14 @@ export const NavbarActionButtons = ({
                     component = isMobile ? (
                         renderDownloadAppMobileView(actionButton.args)
                     ) : (
-                        <ActionButton
+                        <styles.ActionButton
                             {...actionButton.args}
                             type="button"
                             onClick={handleActionButtonClick(actionButton)}
                             data-testid="action-button__download"
                         >
                             Download the app
-                        </ActionButton>
+                        </styles.ActionButton>
                     );
                     break;
                 case "button": {
@@ -158,7 +148,7 @@ export const NavbarActionButtons = ({
                           }`;
 
                     component = (
-                        <ActionButton
+                        <styles.ActionButton
                             {...actionButton.args}
                             type="button"
                             onClick={handleActionButtonClick(actionButton)}
@@ -179,12 +169,12 @@ export const NavbarActionButtons = ({
 
             if (component) {
                 return (
-                    <ButtonItem
+                    <styles.ButtonItem
                         key={`action-button-${index + 1}`}
                         $mobile={isMobile}
                     >
                         {component}
-                    </ButtonItem>
+                    </styles.ButtonItem>
                 );
             }
         });
@@ -202,9 +192,9 @@ export const NavbarActionButtons = ({
             return (
                 <>
                     {collapsableActionButtons.length > 0 && (
-                        <DrawerWrapper>
+                        <styles.DrawerWrapper>
                             {renderButtons(mobile, collapsableActionButtons)}
-                        </DrawerWrapper>
+                        </styles.DrawerWrapper>
                     )}
                 </>
             );
@@ -212,14 +202,14 @@ export const NavbarActionButtons = ({
             return (
                 <>
                     {uncollapsableActionButtons.length > 0 && (
-                        <MobileWrapper>
+                        <styles.MobileWrapper>
                             {renderButtons(false, uncollapsableActionButtons)}
-                        </MobileWrapper>
+                        </styles.MobileWrapper>
                     )}
                     {actionButtons.desktop.length > 0 && (
-                        <Wrapper>
+                        <styles.Wrapper>
                             {renderButtons(mobile, actionButtons.desktop)}
-                        </Wrapper>
+                        </styles.Wrapper>
                     )}
                 </>
             );

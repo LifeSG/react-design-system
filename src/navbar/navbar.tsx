@@ -15,15 +15,7 @@ import { Overlay } from "../overlay/overlay";
 import { V3_Breakpoint } from "../v3_theme";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
-import {
-    MobileMenuButton,
-    MobileMenuIcon,
-    Nav,
-    NavBrandContainer,
-    NavElementsContainer,
-    NavSeparator,
-    Wrapper,
-} from "./navbar.styles";
+import * as styles from "./navbar.styles";
 import { NavbarActionButtons } from "./navbar-action-buttons";
 import { NavbarHelper } from "./navbar-helper";
 import { NavbarItems } from "./navbar-items";
@@ -150,7 +142,7 @@ const Component = <T,>(
     };
 
     const handleBrandClick = (
-        event: React.MouseEvent<HTMLAnchorElement>,
+        _event: React.MouseEvent<HTMLAnchorElement>,
         type: BrandType
     ) => {
         if (onBrandClick) {
@@ -252,7 +244,10 @@ const Component = <T,>(
     );
 
     const renderBrand = () => (
-        <NavBrandContainer $compress={compress} data-id="brand-container">
+        <styles.NavBrandContainer
+            $compress={compress}
+            data-id="brand-container"
+        >
             {primary && (
                 <Brand
                     resources={primary}
@@ -264,7 +259,7 @@ const Component = <T,>(
             )}
             {secondary && (
                 <>
-                    <NavSeparator $compress={compress} />
+                    <styles.NavSeparator $compress={compress} />
                     <Brand
                         resources={secondary}
                         onClick={handleBrandClick}
@@ -274,7 +269,7 @@ const Component = <T,>(
                     />
                 </>
             )}
-        </NavBrandContainer>
+        </styles.NavBrandContainer>
     );
 
     const renderMobileMenuButton = () => {
@@ -284,7 +279,7 @@ const Component = <T,>(
             (actionButtons && hasCollapsibleActionButtons(actionButtons))
         ) {
             return (
-                <MobileMenuButton
+                <styles.MobileMenuButton
                     ref={mobileMenuRef}
                     aria-label={showDrawer ? "Close nav menu" : "Open nav menu"}
                     aria-expanded={showDrawer}
@@ -292,8 +287,8 @@ const Component = <T,>(
                     onClick={handleMobileMenuButtonClick}
                     focusHighlight={false}
                 >
-                    <MobileMenuIcon />
-                </MobileMenuButton>
+                    <styles.MobileMenuIcon />
+                </styles.MobileMenuButton>
             );
         }
 
@@ -303,10 +298,10 @@ const Component = <T,>(
     const renderNavbar = () => {
         return (
             <Layout.Content stretch={isStretch}>
-                <Nav $compress={compress} aria-label={headerLabel}>
+                <styles.Nav $compress={compress} aria-label={headerLabel}>
                     {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
-                        <NavElementsContainer
+                        <styles.NavElementsContainer
                             $hideNavBranding={hideNavBranding}
                         >
                             <NavbarItems
@@ -321,9 +316,9 @@ const Component = <T,>(
                                 onActionButtonClick={handleActionButtonClick}
                             />
                             {renderMobileMenuButton()}
-                        </NavElementsContainer>
+                        </styles.NavElementsContainer>
                     )}
-                </Nav>
+                </styles.Nav>
 
                 {!hideNavElements && renderDrawer()}
             </Layout.Content>
@@ -331,7 +326,7 @@ const Component = <T,>(
     };
 
     return (
-        <Wrapper
+        <styles.Wrapper
             ref={elementRef}
             $fixed={fixed}
             className={className}
@@ -340,7 +335,7 @@ const Component = <T,>(
         >
             {masthead && <Masthead stretch={isStretch} />}
             {renderNavbar()}
-        </Wrapper>
+        </styles.Wrapper>
     );
 };
 

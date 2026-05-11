@@ -1,7 +1,7 @@
 import type React from "react";
 
 import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fallback";
-import { Container } from "./brand.styles";
+import * as styles from "./brand.styles";
 import type { BrandType, NavbarBrandingProps } from "./types";
 
 interface Props {
@@ -53,7 +53,7 @@ export const Brand = ({
         : {};
 
     return (
-        <Container
+        <styles.Container
             data-id={dataId}
             data-testid={testId}
             $type={type}
@@ -61,7 +61,7 @@ export const Brand = ({
             {...props}
         >
             <ImageWithFallback src={resources.logoSrc} alt={logoLabel} />
-        </Container>
+        </styles.Container>
     );
 };
 
