@@ -1,5 +1,5 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { fixedTimestamp } from "../../consts";
+import { fixedTimestamp, modes } from "../../consts";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -45,32 +45,51 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Calendar", () => {
     test.describe("Single Variant", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("default-single", {
-                mockedTimestamp: fixedTimestamp,
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default-single", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Default", async ({ story }) => {
+                await expect(story.locators.selectedValue).toHaveText("none");
+
+                await compareScreenshot(story, "mount");
+            });
+
+            test("Selection", async ({ story }) => {
+                await expect(story.locators.selectedValue).toHaveText("none");
+                await story.getDayCell(15).click();
+
+                await compareScreenshot(story, "selected");
+            });
+
+            test("Keyboard interaction", async ({ story }) => {
+                await story.getDayCell(14).focus();
+                await story.page.keyboard.press("ArrowRight");
+                await expect(story.getDayCell(15)).toBeFocused();
+                await story.page.keyboard.press("Enter");
+
+                await expect(story.locators.selectedValue).toHaveText(
+                    "2026-04-15"
+                );
             });
         });
 
-        test("Default", async ({ story }) => {
-            await expect(story.locators.selectedValue).toHaveText("none");
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default-single", {
+                    mockedTimestamp: fixedTimestamp,
+                    mode: "dark",
+                });
+            });
 
-            await compareScreenshot(story, "mount");
-        });
+            test("Dark Mode", async ({ story }) => {
+                await expect(story.locators.selectedValue).toHaveText("none");
 
-        test("Selection", async ({ story }) => {
-            await expect(story.locators.selectedValue).toHaveText("none");
-            await story.getDayCell(15).click();
-
-            await compareScreenshot(story, "selected");
-        });
-
-        test("Keyboard interaction", async ({ story }) => {
-            await story.getDayCell(14).focus();
-            await story.page.keyboard.press("ArrowRight");
-            await expect(story.getDayCell(15)).toBeFocused();
-            await story.page.keyboard.press("Enter");
-
-            await expect(story.locators.selectedValue).toHaveText("2026-04-15");
+                await compareScreenshot(story, "mount");
+            });
         });
     });
 
@@ -135,32 +154,53 @@ test.describe("Calendar", () => {
     });
 
     test.describe("Disabled Dates", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("disabled-dates", {
-                mockedTimestamp: fixedTimestamp,
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("disabled-dates", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Default", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+
+            test("Selection", async ({ story }) => {
+                await expect(
+                    story.getDayCell(10, "Unavailable")
+                ).toBeDisabled();
+                await story
+                    .getDayCell(10, "Unavailable")
+                    .click({ force: true });
+                await expect(story.locators.selectedValue).toHaveText("none");
+
+                await story.getDayCell(11).click();
+                await expect(story.locators.selectedValue).toHaveText(
+                    "2026-04-11"
+                );
+            });
+
+            test("Keyboard interaction", async ({ story }) => {
+                await story.getDayCell(14).focus();
+                await story.page.keyboard.press("ArrowRight");
+                await expect(story.getDayCell(15, "Unavailable")).toBeFocused();
+                await story.page.keyboard.press("Enter");
+
+                await expect(story.locators.selectedValue).toHaveText("none");
             });
         });
 
-        test("Default", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("disabled-dates", {
+                    mockedTimestamp: fixedTimestamp,
+                    mode: "dark",
+                });
+            });
 
-        test("Selection", async ({ story }) => {
-            await expect(story.getDayCell(10, "Unavailable")).toBeDisabled();
-            await story.getDayCell(10, "Unavailable").click({ force: true });
-            await expect(story.locators.selectedValue).toHaveText("none");
-
-            await story.getDayCell(11).click();
-            await expect(story.locators.selectedValue).toHaveText("2026-04-11");
-        });
-
-        test("Keyboard interaction", async ({ story }) => {
-            await story.getDayCell(14).focus();
-            await story.page.keyboard.press("ArrowRight");
-            await expect(story.getDayCell(15, "Unavailable")).toBeFocused();
-            await story.page.keyboard.press("Enter");
-
-            await expect(story.locators.selectedValue).toHaveText("none");
+            test("Dark Mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
     });
 
@@ -221,63 +261,69 @@ test.describe("Calendar", () => {
     });
 
     test.describe("Focused & Hovered States", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("default-single", {
-                    mockedTimestamp: fixedTimestamp,
+        modes.forEach((mode) => {
+            test.describe(`${mode} mode`, () => {
+                test.describe(() => {
+                    test.beforeEach(async ({ story }) => {
+                        await story.init("default-single", {
+                            mockedTimestamp: fixedTimestamp,
+                            mode,
+                        });
+                    });
+
+                    test("Focus on active date", async ({ story }) => {
+                        await story.getDayCell(15).focus();
+
+                        await compareScreenshot(story, "state");
+                    });
+
+                    test("Focus on today date", async ({ story }) => {
+                        await story.getDayCell(8).focus();
+
+                        await compareScreenshot(story, "state");
+                    });
+
+                    test("Focus on selected date", async ({ story }) => {
+                        await story.getDayCell(15).click();
+                        await story.getDayCell(15).focus();
+
+                        await compareScreenshot(story, "state");
+                    });
+
+                    test("Hover on previous month date", async ({ story }) => {
+                        await story.page
+                            .getByRole("gridcell", {
+                                name: "31 March 2026 Tuesday, Available",
+                            })
+                            .first()
+                            .hover();
+
+                        await compareScreenshot(story, "state");
+                    });
                 });
-            });
 
-            test("Focus on active date", async ({ story }) => {
-                await story.getDayCell(15).focus();
+                test.describe(() => {
+                    test.beforeEach(async ({ story }) => {
+                        await story.init("disabled-dates", {
+                            mockedTimestamp: fixedTimestamp,
+                            mode,
+                        });
+                    });
 
-                await compareScreenshot(story, "state");
-            });
+                    test("Focus on disabled date", async ({ story }) => {
+                        await story.getDayCell(15, "Unavailable").focus();
 
-            test("Focus on today date", async ({ story }) => {
-                await story.getDayCell(8).focus();
+                        await compareScreenshot(story, "state");
+                    });
 
-                await compareScreenshot(story, "state");
-            });
+                    test("Hover on disabled date", async ({ story }) => {
+                        await story
+                            .getDayCell(15, "Unavailable")
+                            .hover({ force: true });
 
-            test("Focus on selected date", async ({ story }) => {
-                await story.getDayCell(15).click();
-                await story.getDayCell(15).focus();
-
-                await compareScreenshot(story, "state");
-            });
-
-            test("Hover on previous month date", async ({ story }) => {
-                await story.page
-                    .getByRole("gridcell", {
-                        name: "31 March 2026 Tuesday, Available",
-                    })
-                    .first()
-                    .hover();
-
-                await compareScreenshot(story, "state");
-            });
-        });
-
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("disabled-dates", {
-                    mockedTimestamp: fixedTimestamp,
+                        await compareScreenshot(story, "state");
+                    });
                 });
-            });
-
-            test("Focus on disabled date", async ({ story }) => {
-                await story.getDayCell(15, "Unavailable").focus();
-
-                await compareScreenshot(story, "state");
-            });
-
-            test("Hover on disabled date", async ({ story }) => {
-                await story
-                    .getDayCell(15, "Unavailable")
-                    .hover({ force: true });
-
-                await compareScreenshot(story, "state");
             });
         });
     });
@@ -292,100 +338,6 @@ test.describe("Calendar", () => {
         test("No Border Variant", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
-            });
-        });
-    });
-
-    test.describe("Dark Mode", () => {
-        test.describe("", () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("default-single", {
-                    mockedTimestamp: fixedTimestamp,
-                    mode: "dark",
-                });
-            });
-
-            test("Default", async ({ story }) => {
-                await expect(story.locators.selectedValue).toHaveText("none");
-
-                await compareScreenshot(story, "mount");
-            });
-        });
-
-        test.describe("Disabled Dates", () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("disabled-dates", {
-                    mockedTimestamp: fixedTimestamp,
-                    mode: "dark",
-                });
-            });
-
-            test("Default", async ({ story }) => {
-                await compareScreenshot(story, "mount");
-            });
-        });
-
-        test.describe("Focused & Hovered States", () => {
-            test.describe(() => {
-                test.beforeEach(async ({ story }) => {
-                    await story.init("default-single", {
-                        mockedTimestamp: fixedTimestamp,
-                        mode: "dark",
-                    });
-                });
-
-                test("Focus on active date", async ({ story }) => {
-                    await story.getDayCell(15).focus();
-
-                    await compareScreenshot(story, "state");
-                });
-
-                test("Focus on today date", async ({ story }) => {
-                    await story.getDayCell(8).focus();
-
-                    await compareScreenshot(story, "state");
-                });
-
-                test("Focus on selected date", async ({ story }) => {
-                    await story.getDayCell(15).click();
-                    await story.getDayCell(15).focus();
-
-                    await compareScreenshot(story, "state");
-                });
-
-                test("Hover on previous month date", async ({ story }) => {
-                    await story.page
-                        .getByRole("gridcell", {
-                            name: "31 March 2026 Tuesday, Available",
-                        })
-                        .first()
-                        .hover();
-
-                    await compareScreenshot(story, "state");
-                });
-            });
-
-            test.describe(() => {
-                test.beforeEach(async ({ story }) => {
-                    await story.init("disabled-dates", {
-                        mockedTimestamp: fixedTimestamp,
-                        mode: "dark",
-                    });
-                });
-
-                test("Focus on disabled date", async ({ story }) => {
-                    await story.getDayCell(15, "Unavailable").focus();
-
-                    await compareScreenshot(story, "state");
-                });
-
-                test("Hover on disabled date", async ({ story }) => {
-                    await story
-                        .getDayCell(15, "Unavailable")
-                        .hover({ force: true });
-
-                    await compareScreenshot(story, "state");
-                });
             });
         });
     });
