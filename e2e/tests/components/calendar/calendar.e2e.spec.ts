@@ -69,7 +69,7 @@ test.describe("Calendar", () => {
             });
         });
 
-        test("Selected", async ({ story }) => {
+        test("Selection", async ({ story }) => {
             await expect(story.locators.selectedValue).toHaveText("none");
             await story.getDayCell(15).click();
 
@@ -101,7 +101,7 @@ test.describe("Calendar", () => {
             await compareScreenshot(story, "mount");
         });
 
-        test("Selected", async ({ story }) => {
+        test("Selection", async ({ story }) => {
             await story.getDayCell(10).click();
             await story.getDayCell(15).click();
 
@@ -123,4 +123,37 @@ test.describe("Calendar", () => {
             );
         });
     });
+
+    test.describe("Disabled Dates", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("disabled-dates", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Default", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+
+        test("Selection", async ({ story }) => {
+            await expect(story.getDayCell(10, "Unavailable")).toBeDisabled();
+            await story.getDayCell(10, "Unavailable").click({ force: true });
+            await expect(story.locators.selectedValue).toHaveText("none");
+
+            await story.getDayCell(11).click();
+            await expect(story.locators.selectedValue).toHaveText("2026-04-11");
+
+            await compareScreenshot(story, "mount");
+        });
+
+        test("Keyboard interaction", async ({ story }) => {
+            await story.getDayCell(14).focus();
+            await story.page.keyboard.press("ArrowRight");
+            await expect(story.getDayCell(15, "Unavailable")).toBeFocused();
+            await story.page.keyboard.press("Enter");
+
+            await expect(story.locators.selectedValue).toHaveText("none");
+        });
+    });
+
 });
