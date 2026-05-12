@@ -391,11 +391,24 @@ export const DataTable = ({
     };
 
     const renderRowCell = (header: HeaderProps, row: RowProps) => {
-        const style = typeof header !== "string" ? header.style : undefined;
+        const style = typeof header === "string" ? undefined : header.style;
         const fieldKey = typeof header === "string" ? header : header.fieldKey;
         const rowId = row.id.toString();
         const cellData = row[fieldKey];
         const cellId = `${rowId}-${fieldKey}`;
+
+        let cellContent: React.ReactNode;
+        if (typeof cellData === "string" || typeof cellData === "number") {
+            cellContent = (
+                <Typography.BodyBL className={styles.bodyCellContent}>
+                    {cellData}
+                </Typography.BodyBL>
+            );
+        } else if (typeof cellData === "function") {
+            cellContent = cellData(row, { isSelected: isRowSelected(rowId) });
+        } else {
+            cellContent = cellData;
+        }
 
         return (
             <td
@@ -405,16 +418,7 @@ export const DataTable = ({
                 className={styles.bodyCell}
                 style={style}
             >
-                {typeof cellData === "string" ||
-                typeof cellData === "number" ? (
-                    <Typography.BodyBL className={styles.bodyCellContent}>
-                        {cellData}
-                    </Typography.BodyBL>
-                ) : typeof cellData === "function" ? (
-                    cellData(row, { isSelected: isRowSelected(rowId) })
-                ) : (
-                    cellData
-                )}
+                {cellContent}
             </td>
         );
     };
@@ -445,31 +449,34 @@ export const DataTable = ({
     };
 
     const renderBasicEmptyView = () => {
+        let emptyTitle: JSX.Element;
+        if (!emptyView?.title) {
+            emptyTitle = (
+                <Typography.HeadingSM
+                    className={styles.errorDisplayTitle}
+                    weight="bold"
+                >
+                    {"No <items> found"}
+                </Typography.HeadingSM>
+            );
+        } else if (typeof emptyView.title === "string") {
+            emptyTitle = (
+                <Typography.HeadingSM
+                    className={styles.errorDisplayTitle}
+                    weight="bold"
+                >
+                    {emptyView.title}
+                </Typography.HeadingSM>
+            );
+        } else {
+            emptyTitle = emptyView.title;
+        }
+
         return (
             <ErrorDisplay
                 type={"no-item-found"}
                 {...emptyView}
-                title={
-                    emptyView?.title ? (
-                        typeof emptyView.title === "string" ? (
-                            <Typography.HeadingSM
-                                className={styles.errorDisplayTitle}
-                                weight="bold"
-                            >
-                                {emptyView.title}
-                            </Typography.HeadingSM>
-                        ) : (
-                            emptyView.title
-                        )
-                    ) : (
-                        <Typography.HeadingSM
-                            className={styles.errorDisplayTitle}
-                            weight="bold"
-                        >
-                            {"No <items> found"}
-                        </Typography.HeadingSM>
-                    )
-                }
+                title={emptyTitle}
                 description={
                     emptyView?.description
                         ? emptyView.description
