@@ -1,6 +1,5 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { BasicButton } from "../shared/input-wrapper";
 import { lineClampCss } from "../shared/styles";
 import {
     Border,
@@ -11,35 +10,13 @@ import {
     Shadow,
     Spacing,
 } from "../theme";
-import { Typography } from "../typography";
 
-export const dataTableClassNames = {
-    tableStickyHeader: "dataTableTableStickyHeader",
-    tableBodyShowLastRowBottomBorder:
-        "dataTableTableBodyShowLastRowBottomBorder",
-    actionBarWrapperFixed: "dataTableActionBarWrapperFixed",
-    actionBarFloat: "dataTableActionBarFloat",
-    headerCellClickable: "dataTableHeaderCellClickable",
-    headerCellCheckbox: "dataTableHeaderCellCheckbox",
-    bodyRowAlternating: "dataTableBodyRowAlternating",
-    bodyRowSelected: "dataTableBodyRowSelected",
-    bodyRowSelectable: "dataTableBodyRowSelectable",
-    bodyCellCheckbox: "dataTableBodyCellCheckbox",
-} as const;
-
-export const dataTableInternalTokens = {
+export const tokens = {
     actionBarWrapperLeft: "--fds-internal-dataTable-actionBarWrapper-left",
     actionBarWrapperWidth: "--fds-internal-dataTable-actionBarWrapper-width",
 } as const;
 
-// =============================================================================
-// STYLES CONSTANTS
-// =============================================================================
-
-// =============================================================================
-// STYLES
-// =============================================================================
-export const TableWrapper = styled.div`
+export const tableWrapper = css`
     overflow: auto;
     display: flex;
     flex-direction: column;
@@ -56,66 +33,74 @@ export const TableWrapper = styled.div`
     }
 `;
 
-export const TableContainer = styled.div`
+export const tableContainer = css`
     flex: 1;
 `;
 
-export const Table = styled.table`
-    th:last-child,
-    td:last-child {
-        padding-right: 1.5rem;
-    }
-    th:first-child,
-    td:first-child {
-        padding-left: 1.5rem;
-    }
+export const table = css`
     text-align: left;
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
+`;
 
-    &.${dataTableClassNames.tableStickyHeader} {
-        thead {
-            position: sticky;
-            top: 0;
-            z-index: 20;
-        }
+export const headerSticky = css`
+    position: sticky;
+    top: 0;
+    z-index: 20;
+`;
+
+export const bodyCell = css`
+    padding: 1.25rem 1rem;
+    vertical-align: middle;
+    color: ${Colour["text"]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+
+    &:first-child {
+        padding-left: 1.5rem;
+    }
+
+    &:last-child {
+        padding-right: 1.5rem;
     }
 `;
 
-export const TableBody = styled.tbody`
-    tr:last-child {
-        td {
+export const bodyRow = css`
+    background-color: ${Colour["bg"]};
+    border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+
+    &:last-child {
+        .${bodyCell} {
             border-bottom: none;
         }
     }
+`;
 
-    &.${dataTableClassNames.tableBodyShowLastRowBottomBorder} {
-        tr:last-child {
-            td {
-                border-bottom: ${Border["width-010"]} ${Border["solid"]}
-                    ${Colour["border"]};
-            }
+export const bodyRowBottomBorder = css`
+    &:last-child {
+        .${bodyCell} {
+            border-bottom: ${Border["width-010"]} ${Border["solid"]}
+                ${Colour["border"]};
         }
     }
 `;
 
-export const ActionBarWrapper = styled.div`
+export const actionBarWrapper = css`
     bottom: 0;
     position: sticky;
     left: 0;
 
-    ${dataTableInternalTokens.actionBarWrapperLeft}: initial;
-    ${dataTableInternalTokens.actionBarWrapperWidth}: initial;
-
-    &.${dataTableClassNames.actionBarWrapperFixed} {
-        position: fixed;
-        left: var(${dataTableInternalTokens.actionBarWrapperLeft}, 0px);
-        width: var(${dataTableInternalTokens.actionBarWrapperWidth}, 100%);
-    }
+    ${tokens.actionBarWrapperLeft}: initial;
+    ${tokens.actionBarWrapperWidth}: initial;
 `;
 
-export const TextButton = styled(BasicButton)`
+export const actionBarWrapperFixed = css`
+    position: fixed;
+    left: var(${tokens.actionBarWrapperLeft}, 0px);
+    width: var(${tokens.actionBarWrapperWidth}, 100%);
+`;
+
+export const textButton = css`
     ${Font["body-md-semibold"]}
     cursor: pointer;
     color: ${Colour["text-primary"]};
@@ -128,7 +113,7 @@ export const TextButton = styled(BasicButton)`
     }
 `;
 
-export const ActionBar = styled.div`
+export const actionBar = css`
     overflow: hidden;
     display: flex;
     align-items: center;
@@ -139,23 +124,23 @@ export const ActionBar = styled.div`
     transition: all 300ms ease;
     border-radius: ${Radius["none"]} ${Radius["none"]} ${Radius["sm"]}
         ${Radius["sm"]};
-
-    &.${dataTableClassNames.actionBarFloat} {
-        transform: translateX(0.5rem) translateY(-2rem);
-        border-radius: ${Radius["sm"]};
-        box-shadow: ${Shadow["xs-subtle"]};
-        width: calc(100% - ${Spacing["spacing-16"]});
-        border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    }
 `;
 
-export const HeaderRow = styled.tr`
+export const actionBarFloat = css`
+    transform: translateX(0.5rem) translateY(-2rem);
+    border-radius: ${Radius["sm"]};
+    box-shadow: ${Shadow["xs-subtle"]};
+    width: calc(100% - ${Spacing["spacing-16"]});
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+`;
+
+export const headerRow = css`
     background-color: ${Colour["bg-stronger"]};
     height: 6rem;
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 `;
 
-export const HeaderCell = styled.th`
+export const headerCell = css`
     padding: 1.25rem 1rem;
     text-align: left;
     cursor: default;
@@ -163,13 +148,12 @@ export const HeaderCell = styled.th`
     color: ${Colour["text"]};
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 
-    &.${dataTableClassNames.headerCellClickable} {
-        cursor: pointer;
+    &:first-child {
+        padding-left: 1.5rem;
     }
 
-    &.${dataTableClassNames.headerCellCheckbox} {
-        width: 4rem;
-        padding: 1.25rem 0.5rem 1.25rem 1.5rem;
+    &:last-child {
+        padding-right: 1.5rem;
     }
 
     &:focus-within {
@@ -178,7 +162,16 @@ export const HeaderCell = styled.th`
     }
 `;
 
-export const HeaderCellWrapper = styled.div`
+export const headerCellClickable = css`
+    cursor: pointer;
+`;
+
+export const headerCellCheckbox = css`
+    width: 4rem;
+    padding: 1.25rem 0.5rem 1.25rem 1.5rem;
+`;
+
+export const headerCellWrapper = css`
     display: flex;
     flex-direction: row;
     align-items: center;
@@ -189,57 +182,55 @@ export const HeaderCellWrapper = styled.div`
     }
 `;
 
-export const BodyRow = styled.tr`
-    background-color: ${Colour["bg"]};
-    border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+export const bodyRowAlternating = css`
+    background-color: ${Colour["bg-strong"]};
+`;
 
-    &.${dataTableClassNames.bodyRowAlternating} {
-        background-color: ${Colour["bg-strong"]};
-    }
+export const bodyRowSelected = css`
+    background-color: ${Colour["bg-selected"]};
+`;
 
-    &.${dataTableClassNames.bodyRowSelected} {
-        background-color: ${Colour["bg-selected"]};
-    }
-
-    &.${dataTableClassNames.bodyRowSelectable}:hover {
+export const bodyRowSelectable = css`
+    &:hover {
         background-color: ${Colour["bg-hover-strong"]};
     }
 `;
 
-export const BodyCell = styled.td`
-    padding: 1.25rem 1rem;
-    vertical-align: middle;
-    color: ${Colour["text"]};
-    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-
-    &.${dataTableClassNames.bodyCellCheckbox} {
-        padding: 1.25rem 0.5rem 1.25rem 1.5rem;
-    }
+export const bodyCellCheckbox = css`
+    padding: 1.25rem 0.5rem 1.25rem 1.5rem;
 `;
 
-export const BodyCellContent = styled(Typography.BodyBL)`
+export const bodyCellContent = css`
     ${lineClampCss(2)}
     text-overflow: ellipsis;
 `;
 
-export const CheckBoxWrapper = styled.div`
+export const checkBoxWrapper = css`
     display: flex;
     align-items: center;
     justify-content: center;
 `;
 
-export const LoaderWrapper = styled.div`
+export const loaderWrapper = css`
     display: flex;
     flex-direction: column;
     align-items: center;
     padding: 4rem 0;
 `;
 
-export const ErrorDisplayTitle = styled(Typography.HeadingSM)`
+export const errorDisplayTitle = css`
     margin-top: 2rem;
     margin-bottom: 1rem;
 `;
 
-export const EmptyViewCell = styled.td`
+export const emptyViewCell = css`
     padding: 4rem 0;
+
+    &:first-child {
+        padding-left: 1.5rem;
+    }
+
+    &:last-child {
+        padding-right: 1.5rem;
+    }
 `;
