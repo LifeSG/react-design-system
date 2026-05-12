@@ -5,26 +5,30 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "data-table";
 
     public readonly locators: {
+        components: {
+            selectAllCheckbox: Locator;
+            selectedCountLabel: Locator;
+            clearSelectionButton: Locator;
+            emptyView: Locator;
+        };
         dataTable: Locator;
-        selectAllCheckbox: Locator;
-        emptyView: Locator;
-        selectedCountLabel: Locator;
-        clearSelectionButton: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
+            components: {
+                selectAllCheckbox: page.getByRole("checkbox", {
+                    name: "Select all rows",
+                }),
+                emptyView: page.getByText("No matching rows"),
+                selectedCountLabel: page.getByText(/ item(s)? selected$/),
+                clearSelectionButton: page.getByRole("button", {
+                    name: /Clear selection of/,
+                }),
+            },
             dataTable: page.getByTestId("data-table"),
-            selectAllCheckbox: page.getByRole("checkbox", {
-                name: "Select all rows",
-            }),
-            emptyView: page.getByText("No matching rows"),
-            selectedCountLabel: page.getByText(/ item(s)? selected$/),
-            clearSelectionButton: page.getByRole("button", {
-                name: /Clear selection of/,
-            }),
         };
     }
 
@@ -94,6 +98,16 @@ test.describe("DataTable", () => {
 
             await compareScreenshot(story, "mount");
         });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default", { mode: "dark" });
+            });
+
+            test("Default Dark Mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
     });
 
     test.describe(() => {
@@ -101,9 +115,20 @@ test.describe("DataTable", () => {
             await story.init("empty");
         });
 
-        test("Empty state", async ({ story }) => {
-            await expect(story.locators.emptyView).toBeVisible();
+        test("Empty State", async ({ story }) => {
+            await expect(story.locators.components.emptyView).toBeVisible();
             await compareScreenshot(story, "mount");
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("empty", { mode: "dark" });
+            });
+
+            test("Empty State Dark Mode", async ({ story }) => {
+                await expect(story.locators.components.emptyView).toBeVisible();
+                await compareScreenshot(story, "mount");
+            });
         });
     });
 
@@ -112,8 +137,18 @@ test.describe("DataTable", () => {
             await story.init("alternating-rows");
         });
 
-        test("Alternating rows", async ({ story }) => {
+        test("Alternating Rows", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("alternating-rows", { mode: "dark" });
+            });
+
+            test("Alternating Rows Dark Mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
     });
 
@@ -142,7 +177,7 @@ test.describe("DataTable", () => {
             await story.init("multi-select");
         });
 
-        test("Row selection", async ({ story }) => {
+        test("Multi Select", async ({ story }) => {
             const firstRowCheckbox = story.rowCheckbox("1");
             const secondRowCheckbox = story.rowCheckbox("2");
             const thirdRowCheckbox = story.rowCheckbox("3");
@@ -156,8 +191,8 @@ test.describe("DataTable", () => {
             });
 
             await test.step("Select all rows from header checkbox", async () => {
-                await story.locators.selectAllCheckbox.click();
-                await story.locators.selectAllCheckbox.blur();
+                await story.locators.components.selectAllCheckbox.click();
+                await story.locators.components.selectAllCheckbox.blur();
 
                 await expect(firstRowCheckbox).toBeChecked();
                 await expect(secondRowCheckbox).toBeChecked();
@@ -165,7 +200,7 @@ test.describe("DataTable", () => {
                 await compareScreenshot(story, "all-rows");
             });
 
-            await story.locators.selectAllCheckbox.click();
+            await story.locators.components.selectAllCheckbox.click();
 
             await expect(firstRowCheckbox).not.toBeChecked();
             await expect(secondRowCheckbox).not.toBeChecked();
@@ -178,13 +213,25 @@ test.describe("DataTable", () => {
             await story.locators.dataTable.focus();
             await story.page.keyboard.press("Tab");
 
-            await expect(story.locators.selectAllCheckbox).toBeFocused();
+            await expect(
+                story.locators.components.selectAllCheckbox
+            ).toBeFocused();
 
             await story.page.keyboard.press("Space");
             await expect(firstRowCheckbox).toBeChecked();
 
             await story.page.keyboard.press("Tab");
             await expect(firstRowCheckbox).toBeFocused();
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("multi-select", { mode: "dark" });
+            });
+
+            test("Multi Select Dark Mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
     });
 
@@ -211,72 +258,67 @@ test.describe("DataTable", () => {
             await story.init("action-bar");
         });
 
-        test("Action bar and clear selection", async ({ story }) => {
+        test("Action Bar", async ({ story }) => {
             const firstRowCheckbox = story.rowCheckbox("1");
             const secondRowCheckbox = story.rowCheckbox("2");
             const thirdRowCheckbox = story.rowCheckbox("3");
 
             await firstRowCheckbox.click();
-            await expect(story.locators.selectedCountLabel).toContainText(
-                "1 item selected"
-            );
+            await expect(
+                story.locators.components.selectedCountLabel
+            ).toContainText("1 item selected");
 
-            await story.locators.selectAllCheckbox.click();
-            await expect(story.locators.selectedCountLabel).toContainText(
-                "3 items selected"
-            );
+            await story.locators.components.selectAllCheckbox.click();
+            await expect(
+                story.locators.components.selectedCountLabel
+            ).toContainText("3 items selected");
 
-            await compareScreenshot(story, "selected");
+            await compareScreenshot(story, "state");
 
-            await story.locators.clearSelectionButton.click();
+            await story.locators.components.clearSelectionButton.click();
 
             await expect(firstRowCheckbox).not.toBeChecked();
             await expect(secondRowCheckbox).not.toBeChecked();
             await expect(thirdRowCheckbox).not.toBeChecked();
-            await expect(story.locators.selectedCountLabel).not.toBeVisible();
+            await expect(
+                story.locators.components.selectedCountLabel
+            ).not.toBeVisible();
         });
     });
 
-    test.describe("Dark Mode", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("default", { mode: "dark" });
-            });
-
-            test("Default", async ({ story }) => {
-                await compareScreenshot(story, "mount");
-            });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("action-bar-overflow");
         });
 
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("alternating-rows", { mode: "dark" });
+        test("Floating Action Bar", async ({ story }) => {
+            const firstRowCheckbox = story.rowCheckbox("1");
+            const twelfthRowCheckbox = story.rowCheckbox("5");
+
+            await firstRowCheckbox.click();
+
+            // Trigger scroll to show the floating action bar
+            await story.scrollWithWheelUntil({
+                scrollTarget: story.locators.dataTable,
+                until: async () => {
+                    return await twelfthRowCheckbox.isVisible();
+                },
             });
 
-            test("Alternating rows", async ({ story }) => {
-                await compareScreenshot(story, "mount");
-            });
-        });
+            await expect(twelfthRowCheckbox).toBeVisible();
 
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("empty", { mode: "dark" });
-            });
+            await expect(
+                story.locators.components.selectedCountLabel
+            ).toBeVisible();
+            await expect(
+                story.locators.components.clearSelectionButton
+            ).toBeVisible();
 
-            test("No rows", async ({ story }) => {
-                await expect(story.locators.emptyView).toBeVisible();
-                await compareScreenshot(story, "mount");
-            });
-        });
+            await expect(
+                story.locators.components.selectedCountLabel
+            ).toContainText("1 item selected");
 
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("multi-select", { mode: "dark" });
-            });
-
-            test("Multi select", async ({ story }) => {
-                await compareScreenshot(story, "mount");
-            });
+            await compareScreenshot(story, "state");
         });
     });
 });
