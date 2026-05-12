@@ -16,7 +16,7 @@ export const tableWrapper = css`
     border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
     border-radius: ${Radius["md"]};
 
-    // Hide scrollbar
+    /* Hide scrollbar */
     &::-webkit-scrollbar {
         display: none;
     }
