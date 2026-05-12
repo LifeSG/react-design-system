@@ -443,11 +443,11 @@ test.describe("DateInput", () => {
                 });
             });
 
-            test("Mount (dark mode)", async ({ story }) => {
+            test("Mount", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
 
-            test("Open (dark mode)", async ({ story }) => {
+            test("Open", async ({ story }) => {
                 await story.openCalendar();
 
                 await compareScreenshot(story, "state", { fullscreen: true });
@@ -462,7 +462,7 @@ test.describe("DateInput", () => {
                 });
             });
 
-            test("Disabled (dark mode)", async ({ story }) => {
+            test("Disabled", async ({ story }) => {
                 await compareScreenshot(story, "state");
             });
         });
@@ -475,7 +475,7 @@ test.describe("DateInput", () => {
                 });
             });
 
-            test("Read-only (dark mode)", async ({ story }) => {
+            test("Read-only", async ({ story }) => {
                 await compareScreenshot(story, "state", {
                     locator: story.locators.dateInput,
                 });
