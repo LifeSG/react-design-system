@@ -75,6 +75,22 @@ test.describe("Calendar", () => {
                     "2026-04-15"
                 );
             });
+
+            test("Month view", async ({ story }) => {
+                await story.page
+                    .getByRole("button", { name: "April, Select month" })
+                    .click();
+
+                await compareScreenshot(story, "state");
+            });
+
+            test("Year view", async ({ story }) => {
+                await story.page
+                    .getByRole("button", { name: "2026, Select year" })
+                    .click();
+
+                await compareScreenshot(story, "state");
+            });
         });
 
         test.describe("", () => {
