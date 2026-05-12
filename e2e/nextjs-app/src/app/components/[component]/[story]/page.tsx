@@ -9,7 +9,6 @@ import { createMockDate } from "../../../../utils/date";
  */
 const CSR_ONLY_COMPONENTS = new Set([
     "badge",
-    "calendar",
     "date-range-input",
     "date-input",
     "select",
