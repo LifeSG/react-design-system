@@ -46,7 +46,7 @@ export const clearButton = css`
     align-self: stretch;
     box-sizing: content-box;
     padding: ${Spacing["spacing-8"]};
-    margin-left: -${Spacing["spacing-8"]};
+    margin-left: calc(${Spacing["spacing-8"]} * -1);
     color: ${Colour["icon"]};
     cursor: pointer;
     font-size: inherit;
