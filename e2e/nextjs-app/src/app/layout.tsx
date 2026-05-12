@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
 import StyledComponentsRegistry from "../lib/registry";
+import E2EDateSeedBootstrap from "./e2e-date-seed-bootstrap";
 
 import "./globals.css";
 
@@ -19,8 +20,7 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body>
-                {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-                <script src="/e2e-date-seed.js" />
+                <E2EDateSeedBootstrap />
                 <StyledComponentsRegistry nonce={nonce}>
                     {children}
                 </StyledComponentsRegistry>

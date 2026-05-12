@@ -1,5 +1,8 @@
 import dynamic from "next/dynamic";
-import { createMockDate } from "../../../../utils/date";
+import {
+    applyE2EDateMock,
+    type E2EDateMockGlobal,
+} from "../../../../utils/date";
 
 /**
  * Components that must be rendered client-side only to avoid hydration mismatches.
@@ -35,16 +38,7 @@ export default async function Page({
     // Mock Date on server-side during SSR if timestamp seed is provided.
     // This ensures server-rendered components use the same time as client hydration.
     if (nowSeed !== undefined) {
-        const nativeDate =
-            (globalThis as Record<string, unknown>).__E2E_NATIVE_DATE__ ?? Date;
-        (globalThis as Record<string, unknown>).__E2E_NATIVE_DATE__ =
-            nativeDate;
-
-        const fixed = new (nativeDate as DateConstructor)(nowSeed).getTime();
-        (globalThis as Record<string, unknown>).Date = createMockDate(
-            nativeDate as DateConstructor,
-            fixed
-        );
+        applyE2EDateMock(nowSeed, globalThis as E2EDateMockGlobal);
     }
 
     const Story = dynamic(
