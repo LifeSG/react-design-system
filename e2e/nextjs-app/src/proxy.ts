@@ -1,17 +1,25 @@
 import { NextRequest, NextResponse } from "next/server";
 
 // referenced from https://nextjs.org/docs/app/guides/content-security-policy#adding-a-nonce-with-proxy
+/**
+ * Middleware that injects CSP headers with a random nonce for inline scripts/styles.
+ * Referenced from: https://nextjs.org/docs/app/guides/content-security-policy#adding-a-nonce-with-proxy
+ */
 export function proxy(request: NextRequest) {
     const nonce = Buffer.from(crypto.randomUUID()).toString("base64");
     const isDev = process.env.NODE_ENV === "development";
+
+    // Dev allows unsafe-inline for faster iteration; prod uses nonce-based CSP
+    const styleSrcDirective = isDev
+        ? "style-src 'self' 'unsafe-inline' https://assets.life.gov.sg;"
+        : `style-src 'self' 'nonce-${nonce}' https://assets.life.gov.sg;`;
+
     const cspHeader = `
         default-src 'self';
         script-src 'self' 'nonce-${nonce}' ${
         isDev ? "'unsafe-eval'" : ""
     } https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3/components/Masthead/index.umd.js;
-        style-src 'self' 'nonce-${nonce}' ${
-        isDev ? "'unsafe-inline'" : ""
-    } https://assets.life.gov.sg;
+        ${styleSrcDirective}
         img-src 'self' https://assets.life.gov.sg blob: data:;
         font-src 'self' https://assets.life.gov.sg;
         object-src 'none';
@@ -22,7 +30,7 @@ export function proxy(request: NextRequest) {
 
     // Replace newline characters and spaces
     const contentSecurityPolicyHeaderValue = cspHeader
-        .replace(/\s{2,}/g, " ")
+        .replaceAll(/\s{2,}/g, " ")
         .trim();
 
     const requestHeaders = new Headers(request.headers);
