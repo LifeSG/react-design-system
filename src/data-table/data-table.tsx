@@ -1,4 +1,5 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useResizeDetector } from "react-resize-detector";
@@ -7,28 +8,11 @@ import { LoadingDotsSpinner } from "../animations";
 import { Checkbox } from "../checkbox";
 import { ErrorDisplay } from "../error-display";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import { useEventListener } from "../util/use-event-listener";
-import {
-    ActionBar,
-    ActionBarWrapper,
-    BodyCell,
-    BodyCellContent,
-    BodyRow,
-    CheckBoxWrapper,
-    EmptyViewCell,
-    ErrorDisplayTitle,
-    HeaderCell,
-    HeaderCellWrapper,
-    HeaderRow,
-    LoaderWrapper,
-    Table,
-    TableBody,
-    TableContainer,
-    TableWrapper,
-    TextButton,
-} from "./data-table.styles";
+import * as styles from "./data-table.styles";
 import type { DataTableProps, HeaderProps, RowProps } from "./types";
 
 export const DataTable = ({
@@ -71,11 +55,21 @@ export const DataTable = ({
 
     const [scrollable, setScrollable] = useState(false);
     const [scrollEnd, setScrollEnd] = useState(false);
-    const [tableEnd, setTableEnd] = useState(false);
     const [isFloatingActionBar, setIsFloatingActionBar] = useState(false);
     const [showLastBorder, setShowLastBorder] = useState(false);
 
     const { ref: endRef, inView: end } = useInView();
+
+    useApplyStyle(actionBarRef, {
+        [styles.dataTableInternalTokens.actionBarWrapperLeft]:
+            isFloatingActionBar && tableRef.current
+                ? `${tableRef.current.getBoundingClientRect().left}px`
+                : undefined,
+        [styles.dataTableInternalTokens.actionBarWrapperWidth]:
+            isFloatingActionBar && tableRef.current
+                ? `${tableRef.current.clientWidth}px`
+                : undefined,
+    });
 
     // =============================================================================
     // EFFECTS, EVENT LISTENERS
@@ -109,13 +103,6 @@ export const DataTable = ({
                 calculateStickyInViewport();
             }
         });
-
-        if (wrapperRef.current) {
-            setTableEnd(
-                wrapperRef.current.getBoundingClientRect().bottom <=
-                    window.innerHeight
-            );
-        }
     };
 
     useEventListener("scroll", scrollHandler, "window");
@@ -253,10 +240,10 @@ export const DataTable = ({
     // =============================================================================
     const renderHeaders = () => (
         <thead ref={headerRef}>
-            <HeaderRow>
+            <styles.HeaderRow>
                 {enableMultiSelect && renderHeaderCheckBox()}
                 {headers.map(renderHeaderCell)}
-            </HeaderRow>
+            </styles.HeaderRow>
         </thead>
     );
 
@@ -278,16 +265,17 @@ export const DataTable = ({
         const headerCellWrapperId = getHeaderWrapperId(fieldKey);
 
         return (
-            <HeaderCell
+            <styles.HeaderCell
                 data-testid={getDataTestId(`header-${fieldKey}`)}
                 key={fieldKey}
-                $clickable={clickable}
+                className={clsx(
+                    clickable && styles.dataTableClassNames.headerCellClickable
+                )}
                 scope="col"
                 aria-sort={getHeaderAriaSort(fieldKey)}
                 style={style}
-                $isCheckbox={false}
             >
-                <HeaderCellWrapper id={headerCellWrapperId}>
+                <styles.HeaderCellWrapper id={headerCellWrapperId}>
                     {typeof label === "string" ? (
                         <Typography.BodyBL weight="bold">
                             {label}
@@ -296,7 +284,7 @@ export const DataTable = ({
                         label
                     )}
                     {renderSortedArrow(fieldKey)}
-                </HeaderCellWrapper>
+                </styles.HeaderCellWrapper>
                 {(clickable || isSortable) && (
                     <VisuallyHidden>
                         <button onClick={() => onHeaderClick?.(fieldKey)}>
@@ -306,7 +294,7 @@ export const DataTable = ({
                         </button>
                     </VisuallyHidden>
                 )}
-            </HeaderCell>
+            </styles.HeaderCell>
         );
     };
 
@@ -334,13 +322,12 @@ export const DataTable = ({
 
     const renderHeaderCheckBox = () => {
         return (
-            <HeaderCell
+            <styles.HeaderCell
                 data-testid={getDataTestId("header-selection")}
-                $clickable={false}
-                $isCheckbox={true}
+                className={styles.dataTableClassNames.headerCellCheckbox}
                 scope="col"
             >
-                <CheckBoxWrapper>
+                <styles.CheckBoxWrapper>
                     <VisuallyHidden>Row selection</VisuallyHidden>
                     {enableSelectAll && (
                         <Checkbox
@@ -354,34 +341,39 @@ export const DataTable = ({
                             }}
                         />
                     )}
-                </CheckBoxWrapper>
-            </HeaderCell>
+                </styles.CheckBoxWrapper>
+            </styles.HeaderCell>
         );
     };
 
     const renderRows = () => {
         return !rows || rows.length < 1 ? (
             <tr>
-                <EmptyViewCell colSpan={getTotalColumns()}>
+                <styles.EmptyViewCell colSpan={getTotalColumns()}>
                     {renderCustomEmptyView
                         ? renderCustomEmptyView()
                         : renderBasicEmptyView()}
-                </EmptyViewCell>
+                </styles.EmptyViewCell>
             </tr>
         ) : (
             <>
                 {rows?.map((row: RowProps, index: number) => (
-                    <BodyRow
+                    <styles.BodyRow
                         data-testid={getDataTestId(`row-${row.id.toString()}`)}
                         key={row.id.toString()}
-                        $alternating={isAlternatingRow(index)}
-                        $isSelectable={enableMultiSelect}
-                        $isSelected={isRowSelected(row.id.toString())}
+                        className={clsx(
+                            isAlternatingRow(index) &&
+                                styles.dataTableClassNames.bodyRowAlternating,
+                            enableMultiSelect &&
+                                styles.dataTableClassNames.bodyRowSelectable,
+                            isRowSelected(row.id.toString()) &&
+                                styles.dataTableClassNames.bodyRowSelected
+                        )}
                     >
                         {enableMultiSelect && renderRowCheckBox(row)}
 
                         {headers.map((header) => renderRowCell(header, row))}
-                    </BodyRow>
+                    </styles.BodyRow>
                 ))}
             </>
         );
@@ -395,22 +387,21 @@ export const DataTable = ({
         const cellId = `${rowId}-${fieldKey}`;
 
         return (
-            <BodyCell
+            <styles.BodyCell
                 data-testid={getDataTestId(`row-${cellId}`)}
                 key={cellId}
                 id={getCellId(rowId, fieldKey)}
                 style={style}
-                $isCheckbox={false}
             >
                 {typeof cellData === "string" ||
                 typeof cellData === "number" ? (
-                    <BodyCellContent>{cellData}</BodyCellContent>
+                    <styles.BodyCellContent>{cellData}</styles.BodyCellContent>
                 ) : typeof cellData === "function" ? (
                     cellData(row, { isSelected: isRowSelected(rowId) })
                 ) : (
                     cellData
                 )}
-            </BodyCell>
+            </styles.BodyCell>
         );
     };
 
@@ -418,11 +409,11 @@ export const DataTable = ({
         const rowId = row.id.toString();
 
         return (
-            <BodyCell
+            <styles.BodyCell
                 data-testid={getDataTestId(`row-${rowId}-selection`)}
-                $isCheckbox={true}
+                className={styles.dataTableClassNames.bodyCellCheckbox}
             >
-                <CheckBoxWrapper>
+                <styles.CheckBoxWrapper>
                     <Checkbox
                         checked={isRowSelected(rowId)}
                         aria-labelledby={getRowCheckboxAriaLabelledBy(rowId)}
@@ -434,8 +425,8 @@ export const DataTable = ({
                         disabled={isDisabledRow(rowId)}
                         focusableWhenDisabled={isDisabledRow(rowId)}
                     />
-                </CheckBoxWrapper>
-            </BodyCell>
+                </styles.CheckBoxWrapper>
+            </styles.BodyCell>
         );
     };
 
@@ -447,16 +438,16 @@ export const DataTable = ({
                 title={
                     emptyView?.title ? (
                         typeof emptyView.title === "string" ? (
-                            <ErrorDisplayTitle weight="bold">
+                            <styles.ErrorDisplayTitle weight="bold">
                                 {emptyView.title}
-                            </ErrorDisplayTitle>
+                            </styles.ErrorDisplayTitle>
                         ) : (
                             emptyView.title
                         )
                     ) : (
-                        <ErrorDisplayTitle weight="bold">
+                        <styles.ErrorDisplayTitle weight="bold">
                             {"No <items> found"}
-                        </ErrorDisplayTitle>
+                        </styles.ErrorDisplayTitle>
                     )
                 }
                 description={
@@ -472,13 +463,13 @@ export const DataTable = ({
         return (
             <tr>
                 <td colSpan={getTotalColumns()}>
-                    <LoaderWrapper
+                    <styles.LoaderWrapper
                         role="status"
                         aria-live="polite"
                         aria-label="Loading table"
                     >
                         {loadState === "loading" && <LoadingDotsSpinner />}
-                    </LoaderWrapper>
+                    </styles.LoaderWrapper>
                 </td>
             </tr>
         );
@@ -488,22 +479,24 @@ export const DataTable = ({
         const count = selectedIds?.length ?? 0;
 
         return (
-            <ActionBarWrapper
+            <styles.ActionBarWrapper
                 ref={actionBarRef}
-                $fixed={isFloatingActionBar}
-                $left={tableRef?.current?.getBoundingClientRect()?.left}
-                $width={tableRef?.current?.clientWidth}
+                className={clsx(
+                    isFloatingActionBar &&
+                        styles.dataTableClassNames.actionBarWrapperFixed
+                )}
             >
-                <ActionBar
-                    $float={
-                        (scrollable ? !scrollEnd : !end) || isFloatingActionBar
-                    }
-                    $scrollable={scrollable}
+                <styles.ActionBar
+                    className={clsx(
+                        ((scrollable ? !scrollEnd : !end) ||
+                            isFloatingActionBar) &&
+                            styles.dataTableClassNames.actionBarFloat
+                    )}
                 >
                     <Typography.BodyMD weight="semibold">{`${count} item${
                         count > 1 ? "s" : ""
                     } selected`}</Typography.BodyMD>
-                    <TextButton
+                    <styles.TextButton
                         type="button"
                         aria-label={`Clear selection of ${count} item${
                             count === 1 ? "" : "s"
@@ -511,15 +504,15 @@ export const DataTable = ({
                         onClick={onClearSelectionClick}
                     >
                         Clear selection
-                    </TextButton>
+                    </styles.TextButton>
                     {actionBarContent}
-                </ActionBar>
-            </ActionBarWrapper>
+                </styles.ActionBar>
+            </styles.ActionBarWrapper>
         );
     };
 
     return (
-        <TableWrapper
+        <styles.TableWrapper
             id={id || "table-wrapper"}
             data-testid={otherProps["data-testid"] || "table"}
             className={className}
@@ -535,21 +528,28 @@ export const DataTable = ({
             }}
             tabIndex={0} // scrollable container must be focusable to support keyboard users
         >
-            <TableContainer>
-                <Table
-                    $end={tableEnd}
-                    $scrollable={scrollable}
+            <styles.TableContainer>
+                <styles.Table
                     ref={tableRef}
-                    $stickyHeader={enableStickyHeader}
+                    className={clsx(
+                        enableStickyHeader &&
+                            styles.dataTableClassNames.tableStickyHeader
+                    )}
                 >
                     {renderHeaders()}
-                    <TableBody $showLastRowBottomBorder={showLastBorder}>
+                    <styles.TableBody
+                        className={clsx(
+                            showLastBorder &&
+                                styles.dataTableClassNames
+                                    .tableBodyShowLastRowBottomBorder
+                        )}
+                    >
                         {loadState === "success"
                             ? renderRows()
                             : renderLoader()}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                    </styles.TableBody>
+                </styles.Table>
+            </styles.TableContainer>
             {enableActionBar &&
                 selectedIds &&
                 selectedIds.length > 0 &&
@@ -560,6 +560,6 @@ export const DataTable = ({
                     endRef(r);
                 }}
             />
-        </TableWrapper>
+        </styles.TableWrapper>
     );
 };
