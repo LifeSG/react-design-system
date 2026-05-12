@@ -174,7 +174,7 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "id",
                 description: "Row id",
-                propTypes: ["string"],
+                propTypes: ["string", "number"],
                 mandatory: true,
             },
             {
