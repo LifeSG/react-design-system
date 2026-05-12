@@ -4,8 +4,6 @@ import { createMockDate } from "../../../../utils/date";
 /**
  * Components that must be rendered client-side only to avoid hydration mismatches.
  * These typically have complex state initialization or rely on browser APIs.
- *
- * TODO: Remove when each component has stable hydration support.
  */
 const CSR_ONLY_COMPONENTS = new Set([
     "badge",
@@ -33,7 +31,6 @@ export default async function Page({
 
     // Extract timestamp seed from query params for deterministic time-based rendering
     const nowSeed = Array.isArray(now) ? now[0] : now;
-    const seedQuery = nowSeed ? `?seed=${encodeURIComponent(nowSeed)}` : "";
 
     // Mock Date on server-side during SSR if timestamp seed is provided.
     // This ensures server-rendered components use the same time as client hydration.
@@ -57,11 +54,5 @@ export default async function Page({
         }
     );
 
-    return (
-        <>
-            {/* eslint-disable-next-line @next/next/no-sync-scripts */}
-            <script src={`/e2e-date-seed.js${seedQuery}`} />
-            <Story />
-        </>
-    );
+    return <Story />;
 }

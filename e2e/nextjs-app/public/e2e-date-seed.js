@@ -5,11 +5,15 @@
  * URL: /e2e-date-seed.js?seed=<ISO_DATE_STRING>
  */
 (function () {
-    // Extract seed from script src query params (e.g., /e2e-date-seed.js?seed=2026-04-12)
+    // Read from page URL first (preferred), then fallback to script src query params.
+    // This allows the script to be loaded in <head> without dynamic script src values.
+    const pageSeed = new URL(globalThis.location.href).searchParams.get("now");
+
+    // Extract fallback seed from script src query params (e.g., /e2e-date-seed.js?seed=2026-04-12)
     const script = document.currentScript;
     const scriptSrc = script ? script.src : globalThis.location.href;
     const url = new URL(scriptSrc);
-    const seed = url.searchParams.get("seed");
+    const seed = pageSeed ?? url.searchParams.get("seed");
     const nativeDate = globalThis.__E2E_NATIVE_DATE__ || Date;
 
     // Preserve reference to native Date for future resets
