@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useContext } from "react";
 
 import { ThemeContext } from "../theme/theme-provider/context";
@@ -18,18 +19,16 @@ export const ResourceAddon = (): JSX.Element => {
                         </Typography.BodyMD>
                         <div className={styles.items}>
                             <img
-                                className={styles.img}
+                                className={clsx(styles.img, styles.govtechLogo)}
                                 data-testid="footer-govtech-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/govtech-logo.png"
                                 alt="GovTech Singapore"
-                                style={{ height: "4.5rem" }}
                             />
                             <img
-                                className={styles.img}
+                                className={clsx(styles.img, styles.psdLogo)}
                                 data-testid="footer-psd-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/psd-logo.png"
                                 alt="Public Service Division"
-                                style={{ height: "3.5rem" }}
                             />
                         </div>
                     </>

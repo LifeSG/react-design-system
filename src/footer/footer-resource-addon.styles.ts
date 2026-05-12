@@ -7,6 +7,14 @@ export const img = css`
     max-width: 100%;
 `;
 
+export const govtechLogo = css`
+    height: 4.5rem;
+`;
+
+export const psdLogo = css`
+    height: 3.5rem;
+`;
+
 export const items = css`
     display: flex;
     align-items: flex-start;
