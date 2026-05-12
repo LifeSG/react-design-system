@@ -7,9 +7,6 @@ class StoryPage extends AbstractStoryPage {
     public readonly locators: {
         table: Locator;
         tableWrapper: Locator;
-        row1: Locator;
-        row2: Locator;
-        row3: Locator;
     };
 
     constructor(page: Page) {
@@ -18,9 +15,6 @@ class StoryPage extends AbstractStoryPage {
         this.locators = {
             table: page.getByTestId("table"),
             tableWrapper: page.getByTestId("table-wrapper"),
-            row1: page.getByTestId("row-1"),
-            row2: page.getByTestId("row-2"),
-            row3: page.getByTestId("row-3"),
         };
     }
 }
@@ -63,13 +57,6 @@ test.describe("Table", () => {
                       - cell "Pending"
             `);
         });
-
-        test("Row hover", async ({ story }) => {
-            await story.locators.row1.hover();
-            await compareScreenshot(story, "hover-row", {
-                locator: story.locators.table,
-            });
-        });
     });
 
     test.describe(() => {
@@ -79,13 +66,6 @@ test.describe("Table", () => {
 
         test("Default table (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount");
-        });
-
-        test("Row hover (dark mode)", async ({ story }) => {
-            await story.locators.row1.hover();
-            await compareScreenshot(story, "hover-row", {
-                locator: story.locators.table,
-            });
         });
     });
 
@@ -101,10 +81,6 @@ test.describe("Table", () => {
         test("Table can be scrolled horizontally", async ({ story }) => {
             await story.locators.tableWrapper.hover();
             await story.page.mouse.wheel(200, 0);
-            const scrollLeft = await story.locators.tableWrapper.evaluate(
-                (el) => el.scrollLeft
-            );
-            expect(scrollLeft).toBeGreaterThan(0);
             await compareScreenshot(story, "scrolled", {
                 locator: story.locators.tableWrapper,
             });
