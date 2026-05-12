@@ -13,14 +13,19 @@
     const script = document.currentScript;
     const scriptSrc = script ? script.src : globalThis.location.href;
     const url = new URL(scriptSrc);
-    const seed = pageSeed ?? url.searchParams.get("seed");
+    const seed =
+        pageSeed ??
+        url.searchParams.get("seed") ??
+        globalThis.__E2E_ACTIVE_DATE_SEED__ ??
+        null;
     const nativeDate = globalThis.__E2E_NATIVE_DATE__ || Date;
 
     // Preserve reference to native Date for future resets
     globalThis.__E2E_NATIVE_DATE__ = nativeDate;
 
+    // If no seed is provided, keep current Date behavior unchanged.
+    // This avoids unintentional resets during re-renders/head updates in dev.
     if (!seed) {
-        globalThis.Date = nativeDate;
         return;
     }
 
@@ -45,5 +50,6 @@
     MockDate.parse = nativeDate.parse;
     MockDate.UTC = nativeDate.UTC;
 
+    globalThis.__E2E_ACTIVE_DATE_SEED__ = seed;
     globalThis.Date = MockDate;
 })();

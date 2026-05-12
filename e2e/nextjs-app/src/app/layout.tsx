@@ -19,6 +19,8 @@ export default async function RootLayout({
     return (
         <html lang="en">
             <body>
+                {/* eslint-disable-next-line @next/next/no-sync-scripts */}
+                <script src="/e2e-date-seed.js" />
                 <StyledComponentsRegistry nonce={nonce}>
                     {children}
                 </StyledComponentsRegistry>
