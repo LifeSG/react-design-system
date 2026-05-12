@@ -81,18 +81,9 @@ const TableEl = ({
 TableEl.displayName = "Table.Table";
 
 export const Table = Object.assign(
-    ({
-        children,
-        className,
-        ...props
-    }: React.TableHTMLAttributes<HTMLTableElement>) => (
+    ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
         <Container>
-            <TableEl
-                className={clsx(styles.tableComponent, className)}
-                {...props}
-            >
-                {children}
-            </TableEl>
+            <TableEl {...props}>{children}</TableEl>
         </Container>
     ),
     {
