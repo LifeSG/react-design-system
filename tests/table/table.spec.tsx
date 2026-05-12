@@ -59,8 +59,9 @@ describe("Table", () => {
         expect(
             screen.getByRole("columnheader", { name: "Status" })
         ).toBeInTheDocument();
-        expect(screen.getByText("John Doe")).toBeInTheDocument();
-        expect(screen.getByText("Active")).toBeInTheDocument();
+        expect(screen.getAllByRole("cell")).toHaveLength(2);
+        expect(screen.getAllByRole("cell")[0]).toHaveTextContent("John Doe");
+        expect(screen.getAllByRole("cell")[1]).toHaveTextContent("Active");
     });
 
     it("should render multiple rows correctly", () => {
