@@ -1,14 +1,14 @@
 "use client";
 
 import { Navbar } from "@lifesg/react-design-system/navbar";
-import { desktopNavItems, downloadActionButtons } from "./common";
+import { navItems, downloadActionButtons } from "./common";
 
 export default function Story() {
     return (
         <Navbar
             data-testid="navbar-default"
             selectedId="guides"
-            items={{ desktop: desktopNavItems }}
+            items={{ desktop: navItems }}
             actionButtons={{ desktop: downloadActionButtons }}
         />
     );

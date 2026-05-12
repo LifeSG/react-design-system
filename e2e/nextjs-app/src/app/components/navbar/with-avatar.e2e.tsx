@@ -2,23 +2,20 @@
 
 import { Navbar } from "@lifesg/react-design-system/navbar";
 import { navItems } from "./common";
+import { Avatar } from "@lifesg/react-design-system/avatar";
 
 export default function Story() {
     return (
         <Navbar
-            data-testid="navbar-multiple-action-buttons"
+            data-testid="navbar-with-avatar"
             selectedId="guides"
             items={{ desktop: navItems }}
             actionButtons={{
                 desktop: [
-                    { type: "download" },
                     {
-                        type: "button",
-                        args: { children: "Sign up", styleType: "secondary" },
-                    },
-                    {
-                        type: "button",
-                        args: { children: "Log in" },
+                        type: "component",
+                        args: { render: <Avatar>GovTech</Avatar> },
+                        uncollapsible: true,
                     },
                 ],
             }}

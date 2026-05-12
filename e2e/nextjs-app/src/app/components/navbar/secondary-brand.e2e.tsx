@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@lifesg/react-design-system/navbar";
-import { ASSETS, desktopNavItems, downloadActionButtons } from "./common";
+import { ASSETS, navItems, downloadActionButtons } from "./common";
 
 export default function Story() {
     return (
@@ -14,7 +14,7 @@ export default function Story() {
                     logoSrc: ASSETS.LOGO_SGW,
                 },
             }}
-            items={{ desktop: desktopNavItems }}
+            items={{ desktop: navItems }}
             actionButtons={{ desktop: downloadActionButtons }}
         />
     );

@@ -13,6 +13,14 @@ class StoryPage extends AbstractStoryPage {
         hideLinkIndicator: Locator;
         secondaryBrand: Locator;
         multipleActionButtons: Locator;
+        singleActionButton: Locator;
+        withAvatar: Locator;
+        submenu: Locator;
+        internal: {
+            mobileMenuButton: Locator;
+            servicesTrigger: Locator;
+            servicesMobileTrigger: Locator;
+        };
     };
 
     constructor(page: Page) {
@@ -29,7 +37,21 @@ class StoryPage extends AbstractStoryPage {
             multipleActionButtons: page.getByTestId(
                 "navbar-multiple-action-buttons"
             ),
+            singleActionButton: page.getByTestId("navbar-single-action-button"),
+            withAvatar: page.getByTestId("navbar-with-avatar"),
+            submenu: page.getByTestId("navbar-submenu"),
+            internal: {
+                mobileMenuButton: page.getByTestId("button__mobile-menu"),
+                servicesTrigger: page.getByRole("button", { name: "Services" }),
+                servicesMobileTrigger: page.getByTestId(
+                    "link__mobile-2-expand-collapse-button"
+                ),
+            },
         };
+    }
+
+    async openMobileDrawer() {
+        await this.locators.internal.mobileMenuButton.click();
     }
 }
 
@@ -41,6 +63,10 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Navbar", () => {
+    // =======================================================================
+    // DESKTOP
+    // =======================================================================
+
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("default");
@@ -128,6 +154,113 @@ test.describe("Navbar", () => {
 
         test("Multiple action buttons", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("single-action-button");
+        });
+
+        test("Single action button", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("with-avatar");
+        });
+
+        test("With avatar", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("submenu");
+        });
+
+        test("Submenu", async ({ story }) => {
+            await story.locators.internal.servicesTrigger.click();
+            await compareScreenshot(story, "open", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    // =======================================================================
+    // MOBILE
+    // =======================================================================
+
+    test.describe("Mobile", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default", { size: "mobile" });
+            });
+
+            test("Collapsed", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+
+            test("Drawer", async ({ story }) => {
+                await story.openMobileDrawer();
+                await compareScreenshot(story, "open", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default", { size: "mobile", mode: "dark" });
+            });
+
+            test("Collapsed (dark mode)", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+
+            test("Drawer (dark mode)", async ({ story }) => {
+                await story.openMobileDrawer();
+                await compareScreenshot(story, "open", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("secondary-brand", { size: "mobile" });
+            });
+
+            test("Secondary brand", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-avatar", { size: "mobile" });
+            });
+
+            test("With avatar", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("submenu", { size: "mobile" });
+            });
+
+            test("Submenu", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.locators.internal.servicesMobileTrigger.click();
+                await compareScreenshot(story, "open", {
+                    fullscreen: true,
+                });
+            });
         });
     });
 });
