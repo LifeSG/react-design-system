@@ -9,7 +9,7 @@ class StoryPage extends AbstractStoryPage {
         compressed: Locator;
         stretch: Locator;
         noMasthead: Locator;
-        hideNavBranding: Locator;
+        hideBranding: Locator;
         hideLinkIndicator: Locator;
         secondaryBrand: Locator;
         multipleActionButtons: Locator;
@@ -23,7 +23,7 @@ class StoryPage extends AbstractStoryPage {
             compressed: page.getByTestId("navbar-compressed"),
             stretch: page.getByTestId("navbar-stretch"),
             noMasthead: page.getByTestId("navbar-no-masthead"),
-            hideNavBranding: page.getByTestId("navbar-hide-branding"),
+            hideBranding: page.getByTestId("navbar-hide-branding"),
             hideLinkIndicator: page.getByTestId("navbar-hide-link-indicator"),
             secondaryBrand: page.getByTestId("navbar-secondary-brand"),
             multipleActionButtons: page.getByTestId(
@@ -46,10 +46,8 @@ test.describe("Navbar", () => {
             await story.init("default");
         });
 
-        test("Default desktop", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.default,
-            });
+        test("Default", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -58,22 +56,18 @@ test.describe("Navbar", () => {
             await story.init("default", { mode: "dark" });
         });
 
-        test("Default desktop (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.default,
-            });
+        test("Default (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("compressed");
+            await story.init("compress");
         });
 
-        test("Compressed variant", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.compressed,
-            });
+        test("Compress", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -82,10 +76,8 @@ test.describe("Navbar", () => {
             await story.init("stretch", { size: "xxl" });
         });
 
-        test("Stretch layout", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.stretch,
-            });
+        test("Stretch", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -95,9 +87,7 @@ test.describe("Navbar", () => {
         });
 
         test("No masthead", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.noMasthead,
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -106,10 +96,8 @@ test.describe("Navbar", () => {
             await story.init("hide-branding");
         });
 
-        test("Hide nav branding", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.hideNavBranding,
-            });
+        test("Hide branding", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -119,9 +107,7 @@ test.describe("Navbar", () => {
         });
 
         test("Hide link indicator", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.hideLinkIndicator,
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -131,9 +117,7 @@ test.describe("Navbar", () => {
         });
 
         test("Secondary brand", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.secondaryBrand,
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -143,9 +127,7 @@ test.describe("Navbar", () => {
         });
 
         test("Multiple action buttons", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.multipleActionButtons,
-            });
+            await compareScreenshot(story, "mount");
         });
     });
 });
