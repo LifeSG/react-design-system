@@ -1,18 +1,16 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { useState } from "react";
 
+import { Button } from "../button";
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import { BasicButton } from "../shared/input-wrapper";
 import { CalendarDropdown } from "../shared/internal-calendar";
-import * as calendarManagerStyles from "../shared/internal-calendar/calendar-manager.styles";
 import { CalendarHelper, DateHelper } from "../util";
-import {
-    Container,
-    HeaderArrowButton,
-    StyledDateTextButton,
-} from "./date-navigator.style";
+import * as styles from "./date-navigator.styles";
 import type { DateNavigatorProps } from "./types";
 
 export const DateNavigator = ({
@@ -27,6 +25,7 @@ export const DateNavigator = ({
     onRightArrowClick,
     onCalendarDateSelect,
     dropdownRootNode,
+    className,
     ...otherProps
 }: DateNavigatorProps) => {
     // =============================================================================
@@ -133,51 +132,44 @@ export const DateNavigator = ({
                   };
 
         return (
-            <Container {...otherProps}>
-                {
-                    <HeaderArrowButton
-                        data-testid="date-navigator-left-arrow-btn"
-                        disabled={loading || isLeftArrowDisabled()}
-                        aria-label={ariaLabel.left}
-                        onClick={navigatePrevious}
-                        styleType="light"
-                        sizeType="small"
-                        icon={
-                            <ChevronLeftIcon
-                                className={calendarManagerStyles.icon}
-                            />
-                        }
-                    />
-                }
-                <StyledDateTextButton
-                    onClick={() =>
-                        !!onCalendarDateSelect &&
-                        !loading &&
-                        setIsCalendarOpen(!isCalendarOpen)
+            <div {...otherProps} className={clsx(styles.container, className)}>
+                <Button
+                    className={styles.headerArrowButton}
+                    data-testid="date-navigator-left-arrow-btn"
+                    disabled={loading || isLeftArrowDisabled()}
+                    aria-label={ariaLabel.left}
+                    onClick={navigatePrevious}
+                    styleType="light"
+                    sizeType="small"
+                    icon={
+                        <ChevronLeftIcon
+                            className={styles.headerArrowButtonIcon}
+                        />
                     }
-                    $enableDateClick={!!onCalendarDateSelect && !loading}
+                />
+                <BasicButton
+                    onClick={() => setIsCalendarOpen(!isCalendarOpen)}
+                    className={styles.dateTextButton}
                     data-testid="date-navigator-date-text"
-                    styleType="link"
                     disabled={!onCalendarDateSelect || loading}
                 >
                     {getDisplayText()}
-                </StyledDateTextButton>
-                {
-                    <HeaderArrowButton
-                        data-testid="date-navigator-right-arrow-btn"
-                        disabled={loading || isRightArrowDisabled()}
-                        aria-label={ariaLabel.right}
-                        onClick={navigateNext}
-                        styleType="light"
-                        sizeType="small"
-                        icon={
-                            <ChevronRightIcon
-                                className={calendarManagerStyles.icon}
-                            />
-                        }
-                    />
-                }
-            </Container>
+                </BasicButton>
+                <Button
+                    className={styles.headerArrowButton}
+                    data-testid="date-navigator-right-arrow-btn"
+                    disabled={loading || isRightArrowDisabled()}
+                    aria-label={ariaLabel.right}
+                    onClick={navigateNext}
+                    styleType="light"
+                    sizeType="small"
+                    icon={
+                        <ChevronRightIcon
+                            className={styles.headerArrowButtonIcon}
+                        />
+                    }
+                />
+            </div>
         );
     };
 
