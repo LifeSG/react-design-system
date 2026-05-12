@@ -71,16 +71,34 @@ test.describe("Table", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("overflow");
+            await story.init("horizontal-overflow");
         });
 
-        test("Overflow scrollable table", async ({ story }) => {
+        test("Horizontal overflow scrollable table", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
 
         test("Table can be scrolled horizontally", async ({ story }) => {
             await story.locators.tableWrapper.hover();
             await story.page.mouse.wheel(200, 0);
+            await compareScreenshot(story, "scrolled", {
+                locator: story.locators.tableWrapper,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("vertical-overflow");
+        });
+
+        test("Vertical overflow scrollable table", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+
+        test("Table can be scrolled vertically", async ({ story }) => {
+            await story.locators.tableWrapper.hover();
+            await story.page.mouse.wheel(0, 200);
             await compareScreenshot(story, "scrolled", {
                 locator: story.locators.tableWrapper,
             });
