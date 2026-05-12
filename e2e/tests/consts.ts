@@ -12,3 +12,5 @@ export const viewport = {
 };
 
 export const fixedTimestamp = "2026-04-08T12:00:00.000Z";
+
+export const modes = ["light", "dark"] as const;

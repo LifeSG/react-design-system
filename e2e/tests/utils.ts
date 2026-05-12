@@ -1,4 +1,4 @@
-import test, { expect, Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { viewport } from "./consts";
 
 export abstract class AbstractStoryPage {
@@ -21,10 +21,6 @@ export abstract class AbstractStoryPage {
     ) {
         await this.page.setViewportSize(viewport[options?.size ?? "desktop"]);
 
-        if (options?.mockedTimestamp) {
-            await applyMockedTimestamp(this.page, options.mockedTimestamp);
-        }
-
         if (options?.mode && options.mode !== "auto") {
             await this.page.emulateMedia({
                 colorScheme:
@@ -34,13 +30,18 @@ export abstract class AbstractStoryPage {
             });
         }
 
-        const modeQuery =
-            options?.mode === "light" || options?.mode === "dark"
-                ? `?mode=${options.mode}`
-                : "";
+        const query = new URLSearchParams();
+        if (options?.mode === "light" || options?.mode === "dark") {
+            query.set("mode", options.mode);
+        }
+        if (options?.mockedTimestamp) {
+            query.set("now", options.mockedTimestamp);
+        }
+
+        const queryString = query.toString();
 
         await this.page.goto(
-            `/components/${this.component}/${story}${modeQuery}`
+            `/components/${this.component}/${story}?${queryString}`
         );
 
         await expect(this.layout).toBeVisible();
@@ -130,14 +131,4 @@ export const compareScreenshot = async (
         threshold: 0.01, // Strict colour matching
         maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
     });
-};
-
-export const applyMockedTimestamp = async (
-    page: Page,
-    timestamp: string
-): Promise<void> => {
-    const mockedDate = new Date(timestamp);
-    const clock = page.clock;
-
-    await clock.install({ time: mockedDate });
 };
