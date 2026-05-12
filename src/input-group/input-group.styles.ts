@@ -11,11 +11,11 @@ export const addonWrapper = css`
     width: 100%;
     padding: 0 ${Spacing["spacing-16"]};
 
-    &[data-read-only] {
+    &[data-read-only="true"] {
         padding: 0;
     }
 
-    &[data-no-border] {
+    &[data-no-border="true"] {
         padding: 0;
     }
 
@@ -30,11 +30,11 @@ export const noAddonWrapper = css`
     width: 100%;
     padding: 0 ${Spacing["spacing-16"]};
 
-    &[data-read-only] {
+    &[data-read-only="true"] {
         padding: 0;
     }
 
-    &[data-no-border] {
+    &[data-no-border="true"] {
         padding: 0;
     }
 `;
@@ -54,11 +54,11 @@ export const labelAddonContainer = css`
         width: 1em;
     }
 
-    &[data-disabled] {
+    &[data-disabled="true"] {
         color: ${Colour["text-subtler"]};
     }
 
-    &[data-read-only] {
+    &[data-read-only="true"] {
         margin-right: ${Spacing["spacing-4"]};
     }
 
@@ -67,7 +67,7 @@ export const labelAddonContainer = css`
         margin-left: ${Spacing["spacing-12"]};
     }
 
-    &[data-position="right"][data-read-only] {
+    &[data-position="right"][data-read-only="true"] {
         margin-right: 0;
         margin-left: ${Spacing["spacing-4"]};
     }

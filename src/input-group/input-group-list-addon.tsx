@@ -208,13 +208,9 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
                     aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     aria-invalid={ariaInvalid}
+                    data-position={position}
                     className={clsx(
-                        noBorder &&
-                            position === "right" &&
-                            styles.expandableElementNoBorderRight,
-                        noBorder &&
-                            position !== "right" &&
-                            styles.expandableElementNoBorderLeft
+                        noBorder && styles.expandableElementNoBorder
                     )}
                 >
                     {renderSelectorContent()}
@@ -303,11 +299,8 @@ export const Component = <T, V>(
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                className={clsx(
-                    styles.fieldWrapper,
-                    position === "right" && styles.fieldWrapperPositionRight,
-                    className
-                )}
+                data-position={position}
+                className={clsx(styles.fieldWrapper, className)}
             >
                 <VisuallyHidden aria-hidden id={comboboxLabelId}>
                     {comboboxAriaLabel}
@@ -319,12 +312,10 @@ export const Component = <T, V>(
                     {renderSelector()}
                 </div>
                 <div
+                    data-position={position}
                     className={clsx(
                         styles.divider,
-                        readOnly && styles.dividerReadOnly,
-                        position === "right"
-                            ? styles.dividerPositionRight
-                            : styles.dividerPositionLeft
+                        readOnly && styles.dividerReadOnly
                     )}
                 />
                 <VisuallyHidden aria-hidden id={textboxLabelId}>
@@ -342,18 +333,11 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, textboxLabelId)}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
+                    data-position={position}
                     className={clsx(
                         readOnly && styles.fieldInputReadOnly,
-                        !readOnly &&
-                            noBorder &&
-                            (position === "right"
-                                ? styles.fieldInputNoBorderRight
-                                : styles.fieldInputNoBorderLeft),
-                        !readOnly &&
-                            !noBorder &&
-                            (position === "right"
-                                ? styles.fieldInputPositionRight
-                                : styles.fieldInputPositionLeft)
+                        !readOnly && noBorder && styles.fieldInputNoBorder,
+                        !readOnly && !noBorder && styles.fieldInputPosition
                     )}
                 />
             </InputBox>

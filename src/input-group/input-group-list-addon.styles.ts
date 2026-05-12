@@ -8,18 +8,20 @@ import { Colour, Spacing } from "../theme";
 export const fieldWrapper = css`
     display: flex;
     align-items: center;
+
+    &[data-position="right"] {
+        flex-direction: row-reverse;
+    }
 `;
 
-export const fieldWrapperPositionRight = css`
-    flex-direction: row-reverse;
-`;
+export const expandableElementNoBorder = css`
+    &[data-position="right"] {
+        padding-right: 0;
+    }
 
-export const expandableElementNoBorderRight = css`
-    padding-right: 0;
-`;
-
-export const expandableElementNoBorderLeft = css`
-    padding-left: 0;
+    &[data-position="left"] {
+        padding-left: 0;
+    }
 `;
 
 export const fieldSelector = css`
@@ -30,20 +32,24 @@ export const fieldInputReadOnly = css`
     padding: 0;
 `;
 
-export const fieldInputNoBorderRight = css`
-    padding-left: 0;
+export const fieldInputNoBorder = css`
+    &[data-position="right"] {
+        padding-left: 0;
+    }
+
+    &[data-position="left"] {
+        padding-right: 0;
+    }
 `;
 
-export const fieldInputNoBorderLeft = css`
-    padding-right: 0;
-`;
+export const fieldInputPosition = css`
+    &[data-position="right"] {
+        padding-left: ${Spacing["spacing-16"]};
+    }
 
-export const fieldInputPositionRight = css`
-    padding-left: ${Spacing["spacing-16"]};
-`;
-
-export const fieldInputPositionLeft = css`
-    padding-right: ${Spacing["spacing-16"]};
+    &[data-position="left"] {
+        padding-right: ${Spacing["spacing-16"]};
+    }
 `;
 
 export const selectorReadOnly = css`
@@ -60,16 +66,16 @@ export const divider = css`
     background: ${Colour["border"]};
     flex-shrink: 0;
     height: 1.25rem;
+
+    &[data-position="right"] {
+        margin-left: ${Spacing["spacing-12"]};
+    }
+
+    &[data-position="left"] {
+        margin-right: ${Spacing["spacing-12"]};
+    }
 `;
 
 export const dividerReadOnly = css`
     display: none;
-`;
-
-export const dividerPositionRight = css`
-    margin-left: ${Spacing["spacing-12"]};
-`;
-
-export const dividerPositionLeft = css`
-    margin-right: ${Spacing["spacing-12"]};
 `;
