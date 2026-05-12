@@ -59,7 +59,11 @@ const Container = ({
     className,
     ...props
 }: React.HTMLAttributes<HTMLDivElement>) => (
-    <div className={clsx(styles.tableWrapper, className)} {...props}>
+    <div
+        className={clsx(styles.tableWrapper, className)}
+        data-testid="table-wrapper"
+        {...props}
+    >
         {children}
     </div>
 );

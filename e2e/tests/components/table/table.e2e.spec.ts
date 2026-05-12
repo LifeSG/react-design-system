@@ -17,7 +17,7 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             table: page.getByTestId("table"),
-            tableWrapper: page.getByTestId("table").locator(".."),
+            tableWrapper: page.getByTestId("table-wrapper"),
             row1: page.getByTestId("row-1"),
             row2: page.getByTestId("row-2"),
             row3: page.getByTestId("row-3"),
