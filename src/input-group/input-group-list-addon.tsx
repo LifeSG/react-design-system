@@ -208,7 +208,7 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
                     aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     aria-invalid={ariaInvalid}
-                    data-position={position}
+                    data-position={position ?? "left"}
                     className={clsx(
                         noBorder && styles.expandableElementNoBorder
                     )}
@@ -312,7 +312,7 @@ export const Component = <T, V>(
                     {renderSelector()}
                 </div>
                 <div
-                    data-position={position}
+                    data-position={position ?? "left"}
                     className={clsx(
                         styles.divider,
                         readOnly && styles.dividerReadOnly
@@ -333,7 +333,7 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, textboxLabelId)}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
-                    data-position={position}
+                    data-position={position ?? "left"}
                     className={clsx(
                         readOnly && styles.fieldInputReadOnly,
                         !readOnly && noBorder && styles.fieldInputNoBorder,
