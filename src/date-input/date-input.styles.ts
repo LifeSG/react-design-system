@@ -1,11 +1,9 @@
-import styled from "styled-components";
-
-import { InputWrapper } from "../shared/input-wrapper";
+import { css } from "@linaria/core";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 
-export const Container = styled(InputWrapper)`
+export const container = css`
     height: 3rem;
 `;
