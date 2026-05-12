@@ -65,8 +65,10 @@ export const logoSize: Partial<Record<ThemeType, string>> = {
         width: 4rem;
     `,
     mylegacy: css`
-        width: 10rem;
-        max-height: 2rem;
+        && {
+            width: 10rem;
+            max-height: 2rem;
+        }
     `,
     ccube: css`
         width: 10rem;
