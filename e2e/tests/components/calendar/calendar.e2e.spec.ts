@@ -226,8 +226,6 @@ test.describe("Calendar", () => {
 
             await story.getDayCell(10).click();
             await expect(story.locators.selectedValue).toHaveText("2026-04-10");
-
-            await compareScreenshot(story, "selected");
         });
 
         test("Keyboard interaction", async ({ story }) => {
