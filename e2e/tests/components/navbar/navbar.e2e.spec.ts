@@ -23,7 +23,7 @@ class StoryPage extends AbstractStoryPage {
             compressed: page.getByTestId("navbar-compressed"),
             stretch: page.getByTestId("navbar-stretch"),
             noMasthead: page.getByTestId("navbar-no-masthead"),
-            hideNavBranding: page.getByTestId("navbar-hide-nav-branding"),
+            hideNavBranding: page.getByTestId("navbar-hide-branding"),
             hideLinkIndicator: page.getByTestId("navbar-hide-link-indicator"),
             secondaryBrand: page.getByTestId("navbar-secondary-brand"),
             multipleActionButtons: page.getByTestId(
@@ -103,7 +103,7 @@ test.describe("Navbar", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("hide-nav-branding");
+            await story.init("hide-branding");
         });
 
         test("Hide nav branding", async ({ story }) => {

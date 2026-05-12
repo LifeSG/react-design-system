@@ -10,8 +10,8 @@ export default function Story() {
             selectedId="guides"
             resources={{
                 secondary: {
-                    brandName: "BookingSG",
-                    logoSrc: ASSETS.LOGO_LIFESG,
+                    brandName: "Support Go Where",
+                    logoSrc: ASSETS.LOGO_SGW,
                 },
             }}
             items={{ desktop: desktopNavItems }}
