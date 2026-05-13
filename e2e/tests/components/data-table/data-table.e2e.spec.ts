@@ -322,9 +322,39 @@ test.describe("DataTable", () => {
             });
         });
 
-        test.describe("Overflow", () => {
+        test.describe("Overflow with Long Items", () => {
             test.beforeEach(async ({ story }) => {
-                await story.init("action-bar-overflow");
+                await story.init("action-bar-overflow-with-long-items");
+            });
+
+            test("Floating", async ({ story }) => {
+                const firstRowCheckbox = story.rowCheckbox("1");
+
+                await firstRowCheckbox.click();
+
+                await story.page.keyboard.press("PageDown");
+
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.dataTable,
+                });
+            });
+
+            test("Docking", async ({ story }) => {
+                const firstRowCheckbox = story.rowCheckbox("1");
+
+                await firstRowCheckbox.click();
+
+                await story.page.keyboard.press("End");
+
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.dataTable,
+                });
+            });
+        });
+
+        test.describe("Overflow with Max Height", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("action-bar-overflow-with-max-height");
             });
 
             test("Floating", async ({ story }) => {
