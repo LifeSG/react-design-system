@@ -31,15 +31,13 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "menu";
 
     public readonly locators: {
-        triggerDefault: Locator;
+        trigger: Locator;
         content: Locator;
-        outsideTarget: Locator;
         itemProfile: Locator;
         linkFirst: Locator;
         linkSecond: Locator;
         linkThird: Locator;
         linkLong: Locator;
-        contentOverflow: Locator;
         triggerForPlacement: (position: PlacementExpectation) => Locator;
         contentForPlacement: (position: PlacementExpectation) => Locator;
     };
@@ -48,9 +46,8 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            triggerDefault: page.getByRole("button", { name: "Open menu" }),
+            trigger: page.getByRole("button", { name: "Open menu" }),
             content: page.getByTestId("menu-content"),
-            outsideTarget: page.getByTestId("outside-dismiss-target"),
             itemProfile: page.getByRole("listitem").filter({
                 hasText: "Jane Doe",
             }),
@@ -60,7 +57,6 @@ class StoryPage extends AbstractStoryPage {
             linkLong: page.getByRole("link", {
                 name: "This is a long menu link title that should clamp across lines when the menu has limited width",
             }),
-            contentOverflow: page.getByTestId("menu-content-overflow"),
             triggerForPlacement: (position: PlacementExpectation) => {
                 return page.getByRole("button", {
                     name: placementButtonNames[position],
@@ -90,7 +86,7 @@ test.describe("Menu", () => {
         });
 
         test("Mount", async ({ story }) => {
-            await story.locators.triggerDefault.click();
+            await story.locators.trigger.click();
             await expect(story.locators.content).toBeVisible();
 
             await compareScreenshot(story, "state", {
@@ -121,12 +117,12 @@ test.describe("Menu", () => {
                       - /url: "#long-link"
             `);
 
-            await story.locators.outsideTarget.click();
+            await story.page.mouse.click(200, 0);
             await expect(story.locators.content).not.toBeVisible();
         });
 
         test("Keyboard navigation", async ({ story }) => {
-            await story.locators.triggerDefault.click();
+            await story.locators.trigger.click();
             await expect(story.locators.content).toBeVisible();
 
             await story.locators.linkFirst.focus();
