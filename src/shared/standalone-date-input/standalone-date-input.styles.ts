@@ -60,9 +60,6 @@ export const baseInputHover = css`
 
 export const divider = css`
     ${Font["body-baseline-regular"]}
-`;
-
-export const dividerInactive = css`
     color: ${Colour["text"]};
 `;
 
