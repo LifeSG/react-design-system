@@ -13,6 +13,12 @@ const CSR_ONLY_COMPONENTS = new Set([
     "date-input",
     "nested-select",
     "nested-multi-select",
+    "badge",
+    "input-group",
+    "input-multi-select",
+    "input-select",
+    "nested-select",
+    "select",
 ]);
 
 export default async function Page({
