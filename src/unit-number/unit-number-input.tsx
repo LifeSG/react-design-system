@@ -1,6 +1,8 @@
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
+import * as inputGroupStyles from "../input-group/input-group.styles";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { InputWrapper } from "../shared/input-wrapper";
 import { StringHelper, useId, useNextInputState } from "../util";
@@ -31,6 +33,7 @@ export const UnitNumberInput = ({
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     "aria-invalid": ariaInvalid,
+    className,
     ...otherProps
 }: UnitNumberInputProps) => {
     // =============================================================================
@@ -405,8 +408,12 @@ export const UnitNumberInput = ({
         >
             <HashContainer
                 data-testid="addon"
-                $disabled={disabled}
-                $readOnly={readOnly}
+                className={clsx(
+                    inputGroupStyles.labelAddonContainer,
+                    className
+                )}
+                data-disabled={disabled}
+                data-read-only={readOnly}
             >
                 #
             </HashContainer>

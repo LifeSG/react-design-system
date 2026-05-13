@@ -1,23 +1,23 @@
 import type { OpenChangeReason } from "@floating-ui/react";
+import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
+import { Input } from "../input";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list";
+import {
+    DropdownList,
+    DropdownListState,
+    ExpandableElement,
+} from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
     PlaceholderLabel,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
+import { InputBox } from "../shared/input-wrapper";
 import { useId } from "../util";
-import {
-    Divider,
-    FieldInput,
-    FieldSelector,
-    FieldWrapper,
-    SelectorReadOnly,
-    StyledExpandableElement,
-} from "./input-group-list-addon.style";
+import * as styles from "./input-group-list-addon.styles";
 import type { InputGroupProps, ListAddon } from "./types";
 
 export const Component = <T, V>(
@@ -67,7 +67,7 @@ export const Component = <T, V>(
         "aria-label": comboboxAriaLabel,
     } = addon!.attributes as ListAddon<T, V>;
 
-    const { position } = addon!;
+    const { position = "left" } = addon!;
 
     // =============================================================================
     // CONST, STATE, REF
@@ -198,7 +198,7 @@ export const Component = <T, V>(
     const renderElement = () => {
         return (
             <div>
-                <StyledExpandableElement
+                <ExpandableElement
                     ref={selectorRef}
                     disabled={disabled}
                     expanded={showOptions}
@@ -208,11 +208,13 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
                     aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     aria-invalid={ariaInvalid}
-                    $noBorder={noBorder}
-                    $position={position}
+                    data-position={position}
+                    className={clsx(
+                        noBorder && styles.expandableElementNoBorder
+                    )}
                 >
                     {renderSelectorContent()}
-                </StyledExpandableElement>
+                </ExpandableElement>
                 <VisuallyHidden id={instructionId}>
                     Press space to open options
                 </VisuallyHidden>
@@ -247,7 +249,7 @@ export const Component = <T, V>(
     const renderSelector = () => {
         if (readOnly) {
             return selected ? (
-                <SelectorReadOnly
+                <div
                     data-testid="selector-label"
                     tabIndex={0}
                     role="combobox"
@@ -257,9 +259,10 @@ export const Component = <T, V>(
                     aria-labelledby={ariaLabelledBy}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
+                    className={styles.selectorReadOnly}
                 >
                     <ValueLabel>{getDisplayValue()}</ValueLabel>
-                </SelectorReadOnly>
+                </div>
             ) : null;
         } else {
             return (
@@ -285,36 +288,42 @@ export const Component = <T, V>(
 
     return (
         <DropdownListState>
-            <FieldWrapper
+            <InputBox
                 focused={focused}
                 disabled={disabled}
                 readOnly={readOnly}
-                $readOnly={readOnly}
                 error={error}
-                $position={position}
                 ref={nodeRef}
-                className={className}
-                data-testid={testId}
                 noBorder={noBorder}
+                data-testid={testId}
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
+                data-position={position}
+                className={clsx(styles.fieldWrapper, className)}
             >
                 <VisuallyHidden aria-hidden id={comboboxLabelId}>
                     {comboboxAriaLabel}
                 </VisuallyHidden>
-                <FieldSelector data-testid={selectorTestId}>
+                <div
+                    data-testid={selectorTestId}
+                    className={styles.fieldSelector}
+                >
                     {renderSelector()}
-                </FieldSelector>
-                <Divider $readOnly={readOnly} $position={position} />
+                </div>
+                <div
+                    data-position={position}
+                    className={clsx(
+                        styles.divider,
+                        readOnly && styles.dividerReadOnly
+                    )}
+                />
                 <VisuallyHidden aria-hidden id={textboxLabelId}>
                     {textboxAriaLabel}
                 </VisuallyHidden>
-                <FieldInput
+                <Input
                     ref={ref}
                     {...otherProps}
-                    $position={position}
-                    $noBorder={noBorder}
                     readOnly={readOnly}
                     disabled={disabled}
                     error={error}
@@ -324,8 +333,14 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, textboxLabelId)}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
+                    data-position={position}
+                    className={clsx(
+                        readOnly && styles.fieldInputReadOnly,
+                        !readOnly && noBorder && styles.fieldInputNoBorder,
+                        !readOnly && !noBorder && styles.fieldInputPosition
+                    )}
                 />
-            </FieldWrapper>
+            </InputBox>
         </DropdownListState>
     );
 };
