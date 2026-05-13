@@ -33,7 +33,6 @@ class StoryPage extends AbstractStoryPage {
     public readonly locators: {
         trigger: Locator;
         content: Locator;
-        itemProfile: Locator;
         linkFirst: Locator;
         linkSecond: Locator;
         linkThird: Locator;
@@ -48,9 +47,6 @@ class StoryPage extends AbstractStoryPage {
         this.locators = {
             trigger: page.getByRole("button", { name: "Open menu" }),
             content: page.getByTestId("menu-content"),
-            itemProfile: page.getByRole("listitem").filter({
-                hasText: "Jane Doe",
-            }),
             linkFirst: page.getByRole("link", { name: "First link" }),
             linkSecond: page.getByRole("link", { name: "Second link" }),
             linkThird: page.getByRole("link", { name: "Third link" }),
@@ -171,29 +167,31 @@ test.describe("Menu", () => {
     });
 
     test.describe("Variants", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants");
-        });
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("variants");
+            });
 
-        test("Section and item", async ({ story }) => {
-            await expect(story.locators.content).toBeVisible();
+            test("Section and Item", async ({ story }) => {
+                await expect(story.locators.content).toBeVisible();
 
-            await compareScreenshot(story, "state", {
-                locator: story.locators.content,
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.content,
+                });
             });
         });
-    });
 
-    test.describe("Variants", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants", { mode: "dark" });
-        });
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("variants", { mode: "dark" });
+            });
 
-        test("Section and item with Dark Mode", async ({ story }) => {
-            await expect(story.locators.content).toBeVisible();
+            test("Section and Item Dark Mode", async ({ story }) => {
+                await expect(story.locators.content).toBeVisible();
 
-            await compareScreenshot(story, "state", {
-                locator: story.locators.content,
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.content,
+                });
             });
         });
     });
@@ -211,7 +209,7 @@ test.describe("Menu", () => {
                 await trigger.click();
                 await expect(content).toBeVisible();
 
-                await compareScreenshot(story, `placement-${placement}`, {
+                await compareScreenshot(story, "state", {
                     fullscreen: true,
                 });
             });
