@@ -1,7 +1,7 @@
 import dayjs from "dayjs";
 
+import type { ThemeType } from "../theme/types";
 import type { TypographyLinkProps } from "../typography";
-import type { V3_ResourceScheme } from "../v3_theme/types";
 import { getDefaultDisclaimerLinks } from "./footer-disclaimer-links-data";
 import type { DisclaimerLinks } from "./types";
 
@@ -15,7 +15,7 @@ export interface InternalDisclaimerLinks {
 export class FooterHelper {
     public static getCopyrightInfo(
         lastUpdated: Date = new Date(),
-        resourceScheme: V3_ResourceScheme | undefined
+        resourceScheme: ThemeType | undefined
     ): string {
         const copyrightText = FooterHelper.getCopyrightText(resourceScheme);
         const copyright = `${new Date().getFullYear()} ${copyrightText}`;
@@ -25,7 +25,7 @@ export class FooterHelper {
     }
 
     private static getCopyrightText(
-        resourceScheme: V3_ResourceScheme | undefined
+        resourceScheme: ThemeType | undefined
     ): string {
         switch (resourceScheme) {
             case "lifesg":
@@ -44,39 +44,40 @@ export class FooterHelper {
     }
 
     public static getFooterLogoAttribute(
-        resourceScheme?: V3_ResourceScheme
-    ): React.ImgHTMLAttributes<HTMLImageElement> {
+        resourceScheme?: ThemeType
+    ): React.ImgHTMLAttributes<HTMLImageElement> & { logoType?: ThemeType } {
         switch (resourceScheme) {
             case "lifesg":
                 return {
                     src: "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
                     alt: "LifeSG",
-                    style: { width: "4rem" },
+                    logoType: "lifesg",
                 };
 
             case "bookingsg":
                 return {
                     src: "https://home.booking.gov.sg/images/bookingsg/footer.svg",
                     alt: "BookingSG",
-                    style: { width: "4rem" },
+                    logoType: "bookingsg",
                 };
             case "mylegacy":
                 return {
                     src: "https://mylegacy.life.gov.sg/images/site-logo.png",
                     alt: "MyLegacy",
-                    style: { width: "10rem", maxHeight: "2rem" },
+                    logoType: "mylegacy",
                 };
             case "ccube":
                 return {
                     src: "https://assets.life.gov.sg/ccube/logo-ccube.svg",
                     alt: "Citizen Collective Common",
-                    style: { width: "10rem" },
+                    logoType: "ccube",
                 };
             case "supportgowhere":
+            case "sgw-digital-lobby":
                 return {
                     src: "https://assets.life.gov.sg/react-design-system/img/logo/sgw-logo.png",
                     alt: "SupportGoWhere",
-                    style: { width: "10rem" },
+                    logoType: "supportgowhere",
                 };
 
             default:
@@ -85,7 +86,7 @@ export class FooterHelper {
     }
 
     public static getDisclaimerLinks(
-        resourceScheme: V3_ResourceScheme | undefined,
+        resourceScheme: ThemeType | undefined,
         customDisclaimerLinks: DisclaimerLinks | undefined
     ): InternalDisclaimerLinks {
         const defaultDisclaimerLinks =
