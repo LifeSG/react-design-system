@@ -273,6 +273,8 @@ test.describe("DataTable", () => {
                 story.locators.components.selectedCountLabel
             ).toContainText("3 items selected");
 
+            await story.locators.components.selectAllCheckbox.blur();
+
             await compareScreenshot(story, "state");
 
             await story.locators.components.clearSelectionButton.click();
