@@ -32,17 +32,17 @@ class StoryPage extends AbstractStoryPage {
         };
     }
 
-    public rowCheckbox(rowId: string) {
+    public getRowCheckbox(rowId: string) {
         return this.page
             .getByTestId(`data-table-row-${rowId}-selection`)
             .getByRole("checkbox");
     }
 
-    public headerCell(fieldKey: string) {
+    public getHeaderCell(fieldKey: string) {
         return this.page.getByTestId(`data-table-header-${fieldKey}`);
     }
 
-    public headerSortArrow(fieldKey: string, direction: "up" | "down") {
+    public getHeaderSortArrow(fieldKey: string, direction: "up" | "down") {
         return this.page.getByTestId(
             `data-table-header-${fieldKey}-arrow${direction}`
         );
@@ -158,13 +158,15 @@ test.describe("DataTable", () => {
         });
 
         test("Sort indicators", async ({ story }) => {
-            await expect(story.headerSortArrow("colA", "up")).toBeVisible();
-            await expect(story.headerCell("colA")).toMatchAriaSnapshot(`
+            await expect(story.getHeaderSortArrow("colA", "up")).toBeVisible();
+            await expect(story.getHeaderCell("colA")).toMatchAriaSnapshot(`
                 - columnheader "Column A Sort by descending order"    
             `);
 
-            await expect(story.headerSortArrow("colB", "down")).toBeVisible();
-            await expect(story.headerCell("colB")).toMatchAriaSnapshot(`
+            await expect(
+                story.getHeaderSortArrow("colB", "down")
+            ).toBeVisible();
+            await expect(story.getHeaderCell("colB")).toMatchAriaSnapshot(`
                 - columnheader "Column B Sort by ascending order"    
             `);
 
@@ -178,9 +180,9 @@ test.describe("DataTable", () => {
         });
 
         test("Multi Select", async ({ story }) => {
-            const firstRowCheckbox = story.rowCheckbox("1");
-            const secondRowCheckbox = story.rowCheckbox("2");
-            const thirdRowCheckbox = story.rowCheckbox("3");
+            const firstRowCheckbox = story.getRowCheckbox("1");
+            const secondRowCheckbox = story.getRowCheckbox("2");
+            const thirdRowCheckbox = story.getRowCheckbox("3");
 
             await test.step("Select one row", async () => {
                 await firstRowCheckbox.click();
@@ -224,9 +226,9 @@ test.describe("DataTable", () => {
         });
 
         test("Disabled checkboxes", async ({ story }) => {
-            const firstRowCheckbox = story.rowCheckbox("1");
-            const secondRowCheckbox = story.rowCheckbox("2");
-            const thirdRowCheckbox = story.rowCheckbox("3");
+            const firstRowCheckbox = story.getRowCheckbox("1");
+            const secondRowCheckbox = story.getRowCheckbox("2");
+            const thirdRowCheckbox = story.getRowCheckbox("3");
 
             await expect(firstRowCheckbox).toBeDisabled();
             await expect(secondRowCheckbox).toBeDisabled();
@@ -242,9 +244,9 @@ test.describe("DataTable", () => {
         });
 
         test("Default", async ({ story }) => {
-            const firstRowCheckbox = story.rowCheckbox("1");
-            const secondRowCheckbox = story.rowCheckbox("2");
-            const thirdRowCheckbox = story.rowCheckbox("3");
+            const firstRowCheckbox = story.getRowCheckbox("1");
+            const secondRowCheckbox = story.getRowCheckbox("2");
+            const thirdRowCheckbox = story.getRowCheckbox("3");
 
             await firstRowCheckbox.click();
             await expect(
@@ -276,9 +278,9 @@ test.describe("DataTable", () => {
             });
 
             test("Default Dark Mode", async ({ story }) => {
-                const firstRowCheckbox = story.rowCheckbox("1");
-                const secondRowCheckbox = story.rowCheckbox("2");
-                const thirdRowCheckbox = story.rowCheckbox("3");
+                const firstRowCheckbox = story.getRowCheckbox("1");
+                const secondRowCheckbox = story.getRowCheckbox("2");
+                const thirdRowCheckbox = story.getRowCheckbox("3");
 
                 await firstRowCheckbox.click();
                 await expect(
@@ -311,7 +313,7 @@ test.describe("DataTable", () => {
             });
 
             test("Floating", async ({ story }) => {
-                const firstRowCheckbox = story.rowCheckbox("1");
+                const firstRowCheckbox = story.getRowCheckbox("1");
 
                 await firstRowCheckbox.click();
 
@@ -323,7 +325,7 @@ test.describe("DataTable", () => {
             });
 
             test("Docking", async ({ story }) => {
-                const firstRowCheckbox = story.rowCheckbox("1");
+                const firstRowCheckbox = story.getRowCheckbox("1");
 
                 await firstRowCheckbox.click();
 
@@ -341,7 +343,7 @@ test.describe("DataTable", () => {
             });
 
             test("Floating", async ({ story }) => {
-                const firstRowCheckbox = story.rowCheckbox("1");
+                const firstRowCheckbox = story.getRowCheckbox("1");
 
                 await firstRowCheckbox.click();
 
@@ -351,7 +353,7 @@ test.describe("DataTable", () => {
             });
 
             test("Docking", async ({ story }) => {
-                const firstRowCheckbox = story.rowCheckbox("1");
+                const firstRowCheckbox = story.getRowCheckbox("1");
 
                 await firstRowCheckbox.click();
 
