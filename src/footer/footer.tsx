@@ -5,7 +5,6 @@ import { useContext } from "react";
 import { Divider } from "../divider";
 import { Layout } from "../layout";
 import { ThemeContext } from "../theme/theme-provider/context";
-import type { ThemeType } from "../theme/types";
 import { Typography } from "../typography";
 import * as styles from "./footer.styles";
 import { DownloadApp } from "./footer-download-app";
@@ -61,7 +60,7 @@ export const Footer = <T,>({
     // =============================================================================
     const renderDisclaimerLinks = () => {
         const links = FooterHelper.getDisclaimerLinks(
-            theme?.theme as ThemeType,
+            theme?.theme,
             disclaimerLinks
         );
 
@@ -104,8 +103,8 @@ export const Footer = <T,>({
         }
 
         if (links || showDownloadAddon) {
-            const { src, ...otherLogoAttributes } =
-                FooterHelper.getFooterLogoAttribute(theme?.theme as ThemeType);
+            const { src, className, ...otherLogoAttributes } =
+                FooterHelper.getFooterLogoAttribute(theme?.theme);
             component = (
                 <>
                     {(logoSrc || src) && !hideLogo && (
@@ -116,6 +115,10 @@ export const Footer = <T,>({
                             <img
                                 src={logoSrc || src}
                                 data-testid="logo"
+                                className={clsx(
+                                    className &&
+                                        styles[className as keyof typeof styles]
+                                )}
                                 {...otherLogoAttributes}
                             />
                         </div>
@@ -201,7 +204,7 @@ export const Footer = <T,>({
                                 &copy;{" "}
                                 {FooterHelper.getCopyrightInfo(
                                     lastUpdated,
-                                    theme?.theme as ThemeType
+                                    theme?.theme
                                 )}
                             </>
                         )}

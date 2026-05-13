@@ -62,6 +62,27 @@ export const logoSection = css`
     }
 `;
 
+export const logoLifesg = css`
+    width: 4rem;
+`;
+
+export const logoBookingsg = css`
+    width: 4rem;
+`;
+
+export const logoMylegacy = css`
+    width: 10rem;
+    max-height: 2rem;
+`;
+
+export const logoCcube = css`
+    width: 10rem;
+`;
+
+export const logoSupportgowhere = css`
+    width: 10rem;
+`;
+
 export const linkSectionWrapper = css`
     display: flex;
     gap: ${Spacing["spacing-32"]};
