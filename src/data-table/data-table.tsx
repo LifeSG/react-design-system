@@ -169,7 +169,7 @@ export const DataTable = ({
         return ` by ${nextSortDirection} order`;
     };
 
-    const getHeaderWrapperId = (fieldKey: string) => {
+    const getHeaderCellId = (fieldKey: string) => {
         return `${internalId}-header-${fieldKey}`;
     };
     const getCellId = (rowId: string, fieldKey: string) => {
@@ -242,7 +242,7 @@ export const DataTable = ({
     const renderHeaders = () => (
         <thead
             ref={headerRef}
-            className={enableStickyHeader ? styles.headerSticky : undefined}
+            className={enableStickyHeader ? styles.stickyHeader : undefined}
         >
             <tr className={styles.headerRow}>
                 {enableMultiSelect && renderHeaderCheckBox()}
@@ -266,7 +266,7 @@ export const DataTable = ({
             : header;
 
         const isSortable = !!getSortDirection(fieldKey);
-        const headerCellWrapperId = getHeaderWrapperId(fieldKey);
+        const headerCellId = getHeaderCellId(fieldKey);
         return (
             <th
                 data-testid={getDataTestId(`header-${fieldKey}`)}
@@ -279,10 +279,7 @@ export const DataTable = ({
                 aria-sort={getHeaderAriaSort(fieldKey)}
                 style={style}
             >
-                <div
-                    className={styles.headerCellWrapper}
-                    id={headerCellWrapperId}
-                >
+                <div className={styles.headerCellContent} id={headerCellId}>
                     {typeof label === "string" ? (
                         <Typography.BodyBL weight="bold">
                             {label}
@@ -296,7 +293,7 @@ export const DataTable = ({
                     <VisuallyHidden>
                         <button onClick={() => onHeaderClick?.(fieldKey)}>
                             {isSortable && "Sort "}
-                            <span aria-labelledby={headerCellWrapperId} />
+                            <span aria-labelledby={headerCellId} />
                             {isSortable && getSortButtonAriaLabel(fieldKey)}
                         </button>
                     </VisuallyHidden>
@@ -334,7 +331,7 @@ export const DataTable = ({
                 className={clsx(styles.headerCell, styles.headerCellCheckbox)}
                 scope="col"
             >
-                <div className={styles.checkBoxWrapper}>
+                <div className={styles.selectionCheckboxWrapper}>
                     <VisuallyHidden>Row selection</VisuallyHidden>
                     {enableSelectAll && (
                         <Checkbox
@@ -357,7 +354,7 @@ export const DataTable = ({
         return !rows || rows.length < 1 ? (
             <tr>
                 <td
-                    className={styles.emptyViewCell}
+                    className={styles.emptyStateCell}
                     colSpan={getTotalColumns()}
                 >
                     {renderCustomEmptyView
@@ -373,7 +370,7 @@ export const DataTable = ({
                         key={row.id.toString()}
                         className={clsx(
                             styles.bodyRow,
-                            showLastBorder && styles.bodyRowBottomBorder,
+                            showLastBorder && styles.bodyRowWithBottomBorder,
                             isAlternatingRow(index) &&
                                 styles.bodyRowAlternating,
                             enableMultiSelect && styles.bodyRowSelectable,
@@ -400,7 +397,7 @@ export const DataTable = ({
         let cellContent: React.ReactNode;
         if (typeof cellData === "string" || typeof cellData === "number") {
             cellContent = (
-                <Typography.BodyBL className={styles.bodyCellContent}>
+                <Typography.BodyBL className={styles.bodyCellText}>
                     {cellData}
                 </Typography.BodyBL>
             );
@@ -431,7 +428,7 @@ export const DataTable = ({
                 data-testid={getDataTestId(`row-${rowId}-selection`)}
                 className={clsx(styles.bodyCell, styles.bodyCellCheckbox)}
             >
-                <div className={styles.checkBoxWrapper}>
+                <div className={styles.selectionCheckboxWrapper}>
                     <Checkbox
                         checked={isRowSelected(rowId)}
                         aria-labelledby={getRowCheckboxAriaLabelledBy(rowId)}
@@ -453,7 +450,7 @@ export const DataTable = ({
         if (!emptyView?.title) {
             emptyTitle = (
                 <Typography.HeadingSM
-                    className={styles.errorDisplayTitle}
+                    className={styles.emptyStateTitle}
                     weight="bold"
                 >
                     {"No <items> found"}
@@ -462,7 +459,7 @@ export const DataTable = ({
         } else if (typeof emptyView.title === "string") {
             emptyTitle = (
                 <Typography.HeadingSM
-                    className={styles.errorDisplayTitle}
+                    className={styles.emptyStateTitle}
                     weight="bold"
                 >
                     {emptyView.title}
@@ -491,7 +488,7 @@ export const DataTable = ({
             <tr>
                 <td colSpan={getTotalColumns()}>
                     <div
-                        className={styles.loaderWrapper}
+                        className={styles.loadingStateWrapper}
                         role="status"
                         aria-live="polite"
                         aria-label="Loading table"
@@ -511,7 +508,7 @@ export const DataTable = ({
                 ref={actionBarRef}
                 className={clsx(
                     styles.actionBarWrapper,
-                    isFloatingActionBar && styles.actionBarWrapperFixed
+                    isFloatingActionBar && styles.actionBarWrapperFloating
                 )}
             >
                 <div
@@ -519,14 +516,14 @@ export const DataTable = ({
                         styles.actionBar,
                         ((scrollable ? !scrollEnd : !end) ||
                             isFloatingActionBar) &&
-                            styles.actionBarFloat
+                            styles.actionBarFloating
                     )}
                 >
                     <Typography.BodyMD weight="semibold">{`${count} item${
                         count > 1 ? "s" : ""
                     } selected`}</Typography.BodyMD>
                     <BasicButton
-                        className={styles.textButton}
+                        className={styles.actionBarButton}
                         type="button"
                         aria-label={`Clear selection of ${count} item${
                             count === 1 ? "" : "s"
