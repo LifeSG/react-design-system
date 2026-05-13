@@ -174,18 +174,23 @@ test.describe("DataTable", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("Multi Select", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("multi-select");
         });
 
-        test("Multi Select", async ({ story }) => {
+        test("Default", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+
+        test("Selection", async ({ story }) => {
             const firstRowCheckbox = story.getRowCheckbox("1");
             const secondRowCheckbox = story.getRowCheckbox("2");
             const thirdRowCheckbox = story.getRowCheckbox("3");
 
             await test.step("Select one row", async () => {
                 await firstRowCheckbox.click();
+                await story.getHeaderCell("title").hover();
 
                 await expect(firstRowCheckbox).toBeChecked();
 
@@ -209,32 +214,56 @@ test.describe("DataTable", () => {
             await expect(thirdRowCheckbox).not.toBeChecked();
         });
 
+        test("Hover Checkbox", async ({ story }) => {
+            const firstRowCheckbox = story.getRowCheckbox("1");
+
+            await test.step("Select one row", async () => {
+                await firstRowCheckbox.hover();
+
+                await compareScreenshot(story, "not-selected");
+
+                await firstRowCheckbox.click();
+
+                await compareScreenshot(story, "selected");
+            });
+        });
+
         test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("disabled-checkboxes");
+            });
+
+            test("Disabled checkboxes", async ({ story }) => {
+                const firstRowCheckbox = story.getRowCheckbox("1");
+                const secondRowCheckbox = story.getRowCheckbox("2");
+                const thirdRowCheckbox = story.getRowCheckbox("3");
+
+                await expect(firstRowCheckbox).toBeDisabled();
+                await expect(secondRowCheckbox).toBeDisabled();
+                await expect(thirdRowCheckbox).toBeEnabled();
+
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("multi-select-empty");
+            });
+
+            test("Empty", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe("", () => {
             test.beforeEach(async ({ story }) => {
                 await story.init("multi-select", { mode: "dark" });
             });
 
-            test("Multi Select Dark Mode", async ({ story }) => {
+            test("Default Dark Mode", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("disabled-checkboxes");
-        });
-
-        test("Disabled checkboxes", async ({ story }) => {
-            const firstRowCheckbox = story.getRowCheckbox("1");
-            const secondRowCheckbox = story.getRowCheckbox("2");
-            const thirdRowCheckbox = story.getRowCheckbox("3");
-
-            await expect(firstRowCheckbox).toBeDisabled();
-            await expect(secondRowCheckbox).toBeDisabled();
-            await expect(thirdRowCheckbox).toBeEnabled();
-
-            await compareScreenshot(story, "mount");
         });
     });
 
