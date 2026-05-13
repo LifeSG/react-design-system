@@ -16,17 +16,6 @@ Object.defineProperty(globalThis, "scrollTo", {
     },
 });
 
-// Mock IntersectionObserver
-global.IntersectionObserver = class IntersectionObserver {
-    constructor() {}
-    disconnect() {}
-    observe() {}
-    takeRecords() {
-        return [];
-    }
-    unobserve() {}
-} as any;
-
 jest.mock("src/theme/theme-provider/hooks", () => {
     const actual: typeof ThemeHooks = jest.requireActual(
         "src/theme/theme-provider/hooks"

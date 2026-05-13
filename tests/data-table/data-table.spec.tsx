@@ -3,6 +3,19 @@ import { userEvent } from "@testing-library/user-event";
 import { DataTable } from "src/data-table";
 
 // =============================================================================
+// TEST SETUP
+// =============================================================================
+globalThis.IntersectionObserver = class IntersectionObserver {
+    constructor() {}
+    disconnect() {}
+    observe() {}
+    takeRecords() {
+        return [];
+    }
+    unobserve() {}
+} as unknown as typeof IntersectionObserver;
+
+// =============================================================================
 // FIXTURES
 // =============================================================================
 const MOCK_HEADERS = [
