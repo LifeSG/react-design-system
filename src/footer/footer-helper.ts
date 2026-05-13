@@ -73,6 +73,7 @@ export class FooterHelper {
                     logoType: "ccube",
                 };
             case "supportgowhere":
+            case "sgw-digital-lobby":
                 return {
                     src: "https://assets.life.gov.sg/react-design-system/img/logo/sgw-logo.png",
                     alt: "SupportGoWhere",
