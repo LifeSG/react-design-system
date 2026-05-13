@@ -31,15 +31,15 @@ export const panel = css`
         .xSpacing}) * 2);
 
     ${MediaQuery.MaxWidth.sm} {
-        ${tokens.panel.xSpacing}: ${Breakpoint["sm-margin"]}px;
+        ${tokens.panel.xSpacing}: ${Breakpoint["sm-margin"]};
     }
 
     ${MediaQuery.MaxWidth.xs} {
-        ${tokens.panel.xSpacing}: ${Breakpoint["xs-margin"]}px;
+        ${tokens.panel.xSpacing}: ${Breakpoint["xs-margin"]};
     }
 
     ${MediaQuery.MaxWidth.xxs} {
-        ${tokens.panel.xSpacing}: ${Breakpoint["xxs-margin"]}px;
+        ${tokens.panel.xSpacing}: ${Breakpoint["xxs-margin"]};
     }
 
     min-width: min(15rem, var(${tokens.panel.availableWidth}));
