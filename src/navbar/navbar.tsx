@@ -323,10 +323,16 @@ const Component = <T,>(
                 <nav
                     className={clsx(
                         styles.nav,
-                        compress ? styles.navCompressed : styles.navFull,
                         theme?.colourMode === "dark"
-                            ? styles.navDark
-                            : styles.navLight
+                            ? styles.navDarkResponsive
+                            : styles.navResponsive,
+                        theme?.colourMode === "dark"
+                            ? compress
+                                ? styles.navDarkCompressed
+                                : styles.navDarkFull
+                            : compress
+                            ? styles.navCompressed
+                            : styles.navFull
                     )}
                     aria-label={headerLabel}
                 >
