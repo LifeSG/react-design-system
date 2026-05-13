@@ -4,7 +4,6 @@ import { useContext } from "react";
 
 import { Button } from "../button";
 import { Markup } from "../markup";
-import { Breakpoint, useDesignToken } from "../theme";
 import { ThemeContext } from "../theme/theme-provider/context";
 import { Typography } from "../typography";
 import * as styles from "./error-display.styles";
@@ -32,13 +31,9 @@ export const ErrorDisplay = ({
     // CONST, STATE, REF
     // =============================================================================
     const theme = useContext(ThemeContext);
-    const mobile = useDesignToken(Breakpoint["sm-max"]) || Breakpoint["sm-max"];
-    const tablet = useDesignToken(Breakpoint["lg-max"]) || Breakpoint["lg-max"];
     const defaultAssets = getErrorDisplayData(
         type,
-        illustrationScheme || theme?.theme || "lifesg",
-        mobile,
-        tablet
+        illustrationScheme || theme?.theme || "lifesg"
     );
     const inactivityAttrs =
         type === "inactivity"
