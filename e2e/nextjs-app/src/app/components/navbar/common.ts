@@ -27,8 +27,7 @@ export const downloadActionButtons: NavbarButtonProps[] = [
 
 export const ASSETS = {
     LOGO_LIFESG: "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
-    LOGO_SGW:
-        "https://assets.life.gov.sg/react-design-system/img/logo/sgw-logo.png",
+    LOGO_BOOKINGSG: "https://www.booking.gov.sg/logo.svg",
 };
 
 export const navItemsWithSubmenu: NavItemProps<undefined>[] = [

@@ -11,7 +11,7 @@ export default function Story() {
             resources={{
                 secondary: {
                     brandName: "Support Go Where",
-                    logoSrc: ASSETS.LOGO_SGW,
+                    logoSrc: ASSETS.LOGO_BOOKINGSG,
                 },
             }}
             items={{ desktop: navItems }}
