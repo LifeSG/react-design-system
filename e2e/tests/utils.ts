@@ -45,7 +45,7 @@ export abstract class AbstractStoryPage {
         const queryString = query.toString();
 
         await this.page.goto(
-            `/components/${this.component}/${story}${queryString}`
+            `/components/${this.component}/${story}?${queryString}`
         );
 
         await expect(this.layout).toBeVisible();
