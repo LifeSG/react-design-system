@@ -5,7 +5,7 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "language-switcher";
 
     public readonly locators: {
-        component: {
+        internal: {
             trigger: Locator;
             panel: Locator;
         };
@@ -16,7 +16,7 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            component: {
+            internal: {
                 trigger: page.getByTestId("language-switcher--trigger"),
                 panel: page.getByTestId("language-switcher--panel"),
             },
@@ -55,7 +55,7 @@ test.describe("LanguageSwitcher", () => {
                 - combobox "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும், English"
             `);
 
-            await story.locators.component.trigger.click();
+            await story.locators.internal.trigger.click();
             await compareScreenshot(story, "open", {
                 fullscreen: true,
             });
@@ -71,9 +71,9 @@ test.describe("LanguageSwitcher", () => {
         });
 
         test("Keyboard Interaction", async ({ story }) => {
-            await story.locators.component.trigger.focus();
+            await story.locators.internal.trigger.focus();
             await story.page.keyboard.press("Enter");
-            await expect(story.locators.component.panel).toBeVisible();
+            await expect(story.locators.internal.panel).toBeVisible();
 
             await story.page.keyboard.press("ArrowDown");
             await expect(story.getDropdownOption("中文")).toBeFocused();
@@ -86,10 +86,8 @@ test.describe("LanguageSwitcher", () => {
 
             await story.page.keyboard.press("ArrowDown");
             await story.page.keyboard.press("Enter");
-            await expect(story.locators.component.panel).not.toBeVisible();
-            await expect(story.locators.component.trigger).toContainText(
-                "中文"
-            );
+            await expect(story.locators.internal.panel).not.toBeVisible();
+            await expect(story.locators.internal.trigger).toContainText("中文");
         });
 
         test.describe("", () => {
@@ -98,7 +96,7 @@ test.describe("LanguageSwitcher", () => {
             });
 
             test("Preselected", async ({ story }) => {
-                await expect(story.locators.component.trigger).toContainText(
+                await expect(story.locators.internal.trigger).toContainText(
                     "中文"
                 );
 
