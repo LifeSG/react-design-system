@@ -21,16 +21,14 @@ export class ErrorDisplayHelper {
      * @param {ErrorDisplayImagePathAttributes} pathAttributes
      */
     public static imgAttributeHelper(
-        pathAttributes: ErrorDisplayImagePathAttributes,
-        mobile: string,
-        tablet: string
+        pathAttributes: ErrorDisplayImagePathAttributes
     ): React.ImgHTMLAttributes<HTMLImageElement> {
         const { base, md, lg, width, height } = pathAttributes;
 
         return {
             srcSet: `${base} 400w, ${md} 800w, ${lg} 1200w`,
             src: lg,
-            sizes: `(max-width: ${mobile}) 400px, (max-width: ${tablet}) 800px, 1200px`,
+            sizes: `(max-width: 500px) 400px, (max-width: 1000px) 800px, 1200px`,
             width,
             height,
         };
