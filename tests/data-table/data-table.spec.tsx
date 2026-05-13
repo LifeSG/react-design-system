@@ -1,5 +1,6 @@
-import { render, screen } from "@testing-library/react";
+import { render, screen, within } from "@testing-library/react";
 import { userEvent } from "@testing-library/user-event";
+import { useState } from "react";
 import { DataTable } from "src/data-table";
 
 // =============================================================================
@@ -619,6 +620,62 @@ describe("DataTable", () => {
 
             const tableWrapper = screen.getByTestId("data-table");
             expect(tableWrapper).toHaveAttribute("tabindex", "0");
+        });
+
+        it("should support keyboard navigation for multi-select checkboxes", async () => {
+            const user = userEvent.setup();
+
+            const StatefulTable = () => {
+                const [selectedIds, setSelectedIds] = useState<string[]>([]);
+
+                return (
+                    <DataTable
+                        headers={MOCK_HEADERS}
+                        rows={MOCK_ROWS}
+                        enableMultiSelect
+                        enableSelectAll
+                        selectedIds={selectedIds}
+                        onSelect={(rowId, isSelected) => {
+                            setSelectedIds((prev) => {
+                                if (isSelected) {
+                                    return [...prev, rowId];
+                                }
+
+                                return prev.filter((id) => id !== rowId);
+                            });
+                        }}
+                        onSelectAll={(isAllSelected) => {
+                            setSelectedIds(
+                                isAllSelected
+                                    ? []
+                                    : MOCK_ROWS.map((row) => row.id)
+                            );
+                        }}
+                        data-testid="data-table"
+                    />
+                );
+            };
+
+            render(<StatefulTable />);
+
+            const tableWrapper = screen.getByTestId("data-table");
+            const selectAllCheckbox = screen.getByRole("checkbox", {
+                name: "Select all rows",
+            });
+            const firstRowCheckbox = within(
+                screen.getByTestId("data-table-row-1-selection")
+            ).getByRole("checkbox");
+
+            tableWrapper.focus();
+            await user.tab();
+
+            expect(selectAllCheckbox).toHaveFocus();
+
+            await user.keyboard(" ");
+            expect(firstRowCheckbox).toBeChecked();
+
+            await user.tab();
+            expect(firstRowCheckbox).toHaveFocus();
         });
     });
 

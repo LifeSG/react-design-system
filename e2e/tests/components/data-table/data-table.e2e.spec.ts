@@ -207,23 +207,6 @@ test.describe("DataTable", () => {
             await expect(thirdRowCheckbox).not.toBeChecked();
         });
 
-        test("Keyboard navigation", async ({ story }) => {
-            const firstRowCheckbox = story.rowCheckbox("1");
-
-            await story.locators.dataTable.focus();
-            await story.page.keyboard.press("Tab");
-
-            await expect(
-                story.locators.components.selectAllCheckbox
-            ).toBeFocused();
-
-            await story.page.keyboard.press("Space");
-            await expect(firstRowCheckbox).toBeChecked();
-
-            await story.page.keyboard.press("Tab");
-            await expect(firstRowCheckbox).toBeFocused();
-        });
-
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("multi-select", { mode: "dark" });
