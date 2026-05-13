@@ -106,8 +106,6 @@ export const compareScreenshot = async (
     name: string,
     options?: { fullscreen?: boolean; locator?: Locator }
 ) => {
-    await storyPage.page.evaluate(() => document.fonts.ready);
-
     if (options?.locator) {
         const box = await options.locator.boundingBox();
         if (!box) {
