@@ -4,8 +4,20 @@ import { AbstractStoryPage, compareScreenshot } from "../../utils";
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "breadcrumb";
 
+    public readonly locators: {
+        fadeLeft: Locator;
+        fadeRight: Locator;
+        fadeBoth: Locator;
+    };
+
     constructor(page: Page) {
         super(page);
+
+        this.locators = {
+            fadeLeft: this.page.getByTestId("breadcrumb-fade-left"),
+            fadeRight: this.page.getByTestId("breadcrumb-fade-right"),
+            fadeBoth: this.page.getByTestId("breadcrumb-fade-both"),
+        };
     }
 }
 
@@ -47,25 +59,18 @@ test.describe("Breadcrumb", () => {
             await story.page.waitForTimeout(500);
 
             await test.step("Fade left", async () => {
-                const fadeLeft = story.page.getByTestId("breadcrumb-fade-left");
-                await fadeLeft.hover();
-                await story.page.mouse.wheel(100, 0);
-                await story.page.waitForTimeout(500);
+                // already positioned, no scrolling needed
             });
 
             await test.step("Fade right", async () => {
-                const fadeRight = story.page.getByTestId(
-                    "breadcrumb-fade-right"
-                );
-                await fadeRight.hover();
-                await story.page.mouse.wheel(-200, 0);
+                await story.locators.fadeRight.hover();
+                await story.page.mouse.wheel(-1800, 0);
                 await story.page.waitForTimeout(500);
             });
 
             await test.step("Fade both", async () => {
-                const fadeBoth = story.page.getByTestId("breadcrumb-fade-both");
-                await fadeBoth.hover();
-                await story.page.mouse.wheel(-150, 0);
+                await story.locators.fadeBoth.hover();
+                await story.page.mouse.wheel(-100, 0);
                 await story.page.waitForTimeout(500);
             });
 

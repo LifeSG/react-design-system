@@ -4,10 +4,6 @@ import { Breadcrumb } from "@lifesg/react-design-system/breadcrumb";
 export default function Story() {
     const longLinks = [
         {
-            children: "Home Page with Very Long Navigation Text",
-            href: "https://life.gov.sg",
-        },
-        {
             children: "Services and Government Resources Section",
             href: "https://life.gov.sg/services",
         },
@@ -23,30 +19,31 @@ export default function Story() {
             children: "Cardiology and Heart Disease Treatment",
             href: "https://life.gov.sg/specialists",
         },
-        { children: "Current Page with Long Descriptive Title" },
+        { children: "Current Page" },
     ];
 
     const fadeColorLeft = ["red", "orange"];
     const fadeColorRight = ["blue", "green"];
+    const fadeColor = { left: fadeColorLeft, right: fadeColorRight };
 
     return (
         <div className="story-column-container">
             <div>
-                <h3>Fade Left Only</h3>
+                <h3>Fade Left</h3>
                 <Breadcrumb
                     data-testid="breadcrumb-fade-left"
                     links={longLinks}
-                    fadePosition="left"
-                    fadeColor={{ left: fadeColorLeft }}
+                    fadePosition="both"
+                    fadeColor={fadeColor}
                 />
             </div>
             <div>
-                <h3>Fade Right Only</h3>
+                <h3>Fade Right</h3>
                 <Breadcrumb
                     data-testid="breadcrumb-fade-right"
                     links={longLinks}
-                    fadePosition="right"
-                    fadeColor={{ right: fadeColorRight }}
+                    fadePosition="both"
+                    fadeColor={fadeColor}
                 />
             </div>
             <div>
@@ -55,7 +52,7 @@ export default function Story() {
                     data-testid="breadcrumb-fade-both"
                     links={longLinks}
                     fadePosition="both"
-                    fadeColor={{ left: fadeColorLeft, right: fadeColorRight }}
+                    fadeColor={fadeColor}
                 />
             </div>
         </div>
