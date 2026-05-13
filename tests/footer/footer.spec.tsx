@@ -90,6 +90,20 @@ describe("Footer", () => {
                 screen.getByRole("link", { name: "Get it on Google Play" })
             ).toBeInTheDocument();
         });
+
+        it("should render showDownloadAddon over showResourceAddon when both are enabled", () => {
+            render(<Footer showDownloadAddon showResourceAddon />);
+
+            expect(
+                screen.getByRole("link", { name: "Download on the App Store" })
+            ).toBeInTheDocument();
+            expect(
+                screen.getByRole("link", { name: "Get it on Google Play" })
+            ).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("resource-addon-section")
+            ).not.toBeInTheDocument();
+        });
     });
 
     describe("disclaimerLinks", () => {
@@ -152,10 +166,17 @@ describe("Footer", () => {
             render(<Footer disclaimerLinks={disclaimerLinks} />);
 
             const privacyLink = getAnchorElement("Privacy Statement");
-
             expect(privacyLink.href).toBe("https://test.com/privacy");
             expect(privacyLink.target).toBe("_blank");
             expect(privacyLink.rel).toBe("noopener noreferrer");
+
+            const termsLink = getAnchorElement("Terms of Use");
+            expect(termsLink.href).toBe("https://www.life.gov.sg/terms-of-use");
+
+            const reportLink = getAnchorElement("Report Vulnerability");
+            expect(reportLink.href).toBe(
+                "https://tech.gov.sg/report_vulnerability"
+            );
         });
     });
 

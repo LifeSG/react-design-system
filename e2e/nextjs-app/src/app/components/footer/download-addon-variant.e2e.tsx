@@ -5,9 +5,9 @@ import { links } from "./footer-shared";
 export default function Story() {
     return (
         <Footer
-            data-testid="footer-stretch-layout"
-            layout="stretch"
+            data-testid="footer-download-addon-variant"
             links={links}
+            showDownloadAddon
         />
     );
 }

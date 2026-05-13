@@ -49,25 +49,14 @@ export default function Layout({
                 href="https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css"
             />
             <V3_DSThemeProvider theme={V3_LifeSGTheme}>
-                {theme ? (
-                    <ThemeProvider theme={theme}>
-                        <div
-                            data-testid="story-layout"
-                            className={styles["story-layout"]}
-                        >
-                            {children}
-                        </div>
-                    </ThemeProvider>
-                ) : (
-                    <ThemeProvider>
-                        <div
-                            data-testid="story-layout"
-                            className={styles["story-layout"]}
-                        >
-                            {children}
-                        </div>
-                    </ThemeProvider>
-                )}
+                <ThemeProvider theme={theme}>
+                    <div
+                        data-testid="story-layout"
+                        className={styles["story-layout"]}
+                    >
+                        {children}
+                    </div>
+                </ThemeProvider>
             </V3_DSThemeProvider>
         </>
     );

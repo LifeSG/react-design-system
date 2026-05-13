@@ -17,6 +17,7 @@ export abstract class AbstractStoryPage {
             size?: keyof typeof viewport;
             mode?: "light" | "dark" | "auto";
             mockedTimestamp?: string;
+            theme?: string;
         }
     ) {
         await this.page.setViewportSize(viewport[options?.size ?? "desktop"]);
@@ -37,11 +38,14 @@ export abstract class AbstractStoryPage {
         if (options?.mockedTimestamp) {
             query.set("now", options.mockedTimestamp);
         }
+        if (options?.theme) {
+            query.set("theme", options.theme);
+        }
 
         const queryString = query.toString();
 
         await this.page.goto(
-            `/components/${this.component}/${story}?${queryString}`
+            `/components/${this.component}/${story}${queryString}`
         );
 
         await expect(this.layout).toBeVisible();
@@ -131,4 +135,14 @@ export const compareScreenshot = async (
         threshold: 0.01, // Strict colour matching
         maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
     });
+};
+
+export const applyMockedTimestamp = async (
+    page: Page,
+    timestamp: string
+): Promise<void> => {
+    const mockedDate = new Date(timestamp);
+    const clock = page.clock;
+
+    await clock.install({ time: mockedDate });
 };

@@ -103,7 +103,7 @@ export const Footer = <T,>({
         }
 
         if (links || showDownloadAddon) {
-            const { src, className, ...otherLogoAttributes } =
+            const { src, logoType, ...otherLogoAttributes } =
                 FooterHelper.getFooterLogoAttribute(theme?.theme);
             component = (
                 <>
@@ -116,32 +116,22 @@ export const Footer = <T,>({
                                 src={logoSrc || src}
                                 data-testid="logo"
                                 className={clsx(
-                                    className &&
-                                        styles[className as keyof typeof styles]
+                                    logoType && styles.logoSize[logoType]
                                 )}
                                 {...otherLogoAttributes}
                             />
                         </div>
                     )}
                     <div className={styles.linkSectionWrapper}>
-                        {links?.[0] && (
+                        {links?.map((columnLinks, columnIndex) => (
                             <ul
-                                key="link-col-1"
-                                data-testid="link-col-1"
+                                key={`link-col-${columnIndex}`}
+                                data-testid={`link-col-${columnIndex}`}
                                 className={styles.linkSection}
                             >
-                                {renderFooterLinks(links[0])}
+                                {renderFooterLinks(columnLinks)}
                             </ul>
-                        )}
-                        {links?.[1] && (
-                            <ul
-                                key="link-col-2"
-                                data-testid="link-col-2"
-                                className={styles.linkSection}
-                            >
-                                {renderFooterLinks(links[1])}
-                            </ul>
-                        )}
+                        ))}
                     </div>
                     {showDownloadAddon && (
                         <div className={styles.addonSection}>

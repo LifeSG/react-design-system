@@ -6,10 +6,8 @@ export default function Story() {
     return (
         <Footer
             data-testid="footer-custom-copyright"
-            lastUpdated={new Date("2026-01-01T00:00:00Z")}
             copyrightInfo="Custom copyright information."
             links={links}
-            showDownloadAddon
         />
     );
 }

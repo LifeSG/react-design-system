@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 
 import { ComponentToken, MediaQuery, Spacing } from "../theme";
+import type { ThemeType } from "../theme/types";
 
 // =============================================================================
 // GENERIC
@@ -56,26 +57,24 @@ export const logoSection = css`
     }
 `;
 
-export const logoLifesg = css`
-    width: 4rem;
-`;
-
-export const logoBookingsg = css`
-    width: 4rem;
-`;
-
-export const logoMylegacy = css`
-    width: 10rem;
-    max-height: 2rem;
-`;
-
-export const logoCcube = css`
-    width: 10rem;
-`;
-
-export const logoSupportgowhere = css`
-    width: 10rem;
-`;
+export const logoSize: Partial<Record<ThemeType, string>> = {
+    lifesg: css`
+        width: 4rem;
+    `,
+    bookingsg: css`
+        width: 4rem;
+    `,
+    mylegacy: css`
+        width: 10rem;
+        max-height: 2rem;
+    `,
+    ccube: css`
+        width: 10rem;
+    `,
+    supportgowhere: css`
+        width: 10rem;
+    `,
+};
 
 export const linkSectionWrapper = css`
     display: flex;
@@ -165,6 +164,7 @@ export const bottomSectionContent = css`
 
     ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
+        gap: ${Spacing["spacing-8"]};
         &:not(:last-child) {
             margin-right: 0;
         }
@@ -195,13 +195,8 @@ export const disclaimerTextLink = css`
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        margin-bottom: ${Spacing["spacing-12"]};
         &:not(:last-child) {
             margin-right: 0;
         }
-    }
-
-    ${MediaQuery.MaxWidth.lg} {
-        margin-bottom: ${Spacing["spacing-8"]};
     }
 `;

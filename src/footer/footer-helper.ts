@@ -45,38 +45,38 @@ export class FooterHelper {
 
     public static getFooterLogoAttribute(
         resourceScheme?: ThemeType
-    ): React.ImgHTMLAttributes<HTMLImageElement> & { className?: string } {
+    ): React.ImgHTMLAttributes<HTMLImageElement> & { logoType?: ThemeType } {
         switch (resourceScheme) {
             case "lifesg":
                 return {
                     src: "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg",
                     alt: "LifeSG",
-                    className: "logoLifesg",
+                    logoType: "lifesg",
                 };
 
             case "bookingsg":
                 return {
                     src: "https://home.booking.gov.sg/images/bookingsg/footer.svg",
                     alt: "BookingSG",
-                    className: "logoBookingsg",
+                    logoType: "bookingsg",
                 };
             case "mylegacy":
                 return {
                     src: "https://mylegacy.life.gov.sg/images/site-logo.png",
                     alt: "MyLegacy",
-                    className: "logoMylegacy",
+                    logoType: "mylegacy",
                 };
             case "ccube":
                 return {
                     src: "https://assets.life.gov.sg/ccube/logo-ccube.svg",
                     alt: "Citizen Collective Common",
-                    className: "logoCcube",
+                    logoType: "ccube",
                 };
             case "supportgowhere":
                 return {
                     src: "https://assets.life.gov.sg/react-design-system/img/logo/sgw-logo.png",
                     alt: "SupportGoWhere",
-                    className: "logoSupportgowhere",
+                    logoType: "supportgowhere",
                 };
 
             default:

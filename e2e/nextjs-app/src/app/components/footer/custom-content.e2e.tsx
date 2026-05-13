@@ -4,10 +4,7 @@ import styles from "./footer.module.css";
 
 export default function Story() {
     return (
-        <Footer
-            data-testid="footer-custom-content"
-            lastUpdated={new Date("2026-01-01T00:00:00Z")}
-        >
+        <Footer data-testid="footer-custom-content">
             <div className={styles.custom}>My custom content</div>
         </Footer>
     );
