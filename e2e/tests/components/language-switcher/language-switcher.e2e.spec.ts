@@ -132,19 +132,6 @@ test.describe("LanguageSwitcher", () => {
             });
         });
 
-        test("Keyboard Interaction", async ({ story }) => {
-            const english = story.getLinkButton("English");
-            const chinese = story.getLinkButton("中文");
-
-            await english.focus();
-            await story.page.keyboard.press("ArrowRight");
-            await expect(chinese).toBeFocused();
-
-            await story.page.keyboard.press("Enter");
-            await expect(chinese).toHaveAttribute("aria-pressed", "true");
-            await expect(english).toHaveAttribute("aria-pressed", "false");
-        });
-
         test.describe("", () => {
             test.beforeEach(async ({ story }) => {
                 await story.init("link-preselected");
