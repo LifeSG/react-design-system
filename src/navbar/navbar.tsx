@@ -254,6 +254,7 @@ const Component = <T,>(
         <div
             className={clsx(
                 styles.navBrandContainer,
+                styles.navBrandContainerResponsive,
                 compress
                     ? styles.navBrandContainerCompressed
                     : styles.navBrandContainerFull
@@ -274,6 +275,7 @@ const Component = <T,>(
                     <div
                         className={clsx(
                             styles.navSeparator,
+                            styles.navSeparatorResponsive,
                             compress
                                 ? styles.navSeparatorCompressed
                                 : styles.navSeparatorFull

@@ -110,6 +110,7 @@ const Component = (
                         <div
                             className={clsx(
                                 navbarStyles.navSeparator,
+                                navbarStyles.navSeparatorResponsive,
                                 navbarStyles.navSeparatorCompressed
                             )}
                         />
@@ -132,6 +133,7 @@ const Component = (
             <div
                 className={clsx(
                     navbarStyles.navBrandContainer,
+                    navbarStyles.navBrandContainerResponsive,
                     navbarStyles.navBrandContainerCompressed
                 )}
                 data-id="drawer-brand-container"

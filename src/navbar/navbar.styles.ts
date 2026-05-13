@@ -113,19 +113,13 @@ export const navBrandContainer = css`
 
 export const navBrandContainerCompressed = css`
     height: ${ComponentToken.Navbar["compressed-logo-height"]};
-
-    ${MediaQuery.MaxWidth.lg} {
-        height: ${ComponentToken.Navbar["mobile-logo-height"]};
-    }
-
-    ${MediaQuery.MaxWidth.xxs} {
-        height: 1.25rem;
-    }
 `;
 
 export const navBrandContainerFull = css`
     height: ${ComponentToken.Navbar["full-logo-height"]};
+`;
 
+export const navBrandContainerResponsive = css`
     ${MediaQuery.MaxWidth.lg} {
         height: ${ComponentToken.Navbar["mobile-logo-height"]};
     }
@@ -144,17 +138,13 @@ export const navSeparator = css`
 
 export const navSeparatorCompressed = css`
     margin: 0 1rem;
-    ${MediaQuery.MaxWidth.lg} {
-        margin: 0 1rem;
-    }
-
-    ${MediaQuery.MaxWidth.sm} {
-        margin: 0 0.75rem;
-    }
 `;
 
 export const navSeparatorFull = css`
     margin: 0 1.5rem;
+`;
+
+export const navSeparatorResponsive = css`
     ${MediaQuery.MaxWidth.lg} {
         margin: 0 1rem;
     }
