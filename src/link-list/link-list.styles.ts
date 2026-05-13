@@ -4,8 +4,8 @@ import { PlusIcon } from "@lifesg/react-icons/plus";
 import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 
+import { Border, Colour } from "../theme";
 import { Typography } from "../typography";
-import { V3_Border, V3_Colour } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -25,22 +25,21 @@ interface ToggleButtonStyleProps {
 const iconStyle = css`
     height: 1.125rem;
     width: 1.125rem;
-    color: ${V3_Colour["icon-primary"]};
+    color: ${Colour["icon-primary"]};
 `;
 
 export const Container = styled.div`
-    border-top: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour.border};
-    border-bottom: ${V3_Border["width-010"]} ${V3_Border.solid}
-        ${V3_Colour.border};
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 `;
 
 export const ItemTitleDefault = styled(Typography.HeadingSM)`
-    color: ${V3_Colour["text-primary"]};
+    color: ${Colour["text-primary"]};
     margin-bottom: 0.5rem;
 `;
 
 export const ItemTitleSmall = styled(Typography.HeadingXS)`
-    color: ${V3_Colour["text-primary"]};
+    color: ${Colour["text-primary"]};
 `;
 
 export const ItemIcon = styled(ChevronRightIcon)`
@@ -55,15 +54,14 @@ export const ItemContainer = styled.a`
     min-height: 4rem;
 
     &:not(:last-of-type) {
-        border-bottom: ${V3_Border["width-010"]} ${V3_Border.solid}
-            ${V3_Colour.border};
+        border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     }
 
     &:hover {
         ${ItemTitleDefault},
         ${ItemTitleSmall},
         ${ItemIcon} {
-            color: ${V3_Colour["text-hover"]};
+            color: ${Colour["text-hover"]};
         }
     }
 `;
@@ -87,13 +85,12 @@ export const ExpandableChild = styled.div<ExpandableChildStyleProps>`
     ${(props) =>
         props.$border &&
         css`
-            border-top: ${V3_Border["width-010"]} ${V3_Border.solid}
-                ${V3_Colour.border};
+            border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
         `}
 `;
 
 export const ToggleButtonLabel = styled(Typography.BodyMD)`
-    color: ${V3_Colour["text-primary"]};
+    color: ${Colour["text-primary"]};
 `;
 
 export const ViewMoreIcon = styled(PlusIcon)`
@@ -112,7 +109,7 @@ export const ToggleButton = styled.button<ToggleButtonStyleProps>`
     border: none;
     background: none;
     cursor: pointer;
-    border-top: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour.border};
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     gap: 1rem;
 
     ${(props) =>
@@ -124,7 +121,7 @@ export const ToggleButton = styled.button<ToggleButtonStyleProps>`
             ${ToggleButtonLabel},
             ${ViewMoreIcon},
             ${ViewLessIcon} {
-                color: ${V3_Colour["text-disabled"]};
+                color: ${Colour["text-disabled"]};
                 text-decoration: none;
             }
         `}
@@ -136,7 +133,7 @@ export const ToggleButton = styled.button<ToggleButtonStyleProps>`
                 ${ToggleButtonLabel},
                 ${ViewMoreIcon},
                 ${ViewLessIcon} {
-                    color: ${V3_Colour["text-hover"]};
+                    color: ${Colour["text-hover"]};
                     text-decoration: underline;
                 }
             }
