@@ -6,6 +6,14 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "date-input";
 
     public readonly locators: {
+        defaultFormInput: Locator;
+        disabledFormInput: Locator;
+        readonlyFormInput: Locator;
+        errorFormInput: Locator;
+        defaultInput: Locator;
+        disabledInput: Locator;
+        readonlyInput: Locator;
+        errorInput: Locator;
         dateInput: Locator;
         calendarContainer: Locator;
         calendarContent: Locator;
@@ -21,6 +29,14 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
+            defaultFormInput: page.getByTestId("form-date-input-default"),
+            disabledFormInput: page.getByTestId("form-date-input-disabled"),
+            readonlyFormInput: page.getByTestId("form-date-input-readonly"),
+            errorFormInput: page.getByTestId("form-date-input-error"),
+            defaultInput: page.getByTestId("date-input-default"),
+            disabledInput: page.getByTestId("date-input-disabled"),
+            readonlyInput: page.getByTestId("date-input-readonly"),
+            errorInput: page.getByTestId("date-input-error"),
             dateInput: page.getByTestId("date-input"),
             calendarContainer: page.getByTestId("calendar-container"),
             calendarContent: page.getByTestId("calendar-content"),
@@ -80,82 +96,332 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("DateInput", () => {
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("default", { mockedTimestamp: fixedTimestamp });
+            await story.init("form-variants", {
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
-        test("Mount", async ({ story }) => {
-            await expect(story.locators.calendarContainer).not.toBeVisible();
-            await expect(story.locators.selectedValue).toHaveText("none");
+        test("Form.DateInput variants", async ({ story }) => {
+            await compareScreenshot(story, "mount");
 
-            await expect(story.locators.dateInput).toMatchAriaSnapshot(`
-                - group:
-                  - textbox "Date"
-                  - textbox "Month"
-                  - textbox "Year"
+            await expect(story.locators.defaultFormInput).toMatchAriaSnapshot(`
+                - group "Default":
+                  - group:
+                    - textbox "Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Year":
+                      - /placeholder: YYYY
             `);
 
+            await expect(story.locators.disabledFormInput).toMatchAriaSnapshot(`
+                - group "Disabled" [disabled]:
+                  - group:
+                    - textbox "Date" [disabled]:
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Month" [disabled]:
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Year" [disabled]:
+                      - /placeholder: YYYY
+            `);
+
+            await expect(story.locators.readonlyFormInput).toMatchAriaSnapshot(`
+                - group "Readonly":
+                  - group:
+                    - textbox "Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Year":
+                      - /placeholder: YYYY
+            `);
+
+            await expect(story.locators.errorFormInput).toMatchAriaSnapshot(`
+                - group "Error":
+                  - group:
+                    - textbox "Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Year":
+                      - /placeholder: YYYY
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", {
+                mockedTimestamp: fixedTimestamp,
+                size: "mobile",
+            });
+        });
+
+        test("Form.DateInput variants (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", {
+                mockedTimestamp: fixedTimestamp,
+                mode: "dark",
+            });
+        });
+
+        test("Form.DateInput variants (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants-prefilled", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Form.DateInput variants prefilled", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+
+            await expect(story.locators.defaultFormInput).toMatchAriaSnapshot(`
+                - group "Default":
+                  - group:
+                    - textbox "Date": "08"
+                    - text: /
+                    - textbox "Month": "04"
+                    - text: /
+                    - textbox "Year": "2026"
+            `);
+
+            await expect(story.locators.disabledFormInput).toMatchAriaSnapshot(`
+                - group "Disabled" [disabled]:
+                  - group:
+                    - textbox "Date" [disabled]: "08"
+                    - text: /
+                    - textbox "Month" [disabled]: "04"
+                    - text: /
+                    - textbox "Year" [disabled]: "2026"
+            `);
+
+            await expect(story.locators.readonlyFormInput).toMatchAriaSnapshot(`
+                - group "Readonly":
+                  - group:
+                    - textbox "Date": "08"
+                    - text: /
+                    - textbox "Month": "04"
+                    - text: /
+                    - textbox "Year": "2026"
+            `);
+
+            await expect(story.locators.errorFormInput).toMatchAriaSnapshot(`
+                - group "Error":
+                  - group:
+                    - textbox "Date": "08"
+                    - text: /
+                    - textbox "Month": "04"
+                    - text: /
+                    - textbox "Year": "2026"
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants-prefilled", {
+                mockedTimestamp: fixedTimestamp,
+                mode: "dark",
+            });
+        });
+
+        test("Form.DateInput variants prefilled (dark mode)", async ({
+            story,
+        }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Standalone variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
 
-        test("Open", async ({ story }) => {
-            await story.openCalendar();
+        test("Focus states", async ({ story }) => {
+            await story.locators.defaultInput.focus();
+            await compareScreenshot(story, "default", {
+                locator: story.locators.defaultInput,
+            });
 
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+            await story.locators.disabledInput.focus();
+            await compareScreenshot(story, "disabled", {
+                locator: story.locators.disabledInput,
+            });
+
+            await story.locators.readonlyInput.focus();
+            await compareScreenshot(story, "readonly", {
+                locator: story.locators.readonlyInput,
+            });
+
+            await story.locators.errorInput.focus();
+            await compareScreenshot(story, "error", {
+                locator: story.locators.errorInput,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants", {
+                mockedTimestamp: fixedTimestamp,
+                mode: "dark",
             });
         });
 
-        test("Hovered date", async ({ story }) => {
-            await story.openCalendar();
-            await story.getDayCell(15).hover();
+        test("Focus states (dark mode)", async ({ story }) => {
+            await story.locators.defaultInput.focus();
+            await compareScreenshot(story, "default", {
+                locator: story.locators.defaultInput,
+            });
 
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+            await story.locators.disabledInput.focus();
+            await compareScreenshot(story, "disabled", {
+                locator: story.locators.disabledInput,
+            });
+
+            await story.locators.readonlyInput.focus();
+            await compareScreenshot(story, "readonly", {
+                locator: story.locators.readonlyInput,
+            });
+
+            await story.locators.errorInput.focus();
+            await compareScreenshot(story, "error", {
+                locator: story.locators.errorInput,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout", {
+                mockedTimestamp: fixedTimestamp,
             });
         });
 
-        test("Selected and hovered date", async ({ story }) => {
-            await story.openCalendar();
-            await story.getDayCell(10).click();
-            await story.getDayCell(10).hover();
+        test("Grid layout", async ({ story }) => {
+            await compareScreenshot(story, "mount");
 
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+            await expect(story.page.getByTestId("form-date-input-short"))
+                .toMatchAriaSnapshot(`
+                - group "Short date input":
+                  - group:
+                    - textbox "Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Year":
+                      - /placeholder: YYYY
+            `);
+
+            await expect(story.page.getByTestId("form-date-input-long"))
+                .toMatchAriaSnapshot(`
+                - group "Long date input":
+                  - group:
+                    - textbox "Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Year":
+                      - /placeholder: YYYY
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", {
+                mockedTimestamp: fixedTimestamp,
             });
         });
 
-        test("Selected date", async ({ story }) => {
-            await story.openCalendar();
-            await story.getDayCell(10).click();
-            await story.getDayCell(10).blur();
+        test.describe("Default states", () => {
+            test("Mount", async ({ story }) => {
+                await expect(story.locators.selectedValue).toHaveText("none");
 
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+                await compareScreenshot(story, "mount");
             });
-        });
 
-        test("Commit with Done", async ({ story }) => {
-            await story.openCalendar();
-            await story.getDayCell(10).click();
-            await story.locators.doneButton.click();
+            test("Open", async ({ story }) => {
+                await story.openCalendar();
 
-            await expect(story.locators.selectedValue).toHaveText(
-                /^\d{4}-\d{2}-\d{2}$/
-            );
-        });
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
+            });
 
-        test("Cancel restores initial value", async ({ story }) => {
-            const previousValue =
-                (await story.locators.selectedValue.textContent()) ?? "";
-            await story.openCalendar();
-            await story.getDayCell(20).click();
-            await story.locators.cancelButton.click();
+            test("Hovered date", async ({ story }) => {
+                await story.openCalendar();
+                await story.getDayCell(15).hover();
 
-            await expect(story.locators.selectedValue).toHaveText(
-                previousValue
-            );
+                await compareScreenshot(story, "state", { fullscreen: true });
+            });
+
+            test("Selected and hovered date", async ({ story }) => {
+                await story.openCalendar();
+                await story.getDayCell(10).click();
+                await story.getDayCell(10).hover();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
+            });
+
+            test("Selected date", async ({ story }) => {
+                await story.openCalendar();
+                await story.getDayCell(10).click();
+                await story.getDayCell(10).blur();
+
+                await compareScreenshot(story, "state", { fullscreen: true });
+            });
+
+            test("Done and Cancel actions", async ({ story }) => {
+                await story.openCalendar();
+                await story.getDayCell(10).click();
+                await story.locators.doneButton.click();
+
+                const committedValue =
+                    (await story.locators.selectedValue.textContent()) ?? "";
+                expect(committedValue).toMatch(/^\d{4}-\d{2}-\d{2}$/);
+
+                await story.openCalendar();
+                await story.getDayCell(20).click();
+                await story.locators.cancelButton.click();
+
+                await expect(story.locators.selectedValue).toHaveText(
+                    committedValue
+                );
+            });
         });
 
         test("Value committed", async ({ story }) => {
@@ -169,26 +435,23 @@ test.describe("DateInput", () => {
         });
 
         test.describe("Focused states", () => {
-            test("Day input focused", async ({ story }) => {
+            test("Input focus states", async ({ story }) => {
                 await story.locators.dayInput.click();
-
-                await compareScreenshot(story, "state", {
+                await compareScreenshot(story, "day", {
                     locator: story.locators.dateInput,
                 });
             });
 
             test("Month input focused", async ({ story }) => {
                 await story.locators.monthInput.click();
-
-                await compareScreenshot(story, "state", {
+                await compareScreenshot(story, "month", {
                     locator: story.locators.dateInput,
                 });
             });
 
             test("Year input focused", async ({ story }) => {
                 await story.locators.yearInput.click();
-
-                await compareScreenshot(story, "state", {
+                await compareScreenshot(story, "year", {
                     locator: story.locators.dateInput,
                 });
             });
@@ -226,54 +489,52 @@ test.describe("DateInput", () => {
         });
     });
 
-    test.describe("Selected", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("selected", { mockedTimestamp: fixedTimestamp });
-        });
-
-        test("Mount", async ({ story }) => {
-            await expect(story.locators.dateInput).toMatchAriaSnapshot(`
-                - group:
-                  - textbox "Date": "08"
-                  - textbox "Month": "04"
-                  - textbox "Year": "2026"
-            `);
-
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.dateInput,
+            await story.init("selected", {
+                mockedTimestamp: fixedTimestamp,
             });
         });
 
-        test("Month view", async ({ story }) => {
-            await story.openCalendar();
-            await story.monthButton.click();
+        test.describe("Selected state", () => {
+            test("Month view", async ({ story }) => {
+                await story.openCalendar();
 
-            await expect(story.getMonthOption("January")).toBeVisible();
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+                await story.monthButton.click();
+
+                await expect(story.getMonthOption("January")).toBeVisible();
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
-        });
 
-        test("Year view", async ({ story }) => {
-            await story.openCalendar();
-            await story.yearButton.click();
-
-            await expect(story.getYearOption("2026")).toBeVisible();
-
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
+            test("Year view", async ({ story }) => {
+                await story.openCalendar();
+                await story.yearButton.click();
+                await expect(story.getYearOption("2026")).toBeVisible();
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("disabled", { mockedTimestamp: fixedTimestamp });
+            await story.init("disabled", {
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
         test("Disabled", async ({ story }) => {
             await expect(story.locators.dateInput).toMatchAriaSnapshot(`
-                - group [disabled]
+                - group [disabled]:
+                  - group:
+                    - textbox "Date" [disabled]: "08"
+                    - text: /
+                    - textbox "Month" [disabled]: "04"
+                    - text: /
+                    - textbox "Year" [disabled]: "2026"
             `);
             await expect(story.locators.calendarContainer).not.toBeVisible();
 
@@ -285,7 +546,7 @@ test.describe("DateInput", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("read-only", {
                 mockedTimestamp: fixedTimestamp,
@@ -295,9 +556,12 @@ test.describe("DateInput", () => {
         test("Read-only", async ({ story }) => {
             await expect(story.locators.dateInput).toMatchAriaSnapshot(`
                 - group:
-                  - textbox "Date"
-                  - textbox "Month"
-                  - textbox "Year"
+                  - group:
+                    - textbox "Date": "08"
+                    - text: /
+                    - textbox "Month": "04"
+                    - text: /
+                    - textbox "Year": "2026"
             `);
 
             await compareScreenshot(story, "mount", {
@@ -314,9 +578,15 @@ test.describe("DateInput", () => {
         test("Error state", async ({ story }) => {
             await expect(story.locators.dateInput).toMatchAriaSnapshot(`
                 - group:
-                  - textbox "Date"
-                  - textbox "Month"
-                  - textbox "Year"
+                  - group:
+                    - textbox "Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Year":
+                      - /placeholder: YYYY
             `);
 
             await compareScreenshot(story, "mount", {
@@ -328,6 +598,19 @@ test.describe("DateInput", () => {
             await story.locators.dateInput.click();
             await expect(story.locators.calendarContainer).toBeVisible();
 
+            await expect(story.locators.dateInput).toMatchAriaSnapshot(`
+                - group:
+                  - group:
+                    - textbox "Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Year":
+                      - /placeholder: YYYY
+            `);
+
             await compareScreenshot(story, "focused", {
                 locator: story.locators.dateInput,
             });
@@ -338,6 +621,16 @@ test.describe("DateInput", () => {
             await story.getDayCell(10).click();
             await story.locators.doneButton.click();
 
+            await expect(story.locators.dateInput).toMatchAriaSnapshot(`
+                - group:
+                  - group:
+                    - textbox "Date": "10"
+                    - text: /
+                    - textbox "Month": "04"
+                    - text: /
+                    - textbox "Year": "2026"
+            `);
+
             await compareScreenshot(story, "value-committed", {
                 locator: story.locators.dateInput,
             });
@@ -346,7 +639,9 @@ test.describe("DateInput", () => {
 
     test.describe("No button", () => {
         test.beforeEach(async ({ story }) => {
-            await story.init("no-button", { mockedTimestamp: fixedTimestamp });
+            await story.init("no-button", {
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
         test("Selecting a date closes calendar and commits value immediately", async ({
@@ -435,7 +730,7 @@ test.describe("DateInput", () => {
     });
 
     test.describe("Dark mode", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default", {
                     mockedTimestamp: fixedTimestamp,
@@ -450,11 +745,13 @@ test.describe("DateInput", () => {
             test("Open", async ({ story }) => {
                 await story.openCalendar();
 
-                await compareScreenshot(story, "state", { fullscreen: true });
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("disabled", {
                     mockedTimestamp: fixedTimestamp,
@@ -467,7 +764,7 @@ test.describe("DateInput", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("read-only", {
                     mockedTimestamp: fixedTimestamp,
@@ -484,7 +781,7 @@ test.describe("DateInput", () => {
     });
 
     test.describe("Mobile", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default", {
                     mockedTimestamp: fixedTimestamp,
@@ -499,7 +796,9 @@ test.describe("DateInput", () => {
             test("Open", async ({ story }) => {
                 await story.openCalendar();
 
-                await compareScreenshot(story, "state", { fullscreen: true });
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
             });
 
             test("Done and Cancel buttons are always shown", async ({
@@ -515,7 +814,9 @@ test.describe("DateInput", () => {
 
     test.describe("Keyboard navigation", () => {
         test.beforeEach(async ({ story }) => {
-            await story.init("default", { mockedTimestamp: fixedTimestamp });
+            await story.init("default", {
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
         test("Escape closes the calendar", async ({ story }) => {
