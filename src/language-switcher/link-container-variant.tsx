@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type React from "react";
 import { useRef } from "react";
 
@@ -6,6 +7,7 @@ import type { VariantInternalProps } from "./internal-types";
 import {
     LinkContainerWrapper,
     LinkItem,
+    linkItemActiveClassName,
     LinkList,
     LinkListItem,
 } from "./link-container-variant.styles";
@@ -70,7 +72,9 @@ export const LinkContainerVariant = ({
                                 }}
                                 type="button"
                                 lang={code}
-                                $active={isActive}
+                                className={clsx(
+                                    isActive && linkItemActiveClassName
+                                )}
                                 aria-pressed={isActive}
                                 tabIndex={isActive ? 0 : -1}
                                 onClick={() => onSelectLanguage(code)}

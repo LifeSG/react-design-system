@@ -1,13 +1,6 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Border, Colour, Font, Motion, Radius, Spacing } from "../theme";
-
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface LinkItemStyleProps {
-    $active?: boolean;
-}
 
 // =============================================================================
 // LINK CONTAINER STYLES
@@ -36,7 +29,10 @@ export const LinkListItem = styled.li`
     align-items: center;
 `;
 
-export const LinkItem = styled.button<LinkItemStyleProps>`
+export const linkItemActiveClassName =
+    "languageSwitcherLinkContainerVariantItemActive";
+
+export const LinkItem = styled.button`
     display: flex;
     padding: 0.25rem 0.5rem;
     justify-content: center;
@@ -48,23 +44,24 @@ export const LinkItem = styled.button<LinkItemStyleProps>`
     color: ${Colour["text-subtler"]};
     text-align: center;
     transition: color ${Motion["duration-150"]} ${Motion["ease-default"]};
+    background: none;
+    cursor: pointer;
 
-    ${({ $active }) =>
-        $active
-            ? css`
-                  background: ${Colour["bg-primary-subtler"]};
-                  color: ${Colour["text-selected"]};
-                  cursor: default;
-              `
-            : css`
-                  background: none;
-                  cursor: pointer;
+    &:hover {
+        color: ${Colour["text-hover"]};
+        text-decoration: underline;
+    }
 
-                  &:hover {
-                      color: ${Colour["text-hover"]};
-                      text-decoration: underline;
-                  }
-              `}
+    &.${linkItemActiveClassName} {
+        background: ${Colour["bg-primary-subtler"]};
+        color: ${Colour["text-selected"]};
+        cursor: default;
+
+        &:hover {
+            color: ${Colour["text-selected"]};
+            text-decoration: none;
+        }
+    }
 
     &:focus-visible {
         outline: 2px solid ${Colour["focus-ring"]};

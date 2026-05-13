@@ -1,10 +1,6 @@
 import styled, { css } from "styled-components";
 
 import { ExpandableElement } from "../shared/dropdown-list";
-import {
-    baseIndicatorStyle,
-    selectedIndicator,
-} from "../shared/dropdown-list/dropdown-list.styles";
 import { iconContainer } from "../shared/dropdown-list/expandable-element.styles";
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
@@ -67,9 +63,15 @@ export const DropdownList = styled.ul`
     padding: ${Spacing["spacing-8"]};
 `;
 
-export { baseIndicatorStyle, selectedIndicator };
+export {
+    baseIndicatorStyle,
+    selectedIndicator,
+} from "../shared/dropdown-list/dropdown-list.styles";
 
-export const DropdownItem = styled.li<{ $selected: boolean }>`
+export const dropdownItemSelectedClassName =
+    "languageSwitcherDropdownVariantItemSelected";
+
+export const DropdownItem = styled.li`
     align-items: center;
     ${Font["body-md-regular"]}
     color: ${Colour["text"]};
@@ -78,14 +80,12 @@ export const DropdownItem = styled.li<{ $selected: boolean }>`
         background: ${Colour["bg-hover-subtle"]};
     }
 
-    ${(props) =>
-        props.$selected &&
-        css`
-            background: transparent;
-            color: ${Colour["text-selected"]};
+    &.${dropdownItemSelectedClassName} {
+        background: transparent;
+        color: ${Colour["text-selected"]};
 
-            &:hover {
-                background: ${Colour["bg-hover"]};
-            }
-        `}
+        &:hover {
+            background: ${Colour["bg-hover"]};
+        }
+    }
 `;

@@ -16,6 +16,7 @@ import { useId } from "../util";
 import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
 import {
     DropdownItem,
+    dropdownItemSelectedClassName,
     DropdownList,
     DropdownPanel,
     LanguageIconWrapper,
@@ -178,11 +179,11 @@ export const DropdownVariant = ({
                                 isFocused &&
                                     isSelected &&
                                     listItemActiveSelected,
-                                isFocused && !isSelected && listItemActive
+                                isFocused && !isSelected && listItemActive,
+                                isSelected && dropdownItemSelectedClassName
                             )}
                             aria-selected={isSelected}
                             tabIndex={isFocused ? 0 : -1}
-                            $selected={isSelected}
                             onClick={() => handleItemSelect(code)}
                             data-testid={`${testId}--item-${code}`}
                         >
