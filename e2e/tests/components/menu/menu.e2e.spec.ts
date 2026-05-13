@@ -140,6 +140,24 @@ test.describe("Menu", () => {
             await story.page.keyboard.press("ArrowDown");
             await expect(story.locators.linkFirst).toBeFocused();
         });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default", { size: "mobile" });
+            });
+
+            test("Mobile", async ({ story }) => {
+                await story.locators.trigger.click();
+                await expect(story.locators.content).toBeVisible();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
+
+                await story.page.mouse.click(200, 0);
+                await expect(story.locators.content).not.toBeVisible();
+            });
+        });
     });
 
     test.describe(() => {
