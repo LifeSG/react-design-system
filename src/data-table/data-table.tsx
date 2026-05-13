@@ -502,6 +502,12 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         const count = selectedIds?.length ?? 0;
+        const hasNotReachedScrollableEnd = scrollable && !scrollEnd;
+        const hasNotReachedTableEnd = !scrollable && !end;
+        const shouldUseFloatingActionBar =
+            hasNotReachedScrollableEnd ||
+            hasNotReachedTableEnd ||
+            isFloatingActionBar;
 
         return (
             <div
@@ -514,9 +520,7 @@ export const DataTable = ({
                 <div
                     className={clsx(
                         styles.actionBar,
-                        ((scrollable ? !scrollEnd : !end) ||
-                            isFloatingActionBar) &&
-                            styles.actionBarFloating
+                        shouldUseFloatingActionBar && styles.actionBarFloating
                     )}
                 >
                     <Typography.BodyMD weight="semibold">{`${count} item${
