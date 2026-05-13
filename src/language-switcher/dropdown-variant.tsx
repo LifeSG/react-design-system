@@ -21,7 +21,7 @@ import {
     LanguageIconWrapper,
     selectedIndicator,
     StyledExpandableElement,
-} from "./dropdown-variant.style";
+} from "./dropdown-variant.styles";
 import type { VariantInternalProps } from "./internal-types";
 import type { LanguageSwitcherCode } from "./types";
 

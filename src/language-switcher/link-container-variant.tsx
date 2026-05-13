@@ -8,7 +8,7 @@ import {
     LinkItem,
     LinkList,
     LinkListItem,
-} from "./link-container-variant.style";
+} from "./link-container-variant.styles";
 
 export const LinkContainerVariant = ({
     selectedLanguage,
