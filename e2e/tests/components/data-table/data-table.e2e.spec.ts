@@ -5,7 +5,7 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "data-table";
 
     public readonly locators: {
-        components: {
+        internal: {
             selectAllCheckbox: Locator;
             selectedCountLabel: Locator;
             clearSelectionButton: Locator;
@@ -18,7 +18,7 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            components: {
+            internal: {
                 selectAllCheckbox: page.getByRole("checkbox", {
                     name: "Select all rows",
                 }),
@@ -116,7 +116,7 @@ test.describe("DataTable", () => {
         });
 
         test("Empty State", async ({ story }) => {
-            await expect(story.locators.components.emptyView).toBeVisible();
+            await expect(story.locators.internal.emptyView).toBeVisible();
             await compareScreenshot(story, "mount");
         });
 
@@ -126,7 +126,7 @@ test.describe("DataTable", () => {
             });
 
             test("Empty State Dark Mode", async ({ story }) => {
-                await expect(story.locators.components.emptyView).toBeVisible();
+                await expect(story.locators.internal.emptyView).toBeVisible();
                 await compareScreenshot(story, "mount");
             });
         });
@@ -193,8 +193,8 @@ test.describe("DataTable", () => {
             });
 
             await test.step("Select all rows from header checkbox", async () => {
-                await story.locators.components.selectAllCheckbox.click();
-                await story.locators.components.selectAllCheckbox.blur();
+                await story.locators.internal.selectAllCheckbox.click();
+                await story.locators.internal.selectAllCheckbox.blur();
 
                 await expect(firstRowCheckbox).toBeChecked();
                 await expect(secondRowCheckbox).toBeChecked();
@@ -202,7 +202,7 @@ test.describe("DataTable", () => {
                 await compareScreenshot(story, "all-rows");
             });
 
-            await story.locators.components.selectAllCheckbox.click();
+            await story.locators.internal.selectAllCheckbox.click();
 
             await expect(firstRowCheckbox).not.toBeChecked();
             await expect(secondRowCheckbox).not.toBeChecked();
@@ -250,25 +250,25 @@ test.describe("DataTable", () => {
 
             await firstRowCheckbox.click();
             await expect(
-                story.locators.components.selectedCountLabel
+                story.locators.internal.selectedCountLabel
             ).toContainText("1 item selected");
 
-            await story.locators.components.selectAllCheckbox.click();
+            await story.locators.internal.selectAllCheckbox.click();
             await expect(
-                story.locators.components.selectedCountLabel
+                story.locators.internal.selectedCountLabel
             ).toContainText("3 items selected");
 
-            await story.locators.components.selectAllCheckbox.blur();
+            await story.locators.internal.selectAllCheckbox.blur();
 
             await compareScreenshot(story, "state");
 
-            await story.locators.components.clearSelectionButton.click();
+            await story.locators.internal.clearSelectionButton.click();
 
             await expect(firstRowCheckbox).not.toBeChecked();
             await expect(secondRowCheckbox).not.toBeChecked();
             await expect(thirdRowCheckbox).not.toBeChecked();
             await expect(
-                story.locators.components.selectedCountLabel
+                story.locators.internal.selectedCountLabel
             ).not.toBeVisible();
         });
 
@@ -284,25 +284,25 @@ test.describe("DataTable", () => {
 
                 await firstRowCheckbox.click();
                 await expect(
-                    story.locators.components.selectedCountLabel
+                    story.locators.internal.selectedCountLabel
                 ).toContainText("1 item selected");
 
-                await story.locators.components.selectAllCheckbox.click();
+                await story.locators.internal.selectAllCheckbox.click();
                 await expect(
-                    story.locators.components.selectedCountLabel
+                    story.locators.internal.selectedCountLabel
                 ).toContainText("3 items selected");
 
-                await story.locators.components.selectAllCheckbox.blur();
+                await story.locators.internal.selectAllCheckbox.blur();
 
                 await compareScreenshot(story, "state");
 
-                await story.locators.components.clearSelectionButton.click();
+                await story.locators.internal.clearSelectionButton.click();
 
                 await expect(firstRowCheckbox).not.toBeChecked();
                 await expect(secondRowCheckbox).not.toBeChecked();
                 await expect(thirdRowCheckbox).not.toBeChecked();
                 await expect(
-                    story.locators.components.selectedCountLabel
+                    story.locators.internal.selectedCountLabel
                 ).not.toBeVisible();
             });
         });
