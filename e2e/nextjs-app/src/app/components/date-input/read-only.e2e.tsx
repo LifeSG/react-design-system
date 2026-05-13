@@ -5,7 +5,7 @@ import styles from "./date-input.module.css";
 
 export default function Story() {
     return (
-        <div className={styles.story}>
+        <div className={`${styles.story} story-background`}>
             <DateInput data-testid="date-input" readOnly value="2026-04-08" />
         </div>
     );
