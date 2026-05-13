@@ -18,7 +18,7 @@ import {
     Container,
     InputContainer,
     MOBILE_WRAP_WIDTH,
-} from "./date-range-input.style";
+} from "./date-range-input.styles";
 import type { DateRangeInputProps } from "./types";
 
 interface DateRangeInputState {
