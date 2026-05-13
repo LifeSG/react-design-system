@@ -1,14 +1,10 @@
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import clsx from "clsx";
 import type React from "react";
 
+import { Typography } from "../../typography";
 import type { LinkListItemProps, LinkListStyle } from "../internal-types";
-import {
-    Description,
-    ItemContainer,
-    ItemContentContainer,
-    ItemIcon,
-    ItemTitleDefault,
-    ItemTitleSmall,
-} from "../link-list.styles";
+import * as styles from "../link-list.styles";
 
 type LinkListItemsProps<T> = {
     "data-testid"?: string | undefined;
@@ -25,7 +21,10 @@ export const LinkListItems = <T,>({
     handleItemClick,
     style,
 }: LinkListItemsProps<T>) => {
-    const ItemTitle = style === "small" ? ItemTitleSmall : ItemTitleDefault;
+    const ItemTitle =
+        style === "small" ? Typography.HeadingXS : Typography.HeadingSM;
+    const itemTitleClassName =
+        style === "small" ? styles.itemTitleSmall : styles.itemTitleDefault;
 
     return (
         <>
@@ -35,35 +34,42 @@ export const LinkListItems = <T,>({
                     description,
                     secondaryDescription,
                     onClick: _onClick, // deconstruct since we are handling it
+                    className,
                     ...otherProps
                 } = item;
 
                 return (
-                    <ItemContainer
+                    <a
                         key={`${testId}-${index}`}
                         data-testid={`${testId}-${index}`}
                         onClick={(event) => handleItemClick(event, item)}
                         {...otherProps}
+                        className={clsx(styles.itemContainer, className)}
                     >
-                        <ItemContentContainer>
+                        <div className={styles.itemContentContainer}>
                             <ItemTitle
-                                forwardedAs="div"
+                                as="div"
                                 data-testid={`link-title-${index}`}
                                 weight="semibold"
+                                className={itemTitleClassName}
                             >
                                 {title}
                             </ItemTitle>
                             {description && (
-                                <Description
+                                <Typography.BodyMD
                                     data-testid={`link-description-${index}`}
+                                    className={styles.itemDescription}
                                 >
                                     {description}
-                                </Description>
+                                </Typography.BodyMD>
                             )}
                             {secondaryDescription}
-                        </ItemContentContainer>
-                        <ItemIcon aria-hidden />
-                    </ItemContainer>
+                        </div>
+                        <ChevronRightIcon
+                            aria-hidden
+                            className={styles.itemIcon}
+                        />
+                    </a>
                 );
             })}
         </>

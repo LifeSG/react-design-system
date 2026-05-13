@@ -1,23 +1,19 @@
-import { useSpring } from "@react-spring/web";
+import { MinusIcon } from "@lifesg/react-icons/minus";
+import { PlusIcon } from "@lifesg/react-icons/plus";
+import { animated, useSpring } from "@react-spring/web";
 import type React from "react";
 import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { inertValue } from "../../shared/accessibility";
+import { Typography } from "../../typography";
 import { useId } from "../../util";
 import type {
     BaseProps,
     LinkListEagerProps,
     LinkListItemProps,
 } from "../internal-types";
-import {
-    Expandable,
-    ExpandableChild,
-    ToggleButton,
-    ToggleButtonLabel,
-    ViewLessIcon,
-    ViewMoreIcon,
-} from "../link-list.styles";
+import * as styles from "../link-list.styles";
 import { LinkListItems } from "./common";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
@@ -73,28 +69,30 @@ export const EagerLinkList = <T,>({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderToggle = () => (
-        <ToggleButton
+        <button
             type="button"
             onClick={handleToggleButtonClick}
             data-testid="toggle-button"
             aria-expanded={showMinimised}
             aria-controls={id}
+            className={styles.toggleButton}
         >
-            <ToggleButtonLabel
-                forwardedAs="span"
+            <Typography.BodyMD
+                as="span"
                 weight="semibold"
                 data-testid="toggle-button-label"
+                className={styles.toggleButtonLabel}
             >
                 {showMinimised
                     ? customLabels?.viewLess || "View less"
                     : customLabels?.viewMore || "View more"}
-            </ToggleButtonLabel>
+            </Typography.BodyMD>
             {showMinimised ? (
-                <ViewLessIcon aria-hidden />
+                <MinusIcon aria-hidden className={styles.toggleButtonIcon} />
             ) : (
-                <ViewMoreIcon aria-hidden />
+                <PlusIcon aria-hidden className={styles.toggleButtonIcon} />
             )}
-        </ToggleButton>
+        </button>
     );
 
     // React spring animation configuration
@@ -111,24 +109,22 @@ export const EagerLinkList = <T,>({
                 style={style}
             />
             {itemsMinimised.length > 0 && (
-                <Expandable
+                <animated.div
                     id={id}
                     style={expandableStyles}
                     data-testid="minimised-content"
                     inert={inertValue(!showMinimised)}
+                    className={styles.expandable}
                 >
-                    <ExpandableChild
-                        ref={childRef}
-                        className="expandableChildBorder"
-                    >
+                    <div ref={childRef} className={styles.expandableList}>
                         <LinkListItems
                             data-testid="link-list-items-minimised"
                             style={style}
                             items={itemsMinimised}
                             handleItemClick={handleListItemClick}
                         />
-                    </ExpandableChild>
-                </Expandable>
+                    </div>
+                </animated.div>
             )}
             {itemsMinimised.length > 0 && renderToggle()}
         </>

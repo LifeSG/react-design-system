@@ -1,40 +1,31 @@
-import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import { MinusIcon } from "@lifesg/react-icons/minus";
-import { PlusIcon } from "@lifesg/react-icons/plus";
-import { animated } from "@react-spring/web";
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour } from "../theme";
-import { Typography } from "../typography";
+
+export const container = css`
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+`;
 
 // =============================================================================
-// STYLING
+// ITEM STYLES
 // =============================================================================
-const iconStyle = css`
+export const itemIcon = css`
     height: 1.125rem;
     width: 1.125rem;
     color: ${Colour["icon-primary"]};
 `;
 
-export const Container = styled.div`
-    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-`;
-
-export const ItemTitleDefault = styled(Typography.HeadingSM)`
+export const itemTitleDefault = css`
     color: ${Colour["text-primary"]};
     margin-bottom: 0.5rem;
 `;
 
-export const ItemTitleSmall = styled(Typography.HeadingXS)`
+export const itemTitleSmall = css`
     color: ${Colour["text-primary"]};
 `;
 
-export const ItemIcon = styled(ChevronRightIcon)`
-    ${iconStyle}
-`;
-
-export const ItemContainer = styled.a`
+export const itemContainer = css`
     padding: 1rem 0;
     display: flex;
     justify-content: space-between;
@@ -46,47 +37,45 @@ export const ItemContainer = styled.a`
     }
 
     &:hover {
-        ${ItemTitleDefault},
-        ${ItemTitleSmall},
-        ${ItemIcon} {
+        .${itemTitleDefault}, .${itemTitleSmall}, .${itemIcon} {
             color: ${Colour["text-hover"]};
         }
     }
 `;
 
-export const ItemContentContainer = styled.div`
+export const itemContentContainer = css`
     display: flex;
     flex-direction: column;
     flex: 1;
     margin-right: 1rem;
 `;
 
-export const Description = styled(Typography.BodyMD)`
+export const itemDescription = css`
     margin-top: 0.25rem;
 `;
 
-export const Expandable = animated(styled.div`
+// =============================================================================
+// TOGGLE STYLES
+// =============================================================================
+export const expandable = css`
     overflow: hidden;
-`);
-
-export const ExpandableChild = styled.div`
-    &.expandableChildBorder {
-        border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-    }
 `;
 
-export const ToggleButtonLabel = styled(Typography.BodyMD)`
+export const expandableList = css`
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+`;
+
+export const toggleButtonLabel = css`
     color: ${Colour["text-primary"]};
 `;
 
-export const ViewMoreIcon = styled(PlusIcon)`
-    ${iconStyle}
-`;
-export const ViewLessIcon = styled(MinusIcon)`
-    ${iconStyle}
+export const toggleButtonIcon = css`
+    height: 1.125rem;
+    width: 1.125rem;
+    color: ${Colour["icon-primary"]};
 `;
 
-export const ToggleButton = styled.button`
+export const toggleButton = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -99,21 +88,24 @@ export const ToggleButton = styled.button`
     gap: 1rem;
 
     &:hover {
-        ${ToggleButtonLabel},
-        ${ViewMoreIcon},
-        ${ViewLessIcon} {
+        .${toggleButtonLabel}, .${toggleButtonIcon} {
             color: ${Colour["text-hover"]};
             text-decoration: underline;
         }
     }
+`;
 
-    &.toggleButtonLoading {
-        cursor: default;
-        flex-direction: row-reverse;
+export const toggleButtonLoading = css`
+    cursor: default;
+    flex-direction: row-reverse;
 
-        ${ToggleButtonLabel},
-        ${ViewMoreIcon},
-        ${ViewLessIcon} {
+    .${toggleButtonLabel}, .${toggleButtonIcon} {
+        color: ${Colour["text-disabled"]};
+        text-decoration: none;
+    }
+
+    &:hover {
+        .${toggleButtonLabel}, .${toggleButtonIcon} {
             color: ${Colour["text-disabled"]};
             text-decoration: none;
         }
