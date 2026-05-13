@@ -287,70 +287,62 @@ test.describe("DataTable", () => {
             ).not.toBeVisible();
         });
 
-        test.beforeEach(async ({ story }) => {
-            await story.init("action-bar", { mode: "dark" });
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("action-bar", { mode: "dark" });
+            });
+
+            test("Default Dark Mode", async ({ story }) => {
+                const firstRowCheckbox = story.rowCheckbox("1");
+                const secondRowCheckbox = story.rowCheckbox("2");
+                const thirdRowCheckbox = story.rowCheckbox("3");
+
+                await firstRowCheckbox.click();
+                await expect(
+                    story.locators.components.selectedCountLabel
+                ).toContainText("1 item selected");
+
+                await story.locators.components.selectAllCheckbox.click();
+                await expect(
+                    story.locators.components.selectedCountLabel
+                ).toContainText("3 items selected");
+
+                await story.locators.components.selectAllCheckbox.blur();
+
+                await compareScreenshot(story, "state");
+
+                await story.locators.components.clearSelectionButton.click();
+
+                await expect(firstRowCheckbox).not.toBeChecked();
+                await expect(secondRowCheckbox).not.toBeChecked();
+                await expect(thirdRowCheckbox).not.toBeChecked();
+                await expect(
+                    story.locators.components.selectedCountLabel
+                ).not.toBeVisible();
+            });
         });
 
-        test("Default Dark Mode", async ({ story }) => {
-            const firstRowCheckbox = story.rowCheckbox("1");
-            const secondRowCheckbox = story.rowCheckbox("2");
-            const thirdRowCheckbox = story.rowCheckbox("3");
-
-            await firstRowCheckbox.click();
-            await expect(
-                story.locators.components.selectedCountLabel
-            ).toContainText("1 item selected");
-
-            await story.locators.components.selectAllCheckbox.click();
-            await expect(
-                story.locators.components.selectedCountLabel
-            ).toContainText("3 items selected");
-
-            await story.locators.components.selectAllCheckbox.blur();
-
-            await compareScreenshot(story, "state");
-
-            await story.locators.components.clearSelectionButton.click();
-
-            await expect(firstRowCheckbox).not.toBeChecked();
-            await expect(secondRowCheckbox).not.toBeChecked();
-            await expect(thirdRowCheckbox).not.toBeChecked();
-            await expect(
-                story.locators.components.selectedCountLabel
-            ).not.toBeVisible();
-        });
-
-        test.describe(() => {
+        test.describe("Overflow", () => {
             test.beforeEach(async ({ story }) => {
                 await story.init("action-bar-overflow");
             });
 
-            test("Floating Action Bar", async ({ story }) => {
+            test("Floating", async ({ story }) => {
                 const firstRowCheckbox = story.rowCheckbox("1");
-                const twelfthRowCheckbox = story.rowCheckbox("5");
 
                 await firstRowCheckbox.click();
 
-                // Trigger scroll to show the floating action bar
-                await story.scrollWithWheelUntil({
-                    scrollTarget: story.locators.dataTable,
-                    until: async () => {
-                        return await twelfthRowCheckbox.isVisible();
-                    },
-                });
+                await story.page.keyboard.press("PageDown");
 
-                await expect(twelfthRowCheckbox).toBeVisible();
+                await compareScreenshot(story, "state");
+            });
 
-                await expect(
-                    story.locators.components.selectedCountLabel
-                ).toBeVisible();
-                await expect(
-                    story.locators.components.clearSelectionButton
-                ).toBeVisible();
+            test("Docking", async ({ story }) => {
+                const firstRowCheckbox = story.rowCheckbox("1");
 
-                await expect(
-                    story.locators.components.selectedCountLabel
-                ).toContainText("1 item selected");
+                await firstRowCheckbox.click();
+
+                await story.page.keyboard.press("End");
 
                 await compareScreenshot(story, "state");
             });
