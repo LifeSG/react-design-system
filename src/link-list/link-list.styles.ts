@@ -8,18 +8,6 @@ import { Border, Colour } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface ExpandableChildStyleProps {
-    $border?: boolean;
-}
-
-interface ToggleButtonStyleProps {
-    $loading?: boolean;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
 const iconStyle = css`
@@ -81,12 +69,10 @@ export const Expandable = animated(styled.div`
     overflow: hidden;
 `);
 
-export const ExpandableChild = styled.div<ExpandableChildStyleProps>`
-    ${(props) =>
-        props.$border &&
-        css`
-            border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-        `}
+export const ExpandableChild = styled.div`
+    &.expandableChildBorder {
+        border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    }
 `;
 
 export const ToggleButtonLabel = styled(Typography.BodyMD)`
@@ -100,7 +86,7 @@ export const ViewLessIcon = styled(MinusIcon)`
     ${iconStyle}
 `;
 
-export const ToggleButton = styled.button<ToggleButtonStyleProps>`
+export const ToggleButton = styled.button`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -112,30 +98,24 @@ export const ToggleButton = styled.button<ToggleButtonStyleProps>`
     border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     gap: 1rem;
 
-    ${(props) =>
-        props.$loading &&
-        css`
-            cursor: default;
-            flex-direction: row-reverse;
+    &:hover {
+        ${ToggleButtonLabel},
+        ${ViewMoreIcon},
+        ${ViewLessIcon} {
+            color: ${Colour["text-hover"]};
+            text-decoration: underline;
+        }
+    }
 
-            ${ToggleButtonLabel},
-            ${ViewMoreIcon},
-            ${ViewLessIcon} {
-                color: ${Colour["text-disabled"]};
-                text-decoration: none;
-            }
-        `}
+    &.toggleButtonLoading {
+        cursor: default;
+        flex-direction: row-reverse;
 
-    ${(props) =>
-        !props.$loading &&
-        css`
-            &:hover {
-                ${ToggleButtonLabel},
-                ${ViewMoreIcon},
-                ${ViewLessIcon} {
-                    color: ${Colour["text-hover"]};
-                    text-decoration: underline;
-                }
-            }
-        `}
+        ${ToggleButtonLabel},
+        ${ViewMoreIcon},
+        ${ViewLessIcon} {
+            color: ${Colour["text-disabled"]};
+            text-decoration: none;
+        }
+    }
 `;

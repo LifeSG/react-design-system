@@ -1,4 +1,5 @@
 import { useSpring } from "@react-spring/web";
+import clsx from "clsx";
 import type React from "react";
 import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
@@ -85,7 +86,7 @@ export const LazyLinkList = <T,>({
                 onClick={handleClickViewMore}
                 data-testid="toggle-button"
                 aria-disabled={isLoading}
-                $loading={isLoading}
+                className={clsx(isLoading && "toggleButtonLoading")}
             >
                 <ToggleButtonLabel
                     forwardedAs="span"

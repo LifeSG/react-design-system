@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import { EagerLinkList } from "./components/link-list-eager";
 import { LazyLinkList } from "./components/link-list-lazy";
 import { Container } from "./link-list.styles";
@@ -12,11 +14,12 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
             onItemClick,
             maxShown,
             customLabels,
+            className,
             ...otherProps
         } = props;
 
         return (
-            <Container {...otherProps}>
+            <Container {...otherProps} className={clsx(className)}>
                 <EagerLinkList
                     items={items}
                     maxShown={maxShown}
@@ -37,11 +40,12 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
                 loadMore,
                 onLoadMore,
                 customLabels,
+                className,
                 ...otherProps
             } = props;
 
             return (
-                <Container {...otherProps}>
+                <Container {...otherProps} className={clsx(className)}>
                     <LazyLinkList
                         items={items}
                         style={style}

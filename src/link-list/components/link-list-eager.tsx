@@ -117,7 +117,10 @@ export const EagerLinkList = <T,>({
                     data-testid="minimised-content"
                     inert={inertValue(!showMinimised)}
                 >
-                    <ExpandableChild ref={childRef} $border>
+                    <ExpandableChild
+                        ref={childRef}
+                        className="expandableChildBorder"
+                    >
                         <LinkListItems
                             data-testid="link-list-items-minimised"
                             style={style}
