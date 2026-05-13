@@ -4,6 +4,7 @@ import clsx from "clsx";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
+import { ExpandableElement } from "../shared/dropdown-list";
 import {
     baseIndicatorStyle,
     listItem,
@@ -14,15 +15,7 @@ import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { useId } from "../util";
 import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
-import {
-    DropdownItem,
-    dropdownItemSelectedClassName,
-    DropdownList,
-    DropdownPanel,
-    LanguageIconWrapper,
-    selectedIndicator,
-    StyledExpandableElement,
-} from "./dropdown-variant.styles";
+import * as styles from "./dropdown-variant.styles";
 import type { VariantInternalProps } from "./internal-types";
 import type { LanguageSwitcherCode } from "./types";
 
@@ -128,8 +121,9 @@ export const DropdownVariant = ({
     // RENDER FUNCTIONS
     // =========================================================================
     const renderElement = () => (
-        <StyledExpandableElement
+        <ExpandableElement
             ref={triggerRef}
+            className={styles.expandableElement}
             disabled={false}
             expanded={isOpen}
             listboxId={listboxId}
@@ -138,26 +132,28 @@ export const DropdownVariant = ({
             aria-label={`${ARIA_LABEL}, ${LANGUAGE_DISPLAY_MAP[selectedLanguage]}`}
             data-testid={`${testId}--trigger`}
         >
-            <LanguageIconWrapper aria-hidden>
+            <span className={styles.languageIconWrapper} aria-hidden>
                 <LanguageIcon />
-            </LanguageIconWrapper>
+            </span>
             {LANGUAGE_DISPLAY_MAP[selectedLanguage]}
-        </StyledExpandableElement>
+        </ExpandableElement>
     );
 
     const renderDropdown = ({
         elementWidth,
-        styles,
+        styles: floatingStyles,
         setFloatingRef,
         getFloatingProps,
     }: DropdownRenderProps) => (
-        <DropdownPanel
+        <div
             ref={setFloatingRef}
-            style={{ ...styles, width: elementWidth }}
+            className={styles.dropdownPanel}
+            style={{ ...floatingStyles, width: elementWidth }}
             data-testid={`${testId}--panel`}
             {...getFloatingProps()}
         >
-            <DropdownList
+            <ul
+                className={styles.dropdownList}
                 role="listbox"
                 id={listboxId}
                 aria-label={ARIA_LABEL}
@@ -167,7 +163,7 @@ export const DropdownVariant = ({
                     const isSelected = code === selectedLanguage;
                     const isFocused = index === focusedIndex;
                     return (
-                        <DropdownItem
+                        <li
                             key={code}
                             ref={(el: HTMLLIElement | null) => {
                                 itemRefs.current[index] = el;
@@ -175,12 +171,13 @@ export const DropdownVariant = ({
                             role="option"
                             lang={code}
                             className={clsx(
+                                styles.dropdownItem,
                                 listItem,
                                 isFocused &&
                                     isSelected &&
                                     listItemActiveSelected,
                                 isFocused && !isSelected && listItemActive,
-                                isSelected && dropdownItemSelectedClassName
+                                isSelected && styles.dropdownItemSelected
                             )}
                             aria-selected={isSelected}
                             tabIndex={isFocused ? 0 : -1}
@@ -191,7 +188,7 @@ export const DropdownVariant = ({
                                 <TickIcon
                                     className={clsx(
                                         baseIndicatorStyle,
-                                        selectedIndicator
+                                        styles.selectedIndicator
                                     )}
                                     aria-hidden
                                 />
@@ -199,11 +196,11 @@ export const DropdownVariant = ({
                                 <div className={baseIndicatorStyle} />
                             )}
                             {LANGUAGE_DISPLAY_MAP[code]}
-                        </DropdownItem>
+                        </li>
                     );
                 })}
-            </DropdownList>
-        </DropdownPanel>
+            </ul>
+        </div>
     );
 
     // =========================================================================

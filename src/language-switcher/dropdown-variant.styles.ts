@@ -1,13 +1,12 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { ExpandableElement } from "../shared/dropdown-list";
 import { iconContainer } from "../shared/dropdown-list/expandable-element.styles";
 import { Border, Colour, Font, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // TRIGGER STYLES
 // =============================================================================
-export const StyledExpandableElement = styled(ExpandableElement)`
+export const expandableElement = css`
     min-width: 9rem;
     width: auto;
     ${Font["body-md-semibold"]}
@@ -32,9 +31,10 @@ export const StyledExpandableElement = styled(ExpandableElement)`
     }
 `;
 
-const IconWrapper = css`
+export const languageIconWrapper = css`
     display: flex;
     align-items: center;
+    color: ${Colour["icon-primary"]};
 
     svg {
         height: 1rem;
@@ -42,22 +42,17 @@ const IconWrapper = css`
     }
 `;
 
-export const LanguageIconWrapper = styled.span`
-    ${IconWrapper}
-    color: ${Colour["icon-primary"]};
-`;
-
 // =============================================================================
 // DROPDOWN STYLES
 // =============================================================================
-export const DropdownPanel = styled.div`
+export const dropdownPanel = css`
     border-radius: ${Radius["sm"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     background: ${Colour["bg"]};
     overflow: hidden;
 `;
 
-export const DropdownList = styled.ul`
+export const dropdownList = css`
     list-style: none;
     margin: 0;
     padding: ${Spacing["spacing-8"]};
@@ -68,10 +63,7 @@ export {
     selectedIndicator,
 } from "../shared/dropdown-list/dropdown-list.styles";
 
-export const dropdownItemSelectedClassName =
-    "languageSwitcherDropdownVariantItemSelected";
-
-export const DropdownItem = styled.li`
+export const dropdownItem = css`
     align-items: center;
     ${Font["body-md-regular"]}
     color: ${Colour["text"]};
@@ -79,13 +71,13 @@ export const DropdownItem = styled.li`
     &:hover {
         background: ${Colour["bg-hover-subtle"]};
     }
+`;
 
-    &.${dropdownItemSelectedClassName} {
-        background: transparent;
-        color: ${Colour["text-selected"]};
+export const dropdownItemSelected = css`
+    background: transparent;
+    color: ${Colour["text-selected"]};
 
-        &:hover {
-            background: ${Colour["bg-hover"]};
-        }
+    &:hover {
+        background: ${Colour["bg-hover"]};
     }
 `;

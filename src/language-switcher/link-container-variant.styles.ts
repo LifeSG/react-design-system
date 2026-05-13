@@ -1,11 +1,11 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Motion, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // LINK CONTAINER STYLES
 // =============================================================================
-export const LinkContainerWrapper = styled.div`
+export const linkContainerWrapper = css`
     display: inline-flex;
     padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     align-items: center;
@@ -14,7 +14,7 @@ export const LinkContainerWrapper = styled.div`
     background: ${Colour["bg"]};
 `;
 
-export const LinkList = styled.ul`
+export const linkList = css`
     display: flex;
     list-style: none;
     margin: 0;
@@ -24,15 +24,12 @@ export const LinkList = styled.ul`
     flex-wrap: wrap;
 `;
 
-export const LinkListItem = styled.li`
+export const linkListItem = css`
     display: flex;
     align-items: center;
 `;
 
-export const linkItemActiveClassName =
-    "languageSwitcherLinkContainerVariantItemActive";
-
-export const LinkItem = styled.button`
+export const linkItem = css`
     display: flex;
     padding: 0.25rem 0.5rem;
     justify-content: center;
@@ -52,19 +49,19 @@ export const LinkItem = styled.button`
         text-decoration: underline;
     }
 
-    &.${linkItemActiveClassName} {
-        background: ${Colour["bg-primary-subtler"]};
-        color: ${Colour["text-selected"]};
-        cursor: default;
-
-        &:hover {
-            color: ${Colour["text-selected"]};
-            text-decoration: none;
-        }
-    }
-
     &:focus-visible {
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: -2px;
+    }
+`;
+
+export const linkItemActive = css`
+    background: ${Colour["bg-primary-subtler"]};
+    color: ${Colour["text-selected"]};
+    cursor: default;
+
+    &:hover {
+        color: ${Colour["text-selected"]};
+        text-decoration: none;
     }
 `;
