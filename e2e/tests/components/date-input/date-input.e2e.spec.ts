@@ -461,7 +461,7 @@ test.describe("DateInput", () => {
                     await story.locators.dayInput.click();
                     await story.locators.dayInput.fill("08");
 
-                    expect(story.locators.monthInput).toBeFocused();
+                    await expect(story.locators.monthInput).toBeFocused();
 
                     await compareScreenshot(story, "after-day-filled", {
                         locator: story.locators.dateInput,
@@ -471,7 +471,7 @@ test.describe("DateInput", () => {
                 await test.step("After month is filled, year input is focused", async () => {
                     await story.locators.monthInput.fill("04");
 
-                    expect(story.locators.yearInput).toBeFocused();
+                    await expect(story.locators.yearInput).toBeFocused();
 
                     await compareScreenshot(story, "after-month-filled", {
                         locator: story.locators.dateInput,
