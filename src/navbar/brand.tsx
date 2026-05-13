@@ -44,24 +44,27 @@ export const Brand = ({
             : `Go to ${resources.brandName}`
         : resources.brandName;
 
-    const props = isClickable
-        ? {
-              role: "link",
-              tabIndex: 0,
-              onClick: handleClick,
-          }
-        : {};
-
-    return (
-        <styles.Container
+    return isClickable ? (
+        <a
             data-id={dataId}
             data-testid={testId}
-            $type={type}
-            as={isClickable ? "a" : "div"}
-            {...props}
+            data-type={type}
+            className={styles.container}
+            role="link"
+            tabIndex={0}
+            onClick={handleClick}
         >
             <ImageWithFallback src={resources.logoSrc} alt={logoLabel} />
-        </styles.Container>
+        </a>
+    ) : (
+        <div
+            data-id={dataId}
+            data-testid={testId}
+            data-type={type}
+            className={styles.container}
+        >
+            <ImageWithFallback src={resources.logoSrc} alt={logoLabel} />
+        </div>
     );
 };
 

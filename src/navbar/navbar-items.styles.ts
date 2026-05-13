@@ -1,43 +1,26 @@
-import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, ComponentToken, Font, MediaQuery } from "../theme";
-import type { TypographyWeight } from "../typography";
-
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $selected: boolean;
-}
-
-interface WrapperStyleProps {
-    $alignLeft: boolean | undefined;
-}
-
-interface ItemStyleProps {
-    $hiddenBranding: boolean | undefined;
-}
 
 // =============================================================================
 // WRAPPER
 // =============================================================================
 
-export const Wrapper = styled.ul<WrapperStyleProps>`
+export const wrapper = css`
     display: flex;
     list-style: none;
     position: relative;
-
-    ${(props) => props.$alignLeft && "margin-right: auto;"}
 
     ${MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;
 
-export const MobileWrapper = styled.ul`
+export const wrapperAlignLeft = css`
+    margin-right: auto;
+`;
+
+export const mobileWrapper = css`
     display: none;
     list-style: none;
 
@@ -51,13 +34,12 @@ export const MobileWrapper = styled.ul`
 // =============================================================================
 // LINK ITEMS
 // =============================================================================
-export const LinkItem = styled.li<ItemStyleProps>`
+export const linkItem = css`
     display: flex;
     margin: 0 1rem;
 
     &:first-child {
-        // negative margin to preserve touch target size for link
-        margin-left: ${(props) => (props.$hiddenBranding ? "-0.5rem" : "0")};
+        margin-left: 0;
     }
 
     ${MediaQuery.MaxWidth.lg} {
@@ -68,9 +50,19 @@ export const LinkItem = styled.li<ItemStyleProps>`
     }
 `;
 
-const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
-    ${(props) => Font[`body-md-${props.weight}`]}
+export const linkItemHiddenBranding = css`
+    &:first-child {
+        margin-left: -0.5rem;
+    }
 
+    ${MediaQuery.MaxWidth.lg} {
+        &:first-child {
+            margin-left: 0rem;
+        }
+    }
+`;
+
+export const link = css`
     display: flex;
     position: relative;
     align-items: center;
@@ -81,10 +73,7 @@ const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
     &:active,
     &:hover,
     &:focus {
-        color: ${(props) =>
-            props.$selected
-                ? ComponentToken.Navbar["link-colour-text-selected-hover"]
-                : ComponentToken.Navbar["link-colour-text-hover"]};
+        color: ${ComponentToken.Navbar["link-colour-text-hover"]};
     }
 
     ${MediaQuery.MaxWidth.lg} {
@@ -94,15 +83,28 @@ const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
         align-items: flex-start;
     }
 `;
-export const Link = styled.a<{ $selected: boolean; weight: TypographyWeight }>`
-    ${linkCss}
+
+export const linkSelected = css`
+    &:active,
+    &:hover,
+    &:focus {
+        color: ${ComponentToken.Navbar["link-colour-text-selected-hover"]};
+    }
 `;
 
-export const LinkButton = styled.button<{
-    $selected: boolean;
-    weight: TypographyWeight;
-}>`
-    ${linkCss}
+export const linkWeightRegular = css`
+    ${Font["body-md-regular"]}
+`;
+
+export const linkWeightSemibold = css`
+    ${Font["body-md-semibold"]}
+`;
+
+export const linkWeightBold = css`
+    ${Font["body-md-bold"]}
+`;
+
+export const linkButton = css`
     background: none;
     border: 0;
     padding: 0;
@@ -114,7 +116,7 @@ export const LinkButton = styled.button<{
     color: inherit;
 `;
 
-export const LinkLabel = styled.div`
+export const linkLabel = css`
     flex: 1;
     margin-top: 0.25rem;
 
@@ -125,17 +127,13 @@ export const LinkLabel = styled.div`
     white-space: pre-wrap;
 `;
 
-export const LinkIndicator = styled.div<StyleProps>`
+export const linkIndicator = css`
     position: absolute;
     bottom: 0;
     left: 0;
     right: 0;
     height: 0.25rem;
     background-color: ${Colour["border-selected"]};
-
-    &:hover {
-        ${(props) => props.$selected && Colour["border-selected-hover"]};
-    }
 
     ${MediaQuery.MaxWidth.lg} {
         left: 0;
@@ -147,26 +145,30 @@ export const LinkIndicator = styled.div<StyleProps>`
     }
 `;
 
-export const LinkIconContainer = styled.div`
+export const linkIndicatorSelected = css`
+    &:hover {
+        background-color: ${Colour["border-selected-hover"]};
+    }
+`;
+
+export const linkIconContainer = css`
     padding-left: 0.5rem;
     margin-right: -0.5rem;
 `;
 
-export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
+export const expandCollapseButton = css`
     padding: 0.5rem;
-    transform: rotate(${(props) => (props.$selected ? 0 : 180)}deg);
+    transform: rotate(180deg);
     transition: transform 300ms ease-in-out;
     margin: auto 0.25rem auto 0;
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
+export const expandCollapseButtonExpanded = css`
+    transform: rotate(0deg);
+`;
+
+export const chevronIcon = css`
     height: 1.25rem;
     width: 1.25rem;
     color: ${Colour.icon};
-    &:hover {
-        ${(props) =>
-            props.$selected
-                ? Colour["icon-selected-hover"]
-                : Colour["icon-hover"]};
-    }
 `;

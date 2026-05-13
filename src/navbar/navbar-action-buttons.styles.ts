@@ -1,13 +1,11 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
 import { MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 // =============================================================================
 // WRAPPER
 // =============================================================================
-export const Wrapper = styled.ul`
+export const wrapper = css`
     display: flex;
     list-style: none;
     margin-left: ${Spacing["spacing-64"]};
@@ -18,7 +16,7 @@ export const Wrapper = styled.ul`
     }
 `;
 
-export const MobileWrapper = styled.ul`
+export const mobileWrapper = css`
     display: none;
 
     ${MediaQuery.MaxWidth.lg} {
@@ -29,7 +27,7 @@ export const MobileWrapper = styled.ul`
     }
 `;
 
-export const DrawerWrapper = styled.ul`
+export const drawerWrapper = css`
     display: none;
     list-style: none;
 
@@ -52,7 +50,7 @@ export const DrawerWrapper = styled.ul`
 // =============================================================================
 // BUTTON ITEMS
 // =============================================================================
-export const ButtonItem = styled.li<{ $mobile?: boolean }>`
+export const buttonItem = css`
     position: relative;
     display: flex;
     align-items: center;
@@ -68,23 +66,24 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
 
         &:not(:last-of-type) {
             margin-right: 0;
-            margin-bottom: ${(props) =>
-                props.$mobile ? Spacing["spacing-16"] : "0"};
+            margin-bottom: 0;
+        }
+    }
+`;
+
+export const buttonItemMobile = css`
+    ${MediaQuery.MaxWidth.lg} {
+        &:not(:last-of-type) {
+            margin-bottom: ${Spacing["spacing-16"]};
         }
     }
 
     ${MediaQuery.MaxWidth.sm} {
-        ${(props) => {
-            if (props.$mobile) {
-                return css`
-                    padding: 0 ${Spacing["spacing-16"]};
-                `;
-            }
-        }}
+        padding: 0 ${Spacing["spacing-16"]};
     }
 `;
 
-export const ActionButton = styled(Button.Small)`
+export const actionButton = css`
     ${MediaQuery.MaxWidth.lg} {
         width: 100%;
     }
@@ -93,7 +92,7 @@ export const ActionButton = styled(Button.Small)`
 // =============================================================================
 // DOWNLOAD APP
 // =============================================================================
-export const DownloadAppWrapper = styled.div`
+export const downloadAppWrapper = css`
     display: none;
 
     ${MediaQuery.MaxWidth.lg} {
@@ -103,15 +102,15 @@ export const DownloadAppWrapper = styled.div`
     }
 `;
 
-export const DownloadAppTitle = styled(Typography.BodyMD)`
+export const downloadAppTitle = css`
     margin-bottom: ${Spacing["spacing-8"]};
 `;
 
-export const DownloadAppImageLinkWrapper = styled.div`
+export const downloadAppImageLinkWrapper = css`
     display: flex;
 `;
 
-export const DownloadAppImageLink = styled.a`
+export const downloadAppImageLink = css`
     &:not(:last-child) {
         margin-right: ${Spacing["spacing-16"]};
     }

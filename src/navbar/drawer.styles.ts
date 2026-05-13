@@ -1,40 +1,14 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, MediaQuery, Motion, Shadow, Spacing } from "../theme";
 
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $show: boolean;
-    $viewHeight?: number | undefined;
-}
-
-// =============================================================================
-// STYLING HELPERS
-// =============================================================================
-const VISIBILITY_STYLE = (show: boolean | undefined) => {
-    if (show) {
-        return css`
-            right: 0;
-            transition: all 300ms ${Motion["ease-entrance"]};
-            transition-delay: 200ms;
-        `;
-    }
-
-    return css`
-        right: -100%;
-        transition: all 300ms ${Motion["ease-exit"]};
-    `;
+export const tokens = {
+    container: {
+        viewHeight: "--fds-internal-navbar-drawer-viewHeight",
+    },
 };
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Wrapper = styled.div`
+export const wrapper = css`
     display: none;
 
     ${MediaQuery.MaxWidth.lg} {
@@ -42,30 +16,21 @@ export const Wrapper = styled.div`
     }
 `;
 
-export const Container = styled.nav<StyleProps>`
+export const container = css`
     position: absolute;
     overflow-y: auto;
     overflow-x: hidden;
-    height: 100vh;
     display: block;
     padding: 0 0 ${Spacing["spacing-16"]};
     background-color: ${Colour.bg};
     box-shadow: ${Shadow["xs-subtle"]};
-    visibility: ${(props) => (props.$show ? "visible" : "hidden")};
     outline: none;
 
-    ${(props) => VISIBILITY_STYLE(props.$show)}
-    ${(props) => {
-        let viewHeight = "1vh";
-        if (props.$viewHeight) {
-            viewHeight = `${props.$viewHeight}px`;
-        }
-        return css`
-            height: calc(${viewHeight} * 100);
-        `;
-    }}
+    /* reset variable to prevent leaking to child components */
+    ${tokens.container.viewHeight}: initial;
+    height: calc(var(${tokens.container.viewHeight}, 1vh) * 100);
 
-	${MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 75%;
     }
 
@@ -74,7 +39,20 @@ export const Container = styled.nav<StyleProps>`
     }
 `;
 
-export const Content = styled.div`
+export const containerShown = css`
+    visibility: visible;
+    right: 0;
+    transition: all 300ms ${Motion["ease-entrance"]};
+    transition-delay: 200ms;
+`;
+
+export const containerHidden = css`
+    visibility: hidden;
+    right: -100%;
+    transition: all 300ms ${Motion["ease-exit"]};
+`;
+
+export const content = css`
     display: flex;
     flex-direction: column;
 `;
@@ -82,7 +60,7 @@ export const Content = styled.div`
 // -----------------------------------------------------------------------------
 // NAV CONTENTS
 // -----------------------------------------------------------------------------
-export const TopBar = styled.div`
+export const topBar = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -91,12 +69,12 @@ export const TopBar = styled.div`
         ${Spacing["spacing-32"]};
 `;
 
-export const CloseIcon = styled(CrossIcon)`
+export const closeIcon = css`
     height: 1.5rem;
     width: 1.5rem;
 `;
 
-export const CloseButton = styled(ClickableIcon)`
+export const closeButton = css`
     position: absolute;
     right: calc(${Spacing["spacing-4"]} * -1);
     color: ${Colour["icon"]};

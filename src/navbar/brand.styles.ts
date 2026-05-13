@@ -1,20 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Motion } from "../theme";
-import type { BrandType } from "./types";
 
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface StyleProps {
-    $type?: BrandType | undefined;
-}
-
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Container = styled.a<StyleProps>`
+export const container = css`
     display: flex;
     justify-content: center;
     height: 100%;

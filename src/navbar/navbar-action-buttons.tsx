@@ -1,7 +1,10 @@
+import clsx from "clsx";
 import findIndex from "lodash/findIndex";
 import type React from "react";
 
+import { Button } from "../button";
 import type { ButtonProps } from "../button/types";
+import { Typography } from "../typography";
 import * as styles from "./navbar-action-buttons.styles";
 import type { NavbarActionButtonsProps, NavbarButtonProps } from "./types";
 
@@ -83,12 +86,16 @@ export const NavbarActionButtons = ({
     // =============================================================================
     const renderDownloadAppMobileView = (args?: ButtonProps) => {
         return (
-            <styles.DownloadAppWrapper>
-                <styles.DownloadAppTitle weight="semibold">
+            <div className={styles.downloadAppWrapper}>
+                <Typography.BodyMD
+                    className={styles.downloadAppTitle}
+                    weight="semibold"
+                >
                     {(args && args.children) || "Download the app"}
-                </styles.DownloadAppTitle>
-                <styles.DownloadAppImageLinkWrapper>
-                    <styles.DownloadAppImageLink
+                </Typography.BodyMD>
+                <div className={styles.downloadAppImageLinkWrapper}>
+                    <a
+                        className={styles.downloadAppImageLink}
                         href="https://apps.apple.com/sg/app/moments-of-life/id1383218758"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -96,8 +103,9 @@ export const NavbarActionButtons = ({
                         onClick={handleDownloadAppImageLinkClick}
                     >
                         <img src={APP_STORE_ICON} alt="apple-app-store" />
-                    </styles.DownloadAppImageLink>
-                    <styles.DownloadAppImageLink
+                    </a>
+                    <a
+                        className={styles.downloadAppImageLink}
                         href="https://play.google.com/store/apps/details?id=sg.gov.app.mol&hl=en_SG"
                         target="_blank"
                         rel="noopener noreferrer"
@@ -105,9 +113,9 @@ export const NavbarActionButtons = ({
                         onClick={handleDownloadAppImageLinkClick}
                     >
                         <img src={PLAY_STORE_ICON} alt="google-play-store" />
-                    </styles.DownloadAppImageLink>
-                </styles.DownloadAppImageLinkWrapper>
-            </styles.DownloadAppWrapper>
+                    </a>
+                </div>
+            </div>
         );
     };
 
@@ -130,14 +138,19 @@ export const NavbarActionButtons = ({
                     component = isMobile ? (
                         renderDownloadAppMobileView(actionButton.args)
                     ) : (
-                        <styles.ActionButton
+                        <Button
                             {...actionButton.args}
+                            className={clsx(
+                                styles.actionButton,
+                                actionButton.args?.className
+                            )}
                             type="button"
+                            sizeType="small"
                             onClick={handleActionButtonClick(actionButton)}
                             data-testid="action-button__download"
                         >
                             Download the app
-                        </styles.ActionButton>
+                        </Button>
                     );
                     break;
                 case "button": {
@@ -148,9 +161,14 @@ export const NavbarActionButtons = ({
                           }`;
 
                     component = (
-                        <styles.ActionButton
+                        <Button
                             {...actionButton.args}
+                            className={clsx(
+                                styles.actionButton,
+                                actionButton.args?.className
+                            )}
                             type="button"
+                            sizeType="small"
                             onClick={handleActionButtonClick(actionButton)}
                             data-testid={testId}
                         />
@@ -169,12 +187,15 @@ export const NavbarActionButtons = ({
 
             if (component) {
                 return (
-                    <styles.ButtonItem
+                    <li
                         key={`action-button-${index + 1}`}
-                        $mobile={isMobile}
+                        className={clsx(
+                            styles.buttonItem,
+                            isMobile && styles.buttonItemMobile
+                        )}
                     >
                         {component}
-                    </styles.ButtonItem>
+                    </li>
                 );
             }
         });
@@ -192,9 +213,9 @@ export const NavbarActionButtons = ({
             return (
                 <>
                     {collapsableActionButtons.length > 0 && (
-                        <styles.DrawerWrapper>
+                        <ul className={styles.drawerWrapper}>
                             {renderButtons(mobile, collapsableActionButtons)}
-                        </styles.DrawerWrapper>
+                        </ul>
                     )}
                 </>
             );
@@ -202,14 +223,14 @@ export const NavbarActionButtons = ({
             return (
                 <>
                     {uncollapsableActionButtons.length > 0 && (
-                        <styles.MobileWrapper>
+                        <ul className={styles.mobileWrapper}>
                             {renderButtons(false, uncollapsableActionButtons)}
-                        </styles.MobileWrapper>
+                        </ul>
                     )}
                     {actionButtons.desktop.length > 0 && (
-                        <styles.Wrapper>
+                        <ul className={styles.wrapper}>
                             {renderButtons(mobile, actionButtons.desktop)}
-                        </styles.Wrapper>
+                        </ul>
                     )}
                 </>
             );

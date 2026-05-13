@@ -1,10 +1,9 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { lineClampCss } from "../shared/styles";
 import { Border, Colour, Radius, Spacing } from "../theme";
-import { Typography } from "../typography";
 
-export const MobileWrapper = styled.ul`
+export const mobileWrapper = css`
     list-style: none;
     display: flex;
     flex-direction: column;
@@ -15,19 +14,19 @@ export const MobileWrapper = styled.ul`
     border-left: ${Border["width-040"]} solid ${Colour["border-selected"]};
 `;
 
-export const MenuItem = styled.li`
+export const menuItem = css`
     width: 100%;
     display: flex;
 `;
 
-export const Link = styled(Typography.LinkBL)`
+export const link = css`
     width: 100%;
     text-align: left;
     color: ${Colour["text"]};
 
     margin: 0 ${Spacing["spacing-8"]};
 
-    // use border, as padding still shows an extra line after the ellipsis
+    /* use border, as padding still shows an extra line after the ellipsis */
     border: ${Border["solid"]} transparent;
     border-width: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
     border-radius: ${Radius["md"]};

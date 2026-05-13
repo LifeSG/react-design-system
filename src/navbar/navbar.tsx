@@ -1,3 +1,5 @@
+import { MenuIcon } from "@lifesg/react-icons/menu";
+import clsx from "clsx";
 import type React from "react";
 import {
     forwardRef,
@@ -12,6 +14,7 @@ import { ThemeContext } from "styled-components";
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
+import { ClickableIcon } from "../shared/clickable-icon";
 import type { ThemeType } from "../theme";
 import { Breakpoint, parsePxOrRemValue, useDesignToken } from "../theme";
 import { Brand } from "./brand";
@@ -248,8 +251,13 @@ const Component = <T,>(
     );
 
     const renderBrand = () => (
-        <styles.NavBrandContainer
-            $compress={compress}
+        <div
+            className={clsx(
+                styles.navBrandContainer,
+                compress
+                    ? styles.navBrandContainerCompressed
+                    : styles.navBrandContainerFull
+            )}
             data-id="brand-container"
         >
             {primary && (
@@ -263,7 +271,14 @@ const Component = <T,>(
             )}
             {secondary && (
                 <>
-                    <styles.NavSeparator $compress={compress} />
+                    <div
+                        className={clsx(
+                            styles.navSeparator,
+                            compress
+                                ? styles.navSeparatorCompressed
+                                : styles.navSeparatorFull
+                        )}
+                    />
                     <Brand
                         resources={secondary}
                         onClick={handleBrandClick}
@@ -273,7 +288,7 @@ const Component = <T,>(
                     />
                 </>
             )}
-        </styles.NavBrandContainer>
+        </div>
     );
 
     const renderMobileMenuButton = () => {
@@ -283,16 +298,17 @@ const Component = <T,>(
             (actionButtons && hasCollapsibleActionButtons(actionButtons))
         ) {
             return (
-                <styles.MobileMenuButton
+                <ClickableIcon
                     ref={mobileMenuRef}
+                    className={styles.mobileMenuButton}
                     aria-label={showDrawer ? "Close nav menu" : "Open nav menu"}
                     aria-expanded={showDrawer}
                     data-testid="button__mobile-menu"
                     onClick={handleMobileMenuButtonClick}
                     focusHighlight={false}
                 >
-                    <styles.MobileMenuIcon />
-                </styles.MobileMenuButton>
+                    <MenuIcon className={styles.mobileMenuIcon} />
+                </ClickableIcon>
             );
         }
 
@@ -302,11 +318,25 @@ const Component = <T,>(
     const renderNavbar = () => {
         return (
             <Layout.Content stretch={isStretch}>
-                <styles.Nav $compress={compress} aria-label={headerLabel}>
+                <nav
+                    className={clsx(
+                        styles.nav,
+                        compress ? styles.navCompressed : styles.navFull,
+                        theme?.colourMode === "dark"
+                            ? styles.navDark
+                            : styles.navLight
+                    )}
+                    aria-label={headerLabel}
+                >
                     {!hideNavBranding && renderBrand()}
                     {!hideNavElements && (
-                        <styles.NavElementsContainer
-                            $hideNavBranding={hideNavBranding}
+                        <div
+                            className={clsx(
+                                styles.navElementsContainer,
+                                hideNavBranding
+                                    ? styles.navElementsContainerWithoutBranding
+                                    : styles.navElementsContainerWithBranding
+                            )}
                         >
                             <NavbarItems
                                 items={items.desktop}
@@ -320,9 +350,9 @@ const Component = <T,>(
                                 onActionButtonClick={handleActionButtonClick}
                             />
                             {renderMobileMenuButton()}
-                        </styles.NavElementsContainer>
+                        </div>
                     )}
-                </styles.Nav>
+                </nav>
 
                 {!hideNavElements && renderDrawer()}
             </Layout.Content>
@@ -330,16 +360,22 @@ const Component = <T,>(
     };
 
     return (
-        <styles.Wrapper
+        <div
             ref={elementRef}
-            $fixed={fixed}
-            className={className}
+            className={clsx(
+                styles.wrapper,
+                fixed ? styles.wrapperFixed : styles.wrapperRelative,
+                theme?.colourMode === "dark"
+                    ? styles.wrapperDark
+                    : styles.wrapperLight,
+                className
+            )}
             id={id || "navbar-wrapper"}
             data-testid={otherProps["data-testid"] || "navbar-wrapper"}
         >
             {masthead && <Masthead stretch={isStretch} />}
             {renderNavbar()}
-        </styles.Wrapper>
+        </div>
     );
 };
 

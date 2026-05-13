@@ -1,7 +1,10 @@
+import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
 import { Menu as DesktopMenu } from "../menu";
+import { ClickableIcon } from "../shared/clickable-icon";
 import type { TypographyWeight } from "../typography";
 import { useId } from "../util";
 import { Menu as MobileMenu } from "./menu";
@@ -11,6 +14,18 @@ import type {
     NavItemLinkProps,
     NavItemProps,
 } from "./types";
+
+const getLinkWeightClass = (weight: TypographyWeight) => {
+    switch (weight) {
+        case "bold":
+            return styles.linkWeightBold;
+        case "semibold":
+            return styles.linkWeightSemibold;
+        case "regular":
+        default:
+            return styles.linkWeightRegular;
+    }
+};
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -170,41 +185,53 @@ export const NavbarItems = <T,>({
 
         const renderIndicator = () =>
             showIndicator ? (
-                <styles.LinkIndicator
+                <div
                     data-testid={`${testId}-indicator`}
-                    $selected={selected}
+                    className={clsx(
+                        styles.linkIndicator,
+                        selected && styles.linkIndicatorSelected
+                    )}
                 />
             ) : null;
 
         const renderMobileChevron = () =>
             mobile && hasSubMenu ? (
-                <styles.LinkIconContainer>
-                    <styles.ExpandCollapseButton
+                <div className={styles.linkIconContainer}>
+                    <ClickableIcon
                         data-testid={`${testId}-expand-collapse-button`}
-                        $selected={isMobileExpanded}
+                        className={clsx(
+                            styles.expandCollapseButton,
+                            isMobileExpanded &&
+                                styles.expandCollapseButtonExpanded
+                        )}
                         focusHighlight={false}
                         focusOutline="browser"
                         aria-label={isMobileExpanded ? "Collapse" : "Expand"}
                     >
-                        <styles.ChevronIcon $selected={selected} />
-                    </styles.ExpandCollapseButton>
-                </styles.LinkIconContainer>
+                        <ChevronUpIcon className={styles.chevronIcon} />
+                    </ClickableIcon>
+                </div>
             ) : null;
 
+        const linkClassName = clsx(
+            styles.link,
+            getLinkWeightClass(textWeight),
+            selected && styles.linkSelected
+        );
+
         const renderLink = () => (
-            <styles.Link
+            <a
                 tabIndex={0}
                 data-testid={testId}
-                weight={textWeight}
-                $selected={selected}
+                className={linkClassName}
                 {...otherItemAttrs}
                 aria-current={isRouteSelected ? "page" : undefined}
                 onClick={handleLinkClick(item, index)}
                 {...options}
             >
-                <styles.LinkLabel>{children}</styles.LinkLabel>
+                <div className={styles.linkLabel}>{children}</div>
                 {renderIndicator()}
-            </styles.Link>
+            </a>
         );
 
         const renderLinkWithSubmenu = () => {
@@ -213,10 +240,9 @@ export const NavbarItems = <T,>({
             if (mobile) {
                 return (
                     <>
-                        <styles.Link
+                        <a
                             data-testid={testId}
-                            weight={textWeight}
-                            $selected={selected}
+                            className={linkClassName}
                             {...otherItemAttrs}
                             aria-current={isRouteSelected ? "page" : undefined}
                             aria-haspopup="menu"
@@ -224,10 +250,10 @@ export const NavbarItems = <T,>({
                             onClick={handleLinkClick(item, index)}
                             {...options}
                         >
-                            <styles.LinkLabel>{children}</styles.LinkLabel>
+                            <div className={styles.linkLabel}>{children}</div>
                             {renderIndicator()}
                             {renderMobileChevron()}
-                        </styles.Link>
+                        </a>
 
                         {isMobileExpanded && renderMobileSubMenu(subMenu!)}
                     </>
@@ -248,27 +274,32 @@ export const NavbarItems = <T,>({
                         );
                     }}
                 >
-                    <styles.LinkButton
+                    <button
                         type="button"
                         tabIndex={0}
                         data-testid={testId}
-                        weight={textWeight}
-                        $selected={selected}
+                        className={clsx(linkClassName, styles.linkButton)}
                         aria-haspopup="menu"
                         aria-expanded={isExpanded}
                         {...options}
                     >
-                        <styles.LinkLabel>{children}</styles.LinkLabel>
+                        <div className={styles.linkLabel}>{children}</div>
                         {renderIndicator()}
-                    </styles.LinkButton>
+                    </button>
                 </DesktopMenu>
             );
         };
 
         return (
-            <styles.LinkItem key={index} $hiddenBranding={hideNavBranding}>
+            <li
+                key={index}
+                className={clsx(
+                    styles.linkItem,
+                    hideNavBranding && styles.linkItemHiddenBranding
+                )}
+            >
                 {hasSubMenu ? renderLinkWithSubmenu() : renderLink()}
-            </styles.LinkItem>
+            </li>
         );
     };
 
@@ -287,13 +318,19 @@ export const NavbarItems = <T,>({
 
     if (items && items.length > 0) {
         return mobile ? (
-            <styles.MobileWrapper ref={listRef}>
+            <ul ref={listRef} className={styles.mobileWrapper}>
                 {renderItems()}
-            </styles.MobileWrapper>
+            </ul>
         ) : (
-            <styles.Wrapper ref={listRef} $alignLeft={hideNavBranding}>
+            <ul
+                ref={listRef}
+                className={clsx(
+                    styles.wrapper,
+                    hideNavBranding && styles.wrapperAlignLeft
+                )}
+            >
                 {renderItems()}
-            </styles.Wrapper>
+            </ul>
         );
     }
 
