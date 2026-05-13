@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
 import { Layout } from "../layout";
+import { Colour, MediaQuery } from "../theme";
 import { Typography } from "../typography";
-import { V3_Colour, V3_MediaQuery } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -24,21 +24,21 @@ interface GridStyleProps extends ContentStyleProps {
 const columnWidthStyle = css<ContentStyleProps>`
     grid-column: ${(props) => (props.$stretch ? "1 / -1" : "span 8")};
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-column: 1 / -1;
     }
 `;
 
 export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
     background: ${({ $background }) =>
-        $background ? V3_Colour["bg-strong"] : "transparent"};
+        $background ? Colour["bg-strong"] : "transparent"};
     padding-top: 2rem;
     padding-bottom: 2rem;
 `;
 
 export const FullWidthWrapper = styled.div<WrapperStyleProps>`
     background: ${({ $background }) =>
-        $background ? V3_Colour["bg-strong"] : "transparent"};
+        $background ? Colour["bg-strong"] : "transparent"};
 `;
 
 export const Title = styled(Typography.HeadingSM)<ContentStyleProps>`
@@ -63,11 +63,11 @@ export const GridUl = styled.ul<GridStyleProps>`
     grid-template-columns: ${({ $fullWidth }) =>
         $fullWidth ? "repeat(2, minmax(0, 1fr))" : "repeat(8, minmax(0, 1fr))"};
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         column-gap: 1.5rem;
     }
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         column-gap: 1rem;
     }
 
