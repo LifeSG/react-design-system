@@ -5,63 +5,62 @@ import { Colour, MediaQuery } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface WrapperStyleProps {
-    $background: boolean;
-}
-
-interface ContentStyleProps {
-    $stretch: boolean | undefined;
-}
-
-interface GridStyleProps extends ContentStyleProps {
-    $fullWidth?: boolean | undefined;
-}
-// =============================================================================
 // STYLING
 // =============================================================================
-const columnWidthStyle = css<ContentStyleProps>`
-    grid-column: ${(props) => (props.$stretch ? "1 / -1" : "span 8")};
+const columnWidthStyle = css`
+    grid-column: span 8;
+
+    &.columnWidthStretch {
+        grid-column: 1 / -1;
+    }
 
     ${MediaQuery.MaxWidth.sm} {
         grid-column: 1 / -1;
     }
 `;
 
-export const Wrapper = styled(Layout.Content)<WrapperStyleProps>`
-    background: ${({ $background }) =>
-        $background ? Colour["bg-strong"] : "transparent"};
+export const Wrapper = styled(Layout.Content)`
+    background: transparent;
     padding-top: 2rem;
     padding-bottom: 2rem;
+
+    &.wrapperBackground {
+        background: ${Colour["bg-strong"]};
+    }
 `;
 
-export const FullWidthWrapper = styled.div<WrapperStyleProps>`
-    background: ${({ $background }) =>
-        $background ? Colour["bg-strong"] : "transparent"};
+export const FullWidthWrapper = styled.div`
+    background: transparent;
+
+    &.fullWidthWrapperBackground {
+        background: ${Colour["bg-strong"]};
+    }
 `;
 
-export const Title = styled(Typography.HeadingSM)<ContentStyleProps>`
+export const Title = styled(Typography.HeadingSM)`
     margin-bottom: 1rem;
     ${columnWidthStyle}
 `;
 
-export const Description = styled(Typography.BodyBL)<ContentStyleProps>`
+export const Description = styled(Typography.BodyBL)`
     margin-bottom: 2rem;
     ${columnWidthStyle}
 `;
 
-export const CustomSection = styled.div<ContentStyleProps>`
+export const CustomSection = styled.div`
     ${columnWidthStyle}
 `;
 
-export const GridUl = styled.ul<GridStyleProps>`
+export const GridUl = styled.ul`
     ${columnWidthStyle}
     column-gap: 2rem;
     row-gap: 2rem;
     display: grid;
-    grid-template-columns: ${({ $fullWidth }) =>
-        $fullWidth ? "repeat(2, minmax(0, 1fr))" : "repeat(8, minmax(0, 1fr))"};
+    grid-template-columns: repeat(8, minmax(0, 1fr));
+
+    &.gridUlFullWidth {
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+    }
 
     ${MediaQuery.MaxWidth.lg} {
         column-gap: 1.5rem;

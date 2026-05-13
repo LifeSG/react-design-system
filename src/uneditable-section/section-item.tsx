@@ -1,5 +1,6 @@
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
+import clsx from "clsx";
 import { useEffect, useState } from "react";
 
 import { FormLabel } from "../form/form-label";
@@ -184,7 +185,10 @@ export const UneditableSectionItem = ({
     };
 
     return (
-        <Container $widthStyle={displayWidth} $fullWidth={fullWidth}>
+        <Container
+            data-width={displayWidth}
+            className={clsx(fullWidth && "containerFullWidth")}
+        >
             <FormLabel>{label}</FormLabel>
             {renderContent()}
             {alert && <StyledAlert sizeType="small" {...alert} />}

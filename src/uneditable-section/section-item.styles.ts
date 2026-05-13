@@ -1,38 +1,32 @@
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Alert } from "../alert";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import { Colour, Font, MediaQuery } from "../theme";
-import type { UneditableSectionItemDisplayWidth } from "./types";
-
-// =============================================================================
-// STYLING INTERFACES
-// =============================================================================
-interface ContainerStyleProps {
-    $widthStyle: UneditableSectionItemDisplayWidth;
-    $fullWidth?: boolean | undefined;
-}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.li<ContainerStyleProps>`
+export const Container = styled.li`
     display: flex;
     flex-direction: column;
 
-    ${(props) => {
-        switch (props.$widthStyle) {
-            case "half":
-                return css`
-                    grid-column: auto / span ${props.$fullWidth ? 1 : 4};
-                `;
-            case "full":
-                return css`
-                    grid-column: auto / span ${props.$fullWidth ? 2 : 8};
-                `;
-        }
-    }}
+    &[data-width="half"] {
+        grid-column: auto / span 4;
+    }
+
+    &[data-width="half"].containerFullWidth {
+        grid-column: auto / span 1;
+    }
+
+    &[data-width="full"] {
+        grid-column: auto / span 8;
+    }
+
+    &[data-width="full"].containerFullWidth {
+        grid-column: auto / span 2;
+    }
 
     ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / -1;

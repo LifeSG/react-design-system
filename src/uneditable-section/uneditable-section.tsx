@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import { UneditableSectionItem } from "./section-item";
 import type {
     UneditableSectionItemProps,
@@ -25,6 +27,7 @@ export const UneditableSectionBase = ({
     onMask,
     onUnmask,
     onTryAgain,
+    className,
     ...otherProps
 }: UneditableSectionProps) => {
     // =============================================================================
@@ -61,7 +64,12 @@ export const UneditableSectionBase = ({
             });
 
             return (
-                <GridUl $stretch={stretch} $fullWidth={fullWidth}>
+                <GridUl
+                    className={clsx(
+                        stretch && "columnWidthStretch",
+                        fullWidth && "gridUlFullWidth"
+                    )}
+                >
                     {renderedItems}
                 </GridUl>
             );
@@ -81,22 +89,32 @@ export const UneditableSectionBase = ({
                     <Title
                         forwardedAs="h2"
                         weight="semibold"
-                        $stretch={stretch}
+                        className={clsx(stretch && "columnWidthStretch")}
                     >
                         {title}
                     </Title>
                 )}
                 {description && (
-                    <Description $stretch={stretch}>{description}</Description>
+                    <Description
+                        className={clsx(stretch && "columnWidthStretch")}
+                    >
+                        {description}
+                    </Description>
                 )}
                 {topSection && (
-                    <CustomSection data-id="top-section" $stretch={stretch}>
+                    <CustomSection
+                        data-id="top-section"
+                        className={clsx(stretch && "columnWidthStretch")}
+                    >
                         {topSection}
                     </CustomSection>
                 )}
                 {renderItems()}
                 {bottomSection && (
-                    <CustomSection data-id="bottom-section" $stretch={stretch}>
+                    <CustomSection
+                        data-id="bottom-section"
+                        className={clsx(stretch && "columnWidthStretch")}
+                    >
                         {bottomSection}
                     </CustomSection>
                 )}
@@ -106,13 +124,23 @@ export const UneditableSectionBase = ({
 
     if (fullWidth) {
         return (
-            <FullWidthWrapper $background={background} {...otherProps}>
+            <FullWidthWrapper
+                className={clsx(
+                    background && "fullWidthWrapperBackground",
+                    className
+                )}
+                {...otherProps}
+            >
                 {renderChildren()}
             </FullWidthWrapper>
         );
     }
     return (
-        <Wrapper $background={background} {...otherProps} type="grid">
+        <Wrapper
+            className={clsx(background && "wrapperBackground", className)}
+            {...otherProps}
+            type="grid"
+        >
             {renderChildren()}
         </Wrapper>
     );
