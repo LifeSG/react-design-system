@@ -45,16 +45,16 @@ export const logoSection = css`
     width: fit-content;
     margin-right: ${Spacing["spacing-64"]};
 
-    img {
-        max-height: 4rem;
-        max-width: 100%;
-        object-fit: contain;
-    }
-
     ${MediaQuery.MaxWidth.lg} {
         width: 100%;
         margin-right: 0;
     }
+`;
+
+export const logoImage = css`
+    max-height: 4rem;
+    max-width: 100%;
+    object-fit: contain;
 `;
 
 export const logoSize: Partial<Record<ThemeType, string>> = {
@@ -65,10 +65,8 @@ export const logoSize: Partial<Record<ThemeType, string>> = {
         width: 4rem;
     `,
     mylegacy: css`
-        && {
-            width: 10rem;
-            max-height: 2rem;
-        }
+        width: 10rem;
+        max-height: 2rem;
     `,
     ccube: css`
         width: 10rem;

@@ -116,6 +116,7 @@ export const Footer = <T,>({
                                 src={logoSrc || src}
                                 data-testid="logo"
                                 className={clsx(
+                                    styles.logoImage,
                                     logoType && styles.logoSize[logoType]
                                 )}
                                 {...otherLogoAttributes}
