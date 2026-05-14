@@ -34,33 +34,36 @@ class StoryPage extends AbstractStoryPage {
 }
 
 const test = base.extend<{ story: StoryPage }>({
-    story: async ({ page }, mountStory) => {
+    story: async ({ page }, use) => {
         const story = new StoryPage(page);
-        await mountStory(story);
+        await use(story);
     },
 });
 
 test.describe("LanguageSwitcher", () => {
     test.describe("Dropdown", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("dropdown-default");
-        });
-
-        test("Default", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.languageSwitcher,
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("dropdown-default");
             });
 
-            await expect(story.locators.languageSwitcher).toMatchAriaSnapshot(`
+            test("Default", async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.languageSwitcher,
+                });
+
+                await expect(story.locators.languageSwitcher)
+                    .toMatchAriaSnapshot(`
                 - combobox "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும், English"
             `);
 
-            await story.locators.internal.trigger.click();
-            await compareScreenshot(story, "open", {
-                fullscreen: true,
-            });
+                await story.locators.internal.trigger.click();
+                await compareScreenshot(story, "open", {
+                    fullscreen: true,
+                });
 
-            await expect(story.locators.languageSwitcher).toMatchAriaSnapshot(`
+                await expect(story.locators.languageSwitcher)
+                    .toMatchAriaSnapshot(`
                 - combobox "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும், English" [expanded]
                 - listbox "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும்":
                     - option "English" [selected]
@@ -68,26 +71,46 @@ test.describe("LanguageSwitcher", () => {
                     - option "Melayu"
                     - option "தமிழ்"
             `);
+            });
+
+            test("Keyboard Interaction", async ({ story }) => {
+                await story.locators.internal.trigger.focus();
+                await story.page.keyboard.press("Enter");
+                await expect(story.locators.internal.panel).toBeVisible();
+
+                await story.page.keyboard.press("ArrowDown");
+                await expect(story.getDropdownOption("中文")).toBeFocused();
+
+                await story.page.keyboard.press("End");
+                await expect(story.getDropdownOption("தமிழ்")).toBeFocused();
+
+                await story.page.keyboard.press("Home");
+                await expect(story.getDropdownOption("English")).toBeFocused();
+
+                await story.page.keyboard.press("ArrowDown");
+                await story.page.keyboard.press("Enter");
+                await expect(story.locators.internal.panel).not.toBeVisible();
+                await expect(story.locators.internal.trigger).toContainText(
+                    "中文"
+                );
+            });
         });
 
-        test("Keyboard Interaction", async ({ story }) => {
-            await story.locators.internal.trigger.focus();
-            await story.page.keyboard.press("Enter");
-            await expect(story.locators.internal.panel).toBeVisible();
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("dropdown-default", { mode: "dark" });
+            });
 
-            await story.page.keyboard.press("ArrowDown");
-            await expect(story.getDropdownOption("中文")).toBeFocused();
+            test("Default Dark Mode", async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.languageSwitcher,
+                });
 
-            await story.page.keyboard.press("End");
-            await expect(story.getDropdownOption("தமிழ்")).toBeFocused();
-
-            await story.page.keyboard.press("Home");
-            await expect(story.getDropdownOption("English")).toBeFocused();
-
-            await story.page.keyboard.press("ArrowDown");
-            await story.page.keyboard.press("Enter");
-            await expect(story.locators.internal.panel).not.toBeVisible();
-            await expect(story.locators.internal.trigger).toContainText("中文");
+                await story.locators.internal.trigger.click();
+                await compareScreenshot(story, "open", {
+                    fullscreen: true,
+                });
+            });
         });
 
         test.describe("", () => {
@@ -108,12 +131,14 @@ test.describe("LanguageSwitcher", () => {
     });
 
     test.describe("Link", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("link-default");
-        });
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("link-default");
+            });
 
-        test("Default", async ({ story }) => {
-            await expect(story.locators.languageSwitcher).toMatchAriaSnapshot(`
+            test("Default", async ({ story }) => {
+                await expect(story.locators.languageSwitcher)
+                    .toMatchAriaSnapshot(`
                 - group "Choose language / 选择语言 / Pilih bahasa / மொழியை தேர்ந்தெடுக்கவும்":
                     - listitem:
                         - button "English" [pressed]
@@ -125,8 +150,9 @@ test.describe("LanguageSwitcher", () => {
                         - button "தமிழ்"
             `);
 
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.languageSwitcher,
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.languageSwitcher,
+                });
             });
         });
 
