@@ -4,16 +4,7 @@ import { Typography } from "../../typography";
 import { useId } from "../../util";
 import type { LocalNavDropdownItemComponentProps } from "../internal-types";
 import type { LocalNavDropdownProps, LocalNavItemProps } from "../types";
-import {
-    Backdrop,
-    NavItem,
-    NavItemLabel,
-    NavItemList,
-    NavSelect,
-    NavSelectIcon,
-    NavWrapper,
-    StyledTickIcon,
-} from "./local-nav-dropdown.styles";
+import * as styles from "./local-nav-dropdown.styles";
 
 const Component = (
     {
@@ -301,7 +292,7 @@ const Component = (
         }
 
         return (
-            <NavItem
+            <styles.NavItem
                 id={id}
                 key={index}
                 role="menuitem"
@@ -314,16 +305,18 @@ const Component = (
                     listItemRefs.current[index] = el as HTMLLIElement;
                 }}
             >
-                {isSelected && <StyledTickIcon />}
-                <NavItemLabel $isSelected={isSelected}>{title}</NavItemLabel>
-            </NavItem>
+                {isSelected && <styles.StyledTickIcon />}
+                <styles.NavItemLabel $isSelected={isSelected}>
+                    {title}
+                </styles.NavItemLabel>
+            </styles.NavItem>
         );
     };
 
     return (
         <>
             <span ref={detectStickyRef} data-testid={"sticky-ref"} />
-            <NavWrapper
+            <styles.NavWrapper
                 $isStickied={isStickied}
                 $sideMargin={dynamicMargin}
                 $stickyOffset={stickyOffset}
@@ -332,7 +325,7 @@ const Component = (
                 data-testid={navTestId}
                 className={className}
             >
-                <NavSelect
+                <styles.NavSelect
                     ref={dropdownRef}
                     role="button"
                     onClick={handleToggleDropdown}
@@ -347,10 +340,12 @@ const Component = (
                     <Typography.BodyBL weight="semibold">
                         {labelText}
                     </Typography.BodyBL>
-                    <NavSelectIcon $isDropdownExpanded={isDropdownExpanded} />
-                </NavSelect>
+                    <styles.NavSelectIcon
+                        $isDropdownExpanded={isDropdownExpanded}
+                    />
+                </styles.NavSelect>
                 {isDropdownExpanded && (
-                    <NavItemList
+                    <styles.NavItemList
                         id={dropdownListId}
                         role="menu"
                         onKeyDown={handleNavItemListKeyDown}
@@ -369,12 +364,12 @@ const Component = (
                                 index: i,
                             })
                         )}
-                    </NavItemList>
+                    </styles.NavItemList>
                 )}
                 {isDropdownExpanded && isStickied && (
-                    <Backdrop onClick={handleDismissBackdrop} />
+                    <styles.Backdrop onClick={handleDismissBackdrop} />
                 )}
-            </NavWrapper>
+            </styles.NavWrapper>
         </>
     );
 };
