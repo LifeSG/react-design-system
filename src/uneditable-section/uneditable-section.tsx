@@ -1,18 +1,13 @@
 import clsx from "clsx";
 
+import { Layout } from "../layout";
+import { Typography } from "../typography";
 import { UneditableSectionItem } from "./section-item";
 import type {
     UneditableSectionItemProps,
     UneditableSectionProps,
 } from "./types";
-import {
-    CustomSection,
-    Description,
-    FullWidthWrapper,
-    GridUl,
-    Title,
-    Wrapper,
-} from "./uneditable-section.styles";
+import * as styles from "./uneditable-section.styles";
 
 export const UneditableSectionBase = ({
     items,
@@ -64,14 +59,15 @@ export const UneditableSectionBase = ({
             });
 
             return (
-                <GridUl
+                <ul
                     className={clsx(
-                        stretch && "columnWidthStretch",
-                        fullWidth && "gridUlFullWidth"
+                        styles.gridUl,
+                        stretch && styles.columnWidthStretch,
+                        fullWidth && styles.gridUlFullWidth
                     )}
                 >
                     {renderedItems}
-                </GridUl>
+                </ul>
             );
         }
 
@@ -86,37 +82,49 @@ export const UneditableSectionBase = ({
         return (
             <>
                 {title && (
-                    <Title
+                    <Typography.HeadingSM
                         forwardedAs="h2"
                         weight="semibold"
-                        className={clsx(stretch && "columnWidthStretch")}
+                        className={clsx(
+                            styles.title,
+                            stretch && styles.columnWidthStretch
+                        )}
                     >
                         {title}
-                    </Title>
+                    </Typography.HeadingSM>
                 )}
                 {description && (
-                    <Description
-                        className={clsx(stretch && "columnWidthStretch")}
+                    <Typography.BodyBL
+                        className={clsx(
+                            styles.description,
+                            stretch && styles.columnWidthStretch
+                        )}
                     >
                         {description}
-                    </Description>
+                    </Typography.BodyBL>
                 )}
                 {topSection && (
-                    <CustomSection
+                    <div
                         data-id="top-section"
-                        className={clsx(stretch && "columnWidthStretch")}
+                        className={clsx(
+                            styles.customSection,
+                            stretch && styles.columnWidthStretch
+                        )}
                     >
                         {topSection}
-                    </CustomSection>
+                    </div>
                 )}
                 {renderItems()}
                 {bottomSection && (
-                    <CustomSection
+                    <div
                         data-id="bottom-section"
-                        className={clsx(stretch && "columnWidthStretch")}
+                        className={clsx(
+                            styles.customSection,
+                            stretch && styles.columnWidthStretch
+                        )}
                     >
                         {bottomSection}
-                    </CustomSection>
+                    </div>
                 )}
             </>
         );
@@ -124,24 +132,29 @@ export const UneditableSectionBase = ({
 
     if (fullWidth) {
         return (
-            <FullWidthWrapper
+            <div
                 className={clsx(
-                    background && "fullWidthWrapperBackground",
+                    styles.fullWidthWrapper,
+                    background && styles.fullWidthWrapperBackground,
                     className
                 )}
                 {...otherProps}
             >
                 {renderChildren()}
-            </FullWidthWrapper>
+            </div>
         );
     }
     return (
-        <Wrapper
-            className={clsx(background && "wrapperBackground", className)}
+        <Layout.Content
+            className={clsx(
+                styles.wrapper,
+                background && styles.wrapperBackground,
+                className
+            )}
             {...otherProps}
             type="grid"
         >
             {renderChildren()}
-        </Wrapper>
+        </Layout.Content>
     );
 };

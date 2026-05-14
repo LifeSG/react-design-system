@@ -1,23 +1,16 @@
+import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
 import clsx from "clsx";
 import { useEffect, useState } from "react";
 
+import { Alert } from "../alert";
 import { FormLabel } from "../form/form-label";
 import { VisuallyHidden } from "../shared/accessibility";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import { Typography } from "../typography";
 import { StringHelper } from "../util/string-helper";
-import {
-    Clickable,
-    Container,
-    ErrorIcon,
-    ErrorLabel,
-    IconContainer,
-    LoadingLabel,
-    Spinner,
-    StyledAlert,
-    TryAgainLabel,
-} from "./section-item.styles";
+import * as styles from "./section-item.styles";
 import type {
     UneditableSectionItemMaskState,
     UneditableSectionItemProps,
@@ -116,26 +109,29 @@ export const UneditableSectionItem = ({
             case "fail":
                 return (
                     <>
-                        <ErrorIcon />
-                        <ErrorLabel>Error</ErrorLabel>
-                        <TryAgainLabel>
+                        <ExclamationTriangleIcon className={styles.errorIcon} />
+                        <span className={styles.errorLabel}>Error</span>
+                        <span className={styles.tryAgainLabel}>
                             Try again?
                             <VisuallyHidden>{label}</VisuallyHidden>
-                        </TryAgainLabel>
+                        </span>
                     </>
                 );
             case "loading":
                 return (
                     <>
-                        <Spinner />
-                        <LoadingLabel>Retrieving...</LoadingLabel>
+                        <ComponentLoadingSpinner className={styles.spinner} />
+                        <span className={styles.loadingLabel}>
+                            Retrieving...
+                        </span>
                     </>
                 );
             default:
                 return (
                     <>
                         {getValue()}
-                        <IconContainer
+                        <div
+                            className={styles.iconContainer}
                             aria-label={
                                 displayMaskState === "masked"
                                     ? `Display ${label}`
@@ -147,7 +143,7 @@ export const UneditableSectionItem = ({
                             ) : (
                                 <EyeSlashIcon data-testid="unmasked-icon" />
                             )}
-                        </IconContainer>
+                        </div>
                     </>
                 );
         }
@@ -167,7 +163,8 @@ export const UneditableSectionItem = ({
         }
 
         return (
-            <Clickable
+            <button
+                className={styles.clickable}
                 data-testid="clickable-label"
                 onClick={handleClickableClick}
                 aria-busy={maskLoadingState === "loading"}
@@ -180,18 +177,23 @@ export const UneditableSectionItem = ({
                 )}
             >
                 {renderMaskingState()}
-            </Clickable>
+            </button>
         );
     };
 
     return (
-        <Container
+        <li
             data-width={displayWidth}
-            className={clsx(fullWidth && "containerFullWidth")}
+            className={clsx(
+                styles.container,
+                fullWidth && styles.containerFullWidth
+            )}
         >
             <FormLabel>{label}</FormLabel>
             {renderContent()}
-            {alert && <StyledAlert sizeType="small" {...alert} />}
-        </Container>
+            {alert && (
+                <Alert className={styles.alert} sizeType="small" {...alert} />
+            )}
+        </li>
     );
 };

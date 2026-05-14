@@ -1,66 +1,60 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { Layout } from "../layout";
 import { Colour, MediaQuery } from "../theme";
-import { Typography } from "../typography";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const columnWidthStyle = css`
+const columnWidthBase = `
     grid-column: span 8;
-
-    &.columnWidthStretch {
-        grid-column: 1 / -1;
-    }
 
     ${MediaQuery.MaxWidth.sm} {
         grid-column: 1 / -1;
     }
 `;
 
-export const Wrapper = styled(Layout.Content)`
+export const columnWidthStretch = css`
+    grid-column: 1 / -1;
+`;
+
+export const wrapper = css`
     background: transparent;
     padding-top: 2rem;
     padding-bottom: 2rem;
-
-    &.wrapperBackground {
-        background: ${Colour["bg-strong"]};
-    }
 `;
 
-export const FullWidthWrapper = styled.div`
+export const wrapperBackground = css`
+    background: ${Colour["bg-strong"]};
+`;
+
+export const fullWidthWrapper = css`
     background: transparent;
-
-    &.fullWidthWrapperBackground {
-        background: ${Colour["bg-strong"]};
-    }
 `;
 
-export const Title = styled(Typography.HeadingSM)`
+export const fullWidthWrapperBackground = css`
+    background: ${Colour["bg-strong"]};
+`;
+
+export const title = css`
     margin-bottom: 1rem;
-    ${columnWidthStyle}
+    ${columnWidthBase}
 `;
 
-export const Description = styled(Typography.BodyBL)`
+export const description = css`
     margin-bottom: 2rem;
-    ${columnWidthStyle}
+    ${columnWidthBase}
 `;
 
-export const CustomSection = styled.div`
-    ${columnWidthStyle}
+export const customSection = css`
+    ${columnWidthBase}
 `;
 
-export const GridUl = styled.ul`
-    ${columnWidthStyle}
+export const gridUl = css`
+    ${columnWidthBase}
     column-gap: 2rem;
     row-gap: 2rem;
     display: grid;
     grid-template-columns: repeat(8, minmax(0, 1fr));
-
-    &.gridUlFullWidth {
-        grid-template-columns: repeat(2, minmax(0, 1fr));
-    }
 
     ${MediaQuery.MaxWidth.lg} {
         column-gap: 1.5rem;
@@ -73,4 +67,8 @@ export const GridUl = styled.ul`
     &:not(:last-child) {
         margin-bottom: 2rem;
     }
+`;
+
+export const gridUlFullWidth = css`
+    grid-template-columns: repeat(2, minmax(0, 1fr));
 `;

@@ -2,16 +2,20 @@ import clsx from "clsx";
 import React from "react";
 
 import type { UneditableSectionItemSectionProps } from "./types";
-import { GridUl } from "./uneditable-section.styles";
+import * as styles from "./uneditable-section.styles";
 
 export const Component = (
     { stretch, className, ...otherProps }: UneditableSectionItemSectionProps,
     ref: React.Ref<HTMLUListElement>
 ) => {
     return (
-        <GridUl
+        <ul
             ref={ref}
-            className={clsx(stretch && "columnWidthStretch", className)}
+            className={clsx(
+                styles.gridUl,
+                stretch && styles.columnWidthStretch,
+                className
+            )}
             {...otherProps}
         />
     );

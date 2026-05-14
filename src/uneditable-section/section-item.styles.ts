@@ -1,14 +1,11 @@
-import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Alert } from "../alert";
-import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import { Colour, Font, MediaQuery } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.li`
+export const container = css`
     display: flex;
     flex-direction: column;
 
@@ -35,7 +32,9 @@ export const Container = styled.li`
     overflow-wrap: break-word;
 `;
 
-export const IconContainer = styled.div`
+export const containerFullWidth = css``;
+
+export const iconContainer = css`
     display: flex;
     height: 100%;
     align-items: center;
@@ -49,7 +48,7 @@ export const IconContainer = styled.div`
     }
 `;
 
-export const Clickable = styled.button`
+export const clickable = css`
     ${Font["body-baseline-regular"]}
     color: ${Colour["text"]};
     border: none;
@@ -70,11 +69,11 @@ export const Clickable = styled.button`
 // -----------------------------------------------------------------------------
 // LOADING DISPLAY
 // -----------------------------------------------------------------------------
-export const LoadingLabel = styled.span`
+export const loadingLabel = css`
     color: ${Colour["text-disabled"]};
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)`
+export const spinner = css`
     margin-right: 0.5rem;
     color: ${Colour["text-disabled"]};
 `;
@@ -82,24 +81,24 @@ export const Spinner = styled(ComponentLoadingSpinner)`
 // -----------------------------------------------------------------------------
 // ERROR DISPLAY
 // -----------------------------------------------------------------------------
-export const ErrorIcon = styled(ExclamationTriangleIcon)`
+export const errorIcon = css`
     color: ${Colour["icon-warning"]};
     margin-right: 0.5rem;
     height: ${Font.Spec["body-size-baseline"]};
     width: ${Font.Spec["body-size-baseline"]};
 `;
 
-export const ErrorLabel = styled.span`
+export const errorLabel = css`
     color: ${Colour["text-warning"]};
 `;
 
-export const TryAgainLabel = styled.span`
+export const tryAgainLabel = css`
     ${Font["body-baseline-semibold"]}
     color: ${Colour["hyperlink"]};
     text-decoration: underline;
     margin-left: 0.5rem;
 `;
 
-export const StyledAlert = styled(Alert)`
+export const alert = css`
     margin-top: 0.5rem;
 `;
