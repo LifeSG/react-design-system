@@ -1,20 +1,12 @@
 import { LanguageIcon } from "@lifesg/react-icons/language";
-import { TickIcon } from "@lifesg/react-icons/tick";
-import clsx from "clsx";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
 import { ExpandableElement } from "../shared/dropdown-list";
-import {
-    baseIndicatorStyle,
-    listItem,
-    listItemActive,
-    listItemActiveSelected,
-} from "../shared/dropdown-list/dropdown-list.styles";
-import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { useId } from "../util";
 import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
+import { DropdownPanel } from "./dropdown-panel";
 import * as styles from "./dropdown-variant.styles";
 import type { VariantInternalProps } from "./internal-types";
 import type { LanguageSwitcherCode } from "./types";
@@ -139,68 +131,16 @@ export const DropdownVariant = ({
         </ExpandableElement>
     );
 
-    const renderDropdown = ({
-        elementWidth,
-        styles: floatingStyles,
-        setFloatingRef,
-        getFloatingProps,
-    }: DropdownRenderProps) => (
-        <div
-            ref={setFloatingRef}
-            className={styles.dropdownPanel}
-            style={{ ...floatingStyles, width: elementWidth }}
-            data-testid={`${testId}--panel`}
-            {...getFloatingProps()}
-        >
-            <ul
-                className={styles.dropdownList}
-                role="listbox"
-                id={listboxId}
-                aria-label={ARIA_LABEL}
-                onKeyDown={handleListKeyDown}
-            >
-                {LANGUAGE_CODES.map((code, index) => {
-                    const isSelected = code === selectedLanguage;
-                    const isFocused = index === focusedIndex;
-                    return (
-                        <li
-                            key={code}
-                            ref={(el: HTMLLIElement | null) => {
-                                itemRefs.current[index] = el;
-                            }}
-                            role="option"
-                            lang={code}
-                            className={clsx(
-                                styles.dropdownItem,
-                                listItem,
-                                isFocused &&
-                                    isSelected &&
-                                    listItemActiveSelected,
-                                isFocused && !isSelected && listItemActive,
-                                isSelected && styles.dropdownItemSelected
-                            )}
-                            aria-selected={isSelected}
-                            tabIndex={isFocused ? 0 : -1}
-                            onClick={() => handleItemSelect(code)}
-                            data-testid={`${testId}--item-${code}`}
-                        >
-                            {isSelected ? (
-                                <TickIcon
-                                    className={clsx(
-                                        baseIndicatorStyle,
-                                        styles.selectedIndicator
-                                    )}
-                                    aria-hidden
-                                />
-                            ) : (
-                                <div className={baseIndicatorStyle} />
-                            )}
-                            {LANGUAGE_DISPLAY_MAP[code]}
-                        </li>
-                    );
-                })}
-            </ul>
-        </div>
+    const renderDropdown = () => (
+        <DropdownPanel
+            focusedIndex={focusedIndex}
+            handleItemSelect={handleItemSelect}
+            handleListKeyDown={handleListKeyDown}
+            itemRefs={itemRefs}
+            listboxId={listboxId}
+            selectedLanguage={selectedLanguage}
+            testId={testId}
+        />
     );
 
     // =========================================================================
