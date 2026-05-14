@@ -89,6 +89,151 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("DateRangeInput", () => {
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants");
+        });
+
+        test("Form.DateRangeInput variants", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+
+            await expect(story.locators.defaultFormInput).toMatchAriaSnapshot(`
+                - group "Default"
+            `);
+            await expect(story.locators.disabledFormInput).toMatchAriaSnapshot(`
+                - group "Disabled" [disabled]
+            `);
+            await expect(story.locators.readonlyFormInput).toMatchAriaSnapshot(`
+                - group "Readonly"
+            `);
+            await expect(story.locators.errorFormInput).toMatchAriaSnapshot(`
+                - group "Error"
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", { size: "mobile" });
+        });
+
+        test("Form.DateRangeInput variants (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", { mode: "dark" });
+        });
+
+        test("Form.DateRangeInput variants (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants-prefilled");
+        });
+
+        test("Form.DateRangeInput variants prefilled", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants-prefilled", { mode: "dark" });
+        });
+
+        test("Form.DateRangeInput variants prefilled (dark mode)", async ({
+            story,
+        }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants");
+        });
+
+        test("Standalone variants", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+
+        test("Focus states", async ({ story }) => {
+            await story.locators.defaultInput.focus();
+            await compareScreenshot(story, "default", {
+                locator: story.locators.defaultInput,
+            });
+
+            await story.locators.disabledInput.click({ force: true });
+            await compareScreenshot(story, "disabled", {
+                locator: story.locators.disabledInput,
+            });
+
+            await story.locators.readonlyInput.focus();
+            await compareScreenshot(story, "readonly", {
+                locator: story.locators.readonlyInput,
+            });
+
+            await story.locators.errorInput.focus();
+            await compareScreenshot(story, "error", {
+                locator: story.locators.errorInput,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants", { mode: "dark" });
+        });
+
+        test("Focus states (dark mode)", async ({ story }) => {
+            await story.locators.defaultInput.focus();
+            await compareScreenshot(story, "default", {
+                locator: story.locators.defaultInput,
+            });
+
+            await story.locators.disabledInput.click({ force: true });
+            await compareScreenshot(story, "disabled", {
+                locator: story.locators.disabledInput,
+            });
+
+            await story.locators.readonlyInput.focus();
+            await compareScreenshot(story, "readonly", {
+                locator: story.locators.readonlyInput,
+            });
+
+            await story.locators.errorInput.focus();
+            await compareScreenshot(story, "error", {
+                locator: story.locators.errorInput,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants-prefilled");
+        });
+
+        test("Standalone variants prefilled", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout");
+        });
+
+        test("Grid layout", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
     test.describe("Range", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("default", { mockedTimestamp: fixedTimestamp });
@@ -422,151 +567,6 @@ test.describe("DateRangeInput", () => {
 
             await story.locators.dateRangeInput.click({ force: true });
             await expect(story.locators.calendarContainer).not.toBeVisible();
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("form-variants");
-        });
-
-        test("Form.DateRangeInput variants", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-
-            await expect(story.locators.defaultFormInput).toMatchAriaSnapshot(`
-                - group "Default"
-            `);
-            await expect(story.locators.disabledFormInput).toMatchAriaSnapshot(`
-                - group "Disabled" [disabled]
-            `);
-            await expect(story.locators.readonlyFormInput).toMatchAriaSnapshot(`
-                - group "Readonly"
-            `);
-            await expect(story.locators.errorFormInput).toMatchAriaSnapshot(`
-                - group "Error"
-            `);
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("form-variants", { size: "mobile" });
-        });
-
-        test("Form.DateRangeInput variants (mobile)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("form-variants", { mode: "dark" });
-        });
-
-        test("Form.DateRangeInput variants (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("form-variants-prefilled");
-        });
-
-        test("Form.DateRangeInput variants prefilled", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("form-variants-prefilled", { mode: "dark" });
-        });
-
-        test("Form.DateRangeInput variants prefilled (dark mode)", async ({
-            story,
-        }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("standalone-variants");
-        });
-
-        test("Standalone variants", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-
-        test("Focus states", async ({ story }) => {
-            await story.locators.defaultInput.focus();
-            await compareScreenshot(story, "default", {
-                locator: story.locators.defaultInput,
-            });
-
-            await story.locators.disabledInput.click({ force: true });
-            await compareScreenshot(story, "disabled", {
-                locator: story.locators.disabledInput,
-            });
-
-            await story.locators.readonlyInput.focus();
-            await compareScreenshot(story, "readonly", {
-                locator: story.locators.readonlyInput,
-            });
-
-            await story.locators.errorInput.focus();
-            await compareScreenshot(story, "error", {
-                locator: story.locators.errorInput,
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("standalone-variants", { mode: "dark" });
-        });
-
-        test("Focus states (dark mode)", async ({ story }) => {
-            await story.locators.defaultInput.focus();
-            await compareScreenshot(story, "default", {
-                locator: story.locators.defaultInput,
-            });
-
-            await story.locators.disabledInput.click({ force: true });
-            await compareScreenshot(story, "disabled", {
-                locator: story.locators.disabledInput,
-            });
-
-            await story.locators.readonlyInput.focus();
-            await compareScreenshot(story, "readonly", {
-                locator: story.locators.readonlyInput,
-            });
-
-            await story.locators.errorInput.focus();
-            await compareScreenshot(story, "error", {
-                locator: story.locators.errorInput,
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("standalone-variants-prefilled");
-        });
-
-        test("Standalone variants prefilled", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("grid-layout");
-        });
-
-        test("Grid layout", async ({ story }) => {
-            await compareScreenshot(story, "mount");
         });
     });
 });
