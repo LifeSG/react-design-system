@@ -83,7 +83,7 @@ export const UneditableSectionBase = ({
             <>
                 {title && (
                     <Typography.HeadingSM
-                        forwardedAs="h2"
+                        as="h2"
                         weight="semibold"
                         className={clsx(
                             styles.title,
