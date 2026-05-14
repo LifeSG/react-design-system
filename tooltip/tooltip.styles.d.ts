@@ -1,0 +1,10 @@
+import type { TooltipPosition } from "./types";
+interface TooltipStyleProps {
+    position?: TooltipPosition;
+    visible?: boolean;
+}
+export declare const BubbleWrap: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof TooltipStyleProps> & TooltipStyleProps, never> & Partial<Pick<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof TooltipStyleProps> & TooltipStyleProps, never>>> & string;
+export declare const Bubble: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("../card/types").CardProps, never> & Partial<Pick<import("../card/types").CardProps, never>>> & string & Omit<({ children, className, "data-testid": dataTestId, ...otherProps }: import("../card/types").CardProps) => JSX.Element, keyof import("react").Component<any, {}, any>>;
+export declare const Arrow: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof TooltipStyleProps> & TooltipStyleProps, never> & Partial<Pick<import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, keyof TooltipStyleProps> & TooltipStyleProps, never>>> & string;
+export declare const HOCWrapper: import("styled-components/dist/types").IStyledComponentBase<"web", import("styled-components").FastOmit<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never> & Partial<Pick<import("react").DetailedHTMLProps<import("react").HTMLAttributes<HTMLDivElement>, HTMLDivElement>, never>>> & string;
+export {};

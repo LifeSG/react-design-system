@@ -1,0 +1,27 @@
+export declare const tokens: {
+    readonly availableWidth: "--fds-internal-dropdownList-container-availableWidth";
+    readonly containerWidth: "--fds-internal-dropdownList-containerWidth";
+    readonly containerMinWidth: "--fds-internal-dropdownList-containerMinWidth";
+    readonly xSpacing: "--fds-internal-dropdownList-container-xSpacing";
+};
+export declare const container: import("@linaria/core").LinariaClassName;
+export declare const containerVariantSmall: import("@linaria/core").LinariaClassName;
+export declare const list: import("@linaria/core").LinariaClassName;
+export declare const listItem: import("@linaria/core").LinariaClassName;
+export declare const listItemActive: import("@linaria/core").LinariaClassName;
+export declare const listItemActiveSelected: import("@linaria/core").LinariaClassName;
+export declare const listItemDisabled: import("@linaria/core").LinariaClassName;
+export declare const baseIndicatorStyle: import("@linaria/core").LinariaClassName;
+export declare const selectedIndicator: import("@linaria/core").LinariaClassName;
+export declare const baseCheckboxIndicatorStyle: import("@linaria/core").LinariaClassName;
+export declare const checkboxSelectedIndicator: import("@linaria/core").LinariaClassName;
+export declare const checkboxUnselectedIndicator: import("@linaria/core").LinariaClassName;
+export declare const checkboxDisabledIndicator: import("@linaria/core").LinariaClassName;
+export declare const selectAllContainer: import("@linaria/core").LinariaClassName;
+export declare const baseButton: import("@linaria/core").LinariaClassName;
+export declare const selectAllButton: import("@linaria/core").LinariaClassName;
+export declare const tryAgainButton: import("@linaria/core").LinariaClassName;
+export declare const resultStateContainer: import("@linaria/core").LinariaClassName;
+export declare const labelIcon: import("@linaria/core").LinariaClassName;
+export declare const spinner: import("@linaria/core").LinariaClassName;
+export declare const noResultDescContainer: import("@linaria/core").LinariaClassName;

@@ -1,0 +1,2 @@
+import type { HistogramSliderProps } from "./types";
+export declare const HistogramSlider: ({ bins, interval, disabled, readOnly, value, showRangeLabels, rangeLabelPrefix, rangeLabelSuffix, ariaLabels, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, onChange, onChangeEnd, renderEmptyView, renderRangeLabel, className, ...otherProps }: HistogramSliderProps) => import("react/jsx-runtime").JSX.Element;

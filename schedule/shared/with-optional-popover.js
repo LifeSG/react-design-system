@@ -1,0 +1,6 @@
+import{jsx as t}from"react/jsx-runtime";import e from"styled-components";import"../../_virtual/_tslib.js";import"clsx";import"react";import"../../theme/theme-provider/context.js";import"../../typography/typography.js";import"../../card/card.styles_1gh9gs3.css";import"../../markup/markup.js";import"../../modal-v2/index.js";import"../../theme/theme-provider/index.js";import"../../theme/tokens/border.js";import"../../theme/tokens/colour.js";import"../../theme/tokens/font.js";import"../../theme/tokens/media-query.js";import"../../util/calendar-helper.js";import"../../external/dayjs/dayjs.min.js";import"../../util/simple-id-generator.js";import"../../util/string-helper.js";import"@react-aria/live-announcer";import"../../popover-v2/popover.styles_lslc72.css";import{PopoverTrigger as o}from"../../popover-v2/popover-trigger.js";import"../../popover-v2/popover-inline/popover-inline.styles_ziag9c.css";const r=e(o)`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+`,i=({containerRef:e,children:o,customPopover:i})=>{if(!i)return o;const p={position:"bottom-start",rootNode:e,customOffset:i.offset,children:o,trigger:i.trigger,delay:i.delay,popoverContent:i.content};return t(r,Object.assign({zIndex:2},p))};export{i as WithOptionalPopover};
+//# sourceMappingURL=with-optional-popover.js.map

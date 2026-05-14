@@ -1,0 +1,2 @@
+import{getCollection as e}from"../helpers.js";import{V3_DefaultBorderUtilSet as t}from"./specs/default-border-util-set.js";const l={collections:{default:t},defaultValue:"default"},d=e=>1===e.length&&"theme"in e[0],o=t=>(...o)=>s=>{const r=d(o)?[]:o,u=d(o)?o[0]:s,a=u.theme;return(0,e(l,null==a?void 0:a.borderScheme)[t])(...r)(u)},s={solid:o("solid"),"dashed-default":o("dashed-default")};export{s as V3_BorderUtilValues,o as getBorderStyle};
+//# sourceMappingURL=theme-helper.js.map

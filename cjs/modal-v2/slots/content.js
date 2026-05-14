@@ -1,0 +1,2 @@
+"use strict";var t=require("../../_virtual/_tslib.js"),e=require("react/jsx-runtime"),a=require("clsx"),s=require("./slot-styles.js");function r(t){return t&&"object"==typeof t&&"default"in t?t:{default:t}}var n=r(a);const i=a=>{var{"data-testid":r="modal-content",children:i,className:l}=a,d=t.__rest(a,["data-testid","children","className"]);return e.jsx("div",Object.assign({"data-testid":r},d,{className:n.default(s.contentContainer,l),children:i}))};i.displayName="ModalV2.Content",exports.Content=i;
+//# sourceMappingURL=content.js.map

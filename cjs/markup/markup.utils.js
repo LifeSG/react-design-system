@@ -1,0 +1,2 @@
+"use strict";var t=require("./markup.style.js");const e={[t.tokens.rootFontFamily]:"font-family",[t.tokens.rootFontVariant]:"font-variant",[t.tokens.rootFontSize]:"font-size",[t.tokens.rootFontWeight]:"font-weight",[t.tokens.rootLineHeight]:"line-height",[t.tokens.rootLetterSpacing]:"letter-spacing"};exports.createMarkupFontStyles=t=>{return o=e,n=t,Object.fromEntries(Object.entries(o).map((([t,e])=>{var o;return[t,null!==(o=null==n?void 0:n[e])&&void 0!==o?o:null]})));var o,n};
+//# sourceMappingURL=markup.utils.js.map

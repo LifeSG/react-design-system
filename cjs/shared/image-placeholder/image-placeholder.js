@@ -1,0 +1,2 @@
+"use strict";var e=require("react/jsx-runtime"),r=require("@lifesg/react-icons"),a=require("clsx"),l=require("./image-placeholder.styles.js");function s(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}var c=s(a);exports.ImagePlaceholder=({className:a})=>e.jsx("div",{className:c.default(l.placeholder,a),children:e.jsx(r.PlaceholderImageIcon,{})});
+//# sourceMappingURL=image-placeholder.js.map
