@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
+import { Colour, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
-import { V3_Colour, V3_Radius, V3_Spacing } from "../../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -41,25 +41,25 @@ export const NavItem = styled.li<NavItemStyleProps>`
         top: 0;
         background-color: ${(props) =>
             props.$isSelected
-                ? V3_Colour["bg-primary"]
-                : V3_Colour["bg-primary-subtler"]};
+                ? Colour["bg-primary"]
+                : Colour["bg-primary-subtler"]};
         transition: all 250ms linear;
     }
 
     &:hover,
     &:focus-within {
-        background-color: ${V3_Colour["bg-hover-subtle"]};
+        background-color: ${Colour["bg-hover-subtle"]};
     }
 `;
 
 export const NavItemContent = styled.div`
     display: block;
-    padding: ${V3_Spacing["spacing-16"]};
-    padding-left: ${V3_Spacing["spacing-20"]};
+    padding: ${Spacing["spacing-16"]};
+    padding-left: ${Spacing["spacing-20"]};
 
     &:focus-visible {
-        outline: 2px solid ${V3_Colour["focus-ring"]};
+        outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 2px;
-        border-radius: ${V3_Radius["sm"]};
+        border-radius: ${Radius["sm"]};
     }
 `;

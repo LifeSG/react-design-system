@@ -2,14 +2,7 @@ import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { TickIcon } from "@lifesg/react-icons/tick";
 import styled, { css } from "styled-components";
 
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_Motion,
-    V3_Radius,
-    V3_Spacing,
-} from "../../v3_theme";
+import { Border, Colour, Font, Motion, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACES, transient props are denoted with $
@@ -44,36 +37,35 @@ interface NavLabelStyleProps extends DropdownExpandedProps {}
 // -----------------------------------------------------------------------------
 
 export const NavSelectIcon = styled(ChevronDownIcon)<NavIconStyleProps>`
-    color: ${V3_Colour["icon"]};
-    transition: transform ${V3_Motion["duration-250"]}
-        ${V3_Motion["ease-default"]};
+    color: ${Colour["icon"]};
+    transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
     transform: rotate(${(props) => (props.$isDropdownExpanded ? 180 : 0)}deg);
 `;
 
 export const NavSelect = styled.div<NavLabelStyleProps>`
     cursor: pointer;
-    background: ${V3_Colour["bg"]};
-    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-16"]};
+    background: ${Colour["bg"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     overflow: hidden;
-    box-shadow: 0 0 ${V3_Border["width-010"]} ${V3_Border["width-010"]}
-        ${V3_Colour["border"]};
-    border-radius: ${V3_Radius["sm"]};
+    box-shadow: 0 0 ${Border["width-010"]} ${Border["width-010"]}
+        ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
     ${(props) =>
         props.$isDropdownExpanded &&
         css`
-            border-bottom-left-radius: ${V3_Radius["none"]};
-            border-bottom-right-radius: ${V3_Radius["none"]};
+            border-bottom-left-radius: ${Radius["none"]};
+            border-bottom-right-radius: ${Radius["none"]};
         `}
     display: flex;
     justify-content: space-between;
     align-items: center;
-    transition: all ${V3_Motion["duration-250"]} ${V3_Motion["ease-default"]};
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     transition-property: background, border-radius, box-shadow, transform;
 
     &:focus-visible {
-        outline: 2px solid ${V3_Colour["focus-ring"]};
+        outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 2px;
-        border-radius: ${V3_Radius["sm"]};
+        border-radius: ${Radius["sm"]};
     }
 `;
 
@@ -85,15 +77,15 @@ export const NavItem = styled.li<NavItemStyleProps>`
     padding: ${(props) =>
         props.$isSelected
             ? css`
-                  ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-8"]} 
-                  ${V3_Spacing["spacing-12"]} 0
+                  ${Spacing["spacing-12"]} ${Spacing["spacing-8"]} 
+                  ${Spacing["spacing-12"]} 0
               `
             : css`
-                  ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-8"]}
-                  ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-32"]}
+                  ${Spacing["spacing-12"]} ${Spacing["spacing-8"]}
+                  ${Spacing["spacing-12"]} ${Spacing["spacing-32"]}
               `};
     background: ${(props) =>
-        props.$isSelected ? V3_Colour["bg-primary-subtlest"] : V3_Colour["bg"]};
+        props.$isSelected ? Colour["bg-primary-subtlest"] : Colour["bg"]};
     /* Ensures that the tick mark is positioned relative to the selected item */
     position: relative;
     display: flex;
@@ -101,24 +93,24 @@ export const NavItem = styled.li<NavItemStyleProps>`
     align-items: center;
 
     &:focus-visible {
-        outline: 2px solid ${V3_Colour["focus-ring"]};
+        outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 0px;
-        border-radius: ${V3_Radius["sm"]};
+        border-radius: ${Radius["sm"]};
     }
 `;
 
 export const NavItemList = styled.ul<NavItemListStyleProps>`
-    transition: all ${V3_Motion["duration-250"]} ${V3_Motion["ease-default"]};
+    transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     transform-origin: top;
     list-style-type: none;
-    padding: 0 ${V3_Spacing["spacing-8"]};
+    padding: 0 ${Spacing["spacing-8"]};
     margin: 0;
-    background: ${V3_Colour["bg"]};
+    background: ${Colour["bg"]};
     cursor: pointer;
-    box-shadow: 0 0 ${V3_Border["width-010"]} ${V3_Border["width-010"]}
-        ${V3_Colour["border"]};
-    border-bottom-right-radius: ${V3_Radius["sm"]};
-    border-bottom-left-radius: ${V3_Radius["sm"]};
+    box-shadow: 0 0 ${Border["width-010"]} ${Border["width-010"]}
+        ${Colour["border"]};
+    border-bottom-right-radius: ${Radius["sm"]};
+    border-bottom-left-radius: ${Radius["sm"]};
     /* Enables vertical scrolling */
     overflow-y: auto;
     /* Set a max height for the dropdown list */
@@ -126,14 +118,14 @@ export const NavItemList = styled.ul<NavItemListStyleProps>`
 `;
 
 export const NavItemLabel = styled.div<NavItemStyleProps>`
-    ${V3_Font["body-baseline-regular"]}
+    ${Font["body-baseline-regular"]}
     color: ${(props) =>
-        props.$isSelected ? V3_Colour["text-selected"] : V3_Colour["text"]};
+        props.$isSelected ? Colour["text-selected"] : Colour["text"]};
 `;
 
 export const StyledTickIcon = styled(TickIcon)`
-    color: ${V3_Colour["icon-selected"]};
-    margin: 0 ${V3_Spacing["spacing-8"]};
+    color: ${Colour["icon-selected"]};
+    margin: 0 ${Spacing["spacing-8"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -146,7 +138,7 @@ export const Backdrop = styled.div`
     right: 0;
     left: 0;
     bottom: 0;
-    background-color: ${V3_Colour["overlay-strong"]};
+    background-color: ${Colour["overlay-strong"]};
     z-index: -1;
 `;
 
@@ -162,17 +154,15 @@ export const NavWrapper = styled.nav<DropdownNavStyleProps>`
         css`
             ${NavSelect} {
                 ${$sideMargin && `margin: 0 -${$sideMargin}px;`}
-                padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing[
-                    "spacing-16"
-                ]};
-                border-radius: ${V3_Radius["none"]};
+                padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+                border-radius: ${Radius["none"]};
             }
 
             ${NavItemList} {
                 ${$sideMargin && `margin-left: -${$sideMargin}px;`}
                 ${$sideMargin && `margin-right: -${$sideMargin}px;`}
-                border-radius-bottom-left: ${V3_Radius.sm};
-                border-radius-bottom-right: ${V3_Radius.sm};
+                border-radius-bottom-left: ${Radius.sm};
+                border-radius-bottom-right: ${Radius.sm};
             }
         `}
 `;
