@@ -9,6 +9,12 @@ import {
     Shadow,
 } from "../theme";
 
+export const tokens = {
+    nav: {
+        height: "--fds-internal-navbar-nav-height",
+    },
+};
+
 export const wrapper = css`
     background-color: ${ComponentToken.Navbar["colour-bg"]};
     z-index: 30;
@@ -42,30 +48,18 @@ export const nav = css`
     align-items: center;
     position: relative;
     transition: ${Motion["duration-350"]} ${Motion["ease-standard"]};
-`;
 
-export const navCompressed = css`
-    height: ${ComponentToken.Navbar["compressed-height"]};
-`;
+    ${tokens.nav.height}: initial;
+    height: var(${tokens.nav.height});
 
-export const navFull = css`
-    height: ${ComponentToken.Navbar["full-height"]};
-`;
-
-export const navDarkCompressed = css`
-    height: calc(${ComponentToken.Navbar["compressed-height"]} - 1px);
-`;
-
-export const navDarkFull = css`
-    height: calc(${ComponentToken.Navbar["full-height"]} - 1px);
-`;
-
-export const navResponsive = css`
     ${MediaQuery.MaxWidth.lg} {
         height: ${ComponentToken.Navbar["mobile-height"]};
     }
 `;
-export const navDarkResponsive = css`
+
+export const navDark = css`
+    height: calc(var(${tokens.nav.height}) - 1px);
+
     ${MediaQuery.MaxWidth.lg} {
         height: calc(${ComponentToken.Navbar["mobile-height"]} - 1px);
     }

@@ -16,7 +16,13 @@ import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
 import { ClickableIcon } from "../shared/clickable-icon";
 import type { ThemeType } from "../theme";
-import { Breakpoint, parsePxOrRemValue, useDesignToken } from "../theme";
+import {
+    Breakpoint,
+    ComponentToken,
+    parsePxOrRemValue,
+    useApplyStyle,
+    useDesignToken,
+} from "../theme";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
 import * as styles from "./navbar.styles";
@@ -69,6 +75,7 @@ const Component = <T,>(
     const mobileMenuRef = useRef<HTMLButtonElement>(null);
     const isStretch = layout === "stretch";
     const elementRef = useRef<HTMLDivElement>(null);
+    const navRef = useRef<HTMLElement>(null);
     const theme = useContext(ThemeContext);
     const defaultResource = getDefaultResourceLogo(
         theme?.resourceScheme as ThemeType | undefined
@@ -78,6 +85,12 @@ const Component = <T,>(
 
     const primary = resources?.primary || defaultResource.primary;
     const secondary = resources?.secondary;
+
+    useApplyStyle(navRef, {
+        [styles.tokens.nav.height]: compress
+            ? ComponentToken.Navbar["compressed-height"]
+            : ComponentToken.Navbar["full-height"],
+    });
 
     useImperativeHandle(
         ref,
@@ -321,18 +334,10 @@ const Component = <T,>(
         return (
             <Layout.Content stretch={isStretch}>
                 <nav
+                    ref={navRef}
                     className={clsx(
                         styles.nav,
-                        theme?.colourMode === "dark"
-                            ? compress
-                                ? styles.navDarkCompressed
-                                : styles.navDarkFull
-                            : compress
-                            ? styles.navCompressed
-                            : styles.navFull,
-                        theme?.colourMode === "dark"
-                            ? styles.navDarkResponsive
-                            : styles.navResponsive
+                        theme?.colourMode === "dark" && styles.navDark
                     )}
                     aria-label={headerLabel}
                 >
