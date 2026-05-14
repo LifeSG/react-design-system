@@ -1,5 +1,9 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    waitForAnimationEnd,
+} from "../../utils";
 import { fixedTimestamp, modes } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
@@ -104,12 +108,7 @@ test.describe("LinkList", () => {
 
                         await test.step("Expanded state after clicking 'View more' button", async () => {
                             await story.locators.internal.viewMoreButton.click();
-
-                            // TODO: common util
-                            const element =
-                                await story.locators.list.elementHandle();
-                            await element?.waitForElementState("stable");
-                            await element?.dispose();
+                            await waitForAnimationEnd(story.locators.list);
 
                             await compareScreenshot(story, "expanded");
                         });
@@ -208,11 +207,7 @@ test.describe("LinkList", () => {
                         await story.page.clock.runFor(1000);
                         await story.page.clock.resume();
 
-                        // TODO: common util
-                        const element =
-                            await story.locators.list.elementHandle();
-                        await element?.waitForElementState("stable");
-                        await element?.dispose();
+                        await waitForAnimationEnd(story.locators.list);
 
                         await expect(
                             story.locators.internal.viewMoreButton
