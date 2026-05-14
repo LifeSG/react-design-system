@@ -76,13 +76,9 @@ export const navElementsContainer = css`
 `;
 
 export const navElementsContainerWithBranding = css`
-    ${MediaQuery.MinWidth.xl} {
-        margin-left: 5rem;
-    }
-`;
+    margin-left: 5rem;
 
-export const navElementsContainerWithoutBranding = css`
-    ${MediaQuery.MinWidth.xl} {
+    ${MediaQuery.MaxWidth.lg} {
         margin-left: 0;
     }
 `;
