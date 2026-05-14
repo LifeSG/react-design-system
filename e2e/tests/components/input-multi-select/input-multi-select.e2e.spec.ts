@@ -20,7 +20,6 @@ class StoryPage extends AbstractStoryPage {
             readonly: Locator;
             disabled: Locator;
             error: Locator;
-            customLabel: Locator;
         };
         standalone: {
             default: Locator;
@@ -40,6 +39,7 @@ class StoryPage extends AbstractStoryPage {
             withCustomSearchPlaceholder: Locator;
         };
         multiSelect: Locator;
+        customLabel: Locator;
     };
 
     constructor(page: Page) {
@@ -68,7 +68,6 @@ class StoryPage extends AbstractStoryPage {
                 readonly: page.getByTestId("form-readonly-base"),
                 disabled: page.getByTestId("form-disabled-base"),
                 error: page.getByTestId("form-error-base"),
-                customLabel: page.getByTestId("form-custom-label-base"),
             },
             smallVariants: {
                 default: page.getByTestId("small-default"),
@@ -87,6 +86,7 @@ class StoryPage extends AbstractStoryPage {
                 ),
             },
             multiSelect: page.getByTestId("multi-select"),
+            customLabel: page.getByTestId("form-custom-label-base"),
         };
     }
 
@@ -225,29 +225,6 @@ test.describe("InputMultiSelect", () => {
             await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
                 - combobox "Disabled" [disabled]: Disabled multi select
             `);
-        });
-
-        test("Custom labels", async ({ story }) => {
-            await story.openDropdown(story.locators.form.customLabel);
-
-            await compareScreenshot(story, "multi-selected-clear-all", {
-                fullscreen: true,
-            });
-            await story.page
-                .getByRole("button", { name: "Custom clear all" })
-                .click();
-
-            await compareScreenshot(story, "select-all", {
-                fullscreen: true,
-            });
-
-            await story.page
-                .getByRole("button", { name: "Custom select all" })
-                .click();
-
-            await compareScreenshot(story, "all-selected", {
-                fullscreen: true,
-            });
         });
     });
 
@@ -698,6 +675,35 @@ test.describe("InputMultiSelect", () => {
 
             await story.openDropdown(story.locators.smallVariants.withSearch);
             await compareScreenshot(story, "open-with-search", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-labels");
+        });
+
+        test("Custom labels", async ({ story }) => {
+            await story.openDropdown(story.locators.customLabel);
+
+            await compareScreenshot(story, "multi-selected-clear-all", {
+                fullscreen: true,
+            });
+            await story.page
+                .getByRole("button", { name: "Custom clear all" })
+                .click();
+
+            await compareScreenshot(story, "select-all", {
+                fullscreen: true,
+            });
+
+            await story.page
+                .getByRole("button", { name: "Custom select all" })
+                .click();
+
+            await compareScreenshot(story, "all-selected", {
                 fullscreen: true,
             });
         });
