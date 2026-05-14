@@ -1,19 +1,18 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour, Radius, Spacing } from "../../theme";
-import { Typography } from "../../typography";
 
-export const Nav = styled.ul`
+export const nav = css`
     list-style-type: none;
     padding: 0;
     margin-top: 0;
 `;
 
-export const TextLabel = styled(Typography.BodyBL)`
+export const textLabel = css`
     margin: 0;
 `;
 
-export const NavItem = styled.li`
+export const navItem = css`
     display: block;
     position: relative;
     margin: 0;
@@ -31,17 +30,19 @@ export const NavItem = styled.li`
         transition: all 250ms linear;
     }
 
-    &.navItemSelected::before {
-        background-color: ${Colour["bg-primary"]};
-    }
-
     &:hover,
     &:focus-within {
         background-color: ${Colour["bg-hover-subtle"]};
     }
 `;
 
-export const NavItemContent = styled.div`
+export const navItemSelected = css`
+    &::before {
+        background-color: ${Colour["bg-primary"]};
+    }
+`;
+
+export const navItemContent = css`
     display: block;
     padding: ${Spacing["spacing-16"]};
     padding-left: ${Spacing["spacing-20"]};

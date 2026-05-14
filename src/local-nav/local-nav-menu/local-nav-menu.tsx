@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React from "react";
 
+import { Typography } from "../../typography";
 import type { LocalNavMenuItemComponentProps } from "../internal-types";
 import type { LocalNavMenuProps } from "../types";
 import * as styles from "./local-nav-menu.styles";
@@ -63,19 +64,26 @@ const Component = (
                 return renderItem(item, { selected: isSelected });
             }
             return (
-                <styles.TextLabel weight={isSelected ? "semibold" : "regular"}>
+                <Typography.BodyBL
+                    className={styles.textLabel}
+                    weight={isSelected ? "semibold" : "regular"}
+                >
                     {title}
-                </styles.TextLabel>
+                </Typography.BodyBL>
             );
         };
 
         return (
-            <styles.NavItem
+            <li
                 id={id}
                 key={index}
-                className={clsx(isSelected && "navItemSelected")}
+                className={clsx(
+                    styles.navItem,
+                    isSelected && styles.navItemSelected
+                )}
             >
-                <styles.NavItemContent
+                <div
+                    className={styles.navItemContent}
                     role="link"
                     onClick={handleClick}
                     onKeyDown={(e) => handleNavItemKeyDown(e, handleClick)}
@@ -83,15 +91,15 @@ const Component = (
                     aria-current={isSelected ? true : undefined}
                 >
                     {renderTitle()}
-                </styles.NavItemContent>
-            </styles.NavItem>
+                </div>
+            </li>
         );
     };
     return (
-        <styles.Nav
+        <ul
             ref={ref}
             id={id}
-            className={className}
+            className={clsx(styles.nav, className)}
             data-testid={localNavMenuId}
         >
             {items.map((item, i) => {
@@ -104,7 +112,7 @@ const Component = (
                     index: i,
                 });
             })}
-        </styles.Nav>
+        </ul>
     );
 };
 
