@@ -1,5 +1,7 @@
+import clsx from "clsx";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
 
+import { useApplyStyle } from "../../theme";
 import { Typography } from "../../typography";
 import { useId } from "../../util";
 import type { LocalNavDropdownItemComponentProps } from "../internal-types";
@@ -26,6 +28,7 @@ const Component = (
     const detectStickyRef = useRef<HTMLSpanElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navWrapperRef = useRef<HTMLElement>(null);
+    const navItemListRef = useRef<HTMLUListElement>(null);
     const listItemRefs = useRef<(HTMLLIElement | null)[]>([]);
     const [isStickied, setIsStickied] = useState<boolean>(false);
     const [isDropdownExpanded, setIsDropdownExpanded] =
@@ -38,6 +41,17 @@ const Component = (
     const dropdownListId = useId();
 
     useImperativeHandle(ref, () => navWrapperRef.current!);
+
+    useApplyStyle(navWrapperRef, {
+        [styles.tokens.navWrapper.stickyOffset]: `${stickyOffset}px`,
+        [styles.tokens.navWrapper.sideMargin]: `${dynamicMargin}px`,
+    });
+
+    useApplyStyle(navItemListRef, {
+        [styles.tokens.navItemList.viewportHeight]: `${
+            viewportHeight - dropdowntHeight - stickyOffset
+        }px`,
+    });
 
     const labelText =
         typeof selectedItemIndex === "number" &&
@@ -296,7 +310,7 @@ const Component = (
                 id={id}
                 key={index}
                 role="menuitem"
-                $isSelected={isSelected && isStickied}
+                className={clsx(isSelected && isStickied && "navItemSelected")}
                 onClick={handleClick}
                 onKeyDown={(e) => handleNavItemKeyDown(e, handleClick)}
                 aria-current={isSelected ? true : undefined}
@@ -306,7 +320,9 @@ const Component = (
                 }}
             >
                 {isSelected && <styles.StyledTickIcon />}
-                <styles.NavItemLabel $isSelected={isSelected}>
+                <styles.NavItemLabel
+                    className={clsx(isSelected && "navItemLabelSelected")}
+                >
                     {title}
                 </styles.NavItemLabel>
             </styles.NavItem>
@@ -317,13 +333,10 @@ const Component = (
         <>
             <span ref={detectStickyRef} data-testid={"sticky-ref"} />
             <styles.NavWrapper
-                $isStickied={isStickied}
-                $sideMargin={dynamicMargin}
-                $stickyOffset={stickyOffset}
                 ref={navWrapperRef}
                 id={id}
                 data-testid={navTestId}
-                className={className}
+                className={clsx(isStickied && "navWrapperStickied", className)}
             >
                 <styles.NavSelect
                     ref={dropdownRef}
@@ -331,7 +344,7 @@ const Component = (
                     onClick={handleToggleDropdown}
                     onKeyDown={handleNavSelectKeyDown}
                     data-testid={`${navTestId}-label`}
-                    $isDropdownExpanded={isDropdownExpanded}
+                    className={clsx(isDropdownExpanded && "navSelectExpanded")}
                     aria-haspopup="true"
                     aria-expanded={isDropdownExpanded}
                     aria-controls={dropdownListId}
@@ -341,18 +354,18 @@ const Component = (
                         {labelText}
                     </Typography.BodyBL>
                     <styles.NavSelectIcon
-                        $isDropdownExpanded={isDropdownExpanded}
+                        className={clsx(
+                            isDropdownExpanded && "navSelectIconExpanded"
+                        )}
                     />
                 </styles.NavSelect>
                 {isDropdownExpanded && (
                     <styles.NavItemList
+                        ref={navItemListRef}
                         id={dropdownListId}
                         role="menu"
                         onKeyDown={handleNavItemListKeyDown}
                         data-testid={`${navTestId}-dropdown-list`}
-                        $viewportHeight={
-                            viewportHeight - dropdowntHeight - stickyOffset
-                        }
                     >
                         {items.map((item, i) =>
                             renderDropdownNavItem({

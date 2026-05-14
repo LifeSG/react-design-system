@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import React from "react";
 
 import type { LocalNavMenuItemComponentProps } from "../internal-types";
@@ -69,7 +70,11 @@ const Component = (
         };
 
         return (
-            <styles.NavItem id={id} key={index} $isSelected={isSelected}>
+            <styles.NavItem
+                id={id}
+                key={index}
+                className={clsx(isSelected && "navItemSelected")}
+            >
                 <styles.NavItemContent
                     role="link"
                     onClick={handleClick}

@@ -1,48 +1,35 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { TickIcon } from "@lifesg/react-icons/tick";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Border, Colour, Font, Motion, Radius, Spacing } from "../../theme";
 
-// =============================================================================
-// STYLE INTERFACES, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface DropdownNavStyleProps {
-    $isStickied?: boolean;
-    $stickyOffset: number;
-    $sideMargin?: number;
-}
-
-interface NavItemListStyleProps {
-    $viewportHeight?: number;
-}
-
-interface NavItemStyleProps {
-    $isSelected?: boolean;
-}
-interface DropdownExpandedProps {
-    $isDropdownExpanded: boolean;
-}
-
-interface NavIconStyleProps extends DropdownExpandedProps {}
-interface NavLabelStyleProps extends DropdownExpandedProps {}
-
-// =============================================================================
-// STYLING
-// =============================================================================
+export const tokens = {
+    navWrapper: {
+        stickyOffset: "--fds-internal-localNavDropdown-navWrapper-stickyOffset",
+        sideMargin: "--fds-internal-localNavDropdown-navWrapper-sideMargin",
+    },
+    navItemList: {
+        viewportHeight:
+            "--fds-internal-localNavDropdown-navItemList-viewportHeight",
+    },
+};
 
 // -----------------------------------------------------------------------------
 // NAV SELECT
 // -----------------------------------------------------------------------------
 
-export const NavSelectIcon = styled(ChevronDownIcon)<NavIconStyleProps>`
+export const NavSelectIcon = styled(ChevronDownIcon)`
     color: ${Colour["icon"]};
     transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
-    transform: rotate(${(props) => (props.$isDropdownExpanded ? 180 : 0)}deg);
+    transform: rotate(0deg);
+
+    &.navSelectIconExpanded {
+        transform: rotate(180deg);
+    }
 `;
 
-export const NavSelect = styled.div<NavLabelStyleProps>`
+export const NavSelect = styled.div`
     cursor: pointer;
     background: ${Colour["bg"]};
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
@@ -50,17 +37,16 @@ export const NavSelect = styled.div<NavLabelStyleProps>`
     box-shadow: 0 0 ${Border["width-010"]} ${Border["width-010"]}
         ${Colour["border"]};
     border-radius: ${Radius["sm"]};
-    ${(props) =>
-        props.$isDropdownExpanded &&
-        css`
-            border-bottom-left-radius: ${Radius["none"]};
-            border-bottom-right-radius: ${Radius["none"]};
-        `}
     display: flex;
     justify-content: space-between;
     align-items: center;
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     transition-property: background, border-radius, box-shadow, transform;
+
+    &.navSelectExpanded {
+        border-bottom-left-radius: ${Radius["none"]};
+        border-bottom-right-radius: ${Radius["none"]};
+    }
 
     &:focus-visible {
         outline: 2px solid ${Colour["focus-ring"]};
@@ -73,24 +59,21 @@ export const NavSelect = styled.div<NavLabelStyleProps>`
 // NAV ITEMS
 // -----------------------------------------------------------------------------
 
-export const NavItem = styled.li<NavItemStyleProps>`
-    padding: ${(props) =>
-        props.$isSelected
-            ? css`
-                  ${Spacing["spacing-12"]} ${Spacing["spacing-8"]} 
-                  ${Spacing["spacing-12"]} 0
-              `
-            : css`
-                  ${Spacing["spacing-12"]} ${Spacing["spacing-8"]}
-                  ${Spacing["spacing-12"]} ${Spacing["spacing-32"]}
-              `};
-    background: ${(props) =>
-        props.$isSelected ? Colour["bg-primary-subtlest"] : Colour["bg"]};
+export const NavItem = styled.li`
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]}
+        ${Spacing["spacing-12"]} ${Spacing["spacing-32"]};
+    background: ${Colour["bg"]};
     /* Ensures that the tick mark is positioned relative to the selected item */
     position: relative;
     display: flex;
     /* Vertically align text and tick */
     align-items: center;
+
+    &.navItemSelected {
+        padding: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]}
+            ${Spacing["spacing-12"]} 0;
+        background: ${Colour["bg-primary-subtlest"]};
+    }
 
     &:focus-visible {
         outline: 2px solid ${Colour["focus-ring"]};
@@ -99,7 +82,8 @@ export const NavItem = styled.li<NavItemStyleProps>`
     }
 `;
 
-export const NavItemList = styled.ul<NavItemListStyleProps>`
+export const NavItemList = styled.ul`
+    ${tokens.navItemList.viewportHeight}: initial;
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     transform-origin: top;
     list-style-type: none;
@@ -114,13 +98,16 @@ export const NavItemList = styled.ul<NavItemListStyleProps>`
     /* Enables vertical scrolling */
     overflow-y: auto;
     /* Set a max height for the dropdown list */
-    max-height: ${(props) => props.$viewportHeight}px;
+    max-height: var(${tokens.navItemList.viewportHeight});
 `;
 
-export const NavItemLabel = styled.div<NavItemStyleProps>`
+export const NavItemLabel = styled.div`
     ${Font["body-baseline-regular"]}
-    color: ${(props) =>
-        props.$isSelected ? Colour["text-selected"] : Colour["text"]};
+    color: ${Colour["text"]};
+
+    &.navItemLabelSelected {
+        color: ${Colour["text-selected"]};
+    }
 `;
 
 export const StyledTickIcon = styled(TickIcon)`
@@ -142,27 +129,27 @@ export const Backdrop = styled.div`
     z-index: -1;
 `;
 
-export const NavWrapper = styled.nav<DropdownNavStyleProps>`
+export const NavWrapper = styled.nav`
+    ${tokens.navWrapper.stickyOffset}: initial;
+    ${tokens.navWrapper.sideMargin}: initial;
     display: block;
     position: sticky;
-    top: ${(props) => props.$stickyOffset}px;
+    top: var(${tokens.navWrapper.stickyOffset});
     width: 100%;
     z-index: 10;
 
-    ${({ $isStickied, $sideMargin }) =>
-        $isStickied &&
-        css`
-            ${NavSelect} {
-                ${$sideMargin && `margin: 0 -${$sideMargin}px;`}
-                padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
-                border-radius: ${Radius["none"]};
-            }
+    &.navWrapperStickied {
+        ${NavSelect} {
+            margin: 0 calc(-1 * var(${tokens.navWrapper.sideMargin}, 0px));
+            padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+            border-radius: ${Radius["none"]};
+        }
 
-            ${NavItemList} {
-                ${$sideMargin && `margin-left: -${$sideMargin}px;`}
-                ${$sideMargin && `margin-right: -${$sideMargin}px;`}
-                border-radius-bottom-left: ${Radius.sm};
-                border-radius-bottom-right: ${Radius.sm};
-            }
-        `}
+        ${NavItemList} {
+            margin-left: calc(-1 * var(${tokens.navWrapper.sideMargin}, 0px));
+            margin-right: calc(-1 * var(${tokens.navWrapper.sideMargin}, 0px));
+            border-radius-bottom-left: ${Radius.sm};
+            border-radius-bottom-right: ${Radius.sm};
+        }
+    }
 `;
