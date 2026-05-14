@@ -3,8 +3,6 @@
 import { Alert } from "@lifesg/react-design-system/alert";
 import { Button } from "@lifesg/react-design-system/button";
 import { UneditableSection } from "@lifesg/react-design-system/uneditable-section";
-import { UneditableItemSection } from "@lifesg/react-design-system/uneditable-section/item-section";
-import { UneditableSectionItem } from "@lifesg/react-design-system/uneditable-section/section-item";
 import styles from "./full-custom-sections.module.css";
 
 export default function Story() {
@@ -24,25 +22,25 @@ export default function Story() {
                     tristique. Aenean sed malesuada arcu. Integer convallis
                     dapibus suscipit.
                 </p>
-                <UneditableItemSection>
-                    <UneditableSectionItem
+                <UneditableSection.ItemSection>
+                    <UneditableSection.Item
                         displayWidth="half"
                         label="Name (as in NRIC or passport)"
                         value="Tom Tan Li Ho"
                     />
-                    <UneditableSectionItem
+                    <UneditableSection.Item
                         displayWidth="half"
                         label="NRIC or FIN"
                         value="S••••534J"
                     />
-                    <UneditableSectionItem
+                    <UneditableSection.Item
                         label="Residential Address"
                         value="Block 287, #05-11, Tampines street 22, Singapore 534788"
                     />
-                </UneditableItemSection>
+                </UneditableSection.ItemSection>
                 <h3 className={styles["custom-style-2"]}>Another section</h3>
-                <UneditableItemSection>
-                    <UneditableSectionItem
+                <UneditableSection.ItemSection>
+                    <UneditableSection.Item
                         label="Custom content list"
                         value={
                             <ul>
@@ -52,7 +50,7 @@ export default function Story() {
                             </ul>
                         }
                     />
-                </UneditableItemSection>
+                </UneditableSection.ItemSection>
             </div>
         </UneditableSection>
     );

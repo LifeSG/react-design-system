@@ -1,37 +1,11 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
+import { test as base, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "uneditable-section";
 
-    public readonly locators: {
-        uneditableSection: Locator;
-        title: Locator;
-        description: Locator;
-        items: Locator;
-        spinner: Locator;
-        loadingLabel: Locator;
-        errorLabel: Locator;
-        tryAgainButton: Locator;
-        topSection: Locator;
-        bottomSection: Locator;
-    };
-
     constructor(page: Page) {
         super(page);
-
-        this.locators = {
-            uneditableSection: page.getByTestId("uneditable-section"),
-            title: page.getByRole("heading", { level: 2 }),
-            description: page.locator("p").first(),
-            items: page.locator("li"),
-            spinner: page.locator('svg[data-testid="spinner"]'),
-            loadingLabel: page.getByText("Retrieving..."),
-            errorLabel: page.getByText("Error"),
-            tryAgainButton: page.getByRole("button", { name: /Try again/i }),
-            topSection: page.locator('[data-id="top-section"]'),
-            bottomSection: page.locator('[data-id="bottom-section"]'),
-        };
     }
 }
 
