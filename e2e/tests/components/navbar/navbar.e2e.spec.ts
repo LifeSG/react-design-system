@@ -5,17 +5,6 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "navbar";
 
     public readonly locators: {
-        default: Locator;
-        compressed: Locator;
-        stretch: Locator;
-        noMasthead: Locator;
-        hideBranding: Locator;
-        hideLinkIndicator: Locator;
-        secondaryBrand: Locator;
-        multipleActionButtons: Locator;
-        singleActionButton: Locator;
-        withAvatar: Locator;
-        submenu: Locator;
         internal: {
             mobileMenuButton: Locator;
             servicesTrigger: Locator;
@@ -27,19 +16,6 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            default: page.getByTestId("navbar-default"),
-            compressed: page.getByTestId("navbar-compressed"),
-            stretch: page.getByTestId("navbar-stretch"),
-            noMasthead: page.getByTestId("navbar-no-masthead"),
-            hideBranding: page.getByTestId("navbar-hide-branding"),
-            hideLinkIndicator: page.getByTestId("navbar-hide-link-indicator"),
-            secondaryBrand: page.getByTestId("navbar-secondary-brand"),
-            multipleActionButtons: page.getByTestId(
-                "navbar-multiple-action-buttons"
-            ),
-            singleActionButton: page.getByTestId("navbar-single-action-button"),
-            withAvatar: page.getByTestId("navbar-with-avatar"),
-            submenu: page.getByTestId("navbar-submenu"),
             internal: {
                 mobileMenuButton: page.getByTestId("button__mobile-menu"),
                 servicesTrigger: page.getByRole("button", { name: "Services" }),
@@ -169,7 +145,7 @@ test.describe("Navbar", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("with-avatar");
+            await story.init("custom-action-button");
         });
 
         test("With avatar", async ({ story }) => {
@@ -241,7 +217,7 @@ test.describe("Navbar", () => {
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("with-avatar", { size: "mobile" });
+                await story.init("custom-action-button", { size: "mobile" });
             });
 
             test("With avatar", async ({ story }) => {
