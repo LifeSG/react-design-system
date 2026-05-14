@@ -264,12 +264,12 @@ test.describe("Filter", () => {
             });
 
             test("Accessibility", async ({ story }) => {
-                await expect(story.locators.pageWrapper)
-                    .toMatchAriaSnapshot(`- button "Dismiss":
-                    - img
+                await expect(story.locators.pageWrapper).toMatchAriaSnapshot(`
+                    - button "Dismiss":
+                        - img
                     - paragraph: Custom filter page content
                     - button "Done"
-                    `);
+                `);
             });
         });
     });
