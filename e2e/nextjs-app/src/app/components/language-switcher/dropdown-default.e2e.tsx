@@ -14,7 +14,6 @@ export default function Story() {
             <LanguageSwitcher
                 data-testid="language-switcher"
                 variant="dropdown"
-                selectedLanguage={language}
                 onSelectLanguage={setLanguage}
             />
         </div>
