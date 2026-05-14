@@ -311,7 +311,14 @@ test.describe("DataTable", () => {
 
                 await firstRowCheckbox.click();
 
-                await story.page.keyboard.press("PageDown");
+                await story.scrollWithWheelUntil({
+                    scrollTarget: story.layout,
+                    until: async () => {
+                        return await story.page.evaluate(
+                            () => window.scrollY > 0
+                        );
+                    },
+                });
 
                 await compareScreenshot(story, "state", {
                     locator: story.locators.dataTable,
@@ -323,7 +330,17 @@ test.describe("DataTable", () => {
 
                 await firstRowCheckbox.click();
 
-                await story.page.keyboard.press("End");
+                await story.scrollWithWheelUntil({
+                    scrollTarget: story.layout,
+                    until: async () => {
+                        return await story.page.evaluate(
+                            () =>
+                                window.scrollY + window.innerHeight >=
+                                document.documentElement.scrollHeight
+                        );
+                    },
+                    maxAttempts: 30,
+                });
 
                 await compareScreenshot(story, "state", {
                     locator: story.locators.dataTable,
