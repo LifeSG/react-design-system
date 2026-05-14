@@ -7,13 +7,16 @@ import {
 import { useState } from "react";
 
 export default function Story() {
-    const [language, setLanguage] = useState<LanguageSwitcherCode>("en");
+    const [language, setLanguage] = useState<LanguageSwitcherCode | undefined>(
+        undefined
+    );
 
     return (
         <div className="story-row-container">
             <LanguageSwitcher
                 data-testid="language-switcher"
                 variant="link-container"
+                selectedLanguage={language}
                 onSelectLanguage={setLanguage}
             />
         </div>

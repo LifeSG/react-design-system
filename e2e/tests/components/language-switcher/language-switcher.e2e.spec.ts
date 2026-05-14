@@ -93,6 +93,11 @@ test.describe("LanguageSwitcher", () => {
                 await expect(story.locators.internal.trigger).toContainText(
                     "中文"
                 );
+
+                await story.page.keyboard.press("Enter");
+                await expect(story.locators.internal.panel).toBeVisible();
+                await story.page.keyboard.press("Escape");
+                await expect(story.locators.internal.panel).not.toBeVisible();
             });
         });
 
