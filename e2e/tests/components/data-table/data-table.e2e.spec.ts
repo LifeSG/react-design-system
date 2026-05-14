@@ -98,15 +98,15 @@ test.describe("DataTable", () => {
 
             await compareScreenshot(story, "mount");
         });
+    });
 
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("default", { mode: "dark" });
-            });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { mode: "dark" });
+        });
 
-            test("Default Dark Mode", async ({ story }) => {
-                await compareScreenshot(story, "mount");
-            });
+        test("Default Dark Mode", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -119,16 +119,16 @@ test.describe("DataTable", () => {
             await expect(story.locators.internal.emptyView).toBeVisible();
             await compareScreenshot(story, "mount");
         });
+    });
 
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("empty", { mode: "dark" });
-            });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("empty", { mode: "dark" });
+        });
 
-            test("Empty State Dark Mode", async ({ story }) => {
-                await expect(story.locators.internal.emptyView).toBeVisible();
-                await compareScreenshot(story, "mount");
-            });
+        test("Empty State Dark Mode", async ({ story }) => {
+            await expect(story.locators.internal.emptyView).toBeVisible();
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -140,15 +140,15 @@ test.describe("DataTable", () => {
         test("Alternating Rows", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
+    });
 
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("alternating-rows", { mode: "dark" });
-            });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("alternating-rows", { mode: "dark" });
+        });
 
-            test("Alternating Rows Dark Mode", async ({ story }) => {
-                await compareScreenshot(story, "mount");
-            });
+        test("Alternating Rows Dark Mode", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 
@@ -267,7 +267,7 @@ test.describe("DataTable", () => {
         });
     });
 
-    test.describe("ActionBar", () => {
+    test.describe("Action Bar", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("action-bar");
         });
@@ -299,6 +299,36 @@ test.describe("DataTable", () => {
             await expect(
                 story.locators.internal.selectedCountLabel
             ).not.toBeVisible();
+        });
+
+        test.describe("Overflow with Long Items", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("action-bar-overflow-with-long-items");
+            });
+
+            test("Floating", async ({ story }) => {
+                const firstRowCheckbox = story.getRowCheckbox("1");
+
+                await firstRowCheckbox.click();
+
+                await story.page.keyboard.press("PageDown");
+
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.dataTable,
+                });
+            });
+
+            test("Docking", async ({ story }) => {
+                const firstRowCheckbox = story.getRowCheckbox("1");
+
+                await firstRowCheckbox.click();
+
+                await story.page.keyboard.press("End");
+
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.dataTable,
+                });
+            });
         });
 
         test.describe("", () => {
@@ -333,36 +363,6 @@ test.describe("DataTable", () => {
                 await expect(
                     story.locators.internal.selectedCountLabel
                 ).not.toBeVisible();
-            });
-        });
-
-        test.describe("Overflow with Long Items", () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("action-bar-overflow-with-long-items");
-            });
-
-            test("Floating", async ({ story }) => {
-                const firstRowCheckbox = story.getRowCheckbox("1");
-
-                await firstRowCheckbox.click();
-
-                await story.page.keyboard.press("PageDown");
-
-                await compareScreenshot(story, "state", {
-                    locator: story.locators.dataTable,
-                });
-            });
-
-            test("Docking", async ({ story }) => {
-                const firstRowCheckbox = story.getRowCheckbox("1");
-
-                await firstRowCheckbox.click();
-
-                await story.page.keyboard.press("End");
-
-                await compareScreenshot(story, "state", {
-                    locator: story.locators.dataTable,
-                });
             });
         });
 
