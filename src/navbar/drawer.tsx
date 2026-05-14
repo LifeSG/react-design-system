@@ -110,8 +110,8 @@ const Component = (
                         <div
                             className={clsx(
                                 navbarStyles.navSeparator,
-                                navbarStyles.navSeparatorResponsive,
-                                navbarStyles.navSeparatorCompressed
+                                navbarStyles.navSeparatorCompressed,
+                                navbarStyles.navSeparatorResponsive
                             )}
                         />
                         <Brand
@@ -133,8 +133,8 @@ const Component = (
             <div
                 className={clsx(
                     navbarStyles.navBrandContainer,
-                    navbarStyles.navBrandContainerResponsive,
-                    navbarStyles.navBrandContainerCompressed
+                    navbarStyles.navBrandContainerCompressed,
+                    navbarStyles.navBrandContainerResponsive
                 )}
                 data-id="drawer-brand-container"
             >

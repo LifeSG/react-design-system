@@ -254,10 +254,10 @@ const Component = <T,>(
         <div
             className={clsx(
                 styles.navBrandContainer,
-                styles.navBrandContainerResponsive,
                 compress
                     ? styles.navBrandContainerCompressed
-                    : styles.navBrandContainerFull
+                    : styles.navBrandContainerFull,
+                styles.navBrandContainerResponsive
             )}
             data-id="brand-container"
         >
@@ -275,10 +275,10 @@ const Component = <T,>(
                     <div
                         className={clsx(
                             styles.navSeparator,
-                            styles.navSeparatorResponsive,
                             compress
                                 ? styles.navSeparatorCompressed
-                                : styles.navSeparatorFull
+                                : styles.navSeparatorFull,
+                            styles.navSeparatorResponsive
                         )}
                     />
                     <Brand
@@ -324,15 +324,15 @@ const Component = <T,>(
                     className={clsx(
                         styles.nav,
                         theme?.colourMode === "dark"
-                            ? styles.navDarkResponsive
-                            : styles.navResponsive,
-                        theme?.colourMode === "dark"
                             ? compress
                                 ? styles.navDarkCompressed
                                 : styles.navDarkFull
                             : compress
                             ? styles.navCompressed
-                            : styles.navFull
+                            : styles.navFull,
+                        theme?.colourMode === "dark"
+                            ? styles.navDarkResponsive
+                            : styles.navResponsive
                     )}
                     aria-label={headerLabel}
                 >
