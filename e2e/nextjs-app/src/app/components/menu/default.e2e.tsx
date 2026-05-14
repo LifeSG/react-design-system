@@ -45,10 +45,6 @@ export default function Story() {
                     </Button>
                 </Menu>
             </div>
-
-            <Button data-testid="outside-dismiss-target">
-                Outside dismiss target
-            </Button>
         </div>
     );
 }

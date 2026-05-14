@@ -31,15 +31,12 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "menu";
 
     public readonly locators: {
-        triggerDefault: Locator;
+        trigger: Locator;
         content: Locator;
-        outsideTarget: Locator;
-        itemProfile: Locator;
         linkFirst: Locator;
         linkSecond: Locator;
         linkThird: Locator;
         linkLong: Locator;
-        contentOverflow: Locator;
         triggerForPlacement: (position: PlacementExpectation) => Locator;
         contentForPlacement: (position: PlacementExpectation) => Locator;
     };
@@ -48,19 +45,14 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            triggerDefault: page.getByRole("button", { name: "Open menu" }),
+            trigger: page.getByRole("button", { name: "Open menu" }),
             content: page.getByTestId("menu-content"),
-            outsideTarget: page.getByTestId("outside-dismiss-target"),
-            itemProfile: page.getByRole("listitem").filter({
-                hasText: "Jane Doe",
-            }),
             linkFirst: page.getByRole("link", { name: "First link" }),
             linkSecond: page.getByRole("link", { name: "Second link" }),
             linkThird: page.getByRole("link", { name: "Third link" }),
             linkLong: page.getByRole("link", {
                 name: "This is a long menu link title that should clamp across lines when the menu has limited width",
             }),
-            contentOverflow: page.getByTestId("menu-content-overflow"),
             triggerForPlacement: (position: PlacementExpectation) => {
                 return page.getByRole("button", {
                     name: placementButtonNames[position],
@@ -90,7 +82,7 @@ test.describe("Menu", () => {
         });
 
         test("Mount", async ({ story }) => {
-            await story.locators.triggerDefault.click();
+            await story.locators.trigger.click();
             await expect(story.locators.content).toBeVisible();
 
             await compareScreenshot(story, "state", {
@@ -121,12 +113,12 @@ test.describe("Menu", () => {
                       - /url: "#long-link"
             `);
 
-            await story.locators.outsideTarget.click();
+            await story.page.mouse.click(200, 0);
             await expect(story.locators.content).not.toBeVisible();
         });
 
         test("Keyboard navigation", async ({ story }) => {
-            await story.locators.triggerDefault.click();
+            await story.locators.trigger.click();
             await expect(story.locators.content).toBeVisible();
 
             await story.locators.linkFirst.focus();
@@ -144,6 +136,24 @@ test.describe("Menu", () => {
             await story.page.keyboard.press("ArrowDown");
             await expect(story.locators.linkFirst).toBeFocused();
         });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default", { size: "mobile" });
+            });
+
+            test("Mobile", async ({ story }) => {
+                await story.locators.trigger.click();
+                await expect(story.locators.content).toBeVisible();
+
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
+
+                await story.page.mouse.click(200, 0);
+                await expect(story.locators.content).not.toBeVisible();
+            });
+        });
     });
 
     test.describe(() => {
@@ -157,29 +167,31 @@ test.describe("Menu", () => {
     });
 
     test.describe("Variants", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants");
-        });
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("variants");
+            });
 
-        test("Section and item", async ({ story }) => {
-            await expect(story.locators.content).toBeVisible();
+            test("Section and Item", async ({ story }) => {
+                await expect(story.locators.content).toBeVisible();
 
-            await compareScreenshot(story, "state", {
-                locator: story.locators.content,
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.content,
+                });
             });
         });
-    });
 
-    test.describe("Variants", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants", { mode: "dark" });
-        });
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("variants", { mode: "dark" });
+            });
 
-        test("Section and item with Dark Mode", async ({ story }) => {
-            await expect(story.locators.content).toBeVisible();
+            test("Section and Item Dark Mode", async ({ story }) => {
+                await expect(story.locators.content).toBeVisible();
 
-            await compareScreenshot(story, "state", {
-                locator: story.locators.content,
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.content,
+                });
             });
         });
     });
@@ -197,7 +209,7 @@ test.describe("Menu", () => {
                 await trigger.click();
                 await expect(content).toBeVisible();
 
-                await compareScreenshot(story, `placement-${placement}`, {
+                await compareScreenshot(story, "state", {
                     fullscreen: true,
                 });
             });
