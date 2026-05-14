@@ -1,7 +1,7 @@
 "use client";
 
 import { Navbar } from "@lifesg/react-design-system/navbar";
-import { ASSETS, navItems, downloadActionButtons } from "./common";
+import { navItems, downloadActionButtons } from "./common";
 
 export default function Story() {
     return (
@@ -10,8 +10,8 @@ export default function Story() {
             selectedId="guides"
             resources={{
                 secondary: {
-                    brandName: "Support Go Where",
-                    logoSrc: ASSETS.LOGO_BOOKINGSG,
+                    brandName: "BookingSG",
+                    logoSrc: "https://www.booking.gov.sg/logo.svg",
                 },
             }}
             items={{ desktop: navItems }}

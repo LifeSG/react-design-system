@@ -12,23 +12,18 @@ export const navItems: NavItemProps<undefined>[] = [
     {
         id: "guides",
         children: "Guides",
-        href: "https://www.life.gov.sg/guides",
+        href: "https://www.life.gov.sg",
     },
     {
         id: "lifesg-app",
         children: "LifeSG app",
-        href: "https://apps.apple.com/sg/app/lifesg/id1383218758",
+        href: "https://www.life.gov.sg",
     },
 ];
 
 export const downloadActionButtons: NavbarButtonProps[] = [
     { type: "download" },
 ];
-
-export const ASSETS = {
-    LOGO_LIFESG: "https://assets.life.gov.sg/lifesg/logo-lifesg.svg",
-    LOGO_BOOKINGSG: "https://www.booking.gov.sg/logo.svg",
-};
 
 export const navItemsWithSubmenu: NavItemProps<undefined>[] = [
     {
@@ -44,23 +39,23 @@ export const navItemsWithSubmenu: NavItemProps<undefined>[] = [
             {
                 id: "services-getting-started",
                 children: "Birth registration",
-                href: "https://www.life.gov.sg/services-tools/birth-registration",
+                href: "https://www.life.gov.sg",
             },
             {
                 id: "services-baby-bonus",
                 children: "Baby bonus",
-                href: "https://www.life.gov.sg/services-tools/baby-bonus",
+                href: "https://www.life.gov.sg",
             },
             {
                 id: "services-preschool-search",
                 children: "Preschool search",
-                href: "https://www.life.gov.sg/services-tools/preschool-search",
+                href: "https://www.life.gov.sg",
             },
         ],
     },
     {
         id: "lifesg-app",
         children: "LifeSG app",
-        href: "https://apps.apple.com/sg/app/lifesg/id1383218758",
+        href: "https://www.life.gov.sg",
     },
 ];
