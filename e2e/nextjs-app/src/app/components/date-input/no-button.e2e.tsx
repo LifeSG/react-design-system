@@ -13,6 +13,7 @@ export default function Story() {
                 data-testid="date-input"
                 value={selectedDate}
                 onChange={setSelectedDate}
+                withButton={false}
             />
             <p
                 data-testid="selected-value"

@@ -13,6 +13,8 @@ export default function Story() {
                 data-testid="date-input"
                 value={selectedDate}
                 onChange={setSelectedDate}
+                minDate="2026-04-05"
+                maxDate="2026-04-20"
             />
             <p
                 data-testid="selected-value"

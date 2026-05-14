@@ -13,6 +13,7 @@ export default function Story() {
                 data-testid="date-input"
                 value={selectedDate}
                 onChange={setSelectedDate}
+                disabledDates={["2026-04-10", "2026-04-15"]}
             />
             <p
                 data-testid="selected-value"
