@@ -3,7 +3,7 @@ import React from "react";
 import type { ErrorDisplayType } from "src";
 import { ErrorDisplay, V3_BookingSGTheme, V3_LifeSGTheme } from "src";
 import { getErrorDisplayData } from "src/error-display/error-display-data";
-import { Breakpoint, ThemeProvider as V4ThemeProvider } from "src/theme";
+import { ThemeProvider as V4ThemeProvider } from "src/theme";
 import { ThemeProvider as StyledThemeProvider } from "styled-components";
 
 // =============================================================================
@@ -17,12 +17,7 @@ describe("ErrorDisplay", () => {
     it("should render the component", () => {
         renderErrorDisplay(<ErrorDisplay type="404" />);
 
-        const title = getErrorDisplayData(
-            "404",
-            "lifesg",
-            MOBILE_BREAKPOINT,
-            TABLET_BREAKPOINT
-        )!.title;
+        const title = getErrorDisplayData("404", "lifesg")!.title;
         expect(
             screen.getByRole("heading", { level: 2, name: title })
         ).toBeInTheDocument();
@@ -118,12 +113,7 @@ describe("ErrorDisplay", () => {
             (type: ErrorDisplayType) => {
                 renderErrorDisplay(<ErrorDisplay type={type} />);
 
-                const error = getErrorDisplayData(
-                    type,
-                    "lifesg",
-                    MOBILE_BREAKPOINT,
-                    TABLET_BREAKPOINT
-                )!;
+                const error = getErrorDisplayData(type, "lifesg")!;
                 const imgPaths = error.img!;
 
                 expect(
@@ -135,7 +125,7 @@ describe("ErrorDisplay", () => {
                 expect(img).toHaveAttribute("srcset", imgPaths.srcSet);
                 expect(img).toHaveAttribute(
                     "sizes",
-                    `(max-width: ${Breakpoint["sm-max"]}) 400px, (max-width: ${Breakpoint["lg-max"]}) 800px, 1200px`
+                    `(max-width: ${MOBILE_BREAKPOINT}) 400px, (max-width: ${TABLET_BREAKPOINT}) 800px, 1200px`
                 );
 
                 expect(
@@ -152,12 +142,7 @@ describe("ErrorDisplay", () => {
                     v4Theme: "bookingsg",
                 });
 
-                const error = getErrorDisplayData(
-                    type,
-                    "bookingsg",
-                    MOBILE_BREAKPOINT,
-                    TABLET_BREAKPOINT
-                )!;
+                const error = getErrorDisplayData(type, "bookingsg")!;
 
                 expect(
                     screen.getByRole("heading", {
@@ -191,12 +176,7 @@ describe("ErrorDisplay", () => {
                 { styledTheme: V3_BookingSGTheme, v4Theme: "bookingsg" }
             );
 
-            const error = getErrorDisplayData(
-                "400",
-                "lifesg",
-                MOBILE_BREAKPOINT,
-                TABLET_BREAKPOINT
-            )!;
+            const error = getErrorDisplayData("400", "lifesg")!;
 
             expect(
                 screen.getByRole("heading", {
@@ -233,12 +213,7 @@ describe("ErrorDisplay", () => {
                 <ErrorDisplay type={type} additionalProps={additionalProps} />
             );
 
-            const error = getErrorDisplayData(
-                type,
-                "lifesg",
-                MOBILE_BREAKPOINT,
-                TABLET_BREAKPOINT
-            )!;
+            const error = getErrorDisplayData(type, "lifesg")!;
             const errorDescription = transformJSXElementToString(
                 error.renderDescription!(additionalProps) as JSX.Element
             );
@@ -302,8 +277,8 @@ describe("ErrorDisplay", () => {
 const CUSTOM_TITLE = "custom error";
 const CUSTOM_DESCRIPTION = "custom description";
 const ERROR_DESCRIPTION_TEST_ID = "error-display--description";
-const MOBILE_BREAKPOINT = Breakpoint["sm-max"];
-const TABLET_BREAKPOINT = Breakpoint["lg-max"];
+const MOBILE_BREAKPOINT = "480px";
+const TABLET_BREAKPOINT = "1200px";
 
 // =============================================================================
 // HELPER FUNCTIONS

@@ -9,15 +9,10 @@ import {
  * These typically have complex state initialization or rely on browser APIs.
  */
 const CSR_ONLY_COMPONENTS = new Set([
-    "badge",
     "date-range-input",
     "date-input",
-    "select",
-    "input-multi-select",
-    "input-select",
     "nested-select",
     "nested-multi-select",
-    "input-group",
 ]);
 
 export default async function Page({

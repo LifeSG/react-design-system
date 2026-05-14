@@ -38,26 +38,15 @@ export default function Layout({
             : undefined;
 
     return (
-        <>
-            <link
-                rel="stylesheet"
-                href="https://assets.life.gov.sg/react-design-system/v3/css/main.css"
-            />
-
-            <link
-                rel="stylesheet"
-                href="https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css"
-            />
-            <V3_DSThemeProvider theme={V3_LifeSGTheme}>
-                <ThemeProvider theme={theme}>
-                    <div
-                        data-testid="story-layout"
-                        className={styles["story-layout"]}
-                    >
-                        {children}
-                    </div>
-                </ThemeProvider>
-            </V3_DSThemeProvider>
-        </>
+        <V3_DSThemeProvider theme={V3_LifeSGTheme}>
+            <ThemeProvider theme={theme}>
+                <div
+                    data-testid="story-layout"
+                    className={styles["story-layout"]}
+                >
+                    {children}
+                </div>
+            </ThemeProvider>
+        </V3_DSThemeProvider>
     );
 }
