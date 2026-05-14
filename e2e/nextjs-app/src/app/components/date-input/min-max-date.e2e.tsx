@@ -8,7 +8,7 @@ export default function Story() {
     const [selectedDate, setSelectedDate] = useState<string>("");
 
     return (
-        <div className={`${styles.story} story-background`}>
+        <div className="story-background">
             <DateInput
                 data-testid="date-input"
                 value={selectedDate}
