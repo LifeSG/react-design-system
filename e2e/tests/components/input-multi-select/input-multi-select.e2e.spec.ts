@@ -635,7 +635,8 @@ test.describe("InputMultiSelect", () => {
 
             await story.scrollWithWheelUntil({
                 scrollTarget: story.locators.component.dropdownList,
-                until: async () => story.getOption("Option 100").isVisible(),
+                until: async () =>
+                    story.page.getByText("Option 100").isVisible(),
             });
 
             await expect(story.getOption("Option 1")).not.toBeVisible();
