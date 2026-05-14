@@ -581,6 +581,32 @@ describe("FilterModal", () => {
     });
 });
 
+describe("Filter.Page", () => {
+    it("calls onDismiss when Dismiss button is clicked", () => {
+        const mockOnDismiss = jest.fn();
+        render(
+            <Filter.Page onDismiss={mockOnDismiss}>
+                <div>Content</div>
+            </Filter.Page>
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Dismiss" }));
+        expect(mockOnDismiss).toHaveBeenCalled();
+    });
+
+    it("calls onDone when Done button is clicked", () => {
+        const mockOnDone = jest.fn();
+        render(
+            <Filter.Page onDone={mockOnDone}>
+                <div>Content</div>
+            </Filter.Page>
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Done" }));
+        expect(mockOnDone).toHaveBeenCalled();
+    });
+});
+
 // =============================================================================
 // CONSTANTS
 // =============================================================================

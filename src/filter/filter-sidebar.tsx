@@ -1,13 +1,10 @@
+import clsx from "clsx";
 import { useRef } from "react";
 
-import { FilterBody } from "./filter.styles";
+import { Button } from "../button";
+import * as filterStyles from "./filter.styles";
 import { FilterContext } from "./filter-context";
-import {
-    DesktopContainer,
-    FilterClearButton,
-    FilterHeader,
-    FilterTitle,
-} from "./filter-sidebar.styles";
+import * as styles from "./filter-sidebar.styles";
 import type { FilterSidebarProps } from "./types";
 
 export const FilterSidebar = ({
@@ -16,6 +13,7 @@ export const FilterSidebar = ({
     clearButtonDisabled = false,
     children,
     headerTitle: _headerTitle,
+    className,
     ...otherProps
 }: FilterSidebarProps) => {
     const nodeRef = useRef<HTMLDivElement>(null);
@@ -27,26 +25,29 @@ export const FilterSidebar = ({
 
     return (
         <FilterContext.Provider value={{ mode: "default", rootNode: nodeRef }}>
-            <DesktopContainer
+            <div
                 data-id="filter-desktop"
                 data-testid="filter-desktop"
                 ref={nodeRef}
+                className={clsx(styles.desktopContainer, className)}
                 {...otherProps}
             >
-                <FilterHeader>
-                    <FilterTitle>{labels.title}</FilterTitle>
-                    <FilterClearButton
+                <div className={styles.filterHeader}>
+                    <h2 className={styles.filterTitle}>{labels.title}</h2>
+                    <Button
+                        className={styles.filterClearButton}
                         styleType="link"
                         type="button"
+                        sizeType="small"
                         onClick={() => onClear?.()}
                         disabled={clearButtonDisabled}
                         aria-label={`clear ${labels.title}`}
                     >
                         {labels.clear}
-                    </FilterClearButton>
-                </FilterHeader>
-                <FilterBody>{children}</FilterBody>
-            </DesktopContainer>
+                    </Button>
+                </div>
+                <div className={filterStyles.filterBody}>{children}</div>
+            </div>
         </FilterContext.Provider>
     );
 };

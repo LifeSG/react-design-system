@@ -1,13 +1,13 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { V3_Colour } from "../v3_theme";
+import { Colour } from "../theme";
 
 // =============================================================================
 // FILTER ITEM PAGE STYLES
 // =============================================================================
 
-export const FilterItemPageContainer = styled.div`
-    background-color: ${V3_Colour["bg"]};
+export const filterItemPageContainer = css`
+    background-color: ${Colour["bg"]};
     height: 100%;
     width: 100%;
     display: flex;
