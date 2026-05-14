@@ -109,6 +109,7 @@ test.describe("LinkList", () => {
                         await test.step("Expanded state after clicking 'View more' button", async () => {
                             await story.locators.internal.viewMoreButton.click();
                             await waitForAnimationEnd(story.locators.list);
+                            await story.page.mouse.move(0, 0); // move mouse away to avoid hover state on list
 
                             await compareScreenshot(story, "expanded");
                         });
@@ -208,6 +209,7 @@ test.describe("LinkList", () => {
                         await story.page.clock.resume();
 
                         await waitForAnimationEnd(story.locators.list);
+                        await story.page.mouse.move(0, 0); // move mouse away to avoid hover state on list
 
                         await expect(
                             story.locators.internal.viewMoreButton
