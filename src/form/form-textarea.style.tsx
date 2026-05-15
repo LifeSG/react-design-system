@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Spacing } from "../theme";
+import { Font, Spacing } from "../theme";
 import { ErrorMessage } from "./form-label.style";
 
 export const LabelContainer = styled.div`
@@ -9,6 +9,7 @@ export const LabelContainer = styled.div`
 `;
 
 export const ErrorMessageContainer = styled.div`
+    ${Font["body-sm-semibold"]}
     display: flex;
     flex: 1;
     margin-right: ${Spacing["spacing-12"]};
