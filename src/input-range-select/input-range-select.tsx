@@ -19,7 +19,7 @@ import {
     ClearIconContainer,
     RangeSelectorButton,
     StyledInputWrapper,
-} from "./input-range-select.style";
+} from "./input-range-select.styles";
 import type { InputRangeSelectProps } from "./types";
 
 type RangeType = "from" | "to";
