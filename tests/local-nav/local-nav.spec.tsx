@@ -78,6 +78,40 @@ describe("LocalNav", () => {
 
             expect(screen.getByText("Custom: Section 1")).toBeInTheDocument();
         });
+
+        it("should handle keyboard navigation and selection", async () => {
+            const user = userEvent.setup();
+            const mockOnSelect = jest.fn();
+
+            render(
+                <LocalNavMenu
+                    items={MOCK_ITEMS}
+                    onNavItemSelect={mockOnSelect}
+                />
+            );
+
+            const items = screen.getAllByRole("link");
+
+            await user.keyboard("{Tab}");
+            expect(items[0]).toHaveFocus();
+
+            await user.keyboard("{Escape}");
+            expect(items[0]).toHaveFocus();
+
+            await user.keyboard("{Tab}");
+            expect(items[1]).toHaveFocus();
+
+            await user.keyboard("{Shift>}{Tab}{/Shift}");
+            expect(items[0]).toHaveFocus();
+
+            for (let i = 0; i < items.length; i++) {
+                await user.keyboard("{Tab}");
+            }
+
+            items.forEach((item) => {
+                expect(item).not.toHaveFocus();
+            });
+        });
     });
 
     describe("LocalNavDropdown", () => {
@@ -254,6 +288,13 @@ describe("LocalNav", () => {
             await user.keyboard(" ");
 
             expect(screen.getByRole("menu")).toBeInTheDocument();
+
+            await user.keyboard("{Escape}");
+            expect(screen.queryByRole("menu")).not.toBeInTheDocument();
+
+            await user.keyboard("{ArrowDown}");
+            expect(screen.getByRole("menu")).toBeInTheDocument();
+
             expect(
                 screen.getByRole("menuitem", { name: "Section 1" })
             ).toHaveFocus();

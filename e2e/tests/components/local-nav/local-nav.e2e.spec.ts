@@ -59,43 +59,6 @@ test.describe("Local nav", () => {
                         - link "Title 4"
             `);
         });
-
-        test("Keyboard navigation", async ({ story }) => {
-            const items = ["Title 1", "Title 2", "Title 3", "Title 4"].map(
-                (name) => story.locators.menu.getByRole("link", { name })
-            );
-
-            await test.step("First item receives focus", async () => {
-                await items[0].focus();
-                await expect(items[0]).toBeFocused();
-            });
-
-            await test.step("Tab cycles through all items in order", async () => {
-                for (let i = 1; i < items.length; i++) {
-                    await story.page.keyboard.press("Tab");
-                    await expect(items[i]).toBeFocused();
-                }
-            });
-
-            await test.step("Shift+Tab moves focus backwards", async () => {
-                for (let i = items.length - 2; i >= 0; i--) {
-                    await story.page.keyboard.press("Shift+Tab");
-                    await expect(items[i]).toBeFocused();
-                }
-            });
-
-            await test.step("Enter selects the focused item", async () => {
-                await items[2].focus();
-                await story.page.keyboard.press("Enter");
-                await expect(items[2]).toHaveAttribute("aria-current", "true");
-            });
-
-            await test.step("Space selects the focused item", async () => {
-                await items[0].focus();
-                await story.page.keyboard.press(" ");
-                await expect(items[0]).toHaveAttribute("aria-current", "true");
-            });
-        });
     });
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
@@ -144,60 +107,6 @@ test.describe("Local nav", () => {
                     - menuitem "Title 3"
                     - menuitem "Title 4"
             `);
-        });
-
-        test("Keyboard navigation", async ({ story }) => {
-            const openDropdownWithKeyboard = async () => {
-                await story.page.locator("body").click();
-                await story.page.keyboard.press("Tab");
-                await story.locators.dropdownLabel.press("ArrowDown");
-            };
-
-            await test.step("ArrowDown opens dropdown and focuses first item", async () => {
-                await openDropdownWithKeyboard();
-                await expect(story.locators.dropdownList).toBeVisible();
-                await expect(
-                    story.locators.dropdownList.getByRole("menuitem").nth(0)
-                ).toBeFocused();
-            });
-
-            await test.step("ArrowDown moves focus to next item", async () => {
-                await story.page.keyboard.press("ArrowDown");
-                await expect(
-                    story.locators.dropdownList.getByRole("menuitem").nth(1)
-                ).toBeFocused();
-                // move from last to first
-                await story.page.keyboard.press("ArrowDown");
-                await story.page.keyboard.press("ArrowDown");
-                await story.page.keyboard.press("ArrowDown");
-                await expect(
-                    story.locators.dropdownList.getByRole("menuitem").nth(0)
-                ).toBeFocused();
-            });
-
-            await test.step("ArrowUp jumps to last item from first", async () => {
-                await story.page.keyboard.press("ArrowUp");
-                await expect(
-                    story.locators.dropdownList.getByRole("menuitem").last()
-                ).toBeFocused();
-            });
-
-            await test.step("Enter selects focused item and closes dropdown", async () => {
-                await story.page.keyboard.press("Enter");
-                await expect(story.locators.dropdownList).not.toBeVisible();
-            });
-
-            await test.step("Space selects focused item and closes dropdown", async () => {
-                await openDropdownWithKeyboard();
-                await story.page.keyboard.press("Space");
-                await expect(story.locators.dropdownList).not.toBeVisible();
-            });
-
-            await test.step("Escape closes dropdown", async () => {
-                await openDropdownWithKeyboard();
-                await story.page.keyboard.press("Escape");
-                await expect(story.locators.dropdownList).not.toBeVisible();
-            });
         });
 
         test("Sticky on scroll", async ({ story }) => {
