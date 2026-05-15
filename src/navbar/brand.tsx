@@ -44,25 +44,23 @@ export const Brand = ({
             : `Go to ${resources.brandName}`
         : resources.brandName;
 
-    return isClickable ? (
-        <a
-            data-id={dataId}
-            data-testid={testId}
-            data-type={type}
-            className={styles.container}
-            role="link"
-            tabIndex={0}
-            onClick={handleClick}
-        >
-            <ImageWithFallback src={resources.logoSrc} alt={logoLabel} />
-        </a>
-    ) : (
-        <div
-            data-id={dataId}
-            data-testid={testId}
-            data-type={type}
-            className={styles.container}
-        >
+    if (isClickable) {
+        return (
+            <a
+                data-id={dataId}
+                data-testid={testId}
+                className={styles.container}
+                role="link"
+                tabIndex={0}
+                onClick={handleClick}
+            >
+                <ImageWithFallback src={resources.logoSrc} alt={logoLabel} />
+            </a>
+        );
+    }
+
+    return (
+        <div data-id={dataId} data-testid={testId} className={styles.container}>
             <ImageWithFallback src={resources.logoSrc} alt={logoLabel} />
         </div>
     );
