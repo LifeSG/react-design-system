@@ -1,19 +1,16 @@
+import clsx from "clsx";
 import type React from "react";
 import { useRef } from "react";
 
 import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
 import type { VariantInternalProps } from "./internal-types";
-import {
-    LinkContainerWrapper,
-    LinkItem,
-    LinkList,
-    LinkListItem,
-} from "./link-container-variant.style";
+import * as styles from "./link-container-variant.styles";
 
 export const LinkContainerVariant = ({
     selectedLanguage,
     onSelectLanguage,
     testId,
+    className,
     ...otherProps
 }: VariantInternalProps): JSX.Element => {
     // =========================================================================
@@ -58,19 +55,30 @@ export const LinkContainerVariant = ({
     // RENDER
     // =========================================================================
     return (
-        <LinkContainerWrapper data-testid={testId} {...otherProps}>
-            <LinkList role="group" aria-label={ARIA_LABEL}>
+        <div
+            className={clsx(styles.linkContainerWrapper, className)}
+            data-testid={testId}
+            {...otherProps}
+        >
+            <ul
+                className={styles.linkList}
+                role="group"
+                aria-label={ARIA_LABEL}
+            >
                 {LANGUAGE_CODES.map((code, index) => {
                     const isActive = code === selectedLanguage;
                     return (
-                        <LinkListItem key={code}>
-                            <LinkItem
+                        <li className={styles.linkListItem} key={code}>
+                            <button
                                 ref={(el) => {
                                     itemRefs.current[index] = el;
                                 }}
                                 type="button"
                                 lang={code}
-                                $active={isActive}
+                                className={clsx(
+                                    styles.linkItem,
+                                    isActive && styles.linkItemActive
+                                )}
                                 aria-pressed={isActive}
                                 tabIndex={isActive ? 0 : -1}
                                 onClick={() => onSelectLanguage(code)}
@@ -78,11 +86,11 @@ export const LinkContainerVariant = ({
                                 data-testid={`${testId}--item-${code}`}
                             >
                                 {LANGUAGE_DISPLAY_MAP[code]}
-                            </LinkItem>
-                        </LinkListItem>
+                            </button>
+                        </li>
                     );
                 })}
-            </LinkList>
-        </LinkContainerWrapper>
+            </ul>
+        </div>
     );
 };
