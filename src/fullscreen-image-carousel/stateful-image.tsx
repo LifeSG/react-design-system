@@ -1,12 +1,9 @@
 import type React from "react";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { LoadingDots } from "../animations";
-import {
-    DefaultPlaceholder,
-    ImageBox,
-    ImageWrapper,
-} from "./stateful-image.styles";
+import { useApplyStyle } from "../theme";
+import * as styles from "./stateful-image.styles";
 
 export interface StatefulImageProps {
     src: string;
@@ -37,6 +34,11 @@ export const StatefulImage = ({
 }: StatefulImageProps) => {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState<Event | string>();
+    const imageRef = useRef<HTMLImageElement>(null);
+
+    useApplyStyle(imageRef, {
+        [styles.tokens.imageBox.fit]: fit,
+    });
 
     useEffect(() => {
         setLoading(true);
@@ -63,15 +65,19 @@ export const StatefulImage = ({
 
     const renderContent = () => {
         if (error) {
-            return placeholder ?? <DefaultPlaceholder />;
+            return placeholder ?? <styles.DefaultPlaceholder />;
         }
 
         if (loading) {
             return <LoadingDots />;
         }
 
-        return <ImageBox src={src} alt={alt} $fit={fit} />;
+        return <styles.ImageBox ref={imageRef} src={src} alt={alt} />;
     };
 
-    return <ImageWrapper className={className}>{renderContent()}</ImageWrapper>;
+    return (
+        <styles.ImageWrapper className={className}>
+            {renderContent()}
+        </styles.ImageWrapper>
+    );
 };

@@ -1,8 +1,7 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
-import type { InsetStyleProps } from "../shared/types";
 import {
     Border,
     Colour,
@@ -16,23 +15,28 @@ import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 
 // =============================================================================
-// STYLE INTERFACES
+// CSS VARIABLE TOKENS
 // =============================================================================
-interface ArrowButtonStyleProps extends InsetStyleProps {
-    $position: "left" | "right";
-}
-
-interface ThumbnailItemStyleProps {
-    $active?: boolean;
-}
-
-interface TopActionButtonsStyleProps extends InsetStyleProps {
-    $hasFileInfo?: boolean | undefined;
-}
-
-interface FileInfoTextWrapperStyleProps {
-    $centerContent?: boolean | undefined;
-}
+export const tokens = {
+    topActionButtons: {
+        insetTop:
+            "--fds-internal-fullscreenImageCarousel-topActionButtons-insetTop",
+        insetLeft:
+            "--fds-internal-fullscreenImageCarousel-topActionButtons-insetLeft",
+        insetRight:
+            "--fds-internal-fullscreenImageCarousel-topActionButtons-insetRight",
+    },
+    arrowButton: {
+        insetLeft:
+            "--fds-internal-fullscreenImageCarousel-arrowButton-insetLeft",
+        insetRight:
+            "--fds-internal-fullscreenImageCarousel-arrowButton-insetRight",
+    },
+    thumbnailContainer: {
+        insetBottom:
+            "--fds-internal-fullscreenImageCarousel-thumbnailContainer-insetBottom",
+    },
+};
 
 // =============================================================================
 // STYLING
@@ -61,61 +65,74 @@ const IconButton = styled(ClickableIcon)`
     }
 `;
 
-export const TopActionButtons = styled.div<TopActionButtonsStyleProps>`
+export const TopActionButtons = styled.div`
+    ${tokens.topActionButtons.insetTop}: initial;
+    ${tokens.topActionButtons.insetLeft}: initial;
+    ${tokens.topActionButtons.insetRight}: initial;
+
     order: -1;
     display: flex;
     align-items: center;
     justify-content: flex-end;
     gap: ${Spacing["spacing-16"]};
 
-    ${(props) =>
-        props.$hasFileInfo
-            ? css`
-                  flex-shrink: 0;
-                  background-color: ${Colour["bg-inverse"]};
-                  padding-top: calc(
-                      ${Spacing["spacing-24"]} + ${props.$insetTop || 0}px
-                  );
-                  padding-bottom: ${Spacing["spacing-24"]};
-                  padding-left: calc(
-                      ${Spacing["spacing-32"]} + ${props.$insetLeft || 0}px
-                  );
-                  padding-right: calc(
-                      ${Spacing["spacing-32"]} + ${props.$insetRight || 0}px
-                  );
+    &[data-has-file-info="true"] {
+        flex-shrink: 0;
+        background-color: ${Colour["bg-inverse"]};
+        padding-top: calc(
+            ${Spacing["spacing-24"]} +
+                var(${tokens.topActionButtons.insetTop}, 0px)
+        );
+        padding-bottom: ${Spacing["spacing-24"]};
+        padding-left: calc(
+            ${Spacing["spacing-32"]} +
+                var(${tokens.topActionButtons.insetLeft}, 0px)
+        );
+        padding-right: calc(
+            ${Spacing["spacing-32"]} +
+                var(${tokens.topActionButtons.insetRight}, 0px)
+        );
 
-                  ${MediaQuery.MaxWidth.sm} {
-                      padding-top: calc(
-                          ${Spacing["spacing-16"]} + ${props.$insetTop || 0}px
-                      );
-                      padding-bottom: ${Spacing["spacing-16"]};
-                      padding-left: calc(
-                          ${Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
-                      );
-                      padding-right: calc(
-                          ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
-                      );
-                  }
-              `
-            : css`
-                  position: absolute;
-                  top: calc(
-                      ${Spacing["spacing-48"]} + ${props.$insetTop || 0}px
-                  );
-                  right: calc(
-                      ${Spacing["spacing-48"]} + ${props.$insetRight || 0}px
-                  );
-                  z-index: 5;
+        ${MediaQuery.MaxWidth.sm} {
+            padding-top: calc(
+                ${Spacing["spacing-16"]} +
+                    var(${tokens.topActionButtons.insetTop}, 0px)
+            );
+            padding-bottom: ${Spacing["spacing-16"]};
+            padding-left: calc(
+                ${Spacing["spacing-20"]} +
+                    var(${tokens.topActionButtons.insetLeft}, 0px)
+            );
+            padding-right: calc(
+                ${Spacing["spacing-20"]} +
+                    var(${tokens.topActionButtons.insetRight}, 0px)
+            );
+        }
+    }
 
-                  ${MediaQuery.MaxWidth.sm} {
-                      top: calc(
-                          ${Spacing["spacing-20"]} + ${props.$insetTop || 0}px
-                      );
-                      right: calc(
-                          ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
-                      );
-                  }
-              `}
+    &[data-has-file-info="false"] {
+        position: absolute;
+        top: calc(
+            ${Spacing["spacing-48"]} +
+                var(${tokens.topActionButtons.insetTop}, 0px)
+        );
+        right: calc(
+            ${Spacing["spacing-48"]} +
+                var(${tokens.topActionButtons.insetRight}, 0px)
+        );
+        z-index: 5;
+
+        ${MediaQuery.MaxWidth.sm} {
+            top: calc(
+                ${Spacing["spacing-20"]} +
+                    var(${tokens.topActionButtons.insetTop}, 0px)
+            );
+            right: calc(
+                ${Spacing["spacing-20"]} +
+                    var(${tokens.topActionButtons.insetRight}, 0px)
+            );
+        }
+    }
 `;
 
 export const CloseButton = styled(IconButton)``;
@@ -126,35 +143,41 @@ export const DeleteButton = styled(IconButton)`
 
 export const MagnifierButton = styled(IconButton)``;
 
-export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
+export const ArrowButton = styled(IconButton)`
+    ${tokens.arrowButton.insetLeft}: initial;
+    ${tokens.arrowButton.insetRight}: initial;
+
     z-index: 4;
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
 
-    ${(props) =>
-        props.$position === "left" &&
-        css`
-            left: calc(${Spacing["spacing-48"]} + ${props.$insetLeft || 0}px);
+    &.arrowButtonLeft {
+        left: calc(
+            ${Spacing["spacing-48"]} + var(${tokens.arrowButton.insetLeft}, 0px)
+        );
 
-            ${MediaQuery.MaxWidth.sm} {
-                left: calc(
-                    ${Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
-                );
-            }
-        `}
+        ${MediaQuery.MaxWidth.sm} {
+            left: calc(
+                ${Spacing["spacing-20"]} +
+                    var(${tokens.arrowButton.insetLeft}, 0px)
+            );
+        }
+    }
 
-    ${(props) =>
-        props.$position === "right" &&
-        css`
-            right: calc(${Spacing["spacing-48"]} + ${props.$insetRight || 0}px);
+    &.arrowButtonRight {
+        right: calc(
+            ${Spacing["spacing-48"]} +
+                var(${tokens.arrowButton.insetRight}, 0px)
+        );
 
-            ${MediaQuery.MaxWidth.sm} {
-                right: calc(
-                    ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
-                );
-            }
-        `}
+        ${MediaQuery.MaxWidth.sm} {
+            right: calc(
+                ${Spacing["spacing-20"]} +
+                    var(${tokens.arrowButton.insetRight}, 0px)
+            );
+        }
+    }
 `;
 
 export const CarouselModalContent = styled.div`
@@ -275,26 +298,25 @@ export const Chip = styled(Typography.BodyXS)`
 // THUMBNAIL STYLING
 // -----------------------------------------------------------------------------
 
-export const ThumbnailContainer = styled.div<InsetStyleProps>`
+export const ThumbnailContainer = styled.div`
+    ${tokens.thumbnailContainer.insetBottom}: initial;
+
     flex-shrink: 0;
     display: flex;
     overflow: auto;
     background-color: ${Colour["bg-inverse"]};
-    padding: ${(props) =>
-            css`
-                ${Spacing["spacing-24"]} ${Spacing[
-                    "spacing-16"
-                ]} calc(${Spacing["spacing-24"]} + ${props.$insetBottom ||
-                0}px);
-            `}
-        ${MediaQuery.MaxWidth.sm} {
-        padding: ${(props) =>
-            css`
-                ${Spacing["spacing-16"]} ${Spacing[
-                    "spacing-20"
-                ]} calc(${Spacing["spacing-16"]} + ${props.$insetBottom ||
-                0}px);
-            `};
+    padding: ${Spacing["spacing-24"]} ${Spacing["spacing-16"]}
+        calc(
+            ${Spacing["spacing-24"]} +
+                var(${tokens.thumbnailContainer.insetBottom}, 0px)
+        );
+
+    ${MediaQuery.MaxWidth.sm} {
+        padding: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]}
+            calc(
+                ${Spacing["spacing-16"]} +
+                    var(${tokens.thumbnailContainer.insetBottom}, 0px)
+            );
     }
 `;
 
@@ -321,7 +343,7 @@ export const ThumbnailItemContainer = styled.div`
     }
 `;
 
-export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
+export const ThumbnailItem = styled.div`
     cursor: pointer;
     background-color: ${Colour["bg-inverse"]};
     border-radius: ${Radius["md"]};
@@ -341,27 +363,26 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
         width: 60px;
     }
 
-    ${(props) =>
-        props.$active
-            ? css`
-                  border-width: ${Border["width-040"]};
-                  border-color: ${Colour["border-selected"]};
+    &[data-active="true"] {
+        border-width: ${Border["width-040"]};
+        border-color: ${Colour["border-selected"]};
 
-                  ${MediaQuery.MaxWidth.sm} {
-                      border-width: ${Border["width-020"]};
-                  }
+        ${MediaQuery.MaxWidth.sm} {
+            border-width: ${Border["width-020"]};
+        }
 
-                  &:hover {
-                      border-color: ${Colour["border-selected-hover"]};
-                  }
-              `
-            : css`
-                  border-width: ${Border["width-010"]};
+        &:hover {
+            border-color: ${Colour["border-selected-hover"]};
+        }
+    }
 
-                  &:hover {
-                      border-color: ${Colour["border-hover"]};
-                  }
-              `};
+    &[data-active="false"] {
+        border-width: ${Border["width-010"]};
+
+        &:hover {
+            border-color: ${Colour["border-hover"]};
+        }
+    }
 `;
 
 export const ThumbnailImage = styled(StatefulImage)`
@@ -373,7 +394,7 @@ export const ThumbnailImage = styled(StatefulImage)`
 // FILE INFO BAR STYLING
 // -----------------------------------------------------------------------------
 
-export const FileInfoTextWrapper = styled.div<FileInfoTextWrapperStyleProps>`
+export const FileInfoTextWrapper = styled.div`
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -384,11 +405,10 @@ export const FileInfoTextWrapper = styled.div<FileInfoTextWrapperStyleProps>`
         ${Font.Spec["body-lh-baseline"]} + ${Spacing["spacing-8"]} +
             ${Font.Spec["body-lh-md"]}
     );
-    ${(props) =>
-        props.$centerContent &&
-        css`
-            justify-content: center;
-        `}
+
+    &.fileInfoTextWrapperCentered {
+        justify-content: center;
+    }
 `;
 
 export const FileInfoFileName = styled(Typography.BodyBL)`
