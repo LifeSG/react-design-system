@@ -3,16 +3,16 @@ import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { ImagePlaceholder } from "../shared/image-placeholder";
 import type { InsetStyleProps } from "../shared/types";
-import { Typography } from "../typography";
 import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Radius,
-    V3_Shadow,
-    V3_Spacing,
-} from "../v3_theme";
+    Border,
+    Colour,
+    Font,
+    MediaQuery,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../theme";
+import { Typography } from "../typography";
 import { StatefulImage } from "./stateful-image";
 
 // =============================================================================
@@ -40,11 +40,11 @@ interface FileInfoTextWrapperStyleProps {
 const IconButton = styled(ClickableIcon)`
     padding: 0;
     border-radius: 100%;
-    background: ${V3_Colour["bg"]};
-    color: ${V3_Colour["icon-primary"]};
+    background: ${Colour["bg"]};
+    color: ${Colour["icon-primary"]};
     height: 2.5rem;
     width: 2.5rem;
-    box-shadow: ${V3_Shadow["md-strong"]};
+    box-shadow: ${Shadow["md-strong"]};
 
     svg {
         height: 1.5rem;
@@ -56,7 +56,7 @@ const IconButton = styled(ClickableIcon)`
     }
 
     &:focus-visible {
-        outline: ${V3_Border["width-020"]} solid ${V3_Colour["border-selected"]};
+        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
         outline-offset: 2px;
     }
 `;
@@ -66,58 +66,53 @@ export const TopActionButtons = styled.div<TopActionButtonsStyleProps>`
     display: flex;
     align-items: center;
     justify-content: flex-end;
-    gap: ${V3_Spacing["spacing-16"]};
+    gap: ${Spacing["spacing-16"]};
 
     ${(props) =>
         props.$hasFileInfo
             ? css`
                   flex-shrink: 0;
-                  background-color: ${V3_Colour["bg-inverse"]};
+                  background-color: ${Colour["bg-inverse"]};
                   padding-top: calc(
-                      ${V3_Spacing["spacing-24"]} + ${props.$insetTop || 0}px
+                      ${Spacing["spacing-24"]} + ${props.$insetTop || 0}px
                   );
-                  padding-bottom: ${V3_Spacing["spacing-24"]};
+                  padding-bottom: ${Spacing["spacing-24"]};
                   padding-left: calc(
-                      ${V3_Spacing["spacing-32"]} + ${props.$insetLeft || 0}px
+                      ${Spacing["spacing-32"]} + ${props.$insetLeft || 0}px
                   );
                   padding-right: calc(
-                      ${V3_Spacing["spacing-32"]} + ${props.$insetRight || 0}px
+                      ${Spacing["spacing-32"]} + ${props.$insetRight || 0}px
                   );
 
-                  ${V3_MediaQuery.MaxWidth.sm} {
+                  ${MediaQuery.MaxWidth.sm} {
                       padding-top: calc(
-                          ${V3_Spacing["spacing-16"]} +
-                              ${props.$insetTop || 0}px
+                          ${Spacing["spacing-16"]} + ${props.$insetTop || 0}px
                       );
-                      padding-bottom: ${V3_Spacing["spacing-16"]};
+                      padding-bottom: ${Spacing["spacing-16"]};
                       padding-left: calc(
-                          ${V3_Spacing["spacing-20"]} +
-                              ${props.$insetLeft || 0}px
+                          ${Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
                       );
                       padding-right: calc(
-                          ${V3_Spacing["spacing-20"]} +
-                              ${props.$insetRight || 0}px
+                          ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
                       );
                   }
               `
             : css`
                   position: absolute;
                   top: calc(
-                      ${V3_Spacing["spacing-48"]} + ${props.$insetTop || 0}px
+                      ${Spacing["spacing-48"]} + ${props.$insetTop || 0}px
                   );
                   right: calc(
-                      ${V3_Spacing["spacing-48"]} + ${props.$insetRight || 0}px
+                      ${Spacing["spacing-48"]} + ${props.$insetRight || 0}px
                   );
                   z-index: 5;
 
-                  ${V3_MediaQuery.MaxWidth.sm} {
+                  ${MediaQuery.MaxWidth.sm} {
                       top: calc(
-                          ${V3_Spacing["spacing-20"]} +
-                              ${props.$insetTop || 0}px
+                          ${Spacing["spacing-20"]} + ${props.$insetTop || 0}px
                       );
                       right: calc(
-                          ${V3_Spacing["spacing-20"]} +
-                              ${props.$insetRight || 0}px
+                          ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
                       );
                   }
               `}
@@ -126,7 +121,7 @@ export const TopActionButtons = styled.div<TopActionButtonsStyleProps>`
 export const CloseButton = styled(IconButton)``;
 
 export const DeleteButton = styled(IconButton)`
-    color: ${V3_Colour["icon-error"]};
+    color: ${Colour["icon-error"]};
 `;
 
 export const MagnifierButton = styled(IconButton)``;
@@ -140,13 +135,11 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     ${(props) =>
         props.$position === "left" &&
         css`
-            left: calc(
-                ${V3_Spacing["spacing-48"]} + ${props.$insetLeft || 0}px
-            );
+            left: calc(${Spacing["spacing-48"]} + ${props.$insetLeft || 0}px);
 
-            ${V3_MediaQuery.MaxWidth.sm} {
+            ${MediaQuery.MaxWidth.sm} {
                 left: calc(
-                    ${V3_Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
+                    ${Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
                 );
             }
         `}
@@ -154,13 +147,11 @@ export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     ${(props) =>
         props.$position === "right" &&
         css`
-            right: calc(
-                ${V3_Spacing["spacing-48"]} + ${props.$insetRight || 0}px
-            );
+            right: calc(${Spacing["spacing-48"]} + ${props.$insetRight || 0}px);
 
-            ${V3_MediaQuery.MaxWidth.sm} {
+            ${MediaQuery.MaxWidth.sm} {
                 right: calc(
-                    ${V3_Spacing["spacing-20"]} + ${props.$insetRight || 0}px
+                    ${Spacing["spacing-20"]} + ${props.$insetRight || 0}px
                 );
             }
         `}
@@ -238,7 +229,7 @@ export const FocusableImageRegion = styled.div`
     }
 
     &:focus-visible {
-        outline: ${V3_Border["width-020"]} solid ${V3_Colour["border-selected"]};
+        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
         outline-offset: -2px;
     }
 `;
@@ -246,21 +237,21 @@ export const FocusableImageRegion = styled.div`
 export const SlideImage = styled(StatefulImage)`
     height: 100%;
     width: 100%;
-    border-radius: ${V3_Radius["none"]};
+    border-radius: ${Radius["none"]};
 `;
 
 export const SlidePlaceholderImage = styled(ImagePlaceholder)`
     width: 60vw;
     height: auto;
     max-height: 100%;
-    border-radius: ${V3_Radius["none"]};
+    border-radius: ${Radius["none"]};
     aspect-ratio: 4 / 3;
 `;
 
 export const BoxChip = styled.div`
     display: flex;
     justify-content: center;
-    padding: ${V3_Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-16"]};
     position: absolute;
     bottom: 0;
     left: 0;
@@ -272,11 +263,11 @@ export const BoxChip = styled.div`
 
 export const Chip = styled(Typography.BodyXS)`
     display: inline-flex;
-    padding: ${V3_Spacing["spacing-4"]} ${V3_Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-4"]} ${Spacing["spacing-16"]};
     justify-content: center;
     align-items: center;
-    border-radius: ${V3_Radius["full"]};
-    background-color: ${V3_Colour["bg"]};
+    border-radius: ${Radius["full"]};
+    background-color: ${Colour["bg"]};
     text-align: center;
 `;
 
@@ -288,20 +279,20 @@ export const ThumbnailContainer = styled.div<InsetStyleProps>`
     flex-shrink: 0;
     display: flex;
     overflow: auto;
-    background-color: ${V3_Colour["bg-inverse"]};
+    background-color: ${Colour["bg-inverse"]};
     padding: ${(props) =>
             css`
-                ${V3_Spacing["spacing-24"]} ${V3_Spacing[
+                ${Spacing["spacing-24"]} ${Spacing[
                     "spacing-16"
-                ]} calc(${V3_Spacing["spacing-24"]} + ${props.$insetBottom ||
+                ]} calc(${Spacing["spacing-24"]} + ${props.$insetBottom ||
                 0}px);
             `}
-        ${V3_MediaQuery.MaxWidth.sm} {
+        ${MediaQuery.MaxWidth.sm} {
         padding: ${(props) =>
             css`
-                ${V3_Spacing["spacing-16"]} ${V3_Spacing[
+                ${Spacing["spacing-16"]} ${Spacing[
                     "spacing-20"
-                ]} calc(${V3_Spacing["spacing-16"]} + ${props.$insetBottom ||
+                ]} calc(${Spacing["spacing-16"]} + ${props.$insetBottom ||
                 0}px);
             `};
     }
@@ -311,7 +302,7 @@ export const ThumbnailWrapper = styled.div`
     box-sizing: border-box;
     display: flex;
     align-items: center;
-    gap: ${V3_Spacing["spacing-16"]};
+    gap: ${Spacing["spacing-16"]};
     justify-content: center;
     margin-left: auto;
     margin-right: auto;
@@ -324,7 +315,7 @@ export const ThumbnailItemContainer = styled.div`
     height: 100px;
     width: 100px;
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         height: 64px;
         width: 64px;
     }
@@ -332,9 +323,9 @@ export const ThumbnailItemContainer = styled.div`
 
 export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     cursor: pointer;
-    background-color: ${V3_Colour["bg-inverse"]};
-    border-radius: ${V3_Radius["md"]};
-    border: ${V3_Border["solid"]} transparent;
+    background-color: ${Colour["bg-inverse"]};
+    border-radius: ${Radius["md"]};
+    border: ${Border["solid"]} transparent;
     box-sizing: content-box;
 
     flex-shrink: 0;
@@ -345,7 +336,7 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     height: 92px;
     width: 92px;
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         height: 60px;
         width: 60px;
     }
@@ -353,22 +344,22 @@ export const ThumbnailItem = styled.div<ThumbnailItemStyleProps>`
     ${(props) =>
         props.$active
             ? css`
-                  border-width: ${V3_Border["width-040"]};
-                  border-color: ${V3_Colour["border-selected"]};
+                  border-width: ${Border["width-040"]};
+                  border-color: ${Colour["border-selected"]};
 
-                  ${V3_MediaQuery.MaxWidth.sm} {
-                      border-width: ${V3_Border["width-020"]};
+                  ${MediaQuery.MaxWidth.sm} {
+                      border-width: ${Border["width-020"]};
                   }
 
                   &:hover {
-                      border-color: ${V3_Colour["border-selected-hover"]};
+                      border-color: ${Colour["border-selected-hover"]};
                   }
               `
             : css`
-                  border-width: ${V3_Border["width-010"]};
+                  border-width: ${Border["width-010"]};
 
                   &:hover {
-                      border-color: ${V3_Colour["border-hover"]};
+                      border-color: ${Colour["border-hover"]};
                   }
               `};
 `;
@@ -386,12 +377,12 @@ export const FileInfoTextWrapper = styled.div<FileInfoTextWrapperStyleProps>`
     flex: 1;
     display: flex;
     flex-direction: column;
-    gap: ${V3_Spacing["spacing-8"]};
+    gap: ${Spacing["spacing-8"]};
     overflow: hidden;
     min-width: 0;
     min-height: calc(
-        ${V3_Font.Spec["body-lh-baseline"]} + ${V3_Spacing["spacing-8"]} +
-            ${V3_Font.Spec["body-lh-md"]}
+        ${Font.Spec["body-lh-baseline"]} + ${Spacing["spacing-8"]} +
+            ${Font.Spec["body-lh-md"]}
     );
     ${(props) =>
         props.$centerContent &&
@@ -401,7 +392,7 @@ export const FileInfoTextWrapper = styled.div<FileInfoTextWrapperStyleProps>`
 `;
 
 export const FileInfoFileName = styled(Typography.BodyBL)`
-    color: ${V3_Colour["text-inverse"]};
+    color: ${Colour["text-inverse"]};
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
@@ -409,7 +400,7 @@ export const FileInfoFileName = styled(Typography.BodyBL)`
 `;
 
 export const FileInfoFileSize = styled(Typography.BodyMD)`
-    color: ${V3_Colour["text-inverse"]};
+    color: ${Colour["text-inverse"]};
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
