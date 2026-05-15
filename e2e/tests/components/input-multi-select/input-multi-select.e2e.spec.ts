@@ -1,5 +1,9 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    isInViewport,
+} from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "input-multi-select";
@@ -612,8 +616,7 @@ test.describe("InputMultiSelect", () => {
 
             await story.scrollWithWheelUntil({
                 scrollTarget: story.locators.component.dropdownList,
-                until: async () =>
-                    story.page.getByText("Option 100").isVisible(),
+                until: async () => isInViewport(story.getOption("Option 100")),
             });
 
             await expect(story.getOption("Option 1")).not.toBeVisible();

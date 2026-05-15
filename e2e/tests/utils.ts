@@ -86,6 +86,7 @@ export abstract class AbstractStoryPage {
                     }
 
                     await this.page.mouse.wheel(deltaX, deltaY);
+                    await this.page.waitForTimeout(100); // Wait for scroll to complete
                 }
 
                 return await until();
@@ -151,4 +152,24 @@ export const waitForAnimationEnd = async (locator: Locator) => {
     const handle = await locator.elementHandle();
     await handle?.waitForElementState("stable");
     await handle?.dispose();
+};
+
+export const isInViewport = async (locator: Locator) => {
+    if (!(await locator.isVisible())) {
+        return false;
+    }
+
+    const box = await locator.boundingBox();
+    const viewport = locator.page().viewportSize();
+
+    if (!box || !viewport) {
+        return false;
+    }
+
+    return (
+        box.x >= 0 &&
+        box.y >= 0 &&
+        box.x + box.width <= viewport.width &&
+        box.y + box.height <= viewport.height
+    );
 };
