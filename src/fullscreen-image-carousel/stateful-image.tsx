@@ -1,7 +1,9 @@
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useRef, useState } from "react";
 
 import { LoadingDots } from "../animations";
+import { ImagePlaceholder } from "../shared/image-placeholder";
 import { useApplyStyle } from "../theme";
 import * as styles from "./stateful-image.styles";
 
@@ -65,19 +67,30 @@ export const StatefulImage = ({
 
     const renderContent = () => {
         if (error) {
-            return placeholder ?? <styles.DefaultPlaceholder />;
+            return (
+                placeholder ?? (
+                    <ImagePlaceholder className={styles.defaultPlaceholder} />
+                )
+            );
         }
 
         if (loading) {
             return <LoadingDots />;
         }
 
-        return <styles.ImageBox ref={imageRef} src={src} alt={alt} />;
+        return (
+            <img
+                ref={imageRef}
+                src={src}
+                alt={alt}
+                className={styles.imageBox}
+            />
+        );
     };
 
     return (
-        <styles.ImageWrapper className={className}>
+        <div className={clsx(styles.imageWrapper, className)}>
             {renderContent()}
-        </styles.ImageWrapper>
+        </div>
     );
 };

@@ -1,7 +1,5 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { ClickableIcon } from "../shared/clickable-icon";
-import { ImagePlaceholder } from "../shared/image-placeholder";
 import {
     Border,
     Colour,
@@ -11,8 +9,6 @@ import {
     Shadow,
     Spacing,
 } from "../theme";
-import { Typography } from "../typography";
-import { StatefulImage } from "./stateful-image";
 
 // =============================================================================
 // CSS VARIABLE TOKENS
@@ -41,7 +37,7 @@ export const tokens = {
 // =============================================================================
 // STYLING
 // =============================================================================
-const IconButton = styled(ClickableIcon)`
+const iconButton = css`
     padding: 0;
     border-radius: 100%;
     background: ${Colour["bg"]};
@@ -65,7 +61,8 @@ const IconButton = styled(ClickableIcon)`
     }
 `;
 
-export const TopActionButtons = styled.div`
+export const topActionButtons = css`
+    /* Reset variables to prevent leaking to child components */
     ${tokens.topActionButtons.insetTop}: initial;
     ${tokens.topActionButtons.insetLeft}: initial;
     ${tokens.topActionButtons.insetRight}: initial;
@@ -135,15 +132,23 @@ export const TopActionButtons = styled.div`
     }
 `;
 
-export const CloseButton = styled(IconButton)``;
+export const closeButton = css`
+    ${iconButton}
+`;
 
-export const DeleteButton = styled(IconButton)`
+export const deleteButton = css`
+    ${iconButton}
     color: ${Colour["icon-error"]};
 `;
 
-export const MagnifierButton = styled(IconButton)``;
+export const magnifierButton = css`
+    ${iconButton}
+`;
 
-export const ArrowButton = styled(IconButton)`
+export const arrowButton = css`
+    ${iconButton}
+
+    /* Reset variables to prevent leaking to child components */
     ${tokens.arrowButton.insetLeft}: initial;
     ${tokens.arrowButton.insetRight}: initial;
 
@@ -180,7 +185,7 @@ export const ArrowButton = styled(IconButton)`
     }
 `;
 
-export const CarouselModalContent = styled.div`
+export const carouselModalContent = css`
     position: relative;
     width: 100%;
     height: 100dvh;
@@ -188,7 +193,7 @@ export const CarouselModalContent = styled.div`
     flex-direction: column;
 `;
 
-export const ImageGalleryContainer = styled.div`
+export const imageGalleryContainer = css`
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -196,7 +201,7 @@ export const ImageGalleryContainer = styled.div`
     min-height: 0;
 `;
 
-export const ImageGalleryWrapper = styled.div`
+export const imageGalleryWrapper = css`
     user-select: none;
     position: relative;
     display: block;
@@ -206,7 +211,7 @@ export const ImageGalleryWrapper = styled.div`
     min-height: 0;
 `;
 
-export const ImageGallerySwipe = styled.div`
+export const imageGallerySwipe = css`
     display: block;
     user-select: none;
     height: 100%;
@@ -214,7 +219,7 @@ export const ImageGallerySwipe = styled.div`
     touch-action: pan-y;
 `;
 
-export const ImageGallerySlides = styled.div`
+export const imageGallerySlides = css`
     display: flex;
     transition: all 450ms ease-out 0s;
     position: relative;
@@ -224,7 +229,7 @@ export const ImageGallerySlides = styled.div`
     height: 100%;
 `;
 
-export const ImageGallerySlide = styled.div`
+export const imageGallerySlide = css`
     flex: 0 0 100%;
     box-sizing: border-box;
     display: flex;
@@ -242,7 +247,7 @@ export const ImageGallerySlide = styled.div`
     }
 `;
 
-export const FocusableImageRegion = styled.div`
+export const focusableImageRegion = css`
     height: 100%;
     width: 100%;
     outline: none;
@@ -257,13 +262,13 @@ export const FocusableImageRegion = styled.div`
     }
 `;
 
-export const SlideImage = styled(StatefulImage)`
+export const slideImage = css`
     height: 100%;
     width: 100%;
     border-radius: ${Radius["none"]};
 `;
 
-export const SlidePlaceholderImage = styled(ImagePlaceholder)`
+export const slidePlaceholderImage = css`
     width: 60vw;
     height: auto;
     max-height: 100%;
@@ -271,7 +276,7 @@ export const SlidePlaceholderImage = styled(ImagePlaceholder)`
     aspect-ratio: 4 / 3;
 `;
 
-export const BoxChip = styled.div`
+export const boxChip = css`
     display: flex;
     justify-content: center;
     padding: ${Spacing["spacing-16"]};
@@ -284,7 +289,7 @@ export const BoxChip = styled.div`
     z-index: 3;
 `;
 
-export const Chip = styled(Typography.BodyXS)`
+export const chip = css`
     display: inline-flex;
     padding: ${Spacing["spacing-4"]} ${Spacing["spacing-16"]};
     justify-content: center;
@@ -298,7 +303,8 @@ export const Chip = styled(Typography.BodyXS)`
 // THUMBNAIL STYLING
 // -----------------------------------------------------------------------------
 
-export const ThumbnailContainer = styled.div`
+export const thumbnailContainer = css`
+    /* Reset variable to prevent leaking to child components */
     ${tokens.thumbnailContainer.insetBottom}: initial;
 
     flex-shrink: 0;
@@ -320,7 +326,7 @@ export const ThumbnailContainer = styled.div`
     }
 `;
 
-export const ThumbnailWrapper = styled.div`
+export const thumbnailWrapper = css`
     box-sizing: border-box;
     display: flex;
     align-items: center;
@@ -330,7 +336,7 @@ export const ThumbnailWrapper = styled.div`
     margin-right: auto;
 `;
 
-export const ThumbnailItemContainer = styled.div`
+export const thumbnailItemContainer = css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -343,7 +349,7 @@ export const ThumbnailItemContainer = styled.div`
     }
 `;
 
-export const ThumbnailItem = styled.div`
+export const thumbnailItem = css`
     cursor: pointer;
     background-color: ${Colour["bg-inverse"]};
     border-radius: ${Radius["md"]};
@@ -385,7 +391,7 @@ export const ThumbnailItem = styled.div`
     }
 `;
 
-export const ThumbnailImage = styled(StatefulImage)`
+export const thumbnailImage = css`
     height: 100%;
     width: 100%;
 `;
@@ -394,7 +400,7 @@ export const ThumbnailImage = styled(StatefulImage)`
 // FILE INFO BAR STYLING
 // -----------------------------------------------------------------------------
 
-export const FileInfoTextWrapper = styled.div`
+export const fileInfoTextWrapper = css`
     flex: 1;
     display: flex;
     flex-direction: column;
@@ -411,7 +417,7 @@ export const FileInfoTextWrapper = styled.div`
     }
 `;
 
-export const FileInfoFileName = styled(Typography.BodyBL)`
+export const fileInfoFileName = css`
     color: ${Colour["text-inverse"]};
     overflow: hidden;
     text-overflow: ellipsis;
@@ -419,7 +425,7 @@ export const FileInfoFileName = styled(Typography.BodyBL)`
     min-width: 0;
 `;
 
-export const FileInfoFileSize = styled(Typography.BodyMD)`
+export const fileInfoFileSize = css`
     color: ${Colour["text-inverse"]};
     overflow: hidden;
     text-overflow: ellipsis;

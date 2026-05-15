@@ -1,6 +1,4 @@
-import styled from "styled-components";
-
-import { ImagePlaceholder } from "../shared/image-placeholder";
+import { css } from "@linaria/core";
 
 export const tokens = {
     imageBox: {
@@ -8,13 +6,14 @@ export const tokens = {
     },
 };
 
-export const ImageWrapper = styled.div`
+export const imageWrapper = css`
     display: flex;
     align-items: center;
     justify-content: center;
 `;
 
-export const ImageBox = styled.img`
+export const imageBox = css`
+    /* Reset variable to prevent leaking to child components */
     ${tokens.imageBox.fit}: initial;
 
     height: 100%;
@@ -22,7 +21,7 @@ export const ImageBox = styled.img`
     object-fit: var(${tokens.imageBox.fit}, contain);
 `;
 
-export const DefaultPlaceholder = styled(ImagePlaceholder)`
+export const defaultPlaceholder = css`
     width: 100%;
     height: 100%;
 `;

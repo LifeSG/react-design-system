@@ -24,10 +24,14 @@ import type {
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 import { ModalV2 } from "../modal-v2";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { useStateCallback } from "../shared/hooks";
+import { ImagePlaceholder } from "../shared/image-placeholder";
 import { useApplyStyle } from "../theme";
+import { Typography } from "../typography";
 import { useEventListener } from "../util";
 import * as styles from "./fullscreen-image-carousel.styles";
+import { StatefulImage } from "./stateful-image";
 import type {
     FullscreenImageCarouselCustomItemProps,
     FullscreenImageCarouselItemProps,
@@ -299,7 +303,8 @@ export const Component = (
     // =============================================================================
     const renderSlides = () => {
         return (
-            <styles.ImageGallerySlides
+            <div
+                className={styles.imageGallerySlides}
                 style={{
                     transform: `translateX(calc(${
                         -currentSlide * 100
@@ -314,11 +319,13 @@ export const Component = (
                         (currentSlide === items.length - 1 && index === 0);
 
                     return (
-                        <styles.ImageGallerySlide
+                        <div
+                            className={styles.imageGallerySlide}
                             key={index}
                             data-testid="slide-item"
                         >
-                            <styles.FocusableImageRegion
+                            <div
+                                className={styles.focusableImageRegion}
                                 ref={isActive ? imageRef : null}
                                 tabIndex={isActive ? 0 : -1}
                             >
@@ -326,7 +333,11 @@ export const Component = (
                                     isActiveOrAdjacent ? (
                                         item.renderContent()
                                     ) : (
-                                        <styles.SlidePlaceholderImage />
+                                        <ImagePlaceholder
+                                            className={
+                                                styles.slidePlaceholderImage
+                                            }
+                                        />
                                     )
                                 ) : (
                                     <TransformWrapper
@@ -342,11 +353,16 @@ export const Component = (
                                         onWheel={handleZoom}
                                     >
                                         <TransformComponent>
-                                            <styles.SlideImage
+                                            <StatefulImage
+                                                className={styles.slideImage}
                                                 src={item.src}
                                                 alt={getItemAriaLabel(index)}
                                                 placeholder={
-                                                    <styles.SlidePlaceholderImage />
+                                                    <ImagePlaceholder
+                                                        className={
+                                                            styles.slidePlaceholderImage
+                                                        }
+                                                    />
                                                 }
                                                 fit="scale-down"
                                                 retrieveImageDimension
@@ -355,11 +371,11 @@ export const Component = (
                                         </TransformComponent>
                                     </TransformWrapper>
                                 )}
-                            </styles.FocusableImageRegion>
-                        </styles.ImageGallerySlide>
+                            </div>
+                        </div>
                     );
                 })}
-            </styles.ImageGallerySlides>
+            </div>
         );
     };
 
@@ -369,43 +385,55 @@ export const Component = (
         const trimmedSize = fileSize?.trim();
 
         return (
-            <styles.FileInfoTextWrapper
-                className={clsx(!trimmedSize && "fileInfoTextWrapperCentered")}
+            <div
+                className={clsx(
+                    styles.fileInfoTextWrapper,
+                    !trimmedSize && "fileInfoTextWrapperCentered"
+                )}
                 aria-live="polite"
                 aria-atomic="true"
                 data-testid="file-info-bar"
             >
                 {trimmedName && (
-                    <styles.FileInfoFileName
+                    <Typography.BodyBL
+                        className={styles.fileInfoFileName}
                         weight="semibold"
                         data-testid="file-info-name"
                     >
                         {trimmedName}
-                    </styles.FileInfoFileName>
+                    </Typography.BodyBL>
                 )}
                 {trimmedSize && (
-                    <styles.FileInfoFileSize data-testid="file-info-size">
+                    <Typography.BodyMD
+                        className={styles.fileInfoFileSize}
+                        data-testid="file-info-size"
+                    >
                         {trimmedSize}
-                    </styles.FileInfoFileSize>
+                    </Typography.BodyMD>
                 )}
-            </styles.FileInfoTextWrapper>
+            </div>
         );
     };
 
     const renderThumbnails = () => {
         return (
-            <styles.ThumbnailContainer
+            <div
+                className={styles.thumbnailContainer}
                 ref={thumbnailContainerRef}
                 aria-hidden="true"
             >
-                <styles.ThumbnailWrapper>
+                <div className={styles.thumbnailWrapper}>
                     {items.map((item, index) => {
                         const src = isCustomItem(item)
                             ? item.thumbnailSrc
                             : item.thumbnailSrc ?? item.src;
                         return (
-                            <styles.ThumbnailItemContainer key={index}>
-                                <styles.ThumbnailItem
+                            <div
+                                className={styles.thumbnailItemContainer}
+                                key={index}
+                            >
+                                <div
+                                    className={styles.thumbnailItem}
                                     data-active={index === currentSlide}
                                     data-testid="thumbnail-item"
                                     onClick={() => goToSlide(index)}
@@ -414,20 +442,25 @@ export const Component = (
                                     }
                                 >
                                     {src ? (
-                                        <styles.ThumbnailImage
+                                        <StatefulImage
+                                            className={styles.thumbnailImage}
                                             src={src}
                                             alt={`Thumbnail ${index + 1}`}
                                             fit="cover"
                                         />
                                     ) : (
-                                        <styles.SlidePlaceholderImage />
+                                        <ImagePlaceholder
+                                            className={
+                                                styles.slidePlaceholderImage
+                                            }
+                                        />
                                     )}
-                                </styles.ThumbnailItem>
-                            </styles.ThumbnailItemContainer>
+                                </div>
+                            </div>
                         );
                     })}
-                </styles.ThumbnailWrapper>
-            </styles.ThumbnailContainer>
+                </div>
+            </div>
         );
     };
 
@@ -439,59 +472,71 @@ export const Component = (
             show={show}
             disableInitialFocus
         >
-            <styles.CarouselModalContent>
-                <styles.ImageGalleryContainer>
-                    <styles.ImageGalleryWrapper>
-                        <styles.ImageGallerySwipe
+            <div className={styles.carouselModalContent}>
+                <div className={styles.imageGalleryContainer}>
+                    <div className={styles.imageGalleryWrapper}>
+                        <div
+                            className={styles.imageGallerySwipe}
                             ref={containerRef}
                             onTouchStart={handleTouchStart}
                             onTouchMove={handleTouchMove}
                             onTouchEnd={handleTouchEnd}
                         >
                             {renderSlides()}
-                        </styles.ImageGallerySwipe>
+                        </div>
 
                         {!hideNavigation && (
                             <>
-                                <styles.ArrowButton
+                                <button
+                                    className={clsx(
+                                        styles.arrowButton,
+                                        "arrowButtonLeft"
+                                    )}
                                     ref={prevArrowButtonRef}
-                                    className="arrowButtonLeft"
                                     aria-label={`Previous ${carouselItemNoun}`}
                                     data-testid="prev-btn"
                                     onClick={goToPrevSlide}
                                 >
                                     <ChevronLeftIcon aria-hidden />
-                                </styles.ArrowButton>
-                                <styles.ArrowButton
+                                </button>
+                                <button
+                                    className={clsx(
+                                        styles.arrowButton,
+                                        "arrowButtonRight"
+                                    )}
                                     ref={nextArrowButtonRef}
-                                    className="arrowButtonRight"
                                     aria-label={`Next ${carouselItemNoun}`}
                                     data-testid="forward-btn"
                                     onClick={goToNextSlide}
                                 >
                                     <ChevronRightIcon aria-hidden />
-                                </styles.ArrowButton>
+                                </button>
                             </>
                         )}
 
                         {!hideCounter && (
-                            <styles.BoxChip aria-hidden="true">
-                                <styles.Chip weight="semibold">{`${
-                                    currentSlide + 1
-                                }/${items.length}`}</styles.Chip>
-                            </styles.BoxChip>
+                            <div className={styles.boxChip} aria-hidden="true">
+                                <Typography.BodyXS
+                                    className={styles.chip}
+                                    weight="semibold"
+                                >{`${currentSlide + 1}/${
+                                    items.length
+                                }`}</Typography.BodyXS>
+                            </div>
                         )}
-                    </styles.ImageGalleryWrapper>
+                    </div>
 
                     {!hideThumbnail && renderThumbnails()}
-                </styles.ImageGalleryContainer>
-                <styles.TopActionButtons
+                </div>
+                <div
+                    className={styles.topActionButtons}
                     ref={topActionButtonsRef}
                     data-has-file-info={hasFileInfo}
                 >
                     {hasFileInfo && renderFileInfo()}
                     {!hideMagnifier && !isCustomItem(currentItem) && (
-                        <styles.MagnifierButton
+                        <ClickableIcon
+                            className={styles.magnifierButton}
                             aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
                             onClick={handleMagnifier}
                         >
@@ -500,11 +545,12 @@ export const Component = (
                             ) : (
                                 <MagnifierMinusIcon aria-hidden />
                             )}
-                        </styles.MagnifierButton>
+                        </ClickableIcon>
                     )}
 
                     {onDelete && (
-                        <styles.DeleteButton
+                        <ClickableIcon
+                            className={styles.deleteButton}
                             aria-label={`Delete ${
                                 (isCustomItem(currentItem) &&
                                     currentItem.itemLabel?.trim()) ||
@@ -514,10 +560,11 @@ export const Component = (
                             onClick={handleDelete}
                         >
                             <BinIcon aria-hidden />
-                        </styles.DeleteButton>
+                        </ClickableIcon>
                     )}
 
-                    <styles.CloseButton
+                    <ClickableIcon
+                        className={styles.closeButton}
                         aria-label={
                             hasAnyItemLabel
                                 ? "Close carousel"
@@ -526,9 +573,9 @@ export const Component = (
                         onClick={onClose}
                     >
                         <CrossIcon aria-hidden />
-                    </styles.CloseButton>
-                </styles.TopActionButtons>
-            </styles.CarouselModalContent>
+                    </ClickableIcon>
+                </div>
+            </div>
         </ModalV2>
     );
 };
