@@ -37,7 +37,6 @@ export const mobileWrapper = css`
 export const linkItem = css`
     display: flex;
     margin: 0 1rem;
-    // negative margin to preserve touch target size for link
     &:first-child {
         margin-left: 0;
     }
@@ -51,6 +50,7 @@ export const linkItem = css`
 `;
 
 export const linkItemHiddenBranding = css`
+    // negative margin to preserve touch target size for link
     &:first-child {
         margin-left: -0.5rem;
     }
