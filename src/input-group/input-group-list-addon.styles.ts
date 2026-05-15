@@ -28,8 +28,16 @@ export const fieldSelector = css`
     flex: 0 0 auto;
 `;
 
-export const fieldInputReadOnly = css`
-    padding: 0;
+export const fieldInput = css`
+    width: 100%;
+
+    &[data-position="right"] {
+        padding-left: ${Spacing["spacing-16"]};
+    }
+
+    &[data-position="left"] {
+        padding-right: ${Spacing["spacing-16"]};
+    }
 `;
 
 export const fieldInputNoBorder = css`
@@ -42,14 +50,8 @@ export const fieldInputNoBorder = css`
     }
 `;
 
-export const fieldInputPosition = css`
-    &[data-position="right"] {
-        padding-left: ${Spacing["spacing-16"]};
-    }
-
-    &[data-position="left"] {
-        padding-right: ${Spacing["spacing-16"]};
-    }
+export const fieldInputReadOnly = css`
+    padding: 0;
 `;
 
 export const selectorReadOnly = css`
