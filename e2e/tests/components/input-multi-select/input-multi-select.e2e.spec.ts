@@ -100,6 +100,8 @@ class StoryPage extends AbstractStoryPage {
 
     public async openDropdown(multiSelect: Locator) {
         await multiSelect.click();
+        await this.page.waitForTimeout(300); // Wait for dropdown animation to complete
+
         await expect(this.locators.component.dropdownContainer).toBeVisible();
         await expect(this.locators.component.dropdownList).toBeVisible();
     }
