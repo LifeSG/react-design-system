@@ -21,26 +21,24 @@ const TopContent = () => (
     >
         <Typography.HeadingMD>Top content</Typography.HeadingMD>
         <Typography.BodyBL>{LOREM_PARAGRAPH}</Typography.BodyBL>
-        <Typography.BodyBL>{LOREM_PARAGRAPH}</Typography.BodyBL>
     </div>
 );
 
 const Content = () => (
     <div data-testid="content-after" className="story-background">
         {ITEMS.map((item) => (
-            <section key={item.id}>
+            <div key={item.id}>
                 <Typography.HeadingMD id={item.id}>
                     {item.title}
                 </Typography.HeadingMD>
                 <Typography.BodyBL>{LOREM_PARAGRAPH}</Typography.BodyBL>
-                <Typography.BodyBL>{LOREM_PARAGRAPH}</Typography.BodyBL>
-            </section>
+            </div>
         ))}
     </div>
 );
 
 export default function Story() {
-    const [selectedItemIndex, setSelectedItemIndex] = useState<number>(-1);
+    const [selectedItemIndex] = useState<number>(-1);
     const dropdownRef = useRef<HTMLElement>(null);
 
     return (
@@ -53,27 +51,7 @@ export default function Story() {
                 items={ITEMS}
                 selectedItemIndex={selectedItemIndex}
                 stickyOffset={0}
-                onNavItemSelect={(_e, item, index) => {
-                    setSelectedItemIndex(index);
-                    const id = item.id;
-                    if (id) {
-                        // Defer until after LocalNavDropdown closes and removes
-                        // the body `overflow: hidden` lock, otherwise the
-                        // smooth scroll is cancelled.
-                        requestAnimationFrame(() => {
-                            const element = document.getElementById(id);
-                            if (!element) return;
-                            const stickyHeight =
-                                dropdownRef.current?.getBoundingClientRect()
-                                    .height ?? 0;
-                            const top =
-                                element.getBoundingClientRect().top +
-                                window.scrollY -
-                                stickyHeight;
-                            window.scrollTo({ top, behavior: "smooth" });
-                        });
-                    }
-                }}
+                onNavItemSelect={() => {}}
             />
             <div className="story-padding">
                 <Content />

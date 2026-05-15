@@ -139,14 +139,14 @@ export const navWrapper = css`
 
 export const navWrapperStickied = css`
     .${navSelect} {
-        margin: 0 calc(-1 * var(${tokens.navWrapper.sideMargin}, 0px));
+        margin: 0 calc(var(${tokens.navWrapper.sideMargin} * -1, 0px));
         padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
         border-radius: ${Radius["none"]};
     }
 
     .${navItemList} {
-        margin-left: calc(-1 * var(${tokens.navWrapper.sideMargin}, 0px));
-        margin-right: calc(-1 * var(${tokens.navWrapper.sideMargin}, 0px));
+        margin-left: calc(var(${tokens.navWrapper.sideMargin} * -1, 0px));
+        margin-right: calc(var(${tokens.navWrapper.sideMargin} * -1, 0px));
         border-radius-bottom-left: ${Radius.sm};
         border-radius-bottom-right: ${Radius.sm};
     }

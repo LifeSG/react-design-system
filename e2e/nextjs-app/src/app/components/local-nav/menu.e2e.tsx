@@ -14,15 +14,11 @@ export default function Story() {
     const [selectedItemIndex, setSelectedItemIndex] = useState(0);
 
     return (
-        <div className="story-row-container story-background">
-            <LocalNavMenu
-                data-testid="local-nav-menu"
-                items={ITEMS}
-                selectedItemIndex={selectedItemIndex}
-                onNavItemSelect={(_e, _item, index) =>
-                    setSelectedItemIndex(index)
-                }
-            />
-        </div>
+        <LocalNavMenu
+            data-testid="local-nav-menu"
+            items={ITEMS}
+            selectedItemIndex={selectedItemIndex}
+            onNavItemSelect={(_e, _item, index) => setSelectedItemIndex(index)}
+        />
     );
 }
