@@ -1,5 +1,6 @@
 import { test as base, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import { THEME_TYPES } from "../../../../src/theme/types";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "navbar";
@@ -43,25 +44,30 @@ test.describe("Navbar", () => {
     // DESKTOP
     // =======================================================================
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("default");
+    for (const theme of THEME_TYPES) {
+        test.describe("Default", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default", { theme: theme });
+            });
+
+            test(`${theme} theme`, async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
 
-        test("Default", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
+        test.describe("Default (dark mode)", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default", {
+                    mode: "dark",
+                    theme: theme,
+                });
+            });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("default", { mode: "dark" });
+            test(`${theme} theme`, async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
-
-        test("Default (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
+    }
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
@@ -135,10 +141,30 @@ test.describe("Navbar", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("single-action-button");
+            await story.init("action-button-only");
         });
 
-        test("Single action button", async ({ story }) => {
+        test("Action button only", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("link-only");
+        });
+
+        test("Link only", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-link");
+        });
+
+        test("Custom link", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
@@ -148,7 +174,7 @@ test.describe("Navbar", () => {
             await story.init("custom-action-button");
         });
 
-        test("With avatar", async ({ story }) => {
+        test("Custom action button", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
@@ -220,7 +246,7 @@ test.describe("Navbar", () => {
                 await story.init("custom-action-button", { size: "mobile" });
             });
 
-            test("With avatar", async ({ story }) => {
+            test("Custom action button", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
         });
@@ -236,6 +262,35 @@ test.describe("Navbar", () => {
                 await compareScreenshot(story, "open", {
                     fullscreen: true,
                 });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("submenu", {
+                    size: "mobile",
+                    mode: "dark",
+                });
+            });
+
+            test("Submenu (dark mode)", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.locators.internal.servicesMobileTrigger.click();
+                await compareScreenshot(story, "open", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("uncollapsible-action-buttons", {
+                    size: "mobile",
+                });
+            });
+
+            test("Uncollapsible action buttons", async ({ story }) => {
+                await compareScreenshot(story, "mount");
             });
         });
     });

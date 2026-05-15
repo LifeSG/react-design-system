@@ -1,0 +1,30 @@
+"use client";
+
+import { Navbar } from "@lifesg/react-design-system/navbar";
+import { navItems } from "./common";
+
+export default function Story() {
+    return (
+        <Navbar
+            data-testid="navbar-uncollapsible-action-buttons"
+            selectedId="guides"
+            items={{ desktop: navItems }}
+            actionButtons={{
+                desktop: [
+                    {
+                        type: "button",
+                        uncollapsible: true,
+                        args: {
+                            children: "Log in",
+                            styleType: "secondary",
+                        },
+                    },
+                    {
+                        type: "button",
+                        args: { children: "Sign up" },
+                    },
+                ],
+            }}
+        />
+    );
+}

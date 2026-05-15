@@ -9,13 +9,11 @@ import {
     useRef,
     useState,
 } from "react";
-import { ThemeContext } from "styled-components";
 
 import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
 import { ClickableIcon } from "../shared/clickable-icon";
-import type { ThemeType } from "../theme";
 import {
     Breakpoint,
     ComponentToken,
@@ -23,6 +21,7 @@ import {
     useApplyStyle,
     useDesignToken,
 } from "../theme";
+import { ThemeContext } from "../theme/theme-provider/context";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
 import * as styles from "./navbar.styles";
@@ -77,9 +76,7 @@ const Component = <T,>(
     const elementRef = useRef<HTMLDivElement>(null);
     const navRef = useRef<HTMLElement>(null);
     const theme = useContext(ThemeContext);
-    const defaultResource = getDefaultResourceLogo(
-        theme?.resourceScheme as ThemeType | undefined
-    );
+    const defaultResource = getDefaultResourceLogo(theme?.theme);
     const tabletWidthToken = useDesignToken(Breakpoint["lg-max"]);
     const tabletWidth = parsePxOrRemValue(tabletWidthToken || "1200px");
 
@@ -337,7 +334,7 @@ const Component = <T,>(
                     ref={navRef}
                     className={clsx(
                         styles.nav,
-                        theme?.colourMode === "dark" && styles.navDark
+                        theme?.mode === "dark" && styles.navDark
                     )}
                     aria-label={headerLabel}
                 >
@@ -378,7 +375,7 @@ const Component = <T,>(
             className={clsx(
                 styles.wrapper,
                 fixed ? styles.wrapperFixed : styles.wrapperRelative,
-                theme?.colourMode === "dark"
+                theme?.mode === "dark"
                     ? styles.wrapperDark
                     : styles.wrapperLight,
                 className
