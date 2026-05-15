@@ -23,6 +23,8 @@ import { FormTimeRangePicker } from "./form-time-range-picker";
 import { FormTimepicker } from "./form-timepicker";
 import { FormUnitNumberInput } from "./form-unit-number-input";
 
+export * from "./types";
+
 export const Form = {
     DateInput: FormDateInput,
     DateRangeInput: FormDateRangeInput,
