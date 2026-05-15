@@ -343,9 +343,8 @@ const Component = <T,>(
                         <div
                             className={clsx(
                                 styles.navElementsContainer,
-                                !hideNavBranding
-                                    ? styles.navElementsContainerWithBranding
-                                    : null
+                                !hideNavBranding &&
+                                    styles.navElementsContainerWithBranding
                             )}
                         >
                             <NavbarItems

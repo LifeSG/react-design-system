@@ -70,17 +70,11 @@ export const navElementsContainer = css`
     height: 100%;
     flex: 1;
     justify-content: flex-end;
-    ${MediaQuery.MaxWidth.lg} {
-        margin-left: 0rem;
-    }
+    margin-left: 0rem;
 `;
 
 export const navElementsContainerWithBranding = css`
     margin-left: 5rem;
-
-    ${MediaQuery.MaxWidth.lg} {
-        margin-left: 0;
-    }
 `;
 
 export const mobileMenuButton = css`
