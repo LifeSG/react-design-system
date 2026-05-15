@@ -123,6 +123,7 @@ export const compareScreenshot = async (
             },
             threshold: 0.01, // Strict colour matching
             maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
+            maxDiffPixels: 50,
         });
         return;
     }
@@ -135,6 +136,7 @@ export const compareScreenshot = async (
         fullPage: options?.fullscreen ?? false,
         threshold: 0.01, // Strict colour matching
         maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
+        maxDiffPixels: 50,
     });
 };
 
