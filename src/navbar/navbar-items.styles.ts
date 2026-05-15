@@ -37,7 +37,7 @@ export const mobileWrapper = css`
 export const linkItem = css`
     display: flex;
     margin: 0 1rem;
-
+    // negative margin to preserve touch target size for link
     &:first-child {
         margin-left: 0;
     }
@@ -171,4 +171,14 @@ export const chevronIcon = css`
     height: 1.25rem;
     width: 1.25rem;
     color: ${Colour.icon};
+
+    &:hover {
+        color: ${Colour["icon-hover"]};
+    }
+`;
+
+export const chevronIconSelected = css`
+    &:hover {
+        color: ${Colour["icon-selected-hover"]};
+    }
 `;

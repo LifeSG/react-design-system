@@ -208,7 +208,12 @@ export const NavbarItems = <T,>({
                         focusOutline="browser"
                         aria-label={isMobileExpanded ? "Collapse" : "Expand"}
                     >
-                        <ChevronUpIcon className={styles.chevronIcon} />
+                        <ChevronUpIcon
+                            className={clsx(
+                                styles.chevronIcon,
+                                selected && styles.chevronIconSelected
+                            )}
+                        />
                     </ClickableIcon>
                 </div>
             ) : null;
