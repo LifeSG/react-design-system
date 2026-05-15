@@ -6,7 +6,7 @@ import {
     DefaultPlaceholder,
     ImageBox,
     ImageWrapper,
-} from "./stateful-image.style";
+} from "./stateful-image.styles";
 
 export interface StatefulImageProps {
     src: string;

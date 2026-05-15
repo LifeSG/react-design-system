@@ -50,7 +50,7 @@ import {
     ThumbnailItemContainer,
     ThumbnailWrapper,
     TopActionButtons,
-} from "./fullscreen-image-carousel.style";
+} from "./fullscreen-image-carousel.styles";
 import type {
     FullscreenImageCarouselCustomItemProps,
     FullscreenImageCarouselItemProps,

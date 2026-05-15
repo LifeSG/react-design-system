@@ -86,14 +86,17 @@ export const TopActionButtons = styled.div<TopActionButtonsStyleProps>`
 
                   ${V3_MediaQuery.MaxWidth.sm} {
                       padding-top: calc(
-                          ${V3_Spacing["spacing-16"]} + ${props.$insetTop || 0}px
+                          ${V3_Spacing["spacing-16"]} +
+                              ${props.$insetTop || 0}px
                       );
                       padding-bottom: ${V3_Spacing["spacing-16"]};
                       padding-left: calc(
-                          ${V3_Spacing["spacing-20"]} + ${props.$insetLeft || 0}px
+                          ${V3_Spacing["spacing-20"]} +
+                              ${props.$insetLeft || 0}px
                       );
                       padding-right: calc(
-                          ${V3_Spacing["spacing-20"]} + ${props.$insetRight || 0}px
+                          ${V3_Spacing["spacing-20"]} +
+                              ${props.$insetRight || 0}px
                       );
                   }
               `
@@ -109,10 +112,12 @@ export const TopActionButtons = styled.div<TopActionButtonsStyleProps>`
 
                   ${V3_MediaQuery.MaxWidth.sm} {
                       top: calc(
-                          ${V3_Spacing["spacing-20"]} + ${props.$insetTop || 0}px
+                          ${V3_Spacing["spacing-20"]} +
+                              ${props.$insetTop || 0}px
                       );
                       right: calc(
-                          ${V3_Spacing["spacing-20"]} + ${props.$insetRight || 0}px
+                          ${V3_Spacing["spacing-20"]} +
+                              ${props.$insetRight || 0}px
                       );
                   }
               `}
