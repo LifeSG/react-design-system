@@ -8,31 +8,32 @@ import { Colour, Font, MediaQuery } from "../theme";
 export const container = css`
     display: flex;
     flex-direction: column;
+    overflow-wrap: break-word;
 
     &[data-width="half"] {
         grid-column: auto / span 4;
-    }
 
-    &[data-width="half"].containerFullWidth {
-        grid-column: auto / span 1;
+        &[data-full-width="true"] {
+            grid-column: auto / span 1;
+        }
     }
 
     &[data-width="full"] {
         grid-column: auto / span 8;
-    }
 
-    &[data-width="full"].containerFullWidth {
-        grid-column: auto / span 2;
+        &[data-full-width="true"] {
+            grid-column: auto / span 2;
+        }
     }
 
     ${MediaQuery.MaxWidth.lg} {
         grid-column: 1 / -1;
     }
 
-    overflow-wrap: break-word;
+    ${MediaQuery.MaxWidth.sm} {
+        grid-column: 1 / -1 !important;
+    }
 `;
-
-export const containerFullWidth = css``;
 
 export const iconContainer = css`
     display: flex;

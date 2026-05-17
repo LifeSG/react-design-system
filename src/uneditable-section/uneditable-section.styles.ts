@@ -18,20 +18,11 @@ export const columnWidthStretch = css`
 `;
 
 export const wrapper = css`
-    background: transparent;
     padding-top: 2rem;
     padding-bottom: 2rem;
 `;
 
 export const wrapperBackground = css`
-    background: ${Colour["bg-strong"]};
-`;
-
-export const fullWidthWrapper = css`
-    background: transparent;
-`;
-
-export const fullWidthWrapperBackground = css`
     background: ${Colour["bg-strong"]};
 `;
 
@@ -71,4 +62,8 @@ export const gridUl = css`
 
 export const gridUlFullWidth = css`
     grid-template-columns: repeat(2, minmax(0, 1fr));
+
+    ${MediaQuery.MaxWidth.sm} {
+        grid-template-columns: repeat(1, minmax(0, 1fr));
+    }
 `;

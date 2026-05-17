@@ -134,8 +134,7 @@ export const UneditableSectionBase = ({
         return (
             <div
                 className={clsx(
-                    styles.fullWidthWrapper,
-                    background && styles.fullWidthWrapperBackground,
+                    background && styles.wrapperBackground,
                     className
                 )}
                 {...otherProps}

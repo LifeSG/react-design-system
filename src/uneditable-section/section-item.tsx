@@ -1,7 +1,6 @@
 import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
-import clsx from "clsx";
 import { useEffect, useState } from "react";
 
 import { Alert } from "../alert";
@@ -184,10 +183,8 @@ export const UneditableSectionItem = ({
     return (
         <li
             data-width={displayWidth}
-            className={clsx(
-                styles.container,
-                fullWidth && styles.containerFullWidth
-            )}
+            data-full-width={fullWidth}
+            className={styles.container}
         >
             <FormLabel>{label}</FormLabel>
             {renderContent()}
