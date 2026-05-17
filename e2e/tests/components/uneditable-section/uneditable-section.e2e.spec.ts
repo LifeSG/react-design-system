@@ -1,5 +1,6 @@
 import { test as base, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import { fixedTimestamp } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "uneditable-section";
@@ -79,30 +80,40 @@ test.describe("UneditableSection", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("masked-variants");
+            await story.init("default-full-width", {
+                size: "mobile",
+            });
         });
 
-        test("Masked variants", async ({ story }) => {
+        test("Default full width (mobile)", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
+        const now = new Date(fixedTimestamp).getTime();
+
         test.beforeEach(async ({ story }) => {
+            await story.page.clock.install({ time: now - 10 * 1000 });
             await story.init("loading-variant");
         });
 
         test("Loading variant", async ({ story }) => {
+            await story.page.clock.pauseAt(now);
             await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
+        const now = new Date(fixedTimestamp).getTime();
+
         test.beforeEach(async ({ story }) => {
+            await story.page.clock.install({ time: now - 10 * 1000 });
             await story.init("loading-variant", { mode: "dark" });
         });
 
         test("Loading variant (dark mode)", async ({ story }) => {
+            await story.page.clock.pauseAt(now);
             await compareScreenshot(story, "mount");
         });
     });
