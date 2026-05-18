@@ -281,6 +281,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     $slotWidth={slotWidth}
                     $slotOffset={0}
                     $variant={variant}
+                    onClick={isClickable ? onClick : undefined}
                 >
                     <TimeSlot
                         styleType={styleType}
@@ -289,7 +290,6 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         hoverBgColor={hoverBackgroundColor}
                         hoverBgColor2={hoverBackgroundColor2}
                         clickable={isClickable}
-                        onClick={isClickable ? onClick : undefined}
                     />
                 </StyledTimeSlotItem>
             </>

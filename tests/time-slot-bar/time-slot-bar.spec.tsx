@@ -209,14 +209,7 @@ describe("TimeSlotBar", () => {
         );
 
         const grid = screen.getByRole("grid");
-        expect(grid).toHaveAttribute(
-            "aria-label",
-            expect.stringContaining("Time slot bar")
-        );
-        expect(grid).toHaveAttribute(
-            "aria-label",
-            expect.stringContaining("Available")
-        );
+        expect(grid).toHaveAccessibleName(/Time slot bar.*Available/i);
 
         expect(within(grid).queryAllByRole("button")).toHaveLength(0);
     });
