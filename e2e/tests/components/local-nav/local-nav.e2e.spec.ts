@@ -105,23 +105,29 @@ test.describe("Local nav", () => {
         test("Accessibility", async ({ story }) => {
             await test.step("Collapsed", async () => {
                 await expect(story.locators.dropdown).toMatchAriaSnapshot(`
-                    - button "Initial" [expanded=false]
+                    - navigation:
+                        - button "Jump to section" [expanded=false]:
+                            - paragraph: Jump to section
+                            - img
                 `);
             });
 
             await test.step("Expanded", async () => {
                 await story.locators.dropdownLabel.click();
                 await expect(story.locators.dropdown).toMatchAriaSnapshot(`
-                    - button "Initial" [expanded=true]
-                    - menu:
-                        - menuitem "Title 1"
-                        - menuitem "Title 2"
-                        - menuitem "Title 3"
-                        - menuitem "Title 4"
-                        - menuitem "Title 5"
-                        - menuitem "Title 6"
-                        - menuitem "Title 7"
-                        - menuitem "Title 8"
+                    - navigation:
+                        - button "Jump to section" [expanded=true]:
+                            - paragraph: Jump to section
+                            - img
+                        - menu:
+                            - menuitem "Title 1"
+                            - menuitem "Title 2"
+                            - menuitem "Title 3"
+                            - menuitem "Title 4"
+                            - menuitem "Title 5"
+                            - menuitem "Title 6"
+                            - menuitem "Title 7"
+                            - menuitem "Title 8"
                 `);
             });
         });
