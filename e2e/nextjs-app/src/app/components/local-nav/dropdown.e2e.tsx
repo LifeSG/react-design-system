@@ -4,12 +4,10 @@ import { LocalNavDropdown } from "@lifesg/react-design-system/local-nav";
 import { Typography } from "@lifesg/react-design-system/typography";
 import { useRef, useState } from "react";
 
-const ITEMS = [
-    { id: "section-1", title: "Title 1" },
-    { id: "section-2", title: "Title 2" },
-    { id: "section-3", title: "Title 3" },
-    { id: "section-4", title: "Title 4" },
-];
+const ITEMS = Array.from({ length: 8 }, (_, i) => ({
+    id: `section-${i + 1}`,
+    title: `Title ${i + 1}`,
+}));
 
 const LOREM_PARAGRAPH =
     "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus lacinia odio vitae vestibulum vestibulum. Cras venenatis euismod malesuada. Integer sit amet lacus ac risus dapibus dictum. Suspendisse potenti. Pellentesque habitant morbi tristique senectus et netus et malesuada fames ac turpis egestas. Mauris in erat justo. Nullam ac urna eu felis dapibus condimentum sit amet a augue. Sed non neque elit. Sed ut imperdiet nisi. Proin condimentum fermentum nunc.";

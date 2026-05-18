@@ -25,6 +25,18 @@ class StoryPage extends AbstractStoryPage {
             contentAfter: page.getByTestId("content-after"),
         };
     }
+
+    async scrollUntilSticky() {
+        await this.scrollWithWheelUntil({
+            scrollTarget: this.locators.contentAfter,
+            until: () =>
+                this.page.evaluate(
+                    () =>
+                        window.innerHeight + window.scrollY >=
+                        document.documentElement.scrollHeight - 1
+                ),
+        });
+    }
 }
 
 const test = base.extend<{ story: StoryPage }>({
@@ -41,9 +53,7 @@ test.describe("Local nav", () => {
         });
 
         test("Default", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.menu,
-            });
+            await compareScreenshot(story, "mount");
         });
 
         test("Accessibility", async ({ story }) => {
@@ -59,6 +69,11 @@ test.describe("Local nav", () => {
                         - link "Title 4"
             `);
         });
+
+        test("Hover", async ({ story }) => {
+            await story.locators.menuItems.first().hover();
+            await compareScreenshot(story, "hover");
+        });
     });
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
@@ -66,9 +81,9 @@ test.describe("Local nav", () => {
         });
 
         test("Menu (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.menu,
-            });
+            await compareScreenshot(story, "mount");
+            await story.locators.menuItems.first().hover();
+            await compareScreenshot(story, "hover");
         });
     });
     test.describe("Dropdown", () => {
@@ -77,61 +92,51 @@ test.describe("Local nav", () => {
         });
 
         test("Default", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.dropdown,
-            });
-            await expect(story.locators.dropdownLabel).toHaveAttribute(
-                "aria-expanded",
-                "false"
-            );
-            await expect(story.locators.dropdownList).not.toBeVisible();
-        });
+            await compareScreenshot(story, "non-sticky unopened");
 
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("dropdown", { mode: "dark" });
+            await story.locators.dropdownLabel.click();
+            await compareScreenshot(story, "non-sticky open", {
+                fullscreen: true,
             });
 
-            test("Default (dark mode)", async ({ story }) => {
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.dropdown,
-                });
-            });
+            await story.locators.dropdownLabel.click();
         });
 
         test("Accessibility", async ({ story }) => {
-            await expect(story.locators.dropdown).toMatchAriaSnapshot(`
-                - menu:
-                    - menuitem "Title 1"
-                    - menuitem "Title 2"
-                    - menuitem "Title 3"
-                    - menuitem "Title 4"
-            `);
+            await test.step("Collapsed", async () => {
+                await expect(story.locators.dropdown).toMatchAriaSnapshot(`
+                    - button "Initial" [expanded=false]
+                `);
+            });
+
+            await test.step("Expanded", async () => {
+                await story.locators.dropdownLabel.click();
+                await expect(story.locators.dropdown).toMatchAriaSnapshot(`
+                    - button "Initial" [expanded=true]
+                    - menu:
+                        - menuitem "Title 1"
+                        - menuitem "Title 2"
+                        - menuitem "Title 3"
+                        - menuitem "Title 4"
+                        - menuitem "Title 5"
+                        - menuitem "Title 6"
+                        - menuitem "Title 7"
+                        - menuitem "Title 8"
+                `);
+            });
         });
 
         test("Sticky on scroll", async ({ story }) => {
-            await test.step("Select an item", async () => {
-                await story.locators.dropdownLabel.click();
-                await story.locators.dropdownList
-                    .getByRole("menuitem", { name: "Title 2" })
-                    .click();
-            });
-
             await test.step("Scroll until sticky", async () => {
-                await story.scrollWithWheelUntil({
-                    scrollTarget: story.locators.contentAfter,
-                    until: async () => {
-                        const text =
-                            await story.locators.dropdownLabel.textContent();
-                        return (text ?? "").includes("Title 2");
-                    },
+                await story.scrollUntilSticky();
+                await compareScreenshot(story, "sticky unopened", {
+                    fullscreen: true,
                 });
             });
 
             await test.step("Open dropdown when stickied shows backdrop", async () => {
                 await story.locators.dropdownLabel.click();
-                await expect(story.locators.dropdownList).toBeVisible();
-                await compareScreenshot(story, "sticky-open", {
+                await compareScreenshot(story, "sticky open", {
                     fullscreen: true,
                 });
             });
@@ -143,13 +148,29 @@ test.describe("Local nav", () => {
         });
 
         test("Dropdown (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.dropdown,
+            await test.step("Non-sticky mode", async () => {
+                await compareScreenshot(story, "non-sticky unopened", {
+                    fullscreen: true,
+                });
+                await story.locators.dropdownLabel.click();
+                await compareScreenshot(story, "non-sticky open", {
+                    fullscreen: true,
+                });
+                await story.locators.dropdownLabel.click();
             });
-            await story.locators.dropdownLabel.click();
-            await expect(story.locators.dropdownList).toBeVisible();
-            await compareScreenshot(story, "sticky-open", {
-                fullscreen: true,
+
+            await test.step("Scroll until sticky", async () => {
+                await story.scrollUntilSticky();
+                await compareScreenshot(story, "sticky unopened", {
+                    fullscreen: true,
+                });
+            });
+
+            await test.step("Open dropdown when stickied shows backdrop", async () => {
+                await story.locators.dropdownLabel.click();
+                await compareScreenshot(story, "sticky open", {
+                    fullscreen: true,
+                });
             });
         });
     });
