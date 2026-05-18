@@ -74,7 +74,7 @@ test.describe("TimeSlotBar", () => {
                       - paragraph: Blocked
                     - gridcell "12:00PM to 6:00PM, Unavailable":
                       - button "12:00PM to 6:00PM, Unavailable" [disabled]
-            `);
+                `);
 
                 await story.page
                     .getByTestId("time-slot-bar-slot-a-timeslot")
@@ -92,6 +92,23 @@ test.describe("TimeSlotBar", () => {
 
             test(`Minified ${mode} mode`, async ({ story }) => {
                 await compareScreenshot(story, "mount");
+
+                await expect(story.locators.timeSlotBar).toMatchAriaSnapshot(`
+                - paragraph: 8am
+                - paragraph: 10am
+                - paragraph: 12pm
+                - paragraph: 2pm
+                - paragraph: 4pm
+                - paragraph: 6pm
+                - paragraph: 8pm
+                - grid "Time slot bar, 8:00AM to 9:00AM, Unavailable, 9:00AM to 10:00AM, Available, 10:00AM to 2:00PM, Unavailable, 2:00PM to 3:30PM, Available, 3:30PM to 10:00PM, Unavailable":
+                  - row:
+                    - gridcell
+                    - gridcell
+                    - gridcell
+                    - gridcell
+                    - gridcell
+                `);
             });
         });
     });

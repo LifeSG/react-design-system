@@ -27,7 +27,7 @@ export default function Story() {
     return (
         <div className="story-column-container">
             <TimeSlotBar
-                data-testid="time-slot-bar-minified"
+                data-testid="time-slot-bar"
                 variant="minified"
                 startTime="08:00"
                 endTime="22:00"
