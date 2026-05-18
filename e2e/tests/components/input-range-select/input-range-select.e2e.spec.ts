@@ -18,6 +18,9 @@ class StoryPage extends AbstractStoryPage {
         };
         focus: Locator;
         focusStart: Locator;
+        focusDisabled: Locator;
+        focusError: Locator;
+        focusReadOnly: Locator;
         search: Locator;
         grid: Locator;
     };
@@ -39,6 +42,13 @@ class StoryPage extends AbstractStoryPage {
             },
             focus: page.getByTestId("input-range-select-focus-base"),
             focusStart: page.getByTestId("focus-start"),
+            focusDisabled: page.getByTestId(
+                "input-range-select-focus-disabled-base"
+            ),
+            focusError: page.getByTestId("input-range-select-focus-error-base"),
+            focusReadOnly: page.getByTestId(
+                "input-range-select-focus-readonly-base"
+            ),
             search: page.getByTestId("input-range-select-search-base"),
             grid: page.getByTestId("input-range-select-grid-layout"),
         };
@@ -275,40 +285,92 @@ test.describe("InputRangeSelect", () => {
             );
         });
 
-        test("Keyboard navigation", async ({ story }) => {
-            await story.getFromButton(story.locators.focus).focus();
-
-            await story.page.keyboard.press("Enter");
-            await expect(
-                story.locators.internal.dropdownContainer
-            ).toBeVisible();
-
-            await story.page.keyboard.press("ArrowDown");
-            await story.page.keyboard.press("ArrowDown");
-            await story.page.keyboard.press("Enter");
-
-            await expect(
-                story.locators.internal.dropdownContainer
-            ).toBeVisible();
-            await expect(story.locators.focus).toMatchAriaSnapshot(`
-                - combobox
-                - combobox [expanded]
-            `);
-
-            await story.page.keyboard.press("Escape");
-            await expect(
-                story.locators.internal.dropdownContainer
-            ).not.toBeVisible();
-            await expect(
-                story.getToButton(story.locators.focus)
-            ).toBeFocused();
-        });
-
-        test("From button focus ring", async ({ story }) => {
+        test("Keyboard navigation and focus ring states", async ({ story }) => {
             await story.locators.focusStart.focus();
-            await story.page.keyboard.press("Tab");
-            await compareScreenshot(story, "from-focus-ring", {
-                locator: story.locators.focus,
+
+            await test.step("Default from - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "default-from-focused", {
+                    locator: story.locators.focus,
+                });
+            });
+
+            await test.step("Default from - dropdown open", async () => {
+                await story.page.keyboard.press("Enter");
+                await compareScreenshot(story, "default-from-dropdown-open", {
+                    locator: story.locators.focus,
+                });
+            });
+
+            await test.step("Default from - dropdown closed", async () => {
+                await story.page.keyboard.press("Escape");
+                await compareScreenshot(story, "default-from-dropdown-closed", {
+                    locator: story.locators.focus,
+                });
+            });
+
+            await test.step("Default to - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "default-to-focused", {
+                    locator: story.locators.focus,
+                });
+            });
+
+            await test.step("Disabled from - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "disabled-from-focused", {
+                    locator: story.locators.focusDisabled,
+                });
+            });
+
+            await test.step("Disabled to - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "disabled-to-focused", {
+                    locator: story.locators.focusDisabled,
+                });
+            });
+
+            await test.step("Error from - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "error-from-focused", {
+                    locator: story.locators.focusError,
+                });
+            });
+
+            await test.step("Error from - dropdown open", async () => {
+                await story.page.keyboard.press("Enter");
+                await compareScreenshot(story, "error-from-dropdown-open", {
+                    locator: story.locators.focusError,
+                });
+            });
+
+            await test.step("Error from - dropdown closed", async () => {
+                await story.page.keyboard.press("Escape");
+                await compareScreenshot(story, "error-from-dropdown-closed", {
+                    locator: story.locators.focusError,
+                });
+            });
+
+            await test.step("Error to - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "error-to-focused", {
+                    locator: story.locators.focusError,
+                });
+            });
+
+            await test.step("Readonly from - focused", async () => {
+                await story.page.keyboard.press("Tab"); // skip error message
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "readonly-from-focused", {
+                    locator: story.locators.focusReadOnly,
+                });
+            });
+
+            await test.step("Readonly to - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "readonly-to-focused", {
+                    locator: story.locators.focusReadOnly,
+                });
             });
         });
     });
@@ -323,11 +385,92 @@ test.describe("InputRangeSelect", () => {
             await compareScreenshot(story, "from-open", { fullscreen: true });
         });
 
-        test("From button focus ring", async ({ story }) => {
+        test("Focus ring states", async ({ story }) => {
             await story.locators.focusStart.focus();
-            await story.page.keyboard.press("Tab");
-            await compareScreenshot(story, "from-focus-ring", {
-                locator: story.locators.focus,
+
+            await test.step("Default from - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "default-from-focused", {
+                    locator: story.locators.focus,
+                });
+            });
+
+            await test.step("Default from - dropdown open", async () => {
+                await story.page.keyboard.press("Enter");
+                await compareScreenshot(story, "default-from-dropdown-open", {
+                    locator: story.locators.focus,
+                });
+            });
+
+            await test.step("Default from - dropdown closed", async () => {
+                await story.page.keyboard.press("Escape");
+                await compareScreenshot(story, "default-from-dropdown-closed", {
+                    locator: story.locators.focus,
+                });
+            });
+
+            await test.step("Default to - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "default-to-focused", {
+                    locator: story.locators.focus,
+                });
+            });
+
+            await test.step("Disabled from - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "disabled-from-focused", {
+                    locator: story.locators.focusDisabled,
+                });
+            });
+
+            await test.step("Disabled to - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "disabled-to-focused", {
+                    locator: story.locators.focusDisabled,
+                });
+            });
+
+            await test.step("Error from - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "error-from-focused", {
+                    locator: story.locators.focusError,
+                });
+            });
+
+            await test.step("Error from - dropdown open", async () => {
+                await story.page.keyboard.press("Enter");
+                await compareScreenshot(story, "error-from-dropdown-open", {
+                    locator: story.locators.focusError,
+                });
+            });
+
+            await test.step("Error from - dropdown closed", async () => {
+                await story.page.keyboard.press("Escape");
+                await compareScreenshot(story, "error-from-dropdown-closed", {
+                    locator: story.locators.focusError,
+                });
+            });
+
+            await test.step("Error to - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "error-to-focused", {
+                    locator: story.locators.focusError,
+                });
+            });
+
+            await test.step("Readonly from - focused", async () => {
+                await story.page.keyboard.press("Tab"); // skip error message
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "readonly-from-focused", {
+                    locator: story.locators.focusReadOnly,
+                });
+            });
+
+            await test.step("Readonly to - focused", async () => {
+                await story.page.keyboard.press("Tab");
+                await compareScreenshot(story, "readonly-to-focused", {
+                    locator: story.locators.focusReadOnly,
+                });
             });
         });
     });
