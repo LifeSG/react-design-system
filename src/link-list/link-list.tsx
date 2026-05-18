@@ -1,6 +1,8 @@
+import clsx from "clsx";
+
 import { EagerLinkList } from "./components/link-list-eager";
 import { LazyLinkList } from "./components/link-list-lazy";
-import { Container } from "./link-list.styles";
+import * as styles from "./link-list.styles";
 import type { LinkListProps } from "./types";
 
 export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
@@ -12,11 +14,12 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
             onItemClick,
             maxShown,
             customLabels,
+            className,
             ...otherProps
         } = props;
 
         return (
-            <Container {...otherProps}>
+            <div {...otherProps} className={clsx(styles.container, className)}>
                 <EagerLinkList
                     items={items}
                     maxShown={maxShown}
@@ -24,7 +27,7 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
                     onItemClick={onItemClick}
                     customLabels={customLabels}
                 />
-            </Container>
+            </div>
         );
     }
     if (props.loadMode === "lazy") {
@@ -37,11 +40,15 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
                 loadMore,
                 onLoadMore,
                 customLabels,
+                className,
                 ...otherProps
             } = props;
 
             return (
-                <Container {...otherProps}>
+                <div
+                    {...otherProps}
+                    className={clsx(styles.container, className)}
+                >
                     <LazyLinkList
                         items={items}
                         style={style}
@@ -50,7 +57,7 @@ export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
                         onLoadMore={onLoadMore}
                         customLabels={customLabels}
                     />
-                </Container>
+                </div>
             );
         }
     }
