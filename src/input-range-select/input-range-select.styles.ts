@@ -1,9 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { InputWrapper } from "../shared/input-wrapper";
 import { Colour, Spacing } from "../theme";
 
-export const ClearIconContainer = styled.button`
+export const clearIconContainer = css`
     height: auto;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     cursor: pointer;
@@ -16,11 +15,11 @@ export const ClearIconContainer = styled.button`
     margin-right: 0;
 `;
 
-export const StyledInputWrapper = styled(InputWrapper)`
+export const styledInputWrapper = css`
     height: 3rem;
 `;
 
-export const RangeSelectorButton = styled.button`
+export const rangeSelectorButton = css`
     appearance: none;
     border: 0;
     background: transparent;

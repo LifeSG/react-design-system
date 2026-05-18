@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FormErrorMessage } from "../../form/form-label";
 import { clearIcon } from "../../input/input.styles";
-import { ClearIconContainer } from "../../input-range-select/input-range-select.styles";
+import * as inputStyles from "../../input-range-select/input-range-select.styles";
 import { concatIds, VisuallyHidden } from "../../shared/accessibility";
 import { DropdownListState } from "../../shared/dropdown-list";
 import { DropdownList } from "../../shared/dropdown-list/dropdown-list";
@@ -336,13 +336,14 @@ export const ComboboxPicker = ({
             (startTimeVal?.length > 0 || endTimeVal?.length > 0)
         ) {
             return (
-                <ClearIconContainer
+                <button
                     onClick={handleClear}
                     type="button"
                     aria-label="Clear"
+                    className={inputStyles.clearIconContainer}
                 >
                     <CrossIcon className={clearIcon} aria-hidden />
-                </ClearIconContainer>
+                </button>
             );
         }
     };
