@@ -26,12 +26,15 @@ export const container = css`
         }
     }
 
-    ${MediaQuery.MaxWidth.lg} {
-        grid-column: 1 / -1;
-    }
+    ${MediaQuery.MaxWidth.lg}, ${MediaQuery.MaxWidth.sm} {
+        &[data-width="half"],
+        &[data-width="full"] {
+            grid-column: 1 / -1;
 
-    ${MediaQuery.MaxWidth.sm} {
-        grid-column: 1 / -1 !important;
+            &[data-full-width="true"] {
+                grid-column: 1 / -1;
+            }
+        }
     }
 `;
 
