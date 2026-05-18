@@ -1,30 +1,7 @@
 import styled, { css } from "styled-components";
 
-import type { TimeSlotBarVariant } from "../../time-slot-bar/types";
 import { V3_Colour } from "../../v3_theme";
 import type { V3_ThemeStyleProps } from "../../v3_theme/types";
-
-// =============================================================================
-// STYLING HELPERS
-// =============================================================================
-
-// Function to get the width of a cell in px
-export const getCellWidth = (variant: TimeSlotBarVariant) => {
-    if (variant === "minified") {
-        return 12;
-    } else {
-        return 40;
-    }
-};
-
-// Function to get the height of a cell in px
-export const getCellHeight = (variant: TimeSlotBarVariant) => {
-    if (variant === "minified") {
-        return 12;
-    } else {
-        return 40;
-    }
-};
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -32,11 +9,6 @@ export const getCellHeight = (variant: TimeSlotBarVariant) => {
 // =============================================================================
 
 export interface TimeSlotStyleProps {
-    $type?: "default" | "vertical";
-    // To be refactored during migration to remove the dependency of TimeSlotBarVariant in TimeSlot
-    $variant: TimeSlotBarVariant;
-    $width?: number;
-    $left?: number;
     $styleType: "default" | "stripes";
     $bgColor: string | ((props: V3_ThemeStyleProps) => string);
     $bgColor2?: string | ((props: V3_ThemeStyleProps) => string);
@@ -50,25 +22,6 @@ export interface TimeSlotStyleProps {
 // =============================================================================
 
 export const StyledTimeSlot = styled.div<TimeSlotStyleProps>`
-    ${(props) => {
-        if (props.$type === "vertical") {
-            return css`
-                display: flex;
-                flex-grow: 1;
-                align-items: center;
-                justify-content: center;
-                width: 100%;
-                margin: 1px 0px;
-            `;
-        } else {
-            return css`
-                position: absolute;
-                height: ${getCellHeight(props.$variant)}px;
-                width: ${props.$width}px;
-                left: ${props.$left}px;
-            `;
-        }
-    }}
     background-color: ${({ $bgColor }) => $bgColor};
     cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
     ${({ $hoverBgColor, $clickable }) =>

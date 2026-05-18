@@ -3,7 +3,6 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 
 import { ClickableIcon } from "../shared/clickable-icon";
-import { getCellHeight, getCellWidth } from "../shared/time-slot";
 import type { Direction } from "../shared/time-slot/types";
 import { Typography } from "../typography";
 import { V3_Border, V3_Colour, V3_Shadow } from "../v3_theme";
@@ -15,6 +14,23 @@ const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
 // STYLING HELPERS
 // =============================================================================
 
+// Function to get the width of a cell in px
+export const getCellWidth = (variant: TimeSlotBarVariant) => {
+    if (variant === "minified") {
+        return 12;
+    } else {
+        return 40;
+    }
+};
+
+// Function to get the height of a cell in px
+export const getCellHeight = (variant: TimeSlotBarVariant) => {
+    if (variant === "minified") {
+        return 12;
+    } else {
+        return 40;
+    }
+};
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -160,4 +176,26 @@ export const CellText = styled(Typography.BodyXS)<CellTextStyleProps>`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+`;
+
+// =============================================================================
+// STYLED TIME SLOT COMPONENTS
+// =============================================================================
+
+interface TimeSlotWrapperProps {
+    $variant: TimeSlotBarVariant;
+    $slotWidth?: number;
+    $slotOffset?: number;
+}
+
+export const StyledTimeSlotItem = styled.div<TimeSlotWrapperProps>`
+    position: absolute;
+    height: ${({ $variant }) => `${getCellHeight($variant)}px`};
+    width: ${({ $slotWidth }) => `${$slotWidth}px`};
+    left: ${({ $slotOffset }) => `${$slotOffset}px`};
+
+    > * {
+        width: 100%;
+        height: 100%;
+    }
 `;

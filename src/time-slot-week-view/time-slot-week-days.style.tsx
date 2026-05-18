@@ -66,6 +66,12 @@ export const TimeSlotText = styled.div`
 `;
 
 export const TimeSlotComponent = styled(TimeSlot)`
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 1px 0px;
     position: relative;
 
     &:focus-within {

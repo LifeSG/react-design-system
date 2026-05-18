@@ -600,14 +600,12 @@ export const TimeSlotBarWeekDays = ({
 
         return (
             <TimeSlotComponent
-                $type="vertical"
-                $variant="default"
                 key={id}
-                $styleType={styleType}
-                $bgColor={backgroundColor}
-                $bgColor2={backgroundColor2}
+                styleType={styleType}
+                bgColor={backgroundColor}
+                bgColor2={backgroundColor2}
+                clickable={clickable}
                 $halfFill={halfFill}
-                $clickable={clickable}
                 $height={
                     variant === "fixed"
                         ? cellLength * SLOT_HEIGHT + (cellLength - 1) * SLOT_GAP
