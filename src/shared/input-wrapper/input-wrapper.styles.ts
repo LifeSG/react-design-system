@@ -130,3 +130,30 @@ export const basicButton = css`
         border-radius: ${Radius["sm"]};
     }
 `;
+
+export const clearButton = css`
+    background: transparent;
+    border: none;
+    outline: none;
+    height: auto;
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+    margin-right: calc(-1 * ${Spacing["spacing-16"]});
+    cursor: pointer;
+    color: ${Colour.icon};
+
+    &:focus,
+    &:active {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: 2px solid ${Colour["border-focus"]};
+        border-radius: ${Radius["sm"]};
+    }
+`;
+
+export const clearIcon = css`
+    height: 1.25rem;
+    width: 1.25rem;
+    vertical-align: middle;
+`;

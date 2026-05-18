@@ -113,3 +113,19 @@ export const BasicButton = forwardRef<HTMLButtonElement, BasicButtonProps>(
         );
     }
 );
+
+/**
+ * Clear button with touch-target padding, offsetting negative margin, and
+ * a fixed 2px focus outline
+ */
+export const ClearButton = forwardRef<HTMLButtonElement, BasicButtonProps>(
+    function ClearButton({ className, ...props }, ref) {
+        return (
+            <button
+                ref={ref}
+                className={clsx(styles.clearButton, className)}
+                {...props}
+            />
+        );
+    }
+);

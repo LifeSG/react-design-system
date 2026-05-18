@@ -3,11 +3,6 @@ import { css } from "@linaria/core";
 import { Colour, Spacing } from "../theme";
 
 export const clearIconContainer = css`
-    height: auto;
-    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
-    cursor: pointer;
-    color: ${Colour.icon};
-
     /* Position styles */
     position: absolute;
     right: 0;

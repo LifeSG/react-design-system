@@ -3,7 +3,6 @@ import clsx from "clsx";
 import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import * as inputStyles from "../input/input.styles";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import type { DropdownListApi } from "../shared/dropdown-list";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list";
@@ -12,7 +11,8 @@ import {
     PlaceholderLabel,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
-import { BasicButton, InputWrapper } from "../shared/input-wrapper";
+import { ClearButton, InputWrapper } from "../shared/input-wrapper";
+import * as inputWrapperStyles from "../shared/input-wrapper/input-wrapper.styles";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
@@ -352,17 +352,17 @@ export const InputRangeSelect = <T, V>({
                     selectedToValue &&
                     !readOnly &&
                     !disabled && (
-                        <BasicButton
+                        <ClearButton
                             onClick={handleClear}
                             type="button"
                             aria-label="Clear"
                             className={styles.clearIconContainer}
                         >
                             <CrossIcon
-                                className={inputStyles.clearIcon}
+                                className={inputWrapperStyles.clearIcon}
                                 aria-hidden
                             />
-                        </BasicButton>
+                        </ClearButton>
                     )}
             </InputWrapper>
         );
