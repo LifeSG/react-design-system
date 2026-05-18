@@ -427,4 +427,14 @@ test.describe("PhoneNumberInput", () => {
             await compareScreenshot(story, "mount");
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout");
+        });
+
+        test("Grid layout", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
 });
