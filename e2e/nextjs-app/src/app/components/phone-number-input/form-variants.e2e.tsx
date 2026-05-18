@@ -28,6 +28,7 @@ export default function Story() {
             <Form.PhoneNumberInput
                 data-testid="phone-number-input-readonly"
                 label="Readonly"
+                placeholder="Enter phone number"
                 readOnly
             />
         </div>
