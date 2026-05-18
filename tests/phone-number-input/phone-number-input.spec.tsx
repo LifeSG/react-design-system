@@ -129,10 +129,12 @@ describe("PhoneNumberInput", () => {
         });
 
         describe("country selection", () => {
-            it("should update the selector label and reformat the number when a country is selected", () => {
+            it("should update selector, reformat number, and call onChange when a country is selected", () => {
+                const onChange = jest.fn();
                 render(
                     <PhoneNumberInput
                         value={{ countryCode: "+994", number: "12345678" }}
+                        onChange={onChange}
                     />
                 );
 
@@ -146,21 +148,6 @@ describe("PhoneNumberInput", () => {
                 );
                 expect(screen.queryByTestId(INPUT_TESTID)).toHaveValue(
                     "1234 5678"
-                );
-            });
-
-            it("should call onChange with the reformatted number and new country code when a country is selected", () => {
-                const onChange = jest.fn();
-                render(
-                    <PhoneNumberInput
-                        value={{ countryCode: "+994", number: "12345678" }}
-                        onChange={onChange}
-                    />
-                );
-
-                fireEvent.click(screen.getByTestId(SELECTOR_TESTID));
-                fireEvent.click(
-                    screen.getByRole("option", { name: /Singapore/i })
                 );
 
                 expect(onChange).toHaveBeenCalledTimes(1);
