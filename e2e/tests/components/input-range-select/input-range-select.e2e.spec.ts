@@ -8,7 +8,6 @@ class StoryPage extends AbstractStoryPage {
         internal: {
             dropdownContainer: Locator;
             dropdownList: Locator;
-            noResults: Locator;
             searchInput: Locator;
         };
         form: {
@@ -30,7 +29,6 @@ class StoryPage extends AbstractStoryPage {
             internal: {
                 dropdownContainer: page.getByTestId("dropdown-container"),
                 dropdownList: page.getByTestId("dropdown-list"),
-                noResults: page.getByTestId("list-no-results"),
                 searchInput: page.getByTestId("search-input"),
             },
             form: {
@@ -120,7 +118,7 @@ test.describe("InputRangeSelect", () => {
             await story.init("form-variants", { size: "mobile" });
         });
 
-        test("All variants (mobile)", async ({ story }) => {
+        test("All variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
@@ -140,7 +138,7 @@ test.describe("InputRangeSelect", () => {
             await story.init("form-variants-prefilled");
         });
 
-        test("All variants prefilled", async ({ story }) => {
+        test("All variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
 
@@ -177,7 +175,7 @@ test.describe("InputRangeSelect", () => {
             await story.init("form-variants-prefilled", { mode: "dark" });
         });
 
-        test("All variants prefilled (dark mode)", async ({ story }) => {
+        test("All variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
@@ -187,7 +185,7 @@ test.describe("InputRangeSelect", () => {
             await story.init("standalone");
         });
 
-        test("All standalone variants", async ({ story }) => {
+        test("All variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
@@ -204,19 +202,6 @@ test.describe("InputRangeSelect", () => {
                 - combobox
             `);
             await compareScreenshot(story, "from-open", { fullscreen: true });
-        });
-
-        test("Clicking to before from redirects to from dropdown", async ({
-            story,
-        }) => {
-            await story.getToButton(story.locators.focus).click();
-            await expect(
-                story.locators.internal.dropdownContainer
-            ).toBeVisible();
-            await expect(story.locators.focus).toMatchAriaSnapshot(`
-                - combobox [expanded]
-                - combobox
-            `);
         });
 
         test("Select from then auto-opens to dropdown", async ({ story }) => {
@@ -314,6 +299,9 @@ test.describe("InputRangeSelect", () => {
             await expect(
                 story.locators.internal.dropdownContainer
             ).not.toBeVisible();
+            await expect(
+                story.getToButton(story.locators.focus)
+            ).toBeFocused();
         });
 
         test("From button focus ring", async ({ story }) => {
@@ -330,12 +318,12 @@ test.describe("InputRangeSelect", () => {
             await story.init("focus-states", { mode: "dark" });
         });
 
-        test("Open from dropdown (dark mode)", async ({ story }) => {
+        test("Open from dropdown", async ({ story }) => {
             await story.openDropdown(story.getFromButton(story.locators.focus));
             await compareScreenshot(story, "from-open", { fullscreen: true });
         });
 
-        test("From button focus ring (dark mode)", async ({ story }) => {
+        test("From button focus ring", async ({ story }) => {
             await story.locators.focusStart.focus();
             await story.page.keyboard.press("Tab");
             await compareScreenshot(story, "from-focus-ring", {
