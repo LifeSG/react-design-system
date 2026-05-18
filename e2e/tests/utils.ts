@@ -93,6 +93,25 @@ export abstract class AbstractStoryPage {
             })
             .toBe(true);
     }
+
+    public async scrollToEnd(options: {
+        scrollTarget: Locator;
+        maxAttempts?: number;
+    }) {
+        const { scrollTarget, maxAttempts = 12 } = options;
+
+        await this.scrollWithWheelUntil({
+            scrollTarget,
+            until: async () => {
+                return await this.page.evaluate(
+                    () =>
+                        window.scrollY + window.innerHeight >=
+                        document.documentElement.scrollHeight
+                );
+            },
+            maxAttempts,
+        });
+    }
 }
 
 /**
@@ -133,7 +152,7 @@ export const compareScreenshot = async (
         : storyPage.page.locator("body");
 
     await expect.soft(target).toHaveScreenshot(`${name}.png`, {
-        fullPage: options?.fullscreen ?? false,
+        fullPage: false,
         threshold: 0.01, // Strict colour matching
         maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
         maxDiffPixels: 50,

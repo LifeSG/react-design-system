@@ -101,17 +101,7 @@ test.describe("Countdown Timer", () => {
         });
 
         test("Right-aligned fixed position", async ({ story }) => {
-            await story.scrollWithWheelUntil({
-                scrollTarget: story.layout,
-                until: async () => {
-                    return await story.page.evaluate(
-                        () =>
-                            window.scrollY + window.innerHeight >=
-                            document.documentElement.scrollHeight
-                    );
-                },
-                maxAttempts: 30,
-            });
+            await story.scrollToEnd({ scrollTarget: story.layout });
 
             await compareScreenshot(story, "scrolled", { fullscreen: true });
         });
@@ -125,17 +115,7 @@ test.describe("Countdown Timer", () => {
         });
 
         test("Left-aligned fixed position", async ({ story }) => {
-            await story.scrollWithWheelUntil({
-                scrollTarget: story.layout,
-                until: async () => {
-                    return await story.page.evaluate(
-                        () =>
-                            window.scrollY + window.innerHeight >=
-                            document.documentElement.scrollHeight
-                    );
-                },
-                maxAttempts: 30,
-            });
+            await story.scrollToEnd({ scrollTarget: story.layout });
 
             await compareScreenshot(story, "scrolled", { fullscreen: true });
         });
@@ -150,17 +130,36 @@ test.describe("Countdown Timer", () => {
         });
 
         test("Fixed position mobile", async ({ story }) => {
-            await story.scrollWithWheelUntil({
-                scrollTarget: story.layout,
-                until: async () => {
-                    return await story.page.evaluate(
-                        () =>
-                            window.scrollY + window.innerHeight >=
-                            document.documentElement.scrollHeight
-                    );
-                },
-                maxAttempts: 30,
+            await story.scrollToEnd({ scrollTarget: story.layout });
+
+            await compareScreenshot(story, "scrolled", { fullscreen: true });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-offset", {
+                mockedTimestamp: fixedTimestamp,
             });
+        });
+
+        test("Custom offset", async ({ story }) => {
+            await story.scrollToEnd({ scrollTarget: story.layout });
+
+            await compareScreenshot(story, "scrolled", { fullscreen: true });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-offset", {
+                mockedTimestamp: fixedTimestamp,
+                size: "mobile",
+            });
+        });
+
+        test("Custom offset (mobile)", async ({ story }) => {
+            await story.scrollToEnd({ scrollTarget: story.layout });
 
             await compareScreenshot(story, "scrolled", { fullscreen: true });
         });
