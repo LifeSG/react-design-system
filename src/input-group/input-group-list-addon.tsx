@@ -321,25 +321,31 @@ export const Component = <T, V>(
                 <VisuallyHidden aria-hidden id={textboxLabelId}>
                     {textboxAriaLabel}
                 </VisuallyHidden>
-                <Input
-                    ref={ref}
-                    {...otherProps}
-                    readOnly={readOnly}
-                    disabled={disabled}
-                    error={error}
-                    onChange={handleInputChange}
-                    data-testid="input"
-                    styleType="no-border"
-                    aria-labelledby={concatIds(ariaLabelledBy, textboxLabelId)}
-                    aria-describedby={ariaDescribedBy}
-                    aria-invalid={ariaInvalid}
+                <div
                     data-position={position}
                     className={clsx(
-                        readOnly && styles.fieldInputReadOnly,
-                        !readOnly && noBorder && styles.fieldInputNoBorder,
-                        !readOnly && !noBorder && styles.fieldInputPosition
+                        styles.fieldInput,
+                        noBorder && styles.fieldInputNoBorder,
+                        readOnly && styles.fieldInputReadOnly
                     )}
-                />
+                >
+                    <Input
+                        ref={ref}
+                        {...otherProps}
+                        readOnly={readOnly}
+                        disabled={disabled}
+                        error={error}
+                        onChange={handleInputChange}
+                        data-testid="input"
+                        styleType="no-border"
+                        aria-labelledby={concatIds(
+                            ariaLabelledBy,
+                            textboxLabelId
+                        )}
+                        aria-describedby={ariaDescribedBy}
+                        aria-invalid={ariaInvalid}
+                    />
+                </div>
             </InputBox>
         </DropdownListState>
     );

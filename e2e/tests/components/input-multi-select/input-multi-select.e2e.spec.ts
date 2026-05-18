@@ -1,5 +1,9 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    isInViewport,
+} from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "input-multi-select";
@@ -96,6 +100,8 @@ class StoryPage extends AbstractStoryPage {
 
     public async openDropdown(multiSelect: Locator) {
         await multiSelect.click();
+        await this.page.waitForTimeout(300); // Wait for dropdown animation to complete
+
         await expect(this.locators.component.dropdownContainer).toBeVisible();
         await expect(this.locators.component.dropdownList).toBeVisible();
     }
@@ -612,8 +618,7 @@ test.describe("InputMultiSelect", () => {
 
             await story.scrollWithWheelUntil({
                 scrollTarget: story.locators.component.dropdownList,
-                until: async () =>
-                    story.page.getByText("Option 100").isVisible(),
+                until: async () => isInViewport(story.getOption("Option 100")),
             });
 
             await expect(story.getOption("Option 1")).not.toBeVisible();

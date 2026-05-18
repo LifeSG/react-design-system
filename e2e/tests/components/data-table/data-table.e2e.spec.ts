@@ -311,14 +311,7 @@ test.describe("DataTable", () => {
 
                 await firstRowCheckbox.click();
 
-                await story.scrollWithWheelUntil({
-                    scrollTarget: story.layout,
-                    until: async () => {
-                        return await story.page.evaluate(
-                            () => window.scrollY > 0
-                        );
-                    },
-                });
+                await story.page.keyboard.press("PageDown");
 
                 await compareScreenshot(story, "state", {
                     locator: story.locators.dataTable,
