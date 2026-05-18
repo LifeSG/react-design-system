@@ -131,13 +131,15 @@ test.describe("TimeSlotBar", () => {
         });
 
         test("Overflowing behavior", async ({ story }) => {
-            const clickUntilEdge = async (arrow: Locator) => {
+            const clickUntilEdge = async (getArrow: () => Locator) => {
                 for (let attempt = 0; attempt < 20; attempt += 1) {
-                    if (!(await arrow.isVisible())) {
+                    const arrow = getArrow();
+
+                    if (!(await arrow.isVisible().catch(() => false))) {
                         return;
                     }
 
-                    await arrow.click();
+                    await arrow.click({ force: true }).catch(() => undefined);
                     await story.page.waitForTimeout(50);
                 }
 
@@ -147,10 +149,10 @@ test.describe("TimeSlotBar", () => {
             await expect(story.locators.internal.leftArrow).toBeVisible();
             await expect(story.locators.internal.rightArrow).toBeVisible();
 
-            await clickUntilEdge(story.locators.internal.leftArrow);
+            await clickUntilEdge(() => story.locators.internal.leftArrow);
             await compareScreenshot(story, "state-with-right-arrow-only");
 
-            await clickUntilEdge(story.locators.internal.rightArrow);
+            await clickUntilEdge(() => story.locators.internal.rightArrow);
             await compareScreenshot(story, "state-with-left-arrow-only");
         });
     });
