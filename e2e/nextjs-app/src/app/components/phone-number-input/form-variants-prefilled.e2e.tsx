@@ -27,6 +27,13 @@ export default function Story() {
                 placeholder="Enter phone number"
                 value={{ countryCode: "+213", number: "91234567" }}
             />
+
+            <Form.PhoneNumberInput
+                data-testid="phone-number-input-readonly"
+                label="Readonly"
+                value={{ countryCode: "+65", number: "91234567" }}
+                readOnly
+            />
         </div>
     );
 }

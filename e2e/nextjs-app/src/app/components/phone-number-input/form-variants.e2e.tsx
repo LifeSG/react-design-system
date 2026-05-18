@@ -28,7 +28,6 @@ export default function Story() {
             <Form.PhoneNumberInput
                 data-testid="phone-number-input-readonly"
                 label="Readonly"
-                value={{ countryCode: "+65", number: "91234567" }}
                 readOnly
             />
         </div>

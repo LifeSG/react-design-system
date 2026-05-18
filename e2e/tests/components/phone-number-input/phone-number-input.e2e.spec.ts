@@ -273,6 +273,14 @@ test.describe("PhoneNumberInput", () => {
                       - text: 912 345 67
                     - paragraph: Mobile number is required
                 `);
+
+                await expect(
+                    story.page.getByTestId("phone-number-input-readonly")
+                ).toMatchAriaSnapshot(`
+                    - text: Readonly
+                    - combobox "Readonly": "+65"
+                    - textbox "Readonly Enter phone number": 9123 4567
+                `);
             });
 
             test("Focus states", async ({ story }) => {
@@ -289,6 +297,11 @@ test.describe("PhoneNumberInput", () => {
                 await story.getTextbox(story.locators.form.error).focus();
                 await compareScreenshot(story, "error", {
                     locator: story.locators.form.error,
+                });
+
+                await story.getTextbox(story.locators.form.readonly).focus();
+                await compareScreenshot(story, "readonly", {
+                    locator: story.locators.form.readonly,
                 });
             });
 
