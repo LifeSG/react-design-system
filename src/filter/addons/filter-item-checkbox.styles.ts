@@ -1,10 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../../button";
-import { Checkbox } from "../../checkbox";
 import { Colour, Font, MediaQuery, Spacing } from "../../theme";
-import { Toggle } from "../../toggle";
-import { FilterItem } from "../filter-item";
 
 export const tokens = {
     item: {
@@ -12,7 +8,7 @@ export const tokens = {
     },
 } as const;
 
-export const StyledFilterItem = styled(FilterItem)`
+export const filterItem = css`
     padding: 0 0 ${Spacing["spacing-16"]};
 
     [data-id="content-container"] {
@@ -30,7 +26,7 @@ export const StyledFilterItem = styled(FilterItem)`
     }
 `;
 
-export const Group = styled.div`
+export const group = css`
     display: flex;
     flex-direction: column;
 
@@ -38,22 +34,20 @@ export const Group = styled.div`
         flex-direction: row;
         flex-wrap: wrap;
         gap: 0;
-
-        &.groupMobileToggleMode {
-            gap: ${Spacing["spacing-16"]};
-        }
     }
 `;
 
-export const Item = styled.label`
+export const groupMobileToggleMode = css`
+    ${MediaQuery.MaxWidth.lg} {
+        gap: ${Spacing["spacing-16"]};
+    }
+`;
+
+export const item = css`
     ${tokens.item.level}: 0;
 
     display: flex;
     align-items: flex-start;
-
-    &.itemHidden {
-        display: none;
-    }
 
     position: relative;
     width: 100%;
@@ -68,10 +62,6 @@ export const Item = styled.label`
     ${Font["body-md-regular"]}
     color: ${Colour["text"]};
 
-    &.itemSelected {
-        color: ${Colour["text-selected"]};
-    }
-
     ${MediaQuery.MaxWidth.lg} {
         padding: ${Spacing["spacing-8"]};
         padding-left: calc(
@@ -81,20 +71,28 @@ export const Item = styled.label`
     }
 `;
 
-export const StyledCheckbox = styled(Checkbox)`
+export const itemHidden = css`
+    display: none;
+`;
+
+export const itemSelected = css`
+    color: ${Colour["text-selected"]};
+`;
+
+export const checkbox = css`
     flex-shrink: 0;
     margin-right: ${Spacing["spacing-8"]};
 `;
 
-export const StyledToggle = styled(Toggle)`
+export const toggle = css`
     min-width: 5rem;
-
-    &.toggleHidden {
-        visibility: hidden;
-    }
 `;
 
-export const SelectAllButton = styled(Button.Small)`
+export const toggleHidden = css`
+    visibility: hidden;
+`;
+
+export const selectAllButton = css`
     height: fit-content;
     padding: 0;
     margin: ${Spacing["spacing-16"]} 0 ${Spacing["spacing-8"]}
