@@ -3,10 +3,9 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 
 import { ClickableIcon } from "../shared/clickable-icon";
-import type { Direction } from "../shared/time-slot/types";
 import { Typography } from "../typography";
 import { V3_Border, V3_Colour, V3_Shadow } from "../v3_theme";
-import type { TimeSlotBarVariant } from "./types";
+import type { Direction, TimeSlotBarVariant } from "./types";
 
 const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
 

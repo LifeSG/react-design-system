@@ -2,21 +2,22 @@ import type { ReactNode } from "react";
 
 import type { V3_ThemeStyleProps } from "../../v3_theme";
 import * as styles from "./time-slot.styles";
+import type { SlotStyle } from "./types";
 
 export interface TimeSlotProps {
-    children?: ReactNode;
-    onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
-    className?: string | undefined;
     ["data-testid"]?: string | undefined;
-    styleType: "default" | "stripes";
     bgColor: string | ((props: V3_ThemeStyleProps) => string);
     bgColor2?: string | ((props: V3_ThemeStyleProps) => string) | undefined;
+    children?: ReactNode;
+    className?: string | undefined;
+    clickable?: boolean | undefined;
     hoverBgColor?: string | ((props: V3_ThemeStyleProps) => string) | undefined;
     hoverBgColor2?:
         | string
         | ((props: V3_ThemeStyleProps) => string)
         | undefined;
-    clickable?: boolean | undefined;
+    onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
+    styleType: SlotStyle;
 }
 
 export const TimeSlot = ({
