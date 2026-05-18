@@ -1,4 +1,4 @@
-import { test as base, Locator, Page } from "@playwright/test";
+import { test as base, expect, Locator, Page } from "@playwright/test";
 import { fixedTimestamp } from "../../consts";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
@@ -6,18 +6,18 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "countdown-timer";
 
     public readonly locators: {
-        countdownTimer: Locator;
-        inlineCountdown: Locator;
-        fixedCountdown: Locator;
+        internal: {
+            inlineCountdown: Locator;
+        };
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
-            countdownTimer: page.getByTestId("countdown-timer"),
-            inlineCountdown: page.locator('[data-id="countdown-wrapper"]'),
-            fixedCountdown: page.locator('[data-id="fixed-countdown-wrapper"]'),
+            internal: {
+                inlineCountdown: page.locator('[data-id="countdown-wrapper"]'),
+            },
         };
     }
 }
@@ -162,6 +162,33 @@ test.describe("Countdown Timer", () => {
             await story.scrollToEnd({ scrollTarget: story.layout });
 
             await compareScreenshot(story, "scrolled", { fullscreen: true });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.page.clock.install({
+                time: new Date("2024-02-02T08:00:00"),
+            });
+            await story.init("non-warn", {
+                size: "mobile",
+            });
+        });
+
+        test("No timer drift", async ({ story }) => {
+            // Pretend that the user closed the laptop lid and opened it again
+            await story.page.clock.fastForward(60 * 1000 + 100);
+
+            await expect(story.locators.internal.inlineCountdown).toContainText(
+                "1 min 00 secs"
+            );
+
+            // Repeat
+            await story.page.clock.fastForward(61 * 1000);
+
+            await expect(story.locators.internal.inlineCountdown).toContainText(
+                "0 mins 00 secs"
+            );
         });
     });
 });
