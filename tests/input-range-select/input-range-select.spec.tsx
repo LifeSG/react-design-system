@@ -1,19 +1,16 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 import { FormRangeSelect } from "src/form/form-range-select";
 import { InputRangeSelect } from "src/input-range-select";
-import styled from "styled-components";
 
 jest.mock("react-resize-detector");
 
-// TODO: act can be removed after upgrading react-testing-library
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
-const Wrapper = styled.div`
-    width: 600px;
-`;
+const Wrapper = ({ children }: { children: React.ReactNode }) => (
+    <div style={{ width: "600px" }}>{children}</div>
+);
 
 const getListItemByText = (text: string) => {
     // Workaround to get list item by truncated text.
@@ -377,17 +374,13 @@ describe("InputRangeSelect", () => {
 
             await user.tab();
 
-            await act(async () => {
-                await user.keyboard("{Enter}");
-            });
+            await user.keyboard("{Enter}");
             const firstOption = await screen.findByRole("option", {
                 name: "From Option A",
             });
             await waitFor(() => expect(firstOption).toHaveFocus());
 
-            await act(async () => {
-                await user.click(document.body);
-            });
+            await user.click(document.body);
 
             await waitFor(() => {
                 expect(
@@ -423,23 +416,17 @@ describe("InputRangeSelect", () => {
 
             await user.tab();
 
-            await act(async () => {
-                await user.keyboard("{Enter}");
-            });
+            await user.keyboard("{Enter}");
             const firstOption = await screen.findByRole("option", {
                 name: "From Option A",
             });
             await waitFor(() => expect(firstOption).toHaveFocus());
 
-            await act(async () => {
-                await user.keyboard("{Enter}");
-            });
+            await user.keyboard("{Enter}");
             expect(screen.getByText("From ... on A")).toBeInTheDocument();
 
             await screen.findByText("To Option A");
-            await act(async () => {
-                await user.click(document.body);
-            });
+            await user.click(document.body);
 
             await waitFor(() => {
                 expect(getRangeButton("From")).toBeInTheDocument();
@@ -477,9 +464,7 @@ describe("InputRangeSelect", () => {
             );
 
             await user.tab();
-            await act(async () => {
-                await user.keyboard("{Enter}");
-            });
+            await user.keyboard("{Enter}");
 
             await waitFor(() => {
                 expect(getListItemByText("From Option A")).toBeInTheDocument();
@@ -490,24 +475,16 @@ describe("InputRangeSelect", () => {
                 expect(items[0]).toHaveFocus();
             });
 
-            await act(async () => {
-                await user.keyboard("{ArrowDown}");
-            });
+            await user.keyboard("{ArrowDown}");
             expect(items[1]).toHaveFocus();
 
-            await act(async () => {
-                await user.keyboard("{ArrowDown}");
-            });
+            await user.keyboard("{ArrowDown}");
             expect(items[2]).toHaveFocus();
 
-            await act(async () => {
-                await user.keyboard("{ArrowUp}");
-            });
+            await user.keyboard("{ArrowUp}");
             expect(items[1]).toHaveFocus();
 
-            await act(async () => {
-                await user.keyboard("{Enter}");
-            });
+            await user.keyboard("{Enter}");
             expect(screen.getByText("From ... on B")).toBeInTheDocument();
             await waitFor(() => {
                 expect(getListItemByText("To Option A")).toBeInTheDocument();
@@ -537,18 +514,14 @@ describe("InputRangeSelect", () => {
             );
 
             await user.tab();
-            await act(async () => {
-                await user.keyboard("{Enter}");
-            });
+            await user.keyboard("{Enter}");
 
             const searchInput = await screen.findByTestId("search-input");
             await waitFor(() => {
                 expect(searchInput).toHaveFocus();
             });
 
-            await act(async () => {
-                await user.keyboard("{ArrowDown}");
-            });
+            await user.keyboard("{ArrowDown}");
 
             const firstOption = await screen.findByRole("option", {
                 name: "From Option A",
@@ -582,9 +555,7 @@ describe("InputRangeSelect", () => {
             const fromButton = screen.getByRole("combobox", { name: "From" });
             expect(fromButton).toHaveFocus();
 
-            await act(async () => {
-                await user.keyboard("{Enter}");
-            });
+            await user.keyboard("{Enter}");
             const fromOption = await screen.findByRole("option", {
                 name: "From Option A",
             });
@@ -592,9 +563,7 @@ describe("InputRangeSelect", () => {
                 expect(fromOption).toHaveFocus();
             });
 
-            await act(async () => {
-                await user.keyboard("{Enter}");
-            });
+            await user.keyboard("{Enter}");
             const toOption = await screen.findByRole("option", {
                 name: "To Option A",
             });
@@ -602,9 +571,7 @@ describe("InputRangeSelect", () => {
                 expect(toOption).toHaveFocus();
             });
 
-            await act(async () => {
-                await user.keyboard("{Enter}");
-            });
+            await user.keyboard("{Enter}");
 
             await waitFor(() => {
                 expect(
