@@ -30,6 +30,14 @@ class StoryPage extends AbstractStoryPage {
     async openMobileDrawer() {
         await this.locators.internal.mobileMenuButton.click();
     }
+    async waitForMasthead(page: Page) {
+        await page.waitForFunction(
+            () =>
+                !!customElements.get("sgds-masthead") &&
+                !!document.querySelector("sgds-masthead")?.shadowRoot
+                    ?.firstElementChild
+        );
+    }
 }
 
 const test = base.extend<{ story: StoryPage }>({
@@ -44,14 +52,6 @@ test.describe("Navbar", () => {
     // DESKTOP
     // =======================================================================
 
-    const waitForMasthead = async (page: Page) => {
-        await page.waitForFunction(
-            () =>
-                !!customElements.get("sgds-masthead") &&
-                !!document.querySelector("sgds-masthead")?.shadowRoot
-                    ?.firstElementChild
-        );
-    };
     for (const theme of THEME_TYPES) {
         test.describe("Default", () => {
             test.beforeEach(async ({ story }) => {
@@ -59,7 +59,7 @@ test.describe("Navbar", () => {
             });
 
             test(`${theme} theme`, async ({ story }) => {
-                await waitForMasthead(story.page);
+                await story.waitForMasthead(story.page);
                 await compareScreenshot(story, "mount");
             });
         });
@@ -73,7 +73,7 @@ test.describe("Navbar", () => {
             });
 
             test(`${theme} theme`, async ({ story }) => {
-                await waitForMasthead(story.page);
+                await story.waitForMasthead(story.page);
                 await compareScreenshot(story, "mount");
             });
         });

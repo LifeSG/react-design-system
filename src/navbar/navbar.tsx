@@ -14,13 +14,7 @@ import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
 import { ClickableIcon } from "../shared/clickable-icon";
-import {
-    Breakpoint,
-    ComponentToken,
-    parsePxOrRemValue,
-    useApplyStyle,
-    useDesignToken,
-} from "../theme";
+import { Breakpoint, parsePxOrRemValue, useDesignToken } from "../theme";
 import { ThemeContext } from "../theme/theme-provider/context";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
@@ -74,7 +68,6 @@ const Component = <T,>(
     const mobileMenuRef = useRef<HTMLButtonElement>(null);
     const isStretch = layout === "stretch";
     const elementRef = useRef<HTMLDivElement>(null);
-    const navRef = useRef<HTMLElement>(null);
     const theme = useContext(ThemeContext);
     const defaultResource = getDefaultResourceLogo(theme?.theme);
     const tabletWidthToken = useDesignToken(Breakpoint["lg-max"]);
@@ -82,12 +75,6 @@ const Component = <T,>(
 
     const primary = resources?.primary || defaultResource.primary;
     const secondary = resources?.secondary;
-
-    useApplyStyle(navRef, {
-        [styles.tokens.nav.height]: compress
-            ? ComponentToken.Navbar["compressed-height"]
-            : ComponentToken.Navbar["full-height"],
-    });
 
     useImperativeHandle(
         ref,
@@ -331,9 +318,9 @@ const Component = <T,>(
         return (
             <Layout.Content stretch={isStretch}>
                 <nav
-                    ref={navRef}
                     className={clsx(
                         styles.nav,
+                        compress && styles.navCompressed,
                         theme?.mode === "dark" && styles.navDark
                     )}
                     aria-label={headerLabel}

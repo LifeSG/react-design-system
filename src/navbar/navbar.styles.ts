@@ -49,12 +49,16 @@ export const nav = css`
     position: relative;
     transition: ${Motion["duration-350"]} ${Motion["ease-standard"]};
 
-    ${tokens.nav.height}: initial;
+    ${tokens.nav.height}: ${ComponentToken.Navbar["full-height"]};
     height: var(${tokens.nav.height});
 
     ${MediaQuery.MaxWidth.lg} {
         height: ${ComponentToken.Navbar["mobile-height"]};
     }
+`;
+
+export const navCompressed = css`
+    ${tokens.nav.height}: ${ComponentToken.Navbar["compressed-height"]};
 `;
 
 export const navDark = css`
@@ -70,7 +74,6 @@ export const navElementsContainer = css`
     height: 100%;
     flex: 1;
     justify-content: flex-end;
-    margin-left: 0rem;
 `;
 
 export const navElementsContainerWithBranding = css`
