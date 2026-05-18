@@ -1,3 +1,4 @@
+import { ClockIcon } from "@lifesg/react-icons";
 import clsx from "clsx";
 import throttle from "lodash/throttle";
 import { useEffect, useRef, useState } from "react";
@@ -13,15 +14,7 @@ import {
 } from "../theme";
 import { useIsMounted } from "../util";
 import { TimeHelper } from "../util/time-helper";
-import {
-    Countdown,
-    FixedCountdown,
-    TimeLeft,
-    Timer,
-    TimerIcon,
-    tokens,
-    Wrapper,
-} from "./countdown-timer.styles";
+import * as styles from "./countdown-timer.styles";
 import type { CountdownTimerProps } from "./types";
 import { useTimer } from "./use-timer";
 
@@ -79,9 +72,15 @@ export const CountdownTimer = ({
     // =============================================================================
 
     useApplyStyle(fixedCountdownRef, {
-        [tokens.fixedCountdown.top]: formatUnitValue(offsetY, "px"),
-        [tokens.fixedCountdown.left]: formatUnitValue(getOffsetLeft(), "px"),
-        [tokens.fixedCountdown.right]: formatUnitValue(getOffsetRight(), "px"),
+        [styles.tokens.fixedCountdown.top]: formatUnitValue(offsetY, "px"),
+        [styles.tokens.fixedCountdown.left]: formatUnitValue(
+            getOffsetLeft(),
+            "px"
+        ),
+        [styles.tokens.fixedCountdown.right]: formatUnitValue(
+            getOffsetRight(),
+            "px"
+        ),
     });
 
     useEffect(() => {
@@ -246,59 +245,67 @@ export const CountdownTimer = ({
         const s = seconds !== 1 ? "secs" : "sec";
         return (
             <>
-                <TimerIcon data-warn={!!warn} />
-                <TimeLeft>Time left:</TimeLeft>
-                <Timer aria-label={getAccessibleTimeText(remainingSeconds)}>
+                <ClockIcon className={styles.timerIcon} data-warn={!!warn} />
+                <div className={styles.timeLeft}>Time left:</div>
+                <div
+                    className={styles.timer}
+                    aria-label={getAccessibleTimeText(remainingSeconds)}
+                >
                     {minutes} {m} {String(seconds).padStart(2, "0")} {s}
-                </Timer>
+                </div>
                 {renderPeriodicAndWarningAnnouncement()}
             </>
         );
     };
 
-    const renderCountdown = () => {
+    const renderInlineCountdown = () => {
         return (
-            <Countdown
+            <div
                 data-testid={testId}
                 data-id="countdown-wrapper"
                 data-warn={!!warn}
                 ref={wrapperRef}
                 inert={inertValue(!isVisible)}
-                className={clsx(!isVisible && "countdownHidden")}
+                className={clsx(
+                    styles.countdown,
+                    styles.countdownInline,
+                    !isVisible && styles.countdownHidden
+                )}
                 tabIndex={0}
                 role="timer"
                 aria-label="Countdown timer"
                 onFocus={handleOnFocus}
             >
                 {renderTimer()}
-            </Countdown>
+            </div>
         );
     };
 
     const renderFixedCountdown = () => {
         return (
-            <FixedCountdown
+            <div
                 ref={fixedCountdownRef}
                 data-testid={testId}
                 data-id="fixed-countdown-wrapper"
                 data-warn={!!warn}
+                className={clsx(styles.countdown, styles.countdownFixed)}
                 tabIndex={0}
                 role="timer"
                 aria-label="Countdown timer"
                 onFocus={handleOnFocus}
             >
                 {renderTimer()}
-            </FixedCountdown>
+            </div>
         );
     };
 
     if (!isPlaying && remainingSeconds !== 0) return <></>;
 
     return (
-        <Wrapper className={clsx(className)} {...otherProps}>
+        <div className={clsx(styles.wrapper, className)} {...otherProps}>
             <div ref={stickyRef}></div>
-            {renderCountdown()}
+            {renderInlineCountdown()}
             {wrapperRef.current && !isVisible && renderFixedCountdown()}
-        </Wrapper>
+        </div>
     );
 };

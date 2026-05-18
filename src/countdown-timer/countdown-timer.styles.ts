@@ -1,5 +1,4 @@
-import { ClockIcon } from "@lifesg/react-icons";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import {
     Border,
@@ -17,13 +16,13 @@ export const tokens = {
         left: "--fds-internal-countdownTimer-fixedCountdown-left",
         right: "--fds-internal-countdownTimer-fixedCountdown-right",
     },
-};
+} as const;
 
-export const Wrapper = styled.div`
+export const wrapper = css`
     width: 100%;
 `;
 
-export const BaseCountdown = styled.div`
+export const countdown = css`
     ${Font["body-baseline-regular"]}
     display: flex;
     align-items: center;
@@ -44,15 +43,15 @@ export const BaseCountdown = styled.div`
     }
 `;
 
-export const Countdown = styled(BaseCountdown)`
-    position: relative;
-
-    &.countdownHidden {
-        opacity: 0;
-    }
+export const countdownHidden = css`
+    opacity: 0;
 `;
 
-export const FixedCountdown = styled(BaseCountdown)`
+export const countdownInline = css`
+    position: relative;
+`;
+
+export const countdownFixed = css`
     position: fixed;
     z-index: 10;
 
@@ -80,7 +79,7 @@ export const FixedCountdown = styled(BaseCountdown)`
     }
 `;
 
-export const TimeLeft = styled.div`
+export const timeLeft = css`
     font-weight: ${Font.Spec["weight-bold"]};
     margin-left: ${Spacing["spacing-8"]};
     margin-right: ${Spacing["spacing-24"]};
@@ -90,12 +89,12 @@ export const TimeLeft = styled.div`
     }
 `;
 
-export const Timer = styled.div`
+export const timer = css`
     font-weight: ${Font.Spec["weight-semibold"]};
     margin-left: auto;
 `;
 
-export const TimerIcon = styled(ClockIcon)`
+export const timerIcon = css`
     color: ${Colour["icon-primary"]};
 
     &[data-warn="true"] {
