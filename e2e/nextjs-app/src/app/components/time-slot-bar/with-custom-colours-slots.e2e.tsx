@@ -57,7 +57,7 @@ const slotsWithStripeBackground: TimeSlot[] = [
         label: "Secondary BG",
         styleAttributes: {
             styleType: "stripes",
-            backgroundColor: "#E67E22",
+            backgroundColor: "#1C7C54",
             backgroundColor2: "#F1A861",
             hoverBackgroundColor: "#2B2D42",
             hoverBackgroundColor2: "#B84691",

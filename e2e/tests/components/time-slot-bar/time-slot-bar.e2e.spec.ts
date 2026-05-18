@@ -158,46 +158,33 @@ test.describe("TimeSlotBar", () => {
     });
 
     test.describe("Custom Colours Props", () => {
-        const styleTypes = ["Default", "Stripes"] as const;
-        styleTypes.forEach((styleType) => {
-            test.describe(`${styleType} Style Type`, () => {
-                test.beforeEach(async ({ story }) => {
-                    await story.init("with-custom-colours");
-                });
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-custom-colours");
+            });
 
-                test("Primary BG", async ({ story }) => {
-                    await compareScreenshot(story, "state", {
-                        locator: story.page.getByTestId(
-                            `time-slot-bar-bg-${styleType.toLowerCase()}`
-                        ),
-                    });
-                });
-
-                test("Secondary BG", async ({ story }) => {
-                    await compareScreenshot(story, "state", {
-                        locator: story.page.getByTestId(
-                            `time-slot-bar-bg-${styleType.toLowerCase()}-with-secondary`
-                        ),
-                    });
-                });
+            test("Visual", async ({ story }) => {
+                await compareScreenshot(story, "state");
             });
         });
     });
 
     test.describe("Custom Colours Slots", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-custom-colours-slots");
+            });
+
+            test("Visual", async ({ story }) => {
+                await compareScreenshot(story, "state");
+            });
+        });
+
         const styleTypes = ["Default", "Stripe"] as const;
         styleTypes.forEach((styleType) => {
             test.describe(`${styleType} Style Type`, () => {
                 test.beforeEach(async ({ story }) => {
                     await story.init("with-custom-colours-slots");
-                });
-
-                test("Visual", async ({ story }) => {
-                    await compareScreenshot(story, "state", {
-                        locator: story.page.getByTestId(
-                            `time-slot-bar-slot-${styleType.toLowerCase()}`
-                        ),
-                    });
                 });
 
                 test("Hover", async ({ story }) => {
@@ -215,14 +202,6 @@ test.describe("TimeSlotBar", () => {
                     await timeslotWithSecondaryBG.hover();
                     await compareScreenshot(story, "secondary-bg", {
                         locator: timeslotWithSecondaryBG,
-                    });
-                });
-
-                test("Label colour", async ({ story }) => {
-                    await compareScreenshot(story, "state", {
-                        locator: story.page.getByTestId(
-                            `time-slot-bar-slot-${styleType.toLowerCase()}-slot-${styleType.toLowerCase()}-label-colour-timeslot`
-                        ),
                     });
                 });
             });
