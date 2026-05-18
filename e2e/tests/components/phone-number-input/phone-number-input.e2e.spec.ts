@@ -391,27 +391,29 @@ test.describe("PhoneNumberInput", () => {
 
     test.describe("Allow clear", () => {
         modes.forEach((mode) => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("allow-clear", { mode });
-            });
-
-            test(`${mode} mode`, async ({ story }) => {
-                const clearField = story.locators.form.allowClear;
-                const clearButton = clearField.getByRole("button", {
-                    name: "Clear input",
+            test.describe("", () => {
+                test.beforeEach(async ({ story }) => {
+                    await story.init("allow-clear", { mode });
                 });
 
-                await expect(clearButton).not.toBeVisible();
+                test(`${mode} mode`, async ({ story }) => {
+                    const clearField = story.locators.form.allowClear;
+                    const clearButton = clearField.getByRole("button", {
+                        name: "Clear input",
+                    });
 
-                await story.getTextbox(clearField).fill("91234567");
-                await expect(clearButton).toBeVisible();
-                await compareScreenshot(story, "filled", {
-                    locator: clearField,
+                    await expect(clearButton).not.toBeVisible();
+
+                    await story.getTextbox(clearField).fill("91234567");
+                    await expect(clearButton).toBeVisible();
+                    await compareScreenshot(story, "filled", {
+                        locator: clearField,
+                    });
+
+                    await clearButton.click();
+                    await expect(story.getTextbox(clearField)).toHaveValue("");
+                    await expect(clearButton).not.toBeVisible();
                 });
-
-                await clearButton.click();
-                await expect(story.getTextbox(clearField)).toHaveValue("");
-                await expect(clearButton).not.toBeVisible();
             });
         });
     });
