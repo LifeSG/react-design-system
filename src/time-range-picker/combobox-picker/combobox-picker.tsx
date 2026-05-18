@@ -398,6 +398,7 @@ export const ComboboxPicker = ({
             readOnly={readOnly}
             onBlur={handleBlur}
             role="group"
+            data-testid="timepicker-container"
         >
             <VisuallyHidden id={startLabelId}>Start time</VisuallyHidden>
             <VisuallyHidden id={endLabelId}>End time</VisuallyHidden>
