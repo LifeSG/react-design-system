@@ -12,6 +12,8 @@ import {
 import { useResizeDetector } from "react-resize-detector";
 
 import { VisuallyHidden } from "../shared/accessibility";
+import { getCellWidth, TimeSlot } from "../shared/time-slot";
+import type { Direction } from "../shared/time-slot/types";
 import { TimeHelper } from "../util/time-helper";
 import { TimeSlotBarHelper } from "./helper";
 import {
@@ -20,17 +22,14 @@ import {
     ArrowIconRight,
     CellText,
     Container,
-    getCellWidth,
     TimeLabel,
     TimeMarker,
     TimeMarkerWrapper,
-    TimeSlot,
     TimeSlotBarContainer,
     TimeSlotBorder,
     TimeSlotWrapper,
 } from "./time-slot-bar.styles";
 import type {
-    Direction,
     TimeSlot as TTimeSlot,
     TimeSlotBarProps,
     TimeSlotBarRef,

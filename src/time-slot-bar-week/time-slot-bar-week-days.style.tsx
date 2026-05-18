@@ -3,8 +3,8 @@ import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 
 import { Button } from "../button";
-import type { TimeSlotStyleProps } from "../time-slot-bar/time-slot-bar.styles";
-import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
+import type { TimeSlotStyleProps } from "../shared/time-slot";
+import { TimeSlot } from "../shared/time-slot";
 import { Typography } from "../typography";
 import {
     V3_Colour,

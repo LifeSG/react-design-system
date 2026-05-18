@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
+import { TimeSlot } from "../shared/time-slot";
 import { Colour, Font } from "../theme";
-import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
 
 // =============================================================================
 // STYLE INTERFACES
