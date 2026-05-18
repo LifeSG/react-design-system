@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { AriaAttributes } from "react";
 import {
     useCallback,
@@ -44,7 +45,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
     const [lastVisibleElementIndex, setLastVisibleElementIndex] =
         useState<number>(options.length);
     const parentRef = useRef<HTMLDivElement>(null);
-    const lastVisibleElement = useRef<HTMLLabelElement>(null);
+    const lastVisibleElement = useRef<HTMLElement | null>(null);
 
     // Check if options have nested structure
     const isNested = useMemo(
@@ -346,10 +347,21 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                 onClick={isNested ? handleItemClick(originalItem) : undefined}
                 onKeyDown={handleListItemKeyDown(originalItem)}
                 tabIndex={isNested ? 0 : undefined}
-                $visible={isVisible}
-                $selected={isSelected}
-                $level={option.level}
-                ref={index === 4 ? lastVisibleElement : undefined}
+                className={clsx(
+                    !isVisible && "itemHidden",
+                    isSelected && "itemSelected"
+                )}
+                ref={(el: HTMLElement | null) => {
+                    if (el && option.level) {
+                        el.style.setProperty(
+                            styles.tokens.item.level,
+                            String(option.level)
+                        );
+                    }
+                    if (index === 4) {
+                        lastVisibleElement.current = el;
+                    }
+                }}
             >
                 {renderCheckboxIcon(originalItem, option)}
                 {optionLabel}
@@ -366,15 +378,15 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         const optionLabel = getLabel(originalItem);
         const optionValue = getValue(originalItem);
         const checked = !!selected.find((s) => getValue(s) === optionValue);
+        const isToggleVisible =
+            !minimised ||
+            (!!minimisedHeight && index <= lastVisibleElementIndex);
         return (
             <styles.StyledToggle
                 key={optionValue}
                 type="checkbox"
                 checked={checked}
-                $visible={
-                    !minimised ||
-                    (!!minimisedHeight && index <= lastVisibleElementIndex)
-                }
+                className={clsx(!isToggleVisible && "toggleHidden")}
                 onChange={handleItemClick(originalItem)}
                 useContentWidth={useToggleContentWidth}
             >
@@ -425,7 +437,9 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                         aria-label={filterItemProps.title}
                         aria-multiselectable={true}
                         ref={parentRef}
-                        $isMobileToggleMode={isMobileToggleMode}
+                        className={clsx(
+                            isMobileToggleMode && "groupMobileToggleMode"
+                        )}
                     >
                         {flattenedOptions.map((option, i) =>
                             isMobileToggleMode
