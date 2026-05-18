@@ -14,7 +14,7 @@ import {
     Timer,
     TimerIcon,
     Wrapper,
-} from "./countdown-timer.style";
+} from "./countdown-timer.styles";
 import type { CountdownTimerProps } from "./types";
 import { useTimer } from "./use-timer";
 
