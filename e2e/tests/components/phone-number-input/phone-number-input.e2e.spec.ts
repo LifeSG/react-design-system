@@ -14,7 +14,6 @@ class StoryPage extends AbstractStoryPage {
         };
         form: {
             default: Locator;
-            selected: Locator;
             error: Locator;
             disabled: Locator;
             readonly: Locator;
@@ -42,7 +41,6 @@ class StoryPage extends AbstractStoryPage {
             },
             form: {
                 default: page.getByTestId("phone-number-input-default-base"),
-                selected: page.getByTestId("phone-number-input-selected-base"),
                 error: page.getByTestId("phone-number-input-error-base"),
                 disabled: page.getByTestId("phone-number-input-disabled-base"),
                 readonly: page.getByTestId("phone-number-input-readonly-base"),
@@ -116,22 +114,22 @@ test.describe("PhoneNumberInput", () => {
                 await expect(
                     story.page.getByTestId("phone-number-input-default")
                 ).toMatchAriaSnapshot(`
-                - text: Default
-                - combobox "Default Country code": Select
-                - text: Press space to open options
-                - textbox "Default Enter phone number":
-                  - /placeholder: Enter phone number
-            `);
+                    - text: Default
+                    - combobox "Default Country code": Select
+                    - text: Press space to open options
+                    - textbox "Default Enter phone number":
+                      - /placeholder: Enter phone number
+                `);
 
                 await expect(
                     story.page.getByTestId("phone-number-input-disabled")
                 ).toMatchAriaSnapshot(`
-                - text: Disabled
-                - combobox "Disabled Country code" [disabled]
-                - text: Press space to open options
-                - textbox "Disabled Enter phone number" [disabled]:
-                  - /placeholder: Enter phone number
-            `);
+                    - text: Disabled
+                    - combobox "Disabled Country code" [disabled]
+                    - text: Press space to open options
+                    - textbox "Disabled Enter phone number" [disabled]:
+                      - /placeholder: Enter phone number
+                `);
                 await story.locators.form.disabled.click();
                 await expect(
                     story.locators.internal.dropdownContainer
@@ -139,34 +137,25 @@ test.describe("PhoneNumberInput", () => {
 
                 await expect(story.page.getByTestId("phone-number-input-error"))
                     .toMatchAriaSnapshot(`
-                - text: Error
-                - combobox "Error Country code"
-                - text: Press space to open options
-                - textbox "Error Enter phone number":
-                  - /placeholder: Enter phone number
-                - paragraph: Mobile number is required
-            `);
+                    - text: Error
+                    - combobox "Error Country code"
+                    - text: Press space to open options
+                    - textbox "Error Enter phone number":
+                      - /placeholder: Enter phone number
+                    - paragraph: Mobile number is required
+                `);
 
                 await expect(
                     story.page.getByTestId("phone-number-input-readonly")
                 ).toMatchAriaSnapshot(`
-                - text: Readonly
-                - textbox "Readonly Enter phone number":
-                  - /placeholder: Enter phone number
-            `);
+                    - text: Readonly
+                    - textbox "Readonly Enter phone number":
+                      - /placeholder: Enter phone number
+                `);
                 await story.locators.form.readonly.click();
                 await expect(
                     story.locators.internal.dropdownContainer
                 ).not.toBeVisible();
-
-                await expect(
-                    story.page.getByTestId("phone-number-input-selected")
-                ).toMatchAriaSnapshot(`
-                - text: Selected
-                - combobox "Selected Country code": "+65"
-                - text: Press space to open options
-                - textbox "Selected Enter phone number": 9123 4567
-            `);
             });
 
             test("Focus states", async ({ story }) => {
@@ -194,13 +183,6 @@ test.describe("PhoneNumberInput", () => {
             test("Open states", async ({ story }) => {
                 await story.openDropdown(story.locators.form.default);
                 await compareScreenshot(story, "default", {
-                    fullscreen: true,
-                });
-
-                await story.page.mouse.click(0, 0);
-
-                await story.openDropdown(story.locators.form.selected);
-                await compareScreenshot(story, "selected", {
                     fullscreen: true,
                 });
             });
@@ -238,6 +220,89 @@ test.describe("PhoneNumberInput", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("form-variants", { mode: "dark" });
+            });
+
+            test("Visual dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    test.describe("Form Variants Prefilled", () => {
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants-prefilled");
+            });
+
+            test("Mount", async ({ story }) => {
+                await compareScreenshot(story, "state");
+
+                await expect(
+                    story.page.getByTestId("phone-number-input-default")
+                ).toMatchAriaSnapshot(`
+                    - text: Default
+                    - combobox "Default Country code": "+213"
+                    - text: Press space to open options
+                    - textbox "Default Enter phone number":
+                      - /placeholder: Enter phone number
+                      - text: 912 345 67
+                `);
+
+                await expect(
+                    story.page.getByTestId("phone-number-input-disabled")
+                ).toMatchAriaSnapshot(`
+                    - text: Disabled
+                    - combobox "Disabled Country code" [disabled]: "+213"
+                    - text: Press space to open options
+                    - textbox "Disabled Enter phone number" [disabled]:
+                      - /placeholder: Enter phone number
+                      - text: 912 345 67
+                `);
+                await story.locators.form.disabled.click();
+                await expect(
+                    story.locators.internal.dropdownContainer
+                ).not.toBeVisible();
+
+                await expect(story.page.getByTestId("phone-number-input-error"))
+                    .toMatchAriaSnapshot(`
+                    - text: Error
+                    - combobox "Error Country code": "+213"
+                    - text: Press space to open options
+                    - textbox "Error Enter phone number":
+                      - /placeholder: Enter phone number
+                      - text: 912 345 67
+                    - paragraph: Mobile number is required
+                `);
+            });
+
+            test("Focus states", async ({ story }) => {
+                await story.getTextbox(story.locators.form.default).focus();
+                await compareScreenshot(story, "default", {
+                    locator: story.locators.form.default,
+                });
+
+                await story.getTextbox(story.locators.form.disabled).focus();
+                await compareScreenshot(story, "disabled", {
+                    locator: story.locators.form.disabled,
+                });
+
+                await story.getTextbox(story.locators.form.error).focus();
+                await compareScreenshot(story, "error", {
+                    locator: story.locators.form.error,
+                });
+            });
+
+            test("Open states", async ({ story }) => {
+                await story.openDropdown(story.locators.form.default);
+                await compareScreenshot(story, "default", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants-prefilled", { mode: "dark" });
             });
 
             test("Visual dark mode", async ({ story }) => {

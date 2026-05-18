@@ -9,6 +9,7 @@ export default function Story() {
                 data-testid="phone-number-input-default"
                 label="Default"
                 placeholder="Enter phone number"
+                value={{ countryCode: "+213", number: "91234567" }}
             />
 
             <Form.PhoneNumberInput
@@ -16,6 +17,7 @@ export default function Story() {
                 label="Error"
                 errorMessage="Mobile number is required"
                 placeholder="Enter phone number"
+                value={{ countryCode: "+213", number: "91234567" }}
             />
 
             <Form.PhoneNumberInput
@@ -23,13 +25,7 @@ export default function Story() {
                 label="Disabled"
                 disabled
                 placeholder="Enter phone number"
-            />
-
-            <Form.PhoneNumberInput
-                data-testid="phone-number-input-readonly"
-                label="Readonly"
-                value={{ countryCode: "+65", number: "91234567" }}
-                readOnly
+                value={{ countryCode: "+213", number: "91234567" }}
             />
         </div>
     );
