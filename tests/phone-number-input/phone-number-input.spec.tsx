@@ -158,22 +158,6 @@ describe("PhoneNumberInput", () => {
                     })
                 );
             });
-
-            it("should not call onChange when no onChange handler is provided", () => {
-                const onChange = jest.fn();
-                render(
-                    <PhoneNumberInput
-                        value={{ countryCode: "+994", number: "123456789" }}
-                    />
-                );
-
-                fireEvent.click(screen.getByTestId(SELECTOR_TESTID));
-                fireEvent.click(
-                    screen.getByRole("option", { name: /Singapore/i })
-                );
-
-                expect(onChange).not.toHaveBeenCalled();
-            });
         });
     });
 
