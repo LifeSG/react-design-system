@@ -95,3 +95,16 @@ export const getInheritedInlineCssVariables = (
 
     return variables;
 };
+
+/**
+ * Convert a numeric value to a CSS unit string (e.g., 12 → "12px"). Returns null for non-numeric values.
+ */
+export const formatUnitValue = (
+    value: unknown,
+    unit: string
+): string | null => {
+    if (typeof value === "number") {
+        return `${value}${unit}`;
+    }
+    return null;
+};

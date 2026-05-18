@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import throttle from "lodash/throttle";
 import { useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
@@ -5,9 +6,12 @@ import { useInView } from "react-intersection-observer";
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import {
     Breakpoint,
+    formatUnitValue,
+    useApplyStyle,
     useDesignToken,
     useSafeMaxWidthMediaQuery,
 } from "../theme";
+import { useIsMounted } from "../util";
 import { TimeHelper } from "../util/time-helper";
 import {
     Countdown,
@@ -15,6 +19,7 @@ import {
     TimeLeft,
     Timer,
     TimerIcon,
+    tokens,
     Wrapper,
 } from "./countdown-timer.styles";
 import type { CountdownTimerProps } from "./types";
@@ -42,6 +47,8 @@ export const CountdownTimer = ({
     // =============================================================================
 
     const wrapperRef = useRef<HTMLDivElement>(null);
+    const fixedCountdownRef = useRef<HTMLDivElement>(null);
+
     const isNotified = useRef<boolean>(false);
     const [offsetY, setOffsetY] = useState<number>(0);
     const [clientRectRight, setClientRectRight] = useState<number>(0);
@@ -49,6 +56,7 @@ export const CountdownTimer = ({
     const [isPlaying, setIsPlaying] = useState(false);
     const [announcement, setAnnouncement] = useState<string>("");
 
+    const isMounted = useIsMounted();
     const [remainingSeconds, initialSeconds] = useTimer(
         timer,
         timestamp,
@@ -69,6 +77,12 @@ export const CountdownTimer = ({
     // =============================================================================
     // EFFECTS
     // =============================================================================
+
+    useApplyStyle(fixedCountdownRef, {
+        [tokens.fixedCountdown.top]: formatUnitValue(offsetY, "px"),
+        [tokens.fixedCountdown.left]: formatUnitValue(getOffsetLeft(), "px"),
+        [tokens.fixedCountdown.right]: formatUnitValue(getOffsetRight(), "px"),
+    });
 
     useEffect(() => {
         setIsPlaying(show);
@@ -180,6 +194,19 @@ export const CountdownTimer = ({
         return offsetY;
     }
 
+    function getOffsetLeft() {
+        if (!isMounted || align !== "left") return undefined;
+        return offset?.left ?? clientRectX;
+    }
+
+    function getOffsetRight() {
+        if (!isMounted || align !== "right") return undefined;
+        return (
+            offset?.right ??
+            Math.floor(document.body.clientWidth - clientRectRight)
+        );
+    }
+
     const getAccessibleTimeText = (seconds: number): string => {
         const { minutes, seconds: secs } = TimeHelper.toMinutesSeconds(seconds);
 
@@ -219,7 +246,7 @@ export const CountdownTimer = ({
         const s = seconds !== 1 ? "secs" : "sec";
         return (
             <>
-                <TimerIcon $warn={warn} />
+                <TimerIcon data-warn={!!warn} />
                 <TimeLeft>Time left:</TimeLeft>
                 <Timer aria-label={getAccessibleTimeText(remainingSeconds)}>
                     {minutes} {m} {String(seconds).padStart(2, "0")} {s}
@@ -234,10 +261,10 @@ export const CountdownTimer = ({
             <Countdown
                 data-testid={testId}
                 data-id="countdown-wrapper"
+                data-warn={!!warn}
                 ref={wrapperRef}
                 inert={inertValue(!isVisible)}
-                $visible={isVisible}
-                $warn={warn}
+                className={clsx(!isVisible && "countdownHidden")}
                 tabIndex={0}
                 role="timer"
                 aria-label="Countdown timer"
@@ -249,23 +276,12 @@ export const CountdownTimer = ({
     };
 
     const renderFixedCountdown = () => {
-        const left =
-            offset?.left ?? (align === "left" ? clientRectX : undefined);
-
-        const right =
-            offset?.right ??
-            (align === "right"
-                ? Math.floor(document.body.clientWidth - clientRectRight)
-                : undefined);
-
         return (
             <FixedCountdown
+                ref={fixedCountdownRef}
                 data-testid={testId}
                 data-id="fixed-countdown-wrapper"
-                $warn={warn}
-                $top={offsetY}
-                $left={left}
-                $right={right}
+                data-warn={!!warn}
                 tabIndex={0}
                 role="timer"
                 aria-label="Countdown timer"
@@ -279,7 +295,7 @@ export const CountdownTimer = ({
     if (!isPlaying && remainingSeconds !== 0) return <></>;
 
     return (
-        <Wrapper className={className} {...otherProps}>
+        <Wrapper className={clsx(className)} {...otherProps}>
             <div ref={stickyRef}></div>
             {renderCountdown()}
             {wrapperRef.current && !isVisible && renderFixedCountdown()}

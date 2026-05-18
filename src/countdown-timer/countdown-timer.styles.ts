@@ -1,5 +1,5 @@
 import { ClockIcon } from "@lifesg/react-icons";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import {
     Border,
@@ -11,27 +11,19 @@ import {
     Spacing,
 } from "../theme";
 
-// =============================================================================
-// STYLE TYPES
-// =============================================================================
-
-interface CountdownStyleProps {
-    $warn: boolean;
-    $visible?: boolean | undefined;
-    $top?: number | undefined;
-    $left?: number | undefined;
-    $right?: number | undefined;
-}
-
-// =============================================================================
-// STYLING
-// =============================================================================
+export const tokens = {
+    fixedCountdown: {
+        top: "--fds-internal-countdownTimer-fixedCountdown-top",
+        left: "--fds-internal-countdownTimer-fixedCountdown-left",
+        right: "--fds-internal-countdownTimer-fixedCountdown-right",
+    },
+};
 
 export const Wrapper = styled.div`
     width: 100%;
 `;
 
-export const BaseCountdown = styled.div<CountdownStyleProps>`
+export const BaseCountdown = styled.div`
     ${Font["body-baseline-regular"]}
     display: flex;
     align-items: center;
@@ -46,45 +38,46 @@ export const BaseCountdown = styled.div<CountdownStyleProps>`
         padding: ${Spacing["spacing-16"]};
     }
 
-    ${(props) => {
-        if (props.$warn) {
-            return css`
-                color: ${Colour["text-error"]};
-                border-color: ${Colour["border-error"]};
-            `;
-        }
-    }}
+    &[data-warn="true"] {
+        color: ${Colour["text-error"]};
+        border-color: ${Colour["border-error"]};
+    }
 `;
 
 export const Countdown = styled(BaseCountdown)`
     position: relative;
-    opacity: ${(props) => (props.$visible ? 1 : 0)};
+
+    &.countdownHidden {
+        opacity: 0;
+    }
 `;
 
 export const FixedCountdown = styled(BaseCountdown)`
     position: fixed;
     z-index: 10;
 
-    ${(props) => {
-        const { $top, $left, $right, $warn } = props;
-        return css`
-            /* style object will be converted to px */
-            ${{ top: $top, left: $left, right: $right }}
+    /* reset variables to prevent leaking to child components */
+    ${tokens.fixedCountdown.top}: initial;
+    ${tokens.fixedCountdown.left}: initial;
+    ${tokens.fixedCountdown.right}: initial;
+    top: var(${tokens.fixedCountdown.top});
+    left: var(${tokens.fixedCountdown.left});
+    right: var(${tokens.fixedCountdown.right});
 
-            box-shadow: ${$warn
-                ? Shadow["xs-error-strong"]
-                : Shadow["xs-focus-strong"]};
+    box-shadow: ${Shadow["xs-focus-strong"]};
 
-            ${MediaQuery.MaxWidth.sm} {
-                left: 0;
-                right: 0;
-                border-radius: 0;
-                border-left: none;
-                border-right: none;
-                box-shadow: none;
-            }
-        `;
-    }}
+    ${MediaQuery.MaxWidth.sm} {
+        left: 0;
+        right: 0;
+        border-radius: 0;
+        border-left: none;
+        border-right: none;
+        box-shadow: none;
+    }
+
+    &[data-warn="true"] {
+        box-shadow: ${Shadow["xs-error-strong"]};
+    }
 `;
 
 export const TimeLeft = styled.div`
@@ -102,7 +95,10 @@ export const Timer = styled.div`
     margin-left: auto;
 `;
 
-export const TimerIcon = styled(ClockIcon)<CountdownStyleProps>`
-    color: ${(props) =>
-        props.$warn ? Colour["icon-error"] : Colour["icon-primary"]};
+export const TimerIcon = styled(ClockIcon)`
+    color: ${Colour["icon-primary"]};
+
+    &[data-warn="true"] {
+        color: ${Colour["icon-error"]};
+    }
 `;
