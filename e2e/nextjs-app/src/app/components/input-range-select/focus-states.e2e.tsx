@@ -5,7 +5,7 @@ import { OPTIONS } from "./input-range-select.shared";
 
 export default function Story() {
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <button data-testid="focus-start">Focus start</button>
             <Form.RangeSelect
                 data-testid="input-range-select-focus"

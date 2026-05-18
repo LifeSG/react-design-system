@@ -9,6 +9,7 @@ export default function Story() {
         <Layout.Content
             data-testid="input-range-select-grid-layout"
             type="grid"
+            className="story-background"
         >
             <Form.RangeSelect
                 data-testid="input-range-select-grid-short"

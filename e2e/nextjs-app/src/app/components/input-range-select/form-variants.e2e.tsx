@@ -5,7 +5,7 @@ import { OPTIONS } from "./input-range-select.shared";
 
 export default function Story() {
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <Form.RangeSelect
                 data-testid="input-range-select-default"
                 label="Default"
@@ -28,9 +28,9 @@ export default function Story() {
                 label="Read only"
                 options={OPTIONS}
                 readOnly
-                selectedOptions={{
-                    from: OPTIONS.from[0],
-                    to: OPTIONS.to[0],
+                placeholders={{
+                    from: OPTIONS.from[0].label,
+                    to: OPTIONS.to[0].label,
                 }}
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}

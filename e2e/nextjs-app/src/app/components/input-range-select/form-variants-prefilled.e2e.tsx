@@ -10,7 +10,7 @@ const SELECTED_OPTIONS = {
 
 export default function Story() {
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <Form.RangeSelect
                 data-testid="input-range-select-default"
                 label="Default"
