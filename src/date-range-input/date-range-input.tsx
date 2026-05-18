@@ -630,7 +630,6 @@ export const DateRangeInput = ({
                 onKeyDown={handleNodeKeyDown}
                 {...otherProps}
                 className={clsx(
-                    styles.container,
                     shouldWrap && !readOnly && styles.containerWrap,
                     shouldWrap && readOnly && styles.containerWrapReadOnly,
                     otherProps.className

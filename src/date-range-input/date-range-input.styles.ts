@@ -7,8 +7,6 @@ export const MOBILE_WRAP_WIDTH = 320;
 // =============================================================================
 // STYLING
 // =============================================================================
-export const container = css``;
-
 export const containerWrap = css`
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
 `;
