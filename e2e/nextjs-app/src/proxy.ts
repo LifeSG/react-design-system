@@ -20,9 +20,8 @@ export function proxy(request: NextRequest) {
         isDev ? "'unsafe-eval'" : ""
     } https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3/components/Masthead/index.umd.js;
         ${styleSrcDirective}
-        img-src 'self' https://*.life.gov.sg https://picsum.photos
-            https://fastly.picsum.photos https://mylegacy.life.gov.sg
-            https://*.booking.gov.sg blob: data:;
+        img-src 'self' https://*.life.gov.sg https://fastly.picsum.photos 
+            https://mylegacy.life.gov.sg https://*.booking.gov.sg blob: data:;
         font-src 'self' https://assets.life.gov.sg;
         object-src 'none';
         base-uri 'self';

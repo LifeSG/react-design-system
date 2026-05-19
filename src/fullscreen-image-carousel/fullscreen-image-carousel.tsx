@@ -96,23 +96,33 @@ export const Component = (
     );
 
     useApplyStyle(topActionButtonsRef, {
-        [styles.tokens.topActionButtons.insetTop]: insets?.top,
-        [styles.tokens.topActionButtons.insetLeft]: insets?.left,
-        [styles.tokens.topActionButtons.insetRight]: insets?.right,
+        [styles.tokens.topActionButtons.insetTop]: insets?.top
+            ? `${insets.top}px`
+            : undefined,
+        [styles.tokens.topActionButtons.insetLeft]: insets?.left
+            ? `${insets.left}px`
+            : undefined,
+        [styles.tokens.topActionButtons.insetRight]: insets?.right
+            ? `${insets.right}px`
+            : undefined,
     });
 
     useApplyStyle(prevArrowButtonRef, {
-        [styles.tokens.arrowButton.insetLeft]: insets?.left,
-        [styles.tokens.arrowButton.insetRight]: insets?.right,
+        [styles.tokens.arrowButton.insetLeft]: insets?.left
+            ? `${insets.left}px`
+            : undefined,
     });
 
     useApplyStyle(nextArrowButtonRef, {
-        [styles.tokens.arrowButton.insetLeft]: insets?.left,
-        [styles.tokens.arrowButton.insetRight]: insets?.right,
+        [styles.tokens.arrowButton.insetRight]: insets?.right
+            ? `${insets.right}px`
+            : undefined,
     });
 
     useApplyStyle(thumbnailContainerRef, {
-        [styles.tokens.thumbnailContainer.insetBottom]: insets?.bottom,
+        [styles.tokens.thumbnailContainer.insetBottom]: insets?.bottom
+            ? `${insets.bottom}px`
+            : undefined,
     });
 
     const getItemAriaLabel = useCallback(
@@ -421,6 +431,7 @@ export const Component = (
                 className={styles.thumbnailContainer}
                 ref={thumbnailContainerRef}
                 aria-hidden="true"
+                data-testid="thumbnail-container"
             >
                 <div className={styles.thumbnailWrapper}>
                     {items.map((item, index) => {
@@ -491,7 +502,7 @@ export const Component = (
                                     className={clsx(
                                         styles.iconButton,
                                         styles.arrowButton,
-                                        "arrowButtonLeft"
+                                        styles.arrowButtonLeft
                                     )}
                                     ref={prevArrowButtonRef}
                                     aria-label={`Previous ${carouselItemNoun}`}
@@ -504,7 +515,7 @@ export const Component = (
                                     className={clsx(
                                         styles.iconButton,
                                         styles.arrowButton,
-                                        "arrowButtonRight"
+                                        styles.arrowButtonRight
                                     )}
                                     ref={nextArrowButtonRef}
                                     aria-label={`Next ${carouselItemNoun}`}
@@ -521,6 +532,7 @@ export const Component = (
                                 <Typography.BodyXS
                                     className={styles.chip}
                                     weight="semibold"
+                                    data-testid="carousel-counter"
                                 >{`${currentSlide + 1}/${
                                     items.length
                                 }`}</Typography.BodyXS>

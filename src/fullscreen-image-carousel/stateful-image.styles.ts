@@ -2,7 +2,7 @@ import { css } from "@linaria/core";
 
 export const tokens = {
     imageBox: {
-        fit: "--fds-internal-statefulImage-imageBox-fit",
+        fit: "--fds-internal-fullscreenImageCarousel-statefulImage-imageBox-fit",
     },
 };
 

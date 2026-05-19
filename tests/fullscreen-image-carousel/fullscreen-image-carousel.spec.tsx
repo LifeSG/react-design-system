@@ -110,6 +110,39 @@ describe("Fullscreen Image Carousel", () => {
             fireEvent.click(elements[0]);
             expect(screen.getByText("1/4")).toBeInTheDocument();
         });
+
+        it("should navigate to the correct slide when keyboard arrows are pressed", () => {
+            render(<FullscreenImageCarousel items={IMAGES} show={true} />);
+            expect(screen.getByText("1/4")).toBeInTheDocument();
+
+            fireEvent.keyDown(document, { key: "ArrowRight" });
+            expect(screen.getByText("2/4")).toBeInTheDocument();
+
+            fireEvent.keyDown(document, { key: "ArrowLeft" });
+            expect(screen.getByText("1/4")).toBeInTheDocument();
+        });
+
+        it("should wrap around to first slide when navigating forward from last slide", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES}
+                    show={true}
+                    initialActiveItemIndex={3}
+                />
+            );
+            expect(screen.getByText("4/4")).toBeInTheDocument();
+
+            fireEvent.click(screen.getByTestId("forward-btn"));
+            expect(screen.getByText("1/4")).toBeInTheDocument();
+        });
+
+        it("should wrap around to last slide when navigating backward from first slide", () => {
+            render(<FullscreenImageCarousel items={IMAGES} show={true} />);
+            expect(screen.getByText("1/4")).toBeInTheDocument();
+
+            fireEvent.click(screen.getByTestId("prev-btn"));
+            expect(screen.getByText("4/4")).toBeInTheDocument();
+        });
     });
 
     describe("Custom content (renderContent)", () => {

@@ -10,6 +10,7 @@ class StoryPage extends AbstractStoryPage {
         prevBtn: Locator;
         forwardBtn: Locator;
         thumbnailItems: Locator;
+        thumbnailContainer: Locator;
         counter: Locator;
         fileInfoName: Locator;
     };
@@ -23,10 +24,8 @@ class StoryPage extends AbstractStoryPage {
             prevBtn: page.getByTestId("prev-btn"),
             forwardBtn: page.getByTestId("forward-btn"),
             thumbnailItems: page.getByTestId("thumbnail-item"),
-            counter: page
-                .locator('[aria-hidden="true"]')
-                .filter({ hasText: /\d+\/\d+/ })
-                .first(),
+            thumbnailContainer: page.getByTestId("thumbnail-container"),
+            counter: page.getByTestId("carousel-counter"),
             fileInfoName: page.getByTestId("file-info-name"),
         };
     }
@@ -89,14 +88,14 @@ test.describe("FullscreenImageCarousel", () => {
         test("Thumbnail (current)", async ({ story }) => {
             await story.locators.thumbnailItems.nth(0).hover();
             await compareScreenshot(story, "hover", {
-                fullscreen: true,
+                locator: story.locators.thumbnailContainer,
             });
         });
 
         test("Thumbnail (next)", async ({ story }) => {
             await story.locators.thumbnailItems.nth(1).hover();
             await compareScreenshot(story, "hover", {
-                fullscreen: true,
+                locator: story.locators.thumbnailContainer,
             });
         });
     });
@@ -116,112 +115,77 @@ test.describe("FullscreenImageCarousel", () => {
         test("Thumbnail (current)", async ({ story }) => {
             await story.locators.thumbnailItems.nth(0).hover();
             await compareScreenshot(story, "hover", {
-                fullscreen: true,
+                locator: story.locators.thumbnailContainer,
             });
         });
 
         test("Thumbnail (next)", async ({ story }) => {
             await story.locators.thumbnailItems.nth(1).hover();
             await compareScreenshot(story, "hover", {
-                fullscreen: true,
+                locator: story.locators.thumbnailContainer,
             });
         });
     });
 
-    test.describe("Mobile", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("basic-carousel", { size: "mobile" });
             await story.page.waitForLoadState("networkidle");
         });
 
-        test("Visual", async ({ story }) => {
+        test("Mobile", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
         });
     });
 
-    test.describe("Navigation", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("basic-carousel");
-            await story.page.waitForLoadState("networkidle");
-        });
-
-        test("Navigate by button click", async ({ story }) => {
-            await story.locators.forwardBtn.click();
-            await expect(story.locators.counter).toHaveText("2/4");
-            await expect(story.locators.fileInfoName).toHaveText("image-2.jpg");
-
-            await story.locators.prevBtn.click();
-            await expect(story.locators.counter).toHaveText("1/4");
-            await expect(story.locators.fileInfoName).toHaveText("image-1.jpg");
-        });
-
-        test("Navigate by thumbnail click", async ({ story }) => {
-            await story.locators.thumbnailItems.nth(2).click();
-            await expect(story.locators.counter).toHaveText("3/4");
-            await expect(story.locators.fileInfoName).toHaveText("image-3.jpg");
-        });
-
-        test("Navigate by keyboard", async ({ story }) => {
-            await story.page.keyboard.press("ArrowRight");
-            await expect(story.locators.counter).toHaveText("2/4");
-            await expect(story.locators.fileInfoName).toHaveText("image-2.jpg");
-
-            await story.page.keyboard.press("ArrowLeft");
-            await expect(story.locators.counter).toHaveText("1/4");
-            await expect(story.locators.fileInfoName).toHaveText("image-1.jpg");
-        });
-
-        test("Navigate wraps around at end", async ({ story }) => {
-            await story.locators.thumbnailItems.nth(3).click();
-            await expect(story.locators.counter).toHaveText("4/4");
-
-            await story.locators.forwardBtn.click();
-            await expect(story.locators.counter).toHaveText("1/4");
-            await expect(story.locators.fileInfoName).toHaveText("image-1.jpg");
-        });
-
-        test("Navigate wraps around at start", async ({ story }) => {
-            await story.locators.prevBtn.click();
-            await expect(story.locators.counter).toHaveText("4/4");
-            await expect(story.locators.fileInfoName).toHaveText("image-4.jpg");
-        });
-    });
-
-    test.describe("Configurable", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("configurable-carousel");
             await story.page.waitForLoadState("networkidle");
         });
 
-        test("Visual", async ({ story }) => {
+        test("Confugurable", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
         });
     });
 
-    test.describe("Long file name", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("long-file-name");
             await story.page.waitForLoadState("networkidle");
         });
 
-        test("Visual", async ({ story }) => {
+        test("Long file name", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
         });
     });
 
-    test.describe("Custom content", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("custom-content");
             await story.page.waitForLoadState("networkidle");
         });
 
-        test("Visual", async ({ story }) => {
+        test("Custom content", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("carousel-no-data");
+            await story.page.waitForLoadState("networkidle");
+        });
+
+        test("Carousel with no data", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });

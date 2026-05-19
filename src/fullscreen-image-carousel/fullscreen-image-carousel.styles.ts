@@ -144,31 +144,31 @@ export const arrowButton = css`
     position: absolute;
     top: 50%;
     transform: translateY(-50%);
+`;
 
-    &.arrowButtonLeft {
+export const arrowButtonLeft = css`
+    left: calc(
+        ${Spacing["spacing-48"]} + var(${tokens.arrowButton.insetLeft}, 0px)
+    );
+
+    ${MediaQuery.MaxWidth.sm} {
         left: calc(
-            ${Spacing["spacing-48"]} + var(${tokens.arrowButton.insetLeft}, 0px)
+            ${Spacing["spacing-20"]} + var(${tokens.arrowButton.insetLeft}, 0px)
         );
-
-        ${MediaQuery.MaxWidth.sm} {
-            left: calc(
-                ${Spacing["spacing-20"]} +
-                    var(${tokens.arrowButton.insetLeft}, 0px)
-            );
-        }
     }
+`;
 
-    &.arrowButtonRight {
+export const arrowButtonRight = css`
+    right: calc(
+        ${Spacing["spacing-48"]} +
+            var(${tokens.arrowButton.insetRight}, 0px)
+    );
+
+    ${MediaQuery.MaxWidth.sm} {
         right: calc(
-            ${Spacing["spacing-48"]} +
+            ${Spacing["spacing-20"]} +
                 var(${tokens.arrowButton.insetRight}, 0px)
         );
-
-        ${MediaQuery.MaxWidth.sm} {
-            right: calc(
-                ${Spacing["spacing-20"]} +
-                    var(${tokens.arrowButton.insetRight}, 0px)
-            );
         }
     }
 `;
