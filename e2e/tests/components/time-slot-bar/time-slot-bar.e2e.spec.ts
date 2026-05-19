@@ -172,13 +172,13 @@ test.describe("TimeSlotBar", () => {
         });
 
         const styleTypes = ["Default", "Stripe"] as const;
-        styleTypes.forEach((styleType) => {
-            test.describe(`${styleType} Style Type`, () => {
-                test.beforeEach(async ({ story }) => {
-                    await story.init("with-custom-colours-slots");
-                });
+        test.describe("Hover", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-custom-colours-slots");
+            });
 
-                test("Hover", async ({ story }) => {
+            styleTypes.forEach((styleType) => {
+                test(`${styleType} Style Type`, async ({ story }) => {
                     const timeslotWithPrimaryBG = story.page.getByTestId(
                         `time-slot-bar-slot-${styleType.toLowerCase()}-slot-${styleType.toLowerCase()}-timeslot`
                     );

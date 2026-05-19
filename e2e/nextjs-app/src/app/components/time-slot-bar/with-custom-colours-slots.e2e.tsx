@@ -92,9 +92,7 @@ export default function Story() {
                     // noop
                 }}
                 styleAttributes={{
-                    styleType: "stripes",
-                    backgroundColor: "black",
-                    backgroundColor2: "beige",
+                    backgroundColor: "crimson",
                 }}
             />
 
@@ -107,9 +105,7 @@ export default function Story() {
                     // noop
                 }}
                 styleAttributes={{
-                    styleType: "stripes",
-                    backgroundColor: "black",
-                    backgroundColor2: "beige",
+                    backgroundColor: "crimson",
                 }}
             />
         </div>
