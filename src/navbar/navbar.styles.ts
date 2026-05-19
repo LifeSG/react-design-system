@@ -78,6 +78,9 @@ export const navElementsContainer = css`
 
 export const navElementsContainerWithBranding = css`
     margin-left: 5rem;
+    ${MediaQuery.MaxWidth.lg} {
+        margin-left: 0;
+    }
 `;
 
 export const mobileMenuButton = css`

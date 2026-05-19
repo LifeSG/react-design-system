@@ -213,6 +213,7 @@ test.describe("Navbar", () => {
             });
 
             test("Collapsed", async ({ story }) => {
+                await story.waitForMasthead(story.page);
                 await compareScreenshot(story, "mount");
             });
 
@@ -230,6 +231,7 @@ test.describe("Navbar", () => {
             });
 
             test("Collapsed (dark mode)", async ({ story }) => {
+                await story.waitForMasthead(story.page);
                 await compareScreenshot(story, "mount");
             });
 
