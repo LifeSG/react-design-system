@@ -3,8 +3,7 @@ import { animated } from "@react-spring/web";
 import styled, { css } from "styled-components";
 
 import { Button } from "../button";
-import type { TimeSlotStyleProps } from "../time-slot-bar/time-slot-bar.styles";
-import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
+import { TimeSlot } from "../shared/time-slot";
 import { Typography } from "../typography";
 import {
     V3_Colour,
@@ -14,7 +13,7 @@ import {
     V3_Spacing,
 } from "../v3_theme";
 
-interface TimeSlotCellProps extends TimeSlotStyleProps {
+interface TimeSlotCellProps {
     $height: number;
     $halfFill?: "top" | "bottom";
 }
@@ -135,18 +134,17 @@ export const ChevronIcon = styled(ChevronUpIcon)<ChevronIconStyleProps>`
 `;
 
 export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
-    ${(props) => {
-        if (props.$type === "vertical") {
-            return css`
-                position: relative;
-                max-width: 200px;
-                height: ${props.$height}px;
-                min-height: ${props.$height}px;
-                margin: 0;
-                border-radius: ${V3_Radius["xs"]};
-            `;
-        }
-    }}
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    position: relative;
+    max-width: 200px;
+    height: ${(props) => props.$height}px;
+    min-height: ${(props) => props.$height}px;
+    margin: 0;
+    border-radius: ${V3_Radius["xs"]};
 
     &:focus-within {
         outline: 2px solid ${V3_Colour["focus-ring"]};
@@ -156,27 +154,25 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
     ${(props) => {
         if (!props.$halfFill) {
             return css`
-                background-color: ${props.$bgColor};
+                background-color: ${props.bgColor};
             `;
         } else {
             return css`
                 background: linear-gradient(
                         to ${props.$halfFill},
-                        ${props.$styleType === "stripes"
+                        ${props.styleType === "stripes"
                                 ? "transparent"
-                                : props.$bgColor}
+                                : props.bgColor}
                             50%,
                         ${V3_Colour["bg-strongest"]} 0%
                     )
-                    ${props.$styleType === "stripes" &&
+                    ${props.styleType === "stripes" &&
                     `, repeating-linear-gradient(
                             135deg,
-                            ${props.$bgColor2 || V3_Colour["bg-strongest"]} 0px,
-                            ${
-                                props.$bgColor2 || V3_Colour["bg-strongest"]
-                            } 10px,
-                            ${props.$bgColor || V3_Colour["bg-stronger"]} 10px,
-                            ${props.$bgColor || V3_Colour["bg-stronger"]} 20px
+                            ${props.bgColor2 || V3_Colour["bg-strongest"]} 0px,
+                            ${props.bgColor2 || V3_Colour["bg-strongest"]} 10px,
+                            ${props.bgColor || V3_Colour["bg-stronger"]} 10px,
+                            ${props.bgColor || V3_Colour["bg-stronger"]} 20px
                         )`};
             `;
         }

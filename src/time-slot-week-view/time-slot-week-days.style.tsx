@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
+import { TimeSlot } from "../shared/time-slot";
 import { Colour, Font } from "../theme";
-import { TimeSlot } from "../time-slot-bar/time-slot-bar.styles";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -66,6 +66,12 @@ export const TimeSlotText = styled.div`
 `;
 
 export const TimeSlotComponent = styled(TimeSlot)`
+    display: flex;
+    flex-grow: 1;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    margin: 1px 0px;
     position: relative;
 
     &:focus-within {

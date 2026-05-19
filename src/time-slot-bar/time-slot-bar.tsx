@@ -12,6 +12,7 @@ import {
 import { useResizeDetector } from "react-resize-detector";
 
 import { VisuallyHidden } from "../shared/accessibility";
+import { TimeSlot } from "../shared/time-slot";
 import { TimeHelper } from "../util/time-helper";
 import { TimeSlotBarHelper } from "./helper";
 import {
@@ -21,10 +22,10 @@ import {
     CellText,
     Container,
     getCellWidth,
+    StyledTimeSlotItem,
     TimeLabel,
     TimeMarker,
     TimeMarkerWrapper,
-    TimeSlot,
     TimeSlotBarContainer,
     TimeSlotBorder,
     TimeSlotWrapper,
@@ -274,20 +275,23 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         return (
             <>
                 <TimeSlotBorder $variant={variant} />
-                <TimeSlot
+                <StyledTimeSlotItem
                     key={"default-timeslot"}
                     data-testid={getDataTestId("default-timeslot")}
-                    $width={slotWidth}
+                    $slotWidth={slotWidth}
+                    $slotOffset={0}
                     $variant={variant}
-                    $left={0}
-                    $styleType={styleType}
-                    $bgColor={backgroundColor}
-                    $bgColor2={backgroundColor2}
-                    $hoverBgColor={hoverBackgroundColor}
-                    $hoverBgColor2={hoverBackgroundColor2}
-                    $clickable={isClickable}
                     onClick={isClickable ? onClick : undefined}
-                />
+                >
+                    <TimeSlot
+                        styleType={styleType}
+                        bgColor={backgroundColor}
+                        bgColor2={backgroundColor2}
+                        hoverBgColor={hoverBackgroundColor}
+                        hoverBgColor2={hoverBackgroundColor2}
+                        clickable={isClickable}
+                    />
+                </StyledTimeSlotItem>
             </>
         );
     };
@@ -345,41 +349,46 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                             left: `${slotOffset}px`,
                         }}
                     />
-                    <TimeSlot
+                    <StyledTimeSlotItem
                         data-testid={getDataTestId(`${id}-timeslot`)}
-                        $width={slotWidth}
-                        $left={slotOffset}
-                        $styleType={styleType}
                         $variant={variant}
-                        $bgColor={backgroundColor}
-                        $bgColor2={backgroundColor2}
-                        $hoverBgColor={hoverBackgroundColor}
-                        $hoverBgColor2={hoverBackgroundColor2}
-                        $clickable={isClickable}
+                        $slotWidth={slotWidth}
+                        $slotOffset={slotOffset}
                         onClick={handleSlotClick(slot)}
                     >
-                        {!!ariaLabel && (
-                            <VisuallyHidden>
-                                <button
-                                    type="button" // overrides default type="submit" when used with <form>
-                                    aria-disabled={!isClickable}
-                                    aria-label={ariaLabel}
-                                    onClick={handleSlotClick(slot)} // use `button` element native keyboard activation handling
-                                />
-                            </VisuallyHidden>
-                        )}
+                        <TimeSlot
+                            styleType={styleType}
+                            bgColor={backgroundColor}
+                            bgColor2={backgroundColor2}
+                            hoverBgColor={hoverBackgroundColor}
+                            hoverBgColor2={hoverBackgroundColor2}
+                            clickable={isClickable}
+                        >
+                            {!!ariaLabel && (
+                                <VisuallyHidden>
+                                    <button
+                                        type="button" // overrides default type="submit" when used with <form>
+                                        aria-disabled={!isClickable}
+                                        aria-label={ariaLabel}
+                                        onClick={handleSlotClick(slot)} // use `button` element native keyboard activation handling
+                                    />
+                                </VisuallyHidden>
+                            )}
 
-                        {showLabel && (
-                            <CellText
-                                $slotWidth={slotWidth}
-                                $color={color}
-                                weight={"semibold"}
-                                aria-hidden={!ariaLabel}
-                            >
-                                {showFullEllipsis(slotWidth) ? "..." : label}
-                            </CellText>
-                        )}
-                    </TimeSlot>
+                            {showLabel && (
+                                <CellText
+                                    $slotWidth={slotWidth}
+                                    $color={color}
+                                    weight={"semibold"}
+                                    aria-hidden={!ariaLabel}
+                                >
+                                    {showFullEllipsis(slotWidth)
+                                        ? "..."
+                                        : label}
+                                </CellText>
+                            )}
+                        </TimeSlot>
+                    </StyledTimeSlotItem>
                     {endTime !== slotEndTime && (
                         <TimeSlotBorder
                             data-testid="end-border"

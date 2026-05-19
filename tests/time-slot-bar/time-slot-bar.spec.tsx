@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, within } from "@testing-library/react";
 import { V3_Colour } from "src";
 import { TimeSlotBar } from "src/time-slot-bar/time-slot-bar";
 import type { TimeSlot } from "src/time-slot-bar/types";
@@ -120,6 +120,46 @@ describe("TimeSlotBar", () => {
         ).toBeInTheDocument();
     });
 
+    it("should call onClick when default background slot is clicked", () => {
+        const mockOnClick = jest.fn();
+
+        render(
+            <TimeSlotBar
+                {...defaultProps}
+                onClick={mockOnClick}
+                styleAttributes={{
+                    backgroundColor: "#CCCCCC",
+                }}
+                data-testid="time-slot-bar"
+            />
+        );
+
+        fireEvent.click(screen.getByTestId("time-slot-bar-default-timeslot"));
+        expect(mockOnClick).toHaveBeenCalledTimes(1);
+    });
+
+    it("should not call onClick when a slot is clicked", () => {
+        const mockOnClick = jest.fn();
+        const mockOnSlotClick = jest.fn();
+
+        render(
+            <TimeSlotBar
+                {...defaultProps}
+                onClick={mockOnClick}
+                onSlotClick={mockOnSlotClick}
+                styleAttributes={{
+                    backgroundColor: "#CCCCCC",
+                }}
+                data-testid="time-slot-bar"
+            />
+        );
+
+        fireEvent.click(screen.getByTestId("time-slot-bar-slot1-timeslot"));
+
+        expect(mockOnSlotClick).toHaveBeenCalledWith(mockSlots[0]);
+        expect(mockOnClick).not.toHaveBeenCalled();
+    });
+
     it("should show ellipsis for narrow slots", () => {
         const narrowSlots: TimeSlot[] = [
             {
@@ -157,6 +197,21 @@ describe("TimeSlotBar", () => {
         expect(
             screen.getByTestId("time-slot-bar-time-slot-wrapper")
         ).toBeInTheDocument();
+    });
+
+    it("should render summary on grid and hide slot buttons in minified variant", () => {
+        render(
+            <TimeSlotBar
+                {...defaultProps}
+                variant="minified"
+                data-testid="time-slot-bar"
+            />
+        );
+
+        const grid = screen.getByRole("grid");
+        expect(grid).toHaveAccessibleName(/Time slot bar.*Available/i);
+
+        expect(within(grid).queryAllByRole("button")).toHaveLength(0);
     });
 
     describe("time slot markers", () => {

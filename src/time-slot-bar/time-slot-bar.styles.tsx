@@ -5,8 +5,7 @@ import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Typography } from "../typography";
 import { V3_Border, V3_Colour, V3_Shadow } from "../v3_theme";
-import type { V3_ThemeStyleProps } from "../v3_theme/types";
-import type { Direction, SlotStyle, TimeSlotBarVariant } from "./types";
+import type { Direction, TimeSlotBarVariant } from "./types";
 
 const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
 
@@ -31,7 +30,6 @@ export const getCellHeight = (variant: TimeSlotBarVariant) => {
         return 40;
     }
 };
-
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
@@ -40,19 +38,6 @@ export const getCellHeight = (variant: TimeSlotBarVariant) => {
 interface ArrowStyleProps {
     $direction?: Direction;
     $variant: TimeSlotBarVariant;
-}
-
-export interface TimeSlotStyleProps {
-    $type?: "default" | "vertical";
-    $variant: TimeSlotBarVariant;
-    $width?: number;
-    $left?: number;
-    $styleType: SlotStyle;
-    $bgColor: string | ((props: V3_ThemeStyleProps) => string);
-    $bgColor2?: string | ((props: V3_ThemeStyleProps) => string);
-    $hoverBgColor?: string | ((props: V3_ThemeStyleProps) => string);
-    $hoverBgColor2?: string | ((props: V3_ThemeStyleProps) => string);
-    $clickable?: boolean;
 }
 
 interface CellTextStyleProps {
@@ -171,75 +156,6 @@ export const TimeLabel = styled(Typography.BodyXS)`
     left: 10%;
 `;
 
-export const TimeSlot = styled.div<TimeSlotStyleProps>`
-    ${(props) => {
-        if (props.$type === "vertical") {
-            return css`
-                display: flex;
-                flex-grow: 1;
-                align-items: center;
-                justify-content: center;
-                width: 100%;
-                margin: 1px 0px;
-            `;
-        } else {
-            return css`
-                position: absolute;
-                height: ${getCellHeight(props.$variant)}px;
-                width: ${props.$width}px;
-                left: ${props.$left}px;
-            `;
-        }
-    }}
-    background-color: ${({ $bgColor }) => $bgColor};
-    cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
-    ${({ $hoverBgColor, $clickable }) =>
-        $hoverBgColor &&
-        $clickable &&
-        css`
-            &:hover {
-                background-color: ${$hoverBgColor};
-            }
-        `}
-
-    ${(props) =>
-        props.$styleType === "stripes" &&
-        css`
-            background: repeating-linear-gradient(
-                135deg,
-                ${props.$bgColor2 || V3_Colour["bg-strongest"]} 0px,
-                ${props.$bgColor2 || V3_Colour["bg-strongest"]} 10px,
-                ${props.$bgColor || V3_Colour["bg-stronger"]} 10px,
-                ${props.$bgColor || V3_Colour["bg-stronger"]} 20px
-            );
-            ${(props.$hoverBgColor || props.$hoverBgColor2) &&
-            props.$clickable &&
-            css`
-                &:hover {
-                    background: repeating-linear-gradient(
-                        135deg,
-                        ${props.$hoverBgColor2 ||
-                            props.$bgColor2 ||
-                            V3_Colour["bg-strongest"]}
-                            0px,
-                        ${props.$hoverBgColor2 ||
-                            props.$bgColor2 ||
-                            V3_Colour["bg-strongest"]}
-                            10px,
-                        ${props.$hoverBgColor ||
-                            props.$bgColor ||
-                            V3_Colour["bg-stronger"]}
-                            10px,
-                        ${props.$hoverBgColor ||
-                            props.$bgColor ||
-                            V3_Colour["bg-stronger"]}
-                            20px
-                    );
-                }
-            `}
-        `}
-`;
-
 export const TimeSlotBorder = styled.div<{ $variant: TimeSlotBarVariant }>`
     position: absolute;
     top: ${MAX_LINE_HEIGHT}rem;
@@ -259,4 +175,26 @@ export const CellText = styled(Typography.BodyXS)<CellTextStyleProps>`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+`;
+
+// =============================================================================
+// STYLED TIME SLOT COMPONENTS
+// =============================================================================
+
+interface TimeSlotWrapperProps {
+    $variant: TimeSlotBarVariant;
+    $slotWidth?: number;
+    $slotOffset?: number;
+}
+
+export const StyledTimeSlotItem = styled.div<TimeSlotWrapperProps>`
+    position: absolute;
+    height: ${({ $variant }) => `${getCellHeight($variant)}px`};
+    width: ${({ $slotWidth }) => `${$slotWidth}px`};
+    left: ${({ $slotOffset }) => `${$slotOffset}px`};
+
+    > * {
+        width: 100%;
+        height: 100%;
+    }
 `;
