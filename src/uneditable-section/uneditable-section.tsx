@@ -1,16 +1,13 @@
+import clsx from "clsx";
+
+import { Layout } from "../layout";
+import { Typography } from "../typography";
 import { UneditableSectionItem } from "./section-item";
 import type {
     UneditableSectionItemProps,
     UneditableSectionProps,
 } from "./types";
-import {
-    CustomSection,
-    Description,
-    FullWidthWrapper,
-    GridUl,
-    Title,
-    Wrapper,
-} from "./uneditable-section.styles";
+import * as styles from "./uneditable-section.styles";
 
 export const UneditableSectionBase = ({
     items,
@@ -25,6 +22,7 @@ export const UneditableSectionBase = ({
     onMask,
     onUnmask,
     onTryAgain,
+    className,
     ...otherProps
 }: UneditableSectionProps) => {
     // =============================================================================
@@ -61,9 +59,15 @@ export const UneditableSectionBase = ({
             });
 
             return (
-                <GridUl $stretch={stretch} $fullWidth={fullWidth}>
+                <ul
+                    className={clsx(
+                        styles.gridUl,
+                        stretch && styles.columnWidthStretch,
+                        fullWidth && styles.gridUlFullWidth
+                    )}
+                >
                     {renderedItems}
-                </GridUl>
+                </ul>
             );
         }
 
@@ -78,27 +82,49 @@ export const UneditableSectionBase = ({
         return (
             <>
                 {title && (
-                    <Title
-                        forwardedAs="h2"
+                    <Typography.HeadingSM
+                        as="h2"
                         weight="semibold"
-                        $stretch={stretch}
+                        className={clsx(
+                            styles.title,
+                            stretch && styles.columnWidthStretch
+                        )}
                     >
                         {title}
-                    </Title>
+                    </Typography.HeadingSM>
                 )}
                 {description && (
-                    <Description $stretch={stretch}>{description}</Description>
+                    <Typography.BodyBL
+                        className={clsx(
+                            styles.description,
+                            stretch && styles.columnWidthStretch
+                        )}
+                    >
+                        {description}
+                    </Typography.BodyBL>
                 )}
                 {topSection && (
-                    <CustomSection data-id="top-section" $stretch={stretch}>
+                    <div
+                        data-id="top-section"
+                        className={clsx(
+                            styles.customSection,
+                            stretch && styles.columnWidthStretch
+                        )}
+                    >
                         {topSection}
-                    </CustomSection>
+                    </div>
                 )}
                 {renderItems()}
                 {bottomSection && (
-                    <CustomSection data-id="bottom-section" $stretch={stretch}>
+                    <div
+                        data-id="bottom-section"
+                        className={clsx(
+                            styles.customSection,
+                            stretch && styles.columnWidthStretch
+                        )}
+                    >
                         {bottomSection}
-                    </CustomSection>
+                    </div>
                 )}
             </>
         );
@@ -106,14 +132,28 @@ export const UneditableSectionBase = ({
 
     if (fullWidth) {
         return (
-            <FullWidthWrapper $background={background} {...otherProps}>
+            <div
+                className={clsx(
+                    background && styles.wrapperBackground,
+                    className
+                )}
+                {...otherProps}
+            >
                 {renderChildren()}
-            </FullWidthWrapper>
+            </div>
         );
     }
     return (
-        <Wrapper $background={background} {...otherProps} type="grid">
+        <Layout.Content
+            className={clsx(
+                styles.wrapper,
+                background && styles.wrapperBackground,
+                className
+            )}
+            {...otherProps}
+            type="grid"
+        >
             {renderChildren()}
-        </Wrapper>
+        </Layout.Content>
     );
 };

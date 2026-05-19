@@ -253,6 +253,98 @@ describe("UneditableSection", () => {
             });
             expect(onTryAgainFn).toHaveBeenCalledWith(ITEMS[0]);
         });
+
+        describe("Masking variants", () => {
+            it("should mask characters using maskRange with start and end", () => {
+                const ITEMS: UneditableSectionItemProps[] = [
+                    {
+                        label: "NRIC",
+                        value: "S1234567D",
+                        maskRange: [1, 4],
+                        maskState: "masked",
+                    },
+                ];
+
+                render(<UneditableSection items={ITEMS} title="Test" />);
+
+                expect(screen.getByText("S••••567D")).toBeInTheDocument();
+            });
+
+            it("should mask characters using maskRange from start index to end of string", () => {
+                const ITEMS: UneditableSectionItemProps[] = [
+                    {
+                        label: "NRIC",
+                        value: "S1234567D",
+                        maskRange: [4, 9999],
+                        maskState: "masked",
+                    },
+                ];
+
+                render(<UneditableSection items={ITEMS} title="Test" />);
+
+                expect(screen.getByText("S123•••••")).toBeInTheDocument();
+            });
+
+            it("should mask characters using maskRange from start of string to end index", () => {
+                const ITEMS: UneditableSectionItemProps[] = [
+                    {
+                        label: "NRIC",
+                        value: "S1234567D",
+                        maskRange: [0, 4],
+                        maskState: "masked",
+                    },
+                ];
+
+                render(<UneditableSection items={ITEMS} title="Test" />);
+
+                expect(screen.getByText("•••••567D")).toBeInTheDocument();
+            });
+
+            it("should unmask characters using unmaskRange and mask the rest", () => {
+                const ITEMS: UneditableSectionItemProps[] = [
+                    {
+                        label: "NRIC",
+                        value: "S1234567D",
+                        unmaskRange: [1, 4],
+                        maskState: "masked",
+                    },
+                ];
+
+                render(<UneditableSection items={ITEMS} title="Test" />);
+
+                expect(screen.getByText("•1234••••")).toBeInTheDocument();
+            });
+
+            it("should mask characters matching maskRegex pattern", () => {
+                const ITEMS: UneditableSectionItemProps[] = [
+                    {
+                        label: "NRIC",
+                        value: "S1234567D",
+                        maskRegex: /\D/g,
+                        maskState: "masked",
+                    },
+                ];
+
+                render(<UneditableSection items={ITEMS} title="Test" />);
+
+                expect(screen.getByText("•1234567•")).toBeInTheDocument();
+            });
+
+            it("should apply custom maskTransformer function", () => {
+                const ITEMS: UneditableSectionItemProps[] = [
+                    {
+                        label: "NRIC",
+                        value: "S1234567D",
+                        maskTransformer: (value) => value.replace(/\d/g, "X"),
+                        maskState: "masked",
+                    },
+                ];
+
+                render(<UneditableSection items={ITEMS} title="Test" />);
+
+                expect(screen.getByText("SXXXXXXXD")).toBeInTheDocument();
+            });
+        });
     });
 
     describe("With alert", () => {
