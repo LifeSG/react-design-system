@@ -1,15 +1,12 @@
+import { CrossIcon } from "@lifesg/react-icons/cross";
+import clsx from "clsx";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { ClickableIcon } from "../shared/clickable-icon";
+import { useApplyStyle } from "../theme";
 import { Brand } from "./brand";
-import {
-    CloseButton,
-    CloseIcon,
-    Container,
-    Content,
-    TopBar,
-    Wrapper,
-} from "./drawer.styles";
-import { NavBrandContainer, NavSeparator } from "./navbar.styles";
+import * as styles from "./drawer.styles";
+import * as navbarStyles from "./navbar.styles";
 import type { NavbarDrawerProps } from "./types";
 
 const Component = (
@@ -31,6 +28,12 @@ const Component = (
     } = props;
     const [viewHeight, setViewHeight] = useState<number>(0);
     const containerRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(containerRef, {
+        [styles.tokens.container.viewHeight]: viewHeight
+            ? `${viewHeight}px`
+            : null,
+    });
 
     const { primary, secondary } = resources;
 
@@ -104,7 +107,13 @@ const Component = (
                 )}
                 {secondary && (
                     <>
-                        <NavSeparator />
+                        <div
+                            className={clsx(
+                                navbarStyles.navSeparator,
+                                navbarStyles.navSeparatorCompressed,
+                                navbarStyles.navSeparatorResponsive
+                            )}
+                        />
                         <Brand
                             resources={secondary}
                             compress
@@ -120,36 +129,46 @@ const Component = (
     };
 
     const renderTopBar = () => (
-        <TopBar>
-            <NavBrandContainer data-id="drawer-brand-container">
+        <div className={styles.topBar}>
+            <div
+                className={clsx(
+                    navbarStyles.navBrandContainer,
+                    navbarStyles.navBrandContainerCompressed,
+                    navbarStyles.navBrandContainerResponsive
+                )}
+                data-id="drawer-brand-container"
+            >
                 {!hideNavBranding && renderBrand()}
-            </NavBrandContainer>
-            <CloseButton
+            </div>
+            <ClickableIcon
+                className={styles.closeButton}
                 onClick={onClose}
                 focusHighlight={false}
                 aria-label="Close nav menu"
             >
-                <CloseIcon />
-            </CloseButton>
-        </TopBar>
+                <CrossIcon className={styles.closeIcon} />
+            </ClickableIcon>
+        </div>
     );
 
     return (
-        <Wrapper ref={ref} data-testid="drawer">
-            <Container
+        <div className={styles.wrapper} ref={ref} data-testid="drawer">
+            <nav
                 ref={containerRef}
-                $show={show}
-                $viewHeight={viewHeight}
+                className={clsx(
+                    styles.container,
+                    show ? styles.containerShown : styles.containerHidden
+                )}
                 onKeyDown={handleKeyDown}
                 tabIndex={show ? 0 : -1}
                 aria-label={drawerLabel}
             >
-                <Content>
+                <div className={styles.content}>
                     {renderTopBar()}
                     {children}
-                </Content>
-            </Container>
-        </Wrapper>
+                </div>
+            </nav>
+        </div>
     );
 };
 

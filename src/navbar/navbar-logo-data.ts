@@ -1,4 +1,4 @@
-import type { V3_ResourceScheme } from "../v3_theme/types";
+import type { ThemeType } from "../theme/types";
 import type { NavbarResourcesProps } from "./types";
 
 const DEFAULT_RESOURCES_LOGO: NavbarResourcesProps = {
@@ -53,7 +53,7 @@ const SUPPORTGOWHERE_RESOURCE_LOGO: NavbarResourcesProps = {
     },
 };
 
-export const getDefaultResourceLogo = (resourceScheme?: V3_ResourceScheme) => {
+export const getDefaultResourceLogo = (resourceScheme?: ThemeType) => {
     switch (resourceScheme) {
         case "bookingsg":
             return BOOKINGSG_RESOURCES_LOGO;
@@ -64,6 +64,7 @@ export const getDefaultResourceLogo = (resourceScheme?: V3_ResourceScheme) => {
         case "spf":
             return SPF_RESOURCE_LOGO;
         case "supportgowhere":
+        case "sgw-digital-lobby":
             return SUPPORTGOWHERE_RESOURCE_LOGO;
         case "imda":
             return IMDA_RESOURCE_LOGO;

@@ -1,7 +1,7 @@
 import type React from "react";
 
 import { ImageWithFallback } from "../shared/image-with-fallback/image-with-fallback";
-import { Container } from "./brand.styles";
+import * as styles from "./brand.styles";
 import type { BrandType, NavbarBrandingProps } from "./types";
 
 interface Props {
@@ -44,24 +44,25 @@ export const Brand = ({
             : `Go to ${resources.brandName}`
         : resources.brandName;
 
-    const props = isClickable
-        ? {
-              role: "link",
-              tabIndex: 0,
-              onClick: handleClick,
-          }
-        : {};
+    if (isClickable) {
+        return (
+            <a
+                data-id={dataId}
+                data-testid={testId}
+                className={styles.container}
+                role="link"
+                tabIndex={0}
+                onClick={handleClick}
+            >
+                <ImageWithFallback src={resources.logoSrc} alt={logoLabel} />
+            </a>
+        );
+    }
 
     return (
-        <Container
-            data-id={dataId}
-            data-testid={testId}
-            $type={type}
-            as={isClickable ? "a" : "div"}
-            {...props}
-        >
+        <div data-id={dataId} data-testid={testId} className={styles.container}>
             <ImageWithFallback src={resources.logoSrc} alt={logoLabel} />
-        </Container>
+        </div>
     );
 };
 

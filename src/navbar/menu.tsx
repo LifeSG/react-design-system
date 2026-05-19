@@ -1,6 +1,7 @@
 import type React from "react";
 
-import { Link, MenuItem, MobileWrapper } from "./menu.styles";
+import { Typography } from "../typography";
+import * as styles from "./menu.styles";
 import type { NavItemCommonProps } from "./types";
 
 interface Props<T> {
@@ -22,14 +23,15 @@ export const Menu = <T,>({ items, onItemClick }: Props<T>): JSX.Element => {
     if (!items?.length) return <></>;
 
     return (
-        <MobileWrapper>
+        <ul className={styles.mobileWrapper}>
             {items.map((item, index) => {
                 const { children, options, ...otherItemAttrs } = item;
                 const testId = `menu__mobile-${index + 1}`;
 
                 return (
-                    <MenuItem key={index}>
-                        <Link
+                    <li key={index} className={styles.menuItem}>
+                        <Typography.LinkBL
+                            className={styles.link}
                             data-testid={testId}
                             {...otherItemAttrs}
                             {...options}
@@ -37,10 +39,10 @@ export const Menu = <T,>({ items, onItemClick }: Props<T>): JSX.Element => {
                             underlineStyle="none"
                         >
                             {children}
-                        </Link>
-                    </MenuItem>
+                        </Typography.LinkBL>
+                    </li>
                 );
             })}
-        </MobileWrapper>
+        </ul>
     );
 };
