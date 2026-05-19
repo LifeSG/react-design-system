@@ -28,6 +28,21 @@ class StoryPage extends AbstractStoryPage {
             ),
         };
     }
+
+    async clickUntilEdge(getArrow: () => Locator) {
+        for (let attempt = 0; attempt < 20; attempt += 1) {
+            const arrow = getArrow();
+
+            if (!(await arrow.isVisible().catch(() => false))) {
+                return;
+            }
+
+            await arrow.click({ force: true }).catch(() => undefined);
+            await this.page.waitForTimeout(50);
+        }
+
+        throw new Error("Unable to reach timeslot bar edge");
+    }
 }
 
 const test = base.extend<{ story: StoryPage }>({
@@ -122,28 +137,15 @@ test.describe("TimeSlotBar", () => {
         });
 
         test("Overflowing behavior", async ({ story }) => {
-            const clickUntilEdge = async (getArrow: () => Locator) => {
-                for (let attempt = 0; attempt < 20; attempt += 1) {
-                    const arrow = getArrow();
-
-                    if (!(await arrow.isVisible().catch(() => false))) {
-                        return;
-                    }
-
-                    await arrow.click({ force: true }).catch(() => undefined);
-                    await story.page.waitForTimeout(50);
-                }
-
-                throw new Error("Unable to reach timeslot bar edge");
-            };
-
             await expect(story.locators.internal.leftArrow).toBeVisible();
             await expect(story.locators.internal.rightArrow).toBeVisible();
 
-            await clickUntilEdge(() => story.locators.internal.leftArrow);
+            await story.clickUntilEdge(() => story.locators.internal.leftArrow);
             await compareScreenshot(story, "state-with-right-arrow-only");
 
-            await clickUntilEdge(() => story.locators.internal.rightArrow);
+            await story.clickUntilEdge(
+                () => story.locators.internal.rightArrow
+            );
             await compareScreenshot(story, "state-with-left-arrow-only");
         });
     });
