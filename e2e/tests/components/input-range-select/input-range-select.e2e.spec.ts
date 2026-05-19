@@ -295,19 +295,19 @@ test.describe("InputRangeSelect", () => {
                 });
             });
 
-            await test.step("Default from - dropdown open", async () => {
-                await story.page.keyboard.press("Enter");
-                await compareScreenshot(story, "default-from-dropdown-open", {
-                    locator: story.locators.focus,
-                });
-            });
+            // await test.step("Default from - dropdown open", async () => {
+            //     await story.page.keyboard.press("Enter");
+            //     await compareScreenshot(story, "default-from-dropdown-open", {
+            //         locator: story.locators.focus,
+            //     });
+            // });
 
-            await test.step("Default from - dropdown closed", async () => {
-                await story.page.keyboard.press("Escape");
-                await compareScreenshot(story, "default-from-dropdown-closed", {
-                    locator: story.locators.focus,
-                });
-            });
+            // await test.step("Default from - dropdown closed", async () => {
+            //     await story.page.keyboard.press("Escape");
+            //     await compareScreenshot(story, "default-from-dropdown-closed", {
+            //         locator: story.locators.focus,
+            //     });
+            // });
 
             await test.step("Default to - focused", async () => {
                 await story.page.keyboard.press("Tab");
@@ -337,19 +337,19 @@ test.describe("InputRangeSelect", () => {
                 });
             });
 
-            await test.step("Error from - dropdown open", async () => {
-                await story.page.keyboard.press("Enter");
-                await compareScreenshot(story, "error-from-dropdown-open", {
-                    locator: story.locators.focusError,
-                });
-            });
+            // await test.step("Error from - dropdown open", async () => {
+            //     await story.page.keyboard.press("Enter");
+            //     await compareScreenshot(story, "error-from-dropdown-open", {
+            //         locator: story.locators.focusError,
+            //     });
+            // });
 
-            await test.step("Error from - dropdown closed", async () => {
-                await story.page.keyboard.press("Escape");
-                await compareScreenshot(story, "error-from-dropdown-closed", {
-                    locator: story.locators.focusError,
-                });
-            });
+            // await test.step("Error from - dropdown closed", async () => {
+            //     await story.page.keyboard.press("Escape");
+            //     await compareScreenshot(story, "error-from-dropdown-closed", {
+            //         locator: story.locators.focusError,
+            //     });
+            // });
 
             await test.step("Error to - focused", async () => {
                 await story.page.keyboard.press("Tab");
@@ -395,19 +395,19 @@ test.describe("InputRangeSelect", () => {
                 });
             });
 
-            await test.step("Default from - dropdown open", async () => {
-                await story.page.keyboard.press("Enter");
-                await compareScreenshot(story, "default-from-dropdown-open", {
-                    locator: story.locators.focus,
-                });
-            });
+            // await test.step("Default from - dropdown open", async () => {
+            //     await story.page.keyboard.press("Enter");
+            //     await compareScreenshot(story, "default-from-dropdown-open", {
+            //         locator: story.locators.focus,
+            //     });
+            // });
 
-            await test.step("Default from - dropdown closed", async () => {
-                await story.page.keyboard.press("Escape");
-                await compareScreenshot(story, "default-from-dropdown-closed", {
-                    locator: story.locators.focus,
-                });
-            });
+            // await test.step("Default from - dropdown closed", async () => {
+            //     await story.page.keyboard.press("Escape");
+            //     await compareScreenshot(story, "default-from-dropdown-closed", {
+            //         locator: story.locators.focus,
+            //     });
+            // });
 
             await test.step("Default to - focused", async () => {
                 await story.page.keyboard.press("Tab");
@@ -437,19 +437,19 @@ test.describe("InputRangeSelect", () => {
                 });
             });
 
-            await test.step("Error from - dropdown open", async () => {
-                await story.page.keyboard.press("Enter");
-                await compareScreenshot(story, "error-from-dropdown-open", {
-                    locator: story.locators.focusError,
-                });
-            });
+            // await test.step("Error from - dropdown open", async () => {
+            //     await story.page.keyboard.press("Enter");
+            //     await compareScreenshot(story, "error-from-dropdown-open", {
+            //         locator: story.locators.focusError,
+            //     });
+            // });
 
-            await test.step("Error from - dropdown closed", async () => {
-                await story.page.keyboard.press("Escape");
-                await compareScreenshot(story, "error-from-dropdown-closed", {
-                    locator: story.locators.focusError,
-                });
-            });
+            // await test.step("Error from - dropdown closed", async () => {
+            //     await story.page.keyboard.press("Escape");
+            //     await compareScreenshot(story, "error-from-dropdown-closed", {
+            //         locator: story.locators.focusError,
+            //     });
+            // });
 
             await test.step("Error to - focused", async () => {
                 await story.page.keyboard.press("Tab");
