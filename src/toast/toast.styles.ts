@@ -1,15 +1,8 @@
-import { animated } from "@react-spring/web";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
-import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, Font, MediaQuery, Radius } from "../theme";
-import { Typography } from "../typography";
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Wrapper = animated(styled.div`
+export const wrapper = css`
     display: flex;
     flex-direction: row;
     position: relative;
@@ -26,37 +19,37 @@ export const Wrapper = animated(styled.div`
         left: 0;
     }
 
-    &.toastWrapperFixed {
+    &[data-fixed="true"] {
         position: fixed;
         margin: 1rem;
     }
 
-    &.toastWrapperSuccess {
+    &[data-type="success"] {
         background: ${Colour["bg-success"]};
         border: 1px solid ${Colour["border-success"]};
         color: ${Colour["text-success"]};
     }
 
-    &.toastWrapperWarning {
+    &[data-type="warning"] {
         background: ${Colour["bg-warning"]};
         border: 1px solid ${Colour["border-warning"]};
         color: ${Colour["text-warning"]};
     }
 
-    &.toastWrapperError {
+    &[data-type="error"] {
         background: ${Colour["bg-error"]};
         border: 1px solid ${Colour["border-error"]};
         color: ${Colour["text-error"]};
     }
 
-    &.toastWrapperInfo {
+    &[data-type="info"] {
         background: ${Colour["bg-info"]};
         border: 1px solid ${Colour["border-info"]};
         color: ${Colour["text-info"]};
     }
-`);
+`;
 
-export const ContentWrapper = styled.div`
+export const contentWrapper = css`
     display: flex;
     align-items: center;
     gap: 2rem;
@@ -71,7 +64,7 @@ export const ContentWrapper = styled.div`
     }
 `;
 
-export const TextIconWrapper = styled.div`
+export const textIconWrapper = css`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
@@ -84,86 +77,39 @@ export const TextIconWrapper = styled.div`
         margin-right: 0.5rem;
     }
 
-    &.toastTextIconWrapperSuccess > svg {
+    :where([data-type="success"]) & > svg {
         color: ${Colour["icon-success"]};
     }
 
-    &.toastTextIconWrapperWarning > svg {
+    :where([data-type="warning"]) & > svg {
         color: ${Colour["icon-warning"]};
     }
 
-    &.toastTextIconWrapperError > svg {
+    :where([data-type="error"]) & > svg {
         color: ${Colour["icon-error"]};
     }
 
-    &.toastTextIconWrapperInfo > svg {
+    :where([data-type="info"]) & > svg {
         color: ${Colour["icon-info"]};
     }
 `;
 
-export const TextContainer = styled.div`
+export const textContainer = css`
     display: flex;
     flex-direction: column;
 `;
 
-export const Title = styled.h2`
+export const title = css`
     display: flex;
     ${Font["body-baseline-semibold"]}
-
-    &.toastTextSuccess {
-        color: ${Colour["text-success"]};
-    }
-
-    &.toastTextWarning {
-        color: ${Colour["text-warning"]};
-    }
-
-    &.toastTextError {
-        color: ${Colour["text-error"]};
-    }
-
-    &.toastTextInfo {
-        color: ${Colour["text-info"]};
-    }
+    color: inherit;
 `;
 
-export const DescriptionMD = styled(Typography.BodyMD)`
-    &.toastTextSuccess {
-        color: ${Colour["text-success"]};
-    }
-
-    &.toastTextWarning {
-        color: ${Colour["text-warning"]};
-    }
-
-    &.toastTextError {
-        color: ${Colour["text-error"]};
-    }
-
-    &.toastTextInfo {
-        color: ${Colour["text-info"]};
-    }
+export const description = css`
+    color: inherit;
 `;
 
-export const DescriptionBL = styled(Typography.BodyBL)`
-    &.toastTextSuccess {
-        color: ${Colour["text-success"]};
-    }
-
-    &.toastTextWarning {
-        color: ${Colour["text-warning"]};
-    }
-
-    &.toastTextError {
-        color: ${Colour["text-error"]};
-    }
-
-    &.toastTextInfo {
-        color: ${Colour["text-info"]};
-    }
-`;
-
-export const ActionButton = styled(Button.Small)`
+export const actionButton = css`
     align-self: center;
     margin-left: auto;
     height: auto;
@@ -176,34 +122,20 @@ export const ActionButton = styled(Button.Small)`
     }
 `;
 
-export const DismissButton = styled(ClickableIcon)`
+export const dismissButton = css`
     padding: 0.75rem;
     margin: -0.75rem;
     align-self: stretch;
+    color: inherit;
+
+    &:hover {
+        background: transparent;
+    }
 
     svg {
         width: 1.5rem;
         height: 1.5rem;
-    }
-
-    &.toastDismissButtonSuccess svg {
-        color: ${Colour["text-success"]};
-    }
-
-    &.toastDismissButtonWarning svg {
-        color: ${Colour["text-warning"]};
-    }
-
-    &.toastDismissButtonError svg {
-        color: ${Colour["text-error"]};
-    }
-
-    &.toastDismissButtonInfo svg {
-        color: ${Colour["text-info"]};
-    }
-
-    &:hover {
-        background: transparent;
+        color: inherit;
     }
 
     ${MediaQuery.MaxWidth.sm} {

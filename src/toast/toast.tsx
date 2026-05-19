@@ -5,16 +5,19 @@ import {
     ICircleFillIcon,
     TickCircleFillIcon,
 } from "@lifesg/react-icons";
-import { easings, useSpring } from "@react-spring/web";
+import { animated, easings, useSpring } from "@react-spring/web";
 import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
+import { Button } from "../button";
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
+import { ClickableIcon } from "../shared/clickable-icon";
 import {
     Breakpoint,
     useDesignToken,
     useSafeMaxWidthMediaQuery,
 } from "../theme";
+import { Typography } from "../typography";
 import * as styles from "./toast.styles";
 import type { ToastProps } from "./types";
 
@@ -27,33 +30,6 @@ const TOAST_ICON_MAP = {
     error: ExclamationCircleFillIcon,
     info: ICircleFillIcon,
 };
-
-const TOAST_CLASS_MAP = {
-    wrapper: {
-        success: "toastWrapperSuccess",
-        warning: "toastWrapperWarning",
-        error: "toastWrapperError",
-        info: "toastWrapperInfo",
-    },
-    textIconWrapper: {
-        success: "toastTextIconWrapperSuccess",
-        warning: "toastTextIconWrapperWarning",
-        error: "toastTextIconWrapperError",
-        info: "toastTextIconWrapperInfo",
-    },
-    text: {
-        success: "toastTextSuccess",
-        warning: "toastTextWarning",
-        error: "toastTextError",
-        info: "toastTextInfo",
-    },
-    dismissButton: {
-        success: "toastDismissButtonSuccess",
-        warning: "toastDismissButtonWarning",
-        error: "toastDismissButtonError",
-        info: "toastDismissButtonInfo",
-    },
-} as const;
 
 export const Toast = ({
     type = "success",
@@ -91,7 +67,7 @@ export const Toast = ({
         }, autoDismissTime);
 
         return () => clearTimeout(timeout);
-    }, [autoDismiss]);
+    }, [autoDismiss, autoDismissTime]);
 
     useEffect(() => {
         const handleKeyDown = (event: KeyboardEvent) => {
@@ -150,12 +126,9 @@ export const Toast = ({
             return title;
         } else {
             return (
-                <styles.Title
-                    className={TOAST_CLASS_MAP.text[type]}
-                    role="presentation"
-                >
+                <h2 className={styles.title} role="presentation">
                     {title}
-                </styles.Title>
+                </h2>
             );
         }
     };
@@ -165,62 +138,59 @@ export const Toast = ({
             return label;
         } else if (title) {
             return (
-                <styles.DescriptionMD className={TOAST_CLASS_MAP.text[type]}>
+                <Typography.BodyMD className={styles.description}>
                     {label}
-                </styles.DescriptionMD>
+                </Typography.BodyMD>
             );
         } else {
             return (
-                <styles.DescriptionBL className={TOAST_CLASS_MAP.text[type]}>
+                <Typography.BodyBL className={styles.description}>
                     {label}
-                </styles.DescriptionBL>
+                </Typography.BodyBL>
             );
         }
     };
 
     return (
-        <styles.Wrapper
+        <animated.div
             ref={toastRef}
             style={transitions}
-            className={clsx(
-                fixed && "toastWrapperFixed",
-                TOAST_CLASS_MAP.wrapper[type],
-                className
-            )}
+            className={clsx(styles.wrapper, className)}
+            data-type={type}
+            data-fixed={fixed}
             role="alert"
             inert={inertValue(!isVisible)}
             {...otherProps}
         >
             <VisuallyHidden>{type}</VisuallyHidden>
-            <styles.ContentWrapper>
-                <styles.TextIconWrapper
-                    className={TOAST_CLASS_MAP.textIconWrapper[type]}
-                >
+            <div className={styles.contentWrapper}>
+                <div className={styles.textIconWrapper}>
                     {renderIcon()}
-                    <styles.TextContainer>
+                    <div className={styles.textContainer}>
                         {title && renderTitle()}
                         {label && renderDesc()}
-                    </styles.TextContainer>
-                </styles.TextIconWrapper>
+                    </div>
+                </div>
 
                 {actionButton && (
-                    <styles.ActionButton
+                    <Button.Small
+                        className={styles.actionButton}
                         styleType="light"
                         onClick={actionButton.onClick}
                     >
                         {actionButton.label}
-                    </styles.ActionButton>
+                    </Button.Small>
                 )}
-            </styles.ContentWrapper>
-            <styles.DismissButton
-                className={TOAST_CLASS_MAP.dismissButton[type]}
+            </div>
+            <ClickableIcon
+                className={styles.dismissButton}
                 onClick={handleDismiss}
             >
                 <VisuallyHidden role="presentation">
                     Close notification
                 </VisuallyHidden>
                 <CrossIcon aria-hidden />
-            </styles.DismissButton>
-        </styles.Wrapper>
+            </ClickableIcon>
+        </animated.div>
     );
 };
