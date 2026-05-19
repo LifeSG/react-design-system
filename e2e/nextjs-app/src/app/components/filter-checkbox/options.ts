@@ -9,6 +9,20 @@ export const getOptions = (
         label: labelFormatter(i),
     }));
 
+export const nonUniformOptions: FilterItemCheckboxOptionProps[] = [
+    { value: "option-1", label: "1" },
+    { value: "option-2", label: "Option 2" },
+    {
+        value: "option-3",
+        label: "This is an option with a little bit longer text",
+    },
+    {
+        value: "option-4",
+        label: "This is an option which is lengthier than most of the other options for some mysterious reason",
+    },
+    { value: "option-5", label: "Option 5" },
+];
+
 export const nestedOptions: FilterItemCheckboxOptionProps[] = [
     {
         value: "asia",

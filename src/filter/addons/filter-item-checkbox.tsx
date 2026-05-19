@@ -415,7 +415,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                 type="checkbox"
                 checked={checked}
                 className={clsx(
-                    styles.toggle,
+                    !useToggleContentWidth && styles.toggle,
                     !isToggleVisible && styles.toggleHidden
                 )}
                 onChange={handleItemClick(originalItem)}

@@ -9,9 +9,11 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "filter-checkbox";
 
     public readonly locators: {
-        sidebar: Locator;
-        modal: Locator;
-        showButton: Locator;
+        internal: {
+            sidebar: Locator;
+            modal: Locator;
+            showButton: Locator;
+        };
         checkboxDefault: Locator;
         checkboxDefaultViewMoreButton: Locator;
         checkboxDefaultViewLessButton: Locator;
@@ -19,25 +21,31 @@ class StoryPage extends AbstractStoryPage {
         checkboxMobileCheckbox: Locator;
         checkboxToggleContentWidth: Locator;
         checkboxNested: Locator;
+        checkboxNestedViewMoreButton: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
-        const sidebar = page.getByTestId("filter-desktop");
-        const modal = page.getByTestId("filter-mobile");
         const checkboxDefault = page.getByTestId("checkbox-default");
+        const checkboxNested = page.getByTestId("checkbox-nested");
 
         this.locators = {
-            sidebar,
-            modal,
-            showButton: page.getByTestId("filter-show-button"),
+            internal: {
+                sidebar: page.getByTestId("filter-desktop"),
+                modal: page.getByTestId("filter-mobile"),
+                showButton: page.getByTestId("filter-show-button"),
+            },
             checkboxDefault,
             checkboxDefaultViewMoreButton: checkboxDefault.getByRole("button", {
                 name: /view more/i,
             }),
             checkboxDefaultViewLessButton: checkboxDefault.getByRole("button", {
                 name: /view less/i,
+            }),
+            checkboxNested,
+            checkboxNestedViewMoreButton: checkboxNested.getByRole("button", {
+                name: /view more/i,
             }),
             checkboxNonMinimisable: page.getByTestId(
                 "checkbox-non-minimisable"
@@ -48,8 +56,15 @@ class StoryPage extends AbstractStoryPage {
             checkboxToggleContentWidth: page.getByTestId(
                 "checkbox-toggle-content-width"
             ),
-            checkboxNested: page.getByTestId("checkbox-nested"),
         };
+    }
+
+    async moveMouseAway() {
+        await this.page.mouse.move(0, 0); // to avoid capturing hover state
+    }
+
+    async waitForItemRendering() {
+        await this.page.waitForTimeout(1000); // wait for items to fill up minimised space
     }
 }
 
@@ -68,8 +83,9 @@ test.describe("Filter Checkbox", () => {
 
         test("Default", async ({ story }) => {
             await compareScreenshot(story, "mount", {
-                locator: story.locators.sidebar,
+                locator: story.locators.internal.sidebar,
             });
+
             await test.step("Hovering over an option", async () => {
                 const { checkboxDefault } = story.locators;
 
@@ -78,7 +94,20 @@ test.describe("Filter Checkbox", () => {
                     .hover();
 
                 await compareScreenshot(story, "hover", {
-                    locator: story.locators.sidebar,
+                    locator: story.locators.internal.sidebar,
+                });
+            });
+
+            await test.step("Select an option", async () => {
+                const { checkboxDefault } = story.locators;
+
+                await checkboxDefault
+                    .getByRole("checkbox", { name: "Option 1" })
+                    .click();
+                await story.moveMouseAway();
+
+                await compareScreenshot(story, "selected", {
+                    locator: story.locators.internal.sidebar,
                 });
             });
         });
@@ -94,7 +123,7 @@ test.describe("Filter Checkbox", () => {
                 await checkboxDefaultViewMoreButton.click();
                 await waitForAnimationEnd(checkboxDefault);
                 await expect(checkboxDefaultViewLessButton).toBeVisible();
-                await story.page.mouse.move(0, 0); // to avoid capturing hover state
+                await story.moveMouseAway();
             });
 
             await compareScreenshot(story, "expanded");
@@ -114,7 +143,32 @@ test.describe("Filter Checkbox", () => {
 
         test("Default (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount", {
-                locator: story.locators.sidebar,
+                locator: story.locators.internal.sidebar,
+            });
+
+            await test.step("Hovering over an option", async () => {
+                const { checkboxDefault } = story.locators;
+
+                await checkboxDefault
+                    .getByRole("checkbox", { name: "Option 1" })
+                    .hover();
+
+                await compareScreenshot(story, "hover", {
+                    locator: story.locators.internal.sidebar,
+                });
+            });
+
+            await test.step("Select an option", async () => {
+                const { checkboxDefault } = story.locators;
+
+                await checkboxDefault
+                    .getByRole("checkbox", { name: "Option 1" })
+                    .click();
+                await story.moveMouseAway();
+
+                await compareScreenshot(story, "selected", {
+                    locator: story.locators.internal.sidebar,
+                });
             });
         });
     });
@@ -138,7 +192,7 @@ test.describe("Filter Checkbox", () => {
                 })
             ).toBeVisible();
             await compareScreenshot(story, "mount", {
-                locator: story.locators.sidebar,
+                locator: story.locators.internal.sidebar,
             });
         });
     });
@@ -149,9 +203,15 @@ test.describe("Filter Checkbox", () => {
         });
 
         test("Nested", async ({ story }) => {
-            const { checkboxNested } = story.locators;
+            const { checkboxNested, checkboxNestedViewMoreButton } =
+                story.locators;
 
-            await compareScreenshot(story, "mount");
+            await compareScreenshot(story, "collapsed");
+
+            await checkboxNestedViewMoreButton.click();
+            await story.moveMouseAway();
+
+            await compareScreenshot(story, "expanded", { fullscreen: true });
 
             await test.step("Clicking a parent selects all descendants", async () => {
                 const parent = checkboxNested.getByRole("treeitem", {
@@ -200,8 +260,8 @@ test.describe("Filter Checkbox", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default", { size: "mobile" });
-                await story.locators.showButton.click();
-                await waitForAnimationEnd(story.locators.modal);
+                await story.locators.internal.showButton.click();
+                await waitForAnimationEnd(story.locators.internal.modal);
             });
 
             test("Default", async ({ story }) => {
@@ -218,8 +278,8 @@ test.describe("Filter Checkbox", () => {
                     size: "mobile",
                     mode: "dark",
                 });
-                await story.locators.showButton.click();
-                await waitForAnimationEnd(story.locators.modal);
+                await story.locators.internal.showButton.click();
+                await waitForAnimationEnd(story.locators.internal.modal);
             });
 
             test("Default (dark mode)", async ({ story }) => {
@@ -230,8 +290,8 @@ test.describe("Filter Checkbox", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("mobile-checkbox", { size: "mobile" });
-                await story.locators.showButton.click();
-                await waitForAnimationEnd(story.locators.modal);
+                await story.locators.internal.showButton.click();
+                await waitForAnimationEnd(story.locators.internal.modal);
             });
 
             test("Mobile checkbox mode", async ({ story }) => {
@@ -242,7 +302,7 @@ test.describe("Filter Checkbox", () => {
                 ).toHaveCount(0);
                 await expect(
                     checkboxMobileCheckbox.getByRole("checkbox", {
-                        name: "Option 1",
+                        name: "1",
                     })
                 ).toBeVisible();
 
@@ -256,8 +316,8 @@ test.describe("Filter Checkbox", () => {
                     size: "mobile",
                     mode: "dark",
                 });
-                await story.locators.showButton.click();
-                await waitForAnimationEnd(story.locators.modal);
+                await story.locators.internal.showButton.click();
+                await waitForAnimationEnd(story.locators.internal.modal);
             });
 
             test("Mobile checkbox mode (dark mode)", async ({ story }) => {
@@ -267,16 +327,43 @@ test.describe("Filter Checkbox", () => {
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
+                await story.init("nested", { size: "mobile" });
+                await story.locators.internal.showButton.click();
+                await waitForAnimationEnd(story.locators.internal.modal);
+                await story.waitForItemRendering();
+            });
+
+            test("Nested", async ({ story }) => {
+                await expect(
+                    story.locators.checkboxDefault.getByTestId("toggle-input")
+                ).toHaveCount(0);
+                await compareScreenshot(story, "mount", { fullscreen: true });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
                 await story.init("mobile-toggle-content-width", {
                     size: "mobile",
                 });
-                await story.locators.showButton.click();
-                await waitForAnimationEnd(story.locators.modal);
-                await story.page.waitForTimeout(1000); // wait for content width to adjust
+                await story.locators.internal.showButton.click();
+                await waitForAnimationEnd(story.locators.internal.modal);
+                await story.waitForItemRendering();
             });
 
             test("useToggleContentWidth", async ({ story }) => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
+
+                await test.step("Select an option", async () => {
+                    await story.locators.checkboxToggleContentWidth
+                        .getByRole("checkbox", { name: "1" })
+                        .click();
+                    await story.moveMouseAway();
+
+                    await compareScreenshot(story, "selected", {
+                        fullscreen: true,
+                    });
+                });
             });
         });
 
@@ -286,13 +373,24 @@ test.describe("Filter Checkbox", () => {
                     size: "mobile",
                     mode: "dark",
                 });
-                await story.locators.showButton.click();
-                await waitForAnimationEnd(story.locators.modal);
-                await story.page.waitForTimeout(1000); // wait for content width to adjust
+                await story.locators.internal.showButton.click();
+                await waitForAnimationEnd(story.locators.internal.modal);
+                await story.waitForItemRendering();
             });
 
             test("useToggleContentWidth (dark mode)", async ({ story }) => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
+
+                await test.step("Select an option", async () => {
+                    await story.locators.checkboxToggleContentWidth
+                        .getByRole("checkbox", { name: "1" })
+                        .click();
+                    await story.moveMouseAway();
+
+                    await compareScreenshot(story, "selected", {
+                        fullscreen: true,
+                    });
+                });
             });
         });
     });

@@ -9,7 +9,6 @@ export default function Story() {
                 data-testid="checkbox-nested"
                 title="Nested options"
                 initialExpanded
-                minimisableOptions={false}
                 options={nestedOptions}
             />
         </Filter>
