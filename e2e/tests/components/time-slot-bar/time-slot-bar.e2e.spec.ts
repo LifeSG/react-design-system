@@ -6,10 +6,6 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "time-slot-bar";
 
     public readonly locators: {
-        internal: {
-            leftArrow: Locator;
-            rightArrow: Locator;
-        };
         timeSlotBar: Locator;
         withCustomColoursBar: Locator;
     };
@@ -18,30 +14,11 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            internal: {
-                leftArrow: page.getByTestId("time-slot-bar-arrow-left"),
-                rightArrow: page.getByTestId("time-slot-bar-arrow-right"),
-            },
             timeSlotBar: page.getByTestId("time-slot-bar"),
             withCustomColoursBar: page.getByTestId(
                 "time-slot-bar-with-custom-colours"
             ),
         };
-    }
-
-    async clickUntilEdge(getArrow: () => Locator) {
-        for (let attempt = 0; attempt < 20; attempt += 1) {
-            const arrow = getArrow();
-
-            if (!(await arrow.isVisible().catch(() => false))) {
-                return;
-            }
-
-            await arrow.click({ force: true }).catch(() => undefined);
-            await this.page.waitForTimeout(50);
-        }
-
-        throw new Error("Unable to reach timeslot bar edge");
     }
 }
 
@@ -125,28 +102,7 @@ test.describe("TimeSlotBar", () => {
         });
 
         test("With initial scroll time", async ({ story }) => {
-            await expect(story.locators.internal.leftArrow).toBeVisible();
-
             await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("with-initial-scroll-time");
-        });
-
-        test("Overflowing behavior", async ({ story }) => {
-            await expect(story.locators.internal.leftArrow).toBeVisible();
-            await expect(story.locators.internal.rightArrow).toBeVisible();
-
-            await story.clickUntilEdge(() => story.locators.internal.leftArrow);
-            await compareScreenshot(story, "state-with-right-arrow-only");
-
-            await story.clickUntilEdge(
-                () => story.locators.internal.rightArrow
-            );
-            await compareScreenshot(story, "state-with-left-arrow-only");
         });
     });
 

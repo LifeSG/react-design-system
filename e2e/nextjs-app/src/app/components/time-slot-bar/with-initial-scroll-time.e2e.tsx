@@ -30,10 +30,42 @@ export default function Story() {
     return (
         <div className="story-column-container">
             <TimeSlotBar
-                data-testid="time-slot-bar"
+                data-testid="time-slot-bar-right-arrow-only"
+                startTime="00:00"
+                endTime="24:00"
+                initialScrollTime="00:00"
+                slots={slots}
+                onSlotClick={() => {
+                    // noop
+                }}
+                styleAttributes={{
+                    styleType: "stripes",
+                    backgroundColor: "#F4F7FA",
+                    backgroundColor2: "#E9EDF2",
+                }}
+            />
+
+            <TimeSlotBar
+                data-testid="time-slot-bar-both-arrows"
                 startTime="00:00"
                 endTime="24:00"
                 initialScrollTime="08:00"
+                slots={slots}
+                onSlotClick={() => {
+                    // noop
+                }}
+                styleAttributes={{
+                    styleType: "stripes",
+                    backgroundColor: "#F4F7FA",
+                    backgroundColor2: "#E9EDF2",
+                }}
+            />
+
+            <TimeSlotBar
+                data-testid="time-slot-bar-left-arrow-only"
+                startTime="00:00"
+                endTime="24:00"
+                initialScrollTime="23:30"
                 slots={slots}
                 onSlotClick={() => {
                     // noop
