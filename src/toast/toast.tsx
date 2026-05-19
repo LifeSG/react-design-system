@@ -26,6 +26,7 @@ import {
 import type { ToastProps } from "./types";
 
 const DEFAULT_AUTO_DISMISS_TIME = 4000;
+const EASING_DURATION = 1000;
 
 const TOAST_ICON_MAP = {
     success: TickCircleFillIcon,
@@ -112,7 +113,7 @@ export const Toast = ({
             : `translateX(150%)`,
         config: {
             easing: easings.easeInOutQuart,
-            duration: 1000,
+            duration: EASING_DURATION,
         },
         onRest: () => {
             if (!isVisible) onDismiss?.();
