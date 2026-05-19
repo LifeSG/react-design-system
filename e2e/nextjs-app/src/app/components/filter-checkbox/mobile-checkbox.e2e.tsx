@@ -4,7 +4,7 @@ import { getOptions } from "./options";
 
 export default function Story() {
     return (
-        <Filter customLabels={{ headerTitle: "Filter" }}>
+        <Filter>
             <Filter.Checkbox
                 data-testid="checkbox-mobile-checkbox"
                 title="Mobile checkbox mode"

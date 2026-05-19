@@ -4,7 +4,7 @@ import { getOptions } from "./options";
 
 export default function Story() {
     return (
-        <Filter customLabels={{ headerTitle: "Filter" }}>
+        <Filter>
             <Filter.Checkbox
                 data-testid="checkbox-toggle-content-width"
                 title="Toggle content width"

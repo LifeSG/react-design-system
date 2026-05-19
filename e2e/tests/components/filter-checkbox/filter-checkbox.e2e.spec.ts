@@ -13,11 +13,11 @@ class StoryPage extends AbstractStoryPage {
         modal: Locator;
         showButton: Locator;
         checkboxDefault: Locator;
+        checkboxDefaultViewMoreButton: Locator;
+        checkboxDefaultViewLessButton: Locator;
+        checkboxNonMinimisable: Locator;
         checkboxMobileCheckbox: Locator;
         checkboxToggleContentWidth: Locator;
-        checkboxMinimisable: Locator;
-        checkboxMinimisableViewMoreButton: Locator;
-        checkboxMinimisableViewLessButton: Locator;
         checkboxNested: Locator;
     };
 
@@ -26,27 +26,27 @@ class StoryPage extends AbstractStoryPage {
 
         const sidebar = page.getByTestId("filter-desktop");
         const modal = page.getByTestId("filter-mobile");
-        const checkboxMinimisable = page.getByTestId("checkbox-minimisable");
+        const checkboxDefault = page.getByTestId("checkbox-default");
 
         this.locators = {
             sidebar,
             modal,
             showButton: page.getByTestId("filter-show-button"),
-            checkboxDefault: page.getByTestId("checkbox-default"),
+            checkboxDefault,
+            checkboxDefaultViewMoreButton: checkboxDefault.getByRole("button", {
+                name: /view more/i,
+            }),
+            checkboxDefaultViewLessButton: checkboxDefault.getByRole("button", {
+                name: /view less/i,
+            }),
+            checkboxNonMinimisable: page.getByTestId(
+                "checkbox-non-minimisable"
+            ),
             checkboxMobileCheckbox: page.getByTestId(
                 "checkbox-mobile-checkbox"
             ),
             checkboxToggleContentWidth: page.getByTestId(
                 "checkbox-toggle-content-width"
-            ),
-            checkboxMinimisable,
-            checkboxMinimisableViewMoreButton: checkboxMinimisable.getByRole(
-                "button",
-                { name: /view more/i }
-            ),
-            checkboxMinimisableViewLessButton: checkboxMinimisable.getByRole(
-                "button",
-                { name: /view less/i }
             ),
             checkboxNested: page.getByTestId("checkbox-nested"),
         };
@@ -67,17 +67,40 @@ test.describe("Filter Checkbox", () => {
         });
 
         test("Default", async ({ story }) => {
-            const { checkboxDefault } = story.locators;
-            await expect(
-                checkboxDefault.getByRole("button", {
-                    name: /view more/i,
-                })
-            ).toBeHidden();
-            await expect(
-                checkboxDefault.getByRole("checkbox", {
-                    name: "Option 8",
-                })
-            ).toBeVisible();
+            await compareScreenshot(story, "mount", {
+                locator: story.locators.sidebar,
+            });
+        });
+
+        test("Minimisable", async ({ story }) => {
+            const {
+                checkboxDefault,
+                checkboxDefaultViewMoreButton,
+                checkboxDefaultViewLessButton,
+            } = story.locators;
+
+            await test.step("Expand options", async () => {
+                await checkboxDefaultViewMoreButton.click();
+                await waitForAnimationEnd(checkboxDefault);
+                await expect(checkboxDefaultViewLessButton).toBeVisible();
+            });
+
+            await compareScreenshot(story, "expanded");
+
+            await test.step("Collapse options", async () => {
+                await checkboxDefaultViewLessButton.click();
+                await waitForAnimationEnd(checkboxDefault);
+                await expect(checkboxDefaultViewMoreButton).toBeVisible();
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { mode: "dark" });
+        });
+
+        test("Default (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 locator: story.locators.sidebar,
             });
@@ -85,51 +108,25 @@ test.describe("Filter Checkbox", () => {
     });
 
     test.describe(() => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("default", { mode: "dark" });
-            });
-
-            test("Default (dark mode)", async ({ story }) => {
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.sidebar,
-                });
-            });
+        test.beforeEach(async ({ story }) => {
+            await story.init("non-minimisable");
         });
-    });
 
-    test.describe("", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("minimisable");
-            });
+        test("Non-minimisable", async ({ story }) => {
+            const { checkboxNonMinimisable } = story.locators;
 
-            test("Minimisable", async ({ story }) => {
-                const {
-                    checkboxMinimisable,
-                    checkboxMinimisableViewMoreButton,
-                    checkboxMinimisableViewLessButton,
-                } = story.locators;
-
-                await compareScreenshot(story, "minimised");
-
-                await test.step("Expand options", async () => {
-                    await checkboxMinimisableViewMoreButton.click();
-                    await waitForAnimationEnd(checkboxMinimisable);
-                    await expect(
-                        checkboxMinimisableViewLessButton
-                    ).toBeVisible();
-                });
-
-                await compareScreenshot(story, "expanded");
-
-                await test.step("Collapse options", async () => {
-                    await checkboxMinimisableViewLessButton.click();
-                    await waitForAnimationEnd(checkboxMinimisable);
-                    await expect(
-                        checkboxMinimisableViewMoreButton
-                    ).toBeVisible();
-                });
+            await expect(
+                checkboxNonMinimisable.getByRole("button", {
+                    name: /view more/i,
+                })
+            ).toBeHidden();
+            await expect(
+                checkboxNonMinimisable.getByRole("checkbox", {
+                    name: "Option 8",
+                })
+            ).toBeVisible();
+            await compareScreenshot(story, "mount", {
+                locator: story.locators.sidebar,
             });
         });
     });
@@ -177,15 +174,13 @@ test.describe("Filter Checkbox", () => {
         });
     });
 
-    test.describe("", () => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("nested", { mode: "dark" });
-            });
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("nested", { mode: "dark" });
+        });
 
-            test("Nested (dark mode)", async ({ story }) => {
-                await compareScreenshot(story, "mount");
-            });
+        test("Nested (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 

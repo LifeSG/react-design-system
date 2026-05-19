@@ -4,7 +4,7 @@ import { nestedOptions } from "./options";
 
 export default function Story() {
     return (
-        <Filter customLabels={{ headerTitle: "Filter" }}>
+        <Filter>
             <Filter.Checkbox
                 data-testid="checkbox-nested"
                 title="Nested options"
