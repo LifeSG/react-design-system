@@ -113,4 +113,17 @@ describe("Toast", () => {
 
         expect(onDismiss).toHaveBeenCalledTimes(1);
     });
+
+    it("should apply custom className to the root toast element", () => {
+        render(
+            <Toast
+                type="success"
+                title="Toast title"
+                label="Toast body"
+                className="custom-toast-class"
+            />
+        );
+
+        expect(screen.getByRole("alert")).toHaveClass("custom-toast-class");
+    });
 });
