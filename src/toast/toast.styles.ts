@@ -3,9 +3,8 @@ import styled, { css } from "styled-components";
 
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Colour, Font, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography";
-import { V3_Colour, V3_Font, V3_MediaQuery, V3_Radius } from "../v3_theme";
-import type { V3_SemanticColourSet } from "../v3_theme/types";
 import type { ToastType } from "./types";
 
 //=============================================================================
@@ -21,7 +20,12 @@ const getValidationColorAttributes = (props: StyleProps) => {
 
     const typeMapping: Record<
         ToastType,
-        Record<string, keyof V3_SemanticColourSet>
+        {
+            Background: keyof typeof Colour;
+            Border: keyof typeof Colour;
+            Text: keyof typeof Colour;
+            Icon: keyof typeof Colour;
+        }
     > = {
         success: {
             Background: "bg-success",
@@ -52,10 +56,10 @@ const getValidationColorAttributes = (props: StyleProps) => {
     const selectedTypeMapping = typeMapping[type];
 
     return {
-        Background: V3_Colour[selectedTypeMapping.Background],
-        Border: V3_Colour[selectedTypeMapping.Border],
-        Text: V3_Colour[selectedTypeMapping.Text],
-        Icon: V3_Colour[selectedTypeMapping.Icon],
+        Background: Colour[selectedTypeMapping.Background],
+        Border: Colour[selectedTypeMapping.Border],
+        Text: Colour[selectedTypeMapping.Text],
+        Icon: Colour[selectedTypeMapping.Icon],
     };
 };
 
@@ -70,12 +74,12 @@ export const Wrapper = animated(styled.div<StyleProps>`
     top: 0;
     right: 0;
     padding: 1rem;
-    border-radius: ${V3_Radius["md"]};
+    border-radius: ${Radius["md"]};
     z-index: 10;
     align-items: center;
     gap: 2rem;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         left: 0;
     }
 
@@ -95,7 +99,7 @@ export const ContentWrapper = styled.div`
     flex: 1;
     justify-content: space-between;
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         display: flex;
         align-items: flex-start;
         flex-direction: column;
@@ -129,7 +133,7 @@ export const TextContainer = styled.div`
 
 export const Title = styled.h2<StyleProps>`
     display: flex;
-    ${V3_Font["body-baseline-semibold"]}
+    ${Font["body-baseline-semibold"]}
 
     ${(props) => {
         return css`
@@ -161,7 +165,7 @@ export const ActionButton = styled(Button.Small)`
     width: fit-content;
     flex-shrink: 0;
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         align-self: flex-start;
         margin-left: 2rem;
     }
@@ -182,7 +186,7 @@ export const DismissButton = styled(ClickableIcon)<StyleProps>`
             &:hover {
                 background: transparent;
             }
-            ${V3_MediaQuery.MaxWidth.sm} {
+            ${MediaQuery.MaxWidth.sm} {
                 align-self: center;
             }
         `;

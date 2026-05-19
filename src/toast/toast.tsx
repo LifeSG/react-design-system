@@ -6,12 +6,14 @@ import {
     TickCircleFillIcon,
 } from "@lifesg/react-icons";
 import { easings, useSpring } from "@react-spring/web";
-import React, { useContext, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import React, { useEffect, useRef, useState } from "react";
 
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
-import { V3_Breakpoint } from "../v3_theme";
+import {
+    Breakpoint,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
 import {
     ActionButton,
     ContentWrapper,
@@ -52,12 +54,8 @@ export const Toast = ({
     const toastRef = useRef<HTMLDivElement>(null);
     const [isVisible, setVisible] = useState<boolean>(false);
 
-    const theme = useContext(ThemeContext);
-
-    const mobileBreakpoint = V3_Breakpoint["lg-max"]({ theme });
-    const isMobile = useMediaQuery({
-        maxWidth: mobileBreakpoint,
-    });
+    const mobileBreakpoint = useDesignToken(Breakpoint["lg-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
 
     // =============================================================================
     // EFFECTS
