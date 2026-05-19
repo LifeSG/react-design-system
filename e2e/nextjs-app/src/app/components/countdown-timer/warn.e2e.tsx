@@ -3,7 +3,7 @@ import { CountdownTimer } from "@lifesg/react-design-system/countdown-timer";
 import { useState } from "react";
 
 export default function Story() {
-    const [timestamp] = useState(() => Date.now() + 2 * 60 * 1000);
+    const [timestamp] = useState(() => Date.now() + 1 * 60 * 1000);
 
     return (
         <CountdownTimer
