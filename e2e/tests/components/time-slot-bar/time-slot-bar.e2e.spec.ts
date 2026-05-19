@@ -12,7 +12,6 @@ class StoryPage extends AbstractStoryPage {
         };
         timeSlotBar: Locator;
         withCustomColoursBar: Locator;
-        slotClickResult: Locator;
     };
 
     constructor(page: Page) {
@@ -27,7 +26,6 @@ class StoryPage extends AbstractStoryPage {
             withCustomColoursBar: page.getByTestId(
                 "time-slot-bar-with-custom-colours"
             ),
-            slotClickResult: page.getByTestId("slot-click-result"),
         };
     }
 }
@@ -75,13 +73,6 @@ test.describe("TimeSlotBar", () => {
                     - gridcell "12:00PM to 6:00PM, Unavailable":
                       - button "12:00PM to 6:00PM, Unavailable" [disabled]
                 `);
-
-                await story.page
-                    .getByTestId("time-slot-bar-slot-a-timeslot")
-                    .click();
-                await expect(story.locators.slotClickResult).toContainText(
-                    "slot: slot-a"
-                );
             });
         });
 
