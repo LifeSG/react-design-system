@@ -26,7 +26,7 @@ export const container = css`
         }
     }
 
-    ${MediaQuery.MaxWidth.lg}, ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.lg} {
         &[data-width="half"],
         &[data-width="full"] {
             grid-column: 1 / -1;
