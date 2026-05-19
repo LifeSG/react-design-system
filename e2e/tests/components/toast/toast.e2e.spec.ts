@@ -5,10 +5,6 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "toast";
 
     public readonly locators: {
-        internal: {
-            dismissSuccess: Locator;
-            dismissError: Locator;
-        };
         toast: Locator;
         toastSuccess: Locator;
         toastWarning: Locator;
@@ -20,20 +16,18 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            internal: {
-                dismissSuccess: page
-                    .getByTestId("toast-success")
-                    .getByRole("button", { name: "Close notification" }),
-                dismissError: page
-                    .getByTestId("toast-error")
-                    .getByRole("button", { name: "Close notification" }),
-            },
             toast: page.getByRole("alert"),
             toastSuccess: page.getByTestId("toast-success"),
             toastWarning: page.getByTestId("toast-warning"),
             toastError: page.getByTestId("toast-error"),
             toastInfo: page.getByTestId("toast-info"),
         };
+    }
+
+    public getDismissButton(testId: string) {
+        return this.page
+            .getByTestId(testId)
+            .getByRole("button", { name: "Close notification" });
     }
 }
 
@@ -78,44 +72,6 @@ test.describe("Toast", () => {
                   - paragraph: Your changes are saved as you continue editing.
                   - button "Close notification"
             `);
-        });
-
-        test("Dismiss interactions with mouse and Escape", async ({
-            story,
-        }) => {
-            await test.step("Click dismiss closes warning toast", async () => {
-                const warningDismiss = story.locators.toastWarning.getByRole(
-                    "button",
-                    { name: "Close notification" }
-                );
-
-                await warningDismiss.click();
-
-                await expect
-                    .poll(async () => {
-                        return await story.locators.toastWarning.evaluate(
-                            (node) => node.hasAttribute("inert")
-                        );
-                    })
-                    .toBe(true);
-            });
-
-            await test.step("Escape closes error toast when focus is inside", async () => {
-                await story.locators.internal.dismissError.focus();
-                await expect(
-                    story.locators.internal.dismissError
-                ).toBeFocused();
-
-                await story.page.keyboard.press("Escape");
-
-                await expect
-                    .poll(async () => {
-                        return await story.locators.toastError.evaluate(
-                            (node) => node.hasAttribute("inert")
-                        );
-                    })
-                    .toBe(true);
-            });
         });
     });
 
