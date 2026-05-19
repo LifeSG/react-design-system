@@ -37,32 +37,8 @@ export const tokens = {
 // =============================================================================
 // STYLING
 // =============================================================================
-const iconButton = css`
-    padding: 0;
-    border-radius: 100%;
-    background: ${Colour["bg"]};
-    color: ${Colour["icon-primary"]};
-    height: 2.5rem;
-    width: 2.5rem;
-    box-shadow: ${Shadow["md-strong"]};
-
-    svg {
-        height: 1.5rem;
-        width: 1.5rem;
-    }
-
-    &:focus {
-        outline: none;
-    }
-
-    &:focus-visible {
-        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
-        outline-offset: 2px;
-    }
-`;
 
 export const topActionButtons = css`
-    /* Reset variables to prevent leaking to child components */
     ${tokens.topActionButtons.insetTop}: initial;
     ${tokens.topActionButtons.insetLeft}: initial;
     ${tokens.topActionButtons.insetRight}: initial;
@@ -132,23 +108,35 @@ export const topActionButtons = css`
     }
 `;
 
-export const closeButton = css`
-    ${iconButton}
+export const iconButton = css`
+    padding: 0;
+    border-radius: 100%;
+    background: ${Colour["bg"]};
+    color: ${Colour["icon-primary"]};
+    height: 2.5rem;
+    width: 2.5rem;
+    box-shadow: ${Shadow["md-strong"]};
+
+    svg {
+        height: 1.5rem;
+        width: 1.5rem;
+    }
+
+    &:focus {
+        outline: none;
+    }
+
+    &:focus-visible {
+        outline: ${Border["width-020"]} solid ${Colour["border-selected"]};
+        outline-offset: 2px;
+    }
 `;
 
-export const deleteButton = css`
-    ${iconButton}
+export const iconButtonError = css`
     color: ${Colour["icon-error"]};
 `;
 
-export const magnifierButton = css`
-    ${iconButton}
-`;
-
 export const arrowButton = css`
-    ${iconButton}
-
-    /* Reset variables to prevent leaking to child components */
     ${tokens.arrowButton.insetLeft}: initial;
     ${tokens.arrowButton.insetRight}: initial;
 
@@ -304,7 +292,6 @@ export const chip = css`
 // -----------------------------------------------------------------------------
 
 export const thumbnailContainer = css`
-    /* Reset variable to prevent leaking to child components */
     ${tokens.thumbnailContainer.insetBottom}: initial;
 
     flex-shrink: 0;

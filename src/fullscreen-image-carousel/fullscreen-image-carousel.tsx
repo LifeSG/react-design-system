@@ -487,8 +487,9 @@ export const Component = (
 
                         {!hideNavigation && (
                             <>
-                                <button
+                                <ClickableIcon
                                     className={clsx(
+                                        styles.iconButton,
                                         styles.arrowButton,
                                         "arrowButtonLeft"
                                     )}
@@ -498,9 +499,10 @@ export const Component = (
                                     onClick={goToPrevSlide}
                                 >
                                     <ChevronLeftIcon aria-hidden />
-                                </button>
-                                <button
+                                </ClickableIcon>
+                                <ClickableIcon
                                     className={clsx(
+                                        styles.iconButton,
                                         styles.arrowButton,
                                         "arrowButtonRight"
                                     )}
@@ -510,7 +512,7 @@ export const Component = (
                                     onClick={goToNextSlide}
                                 >
                                     <ChevronRightIcon aria-hidden />
-                                </button>
+                                </ClickableIcon>
                             </>
                         )}
 
@@ -536,7 +538,7 @@ export const Component = (
                     {hasFileInfo && renderFileInfo()}
                     {!hideMagnifier && !isCustomItem(currentItem) && (
                         <ClickableIcon
-                            className={styles.magnifierButton}
+                            className={styles.iconButton}
                             aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
                             onClick={handleMagnifier}
                         >
@@ -550,7 +552,10 @@ export const Component = (
 
                     {onDelete && (
                         <ClickableIcon
-                            className={styles.deleteButton}
+                            className={clsx(
+                                styles.iconButton,
+                                styles.iconButtonError
+                            )}
                             aria-label={`Delete ${
                                 (isCustomItem(currentItem) &&
                                     currentItem.itemLabel?.trim()) ||
@@ -564,7 +569,7 @@ export const Component = (
                     )}
 
                     <ClickableIcon
-                        className={styles.closeButton}
+                        className={styles.iconButton}
                         aria-label={
                             hasAnyItemLabel
                                 ? "Close carousel"
