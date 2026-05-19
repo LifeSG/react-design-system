@@ -70,6 +70,17 @@ test.describe("Filter Checkbox", () => {
             await compareScreenshot(story, "mount", {
                 locator: story.locators.sidebar,
             });
+            await test.step("Hovering over an option", async () => {
+                const { checkboxDefault } = story.locators;
+
+                await checkboxDefault
+                    .getByRole("checkbox", { name: "Option 1" })
+                    .hover();
+
+                await compareScreenshot(story, "hover", {
+                    locator: story.locators.sidebar,
+                });
+            });
         });
 
         test("Minimisable", async ({ story }) => {
@@ -83,6 +94,7 @@ test.describe("Filter Checkbox", () => {
                 await checkboxDefaultViewMoreButton.click();
                 await waitForAnimationEnd(checkboxDefault);
                 await expect(checkboxDefaultViewLessButton).toBeVisible();
+                await story.page.mouse.move(0, 0); // to avoid capturing hover state
             });
 
             await compareScreenshot(story, "expanded");
