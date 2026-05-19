@@ -272,6 +272,7 @@ test.describe("Filter Checkbox", () => {
                 });
                 await story.locators.showButton.click();
                 await waitForAnimationEnd(story.locators.modal);
+                await story.page.waitForTimeout(1000); // wait for content width to adjust
             });
 
             test("useToggleContentWidth", async ({ story }) => {
@@ -287,6 +288,7 @@ test.describe("Filter Checkbox", () => {
                 });
                 await story.locators.showButton.click();
                 await waitForAnimationEnd(story.locators.modal);
+                await story.page.waitForTimeout(1000); // wait for content width to adjust
             });
 
             test("useToggleContentWidth (dark mode)", async ({ story }) => {
