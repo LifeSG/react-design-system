@@ -1,7 +1,7 @@
 "use client";
 
 import { TimeSlotBar } from "@lifesg/react-design-system/time-slot-bar";
-import type { TimeSlot } from "@lifesg/react-design-system/time-slot-bar/types";
+import type { TimeSlot } from "@lifesg/react-design-system/time-slot-bar";
 
 const slotsWithDefaultBackground: TimeSlot[] = [
     {
