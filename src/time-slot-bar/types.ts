@@ -4,6 +4,8 @@ import type { V3_ThemeStyleProps } from "../v3_theme/types";
 export type TimeSlotBarVariant = "minified" | "default";
 export type Direction = "right" | "left";
 
+export type { SlotStyle } from "../shared/time-slot/types";
+
 export interface TimeSlotBarRef {
     /** Resets the scroll position to the initialScrollTime if provided */
     resetScroll: () => void;
