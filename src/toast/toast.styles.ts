@@ -1,76 +1,19 @@
 import { animated } from "@react-spring/web";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, Font, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography";
-import type { ToastType } from "./types";
-
-//=============================================================================
-// STYLE INTERFACE
-//=============================================================================
-interface StyleProps {
-    $type: ToastType;
-    $fixed?: boolean | undefined;
-}
-
-const getValidationColorAttributes = (props: StyleProps) => {
-    const type = props.$type;
-
-    const typeMapping: Record<
-        ToastType,
-        {
-            Background: keyof typeof Colour;
-            Border: keyof typeof Colour;
-            Text: keyof typeof Colour;
-            Icon: keyof typeof Colour;
-        }
-    > = {
-        success: {
-            Background: "bg-success",
-            Border: "border-success",
-            Text: "text-success",
-            Icon: "icon-success",
-        },
-        warning: {
-            Background: "bg-warning",
-            Border: "border-warning",
-            Text: "text-warning",
-            Icon: "icon-warning",
-        },
-        error: {
-            Background: "bg-error",
-            Border: "border-error",
-            Text: "text-error",
-            Icon: "icon-error",
-        },
-        info: {
-            Background: "bg-info",
-            Border: "border-info",
-            Text: "text-info",
-            Icon: "icon-info",
-        },
-    };
-
-    const selectedTypeMapping = typeMapping[type];
-
-    return {
-        Background: Colour[selectedTypeMapping.Background],
-        Border: Colour[selectedTypeMapping.Border],
-        Text: Colour[selectedTypeMapping.Text],
-        Icon: Colour[selectedTypeMapping.Icon],
-    };
-};
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = animated(styled.div<StyleProps>`
+export const Wrapper = animated(styled.div`
     display: flex;
     flex-direction: row;
-    position: ${(props) => (props.$fixed ? "fixed" : "relative")};
-    margin: ${(props) => (props.$fixed ? "1rem" : 0)};
+    position: relative;
+    margin: 0;
     top: 0;
     right: 0;
     padding: 1rem;
@@ -83,13 +26,34 @@ export const Wrapper = animated(styled.div<StyleProps>`
         left: 0;
     }
 
-    ${(props) => {
-        return css`
-            background: ${getValidationColorAttributes(props).Background};
-            border: 1px solid ${getValidationColorAttributes(props).Border};
-            color: ${getValidationColorAttributes(props).Text};
-        `;
-    }};
+    &.toastWrapperFixed {
+        position: fixed;
+        margin: 1rem;
+    }
+
+    &.toastWrapperSuccess {
+        background: ${Colour["bg-success"]};
+        border: 1px solid ${Colour["border-success"]};
+        color: ${Colour["text-success"]};
+    }
+
+    &.toastWrapperWarning {
+        background: ${Colour["bg-warning"]};
+        border: 1px solid ${Colour["border-warning"]};
+        color: ${Colour["text-warning"]};
+    }
+
+    &.toastWrapperError {
+        background: ${Colour["bg-error"]};
+        border: 1px solid ${Colour["border-error"]};
+        color: ${Colour["text-error"]};
+    }
+
+    &.toastWrapperInfo {
+        background: ${Colour["bg-info"]};
+        border: 1px solid ${Colour["border-info"]};
+        color: ${Colour["text-info"]};
+    }
 `);
 
 export const ContentWrapper = styled.div`
@@ -107,23 +71,34 @@ export const ContentWrapper = styled.div`
     }
 `;
 
-export const TextIconWrapper = styled.div<StyleProps>`
+export const TextIconWrapper = styled.div`
     display: flex;
     flex-direction: row;
     align-items: flex-start;
 
-    ${(props) => {
-        return css`
-            & > svg {
-                flex-shrink: 0;
-                width: 1.5rem;
-                height: 1.5rem;
-                margin-top: 0.0625rem;
-                margin-right: 0.5rem;
-                color: ${getValidationColorAttributes(props).Icon};
-            }
-        `;
-    }};
+    & > svg {
+        flex-shrink: 0;
+        width: 1.5rem;
+        height: 1.5rem;
+        margin-top: 0.0625rem;
+        margin-right: 0.5rem;
+    }
+
+    &.toastTextIconWrapperSuccess > svg {
+        color: ${Colour["icon-success"]};
+    }
+
+    &.toastTextIconWrapperWarning > svg {
+        color: ${Colour["icon-warning"]};
+    }
+
+    &.toastTextIconWrapperError > svg {
+        color: ${Colour["icon-error"]};
+    }
+
+    &.toastTextIconWrapperInfo > svg {
+        color: ${Colour["icon-info"]};
+    }
 `;
 
 export const TextContainer = styled.div`
@@ -131,31 +106,61 @@ export const TextContainer = styled.div`
     flex-direction: column;
 `;
 
-export const Title = styled.h2<StyleProps>`
+export const Title = styled.h2`
     display: flex;
     ${Font["body-baseline-semibold"]}
 
-    ${(props) => {
-        return css`
-            color: ${getValidationColorAttributes(props).Text};
-        `;
-    }}
+    &.toastTextSuccess {
+        color: ${Colour["text-success"]};
+    }
+
+    &.toastTextWarning {
+        color: ${Colour["text-warning"]};
+    }
+
+    &.toastTextError {
+        color: ${Colour["text-error"]};
+    }
+
+    &.toastTextInfo {
+        color: ${Colour["text-info"]};
+    }
 `;
 
-export const DescriptionMD = styled(Typography.BodyMD)<StyleProps>`
-    ${(props) => {
-        return css`
-            color: ${getValidationColorAttributes(props).Text};
-        `;
-    }}
+export const DescriptionMD = styled(Typography.BodyMD)`
+    &.toastTextSuccess {
+        color: ${Colour["text-success"]};
+    }
+
+    &.toastTextWarning {
+        color: ${Colour["text-warning"]};
+    }
+
+    &.toastTextError {
+        color: ${Colour["text-error"]};
+    }
+
+    &.toastTextInfo {
+        color: ${Colour["text-info"]};
+    }
 `;
 
-export const DescriptionBL = styled(Typography.BodyBL)<StyleProps>`
-    ${(props) => {
-        return css`
-            color: ${getValidationColorAttributes(props).Text};
-        `;
-    }}
+export const DescriptionBL = styled(Typography.BodyBL)`
+    &.toastTextSuccess {
+        color: ${Colour["text-success"]};
+    }
+
+    &.toastTextWarning {
+        color: ${Colour["text-warning"]};
+    }
+
+    &.toastTextError {
+        color: ${Colour["text-error"]};
+    }
+
+    &.toastTextInfo {
+        color: ${Colour["text-info"]};
+    }
 `;
 
 export const ActionButton = styled(Button.Small)`
@@ -171,24 +176,37 @@ export const ActionButton = styled(Button.Small)`
     }
 `;
 
-export const DismissButton = styled(ClickableIcon)<StyleProps>`
+export const DismissButton = styled(ClickableIcon)`
     padding: 0.75rem;
     margin: -0.75rem;
     align-self: stretch;
 
-    ${(props) => {
-        return css`
-            svg {
-                width: 1.5rem;
-                height: 1.5rem;
-                color: ${getValidationColorAttributes(props).Text};
-            }
-            &:hover {
-                background: transparent;
-            }
-            ${MediaQuery.MaxWidth.sm} {
-                align-self: center;
-            }
-        `;
-    }};
+    svg {
+        width: 1.5rem;
+        height: 1.5rem;
+    }
+
+    &.toastDismissButtonSuccess svg {
+        color: ${Colour["text-success"]};
+    }
+
+    &.toastDismissButtonWarning svg {
+        color: ${Colour["text-warning"]};
+    }
+
+    &.toastDismissButtonError svg {
+        color: ${Colour["text-error"]};
+    }
+
+    &.toastDismissButtonInfo svg {
+        color: ${Colour["text-info"]};
+    }
+
+    &:hover {
+        background: transparent;
+    }
+
+    ${MediaQuery.MaxWidth.sm} {
+        align-self: center;
+    }
 `;

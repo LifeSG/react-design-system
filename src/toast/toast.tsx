@@ -6,6 +6,7 @@ import {
     TickCircleFillIcon,
 } from "@lifesg/react-icons";
 import { easings, useSpring } from "@react-spring/web";
+import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
 
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
@@ -14,17 +15,7 @@ import {
     useDesignToken,
     useSafeMaxWidthMediaQuery,
 } from "../theme";
-import {
-    ActionButton,
-    ContentWrapper,
-    DescriptionBL,
-    DescriptionMD,
-    DismissButton,
-    TextContainer,
-    TextIconWrapper,
-    Title,
-    Wrapper,
-} from "./toast.styles";
+import * as styles from "./toast.styles";
 import type { ToastProps } from "./types";
 
 const DEFAULT_AUTO_DISMISS_TIME = 4000;
@@ -37,10 +28,38 @@ const TOAST_ICON_MAP = {
     info: ICircleFillIcon,
 };
 
+const TOAST_CLASS_MAP = {
+    wrapper: {
+        success: "toastWrapperSuccess",
+        warning: "toastWrapperWarning",
+        error: "toastWrapperError",
+        info: "toastWrapperInfo",
+    },
+    textIconWrapper: {
+        success: "toastTextIconWrapperSuccess",
+        warning: "toastTextIconWrapperWarning",
+        error: "toastTextIconWrapperError",
+        info: "toastTextIconWrapperInfo",
+    },
+    text: {
+        success: "toastTextSuccess",
+        warning: "toastTextWarning",
+        error: "toastTextError",
+        info: "toastTextInfo",
+    },
+    dismissButton: {
+        success: "toastDismissButtonSuccess",
+        warning: "toastDismissButtonWarning",
+        error: "toastDismissButtonError",
+        info: "toastDismissButtonInfo",
+    },
+} as const;
+
 export const Toast = ({
     type = "success",
     title,
     label,
+    className,
     autoDismiss,
     autoDismissTime = DEFAULT_AUTO_DISMISS_TIME,
     onDismiss,
@@ -131,9 +150,12 @@ export const Toast = ({
             return title;
         } else {
             return (
-                <Title $type={type} role="presentation">
+                <styles.Title
+                    className={TOAST_CLASS_MAP.text[type]}
+                    role="presentation"
+                >
                     {title}
-                </Title>
+                </styles.Title>
             );
         }
     };
@@ -142,47 +164,63 @@ export const Toast = ({
         if (React.isValidElement(label)) {
             return label;
         } else if (title) {
-            return <DescriptionMD $type={type}>{label}</DescriptionMD>;
+            return (
+                <styles.DescriptionMD className={TOAST_CLASS_MAP.text[type]}>
+                    {label}
+                </styles.DescriptionMD>
+            );
         } else {
-            return <DescriptionBL $type={type}>{label}</DescriptionBL>;
+            return (
+                <styles.DescriptionBL className={TOAST_CLASS_MAP.text[type]}>
+                    {label}
+                </styles.DescriptionBL>
+            );
         }
     };
 
     return (
-        <Wrapper
+        <styles.Wrapper
             ref={toastRef}
             style={transitions}
-            $type={type}
-            $fixed={fixed}
+            className={clsx(
+                fixed && "toastWrapperFixed",
+                TOAST_CLASS_MAP.wrapper[type],
+                className
+            )}
             role="alert"
             inert={inertValue(!isVisible)}
             {...otherProps}
         >
             <VisuallyHidden>{type}</VisuallyHidden>
-            <ContentWrapper>
-                <TextIconWrapper $type={type}>
+            <styles.ContentWrapper>
+                <styles.TextIconWrapper
+                    className={TOAST_CLASS_MAP.textIconWrapper[type]}
+                >
                     {renderIcon()}
-                    <TextContainer>
+                    <styles.TextContainer>
                         {title && renderTitle()}
                         {label && renderDesc()}
-                    </TextContainer>
-                </TextIconWrapper>
+                    </styles.TextContainer>
+                </styles.TextIconWrapper>
 
                 {actionButton && (
-                    <ActionButton
+                    <styles.ActionButton
                         styleType="light"
                         onClick={actionButton.onClick}
                     >
                         {actionButton.label}
-                    </ActionButton>
+                    </styles.ActionButton>
                 )}
-            </ContentWrapper>
-            <DismissButton $type={type} onClick={handleDismiss}>
+            </styles.ContentWrapper>
+            <styles.DismissButton
+                className={TOAST_CLASS_MAP.dismissButton[type]}
+                onClick={handleDismiss}
+            >
                 <VisuallyHidden role="presentation">
                     Close notification
                 </VisuallyHidden>
                 <CrossIcon aria-hidden />
-            </DismissButton>
-        </Wrapper>
+            </styles.DismissButton>
+        </styles.Wrapper>
     );
 };
