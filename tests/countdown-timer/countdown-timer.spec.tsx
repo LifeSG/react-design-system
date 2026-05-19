@@ -37,6 +37,13 @@ describe("CountdownTimer", () => {
         }
     );
 
+    it("should render the remaining time left when timestamp is specified", () => {
+        const timestamp = Date.now() + 155 * 1000;
+        render(<CountdownTimer show timestamp={timestamp} />);
+
+        expect(screen.getByText("2 mins 35 secs")).toBeInTheDocument();
+    });
+
     it("should invoke event callbacks correctly", async () => {
         const mockOnFinish = jest.fn();
         const mockOnNotify = jest.fn();
