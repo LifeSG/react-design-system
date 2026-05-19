@@ -58,6 +58,7 @@ test.describe("LanguageSwitcher", () => {
             `);
 
                 await story.locators.internal.trigger.click();
+
                 await compareScreenshot(story, "open", {
                     fullscreen: true,
                 });
@@ -72,11 +73,72 @@ test.describe("LanguageSwitcher", () => {
                     - option "தமிழ்"
             `);
             });
+        });
+
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("dropdown-default", { mode: "dark" });
+            });
+
+            test("Default (dark mode)", async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.languageSwitcher,
+                });
+
+                await story.locators.internal.trigger.click();
+                await compareScreenshot(story, "open", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("dropdown-default", { size: "mobile" });
+            });
+
+            test("Hover", async ({ story }) => {
+                await story.locators.internal.trigger.click();
+                await story.getDropdownOption("English").hover();
+
+                await compareScreenshot(story, "selected", {
+                    fullscreen: true,
+                });
+
+                await story.getDropdownOption("中文").hover();
+
+                await compareScreenshot(story, "unselected", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("dropdown-preselected");
+            });
+
+            test("Preselected", async ({ story }) => {
+                await expect(story.locators.internal.trigger).toContainText(
+                    "中文"
+                );
+
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.languageSwitcher,
+                });
+            });
+        });
+
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("dropdown-default");
+            });
 
             test("Keyboard Interaction", async ({ story }) => {
                 await story.locators.internal.trigger.focus();
                 await story.page.keyboard.press("Enter");
                 await expect(story.locators.internal.panel).toBeVisible();
+                await expect(story.getDropdownOption("English")).toBeFocused();
 
                 await story.page.keyboard.press("ArrowDown");
                 await expect(story.getDropdownOption("中文")).toBeFocused();
@@ -96,41 +158,9 @@ test.describe("LanguageSwitcher", () => {
 
                 await story.page.keyboard.press("Enter");
                 await expect(story.locators.internal.panel).toBeVisible();
+
                 await story.page.keyboard.press("Escape");
                 await expect(story.locators.internal.panel).not.toBeVisible();
-            });
-        });
-
-        test.describe("", () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("dropdown-default", { mode: "dark" });
-            });
-
-            test("Default Dark Mode", async ({ story }) => {
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.languageSwitcher,
-                });
-
-                await story.locators.internal.trigger.click();
-                await compareScreenshot(story, "open", {
-                    fullscreen: true,
-                });
-            });
-        });
-
-        test.describe("", () => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("dropdown-preselected");
-            });
-
-            test("Preselected", async ({ story }) => {
-                await expect(story.locators.internal.trigger).toContainText(
-                    "中文"
-                );
-
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.languageSwitcher,
-                });
             });
         });
     });
@@ -163,6 +193,18 @@ test.describe("LanguageSwitcher", () => {
 
         test.describe("", () => {
             test.beforeEach(async ({ story }) => {
+                await story.init("link-default", { mode: "dark" });
+            });
+
+            test("Default (dark mode)", async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.languageSwitcher,
+                });
+            });
+        });
+
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
                 await story.init("link-preselected");
             });
 
@@ -172,6 +214,26 @@ test.describe("LanguageSwitcher", () => {
                 await expect(tamil).toHaveAttribute("aria-pressed", "true");
 
                 await compareScreenshot(story, "mount", {
+                    locator: story.locators.languageSwitcher,
+                });
+            });
+        });
+
+        test.describe("", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("link-default", { size: "mobile" });
+            });
+
+            test("Hover", async ({ story }) => {
+                await story.getLinkButton("English").hover();
+
+                await compareScreenshot(story, "selected", {
+                    locator: story.locators.languageSwitcher,
+                });
+
+                await story.getLinkButton("中文").hover();
+
+                await compareScreenshot(story, "unselected", {
                     locator: story.locators.languageSwitcher,
                 });
             });
