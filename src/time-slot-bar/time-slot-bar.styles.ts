@@ -146,7 +146,6 @@ export const timeSlotBorderMinified = css`
 `;
 
 export const cellText = css`
-    color: var(${tokens.item.color});
     position: absolute;
     bottom: 0;
     padding-left: 4px;
@@ -155,14 +154,17 @@ export const cellText = css`
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    color: inherit;
 `;
 
 export const timeSlotItem = css`
     /* reset variables to prevent leaking to child components */
     ${tokens.item.left}: initial;
     ${tokens.item.width}: initial;
+    ${tokens.item.color}: initial;
 
     position: absolute;
+    color: var(${tokens.item.color});
     left: var(${tokens.item.left});
     width: var(${tokens.item.width});
 
