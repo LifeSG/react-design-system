@@ -350,12 +350,13 @@ export const InputRangeSelect = <T, V>({
                     selectedToValue &&
                     !readOnly &&
                     !disabled && (
-                        <ClearButton
-                            onClick={handleClear}
-                            type="button"
-                            aria-label="Clear"
-                            className={styles.clearIconContainer}
-                        />
+                        <div className={styles.clearButtonContainer}>
+                            <ClearButton
+                                onClick={handleClear}
+                                type="button"
+                                aria-label="Clear"
+                            />
+                        </div>
                     )}
             </InputWrapper>
         );

@@ -335,12 +335,13 @@ export const ComboboxPicker = ({
             (startTimeVal?.length > 0 || endTimeVal?.length > 0)
         ) {
             return (
-                <ClearButton
-                    onClick={handleClear}
-                    type="button"
-                    aria-label="Clear"
-                    className={inputStyles.clearIconContainer}
-                />
+                <div className={inputStyles.clearButtonContainer}>
+                    <ClearButton
+                        onClick={handleClear}
+                        type="button"
+                        aria-label="Clear"
+                    />
+                </div>
             );
         }
     };

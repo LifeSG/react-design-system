@@ -137,7 +137,8 @@ export const clearButton = css`
     outline: none;
     height: auto;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
-    margin-right: calc(-1 * ${Spacing["spacing-16"]});
+    margin: calc(${Spacing["spacing-12"]} * -1)
+        calc(${Spacing["spacing-16"]} * -1);
     cursor: pointer;
     color: ${Colour.icon};
 

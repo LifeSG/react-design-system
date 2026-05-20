@@ -2,12 +2,11 @@ import { css } from "@linaria/core";
 
 import { Colour, Spacing } from "../theme";
 
-export const clearIconContainer = css`
-    /* Position styles */
+export const clearButtonContainer = css`
     position: absolute;
-    right: 0;
-    padding-left: ${Spacing["spacing-8"]};
-    margin-right: 0;
+    display: flex;
+    align-items: center;
+    right: ${Spacing["spacing-16"]};
 `;
 
 export const styledInputWrapper = css`
