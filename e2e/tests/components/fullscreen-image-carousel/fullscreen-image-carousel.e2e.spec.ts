@@ -73,63 +73,67 @@ test.describe("FullscreenImageCarousel", () => {
         });
     });
 
-    test.describe("Default", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("basic-carousel");
+            await story.init("default-carousel");
             await story.page.waitForLoadState("networkidle");
         });
 
-        test("Visual", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                fullscreen: true,
+        test("Default", async ({ story }) => {
+            await test.step("Initial render", async () => {
+                await compareScreenshot(story, "mount", {
+                    fullscreen: true,
+                });
             });
-        });
 
-        test("Thumbnail (current)", async ({ story }) => {
-            await story.locators.thumbnailItems.nth(0).hover();
-            await compareScreenshot(story, "hover", {
-                locator: story.locators.thumbnailContainer,
+            await test.step("Hover on current thumbnail", async () => {
+                await story.locators.thumbnailItems.nth(0).hover();
+                await compareScreenshot(story, "thumbnail-current-hover", {
+                    locator: story.locators.thumbnailContainer,
+                });
             });
-        });
 
-        test("Thumbnail (next)", async ({ story }) => {
-            await story.locators.thumbnailItems.nth(1).hover();
-            await compareScreenshot(story, "hover", {
-                locator: story.locators.thumbnailContainer,
-            });
-        });
-    });
-
-    test.describe("Default (dark mode)", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("basic-carousel", { mode: "dark" });
-            await story.page.waitForLoadState("networkidle");
-        });
-
-        test("Visual", async ({ story }) => {
-            await compareScreenshot(story, "mount-dark", {
-                fullscreen: true,
-            });
-        });
-
-        test("Thumbnail (current)", async ({ story }) => {
-            await story.locators.thumbnailItems.nth(0).hover();
-            await compareScreenshot(story, "hover", {
-                locator: story.locators.thumbnailContainer,
-            });
-        });
-
-        test("Thumbnail (next)", async ({ story }) => {
-            await story.locators.thumbnailItems.nth(1).hover();
-            await compareScreenshot(story, "hover", {
-                locator: story.locators.thumbnailContainer,
+            await test.step("Hover on next thumbnail", async () => {
+                await story.locators.thumbnailItems.nth(1).hover();
+                await compareScreenshot(story, "thumbnail-next-hover", {
+                    locator: story.locators.thumbnailContainer,
+                });
             });
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("basic-carousel", { size: "mobile" });
+            await story.init("default-carousel", { mode: "dark" });
+            await story.page.waitForLoadState("networkidle");
+        });
+
+        test("Default (dark mode)", async ({ story }) => {
+            await test.step("Initial render", async () => {
+                await compareScreenshot(story, "mount", {
+                    fullscreen: true,
+                });
+            });
+
+            await test.step("Hover on current thumbnail", async () => {
+                await story.locators.thumbnailItems.nth(0).hover();
+                await compareScreenshot(story, "thumbnail-current-hover", {
+                    locator: story.locators.thumbnailContainer,
+                });
+            });
+
+            await test.step("Hover on next thumbnail", async () => {
+                await story.locators.thumbnailItems.nth(1).hover();
+                await compareScreenshot(story, "thumbnail-next-hover", {
+                    locator: story.locators.thumbnailContainer,
+                });
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default-carousel", { size: "mobile" });
             await story.page.waitForLoadState("networkidle");
         });
 
@@ -146,7 +150,7 @@ test.describe("FullscreenImageCarousel", () => {
             await story.page.waitForLoadState("networkidle");
         });
 
-        test("Confugurable", async ({ story }) => {
+        test("Configurable", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
@@ -181,11 +185,24 @@ test.describe("FullscreenImageCarousel", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("carousel-no-data");
+            await story.init("carousel-with-file-data");
             await story.page.waitForLoadState("networkidle");
         });
 
-        test("Carousel with no data", async ({ story }) => {
+        test("Carousel with file data", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("carousel-with-file-data", { mode: "dark" });
+            await story.page.waitForLoadState("networkidle");
+        });
+
+        test("Carousel with file data (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
