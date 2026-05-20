@@ -163,10 +163,7 @@ export const timeSlotBorderMinified = css`
 `;
 
 export const cellText = css`
-    /* reset variable to prevent leaking to child components */
-    ${tokens.item.color}: initial;
-
-    color: var(${tokens.item.color}, ${Colour.text});
+    color: var(${tokens.item.color});
     position: absolute;
     bottom: 0;
     padding-left: 4px;

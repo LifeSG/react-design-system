@@ -4,7 +4,6 @@ import clsx from "clsx";
 import dayjs, { type Dayjs } from "dayjs";
 import {
     forwardRef,
-    type MouseEvent,
     useEffect,
     useImperativeHandle,
     useMemo,
@@ -16,11 +15,12 @@ import { useResizeDetector } from "react-resize-detector";
 import { VisuallyHidden } from "../shared/accessibility";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { TimeSlot } from "../shared/time-slot";
-import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import { TimeHelper } from "../util/time-helper";
-import { TimeSlotBarHelper } from "./helper";
+import { getVariantClass, TimeSlotBarHelper } from "./helper";
 import * as styles from "./time-slot-bar.styles";
+import TimeSlotDivider from "./time-slot-divider";
+import TimeSlotItem from "./time-slot-item";
 import type {
     Direction,
     TimeSlot as TTimeSlot,
@@ -30,88 +30,6 @@ import type {
 } from "./types";
 
 const CELL_DURATION = 30; // In minutes
-
-const getVariantClass = (
-    variant: TimeSlotBarVariant,
-    defaultClassName: string,
-    minifiedClassName: string
-) => {
-    return variant === "default" ? defaultClassName : minifiedClassName;
-};
-
-interface TimeSlotItemProps {
-    variant: TimeSlotBarVariant;
-    slotWidth: number;
-    slotOffset: number;
-    color?: string;
-    onClick?: (() => void) | ((evt: MouseEvent<HTMLElement>) => void);
-    dataTestId?: string;
-    children: React.ReactNode;
-}
-
-const TimeSlotItem = ({
-    variant,
-    slotWidth,
-    slotOffset,
-    color,
-    onClick,
-    dataTestId,
-    children,
-}: TimeSlotItemProps) => {
-    const itemRef = useRef<HTMLDivElement>(null);
-
-    useApplyStyle(itemRef, {
-        [styles.tokens.item.width]: `${slotWidth}px`,
-        [styles.tokens.item.left]: `${slotOffset}px`,
-        [styles.tokens.item.color]: color,
-    });
-
-    return (
-        <div
-            ref={itemRef}
-            data-testid={dataTestId}
-            className={getVariantClass(
-                variant,
-                clsx(styles.timeSlotItem, styles.timeSlotItemDefault),
-                clsx(styles.timeSlotItem, styles.timeSlotItemMinified)
-            )}
-            onClick={onClick}
-        >
-            {children}
-        </div>
-    );
-};
-
-interface TimeSlotDividerProps {
-    variant: TimeSlotBarVariant;
-    left?: number;
-    dataTestId?: string;
-}
-
-const TimeSlotDivider = ({
-    variant,
-    left,
-    dataTestId,
-}: TimeSlotDividerProps) => {
-    const dividerRef = useRef<HTMLDivElement>(null);
-
-    useApplyStyle(dividerRef, {
-        [styles.tokens.border.left]:
-            left === undefined ? undefined : `${left}px`,
-    });
-
-    return (
-        <div
-            ref={dividerRef}
-            data-testid={dataTestId}
-            className={getVariantClass(
-                variant,
-                clsx(styles.timeSlotBorder, styles.timeSlotBorderDefault),
-                clsx(styles.timeSlotBorder, styles.timeSlotBorderMinified)
-            )}
-        />
-    );
-};
 
 const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     // =============================================================================

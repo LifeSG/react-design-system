@@ -233,3 +233,11 @@ export class TimeSlotBarHelper {
         };
     }
 }
+
+export const getVariantClass = (
+    variant: TimeSlotBarVariant,
+    defaultClassName: string,
+    minifiedClassName: string
+) => {
+    return variant === "default" ? defaultClassName : minifiedClassName;
+};
