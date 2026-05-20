@@ -186,7 +186,10 @@ test.describe("DateRangeInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("form-variants", { size: "mobile" });
+            await story.init("form-variants", {
+                size: "mobile",
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
         test("Form.DateRangeInput variants (mobile)", async ({ story }) => {
@@ -361,6 +364,8 @@ test.describe("DateRangeInput", () => {
                 locator: story.locators.defaultInput,
             });
 
+            await story.page.keyboard.press("Escape");
+
             await story.locators.disabledInput.click({ force: true });
             await compareScreenshot(story, "disabled", {
                 locator: story.locators.disabledInput,
@@ -388,6 +393,8 @@ test.describe("DateRangeInput", () => {
             await compareScreenshot(story, "default", {
                 locator: story.locators.defaultInput,
             });
+
+            await story.page.keyboard.press("Escape");
 
             await story.locators.disabledInput.click({ force: true });
             await compareScreenshot(story, "disabled", {
