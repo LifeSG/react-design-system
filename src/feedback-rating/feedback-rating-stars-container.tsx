@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { ChangeEvent } from "react";
 import { useRef, useState } from "react";
 
@@ -98,7 +99,10 @@ export const FeedbackRatingStarsContainer = (
                     onBlur={handleBlur}
                 />
             </VisuallyHidden>
-            <Container aria-hidden $isFocused={isFocused}>
+            <Container
+                aria-hidden
+                className={clsx(isFocused && "containerIsFocused")}
+            >
                 {renderRatings()}
             </Container>
         </>
