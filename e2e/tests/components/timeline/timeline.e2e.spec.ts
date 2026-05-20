@@ -84,34 +84,34 @@ test.describe("Timeline", () => {
             await expect(story.locators.timeline).toMatchAriaSnapshot(`
                 - heading "What's next" [level=2]
                 - list:
-                    - listitem:
-                        - text: Completed step
-                        - heading "Completed" [level=3]
-                        - paragraph: An example with the completed variant.
-                    - listitem:
-                        - text: Current step
-                        - heading "Current" [level=3]
-                        - paragraph: An example with the current variant.
-                    - listitem:
-                        - text: Step number 1
-                        - heading "Numeric" [level=3]
-                        - paragraph: An example with the numeric variant.
-                    - listitem:
-                        - text: Upcoming active step
-                        - heading "Upcoming active" [level=3]
-                        - paragraph: An example with the upcoming-active variant.
-                    - listitem:
-                        - text: Upcoming inactive step
-                        - heading "Upcoming inactive" [level=3]
-                        - paragraph: An example with the upcoming-inactive variant.
-                    - listitem:
-                        - text: Current step, action required
-                        - heading "Error" [level=3]
-                        - paragraph: An example with the error variant.
-                    - listitem:
-                        - text: Inactive step
-                        - heading "Disabled" [level=3]
-                        - paragraph: An example with the disabled variant.
+                  - listitem:
+                    - text: Completed step
+                    - heading "Completed" [level=3]
+                    - paragraph: An example with the completed variant.
+                  - listitem:
+                    - text: Current step
+                    - heading "Current" [level=3]
+                    - paragraph: An example with the current variant.
+                  - listitem:
+                    - text: Step number 3
+                    - heading "Numeric" [level=3]
+                    - paragraph: An example with the numeric variant.
+                  - listitem:
+                    - text: Upcoming active step
+                    - heading "Upcoming active" [level=3]
+                    - paragraph: An example with the upcoming-active variant.
+                  - listitem:
+                    - text: Upcoming inactive step
+                    - heading "Upcoming inactive" [level=3]
+                    - paragraph: An example with the upcoming-inactive variant.
+                  - listitem:
+                    - text: Current step, action required
+                    - heading "Error" [level=3]
+                    - paragraph: An example with the error variant.
+                  - listitem:
+                    - text: Inactive step
+                    - heading "Disabled" [level=3]
+                    - paragraph: An example with the disabled variant.
             `);
         });
     });
