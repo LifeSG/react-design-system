@@ -15,8 +15,9 @@ const getCircleIndicatorClass = (variant: Variant): string => {
         case "completed":
             return styles.circleIndicatorCompleted;
         case "current":
+            return styles.circleIndicatorCurrent;
         case "upcoming-active":
-            return styles.circleIndicatorActive;
+            return styles.circleIndicatorUpcomingActive;
         case "upcoming-inactive":
             return styles.circleIndicatorUpcomingInactive;
         case "disabled":

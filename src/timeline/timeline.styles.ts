@@ -21,7 +21,11 @@ export const circleIndicator = css`
     border-radius: 100%;
 `;
 
-export const circleIndicatorActive = css`
+export const circleIndicatorCurrent = css`
+    background-color: ${Colour["icon-primary-subtle"]};
+`;
+
+export const circleIndicatorUpcomingActive = css`
     border: 4px solid ${Colour["icon-primary-subtle"]};
 `;
 
