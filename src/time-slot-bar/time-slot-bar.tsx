@@ -1,3 +1,5 @@
+import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import clsx from "clsx";
 import dayjs, { type Dayjs } from "dayjs";
 import {
@@ -12,8 +14,10 @@ import {
 import { useResizeDetector } from "react-resize-detector";
 
 import { VisuallyHidden } from "../shared/accessibility";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { TimeSlot } from "../shared/time-slot";
 import { useApplyStyle } from "../theme";
+import { Typography } from "../typography";
 import { TimeHelper } from "../util/time-helper";
 import { TimeSlotBarHelper } from "./helper";
 import * as styles from "./time-slot-bar.styles";
@@ -63,18 +67,18 @@ const TimeSlotItem = ({
     });
 
     return (
-        <styles.StyledTimeSlotItem
+        <div
             ref={itemRef}
             data-testid={dataTestId}
             className={getVariantClass(
                 variant,
-                styles.timeSlotItemDefault,
-                styles.timeSlotItemMinified
+                clsx(styles.timeSlotItem, styles.timeSlotItemDefault),
+                clsx(styles.timeSlotItem, styles.timeSlotItemMinified)
             )}
             onClick={onClick}
         >
             {children}
-        </styles.StyledTimeSlotItem>
+        </div>
     );
 };
 
@@ -97,13 +101,13 @@ const TimeSlotDivider = ({
     });
 
     return (
-        <styles.TimeSlotBorder
+        <div
             ref={dividerRef}
             data-testid={dataTestId}
             className={getVariantClass(
                 variant,
-                styles.timeSlotBorderDefault,
-                styles.timeSlotBorderMinified
+                clsx(styles.timeSlotBorder, styles.timeSlotBorderDefault),
+                clsx(styles.timeSlotBorder, styles.timeSlotBorderMinified)
             )}
         />
     );
@@ -302,10 +306,11 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             );
 
             timeMarkers.push(
-                <styles.TimeMarker
+                <div
                     data-testid={`${currentTime.format("HH:mm")}-marker`}
                     key={currentTime.format("HH:mm")}
                     className={clsx(
+                        styles.timeMarker,
                         getVariantClass(
                             variant,
                             styles.timeMarkerDefault,
@@ -315,13 +320,16 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     )}
                 >
                     {displayLongTimeMarker && (
-                        <styles.TimeLabel weight="semibold">
+                        <Typography.BodyXS
+                            className={styles.timeLabel}
+                            weight="semibold"
+                        >
                             {TimeSlotBarHelper.formatHourlyDisplay(
                                 currentTime.format("HH:mm")
                             )}
-                        </styles.TimeLabel>
+                        </Typography.BodyXS>
                     )}
-                </styles.TimeMarker>
+                </div>
             );
         }
         return timeMarkers;
@@ -409,8 +417,9 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
 
             const handleSlotClick =
                 (clickedSlot: TTimeSlot & { ariaLabel?: string }) =>
-                (evt: MouseEvent<HTMLElement>) => {
+                (evt: React.MouseEvent<HTMLElement>) => {
                     evt.stopPropagation();
+
                     const { ariaLabel: _, ...slot } = clickedSlot;
                     if (isClickable) onSlotClick(slot);
                 };
@@ -450,14 +459,15 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                             )}
 
                             {showLabel && (
-                                <styles.CellText
+                                <Typography.BodyXS
+                                    className={styles.cellText}
                                     weight={"semibold"}
                                     aria-hidden={!ariaLabel}
                                 >
                                     {showFullEllipsis(slotWidth)
                                         ? "..."
                                         : label}
-                                </styles.CellText>
+                                </Typography.BodyXS>
                             )}
                         </TimeSlot>
                     </TimeSlotItem>
@@ -478,11 +488,12 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             <>
                 {/* Show the left ArrowButton when the scroll position is greater than 0 */}
                 {scrollPosition > 0 && (
-                    <styles.ArrowButton
+                    <ClickableIcon
                         data-testid={getDataTestId("arrow-left")}
                         aria-hidden
                         tabIndex={-1}
                         className={clsx(
+                            styles.arrowButton,
                             getVariantClass(
                                 variant,
                                 styles.arrowButtonDefault,
@@ -496,8 +507,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                             handleArrowButtonClick("left");
                         }}
                     >
-                        <styles.ArrowIconLeft />
-                    </styles.ArrowButton>
+                        <ChevronLeftIcon className={styles.arrowIconLeft} />
+                    </ClickableIcon>
                 )}
             </>
         );
@@ -514,11 +525,12 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             )
         ) {
             return (
-                <styles.ArrowButton
+                <ClickableIcon
                     data-testid={getDataTestId("arrow-right")}
                     aria-hidden
                     tabIndex={-1}
                     className={clsx(
+                        styles.arrowButton,
                         getVariantClass(
                             variant,
                             styles.arrowButtonDefault,
@@ -532,8 +544,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         handleArrowButtonClick("right");
                     }}
                 >
-                    <styles.ArrowIconRight />
-                </styles.ArrowButton>
+                    <ChevronRightIcon className={styles.arrowIconRight} />
+                </ClickableIcon>
             );
         }
 
@@ -541,36 +553,38 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     };
 
     return (
-        <styles.Container className={className}>
-            <styles.TimeSlotBarContainer
+        <div className={clsx(styles.container, className)}>
+            <div
                 data-testid={testId}
                 ref={barRef}
                 className={getVariantClass(
                     variant,
-                    styles.containerDefault,
-                    styles.containerMinified
+                    clsx(styles.timeSlotBarContainer, styles.containerDefault),
+                    clsx(styles.timeSlotBarContainer, styles.containerMinified)
                 )}
             >
-                <styles.TimeMarkerWrapper
+                <div
+                    className={styles.timeMarkerWrapper}
                     data-testid={getDataTestId("time-marker-wrapper")}
                     data-id="marker-wrapper"
                 >
                     {renderTimeMarkers()}
-                </styles.TimeMarkerWrapper>
+                </div>
                 <div role="grid" aria-label={slotsSummary} tabIndex={0}>
-                    <styles.TimeSlotWrapper
+                    <div
+                        className={styles.timeSlotWrapper}
                         data-testid={getDataTestId("time-slot-wrapper")}
                         data-id="slot-wrapper"
                         role="row"
                     >
                         {renderDefaultTimeSlots()}
                         {renderTimeSlots()}
-                    </styles.TimeSlotWrapper>
+                    </div>
                 </div>
-            </styles.TimeSlotBarContainer>
+            </div>
             {renderArrowButtonLeft()}
             {renderArrowButtonRight()}
-        </styles.Container>
+        </div>
     );
 };
 
