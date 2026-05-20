@@ -1,8 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Pill } from "../pill";
 import { Colour, Font, MediaQuery, Radius } from "../theme";
-import { Typography } from "../typography";
 
 // =============================================================================
 // TOKENS
@@ -12,101 +10,96 @@ export const tokens = {
         startCol: "--fds-internal-timeline-wrapper-startCol",
         colSpan: "--fds-internal-timeline-wrapper-colSpan",
     },
-};
+} as const;
 
-export const CircleIndicator = styled.div`
+export const circleIndicator = css`
     display: flex;
     justify-content: center;
     align-items: center;
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 100%;
+`;
 
-    &.circleIndicatorCurrent {
-        background-color: ${Colour["icon-primary-subtle"]};
-    }
+export const circleIndicatorActive = css`
+    border: 4px solid ${Colour["icon-primary-subtle"]};
+`;
 
-    &.circleIndicatorUpcomingActive {
-        border: 4px solid ${Colour["icon-primary-subtle"]};
-    }
+export const circleIndicatorUpcomingInactive = css`
+    border: 4px solid ${Colour["icon-subtle"]};
+`;
 
-    &.circleIndicatorUpcomingInactive {
-        border: 4px solid ${Colour["icon-subtle"]};
-    }
+export const circleIndicatorDisabled = css`
+    background-color: ${Colour["icon-disabled-subtle"]};
+`;
 
-    &.circleIndicatorDisabled {
-        background-color: ${Colour["icon-disabled-subtle"]};
-    }
+export const circleIndicatorCompleted = css`
+    background-color: ${Colour["icon-success"]};
 
-    &.circleIndicatorCompleted {
-        background-color: ${Colour["icon-success"]};
-
-        svg {
-            color: ${Colour["icon-inverse"]};
-        }
-    }
-
-    &.circleIndicatorNumeric {
-        background-color: ${Colour["icon-info"]};
-        color: ${Colour["text-inverse"]};
-        font-size: ${Font["body-sm-bold"]};
-    }
-
-    &.circleIndicatorError {
-        width: 1.8rem;
-        height: 1.8rem;
-        margin: -0.15rem 0 -0.15rem -0.15rem;
-
-        svg {
-            color: ${Colour["icon-error"]};
-            height: 100%;
-            width: 100%;
-        }
+    svg {
+        color: ${Colour["icon-inverse"]};
     }
 `;
 
-export const LineIndicator = styled.div`
+export const circleIndicatorNumeric = css`
+    background-color: ${Colour["icon-info"]};
+    color: ${Colour["text-inverse"]};
+    font-size: ${Font["body-sm-bold"]};
+`;
+
+export const circleIndicatorError = css`
+    width: 1.8rem;
+    height: 1.8rem;
+    margin: -0.15rem 0 -0.15rem -0.15rem;
+
+    svg {
+        color: ${Colour["icon-error"]};
+        height: 100%;
+        width: 100%;
+    }
+`;
+
+export const lineIndicator = css`
     width: 4px;
     flex-grow: 1;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     border-radius: ${Radius["full"]};
-
-    &.lineIndicatorCurrent,
-    &.lineIndicatorUpcomingActive {
-        background-color: ${Colour["icon-primary-subtle"]};
-    }
-
-    &.lineIndicatorUpcomingInactive {
-        background-color: ${Colour["icon-subtle"]};
-    }
-
-    &.lineIndicatorDisabled {
-        background-color: ${Colour["icon-disabled-subtle"]};
-    }
-
-    &.lineIndicatorCompleted {
-        background-color: ${Colour["icon-success"]};
-    }
-
-    &.lineIndicatorNumeric {
-        background-color: ${Colour["icon-info"]};
-    }
-
-    &.lineIndicatorError {
-        margin-left: -0.15rem;
-        background-color: ${Colour["icon-error"]};
-    }
 `;
 
-export const TimelineIndicators = styled.div`
+export const lineIndicatorActive = css`
+    background-color: ${Colour["icon-primary-subtle"]};
+`;
+
+export const lineIndicatorUpcomingInactive = css`
+    background-color: ${Colour["icon-subtle"]};
+`;
+
+export const lineIndicatorDisabled = css`
+    background-color: ${Colour["icon-disabled-subtle"]};
+`;
+
+export const lineIndicatorCompleted = css`
+    background-color: ${Colour["icon-success"]};
+`;
+
+export const lineIndicatorNumeric = css`
+    background-color: ${Colour["icon-info"]};
+`;
+
+export const lineIndicatorError = css`
+    margin-left: -0.15rem;
+    background-color: ${Colour["icon-error"]};
+`;
+
+export const timelineIndicators = css`
     display: flex;
     flex-direction: column;
     align-items: center;
     margin-right: 1rem;
 `;
 
-export const TimelineWrapper = styled.div`
+export const timelineWrapper = css`
     ${tokens.wrapper.startCol}: initial;
     ${tokens.wrapper.colSpan}: initial;
     grid-column: var(${tokens.wrapper.startCol}, 3) / span
@@ -121,7 +114,7 @@ export const TimelineWrapper = styled.div`
     }
 `;
 
-export const TimelineTitle = styled(Typography.HeadingSM)`
+export const timelineTitle = css`
     margin-bottom: 1rem;
 
     ${MediaQuery.MaxWidth.lg} {
@@ -129,32 +122,32 @@ export const TimelineTitle = styled(Typography.HeadingSM)`
     }
 `;
 
-export const TimelineItemTitle = styled(Typography.HeadingXS)`
+export const timelineItemTitle = css`
     margin-top: -0.125rem;
     margin-bottom: 0.5rem;
 `;
 
 // default is 2-8-2 on desktop
-export const TimelineItem = styled.div`
+export const timelineItem = css`
     display: flex;
 
-    &:last-of-type ${LineIndicator} {
+    &:last-of-type .${lineIndicator} {
         margin-bottom: 0;
     }
 `;
 
-export const TimelineItemContent = styled.div`
+export const timelineItemContent = css`
     margin-bottom: 2rem;
     width: 100%;
 `;
 
-export const TimelinePills = styled.div`
+export const timelinePills = css`
     display: flex;
     flex-wrap: wrap;
     margin-bottom: 0.5rem;
     gap: 0.5rem;
 `;
 
-export const TimelinePill = styled(Pill)`
+export const timelinePill = css`
     padding: 0.125rem 0.5rem;
 `;

@@ -3,6 +3,7 @@ import clsx from "clsx";
 import { useRef } from "react";
 
 import type { PillProps } from "../pill";
+import { Pill } from "../pill";
 import { VisuallyHidden } from "../shared/accessibility";
 import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
@@ -12,38 +13,36 @@ import type { TimelineItemProps, TimelineProps, Variant } from "./types";
 const getCircleIndicatorClass = (variant: Variant): string => {
     switch (variant) {
         case "completed":
-            return "circleIndicatorCompleted";
+            return styles.circleIndicatorCompleted;
         case "current":
-            return "circleIndicatorCurrent";
         case "upcoming-active":
-            return "circleIndicatorUpcomingActive";
+            return styles.circleIndicatorActive;
         case "upcoming-inactive":
-            return "circleIndicatorUpcomingInactive";
+            return styles.circleIndicatorUpcomingInactive;
         case "disabled":
-            return "circleIndicatorDisabled";
+            return styles.circleIndicatorDisabled;
         case "numeric":
-            return "circleIndicatorNumeric";
+            return styles.circleIndicatorNumeric;
         case "error":
-            return "circleIndicatorError";
+            return styles.circleIndicatorError;
     }
 };
 
 const getLineIndicatorClass = (variant: Variant): string => {
     switch (variant) {
         case "completed":
-            return "lineIndicatorCompleted";
+            return styles.lineIndicatorCompleted;
         case "current":
-            return "lineIndicatorCurrent";
         case "upcoming-active":
-            return "lineIndicatorUpcomingActive";
+            return styles.lineIndicatorActive;
         case "upcoming-inactive":
-            return "lineIndicatorUpcomingInactive";
+            return styles.lineIndicatorUpcomingInactive;
         case "disabled":
-            return "lineIndicatorDisabled";
+            return styles.lineIndicatorDisabled;
         case "numeric":
-            return "lineIndicatorNumeric";
+            return styles.lineIndicatorNumeric;
         case "error":
-            return "lineIndicatorError";
+            return styles.lineIndicatorError;
     }
 };
 
@@ -87,14 +86,17 @@ export const Timeline = ({
     ): JSX.Element => {
         if (typeof title === "string") {
             return (
-                <styles.TimelineItemTitle
-                    forwardedAs="h3"
+                <Typography.HeadingXS
+                    as="h3"
                     aria-level={level}
                     weight="semibold"
-                    className="timeline-item-title"
+                    className={clsx(
+                        styles.timelineItemTitle,
+                        "timeline-item-title"
+                    )}
                 >
                     {title}
-                </styles.TimelineItemTitle>
+                </Typography.HeadingXS>
             );
         }
 
@@ -106,15 +108,18 @@ export const Timeline = ({
         const renderableStatuses = statuses.slice(0, 2);
         return renderableStatuses.map((status: PillProps, index) => {
             return (
-                <styles.TimelinePill
+                <Pill
                     {...status}
                     type={status.type}
                     key={`status-pill-${index}`}
                     data-testid="status-pill"
-                    className="timeline-status-pill"
+                    className={clsx(
+                        styles.timelinePill,
+                        "timeline-status-pill"
+                    )}
                 >
                     {status.children}
-                </styles.TimelinePill>
+                </Pill>
             );
         });
     };
@@ -163,53 +168,66 @@ export const Timeline = ({
                 _variant || (index === 0 ? "current" : "upcoming-active");
 
             return (
-                <styles.TimelineItem
+                <div
                     key={`timeline-item-${index}`}
                     role="listitem"
+                    className={styles.timelineItem}
                 >
-                    <styles.TimelineIndicators>
-                        <styles.CircleIndicator
+                    <div className={styles.timelineIndicators}>
+                        <div
                             data-testid={circleIndicatorTestId}
-                            className={getCircleIndicatorClass(variant)}
+                            className={clsx(
+                                styles.circleIndicator,
+                                getCircleIndicatorClass(variant)
+                            )}
                         >
                             <VisuallyHidden>
                                 {getStatus(variant, index)}
                             </VisuallyHidden>
                             {renderIcon(variant, index)}
-                        </styles.CircleIndicator>
-                        <styles.LineIndicator
-                            className={getLineIndicatorClass(variant)}
+                        </div>
+                        <div
+                            className={clsx(
+                                styles.lineIndicator,
+                                getLineIndicatorClass(variant)
+                            )}
                         />
-                    </styles.TimelineIndicators>
-                    <styles.TimelineItemContent className="timeline-item-content">
+                    </div>
+                    <div
+                        className={clsx(
+                            styles.timelineItemContent,
+                            "timeline-item-content"
+                        )}
+                    >
                         {renderTitle(title, headingLevel + 1)}
                         {statuses && (
-                            <styles.TimelinePills>
+                            <div className={styles.timelinePills}>
                                 {renderStatusPills(statuses)}
-                            </styles.TimelinePills>
+                            </div>
                         )}
                         {renderContent(content)}
-                    </styles.TimelineItemContent>
-                </styles.TimelineItem>
+                    </div>
+                </div>
             );
         });
 
     return (
-        <styles.TimelineWrapper
+        <div
             ref={wrapperRef}
-            className={clsx(className)}
+            className={clsx(styles.timelineWrapper, className)}
             id={id}
             data-testid={testId}
         >
-            <styles.TimelineTitle
-                forwardedAs="h2"
+            <Typography.HeadingSM
+                as="h2"
                 aria-level={headingLevel}
                 data-testid="timeline-title"
                 weight="bold"
+                className={styles.timelineTitle}
             >
                 {title}
-            </styles.TimelineTitle>
+            </Typography.HeadingSM>
             <div role="list">{renderItems()}</div>
-        </styles.TimelineWrapper>
+        </div>
     );
 };
