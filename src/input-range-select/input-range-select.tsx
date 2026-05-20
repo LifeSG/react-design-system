@@ -11,6 +11,7 @@ import {
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { ClearButton, InputWrapper } from "../shared/input-wrapper";
+import * as inputWrapperStyles from "../shared/input-wrapper/input-wrapper.styles";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
@@ -350,7 +351,9 @@ export const InputRangeSelect = <T, V>({
                     selectedToValue &&
                     !readOnly &&
                     !disabled && (
-                        <div className={styles.clearButtonContainer}>
+                        <div
+                            className={inputWrapperStyles.clearButtonContainer}
+                        >
                             <ClearButton
                                 onClick={handleClear}
                                 type="button"

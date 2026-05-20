@@ -158,3 +158,10 @@ export const clearIcon = css`
     width: 1.25rem;
     vertical-align: middle;
 `;
+
+export const clearButtonContainer = css`
+    position: absolute;
+    display: flex;
+    align-items: center;
+    right: ${Spacing["spacing-16"]};
+`;

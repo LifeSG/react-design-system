@@ -1,13 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Colour, Spacing } from "../theme";
-
-export const clearButtonContainer = css`
-    position: absolute;
-    display: flex;
-    align-items: center;
-    right: ${Spacing["spacing-16"]};
-`;
+import { Colour, Radius } from "../theme";
 
 export const styledInputWrapper = css`
     height: 3rem;
@@ -28,7 +21,7 @@ export const rangeSelectorButton = css`
 
     &:focus-visible {
         outline: 2px solid ${Colour["border-focus"]};
-        border-radius: 4px;
+        border-radius: ${Radius.sm};
     }
 
     &:disabled {
