@@ -1,8 +1,7 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
+import clsx from "clsx";
 import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
 
-import * as styles from "../input/input.styles";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import type { DropdownListApi } from "../shared/dropdown-list";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list";
@@ -11,15 +10,12 @@ import {
     PlaceholderLabel,
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
-import { BasicButton } from "../shared/input-wrapper";
+import { ClearButton, InputWrapper } from "../shared/input-wrapper";
+import * as inputWrapperStyles from "../shared/input-wrapper/input-wrapper.styles";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
-import {
-    ClearIconContainer,
-    RangeSelectorButton,
-    StyledInputWrapper,
-} from "./input-range-select.style";
+import * as styles from "./input-range-select.styles";
 import type { InputRangeSelectProps } from "./types";
 
 type RangeType = "from" | "to";
@@ -306,7 +302,7 @@ export const InputRangeSelect = <T, V>({
     };
 
     const renderSelectorContent = (rangeType: RangeType) => (
-        <RangeSelectorButton
+        <button
             type="button"
             role="combobox"
             aria-labelledby={getButtonLabelledBy(rangeType)}
@@ -319,15 +315,16 @@ export const InputRangeSelect = <T, V>({
             onKeyDown={handleSelectorKeyDown(rangeType)}
             ref={labelButtonRef[rangeType]}
             tabIndex={0}
+            className={styles.rangeSelectorButton}
         >
             {renderLabel(rangeType)}
-        </RangeSelectorButton>
+        </button>
     );
 
     const renderElement = () => {
         return (
-            <StyledInputWrapper
-                className={className}
+            <InputWrapper
+                className={clsx(styles.styledInputWrapper, className)}
                 data-testid={testId}
                 disabled={disabled}
                 readOnly={readOnly}
@@ -354,19 +351,17 @@ export const InputRangeSelect = <T, V>({
                     selectedToValue &&
                     !readOnly &&
                     !disabled && (
-                        <BasicButton
-                            onClick={handleClear}
-                            type="button"
-                            aria-label="Clear"
-                            className={ClearIconContainer}
+                        <div
+                            className={inputWrapperStyles.clearButtonContainer}
                         >
-                            <CrossIcon
-                                className={styles.clearIcon}
-                                aria-hidden
+                            <ClearButton
+                                onClick={handleClear}
+                                type="button"
+                                aria-label="Clear"
                             />
-                        </BasicButton>
+                        </div>
                     )}
-            </StyledInputWrapper>
+            </InputWrapper>
         );
     };
 

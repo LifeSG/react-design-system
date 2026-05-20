@@ -1,14 +1,13 @@
 import type { OpenChangeReason } from "@floating-ui/react";
-import { CrossIcon } from "@lifesg/react-icons/cross";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FormErrorMessage } from "../../form/form-label";
-import { clearIcon } from "../../input/input.styles";
-import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
 import { concatIds, VisuallyHidden } from "../../shared/accessibility";
 import { DropdownListState } from "../../shared/dropdown-list";
 import { DropdownList } from "../../shared/dropdown-list/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
+import { ClearButton } from "../../shared/input-wrapper";
+import * as inputWrapperStyles from "../../shared/input-wrapper/input-wrapper.styles";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { useId } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
@@ -336,13 +335,13 @@ export const ComboboxPicker = ({
             (startTimeVal?.length > 0 || endTimeVal?.length > 0)
         ) {
             return (
-                <ClearIconContainer
-                    onClick={handleClear}
-                    type="button"
-                    aria-label="Clear"
-                >
-                    <CrossIcon className={clearIcon} aria-hidden />
-                </ClearIconContainer>
+                <div className={inputWrapperStyles.clearButtonContainer}>
+                    <ClearButton
+                        onClick={handleClear}
+                        type="button"
+                        aria-label="Clear"
+                    />
+                </div>
             );
         }
     };
