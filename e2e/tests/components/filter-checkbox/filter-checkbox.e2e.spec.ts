@@ -219,7 +219,7 @@ test.describe("Filter Checkbox", () => {
             await waitForAnimationEnd(checkboxNested);
             await story.moveMouseAway();
 
-            await compareScreenshot(story, "expanded", { fullscreen: true });
+            await compareScreenshot(story, "expanded");
 
             await test.step("Clicking a parent selects all descendants", async () => {
                 const parent = checkboxNested.getByRole("treeitem", {
