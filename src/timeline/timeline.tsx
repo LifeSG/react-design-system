@@ -3,18 +3,7 @@ import { ExclamationCircleFillIcon, TickIcon } from "@lifesg/react-icons";
 import type { PillProps } from "../pill";
 import { VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography";
-import {
-    CircleIndicator,
-    LineIndicator,
-    TimelineIndicators,
-    TimelineItem,
-    TimelineItemContent,
-    TimelineItemTitle,
-    TimelinePill,
-    TimelinePills,
-    TimelineTitle,
-    TimelineWrapper,
-} from "./timeline.style";
+import * as styles from "./timeline.styles";
 import type { TimelineItemProps, TimelineProps, Variant } from "./types";
 
 export const Timeline = ({
@@ -50,14 +39,14 @@ export const Timeline = ({
     ): JSX.Element => {
         if (typeof title === "string") {
             return (
-                <TimelineItemTitle
+                <styles.TimelineItemTitle
                     forwardedAs="h3"
                     aria-level={level}
                     weight="semibold"
                     className="timeline-item-title"
                 >
                     {title}
-                </TimelineItemTitle>
+                </styles.TimelineItemTitle>
             );
         }
 
@@ -69,7 +58,7 @@ export const Timeline = ({
         const renderableStatuses = statuses.slice(0, 2);
         return renderableStatuses.map((status: PillProps, index) => {
             return (
-                <TimelinePill
+                <styles.TimelinePill
                     {...status}
                     type={status.type}
                     key={`status-pill-${index}`}
@@ -77,7 +66,7 @@ export const Timeline = ({
                     className="timeline-status-pill"
                 >
                     {status.children}
-                </TimelinePill>
+                </styles.TimelinePill>
             );
         });
     };
@@ -126,9 +115,12 @@ export const Timeline = ({
                 _variant || (index === 0 ? "current" : "upcoming-active");
 
             return (
-                <TimelineItem key={`timeline-item-${index}`} role="listitem">
-                    <TimelineIndicators>
-                        <CircleIndicator
+                <styles.TimelineItem
+                    key={`timeline-item-${index}`}
+                    role="listitem"
+                >
+                    <styles.TimelineIndicators>
+                        <styles.CircleIndicator
                             data-testid={circleIndicatorTestId}
                             $variant={variant}
                         >
@@ -136,39 +128,39 @@ export const Timeline = ({
                                 {getStatus(variant, index)}
                             </VisuallyHidden>
                             {renderIcon(variant, index)}
-                        </CircleIndicator>
-                        <LineIndicator $variant={variant} />
-                    </TimelineIndicators>
-                    <TimelineItemContent className="timeline-item-content">
+                        </styles.CircleIndicator>
+                        <styles.LineIndicator $variant={variant} />
+                    </styles.TimelineIndicators>
+                    <styles.TimelineItemContent className="timeline-item-content">
                         {renderTitle(title, headingLevel + 1)}
                         {statuses && (
-                            <TimelinePills>
+                            <styles.TimelinePills>
                                 {renderStatusPills(statuses)}
-                            </TimelinePills>
+                            </styles.TimelinePills>
                         )}
                         {renderContent(content)}
-                    </TimelineItemContent>
-                </TimelineItem>
+                    </styles.TimelineItemContent>
+                </styles.TimelineItem>
             );
         });
 
     return (
-        <TimelineWrapper
+        <styles.TimelineWrapper
             className={className}
             id={id}
             data-testid={testId}
             $startCol={startCol}
             $colSpan={colSpan}
         >
-            <TimelineTitle
+            <styles.TimelineTitle
                 forwardedAs="h2"
                 aria-level={headingLevel}
                 data-testid="timeline-title"
                 weight="bold"
             >
                 {title}
-            </TimelineTitle>
+            </styles.TimelineTitle>
             <div role="list">{renderItems()}</div>
-        </TimelineWrapper>
+        </styles.TimelineWrapper>
     );
 };
