@@ -7,6 +7,7 @@ import {
 } from "@lifesg/react-icons";
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
+import clsx from "clsx";
 import {
     forwardRef,
     useCallback,
@@ -23,34 +24,14 @@ import type {
 import { TransformComponent, TransformWrapper } from "react-zoom-pan-pinch";
 
 import { ModalV2 } from "../modal-v2";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { useStateCallback } from "../shared/hooks";
+import { ImagePlaceholder } from "../shared/image-placeholder";
+import { formatUnitValue, useApplyStyle } from "../theme";
+import { Typography } from "../typography";
 import { useEventListener } from "../util";
-import {
-    ArrowButton,
-    BoxChip,
-    CarouselModalContent,
-    Chip,
-    CloseButton,
-    DeleteButton,
-    FileInfoFileName,
-    FileInfoFileSize,
-    FileInfoTextWrapper,
-    FocusableImageRegion,
-    ImageGalleryContainer,
-    ImageGallerySlide,
-    ImageGallerySlides,
-    ImageGallerySwipe,
-    ImageGalleryWrapper,
-    MagnifierButton,
-    SlideImage,
-    SlidePlaceholderImage,
-    ThumbnailContainer,
-    ThumbnailImage,
-    ThumbnailItem,
-    ThumbnailItemContainer,
-    ThumbnailWrapper,
-    TopActionButtons,
-} from "./fullscreen-image-carousel.style";
+import * as styles from "./fullscreen-image-carousel.styles";
+import { StatefulImage } from "./stateful-image";
 import type {
     FullscreenImageCarouselCustomItemProps,
     FullscreenImageCarouselItemProps,
@@ -96,6 +77,10 @@ export const Component = (
     const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
     const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
     const imageRef = useRef<HTMLDivElement>(null);
+    const topActionButtonsRef = useRef<HTMLDivElement>(null);
+    const prevArrowButtonRef = useRef<HTMLButtonElement>(null);
+    const nextArrowButtonRef = useRef<HTMLButtonElement>(null);
+    const thumbnailContainerRef = useRef<HTMLDivElement>(null);
     const diff = startX && endX ? startX - endX : 0;
     const currentItem = items[currentSlide];
     const hasAnyItemLabel = items.some(
@@ -109,6 +94,42 @@ export const Component = (
             ),
         [items]
     );
+
+    useApplyStyle(topActionButtonsRef, {
+        [styles.tokens.topActionButtons.insetTop]: formatUnitValue(
+            insets?.top,
+            "px"
+        ),
+        [styles.tokens.topActionButtons.insetLeft]: formatUnitValue(
+            insets?.left,
+            "px"
+        ),
+        [styles.tokens.topActionButtons.insetRight]: formatUnitValue(
+            insets?.right,
+            "px"
+        ),
+    });
+
+    useApplyStyle(prevArrowButtonRef, {
+        [styles.tokens.arrowButton.insetLeft]: formatUnitValue(
+            insets?.left,
+            "px"
+        ),
+    });
+
+    useApplyStyle(nextArrowButtonRef, {
+        [styles.tokens.arrowButton.insetRight]: formatUnitValue(
+            insets?.right,
+            "px"
+        ),
+    });
+
+    useApplyStyle(thumbnailContainerRef, {
+        [styles.tokens.thumbnailContainer.insetBottom]: formatUnitValue(
+            insets?.bottom,
+            "px"
+        ),
+    });
 
     const getItemAriaLabel = useCallback(
         (index: number) => {
@@ -298,7 +319,8 @@ export const Component = (
     // =============================================================================
     const renderSlides = () => {
         return (
-            <ImageGallerySlides
+            <div
+                className={styles.imageGallerySlides}
                 style={{
                     transform: `translateX(calc(${
                         -currentSlide * 100
@@ -313,8 +335,13 @@ export const Component = (
                         (currentSlide === items.length - 1 && index === 0);
 
                     return (
-                        <ImageGallerySlide key={index} data-testid="slide-item">
-                            <FocusableImageRegion
+                        <div
+                            className={styles.imageGallerySlide}
+                            key={index}
+                            data-testid="slide-item"
+                        >
+                            <div
+                                className={styles.focusableImageRegion}
                                 ref={isActive ? imageRef : null}
                                 tabIndex={isActive ? 0 : -1}
                             >
@@ -322,7 +349,11 @@ export const Component = (
                                     isActiveOrAdjacent ? (
                                         item.renderContent()
                                     ) : (
-                                        <SlidePlaceholderImage />
+                                        <ImagePlaceholder
+                                            className={
+                                                styles.slidePlaceholderImage
+                                            }
+                                        />
                                     )
                                 ) : (
                                     <TransformWrapper
@@ -338,11 +369,16 @@ export const Component = (
                                         onWheel={handleZoom}
                                     >
                                         <TransformComponent>
-                                            <SlideImage
+                                            <StatefulImage
+                                                className={styles.slideImage}
                                                 src={item.src}
                                                 alt={getItemAriaLabel(index)}
                                                 placeholder={
-                                                    <SlidePlaceholderImage />
+                                                    <ImagePlaceholder
+                                                        className={
+                                                            styles.slidePlaceholderImage
+                                                        }
+                                                    />
                                                 }
                                                 fit="scale-down"
                                                 retrieveImageDimension
@@ -351,11 +387,11 @@ export const Component = (
                                         </TransformComponent>
                                     </TransformWrapper>
                                 )}
-                            </FocusableImageRegion>
-                        </ImageGallerySlide>
+                            </div>
+                        </div>
                     );
                 })}
-            </ImageGallerySlides>
+            </div>
         );
     };
 
@@ -365,65 +401,83 @@ export const Component = (
         const trimmedSize = fileSize?.trim();
 
         return (
-            <FileInfoTextWrapper
-                $centerContent={!trimmedSize}
+            <div
+                className={clsx(
+                    styles.fileInfoTextWrapper,
+                    !trimmedSize && styles.fileInfoTextWrapperCentered
+                )}
                 aria-live="polite"
                 aria-atomic="true"
                 data-testid="file-info-bar"
             >
                 {trimmedName && (
-                    <FileInfoFileName
+                    <Typography.BodyBL
+                        className={styles.fileInfoFileName}
                         weight="semibold"
                         data-testid="file-info-name"
                     >
                         {trimmedName}
-                    </FileInfoFileName>
+                    </Typography.BodyBL>
                 )}
                 {trimmedSize && (
-                    <FileInfoFileSize data-testid="file-info-size">
+                    <Typography.BodyMD
+                        className={styles.fileInfoFileSize}
+                        data-testid="file-info-size"
+                    >
                         {trimmedSize}
-                    </FileInfoFileSize>
+                    </Typography.BodyMD>
                 )}
-            </FileInfoTextWrapper>
+            </div>
         );
     };
 
     const renderThumbnails = () => {
         return (
-            <ThumbnailContainer
-                $insetBottom={insets?.bottom}
+            <div
+                className={styles.thumbnailContainer}
+                ref={thumbnailContainerRef}
                 aria-hidden="true"
+                data-testid="thumbnail-container"
             >
-                <ThumbnailWrapper>
+                <div className={styles.thumbnailWrapper}>
                     {items.map((item, index) => {
                         const src = isCustomItem(item)
                             ? item.thumbnailSrc
                             : item.thumbnailSrc ?? item.src;
                         return (
-                            <ThumbnailItemContainer key={index}>
-                                <ThumbnailItem
+                            <div
+                                className={styles.thumbnailItemContainer}
+                                key={index}
+                            >
+                                <div
+                                    className={styles.thumbnailItem}
+                                    data-active={index === currentSlide}
                                     data-testid="thumbnail-item"
-                                    $active={index === currentSlide}
                                     onClick={() => goToSlide(index)}
                                     ref={(el) =>
                                         (thumbnailRefs.current[index] = el)
                                     }
                                 >
                                     {src ? (
-                                        <ThumbnailImage
+                                        <StatefulImage
+                                            className={styles.thumbnailImage}
                                             src={src}
                                             alt={`Thumbnail ${index + 1}`}
                                             fit="cover"
                                         />
                                     ) : (
-                                        <SlidePlaceholderImage />
+                                        <ImagePlaceholder
+                                            className={
+                                                styles.slidePlaceholderImage
+                                            }
+                                        />
                                     )}
-                                </ThumbnailItem>
-                            </ThumbnailItemContainer>
+                                </div>
+                            </div>
                         );
                     })}
-                </ThumbnailWrapper>
-            </ThumbnailContainer>
+                </div>
+            </div>
         );
     };
 
@@ -435,63 +489,74 @@ export const Component = (
             show={show}
             disableInitialFocus
         >
-            <CarouselModalContent>
-                <ImageGalleryContainer>
-                    <ImageGalleryWrapper>
-                        <ImageGallerySwipe
+            <div className={styles.carouselModalContent}>
+                <div className={styles.imageGalleryContainer}>
+                    <div className={styles.imageGalleryWrapper}>
+                        <div
+                            className={styles.imageGallerySwipe}
                             ref={containerRef}
                             onTouchStart={handleTouchStart}
                             onTouchMove={handleTouchMove}
                             onTouchEnd={handleTouchEnd}
                         >
                             {renderSlides()}
-                        </ImageGallerySwipe>
+                        </div>
 
                         {!hideNavigation && (
                             <>
-                                <ArrowButton
+                                <ClickableIcon
+                                    className={clsx(
+                                        styles.iconButton,
+                                        styles.arrowButton,
+                                        styles.arrowButtonLeft
+                                    )}
+                                    ref={prevArrowButtonRef}
                                     aria-label={`Previous ${carouselItemNoun}`}
                                     data-testid="prev-btn"
-                                    $position="left"
                                     onClick={goToPrevSlide}
-                                    $insetLeft={insets?.left}
-                                    $insetRight={insets?.right}
                                 >
                                     <ChevronLeftIcon aria-hidden />
-                                </ArrowButton>
-                                <ArrowButton
+                                </ClickableIcon>
+                                <ClickableIcon
+                                    className={clsx(
+                                        styles.iconButton,
+                                        styles.arrowButton,
+                                        styles.arrowButtonRight
+                                    )}
+                                    ref={nextArrowButtonRef}
                                     aria-label={`Next ${carouselItemNoun}`}
                                     data-testid="forward-btn"
-                                    $position="right"
                                     onClick={goToNextSlide}
-                                    $insetLeft={insets?.left}
-                                    $insetRight={insets?.right}
                                 >
                                     <ChevronRightIcon aria-hidden />
-                                </ArrowButton>
+                                </ClickableIcon>
                             </>
                         )}
 
                         {!hideCounter && (
-                            <BoxChip aria-hidden="true">
-                                <Chip weight="semibold">{`${currentSlide + 1}/${
+                            <div className={styles.boxChip} aria-hidden="true">
+                                <Typography.BodyXS
+                                    className={styles.chip}
+                                    weight="semibold"
+                                    data-testid="carousel-counter"
+                                >{`${currentSlide + 1}/${
                                     items.length
-                                }`}</Chip>
-                            </BoxChip>
+                                }`}</Typography.BodyXS>
+                            </div>
                         )}
-                    </ImageGalleryWrapper>
+                    </div>
 
                     {!hideThumbnail && renderThumbnails()}
-                </ImageGalleryContainer>
-                <TopActionButtons
-                    $hasFileInfo={hasFileInfo}
-                    $insetTop={insets?.top}
-                    $insetLeft={insets?.left}
-                    $insetRight={insets?.right}
+                </div>
+                <div
+                    className={styles.topActionButtons}
+                    ref={topActionButtonsRef}
+                    data-has-file-info={hasFileInfo}
                 >
                     {hasFileInfo && renderFileInfo()}
                     {!hideMagnifier && !isCustomItem(currentItem) && (
-                        <MagnifierButton
+                        <ClickableIcon
+                            className={styles.iconButton}
                             aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
                             onClick={handleMagnifier}
                         >
@@ -500,11 +565,15 @@ export const Component = (
                             ) : (
                                 <MagnifierMinusIcon aria-hidden />
                             )}
-                        </MagnifierButton>
+                        </ClickableIcon>
                     )}
 
                     {onDelete && (
-                        <DeleteButton
+                        <ClickableIcon
+                            className={clsx(
+                                styles.iconButton,
+                                styles.iconButtonError
+                            )}
                             aria-label={`Delete ${
                                 (isCustomItem(currentItem) &&
                                     currentItem.itemLabel?.trim()) ||
@@ -514,10 +583,11 @@ export const Component = (
                             onClick={handleDelete}
                         >
                             <BinIcon aria-hidden />
-                        </DeleteButton>
+                        </ClickableIcon>
                     )}
 
-                    <CloseButton
+                    <ClickableIcon
+                        className={styles.iconButton}
                         aria-label={
                             hasAnyItemLabel
                                 ? "Close carousel"
@@ -526,9 +596,9 @@ export const Component = (
                         onClick={onClose}
                     >
                         <CrossIcon aria-hidden />
-                    </CloseButton>
-                </TopActionButtons>
-            </CarouselModalContent>
+                    </ClickableIcon>
+                </div>
+            </div>
         </ModalV2>
     );
 };
