@@ -18,8 +18,7 @@ export default function Story() {
                 valueExtractor={(item) => item.value}
                 listExtractor={(item) => item.label}
                 displayValueExtractor={(item) => item.label}
-                xxsCols={[1, 9]}
-                lgCols={[1, 5]}
+                xxsCols={[1, 5]}
             />
             <Form.RangeSelect
                 data-testid="input-range-select-grid-long"

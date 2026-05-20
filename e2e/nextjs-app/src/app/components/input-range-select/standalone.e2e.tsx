@@ -14,17 +14,6 @@ export default function Story() {
                 displayValueExtractor={(item) => item.label}
             />
             <InputRangeSelect
-                data-testid="input-range-select-selected"
-                options={OPTIONS}
-                selectedOptions={{
-                    from: OPTIONS.from[0],
-                    to: OPTIONS.to[0],
-                }}
-                valueExtractor={(item) => item.value}
-                listExtractor={(item) => item.label}
-                displayValueExtractor={(item) => item.label}
-            />
-            <InputRangeSelect
                 data-testid="input-range-select-readonly"
                 options={OPTIONS}
                 placeholders={{

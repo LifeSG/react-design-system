@@ -200,6 +200,16 @@ test.describe("InputRangeSelect", () => {
         });
     });
 
+    test.describe("Standalone variants prefilled", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-prefilled");
+        });
+
+        test("All variants", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
     test.describe("Focus states", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("focus-states");
