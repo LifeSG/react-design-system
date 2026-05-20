@@ -77,19 +77,19 @@ export const textIconWrapper = css`
         margin-right: 0.5rem;
     }
 
-    :where([data-type="success"]) & > svg {
+    [data-type="success"] & > svg {
         color: ${Colour["icon-success"]};
     }
 
-    :where([data-type="warning"]) & > svg {
+    [data-type="warning"] & > svg {
         color: ${Colour["icon-warning"]};
     }
 
-    :where([data-type="error"]) & > svg {
+    [data-type="error"] & > svg {
         color: ${Colour["icon-error"]};
     }
 
-    :where([data-type="info"]) & > svg {
+    [data-type="info"] & > svg {
         color: ${Colour["icon-info"]};
     }
 `;
