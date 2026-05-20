@@ -1,9 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
 import { Colour, MediaQuery } from "../theme";
 
-export const Image = styled.img`
+export const image = css`
     width: 9.5rem;
     height: 9.5rem;
     margin: 0 1rem;
@@ -14,7 +13,7 @@ export const Image = styled.img`
     }
 `;
 
-export const MainContainer = styled.div`
+export const mainContainer = css`
     border-top: 1px solid ${Colour.border};
     border-bottom: 1px solid ${Colour.border};
     display: flex;
@@ -29,7 +28,7 @@ export const MainContainer = styled.div`
     }
 `;
 
-export const ChildContainer = styled.div`
+export const childContainer = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -42,7 +41,7 @@ export const ChildContainer = styled.div`
     }
 `;
 
-export const SubmitButton = styled(Button.Default)`
+export const submitButton = css`
     margin-top: 1rem;
     width: 100%;
 `;

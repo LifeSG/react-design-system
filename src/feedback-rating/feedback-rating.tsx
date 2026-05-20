@@ -1,12 +1,10 @@
+import clsx from "clsx";
+
+import { Button } from "../button";
 import { VisuallyHidden } from "../shared/accessibility";
 import { Typography } from "../typography";
 import { useId } from "../util";
-import {
-    ChildContainer,
-    Image,
-    MainContainer,
-    SubmitButton,
-} from "./feedback-rating.styles";
+import * as styles from "./feedback-rating.styles";
 import { FeedbackRatingData } from "./feedback-rating-data";
 import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
 import type { FeedbackRatingProps } from "./types";
@@ -34,13 +32,16 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
     const isSubmitDisabled = !rating;
 
     return (
-        <MainContainer
+        <div
             role="group"
             aria-labelledby={internalId}
-            {...otherProps}
+            className={clsx(styles.mainContainer, otherProps.className)}
+            id={otherProps.id}
+            data-testid={otherProps["data-testid"]}
         >
             {bannerSrc && (
-                <Image
+                <img
+                    className={styles.image}
                     data-testid="feedback-banner-image"
                     src={bannerSrc}
                     alt=""
@@ -49,7 +50,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                     }
                 />
             )}
-            <ChildContainer>
+            <div className={styles.childContainer}>
                 <Typography.HeadingSM as="h2" id={internalId} weight="semibold">
                     {componentDescription}
                 </Typography.HeadingSM>
@@ -62,15 +63,16 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 <VisuallyHidden id={descriptionId}>
                     Minimum, 1 star. Maximum, 5 stars.
                 </VisuallyHidden>
-                <SubmitButton
+                <Button
+                    className={styles.submitButton}
                     disabled={isSubmitDisabled}
                     focusableWhenDisabled
                     onClick={onSubmit}
                     type="button"
                 >
                     {resolvedButtonLabel}
-                </SubmitButton>
-            </ChildContainer>
-        </MainContainer>
+                </Button>
+            </div>
+        </div>
     );
 };
