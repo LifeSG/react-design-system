@@ -23,12 +23,6 @@ class StoryPage extends AbstractStoryPage {
             toastInfo: page.getByTestId("toast-info"),
         };
     }
-
-    public getDismissButton(testId: string) {
-        return this.page
-            .getByTestId(testId)
-            .getByRole("button", { name: "Close notification" });
-    }
 }
 
 const test = base.extend<{ story: StoryPage }>({
