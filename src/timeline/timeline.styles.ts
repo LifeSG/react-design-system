@@ -1,28 +1,20 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Pill } from "../pill";
 import { Colour, Font, MediaQuery, Radius } from "../theme";
 import { Typography } from "../typography";
-import type { Variant } from "./types";
 
 // =============================================================================
-// STYLE INTERFACES, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
+// TOKENS
 // =============================================================================
+export const tokens = {
+    wrapper: {
+        startCol: "--fds-internal-timeline-wrapper-startCol",
+        colSpan: "--fds-internal-timeline-wrapper-colSpan",
+    },
+};
 
-interface TimelineWrapperStyleProps {
-    $startCol?: number | undefined;
-    $colSpan?: number | undefined;
-}
-
-interface VariantStyleProps {
-    $variant: Variant;
-}
-
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-export const CircleIndicator = styled.div<VariantStyleProps>`
+export const CircleIndicator = styled.div`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -30,90 +22,81 @@ export const CircleIndicator = styled.div<VariantStyleProps>`
     height: 1.5rem;
     border-radius: 100%;
 
-    ${(props) => {
-        switch (props.$variant) {
-            case "current":
-                return css`
-                    background-color: ${Colour["icon-primary-subtle"]};
-                `;
-            case "upcoming-active":
-                return css`
-                    border: 4px solid ${Colour["icon-primary-subtle"]};
-                `;
-            case "upcoming-inactive":
-                return css`
-                    border: 4px solid ${Colour["icon-subtle"]};
-                `;
-            case "disabled":
-                return css`
-                    background-color: ${Colour["icon-disabled-subtle"]};
-                `;
-            case "completed":
-                return css`
-                    background-color: ${Colour["icon-success"]};
-                    svg {
-                        color: ${Colour["icon-inverse"]};
-                    }
-                `;
-            case "numeric":
-                return css`
-                    background-color: ${Colour["icon-info"]};
-                    color: ${Colour["text-inverse"]};
-                    font-size: ${Font["body-sm-bold"]};
-                `;
-            case "error":
-                return css`
-                    width: 1.8rem;
-                    height: 1.8rem;
-                    margin: -0.15rem 0 -0.15rem -0.15rem;
+    &.circleIndicatorCurrent {
+        background-color: ${Colour["icon-primary-subtle"]};
+    }
 
-                    svg {
-                        color: ${Colour["icon-error"]};
-                        height: 100%;
-                        width: 100%;
-                    }
-                `;
+    &.circleIndicatorUpcomingActive {
+        border: 4px solid ${Colour["icon-primary-subtle"]};
+    }
+
+    &.circleIndicatorUpcomingInactive {
+        border: 4px solid ${Colour["icon-subtle"]};
+    }
+
+    &.circleIndicatorDisabled {
+        background-color: ${Colour["icon-disabled-subtle"]};
+    }
+
+    &.circleIndicatorCompleted {
+        background-color: ${Colour["icon-success"]};
+
+        svg {
+            color: ${Colour["icon-inverse"]};
         }
-    }}
+    }
+
+    &.circleIndicatorNumeric {
+        background-color: ${Colour["icon-info"]};
+        color: ${Colour["text-inverse"]};
+        font-size: ${Font["body-sm-bold"]};
+    }
+
+    &.circleIndicatorError {
+        width: 1.8rem;
+        height: 1.8rem;
+        margin: -0.15rem 0 -0.15rem -0.15rem;
+
+        svg {
+            color: ${Colour["icon-error"]};
+            height: 100%;
+            width: 100%;
+        }
+    }
 `;
 
-export const LineIndicator = styled.div<VariantStyleProps>`
+export const LineIndicator = styled.div`
     width: 4px;
     flex-grow: 1;
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     border-radius: ${Radius["full"]};
 
-    ${(props) => {
-        switch (props.$variant) {
-            case "current":
-            case "upcoming-active":
-                return css`
-                    background-color: ${Colour["icon-primary-subtle"]};
-                `;
-            case "upcoming-inactive":
-                return css`
-                    background-color: ${Colour["icon-subtle"]};
-                `;
-            case "disabled":
-                return css`
-                    background-color: ${Colour["icon-disabled-subtle"]};
-                `;
-            case "completed":
-                return css`
-                    background-color: ${Colour["icon-success"]};
-                `;
-            case "numeric":
-                return css`
-                    background-color: ${Colour["icon-info"]};
-                `;
-            case "error":
-                return css`
-                    margin-left: -0.15rem;
-                    background-color: ${Colour["icon-error"]};
-                `;
-        }
-    }}
+    &.lineIndicatorCurrent,
+    &.lineIndicatorUpcomingActive {
+        background-color: ${Colour["icon-primary-subtle"]};
+    }
+
+    &.lineIndicatorUpcomingInactive {
+        background-color: ${Colour["icon-subtle"]};
+    }
+
+    &.lineIndicatorDisabled {
+        background-color: ${Colour["icon-disabled-subtle"]};
+    }
+
+    &.lineIndicatorCompleted {
+        background-color: ${Colour["icon-success"]};
+    }
+
+    &.lineIndicatorNumeric {
+        background-color: ${Colour["icon-info"]};
+    }
+
+    &.lineIndicatorError {
+        margin-left: -0.15rem;
+        background-color: ${Colour["icon-error"]};
+    }
 `;
 
 export const TimelineIndicators = styled.div`
@@ -123,9 +106,11 @@ export const TimelineIndicators = styled.div`
     margin-right: 1rem;
 `;
 
-export const TimelineWrapper = styled.div<TimelineWrapperStyleProps>`
-    grid-column: ${(props) => (props.$startCol ? props.$startCol : 3)} / span
-        ${(props) => (props.$colSpan ? props.$colSpan : 8)};
+export const TimelineWrapper = styled.div`
+    ${tokens.wrapper.startCol}: initial;
+    ${tokens.wrapper.colSpan}: initial;
+    grid-column: var(${tokens.wrapper.startCol}, 3) / span
+        var(${tokens.wrapper.colSpan}, 8);
 
     ${MediaQuery.MaxWidth.lg} {
         grid-column: span 8;

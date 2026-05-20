@@ -1,10 +1,51 @@
 import { ExclamationCircleFillIcon, TickIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
+import { useRef } from "react";
 
 import type { PillProps } from "../pill";
 import { VisuallyHidden } from "../shared/accessibility";
+import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import * as styles from "./timeline.styles";
 import type { TimelineItemProps, TimelineProps, Variant } from "./types";
+
+const getCircleIndicatorClass = (variant: Variant): string => {
+    switch (variant) {
+        case "completed":
+            return "circleIndicatorCompleted";
+        case "current":
+            return "circleIndicatorCurrent";
+        case "upcoming-active":
+            return "circleIndicatorUpcomingActive";
+        case "upcoming-inactive":
+            return "circleIndicatorUpcomingInactive";
+        case "disabled":
+            return "circleIndicatorDisabled";
+        case "numeric":
+            return "circleIndicatorNumeric";
+        case "error":
+            return "circleIndicatorError";
+    }
+};
+
+const getLineIndicatorClass = (variant: Variant): string => {
+    switch (variant) {
+        case "completed":
+            return "lineIndicatorCompleted";
+        case "current":
+            return "lineIndicatorCurrent";
+        case "upcoming-active":
+            return "lineIndicatorUpcomingActive";
+        case "upcoming-inactive":
+            return "lineIndicatorUpcomingInactive";
+        case "disabled":
+            return "lineIndicatorDisabled";
+        case "numeric":
+            return "lineIndicatorNumeric";
+        case "error":
+            return "lineIndicatorError";
+    }
+};
 
 export const Timeline = ({
     items,
@@ -18,6 +59,13 @@ export const Timeline = ({
     headingLevel = 2,
     counterOffset = 0,
 }: TimelineProps): JSX.Element => {
+    const wrapperRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(wrapperRef, {
+        [styles.tokens.wrapper.startCol]: startCol,
+        [styles.tokens.wrapper.colSpan]: colSpan,
+    });
+
     // ===========================================================================
     // RENDER
     // ===========================================================================
@@ -122,14 +170,16 @@ export const Timeline = ({
                     <styles.TimelineIndicators>
                         <styles.CircleIndicator
                             data-testid={circleIndicatorTestId}
-                            $variant={variant}
+                            className={getCircleIndicatorClass(variant)}
                         >
                             <VisuallyHidden>
                                 {getStatus(variant, index)}
                             </VisuallyHidden>
                             {renderIcon(variant, index)}
                         </styles.CircleIndicator>
-                        <styles.LineIndicator $variant={variant} />
+                        <styles.LineIndicator
+                            className={getLineIndicatorClass(variant)}
+                        />
                     </styles.TimelineIndicators>
                     <styles.TimelineItemContent className="timeline-item-content">
                         {renderTitle(title, headingLevel + 1)}
@@ -146,11 +196,10 @@ export const Timeline = ({
 
     return (
         <styles.TimelineWrapper
-            className={className}
+            ref={wrapperRef}
+            className={clsx(className)}
             id={id}
             data-testid={testId}
-            $startCol={startCol}
-            $colSpan={colSpan}
         >
             <styles.TimelineTitle
                 forwardedAs="h2"
