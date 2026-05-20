@@ -44,7 +44,7 @@ export const circleIndicatorCompleted = css`
 export const circleIndicatorNumeric = css`
     background-color: ${Colour["icon-info"]};
     color: ${Colour["text-inverse"]};
-    font-size: ${Font["body-sm-bold"]};
+    ${Font["body-sm-bold"]}
 `;
 
 export const circleIndicatorError = css`
