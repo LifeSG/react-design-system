@@ -22,6 +22,7 @@ const CSR_ONLY_COMPONENTS = new Set([
     "input-group",
     "language-switcher",
     "time-slot-bar",
+    "timetable",
 ]);
 
 export default async function Page({
