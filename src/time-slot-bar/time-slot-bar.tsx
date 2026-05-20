@@ -410,6 +410,9 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         const hasContentOnRight =
             scrollPosition + clientWidth < totalScrollableWidth;
         const shouldShowArrow = isLeft ? hasContentOnLeft : hasContentOnRight;
+
+        if (!shouldShowArrow) return null;
+
         const directionClass = isLeft
             ? styles.arrowButtonLeft
             : styles.arrowButtonRight;
@@ -422,8 +425,6 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         ) : (
             <ChevronRightIcon className={styles.arrowIconRight} />
         );
-
-        if (!shouldShowArrow) return null;
 
         return (
             <ClickableIcon
