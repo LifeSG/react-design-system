@@ -1,21 +1,20 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { BasicInput, InputWrapper } from "../shared/input-wrapper";
 import { Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Wrapper = styled.div`
+export const wrapper = css`
     position: relative;
 `;
 
-export const TimeContainer = styled(InputWrapper)`
+export const timeContainer = css`
     height: 3rem;
     gap: ${Spacing["spacing-8"]};
 `;
 
-export const SelectorInput = styled(BasicInput)`
+export const selectorInput = css`
     display: block;
     width: 100%;
     flex: 1;

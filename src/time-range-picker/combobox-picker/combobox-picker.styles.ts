@@ -1,14 +1,13 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { InputWrapper } from "../../shared/input-wrapper";
 import { Spacing } from "../../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const TimeFieldContainer = styled(InputWrapper)`
+export const timeFieldContainer = css`
     height: 3rem;
     gap: ${Spacing["spacing-8"]};
-    // space for clear icon
+    /* space for clear icon */
     padding-right: calc(1.25rem + ${Spacing["spacing-20"]});
 `;
