@@ -209,6 +209,7 @@ test.describe("Filter Checkbox", () => {
             await compareScreenshot(story, "collapsed");
 
             await checkboxNestedViewMoreButton.click();
+            await waitForAnimationEnd(checkboxNested);
             await story.moveMouseAway();
 
             await compareScreenshot(story, "expanded", { fullscreen: true });
@@ -262,6 +263,7 @@ test.describe("Filter Checkbox", () => {
                 await story.init("default", { size: "mobile" });
                 await story.locators.internal.showButton.click();
                 await waitForAnimationEnd(story.locators.internal.modal);
+                await story.waitForItemRendering();
             });
 
             test("Default", async ({ story }) => {
@@ -280,6 +282,7 @@ test.describe("Filter Checkbox", () => {
                 });
                 await story.locators.internal.showButton.click();
                 await waitForAnimationEnd(story.locators.internal.modal);
+                await story.waitForItemRendering();
             });
 
             test("Default (dark mode)", async ({ story }) => {
