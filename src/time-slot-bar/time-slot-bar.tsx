@@ -283,6 +283,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     onClick={isClickable ? onClick : undefined}
                 >
                     <TimeSlot
+                        className={styles.timeSlotItemContent}
                         styleType={styleType}
                         bgColor={backgroundColor}
                         bgColor2={backgroundColor2}
@@ -356,6 +357,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         onClick={handleSlotClick(slot)}
                     >
                         <TimeSlot
+                            className={styles.timeSlotItemContent}
                             styleType={styleType}
                             bgColor={backgroundColor}
                             bgColor2={backgroundColor2}

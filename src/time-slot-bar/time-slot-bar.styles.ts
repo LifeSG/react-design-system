@@ -167,11 +167,11 @@ export const timeSlotItem = css`
     color: var(${tokens.item.color});
     left: var(${tokens.item.left});
     width: var(${tokens.item.width});
+`;
 
-    > * {
-        width: 100%;
-        height: 100%;
-    }
+export const timeSlotItemContent = css`
+    width: 100%;
+    height: 100%;
 `;
 
 export const timeSlotItemDefault = css`
