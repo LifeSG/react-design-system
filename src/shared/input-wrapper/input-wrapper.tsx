@@ -1,4 +1,4 @@
-import { CrossIcon } from "@lifesg/react-icons";
+import { CrossIcon } from "@lifesg/react-icons/cross";
 import clsx from "clsx";
 import { forwardRef } from "react";
 
