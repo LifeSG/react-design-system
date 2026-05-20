@@ -5,6 +5,10 @@
     "main": "dist/cjs/index.js",
     "module": "dist/index.js",
     "typings": "dist/index.d.ts",
+    "engines": {
+        "npm": ">=11.10.0",
+        "node": ">=22.0.0"
+    },
     "bin": {
         "lifesg-react-design-system": "./codemods/run-codemod.js"
     },
