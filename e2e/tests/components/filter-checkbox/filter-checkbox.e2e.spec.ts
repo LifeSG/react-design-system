@@ -345,7 +345,7 @@ test.describe("Filter Checkbox", () => {
 
             test("Nested", async ({ story }) => {
                 await expect(
-                    story.locators.checkboxDefault.getByTestId("toggle-input")
+                    story.locators.checkboxNested.getByTestId("toggle-input")
                 ).toHaveCount(0);
                 await compareScreenshot(story, "mount", { fullscreen: true });
             });
