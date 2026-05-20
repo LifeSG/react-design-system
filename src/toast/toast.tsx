@@ -173,13 +173,14 @@ export const Toast = ({
                 </div>
 
                 {actionButton && (
-                    <Button.Small
+                    <Button
                         className={styles.actionButton}
                         styleType="light"
                         onClick={actionButton.onClick}
+                        sizeType="small"
                     >
                         {actionButton.label}
-                    </Button.Small>
+                    </Button>
                 )}
             </div>
             <ClickableIcon
