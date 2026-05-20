@@ -1,13 +1,42 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { ClickableIcon } from "../shared/clickable-icon";
 import { Border, Colour, Shadow } from "../theme";
 import { Typography } from "../typography";
-import type { Direction, TimeSlotBarVariant } from "./types";
+import type { TimeSlotBarVariant } from "./types";
 
 const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
+
+export const tokens = {
+    item: {
+        width: "--fds-internal-timeSlotBar-item-width",
+        left: "--fds-internal-timeSlotBar-item-left",
+        color: "--fds-internal-timeSlotBar-item-color",
+    },
+    border: {
+        left: "--fds-internal-timeSlotBar-border-left",
+    },
+} as const;
+
+export const containerDefault = "timeSlotBarContainerDefault";
+export const containerMinified = "timeSlotBarContainerMinified";
+
+export const arrowButtonDefault = "timeSlotBarArrowButtonDefault";
+export const arrowButtonMinified = "timeSlotBarArrowButtonMinified";
+export const arrowButtonLeft = "timeSlotBarArrowButtonLeft";
+export const arrowButtonRight = "timeSlotBarArrowButtonRight";
+
+export const timeMarkerDefault = "timeSlotBarTimeMarkerDefault";
+export const timeMarkerMinified = "timeSlotBarTimeMarkerMinified";
+export const timeMarkerLong = "timeSlotBarTimeMarkerLong";
+
+export const timeSlotBorderDefault = "timeSlotBarTimeSlotBorderDefault";
+export const timeSlotBorderMinified = "timeSlotBarTimeSlotBorderMinified";
+
+export const timeSlotItemDefault = "timeSlotBarTimeSlotItemDefault";
+export const timeSlotItemMinified = "timeSlotBarTimeSlotItemMinified";
 
 // =============================================================================
 // STYLING HELPERS
@@ -26,39 +55,16 @@ export const getCellWidth = (variant: TimeSlotBarVariant) => {
 export const getCellHeight = (variant: TimeSlotBarVariant) => {
     return variant === "minified" ? 12 : 40;
 };
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-
-interface ArrowStyleProps {
-    $direction?: Direction;
-    $variant: TimeSlotBarVariant;
-}
-
-interface CellTextStyleProps {
-    $slotWidth: number;
-    $color?: string;
-}
-
-interface TimeMarkerStyleProps {
-    $isLongMarker: boolean;
-    $variant: TimeSlotBarVariant;
-}
-
-// =============================================================================
-// STYLING
-// =============================================================================
 export const Container = styled.div`
     position: relative;
     display: flex;
     align-items: center;
 `;
 
-export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
+export const ArrowButton = styled(ClickableIcon)`
     z-index: 2;
     position: absolute;
-    bottom: ${({ $variant }) => ($variant === "default" ? "0.25rem" : "0rem")};
+    bottom: 0rem;
     background-color: ${Colour.bg};
     box-shadow: ${Shadow["md-strong"]};
     border-radius: 100%;
@@ -66,14 +72,21 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
     width: 2rem;
     height: 2rem;
 
-    ${(props) =>
-        props.$direction === "right"
-            ? css`
-                  right: 0;
-              `
-            : css`
-                  left: 0;
-              `}
+    &.${arrowButtonDefault} {
+        bottom: 0.25rem;
+    }
+
+    &.${arrowButtonMinified} {
+        bottom: 0rem;
+    }
+
+    &.${arrowButtonLeft} {
+        left: 0;
+    }
+
+    &.${arrowButtonRight} {
+        right: 0;
+    }
 
     > div {
         display: flex;
@@ -97,14 +110,18 @@ export const ArrowIconLeft = styled(ChevronLeftIcon)`
     color: ${Colour["icon-primary"]};
 `;
 
-export const TimeSlotBarContainer = styled.div<{
-    $variant: TimeSlotBarVariant;
-}>`
+export const TimeSlotBarContainer = styled.div`
     overflow: hidden;
     flex-grow: 1;
     position: relative;
-    height: ${({ $variant }) =>
-        `${MAX_LINE_HEIGHT * 16 + getCellHeight($variant)}px`};
+
+    &.${containerDefault} {
+        height: ${MAX_LINE_HEIGHT * 16 + getCellHeight("default")}px;
+    }
+
+    &.${containerMinified} {
+        height: ${MAX_LINE_HEIGHT * 16 + getCellHeight("minified")}px;
+    }
 `;
 
 export const TimeMarkerWrapper = styled.div`
@@ -118,27 +135,24 @@ export const TimeSlotWrapper = styled.div`
     white-space: nowrap;
 `;
 
-export const TimeMarker = styled.div<TimeMarkerStyleProps>`
+export const TimeMarker = styled.div`
     display: inline-block;
-    width: ${({ $variant }) => `${getCellWidth($variant)}px`};
     position: relative;
     border-left: ${Border["width-010"]} ${Border.solid}
         ${Colour["border-stronger"]};
-    ${(props) => {
-        let markerHeight = 0;
 
-        switch (props.$variant) {
-            case "default":
-                markerHeight = props.$isLongMarker ? MAX_LINE_HEIGHT : 0.625;
-                break;
-            case "minified":
-                markerHeight = props.$isLongMarker ? MAX_LINE_HEIGHT : 0;
-                break;
-        }
+    &.${timeMarkerDefault} {
+        width: ${getCellWidth("default")}px;
+        height: 0.625rem;
+    }
 
-        return css`
-            height: ${markerHeight}rem;
-        `;
+    &.${timeMarkerMinified} {
+        width: ${getCellWidth("minified")}px;
+        height: 0rem;
+    }
+
+    &.${timeMarkerLong} {
+        height: ${MAX_LINE_HEIGHT}rem;
     }}
 `;
 
@@ -149,17 +163,25 @@ export const TimeLabel = styled(Typography.BodyXS)`
     left: 10%;
 `;
 
-export const TimeSlotBorder = styled.div<{ $variant: TimeSlotBarVariant }>`
+export const TimeSlotBorder = styled.div`
     position: absolute;
     top: ${MAX_LINE_HEIGHT}rem;
-    height: ${({ $variant }) => `${getCellHeight($variant)}px`};
     z-index: 1;
+    left: var(${tokens.border.left});
     border-right: ${Border["width-010"]} ${Border.solid}
         ${Colour["border-stronger"]};
+
+    &.${timeSlotBorderDefault} {
+        height: ${getCellHeight("default")}px;
+    }
+
+    &.${timeSlotBorderMinified} {
+        height: ${getCellHeight("minified")}px;
+    }
 `;
 
-export const CellText = styled(Typography.BodyXS)<CellTextStyleProps>`
-    color: ${(props) => props.$color || Colour.text};
+export const CellText = styled(Typography.BodyXS)`
+    color: var(${tokens.item.color}, ${Colour.text});
     position: absolute;
     bottom: 0;
     padding-left: 4px;
@@ -170,24 +192,21 @@ export const CellText = styled(Typography.BodyXS)<CellTextStyleProps>`
     text-overflow: ellipsis;
 `;
 
-// =============================================================================
-// STYLED TIME SLOT COMPONENTS
-// =============================================================================
-
-interface TimeSlotWrapperProps {
-    $variant: TimeSlotBarVariant;
-    $slotWidth?: number;
-    $slotOffset?: number;
-}
-
-export const StyledTimeSlotItem = styled.div<TimeSlotWrapperProps>`
+export const StyledTimeSlotItem = styled.div`
     position: absolute;
-    height: ${({ $variant }) => `${getCellHeight($variant)}px`};
-    width: ${({ $slotWidth }) => `${$slotWidth}px`};
-    left: ${({ $slotOffset }) => `${$slotOffset}px`};
+    left: var(${tokens.item.left});
+    width: var(${tokens.item.width});
 
     > * {
         width: 100%;
         height: 100%;
+    }
+
+    &.${timeSlotItemDefault} {
+        height: ${getCellHeight("default")}px;
+    }
+
+    &.${timeSlotItemMinified} {
+        height: ${getCellHeight("minified")}px;
     }
 `;
