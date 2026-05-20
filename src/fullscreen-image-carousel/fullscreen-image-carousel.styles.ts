@@ -398,10 +398,10 @@ export const fileInfoTextWrapper = css`
         ${Font.Spec["body-lh-baseline"]} + ${Spacing["spacing-8"]} +
             ${Font.Spec["body-lh-md"]}
     );
+`;
 
-    &.fileInfoTextWrapperCentered {
-        justify-content: center;
-    }
+export const fileInfoTextWrapperCentered = css`
+    justify-content: center;
 `;
 
 export const fileInfoFileName = css`

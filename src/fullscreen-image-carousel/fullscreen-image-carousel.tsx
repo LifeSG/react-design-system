@@ -27,7 +27,7 @@ import { ModalV2 } from "../modal-v2";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { useStateCallback } from "../shared/hooks";
 import { ImagePlaceholder } from "../shared/image-placeholder";
-import { useApplyStyle } from "../theme";
+import { formatUnitValue, useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import { useEventListener } from "../util";
 import * as styles from "./fullscreen-image-carousel.styles";
@@ -96,33 +96,39 @@ export const Component = (
     );
 
     useApplyStyle(topActionButtonsRef, {
-        [styles.tokens.topActionButtons.insetTop]: insets?.top
-            ? `${insets.top}px`
-            : undefined,
-        [styles.tokens.topActionButtons.insetLeft]: insets?.left
-            ? `${insets.left}px`
-            : undefined,
-        [styles.tokens.topActionButtons.insetRight]: insets?.right
-            ? `${insets.right}px`
-            : undefined,
+        [styles.tokens.topActionButtons.insetTop]: formatUnitValue(
+            insets?.top,
+            "px"
+        ),
+        [styles.tokens.topActionButtons.insetLeft]: formatUnitValue(
+            insets?.left,
+            "px"
+        ),
+        [styles.tokens.topActionButtons.insetRight]: formatUnitValue(
+            insets?.right,
+            "px"
+        ),
     });
 
     useApplyStyle(prevArrowButtonRef, {
-        [styles.tokens.arrowButton.insetLeft]: insets?.left
-            ? `${insets.left}px`
-            : undefined,
+        [styles.tokens.arrowButton.insetLeft]: formatUnitValue(
+            insets?.left,
+            "px"
+        ),
     });
 
     useApplyStyle(nextArrowButtonRef, {
-        [styles.tokens.arrowButton.insetRight]: insets?.right
-            ? `${insets.right}px`
-            : undefined,
+        [styles.tokens.arrowButton.insetRight]: formatUnitValue(
+            insets?.right,
+            "px"
+        ),
     });
 
     useApplyStyle(thumbnailContainerRef, {
-        [styles.tokens.thumbnailContainer.insetBottom]: insets?.bottom
-            ? `${insets.bottom}px`
-            : undefined,
+        [styles.tokens.thumbnailContainer.insetBottom]: formatUnitValue(
+            insets?.bottom,
+            "px"
+        ),
     });
 
     const getItemAriaLabel = useCallback(
@@ -398,7 +404,7 @@ export const Component = (
             <div
                 className={clsx(
                     styles.fileInfoTextWrapper,
-                    !trimmedSize && "fileInfoTextWrapperCentered"
+                    !trimmedSize && styles.fileInfoTextWrapperCentered
                 )}
                 aria-live="polite"
                 aria-atomic="true"
