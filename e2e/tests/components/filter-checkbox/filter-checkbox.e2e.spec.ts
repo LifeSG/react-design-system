@@ -64,7 +64,14 @@ class StoryPage extends AbstractStoryPage {
     }
 
     async waitForItemRendering() {
-        await this.page.waitForTimeout(1000); // wait for items to fill up minimised space
+        const filterItems = this.locators.internal.modal.getByTestId(
+            "expandable-container"
+        );
+        const count = await filterItems.count();
+
+        for (let i = 0; i < count; i += 1) {
+            await waitForAnimationEnd(filterItems.nth(i));
+        }
     }
 }
 
