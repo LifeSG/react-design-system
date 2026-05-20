@@ -3,8 +3,8 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import styled, { css } from "styled-components";
 
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Border, Colour, Shadow } from "../theme";
 import { Typography } from "../typography";
-import { V3_Border, V3_Colour, V3_Shadow } from "../v3_theme";
 import type { Direction, TimeSlotBarVariant } from "./types";
 
 const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
@@ -24,11 +24,7 @@ export const getCellWidth = (variant: TimeSlotBarVariant) => {
 
 // Function to get the height of a cell in px
 export const getCellHeight = (variant: TimeSlotBarVariant) => {
-    if (variant === "minified") {
-        return 12;
-    } else {
-        return 40;
-    }
+    return variant === "minified" ? 12 : 40;
 };
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -63,8 +59,8 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
     z-index: 2;
     position: absolute;
     bottom: ${({ $variant }) => ($variant === "default" ? "0.25rem" : "0rem")};
-    background-color: ${V3_Colour.bg};
-    box-shadow: ${V3_Shadow["md-strong"]};
+    background-color: ${Colour.bg};
+    box-shadow: ${Shadow["md-strong"]};
     border-radius: 100%;
     padding: 0.5rem;
     width: 2rem;
@@ -93,12 +89,12 @@ export const ArrowButton = styled(ClickableIcon)<ArrowStyleProps>`
 export const ArrowIconRight = styled(ChevronRightIcon)`
     width: 1rem;
     height: 1rem;
-    color: ${V3_Colour["icon-primary"]};
+    color: ${Colour["icon-primary"]};
 `;
 
 export const ArrowIconLeft = styled(ChevronLeftIcon)`
     font-size: 1rem;
-    color: ${V3_Colour["icon-primary"]};
+    color: ${Colour["icon-primary"]};
 `;
 
 export const TimeSlotBarContainer = styled.div<{
@@ -126,8 +122,8 @@ export const TimeMarker = styled.div<TimeMarkerStyleProps>`
     display: inline-block;
     width: ${({ $variant }) => `${getCellWidth($variant)}px`};
     position: relative;
-    border-left: ${V3_Border["width-010"]} ${V3_Border.solid}
-        ${V3_Colour["border-stronger"]};
+    border-left: ${Border["width-010"]} ${Border.solid}
+        ${Colour["border-stronger"]};
     ${(props) => {
         let markerHeight = 0;
 
@@ -138,9 +134,6 @@ export const TimeMarker = styled.div<TimeMarkerStyleProps>`
             case "minified":
                 markerHeight = props.$isLongMarker ? MAX_LINE_HEIGHT : 0;
                 break;
-            default:
-                markerHeight = 0;
-                break;
         }
 
         return css`
@@ -150,7 +143,7 @@ export const TimeMarker = styled.div<TimeMarkerStyleProps>`
 `;
 
 export const TimeLabel = styled(Typography.BodyXS)`
-    color: ${V3_Colour["text-subtle"]};
+    color: ${Colour["text-subtle"]};
     position: absolute;
     bottom: 10%;
     left: 10%;
@@ -161,12 +154,12 @@ export const TimeSlotBorder = styled.div<{ $variant: TimeSlotBarVariant }>`
     top: ${MAX_LINE_HEIGHT}rem;
     height: ${({ $variant }) => `${getCellHeight($variant)}px`};
     z-index: 1;
-    border-right: ${V3_Border["width-010"]} ${V3_Border.solid}
-        ${V3_Colour["border-stronger"]};
+    border-right: ${Border["width-010"]} ${Border.solid}
+        ${Colour["border-stronger"]};
 `;
 
 export const CellText = styled(Typography.BodyXS)<CellTextStyleProps>`
-    color: ${(props) => props.$color || V3_Colour.text(props)};
+    color: ${(props) => props.$color || Colour.text};
     position: absolute;
     bottom: 0;
     padding-left: 4px;
