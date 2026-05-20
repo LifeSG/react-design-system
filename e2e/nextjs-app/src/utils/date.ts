@@ -59,6 +59,11 @@ export const applyE2EDateMock = (
 ) => {
     const nativeDate = initializeNativeDate(globalObj);
     const fixed = new nativeDate(seed).getTime();
+
+    if (Number.isNaN(fixed)) {
+        return;
+    }
+
     const MockDate = createMockDate(nativeDate, fixed);
 
     globalObj.__E2E_ACTIVE_DATE_SEED__ = seed;

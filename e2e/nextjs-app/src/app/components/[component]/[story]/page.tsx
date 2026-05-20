@@ -1,8 +1,10 @@
 import dynamic from "next/dynamic";
+import { after } from "next/server";
 import {
     applyE2EDateMock,
+    initializeNativeDate,
     type E2EDateMockGlobal,
-} from "../../../../utils/date";
+} from "@/utils/date";
 
 /**
  * Components that must be rendered client-side only to avoid hydration mismatches.
@@ -33,14 +35,26 @@ export default async function Page({
 }>) {
     const { component, story } = await params;
     const { now } = await searchParams;
+    const globalObj = globalThis as typeof globalThis & E2EDateMockGlobal;
+    const nativeDate = initializeNativeDate(globalObj);
 
     // Extract timestamp seed from query params for deterministic time-based rendering
     const nowSeed = Array.isArray(now) ? now[0] : now;
 
-    // Mock Date on server-side during SSR if timestamp seed is provided.
-    // This ensures server-rendered components use the same time as client hydration.
     if (nowSeed !== undefined) {
-        applyE2EDateMock(nowSeed, globalThis as E2EDateMockGlobal);
+        // Ensure a stale mock from a prior request is always cleared first.
+        globalObj.Date = nativeDate;
+        globalObj.__E2E_ACTIVE_DATE_SEED__ = undefined;
+
+        applyE2EDateMock(nowSeed, globalObj);
+
+        if (globalObj.Date !== nativeDate) {
+            // Restore native Date after this request finishes streaming.
+            after(() => {
+                globalObj.Date = nativeDate;
+                globalObj.__E2E_ACTIVE_DATE_SEED__ = undefined;
+            });
+        }
     }
 
     const Story = dynamic(
@@ -50,5 +64,19 @@ export default async function Page({
         }
     );
 
-    return <Story />;
+    const activeSeed = globalObj.__E2E_ACTIVE_DATE_SEED__ ?? "";
+    const isDateMocked = globalObj.Date !== nativeDate;
+
+    return (
+        <>
+            <div
+                data-testid="e2e-active-date-seed"
+                data-date-mocked={String(isDateMocked)}
+                className={"hidden"}
+            >
+                {activeSeed}
+            </div>
+            <Story />
+        </>
+    );
 }
