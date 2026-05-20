@@ -1,4 +1,3 @@
-import { CrossIcon } from "@lifesg/react-icons/cross";
 import clsx from "clsx";
 import type React from "react";
 import { useEffect, useMemo, useRef, useState } from "react";
@@ -12,7 +11,6 @@ import {
     ValueLabel,
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { ClearButton, InputWrapper } from "../shared/input-wrapper";
-import * as inputWrapperStyles from "../shared/input-wrapper/input-wrapper.styles";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
@@ -357,12 +355,7 @@ export const InputRangeSelect = <T, V>({
                             type="button"
                             aria-label="Clear"
                             className={styles.clearIconContainer}
-                        >
-                            <CrossIcon
-                                className={inputWrapperStyles.clearIcon}
-                                aria-hidden
-                            />
-                        </ClearButton>
+                        />
                     )}
             </InputWrapper>
         );

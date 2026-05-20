@@ -1,3 +1,4 @@
+import { CrossIcon } from "@lifesg/react-icons";
 import clsx from "clsx";
 import { forwardRef } from "react";
 
@@ -125,7 +126,9 @@ export const ClearButton = forwardRef<HTMLButtonElement, BasicButtonProps>(
                 ref={ref}
                 className={clsx(styles.clearButton, className)}
                 {...props}
-            />
+            >
+                <CrossIcon className={styles.clearIcon} aria-hidden />
+            </button>
         );
     }
 );
