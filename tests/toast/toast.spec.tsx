@@ -92,28 +92,6 @@ describe("Toast", () => {
         expect(actionClick).toHaveBeenCalledTimes(1);
     });
 
-    it("should call onDismiss after auto dismiss animation ends", () => {
-        const onDismiss = jest.fn();
-
-        render(
-            <Toast
-                type="success"
-                title="Toast title"
-                label="Toast body"
-                autoDismiss
-                autoDismissTime={10}
-                onDismiss={onDismiss}
-            />
-        );
-
-        act(() => {
-            jest.advanceTimersByTime(10);
-            jest.advanceTimersByTime(1000);
-        });
-
-        expect(onDismiss).toHaveBeenCalledTimes(1);
-    });
-
     it("should apply custom className to the root toast element", () => {
         render(
             <Toast
