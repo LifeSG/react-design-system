@@ -17,7 +17,7 @@ import { ClickableIcon } from "../shared/clickable-icon";
 import { TimeSlot } from "../shared/time-slot";
 import { Typography } from "../typography";
 import { TimeHelper } from "../util/time-helper";
-import { getVariantClass, TimeSlotBarHelper } from "./helper";
+import { getCellWidth, TimeSlotBarHelper } from "./helper";
 import * as styles from "./time-slot-bar.styles";
 import TimeSlotDivider from "./time-slot-divider";
 import TimeSlotItem from "./time-slot-item";
@@ -51,7 +51,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     const barRef = useRef<HTMLDivElement>(null);
     const [scrollPosition, setScrollPosition] = useState<number>(0);
     const [clientWidth, setClientWidth] = useState<number>(0);
-    const cellWidth = styles.getCellWidth(variant);
+    const cellWidth = getCellWidth(variant);
 
     const adjustedStartTime = TimeSlotBarHelper.adjustTimeForMarker(
         startTime,
@@ -229,11 +229,9 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     key={currentTime.format("HH:mm")}
                     className={clsx(
                         styles.timeMarker,
-                        getVariantClass(
-                            variant,
-                            styles.timeMarkerDefault,
-                            styles.timeMarkerMinified
-                        ),
+                        variant === "default"
+                            ? styles.timeMarkerDefault
+                            : styles.timeMarkerMinified,
                         displayLongTimeMarker && styles.timeMarkerLong
                     )}
                 >
@@ -412,12 +410,10 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         tabIndex={-1}
                         className={clsx(
                             styles.arrowButton,
-                            getVariantClass(
-                                variant,
-                                styles.arrowButtonDefault,
-                                styles.arrowButtonMinified
-                            ),
-                            styles.arrowButtonLeft
+                            styles.arrowButtonLeft,
+                            variant === "default"
+                                ? styles.arrowButtonDefault
+                                : styles.arrowButtonMinified
                         )}
                         focusHighlight={false}
                         focusOutline="none"
@@ -449,12 +445,10 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     tabIndex={-1}
                     className={clsx(
                         styles.arrowButton,
-                        getVariantClass(
-                            variant,
-                            styles.arrowButtonDefault,
-                            styles.arrowButtonMinified
-                        ),
-                        styles.arrowButtonRight
+                        styles.arrowButtonRight,
+                        variant === "default"
+                            ? styles.arrowButtonDefault
+                            : styles.arrowButtonMinified
                     )}
                     focusHighlight={false}
                     focusOutline="none"
@@ -475,10 +469,11 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             <div
                 data-testid={testId}
                 ref={barRef}
-                className={getVariantClass(
-                    variant,
-                    clsx(styles.timeSlotBarContainer, styles.containerDefault),
-                    clsx(styles.timeSlotBarContainer, styles.containerMinified)
+                className={clsx(
+                    styles.timeSlotBarContainer,
+                    variant === "default"
+                        ? styles.containerDefault
+                        : styles.containerMinified
                 )}
             >
                 <div

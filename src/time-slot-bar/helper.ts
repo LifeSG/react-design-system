@@ -3,6 +3,7 @@ import customParseFormat from "dayjs/plugin/customParseFormat";
 
 import { DateHelper, SimpleIdGenerator, StringHelper } from "../util";
 import { TimeHelper } from "../util/time-helper";
+import * as styles from "./time-slot-bar.styles";
 import type { TimeSlot as TTimeSlot, TimeSlotBarVariant } from "./types";
 // Load plugins
 dayjs.extend(customParseFormat);
@@ -234,10 +235,9 @@ export class TimeSlotBarHelper {
     }
 }
 
-export const getVariantClass = (
-    variant: TimeSlotBarVariant,
-    defaultClassName: string,
-    minifiedClassName: string
-) => {
-    return variant === "default" ? defaultClassName : minifiedClassName;
+// Function to get the width of a cell in px
+export const getCellWidth = (variant: TimeSlotBarVariant) => {
+    return variant === "minified"
+        ? styles.MINIFIED_CELL_SIZE
+        : styles.DEFAULT_CELL_SIZE;
 };

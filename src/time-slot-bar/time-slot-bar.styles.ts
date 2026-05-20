@@ -1,9 +1,10 @@
 import { css } from "@linaria/core";
 
 import { Border, Colour, Shadow } from "../theme";
-import type { TimeSlotBarVariant } from "./types";
 
 const MAX_LINE_HEIGHT = 1.25; // NOTE in rem
+export const DEFAULT_CELL_SIZE = 40;
+export const MINIFIED_CELL_SIZE = 12;
 
 export const tokens = {
     item: {
@@ -15,24 +16,6 @@ export const tokens = {
         left: "--fds-internal-timeSlotBar-border-left",
     },
 } as const;
-
-// =============================================================================
-// STYLING HELPERS
-// =============================================================================
-
-// Function to get the width of a cell in px
-export const getCellWidth = (variant: TimeSlotBarVariant) => {
-    if (variant === "minified") {
-        return 12;
-    } else {
-        return 40;
-    }
-};
-
-// Function to get the height of a cell in px
-export const getCellHeight = (variant: TimeSlotBarVariant) => {
-    return variant === "minified" ? 12 : 40;
-};
 
 export const container = css`
     position: relative;
@@ -96,11 +79,11 @@ export const timeSlotBarContainer = css`
 `;
 
 export const containerDefault = css`
-    height: ${MAX_LINE_HEIGHT * 16 + getCellHeight("default")}px;
+    height: ${MAX_LINE_HEIGHT * 16 + DEFAULT_CELL_SIZE}px;
 `;
 
 export const containerMinified = css`
-    height: ${MAX_LINE_HEIGHT * 16 + getCellHeight("minified")}px;
+    height: ${MAX_LINE_HEIGHT * 16 + MINIFIED_CELL_SIZE}px;
 `;
 
 export const timeMarkerWrapper = css`
@@ -122,12 +105,12 @@ export const timeMarker = css`
 `;
 
 export const timeMarkerDefault = css`
-    width: ${getCellWidth("default")}px;
+    width: ${DEFAULT_CELL_SIZE}px;
     height: 0.625rem;
 `;
 
 export const timeMarkerMinified = css`
-    width: ${getCellWidth("minified")}px;
+    width: ${MINIFIED_CELL_SIZE}px;
     height: 0rem;
 `;
 
@@ -155,11 +138,11 @@ export const timeSlotBorder = css`
 `;
 
 export const timeSlotBorderDefault = css`
-    height: ${getCellHeight("default")}px;
+    height: ${DEFAULT_CELL_SIZE}px;
 `;
 
 export const timeSlotBorderMinified = css`
-    height: ${getCellHeight("minified")}px;
+    height: ${MINIFIED_CELL_SIZE}px;
 `;
 
 export const cellText = css`
@@ -190,9 +173,9 @@ export const timeSlotItem = css`
 `;
 
 export const timeSlotItemDefault = css`
-    height: ${getCellHeight("default")}px;
+    height: ${DEFAULT_CELL_SIZE}px;
 `;
 
 export const timeSlotItemMinified = css`
-    height: ${getCellHeight("minified")}px;
+    height: ${MINIFIED_CELL_SIZE}px;
 `;

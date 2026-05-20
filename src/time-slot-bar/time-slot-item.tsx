@@ -2,7 +2,6 @@ import clsx from "clsx";
 import { type MouseEvent, useRef } from "react";
 
 import { Colour, useApplyStyle } from "../theme";
-import { getVariantClass } from "./helper";
 import * as styles from "./time-slot-bar.styles";
 import type { TimeSlotBarVariant } from "./types";
 
@@ -37,10 +36,11 @@ const TimeSlotItem = ({
         <div
             ref={itemRef}
             data-testid={dataTestId}
-            className={getVariantClass(
-                variant,
-                clsx(styles.timeSlotItem, styles.timeSlotItemDefault),
-                clsx(styles.timeSlotItem, styles.timeSlotItemMinified)
+            className={clsx(
+                styles.timeSlotItem,
+                variant === "default"
+                    ? styles.timeSlotItemDefault
+                    : styles.timeSlotItemMinified
             )}
             onClick={onClick}
         >

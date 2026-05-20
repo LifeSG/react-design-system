@@ -2,7 +2,6 @@ import clsx from "clsx";
 import { useRef } from "react";
 
 import { useApplyStyle } from "../theme";
-import { getVariantClass } from "./helper";
 import * as styles from "./time-slot-bar.styles";
 import type { TimeSlotBarVariant } from "./types";
 
@@ -28,10 +27,11 @@ const TimeSlotDivider = ({
         <div
             ref={dividerRef}
             data-testid={dataTestId}
-            className={getVariantClass(
-                variant,
-                clsx(styles.timeSlotBorder, styles.timeSlotBorderDefault),
-                clsx(styles.timeSlotBorder, styles.timeSlotBorderMinified)
+            className={clsx(
+                styles.timeSlotBorder,
+                variant === "default"
+                    ? styles.timeSlotBorderDefault
+                    : styles.timeSlotBorderMinified
             )}
         />
     );
