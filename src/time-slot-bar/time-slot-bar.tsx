@@ -399,69 +399,51 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         });
     };
 
-    const renderArrowButtonLeft = () => {
-        return (
-            <>
-                {/* Show the left ArrowButton when the scroll position is greater than 0 */}
-                {scrollPosition > 0 && (
-                    <ClickableIcon
-                        data-testid={getDataTestId("arrow-left")}
-                        aria-hidden
-                        tabIndex={-1}
-                        className={clsx(
-                            styles.arrowButton,
-                            styles.arrowButtonLeft,
-                            variant === "default"
-                                ? styles.arrowButtonDefault
-                                : styles.arrowButtonMinified
-                        )}
-                        focusHighlight={false}
-                        focusOutline="none"
-                        onClick={() => {
-                            handleArrowButtonClick("left");
-                        }}
-                    >
-                        <ChevronLeftIcon className={styles.arrowIconLeft} />
-                    </ClickableIcon>
-                )}
-            </>
+    const renderArrowButton = (direction: Direction) => {
+        const isLeft = direction === "left";
+        const totalScrollableWidth = TimeSlotBarHelper.calculateWidth(
+            adjustedStartTime,
+            adjustedEndTime,
+            cellWidth
         );
-    };
+        const hasContentOnLeft = scrollPosition > 0;
+        const hasContentOnRight =
+            scrollPosition + clientWidth < totalScrollableWidth;
+        const shouldShowArrow = isLeft ? hasContentOnLeft : hasContentOnRight;
+        const directionClass = isLeft
+            ? styles.arrowButtonLeft
+            : styles.arrowButtonRight;
+        const variantClass =
+            variant === "default"
+                ? styles.arrowButtonDefault
+                : styles.arrowButtonMinified;
+        const arrowIcon = isLeft ? (
+            <ChevronLeftIcon className={styles.arrowIconLeft} />
+        ) : (
+            <ChevronRightIcon className={styles.arrowIconRight} />
+        );
 
-    const renderArrowButtonRight = () => {
-        // Show the right ArrowButton when the scroll position is less than the maximum possible scroll value
-        if (
-            scrollPosition + clientWidth <
-            TimeSlotBarHelper.calculateWidth(
-                adjustedStartTime,
-                adjustedEndTime,
-                cellWidth
-            )
-        ) {
-            return (
-                <ClickableIcon
-                    data-testid={getDataTestId("arrow-right")}
-                    aria-hidden
-                    tabIndex={-1}
-                    className={clsx(
-                        styles.arrowButton,
-                        styles.arrowButtonRight,
-                        variant === "default"
-                            ? styles.arrowButtonDefault
-                            : styles.arrowButtonMinified
-                    )}
-                    focusHighlight={false}
-                    focusOutline="none"
-                    onClick={() => {
-                        handleArrowButtonClick("right");
-                    }}
-                >
-                    <ChevronRightIcon className={styles.arrowIconRight} />
-                </ClickableIcon>
-            );
-        }
+        if (!shouldShowArrow) return null;
 
-        return <></>;
+        return (
+            <ClickableIcon
+                data-testid={getDataTestId(`arrow-${direction}`)}
+                aria-hidden
+                tabIndex={-1}
+                className={clsx(
+                    styles.arrowButton,
+                    directionClass,
+                    variantClass
+                )}
+                focusHighlight={false}
+                focusOutline="none"
+                onClick={() => {
+                    handleArrowButtonClick(direction);
+                }}
+            >
+                {arrowIcon}
+            </ClickableIcon>
+        );
     };
 
     return (
@@ -495,8 +477,8 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                     </div>
                 </div>
             </div>
-            {renderArrowButtonLeft()}
-            {renderArrowButtonRight()}
+            {renderArrowButton("left")}
+            {renderArrowButton("right")}
         </div>
     );
 };
