@@ -1,11 +1,10 @@
 "use client";
 
 import { DateRangeInput } from "@lifesg/react-design-system/date-range-input";
-import styles from "./date-range-input.module.css";
 
 export default function Story() {
     return (
-        <div className={styles.story}>
+        <div className="story-background">
             <DateRangeInput
                 data-testid="date-range-input"
                 disabled

@@ -14,6 +14,14 @@ class StoryPage extends AbstractStoryPage {
         selectedEnd: Locator;
         startField: Locator;
         endField: Locator;
+        defaultFormInput: Locator;
+        disabledFormInput: Locator;
+        readonlyFormInput: Locator;
+        errorFormInput: Locator;
+        defaultInput: Locator;
+        disabledInput: Locator;
+        readonlyInput: Locator;
+        errorInput: Locator;
     };
 
     constructor(page: Page) {
@@ -32,6 +40,14 @@ class StoryPage extends AbstractStoryPage {
             endField: page.locator(
                 '[data-id="range-container-elem2-container"]'
             ),
+            defaultFormInput: page.getByRole("group", { name: "Default" }),
+            disabledFormInput: page.getByRole("group", { name: "Disabled" }),
+            readonlyFormInput: page.getByRole("group", { name: "Readonly" }),
+            errorFormInput: page.getByRole("group", { name: "Error" }),
+            defaultInput: page.getByTestId("date-range-input-default"),
+            disabledInput: page.getByTestId("date-range-input-disabled"),
+            readonlyInput: page.getByTestId("date-range-input-readonly"),
+            errorInput: page.getByTestId("date-range-input-error"),
         };
     }
 
@@ -73,6 +89,350 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("DateRangeInput", () => {
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants");
+        });
+
+        test("Form.DateRangeInput variants", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+
+            await expect(story.locators.defaultFormInput).toMatchAriaSnapshot(`
+                - group "Default":
+                  - group:
+                    - textbox "Start Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Start Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Start Year":
+                      - /placeholder: YYYY
+                  - group:
+                    - textbox "End Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "End Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "End Year":
+                      - /placeholder: YYYY
+            `);
+            await expect(story.locators.disabledFormInput).toMatchAriaSnapshot(`
+                - group "Disabled" [disabled]:
+                  - group:
+                    - textbox "Start Date" [disabled]:
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Start Month" [disabled]:
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Start Year" [disabled]:
+                      - /placeholder: YYYY
+                  - group:
+                    - textbox "End Date" [disabled]:
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "End Month" [disabled]:
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "End Year" [disabled]:
+                      - /placeholder: YYYY
+            `);
+            await expect(story.locators.readonlyFormInput).toMatchAriaSnapshot(`
+                - group "Readonly":
+                  - group:
+                    - textbox "Start Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Start Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Start Year":
+                      - /placeholder: YYYY
+                  - group:
+                    - textbox "End Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "End Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "End Year":
+                      - /placeholder: YYYY
+            `);
+            await expect(story.locators.errorFormInput).toMatchAriaSnapshot(`
+                - group "Error":
+                  - group:
+                    - textbox "Start Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "Start Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "Start Year":
+                      - /placeholder: YYYY
+                  - group:
+                    - textbox "End Date":
+                      - /placeholder: DD
+                    - text: /
+                    - textbox "End Month":
+                      - /placeholder: MM
+                    - text: /
+                    - textbox "End Year":
+                      - /placeholder: YYYY
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", {
+                size: "mobile",
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Form.DateRangeInput variants (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+
+        test("Form.DateRangeInput calendar open (mobile)", async ({
+            story,
+        }) => {
+            await story.locators.defaultFormInput.click();
+            await expect(story.locators.calendarContainer).toBeVisible();
+
+            await compareScreenshot(story, "calendar-open", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", { mode: "dark" });
+        });
+
+        test("Form.DateRangeInput variants (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants-prefilled");
+        });
+
+        test("Form.DateRangeInput variants prefilled", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+
+            await expect(story.locators.defaultFormInput).toMatchAriaSnapshot(`
+                - group "Default":
+                  - group:
+                    - textbox "Start Date":
+                      - /placeholder: DD
+                      - text: "10"
+                    - text: /
+                    - textbox "Start Month":
+                      - /placeholder: MM
+                      - text: "04"
+                    - text: /
+                    - textbox "Start Year":
+                      - /placeholder: YYYY
+                      - text: "2026"
+                  - group:
+                    - textbox "End Date":
+                      - /placeholder: DD
+                      - text: "16"
+                    - text: /
+                    - textbox "End Month":
+                      - /placeholder: MM
+                      - text: "04"
+                    - text: /
+                    - textbox "End Year":
+                      - /placeholder: YYYY
+                      - text: "2026"
+            `);
+            await expect(story.locators.disabledFormInput).toMatchAriaSnapshot(`
+                - group "Disabled" [disabled]:
+                  - group:
+                    - textbox "Start Date" [disabled]:
+                      - /placeholder: DD
+                      - text: "10"
+                    - text: /
+                    - textbox "Start Month" [disabled]:
+                      - /placeholder: MM
+                      - text: "04"
+                    - text: /
+                    - textbox "Start Year" [disabled]:
+                      - /placeholder: YYYY
+                      - text: "2026"
+                  - group:
+                    - textbox "End Date" [disabled]:
+                      - /placeholder: DD
+                      - text: "16"
+                    - text: /
+                    - textbox "End Month" [disabled]:
+                      - /placeholder: MM
+                      - text: "04"
+                    - text: /
+                    - textbox "End Year" [disabled]:
+                      - /placeholder: YYYY
+                      - text: "2026"
+            `);
+            await expect(story.locators.readonlyFormInput).toMatchAriaSnapshot(`
+                - group "Readonly":
+                  - group:
+                    - textbox "Start Date":
+                      - /placeholder: DD
+                      - text: "10"
+                    - text: /
+                    - textbox "Start Month":
+                      - /placeholder: MM
+                      - text: "04"
+                    - text: /
+                    - textbox "Start Year":
+                      - /placeholder: YYYY
+                      - text: "2026"
+                  - group:
+                    - textbox "End Date":
+                      - /placeholder: DD
+                      - text: "16"
+                    - text: /
+                    - textbox "End Month":
+                      - /placeholder: MM
+                      - text: "04"
+                    - text: /
+                    - textbox "End Year":
+                      - /placeholder: YYYY
+                      - text: "2026"
+            `);
+            await expect(story.locators.errorFormInput).toMatchAriaSnapshot(`
+                - group "Error":
+                  - group:
+                    - textbox "Start Date":
+                      - /placeholder: DD
+                      - text: "10"
+                    - text: /
+                    - textbox "Start Month":
+                      - /placeholder: MM
+                      - text: "04"
+                    - text: /
+                    - textbox "Start Year":
+                      - /placeholder: YYYY
+                      - text: "2026"
+                  - group:
+                    - textbox "End Date":
+                      - /placeholder: DD
+                      - text: "16"
+                    - text: /
+                    - textbox "End Month":
+                      - /placeholder: MM
+                      - text: "04"
+                    - text: /
+                    - textbox "End Year":
+                      - /placeholder: YYYY
+                      - text: "2026"
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants-prefilled", { mode: "dark" });
+        });
+
+        test("Form.DateRangeInput variants prefilled (dark mode)", async ({
+            story,
+        }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants");
+        });
+
+        test("Standalone variants", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+
+        test("Focus states", async ({ story }) => {
+            await story.locators.defaultInput.focus();
+            await compareScreenshot(story, "default", {
+                locator: story.locators.defaultInput,
+            });
+
+            await story.page.keyboard.press("Escape");
+
+            await story.locators.disabledInput.click({ force: true });
+            await compareScreenshot(story, "disabled", {
+                locator: story.locators.disabledInput,
+            });
+
+            await story.locators.readonlyInput.focus();
+            await compareScreenshot(story, "readonly", {
+                locator: story.locators.readonlyInput,
+            });
+
+            await story.locators.errorInput.focus();
+            await compareScreenshot(story, "error", {
+                locator: story.locators.errorInput,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants", { mode: "dark" });
+        });
+
+        test("Focus states (dark mode)", async ({ story }) => {
+            await story.locators.defaultInput.focus();
+            await compareScreenshot(story, "default", {
+                locator: story.locators.defaultInput,
+            });
+
+            await story.page.keyboard.press("Escape");
+
+            await story.locators.disabledInput.click({ force: true });
+            await compareScreenshot(story, "disabled", {
+                locator: story.locators.disabledInput,
+            });
+
+            await story.locators.readonlyInput.focus();
+            await compareScreenshot(story, "readonly", {
+                locator: story.locators.readonlyInput,
+            });
+
+            await story.locators.errorInput.focus();
+            await compareScreenshot(story, "error", {
+                locator: story.locators.errorInput,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants-prefilled");
+        });
+
+        test("Standalone variants prefilled", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout");
+        });
+
+        test("Grid layout", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
     test.describe("Range", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("default", { mockedTimestamp: fixedTimestamp });
@@ -388,24 +748,6 @@ test.describe("DateRangeInput", () => {
                     fullscreen: true,
                 });
             });
-        });
-    });
-
-    test.describe("Disabled", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("disabled", { mockedTimestamp: fixedTimestamp });
-        });
-
-        test("Disabled state", async ({ story }) => {
-            await expect(story.locators.dateRangeInput).toMatchAriaSnapshot(`
-                - group [disabled]
-            `);
-            await expect(story.locators.calendarContainer).not.toBeVisible();
-
-            await compareScreenshot(story, "state");
-
-            await story.locators.dateRangeInput.click({ force: true });
-            await expect(story.locators.calendarContainer).not.toBeVisible();
         });
     });
 });

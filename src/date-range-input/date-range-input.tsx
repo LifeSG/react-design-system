@@ -1,8 +1,10 @@
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
 
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import { InputWrapper } from "../shared/input-wrapper";
 import type {
     CalendarAction,
     FocusType,
@@ -14,11 +16,7 @@ import type { StandaloneDateInputRef } from "../shared/standalone-date-input/sta
 import { StandaloneDateInput } from "../shared/standalone-date-input/standalone-date-input";
 import { DateHelper, DateInputHelper, useContainerQuery } from "../util";
 import { useStateActions } from "../util/use-state-actions";
-import {
-    Container,
-    InputContainer,
-    MOBILE_WRAP_WIDTH,
-} from "./date-range-input.style";
+import * as styles from "./date-range-input.styles";
 import type { DateRangeInputProps } from "./types";
 
 interface DateRangeInputState {
@@ -186,7 +184,7 @@ export const DateRangeInput = ({
     const startInputRef = useRef<StandaloneDateInputRef>(null);
     const endInputRef = useRef<StandaloneDateInputRef>(null);
     const shouldWrap = useContainerQuery({
-        maxWidth: MOBILE_WRAP_WIDTH,
+        maxWidth: styles.MOBILE_WRAP_WIDTH,
         targetRef: nodeRef,
     });
 
@@ -616,7 +614,7 @@ export const DateRangeInput = ({
     // =============================================================================
     const renderInput = () => {
         return (
-            <Container
+            <InputWrapper
                 role="group"
                 ref={nodeRef}
                 tabIndex={0}
@@ -625,21 +623,29 @@ export const DateRangeInput = ({
                 focused={focused}
                 disabled={disabled}
                 readOnly={readOnly}
-                $readOnly={readOnly}
                 error={error}
-                $wrap={shouldWrap}
                 id={id}
                 data-testid={otherProps["data-testid"]}
                 aria-disabled={disabled}
                 onKeyDown={handleNodeKeyDown}
                 {...otherProps}
+                className={clsx(
+                    shouldWrap && !readOnly && styles.containerWrap,
+                    shouldWrap && readOnly && styles.containerWrapReadOnly,
+                    otherProps.className
+                )}
             >
                 <RangeInputInnerContainer
                     currentActive={currentFocus}
                     wrap={shouldWrap}
                     error={error}
                 >
-                    <InputContainer $wrap={shouldWrap}>
+                    <div
+                        className={clsx(
+                            styles.inputContainer,
+                            shouldWrap && styles.inputContainerWrap
+                        )}
+                    >
                         <StandaloneDateInput
                             ref={startInputRef}
                             placeholder="From"
@@ -663,8 +669,13 @@ export const DateRangeInput = ({
                             onBlur={handleStartInputBlur}
                             hideInputKeyboard={hideInputKeyboard}
                         />
-                    </InputContainer>
-                    <InputContainer $wrap={shouldWrap}>
+                    </div>
+                    <div
+                        className={clsx(
+                            styles.inputContainer,
+                            shouldWrap && styles.inputContainerWrap
+                        )}
+                    >
                         <StandaloneDateInput
                             ref={endInputRef}
                             placeholder="To"
@@ -680,9 +691,9 @@ export const DateRangeInput = ({
                             onBlur={handleEndInputBlur}
                             hideInputKeyboard={hideInputKeyboard}
                         />
-                    </InputContainer>
+                    </div>
                 </RangeInputInnerContainer>
-            </Container>
+            </InputWrapper>
         );
     };
 

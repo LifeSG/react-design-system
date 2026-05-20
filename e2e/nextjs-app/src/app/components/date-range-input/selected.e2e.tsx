@@ -9,7 +9,7 @@ export default function Story() {
     const [endDate, setEndDate] = useState<string>("2026-04-16");
 
     return (
-        <div className={styles.story}>
+        <div className="story-background">
             <DateRangeInput
                 data-testid="date-range-input"
                 value={startDate}
