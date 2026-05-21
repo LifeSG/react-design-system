@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Colour, MediaQuery } from "../theme";
+import { Border, Colour, MediaQuery } from "../theme";
 
 export const image = css`
     width: 9.5rem;
@@ -14,8 +14,8 @@ export const image = css`
 `;
 
 export const mainContainer = css`
-    border-top: 1px solid ${Colour.border};
-    border-bottom: 1px solid ${Colour.border};
+    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
     display: flex;
     flex-direction: row;
     align-items: center;

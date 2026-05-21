@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "../button";
 import { VisuallyHidden } from "../shared/accessibility";
@@ -20,8 +21,13 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         rating,
         onRatingChange,
         onSubmit,
+        className,
+        id,
+        "data-testid": testId,
         ...otherProps
     } = props;
+    const [hasImageError, setHasImageError] = useState(false);
+    const imgRef = useRef<HTMLImageElement>(null);
     const internalId = useId();
     const descriptionId = `${internalId}-description`;
     const bannerSrc = imgSrc ?? FeedbackRatingData.IMG;
@@ -31,23 +37,30 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         buttonLabel ?? FeedbackRatingData.DEFAULT_BUTTON_LABEL;
     const isSubmitDisabled = !rating;
 
+    useEffect(() => {
+        setHasImageError(false);
+
+        if (imgRef.current?.complete && imgRef.current.naturalWidth === 0) {
+            setHasImageError(true);
+        }
+    }, [bannerSrc]);
+
     return (
         <div
             role="group"
             aria-labelledby={internalId}
-            className={clsx(styles.mainContainer, otherProps.className)}
-            id={otherProps.id}
-            data-testid={otherProps["data-testid"]}
+            className={clsx(styles.mainContainer, className)}
+            id={id}
+            data-testid={testId}
+            {...otherProps}
         >
-            {bannerSrc && (
+            {bannerSrc && !hasImageError && (
                 <img
+                    ref={imgRef}
                     className={styles.image}
                     data-testid="feedback-banner-image"
                     src={bannerSrc}
                     alt=""
-                    onError={(event) =>
-                        (event.currentTarget.style.display = "none")
-                    }
                 />
             )}
             <div className={styles.childContainer}>

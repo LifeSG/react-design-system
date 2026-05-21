@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
+import { Border, Colour, Radius, Spacing } from "../theme";
 
 export const star = css`
     width: 2.75rem;
@@ -14,10 +14,6 @@ export const label = css`
     display: flex;
     align-items: center;
     cursor: pointer;
-
-    ${MediaQuery.MaxWidth.md} {
-        margin: 0 ${Spacing["spacing-8"]};
-    }
 `;
 
 export const container = css`
