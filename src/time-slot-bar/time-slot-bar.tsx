@@ -1,6 +1,7 @@
-import type { Dayjs } from "dayjs";
-import dayjs from "dayjs";
-import type { MouseEvent } from "react";
+import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
+import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import clsx from "clsx";
+import dayjs, { type Dayjs } from "dayjs";
 import {
     forwardRef,
     useEffect,
@@ -12,24 +13,14 @@ import {
 import { useResizeDetector } from "react-resize-detector";
 
 import { VisuallyHidden } from "../shared/accessibility";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { TimeSlot } from "../shared/time-slot";
+import { Typography } from "../typography";
 import { TimeHelper } from "../util/time-helper";
-import { TimeSlotBarHelper } from "./helper";
-import {
-    ArrowButton,
-    ArrowIconLeft,
-    ArrowIconRight,
-    CellText,
-    Container,
-    getCellWidth,
-    StyledTimeSlotItem,
-    TimeLabel,
-    TimeMarker,
-    TimeMarkerWrapper,
-    TimeSlotBarContainer,
-    TimeSlotBorder,
-    TimeSlotWrapper,
-} from "./time-slot-bar.styles";
+import { getCellWidth, TimeSlotBarHelper } from "./helper";
+import * as styles from "./time-slot-bar.styles";
+import TimeSlotDivider from "./time-slot-divider";
+import TimeSlotItem from "./time-slot-item";
 import type {
     Direction,
     TimeSlot as TTimeSlot,
@@ -233,20 +224,28 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
             );
 
             timeMarkers.push(
-                <TimeMarker
+                <div
                     data-testid={`${currentTime.format("HH:mm")}-marker`}
                     key={currentTime.format("HH:mm")}
-                    $isLongMarker={displayLongTimeMarker}
-                    $variant={variant}
+                    className={clsx(
+                        styles.timeMarker,
+                        variant === "default"
+                            ? styles.timeMarkerDefault
+                            : styles.timeMarkerMinified,
+                        displayLongTimeMarker && styles.timeMarkerLong
+                    )}
                 >
                     {displayLongTimeMarker && (
-                        <TimeLabel weight="semibold">
+                        <Typography.BodyXS
+                            className={styles.timeLabel}
+                            weight="semibold"
+                        >
                             {TimeSlotBarHelper.formatHourlyDisplay(
                                 currentTime.format("HH:mm")
                             )}
-                        </TimeLabel>
+                        </Typography.BodyXS>
                     )}
-                </TimeMarker>
+                </div>
             );
         }
         return timeMarkers;
@@ -274,16 +273,17 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
 
         return (
             <>
-                <TimeSlotBorder $variant={variant} />
-                <StyledTimeSlotItem
+                <TimeSlotDivider variant={variant} />
+                <TimeSlotItem
                     key={"default-timeslot"}
-                    data-testid={getDataTestId("default-timeslot")}
-                    $slotWidth={slotWidth}
-                    $slotOffset={0}
-                    $variant={variant}
+                    variant={variant}
+                    dataTestId={getDataTestId("default-timeslot")}
+                    slotWidth={slotWidth}
+                    slotOffset={0}
                     onClick={isClickable ? onClick : undefined}
                 >
                     <TimeSlot
+                        className={styles.timeSlotItemContent}
                         styleType={styleType}
                         bgColor={backgroundColor}
                         bgColor2={backgroundColor2}
@@ -291,7 +291,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                         hoverBgColor2={hoverBackgroundColor2}
                         clickable={isClickable}
                     />
-                </StyledTimeSlotItem>
+                </TimeSlotItem>
             </>
         );
     };
@@ -334,29 +334,30 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
 
             const handleSlotClick =
                 (clickedSlot: TTimeSlot & { ariaLabel?: string }) =>
-                (evt: MouseEvent<HTMLElement>) => {
+                (evt: React.MouseEvent<HTMLElement>) => {
                     evt.stopPropagation();
+
                     const { ariaLabel: _, ...slot } = clickedSlot;
                     if (isClickable) onSlotClick(slot);
                 };
 
             return (
                 <div key={id} role="gridcell">
-                    <TimeSlotBorder
-                        data-testid="start-border"
-                        $variant={variant}
-                        style={{
-                            left: `${slotOffset}px`,
-                        }}
+                    <TimeSlotDivider
+                        variant={variant}
+                        left={slotOffset}
+                        dataTestId="start-border"
                     />
-                    <StyledTimeSlotItem
-                        data-testid={getDataTestId(`${id}-timeslot`)}
-                        $variant={variant}
-                        $slotWidth={slotWidth}
-                        $slotOffset={slotOffset}
+                    <TimeSlotItem
+                        variant={variant}
+                        dataTestId={getDataTestId(`${id}-timeslot`)}
+                        slotWidth={slotWidth}
+                        slotOffset={slotOffset}
+                        color={color}
                         onClick={handleSlotClick(slot)}
                     >
                         <TimeSlot
+                            className={styles.timeSlotItemContent}
                             styleType={styleType}
                             bgColor={backgroundColor}
                             bgColor2={backgroundColor2}
@@ -376,26 +377,23 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                             )}
 
                             {showLabel && (
-                                <CellText
-                                    $slotWidth={slotWidth}
-                                    $color={color}
+                                <Typography.BodyXS
+                                    className={styles.cellText}
                                     weight={"semibold"}
                                     aria-hidden={!ariaLabel}
                                 >
                                     {showFullEllipsis(slotWidth)
                                         ? "..."
                                         : label}
-                                </CellText>
+                                </Typography.BodyXS>
                             )}
                         </TimeSlot>
-                    </StyledTimeSlotItem>
+                    </TimeSlotItem>
                     {endTime !== slotEndTime && (
-                        <TimeSlotBorder
-                            data-testid="end-border"
-                            $variant={variant}
-                            style={{
-                                left: `${slotOffset + slotWidth}px`,
-                            }}
+                        <TimeSlotDivider
+                            variant={variant}
+                            dataTestId="end-border"
+                            left={slotOffset + slotWidth}
                         />
                     )}
                 </div>
@@ -403,88 +401,88 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
         });
     };
 
-    const renderArrowButtonLeft = () => {
+    const renderArrowButton = (direction: Direction) => {
+        const isLeft = direction === "left";
+        const totalScrollableWidth = TimeSlotBarHelper.calculateWidth(
+            adjustedStartTime,
+            adjustedEndTime,
+            cellWidth
+        );
+        const hasContentOnLeft = scrollPosition > 0;
+        const hasContentOnRight =
+            scrollPosition + clientWidth < totalScrollableWidth;
+        const shouldShowArrow = isLeft ? hasContentOnLeft : hasContentOnRight;
+
+        if (!shouldShowArrow) return null;
+
+        const directionClass = isLeft
+            ? styles.arrowButtonLeft
+            : styles.arrowButtonRight;
+        const variantClass =
+            variant === "default"
+                ? styles.arrowButtonDefault
+                : styles.arrowButtonMinified;
+        const arrowIcon = isLeft ? (
+            <ChevronLeftIcon className={styles.arrowIcon} />
+        ) : (
+            <ChevronRightIcon className={styles.arrowIcon} />
+        );
+
         return (
-            <>
-                {/* Show the left ArrowButton when the scroll position is greater than 0 */}
-                {scrollPosition > 0 && (
-                    <ArrowButton
-                        data-testid={getDataTestId("arrow-left")}
-                        aria-hidden
-                        tabIndex={-1}
-                        $direction={"left"}
-                        $variant={variant}
-                        focusHighlight={false}
-                        focusOutline="none"
-                        onClick={() => {
-                            handleArrowButtonClick("left");
-                        }}
-                    >
-                        <ArrowIconLeft />
-                    </ArrowButton>
+            <ClickableIcon
+                data-testid={getDataTestId(`arrow-${direction}`)}
+                aria-hidden
+                tabIndex={-1}
+                className={clsx(
+                    styles.arrowButton,
+                    directionClass,
+                    variantClass
                 )}
-            </>
+                focusHighlight={false}
+                focusOutline="none"
+                onClick={() => {
+                    handleArrowButtonClick(direction);
+                }}
+            >
+                {arrowIcon}
+            </ClickableIcon>
         );
     };
 
-    const renderArrowButtonRight = () => {
-        // Show the right ArrowButton when the scroll position is less than the maximum possible scroll value
-        if (
-            scrollPosition + clientWidth <
-            TimeSlotBarHelper.calculateWidth(
-                adjustedStartTime,
-                adjustedEndTime,
-                cellWidth
-            )
-        ) {
-            return (
-                <ArrowButton
-                    data-testid={getDataTestId("arrow-right")}
-                    aria-hidden
-                    tabIndex={-1}
-                    $direction={"right"}
-                    $variant={variant}
-                    focusHighlight={false}
-                    focusOutline="none"
-                    onClick={() => {
-                        handleArrowButtonClick("right");
-                    }}
-                >
-                    <ArrowIconRight />
-                </ArrowButton>
-            );
-        }
-
-        return <></>;
-    };
-
     return (
-        <Container className={className}>
-            <TimeSlotBarContainer
+        <div className={clsx(styles.container, className)}>
+            <div
                 data-testid={testId}
                 ref={barRef}
-                $variant={variant}
+                className={clsx(
+                    styles.timeSlotBarContainer,
+                    variant === "default"
+                        ? styles.containerDefault
+                        : styles.containerMinified
+                )}
             >
-                <TimeMarkerWrapper
+                <div
+                    className={styles.timeMarkerWrapper}
                     data-testid={getDataTestId("time-marker-wrapper")}
                     data-id="marker-wrapper"
                 >
                     {renderTimeMarkers()}
-                </TimeMarkerWrapper>
+                </div>
                 <div role="grid" aria-label={slotsSummary} tabIndex={0}>
-                    <TimeSlotWrapper
+                    <div
+                        className={styles.timeSlotWrapper}
                         data-testid={getDataTestId("time-slot-wrapper")}
                         data-id="slot-wrapper"
                         role="row"
                     >
                         {renderDefaultTimeSlots()}
                         {renderTimeSlots()}
-                    </TimeSlotWrapper>
+                    </div>
                 </div>
-            </TimeSlotBarContainer>
-            {renderArrowButtonLeft()}
-            {renderArrowButtonRight()}
-        </Container>
+            </div>
+            {renderArrowButton("left")}
+            {renderArrowButton("right")}
+        </div>
     );
 };
 
