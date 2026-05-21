@@ -7,14 +7,6 @@ import { Typography } from "../typography";
 export const INDICATOR_BAR_MARGIN_RIGHT_TABLET = 0.5;
 
 // =============================================================================
-// STYLE TYPES
-// =============================================================================
-
-interface IndicatorProps {
-    $highlighted: boolean;
-}
-
-// =============================================================================
 // STYLE COMPONENTS
 // =============================================================================
 export const Wrapper = styled.div`
@@ -39,30 +31,24 @@ export const Content = styled.div`
     width: 100%;
 `;
 
-export const IndicatorBar = styled.div<IndicatorProps>`
+export const IndicatorBar = styled.div`
     height: 4px;
     margin-bottom: ${Spacing["spacing-8"]};
     border-radius: ${Radius["full"]};
-    ${(props) => {
-        const { $highlighted } = props;
-        const color = $highlighted
-            ? Colour["bg-primary-subtle"]
-            : Colour["bg-disabled"];
-        return `
-            background-color: ${color};
-        `;
-    }};
+    background-color: ${Colour["bg-disabled"]};
+
+    &.indicatorBarHighlighted {
+        background-color: ${Colour["bg-primary-subtle"]};
+    }
 `;
 
-export const IndicatorTitleDesktop = styled(Typography.BodyMD)<IndicatorProps>`
+export const IndicatorTitleDesktop = styled(Typography.BodyMD)`
     overflow-wrap: anywhere;
-    ${(props) => {
-        const { $highlighted } = props;
-        const color = $highlighted
-            ? Colour["text-primary"]
-            : Colour["text-disabled"];
-        return `color: ${color};`;
-    }};
+    color: ${Colour["text-disabled"]};
+
+    &.indicatorTitleDesktopHighlighted {
+        color: ${Colour["text-primary"]};
+    }
 `;
 
 export const IndicatorTitleTablet = styled(Typography.BodyMD)`

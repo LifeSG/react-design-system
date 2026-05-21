@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import kebabCase from "lodash/kebabCase";
 import { useMediaQuery } from "react-responsive";
 
@@ -19,6 +20,7 @@ export const ProgressIndicator = <T,>({
     displayExtractor,
     fadeColor: _fadeColor,
     fadePosition: _fadePosition,
+    className,
     ...otherProps
 }: ProgressIndicatorProps<T>) => {
     // =============================================================================
@@ -78,7 +80,11 @@ export const ProgressIndicator = <T,>({
 
             return (
                 <Indicator key={stepIndex} id={getId(stepIndex, currentIndex)}>
-                    <IndicatorBar $highlighted={highlighted}></IndicatorBar>
+                    <IndicatorBar
+                        className={clsx(
+                            highlighted && "indicatorBarHighlighted"
+                        )}
+                    />
                 </Indicator>
             );
         });
@@ -96,7 +102,9 @@ export const ProgressIndicator = <T,>({
                     id={`${getId(stepIndex, currentIndex)}-title`}
                 >
                     <IndicatorTitleDesktop
-                        $highlighted={highlighted}
+                        className={clsx(
+                            highlighted && "indicatorTitleDesktopHighlighted"
+                        )}
                         weight={fontWeight}
                         aria-current={current}
                     >
@@ -133,7 +141,7 @@ export const ProgressIndicator = <T,>({
     };
 
     return (
-        <Wrapper {...otherProps}>
+        <Wrapper className={clsx(className)} {...otherProps}>
             <Content>{renderBars()}</Content>
             <Content>
                 {isTablet ? renderStepTitleTablet() : renderStepTitleDesktop()}
