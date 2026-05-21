@@ -10,13 +10,7 @@ import {
 import { FormErrorMessage } from "../form/form-label";
 import { VisuallyHidden } from "../shared/accessibility";
 import { StringHelper, useId } from "../util";
-import {
-    CTAButton,
-    InputContainer,
-    InputField,
-    Prefix,
-    Wrapper,
-} from "./otp-input.styles";
+import * as styles from "./otp-input.styles";
 import type { OtpInputProps, OtpInputRef } from "./types";
 import { stripOtpFromAutofill, validateUserInput } from "./utils";
 
@@ -270,24 +264,24 @@ const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Wrapper id={id} data-testid={dataTestId} className={className}>
-            <InputContainer
+        <styles.Wrapper id={id} data-testid={dataTestId} className={className}>
+            <styles.InputContainer
                 role="group"
                 aria-label={`${numOfInput}-digit OTP input field`}
             >
                 {prefix && (
-                    <Prefix
+                    <styles.Prefix
                         forwardedAs="span"
                         data-testid="otp-prefix"
                         weight="semibold"
                     >
                         <VisuallyHidden>O T P prefix</VisuallyHidden>
                         {`${prefix.value} ${prefix.separator}`}
-                    </Prefix>
+                    </styles.Prefix>
                 )}
                 {otpValues.map((data, index) => {
                     return (
-                        <InputField
+                        <styles.InputField
                             id={generateId(index, "otp-input", id)}
                             data-testid={generateId(
                                 index,
@@ -312,7 +306,7 @@ const Component = (
                         />
                     );
                 })}
-            </InputContainer>
+            </styles.InputContainer>
             {errorMessage && (
                 <FormErrorMessage id={errorId}>{errorMessage}</FormErrorMessage>
             )}
@@ -324,7 +318,7 @@ const Component = (
                 {countDown > 0 ? "" : "Ready to resend OTP"}
             </VisuallyHidden>
             {!otpOnly && (
-                <CTAButton
+                <styles.CTAButton
                     styleType={styleType}
                     type="button"
                     {...otherCtaProps}
@@ -333,7 +327,7 @@ const Component = (
                     {...getCTALabelProps()}
                 />
             )}
-        </Wrapper>
+        </styles.Wrapper>
     );
 };
 
