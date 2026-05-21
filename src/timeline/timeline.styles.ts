@@ -19,47 +19,47 @@ export const circleIndicator = css`
     width: 1.5rem;
     height: 1.5rem;
     border-radius: 100%;
-`;
 
-export const circleIndicatorCurrent = css`
-    background-color: ${Colour["icon-primary-subtle"]};
-`;
-
-export const circleIndicatorUpcomingActive = css`
-    border: 4px solid ${Colour["icon-primary-subtle"]};
-`;
-
-export const circleIndicatorUpcomingInactive = css`
-    border: 4px solid ${Colour["icon-subtle"]};
-`;
-
-export const circleIndicatorDisabled = css`
-    background-color: ${Colour["icon-disabled-subtle"]};
-`;
-
-export const circleIndicatorCompleted = css`
-    background-color: ${Colour["icon-success"]};
-
-    svg {
-        color: ${Colour["icon-inverse"]};
+    &[data-variant="current"] {
+        background-color: ${Colour["icon-primary-subtle"]};
     }
-`;
 
-export const circleIndicatorNumeric = css`
-    background-color: ${Colour["icon-info"]};
-    color: ${Colour["text-inverse"]};
-    ${Font["body-sm-bold"]}
-`;
+    &[data-variant="upcoming-active"] {
+        border: 4px solid ${Colour["icon-primary-subtle"]};
+    }
 
-export const circleIndicatorError = css`
-    width: 1.8rem;
-    height: 1.8rem;
-    margin: -0.15rem 0 -0.15rem -0.15rem;
+    &[data-variant="upcoming-inactive"] {
+        border: 4px solid ${Colour["icon-subtle"]};
+    }
 
-    svg {
-        color: ${Colour["icon-error"]};
-        height: 100%;
-        width: 100%;
+    &[data-variant="disabled"] {
+        background-color: ${Colour["icon-disabled-subtle"]};
+    }
+
+    &[data-variant="completed"] {
+        background-color: ${Colour["icon-success"]};
+
+        svg {
+            color: ${Colour["icon-inverse"]};
+        }
+    }
+
+    &[data-variant="numeric"] {
+        background-color: ${Colour["icon-info"]};
+        color: ${Colour["text-inverse"]};
+        ${Font["body-sm-bold"]}
+    }
+
+    &[data-variant="error"] {
+        width: 1.8rem;
+        height: 1.8rem;
+        margin: -0.15rem 0 -0.15rem -0.15rem;
+
+        svg {
+            color: ${Colour["icon-error"]};
+            height: 100%;
+            width: 100%;
+        }
     }
 `;
 
@@ -69,31 +69,32 @@ export const lineIndicator = css`
     margin-top: 0.5rem;
     margin-bottom: 0.5rem;
     border-radius: ${Radius["full"]};
-`;
 
-export const lineIndicatorActive = css`
-    background-color: ${Colour["icon-primary-subtle"]};
-`;
+    &[data-variant="completed"] {
+        background-color: ${Colour["icon-success"]};
+    }
 
-export const lineIndicatorUpcomingInactive = css`
-    background-color: ${Colour["icon-subtle"]};
-`;
+    &[data-variant="current"],
+    &[data-variant="upcoming-active"] {
+        background-color: ${Colour["icon-primary-subtle"]};
+    }
 
-export const lineIndicatorDisabled = css`
-    background-color: ${Colour["icon-disabled-subtle"]};
-`;
+    &[data-variant="upcoming-inactive"] {
+        background-color: ${Colour["icon-subtle"]};
+    }
 
-export const lineIndicatorCompleted = css`
-    background-color: ${Colour["icon-success"]};
-`;
+    &[data-variant="disabled"] {
+        background-color: ${Colour["icon-disabled-subtle"]};
+    }
 
-export const lineIndicatorNumeric = css`
-    background-color: ${Colour["icon-info"]};
-`;
+    &[data-variant="numeric"] {
+        background-color: ${Colour["icon-info"]};
+    }
 
-export const lineIndicatorError = css`
-    margin-left: -0.15rem;
-    background-color: ${Colour["icon-error"]};
+    &[data-variant="error"] {
+        margin-left: -0.15rem;
+        background-color: ${Colour["icon-error"]};
+    }
 `;
 
 export const timelineIndicators = css`

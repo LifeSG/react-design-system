@@ -10,43 +10,6 @@ import { Typography } from "../typography";
 import * as styles from "./timeline.styles";
 import type { TimelineItemProps, TimelineProps, Variant } from "./types";
 
-const getCircleIndicatorClass = (variant: Variant): string => {
-    switch (variant) {
-        case "completed":
-            return styles.circleIndicatorCompleted;
-        case "current":
-            return styles.circleIndicatorCurrent;
-        case "upcoming-active":
-            return styles.circleIndicatorUpcomingActive;
-        case "upcoming-inactive":
-            return styles.circleIndicatorUpcomingInactive;
-        case "disabled":
-            return styles.circleIndicatorDisabled;
-        case "numeric":
-            return styles.circleIndicatorNumeric;
-        case "error":
-            return styles.circleIndicatorError;
-    }
-};
-
-const getLineIndicatorClass = (variant: Variant): string => {
-    switch (variant) {
-        case "completed":
-            return styles.lineIndicatorCompleted;
-        case "current":
-        case "upcoming-active":
-            return styles.lineIndicatorActive;
-        case "upcoming-inactive":
-            return styles.lineIndicatorUpcomingInactive;
-        case "disabled":
-            return styles.lineIndicatorDisabled;
-        case "numeric":
-            return styles.lineIndicatorNumeric;
-        case "error":
-            return styles.lineIndicatorError;
-    }
-};
-
 export const Timeline = ({
     items,
     className,
@@ -177,10 +140,8 @@ export const Timeline = ({
                     <div className={styles.timelineIndicators}>
                         <div
                             data-testid={circleIndicatorTestId}
-                            className={clsx(
-                                styles.circleIndicator,
-                                getCircleIndicatorClass(variant)
-                            )}
+                            className={styles.circleIndicator}
+                            data-variant={variant}
                         >
                             <VisuallyHidden>
                                 {getStatus(variant, index)}
@@ -188,10 +149,8 @@ export const Timeline = ({
                             {renderIcon(variant, index)}
                         </div>
                         <div
-                            className={clsx(
-                                styles.lineIndicator,
-                                getLineIndicatorClass(variant)
-                            )}
+                            className={styles.lineIndicator}
+                            data-variant={variant}
                         />
                     </div>
                     <div
