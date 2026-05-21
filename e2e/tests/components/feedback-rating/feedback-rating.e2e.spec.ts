@@ -16,7 +16,7 @@ class StoryPage extends AbstractStoryPage {
         this.locators = {
             feedbackRatingComponent: page.getByTestId("feedback-rating"),
             feedbackRating5Stars: page.getByTestId("feedback-rating-star-5"),
-            submitButton: page.getByTestId("button"),
+            submitButton: page.getByRole("button", { name: "Submit" }),
         };
     }
 }
@@ -42,11 +42,6 @@ test.describe("FeedbackRating", () => {
             await test.step("Select 5 stars rating", async () => {
                 await story.locators.feedbackRating5Stars.click();
                 await compareScreenshot(story, "select-rating");
-            });
-
-            await test.step("Hover on submit button", async () => {
-                await story.locators.submitButton.hover();
-                await compareScreenshot(story, "submit-button-hover");
             });
         });
 
@@ -76,11 +71,41 @@ test.describe("FeedbackRating", () => {
                 await story.locators.feedbackRating5Stars.click();
                 await compareScreenshot(story, "select-rating");
             });
+        });
+    });
 
-            await test.step("Hover on submit button", async () => {
-                await story.locators.submitButton.hover();
-                await compareScreenshot(story, "submit-button-hover");
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { size: "mobile" });
+        });
+
+        test("Mobile", async ({ story }) => {
+            await test.step("Visual", async () => {
+                await compareScreenshot(story, "mount");
             });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { size: "tablet" });
+        });
+
+        test("Tablet", async ({ story }) => {
+            await test.step("Visual", async () => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("image-error");
+            await story.page.waitForLoadState("networkidle");
+        });
+
+        test("Image error", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 });
