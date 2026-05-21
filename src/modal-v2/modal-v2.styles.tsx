@@ -3,10 +3,8 @@ import { MediaQuery, Motion } from "../theme";
 import { ModalAnimationDirection } from "./types";
 
 interface Props {
-    $show: boolean;
     $animationFrom?: ModalAnimationDirection;
     $verticalHeight?: number;
-    $offsetTop?: number;
 }
 
 export const Container = styled.div<Props>`
@@ -17,17 +15,16 @@ export const Container = styled.div<Props>`
     overflow: auto;
 
     ${MediaQuery.MaxWidth.sm} {
-        ${(props) => {
-            return css`
-                height: calc(
-                    ${props.$verticalHeight
-                            ? `${props.$verticalHeight}px`
-                            : "1vh"} * 100
-                );
-            `;
-        }}
+        height: calc(
+            ${(props) =>
+                    props.$verticalHeight
+                        ? `${props.$verticalHeight}px`
+                        : "1vh"} * 100
+        );
+    }
 
-        top: ${(props) => props.$offsetTop || 0}px;
+    @supports (height: 100dvh) {
+        height: 100dvh;
     }
 
     ${(props) => css`
