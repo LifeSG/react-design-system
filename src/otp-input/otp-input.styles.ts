@@ -1,16 +1,13 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
-import { Input } from "../input";
 import { Spacing } from "../theme";
-import { Typography } from "../typography";
 
-export const Wrapper = styled.div`
+export const wrapper = css`
     display: flex;
     flex-direction: column;
 `;
 
-export const InputContainer = styled.div`
+export const inputContainer = css`
     display: flex;
     flex-direction: row;
     align-self: center;
@@ -18,7 +15,7 @@ export const InputContainer = styled.div`
     gap: ${Spacing["spacing-8"]};
 `;
 
-export const InputField = styled(Input)`
+export const inputField = css`
     min-width: 20px;
     margin-bottom: 0rem !important;
 
@@ -28,10 +25,10 @@ export const InputField = styled(Input)`
     }
 `;
 
-export const CTAButton = styled(Button.Small)`
+export const ctaButton = css`
     margin: ${Spacing["spacing-32"]} 0;
 `;
 
-export const Prefix = styled(Typography.BodyBL)`
+export const prefix = css`
     flex-shrink: 0;
 `;

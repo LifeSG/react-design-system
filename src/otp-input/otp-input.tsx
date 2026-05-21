@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type React from "react";
 import {
     forwardRef,
@@ -7,8 +8,11 @@ import {
     useState,
 } from "react";
 
+import { Button } from "../button";
 import { FormErrorMessage } from "../form/form-label";
+import { Input } from "../input";
 import { VisuallyHidden } from "../shared/accessibility";
+import { Typography } from "../typography";
 import { StringHelper, useId } from "../util";
 import * as styles from "./otp-input.styles";
 import type { OtpInputProps, OtpInputRef } from "./types";
@@ -264,24 +268,31 @@ const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <styles.Wrapper id={id} data-testid={dataTestId} className={className}>
-            <styles.InputContainer
+        <div
+            id={id}
+            data-testid={dataTestId}
+            className={clsx(styles.wrapper, className)}
+        >
+            <div
+                className={styles.inputContainer}
                 role="group"
                 aria-label={`${numOfInput}-digit OTP input field`}
             >
                 {prefix && (
-                    <styles.Prefix
-                        forwardedAs="span"
+                    <Typography.BodyBL
+                        as="span"
+                        className={styles.prefix}
                         data-testid="otp-prefix"
                         weight="semibold"
                     >
                         <VisuallyHidden>O T P prefix</VisuallyHidden>
                         {`${prefix.value} ${prefix.separator}`}
-                    </styles.Prefix>
+                    </Typography.BodyBL>
                 )}
                 {otpValues.map((data, index) => {
                     return (
-                        <styles.InputField
+                        <Input
+                            className={styles.inputField}
                             id={generateId(index, "otp-input", id)}
                             data-testid={generateId(
                                 index,
@@ -306,7 +317,7 @@ const Component = (
                         />
                     );
                 })}
-            </styles.InputContainer>
+            </div>
             {errorMessage && (
                 <FormErrorMessage id={errorId}>{errorMessage}</FormErrorMessage>
             )}
@@ -318,16 +329,18 @@ const Component = (
                 {countDown > 0 ? "" : "Ready to resend OTP"}
             </VisuallyHidden>
             {!otpOnly && (
-                <styles.CTAButton
+                <Button
+                    className={styles.ctaButton}
                     styleType={styleType}
                     type="button"
+                    sizeType="small"
                     {...otherCtaProps}
                     onClick={handleClick}
                     disabled={disabled || isWithinCooldown()}
                     {...getCTALabelProps()}
                 />
             )}
-        </styles.Wrapper>
+        </div>
     );
 };
 
