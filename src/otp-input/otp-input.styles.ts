@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 import { Button } from "../button";
 import { Input } from "../input";
+import { Spacing } from "../theme";
 import { Typography } from "../typography";
-import { V3_Spacing } from "../v3_theme";
 
 export const Wrapper = styled.div`
     display: flex;
@@ -15,7 +15,7 @@ export const InputContainer = styled.div`
     flex-direction: row;
     align-self: center;
     align-items: center;
-    gap: ${V3_Spacing["spacing-8"]};
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const InputField = styled(Input)`
@@ -29,7 +29,7 @@ export const InputField = styled(Input)`
 `;
 
 export const CTAButton = styled(Button.Small)`
-    margin: ${V3_Spacing["spacing-32"]} 0;
+    margin: ${Spacing["spacing-32"]} 0;
 `;
 
 export const Prefix = styled(Typography.BodyBL)`
