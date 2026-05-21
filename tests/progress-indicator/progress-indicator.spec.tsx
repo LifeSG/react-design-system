@@ -6,6 +6,8 @@ jest.mock("react-responsive", () => ({
     useMediaQuery: jest.fn(() => false),
 }));
 
+const STEPS = ["Step 1", "Step 2", "Step 3"];
+
 describe("ProgressIndicator", () => {
     beforeEach(() => {
         jest.clearAllMocks();
@@ -23,5 +25,59 @@ describe("ProgressIndicator", () => {
         expect(screen.getByText("Completed step")).toBeInTheDocument();
         expect(screen.getByText("Current step")).toBeInTheDocument();
         expect(screen.getByText("Upcoming step")).toBeInTheDocument();
+    });
+
+    it("should mark only the current step with aria-current", () => {
+        render(<ProgressIndicator steps={STEPS} currentIndex={1} />);
+
+        const currentSteps = document.querySelectorAll(
+            'p[aria-current="true"]'
+        );
+        expect(currentSteps).toHaveLength(1);
+        expect(currentSteps[0]).toHaveTextContent("Step 2");
+    });
+
+    it("should use displayExtractor when provided", () => {
+        const items = [{ label: "One" }, { label: "Two" }];
+        render(
+            <ProgressIndicator
+                steps={items}
+                currentIndex={0}
+                displayExtractor={(item) => item.label}
+            />
+        );
+
+        expect(screen.getByText("One")).toBeInTheDocument();
+        expect(screen.getByText("Two")).toBeInTheDocument();
+    });
+
+    describe("tablet view", () => {
+        beforeEach(() => {
+            (useMediaQuery as jest.Mock).mockReturnValue(true);
+        });
+
+        it("should render step counter text", () => {
+            render(<ProgressIndicator steps={STEPS} currentIndex={1} />);
+
+            expect(screen.getByText("Step 2 of 3")).toBeInTheDocument();
+        });
+
+        it("should render only the current step title", () => {
+            render(<ProgressIndicator steps={STEPS} currentIndex={1} />);
+
+            expect(screen.getByText("Step 2")).toBeInTheDocument();
+            expect(screen.queryByText("Step 1")).not.toBeInTheDocument();
+            expect(screen.queryByText("Step 3")).not.toBeInTheDocument();
+        });
+
+        it("should update counter text when currentIndex changes", () => {
+            const { rerender } = render(
+                <ProgressIndicator steps={STEPS} currentIndex={0} />
+            );
+            expect(screen.getByText("Step 1 of 3")).toBeInTheDocument();
+
+            rerender(<ProgressIndicator steps={STEPS} currentIndex={2} />);
+            expect(screen.getByText("Step 3 of 3")).toBeInTheDocument();
+        });
     });
 });
