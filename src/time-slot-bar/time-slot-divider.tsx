@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { useRef } from "react";
 
-import { useApplyStyle } from "../theme";
+import { formatUnitValue, useApplyStyle } from "../theme";
 import * as styles from "./time-slot-bar.styles";
 import type { TimeSlotBarVariant } from "./types";
 
@@ -20,7 +20,7 @@ const TimeSlotDivider = ({
 
     useApplyStyle(dividerRef, {
         [styles.tokens.border.left]:
-            left === undefined ? undefined : `${left}px`,
+            left === undefined ? undefined : formatUnitValue(left, "px"),
     });
 
     return (
