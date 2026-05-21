@@ -184,12 +184,6 @@
             "react-dom": "$react-dom"
         }
     },
-    "overrides": {
-        "react-resize-detector": {
-            "react": "$react",
-            "react-dom": "$react-dom"
-        }
-    },
     "lint-staged": {
         "*.{tsx,ts}": [
             "eslint --fix"
