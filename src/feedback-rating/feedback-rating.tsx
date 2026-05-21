@@ -45,6 +45,10 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         }
     }, [bannerSrc]);
 
+    const handleImgError = () => {
+        setHasImageError(true);
+    };
+
     return (
         <div
             role="group"
@@ -61,6 +65,7 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                     data-testid="feedback-banner-image"
                     src={bannerSrc}
                     alt=""
+                    onError={handleImgError}
                 />
             )}
             <div className={styles.childContainer}>
