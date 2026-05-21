@@ -237,6 +237,21 @@ export const DataTable = ({
     };
 
     // =============================================================================
+    // EVENT HANDLERS
+    // =============================================================================
+    const handleHeaderClick = (fieldKey: string) => {
+        onHeaderClick?.(fieldKey);
+    };
+
+    const handleHeaderButtonClick = (
+        event: React.MouseEvent<HTMLButtonElement>,
+        fieldKey: string
+    ) => {
+        event.stopPropagation();
+        onHeaderClick?.(fieldKey);
+    };
+
+    // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHeaders = () => (
@@ -278,6 +293,7 @@ export const DataTable = ({
                 scope="col"
                 aria-sort={getHeaderAriaSort(fieldKey)}
                 style={style}
+                onClick={() => handleHeaderClick(fieldKey)}
             >
                 <div className={styles.headerCellContent} id={headerCellId}>
                     {typeof label === "string" ? (
@@ -291,7 +307,11 @@ export const DataTable = ({
                 </div>
                 {(clickable || isSortable) && (
                     <VisuallyHidden>
-                        <button onClick={() => onHeaderClick?.(fieldKey)}>
+                        <button
+                            onClick={(event) =>
+                                handleHeaderButtonClick(event, fieldKey)
+                            }
+                        >
                             {isSortable && "Sort "}
                             <span aria-labelledby={headerCellId} />
                             {isSortable && getSortButtonAriaLabel(fieldKey)}
