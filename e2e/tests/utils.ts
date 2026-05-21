@@ -31,6 +31,17 @@ export abstract class AbstractStoryPage {
             });
         }
 
+        await this.page
+            .context()
+            .route(/^https:\/\/assets\.life\.gov\.sg/, async (route) => {
+                const url = route.request().url();
+                const path = new URL(url).pathname;
+                const cdn = `http://host.docker.internal:3000/cdn${path}`;
+
+                const res = await this.page.request.get(cdn);
+                await route.fulfill({ response: res });
+            });
+
         const query = new URLSearchParams();
         if (options?.mode === "light" || options?.mode === "dark") {
             query.set("mode", options.mode);
