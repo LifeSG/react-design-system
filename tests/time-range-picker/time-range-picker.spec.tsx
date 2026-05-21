@@ -296,6 +296,90 @@ describe("TimeRangePicker", () => {
                     ]);
                 });
             });
+
+            it("should have correct 60-minute interval", async () => {
+                render(<TimeRangePicker variant={"combobox"} interval={60} />);
+
+                screen.getByLabelText(START_LABEL).focus();
+
+                await waitFor(() => {
+                    const options = screen
+                        .getAllByRole("option")
+                        .map((option) => option.textContent);
+
+                    expect(options.length).toBe(24);
+                    expect(options[0]).toBe("12:00am");
+                    expect(options[23]).toBe("11:00pm");
+
+                    // const parseTimeToMinutes = (timeStr: string): number => {
+                    //     const match = timeStr.match(/(\d+):(\d+)(am|pm)/);
+                    //     if (!match) return 0;
+
+                    //     let hours = parseInt(match[1], 10);
+                    //     const minutes = parseInt(match[2], 10);
+                    //     const period = match[3];
+
+                    //     if (period === "pm" && hours !== 12) {
+                    //         hours += 12;
+                    //     } else if (period === "am" && hours === 12) {
+                    //         hours = 0;
+                    //     }
+
+                    //     return hours * 60 + minutes;
+                    // };
+
+                    // for (let i = 0; i < options.length - 1; i++) {
+                    //     const currentTime = parseTimeToMinutes(options[i]);
+                    //     const nextTime = parseTimeToMinutes(options[i + 1]);
+                    //     const difference = nextTime - currentTime;
+
+                    //     expect(difference).toBe(60);
+                    // }
+                });
+            });
+
+            it("should have correct limits with 60-minute interval", async () => {
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        startLimit="12:00pm"
+                        endLimit="4:00pm"
+                        interval={60}
+                    />
+                );
+
+                screen.getByLabelText(START_LABEL).focus();
+
+                await waitFor(() => {
+                    const options = screen
+                        .getAllByRole("option")
+                        .map((option) => option.textContent);
+
+                    expect(options).toEqual([
+                        "12:00pm",
+                        "1:00pm",
+                        "2:00pm",
+                        "3:00pm",
+                        "4:00pm",
+                    ]);
+                });
+
+                screen.getByLabelText(END_LABEL).focus();
+
+                await waitFor(() => {
+                    const endOptions = screen
+                        .getAllByRole("option")
+                        .map((option) => option.textContent);
+
+                    expect(endOptions).toEqual([
+                        "12:00pm",
+                        "1:00pm",
+                        "2:00pm",
+                        "3:00pm",
+                        "4:00pm",
+                    ]);
+                });
+            });
         });
 
         describe("validation errors", () => {
@@ -323,6 +407,19 @@ describe("TimeRangePicker", () => {
                     "3:00pm"
                 );
                 expect(screen.getByLabelText(END_LABEL)).toHaveValue("2:00pm");
+                expect(
+                    screen.queryByText("End time must be after start time")
+                ).toBeInTheDocument();
+            });
+
+            it("should show validation error when end time is before start time", async () => {
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        value={{ start: "2:00pm", end: "1:00pm" }}
+                    />
+                );
+
                 expect(
                     screen.queryByText("End time must be after start time")
                 ).toBeInTheDocument();

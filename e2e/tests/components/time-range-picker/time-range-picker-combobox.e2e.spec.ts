@@ -9,13 +9,16 @@ class StoryPage extends AbstractStoryPage {
         disabled: Locator;
         readOnly: Locator;
         error: Locator;
-        defaultInputFrom: Locator;
-        defaultInputTo: Locator;
-        intervalVariantInputFrom: Locator;
-        format24hrVariantInputFrom: Locator;
-        limitsVariantInputFrom: Locator;
-        dropdownList: Locator;
-        combobox: (field: Locator) => Locator;
+        internal: {
+            defaultInputFrom: Locator;
+            defaultInputTo: Locator;
+            disabledInputFrom: Locator;
+            readonlyInputFrom: Locator;
+            errorInputFrom: Locator;
+            format24hrVariantInputFrom: Locator;
+            dropdownList: Locator;
+            combobox: (field: Locator) => Locator;
+        };
     };
 
     constructor(page: Page) {
@@ -26,23 +29,28 @@ class StoryPage extends AbstractStoryPage {
             disabled: page.getByTestId("time-range-picker-combobox-disabled"),
             readOnly: page.getByTestId("time-range-picker-combobox-readonly"),
             error: page.getByTestId("time-range-picker-combobox-error"),
-            defaultInputFrom: page.getByTestId(
-                "time-range-picker-combobox-default-base-timepicker-selector-start"
-            ),
-            defaultInputTo: page.getByTestId(
-                "time-range-picker-combobox-default-base-timepicker-selector-end"
-            ),
-            intervalVariantInputFrom: page.getByTestId(
-                "time-range-picker-combobox-interval-base-timepicker-selector-start"
-            ),
-            format24hrVariantInputFrom: page.getByTestId(
-                "time-range-picker-combobox-24hr-base-timepicker-selector-start"
-            ),
-            limitsVariantInputFrom: page.getByTestId(
-                "time-range-picker-combobox-limits-base-timepicker-selector-start"
-            ),
-            dropdownList: page.getByRole("listbox"),
-            combobox: (field: Locator) => field.getByRole("combobox"),
+            internal: {
+                defaultInputFrom: page.getByTestId(
+                    "time-range-picker-combobox-default-base-timepicker-selector-start"
+                ),
+                disabledInputFrom: page.getByTestId(
+                    "time-range-picker-combobox-disabled-base-timepicker-selector-start"
+                ),
+                readonlyInputFrom: page.getByTestId(
+                    "time-range-picker-combobox-readonly-base-timepicker-selector-start"
+                ),
+                errorInputFrom: page.getByTestId(
+                    "time-range-picker-combobox-error-base-timepicker-selector-start"
+                ),
+                defaultInputTo: page.getByTestId(
+                    "time-range-picker-combobox-default-base-timepicker-selector-end"
+                ),
+                format24hrVariantInputFrom: page.getByTestId(
+                    "time-range-picker-combobox-24hr-base-timepicker-selector-start"
+                ),
+                dropdownList: page.getByRole("listbox"),
+                combobox: (field: Locator) => field.getByRole("combobox"),
+            },
         };
     }
 }
@@ -66,18 +74,18 @@ test.describe("Time Range Picker Combobox", () => {
 
         test("Dropdown", async ({ story }) => {
             await test.step('Open "from" dropdown', async () => {
-                await story.locators.defaultInputFrom.click();
+                await story.locators.internal.defaultInputFrom.click();
                 await compareScreenshot(story, "from");
             });
 
             await test.step('Open "to" dropdown', async () => {
-                await story.locators.defaultInputTo.click();
+                await story.locators.internal.defaultInputTo.click();
                 await compareScreenshot(story, "to");
             });
 
             await test.step("Hover unselected option in dropdown", async () => {
-                await story.locators.defaultInputFrom.click();
-                const firstOption = story.locators.dropdownList
+                await story.locators.internal.defaultInputFrom.click();
+                const firstOption = story.locators.internal.dropdownList
                     .getByRole("option")
                     .first();
                 await firstOption.hover();
@@ -85,12 +93,12 @@ test.describe("Time Range Picker Combobox", () => {
             });
 
             await test.step("Hover selected option in dropdown", async () => {
-                await story.locators.defaultInputFrom.click();
-                const firstOption = story.locators.dropdownList
+                await story.locators.internal.defaultInputFrom.click();
+                const firstOption = story.locators.internal.dropdownList
                     .getByRole("option")
                     .first();
                 await firstOption.click();
-                await story.locators.defaultInputFrom.click();
+                await story.locators.internal.defaultInputFrom.click();
                 await firstOption.hover();
                 await compareScreenshot(story, "hover-selected-option");
             });
@@ -106,10 +114,14 @@ test.describe("Time Range Picker Combobox", () => {
                     - combobox "Default state End time"
                 `);
                 await expect(
-                    story.locators.combobox(story.locators.default).nth(0)
+                    story.locators.internal
+                        .combobox(story.locators.default)
+                        .nth(0)
                 ).toHaveAccessibleDescription("This is the subtitle");
                 await expect(
-                    story.locators.combobox(story.locators.default).nth(1)
+                    story.locators.internal
+                        .combobox(story.locators.default)
+                        .nth(1)
                 ).toHaveAccessibleDescription("This is the subtitle");
             });
 
@@ -122,10 +134,14 @@ test.describe("Time Range Picker Combobox", () => {
                     - combobox "Disabled State End time" [disabled=true]
                 `);
                 await expect(
-                    story.locators.combobox(story.locators.disabled).nth(0)
+                    story.locators.internal
+                        .combobox(story.locators.disabled)
+                        .nth(0)
                 ).toHaveAccessibleDescription("This is the subtitle");
                 await expect(
-                    story.locators.combobox(story.locators.disabled).nth(1)
+                    story.locators.internal
+                        .combobox(story.locators.disabled)
+                        .nth(1)
                 ).toHaveAccessibleDescription("This is the subtitle");
             });
 
@@ -138,10 +154,14 @@ test.describe("Time Range Picker Combobox", () => {
                     - combobox "Read-only State End time"
                 `);
                 await expect(
-                    story.locators.combobox(story.locators.readOnly).nth(0)
+                    story.locators.internal
+                        .combobox(story.locators.readOnly)
+                        .nth(0)
                 ).toHaveAccessibleDescription("This is the subtitle");
                 await expect(
-                    story.locators.combobox(story.locators.readOnly).nth(1)
+                    story.locators.internal
+                        .combobox(story.locators.readOnly)
+                        .nth(1)
                 ).toHaveAccessibleDescription("This is the subtitle");
             });
 
@@ -155,15 +175,53 @@ test.describe("Time Range Picker Combobox", () => {
                 - paragraph: Sample error message
                 `);
                 await expect(
-                    story.locators.combobox(story.locators.error).nth(0)
+                    story.locators.internal
+                        .combobox(story.locators.error)
+                        .nth(0)
                 ).toHaveAccessibleDescription(
                     "Sample error message This is the subtitle"
                 );
                 await expect(
-                    story.locators.combobox(story.locators.error).nth(1)
+                    story.locators.internal
+                        .combobox(story.locators.error)
+                        .nth(1)
                 ).toHaveAccessibleDescription(
                     "Sample error message This is the subtitle"
                 );
+            });
+        });
+
+        test("Focus", async ({ story }) => {
+            await test.step("Default state", async () => {
+                await story.locators.internal.defaultInputFrom.focus();
+                await compareScreenshot(story, "default", {
+                    locator: story.locators.default,
+                });
+                await story.page.keyboard.press("Escape");
+            });
+
+            await test.step("Disabled state", async () => {
+                await story.locators.internal.disabledInputFrom.focus();
+                await compareScreenshot(story, "disabled", {
+                    locator: story.locators.disabled,
+                });
+                await story.page.keyboard.press("Escape");
+            });
+
+            await test.step("Readonly state", async () => {
+                await story.locators.internal.readonlyInputFrom.focus();
+                await compareScreenshot(story, "readonly", {
+                    locator: story.locators.readOnly,
+                });
+                await story.page.keyboard.press("Escape");
+            });
+
+            await test.step("Error state", async () => {
+                await story.locators.internal.errorInputFrom.focus();
+                await compareScreenshot(story, "error", {
+                    locator: story.locators.error,
+                });
+                await story.page.keyboard.press("Escape");
             });
         });
     });
@@ -179,18 +237,18 @@ test.describe("Time Range Picker Combobox", () => {
 
         test("Dropdown dark mode", async ({ story }) => {
             await test.step('Open "from" dropdown', async () => {
-                await story.locators.defaultInputFrom.click();
+                await story.locators.internal.defaultInputFrom.click();
                 await compareScreenshot(story, "from");
             });
 
             await test.step('Open "to" dropdown', async () => {
-                await story.locators.defaultInputTo.click();
+                await story.locators.internal.defaultInputTo.click();
                 await compareScreenshot(story, "to");
             });
 
             await test.step("Hover unselected option in dropdown", async () => {
-                await story.locators.defaultInputFrom.click();
-                const firstOption = story.locators.dropdownList
+                await story.locators.internal.defaultInputFrom.click();
+                const firstOption = story.locators.internal.dropdownList
                     .getByRole("option")
                     .first();
                 await firstOption.hover();
@@ -198,12 +256,12 @@ test.describe("Time Range Picker Combobox", () => {
             });
 
             await test.step("Hover selected option in dropdown", async () => {
-                await story.locators.defaultInputFrom.click();
-                const firstOption = story.locators.dropdownList
+                await story.locators.internal.defaultInputFrom.click();
+                const firstOption = story.locators.internal.dropdownList
                     .getByRole("option")
                     .first();
                 await firstOption.click();
-                await story.locators.defaultInputFrom.click();
+                await story.locators.internal.defaultInputFrom.click();
                 await firstOption.hover();
                 await compareScreenshot(story, "hover-selected-option");
             });
@@ -222,26 +280,14 @@ test.describe("Time Range Picker Combobox", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("combobox-other-variants");
-        });
-
-        test("Interval variant", async ({ story }) => {
-            await story.locators.intervalVariantInputFrom.click();
-            await compareScreenshot(story, "dropdown");
+            await story.init("combobox-24hr-variant");
         });
 
         test("24hr format variant", async ({ story }) => {
-            await story.locators.format24hrVariantInputFrom.click();
-            await compareScreenshot(story, "dropdown");
-        });
-
-        test("Limits variant", async ({ story }) => {
-            await story.locators.limitsVariantInputFrom.click();
-            await compareScreenshot(story, "dropdown");
-        });
-
-        test("Validation variant", async ({ story }) => {
-            await compareScreenshot(story, "mount");
+            await story.locators.internal.format24hrVariantInputFrom.click();
+            await compareScreenshot(story, "dropdown", {
+                fullscreen: true,
+            });
         });
     });
 
