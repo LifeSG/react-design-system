@@ -12,8 +12,6 @@ export const ProgressIndicator = <T,>({
     steps,
     currentIndex,
     displayExtractor,
-    fadeColor: _fadeColor,
-    fadePosition: _fadePosition,
     className,
     ...otherProps
 }: ProgressIndicatorProps<T>) => {
