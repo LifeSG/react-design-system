@@ -12,7 +12,7 @@ import {
     IndicatorTitleDesktop,
     IndicatorTitleTablet,
     Wrapper,
-} from "./progress-indicator.style";
+} from "./progress-indicator.styles";
 import type { ProgressIndicatorProps } from "./types";
 
 export const ProgressIndicator = <T,>({
