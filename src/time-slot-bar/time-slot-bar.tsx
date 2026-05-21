@@ -423,9 +423,9 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
                 ? styles.arrowButtonDefault
                 : styles.arrowButtonMinified;
         const arrowIcon = isLeft ? (
-            <ChevronLeftIcon className={styles.arrowIconLeft} />
+            <ChevronLeftIcon className={styles.arrowIcon} />
         ) : (
-            <ChevronRightIcon className={styles.arrowIconRight} />
+            <ChevronRightIcon className={styles.arrowIcon} />
         );
 
         return (

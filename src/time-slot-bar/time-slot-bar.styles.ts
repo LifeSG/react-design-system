@@ -61,14 +61,9 @@ export const arrowButtonRight = css`
     right: 0;
 `;
 
-export const arrowIconRight = css`
+export const arrowIcon = css`
     width: 1rem;
     height: 1rem;
-    color: ${Colour["icon-primary"]};
-`;
-
-export const arrowIconLeft = css`
-    font-size: 1rem;
     color: ${Colour["icon-primary"]};
 `;
 
