@@ -33,7 +33,8 @@ export default function Story() {
                             {
                                 type: "solid",
                                 colorType: "yellow",
-                                children: "Pending documents",
+                                children:
+                                    "Pending documents verification & background check",
                             },
                         ],
                     },

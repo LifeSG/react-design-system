@@ -57,16 +57,6 @@ test.describe("Timeline", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("pills", { mode: "dark" });
-        });
-
-        test("Status pills (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
             await story.init("numeric-offset");
         });
 
@@ -148,6 +138,16 @@ test.describe("Timeline", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("pills", { size: "mobile" });
+        });
+
+        test("Mobile - status pills", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("variants", { size: "mobile" });
         });
 
@@ -162,6 +162,26 @@ test.describe("Timeline", () => {
         });
 
         test("Mobile - all variants (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("col-span", { size: "mobile" });
+        });
+
+        test("Mobile - grid column span", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("col-span", { size: "tablet" });
+        });
+
+        test("Tablet - grid column span", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
