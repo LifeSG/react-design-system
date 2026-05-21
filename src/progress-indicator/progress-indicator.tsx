@@ -1,10 +1,8 @@
 import kebabCase from "lodash/kebabCase";
-import { useContext } from "react";
 import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
 
 import { VisuallyHidden } from "../shared/accessibility";
-import { V3_Breakpoint } from "../v3_theme";
+import { Breakpoint, parsePxOrRemValue, useDesignToken } from "../theme";
 import {
     Content,
     Indicator,
@@ -26,8 +24,10 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const theme = useContext(ThemeContext);
-    const tabletBreakpoint = V3_Breakpoint["lg-max"]({ theme });
+    const tabletBreakpointToken = useDesignToken(Breakpoint["lg-max"]);
+    const tabletBreakpoint = parsePxOrRemValue(
+        tabletBreakpointToken || "1200px"
+    );
     const isTablet = useMediaQuery({
         maxWidth: tabletBreakpoint,
     });

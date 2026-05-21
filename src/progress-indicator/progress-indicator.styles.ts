@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
+import { Colour, MediaQuery, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
-import { V3_Colour, V3_MediaQuery, V3_Radius, V3_Spacing } from "../v3_theme";
 
 // Units in rem
 export const INDICATOR_BAR_MARGIN_RIGHT_TABLET = 0.5;
@@ -23,11 +23,11 @@ export const Wrapper = styled.div`
 
     margin: 2rem 0;
 
-    ${V3_MediaQuery.MaxWidth.xl} {
+    ${MediaQuery.MaxWidth.xl} {
         margin: 1.5rem 0;
     }
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         margin: 1rem 0;
     }
 `;
@@ -41,15 +41,15 @@ export const Content = styled.div`
 
 export const IndicatorBar = styled.div<IndicatorProps>`
     height: 4px;
-    margin-bottom: ${V3_Spacing["spacing-8"]};
-    border-radius: ${V3_Radius["full"]};
+    margin-bottom: ${Spacing["spacing-8"]};
+    border-radius: ${Radius["full"]};
     ${(props) => {
         const { $highlighted } = props;
         const color = $highlighted
-            ? V3_Colour["bg-primary-subtle"]
-            : V3_Colour["bg-disabled"];
+            ? Colour["bg-primary-subtle"]
+            : Colour["bg-disabled"];
         return `
-            background-color: ${color(props)};
+            background-color: ${color};
         `;
     }};
 `;
@@ -59,15 +59,15 @@ export const IndicatorTitleDesktop = styled(Typography.BodyMD)<IndicatorProps>`
     ${(props) => {
         const { $highlighted } = props;
         const color = $highlighted
-            ? V3_Colour["text-primary"]
-            : V3_Colour["text-disabled"];
-        return `color: ${color(props)};`;
+            ? Colour["text-primary"]
+            : Colour["text-disabled"];
+        return `color: ${color};`;
     }};
 `;
 
 export const IndicatorTitleTablet = styled(Typography.BodyMD)`
     overflow-wrap: anywhere;
-    color: ${V3_Colour.text};
+    color: ${Colour.text};
 `;
 
 export const Indicator = styled.div`
