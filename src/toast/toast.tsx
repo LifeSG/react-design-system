@@ -164,7 +164,7 @@ export const Toast = ({
         >
             <VisuallyHidden>{type}</VisuallyHidden>
             <div className={styles.contentWrapper}>
-                <div className={styles.textIconWrapper}>
+                <div className={styles.textIconWrapper} data-type={type}>
                     {renderIcon()}
                     <div className={styles.textContainer}>
                         {title && renderTitle()}
