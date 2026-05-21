@@ -4,6 +4,29 @@ import { normalizeCssLengthValue } from "./css-variable";
 import { toCssValue } from "./token-resolver";
 import { useResolveBreakpointToken } from "./use-resolve-breakpoint-token";
 
+export type BreakpointName = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+
+export const useMinWidthMediaQuery = (
+    breakpoint: BreakpointName,
+    orientation?: MediaQueryOrientation
+) =>
+    useMediaQuery({
+        minWidth: `${breakpoint}-min`,
+        orientation,
+    });
+
+export const useMaxWidthMediaQuery = (
+    breakpoint: BreakpointName,
+    orientation?: MediaQueryOrientation
+) =>
+    useMediaQuery({
+        maxWidth: `${breakpoint}-max`,
+        orientation,
+    });
+
+export const useOrientation = (orientation: MediaQueryOrientation) =>
+    useMediaQuery({ orientation });
+
 export type MediaQueryOrientation = "landscape" | "portrait";
 export const DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT = "480px";
 
@@ -103,6 +126,9 @@ export const useMediaQuery = (options: MediaQueryOptions): boolean => {
 };
 
 /**
+ * @deprecated Use `useMaxWidthMediaQuery` from `use-breakpoint-hooks` instead.
+ * This wrapper is legacy and will be removed.
+ *
  * A safer wrapper around `useMediaQuery` that guards against invalid/empty
  * max-width values (e.g. unresolved tokens), and falls back to a valid default.
  */
