@@ -12,19 +12,27 @@ const mockUseResolvedTokenValue = jest.mocked(useResolvedTokenValue);
 // Test consumer renders the hook result into the DOM so we can assert on it.
 // This avoids needing renderHook, which is only available in @testing-library/react v13+.
 const TestConsumer = ({
-    tokenName,
-    fallback,
+    breakpointOrLength,
+    fallbackLength,
 }: {
-    tokenName: string;
-    fallback?: string;
+    breakpointOrLength: string;
+    fallbackLength?: string;
 }) => {
-    const result = useResolveBreakpointToken(tokenName, fallback);
+    const result = useResolveBreakpointToken(
+        breakpointOrLength,
+        fallbackLength
+    );
 
     return <div data-testid="result">{result}</div>;
 };
 
-const renderToken = (tokenName: string, fallback?: string) => {
-    render(<TestConsumer tokenName={tokenName} fallback={fallback} />);
+const renderToken = (breakpointOrLength: string, fallbackLength?: string) => {
+    render(
+        <TestConsumer
+            breakpointOrLength={breakpointOrLength}
+            fallbackLength={fallbackLength}
+        />
+    );
 
     return screen.getByTestId("result").textContent;
 };
@@ -88,7 +96,7 @@ describe("useResolveBreakpointToken", () => {
         });
     });
 
-    describe("when tokenName is not a known breakpoint token", () => {
+    describe("when input is not a known breakpoint token", () => {
         it("returns fallback when token is unrecognised", () => {
             mockUseResolvedTokenValue.mockReturnValue("");
 

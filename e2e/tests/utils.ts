@@ -21,7 +21,16 @@ export abstract class AbstractStoryPage {
             theme?: string;
         }
     ) {
-        const orientation = options?.orientation ?? "landscape";
+        const defaultOrientation = options?.orientation ?? "landscape";
+        const initialOrientation =
+            options?.size === "desktop" ||
+            options?.size === "xl" ||
+            options?.size === "xxl"
+                ? defaultOrientation
+                : "portrait";
+        const orientation = options?.size
+            ? initialOrientation
+            : defaultOrientation;
         const initialViewport = viewport[options?.size ?? "desktop"];
         const isLandscape = initialViewport.width >= initialViewport.height;
         const shouldBeLandscape = orientation === "landscape";

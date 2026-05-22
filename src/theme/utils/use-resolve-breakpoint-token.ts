@@ -4,22 +4,26 @@ import {
     extractFdsCssVariableName,
     normalizeCssLengthValue,
 } from "./css-variable";
+import { isTokenFromSet } from "./token-resolver";
 import { useResolvedTokenValue } from "./use-design-token";
 
 type BreakpointTokenName = keyof typeof Breakpoint;
 
 const BREAKPOINT_TOKEN_SET = new Set<string>(Object.values(Breakpoint));
 
-const isBreakpointCssVariable = (
+const isBreakpointToken = (
     value: unknown
 ): value is BreakpointCSSVariableString => {
-    return typeof value === "string" && BREAKPOINT_TOKEN_SET.has(value);
+    return isTokenFromSet<BreakpointCSSVariableString>(
+        value,
+        BREAKPOINT_TOKEN_SET
+    );
 };
 
 const normalizeTokenName = (
-    tokenName: string
+    breakpointOrLength: string
 ): BreakpointTokenName | undefined => {
-    const trimmed = tokenName.trim();
+    const trimmed = breakpointOrLength.trim();
     const extractedVariableName = extractFdsCssVariableName(trimmed);
 
     if (extractedVariableName?.startsWith("--fds-breakpoint-")) {
@@ -36,15 +40,16 @@ const normalizeTokenName = (
 };
 
 /**
- * Resolves breakpoint tokens like "md-min" to concrete CSS lengths.
- * Falls back to supplied fallback when unresolved.
+ * Resolves a breakpoint token key or CSS variable (for example "md-min" or
+ * "var(--fds-breakpoint-md-min)") to a concrete CSS length.
+ * Falls back to supplied CSS length when unresolved.
  * Returns undefined when neither the token nor the fallback resolves to a valid CSS length.
  */
 export const useResolveBreakpointToken = (
-    tokenName: string,
-    fallback?: string
+    breakpointOrLength: string,
+    fallbackLength?: string
 ): string | undefined => {
-    const normalizedTokenName = normalizeTokenName(tokenName);
+    const normalizedTokenName = normalizeTokenName(breakpointOrLength);
     const cssVariableToken = normalizedTokenName
         ? Breakpoint[normalizedTokenName]
         : undefined;
@@ -53,21 +58,13 @@ export const useResolveBreakpointToken = (
         string
     >({
         value: cssVariableToken,
-        fallback: fallback ?? tokenName,
-        isToken: isBreakpointCssVariable,
+        fallback: fallbackLength ?? breakpointOrLength,
+        isToken: isBreakpointToken,
         normalizeCustom: (value) => value,
     });
-    const normalizedResolvedTokenValue =
-        normalizeCssLengthValue(resolvedTokenValue);
-    const normalizedFallback = normalizeCssLengthValue(fallback);
 
-    if (normalizedResolvedTokenValue) {
-        return normalizedResolvedTokenValue;
-    }
-
-    if (normalizedFallback) {
-        return normalizedFallback;
-    }
-
-    return undefined;
+    return (
+        normalizeCssLengthValue(resolvedTokenValue) ??
+        normalizeCssLengthValue(fallbackLength)
+    );
 };

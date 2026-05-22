@@ -5,7 +5,7 @@ import type { CSSVariableString } from "../types";
 type InlineCssVariables = Record<`--${string}`, string>;
 
 const DEFAULT_FONT_SIZE_PX = 16;
-const CSS_PX_OR_REM_PATTERN = /^-?\d*\.?\d+(px|rem)$/i;
+const CSS_PX_OR_REM_CAPTURE_PATTERN = /^(-?\d*\.?\d+)(px|rem)$/i;
 
 /**
  * Extracts an fds CSS variable name from raw token input.
@@ -64,7 +64,7 @@ export function parseCSSVariableValue(
  */
 export function parsePxOrRemValue(cssValue: string): number {
     const value = cssValue.trim();
-    const match = /^(-?\d*\.?\d+)(px|rem)$/i.exec(value);
+    const match = CSS_PX_OR_REM_CAPTURE_PATTERN.exec(value);
     if (!match) return 0;
 
     const parsedValue = Number.parseFloat(match[1]);
@@ -100,13 +100,11 @@ export const normalizeCssLengthValue = (
         return trimmedValue;
     }
 
-    if (!CSS_PX_OR_REM_PATTERN.test(trimmedValue)) {
+    if (!CSS_PX_OR_REM_CAPTURE_PATTERN.test(trimmedValue)) {
         return undefined;
     }
 
-    const parsedValue = parsePxOrRemValue(trimmedValue);
-
-    return Number.isFinite(parsedValue) ? trimmedValue : undefined;
+    return trimmedValue;
 };
 
 const mergeInlineCssVariables = (

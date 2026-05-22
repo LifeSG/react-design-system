@@ -118,7 +118,7 @@ test.describe("Theme media query", () => {
 
         test("landscape orientation detection", async ({ story }) => {
             await story.init("media-query", {
-                size: "mobile",
+                size: "desktop",
                 orientation: "landscape",
             });
 
