@@ -14,6 +14,7 @@ export interface TimeSlotStyleProps {
     $hoverBgColor?: string;
     $hoverBgColor2?: string;
     $clickable?: boolean;
+    $nonClickableCursor?: "default" | "not-allowed";
 }
 
 // =============================================================================
@@ -22,7 +23,8 @@ export interface TimeSlotStyleProps {
 
 export const StyledTimeSlot = styled.div<TimeSlotStyleProps>`
     background-color: ${({ $bgColor }) => $bgColor};
-    cursor: ${({ $clickable }) => ($clickable ? "pointer" : "default")};
+    cursor: ${({ $clickable, $nonClickableCursor }) =>
+        $clickable ? "pointer" : $nonClickableCursor || "default"};
     ${({ $hoverBgColor, $clickable }) =>
         $hoverBgColor &&
         $clickable &&
@@ -38,9 +40,9 @@ export const StyledTimeSlot = styled.div<TimeSlotStyleProps>`
             background: repeating-linear-gradient(
                 135deg,
                 ${props.$bgColor2 || Colour["bg-strongest"]} 0px,
-                ${props.$bgColor2 || Colour["bg-strongest"]} 10px,
-                ${props.$bgColor || Colour["bg-stronger"]} 10px,
-                ${props.$bgColor || Colour["bg-stronger"]} 20px
+                ${props.$bgColor2 || Colour["bg-strongest"]} 6px,
+                ${props.$bgColor || Colour["bg-stronger"]} 6px,
+                ${props.$bgColor || Colour["bg-stronger"]} 12px
             );
             ${(props.$hoverBgColor || props.$hoverBgColor2) &&
             props.$clickable &&

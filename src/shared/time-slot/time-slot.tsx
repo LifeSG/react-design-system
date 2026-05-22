@@ -5,7 +5,7 @@ import * as styles from "./time-slot.styles";
 import type { SlotStyle } from "./types";
 
 export interface TimeSlotProps {
-    ["data-testid"]?: string | undefined;
+    "data-testid"?: string | undefined;
     bgColor: string | ((props: V3_ThemeStyleProps) => string);
     bgColor2?: string | ((props: V3_ThemeStyleProps) => string) | undefined;
     children?: ReactNode;
@@ -16,6 +16,7 @@ export interface TimeSlotProps {
         | string
         | ((props: V3_ThemeStyleProps) => string)
         | undefined;
+    nonClickableCursor?: "default" | "not-allowed" | undefined;
     onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
     styleType: SlotStyle;
 }
@@ -29,6 +30,7 @@ export const TimeSlot = ({
     clickable,
     hoverBgColor,
     hoverBgColor2,
+    nonClickableCursor,
     onClick,
     styleType,
 }: TimeSlotProps) => (
@@ -39,6 +41,7 @@ export const TimeSlot = ({
         $clickable={clickable}
         $hoverBgColor={hoverBgColor}
         $hoverBgColor2={hoverBgColor2}
+        $nonClickableCursor={nonClickableCursor}
         $styleType={styleType}
         onClick={onClick}
         data-testid={dataTestId}
