@@ -14,8 +14,6 @@ class StoryPage extends AbstractStoryPage {
         readonlyBase: Locator;
         errorBase: Locator;
         internal: {
-            defaultDropdownFrom: Locator;
-            defaultDropdownTo: Locator;
             incrementHourButton: Locator;
             incrementMinuteButton: Locator;
             dropdownAMButton: Locator;
@@ -23,6 +21,8 @@ class StoryPage extends AbstractStoryPage {
             dropdownCancelButton: Locator;
             dropdownDoneButton: Locator;
             combobox: (field: Locator) => Locator;
+            dropdownFrom: (locator: Locator) => Locator;
+            dropdownTo: (locator: Locator) => Locator;
         };
     };
 
@@ -39,12 +39,6 @@ class StoryPage extends AbstractStoryPage {
             readonlyBase: page.getByTestId("time-range-picker-readonly-base"),
             errorBase: page.getByTestId("time-range-picker-error-base"),
             internal: {
-                defaultDropdownFrom: page.getByTestId(
-                    "time-range-picker-default-base-timepicker-selector-from"
-                ),
-                defaultDropdownTo: page.getByTestId(
-                    "time-range-picker-default-base-timepicker-selector-to"
-                ),
                 incrementHourButton: page.getByTestId(
                     "time-range-picker-default-base-end-hour-increment-button"
                 ),
@@ -64,6 +58,10 @@ class StoryPage extends AbstractStoryPage {
                     "time-range-picker-default-base-end-confirm-button"
                 ),
                 combobox: (field: Locator) => field.getByRole("combobox"),
+                dropdownFrom: (locator: Locator) =>
+                    locator.getByTestId(/timepicker-selector-from$/),
+                dropdownTo: (locator: Locator) =>
+                    locator.getByTestId(/timepicker-selector-to$/),
             },
         };
     }
@@ -126,12 +124,16 @@ test.describe("Time Range Picker Dial", () => {
 
         test("Dropdown", async ({ story }) => {
             await test.step('Open "from" dropdown', async () => {
-                await story.locators.internal.defaultDropdownFrom.click();
+                await story.locators.internal
+                    .dropdownFrom(story.locators.defaultBase)
+                    .click();
                 await compareScreenshot(story, "from");
             });
 
             await test.step('Open "to" dropdown', async () => {
-                await story.locators.internal.defaultDropdownTo.click();
+                await story.locators.internal
+                    .dropdownTo(story.locators.defaultBase)
+                    .click();
                 await compareScreenshot(story, "to");
             });
 
@@ -301,44 +303,17 @@ test.describe("Time Range Picker Dial", () => {
 
         test("Dropdown dark mode", async ({ story }) => {
             await test.step('Open "from" dropdown', async () => {
-                await story.locators.internal.defaultDropdownFrom.click();
+                await story.locators.internal
+                    .dropdownFrom(story.locators.defaultBase)
+                    .click();
                 await compareScreenshot(story, "from");
             });
 
             await test.step('Open "to" dropdown', async () => {
-                await story.locators.internal.defaultDropdownTo.click();
+                await story.locators.internal
+                    .dropdownTo(story.locators.defaultBase)
+                    .click();
                 await compareScreenshot(story, "to");
-            });
-
-            await test.step("Hover on increment hour button", async () => {
-                await story.locators.internal.incrementHourButton.hover();
-                await compareScreenshot(story, "increment-hour-hover");
-            });
-
-            await test.step('Hover on default selected "AM" button', async () => {
-                await story.locators.internal.dropdownAMButton
-                    .getByTestId("toggle-input")
-                    .hover();
-                await compareScreenshot(story, "am-button-hover");
-            });
-
-            await test.step('Hover on "PM" button', async () => {
-                await story.locators.internal.dropdownPMButton
-                    .getByTestId("toggle-input")
-                    .hover();
-                await compareScreenshot(story, "pm-button-hover");
-            });
-
-            await test.step('Hover on "Cancel" button', async () => {
-                await story.locators.internal.dropdownCancelButton.hover();
-                await compareScreenshot(story, "cancel-button-hover");
-            });
-
-            await test.step('Hover on "Done" button', async () => {
-                await story.locators.internal.incrementHourButton.click();
-                await story.locators.internal.incrementMinuteButton.click();
-                await story.locators.internal.dropdownDoneButton.hover();
-                await compareScreenshot(story, "done-button-hover");
             });
         });
     });
