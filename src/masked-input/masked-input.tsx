@@ -19,7 +19,7 @@ import {
     ReadOnlyValueText,
     Spinner,
     TryAgainLabel,
-} from "./masked-input.style";
+} from "./masked-input.styles";
 import type { MaskedInputProps } from "./types";
 
 const Component = (
