@@ -7,44 +7,44 @@ import { BasicButton } from "../shared/input-wrapper";
 import { Colour, Font, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
+export const tokens = {
+    iconContainer: {
+        inactiveColor: "--fds-internal-maskedInput-iconContainer-inactiveColor",
+        activeColor: "--fds-internal-maskedInput-iconContainer-activeColor",
+    },
+};
 
-interface InputGroupWrapperProps {
-    readOnly: boolean | undefined;
-    $isDisabled: boolean | undefined;
-}
+export const InputGroupWrapper = styled(InputGroup)`
+    padding: 0 0 0 ${Spacing["spacing-16"]};
 
-interface IconProps {
-    $isDisabled?: boolean;
-    $inactiveColor: string | undefined;
-    $activeColor: string | undefined;
-}
+    &.inputGroupWrapperReadOnly {
+        padding: 0;
+    }
 
-// =============================================================================
-// STYLING
-// =============================================================================
-
-export const InputGroupWrapper = styled(InputGroup)<InputGroupWrapperProps>`
-    padding: 0 0 0 ${({ readOnly }) => (readOnly ? "0" : Spacing["spacing-16"])};
     input {
-        cursor: ${({ readOnly, $isDisabled }) =>
-            readOnly && !$isDisabled ? "pointer" : "initial"};
+        cursor: initial;
+    }
+
+    &.inputGroupWrapperReadOnly:not(.inputGroupWrapperDisabled) input {
+        cursor: pointer;
     }
 `;
 
-export const IconContainer = styled.div<IconProps>`
+export const IconContainer = styled.div`
+    ${tokens.iconContainer.inactiveColor}: initial;
+    ${tokens.iconContainer.activeColor}: initial;
+
     display: flex;
     align-items: center;
     justify-content: center;
-    cursor: ${({ $isDisabled }) => (!$isDisabled ? "pointer" : "initial")};
-    color: ${({
-        $isDisabled,
-        $inactiveColor = Colour.icon,
-        $activeColor = Colour["icon-primary"],
-    }) => ($isDisabled ? $inactiveColor : $activeColor)};
+    cursor: pointer;
+    color: var(${tokens.iconContainer.activeColor}, ${Colour["icon-primary"]});
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
+
+    &.iconContainerDisabled {
+        cursor: initial;
+        color: var(${tokens.iconContainer.inactiveColor}, ${Colour.icon});
+    }
 
     svg {
         height: 1em;
