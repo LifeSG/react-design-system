@@ -12,12 +12,12 @@ import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import type { InternalCalendarProps } from "../shared/internal-calendar";
 import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
 import { DayCell } from "../shared/internal-calendar/day-cell";
+import { Colour } from "../theme";
 import type { TimeSlot } from "../time-slot-bar/types";
 import { DateHelper } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
 import { StringHelper } from "../util/string-helper";
 import { TimeHelper } from "../util/time-helper";
-import { V3_Colour } from "../v3_theme";
 import {
     CellWeekText,
     ChevronIcon,
@@ -329,7 +329,7 @@ export const TimeSlotBarWeekDays = ({
             clickable: false,
             isActualSlot: false,
             styleAttributes: {
-                backgroundColor: V3_Colour["bg-stronger"],
+                backgroundColor: Colour["bg-stronger"],
             },
             cellLength,
         };

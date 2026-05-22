@@ -1,5 +1,5 @@
 import { fireEvent, render, screen, within } from "@testing-library/react";
-import { V3_Colour } from "src";
+import { Colour } from "src/theme";
 import { TimeSlotBar } from "src/time-slot-bar/time-slot-bar";
 import type { TimeSlot } from "src/time-slot-bar/types";
 
@@ -23,7 +23,7 @@ describe("TimeSlotBar", () => {
             label: "Meeting 2",
             clickable: false,
             styleAttributes: {
-                backgroundColor: V3_Colour["bg-available"],
+                backgroundColor: Colour["bg-available"],
             },
         },
     ];

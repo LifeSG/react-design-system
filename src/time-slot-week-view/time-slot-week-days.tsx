@@ -8,10 +8,10 @@ import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import type { InternalCalendarProps } from "../shared/internal-calendar";
 import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
 import { DayCell } from "../shared/internal-calendar/day-cell";
+import { Colour } from "../theme";
 import type { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
 import { TimeHelper } from "../util/time-helper";
-import { V3_Colour } from "../v3_theme";
 import {
     ColumnWeekCell,
     DayLabel,
@@ -54,8 +54,8 @@ const fallbackSlot: TimeSlot = {
     styleAttributes: {
         color: "",
         styleType: "stripes",
-        backgroundColor: V3_Colour["bg-stronger"],
-        backgroundColor2: V3_Colour["bg-strongest"],
+        backgroundColor: Colour["bg-stronger"],
+        backgroundColor2: Colour["bg-strongest"],
     },
 };
 
