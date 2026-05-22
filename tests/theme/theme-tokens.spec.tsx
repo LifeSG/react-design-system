@@ -23,4 +23,11 @@ describe("Theme Tokens", () => {
             xxl: ":where(body.fds-breakpoint-xxl-min) &",
         });
     });
+
+    it("maps Orientation values to native media queries", () => {
+        expect(MediaQuery.Orientation).toEqual({
+            landscape: "@media (orientation: landscape)",
+            portrait: "@media (orientation: portrait)",
+        });
+    });
 });

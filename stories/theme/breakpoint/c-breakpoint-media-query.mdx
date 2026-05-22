@@ -46,6 +46,23 @@ const isLandscape = useOrientation("landscape");
 `minWidth` and `maxWidth` accept breakpoint tokens like `"md-min"` and
 `"sm-max"` in addition to concrete values like `"768px"`.
 
+For CSS-in-JS selectors, `MediaQuery.Orientation` can be used in the same style
+as other media query tokens.
+
+```tsx
+import { MediaQuery } from "@lifesg/react-design-system/theme";
+
+const styles = css`
+    ${MediaQuery.Orientation.landscape} {
+        // styles
+    }
+
+    ${MediaQuery.Orientation.portrait} {
+        // styles
+    }
+`;
+```
+
 ## SSR behavior
 
 The hooks are safe to render on the server. They return a deterministic
