@@ -1,11 +1,6 @@
-import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { InputGroup } from "../input-group";
-import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
-import { BasicButton } from "../shared/input-wrapper";
 import { Colour, Font, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 export const tokens = {
     iconContainer: {
@@ -14,23 +9,27 @@ export const tokens = {
     },
 };
 
-export const InputGroupWrapper = styled(InputGroup)`
+export const inputGroupWrapper = css`
     padding: 0 0 0 ${Spacing["spacing-16"]};
+`;
 
-    &.inputGroupWrapperReadOnly {
-        padding: 0;
-    }
+export const inputGroupWrapperReadOnly = css`
+    padding: 0;
+`;
 
+export const inputGroupWrapperInput = css`
     input {
         cursor: initial;
     }
+`;
 
-    &.inputGroupWrapperReadOnly:not(.inputGroupWrapperDisabled) input {
+export const inputGroupWrapperInputPointer = css`
+    input {
         cursor: pointer;
     }
 `;
 
-export const IconContainer = styled.div`
+export const iconContainer = css`
     ${tokens.iconContainer.inactiveColor}: initial;
     ${tokens.iconContainer.activeColor}: initial;
 
@@ -41,63 +40,56 @@ export const IconContainer = styled.div`
     color: var(${tokens.iconContainer.activeColor}, ${Colour["icon-primary"]});
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
 
-    &.iconContainerDisabled {
-        cursor: initial;
-        color: var(${tokens.iconContainer.inactiveColor}, ${Colour.icon});
-    }
-
     svg {
         height: 1em;
         width: 1em;
     }
 `;
 
-// -----------------------------------------------------------------------------
-// LOADING DISPLAY
-// -----------------------------------------------------------------------------
-export const LoadingWrapper = styled.div`
+export const iconContainerDisabled = css`
+    cursor: initial;
+    color: var(${tokens.iconContainer.inactiveColor}, ${Colour.icon});
+`;
+
+export const loadingWrapper = css`
     display: flex;
     align-items: center;
     height: 3rem;
 `;
 
-export const LoadingLabel = styled(Typography.BodyBL)`
+export const loadingLabel = css`
     color: ${Colour["text-subtler"]};
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)`
+export const spinner = css`
     margin-right: ${Spacing["spacing-8"]};
     color: ${Colour["icon"]};
 `;
 
-// -----------------------------------------------------------------------------
-// ERROR DISPLAY
-// -----------------------------------------------------------------------------
-
-export const TryAgainLabel = styled.span`
+export const tryAgainLabel = css`
     color: ${Colour["text-primary"]};
     text-decoration: underline;
     font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
-export const ErrorTextContainer = styled.span`
+export const errorTextContainer = css`
     display: flex;
     align-items: center;
     margin-right: ${Spacing["spacing-8"]};
 `;
 
-export const ErrorIcon = styled(ExclamationTriangleIcon)`
+export const errorIcon = css`
     color: ${Colour["icon-warning"]};
     margin-right: ${Spacing["spacing-8"]};
     height: 1em;
     width: 1em;
 `;
 
-export const ErrorLabel = styled.span`
+export const errorLabel = css`
     color: ${Colour["text-warning"]};
 `;
 
-export const ClickableErrorWrapper = styled(BasicButton)`
+export const clickableErrorWrapper = css`
     width: 100%;
     height: 3rem;
     display: flex;
@@ -108,19 +100,19 @@ export const ClickableErrorWrapper = styled(BasicButton)`
     cursor: pointer;
 
     ${Font["body-baseline-regular"]}
+`;
 
-    &:hover, &:active, &:focus {
-        ${TryAgainLabel} {
+export const clickableErrorWrapperHover = css`
+    &:hover,
+    &:active,
+    &:focus {
+        .${tryAgainLabel} {
             color: ${Colour["text-hover"]};
         }
     }
 `;
 
-// -----------------------------------------------------------------------------
-// READONLY MASKED DISPLAY
-// -----------------------------------------------------------------------------
-
-export const ReadOnlyClickable = styled.button`
+export const readOnlyClickable = css`
     ${Font["body-baseline-regular"]}
     color: ${Colour["text"]};
     border: none;
@@ -134,11 +126,11 @@ export const ReadOnlyClickable = styled.button`
     min-height: 3rem;
 `;
 
-export const ReadOnlyValueText = styled.span`
+export const readOnlyValueText = css`
     overflow-wrap: anywhere;
 `;
 
-export const ReadOnlyIconContainer = styled.span`
+export const readOnlyIconContainer = css`
     display: flex;
     align-items: center;
     justify-content: center;
