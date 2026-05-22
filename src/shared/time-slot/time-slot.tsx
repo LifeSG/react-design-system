@@ -19,6 +19,7 @@ export interface TimeSlotProps {
     nonClickableCursor?: "default" | "not-allowed" | undefined;
     onClick?: React.MouseEventHandler<HTMLDivElement> | undefined;
     styleType: SlotStyle;
+    tabIndex?: number | undefined;
 }
 
 export const TimeSlot = ({
@@ -33,6 +34,7 @@ export const TimeSlot = ({
     nonClickableCursor,
     onClick,
     styleType,
+    tabIndex,
 }: TimeSlotProps) => (
     <styles.StyledTimeSlot
         className={className}
@@ -45,6 +47,7 @@ export const TimeSlot = ({
         $styleType={styleType}
         onClick={onClick}
         data-testid={dataTestId}
+        tabIndex={tabIndex}
     >
         {children}
     </styles.StyledTimeSlot>

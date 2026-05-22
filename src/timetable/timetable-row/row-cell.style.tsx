@@ -1,21 +1,20 @@
 import styled, { css } from "styled-components";
 
+import { TimeSlot } from "../../shared/time-slot";
 import { Border, Colour, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
-import type { V3_ThemeStyleProps } from "../../v3_theme";
-import type { TimeTableCellType } from "../types";
+
+export const tokens = {
+    block: {
+        mainColor: "--fds-internal-timetable-rowCellBlock-mainColor",
+        altColor: "--fds-internal-timetable-rowCellBlock-altColor",
+    },
+};
 
 interface BlockStyleProps {
     $width: number;
-    $status: TimeTableCellType;
     $mainColor: string;
     $altColor: string;
-    $isClickable?: boolean;
-    $customMainColor?: string | undefined;
-    $customAltColor?: string | undefined;
-    $customHoverColor?: string | undefined;
-    $customAltHoverColor?: string | undefined;
-    $styleType?: "default" | "solid" | "stripes" | undefined;
 }
 
 interface BlockContainerProps {
@@ -44,101 +43,15 @@ export const Gap = styled.div`
     height: 100%;
 `;
 
-export const Block = styled.div<BlockStyleProps>`
+export const Block = styled(TimeSlot)<BlockStyleProps>`
     height: 100%;
     width: ${({ $width }) => `${$width}px`};
     border-radius: ${Radius["sm"]};
     box-sizing: border-box;
     padding: ${Spacing["spacing-4"]};
-    ${({
-        $status,
-        $mainColor,
-        $isClickable,
-        $altColor,
-        $customMainColor,
-        $customAltColor,
-        $customHoverColor,
-        $customAltHoverColor,
-        $styleType,
-    }) => {
-        // Map status to default colors, cursor behavior, and style type
-        const statusDefaults: Record<
-            TimeTableCellType,
-            {
-                mainColor?: string | ((props: V3_ThemeStyleProps) => string);
-                altColor?: string | ((props: V3_ThemeStyleProps) => string);
-                hoverColor?: string | ((props: V3_ThemeStyleProps) => string);
-                defaultStyleType: "solid" | "stripes";
-                nonClickablePointer?: "default" | "not-allowed";
-            }
-        > = {
-            blocked: {
-                mainColor: Colour["bg-stronger"],
-                altColor: Colour["bg-strongest"],
-                defaultStyleType: "stripes",
-                nonClickablePointer: "not-allowed",
-            },
-            filled: {
-                mainColor: $mainColor,
-                defaultStyleType: "solid",
-            },
-            disabled: {
-                mainColor: Colour["bg-disabled"],
-                defaultStyleType: "solid",
-                nonClickablePointer: "not-allowed",
-            },
-            pending: {
-                mainColor: $mainColor,
-                altColor: $altColor,
-                defaultStyleType: "stripes",
-                nonClickablePointer: "not-allowed",
-            },
-            default: {
-                hoverColor: Colour["bg-hover-subtle"],
-                defaultStyleType: "solid",
-            },
-        };
 
-        const defaults = statusDefaults[$status];
-        const effectiveStyleType =
-            $styleType === "default" || !$styleType
-                ? defaults.defaultStyleType
-                : $styleType;
-        const cursor = $isClickable
-            ? "pointer"
-            : defaults.nonClickablePointer || "default";
-
-        if (effectiveStyleType === "stripes") {
-            return css`
-                background: repeating-linear-gradient(
-                    135deg,
-                    ${$customMainColor || defaults.mainColor || ""} 0px 6px,
-                    ${$customAltColor || defaults.altColor || ""} 6px 12px
-                );
-                &:hover {
-                    ${$isClickable &&
-                    css`
-                        background: repeating-linear-gradient(
-                            135deg,
-                            ${$customHoverColor || ""} 0px 6px,
-                            ${$customAltHoverColor || ""} 6px 12px
-                        );
-                    `}
-                    cursor: ${cursor};
-                }
-            `;
-        } else {
-            return css`
-                background: ${$customMainColor || defaults.mainColor};
-                &:hover {
-                    background-color: ${$isClickable
-                        ? $customHoverColor || defaults.hoverColor
-                        : ""};
-                    cursor: ${cursor};
-                }
-            `;
-        }
-    }}
+    ${tokens.block.mainColor}: ${({ $mainColor }) => $mainColor};
+    ${tokens.block.altColor}: ${({ $altColor }) => $altColor};
 `;
 
 export const BlockTitle = styled(Typography.BodySM)`
