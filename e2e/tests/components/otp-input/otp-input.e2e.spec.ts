@@ -65,7 +65,7 @@ test.describe("OTP Input", () => {
                 story.locators.otpDefault
             );
             await expect(resendBtn).toBeEnabled();
-            await compareScreenshot(story, "mount");
+            await compareScreenshot(story, "mount", { fullscreen: true });
 
             await expect(story.locators.otpDefault).toMatchAriaSnapshot(`
                 - group "6-digit OTP input field":
@@ -112,7 +112,9 @@ test.describe("OTP Input", () => {
         });
 
         test("Default (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
+            await compareScreenshot(story, "mount", {
+                locator: story.locators.otpDefault,
+            });
         });
     });
 
