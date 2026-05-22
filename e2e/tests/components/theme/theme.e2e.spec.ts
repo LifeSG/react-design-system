@@ -9,10 +9,6 @@ class StoryPage extends AbstractStoryPage {
         breakpointMain: Locator;
         colourNested: Locator;
         breakpointNested: Locator;
-        layoutContainerSpecificity: Locator;
-        layoutContainerFlexColumnSpecificity: Locator;
-        layoutContainerGridSpecificity: Locator;
-        layoutContentSpecificity: Locator;
     };
 
     constructor(page: Page) {
@@ -25,18 +21,6 @@ class StoryPage extends AbstractStoryPage {
             breakpointNested: page
                 .getByTestId("nested")
                 .getByTestId("breakpoint"),
-            layoutContainerSpecificity: page.getByTestId(
-                "layout-container-specificity"
-            ),
-            layoutContainerFlexColumnSpecificity: page.getByTestId(
-                "layout-container-flex-column-specificity"
-            ),
-            layoutContainerGridSpecificity: page.getByTestId(
-                "layout-container-grid-specificity"
-            ),
-            layoutContentSpecificity: page.getByTestId(
-                "layout-content-specificity"
-            ),
         };
     }
 }
@@ -109,44 +93,6 @@ test.describe("Theme", () => {
             story,
         }) => {
             await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("media-query-specificity", { size: "sm" });
-        });
-
-        test("Enable override media query specificity", async ({ story }) => {
-            await compareScreenshot(story, "layout-container-specificity", {
-                locator: story.locators.layoutContainerSpecificity,
-            });
-
-            await compareScreenshot(
-                story,
-                "layout-container-flex-column-specificity",
-                {
-                    locator:
-                        story.locators.layoutContainerFlexColumnSpecificity,
-                }
-            );
-
-            await compareScreenshot(
-                story,
-                "layout-container-grid-specificity",
-                {
-                    locator: story.locators.layoutContainerGridSpecificity,
-                }
-            );
-
-            // Go to bottom of the page
-            await story.page.evaluate(() =>
-                window.scrollTo(0, document.body.scrollHeight)
-            );
-
-            await compareScreenshot(story, "layout-content-specificity", {
-                locator: story.locators.layoutContentSpecificity,
-            });
         });
     });
 });

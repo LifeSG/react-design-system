@@ -15,12 +15,28 @@ export abstract class AbstractStoryPage {
         story: string,
         options?: {
             size?: keyof typeof viewport;
+            orientation?: "landscape" | "portrait";
             mode?: "light" | "dark" | "auto";
             mockedTimestamp?: string;
             theme?: string;
         }
     ) {
-        await this.page.setViewportSize(viewport[options?.size ?? "desktop"]);
+        const orientation = options?.orientation ?? "landscape";
+        const initialViewport = viewport[options?.size ?? "desktop"];
+        const isLandscape = initialViewport.width >= initialViewport.height;
+        const shouldBeLandscape = orientation === "landscape";
+        const shouldBePortrait = orientation === "portrait";
+        const shouldSwap =
+            (shouldBeLandscape && !isLandscape) ||
+            (shouldBePortrait && isLandscape);
+        const resolvedViewport = shouldSwap
+            ? {
+                  width: initialViewport.height,
+                  height: initialViewport.width,
+              }
+            : initialViewport;
+
+        await this.page.setViewportSize(resolvedViewport);
 
         if (options?.mode && options.mode !== "auto") {
             await this.page.emulateMedia({
