@@ -4,8 +4,8 @@ import styled from "styled-components";
 import { InputGroup } from "../input-group";
 import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
 import { BasicButton } from "../shared/input-wrapper";
+import { Colour, Font, Spacing } from "../theme";
 import { Typography } from "../typography";
-import { V3_Colour, V3_Font, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -27,8 +27,7 @@ interface IconProps {
 // =============================================================================
 
 export const InputGroupWrapper = styled(InputGroup)<InputGroupWrapperProps>`
-    padding: 0 0 0
-        ${({ readOnly }) => (readOnly ? "0" : V3_Spacing["spacing-16"])};
+    padding: 0 0 0 ${({ readOnly }) => (readOnly ? "0" : Spacing["spacing-16"])};
     input {
         cursor: ${({ readOnly, $isDisabled }) =>
             readOnly && !$isDisabled ? "pointer" : "initial"};
@@ -42,10 +41,10 @@ export const IconContainer = styled.div<IconProps>`
     cursor: ${({ $isDisabled }) => (!$isDisabled ? "pointer" : "initial")};
     color: ${({
         $isDisabled,
-        $inactiveColor = V3_Colour.icon,
-        $activeColor = V3_Colour["icon-primary"],
+        $inactiveColor = Colour.icon,
+        $activeColor = Colour["icon-primary"],
     }) => ($isDisabled ? $inactiveColor : $activeColor)};
-    padding: ${V3_Spacing["spacing-12"]} ${V3_Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
 
     svg {
         height: 1em;
@@ -63,12 +62,12 @@ export const LoadingWrapper = styled.div`
 `;
 
 export const LoadingLabel = styled(Typography.BodyBL)`
-    color: ${V3_Colour["text-subtler"]};
+    color: ${Colour["text-subtler"]};
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)`
-    margin-right: ${V3_Spacing["spacing-8"]};
-    color: ${V3_Colour["icon"]};
+    margin-right: ${Spacing["spacing-8"]};
+    color: ${Colour["icon"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -76,26 +75,26 @@ export const Spinner = styled(ComponentLoadingSpinner)`
 // -----------------------------------------------------------------------------
 
 export const TryAgainLabel = styled.span`
-    color: ${V3_Colour["text-primary"]};
+    color: ${Colour["text-primary"]};
     text-decoration: underline;
-    font-weight: ${V3_Font.Spec["weight-semibold"]};
+    font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
 export const ErrorTextContainer = styled.span`
     display: flex;
     align-items: center;
-    margin-right: ${V3_Spacing["spacing-8"]};
+    margin-right: ${Spacing["spacing-8"]};
 `;
 
 export const ErrorIcon = styled(ExclamationTriangleIcon)`
-    color: ${V3_Colour["icon-warning"]};
-    margin-right: ${V3_Spacing["spacing-8"]};
+    color: ${Colour["icon-warning"]};
+    margin-right: ${Spacing["spacing-8"]};
     height: 1em;
     width: 1em;
 `;
 
 export const ErrorLabel = styled.span`
-    color: ${V3_Colour["text-warning"]};
+    color: ${Colour["text-warning"]};
 `;
 
 export const ClickableErrorWrapper = styled(BasicButton)`
@@ -108,11 +107,11 @@ export const ClickableErrorWrapper = styled(BasicButton)`
     background: transparent;
     cursor: pointer;
 
-    ${V3_Font["body-baseline-regular"]}
+    ${Font["body-baseline-regular"]}
 
     &:hover, &:active, &:focus {
         ${TryAgainLabel} {
-            color: ${V3_Colour["text-hover"]};
+            color: ${Colour["text-hover"]};
         }
     }
 `;
@@ -122,8 +121,8 @@ export const ClickableErrorWrapper = styled(BasicButton)`
 // -----------------------------------------------------------------------------
 
 export const ReadOnlyClickable = styled.button`
-    ${V3_Font["body-baseline-regular"]}
-    color: ${V3_Colour["text"]};
+    ${Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
     border: none;
     background: transparent;
     display: flex;
@@ -143,12 +142,12 @@ export const ReadOnlyIconContainer = styled.span`
     display: flex;
     align-items: center;
     justify-content: center;
-    color: ${V3_Colour["icon-primary"]};
+    color: ${Colour["icon-primary"]};
     padding: 0 1rem;
     flex-shrink: 0;
 
     svg {
-        width: ${V3_Font.Spec["body-size-baseline"]};
-        height: ${V3_Font.Spec["body-size-baseline"]};
+        width: ${Font.Spec["body-size-baseline"]};
+        height: ${Font.Spec["body-size-baseline"]};
     }
 `;
