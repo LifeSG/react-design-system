@@ -50,17 +50,3 @@ const isLandscape = useOrientation("landscape");
 
 The hooks are safe to render on the server. They return a deterministic
 fallback until `window.matchMedia` is available on the client.
-
-## Migration from react-responsive
-
-```tsx
-// Before
-const isMobile = useMediaQuery({ maxWidth: "480px" });
-
-// After
-const isMobile = useMediaQuery({ maxWidth: "480px" });
-// or
-const isMobile = useMediaQuery({ maxWidth: 480 });
-// or
-const isMobile = useMaxWidthMediaQuery("sm");
-```
