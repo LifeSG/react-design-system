@@ -1,4 +1,4 @@
-import { Breakpoint } from "../tokens";
+import { Breakpoint } from "../tokens/breakpoint";
 import type { BreakpointCSSVariableString } from "../types";
 import {
     extractFdsCssVariableName,
