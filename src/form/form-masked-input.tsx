@@ -16,6 +16,13 @@ const Component = (
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
+        xxsCols,
+        xsCols,
+        smCols,
+        mdCols,
+        lgCols,
+        xlCols,
+        xxlCols,
         ...otherProps
     } = props;
 
@@ -25,10 +32,18 @@ const Component = (
     return (
         <FormWrapper
             id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
             layoutType={layoutType}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
         >
             <MaskedInput
                 ref={ref}
