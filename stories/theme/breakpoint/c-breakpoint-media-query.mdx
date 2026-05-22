@@ -1,0 +1,66 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Foundations/Breakpoint/Media Query" />
+
+# Media query
+
+```tsx
+import {
+    useMaxWidthMediaQuery,
+    useMediaQuery,
+    useMinWidthMediaQuery,
+    useOrientation,
+    useSafeMaxWidthMediaQuery,
+} from "@lifesg/react-design-system/theme";
+```
+
+Use the in-house media query hooks when your component needs responsive
+behaviour in runtime logic.
+
+For CSS-in-JS breakpoint selectors, refer to
+[Breakpoint Introduction](/docs/foundations-breakpoint-introduction--docs).
+
+## Usage
+
+### Generic query
+
+```tsx
+const tabletAndUp = useMediaQuery({ minWidth: "md-min" });
+const mobileOnly = useMediaQuery({ maxWidth: "sm-max" });
+const landscapeTabletAndUp = useMediaQuery({
+    minWidth: "md-min",
+    orientation: "landscape",
+});
+```
+
+### Convenience hooks
+
+```tsx
+const desktopUp = useMinWidthMediaQuery("lg");
+const tabletDown = useMaxWidthMediaQuery("md");
+const isLandscape = useOrientation("landscape");
+```
+
+## Token support
+
+`minWidth` and `maxWidth` accept breakpoint tokens like `"md-min"` and
+`"sm-max"` in addition to concrete values like `"768px"`.
+
+## SSR behavior
+
+The hooks are safe to render on the server. They return a deterministic
+fallback until `window.matchMedia` is available on the client.
+
+## Migration from react-responsive
+
+```tsx
+// Before
+const isMobile = useMediaQuery({ maxWidth: "480px" });
+
+// After
+const isMobile = useMediaQuery({ maxWidth: "480px" });
+// or
+const isMobile = useMediaQuery({ maxWidth: 480 });
+// or
+const isMobile = useMaxWidthMediaQuery("sm");
+```
