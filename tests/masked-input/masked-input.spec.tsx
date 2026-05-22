@@ -179,4 +179,58 @@ describe("MaskedInput", () => {
             expect(tryAgainFn).toHaveBeenCalled();
         });
     });
+
+    describe("Transform input", () => {
+        it("should transform input to uppercase when transformInput is set to uppercase", () => {
+            const onChangeFn = jest.fn();
+
+            render(
+                <MaskedInput
+                    value=""
+                    transformInput="uppercase"
+                    onChange={onChangeFn}
+                />
+            );
+
+            const input = screen.getByTestId("input");
+            fireEvent.change(input, { target: { value: "Test input" } });
+
+            expect(onChangeFn).toHaveBeenCalled();
+            expect(screen.getByDisplayValue("TEST INPUT")).toBeInTheDocument();
+        });
+
+        it("should transform input to lowercase when transformInput is set to lowercase", () => {
+            const onChangeFn = jest.fn();
+
+            render(
+                <MaskedInput
+                    value=""
+                    transformInput="lowercase"
+                    onChange={onChangeFn}
+                />
+            );
+
+            const input = screen.getByTestId("input");
+            fireEvent.change(input, { target: { value: "TEST INPUT" } });
+
+            expect(onChangeFn).toHaveBeenCalled();
+            expect(screen.getByDisplayValue("test input")).toBeInTheDocument();
+        });
+    });
+
+    describe("Disable masking", () => {
+        it("should not toggle masking when icon is clicked and disableMask is true", () => {
+            render(<MaskedInput value="S1234567D" disableMask />);
+
+            expect(screen.getByDisplayValue("S1234567D")).toBeInTheDocument();
+
+            const icon = screen.queryByTestId("icon-masked");
+            if (icon) {
+                fireEvent.click(icon);
+                expect(
+                    screen.getByDisplayValue("S1234567D")
+                ).toBeInTheDocument();
+            }
+        });
+    });
 });
