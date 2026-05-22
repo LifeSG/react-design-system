@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
+import { Border, Colour, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 import type { V3_ThemeStyleProps } from "../../v3_theme";
-import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../../v3_theme";
 import type { TimeTableCellType } from "../types";
 
 interface BlockStyleProps {
@@ -11,22 +11,10 @@ interface BlockStyleProps {
     $mainColor: string;
     $altColor: string;
     $isClickable?: boolean;
-    $customMainColor?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
-    $customAltColor?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
-    $customHoverColor?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
-    $customAltHoverColor?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
+    $customMainColor?: string | undefined;
+    $customAltColor?: string | undefined;
+    $customHoverColor?: string | undefined;
+    $customAltHoverColor?: string | undefined;
     $styleType?: "default" | "solid" | "stripes" | undefined;
 }
 
@@ -35,12 +23,11 @@ interface BlockContainerProps {
 }
 
 export const BlockContainer = styled.div<BlockContainerProps>`
-    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     ${(props) => {
         if (props.$isOnTheHour) {
             return css`
-                box-shadow: inset -0.5px 0px ${V3_Colour["border-primary"]};
+                box-shadow: inset -0.5px 0px ${Colour["border-primary"]};
             `;
         }
     }}
@@ -60,9 +47,9 @@ export const Gap = styled.div`
 export const Block = styled.div<BlockStyleProps>`
     height: 100%;
     width: ${({ $width }) => `${$width}px`};
-    border-radius: ${V3_Radius["sm"]};
+    border-radius: ${Radius["sm"]};
     box-sizing: border-box;
-    padding: ${V3_Spacing["spacing-4"]};
+    padding: ${Spacing["spacing-4"]};
     ${({
         $status,
         $mainColor,
@@ -86,8 +73,8 @@ export const Block = styled.div<BlockStyleProps>`
             }
         > = {
             blocked: {
-                mainColor: V3_Colour["bg-stronger"],
-                altColor: V3_Colour["bg-strongest"],
+                mainColor: Colour["bg-stronger"],
+                altColor: Colour["bg-strongest"],
                 defaultStyleType: "stripes",
                 nonClickablePointer: "not-allowed",
             },
@@ -96,7 +83,7 @@ export const Block = styled.div<BlockStyleProps>`
                 defaultStyleType: "solid",
             },
             disabled: {
-                mainColor: V3_Colour["bg-disabled"],
+                mainColor: Colour["bg-disabled"],
                 defaultStyleType: "solid",
                 nonClickablePointer: "not-allowed",
             },
@@ -107,7 +94,7 @@ export const Block = styled.div<BlockStyleProps>`
                 nonClickablePointer: "not-allowed",
             },
             default: {
-                hoverColor: V3_Colour["bg-hover-subtle"],
+                hoverColor: Colour["bg-hover-subtle"],
                 defaultStyleType: "solid",
             },
         };
@@ -161,7 +148,7 @@ export const BlockTitle = styled(Typography.BodySM)`
 `;
 
 export const BlockDescription = styled(Typography.BodyXS)`
-    color: ${V3_Colour["text-subtler"]};
+    color: ${Colour["text-subtler"]};
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;

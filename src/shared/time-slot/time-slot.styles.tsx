@@ -1,7 +1,6 @@
 import styled, { css } from "styled-components";
 
-import { V3_Colour } from "../../v3_theme";
-import type { V3_ThemeStyleProps } from "../../v3_theme/types";
+import { Colour } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -10,10 +9,10 @@ import type { V3_ThemeStyleProps } from "../../v3_theme/types";
 
 export interface TimeSlotStyleProps {
     $styleType: "default" | "stripes";
-    $bgColor: string | ((props: V3_ThemeStyleProps) => string);
-    $bgColor2?: string | ((props: V3_ThemeStyleProps) => string);
-    $hoverBgColor?: string | ((props: V3_ThemeStyleProps) => string);
-    $hoverBgColor2?: string | ((props: V3_ThemeStyleProps) => string);
+    $bgColor: string;
+    $bgColor2?: string;
+    $hoverBgColor?: string;
+    $hoverBgColor2?: string;
     $clickable?: boolean;
 }
 
@@ -38,10 +37,10 @@ export const StyledTimeSlot = styled.div<TimeSlotStyleProps>`
         css`
             background: repeating-linear-gradient(
                 135deg,
-                ${props.$bgColor2 || V3_Colour["bg-strongest"]} 0px,
-                ${props.$bgColor2 || V3_Colour["bg-strongest"]} 10px,
-                ${props.$bgColor || V3_Colour["bg-stronger"]} 10px,
-                ${props.$bgColor || V3_Colour["bg-stronger"]} 20px
+                ${props.$bgColor2 || Colour["bg-strongest"]} 0px,
+                ${props.$bgColor2 || Colour["bg-strongest"]} 10px,
+                ${props.$bgColor || Colour["bg-stronger"]} 10px,
+                ${props.$bgColor || Colour["bg-stronger"]} 20px
             );
             ${(props.$hoverBgColor || props.$hoverBgColor2) &&
             props.$clickable &&
@@ -51,19 +50,19 @@ export const StyledTimeSlot = styled.div<TimeSlotStyleProps>`
                         135deg,
                         ${props.$hoverBgColor2 ||
                             props.$bgColor2 ||
-                            V3_Colour["bg-strongest"]}
+                            Colour["bg-strongest"]}
                             0px,
                         ${props.$hoverBgColor2 ||
                             props.$bgColor2 ||
-                            V3_Colour["bg-strongest"]}
+                            Colour["bg-strongest"]}
                             10px,
                         ${props.$hoverBgColor ||
                             props.$bgColor ||
-                            V3_Colour["bg-stronger"]}
+                            Colour["bg-stronger"]}
                             10px,
                         ${props.$hoverBgColor ||
                             props.$bgColor ||
-                            V3_Colour["bg-stronger"]}
+                            Colour["bg-stronger"]}
                             20px
                     );
                 }
