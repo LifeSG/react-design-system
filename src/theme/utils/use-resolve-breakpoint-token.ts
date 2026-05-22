@@ -41,7 +41,8 @@ const normalizeTokenName = (
 
 /**
  * Resolves a breakpoint token key or CSS variable (for example "md-min" or
- * "var(--fds-breakpoint-md-min)") to a concrete CSS length.
+ * "var(--fds-breakpoint-md-min)").
+ * Also accepts raw CSS length strings like "900px", "20rem", or "0".
  * Falls back to supplied CSS length when unresolved.
  * Returns undefined when neither the token nor the fallback resolves to a valid CSS length.
  */
