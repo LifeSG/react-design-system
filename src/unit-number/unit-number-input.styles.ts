@@ -1,8 +1,8 @@
 import styled, { css } from "styled-components";
 
 import { Input } from "../input";
+import { Colour } from "../theme";
 import { Typography } from "../typography";
-import { V3_Colour } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACE, transient props are denoted with $
@@ -42,7 +42,7 @@ export const UnitNumberDivider = styled(Typography.BodyBL)<LabelStyleProps>`
     ${(props) => {
         if (props.$inactive) {
             return css`
-                color: ${V3_Colour["text-disabled"]};
+                color: ${Colour["text-disabled"]};
             `;
         }
     }}
