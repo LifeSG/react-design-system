@@ -332,7 +332,11 @@ export const UnitNumberInput = ({
             <VisuallyHidden aria-hidden id={floorLabelId}>
                 Enter floor number
             </VisuallyHidden>
-            <UnitNumberDivider $inactive={floorValue.length === 0}>
+            <UnitNumberDivider
+                className={clsx(
+                    floorValue.length === 0 && "unitNumberDividerInactive"
+                )}
+            >
                 -
             </UnitNumberDivider>
             <UnitInput
@@ -405,13 +409,11 @@ export const UnitNumberInput = ({
             readOnly={readOnly}
             tabIndex={-1}
             onBlur={handleNodeBlur}
+            className={className}
         >
             <HashContainer
                 data-testid="addon"
-                className={clsx(
-                    inputGroupStyles.labelAddonContainer,
-                    className
-                )}
+                className={inputGroupStyles.labelAddonContainer}
                 data-disabled={disabled}
                 data-read-only={readOnly}
             >

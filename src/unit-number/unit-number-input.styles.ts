@@ -1,20 +1,9 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Input } from "../input";
 import { Colour } from "../theme";
 import { Typography } from "../typography";
 
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface LabelStyleProps {
-    $inactive?: boolean;
-}
-
-// =============================================================================
-// STYLING
-// =============================================================================
 export const HashContainer = styled.div`
     margin-right: 0.5rem;
 `;
@@ -37,15 +26,12 @@ export const UnitInput = styled(FloorInput)`
     }
 `;
 
-export const UnitNumberDivider = styled(Typography.BodyBL)<LabelStyleProps>`
+export const UnitNumberDivider = styled(Typography.BodyBL)`
     margin: 0 0.25rem;
-    ${(props) => {
-        if (props.$inactive) {
-            return css`
-                color: ${Colour["text-disabled"]};
-            `;
-        }
-    }}
+
+    &.unitNumberDividerInactive {
+        color: ${Colour["text-disabled"]};
+    }
 `;
 
 export const ReadOnlyContainer = styled.div`
@@ -54,4 +40,4 @@ export const ReadOnlyContainer = styled.div`
     height: calc(3rem - 2px); // exclude top and bottom borders
 `;
 
-export const ReadOnlyLabel = styled(Typography.BodyBL)<LabelStyleProps>``;
+export const ReadOnlyLabel = styled(Typography.BodyBL)``;
