@@ -1,14 +1,12 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Input } from "../input";
 import { Colour } from "../theme";
-import { Typography } from "../typography";
 
-export const HashContainer = styled.div`
+export const hashContainer = css`
     margin-right: 0.5rem;
 `;
 
-export const FloorInput = styled(Input)`
+export const floorInput = css`
     width: 2.5rem;
 
     input {
@@ -16,8 +14,8 @@ export const FloorInput = styled(Input)`
     }
 `;
 
-export const UnitInput = styled(FloorInput)`
-    // Cheat to balance the placeholder look while ensuring enough width
+export const unitInput = css`
+    /* Cheat to balance the placeholder look while ensuring enough width */
     margin-left: 0.5rem;
     width: 6rem;
 
@@ -26,18 +24,16 @@ export const UnitInput = styled(FloorInput)`
     }
 `;
 
-export const UnitNumberDivider = styled(Typography.BodyBL)`
+export const unitNumberDivider = css`
     margin: 0 0.25rem;
-
-    &.unitNumberDividerInactive {
-        color: ${Colour["text-disabled"]};
-    }
 `;
 
-export const ReadOnlyContainer = styled.div`
+export const unitNumberDividerInactive = css`
+    color: ${Colour["text-disabled"]};
+`;
+
+export const readOnlyContainer = css`
     display: flex;
     align-items: center;
-    height: calc(3rem - 2px); // exclude top and bottom borders
+    height: calc(3rem - 2px); /* exclude top and bottom borders */
 `;
-
-export const ReadOnlyLabel = styled(Typography.BodyBL)``;
