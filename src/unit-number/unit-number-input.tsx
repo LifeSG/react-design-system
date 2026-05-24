@@ -14,7 +14,7 @@ import {
     ReadOnlyLabel,
     UnitInput,
     UnitNumberDivider,
-} from "./unit-number-input.style";
+} from "./unit-number-input.styles";
 
 type FieldType = "floor" | "unit" | "none";
 type ValueFieldTypes = Exclude<FieldType, "none">;
