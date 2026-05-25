@@ -51,6 +51,7 @@ class StoryPage extends AbstractStoryPage {
     }
 
     public async reorderSortableItem(sourceId: string, targetId: string) {
+        // Use keyboard sensor interactions for better CI stability than pointer drag.
         const getItemIds = async () => {
             return await this.locators.fileUpload
                 .locator("li[id]")
