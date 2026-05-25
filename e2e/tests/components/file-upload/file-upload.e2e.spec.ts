@@ -14,6 +14,7 @@ class StoryPage extends AbstractStoryPage {
         disabledComponent: Locator;
         disabledUploadInput: Locator;
         errorComponent: Locator;
+        fileUpload: Locator;
     };
 
     constructor(page: Page) {
@@ -29,6 +30,7 @@ class StoryPage extends AbstractStoryPage {
             disabledComponent: page.getByTestId("file-upload-disabled"),
             disabledUploadInput: page.getByTestId("file-upload-disabled-input"),
             errorComponent: page.getByTestId("file-upload-error"),
+            fileUpload: page.getByTestId("file-upload"),
         };
     }
 
@@ -46,6 +48,49 @@ class StoryPage extends AbstractStoryPage {
             dataTransfer.items.add(new File([content], name, { type }));
             return dataTransfer;
         }, file);
+    }
+
+    public async reorderSortableItem(sourceId: string, targetId: string) {
+        const getItemIds = async () => {
+            return await this.locators.fileUpload
+                .locator("li[id]")
+                .evaluateAll((elements) =>
+                    elements.map((element) => element.id)
+                );
+        };
+
+        const itemIds = await getItemIds();
+
+        const sourceIndex = itemIds.indexOf(sourceId);
+        const targetIndex = itemIds.indexOf(targetId);
+
+        if (sourceIndex < 0 || targetIndex < 0) {
+            throw new Error("Unable to find sortable item ids");
+        }
+
+        const source = this.locators.fileUpload.locator(`#${sourceId}`);
+        await expect(source).toBeVisible();
+
+        await source.focus();
+        await expect(source).toBeFocused();
+        await this.page.keyboard.press("Space");
+
+        const moveKey = targetIndex > sourceIndex ? "ArrowDown" : "ArrowUp";
+        const maxMoves = Math.abs(targetIndex - sourceIndex) + 2;
+        let currentIds = itemIds;
+        let currentSourceIndex = sourceIndex;
+
+        for (
+            let i = 0;
+            i < maxMoves && currentSourceIndex !== targetIndex;
+            i += 1
+        ) {
+            await this.page.keyboard.press(moveKey);
+            currentIds = await getItemIds();
+            currentSourceIndex = currentIds.indexOf(sourceId);
+        }
+
+        await this.page.keyboard.press("Space");
     }
 }
 
@@ -133,6 +178,97 @@ test.describe("FileUpload", () => {
         test("Readonly disabled error", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("editable");
+        });
+
+        test("Editable", async ({ story }) => {
+            await test.step("States mount", async () => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.fileUpload,
+                });
+            });
+
+            await test.step("Save description", async () => {
+                await expect(
+                    story.locators.fileUpload.getByTestId(
+                        "editable-image-edit-display"
+                    )
+                ).toBeVisible();
+
+                const textarea = story.locators.fileUpload.getByTestId(
+                    "editable-image-textarea-base"
+                );
+                const saveButton = story.locators.fileUpload.getByTestId(
+                    "editable-image-save-button"
+                );
+
+                await expect(saveButton).toBeDisabled();
+                await expect(textarea).toBeVisible();
+
+                await textarea.fill("A person walking beside a tree");
+
+                await expect(saveButton).not.toBeDisabled();
+                await saveButton.click();
+                await expect(
+                    story.locators.fileUpload.getByTestId(
+                        "editable-image-edit-button"
+                    )
+                ).toBeVisible();
+
+                await compareScreenshot(story, "edited", {
+                    locator: story.locators.fileUpload,
+                });
+            });
+
+            await test.step("Cancel edit keeps saved description", async () => {
+                await story.locators.fileUpload
+                    .getByTestId("editable-image-edit-button")
+                    .click();
+
+                const textarea = story.locators.fileUpload.getByTestId(
+                    "editable-image-textarea-base"
+                );
+
+                await textarea.fill("Temporary change");
+                await story.locators.fileUpload
+                    .getByTestId("editable-image-cancel-button")
+                    .click();
+
+                await expect(
+                    story.locators.fileUpload.getByText(
+                        "A person walking beside a tree"
+                    )
+                ).toBeVisible();
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("sortable");
+        });
+
+        test("Sortable", async ({ story }) => {
+            await test.step("States mount", async () => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.fileUpload,
+                });
+            });
+
+            await test.step("Drag item to reorder", async () => {
+                await story.reorderSortableItem("sort-1", "sort-3");
+
+                await story.page.mouse.click(0, 0);
+
+                await compareScreenshot(story, "reordered", {
+                    locator: story.locators.fileUpload,
+                });
             });
         });
     });
