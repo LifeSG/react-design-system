@@ -2,7 +2,10 @@
 
 import type { FileItemProps } from "@lifesg/react-design-system/file-upload";
 import { FileUpload } from "@lifesg/react-design-system/file-upload";
-import { useMemo, useState } from "react";
+import { useState } from "react";
+
+const THUMBNAIL_URL =
+    "https://fastly.picsum.photos/id/445/300/300.jpg?hmac=5O-DNt4KzxZfuV5dgp9fNb7_sc3Tg6ZKtH6Bv6oktOQ";
 
 const INITIAL_ITEMS: FileItemProps[] = [
     {
@@ -10,24 +13,21 @@ const INITIAL_ITEMS: FileItemProps[] = [
         name: "first-file.jpg",
         size: 1024,
         type: "image/jpeg",
-        thumbnailImageDataUrl:
-            "https://assets.life.gov.sg/react-design-system/img/feedback-rating/feedback-rating-banner.png",
+        thumbnailImageDataUrl: THUMBNAIL_URL,
     },
     {
         id: "sort-2",
         name: "second-file.jpg",
         size: 2048,
         type: "image/jpeg",
-        thumbnailImageDataUrl:
-            "https://assets.life.gov.sg/react-design-system/img/feedback-rating/feedback-rating-banner.png",
+        thumbnailImageDataUrl: THUMBNAIL_URL,
     },
     {
         id: "sort-3",
         name: "third-file.jpg",
         size: 3072,
         type: "image/jpeg",
-        thumbnailImageDataUrl:
-            "https://assets.life.gov.sg/react-design-system/img/feedback-rating/feedback-rating-banner.png",
+        thumbnailImageDataUrl: THUMBNAIL_URL,
     },
 ];
 

@@ -4,7 +4,7 @@ import type { FileItemProps } from "@lifesg/react-design-system/file-upload";
 import { FileUpload } from "@lifesg/react-design-system/file-upload";
 
 const THUMBNAIL_URL =
-    "https://assets.life.gov.sg/react-design-system/img/feedback-rating/feedback-rating-banner.png";
+    "https://fastly.picsum.photos/id/445/300/300.jpg?hmac=5O-DNt4KzxZfuV5dgp9fNb7_sc3Tg6ZKtH6Bv6oktOQ";
 
 const FILE_ITEMS: FileItemProps[] = [
     {

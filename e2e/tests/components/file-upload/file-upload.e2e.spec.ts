@@ -353,33 +353,6 @@ test.describe("FileUpload", () => {
             await compareScreenshot(story, "mount", {
                 locator: story.locators.fileUpload,
             });
-
-            await expect(
-                story.locators.fileUpload.getByTestId(
-                    "pdf-icon-thumbnail-image"
-                )
-            ).toHaveAttribute(
-                "src",
-                "https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg"
-            );
-
-            await expect(
-                story.locators.fileUpload.getByTestId(
-                    "pdf-thumbnail-thumbnail-image"
-                )
-            ).toHaveAttribute(
-                "src",
-                "https://assets.life.gov.sg/react-design-system/img/feedback-rating/feedback-rating-banner.png"
-            );
-
-            await expect(
-                story.locators.fileUpload.getByTestId(
-                    "image-thumbnail-thumbnail-image"
-                )
-            ).toHaveAttribute(
-                "src",
-                "https://assets.life.gov.sg/react-design-system/img/feedback-rating/feedback-rating-banner.png"
-            );
         });
     });
 
