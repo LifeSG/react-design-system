@@ -17,9 +17,6 @@ class MediaQueryPage extends AbstractStoryPage {
         maxWidthMdStatus: Locator;
         maxWidthLgStatus: Locator;
         maxWidthXlStatus: Locator;
-        orientationLandscapeStatus: Locator;
-        orientationPortraitStatus: Locator;
-        combinedMdLandscapeStatus: Locator;
         tokenDirectMinMdStatus: Locator;
         tokenDirectMaxSmStatus: Locator;
         layoutContainerSpecificity: Locator;
@@ -44,15 +41,6 @@ class MediaQueryPage extends AbstractStoryPage {
             maxWidthMdStatus: page.getByTestId("max-width-md-status"),
             maxWidthLgStatus: page.getByTestId("max-width-lg-status"),
             maxWidthXlStatus: page.getByTestId("max-width-xl-status"),
-            orientationLandscapeStatus: page.getByTestId(
-                "orientation-landscape-status"
-            ),
-            orientationPortraitStatus: page.getByTestId(
-                "orientation-portrait-status"
-            ),
-            combinedMdLandscapeStatus: page.getByTestId(
-                "combined-md-landscape-status"
-            ),
             tokenDirectMinMdStatus: page.getByTestId(
                 "token-direct-min-md-status"
             ),
