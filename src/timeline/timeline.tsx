@@ -77,10 +77,6 @@ export const Timeline = ({
                     type={status.type}
                     key={`status-pill-${index}`}
                     data-testid="status-pill"
-                    className={clsx(
-                        styles.timelinePill,
-                        "timeline-status-pill"
-                    )}
                 >
                     {status.children}
                 </Pill>

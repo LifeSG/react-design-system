@@ -27,6 +27,26 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("Timeline", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("default");
+        });
+
+        test("Default", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { size: "mobile" });
+        });
+
+        test("Default (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("variants");
         });
 
@@ -47,6 +67,16 @@ test.describe("Timeline", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("variants", { size: "mobile" });
+        });
+
+        test("All variants (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("pills");
         });
 
@@ -57,10 +87,30 @@ test.describe("Timeline", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("pills", { size: "mobile" });
+        });
+
+        test("Status pills (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("numeric-offset");
         });
 
-        test("Numeric variant with counter offset", async ({ story }) => {
+        test("Numeric offset", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("numeric-offset", { mode: "dark" });
+        });
+
+        test("Numeric offset (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
@@ -118,60 +168,10 @@ test.describe("Timeline", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("default", { size: "mobile" });
-        });
-
-        test("Mobile", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("default", { size: "mobile", mode: "dark" });
-        });
-
-        test("Mobile (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("pills", { size: "mobile" });
-        });
-
-        test("Mobile - status pills", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants", { size: "mobile" });
-        });
-
-        test("Mobile - all variants", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants", { size: "mobile", mode: "dark" });
-        });
-
-        test("Mobile - all variants (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
             await story.init("col-span", { size: "mobile" });
         });
 
-        test("Mobile - grid column span", async ({ story }) => {
+        test("Grid column span (mobile)", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
@@ -181,7 +181,7 @@ test.describe("Timeline", () => {
             await story.init("col-span", { size: "tablet" });
         });
 
-        test("Tablet - grid column span", async ({ story }) => {
+        test("Grid column span (tablet)", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });

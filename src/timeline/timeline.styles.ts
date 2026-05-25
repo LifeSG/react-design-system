@@ -152,7 +152,3 @@ export const timelinePills = css`
     margin-bottom: 0.5rem;
     gap: 0.5rem;
 `;
-
-export const timelinePill = css`
-    padding: 0.125rem 0.5rem;
-`;
