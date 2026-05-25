@@ -9,7 +9,6 @@ import {
     useMaxWidthMediaQuery,
     useMediaQuery,
     useMinWidthMediaQuery,
-    useOrientation,
     useSafeMaxWidthMediaQuery,
 } from "@lifesg/react-design-system/theme";
 ```
@@ -27,10 +26,6 @@ For CSS-in-JS breakpoint selectors, refer to
 ```tsx
 const tabletAndUp = useMediaQuery({ minWidth: "md-min" });
 const mobileOnly = useMediaQuery({ maxWidth: "sm-max" });
-const landscapeTabletAndUp = useMediaQuery({
-    minWidth: "md-min",
-    orientation: "landscape",
-});
 ```
 
 ### Convenience hooks
@@ -38,7 +33,6 @@ const landscapeTabletAndUp = useMediaQuery({
 ```tsx
 const desktopUp = useMinWidthMediaQuery("lg");
 const tabletDown = useMaxWidthMediaQuery("md");
-const isLandscape = useOrientation("landscape");
 ```
 
 ## Token support

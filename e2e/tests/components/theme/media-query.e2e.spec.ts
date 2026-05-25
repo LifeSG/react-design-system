@@ -116,51 +116,6 @@ test.describe("Theme media query", () => {
             await expect(story.locators.maxWidthXlStatus).toHaveText("true");
         });
 
-        test("landscape orientation detection", async ({ story }) => {
-            await story.init("media-query", {
-                size: "desktop",
-                orientation: "landscape",
-            });
-
-            await expect(story.locators.orientationLandscapeStatus).toHaveText(
-                "true"
-            );
-            await expect(story.locators.orientationPortraitStatus).toHaveText(
-                "false"
-            );
-        });
-
-        test("portrait orientation detection", async ({ story }) => {
-            await story.init("media-query", {
-                size: "mobile",
-                orientation: "portrait",
-            });
-
-            await expect(story.locators.orientationPortraitStatus).toHaveText(
-                "true"
-            );
-            await expect(story.locators.orientationLandscapeStatus).toHaveText(
-                "false"
-            );
-        });
-
-        test("combined queries (minWidth + orientation)", async ({ story }) => {
-            await story.init("media-query", { size: "mobile" });
-            await expect(story.locators.combinedMdLandscapeStatus).toHaveText(
-                "false"
-            );
-
-            await story.page.setViewportSize({ width: 400, height: 300 });
-            await expect(story.locators.combinedMdLandscapeStatus).toHaveText(
-                "false"
-            );
-
-            await story.page.setViewportSize({ width: 1024, height: 600 });
-            await expect(story.locators.combinedMdLandscapeStatus).toHaveText(
-                "true"
-            );
-        });
-
         test("token resolution via convenience hooks", async ({ story }) => {
             await story.init("media-query", { size: "desktop" });
 

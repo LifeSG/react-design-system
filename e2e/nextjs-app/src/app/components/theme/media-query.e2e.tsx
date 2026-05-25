@@ -4,7 +4,6 @@ import {
     useMaxWidthMediaQuery,
     useMediaQuery,
     useMinWidthMediaQuery,
-    useOrientation,
 } from "@lifesg/react-design-system/theme";
 import { useEffect, useState } from "react";
 
@@ -24,14 +23,6 @@ export default function Story() {
     const maxMd = useMaxWidthMediaQuery("md");
     const maxLg = useMaxWidthMediaQuery("lg");
     const maxXl = useMaxWidthMediaQuery("xl");
-
-    const landscape = useOrientation("landscape");
-    const portrait = useOrientation("portrait");
-
-    const combinedMdLandscape = useMediaQuery({
-        minWidth: "md-min",
-        orientation: "landscape",
-    });
 
     const tokenDirectMinMd = useMediaQuery({ minWidth: "md-min" });
     const tokenDirectMaxSm = useMediaQuery({ maxWidth: "sm-max" });
@@ -71,23 +62,6 @@ export default function Story() {
                 <p data-testid="max-width-md-status">{boolToText(maxMd)}</p>
                 <p data-testid="max-width-lg-status">{boolToText(maxLg)}</p>
                 <p data-testid="max-width-xl-status">{boolToText(maxXl)}</p>
-            </div>
-
-            <div>
-                <h3>Orientation</h3>
-                <p data-testid="orientation-landscape-status">
-                    {boolToText(landscape)}
-                </p>
-                <p data-testid="orientation-portrait-status">
-                    {boolToText(portrait)}
-                </p>
-            </div>
-
-            <div>
-                <h3>Combined</h3>
-                <p data-testid="combined-md-landscape-status">
-                    {boolToText(combinedMdLandscape)}
-                </p>
             </div>
 
             <div>

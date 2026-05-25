@@ -118,7 +118,7 @@ describe("useMediaQuery", () => {
         });
     });
 
-    it("builds a query from resolved widths and orientation", () => {
+    it("builds a query from resolved widths", () => {
         const { matchMedia } = createMatchMediaMock(true);
 
         render(
@@ -126,13 +126,12 @@ describe("useMediaQuery", () => {
                 options={{
                     maxWidth: 768,
                     minWidth: "md-min",
-                    orientation: "landscape",
                 }}
             />
         );
 
         expect(matchMedia).toHaveBeenCalledWith(
-            "(min-width: 481px) and (max-width: 768px) and (orientation: landscape)"
+            "(min-width: 481px) and (max-width: 768px)"
         );
         expect(screen.getByTestId("result").textContent).toBe("true");
     });

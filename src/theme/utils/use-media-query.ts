@@ -7,34 +7,20 @@ import { useResolveBreakpointToken } from "./use-resolve-breakpoint-token";
 export type BreakpointName = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 export type MaxWidthBreakpointName = Exclude<BreakpointName, "xxl">;
 
-export const useMinWidthMediaQuery = (
-    breakpoint: BreakpointName,
-    orientation?: MediaQueryOrientation
-) =>
+export const useMinWidthMediaQuery = (breakpoint: BreakpointName) =>
     useMediaQuery({
         minWidth: `${breakpoint}-min`,
-        orientation,
     });
 
-export const useMaxWidthMediaQuery = (
-    breakpoint: MaxWidthBreakpointName,
-    orientation?: MediaQueryOrientation
-) =>
+export const useMaxWidthMediaQuery = (breakpoint: MaxWidthBreakpointName) =>
     useMediaQuery({
         maxWidth: `${breakpoint}-max`,
-        orientation,
     });
-
-export const useOrientation = (orientation: MediaQueryOrientation) =>
-    useMediaQuery({ orientation });
-
-export type MediaQueryOrientation = "landscape" | "portrait";
 export const DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT = "480px";
 
 export interface MediaQueryOptions {
     minWidth?: number | string;
     maxWidth?: number | string;
-    orientation?: MediaQueryOrientation;
 }
 
 const getWidthCandidate = (value: number | string | undefined) => {
@@ -81,7 +67,7 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
 };
 
 export const useMediaQuery = (options: MediaQueryOptions): boolean => {
-    const { minWidth, maxWidth, orientation } = options;
+    const { minWidth, maxWidth } = options;
     const normalizedMinWidth = useResolveBreakpointToken(
         getWidthCandidate(minWidth)
     );
@@ -91,7 +77,6 @@ export const useMediaQuery = (options: MediaQueryOptions): boolean => {
     const clauses = [
         getMediaQueryClause("min-width", normalizedMinWidth),
         getMediaQueryClause("max-width", normalizedMaxWidth),
-        orientation ? `(orientation: ${orientation})` : undefined,
     ].filter((value): value is string => !!value);
     const queryString = clauses.join(" and ");
     const hasMinWidth = !!normalizedMinWidth;
