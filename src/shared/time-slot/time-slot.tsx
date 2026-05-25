@@ -1,4 +1,5 @@
 import type { ReactNode } from "react";
+import { forwardRef } from "react";
 
 import * as styles from "./time-slot.styles";
 import type { SlotStyle } from "./types";
@@ -18,21 +19,25 @@ export interface TimeSlotProps {
     tabIndex?: number | undefined;
 }
 
-export const TimeSlot = ({
-    className,
-    "data-testid": dataTestId,
-    bgColor,
-    bgColor2,
-    children,
-    clickable,
-    hoverBgColor,
-    hoverBgColor2,
-    nonClickableCursor,
-    onClick,
-    styleType,
-    tabIndex,
-}: TimeSlotProps) => (
+const Component = (
+    {
+        className,
+        "data-testid": dataTestId,
+        bgColor,
+        bgColor2,
+        children,
+        clickable,
+        hoverBgColor,
+        hoverBgColor2,
+        nonClickableCursor,
+        onClick,
+        styleType,
+        tabIndex,
+    }: TimeSlotProps,
+    ref: React.Ref<HTMLDivElement>
+) => (
     <styles.StyledTimeSlot
+        ref={ref}
         className={className}
         $bgColor={bgColor}
         $bgColor2={bgColor2}
@@ -48,3 +53,5 @@ export const TimeSlot = ({
         {children}
     </styles.StyledTimeSlot>
 );
+
+export const TimeSlot = forwardRef(Component);
