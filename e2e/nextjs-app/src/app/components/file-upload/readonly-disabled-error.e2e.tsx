@@ -34,7 +34,7 @@ const ERROR_FILE_ITEMS: FileItemProps[] = [
 
 export default function Story() {
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <FileUpload
                 data-testid="file-upload-readonly"
                 title="Readonly state"

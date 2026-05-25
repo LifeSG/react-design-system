@@ -173,12 +173,63 @@ test.describe("FileUpload", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("readonly-disabled-error");
+            await story.init("upload-interactions", { mode: "dark" });
         });
 
-        test("Readonly disabled error", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                fullscreen: true,
+        test("Upload interactions - dark mode", async ({ story }) => {
+            await test.step("Component mounts", async () => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.component,
+                });
+            });
+
+            await test.step("Upload through drag and drop", async () => {
+                const dataTransfer = await story.createDataTransfer({
+                    name: "drag-upload.png",
+                    type: "image/png",
+                    content: "drag upload file",
+                });
+
+                await story.locators.dropzone.dispatchEvent("dragenter", {
+                    dataTransfer,
+                });
+                await expect(story.locators.dragOverlayText).toBeVisible();
+
+                await compareScreenshot(story, "drag-overlay", {
+                    locator: story.locators.dropzone,
+                });
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("readonly-disabled-error");
+            });
+
+            test("Readonly disabled error", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("readonly-disabled-error", { size: "mobile" });
+            });
+
+            test("Readonly disabled error - mobile", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("readonly-disabled-error", { mode: "dark" });
+            });
+
+            test("Readonly disabled error - dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
             });
         });
     });
