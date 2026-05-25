@@ -2,20 +2,18 @@ import styled from "styled-components";
 
 import { Border, Colour, Spacing } from "../theme";
 
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface ListWrapperStyleProps {
-    $readOnly?: boolean | undefined;
-}
+export const listWrapperReadOnly = "fileUploadListWrapperReadOnly";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const ListWrapper = styled.ul<ListWrapperStyleProps>`
+export const ListWrapper = styled.ul`
     list-style-type: none;
-    margin-bottom: ${(props) =>
-        props.$readOnly ? "0" : Spacing["spacing-32"]};
+    margin-bottom: ${Spacing["spacing-32"]};
+
+    &.${listWrapperReadOnly} {
+        margin-bottom: 0;
+    }
 `;
 
 export const EditableItemsContainer = styled.li`

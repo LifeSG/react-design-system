@@ -1,37 +1,29 @@
 import { CloudArrowUpFillIcon } from "@lifesg/react-icons/cloud-arrow-up-fill";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { DashedBorder } from "../dashed-border";
 import { Colour, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface StyleProps {
-    $showDashedBorder: boolean | undefined;
-}
+export const containerWithDashedBorder =
+    "fileUploadDropzoneContainerWithDashedBorder";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 
-export const Container = styled(DashedBorder)<StyleProps>`
+export const Container = styled(DashedBorder)`
     position: relative;
     display: flex;
     flex-direction: column;
 
-    ${(props) => {
-        if (props.$showDashedBorder) {
-            return css`
-                padding: ${Spacing["spacing-32"]};
+    &.${containerWithDashedBorder} {
+        padding: ${Spacing["spacing-32"]};
 
-                ${MediaQuery.MaxWidth.md} {
-                    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
-                }
-            `;
+        ${MediaQuery.MaxWidth.md} {
+            padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
         }
-    }}
+    }
 `;
 
 export const HiddenInput = styled.input`

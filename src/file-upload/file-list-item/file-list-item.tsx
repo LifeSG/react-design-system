@@ -2,6 +2,7 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
+import clsx from "clsx";
 import {
     memo,
     useCallback,
@@ -149,6 +150,62 @@ const Component = ({
 
     const shouldEnableSort = () => !!sortable && !readOnly;
 
+    const getItemStateClassName = () => {
+        if (shouldDisable() && focusType === "none") {
+            return styles.itemDisabled;
+        }
+
+        if (shouldEnableSort() && focusType === "self") {
+            return styles.itemSortableActive;
+        }
+
+        if (shouldEnableSort()) {
+            return styles.itemSortable;
+        }
+
+        return undefined;
+    };
+
+    const getDragHandleIconClassName = () => {
+        if (focusType === "self") {
+            return styles.dragHandleIconActive;
+        }
+
+        if (shouldDisable()) {
+            return styles.dragHandleIconDisabled;
+        }
+
+        return undefined;
+    };
+
+    const getBoxStatusClassName = () => {
+        if (focusType === "self") {
+            return styles.boxFocused;
+        }
+
+        if (shouldDisable()) {
+            return styles.boxDisabled;
+        }
+
+        if (errorMessage) {
+            return styles.boxError;
+        }
+
+        return undefined;
+    };
+
+    const getActionContainerClassName = () => {
+        if (!errorMessage && isLoading) {
+            return styles.actionContainerLoading;
+        }
+
+        if (!errorMessage && editable) {
+            return styles.actionContainerEditable;
+        }
+
+        return undefined;
+    };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -209,7 +266,13 @@ const Component = ({
             <NameSection ref={detailSectionRef}>
                 {renderNameDescription()}
             </NameSection>
-            <FileSizeSection $hideInMobile={isLoading}>
+            <FileSizeSection
+                className={clsx(
+                    isLoading
+                        ? styles.fileSizeSectionHideInMobile
+                        : styles.fileSizeSectionExpandMobile
+                )}
+            >
                 <FileSizeText>{fileSize}</FileSizeText>
             </FileSizeSection>
         </>
@@ -230,7 +293,11 @@ const Component = ({
         }
 
         return (
-            <ContentSection $hasThumbnail={shouldShowThumbnail}>
+            <ContentSection
+                className={clsx(
+                    shouldShowThumbnail && styles.contentSectionWithThumbnail
+                )}
+            >
                 {content}
             </ContentSection>
         );
@@ -296,11 +363,7 @@ const Component = ({
         }
 
         return (
-            <ActionContainer
-                $editable={editable}
-                $error={!!errorMessage}
-                $loading={isLoading}
-            >
+            <ActionContainer className={clsx(getActionContainerClassName())}>
                 {content}
             </ActionContainer>
         );
@@ -311,24 +374,22 @@ const Component = ({
             id={id}
             ref={setNodeRef}
             data-testid={`${id}-item`}
-            $sortable={shouldEnableSort()}
-            $disabled={shouldDisable()}
-            $focusType={focusType}
+            className={clsx(getItemStateClassName())}
             {...(shouldEnableSort() ? sortableProps : {})}
         >
             {shouldEnableSort() && (
                 <DragHandleIcon
                     data-testid={`${id}-drag-handle`}
-                    $disabled={shouldDisable()}
-                    $active={focusType === "self"}
+                    className={clsx(getDragHandleIconClassName())}
                 />
             )}
             <Box
-                $focused={focusType === "self"}
-                $error={!!errorMessage}
-                $loading={isLoading}
-                $disabled={shouldDisable()}
-                $editable={editable}
+                className={clsx(
+                    getBoxStatusClassName(),
+                    !errorMessage &&
+                        (isLoading || editable) &&
+                        styles.boxStackMobile
+                )}
             >
                 {renderContents()}
                 {!readOnly && renderActions()}

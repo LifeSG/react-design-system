@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type React from "react";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { useDropzone } from "react-dropzone";
@@ -5,6 +6,7 @@ import { useDropzone } from "react-dropzone";
 import { Border, Colour, Radius } from "../theme";
 import {
     Container,
+    containerWithDashedBorder,
     DragOverlay,
     HiddenInput,
     OverlayIcon,
@@ -89,11 +91,10 @@ const Component = (
             id={id}
             data-testid={testId || "dropzone"}
             enabled={border}
-            $showDashedBorder={border}
             thickness={Border["width-040"]}
             radius={Radius["sm"]}
             colour={Colour["border"]}
-            className={className}
+            className={clsx(border && containerWithDashedBorder, className)}
             {...getRootProps()}
         >
             <HiddenInput

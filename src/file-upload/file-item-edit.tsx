@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Form } from "../form";
@@ -5,6 +6,7 @@ import { StringHelper } from "../util";
 import {
     ActionButton,
     ActionButtonsSection,
+    actionButtonsSectionWithThumbnail,
     ContentSection,
     DetailsSection,
     FileNameText,
@@ -151,7 +153,11 @@ export const FileItemEdit = ({
                     />
                 </DetailsSection>
             </ContentSection>
-            <ActionButtonsSection $thumbnail={shouldShowThumbnail}>
+            <ActionButtonsSection
+                className={clsx(
+                    shouldShowThumbnail && actionButtonsSectionWithThumbnail
+                )}
+            >
                 <ActionButton
                     data-testid={`${id}-save-button`}
                     type="button"

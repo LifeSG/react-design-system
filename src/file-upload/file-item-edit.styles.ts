@@ -1,15 +1,11 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button } from "../button/button";
 import { Border, Colour, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface ActionButtonSectionStyleProps {
-    $thumbnail?: boolean | undefined;
-}
+export const actionButtonsSectionWithThumbnail =
+    "fileUploadItemEditActionButtonsSectionWithThumbnail";
 
 // =============================================================================
 // STYLING
@@ -63,25 +59,22 @@ export const FileNameText = styled(Typography.BodyMD)`
 
 export const FileSizeText = styled(Typography.BodyMD)``;
 
-export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
+export const ActionButtonsSection = styled.div`
     display: flex;
+
     ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
     }
 
-    ${(props) => {
-        if (props.$thumbnail) {
-            return css`
-                margin-left: calc(
-                    96px + ${Spacing["spacing-32"]}
-                ); // thumbnail width + right margin
+    &.${actionButtonsSectionWithThumbnail} {
+        margin-left: calc(
+            96px + ${Spacing["spacing-32"]}
+        ); // thumbnail width + right margin
 
-                ${MediaQuery.MaxWidth.md} {
-                    margin-left: 0;
-                }
-            `;
+        ${MediaQuery.MaxWidth.md} {
+            margin-left: 0;
         }
-    }}
+    }
 `;
 
 export const ActionButton = styled(Button.Small)`

@@ -1,9 +1,7 @@
+import clsx from "clsx";
+
 import { FileUploadHelper } from "../helper";
-import {
-    Container,
-    ReplaceButton,
-    Thumbnail,
-} from "./file-list-item-thumbnail.styles";
+import * as styles from "./file-list-item-thumbnail.styles";
 
 interface Props {
     thumbnailImageDataUrl?: string | undefined;
@@ -32,17 +30,17 @@ export const FileListItemThumbnail = ({
         : thumbnailImageDataUrl || "";
 
     return (
-        <Container data-testid={testId}>
-            <Thumbnail
+        <styles.Container data-testid={testId}>
+            <styles.Thumbnail
                 data-testid={testId ? `${testId}-image` : undefined}
                 src={displaySrc}
-                $isPdf={isPdf}
+                className={clsx(isPdf && styles.thumbnailPdf)}
             />
             {renderReplaceButton && (
-                <ReplaceButton type="button" onClick={handleReplace}>
+                <styles.ReplaceButton type="button" onClick={handleReplace}>
                     Replace
-                </ReplaceButton>
+                </styles.ReplaceButton>
             )}
-        </Container>
+        </styles.Container>
     );
 };

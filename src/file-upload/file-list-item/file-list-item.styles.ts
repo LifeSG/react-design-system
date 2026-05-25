@@ -1,6 +1,6 @@
 import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button as DSIconButton } from "../../button";
 import {
@@ -17,43 +17,36 @@ import { Typography } from "../../typography";
 // STYLE INTERFACES
 // =============================================================================
 export type ItemFocusType = "self" | "others" | "none";
-interface ItemStyleProps {
-    $sortable: boolean;
-    $disabled?: boolean | undefined;
-    $focusType: ItemFocusType;
-}
+export const itemDisabled = "fileUploadListItemDisabled";
+export const itemSortable = "fileUploadListItemSortable";
+export const itemSortableActive = "fileUploadListItemSortableActive";
 
-interface DragHandleIconStyleProps {
-    $disabled?: boolean | undefined;
-    $active?: boolean | undefined;
-}
+export const dragHandleIconActive = "fileUploadListItemDragHandleIconActive";
+export const dragHandleIconDisabled =
+    "fileUploadListItemDragHandleIconDisabled";
 
-interface BoxStyleProps {
-    $error?: boolean | undefined;
-    $disabled?: boolean | undefined;
-    $focused?: boolean | undefined;
-    $loading?: boolean | undefined;
-    $editable?: boolean | undefined;
-}
+export const boxFocused = "fileUploadListItemBoxFocused";
+export const boxDisabled = "fileUploadListItemBoxDisabled";
+export const boxError = "fileUploadListItemBoxError";
+export const boxStackMobile = "fileUploadListItemBoxStackMobile";
 
-interface ContentSectionStyleProps {
-    $hasThumbnail?: boolean | undefined;
-}
+export const contentSectionWithThumbnail =
+    "fileUploadListItemContentSectionWithThumbnail";
 
-interface ActionContainerStyleProps {
-    $editable?: boolean | undefined;
-    $error?: boolean | undefined;
-    $loading?: boolean | undefined;
-}
+export const fileSizeSectionHideInMobile =
+    "fileUploadListItemFileSizeSectionHideInMobile";
+export const fileSizeSectionExpandMobile =
+    "fileUploadListItemFileSizeSectionExpandMobile";
 
-interface FileSizeSectionStyleProps {
-    $hideInMobile?: boolean | undefined;
-}
+export const actionContainerLoading =
+    "fileUploadListItemActionContainerLoading";
+export const actionContainerEditable =
+    "fileUploadListItemActionContainerEditable";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Item = styled.li<ItemStyleProps>`
+export const Item = styled.li`
     display: flex;
     align-items: center;
     width: 100%;
@@ -63,56 +56,39 @@ export const Item = styled.li<ItemStyleProps>`
         margin-bottom: ${Spacing["spacing-16"]};
     }
 
-    ${(props) => {
-        if (props.$disabled && props.$focusType === "none") {
-            // Show disabled cursor only if no dragging is happening
-            return css`
-                cursor: not-allowed;
-            `;
-        } else if (props.$sortable && props.$focusType === "self") {
-            return css`
-                cursor: grabbing;
-                // Following recommendation by the library for touch events
-                // https://docs.dndkit.com/api-documentation/sensors/touch#recommendations
-                touch-action: manipulation;
-            `;
-        } else if (props.$sortable) {
-            return css`
-                &:hover {
-                    cursor: grab;
-                }
-                // Following recommendation by the library for touch events
-                // https://docs.dndkit.com/api-documentation/sensors/touch#recommendations
-                touch-action: manipulation;
-            `;
+    &.${itemDisabled} {
+        cursor: not-allowed;
+    }
+
+    &.${itemSortableActive} {
+        cursor: grabbing;
+        touch-action: manipulation;
+    }
+
+    &.${itemSortable} {
+        &:hover {
+            cursor: grab;
         }
-    }}
+        touch-action: manipulation;
+    }
 `;
 
-export const DragHandleIcon = styled(
-    DSDragHandleIcon
-)<DragHandleIconStyleProps>`
+export const DragHandleIcon = styled(DSDragHandleIcon)`
     margin-right: ${Spacing["spacing-16"]};
     height: 1.5rem;
     width: 1.5rem;
     color: ${Colour["icon"]};
 
-    ${(props) => {
-        if (props.$active) {
-            return css`
-                color: ${Colour["icon-primary"]};
-            `;
-        }
+    &.${dragHandleIconActive} {
+        color: ${Colour["icon-primary"]};
+    }
 
-        if (props.$disabled) {
-            return css`
-                color: ${Colour["icon-disabled"]};
-            `;
-        }
-    }};
+    &.${dragHandleIconDisabled} {
+        color: ${Colour["icon-disabled"]};
+    }
 `;
 
-export const Box = styled.div<BoxStyleProps>`
+export const Box = styled.div`
     background: ${Colour["bg-primary-subtlest"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
@@ -125,37 +101,29 @@ export const Box = styled.div<BoxStyleProps>`
         padding: ${Spacing["spacing-16"]};
     }
 
-    ${(props) => {
-        if (props.$focused) {
-            return css`
-                border-color: ${Colour["border-focus"]};
-                box-shadow: ${Shadow["xs-focus-strong"]};
-            `;
-        } else if (props.$disabled) {
-            return css`
-                border-color: ${Colour["border-disabled"]};
-            `;
-        } else if (props.$error) {
-            return css`
-                background: ${Colour["bg-error"]};
-                border-color: ${Colour["border-error"]};
-            `;
-        }
-    }}
+    &.${boxFocused} {
+        border-color: ${Colour["border-focus"]};
+        box-shadow: ${Shadow["xs-focus-strong"]};
+    }
 
-    ${(props) => {
-        if (!props.$error && (props.$loading || props.$editable)) {
-            return css`
-                ${MediaQuery.MaxWidth.md} {
-                    flex-direction: column;
-                    align-items: flex-start;
-                }
-            `;
+    &.${boxDisabled} {
+        border-color: ${Colour["border-disabled"]};
+    }
+
+    &.${boxError} {
+        background: ${Colour["bg-error"]};
+        border-color: ${Colour["border-error"]};
+    }
+
+    &.${boxStackMobile} {
+        ${MediaQuery.MaxWidth.md} {
+            flex-direction: column;
+            align-items: flex-start;
         }
-    }}
+    }
 `;
 
-export const ContentSection = styled.div<ContentSectionStyleProps>`
+export const ContentSection = styled.div`
     display: flex;
     flex: 1;
     align-items: center;
@@ -166,16 +134,12 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
         align-items: flex-start;
     }
 
-    ${(props) => {
-        if (props.$hasThumbnail) {
-            return css`
-                ${MediaQuery.MaxWidth.md} {
-                    flex-direction: row;
-                    align-items: center;
-                }
-            `;
+    &.${contentSectionWithThumbnail} {
+        ${MediaQuery.MaxWidth.md} {
+            flex-direction: row;
+            align-items: center;
         }
-    }}
+    }
 `;
 
 export const NameSection = styled.div`
@@ -197,28 +161,26 @@ export const ExtendedNameSection = styled.div`
     }
 `;
 
-export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
+export const FileSizeSection = styled.div`
     display: flex;
     width: 5rem;
     margin-left: ${Spacing["spacing-8"]};
     justify-content: flex-end;
 
-    ${MediaQuery.MaxWidth.md} {
-        ${(props) => {
-            if (props.$hideInMobile) {
-                return css`
-                    display: none;
-                    visibility: hidden;
-                `;
-            } else {
-                return css`
-                    width: 100%;
-                    margin-left: 0;
-                    margin-top: ${Spacing["spacing-8"]};
-                    justify-content: flex-start;
-                `;
-            }
-        }}
+    &.${fileSizeSectionHideInMobile} {
+        ${MediaQuery.MaxWidth.md} {
+            display: none;
+            visibility: hidden;
+        }
+    }
+
+    &.${fileSizeSectionExpandMobile} {
+        ${MediaQuery.MaxWidth.md} {
+            width: 100%;
+            margin-left: 0;
+            margin-top: ${Spacing["spacing-8"]};
+            justify-content: flex-start;
+        }
     }
 `;
 
@@ -268,7 +230,7 @@ export const MobileErrorMessage = styled(Typography.BodySM)`
     }
 `;
 
-export const ActionContainer = styled.div<ActionContainerStyleProps>`
+export const ActionContainer = styled.div`
     width: 6rem;
     margin-left: ${Spacing["spacing-32"]};
     display: flex;
@@ -277,22 +239,22 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
 
     ${MediaQuery.MaxWidth.md} {
         width: fit-content;
+    }
 
-        ${(props) => {
-            if (props.$loading && !props.$error) {
-                return css`
-                    margin-left: 0;
-                    margin-top: ${Spacing["spacing-16"]};
-                    width: 100%;
-                `;
-            } else if (props.$editable && !props.$error) {
-                return css`
-                    margin-left: 0;
-                    margin-top: ${Spacing["spacing-16"]};
-                    align-self: flex-end;
-                `;
-            }
-        }}
+    &.${actionContainerLoading} {
+        ${MediaQuery.MaxWidth.md} {
+            margin-left: 0;
+            margin-top: ${Spacing["spacing-16"]};
+            width: 100%;
+        }
+    }
+
+    &.${actionContainerEditable} {
+        ${MediaQuery.MaxWidth.md} {
+            margin-left: 0;
+            margin-top: ${Spacing["spacing-16"]};
+            align-self: flex-end;
+        }
     }
 `;
 

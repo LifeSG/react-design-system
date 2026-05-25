@@ -3,6 +3,8 @@ import styled from "styled-components";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
 
+export const thumbnailPdf = "fileUploadListItemThumbnailPdf";
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -15,16 +17,17 @@ export const Container = styled.div`
     justify-content: center;
 `;
 
-export const Thumbnail = styled(ImageWithFallback)<{ $isPdf?: boolean }>`
+export const Thumbnail = styled(ImageWithFallback)`
     width: 96px;
     height: 96px;
     aspect-ratio: 1;
     border-radius: ${Radius["sm"]};
-    border: ${(props) =>
-        props.$isPdf
-            ? "none"
-            : `${Border["width-010"]} ${Border["solid"]} ${Colour["border"]}`};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     object-fit: cover;
+
+    &.${thumbnailPdf} {
+        border: none;
+    }
 
     ${MediaQuery.MaxWidth.md} {
         width: 64px;
