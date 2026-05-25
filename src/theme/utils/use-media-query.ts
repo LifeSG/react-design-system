@@ -92,10 +92,10 @@ export const useMediaQuery = (options: MediaQueryOptions): boolean => {
         getMediaQueryClause("min-width", normalizedMinWidth),
         getMediaQueryClause("max-width", normalizedMaxWidth),
         orientation ? `(orientation: ${orientation})` : undefined,
-    ].filter((value): value is string => Boolean(value));
+    ].filter((value): value is string => !!value);
     const queryString = clauses.join(" and ");
-    const hasMinWidth = Boolean(normalizedMinWidth);
-    const hasMaxWidth = Boolean(normalizedMaxWidth);
+    const hasMinWidth = !!normalizedMinWidth;
+    const hasMaxWidth = !!normalizedMaxWidth;
     const defaultMatch = getDefaultMatch(hasMinWidth, hasMaxWidth);
     const [matches, setMatches] = useState(() =>
         getCurrentMatch(queryString, defaultMatch)
