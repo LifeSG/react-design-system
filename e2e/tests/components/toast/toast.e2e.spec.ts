@@ -77,7 +77,7 @@ test.describe("Toast", () => {
 
         test("Fixed positioning", async ({ story }) => {
             await compareScreenshot(story, "mount", {
-                locator: story.page.getByTestId("fixed-positioning-page"),
+                fullscreen: true,
             });
 
             const pageHeight = await story.page.evaluate(
@@ -86,7 +86,7 @@ test.describe("Toast", () => {
             await story.page.mouse.wheel(0, pageHeight);
 
             await compareScreenshot(story, "scrolled", {
-                locator: story.page.getByTestId("fixed-positioning-page"),
+                fullscreen: true,
             });
         });
     });
