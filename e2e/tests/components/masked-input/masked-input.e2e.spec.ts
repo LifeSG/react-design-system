@@ -17,8 +17,6 @@ class StoryPage extends AbstractStoryPage {
         defaultFormUnmasked: Locator;
         disabledFormUnmasked: Locator;
         errorFormUnmasked: Locator;
-        customIconFormMasked: Locator;
-        customIconFormUnmasked: Locator;
     };
 
     constructor(page: Page) {
@@ -49,12 +47,6 @@ class StoryPage extends AbstractStoryPage {
             ),
             errorFormUnmasked: page.getByTestId(
                 "form-masked-input-error-base-unmasked"
-            ),
-            customIconFormMasked: page.getByTestId(
-                "form-masked-input-custom-icon-base-masked"
-            ),
-            customIconFormUnmasked: page.getByTestId(
-                "form-masked-input-custom-icon-base-unmasked"
             ),
         };
     }
@@ -225,22 +217,11 @@ test.describe("Masked Input", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("other-variants");
+            await story.init("custom-mask-icons");
         });
 
-        test("Other variants", async ({ story }) => {
+        test("Custom mask icons", async ({ story }) => {
             await compareScreenshot(story, "mount");
-        });
-
-        test("Focus variants", async ({ story }) => {
-            await test.step("Focus custom icon input", async () => {
-                await story.locators.customIconFormMasked
-                    .getByTestId("input")
-                    .focus();
-                await compareScreenshot(story, "disabled-masking", {
-                    locator: story.locators.customIconFormUnmasked,
-                });
-            });
         });
     });
 

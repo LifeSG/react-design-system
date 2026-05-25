@@ -11,6 +11,7 @@ export default function Story() {
                     children: "Default state",
                     subtitle: "This is the subtitle",
                 }}
+                placeholder="Placeholder text"
             />
             <Form.MaskedInput
                 data-testid="form-masked-input-disabled"
@@ -18,6 +19,7 @@ export default function Story() {
                     children: "Disabled state",
                     subtitle: "This is the subtitle",
                 }}
+                placeholder="Placeholder text"
                 disabled
             />
             <Form.MaskedInput
@@ -26,6 +28,7 @@ export default function Story() {
                     children: "Readonly state",
                     subtitle: "This is the subtitle",
                 }}
+                placeholder="Placeholder text"
                 readOnly
             />
             <Form.MaskedInput
@@ -34,6 +37,7 @@ export default function Story() {
                     children: "Error state",
                     subtitle: "This is the subtitle",
                 }}
+                placeholder="Placeholder text"
                 errorMessage="Sample error message"
             />
         </div>

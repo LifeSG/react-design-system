@@ -18,6 +18,13 @@ export default function Story() {
                 readOnly
                 loadState={"fail"}
             />
+
+            <Form.MaskedInput
+                label="Error display with focus"
+                value="S1234567D"
+                readOnly
+                loadState={"fail"}
+            />
         </div>
     );
 }

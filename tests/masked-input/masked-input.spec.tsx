@@ -195,7 +195,13 @@ describe("MaskedInput", () => {
             const input = screen.getByTestId("input");
             fireEvent.change(input, { target: { value: "Test input" } });
 
-            expect(onChangeFn).toHaveBeenCalled();
+            expect(onChangeFn).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    target: expect.objectContaining({
+                        value: "TEST INPUT",
+                    }),
+                })
+            );
             expect(screen.getByDisplayValue("TEST INPUT")).toBeInTheDocument();
         });
 
@@ -213,7 +219,13 @@ describe("MaskedInput", () => {
             const input = screen.getByTestId("input");
             fireEvent.change(input, { target: { value: "TEST INPUT" } });
 
-            expect(onChangeFn).toHaveBeenCalled();
+            expect(onChangeFn).toHaveBeenCalledWith(
+                expect.objectContaining({
+                    target: expect.objectContaining({
+                        value: "test input",
+                    }),
+                })
+            );
             expect(screen.getByDisplayValue("test input")).toBeInTheDocument();
         });
     });
@@ -224,13 +236,10 @@ describe("MaskedInput", () => {
 
             expect(screen.getByDisplayValue("S1234567D")).toBeInTheDocument();
 
-            const icon = screen.queryByTestId("icon-masked");
-            if (icon) {
-                fireEvent.click(icon);
-                expect(
-                    screen.getByDisplayValue("S1234567D")
-                ).toBeInTheDocument();
-            }
+            const icon = screen.getByTestId("icon-unmasked");
+
+            fireEvent.click(icon);
+            expect(screen.getByDisplayValue("S1234567D")).toBeInTheDocument();
         });
     });
 });
