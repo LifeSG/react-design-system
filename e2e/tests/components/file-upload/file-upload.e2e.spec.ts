@@ -5,11 +5,12 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "file-upload";
 
     public readonly locators: {
-        component: Locator;
-        dropzone: Locator;
-        uploadInput: Locator;
-        uploadButton: Locator;
-        dragOverlayText: Locator;
+        internal: {
+            dropzone: Locator;
+            uploadInput: Locator;
+            uploadButton: Locator;
+            dragOverlayText: Locator;
+        };
         readonlyComponent: Locator;
         disabledComponent: Locator;
         disabledUploadInput: Locator;
@@ -21,11 +22,14 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
-            component: page.getByTestId("file-upload"),
-            dropzone: page.getByTestId("file-upload"),
-            uploadInput: page.getByTestId("file-upload-input"),
-            uploadButton: page.getByRole("button", { name: "Upload files" }),
-            dragOverlayText: page.getByText("Drop files here"),
+            internal: {
+                dropzone: page.getByTestId("file-upload"),
+                uploadInput: page.getByTestId("file-upload-input"),
+                uploadButton: page.getByRole("button", {
+                    name: "Upload files",
+                }),
+                dragOverlayText: page.getByText("Drop files here"),
+            },
             readonlyComponent: page.getByTestId("file-upload-readonly"),
             disabledComponent: page.getByTestId("file-upload-disabled"),
             disabledUploadInput: page.getByTestId("file-upload-disabled-input"),
@@ -111,14 +115,14 @@ test.describe("FileUpload", () => {
         test("Upload interactions", async ({ story }) => {
             await test.step("Component mounts", async () => {
                 await compareScreenshot(story, "mount", {
-                    locator: story.locators.component,
+                    locator: story.locators.fileUpload,
                 });
             });
 
             await test.step("Upload through button", async () => {
                 const fileChooserPromise =
                     story.page.waitForEvent("filechooser");
-                await story.locators.uploadButton.click();
+                await story.locators.internal.uploadButton.click();
 
                 const fileChooser = await fileChooserPromise;
                 await fileChooser.setFiles("public/img/colour-tokens.png");
@@ -127,7 +131,7 @@ test.describe("FileUpload", () => {
                     story.getFileName("colour-tokens.png")
                 ).toBeVisible();
                 await compareScreenshot(story, "uploaded-through-button", {
-                    locator: story.locators.component,
+                    locator: story.locators.fileUpload,
                 });
             });
 
@@ -138,33 +142,43 @@ test.describe("FileUpload", () => {
                     content: "drag upload file",
                 });
 
-                await story.locators.dropzone.dispatchEvent("dragenter", {
-                    dataTransfer,
-                });
-                await expect(story.locators.dragOverlayText).toBeVisible();
+                await story.locators.internal.dropzone.dispatchEvent(
+                    "dragenter",
+                    {
+                        dataTransfer,
+                    }
+                );
+                await expect(
+                    story.locators.internal.dragOverlayText
+                ).toBeVisible();
 
                 await compareScreenshot(story, "drag-overlay", {
-                    locator: story.locators.dropzone,
+                    locator: story.locators.internal.dropzone,
                 });
 
-                await story.locators.dropzone.dispatchEvent("dragover", {
-                    dataTransfer,
-                });
-                await story.locators.dropzone.dispatchEvent("drop", {
+                await story.locators.internal.dropzone.dispatchEvent(
+                    "dragover",
+                    {
+                        dataTransfer,
+                    }
+                );
+                await story.locators.internal.dropzone.dispatchEvent("drop", {
                     dataTransfer,
                 });
 
                 await expect(
                     story.getFileName("drag-upload.png")
                 ).toBeVisible();
-                await expect(story.locators.dragOverlayText).not.toBeVisible();
+                await expect(
+                    story.locators.internal.dragOverlayText
+                ).not.toBeVisible();
 
                 await dataTransfer.dispose();
                 await compareScreenshot(
                     story,
                     "uploaded-through-drag-and-drop",
                     {
-                        locator: story.locators.component,
+                        locator: story.locators.fileUpload,
                     }
                 );
             });
@@ -179,7 +193,7 @@ test.describe("FileUpload", () => {
         test("Upload interactions - dark mode", async ({ story }) => {
             await test.step("Component mounts", async () => {
                 await compareScreenshot(story, "mount", {
-                    locator: story.locators.component,
+                    locator: story.locators.fileUpload,
                 });
             });
 
@@ -190,13 +204,18 @@ test.describe("FileUpload", () => {
                     content: "drag upload file",
                 });
 
-                await story.locators.dropzone.dispatchEvent("dragenter", {
-                    dataTransfer,
-                });
-                await expect(story.locators.dragOverlayText).toBeVisible();
+                await story.locators.internal.dropzone.dispatchEvent(
+                    "dragenter",
+                    {
+                        dataTransfer,
+                    }
+                );
+                await expect(
+                    story.locators.internal.dragOverlayText
+                ).toBeVisible();
 
                 await compareScreenshot(story, "drag-overlay", {
-                    locator: story.locators.dropzone,
+                    locator: story.locators.internal.dropzone,
                 });
             });
         });
