@@ -9,7 +9,7 @@ export default function Story() {
         <div className="story-column-container story-background">
             <FeedbackRating
                 data-testid="feedback-rating"
-                imgSrc="invalid-image-src.jpg"
+                imgSrc="https://assets.life.gov.sg/react-design-system/invalid"
                 rating={rating}
                 onRatingChange={setRating}
                 onSubmit={() => {}}
