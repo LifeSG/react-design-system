@@ -227,7 +227,10 @@ const Component = ({
                     </Typography.BodySM>
                 )}
             </div>
-            <div className={styles.fileSizeSection}>
+            <div
+                className={styles.fileSizeSection}
+                data-mobile-visibility={isLoading ? "hidden" : "expand"}
+            >
                 <Typography.BodyMD className={styles.fileSizeText}>
                     {fileSize}
                 </Typography.BodyMD>
@@ -258,7 +261,10 @@ const Component = ({
                 <div ref={detailSectionRef} className={styles.nameSection}>
                     {renderNameDescription()}
                 </div>
-                <div className={styles.fileSizeSection}>
+                <div
+                    className={styles.fileSizeSection}
+                    data-mobile-visibility={isLoading ? "hidden" : "expand"}
+                >
                     <Typography.BodyMD className={styles.fileSizeText}>
                         {fileSize}
                     </Typography.BodyMD>
@@ -321,9 +327,8 @@ const Component = ({
                     aria-label={`delete ${name}, error: ${errorMessage}`}
                     onClick={handleDelete}
                     className={styles.iconButton}
-                >
-                    <BinIcon aria-hidden />
-                </Button>
+                    icon={<BinIcon aria-hidden />}
+                />
             );
         } else if (isLoading) {
             content = (
