@@ -1,4 +1,5 @@
 import type { OpenChangeReason } from "@floating-ui/react";
+import clsx from "clsx";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { FormErrorMessage } from "../../form/form-label";
@@ -6,12 +7,16 @@ import { concatIds, VisuallyHidden } from "../../shared/accessibility";
 import { DropdownListState } from "../../shared/dropdown-list";
 import { DropdownList } from "../../shared/dropdown-list/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
-import { ClearButton } from "../../shared/input-wrapper";
+import {
+    BasicInput,
+    ClearButton,
+    InputWrapper,
+} from "../../shared/input-wrapper";
 import * as inputWrapperStyles from "../../shared/input-wrapper/input-wrapper.styles";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { useId } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
-import { SelectorInput, Wrapper } from "../common.styles";
+import * as commonStyles from "../common.styles";
 import type { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 import * as styles from "./combobox-picker.styles";
 
@@ -391,13 +396,15 @@ export const ComboboxPicker = ({
     };
 
     const renderElement = () => (
-        <styles.TimeFieldContainer
+        <InputWrapper
             ref={nodeRef}
             disabled={disabled}
             error={error || !!validationError}
             readOnly={readOnly}
             onBlur={handleBlur}
             role="group"
+            data-testid="timepicker-container"
+            className={styles.timeFieldContainer}
         >
             <VisuallyHidden id={startLabelId}>Start time</VisuallyHidden>
             <VisuallyHidden id={endLabelId}>End time</VisuallyHidden>
@@ -409,7 +416,7 @@ export const ComboboxPicker = ({
                 }
             >
                 {/* From */}
-                <SelectorInput
+                <BasicInput
                     ref={startInputRef}
                     onFocus={() => handleInputFocus("start")}
                     placeholder={
@@ -438,9 +445,10 @@ export const ComboboxPicker = ({
                     aria-invalid={error || ariaInvalid || !!validationError}
                     aria-disabled={disabled}
                     aria-readonly={readOnly}
+                    className={commonStyles.selectorInput}
                 />
                 {/* To */}
-                <SelectorInput
+                <BasicInput
                     ref={endInputRef}
                     onFocus={() => handleInputFocus("end")}
                     placeholder={activeTimeSelector === "end" ? "hh:mm" : "To"}
@@ -467,10 +475,11 @@ export const ComboboxPicker = ({
                     }
                     aria-disabled={disabled || undefined}
                     aria-readonly={readOnly || undefined}
+                    className={commonStyles.selectorInput}
                 />
             </RangeInputInnerContainer>
             {renderClearButton()}
-        </styles.TimeFieldContainer>
+        </InputWrapper>
     );
 
     const renderError = () =>
@@ -487,7 +496,11 @@ export const ComboboxPicker = ({
         );
 
     return (
-        <Wrapper id={id} {...otherProps}>
+        <div
+            id={id}
+            {...otherProps}
+            className={clsx(commonStyles.wrapper, otherProps.className)}
+        >
             <DropdownListState>
                 <ElementWithDropdown
                     enabled={!readOnly && !disabled}
@@ -504,6 +517,6 @@ export const ComboboxPicker = ({
                 />
             </DropdownListState>
             {renderError()}
-        </Wrapper>
+        </div>
     );
 };

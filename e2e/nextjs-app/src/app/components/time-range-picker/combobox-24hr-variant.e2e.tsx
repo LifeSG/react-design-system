@@ -9,8 +9,8 @@ export default function Story() {
                 id="time-range-picker-combobox-24hr"
                 data-testid="time-range-picker-combobox-24hr"
                 label="24hour combobox format"
-                variant="combobox"
                 format="24hr"
+                variant="combobox"
             />
         </div>
     );

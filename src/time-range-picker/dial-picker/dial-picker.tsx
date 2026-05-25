@@ -1,13 +1,15 @@
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 
 import { concatIds } from "../../shared/accessibility";
 import type { DropdownRenderProps } from "../../shared/dropdown-wrapper";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
+import { BasicInput, InputWrapper } from "../../shared/input-wrapper";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { TimepickerDropdown } from "../../shared/timepicker-dropdown/timepicker-dropdown";
 import { useId } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
-import { SelectorInput, TimeContainer, Wrapper } from "../common.styles";
+import * as styles from "../common.styles";
 import type { TimeRangePickerProps, TimeRangePickerValue } from "../types";
 
 type Active = "start" | "end" | "none";
@@ -148,7 +150,7 @@ export const DialPicker = ({
     };
 
     const renderElement = () => (
-        <TimeContainer
+        <InputWrapper
             ref={nodeRef}
             tabIndex={-1}
             onBlur={handleContainerBlur}
@@ -158,9 +160,10 @@ export const DialPicker = ({
             error={error}
             readOnly={readOnly}
             focused={focused}
+            className={styles.timeContainer}
         >
             <RangeInputInnerContainer error={error} currentActive={active}>
-                <SelectorInput
+                <BasicInput
                     onFocus={() => handleOpen("start")}
                     onClick={() => handleOpen("start")}
                     readOnly
@@ -178,8 +181,9 @@ export const DialPicker = ({
                     aria-readonly={readOnly}
                     aria-labelledby={getInputLabelledBy("start")}
                     aria-describedby={getInputDescribedBy()}
+                    className={styles.selectorInput}
                 />
-                <SelectorInput
+                <BasicInput
                     onClick={() => handleOpen("end")}
                     readOnly
                     placeholder="To"
@@ -196,9 +200,10 @@ export const DialPicker = ({
                     aria-readonly={readOnly || undefined}
                     aria-labelledby={getInputLabelledBy("end")}
                     aria-describedby={getInputDescribedBy()}
+                    className={styles.selectorInput}
                 />
             </RangeInputInnerContainer>
-        </TimeContainer>
+        </InputWrapper>
     );
 
     const renderDropdown = ({
@@ -242,7 +247,11 @@ export const DialPicker = ({
     };
 
     return (
-        <Wrapper id={id} {...otherProps}>
+        <div
+            id={id}
+            {...otherProps}
+            className={clsx(styles.wrapper, otherProps.className)}
+        >
             <ElementWithDropdown
                 enabled={enabled}
                 isOpen={isOpen}
@@ -256,6 +265,6 @@ export const DialPicker = ({
                 customZIndex={dropdownZIndex}
                 rootNode={dropdownRootNode}
             />
-        </Wrapper>
+        </div>
     );
 };
