@@ -9,7 +9,7 @@ import type {
     RowBarColors,
 } from "../internal-types";
 import type { TimeTableRowData } from "../types";
-import { RowCellContainer } from "./row-bar.styles";
+import * as styles from "./row-bar.styles";
 import { RowCell } from "./row-cell";
 
 interface RowBarProps extends TimeTableRowData {
@@ -207,7 +207,11 @@ export const RowBar = ({
     ]);
 
     return (
-        <RowCellContainer data-testid="timetable-row" role="presentation">
+        <div
+            className={styles.rowCellContainer}
+            data-testid="timetable-row"
+            role="presentation"
+        >
             {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell
@@ -227,6 +231,6 @@ export const RowBar = ({
                     />
                 );
             })}
-        </RowCellContainer>
+        </div>
     );
 };

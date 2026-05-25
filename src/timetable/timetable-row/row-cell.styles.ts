@@ -1,8 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { TimeSlot } from "../../shared/time-slot";
 import { Border, Colour, Radius, Spacing } from "../../theme";
-import { Typography } from "../../typography";
 
 export const tokens = {
     block: {
@@ -12,26 +10,31 @@ export const tokens = {
     },
 };
 
-export const BlockContainer = styled.div`
+export const blockContainer = css`
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-
-    &.blockContainerIsOnTheHour {
-        box-shadow: inset -0.5px 0px ${Colour["border-primary"]};
-    }
 `;
 
-export const Wrapper = styled.div`
+export const blockContainerOnTheHour = css`
+    box-shadow: inset -0.5px 0px ${Colour["border-primary"]};
+`;
+
+export const wrapper = css`
     display: flex;
     margin-bottom: 2px;
     height: 65px;
 `;
 
-export const Gap = styled.div`
+export const gap = css`
     width: 2px;
     height: 100%;
 `;
 
-export const Block = styled(TimeSlot)`
+export const block = css`
+    /* reset variables to prevent leaking to child components */
+    ${tokens.block.width}: initial;
+    ${tokens.block.mainColor}: initial;
+    ${tokens.block.altColor}: initial;
+
     height: 100%;
     width: var(${tokens.block.width});
     border-radius: ${Radius["sm"]};
@@ -39,13 +42,13 @@ export const Block = styled(TimeSlot)`
     padding: ${Spacing["spacing-4"]};
 `;
 
-export const BlockTitle = styled(Typography.BodySM)`
+export const blockTitle = css`
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
 `;
 
-export const BlockDescription = styled(Typography.BodyXS)`
+export const blockDescription = css`
     color: ${Colour["text-subtler"]};
     text-overflow: ellipsis;
     overflow: hidden;

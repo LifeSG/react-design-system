@@ -1,6 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-export const RowCellContainer = styled.div`
+export const rowCellContainer = css`
     display: flex;
     width: 100%;
 `;
