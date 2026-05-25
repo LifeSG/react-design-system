@@ -11,7 +11,7 @@ const INITIAL_ITEMS: FileItemProps[] = [
         size: 5120,
         type: "image/jpeg",
         thumbnailImageDataUrl:
-            "https://assets.life.gov.sg/react-design-system/img/feedback-rating/feedback-rating-banner.png",
+            "https://fastly.picsum.photos/id/445/300/300.jpg?hmac=5O-DNt4KzxZfuV5dgp9fNb7_sc3Tg6ZKtH6Bv6oktOQ",
     },
 ];
 
