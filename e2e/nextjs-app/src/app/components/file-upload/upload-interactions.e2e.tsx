@@ -32,7 +32,7 @@ export default function Story() {
     };
 
     return (
-        <div className="story-column-container">
+        <div className="story-background">
             <FileUpload
                 data-testid="file-upload"
                 title="Upload supporting files"
