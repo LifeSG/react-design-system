@@ -11,16 +11,14 @@ export const tokens = {
 
 export const inputGroupWrapper = css`
     padding: 0 0 0 ${Spacing["spacing-16"]};
+
+    input {
+        cursor: initial;
+    }
 `;
 
 export const inputGroupWrapperReadOnly = css`
     padding: 0;
-`;
-
-export const inputGroupWrapperInput = css`
-    input {
-        cursor: initial;
-    }
 `;
 
 export const inputGroupWrapperInputPointer = css`
@@ -51,6 +49,9 @@ export const iconContainerDisabled = css`
     color: var(${tokens.iconContainer.inactiveColor}, ${Colour.icon});
 `;
 
+// -----------------------------------------------------------------------------
+// LOADING DISPLAY
+// -----------------------------------------------------------------------------
 export const loadingWrapper = css`
     display: flex;
     align-items: center;
@@ -100,9 +101,7 @@ export const clickableErrorWrapper = css`
     cursor: pointer;
 
     ${Font["body-baseline-regular"]}
-`;
 
-export const clickableErrorWrapperHover = css`
     &:hover,
     &:active,
     &:focus {

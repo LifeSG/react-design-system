@@ -260,10 +260,7 @@ const Component = (
                     return (
                         <BasicButton
                             ref={tryAgainRef}
-                            className={clsx(
-                                styles.clickableErrorWrapper,
-                                styles.clickableErrorWrapperHover
-                            )}
+                            className={styles.clickableErrorWrapper}
                             onClick={handleTryAgain}
                             data-testid="try-again-button"
                             type="button"
@@ -301,7 +298,6 @@ const Component = (
                 ref={inputRef}
                 className={clsx(
                     styles.inputGroupWrapper,
-                    styles.inputGroupWrapperInput,
                     readOnly && styles.inputGroupWrapperReadOnly,
                     readOnly &&
                         !shouldDisableMasking() &&
