@@ -1,10 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { LoadingDotsSpinner } from "../animations";
-import { ErrorDisplay } from "../error-display";
-import { PopoverTrigger } from "../popover-v2";
 import { Border, Colour, Shadow, Spacing } from "../theme";
-import { Typography } from "../typography";
 import {
     MIN_HOURLY_INTERVAL_WIDTH,
     ROW_HEADER_WIDTH,
@@ -24,32 +20,32 @@ export const tokens = {
     },
 };
 
-export const Container = styled.div``;
-
-export const EmptyTableContainer = styled.div`
+export const emptyTableContainer = css`
     display: grid;
     overflow: scroll;
     position: relative;
     grid-template-columns: ${ROW_HEADER_WIDTH}px auto;
 `;
 
-export const TimeTableContainer = styled.div`
+export const timeTableContainer = css`
     display: grid;
     align-content: start;
     overflow: scroll;
     position: relative;
     isolation: isolate;
+`;
 
-    &.timeTableContainerNotAllLoaded {
-        padding-bottom: 128px;
-    }
+export const timeTableContainerNotAllLoaded = css`
+    padding-bottom: 128px;
+`;
 
-    &.timeTableContainerLoading:hover {
+export const timeTableContainerLoading = css`
+    &:hover {
         cursor: not-allowed;
     }
 `;
 
-export const RowColumnHeader = styled.div`
+export const rowColumnHeader = css`
     ${tokens.rowColumnHeader.clipRight}: 0;
     ${tokens.rowColumnHeader.clipBottom}: 0;
 
@@ -64,25 +60,25 @@ export const RowColumnHeader = styled.div`
     box-shadow: none;
     clip-path: inset(0);
     transition: box-shadow 0.5s ease-in-out, clip-path 0.5s ease-in-out;
-
-    &.rowColumnHeaderScrolled {
-        box-shadow: ${Shadow["md-subtle"]};
-        clip-path: inset(
-            0 var(${tokens.rowColumnHeader.clipRight})
-                var(${tokens.rowColumnHeader.clipBottom}) 0
-        );
-    }
-
-    &.rowColumnHeaderScrolledX {
-        ${tokens.rowColumnHeader.clipRight}: -0.12px;
-    }
-
-    &.rowColumnHeaderScrolledY {
-        ${tokens.rowColumnHeader.clipBottom}: -0.12px;
-    }
 `;
 
-export const TimeTableHeaderRow = styled.div`
+export const rowColumnHeaderScrolled = css`
+    box-shadow: ${Shadow["md-subtle"]};
+    clip-path: inset(
+        0 var(${tokens.rowColumnHeader.clipRight})
+            var(${tokens.rowColumnHeader.clipBottom}) 0
+    );
+`;
+
+export const rowColumnHeaderScrolledX = css`
+    ${tokens.rowColumnHeader.clipRight}: -0.12px;
+`;
+
+export const rowColumnHeaderScrolledY = css`
+    ${tokens.rowColumnHeader.clipBottom}: -0.12px;
+`;
+
+export const timeTableHeaderRow = css`
     display: grid;
     position: sticky;
     top: 0;
@@ -94,7 +90,7 @@ export const TimeTableHeaderRow = styled.div`
     height: ${ROW_HEIGHT}px;
 `;
 
-export const ColumnHeaderRow = styled.div`
+export const columnHeaderRow = css`
     display: grid;
     background-color: ${Colour["bg"]};
     height: ${ROW_HEIGHT}px;
@@ -105,29 +101,29 @@ export const ColumnHeaderRow = styled.div`
     );
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     transition: all 0.5s ease-in-out;
-
-    &.columnHeaderRowScrolled {
-        box-shadow: ${Shadow["md-subtle"]};
-    }
 `;
 
-export const ColumnHeader = styled.div`
+export const columnHeaderRowScrolled = css`
+    box-shadow: ${Shadow["md-subtle"]};
+`;
+
+export const columnHeader = css`
     min-width: ${MIN_HOURLY_INTERVAL_WIDTH}px;
     display: flex;
     align-items: flex-end;
     padding-bottom: ${Spacing["spacing-4"]};
 `;
 
-export const ColumnHeaderTitle = styled(Typography.BodySM)`
+export const columnHeaderTitle = css`
     color: ${Colour["text-subtler"]};
 `;
 
-export const TimeTableBody = styled.div`
+export const timeTableBody = css`
     width: max-content;
     min-width: 100%;
 `;
 
-export const TimeTableRow = styled.div`
+export const timeTableRow = css`
     display: grid;
     grid-template-columns: ${ROW_HEADER_WIDTH}px max-content;
     width: max-content;
@@ -135,7 +131,7 @@ export const TimeTableRow = styled.div`
     height: ${ROW_HEIGHT}px;
 `;
 
-export const RowHeader = styled.div`
+export const rowHeader = css`
     display: flex;
     flex-direction: column;
     align-items: flex-end;
@@ -153,61 +149,63 @@ export const RowHeader = styled.div`
         ${Colour["border-primary"]};
     border-left: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     transition: all 0.5s ease-in-out;
-
-    &.rowHeaderScrolled {
-        box-shadow: ${Shadow["md-subtle"]};
-        clip-path: inset(0 -6px 0 0);
-    }
 `;
 
-export const ClickableRowHeaderTitle = styled(Typography.BodyMD)`
+export const rowHeaderScrolled = css`
+    box-shadow: ${Shadow["md-subtle"]};
+    clip-path: inset(0 -6px 0 0);
+`;
+
+export const clickableRowHeaderTitle = css`
     display: inline-block;
     text-overflow: ellipsis;
     overflow: hidden;
     width: 100%;
     white-space: nowrap;
     color: ${Colour["text-primary"]};
+`;
 
-    &.clickableRowHeaderTitleClickable:hover {
+export const clickableRowHeaderTitleClickable = css`
+    &:hover {
         cursor: pointer;
     }
 `;
 
-export const RowHeaderSubtitle = styled(Typography.BodyXS)`
+export const rowHeaderSubtitle = css`
     display: inline-flex;
     gap: ${Spacing["spacing-4"]};
     align-items: center;
     color: ${Colour["text-subtler"]};
-
-    &.rowHeaderSubtitleHidden {
-        display: none;
-    }
 `;
 
-export const Loader = styled(LoadingDotsSpinner)`
+export const rowHeaderSubtitleHidden = css`
+    display: none;
+`;
+
+export const loader = css`
     display: flex;
     align-items: center;
     justify-content: center;
     grid-row: 2;
     width: 100%;
     height: 100%;
-
-    &.loaderEmptyContent {
-        grid-column: 1 / -1;
-    }
-
-    &.loaderHasContent {
-        grid-column: 2 / -1;
-    }
 `;
 
-export const NoResultsFound = styled(ErrorDisplay)`
+export const loaderEmptyContent = css`
+    grid-column: 1 / -1;
+`;
+
+export const loaderHasContent = css`
+    grid-column: 2 / -1;
+`;
+
+export const noResultsFound = css`
     grid-column: 1 / -1;
     grid-row: 2;
     padding: ${Spacing["spacing-72"]} 0;
 `;
 
-export const LoadingWrapper = styled.div`
+export const loadingWrapper = css`
     /* reset variable to prevent leaking to child components */
     ${tokens.loadingWrapper.cellWidth}: initial;
 
@@ -215,7 +213,7 @@ export const LoadingWrapper = styled.div`
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 `;
 
-export const LoadingCell = styled.div`
+export const loadingCell = css`
     border-right: ${Border["width-005"]} ${Border["solid"]}
         ${Colour["border-primary"]};
     width: var(${tokens.loadingWrapper.cellWidth});
@@ -223,7 +221,7 @@ export const LoadingCell = styled.div`
     padding: ${Spacing["spacing-20"]} ${Spacing["spacing-12"]};
 `;
 
-export const LoadingBar = styled.div`
+export const loadingBar = css`
     @keyframes timetable-loading-gradient {
         0% {
             background-position: -468px 0;
@@ -245,7 +243,7 @@ export const LoadingBar = styled.div`
     animation: timetable-loading-gradient 1.5s forwards infinite;
 `;
 
-export const StyledPopoverTrigger = styled(PopoverTrigger)`
+export const styledPopoverTrigger = css`
     max-width: 24rem !important;
     &:hover {
         cursor: default;

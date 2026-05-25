@@ -10,9 +10,13 @@ import {
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { LoadingDotsSpinner } from "../animations";
+import { ErrorDisplay } from "../error-display";
 import type { PopoverV2TriggerProps } from "../popover-v2";
+import { PopoverTrigger } from "../popover-v2";
 import { VisuallyHidden } from "../shared/accessibility";
 import { useApplyStyle } from "../theme";
+import { Typography } from "../typography";
 import { TimeHelper } from "../util/time-helper";
 import {
     MIN_INTERVAL_WIDTH,
@@ -21,28 +25,7 @@ import {
     ROW_HEADER_WIDTH,
     ROW_INTERVAL,
 } from "./const";
-import {
-    ClickableRowHeaderTitle,
-    ColumnHeader,
-    ColumnHeaderRow,
-    ColumnHeaderTitle,
-    Container,
-    EmptyTableContainer,
-    Loader,
-    LoadingBar,
-    LoadingCell,
-    LoadingWrapper,
-    NoResultsFound,
-    RowColumnHeader,
-    RowHeader,
-    RowHeaderSubtitle,
-    StyledPopoverTrigger,
-    TimeTableBody,
-    TimeTableContainer,
-    TimeTableHeaderRow,
-    TimeTableRow,
-    tokens,
-} from "./timetable.styles";
+import * as styles from "./timetable.styles";
 import { TimeTableHeader } from "./timetable-header/timetable-header";
 import { RowBar } from "./timetable-row/row-bar";
 import type { TimeTableProps, TimeTableRef, TimeTableRowData } from "./types";
@@ -112,11 +95,11 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     }));
 
     useApplyStyle(columnHeaderRowRef, {
-        [tokens.columnHeaderRow.columnWidth]: `${intervalWidth * 4}px`,
+        [styles.tokens.columnHeaderRow.columnWidth]: `${intervalWidth * 4}px`,
     });
 
     useApplyStyle(loadingWrapperRef, {
-        [tokens.loadingWrapper.cellWidth]: `${intervalWidth * 4}px`,
+        [styles.tokens.loadingWrapper.cellWidth]: `${intervalWidth * 4}px`,
     });
 
     // =============================================================================
@@ -247,13 +230,14 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
         };
 
         return (
-            <StyledPopoverTrigger
+            <PopoverTrigger
                 {...popoverTriggerProps}
+                className={styles.styledPopoverTrigger}
                 key={`${data.id}-popover-trigger`}
                 zIndex={2}
             >
                 {child}
-            </StyledPopoverTrigger>
+            </PopoverTrigger>
         );
     };
 
@@ -287,10 +271,11 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     const renderRowHeader = (data: TimeTableRowData) => {
         const rowHeaderContent = (
             <>
-                <ClickableRowHeaderTitle
+                <Typography.BodyMD
                     className={clsx(
+                        styles.clickableRowHeaderTitle,
                         !!data.onRowNameClick &&
-                            "clickableRowHeaderTitleClickable"
+                            styles.clickableRowHeaderTitleClickable
                     )}
                     onClick={(event: React.MouseEvent) =>
                         handleRowNameClick(data, event)
@@ -299,29 +284,33 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                     data-testid={`${data.id}-row-header-title`}
                 >
                     {data.name}
-                </ClickableRowHeaderTitle>
+                </Typography.BodyMD>
 
-                <RowHeaderSubtitle
+                <Typography.BodyXS
                     weight="bold"
                     className={clsx(
-                        !data.subtitle && "rowHeaderSubtitleHidden"
+                        styles.rowHeaderSubtitle,
+                        !data.subtitle && styles.rowHeaderSubtitleHidden
                     )}
                     data-testid={`${data.id}-row-header-subtitle`}
                 >
                     {data.subtitle}
-                </RowHeaderSubtitle>
+                </Typography.BodyXS>
             </>
         );
 
         return (
-            <RowHeader
-                className={clsx(isScrolledX && "rowHeaderScrolled")}
+            <div
+                className={clsx(
+                    styles.rowHeader,
+                    isScrolledX && styles.rowHeaderScrolled
+                )}
                 key={`${data.id}-row-header`}
                 role="rowheader"
                 aria-colindex={1}
             >
                 {buildPopoverTrigger(data, rowHeaderContent)}
-            </RowHeader>
+            </div>
         );
     };
 
@@ -329,39 +318,46 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
         // Don't render first column if there are no rows
 
         return hourlyIntervals.map((columnHeader: string) => (
-            <ColumnHeader
+            <div
+                className={styles.columnHeader}
                 key={`${columnHeader}-column-key`}
                 data-testid={`${columnHeader}-column`}
             >
-                <ColumnHeaderTitle weight={"semibold"}>
+                <Typography.BodySM
+                    className={styles.columnHeaderTitle}
+                    weight={"semibold"}
+                >
                     {columnHeader}
-                </ColumnHeaderTitle>
-            </ColumnHeader>
+                </Typography.BodySM>
+            </div>
         ));
     };
 
     const renderRows = () => {
         if (loading) {
             return (
-                <Loader
+                <LoadingDotsSpinner
                     className={clsx(
+                        styles.loader,
                         isEmptyContent
-                            ? "loaderEmptyContent"
-                            : "loaderHasContent"
+                            ? styles.loaderEmptyContent
+                            : styles.loaderHasContent
                     )}
                 />
             );
         }
 
         return (
-            <TimeTableBody
+            <div
+                className={styles.timeTableBody}
                 data-testid="content-container-id"
                 ref={contentContainerRef}
                 role="rowgroup"
             >
                 {rowData.map((data, index) => {
                     return (
-                        <TimeTableRow
+                        <div
+                            className={styles.timeTableRow}
                             key={`${index}-timetable-row`}
                             role="row"
                             aria-rowindex={index + 2}
@@ -377,39 +373,48 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                                 containerRef={contentContainerRef}
                                 {...data}
                             />
-                        </TimeTableRow>
+                        </div>
                     );
                 })}
                 {renderLazyLoadRow()}
-            </TimeTableBody>
+            </div>
         );
     };
 
     const renderLazyLoadRow = () => {
         if (loading || !loadMore) return;
         return (
-            <TimeTableRow>
-                <RowHeader className={clsx(isScrolledX && "rowHeaderScrolled")}>
-                    <LoadingBar />
-                </RowHeader>
-                <LoadingWrapper
+            <div className={styles.timeTableRow}>
+                <div
+                    className={clsx(
+                        styles.rowHeader,
+                        isScrolledX && styles.rowHeaderScrolled
+                    )}
+                >
+                    <div className={styles.loadingBar} />
+                </div>
+                <div
                     ref={loadingWrapperRef}
+                    className={styles.loadingWrapper}
                     data-testid="lazy-loader"
                     role="presentation"
                 >
                     {hourlyIntervals.map((_, index) => (
-                        <LoadingCell key={`lazy-load-cell-${index}`}>
-                            <LoadingBar />
-                        </LoadingCell>
+                        <div
+                            className={styles.loadingCell}
+                            key={`lazy-load-cell-${index}`}
+                        >
+                            <div className={styles.loadingBar} />
+                        </div>
                     ))}
-                </LoadingWrapper>
-            </TimeTableRow>
+                </div>
+            </div>
         );
     };
 
     if (isEmptyContent) {
         return (
-            <Container {...otherProps} data-testid={testId}>
+            <div {...otherProps} data-testid={testId}>
                 <TimeTableHeader
                     selectedDate={date}
                     loading={loading || loadMore}
@@ -424,37 +429,42 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                     onRefresh={onRefresh}
                     onCalendarDateSelect={onCalendarDateSelect}
                 />
-                <EmptyTableContainer
-                    className="empty-container"
+                <div
+                    className={clsx(
+                        styles.emptyTableContainer,
+                        "empty-container"
+                    )}
                     tabIndex={0}
                     aria-live="polite"
                     aria-atomic
                     aria-busy={loading}
                 >
                     {!loading ? (
-                        <NoResultsFound
+                        <ErrorDisplay
+                            className={styles.noResultsFound}
                             type="no-item-found"
                             description={emptyContentMessage}
                         />
                     ) : (
                         <>
                             <VisuallyHidden>{`Loading ${timetableAriaLabel}`}</VisuallyHidden>
-                            <Loader
+                            <LoadingDotsSpinner
                                 className={clsx(
+                                    styles.loader,
                                     isEmptyContent
-                                        ? "loaderEmptyContent"
-                                        : "loaderHasContent"
+                                        ? styles.loaderEmptyContent
+                                        : styles.loaderHasContent
                                 )}
-                            ></Loader>
+                            />
                         </>
                     )}
-                </EmptyTableContainer>
-            </Container>
+                </div>
+            </div>
         );
     }
 
     return (
-        <Container {...otherProps} data-testid={testId}>
+        <div {...otherProps} data-testid={testId}>
             <TimeTableHeader
                 data-id="timetable-date-navigator"
                 selectedDate={date}
@@ -470,13 +480,14 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                 onRefresh={onRefresh}
                 onCalendarDateSelect={onCalendarDateSelect}
             />
-            <TimeTableContainer
+            <div
                 data-id="timetable-container"
                 data-testid="timetable-container"
                 ref={tableContainerRef}
                 className={clsx(
-                    hasLazyLoad && "timeTableContainerNotAllLoaded",
-                    loading && "timeTableContainerLoading"
+                    styles.timeTableContainer,
+                    hasLazyLoad && styles.timeTableContainerNotAllLoaded,
+                    loading && styles.timeTableContainerLoading
                 )}
                 role="grid"
                 aria-label={timetableAriaLabel}
@@ -485,36 +496,39 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                 aria-busy={loadMore}
                 tabIndex={0}
             >
-                <TimeTableHeaderRow
+                <div
+                    className={styles.timeTableHeaderRow}
                     role="row"
                     aria-rowindex={1}
                     data-testid={"row-header-column-id"}
                 >
-                    <RowColumnHeader
+                    <div
                         className={clsx(
+                            styles.rowColumnHeader,
                             (isScrolledX || isScrolledY) &&
-                                "rowColumnHeaderScrolled",
-                            isScrolledX && "rowColumnHeaderScrolledX",
-                            isScrolledY && "rowColumnHeaderScrolledY"
+                                styles.rowColumnHeaderScrolled,
+                            isScrolledX && styles.rowColumnHeaderScrolledX,
+                            isScrolledY && styles.rowColumnHeaderScrolledY
                         )}
                         role="columnheader"
                         aria-colindex={1}
                     >
                         <VisuallyHidden>Resource</VisuallyHidden>
-                    </RowColumnHeader>
-                    <ColumnHeaderRow
+                    </div>
+                    <div
                         ref={columnHeaderRowRef}
                         className={clsx(
-                            isScrolledY && "columnHeaderRowScrolled"
+                            styles.columnHeaderRow,
+                            isScrolledY && styles.columnHeaderRowScrolled
                         )}
                         role="presentation"
                     >
                         {renderColumnHeaders()}
-                    </ColumnHeaderRow>
-                </TimeTableHeaderRow>
+                    </div>
+                </div>
                 {renderRows()}
-            </TimeTableContainer>
-        </Container>
+            </div>
+        </div>
     );
 };
 
