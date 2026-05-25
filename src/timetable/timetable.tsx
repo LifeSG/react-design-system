@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { isEmpty, throttle } from "lodash";
 import {
@@ -11,6 +12,7 @@ import { useResizeDetector } from "react-resize-detector";
 
 import type { PopoverV2TriggerProps } from "../popover-v2";
 import { VisuallyHidden } from "../shared/accessibility";
+import { useApplyStyle } from "../theme";
 import { TimeHelper } from "../util/time-helper";
 import {
     MIN_INTERVAL_WIDTH,
@@ -39,6 +41,7 @@ import {
     TimeTableContainer,
     TimeTableHeaderRow,
     TimeTableRow,
+    tokens,
 } from "./timetable.styles";
 import { TimeTableHeader } from "./timetable-header/timetable-header";
 import { RowBar } from "./timetable-row/row-bar";
@@ -93,8 +96,11 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
 
     const isEmptyContent = totalRecords === 0 || isEmpty(rowData);
     const allRecordsLoaded = isEmptyContent || rowData.length === totalRecords;
+    const hasLazyLoad = !allRecordsLoaded && !!onPage;
     const tableContainerRef = useRef<HTMLDivElement>(null);
     const contentContainerRef = useRef<HTMLDivElement>(null);
+    const columnHeaderRowRef = useRef<HTMLDivElement>(null);
+    const loadingWrapperRef = useRef<HTMLDivElement>(null);
     const [isScrolledX, setIsScrolledX] = useState<boolean>(false);
     const [isScrolledY, setIsScrolledY] = useState<boolean>(false);
     const [intervalWidth, setIntervalWidth] = useState<number>(0);
@@ -104,6 +110,14 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     useImperativeHandle(ref, () => ({
         resetScroll,
     }));
+
+    useApplyStyle(columnHeaderRowRef, {
+        [tokens.columnHeaderRow.columnWidth]: `${intervalWidth * 4}px`,
+    });
+
+    useApplyStyle(loadingWrapperRef, {
+        [tokens.loadingWrapper.cellWidth]: `${intervalWidth * 4}px`,
+    });
 
     // =============================================================================
     // EFFECTS
@@ -274,7 +288,10 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
         const rowHeaderContent = (
             <>
                 <ClickableRowHeaderTitle
-                    $isClickable={!!data.onRowNameClick}
+                    className={clsx(
+                        !!data.onRowNameClick &&
+                            "clickableRowHeaderTitleClickable"
+                    )}
                     onClick={(event: React.MouseEvent) =>
                         handleRowNameClick(data, event)
                     }
@@ -286,7 +303,9 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
 
                 <RowHeaderSubtitle
                     weight="bold"
-                    $show={!!data.subtitle}
+                    className={clsx(
+                        !data.subtitle && "rowHeaderSubtitleHidden"
+                    )}
                     data-testid={`${data.id}-row-header-subtitle`}
                 >
                     {data.subtitle}
@@ -296,7 +315,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
 
         return (
             <RowHeader
-                $isScrolled={isScrolledX}
+                className={clsx(isScrolledX && "rowHeaderScrolled")}
                 key={`${data.id}-row-header`}
                 role="rowheader"
                 aria-colindex={1}
@@ -322,7 +341,18 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     };
 
     const renderRows = () => {
-        if (loading) return <Loader $isEmptyContent={isEmptyContent} />;
+        if (loading) {
+            return (
+                <Loader
+                    className={clsx(
+                        isEmptyContent
+                            ? "loaderEmptyContent"
+                            : "loaderHasContent"
+                    )}
+                />
+            );
+        }
+
         return (
             <TimeTableBody
                 data-testid="content-container-id"
@@ -359,15 +389,16 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
         if (loading || !loadMore) return;
         return (
             <TimeTableRow>
-                <RowHeader $isScrolled={isScrolledX}>
+                <RowHeader className={clsx(isScrolledX && "rowHeaderScrolled")}>
                     <LoadingBar />
                 </RowHeader>
-                <LoadingWrapper data-testid="lazy-loader" role="presentation">
+                <LoadingWrapper
+                    ref={loadingWrapperRef}
+                    data-testid="lazy-loader"
+                    role="presentation"
+                >
                     {hourlyIntervals.map((_, index) => (
-                        <LoadingCell
-                            key={`lazy-load-cell-${index}`}
-                            $width={intervalWidth * 4}
-                        >
+                        <LoadingCell key={`lazy-load-cell-${index}`}>
                             <LoadingBar />
                         </LoadingCell>
                     ))}
@@ -408,7 +439,13 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                     ) : (
                         <>
                             <VisuallyHidden>{`Loading ${timetableAriaLabel}`}</VisuallyHidden>
-                            <Loader $isEmptyContent={isEmptyContent}></Loader>
+                            <Loader
+                                className={clsx(
+                                    isEmptyContent
+                                        ? "loaderEmptyContent"
+                                        : "loaderHasContent"
+                                )}
+                            ></Loader>
                         </>
                     )}
                 </EmptyTableContainer>
@@ -437,8 +474,10 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                 data-id="timetable-container"
                 data-testid="timetable-container"
                 ref={tableContainerRef}
-                $loading={loading}
-                $allRecordsLoaded={allRecordsLoaded || !onPage}
+                className={clsx(
+                    hasLazyLoad && "timeTableContainerNotAllLoaded",
+                    loading && "timeTableContainerLoading"
+                )}
                 role="grid"
                 aria-label={timetableAriaLabel}
                 aria-rowcount={ariaRowCount}
@@ -452,17 +491,22 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                     data-testid={"row-header-column-id"}
                 >
                     <RowColumnHeader
-                        $isScrolledY={isScrolledY}
-                        $isScrolledX={isScrolledX}
+                        className={clsx(
+                            (isScrolledX || isScrolledY) &&
+                                "rowColumnHeaderScrolled",
+                            isScrolledX && "rowColumnHeaderScrolledX",
+                            isScrolledY && "rowColumnHeaderScrolledY"
+                        )}
                         role="columnheader"
                         aria-colindex={1}
                     >
                         <VisuallyHidden>Resource</VisuallyHidden>
                     </RowColumnHeader>
                     <ColumnHeaderRow
-                        $numOfColumns={hourlyIntervals.length}
-                        $intervalWidth={intervalWidth}
-                        $isScrolled={isScrolledY}
+                        ref={columnHeaderRowRef}
+                        className={clsx(
+                            isScrolledY && "columnHeaderRowScrolled"
+                        )}
                         role="presentation"
                     >
                         {renderColumnHeaders()}
