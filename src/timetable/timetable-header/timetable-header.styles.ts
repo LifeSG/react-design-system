@@ -1,4 +1,4 @@
-import styled, { css, keyframes } from "styled-components";
+import styled, { keyframes } from "styled-components";
 
 import { Button } from "../../button";
 import { DateNavigator } from "../../date-navigator";
@@ -12,16 +12,11 @@ const spin = keyframes`
     }
 `;
 
-export const StyledRefreshButton = styled(Button)<{ $loading: boolean }>`
+export const StyledRefreshButton = styled(Button)`
     color: ${Colour["icon"]};
-    svg {
-        ${(props) => {
-            if (props.$loading) {
-                return css`
-                    animation: ${spin} 4s linear infinite;
-                `;
-            }
-        }}
+
+    &.styledRefreshButtonLoading svg {
+        animation: ${spin} 4s linear infinite;
     }
 `;
 

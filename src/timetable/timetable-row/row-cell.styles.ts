@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { TimeSlot } from "../../shared/time-slot";
 import { Border, Colour, Radius, Spacing } from "../../theme";
@@ -8,28 +8,16 @@ export const tokens = {
     block: {
         mainColor: "--fds-internal-timetable-rowCellBlock-mainColor",
         altColor: "--fds-internal-timetable-rowCellBlock-altColor",
+        width: "--fds-internal-timetable-rowCellBlock-width",
     },
 };
 
-interface BlockStyleProps {
-    $width: number;
-    $mainColor: string;
-    $altColor: string;
-}
-
-interface BlockContainerProps {
-    $isOnTheHour: boolean;
-}
-
-export const BlockContainer = styled.div<BlockContainerProps>`
+export const BlockContainer = styled.div`
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    ${(props) => {
-        if (props.$isOnTheHour) {
-            return css`
-                box-shadow: inset -0.5px 0px ${Colour["border-primary"]};
-            `;
-        }
-    }}
+
+    &.blockContainerIsOnTheHour {
+        box-shadow: inset -0.5px 0px ${Colour["border-primary"]};
+    }
 `;
 
 export const Wrapper = styled.div`
@@ -43,15 +31,12 @@ export const Gap = styled.div`
     height: 100%;
 `;
 
-export const Block = styled(TimeSlot)<BlockStyleProps>`
+export const Block = styled(TimeSlot)`
     height: 100%;
-    width: ${({ $width }) => `${$width}px`};
+    width: var(${tokens.block.width});
     border-radius: ${Radius["sm"]};
     box-sizing: border-box;
     padding: ${Spacing["spacing-4"]};
-
-    ${tokens.block.mainColor}: ${({ $mainColor }) => $mainColor};
-    ${tokens.block.altColor}: ${({ $altColor }) => $altColor};
 `;
 
 export const BlockTitle = styled(Typography.BodySM)`

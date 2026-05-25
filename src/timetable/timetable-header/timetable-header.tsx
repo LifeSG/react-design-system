@@ -1,4 +1,5 @@
 import { RefreshIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 import type { RefObject } from "react";
 
 import {
@@ -82,7 +83,9 @@ export const TimeTableHeader = ({
                         sizeType="small"
                         disabled={loading}
                         onClick={handleRefresh}
-                        $loading={loading}
+                        className={clsx(
+                            loading && "styledRefreshButtonLoading"
+                        )}
                         icon={<RefreshIcon />}
                     />
                 )}

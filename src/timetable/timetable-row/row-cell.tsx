@@ -1,10 +1,11 @@
+import clsx from "clsx";
 import dayjs from "dayjs";
 import type { RefObject } from "react";
-import React from "react";
+import React, { useRef } from "react";
 
 import { concatIds, VisuallyHidden } from "../../shared/accessibility";
 import type { SlotStyle, TimeSlotProps } from "../../shared/time-slot";
-import { Colour } from "../../theme";
+import { Colour, formatUnitValue, useApplyStyle } from "../../theme";
 import { DateHelper } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
@@ -116,6 +117,14 @@ const Component = ({
         `${status}`
     );
 
+    const blockRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(blockRef, {
+        [tokens.block.width]: formatUnitValue(adjustedCellWidth, "px"),
+        [tokens.block.mainColor]: rowBarColor.mainColor,
+        [tokens.block.altColor]: rowBarColor.alternateColor,
+    });
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -166,9 +175,7 @@ const Component = ({
             <WithOptionalPopover customPopover={customPopover}>
                 <Wrapper>
                     <Block
-                        $width={adjustedCellWidth}
-                        $mainColor={rowBarColor.mainColor}
-                        $altColor={rowBarColor.alternateColor}
+                        ref={blockRef}
                         clickable={isClickable}
                         bgColor={customBgColor}
                         bgColor2={customBg2Color}
@@ -201,7 +208,7 @@ const Component = ({
         <BlockContainer
             key={`block-container-key`}
             data-testid={`block-container`}
-            $isOnTheHour={isOnTheHour}
+            className={clsx(isOnTheHour && "blockContainerIsOnTheHour")}
             role="gridcell"
             aria-colindex={ariaColIndex}
             aria-colspan={ariaColSpan}
