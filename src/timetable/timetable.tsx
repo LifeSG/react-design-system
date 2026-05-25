@@ -232,7 +232,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
         return (
             <PopoverTrigger
                 {...popoverTriggerProps}
-                className={styles.styledPopoverTrigger}
+                className={styles.popoverTrigger}
                 key={`${data.id}-popover-trigger`}
                 zIndex={2}
             >
@@ -338,10 +338,10 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
             return (
                 <LoadingDotsSpinner
                     className={clsx(
-                        styles.loader,
+                        styles.loadingSpinner,
                         isEmptyContent
-                            ? styles.loaderEmptyContent
-                            : styles.loaderHasContent
+                            ? styles.loadingSpinnerEmptyContent
+                            : styles.loadingSpinnerHasContent
                     )}
                 />
             );
@@ -450,10 +450,10 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                             <VisuallyHidden>{`Loading ${timetableAriaLabel}`}</VisuallyHidden>
                             <LoadingDotsSpinner
                                 className={clsx(
-                                    styles.loader,
+                                    styles.loadingSpinner,
                                     isEmptyContent
-                                        ? styles.loaderEmptyContent
-                                        : styles.loaderHasContent
+                                        ? styles.loadingSpinnerEmptyContent
+                                        : styles.loadingSpinnerHasContent
                                 )}
                             />
                         </>

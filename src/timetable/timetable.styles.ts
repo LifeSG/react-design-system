@@ -20,6 +20,10 @@ export const tokens = {
     },
 };
 
+// -----------------------------------------------------------------------------
+// TABLE
+// -----------------------------------------------------------------------------
+
 export const emptyTableContainer = css`
     display: grid;
     overflow: scroll;
@@ -44,6 +48,10 @@ export const timeTableContainerLoading = css`
         cursor: not-allowed;
     }
 `;
+
+// -----------------------------------------------------------------------------
+// TABLE HEADER
+// -----------------------------------------------------------------------------
 
 export const rowColumnHeader = css`
     ${tokens.rowColumnHeader.clipRight}: 0;
@@ -118,6 +126,10 @@ export const columnHeaderTitle = css`
     color: ${Colour["text-subtler"]};
 `;
 
+// -----------------------------------------------------------------------------
+// TABLE BODY
+// -----------------------------------------------------------------------------
+
 export const timeTableBody = css`
     width: max-content;
     min-width: 100%;
@@ -182,7 +194,11 @@ export const rowHeaderSubtitleHidden = css`
     display: none;
 `;
 
-export const loader = css`
+// -----------------------------------------------------------------------------
+// LOADING AND ERROR
+// -----------------------------------------------------------------------------
+
+export const loadingSpinner = css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -191,11 +207,11 @@ export const loader = css`
     height: 100%;
 `;
 
-export const loaderEmptyContent = css`
+export const loadingSpinnerEmptyContent = css`
     grid-column: 1 / -1;
 `;
 
-export const loaderHasContent = css`
+export const loadingSpinnerHasContent = css`
     grid-column: 2 / -1;
 `;
 
@@ -204,6 +220,10 @@ export const noResultsFound = css`
     grid-row: 2;
     padding: ${Spacing["spacing-72"]} 0;
 `;
+
+// -----------------------------------------------------------------------------
+// LAZY LOADING
+// -----------------------------------------------------------------------------
 
 export const loadingWrapper = css`
     /* reset variable to prevent leaking to child components */
@@ -243,7 +263,11 @@ export const loadingBar = css`
     animation: timetable-loading-gradient 1.5s forwards infinite;
 `;
 
-export const styledPopoverTrigger = css`
+// -----------------------------------------------------------------------------
+// MISCELLANEOUS
+// -----------------------------------------------------------------------------
+
+export const popoverTrigger = css`
     max-width: 24rem !important;
     &:hover {
         cursor: default;
