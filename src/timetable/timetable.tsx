@@ -337,6 +337,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
         if (loading) {
             return (
                 <LoadingDotsSpinner
+                    data-testid="timetable-loading-spinner"
                     className={clsx(
                         styles.loadingSpinner,
                         isEmptyContent
@@ -449,6 +450,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
                         <>
                             <VisuallyHidden>{`Loading ${timetableAriaLabel}`}</VisuallyHidden>
                             <LoadingDotsSpinner
+                                data-testid="timetable-loading-spinner"
                                 className={clsx(
                                     styles.loadingSpinner,
                                     isEmptyContent
