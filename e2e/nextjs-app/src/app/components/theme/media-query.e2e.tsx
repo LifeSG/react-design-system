@@ -13,6 +13,7 @@ const boolToText = (value: boolean) => String(value);
 export default function Story() {
     const [dimensions, setDimensions] = useState("0 x 0");
 
+    const minXxs = useMinWidthMediaQuery("xxs");
     const minXs = useMinWidthMediaQuery("xs");
     const minSm = useMinWidthMediaQuery("sm");
     const minMd = useMinWidthMediaQuery("md");
@@ -49,6 +50,7 @@ export default function Story() {
 
             <div>
                 <h3>Min width</h3>
+                <p data-testid="min-width-xxs-status">{boolToText(minXxs)}</p>
                 <p data-testid="min-width-xs-status">{boolToText(minXs)}</p>
                 <p data-testid="min-width-sm-status">{boolToText(minSm)}</p>
                 <p data-testid="min-width-md-status">{boolToText(minMd)}</p>

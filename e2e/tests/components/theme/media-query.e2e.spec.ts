@@ -6,6 +6,7 @@ class MediaQueryPage extends AbstractStoryPage {
 
     public readonly locators: {
         viewportDimensions: Locator;
+        minWidthXxsStatus: Locator;
         minWidthXsStatus: Locator;
         minWidthSmStatus: Locator;
         minWidthMdStatus: Locator;
@@ -32,6 +33,7 @@ class MediaQueryPage extends AbstractStoryPage {
 
         this.locators = {
             viewportDimensions: page.getByTestId("viewport-dimensions"),
+            minWidthXxsStatus: page.getByTestId("min-width-xxs-status"),
             minWidthXsStatus: page.getByTestId("min-width-xs-status"),
             minWidthSmStatus: page.getByTestId("min-width-sm-status"),
             minWidthMdStatus: page.getByTestId("min-width-md-status"),
@@ -85,6 +87,7 @@ test.describe("Theme media query", () => {
         test("mobile breakpoint queries", async ({ story }) => {
             await story.init("media-query", { size: "mobile" });
 
+            await expect(story.locators.minWidthXxsStatus).toHaveText("true");
             await expect(story.locators.minWidthXsStatus).toHaveText("true");
             await expect(story.locators.minWidthSmStatus).toHaveText("false");
             await expect(story.locators.minWidthMdStatus).toHaveText("false");
