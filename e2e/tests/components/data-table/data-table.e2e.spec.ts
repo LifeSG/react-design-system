@@ -311,7 +311,9 @@ test.describe("DataTable", () => {
 
                 await firstRowCheckbox.click();
 
-                await story.page.keyboard.press("PageDown");
+                // force scrolling to trigger the floating action bar
+                await story.page.mouse.wheel(0, 100);
+                await story.page.mouse.wheel(0, -100);
 
                 await compareScreenshot(story, "state", {
                     locator: story.locators.dataTable,
@@ -323,15 +325,8 @@ test.describe("DataTable", () => {
 
                 await firstRowCheckbox.click();
 
-                await story.scrollWithWheelUntil({
+                await story.scrollToEnd({
                     scrollTarget: story.layout,
-                    until: async () => {
-                        return await story.page.evaluate(
-                            () =>
-                                window.scrollY + window.innerHeight >=
-                                document.documentElement.scrollHeight
-                        );
-                    },
                     maxAttempts: 30,
                 });
 
@@ -386,7 +381,9 @@ test.describe("DataTable", () => {
 
                 await firstRowCheckbox.click();
 
-                await story.page.keyboard.press("PageDown");
+                // force scrolling to trigger the floating action bar
+                await story.page.mouse.wheel(0, 100);
+                await story.page.mouse.wheel(0, -100);
 
                 await compareScreenshot(story, "state");
             });
