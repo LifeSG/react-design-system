@@ -5,6 +5,7 @@ import { toCssValue } from "./token-resolver";
 import { useResolveBreakpointToken } from "./use-resolve-breakpoint-token";
 
 export type BreakpointName = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+export type MaxWidthBreakpointName = Exclude<BreakpointName, "xxl">;
 
 export const useMinWidthMediaQuery = (
     breakpoint: BreakpointName,
@@ -16,7 +17,7 @@ export const useMinWidthMediaQuery = (
     });
 
 export const useMaxWidthMediaQuery = (
-    breakpoint: BreakpointName,
+    breakpoint: MaxWidthBreakpointName,
     orientation?: MediaQueryOrientation
 ) =>
     useMediaQuery({
