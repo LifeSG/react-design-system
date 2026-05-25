@@ -1,35 +1,48 @@
 import { useEffect, useState } from "react";
 
+import { Breakpoint } from "../tokens/breakpoint";
+import type { BreakpointCSSVariableString } from "../types";
 import { normalizeCssLengthValue } from "./css-variable";
-import { toCssValue } from "./token-resolver";
-import { useResolveBreakpointToken } from "./use-resolve-breakpoint-token";
+import { isTokenFromSet } from "./token-resolver";
+import { useResolvedTokenValue } from "./use-design-token";
 
 export type BreakpointName = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 export type MaxWidthBreakpointName = Exclude<BreakpointName, "xxl">;
 
+const BREAKPOINT_TOKEN_SET = new Set<string>(Object.values(Breakpoint));
+
+const isBreakpointToken = (
+    value: unknown
+): value is BreakpointCSSVariableString => {
+    return isTokenFromSet<BreakpointCSSVariableString>(
+        value,
+        BREAKPOINT_TOKEN_SET
+    );
+};
+
+const getMinWidthBreakpointToken = (breakpoint: BreakpointName) => {
+    return Breakpoint[`${breakpoint}-min`];
+};
+
+const getMaxWidthBreakpointToken = (breakpoint: MaxWidthBreakpointName) => {
+    return Breakpoint[`${breakpoint}-max`];
+};
+
 export const useMinWidthMediaQuery = (breakpoint: BreakpointName) =>
     useMediaQuery({
-        minWidth: `${breakpoint}-min`,
+        minWidth: getMinWidthBreakpointToken(breakpoint),
     });
 
 export const useMaxWidthMediaQuery = (breakpoint: MaxWidthBreakpointName) =>
     useMediaQuery({
-        maxWidth: `${breakpoint}-max`,
+        maxWidth: getMaxWidthBreakpointToken(breakpoint),
     });
 export const DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT = "480px";
 
 export interface MediaQueryOptions {
-    minWidth?: number | string;
-    maxWidth?: number | string;
+    minWidth?: BreakpointCSSVariableString;
+    maxWidth?: BreakpointCSSVariableString;
 }
-
-const getWidthCandidate = (value: number | string | undefined) => {
-    if (value == null || value === "") {
-        return "";
-    }
-
-    return typeof value === "number" ? toCssValue(value) : value;
-};
 
 const getMediaQueryClause = (
     feature: "min-width" | "max-width",
@@ -66,22 +79,30 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
     return globalThis.window.matchMedia(queryString).matches;
 };
 
-export const useMediaQuery = (options: MediaQueryOptions): boolean => {
-    const { minWidth, maxWidth } = options;
-    const normalizedMinWidth = useResolveBreakpointToken(
-        getWidthCandidate(minWidth)
+const useResolvedBreakpointToken = (
+    breakpointToken: BreakpointCSSVariableString | undefined,
+    fallbackLength?: string
+): string | undefined => {
+    const resolvedTokenValue = useResolvedTokenValue<
+        BreakpointCSSVariableString,
+        string
+    >({
+        value: breakpointToken,
+        fallback: fallbackLength ?? breakpointToken ?? "",
+        isToken: isBreakpointToken,
+        normalizeCustom: (value) => value,
+    });
+
+    return (
+        normalizeCssLengthValue(resolvedTokenValue) ??
+        normalizeCssLengthValue(fallbackLength)
     );
-    const normalizedMaxWidth = useResolveBreakpointToken(
-        getWidthCandidate(maxWidth)
-    );
-    const clauses = [
-        getMediaQueryClause("min-width", normalizedMinWidth),
-        getMediaQueryClause("max-width", normalizedMaxWidth),
-    ].filter((value): value is string => !!value);
-    const queryString = clauses.join(" and ");
-    const hasMinWidth = !!normalizedMinWidth;
-    const hasMaxWidth = !!normalizedMaxWidth;
-    const defaultMatch = getDefaultMatch(hasMinWidth, hasMaxWidth);
+};
+
+const useMatchMediaQuery = (
+    queryString: string,
+    defaultMatch: boolean
+): boolean => {
     const [matches, setMatches] = useState(() =>
         getCurrentMatch(queryString, defaultMatch)
     );
@@ -109,6 +130,22 @@ export const useMediaQuery = (options: MediaQueryOptions): boolean => {
     return matches;
 };
 
+export const useMediaQuery = (options: MediaQueryOptions): boolean => {
+    const { minWidth, maxWidth } = options;
+    const normalizedMinWidth = useResolvedBreakpointToken(minWidth);
+    const normalizedMaxWidth = useResolvedBreakpointToken(maxWidth);
+    const clauses = [
+        getMediaQueryClause("min-width", normalizedMinWidth),
+        getMediaQueryClause("max-width", normalizedMaxWidth),
+    ].filter((value): value is string => !!value);
+    const queryString = clauses.join(" and ");
+    const hasMinWidth = !!normalizedMinWidth;
+    const hasMaxWidth = !!normalizedMaxWidth;
+    const defaultMatch = getDefaultMatch(hasMinWidth, hasMaxWidth);
+
+    return useMatchMediaQuery(queryString, defaultMatch);
+};
+
 /**
  * @deprecated Use `useMaxWidthMediaQuery` from `use-breakpoint-hooks` instead.
  * This wrapper is legacy and will be removed.
@@ -117,15 +154,20 @@ export const useMediaQuery = (options: MediaQueryOptions): boolean => {
  * max-width values (e.g. unresolved tokens), and falls back to a valid default.
  */
 export const useSafeMaxWidthMediaQuery = (
-    maxWidth: string | undefined,
+    maxWidth: BreakpointCSSVariableString | string | undefined,
     fallback: string = DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT
 ) => {
     const normalizedFallback =
         normalizeCssLengthValue(fallback) ??
         DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT;
+    const breakpointToken = isBreakpointToken(maxWidth) ? maxWidth : undefined;
+    const resolvedTokenMaxWidth = useResolvedBreakpointToken(breakpointToken);
+    const normalizedRawMaxWidth = normalizeCssLengthValue(maxWidth);
     const resolvedMaxWidth =
-        useResolveBreakpointToken(maxWidth ?? "", normalizedFallback) ??
-        normalizedFallback;
+        resolvedTokenMaxWidth ?? normalizedRawMaxWidth ?? normalizedFallback;
 
-    return useMediaQuery({ maxWidth: resolvedMaxWidth });
+    const queryString =
+        getMediaQueryClause("max-width", resolvedMaxWidth) ?? "";
+
+    return useMatchMediaQuery(queryString, false);
 };

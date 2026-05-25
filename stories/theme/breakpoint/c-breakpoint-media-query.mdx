@@ -6,6 +6,7 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 ```tsx
 import {
+    Breakpoint,
     useMaxWidthMediaQuery,
     useMediaQuery,
     useMinWidthMediaQuery,
@@ -24,8 +25,8 @@ For CSS-in-JS breakpoint selectors, refer to
 ### Generic query
 
 ```tsx
-const tabletAndUp = useMediaQuery({ minWidth: "md-min" });
-const mobileOnly = useMediaQuery({ maxWidth: "sm-max" });
+const tabletAndUp = useMediaQuery({ minWidth: Breakpoint["md-min"] });
+const mobileOnly = useMediaQuery({ maxWidth: Breakpoint["sm-max"] });
 ```
 
 ### Convenience hooks
@@ -37,8 +38,8 @@ const tabletDown = useMaxWidthMediaQuery("md");
 
 ## Token support
 
-`minWidth` and `maxWidth` accept breakpoint tokens like `"md-min"` and
-`"sm-max"` in addition to concrete values like `"768px"`.
+`minWidth` and `maxWidth` accept breakpoint CSS variable tokens like
+`Breakpoint["md-min"]` and `Breakpoint["sm-max"]`.
 
 For CSS-in-JS selectors, `MediaQuery.Orientation` can be used in the same style
 as other media query tokens.

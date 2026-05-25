@@ -33,5 +33,5 @@ export function getThemeVariablesStyle(
     return {
         ...BREAKPOINT_THEME_VARIABLES,
         ...overrides,
-    } as CSSProperties;
+    };
 }

@@ -1,16 +1,14 @@
-import { act, render, screen } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
+import { ThemeProvider } from "src/theme";
+import { Breakpoint } from "src/theme/tokens/breakpoint";
+import type { BreakpointCSSVariableString } from "src/theme/types";
 import {
     type MediaQueryOptions,
     useMediaQuery,
     useSafeMaxWidthMediaQuery,
 } from "src/theme/utils/use-media-query";
-import { useResolveBreakpointToken } from "src/theme/utils/use-resolve-breakpoint-token";
 
-jest.mock("src/theme/utils/use-resolve-breakpoint-token", () => ({
-    useResolveBreakpointToken: jest.fn(),
-}));
-
-const mockUseResolveBreakpointToken = jest.mocked(useResolveBreakpointToken);
+import { getThemeVariablesStyle, setupThemeVariables } from "../setup";
 
 type MockMediaQueryList = {
     addEventListener: jest.Mock;
@@ -87,27 +85,23 @@ const SafeMaxWidthConsumer = ({
     maxWidth,
 }: {
     fallback?: string;
-    maxWidth?: string;
+    maxWidth?: BreakpointCSSVariableString;
 }) => {
     const result = useSafeMaxWidthMediaQuery(maxWidth, fallback);
 
     return <div data-testid="result">{String(result)}</div>;
 };
 
+const renderWithTheme = (ui: React.ReactElement) => {
+    return render(
+        <ThemeProvider style={getThemeVariablesStyle()}>{ui}</ThemeProvider>
+    );
+};
+
 describe("useMediaQuery", () => {
     beforeEach(() => {
-        jest.clearAllMocks();
+        setupThemeVariables();
         createMatchMediaMock();
-        mockUseResolveBreakpointToken.mockImplementation((value, fallback) => {
-            const candidate = (value || fallback || "").trim();
-
-            if (candidate === "md-min") return "481px";
-            if (candidate === "sm-max") return "480px";
-            if (candidate === "lg-max") return "1200px";
-            if (candidate === "") return undefined;
-
-            return candidate;
-        });
     });
 
     afterAll(() => {
@@ -118,32 +112,44 @@ describe("useMediaQuery", () => {
         });
     });
 
-    it("builds a query from resolved widths", () => {
+    it("builds a query from resolved widths", async () => {
         const { matchMedia } = createMatchMediaMock(true);
 
-        render(
+        renderWithTheme(
             <CoreConsumer
                 options={{
-                    maxWidth: 768,
-                    minWidth: "md-min",
+                    maxWidth: Breakpoint["lg-max"],
+                    minWidth: Breakpoint["md-min"],
                 }}
             />
         );
 
-        expect(matchMedia).toHaveBeenCalledWith(
-            "(min-width: 481px) and (max-width: 768px)"
-        );
-        expect(screen.getByTestId("result").textContent).toBe("true");
+        await waitFor(() => {
+            expect(matchMedia).toHaveBeenCalledWith(
+                "(min-width: 481px) and (max-width: 1200px)"
+            );
+        });
+        await waitFor(() => {
+            expect(screen.getByTestId("result").textContent).toBe("true");
+        });
     });
 
-    it("updates when the media query match changes", () => {
+    it("updates when the media query match changes", async () => {
         const { mediaQueryLists } = createMatchMediaMock(false);
 
-        render(<CoreConsumer options={{ minWidth: "md-min" }} />);
+        renderWithTheme(
+            <CoreConsumer options={{ minWidth: Breakpoint["md-min"] }} />
+        );
+
+        await waitFor(() => {
+            expect(mediaQueryLists.has("(min-width: 481px)")).toBe(true);
+        });
 
         const mediaQueryList = mediaQueryLists.get("(min-width: 481px)");
 
-        expect(screen.getByTestId("result").textContent).toBe("false");
+        await waitFor(() => {
+            expect(screen.getByTestId("result").textContent).toBe("false");
+        });
 
         act(() => {
             mediaQueryList?.dispatch(true);
@@ -152,38 +158,44 @@ describe("useMediaQuery", () => {
         expect(screen.getByTestId("result").textContent).toBe("true");
     });
 
-    it("returns desktop-safe defaults when matchMedia is unavailable", () => {
+    it("returns desktop-safe defaults when matchMedia is unavailable", async () => {
         Object.defineProperty(globalThis.window, "matchMedia", {
             configurable: true,
             value: undefined,
             writable: true,
         });
 
-        const { rerender } = render(
-            <CoreConsumer options={{ minWidth: "md-min" }} />
+        const { rerender } = renderWithTheme(
+            <CoreConsumer options={{ minWidth: Breakpoint["md-min"] }} />
         );
 
-        expect(screen.getByTestId("result").textContent).toBe("true");
-
-        rerender(<CoreConsumer options={{ maxWidth: "sm-max" }} />);
-
-        expect(screen.getByTestId("result").textContent).toBe("false");
-    });
-
-    it("keeps the safe max-width wrapper fallback behavior", () => {
-        const { matchMedia } = createMatchMediaMock(true);
-
-        mockUseResolveBreakpointToken.mockImplementation((value, fallback) => {
-            if (value === "not-a-breakpoint") {
-                return fallback;
-            }
-
-            return (value || fallback || "").trim() || undefined;
+        await waitFor(() => {
+            expect(screen.getByTestId("result").textContent).toBe("true");
         });
 
-        render(<SafeMaxWidthConsumer maxWidth="not-a-breakpoint" />);
+        rerender(
+            <ThemeProvider style={getThemeVariablesStyle()}>
+                <CoreConsumer options={{ maxWidth: Breakpoint["sm-max"] }} />
+            </ThemeProvider>
+        );
 
-        expect(matchMedia).toHaveBeenCalledWith("(max-width: 480px)");
-        expect(screen.getByTestId("result").textContent).toBe("true");
+        await waitFor(() => {
+            expect(screen.getByTestId("result").textContent).toBe("false");
+        });
+    });
+
+    it("keeps the safe max-width wrapper fallback behavior", async () => {
+        const { matchMedia } = createMatchMediaMock(true);
+
+        renderWithTheme(
+            <SafeMaxWidthConsumer fallback="480px" maxWidth={undefined} />
+        );
+
+        await waitFor(() => {
+            expect(matchMedia).toHaveBeenCalledWith("(max-width: 480px)");
+        });
+        await waitFor(() => {
+            expect(screen.getByTestId("result").textContent).toBe("true");
+        });
     });
 });

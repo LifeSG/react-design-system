@@ -4,6 +4,7 @@ import {
     useMaxWidthMediaQuery,
     useMediaQuery,
     useMinWidthMediaQuery,
+    Breakpoint,
 } from "@lifesg/react-design-system/theme";
 import { useEffect, useState } from "react";
 
@@ -24,8 +25,8 @@ export default function Story() {
     const maxLg = useMaxWidthMediaQuery("lg");
     const maxXl = useMaxWidthMediaQuery("xl");
 
-    const tokenDirectMinMd = useMediaQuery({ minWidth: "md-min" });
-    const tokenDirectMaxSm = useMediaQuery({ maxWidth: "sm-max" });
+    const tokenDirectMinMd = useMediaQuery({ minWidth: Breakpoint["md-min"] });
+    const tokenDirectMaxSm = useMediaQuery({ maxWidth: Breakpoint["sm-max"] });
 
     useEffect(() => {
         const onResize = () => {
