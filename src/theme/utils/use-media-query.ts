@@ -108,9 +108,8 @@ const useMatchMediaQuery = (
     );
 
     useEffect(() => {
-        setMatches(getCurrentMatch(queryString, defaultMatch));
-
         if (!queryString || !globalThis.window?.matchMedia) {
+            setMatches(defaultMatch);
             return;
         }
 
