@@ -340,7 +340,7 @@ test.describe("Time Range Picker Dial", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("dial-variants-prefilled");
+            await story.init("dial-variants-prefilled", { mode: "dark" });
         });
 
         test("Prefilled dark mode", async ({ story }) => {
