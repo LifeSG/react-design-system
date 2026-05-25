@@ -81,14 +81,12 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
 
 export const useMediaQuery = (options: MediaQueryOptions): boolean => {
     const { minWidth, maxWidth, orientation } = options;
-    const resolvedMinWidth = useResolveBreakpointToken(
+    const normalizedMinWidth = useResolveBreakpointToken(
         getWidthCandidate(minWidth)
     );
-    const resolvedMaxWidth = useResolveBreakpointToken(
+    const normalizedMaxWidth = useResolveBreakpointToken(
         getWidthCandidate(maxWidth)
     );
-    const normalizedMinWidth = normalizeCssLengthValue(resolvedMinWidth);
-    const normalizedMaxWidth = normalizeCssLengthValue(resolvedMaxWidth);
     const clauses = [
         getMediaQueryClause("min-width", normalizedMinWidth),
         getMediaQueryClause("max-width", normalizedMaxWidth),
