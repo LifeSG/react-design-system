@@ -363,4 +363,30 @@ test.describe("FileUpload", () => {
             );
         });
     });
+
+    test.describe(() => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("progress-indicator");
+            });
+
+            test("Progress indicator", async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.fileUpload,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("progress-indicator", { mode: "dark" });
+            });
+
+            test("Progress indicator - dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount", {
+                    locator: story.locators.fileUpload,
+                });
+            });
+        });
+    });
 });
