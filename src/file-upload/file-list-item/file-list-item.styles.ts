@@ -3,15 +3,15 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 import styled, { css } from "styled-components";
 
 import { Button as DSIconButton } from "../../button";
-import { Typography } from "../../typography";
 import {
-    V3_Border,
-    V3_Colour,
-    V3_MediaQuery,
-    V3_Radius,
-    V3_Shadow,
-    V3_Spacing,
-} from "../../v3_theme";
+    Border,
+    Colour,
+    MediaQuery,
+    Radius,
+    Shadow,
+    Spacing,
+} from "../../theme";
+import { Typography } from "../../typography";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -60,7 +60,7 @@ export const Item = styled.li<ItemStyleProps>`
     border: none;
 
     &:not(:last-child) {
-        margin-bottom: ${V3_Spacing["spacing-16"]};
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 
     ${(props) => {
@@ -92,54 +92,53 @@ export const Item = styled.li<ItemStyleProps>`
 export const DragHandleIcon = styled(
     DSDragHandleIcon
 )<DragHandleIconStyleProps>`
-    margin-right: ${V3_Spacing["spacing-16"]};
+    margin-right: ${Spacing["spacing-16"]};
     height: 1.5rem;
     width: 1.5rem;
-    color: ${V3_Colour["icon"]};
+    color: ${Colour["icon"]};
 
     ${(props) => {
         if (props.$active) {
             return css`
-                color: ${V3_Colour["icon-primary"]};
+                color: ${Colour["icon-primary"]};
             `;
         }
 
         if (props.$disabled) {
             return css`
-                color: ${V3_Colour["icon-disabled"]};
+                color: ${Colour["icon-disabled"]};
             `;
         }
     }};
 `;
 
 export const Box = styled.div<BoxStyleProps>`
-    background: ${V3_Colour["bg-primary-subtlest"]};
-    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
-    border-radius: ${V3_Radius["sm"]};
-    padding: ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-32"]};
+    background: ${Colour["bg-primary-subtlest"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
     display: flex;
     align-items: center;
     width: 100%;
 
-    ${V3_MediaQuery.MaxWidth.md} {
-        padding: ${V3_Spacing["spacing-16"]};
+    ${MediaQuery.MaxWidth.md} {
+        padding: ${Spacing["spacing-16"]};
     }
 
     ${(props) => {
         if (props.$focused) {
             return css`
-                border-color: ${V3_Colour["border-focus"]};
-                box-shadow: ${V3_Shadow["xs-focus-strong"]};
+                border-color: ${Colour["border-focus"]};
+                box-shadow: ${Shadow["xs-focus-strong"]};
             `;
         } else if (props.$disabled) {
             return css`
-                border-color: ${V3_Colour["border-disabled"]};
+                border-color: ${Colour["border-disabled"]};
             `;
         } else if (props.$error) {
             return css`
-                background: ${V3_Colour["bg-error"]};
-                border-color: ${V3_Colour["border-error"]};
+                background: ${Colour["bg-error"]};
+                border-color: ${Colour["border-error"]};
             `;
         }
     }}
@@ -147,7 +146,7 @@ export const Box = styled.div<BoxStyleProps>`
     ${(props) => {
         if (!props.$error && (props.$loading || props.$editable)) {
             return css`
-                ${V3_MediaQuery.MaxWidth.md} {
+                ${MediaQuery.MaxWidth.md} {
                     flex-direction: column;
                     align-items: flex-start;
                 }
@@ -161,7 +160,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     flex: 1;
     align-items: center;
 
-    ${V3_MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         width: 100%;
         align-items: flex-start;
@@ -170,7 +169,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     ${(props) => {
         if (props.$hasThumbnail) {
             return css`
-                ${V3_MediaQuery.MaxWidth.md} {
+                ${MediaQuery.MaxWidth.md} {
                     flex-direction: row;
                     align-items: center;
                 }
@@ -191,7 +190,7 @@ export const ExtendedNameSection = styled.div`
     flex: 1;
     align-items: center;
 
-    ${V3_MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -201,10 +200,10 @@ export const ExtendedNameSection = styled.div`
 export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     display: flex;
     width: 5rem;
-    margin-left: ${V3_Spacing["spacing-8"]};
+    margin-left: ${Spacing["spacing-8"]};
     justify-content: flex-end;
 
-    ${V3_MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MaxWidth.md} {
         ${(props) => {
             if (props.$hideInMobile) {
                 return css`
@@ -215,7 +214,7 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
                 return css`
                     width: 100%;
                     margin-left: 0;
-                    margin-top: ${V3_Spacing["spacing-8"]};
+                    margin-top: ${Spacing["spacing-8"]};
                     justify-content: flex-start;
                 `;
             }
@@ -224,72 +223,72 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
 `;
 
 export const FileSizeText = styled(Typography.BodyMD)`
-    color: ${V3_Colour["text-subtler"]};
+    color: ${Colour["text-subtler"]};
 `;
 
 export const ItemText = styled(Typography.BodyMD)``;
 
 export const ItemDescriptionText = styled(Typography.BodyMD)`
-    margin-top: ${V3_Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-4"]};
 `;
 
 export const ErrorIcon = styled(ExclamationCircleFillIcon)`
     height: 1lh;
     width: 1em;
     flex-shrink: 0;
-    color: ${V3_Colour["icon-error-strong"]};
+    color: ${Colour["icon-error-strong"]};
 `;
 
 export const BaseErrorMessage = styled(Typography.BodySM)`
-    color: ${V3_Colour["text-error"]};
+    color: ${Colour["text-error"]};
 `;
 
 export const DesktopErrorMessage = styled(Typography.BodySM)`
-    color: ${V3_Colour["text-error"]};
-    margin-top: ${V3_Spacing["spacing-4"]};
+    color: ${Colour["text-error"]};
+    margin-top: ${Spacing["spacing-4"]};
     display: flex;
-    gap: ${V3_Spacing["spacing-4"]};
+    gap: ${Spacing["spacing-4"]};
 
-    ${V3_MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MaxWidth.md} {
         display: none;
         visibility: hidden;
     }
 `;
 
 export const MobileErrorMessage = styled(Typography.BodySM)`
-    color: ${V3_Colour["text-error"]};
+    color: ${Colour["text-error"]};
     display: none;
     visibility: hidden;
 
-    ${V3_MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MaxWidth.md} {
         display: flex;
-        gap: ${V3_Spacing["spacing-4"]};
+        gap: ${Spacing["spacing-4"]};
         visibility: visible;
-        margin-top: ${V3_Spacing["spacing-8"]};
+        margin-top: ${Spacing["spacing-8"]};
     }
 `;
 
 export const ActionContainer = styled.div<ActionContainerStyleProps>`
     width: 6rem;
-    margin-left: ${V3_Spacing["spacing-32"]};
+    margin-left: ${Spacing["spacing-32"]};
     display: flex;
     justify-content: flex-end;
     align-items: center;
 
-    ${V3_MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MaxWidth.md} {
         width: fit-content;
 
         ${(props) => {
             if (props.$loading && !props.$error) {
                 return css`
                     margin-left: 0;
-                    margin-top: ${V3_Spacing["spacing-16"]};
+                    margin-top: ${Spacing["spacing-16"]};
                     width: 100%;
                 `;
             } else if (props.$editable && !props.$error) {
                 return css`
                     margin-left: 0;
-                    margin-top: ${V3_Spacing["spacing-16"]};
+                    margin-top: ${Spacing["spacing-16"]};
                     align-self: flex-end;
                 `;
             }
@@ -301,6 +300,6 @@ export const IconButton = styled(DSIconButton)`
     min-width: unset;
 
     &:not(:last-child) {
-        margin-right: ${V3_Spacing["spacing-16"]};
+        margin-right: ${Spacing["spacing-16"]};
     }
 `;

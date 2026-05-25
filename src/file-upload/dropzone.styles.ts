@@ -2,8 +2,8 @@ import { CloudArrowUpFillIcon } from "@lifesg/react-icons/cloud-arrow-up-fill";
 import styled, { css } from "styled-components";
 
 import { DashedBorder } from "../dashed-border";
+import { Colour, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography";
-import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -24,11 +24,10 @@ export const Container = styled(DashedBorder)<StyleProps>`
     ${(props) => {
         if (props.$showDashedBorder) {
             return css`
-                padding: ${V3_Spacing["spacing-32"]};
+                padding: ${Spacing["spacing-32"]};
 
-                ${V3_MediaQuery.MaxWidth.md} {
-                    padding: ${V3_Spacing["spacing-32"]}
-                        ${V3_Spacing["spacing-20"]};
+                ${MediaQuery.MaxWidth.md} {
+                    padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
                 }
             `;
         }
@@ -53,12 +52,12 @@ export const DragOverlay = styled(DashedBorder)`
 `;
 
 export const OverlayText = styled(Typography.BodyMD)`
-    color: ${V3_Colour["text-primary"]};
+    color: ${Colour["text-primary"]};
     text-align: center;
 `;
 
 export const OverlayIcon = styled(CloudArrowUpFillIcon)`
-    color: ${V3_Colour["icon-primary"]};
+    color: ${Colour["icon-primary"]};
     height: 4rem;
     width: 4rem;
 `;
