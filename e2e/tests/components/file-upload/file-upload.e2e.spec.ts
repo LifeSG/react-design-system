@@ -10,6 +10,10 @@ class StoryPage extends AbstractStoryPage {
         uploadInput: Locator;
         uploadButton: Locator;
         dragOverlayText: Locator;
+        readonlyComponent: Locator;
+        disabledComponent: Locator;
+        disabledUploadInput: Locator;
+        errorComponent: Locator;
     };
 
     constructor(page: Page) {
@@ -21,6 +25,10 @@ class StoryPage extends AbstractStoryPage {
             uploadInput: page.getByTestId("file-upload-input"),
             uploadButton: page.getByRole("button", { name: "Upload files" }),
             dragOverlayText: page.getByText("Drop files here"),
+            readonlyComponent: page.getByTestId("file-upload-readonly"),
+            disabledComponent: page.getByTestId("file-upload-disabled"),
+            disabledUploadInput: page.getByTestId("file-upload-disabled-input"),
+            errorComponent: page.getByTestId("file-upload-error"),
         };
     }
 
@@ -113,6 +121,18 @@ test.describe("FileUpload", () => {
                         locator: story.locators.component,
                     }
                 );
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("readonly-disabled-error");
+        });
+
+        test("Readonly disabled error", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
             });
         });
     });
