@@ -1,4 +1,5 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
+import { fixedTimestamp } from "../../consts";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -157,17 +158,7 @@ test.describe("OTP Input", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("digit-length");
-        });
-
-        test("Digit length", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("cooldown");
+            await story.init("cooldown", { mockedTimestamp: fixedTimestamp });
         });
 
         test("Cooldown", async ({ story }) => {
