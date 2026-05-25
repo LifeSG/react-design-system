@@ -3,9 +3,8 @@ import styled, { css, keyframes } from "styled-components";
 import { LoadingDotsSpinner } from "../animations";
 import { ErrorDisplay } from "../error-display";
 import { PopoverTrigger } from "../popover-v2";
-import { Border, Colour, Spacing } from "../theme";
+import { Border, Colour, Shadow, Spacing } from "../theme";
 import { Typography } from "../typography";
-import { V3_Border, V3_Colour, V3_Shadow, V3_Spacing } from "../v3_theme";
 import {
     MIN_HOURLY_INTERVAL_WIDTH,
     ROW_HEADER_WIDTH,
@@ -80,16 +79,15 @@ export const RowColumnHeader = styled.div<RowColumnHeaderProps>`
     position: sticky;
     top: 0;
     left: 0;
-    background-color: ${V3_Colour["bg"]};
+    background-color: ${Colour["bg"]};
     width: ${ROW_HEADER_WIDTH}px;
     height: ${ROW_HEIGHT}px;
     z-index: 2;
-    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     ${(props) => {
         if (props.$isScrolledX || props.$isScrolledY) {
             return css`
-                box-shadow: ${V3_Shadow["md-subtle"]};
+                box-shadow: ${Shadow["md-subtle"]};
                 clip-path: inset(
                     0 ${props.$isScrolledX ? "-0.12px" : "0"}
                         ${props.$isScrolledY ? "-0.12px" : "0"} 0
@@ -134,7 +132,7 @@ export const ColumnHeaderRow = styled.div<ColumnHeaderRowProps>`
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: ${V3_Shadow["md-subtle"]};
+                box-shadow: ${Shadow["md-subtle"]};
             `;
         }
     }};
@@ -148,7 +146,7 @@ export const ColumnHeader = styled.div`
 `;
 
 export const ColumnHeaderTitle = styled(Typography.BodySM)`
-    color: ${V3_Colour["text-subtler"]};
+    color: ${Colour["text-subtler"]};
 `;
 
 export const TimeTableBody = styled.div`
@@ -176,18 +174,16 @@ export const RowHeader = styled.div<RowHeaderProps>`
     width: ${ROW_HEADER_WIDTH}px;
     height: ${ROW_HEIGHT}px;
     text-align: right;
-    padding: 0 ${V3_Spacing["spacing-16"]} 0 ${V3_Spacing["spacing-32"]};
-    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
-    border-right: ${V3_Border["width-005"]} ${V3_Border["solid"]}
-        ${V3_Colour["border-primary"]};
-    border-left: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
+    padding: 0 ${Spacing["spacing-16"]} 0 ${Spacing["spacing-32"]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-right: ${Border["width-005"]} ${Border["solid"]}
+        ${Colour["border-primary"]};
+    border-left: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     transition: all 0.5s ease-in-out;
     ${(props) => {
         if (props.$isScrolled) {
             return css`
-                box-shadow: ${V3_Shadow["md-subtle"]};
+                box-shadow: ${Shadow["md-subtle"]};
                 clip-path: inset(0 -6px 0 0);
             `;
         } else {
@@ -206,7 +202,7 @@ export const ClickableRowHeaderTitle = styled(
     overflow: hidden;
     width: 100%;
     white-space: nowrap;
-    color: ${V3_Colour["text-primary"]};
+    color: ${Colour["text-primary"]};
     &:hover {
         cursor: ${(props) => (props.$isClickable ? "pointer" : "default")};
     }
@@ -216,9 +212,9 @@ export const RowHeaderSubtitle = styled(
     Typography.BodyXS
 )<RowHeaderSubtitleProps>`
     display: inline-flex;
-    gap: ${V3_Spacing["spacing-4"]};
+    gap: ${Spacing["spacing-4"]};
     align-items: center;
-    color: ${V3_Colour["text-subtler"]};
+    color: ${Colour["text-subtler"]};
     ${(props) => {
         if (!props.$show) {
             return css`
@@ -241,21 +237,20 @@ export const Loader = styled(LoadingDotsSpinner)<LoaderProps>`
 export const NoResultsFound = styled(ErrorDisplay)`
     grid-column: 1 / -1;
     grid-row: 2;
-    padding: ${V3_Spacing["spacing-72"]} 0;
+    padding: ${Spacing["spacing-72"]} 0;
 `;
 
 export const LoadingWrapper = styled.div`
     display: flex;
-    border-bottom: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
+    border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 `;
 
 export const LoadingCell = styled.div<LoadingCellWrapperProps>`
-    border-right: ${V3_Border["width-005"]} ${V3_Border["solid"]}
-        ${V3_Colour["border-primary"]};
+    border-right: ${Border["width-005"]} ${Border["solid"]}
+        ${Colour["border-primary"]};
     width: ${(props) => `${props.$width}px`};
     height: 100%;
-    padding: ${V3_Spacing["spacing-20"]} ${V3_Spacing["spacing-12"]};
+    padding: ${Spacing["spacing-20"]} ${Spacing["spacing-12"]};
 `;
 
 const gradientAnimation = keyframes`
@@ -272,9 +267,9 @@ export const LoadingBar = styled.div`
     width: 100%;
     background: linear-gradient(
         to right,
-        ${V3_Colour.Primitive["neutral-95"]} 8%,
-        ${V3_Colour.Primitive["neutral-100"]} 18%,
-        ${V3_Colour.Primitive["neutral-95"]} 33%
+        ${Colour.Primitive["neutral-95"]} 8%,
+        ${Colour.Primitive["neutral-100"]} 18%,
+        ${Colour.Primitive["neutral-95"]} 33%
     );
     background-size: 800px 104px;
     animation: ${gradientAnimation} 1.5s forwards infinite;

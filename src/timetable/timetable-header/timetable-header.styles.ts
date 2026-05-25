@@ -2,8 +2,8 @@ import styled, { css, keyframes } from "styled-components";
 
 import { Button } from "../../button";
 import { DateNavigator } from "../../date-navigator";
+import { Colour, Spacing } from "../../theme";
 import { Typography } from "../../typography";
-import { V3_Colour, V3_Spacing } from "../../v3_theme";
 
 const spin = keyframes`
     100% {
@@ -13,7 +13,7 @@ const spin = keyframes`
 `;
 
 export const StyledRefreshButton = styled(Button)<{ $loading: boolean }>`
-    color: ${V3_Colour["icon"]};
+    color: ${Colour["icon"]};
     svg {
         ${(props) => {
             if (props.$loading) {
@@ -27,20 +27,20 @@ export const StyledRefreshButton = styled(Button)<{ $loading: boolean }>`
 
 export const NavigationHeaderWrapper = styled.div`
     display: flex;
-    padding-bottom: ${V3_Spacing["spacing-16"]};
+    padding-bottom: ${Spacing["spacing-16"]};
     justify-content: space-between;
-    gap: ${V3_Spacing["spacing-8"]};
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const NavigationHeaderSubtitleWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: ${V3_Spacing["spacing-8"]};
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const StyledResultText = styled(Typography.BodySM)`
-    color: ${V3_Colour["text-subtler"]};
+    color: ${Colour["text-subtler"]};
 `;
 
 export const StyledDateNavigator = styled(DateNavigator)`
