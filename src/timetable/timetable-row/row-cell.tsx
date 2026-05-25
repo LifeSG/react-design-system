@@ -3,6 +3,8 @@ import type { RefObject } from "react";
 import React from "react";
 
 import { concatIds, VisuallyHidden } from "../../shared/accessibility";
+import type { SlotStyle, TimeSlotProps } from "../../shared/time-slot";
+import { Colour } from "../../theme";
 import { DateHelper } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
@@ -10,12 +12,14 @@ import type {
     InternalTimeTableRowCellData,
     RowBarColors,
 } from "../internal-types";
+import type { TimeTableCellType } from "../types";
 import {
     Block,
     BlockContainer,
     BlockDescription,
     BlockTitle,
     Gap,
+    tokens,
     Wrapper,
 } from "./row-cell.style";
 import { WithOptionalPopover } from "./with-optional-popover";
@@ -28,6 +32,51 @@ interface RowCellProps extends InternalTimeTableRowCellData {
     ariaColSpan: number;
     rowName: string;
 }
+
+const styleTypeToSlotType: Record<"solid" | "stripes", SlotStyle> = {
+    stripes: "stripes",
+    solid: "default",
+};
+
+const statusToTimeSlotPropsMap: Record<
+    TimeTableCellType,
+    Pick<
+        TimeSlotProps,
+        | "bgColor"
+        | "bgColor2"
+        | "hoverBgColor"
+        | "hoverBgColor2"
+        | "styleType"
+        | "nonClickableCursor"
+    >
+> = {
+    blocked: {
+        styleType: "stripes",
+        bgColor: Colour["bg-stronger"],
+        bgColor2: Colour["bg-strongest"],
+        nonClickableCursor: "not-allowed",
+    },
+    filled: {
+        styleType: "default",
+        bgColor: `var(${tokens.block.mainColor})`,
+    },
+    disabled: {
+        styleType: "default",
+        bgColor: Colour["bg-disabled"],
+        nonClickableCursor: "not-allowed",
+    },
+    pending: {
+        styleType: "stripes",
+        bgColor: `var(${tokens.block.mainColor})`,
+        bgColor2: `var(${tokens.block.altColor})`,
+        nonClickableCursor: "not-allowed",
+    },
+    default: {
+        styleType: "default",
+        bgColor: "transparent",
+        hoverBgColor: Colour["bg-hover-subtle"],
+    },
+};
 
 const Component = ({
     id,
@@ -90,43 +139,63 @@ const Component = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCellContent = () => (
-        <WithOptionalPopover customPopover={customPopover}>
-            <Wrapper>
-                <Block
-                    $width={adjustedCellWidth}
-                    $status={status}
-                    $mainColor={rowBarColor.mainColor}
-                    $altColor={rowBarColor.alternateColor}
-                    $isClickable={isClickable}
-                    $customMainColor={cellStyleAttributes?.backgroundColor}
-                    $customAltColor={cellStyleAttributes?.altBackgroundColor}
-                    $customHoverColor={
-                        cellStyleAttributes?.hoverBackgroundColor
-                    }
-                    $customAltHoverColor={
-                        cellStyleAttributes?.altHoverBackgroundColor
-                    }
-                    $styleType={cellStyleAttributes?.styleType}
-                    tabIndex={isFocusable ? 0 : undefined}
-                    onClick={handleCellClick}
-                >
-                    <VisuallyHidden>{rowAriaLabel}</VisuallyHidden>
-                    {title && (
-                        <BlockTitle weight={"semibold"} aria-hidden>
-                            {title}
-                        </BlockTitle>
-                    )}
-                    {subtitle && (
-                        <BlockDescription weight={"bold"} aria-hidden>
-                            {subtitle}
-                        </BlockDescription>
-                    )}
-                </Block>
-                <Gap />
-            </Wrapper>
-        </WithOptionalPopover>
-    );
+    const renderCellContent = () => {
+        const {
+            styleType,
+            bgColor,
+            bgColor2,
+            hoverBgColor,
+            hoverBgColor2,
+            nonClickableCursor,
+        } = statusToTimeSlotPropsMap[status];
+
+        const timetableStyleType = cellStyleAttributes?.styleType ?? "default";
+        const timeslotStyleType =
+            timetableStyleType === "default"
+                ? styleType
+                : styleTypeToSlotType[timetableStyleType];
+        const customBgColor = cellStyleAttributes?.backgroundColor || bgColor;
+        const customBg2Color =
+            cellStyleAttributes?.altBackgroundColor || bgColor2;
+        const customHoverBgColor =
+            cellStyleAttributes?.hoverBackgroundColor || hoverBgColor;
+        const customHoverBg2Color =
+            cellStyleAttributes?.altHoverBackgroundColor || hoverBgColor2;
+
+        return (
+            <WithOptionalPopover customPopover={customPopover}>
+                <Wrapper>
+                    <Block
+                        $width={adjustedCellWidth}
+                        $mainColor={rowBarColor.mainColor}
+                        $altColor={rowBarColor.alternateColor}
+                        clickable={isClickable}
+                        bgColor={customBgColor}
+                        bgColor2={customBg2Color}
+                        hoverBgColor={customHoverBgColor}
+                        hoverBgColor2={customHoverBg2Color}
+                        nonClickableCursor={nonClickableCursor}
+                        onClick={handleCellClick}
+                        styleType={timeslotStyleType}
+                        tabIndex={isFocusable ? 0 : undefined}
+                    >
+                        <VisuallyHidden>{rowAriaLabel}</VisuallyHidden>
+                        {title && (
+                            <BlockTitle weight={"semibold"} aria-hidden>
+                                {title}
+                            </BlockTitle>
+                        )}
+                        {subtitle && (
+                            <BlockDescription weight={"bold"} aria-hidden>
+                                {subtitle}
+                            </BlockDescription>
+                        )}
+                    </Block>
+                    <Gap />
+                </Wrapper>
+            </WithOptionalPopover>
+        );
+    };
 
     return (
         <BlockContainer

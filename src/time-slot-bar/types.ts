@@ -1,5 +1,4 @@
 import type { SlotStyle } from "../shared/time-slot/types";
-import type { V3_ThemeStyleProps } from "../v3_theme/types";
 
 export type TimeSlotBarVariant = "minified" | "default";
 export type Direction = "right" | "left";
@@ -17,22 +16,13 @@ interface TimeSlotBarStyleAttributes {
     /** The label color */
     color?: string | undefined;
     /** The background color */
-    backgroundColor: string | ((props: V3_ThemeStyleProps) => string);
+    backgroundColor: string;
     /** The secondary background color. Used in conjunction if styleType is "stripes" */
-    backgroundColor2?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
+    backgroundColor2?: string | undefined;
     /** The background color on hover */
-    hoverBackgroundColor?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
+    hoverBackgroundColor?: string | undefined;
     /** The secondary background color on hover. Used in conjunction if styleType is "stripes" */
-    hoverBackgroundColor2?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
+    hoverBackgroundColor2?: string | undefined;
 }
 
 export interface TimeSlotBarProps {

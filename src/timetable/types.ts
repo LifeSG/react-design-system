@@ -1,5 +1,4 @@
 import type { PopoverV2TriggerType } from "../popover-v2";
-import type { V3_ThemeStyleProps } from "../v3_theme/types";
 
 export type TimeTableCellType =
     | "filled"
@@ -10,25 +9,13 @@ export type TimeTableCellType =
 
 export interface TimeTableCellStyleAttributes {
     /** Main background color for the cell */
-    backgroundColor?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
+    backgroundColor?: string | undefined;
     /** Alternate background color (used for striped patterns in blocked/pending status) */
-    altBackgroundColor?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
+    altBackgroundColor?: string | undefined;
     /** Hover background color for the cell */
-    hoverBackgroundColor?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
+    hoverBackgroundColor?: string | undefined;
     /** Alternate hover background color for the cell */
-    altHoverBackgroundColor?:
-        | string
-        | ((props: V3_ThemeStyleProps) => string)
-        | undefined;
+    altHoverBackgroundColor?: string | undefined;
     /** Display style for the cell. If not set, defaults based on cell type (blocked/pending = striped, others = solid) */
     styleType?: "default" | "solid" | "stripes" | undefined;
 }

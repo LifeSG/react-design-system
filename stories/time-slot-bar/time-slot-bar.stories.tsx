@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { Colour } from "src/theme";
 import { TimeSlotBar } from "src/time-slot-bar";
-import { V3_Colour } from "src/v3_theme";
 import { FullWidthStoryDecorator } from "stories/storybook-common";
 
 type Component = typeof TimeSlotBar;
@@ -27,7 +27,7 @@ export const Default: StoryObj<Component> = {
                         startTime: "09:00",
                         endTime: "09:30",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -35,7 +35,7 @@ export const Default: StoryObj<Component> = {
                         startTime: "09:30",
                         endTime: "10:00",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -43,7 +43,7 @@ export const Default: StoryObj<Component> = {
                         startTime: "13:00",
                         endTime: "14:30",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -51,14 +51,14 @@ export const Default: StoryObj<Component> = {
                         startTime: "15:15",
                         endTime: "16:45",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                 ]}
                 styleAttributes={{
                     styleType: "stripes",
-                    backgroundColor: V3_Colour["bg-stronger"],
-                    backgroundColor2: V3_Colour["bg-strongest"],
+                    backgroundColor: Colour["bg-stronger"],
+                    backgroundColor2: Colour["bg-strongest"],
                 }}
             />
         );
@@ -82,7 +82,7 @@ export const MinifiedVariant: StoryObj<Component> = {
                         startTime: "09:00",
                         endTime: "09:30",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -90,7 +90,7 @@ export const MinifiedVariant: StoryObj<Component> = {
                         startTime: "09:30",
                         endTime: "10:00",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -98,7 +98,7 @@ export const MinifiedVariant: StoryObj<Component> = {
                         startTime: "13:00",
                         endTime: "14:30",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -106,7 +106,7 @@ export const MinifiedVariant: StoryObj<Component> = {
                         startTime: "15:15",
                         endTime: "16:45",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -114,12 +114,12 @@ export const MinifiedVariant: StoryObj<Component> = {
                         startTime: "20:00",
                         endTime: "22:00",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                 ]}
                 styleAttributes={{
-                    backgroundColor: V3_Colour["bg-strongest"],
+                    backgroundColor: Colour["bg-strongest"],
                 }}
             />
         );
@@ -142,8 +142,8 @@ export const DifferentIndicators: StoryObj<Component> = {
                         endTime: "9:00",
                         styleAttributes: {
                             styleType: "stripes",
-                            backgroundColor: V3_Colour["bg-stronger"],
-                            backgroundColor2: V3_Colour["bg-strongest"],
+                            backgroundColor: Colour["bg-stronger"],
+                            backgroundColor2: Colour["bg-strongest"],
                         },
                         label: "Blocked",
                         clickable: false,
@@ -177,7 +177,7 @@ export const DifferentIndicators: StoryObj<Component> = {
                         startTime: "15:15",
                         endTime: "16:45",
                         styleAttributes: {
-                            backgroundColor: V3_Colour["bg-available"],
+                            backgroundColor: Colour["bg-available"],
                         },
                     },
                     {
@@ -195,8 +195,8 @@ export const DifferentIndicators: StoryObj<Component> = {
                 ]}
                 styleAttributes={{
                     styleType: "stripes",
-                    backgroundColor: V3_Colour["bg-stronger"],
-                    backgroundColor2: V3_Colour["bg-strongest"],
+                    backgroundColor: Colour["bg-stronger"],
+                    backgroundColor2: Colour["bg-strongest"],
                 }}
             />
         );
@@ -221,7 +221,7 @@ export const InitialScrollTime: StoryObj<Component> = {
                             startTime: "09:00",
                             endTime: "09:30",
                             styleAttributes: {
-                                backgroundColor: V3_Colour["bg-available"],
+                                backgroundColor: Colour["bg-available"],
                             },
                         },
                         {
@@ -229,7 +229,7 @@ export const InitialScrollTime: StoryObj<Component> = {
                             startTime: "09:30",
                             endTime: "10:00",
                             styleAttributes: {
-                                backgroundColor: V3_Colour["bg-available"],
+                                backgroundColor: Colour["bg-available"],
                             },
                         },
                         {
@@ -237,7 +237,7 @@ export const InitialScrollTime: StoryObj<Component> = {
                             startTime: "13:00",
                             endTime: "14:30",
                             styleAttributes: {
-                                backgroundColor: V3_Colour["bg-available"],
+                                backgroundColor: Colour["bg-available"],
                             },
                         },
                         {
@@ -245,14 +245,14 @@ export const InitialScrollTime: StoryObj<Component> = {
                             startTime: "15:15",
                             endTime: "16:45",
                             styleAttributes: {
-                                backgroundColor: V3_Colour["bg-available"],
+                                backgroundColor: Colour["bg-available"],
                             },
                         },
                     ]}
                     styleAttributes={{
                         styleType: "stripes",
-                        backgroundColor: V3_Colour["bg-stronger"],
-                        backgroundColor2: V3_Colour["bg-strongest"],
+                        backgroundColor: Colour["bg-stronger"],
+                        backgroundColor2: Colour["bg-strongest"],
                     }}
                 />
             </div>

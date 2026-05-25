@@ -216,9 +216,9 @@ const DATA: ApiTableSectionProps[] = [
         name: "TimeSlotBarStyleAttributes",
         attributes: [
             {
-                name: "color",
+                name: "backgroundColor",
                 mandatory: true,
-                description: <>The color of the slot</>,
+                description: <>The background color of the slot</>,
                 propTypes: ["string"],
             },
             {
@@ -228,11 +228,11 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "default",
             },
             {
-                name: "secondaryColor",
+                name: "backgroundColor2",
                 description: (
                     <>
-                        The secondary color of the slot. Used in conjuction
-                        with&nbsp;
+                        The secondary background color of the slot. Used in
+                        conjunction with&nbsp;
                         <code>styleType</code> of <code>{`"stripes"`}</code>
                     </>
                 ),
