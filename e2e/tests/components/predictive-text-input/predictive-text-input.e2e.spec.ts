@@ -165,7 +165,7 @@ test.describe("PredictiveTextInput", () => {
             await test.step("Disabled - combobox should be disabled", async () => {
                 await expect(story.getInput(story.locators.standalone.disabled))
                     .toMatchAriaSnapshot(`
-                    - textbox [disabled]
+                    - combobox "Enter here..." [disabled]
                 `);
             });
 
