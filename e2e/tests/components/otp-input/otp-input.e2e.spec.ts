@@ -13,10 +13,12 @@ class StoryPage extends AbstractStoryPage {
         otp4Digit: Locator;
         otp6Digit: Locator;
         otpCooldown: Locator;
-        inputCell: (wrapper: Locator, index: number) => Locator;
-        resendButton: (wrapper: Locator) => Locator;
-        prefix: (wrapper: Locator) => Locator;
-        errorMessage: (wrapper: Locator) => Locator;
+        internals: {
+            inputCell: (wrapper: Locator, index: number) => Locator;
+            resendButton: (wrapper: Locator) => Locator;
+            prefix: (wrapper: Locator) => Locator;
+            errorMessage: (wrapper: Locator) => Locator;
+        };
     };
 
     constructor(page: Page) {
@@ -30,22 +32,19 @@ class StoryPage extends AbstractStoryPage {
             otp4Digit: page.getByTestId("otp-4-digit"),
             otp6Digit: page.getByTestId("otp-6-digit"),
             otpCooldown: page.getByTestId("otp-cooldown"),
-            inputCell: (wrapper: Locator, index: number) =>
-                wrapper.getByRole("textbox", {
-                    name: new RegExp(`${ordinal(index)} digit`, "i"),
-                }),
-            resendButton: (wrapper: Locator) =>
-                wrapper.getByRole("button", { name: /resend otp/i }),
-            prefix: (wrapper: Locator) => wrapper.getByTestId("otp-prefix"),
-            errorMessage: (wrapper: Locator) => wrapper.getByRole("paragraph"),
+            internals: {
+                inputCell: (wrapper: Locator, index: number) =>
+                    wrapper.getByRole("textbox", {
+                        name: new RegExp(`${index}.+ digit`, "i"),
+                    }),
+                resendButton: (wrapper: Locator) =>
+                    wrapper.getByRole("button", { name: /resend otp/i }),
+                prefix: (wrapper: Locator) => wrapper.getByTestId("otp-prefix"),
+                errorMessage: (wrapper: Locator) =>
+                    wrapper.locator("p[id$='-error']"),
+            },
         };
     }
-}
-
-function ordinal(n: number): string {
-    const s = ["st", "nd", "rd"];
-    const v = n % 100;
-    return n + (s[(v - 20) % 10] || s[v - 1] || "th");
 }
 
 const test = base.extend<{ story: StoryPage }>({
@@ -62,7 +61,7 @@ test.describe("OTP Input", () => {
         });
 
         test("Default", async ({ story }) => {
-            const resendBtn = story.locators.resendButton(
+            const resendBtn = story.locators.internals.resendButton(
                 story.locators.otpDefault
             );
             await expect(resendBtn).toBeEnabled();
@@ -80,26 +79,26 @@ test.describe("OTP Input", () => {
             `);
 
             await test.step("Partially filled (2 digits)", async () => {
-                await story.locators
+                await story.locators.internals
                     .inputCell(story.locators.otpDefault, 1)
                     .fill("1");
-                await story.locators
+                await story.locators.internals
                     .inputCell(story.locators.otpDefault, 2)
                     .fill("2");
                 await compareScreenshot(story, "partially filled");
             });
 
             await test.step("All digits filled", async () => {
-                await story.locators
+                await story.locators.internals
                     .inputCell(story.locators.otpDefault, 3)
                     .fill("3");
-                await story.locators
+                await story.locators.internals
                     .inputCell(story.locators.otpDefault, 4)
                     .fill("4");
-                await story.locators
+                await story.locators.internals
                     .inputCell(story.locators.otpDefault, 5)
                     .fill("5");
-                await story.locators
+                await story.locators.internals
                     .inputCell(story.locators.otpDefault, 6)
                     .fill("6");
                 await compareScreenshot(story, "filled");
@@ -114,6 +113,23 @@ test.describe("OTP Input", () => {
 
         test("Default (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount", {
+                locator: story.locators.otpDefault,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default", { size: "xxs" });
+        });
+
+        test("Default (xxs)", async ({ story }) => {
+            for (let i = 1; i <= 6; i++) {
+                await story.locators.internals
+                    .inputCell(story.locators.otpDefault, i)
+                    .fill(String(i));
+            }
+            await compareScreenshot(story, "prefilled", {
                 locator: story.locators.otpDefault,
             });
         });
@@ -136,7 +152,9 @@ test.describe("OTP Input", () => {
 
         test("Error state", async ({ story }) => {
             await expect(
-                story.locators.errorMessage(story.locators.otpWithError)
+                story.locators.internals.errorMessage(
+                    story.locators.otpWithError
+                )
             ).toHaveText("Invalid OTP. Please try again.");
 
             await compareScreenshot(story, "mount");
@@ -150,7 +168,7 @@ test.describe("OTP Input", () => {
 
         test("With prefix", async ({ story }) => {
             await expect(
-                story.locators.prefix(story.locators.otpWithPrefix)
+                story.locators.internals.prefix(story.locators.otpWithPrefix)
             ).toBeVisible();
             await compareScreenshot(story, "mount");
         });
@@ -162,7 +180,7 @@ test.describe("OTP Input", () => {
         });
 
         test("Cooldown", async ({ story }) => {
-            const resendBtn = story.locators.resendButton(
+            const resendBtn = story.locators.internals.resendButton(
                 story.locators.otpCooldown
             );
 
