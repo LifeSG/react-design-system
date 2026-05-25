@@ -9,7 +9,7 @@ import type {
     RowBarColors,
 } from "../internal-types";
 import type { TimeTableRowData } from "../types";
-import { RowCellContainer } from "./row-bar.style";
+import { RowCellContainer } from "./row-bar.styles";
 import { RowCell } from "./row-cell";
 
 interface RowBarProps extends TimeTableRowData {

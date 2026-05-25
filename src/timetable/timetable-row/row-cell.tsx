@@ -21,7 +21,7 @@ import {
     Gap,
     tokens,
     Wrapper,
-} from "./row-cell.style";
+} from "./row-cell.styles";
 import { WithOptionalPopover } from "./with-optional-popover";
 
 interface RowCellProps extends InternalTimeTableRowCellData {

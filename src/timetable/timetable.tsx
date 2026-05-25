@@ -39,7 +39,7 @@ import {
     TimeTableContainer,
     TimeTableHeaderRow,
     TimeTableRow,
-} from "./timetable.style";
+} from "./timetable.styles";
 import { TimeTableHeader } from "./timetable-header/timetable-header";
 import { RowBar } from "./timetable-row/row-bar";
 import type { TimeTableProps, TimeTableRef, TimeTableRowData } from "./types";
