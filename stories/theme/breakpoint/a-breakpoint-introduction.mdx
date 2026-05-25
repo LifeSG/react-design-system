@@ -101,22 +101,6 @@ export const MyComponent = () => {
 };
 ```
 
-You can also target orientation with CSS selectors.
-
-```tsx
-import { MediaQuery } from "@lifesg/react-design-system/theme";
-
-const styles = css`
-    ${MediaQuery.Orientation.landscape} {
-        // styles
-    }
-
-    ${MediaQuery.Orientation.portrait} {
-        // styles
-    }
-`;
-```
-
 ### Runtime utilities
 
 Use runtime hooks when responsive behavior affects rendering logic.
