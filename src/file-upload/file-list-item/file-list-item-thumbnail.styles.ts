@@ -1,14 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
 
-export const thumbnailPdf = "fileUploadListItemThumbnailPdf";
-
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Container = styled.div`
+export const container = css`
     width: auto;
     margin-right: ${Spacing["spacing-32"]};
     display: flex;
@@ -17,7 +11,7 @@ export const Container = styled.div`
     justify-content: center;
 `;
 
-export const Thumbnail = styled(ImageWithFallback)`
+export const thumbnail = css`
     width: 96px;
     height: 96px;
     aspect-ratio: 1;
@@ -25,17 +19,17 @@ export const Thumbnail = styled(ImageWithFallback)`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     object-fit: cover;
 
-    &.${thumbnailPdf} {
-        border: none;
-    }
-
     ${MediaQuery.MaxWidth.md} {
         width: 64px;
         height: 64px;
     }
 `;
 
-export const ReplaceButton = styled.button`
+export const thumbnailPdf = css`
+    border: none;
+`;
+
+export const replaceButton = css`
     width: 100%;
     height: 1.625rem;
     margin-top: ${Spacing["spacing-8"]};

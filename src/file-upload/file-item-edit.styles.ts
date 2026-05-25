@@ -1,16 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button/button";
 import { Border, Colour, MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography";
 
-export const actionButtonsSectionWithThumbnail =
-    "fileUploadItemEditActionButtonsSectionWithThumbnail";
-
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Item = styled.li`
+export const item = css`
     display: flex;
     flex-direction: column;
     padding: ${Spacing["spacing-32"]} 0;
@@ -21,20 +13,20 @@ export const Item = styled.li`
     }
 `;
 
-export const ContentSection = styled.div`
+export const contentSection = css`
     display: flex;
     align-items: flex-start;
     margin-bottom: ${Spacing["spacing-16"]};
     width: 100%;
 `;
 
-export const DetailsSection = styled.div`
+export const detailsSection = css`
     display: flex;
     flex: 1;
     flex-direction: column;
 `;
 
-export const NameSection = styled.div`
+export const nameSection = css`
     width: 100%;
     display: flex;
     justify-content: space-between;
@@ -46,7 +38,7 @@ export const NameSection = styled.div`
     }
 `;
 
-export const FileNameText = styled(Typography.BodyMD)`
+export const fileNameText = css`
     display: flex;
     flex: 1;
     margin-right: ${Spacing["spacing-16"]};
@@ -57,34 +49,34 @@ export const FileNameText = styled(Typography.BodyMD)`
     }
 `;
 
-export const FileSizeText = styled(Typography.BodyMD)``;
-
-export const ActionButtonsSection = styled.div`
+export const actionButtonsSection = css`
     display: flex;
 
     ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
     }
+`;
 
-    &.${actionButtonsSectionWithThumbnail} {
-        margin-left: calc(
-            96px + ${Spacing["spacing-32"]}
-        ); // thumbnail width + right margin
+export const actionButtonsSectionWithThumbnail = css`
+    margin-left: calc(
+        96px + ${Spacing["spacing-32"]}
+    ); // thumbnail width + right margin
 
-        ${MediaQuery.MaxWidth.md} {
-            margin-left: 0;
-        }
+    ${MediaQuery.MaxWidth.md} {
+        margin-left: 0;
     }
 `;
 
-export const ActionButton = styled(Button.Small)`
+export const actionButton = css`
     width: 7.5rem;
+
     &:not(:last-of-type) {
         margin-right: ${Spacing["spacing-16"]};
     }
 
     ${MediaQuery.MaxWidth.md} {
         width: 100%;
+
         &:not(:last-of-type) {
             margin-bottom: ${Spacing["spacing-16"]};
         }

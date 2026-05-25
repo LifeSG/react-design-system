@@ -1,5 +1,6 @@
 import clsx from "clsx";
 
+import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { FileUploadHelper } from "../helper";
 import * as styles from "./file-list-item-thumbnail.styles";
 
@@ -30,17 +31,21 @@ export const FileListItemThumbnail = ({
         : thumbnailImageDataUrl || "";
 
     return (
-        <styles.Container data-testid={testId}>
-            <styles.Thumbnail
+        <div className={styles.container} data-testid={testId}>
+            <ImageWithFallback
                 data-testid={testId ? `${testId}-image` : undefined}
                 src={displaySrc}
-                className={clsx(isPdf && styles.thumbnailPdf)}
+                className={clsx(styles.thumbnail, isPdf && styles.thumbnailPdf)}
             />
             {renderReplaceButton && (
-                <styles.ReplaceButton type="button" onClick={handleReplace}>
+                <button
+                    type="button"
+                    onClick={handleReplace}
+                    className={styles.replaceButton}
+                >
                     Replace
-                </styles.ReplaceButton>
+                </button>
             )}
-        </styles.Container>
+        </div>
     );
 };

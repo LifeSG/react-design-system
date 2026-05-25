@@ -28,11 +28,7 @@ import { VisuallyHidden } from "../shared/accessibility";
 import { FileUploadContext } from "./context";
 import { MouseSensor } from "./custom-sensors";
 import { FileItemEdit } from "./file-item-edit";
-import {
-    EditableItemsContainer,
-    ListWrapper,
-    listWrapperReadOnly,
-} from "./file-list.styles";
+import * as styles from "./file-list.styles";
 import { FileListItem } from "./file-list-item";
 import { FileUploadHelper } from "./helper";
 import type { FileItemProps } from "./types";
@@ -463,9 +459,12 @@ function Component(
         });
 
         return (
-            <EditableItemsContainer key={`editable-${keyToUse}`}>
+            <li
+                key={`editable-${keyToUse}`}
+                className={styles.editableItemsContainer}
+            >
                 <ul>{itemsToRender}</ul>
-            </EditableItemsContainer>
+            </li>
         );
     };
 
@@ -513,14 +512,17 @@ function Component(
         return (
             <>
                 {renderProgressStatus()}
-                <ListWrapper
+                <ul
                     tabIndex={-1}
-                    className={clsx(readOnly && listWrapperReadOnly)}
+                    className={clsx(
+                        styles.listWrapper,
+                        readOnly && styles.listWrapperReadOnly
+                    )}
                     ref={wrapperRef}
                     aria-label={getWrapperAriaLabel()}
                 >
                     {renderItems()}
-                </ListWrapper>
+                </ul>
             </>
         );
     };

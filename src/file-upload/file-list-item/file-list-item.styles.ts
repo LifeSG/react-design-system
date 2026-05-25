@@ -1,8 +1,5 @@
-import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button as DSIconButton } from "../../button";
 import {
     Border,
     Colour,
@@ -11,42 +8,10 @@ import {
     Shadow,
     Spacing,
 } from "../../theme";
-import { Typography } from "../../typography";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
 export type ItemFocusType = "self" | "others" | "none";
-export const itemDisabled = "fileUploadListItemDisabled";
-export const itemSortable = "fileUploadListItemSortable";
-export const itemSortableActive = "fileUploadListItemSortableActive";
 
-export const dragHandleIconActive = "fileUploadListItemDragHandleIconActive";
-export const dragHandleIconDisabled =
-    "fileUploadListItemDragHandleIconDisabled";
-
-export const boxFocused = "fileUploadListItemBoxFocused";
-export const boxDisabled = "fileUploadListItemBoxDisabled";
-export const boxError = "fileUploadListItemBoxError";
-export const boxStackMobile = "fileUploadListItemBoxStackMobile";
-
-export const contentSectionWithThumbnail =
-    "fileUploadListItemContentSectionWithThumbnail";
-
-export const fileSizeSectionHideInMobile =
-    "fileUploadListItemFileSizeSectionHideInMobile";
-export const fileSizeSectionExpandMobile =
-    "fileUploadListItemFileSizeSectionExpandMobile";
-
-export const actionContainerLoading =
-    "fileUploadListItemActionContainerLoading";
-export const actionContainerEditable =
-    "fileUploadListItemActionContainerEditable";
-
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Item = styled.li`
+export const item = css`
     display: flex;
     align-items: center;
     width: 100%;
@@ -55,40 +20,40 @@ export const Item = styled.li`
     &:not(:last-child) {
         margin-bottom: ${Spacing["spacing-16"]};
     }
-
-    &.${itemDisabled} {
+    &[data-item-state="disabled"] {
         cursor: not-allowed;
     }
 
-    &.${itemSortableActive} {
-        cursor: grabbing;
-        touch-action: manipulation;
-    }
-
-    &.${itemSortable} {
+    &[data-item-state="sortable"] {
         &:hover {
             cursor: grab;
         }
+
+        touch-action: manipulation;
+    }
+
+    &[data-item-state="sortable-active"] {
+        cursor: grabbing;
         touch-action: manipulation;
     }
 `;
 
-export const DragHandleIcon = styled(DSDragHandleIcon)`
+export const dragHandleIcon = css`
     margin-right: ${Spacing["spacing-16"]};
     height: 1.5rem;
     width: 1.5rem;
     color: ${Colour["icon"]};
 
-    &.${dragHandleIconActive} {
+    &[data-drag-handle-state="active"] {
         color: ${Colour["icon-primary"]};
     }
 
-    &.${dragHandleIconDisabled} {
+    &[data-drag-handle-state="disabled"] {
         color: ${Colour["icon-disabled"]};
     }
 `;
 
-export const Box = styled.div`
+export const box = css`
     background: ${Colour["bg-primary-subtlest"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
@@ -101,21 +66,21 @@ export const Box = styled.div`
         padding: ${Spacing["spacing-16"]};
     }
 
-    &.${boxFocused} {
+    &[data-box-state="focused"] {
         border-color: ${Colour["border-focus"]};
         box-shadow: ${Shadow["xs-focus-strong"]};
     }
 
-    &.${boxDisabled} {
+    &[data-box-state="disabled"] {
         border-color: ${Colour["border-disabled"]};
     }
 
-    &.${boxError} {
+    &[data-box-state="error"] {
         background: ${Colour["bg-error"]};
         border-color: ${Colour["border-error"]};
     }
 
-    &.${boxStackMobile} {
+    &[data-stack-mobile="true"] {
         ${MediaQuery.MaxWidth.md} {
             flex-direction: column;
             align-items: flex-start;
@@ -123,7 +88,7 @@ export const Box = styled.div`
     }
 `;
 
-export const ContentSection = styled.div`
+export const contentSection = css`
     display: flex;
     flex: 1;
     align-items: center;
@@ -134,22 +99,21 @@ export const ContentSection = styled.div`
         align-items: flex-start;
     }
 
-    &.${contentSectionWithThumbnail} {
+    &[data-has-thumbnail="true"] {
         ${MediaQuery.MaxWidth.md} {
             flex-direction: row;
             align-items: center;
         }
-    }
 `;
 
-export const NameSection = styled.div`
+export const nameSection = css`
     display: flex;
     flex: 1;
     flex-direction: column;
     width: 100%;
 `;
 
-export const ExtendedNameSection = styled.div`
+export const extendedNameSection = css`
     display: flex;
     flex: 1;
     align-items: center;
@@ -161,20 +125,20 @@ export const ExtendedNameSection = styled.div`
     }
 `;
 
-export const FileSizeSection = styled.div`
+export const fileSizeSection = css`
     display: flex;
     width: 5rem;
     margin-left: ${Spacing["spacing-8"]};
     justify-content: flex-end;
 
-    &.${fileSizeSectionHideInMobile} {
+    &[data-mobile-visibility="hidden"] {
         ${MediaQuery.MaxWidth.md} {
             display: none;
             visibility: hidden;
         }
     }
 
-    &.${fileSizeSectionExpandMobile} {
+    &[data-mobile-visibility="expand"] {
         ${MediaQuery.MaxWidth.md} {
             width: 100%;
             margin-left: 0;
@@ -184,28 +148,24 @@ export const FileSizeSection = styled.div`
     }
 `;
 
-export const FileSizeText = styled(Typography.BodyMD)`
+export const fileSizeText = css`
     color: ${Colour["text-subtler"]};
 `;
 
-export const ItemText = styled(Typography.BodyMD)``;
+export const itemText = css``;
 
-export const ItemDescriptionText = styled(Typography.BodyMD)`
+export const itemDescriptionText = css`
     margin-top: ${Spacing["spacing-4"]};
 `;
 
-export const ErrorIcon = styled(ExclamationCircleFillIcon)`
+export const errorIcon = css`
     height: 1lh;
     width: 1em;
     flex-shrink: 0;
     color: ${Colour["icon-error-strong"]};
 `;
 
-export const BaseErrorMessage = styled(Typography.BodySM)`
-    color: ${Colour["text-error"]};
-`;
-
-export const DesktopErrorMessage = styled(Typography.BodySM)`
+export const desktopErrorMessage = css`
     color: ${Colour["text-error"]};
     margin-top: ${Spacing["spacing-4"]};
     display: flex;
@@ -217,7 +177,7 @@ export const DesktopErrorMessage = styled(Typography.BodySM)`
     }
 `;
 
-export const MobileErrorMessage = styled(Typography.BodySM)`
+export const mobileErrorMessage = css`
     color: ${Colour["text-error"]};
     display: none;
     visibility: hidden;
@@ -230,7 +190,7 @@ export const MobileErrorMessage = styled(Typography.BodySM)`
     }
 `;
 
-export const ActionContainer = styled.div`
+export const actionContainer = css`
     width: 6rem;
     margin-left: ${Spacing["spacing-32"]};
     display: flex;
@@ -241,7 +201,7 @@ export const ActionContainer = styled.div`
         width: fit-content;
     }
 
-    &.${actionContainerLoading} {
+    &[data-mobile-layout="loading"] {
         ${MediaQuery.MaxWidth.md} {
             margin-left: 0;
             margin-top: ${Spacing["spacing-16"]};
@@ -249,7 +209,7 @@ export const ActionContainer = styled.div`
         }
     }
 
-    &.${actionContainerEditable} {
+    &[data-mobile-layout="editable"] {
         ${MediaQuery.MaxWidth.md} {
             margin-left: 0;
             margin-top: ${Spacing["spacing-16"]};
@@ -258,7 +218,7 @@ export const ActionContainer = styled.div`
     }
 `;
 
-export const IconButton = styled(DSIconButton)`
+export const iconButton = css`
     min-width: unset;
 
     &:not(:last-child) {

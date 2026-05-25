@@ -1,36 +1,26 @@
-import { CloudArrowUpFillIcon } from "@lifesg/react-icons/cloud-arrow-up-fill";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { DashedBorder } from "../dashed-border";
 import { Colour, MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography";
 
-export const containerWithDashedBorder =
-    "fileUploadDropzoneContainerWithDashedBorder";
-
-// =============================================================================
-// STYLING
-// =============================================================================
-
-export const Container = styled(DashedBorder)`
+export const container = css`
     position: relative;
     display: flex;
     flex-direction: column;
+`;
 
-    &.${containerWithDashedBorder} {
-        padding: ${Spacing["spacing-32"]};
+export const containerWithDashedBorder = css`
+    padding: ${Spacing["spacing-32"]};
 
-        ${MediaQuery.MaxWidth.md} {
-            padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
-        }
+    ${MediaQuery.MaxWidth.md} {
+        padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
     }
 `;
 
-export const HiddenInput = styled.input`
+export const hiddenInput = css`
     display: none;
 `;
 
-export const DragOverlay = styled(DashedBorder)`
+export const dragOverlay = css`
     position: absolute;
     top: 0;
     left: 0;
@@ -43,12 +33,12 @@ export const DragOverlay = styled(DashedBorder)`
     align-items: center;
 `;
 
-export const OverlayText = styled(Typography.BodyMD)`
+export const overlayText = css`
     color: ${Colour["text-primary"]};
     text-align: center;
 `;
 
-export const OverlayIcon = styled(CloudArrowUpFillIcon)`
+export const overlayIcon = css`
     color: ${Colour["icon-primary"]};
     height: 4rem;
     width: 4rem;

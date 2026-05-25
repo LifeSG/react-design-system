@@ -1,22 +1,15 @@
 import { useRef, useState } from "react";
 
+import { Alert } from "../alert";
+import { Button } from "../button";
+import { Markup } from "../markup";
+import { Typography } from "../typography";
 import { FileUploadContext } from "./context";
 import type { DropzoneElement } from "./dropzone";
 import { FileUploadDropzone } from "./dropzone";
 import type { FileListRef } from "./file-list";
 import { FileList } from "./file-list";
-import {
-    Description,
-    DescriptionContainer,
-    ErrorAlert,
-    TextContainer,
-    Title,
-    TitleContainer,
-    UploadButton,
-    UploadButtonContainer,
-    UploadButtonText,
-    WarningAlert,
-} from "./file-upload.styles";
+import * as styles from "./file-upload.styles";
 import type { FileItemProps, FileUploadProps } from "./types";
 
 export const FileUpload = ({
@@ -111,13 +104,16 @@ export const FileUpload = ({
         }
 
         if (typeof title === "string") {
-            return <Title>{title}</Title>;
+            return <Typography.BodyBL>{title}</Typography.BodyBL>;
         }
 
         return (
-            <TitleContainer baseTextSize="body-baseline">
+            <Markup
+                className={styles.titleContainer}
+                baseTextSize="body-baseline"
+            >
                 {title}
-            </TitleContainer>
+            </Markup>
         );
     };
 
@@ -127,13 +123,20 @@ export const FileUpload = ({
         }
 
         if (typeof description === "string") {
-            return <Description>{description}</Description>;
+            return (
+                <Typography.BodyMD className={styles.description}>
+                    {description}
+                </Typography.BodyMD>
+            );
         }
 
         return (
-            <DescriptionContainer baseTextSize="body-md">
+            <Markup
+                className={styles.descriptionContainer}
+                baseTextSize="body-md"
+            >
                 {description}
-            </DescriptionContainer>
+            </Markup>
         );
     };
 
@@ -153,13 +156,15 @@ export const FileUpload = ({
                 disabled={disabled || reachedMaxFiles() || readOnly}
             >
                 {!!(title || description) && (
-                    <TextContainer>
+                    <div className={styles.textContainer}>
                         {renderTitle()}
                         {renderDescription()}
-                    </TextContainer>
+                    </div>
                 )}
                 {!!warning && (
-                    <WarningAlert type="warning">{warning}</WarningAlert>
+                    <Alert className={styles.warningAlert} type="warning">
+                        {warning}
+                    </Alert>
                 )}
                 <FileList
                     ref={fileListRef}
@@ -174,24 +179,31 @@ export const FileUpload = ({
                     onSort={handleSort}
                 />
                 {errorMessage && (
-                    <ErrorAlert type="error">{errorMessage}</ErrorAlert>
+                    <Alert className={styles.errorAlert} type="error">
+                        {errorMessage}
+                    </Alert>
                 )}
                 {!readOnly && (
-                    <UploadButtonContainer>
-                        <UploadButton
+                    <div className={styles.uploadButtonContainer}>
+                        <Button
                             type="button"
+                            sizeType="small"
                             styleType="secondary"
                             disabled={
                                 !!activeId || disabled || reachedMaxFiles()
                             }
                             onClick={handleUploadButtonClick}
+                            className={styles.uploadButton}
                         >
                             {labels.uploadButton}
-                        </UploadButton>
-                        <UploadButtonText weight="semibold">
+                        </Button>
+                        <Typography.BodyMD
+                            className={styles.uploadButtonText}
+                            weight="semibold"
+                        >
                             or drop them here
-                        </UploadButtonText>
-                    </UploadButtonContainer>
+                        </Typography.BodyMD>
+                    </div>
                 )}
             </FileUploadDropzone>
         </FileUploadContext.Provider>

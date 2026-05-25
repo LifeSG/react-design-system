@@ -1,40 +1,31 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Alert } from "../alert";
-import { Button } from "../button";
-import { Markup } from "../markup";
 import { Colour, MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography";
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const TextContainer = styled.div`
+export const textContainer = css`
     display: flex;
     flex-direction: column;
     margin-bottom: ${Spacing["spacing-32"]};
     gap: ${Spacing["spacing-8"]};
 `;
 
-export const Title = styled(Typography.BodyBL)``;
-
-export const TitleContainer = styled(Markup)`
+export const titleContainer = css`
     color: ${Colour.text};
 `;
 
-export const Description = styled(Typography.BodyMD)`
+export const description = css`
     color: ${Colour["text-subtler"]};
 `;
 
-export const DescriptionContainer = styled(Markup)`
+export const descriptionContainer = css`
     color: ${Colour.text};
 `;
 
-export const WarningAlert = styled(Alert)`
+export const warningAlert = css`
     margin-bottom: ${Spacing["spacing-32"]};
 `;
 
-export const UploadButtonContainer = styled.div`
+export const uploadButtonContainer = css`
     width: 100%;
     display: flex;
     flex-direction: column;
@@ -45,7 +36,7 @@ export const UploadButtonContainer = styled.div`
     }
 `;
 
-export const UploadButton = styled(Button.Small)`
+export const uploadButton = css`
     width: 10rem;
 
     ${MediaQuery.MaxWidth.md} {
@@ -53,17 +44,18 @@ export const UploadButton = styled(Button.Small)`
     }
 `;
 
-export const UploadButtonText = styled(Typography.BodyMD)`
+export const uploadButtonText = css`
     color: ${Colour["text-subtler"]};
     margin-top: ${Spacing["spacing-8"]};
     width: 10rem;
     text-align: center;
+
     ${MediaQuery.MaxWidth.md} {
         display: none;
         visibility: hidden;
     }
 `;
 
-export const ErrorAlert = styled(Alert)`
+export const errorAlert = css`
     margin-bottom: ${Spacing["spacing-32"]};
 `;
