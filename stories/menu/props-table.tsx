@@ -12,7 +12,7 @@ const MENU_DATA: ApiTableSectionProps[] = [
                     <>
                         This component also inherits props from&nbsp;
                         <a
-                            href="/?path=/docs/overlays-popoverv2--docs"
+                            href="/?path=/docs/overlays-popover--docs"
                             target="_blank"
                             rel="noreferrer"
                         >

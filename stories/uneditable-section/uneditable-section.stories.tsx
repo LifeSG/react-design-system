@@ -3,10 +3,10 @@ import { useState } from "react";
 import { Alert } from "src/alert";
 import { BoxContainer } from "src/box-container";
 import { Button } from "src/button";
+import { TextList } from "src/text-list";
 import { Typography } from "src/typography";
 import type { UneditableSectionItemProps } from "src/uneditable-section";
 import { UneditableSection } from "src/uneditable-section";
-import { V2_TextList } from "src/v2_text-list";
 
 import { SAMPLE_ITEMS } from "./doc-elements";
 
@@ -367,11 +367,11 @@ export const ComposingFromScratch: StoryObj<Component> = {
                         <UneditableSection.Item
                             label="Spoken languages"
                             value={
-                                <V2_TextList.Ul>
+                                <TextList.Ul>
                                     <li>English</li>
                                     <li>Mandarin</li>
                                     <li>French</li>
-                                </V2_TextList.Ul>
+                                </TextList.Ul>
                             }
                         />
                     </UneditableSection.ItemSection>
