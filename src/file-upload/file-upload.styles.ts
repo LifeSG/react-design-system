@@ -9,16 +9,12 @@ export const textContainer = css`
     gap: ${Spacing["spacing-8"]};
 `;
 
-export const titleContainer = css`
+export const markupContainer = css`
     color: ${Colour.text};
 `;
 
 export const description = css`
     color: ${Colour["text-subtler"]};
-`;
-
-export const descriptionContainer = css`
-    color: ${Colour.text};
 `;
 
 export const warningAlert = css`

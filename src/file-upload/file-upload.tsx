@@ -109,7 +109,7 @@ export const FileUpload = ({
 
         return (
             <Markup
-                className={styles.titleContainer}
+                className={styles.markupContainer}
                 baseTextSize="body-baseline"
             >
                 {title}
@@ -131,10 +131,7 @@ export const FileUpload = ({
         }
 
         return (
-            <Markup
-                className={styles.descriptionContainer}
-                baseTextSize="body-md"
-            >
+            <Markup className={styles.markupContainer} baseTextSize="body-md">
                 {description}
             </Markup>
         );
