@@ -258,6 +258,28 @@ describe("FileUpload", () => {
 
             expect(uploadButton).toBeDisabled();
         });
+
+        it("should only pass remaining file slots when selected files exceed maxFiles", async () => {
+            const onChangeCallback = jest.fn();
+
+            const rendered = render(
+                <FileUpload
+                    maxFiles={1}
+                    fileItems={[]}
+                    onChange={onChangeCallback}
+                />
+            );
+
+            const dropzoneInput = rendered.getByTestId("dropzone-input");
+
+            await waitFor(() =>
+                fireEvent.change(dropzoneInput, {
+                    target: { files: [MOCK_IMAGE_ITEM, MOCK_NON_IMAGE_FILE] },
+                })
+            );
+
+            expect(onChangeCallback).toHaveBeenCalledWith([MOCK_IMAGE_ITEM]);
+        });
     });
 
     describe("Delete", () => {

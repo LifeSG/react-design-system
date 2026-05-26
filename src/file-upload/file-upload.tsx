@@ -52,8 +52,10 @@ export const FileUpload = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleChange = (files: File[]) => {
-        if (!disabled && onChange) {
-            onChange(files);
+        const filesToProcess = limitIncomingFiles(files);
+
+        if (!disabled && onChange && filesToProcess.length > 0) {
+            onChange(filesToProcess);
             fileListRef.current?.focus();
         }
     };
@@ -91,6 +93,17 @@ export const FileUpload = ({
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
+    const limitIncomingFiles = (files: File[]) => {
+        if (maxFiles === undefined) {
+            return files;
+        }
+
+        const existingItemsCount = fileItems?.length ?? 0;
+        const remainingSlots = Math.max(maxFiles - existingItemsCount, 0);
+
+        return files.slice(0, remainingSlots);
+    };
+
     const reachedMaxFiles = () => {
         return maxFiles && fileItems ? fileItems.length >= maxFiles : false;
     };
