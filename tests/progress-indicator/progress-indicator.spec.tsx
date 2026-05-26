@@ -11,7 +11,7 @@ jest.mock("src/theme", () => {
     };
 });
 
-const STEPS = ["Step 1", "Step 2", "Step 3"];
+const STEPS = ["Test One", "Test Two", "Test Three"];
 
 describe("ProgressIndicator", () => {
     beforeEach(() => {
@@ -37,7 +37,7 @@ describe("ProgressIndicator", () => {
 
         const currentSteps = document.querySelectorAll('[aria-current="true"]');
         expect(currentSteps).toHaveLength(1);
-        expect(currentSteps[0]).toHaveTextContent("Step 2");
+        expect(currentSteps[0]).toHaveTextContent("Test Two");
     });
 
     it("should use displayExtractor when provided", () => {
@@ -59,18 +59,14 @@ describe("ProgressIndicator", () => {
             jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(true);
         });
 
-        it("should render step counter text", () => {
+        it("should render step counter text and only the current step title", () => {
             render(<ProgressIndicator steps={STEPS} currentIndex={1} />);
 
             expect(screen.getByText("Step 2 of 3")).toBeInTheDocument();
-        });
 
-        it("should render only the current step title", () => {
-            render(<ProgressIndicator steps={STEPS} currentIndex={1} />);
-
-            expect(screen.getByText("Step 2")).toBeInTheDocument();
-            expect(screen.queryByText("Step 1")).not.toBeInTheDocument();
-            expect(screen.queryByText("Step 3")).not.toBeInTheDocument();
+            expect(screen.getByText("Test Two")).toBeInTheDocument();
+            expect(screen.queryByText("Test One")).not.toBeInTheDocument();
+            expect(screen.queryByText("Test Three")).not.toBeInTheDocument();
         });
 
         it("should update counter text when currentIndex changes", () => {
