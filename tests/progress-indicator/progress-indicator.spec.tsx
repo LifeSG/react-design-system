@@ -1,17 +1,22 @@
 import { render, screen } from "@testing-library/react";
-import { useMediaQuery } from "react-responsive";
 import { ProgressIndicator } from "src/progress-indicator";
+import { useSafeMaxWidthMediaQuery } from "src/theme";
 
-jest.mock("react-responsive", () => ({
-    useMediaQuery: jest.fn(() => false),
-}));
+jest.mock("src/theme", () => {
+    const originalModule = jest.requireActual("src/theme");
+    return {
+        __esModule: true,
+        ...originalModule,
+        useSafeMaxWidthMediaQuery: jest.fn(() => false),
+    };
+});
 
 const STEPS = ["Step 1", "Step 2", "Step 3"];
 
 describe("ProgressIndicator", () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        (useMediaQuery as jest.Mock).mockReturnValue(false);
+        jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(false);
     });
 
     it("should include hidden status text for each step in desktop view", () => {
@@ -30,9 +35,7 @@ describe("ProgressIndicator", () => {
     it("should mark only the current step with aria-current", () => {
         render(<ProgressIndicator steps={STEPS} currentIndex={1} />);
 
-        const currentSteps = document.querySelectorAll(
-            'p[aria-current="true"]'
-        );
+        const currentSteps = document.querySelectorAll('[aria-current="true"]');
         expect(currentSteps).toHaveLength(1);
         expect(currentSteps[0]).toHaveTextContent("Step 2");
     });
@@ -53,7 +56,7 @@ describe("ProgressIndicator", () => {
 
     describe("tablet view", () => {
         beforeEach(() => {
-            (useMediaQuery as jest.Mock).mockReturnValue(true);
+            jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(true);
         });
 
         it("should render step counter text", () => {

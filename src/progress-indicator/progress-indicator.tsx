@@ -1,9 +1,12 @@
 import clsx from "clsx";
 import kebabCase from "lodash/kebabCase";
-import { useMediaQuery } from "react-responsive";
 
 import { VisuallyHidden } from "../shared/accessibility";
-import { Breakpoint, parsePxOrRemValue, useDesignToken } from "../theme";
+import {
+    Breakpoint,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
 import { Typography } from "../typography";
 import * as styles from "./progress-indicator.styles";
 import type { ProgressIndicatorProps } from "./types";
@@ -19,12 +22,7 @@ export const ProgressIndicator = <T,>({
     // CONST, STATE, REFS
     // =============================================================================
     const tabletBreakpointToken = useDesignToken(Breakpoint["lg-max"]);
-    const tabletBreakpoint = parsePxOrRemValue(
-        tabletBreakpointToken || "1200px"
-    );
-    const isTablet = useMediaQuery({
-        maxWidth: tabletBreakpoint,
-    });
+    const isTablet = useSafeMaxWidthMediaQuery(tabletBreakpointToken);
 
     // =============================================================================
     // EFFECTS
