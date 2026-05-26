@@ -7,29 +7,25 @@ import { FontDisplay } from "../doc-elements";
 
 # SMGS font
 
-This is the font set used when the `fontScheme` is `"smgs"`.
+The SMGS theme uses the BookingSG font set (Plus Jakarta Sans).
 
 ```tsx
 const theme: ThemeSpec = {
-    fontScheme: "smgs",
+    fontScheme: "bookingsg",
     // ...other specifications
 };
 ```
 
-These stylesheets should be loaded in your app.
+This stylesheet should be loaded in your app.
 
 ```
-// Poppins
-https://assets.life.gov.sg/react-design-system/v3/css/poppins.css
-
-// Inter
-https://assets.life.gov.sg/react-design-system/v3/css/inter.css
+https://assets.life.gov.sg/react-design-system/v3/css/plus-jakarta-sans.css
 ```
 
 <DocInfo>
     [Common
     ligatures](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures)
-    are **disabled** for this font set
+    are **disabled** for this font
 </DocInfo>
 
 <FontDisplay theme={SMGSTheme} />
