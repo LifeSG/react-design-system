@@ -9,6 +9,12 @@ import { ClickableIcon } from "../shared/clickable-icon";
 import { Border, Colour, Font, MediaQuery, Radius, Shadow } from "../theme";
 import { Typography } from "../typography";
 
+export const tokens = {
+    container: {
+        top: "--fds-internal-smartAppBanner-container-top",
+    },
+};
+
 const slideDown = keyframes`
 	from {
 		opacity: 0;
@@ -20,40 +26,32 @@ const slideDown = keyframes`
 	}
 `;
 
-export const SmartAppBannerContainer = styled.div<{
-    $offset: number;
-    $isAnimated: boolean;
-}>`
+export const SmartAppBannerContainer = styled.div`
     display: flex;
     flex-direction: row-reverse;
     align-items: stretch;
     position: fixed;
     margin: 0.5rem 1.25rem;
-    ${(props) => {
-        return `top: ${props.$offset}px;`;
-    }}
+    ${tokens.container.top}: initial;
+    top: var(${tokens.container.top});
     left: 0;
     width: calc(100% - 2.5rem);
     min-height: 5.5rem;
     z-index: 9001;
     background: ${Colour.bg};
-    ${(props) => {
-        return props.theme?.colourMode === "dark"
-            ? css`
-                  border: ${Border["width-010"]} ${Border.solid}
-                      ${Colour.border};
-              `
-            : css`
-                  box-shadow: ${Shadow["md-subtle"]};
-              `;
-    }}
     border-radius: ${Radius.md};
-    ${(props) => {
-        if (props.$isAnimated)
-            return css`
-                animation: ${slideDown} 0.3s;
-            `;
-    }}
+
+    &.smartAppBannerContainerLight {
+        box-shadow: ${Shadow["md-subtle"]};
+    }
+
+    &.smartAppBannerContainerDark {
+        border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    }
+
+    &.smartAppBannerContainerAnimated {
+        animation: ${slideDown} 0.3s;
+    }
 `;
 
 export const DismissContainer = styled.div`

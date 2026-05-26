@@ -1,5 +1,9 @@
-import React from "react";
+import clsx from "clsx";
+import React, { useContext, useRef } from "react";
 
+import { useApplyStyle } from "../theme";
+import { ThemeContext } from "../theme/theme-provider/context";
+import { mergeRefs } from "../util";
 import {
     BannerIcon,
     ButtonContainer,
@@ -16,6 +20,7 @@ import {
     StyledButton,
     TextContainer,
     Title,
+    tokens,
 } from "./smart-app-banner.styles";
 import type { SmartAppBannerProps } from "./types";
 
@@ -52,6 +57,14 @@ function SmartAppBannerComponent(
         buttonAriaLabel,
         numberOfStars,
     } = content;
+
+    const containerRef = useRef<HTMLDivElement>(null);
+    const theme = useContext(ThemeContext);
+    const isDark = theme?.mode === "dark";
+
+    useApplyStyle(containerRef, {
+        [tokens.container.top]: `${offset}px`,
+    });
 
     const ariaLabels = {
         dismiss: "Close banner",
@@ -109,10 +122,14 @@ function SmartAppBannerComponent(
         <>
             {show && (
                 <SmartAppBannerContainer
-                    ref={ref}
-                    $isAnimated={animated}
-                    $offset={offset}
-                    className={className}
+                    ref={mergeRefs(containerRef, ref)}
+                    className={clsx(
+                        isDark
+                            ? "smartAppBannerContainerDark"
+                            : "smartAppBannerContainerLight",
+                        animated && "smartAppBannerContainerAnimated",
+                        className
+                    )}
                 >
                     <ProceedContainer
                         onClick={handleClick}
