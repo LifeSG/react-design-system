@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { ReactNode } from "react";
 import { forwardRef, useRef } from "react";
 
@@ -61,9 +62,9 @@ const Component = (
     };
 
     return (
-        <styles.StyledTimeSlot
+        <div
             ref={mergeRefs(slotRef, ref)}
-            className={className}
+            className={clsx(styles.timeSlot, className)}
             data-style-type={styleType}
             data-clickable={!!clickable}
             data-hoverable={isHoverable()}
@@ -72,7 +73,7 @@ const Component = (
             tabIndex={tabIndex}
         >
             {children}
-        </styles.StyledTimeSlot>
+        </div>
     );
 };
 

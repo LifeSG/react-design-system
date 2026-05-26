@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour } from "../../theme";
 
@@ -12,7 +12,7 @@ export const tokens = {
     },
 };
 
-export const StyledTimeSlot = styled.div`
+export const timeSlot = css`
     ${tokens.slot.bgColor}: ${Colour["bg-stronger"]};
     ${tokens.slot.bgColor2}: ${Colour["bg-strongest"]};
     ${tokens.slot.hoverBgColor}: ${Colour["bg-stronger"]};
