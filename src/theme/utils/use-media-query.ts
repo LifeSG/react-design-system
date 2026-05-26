@@ -1,13 +1,19 @@
 import { useEffect, useState } from "react";
 
 import { Breakpoint } from "../tokens/breakpoint";
-import type { BreakpointCSSVariableString } from "../types";
 import { normalizeCssLengthValue } from "./css-variable";
 import { isTokenFromSet } from "./token-resolver";
 import { useResolvedTokenValue } from "./use-design-token";
 
 export type BreakpointName = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 export type MaxWidthBreakpointName = Exclude<BreakpointName, "xxl">;
+type MinWidthBreakpointTokenKey = `${BreakpointName}-min`;
+type MaxWidthBreakpointTokenKey = `${MaxWidthBreakpointName}-max`;
+type WidthBreakpointTokenKey =
+    | MinWidthBreakpointTokenKey
+    | MaxWidthBreakpointTokenKey;
+type WidthBreakpointCSSVariableString =
+    (typeof Breakpoint)[WidthBreakpointTokenKey];
 
 type MediaQueryFeature =
     | "aspect-ratio"
@@ -35,21 +41,34 @@ export interface MediaQueryClause {
 }
 
 export interface MediaQueryOptions {
-    minWidth?: BreakpointCSSVariableString;
-    maxWidth?: BreakpointCSSVariableString;
+    minWidth?: WidthBreakpointCSSVariableString;
+    maxWidth?: WidthBreakpointCSSVariableString;
     clauses?: MediaQueryClause[];
 }
 
 export const DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT = "480px";
-
-const BREAKPOINT_TOKEN_SET = new Set<string>(Object.values(Breakpoint));
+const WIDTH_BREAKPOINT_TOKEN_SET = new Set<WidthBreakpointCSSVariableString>([
+    Breakpoint["xxs-min"],
+    Breakpoint["xs-min"],
+    Breakpoint["sm-min"],
+    Breakpoint["md-min"],
+    Breakpoint["lg-min"],
+    Breakpoint["xl-min"],
+    Breakpoint["xxl-min"],
+    Breakpoint["xxs-max"],
+    Breakpoint["xs-max"],
+    Breakpoint["sm-max"],
+    Breakpoint["md-max"],
+    Breakpoint["lg-max"],
+    Breakpoint["xl-max"],
+]);
 
 const isBreakpointToken = (
     value: unknown
-): value is BreakpointCSSVariableString => {
-    return isTokenFromSet<BreakpointCSSVariableString>(
+): value is WidthBreakpointCSSVariableString => {
+    return isTokenFromSet<WidthBreakpointCSSVariableString>(
         value,
-        BREAKPOINT_TOKEN_SET
+        WIDTH_BREAKPOINT_TOKEN_SET
     );
 };
 
@@ -137,11 +156,11 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
 };
 
 const useResolvedBreakpointToken = (
-    breakpointToken: BreakpointCSSVariableString | undefined,
+    breakpointToken: WidthBreakpointCSSVariableString | undefined,
     fallbackLength?: string
 ): string | undefined => {
     const resolvedTokenValue = useResolvedTokenValue<
-        BreakpointCSSVariableString,
+        WidthBreakpointCSSVariableString,
         string
     >({
         value: breakpointToken,
@@ -213,7 +232,7 @@ export const useMediaQuery = (options: MediaQueryOptions): boolean => {
  * max-width values (e.g. unresolved tokens), and falls back to a valid default.
  */
 export const useSafeMaxWidthMediaQuery = (
-    maxWidth: BreakpointCSSVariableString | string | undefined,
+    maxWidth: string | undefined,
     fallback: string = DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT
 ) => {
     const normalizedFallback =
