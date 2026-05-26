@@ -21,31 +21,7 @@ export abstract class AbstractStoryPage {
             theme?: string;
         }
     ) {
-        const defaultOrientation = options?.orientation ?? "landscape";
-        const initialOrientation =
-            options?.size === "desktop" ||
-            options?.size === "xl" ||
-            options?.size === "xxl"
-                ? defaultOrientation
-                : "portrait";
-        const orientation = options?.size
-            ? initialOrientation
-            : defaultOrientation;
-        const initialViewport = viewport[options?.size ?? "desktop"];
-        const isLandscape = initialViewport.width >= initialViewport.height;
-        const shouldBeLandscape = orientation === "landscape";
-        const shouldBePortrait = orientation === "portrait";
-        const shouldSwap =
-            (shouldBeLandscape && !isLandscape) ||
-            (shouldBePortrait && isLandscape);
-        const resolvedViewport = shouldSwap
-            ? {
-                  width: initialViewport.height,
-                  height: initialViewport.width,
-              }
-            : initialViewport;
-
-        await this.page.setViewportSize(resolvedViewport);
+        await this.page.setViewportSize(viewport[options?.size ?? "desktop"]);
 
         if (options?.mode && options.mode !== "auto") {
             await this.page.emulateMedia({
