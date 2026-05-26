@@ -296,14 +296,7 @@ const Component = (
         return (
             <InputGroup
                 ref={inputRef}
-                className={clsx(
-                    styles.inputGroupWrapper,
-                    readOnly && styles.inputGroupWrapperReadOnly,
-                    readOnly &&
-                        !shouldDisableMasking() &&
-                        styles.inputGroupWrapperInputPointer,
-                    className
-                )}
+                className={clsx(styles.inputGroupWrapper, className)}
                 data-testid={`${dataTestId || "masked-input"}${
                     isMasked ? "-masked" : "-unmasked"
                 }`}
