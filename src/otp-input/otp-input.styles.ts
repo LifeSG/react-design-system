@@ -16,9 +16,6 @@ export const inputContainer = css`
 `;
 
 export const inputField = css`
-    min-width: 20px;
-    margin-bottom: 0rem !important;
-
     input {
         padding: 0;
         text-align: center;
