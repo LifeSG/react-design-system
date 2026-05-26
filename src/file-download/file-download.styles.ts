@@ -1,14 +1,8 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
+import { DashedBorder } from "../dashed-border";
 import { Markup } from "../markup";
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Radius,
-    V3_Spacing,
-} from "../v3_theme";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
@@ -18,24 +12,24 @@ interface StyleProps {
     $border?: boolean | undefined;
 }
 
-export const Container = styled.div<StyleProps>`
+export const Container = styled(DashedBorder).attrs<StyleProps>((props) => ({
+    enabled: props.$border,
+    thickness: Border["width-040"],
+    radius: Radius["sm"],
+    colour: Colour["border"],
+}))<StyleProps>`
     position: relative;
     display: flex;
     flex-direction: column;
 
     ${(props) => {
         if (props.$border) {
-            return css`
-                ${V3_Border.Util["dashed-default"]({
-                    radius: V3_Radius["sm"],
-                    thickness: V3_Border["width-040"],
-                    colour: V3_Colour["border"],
-                })}
-                padding: ${V3_Spacing["spacing-32"]};
+            return `
+                padding: ${Spacing["spacing-32"]};
 
-                ${V3_MediaQuery.MaxWidth.sm} {
-                    padding: ${V3_Spacing["spacing-32"]}
-                        ${V3_Spacing["spacing-20"]};
+                ${MediaQuery.MaxWidth.sm} {
+                    padding: ${Spacing["spacing-32"]}
+                        ${Spacing["spacing-20"]};
                 }
             `;
         }
@@ -45,26 +39,26 @@ export const Container = styled.div<StyleProps>`
 export const TextContainer = styled.div`
     display: flex;
     flex-direction: column;
-    margin-bottom: ${V3_Spacing["spacing-32"]};
+    margin-bottom: ${Spacing["spacing-32"]};
 `;
 
 export const Title = styled.p`
-    ${V3_Font["heading-xs-regular"]}
-    color: ${V3_Colour["text"]};
-    margin-bottom: ${V3_Spacing["spacing-8"]};
+    ${Font["heading-xs-regular"]}
+    color: ${Colour["text"]};
+    margin-bottom: ${Spacing["spacing-8"]};
 `;
 
 export const TitleContainer = styled(Markup)`
-    color: ${V3_Colour["text"]};
+    color: ${Colour["text"]};
 `;
 
 export const Description = styled.p`
-    ${V3_Font["body-md-regular"]}
-    color: ${V3_Colour["text-subtler"]};
+    ${Font["body-md-regular"]}
+    color: ${Colour["text-subtler"]};
 `;
 
 export const DescriptionContainer = styled(Markup)`
-    color: ${V3_Colour["text-subtler"]};
+    color: ${Colour["text-subtler"]};
 `;
 
 export const ListWrapper = styled.ul`

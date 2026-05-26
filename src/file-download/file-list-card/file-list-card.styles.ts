@@ -5,14 +5,7 @@ import { Button as DSIconButton } from "../../button";
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { lineClampCss } from "../../shared/styles";
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Radius,
-    V3_Spacing,
-} from "../../v3_theme";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -37,7 +30,7 @@ export const Item = styled.li`
     border: none;
 
     &:not(:last-child) {
-        margin-bottom: ${V3_Spacing["spacing-16"]};
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 `;
 
@@ -46,30 +39,29 @@ export const Box = styled.div<BoxStyleProps>`
     align-items: center;
 
     width: 100%;
-    padding: ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-32"]};
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-32"]};
     cursor: pointer;
 
-    background: ${V3_Colour["bg-primary-subtlest"]};
-    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
-    border-radius: ${V3_Radius["sm"]};
+    background: ${Colour["bg-primary-subtlest"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
 
-    ${V3_MediaQuery.MaxWidth.lg} {
-        padding: ${V3_Spacing["spacing-16"]};
+    ${MediaQuery.MaxWidth.lg} {
+        padding: ${Spacing["spacing-16"]};
     }
 
     &:hover {
-        background: ${V3_Colour["bg-hover"]};
+        background: ${Colour["bg-hover"]};
     }
 
     ${(props) => {
         if (props.$error) {
             return css`
-                background: ${V3_Colour["bg-error"]};
-                border-color: ${V3_Colour["border-error"]};
+                background: ${Colour["bg-error"]};
+                border-color: ${Colour["border-error"]};
 
                 &:hover {
-                    background: ${V3_Colour["bg-error"]};
+                    background: ${Colour["bg-error"]};
                 }
             `;
         }
@@ -81,7 +73,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     flex: 1;
     align-items: center;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -90,7 +82,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     ${(props) => {
         if (props.$hasThumbnail) {
             return css`
-                ${V3_MediaQuery.MaxWidth.lg} {
+                ${MediaQuery.MaxWidth.lg} {
                     flex-direction: row;
                     align-items: center;
                 }
@@ -116,7 +108,7 @@ export const ExtendedNameSection = styled.div`
     flex: 1;
     align-items: center;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
         align-items: flex-start;
         width: 100%;
@@ -128,54 +120,54 @@ export const FileSizeSection = styled.div`
     justify-content: flex-end;
 
     width: 5rem;
-    margin-left: ${V3_Spacing["spacing-8"]};
+    margin-left: ${Spacing["spacing-8"]};
 
-    ${V3_Font["body-md-regular"]}
-    color: ${V3_Colour["text"]};
+    ${Font["body-md-regular"]}
+    color: ${Colour["text"]};
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         justify-content: flex-start;
 
         width: 100%;
         margin-left: 0;
-        margin-top: ${V3_Spacing["spacing-8"]};
+        margin-top: ${Spacing["spacing-8"]};
 
         ${lineClampCss(2)}
     }
 `;
 
 export const ItemNameText = styled.div`
-    ${V3_Font["body-md-regular"]}
-    color: ${V3_Colour["text"]};
+    ${Font["body-md-regular"]}
+    color: ${Colour["text"]};
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         ${lineClampCss(2)}
     }
 `;
 
 export const ItemDescriptionText = styled(ItemNameText)`
-    ${V3_Font["body-md-regular"]}
-    margin-top: ${V3_Spacing["spacing-4"]};
+    ${Font["body-md-regular"]}
+    margin-top: ${Spacing["spacing-4"]};
 `;
 
 export const ErrorIcon = styled(ExclamationCircleFillIcon)`
     height: 1lh;
     width: 1em;
     flex-shrink: 0;
-    color: ${V3_Colour["icon-error-strong"]};
+    color: ${Colour["icon-error-strong"]};
 `;
 
 const BaseErrorMessage = styled.div`
-    ${V3_Font["body-sm-semibold"]}
-    color: ${V3_Colour["text-error"]};
+    ${Font["body-sm-semibold"]}
+    color: ${Colour["text-error"]};
 `;
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
-    margin-top: ${V3_Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-4"]};
     display: flex;
-    gap: ${V3_Spacing["spacing-4"]};
+    gap: ${Spacing["spacing-4"]};
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         display: none;
         visibility: hidden;
     }
@@ -185,16 +177,16 @@ export const MobileErrorMessage = styled(BaseErrorMessage)`
     display: none;
     visibility: hidden;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         display: flex;
-        gap: ${V3_Spacing["spacing-4"]};
+        gap: ${Spacing["spacing-4"]};
         visibility: visible;
-        margin-top: ${V3_Spacing["spacing-8"]};
+        margin-top: ${Spacing["spacing-8"]};
     }
 `;
 
 export const Spinner = styled(ComponentLoadingSpinner)`
-    color: ${V3_Colour["icon-primary"]};
+    color: ${Colour["icon-primary"]};
 `;
 
 export const ActionContainer = styled.div`
@@ -202,10 +194,10 @@ export const ActionContainer = styled.div`
     justify-content: flex-end;
     align-items: center;
 
-    margin-left: ${V3_Spacing["spacing-32"]};
+    margin-left: ${Spacing["spacing-32"]};
 
-    ${V3_MediaQuery.MaxWidth.lg} {
-        margin-left: ${V3_Spacing["spacing-16"]};
+    ${MediaQuery.MaxWidth.lg} {
+        margin-left: ${Spacing["spacing-16"]};
     }
 `;
 
@@ -213,35 +205,34 @@ export const IconButton = styled(DSIconButton)`
     min-width: unset;
 
     &:not(:last-child) {
-        margin-right: ${V3_Spacing["spacing-16"]};
+        margin-right: ${Spacing["spacing-16"]};
     }
 `;
 
 export const ThumbnailContainer = styled.div`
     width: auto;
-    margin-right: ${V3_Spacing["spacing-32"]};
+    margin-right: ${Spacing["spacing-32"]};
 
     display: flex;
     flex-shrink: 0;
     flex-direction: column;
     justify-content: center;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
-        margin-right: ${V3_Spacing["spacing-16"]};
+    ${MediaQuery.MaxWidth.lg} {
+        margin-right: ${Spacing["spacing-16"]};
     }
 `;
 
 export const Thumbnail = styled(ImageWithFallback)`
-    border-radius: ${V3_Radius["sm"]};
-    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 
     width: 96px;
     height: 96px;
     aspect-ratio: 1;
     object-fit: cover;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         width: 64px;
         height: 64px;
     }
