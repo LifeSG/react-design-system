@@ -1,16 +1,12 @@
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button as DSIconButton } from "../../button";
-import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
-import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { lineClampCss } from "../../shared/styles";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Item = styled.li`
+export const item = css`
     display: flex;
     align-items: center;
 
@@ -22,7 +18,7 @@ export const Item = styled.li`
     }
 `;
 
-export const Box = styled.div`
+export const box = css`
     display: flex;
     align-items: center;
 
@@ -41,18 +37,18 @@ export const Box = styled.div`
     &:hover {
         background: ${Colour["bg-hover"]};
     }
+`;
 
-    &.boxError {
+export const boxError = css`
+    background: ${Colour["bg-error"]};
+    border-color: ${Colour["border-error"]};
+
+    &:hover {
         background: ${Colour["bg-error"]};
-        border-color: ${Colour["border-error"]};
-
-        &:hover {
-            background: ${Colour["bg-error"]};
-        }
     }
 `;
 
-export const ContentSection = styled.div`
+export const contentSection = css`
     display: flex;
     flex: 1;
     align-items: center;
@@ -62,16 +58,16 @@ export const ContentSection = styled.div`
         align-items: flex-start;
         width: 100%;
     }
+`;
 
-    &.contentSectionHasThumbnail {
-        ${MediaQuery.MaxWidth.lg} {
-            flex-direction: row;
-            align-items: center;
-        }
+export const contentSectionHasThumbnail = css`
+    ${MediaQuery.MaxWidth.lg} {
+        flex-direction: row;
+        align-items: center;
     }
 `;
 
-export const NameSection = styled.div`
+export const nameSection = css`
     display: flex;
     flex: 1;
     flex-direction: column;
@@ -83,7 +79,7 @@ export const NameSection = styled.div`
     white-space: normal;
 `;
 
-export const ExtendedNameSection = styled.div`
+export const extendedNameSection = css`
     display: flex;
     flex: 1;
     align-items: center;
@@ -95,7 +91,7 @@ export const ExtendedNameSection = styled.div`
     }
 `;
 
-export const FileSizeSection = styled.div`
+export const fileSizeSection = css`
     display: flex;
     justify-content: flex-end;
 
@@ -116,7 +112,7 @@ export const FileSizeSection = styled.div`
     }
 `;
 
-export const ItemNameText = styled.div`
+export const itemNameText = css`
     ${Font["body-md-regular"]}
     color: ${Colour["text"]};
 
@@ -125,24 +121,30 @@ export const ItemNameText = styled.div`
     }
 `;
 
-export const ItemDescriptionText = styled(ItemNameText)`
+export const itemDescriptionText = css`
     ${Font["body-md-regular"]}
+    color: ${Colour["text"]};
     margin-top: ${Spacing["spacing-4"]};
+
+    ${MediaQuery.MaxWidth.lg} {
+        ${lineClampCss(2)}
+    }
 `;
 
-export const ErrorIcon = styled(ExclamationCircleFillIcon)`
+export const errorIcon = css`
     height: 1lh;
     width: 1em;
     flex-shrink: 0;
     color: ${Colour["icon-error-strong"]};
 `;
 
-const BaseErrorMessage = styled.div`
+const baseErrorMessage = `
     ${Font["body-sm-semibold"]}
     color: ${Colour["text-error"]};
 `;
 
-export const DesktopErrorMessage = styled(BaseErrorMessage)`
+export const desktopErrorMessage = css`
+    ${baseErrorMessage}
     margin-top: ${Spacing["spacing-4"]};
     display: flex;
     gap: ${Spacing["spacing-4"]};
@@ -153,7 +155,8 @@ export const DesktopErrorMessage = styled(BaseErrorMessage)`
     }
 `;
 
-export const MobileErrorMessage = styled(BaseErrorMessage)`
+export const mobileErrorMessage = css`
+    ${baseErrorMessage}
     display: none;
     visibility: hidden;
 
@@ -165,11 +168,11 @@ export const MobileErrorMessage = styled(BaseErrorMessage)`
     }
 `;
 
-export const Spinner = styled(ComponentLoadingSpinner)`
+export const spinner = css`
     color: ${Colour["icon-primary"]};
 `;
 
-export const ActionContainer = styled.div`
+export const actionContainer = css`
     display: flex;
     justify-content: flex-end;
     align-items: center;
@@ -181,7 +184,7 @@ export const ActionContainer = styled.div`
     }
 `;
 
-export const IconButton = styled(DSIconButton)`
+export const iconButton = css`
     min-width: unset;
 
     &:not(:last-child) {
@@ -189,7 +192,7 @@ export const IconButton = styled(DSIconButton)`
     }
 `;
 
-export const ThumbnailContainer = styled.div`
+export const thumbnailContainer = css`
     width: auto;
     margin-right: ${Spacing["spacing-32"]};
 
@@ -203,7 +206,7 @@ export const ThumbnailContainer = styled.div`
     }
 `;
 
-export const Thumbnail = styled(ImageWithFallback)`
+export const thumbnail = css`
     border-radius: ${Radius["sm"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 

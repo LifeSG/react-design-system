@@ -1,56 +1,50 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { DashedBorder } from "../dashed-border";
-import { Markup } from "../markup";
-import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
+import { Colour, Font, MediaQuery, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
 // =============================================================================
 
-export const Container = styled(DashedBorder).attrs({
-    thickness: Border["width-040"],
-    radius: Radius["sm"],
-    colour: Colour["border"],
-})`
+export const container = css`
     position: relative;
     display: flex;
     flex-direction: column;
+`;
 
-    &.containerBordered {
-        padding: ${Spacing["spacing-32"]};
+export const containerBordered = css`
+    padding: ${Spacing["spacing-32"]};
 
-        ${MediaQuery.MaxWidth.sm} {
-            padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
-        }
+    ${MediaQuery.MaxWidth.sm} {
+        padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
     }
 `;
 
-export const TextContainer = styled.div`
+export const textContainer = css`
     display: flex;
     flex-direction: column;
     margin-bottom: ${Spacing["spacing-32"]};
 `;
 
-export const Title = styled.p`
+export const title = css`
     ${Font["heading-xs-regular"]}
     color: ${Colour["text"]};
     margin-bottom: ${Spacing["spacing-8"]};
 `;
 
-export const TitleContainer = styled(Markup)`
+export const titleContainer = css`
     color: ${Colour["text"]};
 `;
 
-export const Description = styled.p`
+export const description = css`
     ${Font["body-md-regular"]}
     color: ${Colour["text-subtler"]};
 `;
 
-export const DescriptionContainer = styled(Markup)`
+export const descriptionContainer = css`
     color: ${Colour["text-subtler"]};
 `;
 
-export const ListWrapper = styled.ul`
+export const listWrapper = css`
     list-style-type: none;
 `;
