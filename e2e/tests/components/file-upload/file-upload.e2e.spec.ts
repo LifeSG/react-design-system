@@ -224,33 +224,33 @@ test.describe("FileUpload", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("Form states", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("readonly-disabled-error");
+                await story.init("form-states");
             });
 
-            test("Readonly disabled error", async ({ story }) => {
+            test("Visual", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
         });
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("readonly-disabled-error", { size: "mobile" });
+                await story.init("form-states", { size: "mobile" });
             });
 
-            test("Readonly disabled error - mobile", async ({ story }) => {
+            test("Mobile", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
         });
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("readonly-disabled-error", { mode: "dark" });
+                await story.init("form-states", { mode: "dark" });
             });
 
-            test("Readonly disabled error - dark mode", async ({ story }) => {
+            test("Dark mode", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
         });
