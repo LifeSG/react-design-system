@@ -323,7 +323,7 @@ export const UnitNumberInput = ({
                 }
                 autoComplete={autoComplete}
                 styleType="no-border"
-                className={styles.floorInput}
+                className={clsx(styles.input, styles.floorInput)}
             />
             <VisuallyHidden aria-hidden id={floorLabelId}>
                 Enter floor number
@@ -360,7 +360,11 @@ export const UnitNumberInput = ({
                 }
                 autoComplete={autoComplete}
                 styleType="no-border"
-                className={clsx(styles.floorInput, styles.unitInput)}
+                className={clsx(
+                    styles.input,
+                    styles.floorInput,
+                    styles.unitInput
+                )}
             />
             <VisuallyHidden aria-hidden id={unitLabelId}>
                 Enter unit number

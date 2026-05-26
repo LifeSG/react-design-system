@@ -6,12 +6,14 @@ export const hashContainer = css`
     margin-right: 0.5rem;
 `;
 
-export const floorInput = css`
-    width: 2.5rem;
-
+export const input = css`
     input {
         text-align: center;
     }
+`;
+
+export const floorInput = css`
+    width: 2.5rem;
 `;
 
 export const unitInput = css`
