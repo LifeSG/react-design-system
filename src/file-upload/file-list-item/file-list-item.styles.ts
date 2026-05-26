@@ -153,8 +153,6 @@ export const fileSizeText = css`
     color: ${Colour["text-subtler"]};
 `;
 
-export const itemText = css``;
-
 export const itemDescriptionText = css`
     margin-top: ${Spacing["spacing-4"]};
 `;

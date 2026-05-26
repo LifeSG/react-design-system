@@ -196,10 +196,7 @@ const Component = ({
     // =========================================================================
     const renderNameDescription = () => (
         <>
-            <Typography.BodyMD
-                className={styles.itemText}
-                weight={description ? "semibold" : "regular"}
-            >
+            <Typography.BodyMD weight={description ? "semibold" : "regular"}>
                 {formattedName}
             </Typography.BodyMD>
             {description && (
