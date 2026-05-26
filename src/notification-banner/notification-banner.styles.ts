@@ -5,21 +5,13 @@ import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, Font, Motion, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-// =============================================================================
-// STYLE INTERFACES, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-interface WrapperStyleProps {
-    $sticky: boolean;
-    $clickable: boolean;
-}
+export const tokens = {
+    contentText: {
+        maxCollapsedHeight:
+            "--fds-internal-notificationBanner-contentText-maxCollapsedHeight",
+    },
+};
 
-interface ContentStyleProps {
-    $maxCollapsedHeight?: number;
-}
-
-// =============================================================================
-// STYLING
 // =============================================================================
 const commonLinkStyle = css`
     color: ${Colour["hyperlink-inverse"]};
@@ -39,8 +31,8 @@ const commonLinkStyle = css`
     }
 `;
 
-export const Wrapper = styled.div<WrapperStyleProps>`
-    position: ${(props) => (props.$sticky ? "sticky" : "relative")};
+export const Wrapper = styled.div`
+    position: relative;
     left: 0;
     top: 0;
     width: 100%;
@@ -48,7 +40,15 @@ export const Wrapper = styled.div<WrapperStyleProps>`
     background: ${Colour["bg-inverse-subtle"]};
     border-radius: ${Radius["none"]};
     z-index: 25;
-    cursor: ${(props) => (props.$clickable ? "pointer" : "default")};
+    cursor: default;
+
+    &.wrapperSticky {
+        position: sticky;
+    }
+
+    &.wrapperClickable {
+        cursor: pointer;
+    }
 `;
 
 export const Container = styled(Layout.Content)``;
@@ -59,7 +59,7 @@ export const ContentContainer = styled.div`
     padding: ${Spacing["spacing-24"]} 0;
 `;
 
-export const Content = styled.div<ContentStyleProps>`
+export const Content = styled.div`
     display: flex;
     flex: 1;
     align-items: flex-start;
@@ -88,22 +88,22 @@ export const ContentWrapper = styled.div`
     flex: 1;
 `;
 
-export const ContentText = styled.div<{ $maxCollapsedHeight?: number }>`
+export const ContentText = styled.div`
+    ${tokens.contentText.maxCollapsedHeight}: initial;
     flex: 1;
     word-wrap: break-word;
     overflow-wrap: break-word;
-    ${(props) => {
-        const gradient =
-            "linear-gradient(to bottom, black 50%, transparent 100%)";
-        if (props.$maxCollapsedHeight) {
-            return css`
-                max-height: ${props.$maxCollapsedHeight}px;
-                overflow: hidden;
-                -webkit-mask-image: ${gradient};
-                mask-image: ${gradient};
-            `;
-        }
-    }}
+
+    &.contentTextCollapsed {
+        max-height: var(${tokens.contentText.maxCollapsedHeight});
+        overflow: hidden;
+        -webkit-mask-image: linear-gradient(
+            to bottom,
+            black 50%,
+            transparent 100%
+        );
+        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    }
 `;
 
 export const ContentLink = styled(Typography.LinkBL)`

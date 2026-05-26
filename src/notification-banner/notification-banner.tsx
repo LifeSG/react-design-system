@@ -1,8 +1,10 @@
 import { CrossIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 import type { NamedExoticComponent } from "react";
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { formatUnitValue, useApplyStyle } from "../theme";
 import {
     AccessibleBannerButton,
     ActionButton,
@@ -14,6 +16,7 @@ import {
     ContentWrapper,
     IconContainer,
     StyledIconButton,
+    tokens,
     Wrapper,
 } from "./notification-banner.styles";
 import type {
@@ -33,6 +36,7 @@ export const NBComponent = ({
     onClick,
     actionButton,
     icon,
+    className,
     ...otherProps
 }: NotificationBannerWithForwardedRefProps) => {
     // =============================================================================
@@ -42,6 +46,16 @@ export const NBComponent = ({
 
     const [isVisible, setVisible] = useState<boolean>(visible);
     const { height: contentHeight = 0, ref: contentRef } = useResizeDetector();
+    const contentTextRef = useRef<HTMLDivElement>(null);
+
+    const isCollapsed =
+        maxCollapsedHeight && contentHeight > maxCollapsedHeight;
+
+    useApplyStyle(contentTextRef, {
+        [tokens.contentText.maxCollapsedHeight]: isCollapsed
+            ? formatUnitValue(maxCollapsedHeight, "px")
+            : undefined,
+    });
 
     // =============================================================================
     // EFFECTS
@@ -111,11 +125,8 @@ export const NBComponent = ({
         <Content data-testid={formatId("text-content", testId)}>
             <ContentWrapper>
                 <ContentText
-                    $maxCollapsedHeight={
-                        maxCollapsedHeight && contentHeight > maxCollapsedHeight
-                            ? maxCollapsedHeight
-                            : undefined
-                    }
+                    ref={contentTextRef}
+                    className={clsx(isCollapsed && "contentTextCollapsed")}
                 >
                     <div ref={contentRef}>{children}</div>
                 </ContentText>
@@ -131,8 +142,11 @@ export const NBComponent = ({
     return (
         <Wrapper
             ref={forwardedRef}
-            $sticky={sticky}
-            $clickable={!!onClick}
+            className={clsx(
+                sticky && "wrapperSticky",
+                !!onClick && "wrapperClickable",
+                className
+            )}
             onClick={onClick}
             role="region"
             {...otherProps}
