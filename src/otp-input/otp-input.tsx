@@ -319,7 +319,9 @@ const Component = (
                 })}
             </div>
             {errorMessage && (
-                <FormErrorMessage id={errorId}>{errorMessage}</FormErrorMessage>
+                <FormErrorMessage id={errorId} data-testid="otp-error-message">
+                    {errorMessage}
+                </FormErrorMessage>
             )}
             {/* visually hidden elements need to be rendered before the button so that Voiceover/Chrome doesn't skip the button */}
             <VisuallyHidden role="timer" id={timerId}>

@@ -41,7 +41,7 @@ class StoryPage extends AbstractStoryPage {
                     wrapper.getByRole("button", { name: /resend otp/i }),
                 prefix: (wrapper: Locator) => wrapper.getByTestId("otp-prefix"),
                 errorMessage: (wrapper: Locator) =>
-                    wrapper.locator("p[id$='-error']"),
+                    wrapper.getByTestId("otp-error-message"),
             },
         };
     }
@@ -65,7 +65,7 @@ test.describe("OTP Input", () => {
                 story.locators.otpDefault
             );
             await expect(resendBtn).toBeEnabled();
-            await compareScreenshot(story, "mount", { fullscreen: true });
+            await compareScreenshot(story, "mount");
 
             await expect(story.locators.otpDefault).toMatchAriaSnapshot(`
                 - group "6-digit OTP input field":
