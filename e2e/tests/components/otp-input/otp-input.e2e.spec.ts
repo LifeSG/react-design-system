@@ -7,11 +7,8 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         otpDefault: Locator;
-        otpOnly: Locator;
         otpWithError: Locator;
         otpWithPrefix: Locator;
-        otp4Digit: Locator;
-        otp6Digit: Locator;
         otpCooldown: Locator;
         internals: {
             inputCell: (wrapper: Locator, index: number) => Locator;
@@ -26,11 +23,8 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             otpDefault: page.getByTestId("otp-default"),
-            otpOnly: page.getByTestId("otp-only"),
             otpWithError: page.getByTestId("otp-with-error"),
             otpWithPrefix: page.getByTestId("otp-with-prefix"),
-            otp4Digit: page.getByTestId("otp-4-digit"),
-            otp6Digit: page.getByTestId("otp-6-digit"),
             otpCooldown: page.getByTestId("otp-cooldown"),
             internals: {
                 inputCell: (wrapper: Locator, index: number) =>
