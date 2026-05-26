@@ -1,3 +1,5 @@
+import clsx from "clsx";
+
 import * as styles from "./file-download.styles";
 import { FileListCard } from "./file-list-card";
 import type { FileDownloadProps, FileItemDownloadProps } from "./types";
@@ -56,12 +58,14 @@ export const FileDownload = ({
         );
     };
 
+    const isBordered = styleType === "bordered";
+
     return (
         <styles.Container
             id={id ? `${id}-file-download` : "file-download"}
-            className={className}
+            className={clsx(isBordered && "containerBordered", className)}
             data-testid={testId}
-            $border={styleType === "bordered"}
+            enabled={isBordered}
         >
             {(title || description) && (
                 <styles.TextContainer>

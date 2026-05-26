@@ -1,4 +1,5 @@
 import { DownloadIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 import { memo, useEffect, useRef, useState } from "react";
 
 import { FileUploadHelper } from "../../file-upload/helper";
@@ -150,7 +151,11 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         }
 
         return (
-            <ContentSection $hasThumbnail={!!thumbnailImageDataUrl}>
+            <ContentSection
+                className={clsx(
+                    !!thumbnailImageDataUrl && "contentSectionHasThumbnail"
+                )}
+            >
                 {content}
             </ContentSection>
         );
@@ -174,7 +179,10 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
 
     return (
         <Item data-testid={id}>
-            <Box onClick={handleDownload} $error={isError}>
+            <Box
+                onClick={handleDownload}
+                className={clsx(isError && "boxError")}
+            >
                 {renderContents()}
                 {renderActions()}
             </Box>

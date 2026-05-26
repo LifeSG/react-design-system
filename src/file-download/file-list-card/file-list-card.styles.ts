@@ -1,23 +1,11 @@
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button as DSIconButton } from "../../button";
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
 import { lineClampCss } from "../../shared/styles";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../../theme";
-
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-
-interface BoxStyleProps {
-    $error?: boolean | undefined;
-}
-
-interface ContentSectionStyleProps {
-    $hasThumbnail?: boolean | undefined;
-}
 
 // =============================================================================
 // STYLING
@@ -34,7 +22,7 @@ export const Item = styled.li`
     }
 `;
 
-export const Box = styled.div<BoxStyleProps>`
+export const Box = styled.div`
     display: flex;
     align-items: center;
 
@@ -54,21 +42,17 @@ export const Box = styled.div<BoxStyleProps>`
         background: ${Colour["bg-hover"]};
     }
 
-    ${(props) => {
-        if (props.$error) {
-            return css`
-                background: ${Colour["bg-error"]};
-                border-color: ${Colour["border-error"]};
+    &.boxError {
+        background: ${Colour["bg-error"]};
+        border-color: ${Colour["border-error"]};
 
-                &:hover {
-                    background: ${Colour["bg-error"]};
-                }
-            `;
+        &:hover {
+            background: ${Colour["bg-error"]};
         }
-    }}
+    }
 `;
 
-export const ContentSection = styled.div<ContentSectionStyleProps>`
+export const ContentSection = styled.div`
     display: flex;
     flex: 1;
     align-items: center;
@@ -79,16 +63,12 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
         width: 100%;
     }
 
-    ${(props) => {
-        if (props.$hasThumbnail) {
-            return css`
-                ${MediaQuery.MaxWidth.lg} {
-                    flex-direction: row;
-                    align-items: center;
-                }
-            `;
+    &.contentSectionHasThumbnail {
+        ${MediaQuery.MaxWidth.lg} {
+            flex-direction: row;
+            align-items: center;
         }
-    }}
+    }
 `;
 
 export const NameSection = styled.div`

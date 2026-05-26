@@ -8,32 +8,22 @@ import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 // STYLING
 // =============================================================================
 
-interface StyleProps {
-    $border?: boolean | undefined;
-}
-
-export const Container = styled(DashedBorder).attrs<StyleProps>((props) => ({
-    enabled: props.$border,
+export const Container = styled(DashedBorder).attrs({
     thickness: Border["width-040"],
     radius: Radius["sm"],
     colour: Colour["border"],
-}))<StyleProps>`
+})`
     position: relative;
     display: flex;
     flex-direction: column;
 
-    ${(props) => {
-        if (props.$border) {
-            return `
-                padding: ${Spacing["spacing-32"]};
+    &.containerBordered {
+        padding: ${Spacing["spacing-32"]};
 
-                ${MediaQuery.MaxWidth.sm} {
-                    padding: ${Spacing["spacing-32"]}
-                        ${Spacing["spacing-20"]};
-                }
-            `;
+        ${MediaQuery.MaxWidth.sm} {
+            padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]};
         }
-    }}
+    }
 `;
 
 export const TextContainer = styled.div`
