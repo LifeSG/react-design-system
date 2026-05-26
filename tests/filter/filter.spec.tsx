@@ -1,29 +1,36 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
-import { useMediaQuery } from "react-responsive";
 import { Filter } from "src";
 import { FilterContext } from "src/filter/filter-context";
 import { FilterModal } from "src/filter/filter-modal";
 import { FilterSidebar } from "src/filter/filter-sidebar";
 import type { FilterItemCheckboxOptionProps } from "src/filter/types";
+import { useSafeMaxWidthMediaQuery } from "src/theme";
 
-jest.mock("react-responsive");
+jest.mock("src/theme", () => {
+    const actual = jest.requireActual("src/theme");
+
+    return {
+        ...actual,
+        useSafeMaxWidthMediaQuery: jest.fn(),
+    };
+});
 
 describe("Filter", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
+        globalThis.requestAnimationFrame = (cb: FrameRequestCallback) => {
             cb(0);
             return 0;
         };
 
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+        globalThis.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
             unobserve: jest.fn(),
             disconnect: jest.fn(),
         }));
 
-        (useMediaQuery as jest.Mock).mockReturnValue(false);
+        jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(false);
     });
 
     it("should render the relevant components correctly on desktop", () => {
@@ -40,7 +47,7 @@ describe("Filter", () => {
     });
 
     it("should render the relevant components correctly on mobile", () => {
-        (useMediaQuery as jest.Mock).mockReturnValue(true);
+        jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(true);
 
         render(
             <Filter>

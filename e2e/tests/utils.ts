@@ -15,6 +15,7 @@ export abstract class AbstractStoryPage {
         story: string,
         options?: {
             size?: keyof typeof viewport;
+            orientation?: "landscape" | "portrait";
             mode?: "light" | "dark" | "auto";
             mockedTimestamp?: string;
             theme?: string;

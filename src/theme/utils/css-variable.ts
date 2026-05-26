@@ -5,6 +5,25 @@ import type { CSSVariableString } from "../types";
 type InlineCssVariables = Record<`--${string}`, string>;
 
 const DEFAULT_FONT_SIZE_PX = 16;
+const CSS_PX_OR_REM_CAPTURE_PATTERN = /^(-?\d*\.?\d+)(px|rem)$/i;
+
+/**
+ * Extracts an fds CSS variable name from raw token input.
+ * Supports values like "var(--fds-breakpoint-sm-max)" and "--fds-breakpoint-sm-max".
+ */
+export const extractFdsCssVariableName = (
+    value: string | undefined
+): `--fds-${string}` | undefined => {
+    if (!value) return undefined;
+
+    const variableName = /--fds-[\w-]+/.exec(value)?.[0];
+
+    if (!variableName) {
+        return undefined;
+    }
+
+    return variableName as `--fds-${string}`;
+};
 
 /**
  * Parse a CSS variable string and return its computed value.
@@ -25,7 +44,7 @@ export function parseCSSVariableValue(
         return "";
     }
 
-    const variableName = /--fds-[\w-]+/.exec(cssVarString as string)?.[0];
+    const variableName = extractFdsCssVariableName(cssVarString);
     if (!variableName) {
         console.warn(
             `Invalid CSS variable string: ${cssVarString}. Expected format: var(--fds-token-name)`
@@ -45,7 +64,7 @@ export function parseCSSVariableValue(
  */
 export function parsePxOrRemValue(cssValue: string): number {
     const value = cssValue.trim();
-    const match = /^(-?\d*\.?\d+)(px|rem)$/i.exec(value);
+    const match = CSS_PX_OR_REM_CAPTURE_PATTERN.exec(value);
     if (!match) return 0;
 
     const parsedValue = Number.parseFloat(match[1]);
@@ -64,6 +83,29 @@ export function parsePxOrRemValue(cssValue: string): number {
 
     return parsedValue * resolvedRootFontSize;
 }
+
+/**
+ * Normalizes a CSS length value and accepts px/rem or unitless zero.
+ * Returns undefined for invalid inputs.
+ */
+export const normalizeCssLengthValue = (
+    value: string | undefined
+): string | undefined => {
+    if (!value) return undefined;
+
+    const trimmedValue = value.trim();
+
+    // CSS allows unitless zero in width-like properties.
+    if (trimmedValue === "0") {
+        return trimmedValue;
+    }
+
+    if (!CSS_PX_OR_REM_CAPTURE_PATTERN.test(trimmedValue)) {
+        return undefined;
+    }
+
+    return trimmedValue;
+};
 
 const mergeInlineCssVariables = (
     element: HTMLElement,

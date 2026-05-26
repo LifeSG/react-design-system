@@ -24,10 +24,12 @@ and **media query** tokens. For grid-based page layouts, **column number** and
 
 ## Usage
 
-Use `MediaQuery` to target styles based on max width (desktop-first approach) or
-min width (mobile-first approach).
+### CSS-based style declarations
 
-### Max width
+Use `MediaQuery` to target styles based on max width (desktop-first approach)
+or min width (mobile-first approach).
+
+#### Max width
 
 <DocAlert>
     Max-width media queries should be arranged in{" "}
@@ -53,7 +55,7 @@ const container = css`
 `;
 ```
 
-### Min width
+#### Min width
 
 <DocAlert>
     Min-width media queries should be arranged in{" "}
@@ -79,7 +81,7 @@ const container = css`
 `;
 ```
 
-### Width as constant
+#### Width as constant
 
 ```tsx
 import {
@@ -98,6 +100,33 @@ export const MyComponent = () => {
     }, [mobileWidth]);
 };
 ```
+
+### Runtime utilities
+
+Use runtime hooks when responsive behavior affects rendering logic.
+
+```tsx
+import {
+    Breakpoint,
+    useMaxWidthMediaQuery,
+    useMediaQuery,
+    useMinWidthMediaQuery,
+    useSafeMaxWidthMediaQuery,
+} from "@lifesg/react-design-system/theme";
+
+const tabletAndUp = useMediaQuery({ minWidth: Breakpoint["md-min"] });
+const mobileOnly = useMediaQuery({ maxWidth: Breakpoint["sm-max"] });
+
+const desktopUp = useMinWidthMediaQuery("lg");
+const tabletDown = useMaxWidthMediaQuery("md");
+const safeMobile = useSafeMaxWidthMediaQuery(Breakpoint["sm-max"]);
+```
+
+`minWidth` and `maxWidth` accept breakpoint CSS variable tokens like
+`Breakpoint["md-min"]` and `Breakpoint["sm-max"]`.
+
+The hooks are safe to render on the server. They return a deterministic
+fallback until `window.matchMedia` is available on the client.
 
 ## Overriding
 
