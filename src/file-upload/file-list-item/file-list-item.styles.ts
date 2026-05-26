@@ -104,6 +104,7 @@ export const contentSection = css`
             flex-direction: row;
             align-items: center;
         }
+    }
 `;
 
 export const nameSection = css`
