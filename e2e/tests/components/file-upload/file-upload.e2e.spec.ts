@@ -58,7 +58,7 @@ class StoryPage extends AbstractStoryPage {
         // Use keyboard sensor interactions for better CI stability than pointer drag.
         const getItemIds = async () => {
             return await this.locators.fileUpload
-                .locator("li[id]")
+                .locator('[data-testid$="-item"]')
                 .evaluateAll((elements) =>
                     elements.map((element) => element.id)
                 );

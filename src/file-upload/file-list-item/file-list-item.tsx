@@ -310,6 +310,7 @@ const Component = ({
         <Item
             id={id}
             ref={setNodeRef}
+            data-testid={`${id}-item`}
             $sortable={shouldEnableSort()}
             $disabled={shouldDisable()}
             $focusType={focusType}
