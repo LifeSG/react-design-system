@@ -6,15 +6,8 @@ import styled, { css, keyframes } from "styled-components";
 
 import { Button } from "../button";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { Border, Colour, Font, MediaQuery, Radius, Shadow } from "../theme";
 import { Typography } from "../typography";
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Radius,
-    V3_Shadow,
-} from "../v3_theme";
 
 const slideDown = keyframes`
 	from {
@@ -43,18 +36,18 @@ export const SmartAppBannerContainer = styled.div<{
     width: calc(100% - 2.5rem);
     min-height: 5.5rem;
     z-index: 9001;
-    background: ${V3_Colour.bg};
+    background: ${Colour.bg};
     ${(props) => {
         return props.theme?.colourMode === "dark"
             ? css`
-                  border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-                      ${V3_Colour["border"]};
+                  border: ${Border["width-010"]} ${Border.solid}
+                      ${Colour.border};
               `
             : css`
-                  box-shadow: ${V3_Shadow["md-subtle"]};
+                  box-shadow: ${Shadow["md-subtle"]};
               `;
     }}
-    border-radius: ${V3_Radius["md"]};
+    border-radius: ${Radius.md};
     ${(props) => {
         if (props.$isAnimated)
             return css`
@@ -74,7 +67,7 @@ export const DismissButton = styled(ClickableIcon)`
 `;
 
 export const Cross = styled(CrossIcon)`
-    color: ${V3_Colour.icon};
+    color: ${Colour.icon};
     height: 1.25rem;
     width: 1.25rem;
 `;
@@ -93,7 +86,7 @@ export const TextContainer = styled.div`
     flex-direction: column;
     align-items: left;
     margin: 0.5rem;
-    ${V3_MediaQuery.MaxWidth.xs} {
+    ${MediaQuery.MaxWidth.xs} {
         margin: 0 0.5rem;
     }
 `;
@@ -113,15 +106,15 @@ export const StyledButton = styled(Button.Small)`
     height: auto;
     & > span {
         overflow-wrap: anywhere;
-        ${V3_Font["body-xs-semibold"]}
+        ${Font["body-xs-semibold"]}
     }
 `;
 
 export const Title = styled(Typography.BodySM)`
-    font-weight: ${V3_Font.Spec["weight-bold"]};
+    font-weight: ${Font.Spec["weight-bold"]};
     overflow-wrap: anywhere;
-    ${V3_MediaQuery.MaxWidth.xs} {
-        ${V3_Font["body-xs-bold"]}
+    ${MediaQuery.MaxWidth.xs} {
+        ${Font["body-xs-bold"]}
     }
 `;
 
