@@ -148,7 +148,7 @@ const Component = ({
             return "sortable";
         }
 
-        return "default";
+        return undefined;
     };
 
     const getDragHandleState = () => {
@@ -160,7 +160,7 @@ const Component = ({
             return "disabled";
         }
 
-        return "default";
+        return undefined;
     };
 
     const getBoxState = () => {
@@ -176,7 +176,7 @@ const Component = ({
             return "error";
         }
 
-        return "default";
+        return undefined;
     };
 
     const getActionContainerLayout = () => {
@@ -188,7 +188,7 @@ const Component = ({
             return "editable";
         }
 
-        return "default";
+        return undefined;
     };
 
     // =========================================================================
