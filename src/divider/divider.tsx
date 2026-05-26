@@ -4,7 +4,6 @@ import { useRef } from "react";
 import { ColDiv } from "../layout/col-div";
 import { Colour, useApplyStyle, useResolvedTokenValue } from "../theme";
 import { isColourToken } from "../util/styling-helper";
-import { V2_ColDiv } from "../v2_layout/col-div";
 import * as styles from "./divider.styles";
 import type { DividerLineStyleType, DividerProps } from "./types";
 
@@ -26,9 +25,6 @@ export const Divider = ({
     lgCols,
     xlCols,
     xxlCols,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     ...otherProps
 }: DividerProps) => {
     const ref = useRef<HTMLHRElement>(null);
@@ -49,11 +45,6 @@ export const Divider = ({
         [styles.tokens.backgroundImage]: `
             url('data:image/svg+xml,<svg width="8" height="${thickness}" viewBox="0 0 8 1" xmlns="http://www.w3.org/2000/svg"><line x1="2" y1="1" x2="6" y2="1" stroke="${encodedColor}" stroke-width="${strokeWidth}" stroke-dasharray="4 4" /></svg>')`,
     });
-
-    const isV2Layout =
-        mobileCols !== undefined ||
-        tabletCols !== undefined ||
-        desktopCols !== undefined;
 
     const getColumnProps = () => {
         const xxsColsProp = xxsCols || [1, -1];
@@ -87,28 +78,14 @@ export const Divider = ({
                 />
             );
         case "grid":
-            if (isV2Layout) {
-                return (
-                    <V2_ColDiv
-                        className={className}
-                        mobileCols={mobileCols}
-                        tabletCols={tabletCols}
-                        desktopCols={desktopCols}
-                        {...otherProps}
-                    >
-                        <hr ref={ref} className={lineClass} />
-                    </V2_ColDiv>
-                );
-            } else {
-                return (
-                    <ColDiv
-                        className={className}
-                        {...getColumnProps()}
-                        {...otherProps}
-                    >
-                        <hr ref={ref} className={lineClass} />
-                    </ColDiv>
-                );
-            }
+            return (
+                <ColDiv
+                    className={className}
+                    {...getColumnProps()}
+                    {...otherProps}
+                >
+                    <hr ref={ref} className={lineClass} />
+                </ColDiv>
+            );
     }
 };

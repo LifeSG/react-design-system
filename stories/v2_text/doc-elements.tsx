@@ -1,5 +1,5 @@
-import { V2_TextStyleHelper } from "src";
 import { V2_Color } from "src/v2_color/color";
+import { V2_TextStyleHelper } from "src/v2_text";
 import { V2_Text } from "src/v2_text/text";
 import styled, { css } from "styled-components";
 
