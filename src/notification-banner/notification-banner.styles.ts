@@ -38,24 +38,6 @@ export const contentContainer = css`
     padding: ${Spacing["spacing-24"]} 0;
 `;
 
-const commonLinkStyle = css`
-    color: ${Colour["hyperlink-inverse"]};
-
-    svg {
-        color: ${Colour["icon-primary-inverse"]};
-    }
-
-    &:hover,
-    &:active,
-    &:visited,
-    &:focus {
-        color: ${Colour["hyperlink-inverse"]};
-        svg {
-            color: ${Colour["icon-primary-inverse"]};
-        }
-    }
-`;
-
 export const content = css`
     display: flex;
     flex: 1;
@@ -75,7 +57,21 @@ export const content = css`
 
     a {
         ${Font["body-baseline-regular"]}
-        ${commonLinkStyle}
+        color: ${Colour["hyperlink-inverse"]};
+
+        svg {
+            color: ${Colour["icon-primary-inverse"]};
+        }
+
+        &:hover,
+        &:active,
+        &:visited,
+        &:focus {
+            color: ${Colour["hyperlink-inverse"]};
+            svg {
+                color: ${Colour["icon-primary-inverse"]};
+            }
+        }
     }
 `;
 
@@ -101,7 +97,21 @@ export const contentTextCollapsed = css`
 
 export const contentLink = css`
     position: relative;
-    ${commonLinkStyle}
+    color: ${Colour["hyperlink-inverse"]};
+
+    svg {
+        color: ${Colour["icon-primary-inverse"]};
+    }
+
+    &:hover,
+    &:active,
+    &:visited,
+    &:focus {
+        color: ${Colour["hyperlink-inverse"]};
+        svg {
+            color: ${Colour["icon-primary-inverse"]};
+        }
+    }
 `;
 
 export const styledIconButton = css`
