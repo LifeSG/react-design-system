@@ -57,17 +57,17 @@ class StoryPage extends AbstractStoryPage {
         }, file);
     }
 
-    public async reorderSortableItem(sourceId: string, targetId: string) {
-        // Use keyboard sensor interactions for better CI stability than pointer drag.
-        const getItemIds = async () => {
-            return await this.locators.fileUpload
-                .locator('[data-testid$="-item"]')
-                .evaluateAll((elements) =>
-                    elements.map((element) => element.id)
-                );
-        };
+    public async getSortableItemIds() {
+        return await this.locators.fileUpload
+            .locator('[data-testid$="-item"]')
+            .evaluateAll((elements) => elements.map((element) => element.id));
+    }
 
-        const itemIds = await getItemIds();
+    public async reorderSortableItemWithKeyboard(
+        sourceId: string,
+        targetId: string
+    ) {
+        const itemIds = await this.getSortableItemIds();
 
         const sourceIndex = itemIds.indexOf(sourceId);
         const targetIndex = itemIds.indexOf(targetId);
@@ -94,11 +94,57 @@ class StoryPage extends AbstractStoryPage {
             i += 1
         ) {
             await this.page.keyboard.press(moveKey);
-            currentIds = await getItemIds();
+            currentIds = await this.getSortableItemIds();
             currentSourceIndex = currentIds.indexOf(sourceId);
         }
+    }
 
-        await this.page.keyboard.press("Space");
+    public async reorderSortableItemWithMouse(
+        sourceId: string,
+        targetId: string
+    ) {
+        const itemIds = await this.getSortableItemIds();
+
+        const sourceIndex = itemIds.indexOf(sourceId);
+        const targetIndex = itemIds.indexOf(targetId);
+
+        if (sourceIndex < 0 || targetIndex < 0) {
+            throw new Error("Unable to find sortable item ids");
+        }
+
+        const source = this.locators.fileUpload.getByTestId(`${sourceId}-item`);
+        const target = this.locators.fileUpload.getByTestId(`${targetId}-item`);
+        const sourceHandle = this.locators.fileUpload.getByTestId(
+            `${sourceId}-drag-handle`
+        );
+
+        await expect(source).toBeVisible();
+        await expect(target).toBeVisible();
+        await expect(sourceHandle).toBeVisible();
+
+        const sourceHandleBox = await sourceHandle.boundingBox();
+        const targetBox = await target.boundingBox();
+
+        if (!sourceHandleBox || !targetBox) {
+            throw new Error("Sortable item does not have a bounding box");
+        }
+
+        const sourceX = sourceHandleBox.x + sourceHandleBox.width / 2;
+        const sourceY = sourceHandleBox.y + sourceHandleBox.height / 2;
+        const targetX = targetBox.x + targetBox.width / 2;
+        const targetY = targetBox.y + targetBox.height / 2;
+
+        await this.page.mouse.move(sourceX, sourceY);
+        await this.page.mouse.down();
+        await this.page.mouse.move(sourceX, sourceY);
+        // mouse sensor requires pointer movement over the activation distance.
+        await this.page.mouse.move(targetX, targetY, { steps: 2 });
+        await this.page.mouse.up();
+
+        const reorderedIds = await this.getSortableItemIds();
+        const reorderedSourceIndex = reorderedIds.indexOf(sourceId);
+
+        expect(reorderedSourceIndex).toBe(targetIndex);
     }
 }
 
@@ -350,8 +396,18 @@ test.describe("FileUpload", () => {
             });
         });
 
-        test("Sorting", async ({ story }) => {
-            await story.reorderSortableItem("sort-1", "sort-3");
+        test("Keyboard sorting", async ({ story }) => {
+            await story.reorderSortableItemWithKeyboard("sort-1", "sort-3");
+
+            await story.page.mouse.click(0, 0);
+
+            await compareScreenshot(story, "reordered", {
+                locator: story.locators.fileUpload,
+            });
+        });
+
+        test("Mouse sorting", async ({ story }) => {
+            await story.reorderSortableItemWithMouse("sort-1", "sort-3");
 
             await story.page.mouse.click(0, 0);
 
