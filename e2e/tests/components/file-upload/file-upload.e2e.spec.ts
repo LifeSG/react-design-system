@@ -1,6 +1,9 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
+const SAMPLE_UPLOAD_FILE_PATH = "e2e/tests/fixtures/file-upload/sample.png";
+const SAMPLE_UPLOAD_FILE_NAME = "sample.png";
+
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "file-upload";
 
@@ -125,10 +128,10 @@ test.describe("FileUpload", () => {
                 await story.locators.internal.uploadButton.click();
 
                 const fileChooser = await fileChooserPromise;
-                await fileChooser.setFiles("public/img/colour-tokens.png");
+                await fileChooser.setFiles(SAMPLE_UPLOAD_FILE_PATH);
 
                 await expect(
-                    story.getFileName("colour-tokens.png")
+                    story.getFileName(SAMPLE_UPLOAD_FILE_NAME)
                 ).toBeVisible();
                 await compareScreenshot(story, "uploaded-through-button", {
                     locator: story.locators.fileUpload,
