@@ -1,9 +1,6 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { Layout } from "../layout";
-import { ClickableIcon } from "../shared/clickable-icon";
 import { Colour, Font, Motion, Radius, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 export const tokens = {
     contentText: {
@@ -13,6 +10,34 @@ export const tokens = {
 };
 
 // =============================================================================
+// STYLING
+// =============================================================================
+export const wrapper = css`
+    position: relative;
+    left: 0;
+    top: 0;
+    width: 100%;
+    transition: all ${Motion["duration-800"]} ${Motion["ease-default"]};
+    background: ${Colour["bg-inverse-subtle"]};
+    border-radius: ${Radius["none"]};
+    z-index: 25;
+    cursor: default;
+`;
+
+export const wrapperSticky = css`
+    position: sticky;
+`;
+
+export const wrapperClickable = css`
+    cursor: pointer;
+`;
+
+export const contentContainer = css`
+    flex: 1;
+    align-items: flex-start;
+    padding: ${Spacing["spacing-24"]} 0;
+`;
+
 const commonLinkStyle = css`
     color: ${Colour["hyperlink-inverse"]};
 
@@ -31,35 +56,7 @@ const commonLinkStyle = css`
     }
 `;
 
-export const Wrapper = styled.div`
-    position: relative;
-    left: 0;
-    top: 0;
-    width: 100%;
-    transition: all ${Motion["duration-800"]} ${Motion["ease-default"]};
-    background: ${Colour["bg-inverse-subtle"]};
-    border-radius: ${Radius["none"]};
-    z-index: 25;
-    cursor: default;
-
-    &.wrapperSticky {
-        position: sticky;
-    }
-
-    &.wrapperClickable {
-        cursor: pointer;
-    }
-`;
-
-export const Container = styled(Layout.Content)``;
-
-export const ContentContainer = styled.div`
-    flex: 1;
-    align-items: flex-start;
-    padding: ${Spacing["spacing-24"]} 0;
-`;
-
-export const Content = styled.div`
+export const content = css`
     display: flex;
     flex: 1;
     align-items: flex-start;
@@ -82,40 +79,36 @@ export const Content = styled.div`
     }
 `;
 
-export const ContentWrapper = styled.div`
+export const contentWrapper = css`
     display: flex;
     flex-direction: column;
     flex: 1;
 `;
 
-export const ContentText = styled.div`
+export const contentText = css`
     ${tokens.contentText.maxCollapsedHeight}: initial;
     flex: 1;
     word-wrap: break-word;
     overflow-wrap: break-word;
-
-    &.contentTextCollapsed {
-        max-height: var(${tokens.contentText.maxCollapsedHeight});
-        overflow: hidden;
-        -webkit-mask-image: linear-gradient(
-            to bottom,
-            black 50%,
-            transparent 100%
-        );
-        mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
-    }
 `;
 
-export const ContentLink = styled(Typography.LinkBL)`
-    position: relative;
+export const contentTextCollapsed = css`
+    max-height: var(${tokens.contentText.maxCollapsedHeight});
+    overflow: hidden;
+    -webkit-mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+    mask-image: linear-gradient(to bottom, black 50%, transparent 100%);
+`;
 
+export const contentLink = css`
+    position: relative;
     ${commonLinkStyle}
 `;
 
-export const StyledIconButton = styled(ClickableIcon)`
-    margin-right: -${Spacing["spacing-24"]};
+export const styledIconButton = css`
+    margin-right: calc(${Spacing["spacing-24"]} * -1);
     padding-left: ${Spacing["spacing-16"]};
     height: max-content;
+
     svg {
         height: 1.5rem;
         width: 1.5rem;
@@ -123,7 +116,7 @@ export const StyledIconButton = styled(ClickableIcon)`
     }
 `;
 
-export const ActionButton = styled.button`
+export const actionButton = css`
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-4"]};
@@ -138,7 +131,7 @@ export const ActionButton = styled.button`
     cursor: pointer;
 `;
 
-export const AccessibleBannerButton = styled.button`
+export const accessibleBannerButton = css`
     clip: rect(0 0 0 0);
     clip-path: inset(50%);
     height: 1px;
@@ -148,7 +141,7 @@ export const AccessibleBannerButton = styled.button`
     width: 1px;
 `;
 
-export const IconContainer = styled.div`
+export const iconContainer = css`
     height: 1.5rem;
     width: 1.5rem;
     margin: ${Spacing["spacing-24"]} ${Spacing["spacing-24"]} 0 0;

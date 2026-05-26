@@ -4,21 +4,11 @@ import type { NamedExoticComponent } from "react";
 import React, { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { Layout } from "../layout";
+import { ClickableIcon } from "../shared/clickable-icon";
 import { formatUnitValue, useApplyStyle } from "../theme";
-import {
-    AccessibleBannerButton,
-    ActionButton,
-    Container,
-    Content,
-    ContentContainer,
-    ContentLink as NBLink,
-    ContentText,
-    ContentWrapper,
-    IconContainer,
-    StyledIconButton,
-    tokens,
-    Wrapper,
-} from "./notification-banner.styles";
+import { Typography } from "../typography";
+import * as styles from "./notification-banner.styles";
 import type {
     NotificationBannerProps,
     NotificationBannerWithForwardedRefProps,
@@ -52,7 +42,7 @@ export const NBComponent = ({
         maxCollapsedHeight && contentHeight > maxCollapsedHeight;
 
     useApplyStyle(contentTextRef, {
-        [tokens.contentText.maxCollapsedHeight]: isCollapsed
+        [styles.tokens.contentText.maxCollapsedHeight]: isCollapsed
             ? formatUnitValue(maxCollapsedHeight, "px")
             : undefined,
     });
@@ -91,7 +81,8 @@ export const NBComponent = ({
     if (!isVisible) return null;
 
     const renderDismissButton = () => (
-        <StyledIconButton
+        <ClickableIcon
+            className={styles.styledIconButton}
             tabIndex={0}
             onClick={handleDismiss}
             id={formatId("dismiss-button", id)}
@@ -102,14 +93,15 @@ export const NBComponent = ({
             aria-label="close"
         >
             <CrossIcon aria-hidden />
-        </StyledIconButton>
+        </ClickableIcon>
     );
 
     const renderActionButton = () => {
         if (!actionButton) return null;
 
         return (
-            <ActionButton
+            <button
+                className={styles.actionButton}
                 id={formatId("action-button", id)}
                 data-testid={formatId("action-button", testId)}
                 type="button"
@@ -117,47 +109,62 @@ export const NBComponent = ({
                 onClick={handleActionButtonOnClick}
             >
                 {actionButton.children}
-            </ActionButton>
+            </button>
         );
     };
 
     const renderContent = () => (
-        <Content data-testid={formatId("text-content", testId)}>
-            <ContentWrapper>
-                <ContentText
+        <div
+            className={styles.content}
+            data-testid={formatId("text-content", testId)}
+        >
+            <div className={styles.contentWrapper}>
+                <div
                     ref={contentTextRef}
-                    className={clsx(isCollapsed && "contentTextCollapsed")}
+                    className={clsx(
+                        styles.contentText,
+                        isCollapsed && styles.contentTextCollapsed
+                    )}
                 >
                     <div ref={contentRef}>{children}</div>
-                </ContentText>
+                </div>
                 {renderActionButton()}
-            </ContentWrapper>
-        </Content>
+            </div>
+        </div>
     );
 
     const renderAccessibleBannerButton = () => (
-        <AccessibleBannerButton aria-label={"Clickable banner"} type="button" />
+        <button
+            className={styles.accessibleBannerButton}
+            aria-label={"Clickable banner"}
+            type="button"
+        />
     );
 
     return (
-        <Wrapper
+        <div
             ref={forwardedRef}
             className={clsx(
-                sticky && "wrapperSticky",
-                !!onClick && "wrapperClickable",
+                styles.wrapper,
+                sticky && styles.wrapperSticky,
+                !!onClick && styles.wrapperClickable,
                 className
             )}
             onClick={onClick}
             role="region"
             {...otherProps}
         >
-            <Container id={formatId("container", id)}>
-                {icon && <IconContainer aria-hidden>{icon}</IconContainer>}
-                <ContentContainer>{renderContent()}</ContentContainer>
+            <Layout.Content id={formatId("container", id)}>
+                {icon && (
+                    <div className={styles.iconContainer} aria-hidden>
+                        {icon}
+                    </div>
+                )}
+                <div className={styles.contentContainer}>{renderContent()}</div>
                 {dismissible && renderDismissButton()}
-            </Container>
+            </Layout.Content>
             {onClick && renderAccessibleBannerButton()}
-        </Wrapper>
+        </div>
     );
 };
 
@@ -170,6 +177,19 @@ const NBWithRef = (
 ) => {
     return <NBComponent {...props} forwardedRef={ref} />;
 };
+
+const NBLink = React.forwardRef<
+    HTMLAnchorElement,
+    React.ComponentProps<typeof Typography.LinkBL>
+>(function NotificationBannerLink(props, ref) {
+    return (
+        <Typography.LinkBL
+            ref={ref}
+            className={clsx(styles.contentLink, props.className)}
+            {...props}
+        />
+    );
+});
 
 // =============================================================================
 // HELPER FUNCTIONS
