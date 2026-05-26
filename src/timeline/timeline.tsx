@@ -77,6 +77,7 @@ export const Timeline = ({
                     type={status.type}
                     key={`status-pill-${index}`}
                     data-testid="status-pill"
+                    className="timeline-status-pill"
                 >
                     {status.children}
                 </Pill>
