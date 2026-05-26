@@ -134,6 +134,79 @@ describe("useMediaQuery", () => {
         });
     });
 
+    it("builds a query from resolved widths and custom clauses", async () => {
+        const { matchMedia } = createMatchMediaMock(true);
+
+        renderWithTheme(
+            <CoreConsumer
+                options={{
+                    maxWidth: Breakpoint["lg-max"],
+                    minWidth: Breakpoint["md-min"],
+                    clauses: [
+                        { feature: "orientation", value: "landscape" },
+                        { feature: "hover", value: true },
+                    ],
+                }}
+            />
+        );
+
+        await waitFor(() => {
+            expect(matchMedia).toHaveBeenCalledWith(
+                "(min-width: 481px) and (max-width: 1200px) and (orientation: landscape) and (hover)"
+            );
+        });
+        await waitFor(() => {
+            expect(screen.getByTestId("result").textContent).toBe("true");
+        });
+    });
+
+    it("builds a query from custom clauses only", async () => {
+        const { matchMedia } = createMatchMediaMock(true);
+
+        renderWithTheme(
+            <CoreConsumer
+                options={{
+                    clauses: [
+                        { feature: "orientation", value: "portrait" },
+                        { feature: "height", value: "480px" },
+                    ],
+                }}
+            />
+        );
+
+        await waitFor(() => {
+            expect(matchMedia).toHaveBeenCalledWith(
+                "(orientation: portrait) and (height: 480px)"
+            );
+        });
+        await waitFor(() => {
+            expect(screen.getByTestId("result").textContent).toBe("true");
+        });
+    });
+
+    it("drops invalid or disabled custom clauses", async () => {
+        const { matchMedia } = createMatchMediaMock(true);
+
+        renderWithTheme(
+            <CoreConsumer
+                options={{
+                    clauses: [
+                        { feature: "orientation", value: "" },
+                        { feature: "pointer", value: false },
+                        { feature: "orientation", value: "landscape" },
+                    ],
+                }}
+            />
+        );
+
+        await waitFor(() => {
+            expect(matchMedia).toHaveBeenCalledWith("(orientation: landscape)");
+        });
+        await waitFor(() => {
+            expect(screen.getByTestId("result").textContent).toBe("true");
+        });
+    });
+
     it("updates when the media query match changes", async () => {
         const { mediaQueryLists } = createMatchMediaMock(false);
 
@@ -156,6 +229,38 @@ describe("useMediaQuery", () => {
         });
 
         expect(screen.getByTestId("result").textContent).toBe("true");
+    });
+
+    it("updates listeners when options change between renders", async () => {
+        const { mediaQueryLists } = createMatchMediaMock(false);
+
+        const { rerender } = renderWithTheme(
+            <CoreConsumer
+                options={{
+                    clauses: [{ feature: "orientation", value: "portrait" }],
+                }}
+            />
+        );
+
+        await waitFor(() => {
+            expect(mediaQueryLists.has("(orientation: portrait)")).toBe(true);
+        });
+
+        rerender(
+            <ThemeProvider style={getThemeVariablesStyle()}>
+                <CoreConsumer
+                    options={{
+                        clauses: [
+                            { feature: "orientation", value: "landscape" },
+                        ],
+                    }}
+                />
+            </ThemeProvider>
+        );
+
+        await waitFor(() => {
+            expect(mediaQueryLists.has("(orientation: landscape)")).toBe(true);
+        });
     });
 
     it("returns desktop-safe defaults when matchMedia is unavailable", async () => {

@@ -9,6 +9,39 @@ import { useResolvedTokenValue } from "./use-design-token";
 export type BreakpointName = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
 export type MaxWidthBreakpointName = Exclude<BreakpointName, "xxl">;
 
+type MediaQueryFeature =
+    | "aspect-ratio"
+    | "color-index"
+    | "color"
+    | "device-aspect-ratio"
+    | "device-height"
+    | "device-width"
+    | "grid"
+    | "height"
+    | "hover"
+    | "monochrome"
+    | "orientation"
+    | "pointer"
+    | "prefers-color-scheme"
+    | "resolution"
+    | "scan"
+    | "width";
+
+export type MediaQueryClauseValue = string | number | boolean;
+
+export interface MediaQueryClause {
+    feature: MediaQueryFeature;
+    value: MediaQueryClauseValue;
+}
+
+export interface MediaQueryOptions {
+    minWidth?: BreakpointCSSVariableString;
+    maxWidth?: BreakpointCSSVariableString;
+    clauses?: MediaQueryClause[];
+}
+
+export const DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT = "480px";
+
 const BREAKPOINT_TOKEN_SET = new Set<string>(Object.values(Breakpoint));
 
 const isBreakpointToken = (
@@ -37,12 +70,6 @@ export const useMaxWidthMediaQuery = (breakpoint: MaxWidthBreakpointName) =>
     useMediaQuery({
         maxWidth: getMaxWidthBreakpointToken(breakpoint),
     });
-export const DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT = "480px";
-
-export interface MediaQueryOptions {
-    minWidth?: BreakpointCSSVariableString;
-    maxWidth?: BreakpointCSSVariableString;
-}
 
 const getMediaQueryClause = (
     feature: "min-width" | "max-width",
@@ -53,6 +80,36 @@ const getMediaQueryClause = (
     }
 
     return `(${feature}: ${value})`;
+};
+
+const getCustomMediaQueryClause = (
+    clause: MediaQueryClause | null | undefined
+) => {
+    if (!clause?.feature) {
+        return undefined;
+    }
+
+    const trimmedFeature = clause.feature.trim();
+
+    if (!trimmedFeature) {
+        return undefined;
+    }
+
+    if (clause.value === true) {
+        return `(${trimmedFeature})`;
+    }
+
+    if (clause.value === false) {
+        return undefined;
+    }
+
+    const value = `${clause.value}`.trim();
+
+    if (!value) {
+        return undefined;
+    }
+
+    return `(${trimmedFeature}: ${value})`;
 };
 
 const getDefaultMatch = (hasMinWidth: boolean, hasMaxWidth: boolean) => {
@@ -130,14 +187,17 @@ const useMatchMediaQuery = (
 };
 
 export const useMediaQuery = (options: MediaQueryOptions): boolean => {
-    const { minWidth, maxWidth } = options;
+    const { minWidth, maxWidth, clauses = [] } = options;
     const normalizedMinWidth = useResolvedBreakpointToken(minWidth);
     const normalizedMaxWidth = useResolvedBreakpointToken(maxWidth);
-    const clauses = [
+    const widthClauses = [
         getMediaQueryClause("min-width", normalizedMinWidth),
         getMediaQueryClause("max-width", normalizedMaxWidth),
     ].filter((value): value is string => !!value);
-    const queryString = clauses.join(" and ");
+    const customClauses = clauses
+        .map(getCustomMediaQueryClause)
+        .filter((value): value is string => !!value);
+    const queryString = [...widthClauses, ...customClauses].join(" and ");
     const hasMinWidth = !!normalizedMinWidth;
     const hasMaxWidth = !!normalizedMaxWidth;
     const defaultMatch = getDefaultMatch(hasMinWidth, hasMaxWidth);
