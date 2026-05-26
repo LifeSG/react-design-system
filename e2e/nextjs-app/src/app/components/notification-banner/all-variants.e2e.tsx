@@ -1,5 +1,5 @@
 "use client";
-import { SpeakerFillIcon } from "@lifesg/react-icons";
+import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { NotificationBanner } from "@lifesg/react-design-system/notification-banner";
 
 export default function Story() {
@@ -11,7 +11,7 @@ export default function Story() {
 
             <NotificationBanner
                 data-testid="banner-with-icon"
-                icon={<SpeakerFillIcon />}
+                icon={<PlaceholderIcon />}
             >
                 This is a notification banner with an icon
             </NotificationBanner>
