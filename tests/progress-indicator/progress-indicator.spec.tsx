@@ -1,15 +1,22 @@
 import { render, screen } from "@testing-library/react";
-import { useMediaQuery } from "react-responsive";
 import { ProgressIndicator } from "src/progress-indicator";
+import { useSafeMaxWidthMediaQuery } from "src/theme";
 
-jest.mock("react-responsive", () => ({
-    useMediaQuery: jest.fn(() => false),
-}));
+jest.mock("src/theme", () => {
+    const originalModule = jest.requireActual("src/theme");
+    return {
+        __esModule: true,
+        ...originalModule,
+        useSafeMaxWidthMediaQuery: jest.fn(() => false),
+    };
+});
+
+const STEPS = ["Test One", "Test Two", "Test Three"];
 
 describe("ProgressIndicator", () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        (useMediaQuery as jest.Mock).mockReturnValue(false);
+        jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(false);
     });
 
     it("should include hidden status text for each step in desktop view", () => {
@@ -23,5 +30,53 @@ describe("ProgressIndicator", () => {
         expect(screen.getByText("Completed step")).toBeInTheDocument();
         expect(screen.getByText("Current step")).toBeInTheDocument();
         expect(screen.getByText("Upcoming step")).toBeInTheDocument();
+    });
+
+    it("should mark only the current step with aria-current", () => {
+        render(<ProgressIndicator steps={STEPS} currentIndex={1} />);
+
+        const currentSteps = document.querySelectorAll('[aria-current="true"]');
+        expect(currentSteps).toHaveLength(1);
+        expect(currentSteps[0]).toHaveTextContent("Test Two");
+    });
+
+    it("should use displayExtractor when provided", () => {
+        const items = [{ label: "One" }, { label: "Two" }];
+        render(
+            <ProgressIndicator
+                steps={items}
+                currentIndex={0}
+                displayExtractor={(item) => item.label}
+            />
+        );
+
+        expect(screen.getByText("One")).toBeInTheDocument();
+        expect(screen.getByText("Two")).toBeInTheDocument();
+    });
+
+    describe("tablet view", () => {
+        beforeEach(() => {
+            jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(true);
+        });
+
+        it("should render step counter text and only the current step title", () => {
+            render(<ProgressIndicator steps={STEPS} currentIndex={1} />);
+
+            expect(screen.getByText("Step 2 of 3")).toBeInTheDocument();
+
+            expect(screen.getByText("Test Two")).toBeInTheDocument();
+            expect(screen.queryByText("Test One")).not.toBeInTheDocument();
+            expect(screen.queryByText("Test Three")).not.toBeInTheDocument();
+        });
+
+        it("should update counter text when currentIndex changes", () => {
+            const { rerender } = render(
+                <ProgressIndicator steps={STEPS} currentIndex={0} />
+            );
+            expect(screen.getByText("Step 1 of 3")).toBeInTheDocument();
+
+            rerender(<ProgressIndicator steps={STEPS} currentIndex={2} />);
+            expect(screen.getByText("Step 3 of 3")).toBeInTheDocument();
+        });
     });
 });

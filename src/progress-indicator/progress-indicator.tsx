@@ -1,36 +1,28 @@
+import clsx from "clsx";
 import kebabCase from "lodash/kebabCase";
-import { useContext } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
 
 import { VisuallyHidden } from "../shared/accessibility";
-import { V3_Breakpoint } from "../v3_theme";
 import {
-    Content,
-    Indicator,
-    IndicatorBar,
-    IndicatorTitleDesktop,
-    IndicatorTitleTablet,
-    Wrapper,
-} from "./progress-indicator.style";
+    Breakpoint,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
+import { Typography } from "../typography";
+import * as styles from "./progress-indicator.styles";
 import type { ProgressIndicatorProps } from "./types";
 
 export const ProgressIndicator = <T,>({
     steps,
     currentIndex,
     displayExtractor,
-    fadeColor: _fadeColor,
-    fadePosition: _fadePosition,
+    className,
     ...otherProps
 }: ProgressIndicatorProps<T>) => {
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const theme = useContext(ThemeContext);
-    const tabletBreakpoint = V3_Breakpoint["lg-max"]({ theme });
-    const isTablet = useMediaQuery({
-        maxWidth: tabletBreakpoint,
-    });
+    const tabletBreakpointToken = useDesignToken(Breakpoint["lg-max"]);
+    const isTablet = useSafeMaxWidthMediaQuery(tabletBreakpointToken);
 
     // =============================================================================
     // EFFECTS
@@ -77,9 +69,18 @@ export const ProgressIndicator = <T,>({
             const highlighted = stepIndex <= currentIndex;
 
             return (
-                <Indicator key={stepIndex} id={getId(stepIndex, currentIndex)}>
-                    <IndicatorBar $highlighted={highlighted}></IndicatorBar>
-                </Indicator>
+                <div
+                    key={stepIndex}
+                    id={getId(stepIndex, currentIndex)}
+                    className={styles.indicator}
+                >
+                    <div
+                        className={clsx(
+                            styles.indicatorBar,
+                            highlighted && styles.indicatorBarHighlighted
+                        )}
+                    />
+                </div>
             );
         });
     };
@@ -91,12 +92,17 @@ export const ProgressIndicator = <T,>({
             const fontWeight = current ? "bold" : "regular";
 
             return (
-                <Indicator
+                <div
                     key={stepIndex}
                     id={`${getId(stepIndex, currentIndex)}-title`}
+                    className={styles.indicator}
                 >
-                    <IndicatorTitleDesktop
-                        $highlighted={highlighted}
+                    <Typography.BodyMD
+                        className={clsx(
+                            styles.indicatorTitleDesktop,
+                            highlighted &&
+                                styles.indicatorTitleDesktopHighlighted
+                        )}
                         weight={fontWeight}
                         aria-current={current}
                     >
@@ -104,40 +110,43 @@ export const ProgressIndicator = <T,>({
                         <VisuallyHidden>
                             {getStepAriaLabel(stepIndex, currentIndex)}
                         </VisuallyHidden>
-                    </IndicatorTitleDesktop>
-                </Indicator>
+                    </Typography.BodyMD>
+                </div>
             );
         });
     };
 
     const renderStepTitleTablet = () => {
         return (
-            <Indicator
+            <div
                 key={currentIndex}
                 id={getId(currentIndex, currentIndex)}
+                className={styles.indicator}
             >
-                <IndicatorTitleTablet
+                <Typography.BodyMD
+                    className={styles.indicatorTitleTablet}
                     weight={"semibold"}
                     id={`${getId(currentIndex, currentIndex)}-counter`}
                 >
                     Step {currentIndex + 1} of {steps.length}
-                </IndicatorTitleTablet>
-                <IndicatorTitleTablet
+                </Typography.BodyMD>
+                <Typography.BodyMD
+                    className={styles.indicatorTitleTablet}
                     weight={"regular"}
                     id={`${getId(currentIndex, currentIndex)}-title`}
                 >
                     {getDisplayValue(steps[currentIndex])}
-                </IndicatorTitleTablet>
-            </Indicator>
+                </Typography.BodyMD>
+            </div>
         );
     };
 
     return (
-        <Wrapper {...otherProps}>
-            <Content>{renderBars()}</Content>
-            <Content>
+        <div className={clsx(styles.wrapper, className)} {...otherProps}>
+            <div className={styles.content}>{renderBars()}</div>
+            <div className={styles.content}>
                 {isTablet ? renderStepTitleTablet() : renderStepTitleDesktop()}
-            </Content>
-        </Wrapper>
+            </div>
+        </div>
     );
 };
