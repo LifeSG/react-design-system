@@ -1,6 +1,5 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
-import { fixedTimestamp } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "masked-input";
@@ -246,15 +245,11 @@ test.describe("Masked Input", () => {
     });
 
     test.describe(() => {
-        const now = new Date(fixedTimestamp).getTime();
-
         test.beforeEach(async ({ story }) => {
-            await story.page.clock.install({ time: now - 30 * 1000 });
             await story.init("loading-and-error-display");
         });
 
         test("Loading and error display", async ({ story }) => {
-            await story.page.clock.pauseAt(now);
             await compareScreenshot(story, "mount");
         });
     });

@@ -40,6 +40,15 @@ export default function Story() {
                 value="S1234567D"
                 errorMessage="Sample error message"
             />
+            <Form.MaskedInput
+                data-testid="form-masked-input-disabled-masking"
+                label={{
+                    children: "Disabled masking",
+                    subtitle: "This is the subtitle",
+                }}
+                disableMask
+                value="S1234567D"
+            />
         </div>
     );
 }

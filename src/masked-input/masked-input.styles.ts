@@ -67,6 +67,9 @@ export const spinner = css`
     color: ${Colour["icon"]};
 `;
 
+// -----------------------------------------------------------------------------
+// ERROR DISPLAY
+// -----------------------------------------------------------------------------
 export const tryAgainLabel = css`
     color: ${Colour["text-primary"]};
     text-decoration: underline;
@@ -111,6 +114,9 @@ export const clickableErrorWrapper = css`
     }
 `;
 
+// -----------------------------------------------------------------------------
+// READONLY MASKED DISPLAY
+// -----------------------------------------------------------------------------
 export const readOnlyClickable = css`
     ${Font["body-baseline-regular"]}
     color: ${Colour["text"]};
