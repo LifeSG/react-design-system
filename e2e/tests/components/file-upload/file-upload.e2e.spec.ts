@@ -254,68 +254,84 @@ test.describe("FileUpload", () => {
     });
 
     test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("editable");
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("editable");
+            });
+
+            test("Editable", async ({ story }) => {
+                await test.step("States mount", async () => {
+                    await compareScreenshot(story, "mount", {
+                        locator: story.locators.fileUpload,
+                    });
+                });
+
+                await test.step("Save description", async () => {
+                    await expect(
+                        story.locators.fileUpload.getByTestId(
+                            "editable-image-edit-display"
+                        )
+                    ).toBeVisible();
+
+                    const textarea = story.locators.fileUpload.getByTestId(
+                        "editable-image-textarea-base"
+                    );
+                    const saveButton = story.locators.fileUpload.getByTestId(
+                        "editable-image-save-button"
+                    );
+
+                    await expect(saveButton).toBeDisabled();
+                    await expect(textarea).toBeVisible();
+
+                    await textarea.fill("A person walking beside a tree");
+
+                    await expect(saveButton).not.toBeDisabled();
+                    await saveButton.click();
+                    await expect(
+                        story.locators.fileUpload.getByTestId(
+                            "editable-image-edit-button"
+                        )
+                    ).toBeVisible();
+
+                    await compareScreenshot(story, "edited", {
+                        locator: story.locators.fileUpload,
+                    });
+                });
+
+                await test.step("Cancel edit keeps saved description", async () => {
+                    await story.locators.fileUpload
+                        .getByTestId("editable-image-edit-button")
+                        .click();
+
+                    const textarea = story.locators.fileUpload.getByTestId(
+                        "editable-image-textarea-base"
+                    );
+
+                    await textarea.fill("Temporary change");
+                    await story.locators.fileUpload
+                        .getByTestId("editable-image-cancel-button")
+                        .click();
+
+                    await expect(
+                        story.locators.fileUpload.getByText(
+                            "A person walking beside a tree"
+                        )
+                    ).toBeVisible();
+                });
+            });
         });
 
-        test("Editable", async ({ story }) => {
-            await test.step("States mount", async () => {
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.fileUpload,
-                });
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("editable", { size: "mobile" });
             });
 
-            await test.step("Save description", async () => {
-                await expect(
-                    story.locators.fileUpload.getByTestId(
-                        "editable-image-edit-display"
-                    )
-                ).toBeVisible();
-
-                const textarea = story.locators.fileUpload.getByTestId(
-                    "editable-image-textarea-base"
-                );
-                const saveButton = story.locators.fileUpload.getByTestId(
-                    "editable-image-save-button"
-                );
-
-                await expect(saveButton).toBeDisabled();
-                await expect(textarea).toBeVisible();
-
-                await textarea.fill("A person walking beside a tree");
-
-                await expect(saveButton).not.toBeDisabled();
-                await saveButton.click();
-                await expect(
-                    story.locators.fileUpload.getByTestId(
-                        "editable-image-edit-button"
-                    )
-                ).toBeVisible();
-
-                await compareScreenshot(story, "edited", {
-                    locator: story.locators.fileUpload,
+            test("Editable - mobile", async ({ story }) => {
+                await test.step("States mount", async () => {
+                    await compareScreenshot(story, "mount", {
+                        locator: story.locators.fileUpload,
+                    });
                 });
-            });
-
-            await test.step("Cancel edit keeps saved description", async () => {
-                await story.locators.fileUpload
-                    .getByTestId("editable-image-edit-button")
-                    .click();
-
-                const textarea = story.locators.fileUpload.getByTestId(
-                    "editable-image-textarea-base"
-                );
-
-                await textarea.fill("Temporary change");
-                await story.locators.fileUpload
-                    .getByTestId("editable-image-cancel-button")
-                    .click();
-
-                await expect(
-                    story.locators.fileUpload.getByText(
-                        "A person walking beside a tree"
-                    )
-                ).toBeVisible();
             });
         });
     });
