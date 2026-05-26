@@ -15,12 +15,14 @@ export default function Story() {
                 data-testid="form-masked-input-custom-active"
                 label="Custom mask active color (red)"
                 value="S1234567D"
+                maskRange={[2, 5]}
                 iconActiveColor="red"
             />
             <Form.MaskedInput
                 data-testid="form-masked-input-custom-icon"
                 label="Custom mask and unmask icon"
                 value="S1234567D"
+                maskRange={[2, 5]}
                 iconMask={<ToggleOffFillIcon />}
                 iconUnmask={<ToggleOffIcon />}
             />

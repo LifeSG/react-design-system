@@ -12,6 +12,7 @@ export default function Story() {
                     subtitle: "This is the subtitle",
                 }}
                 value="S1234567D"
+                maskRange={[2, 5]}
             />
             <Form.MaskedInput
                 data-testid="form-masked-input-disabled"
@@ -20,6 +21,7 @@ export default function Story() {
                     subtitle: "This is the subtitle",
                 }}
                 value="S1234567D"
+                maskRange={[2, 5]}
                 disabled
             />
             <Form.MaskedInput
@@ -29,6 +31,7 @@ export default function Story() {
                     subtitle: "This is the subtitle",
                 }}
                 value="S1234567D"
+                maskRange={[2, 5]}
                 readOnly
             />
             <Form.MaskedInput
@@ -38,6 +41,7 @@ export default function Story() {
                     subtitle: "This is the subtitle",
                 }}
                 value="S1234567D"
+                maskRange={[2, 5]}
                 errorMessage="Sample error message"
             />
             <Form.MaskedInput
