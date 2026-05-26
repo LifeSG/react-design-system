@@ -336,27 +336,45 @@ test.describe("FileUpload", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("Sortable", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("sortable");
         });
 
-        test("Sortable", async ({ story }) => {
-            await test.step("States mount", async () => {
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.fileUpload,
-                });
+        test("Visual", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                locator: story.locators.fileUpload,
+            });
+        });
+
+        test("Sorting", async ({ story }) => {
+            await story.reorderSortableItem("sort-1", "sort-3");
+
+            await story.page.mouse.click(0, 0);
+
+            await compareScreenshot(story, "reordered", {
+                locator: story.locators.fileUpload,
+            });
+        });
+
+        test("Focus states", async ({ story }) => {
+            const sortableItem = story.locators.fileUpload.locator("#sort-1");
+
+            await expect(sortableItem).toBeVisible();
+            await sortableItem.focus();
+            await expect(sortableItem).toBeFocused();
+
+            await compareScreenshot(story, "focus-item", {
+                locator: story.locators.fileUpload,
             });
 
-            await test.step("Drag item to reorder", async () => {
-                await story.reorderSortableItem("sort-1", "sort-3");
+            await story.page.keyboard.press("Space");
 
-                await story.page.mouse.click(0, 0);
-
-                await compareScreenshot(story, "reordered", {
-                    locator: story.locators.fileUpload,
-                });
+            await compareScreenshot(story, "focus-sorting", {
+                locator: story.locators.fileUpload,
             });
+
+            await story.page.keyboard.press("Space");
         });
     });
 
