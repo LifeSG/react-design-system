@@ -1,12 +1,4 @@
-import {
-    Container,
-    Description,
-    DescriptionContainer,
-    ListWrapper,
-    TextContainer,
-    Title,
-    TitleContainer,
-} from "./file-download.styles";
+import * as styles from "./file-download.styles";
 import { FileListCard } from "./file-list-card";
 import type { FileDownloadProps, FileItemDownloadProps } from "./types";
 
@@ -38,11 +30,13 @@ export const FileDownload = ({
         }
 
         if (typeof title === "string") {
-            return <Title>{title}</Title>;
+            return <styles.Title>{title}</styles.Title>;
         }
 
         return (
-            <TitleContainer baseTextSize="heading-xs">{title}</TitleContainer>
+            <styles.TitleContainer baseTextSize="heading-xs">
+                {title}
+            </styles.TitleContainer>
         );
     };
 
@@ -52,30 +46,30 @@ export const FileDownload = ({
         }
 
         if (typeof description === "string") {
-            return <Description>{description}</Description>;
+            return <styles.Description>{description}</styles.Description>;
         }
 
         return (
-            <DescriptionContainer baseTextSize="body-md">
+            <styles.DescriptionContainer baseTextSize="body-md">
                 {description}
-            </DescriptionContainer>
+            </styles.DescriptionContainer>
         );
     };
 
     return (
-        <Container
+        <styles.Container
             id={id ? `${id}-file-download` : "file-download"}
             className={className}
             data-testid={testId}
             $border={styleType === "bordered"}
         >
             {(title || description) && (
-                <TextContainer>
+                <styles.TextContainer>
                     {renderTitle()}
                     {renderDescription()}
-                </TextContainer>
+                </styles.TextContainer>
             )}
-            <ListWrapper>
+            <styles.ListWrapper>
                 {fileItems &&
                     fileItems.length > 0 &&
                     fileItems.map((item) => (
@@ -85,7 +79,7 @@ export const FileDownload = ({
                             onDownload={handleDownloadItem}
                         />
                     ))}
-            </ListWrapper>
-        </Container>
+            </styles.ListWrapper>
+        </styles.Container>
     );
 };
