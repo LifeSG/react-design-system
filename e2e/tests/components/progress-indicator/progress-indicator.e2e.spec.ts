@@ -60,4 +60,14 @@ test.describe("ProgressIndicator", () => {
             await compareScreenshot(story, "mount");
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("variants", { size: "lg", mode: "dark" });
+        });
+
+        test("Tablet layout (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
 });
