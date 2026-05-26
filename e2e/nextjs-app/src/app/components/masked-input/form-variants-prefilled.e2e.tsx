@@ -52,6 +52,7 @@ export default function Story() {
                 }}
                 disableMask
                 value="S1234567D"
+                maskRange={[2, 5]}
             />
         </div>
     );
