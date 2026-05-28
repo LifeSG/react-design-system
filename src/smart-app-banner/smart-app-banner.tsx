@@ -121,6 +121,7 @@ function SmartAppBannerComponent(
                 className={styles.ratingContainer}
                 role="group"
                 aria-label={`A rating of ${numberOfStars} out of ${MAX_STARS} stars`}
+                data-testid={`${ID}-star-rating`}
             >
                 {stars.slice(0, MAX_STARS)}
             </div>

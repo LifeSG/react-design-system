@@ -60,9 +60,7 @@ test.describe("SmartAppBanner", () => {
                 - button "Get"
             `);
             await expect(
-                story.page.getByRole("group", {
-                    name: "A rating of 4.5 out of 5 stars",
-                })
+                story.page.getByTestId("smart-app-banner-star-rating")
             ).toBeVisible();
         });
     });
@@ -107,9 +105,7 @@ test.describe("SmartAppBanner", () => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
 
                 await expect(
-                    story.page.getByRole("group", {
-                        name: "A rating of 5 out of 5 stars",
-                    })
+                    story.page.getByTestId("smart-app-banner-star-rating")
                 ).toBeVisible();
             });
         });
@@ -123,9 +119,7 @@ test.describe("SmartAppBanner", () => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
 
                 await expect(
-                    story.page.getByRole("group", {
-                        name: "A rating of 3.5 out of 5 stars",
-                    })
+                    story.page.getByTestId("smart-app-banner-star-rating")
                 ).toBeVisible();
             });
         });
@@ -139,9 +133,7 @@ test.describe("SmartAppBanner", () => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
 
                 await expect(
-                    story.page.getByRole("group", {
-                        name: "A rating of 0 out of 5 stars",
-                    })
+                    story.page.getByTestId("smart-app-banner-star-rating")
                 ).toBeVisible();
             });
         });
@@ -154,7 +146,9 @@ test.describe("SmartAppBanner", () => {
             test("No rating shown for invalid value", async ({ story }) => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
 
-                await expect(story.page.getByRole("group")).not.toBeVisible();
+                await expect(
+                    story.page.getByTestId("smart-app-banner-star-rating")
+                ).not.toBeVisible();
             });
         });
     });
