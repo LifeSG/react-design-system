@@ -183,6 +183,10 @@ export const mainSizeLargeIconOnly = css`
     width: 4rem;
 `;
 
+export const spinner = css`
+    flex-shrink: 0;
+`;
+
 export const spinnerHasChildren = css`
     margin-right: 0.5rem;
 `;
