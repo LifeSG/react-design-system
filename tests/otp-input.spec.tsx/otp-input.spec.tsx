@@ -158,6 +158,23 @@ describe("OtpInput", () => {
         await user.keyboard("{ArrowLeft}");
 
         expect(screen.getByLabelText("1st digit")).toHaveFocus();
+
+        await user.keyboard("1");
+
+        expect(screen.getByLabelText("1st digit")).toHaveValue("1");
+        expect(screen.getByLabelText("2nd digit")).toHaveFocus();
+
+        await user.keyboard("{Backspace}");
+        expect(screen.getByLabelText("1st digit")).toHaveValue("");
+        expect(screen.getByLabelText("1st digit")).toHaveFocus();
+
+        await user.tab();
+
+        expect(screen.getByLabelText("2nd digit")).toHaveFocus();
+
+        await user.tab({ shift: true });
+
+        expect(screen.getByLabelText("1st digit")).toHaveFocus();
     });
 
     it("should not render the action button when otpOnly is true", () => {
