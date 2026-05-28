@@ -10,10 +10,14 @@ class StoryPage extends AbstractStoryPage {
         internal: {
             dropdownContainer: Locator;
             listLoading: Locator;
-            listFail: Locator;
             listItems: Locator;
-            retryButton: Locator;
             clearButton: Locator;
+        };
+        form: {
+            default: Locator;
+            error: Locator;
+            disabled: Locator;
+            readonly: Locator;
         };
         default: Locator;
         standalone: {
@@ -21,7 +25,6 @@ class StoryPage extends AbstractStoryPage {
             readonly: Locator;
         };
         loading: Locator;
-        errorState: Locator;
         gridLayout: {
             layout: Locator;
         };
@@ -35,12 +38,16 @@ class StoryPage extends AbstractStoryPage {
             internal: {
                 dropdownContainer: page.getByTestId("dropdown-container"),
                 listLoading: page.getByTestId("list-loading"),
-                listFail: page.getByTestId("list-fail"),
                 listItems: page.getByTestId("list-item"),
-                retryButton: page.getByRole("button", { name: "Try again." }),
                 clearButton: page.getByRole("button", {
                     name: "Clear input",
                 }),
+            },
+            form: {
+                default: page.getByTestId("pti-default-base"),
+                error: page.getByTestId("pti-error-base"),
+                disabled: page.getByTestId("pti-disabled-base"),
+                readonly: page.getByTestId("pti-readonly-base"),
             },
             default: page.getByTestId("pti-default"),
             standalone: {
@@ -48,7 +55,6 @@ class StoryPage extends AbstractStoryPage {
                 readonly: page.getByTestId("pti-readonly"),
             },
             loading: page.getByTestId("pti-loading"),
-            errorState: page.getByTestId("pti-error-state"),
             gridLayout: {
                 layout: page.getByTestId("pti-grid-layout"),
             },
@@ -78,13 +84,189 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("PredictiveTextInput", () => {
+    test.describe("Form Variants", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants");
+            });
+
+            test("Mount", async ({ story }) => {
+                await compareScreenshot(story, "state");
+
+                await expect(story.page.getByTestId("pti-default"))
+                    .toMatchAriaSnapshot(`
+                    - text: Default
+                    - combobox "Default":
+                      - /placeholder: Enter here.../
+                `);
+
+                await expect(story.page.getByTestId("pti-disabled"))
+                    .toMatchAriaSnapshot(`
+                    - text: Disabled
+                    - combobox "Disabled" [disabled]:
+                      - /placeholder: Enter here.../
+                `);
+
+                await expect(story.page.getByTestId("pti-error"))
+                    .toMatchAriaSnapshot(`
+                    - text: Error
+                    - combobox "Error":
+                      - /placeholder: Enter here.../
+                    - paragraph: Selection is required
+                `);
+
+                await expect(story.page.getByTestId("pti-readonly"))
+                    .toMatchAriaSnapshot(`
+                    - text: Readonly
+                    - combobox "Readonly":
+                      - /placeholder: Enter here.../
+                `);
+            });
+
+            test("Focus states", async ({ story }) => {
+                await story.getInput(story.locators.form.default).focus();
+                await compareScreenshot(story, "default", {
+                    locator: story.locators.form.default,
+                });
+
+                await story.getInput(story.locators.form.disabled).focus();
+                await compareScreenshot(story, "disabled", {
+                    locator: story.locators.form.disabled,
+                });
+
+                await story.getInput(story.locators.form.error).focus();
+                await compareScreenshot(story, "error", {
+                    locator: story.locators.form.error,
+                });
+
+                await story.getInput(story.locators.form.readonly).focus();
+                await compareScreenshot(story, "readonly", {
+                    locator: story.locators.form.readonly,
+                });
+            });
+
+            test("Open states", async ({ story }) => {
+                const input = story.getInput(story.locators.form.default);
+                await story.typeAndWaitForDebounce(input, "land");
+                await compareScreenshot(story, "default", {
+                    fullscreen: true,
+                });
+            });
+
+            test("Hover states", async ({ story }) => {
+                const input = story.getInput(story.locators.form.default);
+                await story.typeAndWaitForDebounce(input, "land");
+
+                const optionTarget = story.getOption("Finland");
+                await optionTarget.hover();
+                await compareScreenshot(story, "active-option", {
+                    fullscreen: true,
+                });
+
+                await optionTarget.click();
+
+                await story.typeAndWaitForDebounce(input, "land");
+
+                await optionTarget.hover();
+                await compareScreenshot(story, "selected-option", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants", { size: "mobile" });
+            });
+
+            test("Visual mobile", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants", { mode: "dark" });
+            });
+
+            test("Visual mobile dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    test.describe("Form Variants Prefilled", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants-prefilled");
+            });
+
+            test("Mount", async ({ story }) => {
+                await compareScreenshot(story, "state");
+
+                await expect(story.page.getByTestId("pti-default"))
+                    .toMatchAriaSnapshot(`
+                    - text: Default
+                    - combobox "Default": Finland
+                `);
+
+                await expect(story.page.getByTestId("pti-disabled"))
+                    .toMatchAriaSnapshot(`
+                    - text: Disabled
+                    - combobox "Disabled" [disabled]: Finland
+                `);
+
+                await expect(story.page.getByTestId("pti-error"))
+                    .toMatchAriaSnapshot(`
+                    - text: Error
+                    - combobox "Error": Finland
+                    - paragraph: Selection is required
+                `);
+
+                await expect(story.page.getByTestId("pti-readonly"))
+                    .toMatchAriaSnapshot(`
+                    - text: Readonly
+                    - combobox "Readonly": Finland
+                `);
+            });
+
+            test("Focus states", async ({ story }) => {
+                await story.getInput(story.locators.form.default).focus();
+                await compareScreenshot(story, "default", {
+                    locator: story.locators.form.default,
+                });
+
+                await story.getInput(story.locators.form.disabled).focus();
+                await compareScreenshot(story, "disabled", {
+                    locator: story.locators.form.disabled,
+                });
+
+                await story.getInput(story.locators.form.error).focus();
+                await compareScreenshot(story, "error", {
+                    locator: story.locators.form.error,
+                });
+
+                await story.getInput(story.locators.form.readonly).focus();
+                await compareScreenshot(story, "readonly", {
+                    locator: story.locators.form.readonly,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants-prefilled", { mode: "dark" });
+            });
+
+            test("Visual dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("default");
-        });
-
-        test("Default", async ({ story }) => {
-            await compareScreenshot(story, "mount");
         });
 
         test("Typing with no results found", async ({ story }) => {
@@ -105,17 +287,6 @@ test.describe("PredictiveTextInput", () => {
             await compareScreenshot(story, "suggestions", { fullscreen: true });
         });
 
-        test("Select option from suggestions", async ({ story }) => {
-            const input = story.getInput(story.locators.default);
-
-            await story.typeAndWaitForDebounce(input, "fin");
-            await story.getOption("Finland").click();
-
-            await compareScreenshot(story, "selected", {
-                locator: story.locators.default,
-            });
-        });
-
         test("Clear selected option", async ({ story }) => {
             const input = story.getInput(story.locators.default);
 
@@ -132,12 +303,6 @@ test.describe("PredictiveTextInput", () => {
             await story.init("default", { mode: "dark" });
         });
 
-        test("Default (dark mode)", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                locator: story.locators.default,
-            });
-        });
-
         test("Typing with suggestions (dark mode)", async ({ story }) => {
             const input = story.getInput(story.locators.default);
 
@@ -147,36 +312,51 @@ test.describe("PredictiveTextInput", () => {
         });
     });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("standalone");
+    test.describe("Standalone", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("standalone");
+            });
+
+            test("Mount", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+
+            test("Disabled and readonly states", async ({ story }) => {
+                await test.step("Disabled - should not open dropdown on click", async () => {
+                    await story.locators.standalone.disabled.click();
+                    await expect(
+                        story.locators.internal.dropdownContainer
+                    ).not.toBeVisible();
+                });
+
+                await test.step("Disabled - combobox should be disabled", async () => {
+                    await expect(
+                        story.getInput(story.locators.standalone.disabled)
+                    ).toMatchAriaSnapshot(`
+                        - combobox "Enter here..." [disabled]
+                    `);
+                });
+
+                await test.step("Readonly - should not open dropdown on click", async () => {
+                    await story.locators.standalone.readonly.click();
+                });
+
+                await test.step("Readonly - combobox should not be disabled", async () => {
+                    await expect(
+                        story.getInput(story.locators.standalone.readonly)
+                    ).not.toBeDisabled();
+                });
+            });
         });
 
-        test("Standalone", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-
-            await test.step("Disabled - should not open dropdown on click", async () => {
-                await story.locators.standalone.disabled.click();
-                await expect(
-                    story.locators.internal.dropdownContainer
-                ).not.toBeVisible();
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("standalone", { mode: "dark" });
             });
 
-            await test.step("Disabled - combobox should be disabled", async () => {
-                await expect(story.getInput(story.locators.standalone.disabled))
-                    .toMatchAriaSnapshot(`
-                    - combobox "Enter here..." [disabled]
-                `);
-            });
-
-            await test.step("Readonly - should not open dropdown on click", async () => {
-                await story.locators.standalone.readonly.click();
-            });
-
-            await test.step("Readonly - combobox should not be disabled", async () => {
-                await expect(
-                    story.getInput(story.locators.standalone.readonly)
-                ).not.toBeDisabled();
+            test("Visual dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
             });
         });
     });
@@ -194,30 +374,6 @@ test.describe("PredictiveTextInput", () => {
             await expect(story.locators.internal.listLoading).toBeVisible();
 
             await compareScreenshot(story, "loading", { fullscreen: true });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("error-state");
-        });
-
-        test("Error", async ({ story }) => {
-            const input = story.getInput(story.locators.errorState);
-
-            await story.typeAndWaitForDebounce(input, "app");
-
-            await compareScreenshot(story, "error", { fullscreen: true });
-        });
-
-        test("Retry after error", async ({ story }) => {
-            const input = story.getInput(story.locators.errorState);
-
-            await story.typeAndWaitForDebounce(input, "app");
-            await expect(story.locators.internal.listFail).toBeVisible();
-
-            await story.locators.internal.retryButton.click();
-            await expect(story.locators.internal.listFail).toBeVisible();
         });
     });
 
@@ -254,38 +410,7 @@ test.describe("PredictiveTextInput", () => {
                 await story.init("default", { size: "mobile" });
             });
 
-            test("Default", async ({ story }) => {
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.default,
-                });
-            });
-
             test("Typing with suggestions", async ({ story }) => {
-                const input = story.getInput(story.locators.default);
-
-                await story.typeAndWaitForDebounce(input, "land");
-
-                await compareScreenshot(story, "suggestions", {
-                    fullscreen: true,
-                });
-            });
-        });
-
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("default", {
-                    size: "mobile",
-                    mode: "dark",
-                });
-            });
-
-            test("Default (dark mode)", async ({ story }) => {
-                await compareScreenshot(story, "mount", {
-                    locator: story.locators.default,
-                });
-            });
-
-            test("Typing with suggestions (dark mode)", async ({ story }) => {
                 const input = story.getInput(story.locators.default);
 
                 await story.typeAndWaitForDebounce(input, "land");

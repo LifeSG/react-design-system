@@ -2,7 +2,6 @@
 
 import { PredictiveTextInput } from "@lifesg/react-design-system/predictive-text-input";
 import { useState } from "react";
-import { Typography } from "@lifesg/react-design-system";
 
 type Option = { value: string; label: string };
 
@@ -15,7 +14,6 @@ export default function Story() {
 
     return (
         <div className="story-column-container">
-            <Typography.BodyBL>Default</Typography.BodyBL>
             <PredictiveTextInput
                 data-testid="pti-default"
                 selectedOption={selectedOption}
@@ -25,7 +23,6 @@ export default function Story() {
                 displayValueExtractor={(item) => item.label}
                 onSelectOption={(option) => setSelectedOption(option)}
             />
-            <Typography.BodyBL>Selected</Typography.BodyBL>
             <PredictiveTextInput
                 data-testid="pti-selected"
                 selectedOption={SELECTED_OPTION}
@@ -34,13 +31,11 @@ export default function Story() {
                 listExtractor={(item) => item.label}
                 displayValueExtractor={(item) => item.label}
             />
-            <Typography.BodyBL>Disabled</Typography.BodyBL>
             <PredictiveTextInput
                 data-testid="pti-disabled"
                 disabled
                 fetchOptions={mockFetch}
             />
-            <Typography.BodyBL>Readonly</Typography.BodyBL>
             <PredictiveTextInput
                 data-testid="pti-readonly"
                 readOnly
@@ -50,7 +45,6 @@ export default function Story() {
                 listExtractor={(item) => item.label}
                 displayValueExtractor={(item) => item.label}
             />
-            <Typography.BodyBL>Error</Typography.BodyBL>
             <PredictiveTextInput
                 data-testid="pti-error"
                 error
