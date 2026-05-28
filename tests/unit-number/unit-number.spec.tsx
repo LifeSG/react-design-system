@@ -1,4 +1,5 @@
 import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { UnitNumberInput } from "src/unit-number";
 
 // =============================================================================
@@ -118,6 +119,106 @@ describe("UnitNumberInput", () => {
             expect(floorInputSpy).toHaveBeenCalledWith(1, 1);
             expect(unitInput).toHaveValue("B2");
             expect(unitInputSpy).toHaveBeenCalledWith(1, 1);
+        });
+
+        it("should call onChange with new floor value when only floor number is changed", () => {
+            const mockOnChange = jest.fn();
+            render(<UnitNumberInput value="01-123" onChange={mockOnChange} />);
+
+            const floorInput: HTMLInputElement =
+                screen.getByTestId("floor-input");
+
+            fireEvent.change(floorInput, {
+                target: { value: "05" },
+            });
+
+            expect(mockOnChange).toHaveBeenCalledWith("05-123");
+        });
+
+        it("should call onChange with new unit value when only unit number is changed", () => {
+            const mockOnChange = jest.fn();
+            render(<UnitNumberInput value="01-123" onChange={mockOnChange} />);
+
+            const unitInput: HTMLInputElement =
+                screen.getByTestId("unit-input");
+
+            fireEvent.change(unitInput, {
+                target: { value: "456" },
+            });
+
+            expect(mockOnChange).toHaveBeenCalledWith("01-456");
+        });
+
+        it("should call onChangeRaw with new floor value when only floor number is changed", () => {
+            const mockOnChangeRaw = jest.fn();
+            render(
+                <UnitNumberInput value="01-123" onChangeRaw={mockOnChangeRaw} />
+            );
+
+            const floorInput: HTMLInputElement =
+                screen.getByTestId("floor-input");
+
+            fireEvent.change(floorInput, {
+                target: { value: "05" },
+            });
+
+            expect(mockOnChangeRaw).toHaveBeenCalledWith(["05", "123"]);
+        });
+
+        it("should call onChangeRaw with new unit value when only unit number is changed", () => {
+            const mockOnChangeRaw = jest.fn();
+            render(
+                <UnitNumberInput value="01-123" onChangeRaw={mockOnChangeRaw} />
+            );
+
+            const unitInput: HTMLInputElement =
+                screen.getByTestId("unit-input");
+
+            fireEvent.change(unitInput, {
+                target: { value: "456" },
+            });
+
+            expect(mockOnChangeRaw).toHaveBeenCalledWith(["01", "456"]);
+        });
+    });
+
+    describe("blur handling", () => {
+        it("should call onBlur callback on component defocus", async () => {
+            const user = userEvent.setup();
+            const mockOnBlur = jest.fn();
+            render(<UnitNumberInput onBlur={mockOnBlur} />);
+
+            const floorInput: HTMLInputElement =
+                screen.getByTestId("floor-input");
+            const unitInput: HTMLInputElement =
+                screen.getByTestId("unit-input");
+
+            await user.click(floorInput);
+            await user.type(floorInput, "05");
+            await user.tab();
+            await user.type(unitInput, "123");
+            await user.tab();
+
+            expect(mockOnBlur).toHaveBeenCalledWith("05-123");
+        });
+
+        it("should call onBlurRaw callback on component defocus", async () => {
+            const user = userEvent.setup();
+            const mockOnBlurRaw = jest.fn();
+            render(<UnitNumberInput onBlurRaw={mockOnBlurRaw} />);
+
+            const floorInput: HTMLInputElement =
+                screen.getByTestId("floor-input");
+            const unitInput: HTMLInputElement =
+                screen.getByTestId("unit-input");
+
+            await user.click(floorInput);
+            await user.type(floorInput, "05");
+            await user.tab();
+            await user.type(unitInput, "123");
+            await user.tab();
+
+            expect(mockOnBlurRaw).toHaveBeenCalledWith(["05", "123"]);
         });
     });
 });
