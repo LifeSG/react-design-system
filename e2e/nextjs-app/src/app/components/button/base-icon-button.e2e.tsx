@@ -1,7 +1,7 @@
 "use client";
 
-import { BoxIcon } from "@lifesg/react-icons/box";
 import { Button } from "@lifesg/react-design-system/button";
+import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 
 export default function Story() {
     return (
@@ -14,7 +14,7 @@ export default function Story() {
                                 key={style}
                                 sizeType={size}
                                 styleType={style}
-                                icon={<BoxIcon />}
+                                icon={<PlaceholderIcon />}
                                 aria-label={`${size} ${style}`}
                             />
                         )
@@ -22,7 +22,7 @@ export default function Story() {
                     <Button
                         sizeType={size}
                         disabled
-                        icon={<BoxIcon />}
+                        icon={<PlaceholderIcon />}
                         aria-label={`${size} disabled`}
                     />
                 </div>
