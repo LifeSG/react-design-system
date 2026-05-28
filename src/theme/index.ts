@@ -242,7 +242,7 @@ const SPFThemeBase: ThemeSpec = {
 
 const SMGSThemeBase: ThemeSpec = {
     colourScheme: "smgs",
-    fontScheme: "smgs",
+    fontScheme: "bookingsg",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",

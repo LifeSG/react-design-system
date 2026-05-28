@@ -61,8 +61,7 @@ export type FontScheme =
     | "sgwdigitallobby"
     | "imda"
     | "spf"
-    | "oneservice"
-    | "smgs";
+    | "oneservice";
 export type MotionScheme = "default";
 export type BorderScheme = "default";
 export type SpacingScheme = "default";
