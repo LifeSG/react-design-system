@@ -187,7 +187,7 @@ const GridStoryContainer = styled.div<{ $grid: number; $rowHeader: boolean }>`
     grid-auto-flow: dense;
     grid-template-columns:
         ${(props) => (props.$rowHeader ? "auto " : "")}
-        repeat(${(props) => props.$grid}, 1fr);
+        repeat(${(props) => props.$grid}, minmax(min-content, 1fr));
     gap: 1rem;
     align-items: center;
     justify-items: center;
