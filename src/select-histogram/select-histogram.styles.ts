@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { lineClampCss } from "../shared/styles";
 import {
@@ -11,7 +11,7 @@ import {
     Spacing,
 } from "../theme";
 
-export const HistogramSliderDropdownContainer = styled.div`
+export const histogramSliderDropdownContainer = css`
     overflow: hidden;
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
@@ -33,30 +33,37 @@ export const HistogramSliderDropdownContainer = styled.div`
     }
 `;
 
-export const Label = styled.div`
+export const label = css`
     display: flex;
     align-items: baseline;
 `;
 
-export const Separator = styled.div`
+export const separator = css`
     margin: 0 0.5rem;
     color: ${Colour["text"]};
 `;
 
-export const ValueLabel = styled.div`
+export const valueLabel = css`
     ${Font["body-baseline-regular"]}
     text-align: left;
     overflow: hidden;
-
-    &.valueLabelSmall {
-        ${Font["body-md-regular"]}
-    }
-
-    &.valueLabelTruncateEnd {
-        ${lineClampCss(1)}
-    }
 `;
 
-export const PlaceholderLabel = styled(ValueLabel)`
+export const valueLabelSmall = css`
+    ${Font["body-md-regular"]}
+`;
+
+export const valueLabelTruncateEnd = css`
+    ${lineClampCss(1)}
+`;
+
+export const placeholderLabel = css`
+    ${Font["body-baseline-regular"]}
+    text-align: left;
+    overflow: hidden;
     color: ${Colour["text-subtler"]};
+`;
+
+export const placeholderLabelTruncateEnd = css`
+    ${lineClampCss(1)}
 `;

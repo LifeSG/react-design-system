@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
 
 import { HistogramSlider } from "../histogram-slider";
@@ -8,12 +9,7 @@ import * as dropdownWrapperStyles from "../shared/dropdown-wrapper/dropdown-wrap
 import { InputBox } from "../shared/input-wrapper";
 import { Typography } from "../typography";
 import { useId } from "../util";
-import {
-    HistogramSliderDropdownContainer,
-    Label,
-    PlaceholderLabel,
-    Separator,
-} from "./select-histogram.styles";
+import * as styles from "./select-histogram.styles";
 import type { SelectHistogramProps } from "./types";
 
 export const SelectHistogram = ({
@@ -142,18 +138,21 @@ export const SelectHistogram = ({
 
     const getDisplayValue = () => {
         return !values || values.length === 0 ? (
-            <PlaceholderLabel
-                $truncateType={optionTruncationType}
-                $variant="default"
+            <div
+                className={clsx(
+                    styles.placeholderLabel,
+                    optionTruncationType !== "middle" &&
+                        styles.placeholderLabelTruncateEnd
+                )}
             >
                 {placeholder}
-            </PlaceholderLabel>
+            </div>
         ) : (
-            <Label>
+            <div className={styles.label}>
                 {renderSelector(selection[0])}
-                <Separator>-</Separator>
+                <div className={styles.separator}>-</div>
                 {renderSelector(selection[1])}
-            </Label>
+            </div>
         );
     };
 
@@ -202,12 +201,13 @@ export const SelectHistogram = ({
 
     const renderDropdown = ({
         elementWidth,
-        styles,
+        styles: floatingStyles,
         setFloatingRef,
         getFloatingProps,
     }: DropdownRenderProps) => (
-        <HistogramSliderDropdownContainer
-            style={{ ...styles, width: elementWidth }}
+        <div
+            className={styles.histogramSliderDropdownContainer}
+            style={{ ...floatingStyles, width: elementWidth }}
             ref={setFloatingRef}
             {...getFloatingProps()}
         >
@@ -221,7 +221,7 @@ export const SelectHistogram = ({
                 renderEmptyView={renderEmptyView}
                 ariaLabels={ariaLabels}
             />
-        </HistogramSliderDropdownContainer>
+        </div>
     );
 
     return (
