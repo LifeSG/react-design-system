@@ -21,7 +21,6 @@ const CSR_ONLY_COMPONENTS = new Set([
     "nested-multi-select",
     "input-group",
     "language-switcher",
-    "smart-app-banner",
     "time-slot-bar",
     "timetable",
 ]);
