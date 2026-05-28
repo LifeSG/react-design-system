@@ -1,9 +1,5 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
-import type {
-    DropdownVariantType,
-    TruncateType,
-} from "../shared/dropdown-list/types";
 import { lineClampCss } from "../shared/styles";
 import {
     Border,
@@ -14,11 +10,6 @@ import {
     Radius,
     Spacing,
 } from "../theme";
-
-interface ValueLabelStyleProps {
-    $truncateType?: TruncateType;
-    $variant?: DropdownVariantType;
-}
 
 export const HistogramSliderDropdownContainer = styled.div`
     overflow: hidden;
@@ -52,24 +43,18 @@ export const Separator = styled.div`
     color: ${Colour["text"]};
 `;
 
-export const ValueLabel = styled.div<ValueLabelStyleProps>`
-    ${(props) =>
-        props.$variant === "small"
-            ? Font["body-md-regular"]
-            : Font["body-baseline-regular"]}
+export const ValueLabel = styled.div`
+    ${Font["body-baseline-regular"]}
     text-align: left;
-    ${(props) => {
-        switch (props.$truncateType) {
-            case "middle":
-                break;
-            case "end":
-            default:
-                return css`
-                    ${lineClampCss(1)}
-                `;
-        }
-    }}
     overflow: hidden;
+
+    &.valueLabelSmall {
+        ${Font["body-md-regular"]}
+    }
+
+    &.valueLabelTruncateEnd {
+        ${lineClampCss(1)}
+    }
 `;
 
 export const PlaceholderLabel = styled(ValueLabel)`
