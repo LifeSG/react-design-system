@@ -91,7 +91,7 @@ export const buttonContainer = css`
     max-width: 30%;
 `;
 
-export const styledButton = css`
+export const button = css`
     padding: 0.5rem;
     height: auto;
     & > span {
@@ -118,7 +118,7 @@ export const ratingContainer = css`
     align-items: center;
 `;
 
-export const starIconStyleBase = css`
+export const starIcon = css`
     height: 2rem;
     width: 2rem;
     padding-right: 0.25rem;

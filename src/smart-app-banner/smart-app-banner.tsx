@@ -89,7 +89,7 @@ function SmartAppBannerComponent(
                 <StarFillIcon
                     key={`star${i}`}
                     aria-hidden
-                    className={styles.starIconStyleBase}
+                    className={styles.starIcon}
                 />
             );
         }
@@ -98,7 +98,7 @@ function SmartAppBannerComponent(
                 <StarHalfIcon
                     key={`halfstar`}
                     aria-hidden
-                    className={styles.starIconStyleBase}
+                    className={styles.starIcon}
                 />
             );
         }
@@ -109,7 +109,7 @@ function SmartAppBannerComponent(
                     <StarIcon
                         key={`emptystar${i}`}
                         aria-hidden
-                        className={styles.starIconStyleBase}
+                        className={styles.starIcon}
                     />
                 );
             }
@@ -164,7 +164,7 @@ function SmartAppBannerComponent(
                         </div>
                         <div className={styles.buttonContainer}>
                             <Button
-                                className={styles.styledButton}
+                                className={styles.button}
                                 type="button"
                                 onClick={handleClick}
                                 aria-label={ariaLabels.cta}
