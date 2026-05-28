@@ -12,6 +12,7 @@ class StoryPage extends AbstractStoryPage {
             nextDayBtn: Locator;
             dateText: Locator;
             recordsResults: Locator;
+            loadingSpinner: Locator;
             lazyLoader: Locator;
         };
     };
@@ -27,6 +28,9 @@ class StoryPage extends AbstractStoryPage {
                 nextDayBtn: page.getByTestId("date-navigator-right-arrow-btn"),
                 dateText: page.getByTestId("date-navigator-date-text"),
                 recordsResults: page.getByTestId("timetable-records-results"),
+                loadingSpinner: page
+                    .getByTestId("timetable-loading-spinner")
+                    .locator("svg"),
                 lazyLoader: page.getByTestId("lazy-loader"),
             },
         };
@@ -255,6 +259,18 @@ test.describe("TimeTable", () => {
                 await compareScreenshot(story, "max", {
                     fullscreen: true,
                 });
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("loading");
+        });
+
+        test("Loading", async ({ story }) => {
+            await compareScreenshot(story, "state", {
+                mask: [story.locators.internal.loadingSpinner],
             });
         });
     });

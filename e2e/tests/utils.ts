@@ -136,7 +136,7 @@ export abstract class AbstractStoryPage {
 export const compareScreenshot = async (
     storyPage: AbstractStoryPage,
     name: string,
-    options?: { fullscreen?: boolean; locator?: Locator }
+    options?: { fullscreen?: boolean; locator?: Locator; mask?: Locator[] }
 ) => {
     if (options?.locator) {
         const box = await options.locator.boundingBox();
@@ -155,6 +155,7 @@ export const compareScreenshot = async (
             threshold: 0.01, // Strict colour matching
             maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
             maxDiffPixels: 50,
+            mask: options.mask,
         });
         return;
     }
@@ -168,6 +169,7 @@ export const compareScreenshot = async (
         threshold: 0.01, // Strict colour matching
         maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
         maxDiffPixels: 50,
+        mask: options?.mask,
     });
 };
 

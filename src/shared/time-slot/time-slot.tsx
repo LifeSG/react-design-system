@@ -1,5 +1,9 @@
+import clsx from "clsx";
 import type { ReactNode } from "react";
+import { forwardRef, useRef } from "react";
 
+import { useApplyStyle } from "../../theme";
+import { mergeRefs } from "../../util";
 import * as styles from "./time-slot.styles";
 import type { SlotStyle } from "./types";
 
@@ -18,33 +22,59 @@ export interface TimeSlotProps {
     tabIndex?: number | undefined;
 }
 
-export const TimeSlot = ({
-    className,
-    "data-testid": dataTestId,
-    bgColor,
-    bgColor2,
-    children,
-    clickable,
-    hoverBgColor,
-    hoverBgColor2,
-    nonClickableCursor,
-    onClick,
-    styleType,
-    tabIndex,
-}: TimeSlotProps) => (
-    <styles.StyledTimeSlot
-        className={className}
-        $bgColor={bgColor}
-        $bgColor2={bgColor2}
-        $clickable={clickable}
-        $hoverBgColor={hoverBgColor}
-        $hoverBgColor2={hoverBgColor2}
-        $nonClickableCursor={nonClickableCursor}
-        $styleType={styleType}
-        onClick={onClick}
-        data-testid={dataTestId}
-        tabIndex={tabIndex}
-    >
-        {children}
-    </styles.StyledTimeSlot>
-);
+const Component = (
+    {
+        className,
+        "data-testid": dataTestId,
+        bgColor,
+        bgColor2,
+        children,
+        clickable,
+        hoverBgColor,
+        hoverBgColor2,
+        nonClickableCursor,
+        onClick,
+        styleType,
+        tabIndex,
+    }: TimeSlotProps,
+    ref: React.Ref<HTMLDivElement>
+) => {
+    const slotRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(slotRef, {
+        [styles.tokens.slot.bgColor]: bgColor,
+        [styles.tokens.slot.bgColor2]: bgColor2,
+        [styles.tokens.slot.hoverBgColor]: hoverBgColor,
+        [styles.tokens.slot.hoverBgColor2]: hoverBgColor2,
+        [styles.tokens.slot.cursor]: nonClickableCursor,
+    });
+
+    const isHoverable = () => {
+        if (!clickable) {
+            return false;
+        }
+
+        if (styleType === "stripes") {
+            return !!(hoverBgColor || hoverBgColor2);
+        }
+
+        return !!hoverBgColor;
+    };
+
+    return (
+        <div
+            ref={mergeRefs(slotRef, ref)}
+            className={clsx(styles.timeSlot, className)}
+            data-style-type={styleType}
+            data-clickable={!!clickable}
+            data-hoverable={isHoverable()}
+            onClick={onClick}
+            data-testid={dataTestId}
+            tabIndex={tabIndex}
+        >
+            {children}
+        </div>
+    );
+};
+
+export const TimeSlot = forwardRef(Component);

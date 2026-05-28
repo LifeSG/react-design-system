@@ -1,10 +1,13 @@
+import clsx from "clsx";
 import dayjs from "dayjs";
 import type { RefObject } from "react";
-import React from "react";
+import React, { useRef } from "react";
 
 import { concatIds, VisuallyHidden } from "../../shared/accessibility";
 import type { SlotStyle, TimeSlotProps } from "../../shared/time-slot";
-import { Colour } from "../../theme";
+import { TimeSlot } from "../../shared/time-slot";
+import { Colour, formatUnitValue, useApplyStyle } from "../../theme";
+import { Typography } from "../../typography";
 import { DateHelper } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
@@ -13,15 +16,7 @@ import type {
     RowBarColors,
 } from "../internal-types";
 import type { TimeTableCellType } from "../types";
-import {
-    Block,
-    BlockContainer,
-    BlockDescription,
-    BlockTitle,
-    Gap,
-    tokens,
-    Wrapper,
-} from "./row-cell.style";
+import * as styles from "./row-cell.styles";
 import { WithOptionalPopover } from "./with-optional-popover";
 
 interface RowCellProps extends InternalTimeTableRowCellData {
@@ -58,7 +53,7 @@ const statusToTimeSlotPropsMap: Record<
     },
     filled: {
         styleType: "default",
-        bgColor: `var(${tokens.block.mainColor})`,
+        bgColor: `var(${styles.tokens.block.mainColor})`,
     },
     disabled: {
         styleType: "default",
@@ -67,8 +62,8 @@ const statusToTimeSlotPropsMap: Record<
     },
     pending: {
         styleType: "stripes",
-        bgColor: `var(${tokens.block.mainColor})`,
-        bgColor2: `var(${tokens.block.altColor})`,
+        bgColor: `var(${styles.tokens.block.mainColor})`,
+        bgColor2: `var(${styles.tokens.block.altColor})`,
         nonClickableCursor: "not-allowed",
     },
     default: {
@@ -115,6 +110,14 @@ const Component = ({
         subtitle,
         `${status}`
     );
+
+    const blockRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(blockRef, {
+        [styles.tokens.block.width]: formatUnitValue(adjustedCellWidth, "px"),
+        [styles.tokens.block.mainColor]: rowBarColor.mainColor,
+        [styles.tokens.block.altColor]: rowBarColor.alternateColor,
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -164,11 +167,10 @@ const Component = ({
 
         return (
             <WithOptionalPopover customPopover={customPopover}>
-                <Wrapper>
-                    <Block
-                        $width={adjustedCellWidth}
-                        $mainColor={rowBarColor.mainColor}
-                        $altColor={rowBarColor.alternateColor}
+                <div className={styles.wrapper}>
+                    <TimeSlot
+                        className={styles.block}
+                        ref={blockRef}
                         clickable={isClickable}
                         bgColor={customBgColor}
                         bgColor2={customBg2Color}
@@ -181,33 +183,44 @@ const Component = ({
                     >
                         <VisuallyHidden>{rowAriaLabel}</VisuallyHidden>
                         {title && (
-                            <BlockTitle weight={"semibold"} aria-hidden>
+                            <Typography.BodySM
+                                className={styles.blockTitle}
+                                weight="semibold"
+                                aria-hidden
+                            >
                                 {title}
-                            </BlockTitle>
+                            </Typography.BodySM>
                         )}
                         {subtitle && (
-                            <BlockDescription weight={"bold"} aria-hidden>
+                            <Typography.BodyXS
+                                className={styles.blockDescription}
+                                weight="bold"
+                                aria-hidden
+                            >
                                 {subtitle}
-                            </BlockDescription>
+                            </Typography.BodyXS>
                         )}
-                    </Block>
-                    <Gap />
-                </Wrapper>
+                    </TimeSlot>
+                    <div className={styles.gap} />
+                </div>
             </WithOptionalPopover>
         );
     };
 
     return (
-        <BlockContainer
+        <div
             key={`block-container-key`}
             data-testid={`block-container`}
-            $isOnTheHour={isOnTheHour}
+            className={clsx(
+                styles.blockContainer,
+                isOnTheHour && styles.blockContainerOnTheHour
+            )}
             role="gridcell"
             aria-colindex={ariaColIndex}
             aria-colspan={ariaColSpan}
         >
             {renderCellContent()}
-        </BlockContainer>
+        </div>
     );
 };
 
