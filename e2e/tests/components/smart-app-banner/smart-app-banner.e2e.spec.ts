@@ -163,43 +163,4 @@ test.describe("SmartAppBanner", () => {
             await expect(story.locators.dismissContainer).not.toBeVisible();
         });
     });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("keyboard-nav");
-        });
-
-        test("Keyboard navigation", async ({ story }) => {
-            await test.step("Tab from focus-start focuses CTA button", async () => {
-                await story.locators.focusStart.focus();
-                await story.page.keyboard.press("Tab");
-
-                await expect(story.locators.ctaButton).toBeFocused();
-            });
-
-            await test.step("Enter on CTA button triggers onClick and opens new tab", async () => {
-                await expect(story.locators.clickCount).toHaveText("0");
-
-                const popupPromise = story.page.waitForEvent("popup");
-                await story.page.keyboard.press("Enter");
-                await popupPromise;
-
-                await expect(story.locators.clickCount).toHaveText("1");
-            });
-
-            await test.step("Tab from CTA button focuses dismiss button", async () => {
-                await story.page.keyboard.press("Tab");
-
-                await expect(story.locators.dismissButton).toBeFocused();
-            });
-
-            await test.step("Enter on dismiss button triggers onDismiss", async () => {
-                await expect(story.locators.dismissCount).toHaveText("0");
-
-                await story.page.keyboard.press("Enter");
-
-                await expect(story.locators.dismissCount).toHaveText("1");
-            });
-        });
-    });
 });

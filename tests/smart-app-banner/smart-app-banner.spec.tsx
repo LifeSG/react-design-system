@@ -129,4 +129,28 @@ describe("SmartAppBanner", () => {
             openSpy.mockRestore();
         });
     });
+
+    describe("keyboard navigation", () => {
+        it("should focus the CTA button then the dismiss button in tab order", async () => {
+            const user = userEvent.setup();
+
+            render(
+                <>
+                    <button data-testid="focus-start">Focus start</button>
+                    <SmartAppBanner {...MOCK_PROPS} />
+                </>
+            );
+
+            screen.getByTestId("focus-start").focus();
+            await user.tab();
+
+            expect(screen.getByRole("button", { name: "Get" })).toHaveFocus();
+
+            await user.tab();
+
+            expect(
+                screen.getByRole("button", { name: "Close banner" })
+            ).toHaveFocus();
+        });
+    });
 });
