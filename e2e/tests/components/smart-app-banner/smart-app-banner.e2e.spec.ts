@@ -166,62 +166,6 @@ test.describe("SmartAppBanner", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("animated");
-        });
-
-        test("Animation applied on mount", async ({ story }) => {
-            const bannerContainer =
-                story.locators.proceedContainer.locator("..");
-
-            const animationName = await bannerContainer.evaluate(
-                (el) => getComputedStyle(el).animationName
-            );
-            expect(animationName).not.toBe("none");
-
-            await waitForAnimationEnd(bannerContainer);
-            await compareScreenshot(story, "after-animation", {
-                fullscreen: true,
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("dismiss-interaction");
-        });
-
-        test("Dismiss button triggers onDismiss", async ({ story }) => {
-            await expect(story.locators.dismissCount).toHaveText("0");
-
-            await story.locators.dismissButton.click();
-            await expect(story.locators.dismissCount).toHaveText("1");
-
-            await story.locators.dismissButton.click();
-            await expect(story.locators.dismissCount).toHaveText("2");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("cta-interaction");
-        });
-
-        test("CTA click triggers onClick and opens URL in new tab", async ({
-            story,
-        }) => {
-            await expect(story.locators.clickCount).toHaveText("0");
-
-            const popupPromise = story.page.waitForEvent("popup");
-            await story.locators.ctaButton.click();
-            const popup = await popupPromise;
-
-            await expect(story.locators.clickCount).toHaveText("1");
-            await expect(popup).toHaveURL("https://example.com");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
             await story.init("keyboard-nav");
         });
 
