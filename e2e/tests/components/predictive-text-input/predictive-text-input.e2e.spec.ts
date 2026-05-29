@@ -268,7 +268,7 @@ test.describe("PredictiveTextInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("default");
+            await story.init("interaction");
         });
 
         test("Typing with no results found", async ({ story }) => {
@@ -302,7 +302,7 @@ test.describe("PredictiveTextInput", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("default", { mode: "dark" });
+            await story.init("interaction", { mode: "dark" });
         });
 
         test("Typing with suggestions (dark mode)", async ({ story }) => {
@@ -409,7 +409,7 @@ test.describe("PredictiveTextInput", () => {
     test.describe("Mobile", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("default", { size: "mobile" });
+                await story.init("interaction", { size: "mobile" });
             });
 
             test("Typing with suggestions", async ({ story }) => {

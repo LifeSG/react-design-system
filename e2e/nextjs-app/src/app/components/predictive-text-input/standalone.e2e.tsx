@@ -13,7 +13,7 @@ export default function Story() {
     const [selectedOption, setSelectedOption] = useState<Option | undefined>();
 
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <PredictiveTextInput
                 data-testid="pti-default"
                 selectedOption={selectedOption}
