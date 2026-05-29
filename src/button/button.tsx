@@ -90,7 +90,10 @@ const Component = (props: ButtonProps, ref: ButtonRef) => {
         >
             {loading ? (
                 <ComponentLoadingSpinner
-                    className={clsx(hasChildren && styles.spinnerHasChildren)}
+                    className={clsx(
+                        styles.spinner,
+                        hasChildren && styles.spinnerHasChildren
+                    )}
                 />
             ) : icon ? (
                 React.cloneElement(icon, { "aria-hidden": true })

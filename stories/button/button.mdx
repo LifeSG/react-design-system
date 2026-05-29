@@ -14,9 +14,13 @@ The primary call to action component.
 import { Button } from "@lifesg/react-design-system/button";
 ```
 
+<Canvas of={ButtonStories.Default} />
+
+## Sizes
+
 The `Button` component comes in 3 sizes: default, small, and large.
 
-<Canvas of={ButtonStories.Default} />
+<Canvas of={ButtonStories.Size} />
 
 ## Loading
 
@@ -33,6 +37,19 @@ apply a red scheme over the buttons.
 <Canvas of={ButtonStories.DangerLoadingState} />
 
 ## Accessibility
+
+### Accessible name
+
+The icon (if specified) is automatically marked `aria-hidden` by the component.
+
+Since the icon-only `Button` has no visible text label, you **must** provide an
+accessible name via `aria-label` so screen reader users understand its purpose.
+
+```tsx
+<Button icon={<DeleteIcon />} aria-label="Delete item" />
+```
+
+### Focus
 
 By default, a disabled `<button>` cannot receive focus or events. In certain
 modes across screen readers, it is excluded from the focus order, which can make
