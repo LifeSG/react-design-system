@@ -4,7 +4,13 @@
  *
  */
 
-import { Children, ComponentType, cloneElement } from "react";
+import {
+    Children,
+    ComponentType,
+    Fragment,
+    cloneElement,
+    isValidElement,
+} from "react";
 import { useId } from "../util";
 import { FormLabel } from "./form-label";
 import {
@@ -165,9 +171,12 @@ export const FormWrapper = ({
             "aria-describedby": getAriaDescribedBy(),
             "aria-labelledby": label ? labelId : undefined,
         };
-        return Children.map(children, (child) =>
-            cloneElement(child, ariaState)
-        );
+        return Children.map(children, (child) => {
+            if (isValidElement(child) && child.type === Fragment) {
+                return cloneElement(child);
+            }
+            return cloneElement(child, ariaState);
+        });
     };
 
     const ContainerComponent = getContainerComponent(updatedLayoutType);
