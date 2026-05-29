@@ -84,6 +84,34 @@ class StoryPage extends AbstractStoryPage {
         const testId = await locator.getAttribute("data-testid");
         await expect(this.page.getByTestId(`${testId}-dropdown`)).toBeVisible();
     }
+
+    public async getSliderValue(index: number) {
+        const thumb = this.locators.internal.thumb(index);
+        const value = await thumb.getAttribute("aria-valuenow");
+        if (value === null) {
+            throw new Error(`Slider at index ${index} does not have a value`);
+        }
+        return parseInt(value);
+    }
+
+    public async getSliderDelta(locator: Locator, range: number) {
+        const box = await locator.boundingBox();
+        return box?.width ? box.width / range : 0;
+    }
+
+    public async dragSlider(index: number, deltaX: number) {
+        const thumb = this.locators.internal.thumb(index);
+        const boundingBox = await thumb.boundingBox();
+        if (!boundingBox) {
+            throw new Error(
+                `Slider at index ${index} does not have a bounding box`
+            );
+        }
+        await thumb.hover();
+        await this.page.mouse.down();
+        await this.page.mouse.move(boundingBox.x + deltaX, boundingBox.y);
+        await this.page.mouse.up();
+    }
 }
 
 const test = base.extend<{ story: StoryPage }>({
@@ -468,6 +496,59 @@ test.describe("SelectHistogram", () => {
 
                 await compareScreenshot(story, "slider-adjusted", {
                     fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("interaction");
+                await story.openDropdown(story.locators.interaction);
+            });
+
+            test("Drag min thumb updates selection", async ({ story }) => {
+                const step = await story.getSliderDelta(
+                    story.locators.interactionDropdown,
+                    5
+                );
+                expect(await story.getSliderValue(0)).toEqual(2);
+
+                await test.step("Drag min thumb right by one step", async () => {
+                    await story.dragSlider(0, step);
+                    expect(await story.getSliderValue(0)).toEqual(3);
+                    await expect(story.locators.minValue).toHaveText("3");
+                    await expect(
+                        story.getTrigger(story.locators.interaction)
+                    ).toContainText("3");
+                });
+
+                await test.step("Drag min thumb left by one step", async () => {
+                    await story.dragSlider(0, -step);
+                    expect(await story.getSliderValue(0)).toEqual(2);
+                    await expect(story.locators.minValue).toHaveText("2");
+                });
+            });
+
+            test("Drag max thumb updates selection", async ({ story }) => {
+                const step = await story.getSliderDelta(
+                    story.locators.interactionDropdown,
+                    5
+                );
+                expect(await story.getSliderValue(1)).toEqual(4);
+
+                await test.step("Drag max thumb right by one step", async () => {
+                    await story.dragSlider(1, step);
+                    expect(await story.getSliderValue(1)).toEqual(5);
+                    await expect(story.locators.maxValue).toHaveText("5");
+                    await expect(
+                        story.getTrigger(story.locators.interaction)
+                    ).toContainText("5");
+                });
+
+                await test.step("Drag max thumb left by one step", async () => {
+                    await story.dragSlider(1, -step);
+                    expect(await story.getSliderValue(1)).toEqual(4);
+                    await expect(story.locators.maxValue).toHaveText("4");
                 });
             });
         });
