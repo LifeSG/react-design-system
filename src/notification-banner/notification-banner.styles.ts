@@ -9,6 +9,14 @@ export const tokens = {
     },
 };
 
+const inverseLinkColorStyles = `
+    color: ${Colour["hyperlink-inverse"]};
+
+    svg {
+        color: ${Colour["icon-primary-inverse"]};
+    }
+`;
+
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -57,20 +65,13 @@ export const content = css`
 
     a {
         ${Font["body-baseline-regular"]}
-        color: ${Colour["hyperlink-inverse"]};
-
-        svg {
-            color: ${Colour["icon-primary-inverse"]};
-        }
+        ${inverseLinkColorStyles}
 
         &:hover,
         &:active,
         &:visited,
         &:focus {
-            color: ${Colour["hyperlink-inverse"]};
-            svg {
-                color: ${Colour["icon-primary-inverse"]};
-            }
+            ${inverseLinkColorStyles}
         }
     }
 `;
@@ -97,24 +98,17 @@ export const contentTextCollapsed = css`
 
 export const contentLink = css`
     position: relative;
-    color: ${Colour["hyperlink-inverse"]};
-
-    svg {
-        color: ${Colour["icon-primary-inverse"]};
-    }
+    ${inverseLinkColorStyles}
 
     &:hover,
     &:active,
     &:visited,
     &:focus {
-        color: ${Colour["hyperlink-inverse"]};
-        svg {
-            color: ${Colour["icon-primary-inverse"]};
-        }
+        ${inverseLinkColorStyles}
     }
 `;
 
-export const styledIconButton = css`
+export const dismissButton = css`
     margin-right: calc(${Spacing["spacing-24"]} * -1);
     padding-left: ${Spacing["spacing-16"]};
     height: max-content;
@@ -139,16 +133,6 @@ export const actionButton = css`
     ${Font["body-md-semibold"]};
 
     cursor: pointer;
-`;
-
-export const accessibleBannerButton = css`
-    clip: rect(0 0 0 0);
-    clip-path: inset(50%);
-    height: 1px;
-    overflow: hidden;
-    position: absolute;
-    white-space: nowrap;
-    width: 1px;
 `;
 
 export const iconContainer = css`

@@ -5,6 +5,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { Layout } from "../layout";
+import { VisuallyHidden } from "../shared/accessibility";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { formatUnitValue, useApplyStyle } from "../theme";
 import { Typography } from "../typography";
@@ -82,7 +83,7 @@ export const NBComponent = ({
 
     const renderDismissButton = () => (
         <ClickableIcon
-            className={styles.styledIconButton}
+            className={styles.dismissButton}
             tabIndex={0}
             onClick={handleDismiss}
             id={formatId("dismiss-button", id)}
@@ -134,11 +135,9 @@ export const NBComponent = ({
     );
 
     const renderAccessibleBannerButton = () => (
-        <button
-            className={styles.accessibleBannerButton}
-            aria-label={"Clickable banner"}
-            type="button"
-        />
+        <VisuallyHidden>
+            <button aria-label={"Clickable banner"} type="button" />
+        </VisuallyHidden>
     );
 
     return (
@@ -190,6 +189,7 @@ const NBLink = React.forwardRef<
         />
     );
 });
+(NBLink as NamedExoticComponent).displayName = "NotificationBanner.Link";
 
 // =============================================================================
 // HELPER FUNCTIONS
