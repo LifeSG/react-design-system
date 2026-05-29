@@ -376,7 +376,9 @@ export const Component = (
                         }
                     />
                 </DayInputSizer>
-                <Divider $inactive={dayValue.length === 0}>/</Divider>
+                <Divider $inactive={dayValue.length === 0} $disabled={disabled}>
+                    /
+                </Divider>
                 <MonthInputSizer>
                     <MonthInput
                         ref={monthInputRef}
@@ -401,7 +403,12 @@ export const Component = (
                         }
                     />
                 </MonthInputSizer>
-                <Divider $inactive={monthValue.length === 0}>/</Divider>
+                <Divider
+                    $inactive={monthValue.length === 0}
+                    $disabled={disabled}
+                >
+                    /
+                </Divider>
                 <YearInputSizer>
                     <YearInput
                         ref={yearInputRef}

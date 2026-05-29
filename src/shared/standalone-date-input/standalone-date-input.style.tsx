@@ -14,6 +14,7 @@ interface PlaceholderStyleProps {
 
 interface DividerStyleProps {
     $inactive?: boolean;
+    $disabled?: boolean;
 }
 
 interface InputContainerStyleProps {
@@ -91,6 +92,12 @@ export const YearInput = styled(BaseInput)``;
 export const Divider = styled.span<DividerStyleProps>`
     ${Font["body-baseline-regular"]}
     ${(props) => {
+        if (props.$disabled) {
+            return css`
+                color: ${Colour["text-disabled"]};
+            `;
+        }
+
         if (props.$inactive) {
             return css`
                 color: ${Colour["text"]};
