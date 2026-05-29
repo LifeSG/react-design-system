@@ -116,7 +116,7 @@ const CCubeThemeBase: ThemeSpec = {
 
 const CareerCompassThemeBase: ThemeSpec = {
     colourScheme: "careercompass",
-    fontScheme: "default",
+    fontScheme: "bookingsg",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",
