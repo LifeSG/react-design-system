@@ -129,4 +129,34 @@ test.describe("File Download", () => {
             });
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("no-title-description");
+        });
+
+        test("No title and description", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("long-file-names");
+        });
+
+        test("Long file names", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("long-file-names", { size: "mobile" });
+        });
+
+        test("Long file names (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
 });
