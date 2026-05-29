@@ -206,26 +206,28 @@ test.describe("PredictiveTextInput", () => {
 
                 await expect(story.page.getByTestId("pti-default"))
                     .toMatchAriaSnapshot(`
-                    - text: Default
+                    - text: /Default/
                     - combobox "Default": Finland
+                    - button "Clear input"
                 `);
 
                 await expect(story.page.getByTestId("pti-disabled"))
                     .toMatchAriaSnapshot(`
-                    - text: Disabled
+                    - text: /Disabled/
                     - combobox "Disabled" [disabled]: Finland
                 `);
 
                 await expect(story.page.getByTestId("pti-error"))
                     .toMatchAriaSnapshot(`
-                    - text: Error
+                    - text: /Error/
                     - combobox "Error": Finland
+                    - button "Clear input"
                     - paragraph: Selection is required
                 `);
 
                 await expect(story.page.getByTestId("pti-readonly"))
                     .toMatchAriaSnapshot(`
-                    - text: Readonly
+                    - text: /Readonly/
                     - combobox "Readonly": Finland
                 `);
             });
