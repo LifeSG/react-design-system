@@ -4,15 +4,24 @@ import { MediaQuery } from "../theme";
 
 interface Props {
     $show: boolean;
+    $ready?: boolean;
     $animationFrom?: ModalAnimationDirection;
     $verticalHeight?: number;
-    $offsetTop?: number;
 }
 
 const visibilityStyle = (
     show: boolean,
-    animationFrom: ModalAnimationDirection
+    animationFrom: ModalAnimationDirection,
+    ready?: boolean
 ) => {
+    if (show && !ready) {
+        return `
+			${animationFrom}: -3%;
+			opacity: 0;
+			transition: none;
+		`;
+    }
+
     if (show) {
         return `
 			${animationFrom}: 0;
@@ -37,7 +46,13 @@ export const Container = styled.div<Props>`
     height: 100%;
     width: 100%;
     overflow: hidden;
-    ${(props) => visibilityStyle(props.$show, props.$animationFrom || "bottom")}
+
+    ${(props) =>
+        visibilityStyle(
+            props.$show,
+            props.$animationFrom || "bottom",
+            props.$ready
+        )}
 
     ${MediaQuery.MaxWidth.sm} {
         height: calc(
@@ -46,7 +61,5 @@ export const Container = styled.div<Props>`
                         ? `${props.$verticalHeight}px`
                         : "1vh"} * 100
         );
-
-        top: ${(props) => props.$offsetTop || 0}px;
     }
 `;

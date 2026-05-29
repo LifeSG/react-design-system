@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
 import { useEvent } from "../util";
@@ -20,25 +20,18 @@ export const Modal = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { verticalHeight, offsetTop } = useViewport();
-    const childRef = useRef<HTMLDivElement>(null);
-    const childWithRef =
-        children && React.cloneElement(children, { ref: childRef });
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
     const dismissKeyboard = useEvent(() => {
         if (dismissKeyboardOnShow) {
             (document.activeElement as HTMLElement)?.blur?.();
         }
     });
-
-    useEffect(() => {
-        if (show) {
-            dismissKeyboard();
-        }
-    }, [show, dismissKeyboard]);
+    const { verticalHeight, ready } = useViewport({
+        enabled: show,
+        onBeforeStart: dismissKeyboard,
+    });
+    const childRef = useRef<HTMLDivElement>(null);
+    const childWithRef =
+        children && React.cloneElement(children, { ref: childRef });
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -56,10 +49,10 @@ export const Modal = ({
         >
             <Container
                 $show={show}
+                $ready={ready}
                 $animationFrom={animationFrom}
                 data-testid={id}
                 $verticalHeight={verticalHeight}
-                $offsetTop={offsetTop}
                 {...otherProps}
             >
                 {childWithRef}
