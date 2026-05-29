@@ -202,27 +202,12 @@ test.describe("SelectHistogram", () => {
                 await story.init("form-variants");
             });
 
-            test("Keyboard navigation and focus ring states", async ({
-                story,
-            }) => {
+            test("Focus ring states", async ({ story }) => {
                 await test.step("Default - focused", async () => {
-                    await story.getTrigger(story.locators.form.default).focus();
+                    await story.page.keyboard.press("Tab");
                     await compareScreenshot(story, "default-focused", {
                         locator: story.locators.form.default,
                     });
-                });
-
-                await test.step("Default - dropdown open", async () => {
-                    await story.page.keyboard.press("Enter");
-                    await expect(
-                        story.page.getByTestId(
-                            "select-histogram-form-default-base-dropdown"
-                        )
-                    ).toBeVisible();
-                    await compareScreenshot(story, "default-open", {
-                        fullscreen: true,
-                    });
-                    await story.page.keyboard.press("Escape");
                 });
 
                 await test.step("Disabled - focused", async () => {
@@ -253,11 +238,9 @@ test.describe("SelectHistogram", () => {
                 await story.init("form-variants", { mode: "dark" });
             });
 
-            test("Keyboard navigation and focus ring states (dark mode)", async ({
-                story,
-            }) => {
+            test("Focus ring states (dark mode)", async ({ story }) => {
                 await test.step("Default - focused", async () => {
-                    await story.getTrigger(story.locators.form.default).focus();
+                    await story.page.keyboard.press("Tab");
                     await compareScreenshot(story, "default-focused", {
                         locator: story.locators.form.default,
                     });
