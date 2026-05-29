@@ -13,6 +13,8 @@ export const PAColourSet: SemanticColourSet = {
     "text-subtlest": getPrimitiveColour("neutral-70"),
     "text-primary": getPrimitiveColour("neutral-10"),
     "text-primary-strongest": getPrimitiveColour("neutral-10"),
+    "text-secondary": getPrimitiveColour("secondary-50"),
+    "text-secondary-subtle": getPrimitiveColour("secondary-60"),
 
     "text-hover": getPrimitiveColour("neutral-70"),
     "text-selected": getPrimitiveColour("neutral-20"),
@@ -36,6 +38,8 @@ export const PAColourSet: SemanticColourSet = {
     "icon-primary": getPrimitiveColour("neutral-10"),
     "icon-primary-subtle": getPrimitiveColour("neutral-30"),
     "icon-primary-subtlest": getPrimitiveColour("neutral-60"),
+    "icon-secondary": getPrimitiveColour("secondary-50"),
+    "icon-secondary-subtle": getPrimitiveColour("secondary-60"),
 
     "icon-hover": getPrimitiveColour("neutral-70"),
     "icon-selected": getPrimitiveColour("brand-20"),
@@ -133,6 +137,11 @@ export const PAColourSet: SemanticColourSet = {
     "bg-primary-subtler": getPrimitiveColour("brand-80"),
     "bg-primary-subtlest": getPrimitiveColour("brand-100"),
     "bg-available": getPrimitiveColour("success-60"),
+
+    "bg-secondary": getPrimitiveColour("secondary-50"),
+    "bg-secondary-subtle": getPrimitiveColour("secondary-60"),
+    "bg-secondary-subtler": getPrimitiveColour("secondary-95"),
+    "bg-secondary-subtlest": getPrimitiveColour("secondary-100"),
 
     "bg-primary-hover": getPrimitiveColour("brand-10"),
     "bg-primary-subtlest-hover": getPrimitiveColour("brand-80"),

@@ -16,6 +16,8 @@ export type SemanticColourSet = {
     "text-subtlest": SemanticColourValue;
     "text-primary": SemanticColourValue;
     "text-primary-strongest": SemanticColourValue;
+    "text-secondary": SemanticColourValue;
+    "text-secondary-subtle": SemanticColourValue;
 
     "text-hover": SemanticColourValue;
     "text-selected": SemanticColourValue;
@@ -39,6 +41,8 @@ export type SemanticColourSet = {
     "icon-primary": SemanticColourValue;
     "icon-primary-subtle": SemanticColourValue;
     "icon-primary-subtlest": SemanticColourValue;
+    "icon-secondary": SemanticColourValue;
+    "icon-secondary-subtle": SemanticColourValue;
 
     "icon-hover": SemanticColourValue;
     "icon-selected": SemanticColourValue;
@@ -136,6 +140,11 @@ export type SemanticColourSet = {
     "bg-primary-subtler": SemanticColourValue;
     "bg-primary-subtlest": SemanticColourValue;
     "bg-available": SemanticColourValue;
+
+    "bg-secondary": SemanticColourValue;
+    "bg-secondary-subtle": SemanticColourValue;
+    "bg-secondary-subtler": SemanticColourValue;
+    "bg-secondary-subtlest": SemanticColourValue;
 
     "bg-primary-hover": SemanticColourValue;
     "bg-primary-subtlest-hover": SemanticColourValue;

@@ -114,6 +114,19 @@ const CCubeThemeBase: ThemeSpec = {
     },
 };
 
+const CareerCompassThemeBase: ThemeSpec = {
+    colourScheme: "careercompass",
+    fontScheme: "default",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "careercompass",
+    componentScheme: "default",
+};
+
 const MyLegacyThemeBase: ThemeSpec = {
     colourScheme: "mylegacy",
     fontScheme: "mylegacy",
@@ -274,6 +287,12 @@ export const CCubeTheme = {
     ...CCubeThemeBase,
     light: createThemeWithColourMode(CCubeThemeBase, "light"),
     dark: createThemeWithColourMode(CCubeThemeBase, "dark"),
+};
+
+export const CareerCompassTheme = {
+    ...CareerCompassThemeBase,
+    light: createThemeWithColourMode(CareerCompassThemeBase, "light"),
+    dark: createThemeWithColourMode(CareerCompassThemeBase, "dark"),
 };
 
 export const MyLegacyTheme = {
