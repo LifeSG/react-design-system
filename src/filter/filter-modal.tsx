@@ -3,12 +3,15 @@ import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { Overlay } from "src/overlay";
 import { inertValue } from "src/shared/accessibility";
+import { renderFilterBadge } from "./filter-badge";
 import { FilterContext } from "./filter-context";
 import {
     FilterButton,
     FilterClearButton,
     FilterHeader,
     FilterTitle,
+    FilterTitleGroup,
+    FilterToggleContent,
     FloatingWrapper,
     MobileContainer,
     MobileOverlayContainer,
@@ -30,6 +33,7 @@ export const FilterModal = ({
     toggleFilterButtonStyle = "light",
     clearButtonDisabled = false,
     insets,
+    count,
     children,
     toggleFilterButtonLabel: _toggleFilterButtonLabel,
     headerTitle: _headerTitle,
@@ -82,7 +86,10 @@ export const FilterModal = ({
                     type="button"
                     icon={<FilterIcon />}
                 >
-                    {labels.toggle}
+                    <FilterToggleContent>
+                        <span>{labels.toggle}</span>
+                        {renderFilterBadge(count)}
+                    </FilterToggleContent>
                 </FilterButton>
             </div>
             <Overlay show={visible} disableTransition>
@@ -103,7 +110,12 @@ export const FilterModal = ({
                                     >
                                         <CrossIcon />
                                     </FilterHeaderButton>
-                                    <FilterTitle>{labels.title}</FilterTitle>
+                                    <FilterTitleGroup>
+                                        <FilterTitle>
+                                            {labels.title}
+                                        </FilterTitle>
+                                        {renderFilterBadge(count)}
+                                    </FilterTitleGroup>
                                     <FilterClearButton
                                         styleType="link"
                                         type="button"

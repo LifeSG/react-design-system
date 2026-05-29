@@ -21,6 +21,7 @@ export interface FilterBaseProps {
     "data-testid"?: string | undefined;
     className?: string | undefined;
     style?: CSSProperties | undefined;
+    count?: number | undefined;
     clearButtonDisabled?: boolean | undefined;
     /** Called when clear button is pressed */
     onClear?: (() => void) | undefined;

@@ -1,10 +1,12 @@
 import { useRef } from "react";
+import { renderFilterBadge } from "./filter-badge";
 import { FilterContext } from "./filter-context";
 import {
     DesktopContainer,
     FilterClearButton,
     FilterHeader,
     FilterTitle,
+    FilterTitleGroup,
 } from "./filter-sidebar.styles";
 import { FilterSidebarProps } from "./types";
 import { FilterBody } from "./filter.styles";
@@ -13,6 +15,7 @@ export const FilterSidebar = ({
     customLabels,
     onClear,
     clearButtonDisabled = false,
+    count,
     children,
     headerTitle: _headerTitle,
     ...otherProps
@@ -33,7 +36,10 @@ export const FilterSidebar = ({
                 {...otherProps}
             >
                 <FilterHeader>
-                    <FilterTitle>{labels.title}</FilterTitle>
+                    <FilterTitleGroup>
+                        <FilterTitle>{labels.title}</FilterTitle>
+                        {renderFilterBadge(count)}
+                    </FilterTitleGroup>
                     <FilterClearButton
                         styleType="link"
                         type="button"

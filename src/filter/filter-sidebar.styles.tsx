@@ -25,11 +25,19 @@ export const FilterHeader = styled.div`
     background-color: ${Colour["bg"]};
 `;
 
-export const FilterTitle = styled.h2`
-    ${Font["heading-xs-semibold"]}
+export const FilterTitleGroup = styled.div`
     flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: ${Spacing["spacing-8"]};
     margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
         ${Spacing["spacing-20"]};
+`;
+
+export const FilterTitle = styled.h2`
+    ${Font["heading-xs-semibold"]}
+    margin: 0;
 `;
 
 export const FilterClearButton = styled(Button.Small)`

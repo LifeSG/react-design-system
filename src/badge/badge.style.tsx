@@ -58,7 +58,7 @@ const dotBadgeStyles = css`
     height: 0.5rem;
 `;
 
-export const StyledBadge = styled.div<StyledBadgeProps>`
+export const StyledBadge = styled.span<StyledBadgeProps>`
     background-color: ${({ $color }) =>
         $color === "important" ? Colour["icon-error"] : Colour["bg-primary"]};
     color: ${Colour["text-inverse"]};
