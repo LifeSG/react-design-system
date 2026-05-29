@@ -9,11 +9,21 @@ export const tokens = {
     },
 };
 
-const inverseLinkColorStyles = `
+const linkStyle = `
     color: ${Colour["hyperlink-inverse"]};
 
     svg {
         color: ${Colour["icon-primary-inverse"]};
+    }
+
+    &:hover,
+    &:active,
+    &:visited,
+    &:focus {
+        color: ${Colour["hyperlink-inverse"]};
+        svg {
+            color: ${Colour["icon-primary-inverse"]};
+        }
     }
 `;
 
@@ -65,14 +75,7 @@ export const content = css`
 
     a {
         ${Font["body-baseline-regular"]}
-        ${inverseLinkColorStyles}
-
-        &:hover,
-        &:active,
-        &:visited,
-        &:focus {
-            ${inverseLinkColorStyles}
-        }
+        ${linkStyle}
     }
 `;
 
@@ -98,14 +101,7 @@ export const contentTextCollapsed = css`
 
 export const contentLink = css`
     position: relative;
-    ${inverseLinkColorStyles}
-
-    &:hover,
-    &:active,
-    &:visited,
-    &:focus {
-        ${inverseLinkColorStyles}
-    }
+    ${linkStyle}
 `;
 
 export const dismissButton = css`
