@@ -56,14 +56,11 @@ export const SemanticColourDisplay = ({
                         "text-subtler",
                         "text-subtlest",
                         "text-primary",
+                        "text-primary-strongest",
                     ]}
                 />
                 <SemanticColourPalette
-                    tokens={[
-                        "text-primary-strongest",
-                        "text-secondary",
-                        "text-secondary-subtle",
-                    ]}
+                    tokens={["text-secondary", "text-secondary-subtle"]}
                 />
                 <SemanticColourPalette
                     tokens={[
