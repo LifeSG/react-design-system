@@ -305,25 +305,6 @@ test.describe("SelectHistogram", () => {
                 await compareScreenshot(story, "mount");
             });
 
-            test("Custom range label prefix and suffix", async ({ story }) => {
-                await compareScreenshot(story, "custom-label-closed", {
-                    locator: story.locators.standalone.customLabel,
-                });
-
-                await story.openDropdown(story.locators.standalone.customLabel);
-                await compareScreenshot(story, "custom-label-open", {
-                    fullscreen: true,
-                });
-            });
-
-            test("Empty view when dropdown is opened", async ({ story }) => {
-                await story.openDropdown(story.locators.standalone.empty);
-                await expect(story.locators.standalone.emptyView).toBeVisible();
-                await compareScreenshot(story, "empty-view-open", {
-                    fullscreen: true,
-                });
-            });
-
             test("Disabled and readonly cannot open", async ({ story }) => {
                 await test.step("disabled combobox is reflected in aria", async () => {
                     await expect(story.locators.standalone.disabled)
@@ -344,6 +325,37 @@ test.describe("SelectHistogram", () => {
                         .getTrigger(story.locators.standalone.readonly)
                         .click();
                     await expect(story.page.getByRole("slider")).toHaveCount(0);
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("custom-label");
+            });
+
+            test("Custom range label prefix and suffix", async ({ story }) => {
+                await compareScreenshot(story, "custom-label-closed", {
+                    locator: story.locators.standalone.customLabel,
+                });
+
+                await story.openDropdown(story.locators.standalone.customLabel);
+                await compareScreenshot(story, "custom-label-open", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("empty");
+            });
+
+            test("Empty view when dropdown is opened", async ({ story }) => {
+                await story.openDropdown(story.locators.standalone.empty);
+                await expect(story.locators.standalone.emptyView).toBeVisible();
+                await compareScreenshot(story, "empty-view-open", {
+                    fullscreen: true,
                 });
             });
         });

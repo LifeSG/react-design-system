@@ -47,26 +47,6 @@ export default function Story() {
                 }}
                 error
             />
-            <SelectHistogram
-                data-testid="select-histogram-custom-label"
-                histogramSlider={{
-                    bins: MOCK_BINS,
-                    interval: 1,
-                }}
-                value={[2, 4]}
-                rangeLabelPrefix="$"
-                rangeLabelSuffix="k"
-            />
-            <SelectHistogram
-                data-testid="select-histogram-empty"
-                histogramSlider={{
-                    bins: [],
-                    interval: 1,
-                    renderEmptyView: () => (
-                        <div data-testid="empty-view">No data available</div>
-                    ),
-                }}
-            />
         </div>
     );
 }
