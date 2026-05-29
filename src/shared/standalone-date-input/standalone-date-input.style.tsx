@@ -14,7 +14,7 @@ interface PlaceholderStyleProps {
 
 interface DividerStyleProps {
     $inactive?: boolean;
-    $disabled?: boolean;
+    $disabled?: boolean | undefined;
 }
 
 interface InputContainerStyleProps {
