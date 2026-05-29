@@ -112,6 +112,17 @@ export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
         ${(props) => (props.$readOnly ? "0" : Spacing["spacing-16"])};
     flex-direction: ${(props) =>
         props.$position === "right" ? "row-reverse" : "row"};
+
+    ${(props) => {
+        if (props.$disabled) {
+            return css`
+                cursor: not-allowed;
+                &:focus-within {
+                    ${noFocusCss}
+                }
+            `;
+        }
+    }}
 `;
 
 /**

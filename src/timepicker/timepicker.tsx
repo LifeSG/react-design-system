@@ -76,11 +76,12 @@ export const Timepicker = ({
     };
 
     const handleFocus = () => {
+        if (disabled) return;
         onFocus?.();
     };
 
     const handleSelectorBlur = (e: React.FocusEvent<HTMLInputElement>) => {
-        if (isOpen) return;
+        if (isOpen || disabled) return;
 
         const next = e.relatedTarget as Node | null;
         if (next && wrapperRef.current?.contains(next)) return;
@@ -113,6 +114,7 @@ export const Timepicker = ({
             {...otherProps}
         >
             <InputSelectorElement
+                $disabled={disabled}
                 ref={selectorRef}
                 readOnly
                 placeholder={placeholder || getPlaceholderValue()}
