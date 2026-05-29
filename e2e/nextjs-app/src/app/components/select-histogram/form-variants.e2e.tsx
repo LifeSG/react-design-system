@@ -11,7 +11,6 @@ export default function Story() {
                 histogramSlider={{
                     bins: MOCK_BINS,
                     interval: 1,
-                    ariaLabels: ["Minimum value", "Maximum value"],
                 }}
                 placeholder="Select range"
             />
@@ -21,7 +20,6 @@ export default function Story() {
                 histogramSlider={{
                     bins: MOCK_BINS,
                     interval: 1,
-                    ariaLabels: ["Minimum value", "Maximum value"],
                 }}
                 disabled
             />
@@ -31,7 +29,6 @@ export default function Story() {
                 histogramSlider={{
                     bins: MOCK_BINS,
                     interval: 1,
-                    ariaLabels: ["Minimum value", "Maximum value"],
                 }}
                 readOnly
             />
@@ -41,7 +38,6 @@ export default function Story() {
                 histogramSlider={{
                     bins: MOCK_BINS,
                     interval: 1,
-                    ariaLabels: ["Minimum value", "Maximum value"],
                 }}
                 errorMessage="Please select a range"
             />

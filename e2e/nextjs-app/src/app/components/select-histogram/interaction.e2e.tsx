@@ -14,7 +14,6 @@ export default function Story() {
                 histogramSlider={{
                     bins: MOCK_BINS,
                     interval: 1,
-                    ariaLabels: ["Minimum value", "Maximum value"],
                 }}
                 value={value}
                 onChange={(v) => setValue(v)}

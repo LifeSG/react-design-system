@@ -16,7 +16,6 @@ export default function Story() {
                 histogramSlider={{
                     bins: MOCK_BINS,
                     interval: 1,
-                    ariaLabels: ["Minimum value", "Maximum value"],
                 }}
                 xxsCols={[1, 5]}
             />
@@ -26,7 +25,6 @@ export default function Story() {
                 histogramSlider={{
                     bins: MOCK_BINS,
                     interval: 1,
-                    ariaLabels: ["Minimum value", "Maximum value"],
                 }}
                 xxsCols={[1, 9]}
             />
