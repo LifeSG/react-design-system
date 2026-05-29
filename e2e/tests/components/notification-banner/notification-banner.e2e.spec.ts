@@ -118,17 +118,18 @@ test.describe("NotificationBanner", () => {
         test("Sticky banner behaviour", async ({ story }) => {
             await test.step("Verify sticky banner is visible initially", async () => {
                 await expect(story.locators.bannerSticky).toBeInViewport();
-                await compareScreenshot(story, "mount");
+                await compareScreenshot(story, "mount", { fullscreen: true });
             });
 
             await test.step("Scroll down the page", async () => {
-                await story.page.mouse.wheel(0, 100);
-                await story.page.waitForTimeout(300);
+                await story.scrollToEnd({ scrollTarget: story.layout });
             });
 
             await test.step("Verify sticky banner remains in view", async () => {
                 await expect(story.locators.bannerSticky).toBeInViewport();
-                await compareScreenshot(story, "after-scroll");
+                await compareScreenshot(story, "after-scroll", {
+                    fullscreen: true,
+                });
             });
         });
     });

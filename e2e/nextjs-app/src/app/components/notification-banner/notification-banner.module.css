@@ -10,5 +10,6 @@
 
 .sticky {
     height: 200vh;
-    padding: 2rem;
+    background-color: teal;
+    border: solid 10px crimson;
 }
