@@ -1,0 +1,2 @@
+"use strict";var r=require("../_virtual/_tslib.js"),e=require("react/jsx-runtime"),t=require("../typography/typography.js"),s=require("./card.style.js");exports.Card=a=>{var{children:i}=a,d=r.__rest(a,["children"]);const c=d["data-testid"]||"card";return e.jsx(s.StyledCard,Object.assign({},d,{"data-testid":c,children:"string"==typeof i?e.jsx(t.Typography.BodyBL,{children:i}):i}))};
+//# sourceMappingURL=card.js.map
