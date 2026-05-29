@@ -9,6 +9,7 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "smart-app-banner";
 
     public readonly locators: {
+        banner: Locator;
         proceedContainer: Locator;
         dismissContainer: Locator;
         dismissButton: Locator;
@@ -22,6 +23,7 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
+            banner: page.getByTestId("smart-app-banner"),
             proceedContainer: page.getByTestId(
                 "smart-app-banner-proceed-container"
             ),
@@ -53,15 +55,11 @@ test.describe("SmartAppBanner", () => {
         test("Default appearance", async ({ story }) => {
             await compareScreenshot(story, "mount", { fullscreen: true });
 
-            await expect(story.locators.dismissButton).toMatchAriaSnapshot(`
+            await expect(story.locators.banner).toMatchAriaSnapshot(`
+                - group "A rating of 4.5 out of 5 stars"
+                - button "Get"
                 - button "Close banner"
             `);
-            await expect(story.locators.ctaButton).toMatchAriaSnapshot(`
-                - button "Get"
-            `);
-            await expect(
-                story.page.getByTestId("smart-app-banner-star-rating")
-            ).toBeVisible();
         });
     });
 
@@ -103,10 +101,6 @@ test.describe("SmartAppBanner", () => {
 
             test("All stars filled", async ({ story }) => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
-
-                await expect(
-                    story.page.getByTestId("smart-app-banner-star-rating")
-                ).toBeVisible();
             });
         });
 
@@ -117,10 +111,6 @@ test.describe("SmartAppBanner", () => {
 
             test("Partial stars with half star", async ({ story }) => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
-
-                await expect(
-                    story.page.getByTestId("smart-app-banner-star-rating")
-                ).toBeVisible();
             });
         });
 
@@ -131,10 +121,6 @@ test.describe("SmartAppBanner", () => {
 
             test("Zero stars (all empty)", async ({ story }) => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
-
-                await expect(
-                    story.page.getByTestId("smart-app-banner-star-rating")
-                ).toBeVisible();
             });
         });
 
@@ -145,10 +131,6 @@ test.describe("SmartAppBanner", () => {
 
             test("No rating shown for invalid value", async ({ story }) => {
                 await compareScreenshot(story, "mount", { fullscreen: true });
-
-                await expect(
-                    story.page.getByTestId("smart-app-banner-star-rating")
-                ).not.toBeVisible();
             });
         });
     });

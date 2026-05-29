@@ -133,6 +133,7 @@ function SmartAppBannerComponent(
             {show && (
                 <div
                     ref={mergeRefs(containerRef, ref)}
+                    data-testid={ID}
                     className={clsx(
                         styles.smartAppBannerContainer,
                         isDark
