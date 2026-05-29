@@ -6,6 +6,7 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         bannerNonSticky: Locator;
+        bannerSticky: Locator;
     };
 
     constructor(page: Page) {
@@ -13,6 +14,7 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             bannerNonSticky: page.getByTestId("banner-non-sticky"),
+            bannerSticky: page.getByTestId("banner-sticky"),
         };
     }
 }
@@ -87,7 +89,7 @@ test.describe("NotificationBanner", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("sticky-behavior");
+            await story.init("non-sticky");
         });
 
         test("Non-sticky banner scrolls out of view", async ({ story }) => {
@@ -96,7 +98,7 @@ test.describe("NotificationBanner", () => {
             });
 
             await test.step("Scroll down the page", async () => {
-                await story.page.evaluate(() => window.scrollBy(0, 100));
+                await story.page.mouse.wheel(0, 100);
                 await story.page.waitForTimeout(300);
             });
 
@@ -104,6 +106,29 @@ test.describe("NotificationBanner", () => {
                 await expect(
                     story.locators.bannerNonSticky
                 ).not.toBeInViewport();
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("sticky");
+        });
+
+        test("Sticky banner behaviour", async ({ story }) => {
+            await test.step("Verify sticky banner is visible initially", async () => {
+                await expect(story.locators.bannerSticky).toBeInViewport();
+                await compareScreenshot(story, "mount");
+            });
+
+            await test.step("Scroll down the page", async () => {
+                await story.page.mouse.wheel(0, 100);
+                await story.page.waitForTimeout(300);
+            });
+
+            await test.step("Verify sticky banner remains in view", async () => {
+                await expect(story.locators.bannerSticky).toBeInViewport();
+                await compareScreenshot(story, "after-scroll");
             });
         });
     });

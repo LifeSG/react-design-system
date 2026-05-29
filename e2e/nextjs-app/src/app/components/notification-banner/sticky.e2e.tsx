@@ -1,12 +1,12 @@
 "use client";
 import { NotificationBanner } from "@lifesg/react-design-system/notification-banner";
-import styles from "./styles.module.css";
+import styles from "./notification-banner.module.css";
 
 export default function Story() {
     return (
         <div>
-            <NotificationBanner data-testid="banner-non-sticky" sticky={false}>
-                This is a non-sticky notification banner.
+            <NotificationBanner data-testid="banner-sticky">
+                This is a sticky notification banner.
             </NotificationBanner>
             <div className={styles.sticky}>
                 <p>
