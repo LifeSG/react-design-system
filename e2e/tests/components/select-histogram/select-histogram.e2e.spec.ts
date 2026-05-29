@@ -27,6 +27,7 @@ class StoryPage extends AbstractStoryPage {
             emptyView: Locator;
         };
         interaction: Locator;
+        interactionDropdown: Locator;
         focusTargetBefore: Locator;
         minValue: Locator;
         maxValue: Locator;
@@ -65,6 +66,9 @@ class StoryPage extends AbstractStoryPage {
                 emptyView: page.getByTestId("empty-view"),
             },
             interaction: page.getByTestId("select-histogram-interaction"),
+            interactionDropdown: page.getByTestId(
+                "select-histogram-interaction-dropdown"
+            ),
             focusTargetBefore: page.getByTestId("focus-target-before"),
             minValue: page.getByTestId("min-value"),
             maxValue: page.getByTestId("max-value"),
@@ -77,10 +81,8 @@ class StoryPage extends AbstractStoryPage {
 
     public async openDropdown(locator: Locator) {
         await this.getTrigger(locator).click();
-        await expect(this.getTrigger(locator)).toHaveAttribute(
-            "aria-expanded",
-            "true"
-        );
+        const testId = await locator.getAttribute("data-testid");
+        await expect(this.page.getByTestId(`${testId}-dropdown`)).toBeVisible();
     }
 }
 
@@ -213,8 +215,10 @@ test.describe("SelectHistogram", () => {
                 await test.step("Default - dropdown open", async () => {
                     await story.page.keyboard.press("Enter");
                     await expect(
-                        story.getTrigger(story.locators.form.default)
-                    ).toHaveAttribute("aria-expanded", "true");
+                        story.page.getByTestId(
+                            "select-histogram-form-default-base-dropdown"
+                        )
+                    ).toBeVisible();
                     await compareScreenshot(story, "default-open", {
                         fullscreen: true,
                     });
@@ -392,10 +396,9 @@ test.describe("SelectHistogram", () => {
 
                 await test.step("click opens the dropdown", async () => {
                     await trigger.click();
-                    await expect(trigger).toHaveAttribute(
-                        "aria-expanded",
-                        "true"
-                    );
+                    await expect(
+                        story.locators.interactionDropdown
+                    ).toBeVisible();
                     await expect(
                         story.locators.internal.thumb(0)
                     ).toBeVisible();
@@ -406,10 +409,9 @@ test.describe("SelectHistogram", () => {
 
                 await test.step("click outside closes the dropdown", async () => {
                     await story.page.mouse.click(0, 0);
-                    await expect(trigger).toHaveAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
+                    await expect(
+                        story.locators.interactionDropdown
+                    ).not.toBeAttached();
                     await expect(
                         story.locators.internal.thumb(0)
                     ).not.toBeAttached();
@@ -418,10 +420,9 @@ test.describe("SelectHistogram", () => {
                 await test.step("keyboard: Enter opens the dropdown", async () => {
                     await trigger.focus();
                     await story.page.keyboard.press("Enter");
-                    await expect(trigger).toHaveAttribute(
-                        "aria-expanded",
-                        "true"
-                    );
+                    await expect(
+                        story.locators.interactionDropdown
+                    ).toBeVisible();
                     await expect(
                         story.locators.internal.thumb(0)
                     ).toBeVisible();
@@ -429,10 +430,9 @@ test.describe("SelectHistogram", () => {
 
                 await test.step("keyboard: Escape closes the dropdown and restores focus", async () => {
                     await story.page.keyboard.press("Escape");
-                    await expect(trigger).toHaveAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
+                    await expect(
+                        story.locators.interactionDropdown
+                    ).not.toBeAttached();
                     await expect(
                         story.locators.internal.thumb(0)
                     ).not.toBeAttached();
@@ -441,15 +441,13 @@ test.describe("SelectHistogram", () => {
 
                 await test.step("keyboard: Space toggles the dropdown", async () => {
                     await story.page.keyboard.press("Space");
-                    await expect(trigger).toHaveAttribute(
-                        "aria-expanded",
-                        "true"
-                    );
+                    await expect(
+                        story.locators.interactionDropdown
+                    ).toBeVisible();
                     await story.page.keyboard.press("Space");
-                    await expect(trigger).toHaveAttribute(
-                        "aria-expanded",
-                        "false"
-                    );
+                    await expect(
+                        story.locators.interactionDropdown
+                    ).not.toBeAttached();
                 });
             });
 

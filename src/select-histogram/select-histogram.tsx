@@ -209,6 +209,7 @@ export const SelectHistogram = ({
             className={styles.histogramSliderDropdownContainer}
             style={{ ...floatingStyles, width: elementWidth }}
             ref={setFloatingRef}
+            data-testid={`${testId}-dropdown`}
             {...getFloatingProps()}
         >
             <HistogramSlider
