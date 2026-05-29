@@ -43,20 +43,6 @@ export const separator = css`
     color: ${Colour["text"]};
 `;
 
-export const valueLabel = css`
-    ${Font["body-baseline-regular"]}
-    text-align: left;
-    overflow: hidden;
-`;
-
-export const valueLabelSmall = css`
-    ${Font["body-md-regular"]}
-`;
-
-export const valueLabelTruncateEnd = css`
-    ${lineClampCss(1)}
-`;
-
 export const placeholderLabel = css`
     ${Font["body-baseline-regular"]}
     text-align: left;
