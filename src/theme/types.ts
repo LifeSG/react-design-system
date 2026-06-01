@@ -50,7 +50,8 @@ export type ColourScheme =
     | "sgwdigitallobby"
     | "imda"
     | "spf"
-    | "smgs";
+    | "smgs"
+    | "careercompass";
 export type FontScheme =
     | "default"
     | "bookingsg"
@@ -87,7 +88,8 @@ export type ResourceScheme =
     | "supportgowhere"
     | "imda"
     | "spf"
-    | "smgs";
+    | "smgs"
+    | "careercompass";
 
 export type ColourMode = "light" | "dark";
 

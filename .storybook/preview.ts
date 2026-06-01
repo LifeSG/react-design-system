@@ -15,6 +15,7 @@ import {
     SupportGoWhereTheme,
     SGWDigitalLobbyTheme,
     SMGSTheme,
+    CareerCompassTheme,
 } from "../src/theme";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
@@ -35,6 +36,7 @@ const preview: Preview = {
                 RBS: RBSTheme,
                 SPF: SPFTheme,
                 SMGS: SMGSTheme,
+                CareerCompass: CareerCompassTheme,
             },
             Provider: ThemeProvider,
         }),

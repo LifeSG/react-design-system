@@ -56,7 +56,11 @@ export const SemanticColourDisplay = ({
                         "text-subtler",
                         "text-subtlest",
                         "text-primary",
+                        "text-primary-strongest",
                     ]}
+                />
+                <SemanticColourPalette
+                    tokens={["text-secondary", "text-secondary-subtle"]}
                 />
                 <SemanticColourPalette
                     tokens={[
@@ -94,6 +98,8 @@ export const SemanticColourDisplay = ({
                         "icon-primary",
                         "icon-primary-subtle",
                         "icon-primary-subtlest",
+                        "icon-secondary",
+                        "icon-secondary-subtle",
                     ]}
                 />
                 <SemanticColourPalette
@@ -203,6 +209,14 @@ export const SemanticColourDisplay = ({
                 />
                 <SemanticColourPalette
                     tokens={[
+                        "bg-secondary",
+                        "bg-secondary-subtle",
+                        "bg-secondary-subtler",
+                        "bg-secondary-subtlest",
+                    ]}
+                />
+                <SemanticColourPalette
+                    tokens={[
                         "bg-success",
                         "bg-success-hover",
                         "bg-success-strong",
@@ -243,6 +257,9 @@ export const SemanticColourDisplay = ({
             <Display>
                 <SemanticColourPalette
                     tokens={["hyperlink", "hyperlink-inverse"]}
+                />
+                <SemanticColourPalette
+                    tokens={["hyperlink-hover", "hyperlink-visited"]}
                 />
             </Display>
 

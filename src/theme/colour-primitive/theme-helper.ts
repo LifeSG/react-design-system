@@ -13,6 +13,7 @@ import { SupportGoWhereColourSet } from "./specs/supportgowhere-colour-set";
 import { IMDAColourSet } from "./specs/imda-colour-set";
 import { SPFColourSet } from "./specs/spf-colour-set";
 import { SMGSColourSet } from "./specs/smgs-colour-set";
+import { CareerCompassColourSet } from "./specs/careercompass-colour-set";
 import { ColourCollectionsMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -32,6 +33,7 @@ export const ColourSpec: ThemeCollectionSpec<
         sgwdigitallobby: SupportGoWhereColourSet,
         imda: IMDAColourSet,
         spf: SPFColourSet,
+        careercompass: CareerCompassColourSet,
         smgs: SMGSColourSet,
     },
     defaultValue: "lifesg",
@@ -58,6 +60,7 @@ export const DarkColourSpec: ThemeCollectionSpec<
         sgwdigitallobby: SupportGoWhereColourSet,
         imda: IMDAColourSet,
         spf: SPFColourSet,
+        careercompass: CareerCompassColourSet,
         smgs: SMGSColourSet,
     },
     defaultValue: "lifesg",
