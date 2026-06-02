@@ -1,8 +1,8 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
-const SAMPLE_UPLOAD_FILE_PATH = "e2e/tests/fixtures/file-upload/sample.png";
-const SAMPLE_UPLOAD_FILE_NAME = "sample.png";
+const SAMPLE_UPLOAD_FILE_PATH = "e2e/tests/fixtures/file-upload/sample.jpg";
+const SAMPLE_UPLOAD_FILE_NAME = "sample.jpg";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "file-upload";
