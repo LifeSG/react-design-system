@@ -29,11 +29,16 @@ export const item = css`
             cursor: grab;
         }
 
+        // Following recommendation by the library for touch events
+        // https://docs.dndkit.com/api-documentation/sensors/touch#recommendations
         touch-action: manipulation;
     }
 
     &[data-item-state="sortable-active"] {
         cursor: grabbing;
+
+        // Following recommendation by the library for touch events
+        // https://docs.dndkit.com/api-documentation/sensors/touch#recommendations
         touch-action: manipulation;
     }
 `;
