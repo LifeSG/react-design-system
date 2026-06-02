@@ -1,10 +1,11 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import { useMediaQuery } from "react-responsive";
 import type { ScheduleEntityProps, ScheduleProps } from "src/schedule";
 import { Schedule } from "src/schedule";
+import { useMediaQuery } from "src/theme";
 
-jest.mock("react-responsive", () => ({
+jest.mock("src/theme", () => ({
+    ...jest.requireActual("src/theme"),
     useMediaQuery: jest.fn(() => false),
 }));
 
@@ -32,7 +33,6 @@ describe("Schedule", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         jest.useFakeTimers().setSystemTime(new Date("2024-09-11").getTime());
-
         (useMediaQuery as jest.Mock).mockReturnValue(false);
     });
 

@@ -1,10 +1,6 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { FileDownload } from "src/file-download";
 
-jest.mock("react-responsive", () => ({
-    useMediaQuery: jest.fn().mockReturnValue(false),
-}));
-
 const MOCK_FILE_ITEM = {
     id: "file-1",
     name: "sample.pdf",

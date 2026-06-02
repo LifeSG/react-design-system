@@ -8,71 +8,11 @@ import {
     useSafeMaxWidthMediaQuery,
 } from "src/theme/utils/use-media-query";
 
-import { getThemeVariablesStyle, setupThemeVariables } from "../setup";
-
-type MockMediaQueryList = {
-    addEventListener: jest.Mock;
-    dispatch: (matches: boolean) => void;
-    matches: boolean;
-    media: string;
-    removeEventListener: jest.Mock;
-};
-
-const originalMatchMedia = globalThis.window.matchMedia;
-
-const createMatchMediaMock = (initialMatches = false) => {
-    const mediaQueryLists = new Map<string, MockMediaQueryList>();
-    const matchMedia = jest.fn((query: string) => {
-        const existingMediaQueryList = mediaQueryLists.get(query);
-
-        if (existingMediaQueryList) {
-            return existingMediaQueryList;
-        }
-
-        let changeListener: ((event: MediaQueryListEvent) => void) | undefined;
-
-        const mediaQueryList: MockMediaQueryList = {
-            addEventListener: jest.fn(
-                (
-                    eventName: string,
-                    listener: (event: MediaQueryListEvent) => void
-                ) => {
-                    if (eventName === "change") {
-                        changeListener = listener;
-                    }
-                }
-            ),
-            dispatch: (matches: boolean) => {
-                mediaQueryList.matches = matches;
-                changeListener?.({ matches } as MediaQueryListEvent);
-            },
-            matches: initialMatches,
-            media: query,
-            removeEventListener: jest.fn(
-                (
-                    eventName: string,
-                    listener: (event: MediaQueryListEvent) => void
-                ) => {
-                    if (eventName === "change" && changeListener === listener) {
-                        changeListener = undefined;
-                    }
-                }
-            ),
-        };
-
-        mediaQueryLists.set(query, mediaQueryList);
-
-        return mediaQueryList;
-    });
-
-    Object.defineProperty(globalThis.window, "matchMedia", {
-        configurable: true,
-        value: matchMedia,
-        writable: true,
-    });
-
-    return { matchMedia, mediaQueryLists };
-};
+import {
+    createMatchMediaMock,
+    getThemeVariablesStyle,
+    setupThemeVariables,
+} from "../setup";
 
 const CoreConsumer = ({ options }: { options: MediaQueryOptions }) => {
     const result = useMediaQuery(options);
@@ -102,14 +42,6 @@ describe("useMediaQuery", () => {
     beforeEach(() => {
         setupThemeVariables();
         createMatchMediaMock();
-    });
-
-    afterAll(() => {
-        Object.defineProperty(globalThis.window, "matchMedia", {
-            configurable: true,
-            value: originalMatchMedia,
-            writable: true,
-        });
     });
 
     it("builds a query from resolved widths", async () => {

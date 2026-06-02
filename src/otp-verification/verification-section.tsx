@@ -1,13 +1,9 @@
-import { useContext } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
-
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
 import { concatIds } from "../shared/accessibility";
+import { Breakpoint, useMediaQuery } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
-import { V3_Breakpoint } from "../v3_theme";
 import type { VerificationSectionProps } from "./internal-types";
 import { EmailThumbnail, PhoneThumbnail } from "./thumbnail";
 import {
@@ -34,9 +30,8 @@ export const VerificationSection = ({
     otpPrefix,
     otpSeparator,
 }: VerificationSectionProps) => {
-    const theme = useContext(ThemeContext);
     const isMobile = useMediaQuery({
-        maxWidth: V3_Breakpoint["sm-max"]({ theme }),
+        maxWidth: Breakpoint["sm-max"],
     });
     const thumbnailSize = isMobile ? 64 : 120;
     const internalId = useId();
