@@ -34,7 +34,7 @@ import {
     TimeSlotComponent,
     TimeSlotWrapper,
     Wrapper,
-} from "./time-slot-bar-week-days.style";
+} from "./time-slot-bar-week-days.styles";
 import type { TimeSlotCellsVariant } from "./types";
 
 interface TimeSlotWeekDaysProps
