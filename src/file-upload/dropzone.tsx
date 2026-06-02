@@ -1,15 +1,13 @@
+import { CloudArrowUpFillIcon } from "@lifesg/react-icons/cloud-arrow-up-fill";
+import clsx from "clsx";
 import type React from "react";
 import { forwardRef, useImperativeHandle, useRef } from "react";
 import { useDropzone } from "react-dropzone";
 
+import { DashedBorder } from "../dashed-border";
 import { Border, Colour, Radius } from "../theme";
-import {
-    Container,
-    DragOverlay,
-    HiddenInput,
-    OverlayIcon,
-    OverlayText,
-} from "./dropzone.styles";
+import { Typography } from "../typography";
+import * as styles from "./dropzone.styles";
 import type { FileInputProps } from "./types";
 
 export interface DropzoneElement extends HTMLInputElement {
@@ -72,36 +70,43 @@ const Component = (
     // RENDER FUNCTIONS
     // =========================================================================
     const renderDragOverlay = () => (
-        <DragOverlay
+        <DashedBorder
             colour={Colour["border-primary"]}
             thickness={Border["width-040"]}
             radius={Radius["sm"]}
             enabled={border}
             backgroundColor={Colour["bg-primary-subtler"]}
+            className={styles.dragOverlay}
         >
-            <OverlayIcon />
-            <OverlayText weight="semibold">Drop files here</OverlayText>
-        </DragOverlay>
+            <CloudArrowUpFillIcon className={styles.overlayIcon} />
+            <Typography.BodyMD className={styles.overlayText} weight="semibold">
+                Drop files here
+            </Typography.BodyMD>
+        </DashedBorder>
     );
 
     return (
-        <Container
+        <DashedBorder
             id={id}
             data-testid={testId || "dropzone"}
             enabled={border}
-            $showDashedBorder={border}
             thickness={Border["width-040"]}
             radius={Radius["sm"]}
             colour={Colour["border"]}
-            className={className}
+            className={clsx(
+                styles.container,
+                border && styles.containerWithDashedBorder,
+                className
+            )}
             {...getRootProps()}
         >
-            <HiddenInput
+            <input
                 type="file"
                 name={name}
                 ref={inputRef}
                 tabIndex={-1}
                 aria-hidden
+                className={styles.hiddenInput}
                 accept={accept}
                 capture={capture}
                 multiple={multiple}
@@ -110,7 +115,7 @@ const Component = (
             />
             {children}
             {isDragActive && renderDragOverlay()}
-        </Container>
+        </DashedBorder>
     );
 };
 
