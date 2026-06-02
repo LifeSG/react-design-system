@@ -5,6 +5,7 @@ import type {
     CountryValue,
     PhoneNumberInputValue,
 } from "../phone-number-input";
+import { concatIds } from "../shared/accessibility";
 import {
     ContactButton,
     ContactInputSectionWrapper,
@@ -35,6 +36,8 @@ export const ContactInputSection = ({
     onSendOtp,
     onStateReset,
     sendOtpError,
+    "aria-labelledby": ariaLabelledBy,
+    "aria-describedby": ariaDescribedBy,
 }: ContactInputSectionProps) => {
     const contactErrorId = id ? `${id}-contact-error` : undefined;
 
@@ -97,7 +100,11 @@ export const ContactInputSection = ({
                 aria-invalid={!!sendOtpError}
                 aria-required={true}
                 aria-label="Enter your email address to receive a verification OTP"
-                aria-describedby={sendOtpError ? contactErrorId : undefined}
+                aria-labelledby={ariaLabelledBy}
+                aria-describedby={concatIds(
+                    sendOtpError ? contactErrorId : undefined,
+                    ariaDescribedBy
+                )}
                 disabled={disabled}
                 readOnly={readOnly}
             />
@@ -114,8 +121,12 @@ export const ContactInputSection = ({
                 fixedCountry={fixedCountry}
                 aria-invalid={!!sendOtpError}
                 aria-required={true}
-                aria-describedby={sendOtpError ? contactErrorId : undefined}
                 getAriaLabel={getMobileAriaLabel}
+                aria-labelledby={ariaLabelledBy}
+                aria-describedby={concatIds(
+                    sendOtpError ? contactErrorId : undefined,
+                    ariaDescribedBy
+                )}
                 disabled={disabled}
                 readOnly={readOnly}
             />

@@ -47,11 +47,15 @@ const Component = <T, V>(
             data-read-only={otherProps.readOnly}
             data-no-border={noBorder}
         >
+            <VisuallyHidden aria-hidden id={ariaLabelId}>
+                {ariaLabel}
+            </VisuallyHidden>
             <Input
                 ref={ref}
                 {...otherProps}
                 data-testid="input"
                 styleType="no-border"
+                aria-labelledby={concatIds(ariaLabelId, ariaLabelledBy)}
             />
         </InputBox>
     );
