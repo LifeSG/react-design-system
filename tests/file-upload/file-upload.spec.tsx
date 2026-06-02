@@ -236,6 +236,50 @@ describe("FileUpload", () => {
 
             expect(onChangeCallback).toHaveBeenCalledWith([file]);
         });
+
+        it("should not call onChange callback if the component is disabled", () => {
+            const onChangeCallback = jest.fn();
+            render(<FileUpload disabled onChange={onChangeCallback} />);
+
+            fireEvent.click(
+                screen.getByRole("button", { name: "Upload files" })
+            );
+            expect(onChangeCallback).not.toHaveBeenCalled();
+        });
+
+        it("should disable upload button when max files limit is reached", () => {
+            render(
+                <FileUpload fileItems={[MOCK_NON_IMAGE_FILE]} maxFiles={1} />
+            );
+
+            const uploadButton = screen.getByRole("button", {
+                name: "Upload files",
+            });
+
+            expect(uploadButton).toBeDisabled();
+        });
+
+        it("should only pass remaining file slots when selected files exceed maxFiles", async () => {
+            const onChangeCallback = jest.fn();
+
+            const rendered = render(
+                <FileUpload
+                    maxFiles={1}
+                    fileItems={[]}
+                    onChange={onChangeCallback}
+                />
+            );
+
+            const dropzoneInput = rendered.getByTestId("dropzone-input");
+
+            await waitFor(() =>
+                fireEvent.change(dropzoneInput, {
+                    target: { files: [MOCK_IMAGE_ITEM, MOCK_NON_IMAGE_FILE] },
+                })
+            );
+
+            expect(onChangeCallback).toHaveBeenCalledWith([MOCK_IMAGE_ITEM]);
+        });
     });
 
     describe("Delete", () => {

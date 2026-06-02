@@ -14,6 +14,7 @@ const CSR_ONLY_COMPONENTS = new Set([
     "badge",
     "date-range-input",
     "date-input",
+    "file-upload",
     "select",
     "input-multi-select",
     "input-select",

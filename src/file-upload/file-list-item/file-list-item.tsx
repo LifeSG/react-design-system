@@ -1,6 +1,8 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { BinIcon } from "@lifesg/react-icons/bin";
+import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
 import {
     memo,
@@ -11,7 +13,9 @@ import {
     useState,
 } from "react";
 
+import { Button } from "../../button";
 import { ProgressBar } from "../../shared/progress-bar";
+import { Typography } from "../../typography";
 import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
 import { FileUploadHelper } from "../helper";
@@ -23,24 +27,6 @@ import type { FileListItemProps } from "./types";
 interface Props extends FileListItemProps {
     readOnly?: boolean | undefined;
 }
-
-const {
-    ActionContainer,
-    Box,
-    ContentSection,
-    DesktopErrorMessage,
-    DragHandleIcon,
-    ErrorIcon,
-    ExtendedNameSection,
-    FileSizeSection,
-    FileSizeText,
-    IconButton,
-    Item,
-    ItemDescriptionText,
-    ItemText,
-    MobileErrorMessage,
-    NameSection,
-} = styles;
 
 const Component = ({
     fileItem,
@@ -149,39 +135,114 @@ const Component = ({
 
     const shouldEnableSort = () => !!sortable && !readOnly;
 
+    const getItemState = () => {
+        if (shouldDisable() && focusType === "none") {
+            return "disabled";
+        }
+
+        if (shouldEnableSort() && focusType === "self") {
+            return "sortable-active";
+        }
+
+        if (shouldEnableSort()) {
+            return "sortable";
+        }
+
+        return undefined;
+    };
+
+    const getDragHandleState = () => {
+        if (focusType === "self") {
+            return "active";
+        }
+
+        if (shouldDisable()) {
+            return "disabled";
+        }
+
+        return undefined;
+    };
+
+    const getBoxState = () => {
+        if (focusType === "self") {
+            return "focused";
+        }
+
+        if (shouldDisable()) {
+            return "disabled";
+        }
+
+        if (errorMessage) {
+            return "error";
+        }
+
+        return undefined;
+    };
+
+    const getActionContainerLayout = () => {
+        if (!errorMessage && isLoading) {
+            return "loading";
+        }
+
+        if (!errorMessage && editable) {
+            return "editable";
+        }
+
+        return undefined;
+    };
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     const renderNameDescription = () => (
         <>
-            <ItemText weight={description ? "semibold" : "regular"}>
+            <Typography.BodyMD weight={description ? "semibold" : "regular"}>
                 {formattedName}
-            </ItemText>
+            </Typography.BodyMD>
             {description && (
-                <ItemDescriptionText>{description}</ItemDescriptionText>
+                <Typography.BodyMD className={styles.itemDescriptionText}>
+                    {description}
+                </Typography.BodyMD>
             )}
         </>
     );
 
     const renderErrorState = () => (
         <>
-            <NameSection ref={detailSectionRef}>
+            <div ref={detailSectionRef} className={styles.nameSection}>
                 {renderNameDescription()}
                 {errorMessage && (
-                    <DesktopErrorMessage weight="semibold">
-                        <ErrorIcon aria-hidden />
+                    <Typography.BodySM
+                        className={styles.desktopErrorMessage}
+                        weight="semibold"
+                    >
+                        <ExclamationCircleFillIcon
+                            className={styles.errorIcon}
+                            aria-hidden
+                        />
                         {errorMessage}
-                    </DesktopErrorMessage>
+                    </Typography.BodySM>
                 )}
-            </NameSection>
-            <FileSizeSection>
-                <FileSizeText>{fileSize}</FileSizeText>
-            </FileSizeSection>
+            </div>
+            <div
+                className={styles.fileSizeSection}
+                data-mobile-visibility={isLoading ? "hidden" : "expand"}
+            >
+                <Typography.BodyMD className={styles.fileSizeText}>
+                    {fileSize}
+                </Typography.BodyMD>
+            </div>
             {errorMessage && (
-                <MobileErrorMessage weight="semibold">
-                    <ErrorIcon aria-hidden />
+                <Typography.BodySM
+                    className={styles.mobileErrorMessage}
+                    weight="semibold"
+                >
+                    <ExclamationCircleFillIcon
+                        className={styles.errorIcon}
+                        aria-hidden
+                    />
                     {errorMessage}
-                </MobileErrorMessage>
+                </Typography.BodySM>
             )}
         </>
     );
@@ -193,25 +254,35 @@ const Component = ({
                 fileType={fileItem.type}
                 data-testid={`${id}-thumbnail`}
             />
-            <ExtendedNameSection>
-                <NameSection ref={detailSectionRef}>
+            <div className={styles.extendedNameSection}>
+                <div ref={detailSectionRef} className={styles.nameSection}>
                     {renderNameDescription()}
-                </NameSection>
-                <FileSizeSection>
-                    <FileSizeText>{fileSize}</FileSizeText>
-                </FileSizeSection>
-            </ExtendedNameSection>
+                </div>
+                <div
+                    className={styles.fileSizeSection}
+                    data-mobile-visibility={isLoading ? "hidden" : "expand"}
+                >
+                    <Typography.BodyMD className={styles.fileSizeText}>
+                        {fileSize}
+                    </Typography.BodyMD>
+                </div>
+            </div>
         </>
     );
 
     const renderDefault = () => (
         <>
-            <NameSection ref={detailSectionRef}>
+            <div ref={detailSectionRef} className={styles.nameSection}>
                 {renderNameDescription()}
-            </NameSection>
-            <FileSizeSection $hideInMobile={isLoading}>
-                <FileSizeText>{fileSize}</FileSizeText>
-            </FileSizeSection>
+            </div>
+            <div
+                className={styles.fileSizeSection}
+                data-mobile-visibility={isLoading ? "hidden" : "expand"}
+            >
+                <Typography.BodyMD className={styles.fileSizeText}>
+                    {fileSize}
+                </Typography.BodyMD>
+            </div>
         </>
     );
 
@@ -230,9 +301,12 @@ const Component = ({
         }
 
         return (
-            <ContentSection $hasThumbnail={shouldShowThumbnail}>
+            <div
+                className={styles.contentSection}
+                data-has-thumbnail={shouldShowThumbnail}
+            >
                 {content}
-            </ContentSection>
+            </div>
         );
     };
 
@@ -241,7 +315,7 @@ const Component = ({
 
         if (errorMessage) {
             content = (
-                <IconButton
+                <Button
                     data-testid={`${id}-error-delete-button`}
                     data-no-dnd="true"
                     type="button"
@@ -249,9 +323,9 @@ const Component = ({
                     sizeType="small"
                     aria-label={`delete ${name}, error: ${errorMessage}`}
                     onClick={handleDelete}
-                >
-                    <BinIcon aria-hidden />
-                </IconButton>
+                    className={styles.iconButton}
+                    icon={<BinIcon aria-hidden />}
+                />
             );
         } else if (isLoading) {
             content = (
@@ -264,7 +338,7 @@ const Component = ({
             content = (
                 <>
                     {editable && (
-                        <IconButton
+                        <Button
                             key="edit"
                             data-testid={`${id}-edit-button`}
                             data-no-dnd="true"
@@ -276,9 +350,10 @@ const Component = ({
                             onClick={handleEdit}
                             onKeyDown={handleKeyDown}
                             icon={<PencilIcon aria-hidden />}
+                            className={styles.iconButton}
                         />
                     )}
-                    <IconButton
+                    <Button
                         key="delete"
                         data-testid={`${id}-delete-button`}
                         data-no-dnd="true"
@@ -290,49 +365,47 @@ const Component = ({
                         onClick={handleDelete}
                         onKeyDown={handleKeyDown}
                         icon={<BinIcon aria-hidden />}
+                        className={styles.iconButton}
                     />
                 </>
             );
         }
 
         return (
-            <ActionContainer
-                $editable={editable}
-                $error={!!errorMessage}
-                $loading={isLoading}
+            <div
+                className={styles.actionContainer}
+                data-mobile-layout={getActionContainerLayout()}
             >
                 {content}
-            </ActionContainer>
+            </div>
         );
     };
 
     return (
-        <Item
+        <li
             id={id}
             ref={setNodeRef}
-            $sortable={shouldEnableSort()}
-            $disabled={shouldDisable()}
-            $focusType={focusType}
+            className={styles.item}
+            data-item-state={getItemState()}
+            data-testid={`${id}-item`}
             {...(shouldEnableSort() ? sortableProps : {})}
         >
             {shouldEnableSort() && (
-                <DragHandleIcon
+                <DSDragHandleIcon
                     data-testid={`${id}-drag-handle`}
-                    $disabled={shouldDisable()}
-                    $active={focusType === "self"}
+                    className={styles.dragHandleIcon}
+                    data-drag-handle-state={getDragHandleState()}
                 />
             )}
-            <Box
-                $focused={focusType === "self"}
-                $error={!!errorMessage}
-                $loading={isLoading}
-                $disabled={shouldDisable()}
-                $editable={editable}
+            <div
+                className={styles.box}
+                data-box-state={getBoxState()}
+                data-stack-mobile={!errorMessage && (isLoading || editable)}
             >
                 {renderContents()}
                 {!readOnly && renderActions()}
-            </Box>
-        </Item>
+            </div>
+        </li>
     );
 };
 
