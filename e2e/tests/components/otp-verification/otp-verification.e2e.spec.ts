@@ -8,6 +8,24 @@ class StoryPage extends AbstractStoryPage {
     public readonly locators: {
         phoneInteractive: Locator;
         emailInteractive: Locator;
+        phone: {
+            default: Locator;
+            disabled: Locator;
+            readonly: Locator;
+            error: Locator;
+            verified: Locator;
+            sent: Locator;
+            sentError: Locator;
+        };
+        email: {
+            default: Locator;
+            disabled: Locator;
+            readonly: Locator;
+            error: Locator;
+            verified: Locator;
+            sent: Locator;
+            sentError: Locator;
+        };
         internals: {
             sendOtpButton: (root?: Locator) => Locator;
             sentOtpButton: (root?: Locator) => Locator;
@@ -25,6 +43,24 @@ class StoryPage extends AbstractStoryPage {
         this.locators = {
             phoneInteractive: page.getByTestId("otp-phone"),
             emailInteractive: page.getByTestId("otp-email"),
+            phone: {
+                default: page.getByTestId("otp-phone-default"),
+                disabled: page.getByTestId("otp-phone-disabled"),
+                readonly: page.getByTestId("otp-phone-readonly"),
+                error: page.getByTestId("otp-phone-error"),
+                verified: page.getByTestId("otp-phone-verified"),
+                sent: page.getByTestId("otp-phone-sent"),
+                sentError: page.getByTestId("otp-phone-sent-error"),
+            },
+            email: {
+                default: page.getByTestId("otp-email-default"),
+                disabled: page.getByTestId("otp-email-disabled"),
+                readonly: page.getByTestId("otp-email-readonly"),
+                error: page.getByTestId("otp-email-error"),
+                verified: page.getByTestId("otp-email-verified"),
+                sent: page.getByTestId("otp-email-sent"),
+                sentError: page.getByTestId("otp-email-sent-error"),
+            },
             internals: {
                 sendOtpButton: (root) =>
                     (root ?? page).getByRole("button", { name: "Send OTP" }),
@@ -65,6 +101,51 @@ test.describe("OtpVerification", () => {
             test("Form variants", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
+
+            test("Accessibility", async ({ story }) => {
+                // FIXME: subtitle is not read by screen readers, need to investigate further
+                await expect(story.locators.phone.default).toMatchAriaSnapshot(`
+                    - textbox "Enter your Singapore mobile number to receive a verification OTP Default +65"
+                    - button "Send OTP" [disabled=false]
+                `);
+                await expect(
+                    story.locators.internals.phoneNumberInput(
+                        story.locators.phone.default
+                    )
+                ).toHaveAccessibleDescription("This is the subtitle");
+
+                await expect(story.locators.phone.disabled)
+                    .toMatchAriaSnapshot(`
+                    - textbox "Enter your Singapore mobile number to receive a verification OTP Disabled +65" [disabled]
+                `);
+                await expect(
+                    story.locators.internals.phoneNumberInput(
+                        story.locators.phone.disabled
+                    )
+                ).toHaveAccessibleDescription("This is the subtitle");
+
+                await expect(story.locators.phone.readonly)
+                    .toMatchAriaSnapshot(`
+                    - textbox "Enter your Singapore mobile number to receive a verification OTP Read only +65"
+                `);
+                await expect(
+                    story.locators.internals.phoneNumberInput(
+                        story.locators.phone.readonly
+                    )
+                ).toHaveAccessibleDescription("This is the subtitle");
+
+                await expect(story.locators.phone.error).toMatchAriaSnapshot(`
+                    - textbox "Enter your Singapore mobile number to receive a verification OTP Contact error +65"
+                    - button "Send OTP" [disabled=false]
+                `);
+                await expect(
+                    story.locators.internals.phoneNumberInput(
+                        story.locators.phone.error
+                    )
+                ).toHaveAccessibleDescription(
+                    "Please enter a valid phone number This is the subtitle"
+                );
+            });
         });
 
         test.describe(() => {
@@ -94,6 +175,39 @@ test.describe("OtpVerification", () => {
 
             test("OTP states", async ({ story }) => {
                 await compareScreenshot(story, "mount");
+            });
+
+            test("OTP states accessibility", async ({ story }) => {
+                await expect(story.locators.phone.verified)
+                    .toMatchAriaSnapshot(`
+                    - textbox "Enter your Singapore mobile number to receive a verification OTP +65"
+                    - img "Verified"
+                    - button "Verified" [disabled]
+                `);
+
+                await expect(story.locators.phone.sent).toMatchAriaSnapshot(`
+                    - textbox "Enter your Singapore mobile number to receive a verification OTP +65"
+                    - button "Send OTP" [disabled=false]
+                    - group:
+                      - spinbutton "Verify your mobile number"
+                      - button "Verify" [disabled]
+                `);
+
+                await expect(story.locators.phone.sentError)
+                    .toMatchAriaSnapshot(`
+                    - textbox "Enter your Singapore mobile number to receive a verification OTP +65"
+                    - button "Send OTP" [disabled=false]
+                    - group:
+                      - spinbutton "Verify your mobile number"
+                      - button "Verify" [disabled]
+                `);
+                await expect(
+                    story.locators.internals.otpInput(
+                        story.locators.phone.sentError
+                    )
+                ).toHaveAccessibleDescription(
+                    "Invalid OTP code. Please try again."
+                );
             });
         });
 
@@ -194,6 +308,51 @@ test.describe("OtpVerification", () => {
             test("Form variants", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
+
+            test("Accessibility", async ({ story }) => {
+                // FIXME: subtitle is not read by screen readers, need to investigate further
+                await expect(story.locators.email.default).toMatchAriaSnapshot(`
+                    - textbox "Enter your email address to receive a verification OTP Default"
+                    - button "Send OTP" [disabled=false]
+                `);
+                await expect(
+                    story.locators.internals.emailInput(
+                        story.locators.email.default
+                    )
+                ).toHaveAccessibleDescription("This is the subtitle");
+
+                await expect(story.locators.email.disabled)
+                    .toMatchAriaSnapshot(`
+                    - textbox "Enter your email address to receive a verification OTP Disabled" [disabled]
+                `);
+                await expect(
+                    story.locators.internals.emailInput(
+                        story.locators.email.disabled
+                    )
+                ).toHaveAccessibleDescription("This is the subtitle");
+
+                await expect(story.locators.email.readonly)
+                    .toMatchAriaSnapshot(`
+                    - textbox "Enter your email address to receive a verification OTP Read only"
+                `);
+                await expect(
+                    story.locators.internals.emailInput(
+                        story.locators.email.readonly
+                    )
+                ).toHaveAccessibleDescription("This is the subtitle");
+
+                await expect(story.locators.email.error).toMatchAriaSnapshot(`
+                    - textbox "Enter your email address to receive a verification OTP Contact error"
+                    - button "Send OTP" [disabled=false]
+                `);
+                await expect(
+                    story.locators.internals.emailInput(
+                        story.locators.email.error
+                    )
+                ).toHaveAccessibleDescription(
+                    "Please enter a valid email address This is the subtitle"
+                );
+            });
         });
 
         test.describe(() => {
@@ -223,6 +382,39 @@ test.describe("OtpVerification", () => {
 
             test("OTP states", async ({ story }) => {
                 await compareScreenshot(story, "mount");
+            });
+
+            test("OTP states accessibility", async ({ story }) => {
+                await expect(story.locators.email.verified)
+                    .toMatchAriaSnapshot(`
+                    - textbox "Enter your email address to receive a verification OTP"
+                    - img "Verified"
+                    - button "Verified" [disabled]
+                `);
+
+                await expect(story.locators.email.sent).toMatchAriaSnapshot(`
+                    - textbox "Enter your email address to receive a verification OTP"
+                    - button "Send OTP" [disabled=false]
+                    - group:
+                      - spinbutton "Verify your email address"
+                      - button "Verify" [disabled]
+                `);
+
+                await expect(story.locators.email.sentError)
+                    .toMatchAriaSnapshot(`
+                    - textbox "Enter your email address to receive a verification OTP"
+                    - button "Send OTP" [disabled=false]
+                    - group:
+                      - spinbutton "Verify your email address"
+                      - button "Verify" [disabled]
+                `);
+                await expect(
+                    story.locators.internals.otpInput(
+                        story.locators.email.sentError
+                    )
+                ).toHaveAccessibleDescription(
+                    "Invalid OTP code. Please try again."
+                );
             });
         });
 
