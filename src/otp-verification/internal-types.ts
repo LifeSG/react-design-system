@@ -4,6 +4,8 @@ import type { useCountdown } from "../util";
 export interface ContactInputSectionProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
+    "aria-labelledby"?: string | undefined;
+    "aria-describedby"?: string | undefined;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     inputId?: string | undefined;

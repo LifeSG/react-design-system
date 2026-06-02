@@ -22,6 +22,7 @@ const CSR_ONLY_COMPONENTS = new Set([
     "nested-multi-select",
     "input-group",
     "language-switcher",
+    "otp-verification",
 ]);
 
 export default async function Page({

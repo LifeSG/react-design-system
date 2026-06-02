@@ -31,6 +31,7 @@ export const ContactInputWrapper = styled.div<ContactInputWrapperStyleProps>`
     display: flex;
     align-items: center;
     width: ${(props) => (props.$isMaxWidth ? "100%" : "auto")};
+    padding: 0 ${V3_Spacing["spacing-16"]};
     border-radius: ${V3_Radius["sm"]} 0 0 ${V3_Radius["sm"]};
     box-shadow: inset 1px 0 0 ${V3_Colour["border"]},
         inset 0 1px 0 ${V3_Colour["border"]},
@@ -84,6 +85,7 @@ export const ContactInputWrapper = styled.div<ContactInputWrapperStyleProps>`
             `;
         } else if (props.$readonly) {
             return css`
+                padding-left: 0;
                 box-shadow: none;
                 border-radius: ${V3_Radius["sm"]};
                 &:focus-within {
@@ -98,7 +100,7 @@ export const VerifiedIconWrapper = styled.div`
     display: flex;
     align-items: center;
     justify-content: center;
-    padding: 0 ${V3_Spacing["spacing-12"]};
+    padding-left: ${V3_Spacing["spacing-12"]};
     color: ${V3_Colour["icon-success"]};
     flex-shrink: 0;
 
