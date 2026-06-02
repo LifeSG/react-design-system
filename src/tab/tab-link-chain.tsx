@@ -2,8 +2,7 @@ import clsx from "clsx";
 import { useContext, useEffect, useRef } from "react";
 
 import { FadeWrapper, type ResizeCallbackParams } from "../shared/fade-wrapper";
-import { useDesignToken, useSafeMaxWidthMediaQuery } from "../theme";
-import { Breakpoint } from "../theme/tokens";
+import { useMaxWidthMediaQuery } from "../theme";
 import { TabContext } from "./tab-context";
 import * as styles from "./tab-link-chain.styles";
 import type { TabProps } from "./types";
@@ -29,8 +28,7 @@ export const TabLinkChain = ({
     const { setCurrentActiveIndex, currentActiveIndex, tabLinks } =
         useContext(TabContext);
 
-    const tabletBreakpoint = useDesignToken(Breakpoint["lg-max"]);
-    const isTablet = useSafeMaxWidthMediaQuery(tabletBreakpoint);
+    const isTablet = useMaxWidthMediaQuery("lg");
 
     const activeLinkRef = useRef<HTMLLIElement | null>(null);
     const chainRef = useRef<HTMLUListElement | null>(null);

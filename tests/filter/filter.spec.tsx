@@ -4,14 +4,14 @@ import { FilterContext } from "src/filter/filter-context";
 import { FilterModal } from "src/filter/filter-modal";
 import { FilterSidebar } from "src/filter/filter-sidebar";
 import type { FilterItemCheckboxOptionProps } from "src/filter/types";
-import { useSafeMaxWidthMediaQuery } from "src/theme";
+import { useMaxWidthMediaQuery } from "src/theme";
 
 jest.mock("src/theme", () => {
     const actual = jest.requireActual("src/theme");
 
     return {
         ...actual,
-        useSafeMaxWidthMediaQuery: jest.fn(),
+        useMaxWidthMediaQuery: jest.fn(),
     };
 });
 
@@ -30,7 +30,7 @@ describe("Filter", () => {
             disconnect: jest.fn(),
         }));
 
-        jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(false);
+        jest.mocked(useMaxWidthMediaQuery).mockReturnValue(false);
     });
 
     it("should render the relevant components correctly on desktop", () => {
@@ -47,7 +47,7 @@ describe("Filter", () => {
     });
 
     it("should render the relevant components correctly on mobile", () => {
-        jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(true);
+        jest.mocked(useMaxWidthMediaQuery).mockReturnValue(true);
 
         render(
             <Filter>

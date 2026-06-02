@@ -4,12 +4,7 @@ import { useMemo, useRef } from "react";
 import { Card } from "../card";
 import { Markup } from "../markup";
 import { ModalV2 } from "../modal-v2";
-import {
-    Breakpoint,
-    useApplyStyle,
-    useDesignToken,
-    useSafeMaxWidthMediaQuery,
-} from "../theme";
+import { useApplyStyle, useMaxWidthMediaQuery } from "../theme";
 import { Typography } from "../typography";
 import * as styles from "./popover.styles";
 import type { PopoverProps } from "./types";
@@ -29,8 +24,7 @@ export const Popover = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
+    const isMobile = useMaxWidthMediaQuery("sm");
     const popoverContainerRef = useRef<HTMLDivElement>(null);
     const popoverCardStyle = useMemo(
         () => ({
