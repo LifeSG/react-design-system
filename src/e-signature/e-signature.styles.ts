@@ -1,16 +1,12 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
-import { DashedBorder } from "../dashed-border";
-import { Modal } from "../modal";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 // =============================================================================
 // CUSTOM MEDIA QUERIES
 // =============================================================================
 // for mobile in landscape orientation
-const mobileLandscapeMediaQuery =
+const MOBILE_LANDSCAPE =
     "@media (orientation: landscape) and (max-height: 480px)";
 
 // =============================================================================
@@ -21,7 +17,7 @@ const mobileLandscapeMediaQuery =
 // MAIN FIELD
 // -----------------------------------------------------------------------------
 
-export const SignatureArea = styled(DashedBorder)`
+export const signatureArea = css`
     position: relative;
     display: flex;
     align-items: center;
@@ -29,7 +25,7 @@ export const SignatureArea = styled(DashedBorder)`
     height: 14.125rem;
 `;
 
-export const AddSignatureButton = styled(Button)`
+export const addSignatureButton = css`
     width: fit-content;
     margin: 0 ${Spacing["spacing-20"]};
 
@@ -38,7 +34,7 @@ export const AddSignatureButton = styled(Button)`
     }
 `;
 
-export const EditSignatureButton = styled(Button)`
+export const editSignatureButton = css`
     position: absolute;
     top: ${Spacing["spacing-16"]};
     right: ${Spacing["spacing-16"]};
@@ -48,7 +44,7 @@ export const EditSignatureButton = styled(Button)`
     }
 `;
 
-export const SignaturePreviewImage = styled.img`
+export const signaturePreviewImage = css`
     display: block;
     object-fit: contain;
     object-position: center;
@@ -56,7 +52,7 @@ export const SignaturePreviewImage = styled.img`
     height: 100%;
 `;
 
-export const ProgressBox = styled.div`
+export const progressBox = css`
     background: ${Colour["bg-primary-subtlest"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
@@ -69,7 +65,7 @@ export const ProgressBox = styled.div`
     align-items: center;
 `;
 
-export const Instructions = styled(Typography.BodySM)`
+export const instructions = css`
     margin-top: ${Spacing["spacing-16"]};
 `;
 
@@ -77,7 +73,7 @@ export const Instructions = styled(Typography.BodySM)`
 // SIGNATURE MODAL
 // -----------------------------------------------------------------------------
 
-export const ScrollableModal = styled(Modal)`
+export const scrollableModal = css`
     /* increase specificity as the styles are overwritten */
     && {
         height: 100%;
@@ -85,7 +81,7 @@ export const ScrollableModal = styled(Modal)`
     }
 `;
 
-export const GrowContainer = styled.div`
+export const growContainer = css`
     width: 100%;
     margin: auto;
     padding: ${Spacing["layout-xxl"]} ${Spacing["layout-sm"]};
@@ -95,14 +91,14 @@ export const GrowContainer = styled.div`
         width: 100%;
         height: 100%;
     }
-    ${mobileLandscapeMediaQuery} {
+    ${MOBILE_LANDSCAPE} {
         padding: 0;
         width: 100%;
         height: 100%;
     }
 `;
 
-export const ModalBox = styled(Modal.Box)`
+export const modalBox = css`
     width: 100%;
     height: 29rem;
     max-width: 672px;
@@ -121,7 +117,7 @@ export const ModalBox = styled(Modal.Box)`
         --close-button-top-inset: ${Spacing["spacing-8"]};
         --close-button-right-inset: ${Spacing["spacing-20"]};
     }
-    ${mobileLandscapeMediaQuery} {
+    ${MOBILE_LANDSCAPE} {
         display: flex;
         flex-direction: column;
         max-width: none;
@@ -134,7 +130,7 @@ export const ModalBox = styled(Modal.Box)`
     }
 `;
 
-export const ModalTitle = styled.h2`
+export const modalTitle = css`
     ${Font["body-baseline-semibold"]}
     color: ${Colour["text"]};
     margin-bottom: ${Spacing["spacing-16"]};
@@ -144,13 +140,13 @@ export const ModalTitle = styled.h2`
         ${Font["body-md-semibold"]}
         margin: ${Spacing["spacing-12"]} 0;
     }
-    ${mobileLandscapeMediaQuery} {
+    ${MOBILE_LANDSCAPE} {
         ${Font["body-md-semibold"]}
         margin: ${Spacing["spacing-12"]} 0;
     }
 `;
 
-export const ESignatureContainer = styled.div`
+export const eSignatureContainer = css`
     width: 100%;
     height: 20rem;
     border-radius: ${Radius["lg"]};
@@ -160,14 +156,14 @@ export const ESignatureContainer = styled.div`
         border-radius: 0;
         flex: 1;
     }
-    ${mobileLandscapeMediaQuery} {
+    ${MOBILE_LANDSCAPE} {
         border-radius: 0;
         flex: 1;
         background: ${Colour["bg-strong"]};
     }
 `;
 
-export const ESignatureDrawable = styled.div`
+export const eSignatureDrawable = css`
     position: relative;
     width: 100%;
     height: 100%;
@@ -179,14 +175,14 @@ export const ESignatureDrawable = styled.div`
         width: 100%;
         height: auto;
     }
-    ${mobileLandscapeMediaQuery} {
+    ${MOBILE_LANDSCAPE} {
         aspect-ratio: 4/3;
         width: auto;
         height: 100%;
     }
 `;
 
-export const SignatureLine = styled.div`
+export const signatureLine = css`
     position: absolute;
     left: 50%;
     top: calc(75% - 1px);
@@ -201,14 +197,14 @@ export const SignatureLine = styled.div`
         max-width: 300px;
         left: 50%;
     }
-    ${mobileLandscapeMediaQuery} {
+    ${MOBILE_LANDSCAPE} {
         width: calc(100% - ${Spacing["spacing-40"]});
         max-width: 300px;
         left: 50%;
     }
 `;
 
-export const ModalButtons = styled.div`
+export const modalButtons = css`
     display: flex;
     justify-content: space-between;
     margin-top: ${Spacing["spacing-16"]};
@@ -219,28 +215,28 @@ export const ModalButtons = styled.div`
             ${Spacing["spacing-48"]};
         gap: ${Spacing["spacing-16"]};
     }
-    ${mobileLandscapeMediaQuery} {
+    ${MOBILE_LANDSCAPE} {
         flex-direction: row;
         margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
     }
 `;
 
-export const ModalActionButton = styled(Button)`
+export const modalActionButton = css`
     width: 8.5rem;
     ${MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
-    ${mobileLandscapeMediaQuery} {
+    ${MOBILE_LANDSCAPE} {
         height: 2.5rem;
     }
 `;
 
-export const SignatureCanvasContainer = styled.div`
+export const signatureCanvasContainer = css`
     width: 100%;
     height: 100%;
     overflow: hidden;
 `;
 
-export const SignatureCanvas = styled.canvas`
+export const signatureCanvas = css`
     cursor: crosshair;
 `;

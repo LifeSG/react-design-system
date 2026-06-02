@@ -9,10 +9,7 @@ import {
 } from "react";
 
 import { Colour } from "../theme";
-import {
-    SignatureCanvas,
-    SignatureCanvasContainer,
-} from "./e-signature.styles";
+import * as styles from "./e-signature.styles";
 
 interface ESignatureCanvasProps {
     baseImageDataURL?: string | null | undefined;
@@ -142,9 +139,13 @@ const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <SignatureCanvasContainer ref={containerRef}>
-            <SignatureCanvas id="eSignatureCanvas" ref={canvasRef} />
-        </SignatureCanvasContainer>
+        <div className={styles.signatureCanvasContainer} ref={containerRef}>
+            <canvas
+                className={styles.signatureCanvas}
+                id="eSignatureCanvas"
+                ref={canvasRef}
+            />
+        </div>
     );
 };
 
