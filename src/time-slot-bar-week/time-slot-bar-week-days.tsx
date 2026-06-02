@@ -1,4 +1,5 @@
 import { useSpring } from "@react-spring/web";
+import clsx from "clsx";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import isEmpty from "lodash/isEmpty";
@@ -12,29 +13,13 @@ import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import type { InternalCalendarProps } from "../shared/internal-calendar";
 import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
 import { DayCell } from "../shared/internal-calendar/day-cell";
-import { Colour } from "../theme";
+import { Colour, formatUnitValue, useApplyStyle } from "../theme";
 import type { TimeSlot } from "../time-slot-bar/types";
 import { DateHelper } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
 import { StringHelper } from "../util/string-helper";
 import { TimeHelper } from "../util/time-helper";
-import {
-    CellWeekText,
-    ChevronIcon,
-    CollapseExpandAllButton,
-    CollapseExpandAllWrapper,
-    ColumnWeekCell,
-    Expandable,
-    GridWrapper,
-    HeaderCellWeek,
-    HeaderCellWeekColumn,
-    TimeColumn,
-    TimeColumnText,
-    TimeColumnWrapper,
-    TimeSlotComponent,
-    TimeSlotWrapper,
-    Wrapper,
-} from "./time-slot-bar-week-days.styles";
+import * as styles from "./time-slot-bar-week-days.styles";
 import type { TimeSlotCellsVariant } from "./types";
 
 interface TimeSlotWeekDaysProps
@@ -95,6 +80,7 @@ export const TimeSlotBarWeekDays = ({
     const [expandAll, setExpandAll] = useState<boolean>(false);
     const [hoverDay, setHoverDay] = useState<Dayjs>();
     const slotButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
+    const timeColumnRef = useRef<HTMLDivElement>(null);
     const currentCalendarWeek = useMemo((): Dayjs[] => {
         return CalendarHelper.generateDaysForCurrentWeek(calendarDate);
     }, [calendarDate]);
@@ -170,6 +156,10 @@ export const TimeSlotBarWeekDays = ({
             {}
         );
     }, [currentCalendarWeek, generatedDaySlots]);
+
+    useApplyStyle(timeColumnRef, {
+        [styles.tokens.timeColumn.height]: formatUnitValue(height, "px"),
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -493,24 +483,32 @@ export const TimeSlotBarWeekDays = ({
     // =============================================================================
     const renderWeek = () => {
         return (
-            <HeaderCellWeekColumn role="row">
+            <styles.HeaderCellWeekColumn role="row">
                 {currentCalendarWeek.map((day, index) => (
-                    <HeaderCellWeek key={`week-day-${index}`} role="gridcell">
-                        <CellWeekText
+                    <styles.HeaderCellWeek
+                        key={`week-day-${index}`}
+                        role="gridcell"
+                    >
+                        <styles.CellWeekText
                             weight={"semibold"}
-                            $disabled={isDisabled(day)}
+                            className={clsx(
+                                isDisabled(day) && "cellWeekTextDisabled"
+                            )}
                         >
                             {dayjs(day).format("ddd")}
-                        </CellWeekText>
-                    </HeaderCellWeek>
+                        </styles.CellWeekText>
+                    </styles.HeaderCellWeek>
                 ))}
-            </HeaderCellWeekColumn>
+            </styles.HeaderCellWeekColumn>
         );
     };
 
     const renderHeader = () => {
         return (
-            <HeaderCellWeekColumn role="row" onBlur={handleDayHoverClear}>
+            <styles.HeaderCellWeekColumn
+                role="row"
+                onBlur={handleDayHoverClear}
+            >
                 {currentCalendarWeek.map((day, dayIndex) => {
                     const dayCellStyleProps = generateStyleProps(day);
 
@@ -534,7 +532,7 @@ export const TimeSlotBarWeekDays = ({
                         ></DayCell>
                     );
                 })}
-            </HeaderCellWeekColumn>
+            </styles.HeaderCellWeekColumn>
         );
     };
 
@@ -567,15 +565,17 @@ export const TimeSlotBarWeekDays = ({
         };
 
         return (
-            <TimeColumn $height={height} aria-hidden>
+            <styles.TimeColumn ref={timeColumnRef} aria-hidden>
                 {Array(Math.ceil(numberOfCells / 4))
                     .fill(undefined)
                     .map((_, index) => (
-                        <TimeColumnWrapper key={`time-${index}`}>
-                            <TimeColumnText>{formatTime(index)}</TimeColumnText>
-                        </TimeColumnWrapper>
+                        <styles.TimeColumnWrapper key={`time-${index}`}>
+                            <styles.TimeColumnText>
+                                {formatTime(index)}
+                            </styles.TimeColumnText>
+                        </styles.TimeColumnWrapper>
                     ))}
-            </TimeColumn>
+            </styles.TimeColumn>
         );
     };
     const renderSlotCell = (formattedDate: string, slot: TimeSlotCell) => {
@@ -598,19 +598,32 @@ export const TimeSlotBarWeekDays = ({
             !expandAll &&
             (slot.rowIndex ?? 0) >= visibleRowCount;
 
+        const slotHeight =
+            variant === "fixed"
+                ? cellLength * SLOT_HEIGHT + (cellLength - 1) * SLOT_GAP
+                : SLOT_HEIGHT;
+
+        const slotRef = useRef<HTMLDivElement>(null);
+        useApplyStyle(slotRef, {
+            [styles.tokens.timeSlotComponent.height]: formatUnitValue(
+                slotHeight,
+                "px"
+            ),
+        });
+
         return (
-            <TimeSlotComponent
+            <styles.TimeSlotComponent
                 key={id}
+                ref={slotRef}
                 styleType={styleType}
                 bgColor={backgroundColor}
                 bgColor2={backgroundColor2}
                 clickable={clickable}
-                $halfFill={halfFill}
-                $height={
-                    variant === "fixed"
-                        ? cellLength * SLOT_HEIGHT + (cellLength - 1) * SLOT_GAP
-                        : SLOT_HEIGHT
-                }
+                className={clsx(
+                    !halfFill && "timeSlotComponentDefault",
+                    halfFill === "top" && "timeSlotComponentHalfFillTop",
+                    halfFill === "bottom" && "timeSlotComponentHalfFillBottom"
+                )}
                 onClick={() =>
                     clickable && handleSlotClick(formattedDate, slot)
                 }
@@ -639,14 +652,14 @@ export const TimeSlotBarWeekDays = ({
                         />
                     </VisuallyHidden>
                 )}
-            </TimeSlotComponent>
+            </styles.TimeSlotComponent>
         );
     };
 
     const renderTimeSlotBarCells = () => {
         return (
-            <Expandable style={expandableStyles} role="row">
-                <ColumnWeekCell
+            <styles.Expandable style={expandableStyles} role="row">
+                <styles.ColumnWeekCell
                     ref={cellsRef}
                     key={`week-cell-${calendarDate.format(dateFormat)}`}
                 >
@@ -654,47 +667,49 @@ export const TimeSlotBarWeekDays = ({
                         const formattedDate = day.format(dateFormat);
                         const cellsArray = getCellsForDate(formattedDate);
                         return (
-                            <TimeSlotWrapper
+                            <styles.TimeSlotWrapper
                                 key={`wrapper-${dayIndex}`}
                                 role="gridcell"
                             >
                                 {cellsArray.map((slot) =>
                                     renderSlotCell(formattedDate, slot)
                                 )}
-                            </TimeSlotWrapper>
+                            </styles.TimeSlotWrapper>
                         );
                     })}
-                </ColumnWeekCell>
-            </Expandable>
+                </styles.ColumnWeekCell>
+            </styles.Expandable>
         );
     };
 
     const renderCollapseExpandAll = () => {
         if (!maxVisibleCellHeight || !cellsRef.current) return;
         return (
-            <CollapseExpandAllWrapper>
-                <CollapseExpandAllButton
+            <styles.CollapseExpandAllWrapper>
+                <styles.CollapseExpandAllButton
                     data-testid="time-bar-expand-collapse-button"
                     styleType="light"
                     aria-expanded={expandAll}
                     onClick={handleExpandCollapseClick}
                 >
-                    <ChevronIcon $isExpanded={expandAll} />
+                    <styles.ChevronIcon
+                        className={clsx(expandAll && "chevronIconExpanded")}
+                    />
                     {`${expandAll ? "Hide" : "Show"} later times`}
-                </CollapseExpandAllButton>
-            </CollapseExpandAllWrapper>
+                </styles.CollapseExpandAllButton>
+            </styles.CollapseExpandAllWrapper>
         );
     };
 
     return (
-        <Wrapper>
-            <GridWrapper role="grid">
+        <styles.Wrapper>
+            <styles.GridWrapper role="grid">
                 {renderHeader()}
                 {renderWeek()}
                 {renderTimeColumn()}
                 {renderTimeSlotBarCells()}
-            </GridWrapper>
+            </styles.GridWrapper>
             {renderCollapseExpandAll()}
-        </Wrapper>
+        </styles.Wrapper>
     );
 };

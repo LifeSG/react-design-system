@@ -1,28 +1,20 @@
 import { ChevronUpIcon } from "@lifesg/react-icons";
 import { animated } from "@react-spring/web";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button } from "../button";
 import { TimeSlot } from "../shared/time-slot";
 import { Colour, Font, Motion, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
 
-interface TimeSlotCellProps {
-    $height: number;
-    $halfFill?: "top" | "bottom";
-}
-
-interface TimeColumnStyleProps {
-    $height?: number;
-}
-
-interface CellWeekTextStyleProps {
-    $disabled?: boolean;
-}
-
-interface ChevronIconStyleProps {
-    $isExpanded?: boolean;
-}
+export const tokens = {
+    timeColumn: {
+        height: "--fds-internal-timeSlotBarWeek-timeColumn-height",
+    },
+    timeSlotComponent: {
+        height: "--fds-internal-timeSlotBarWeek-timeSlotComponent-height",
+    },
+};
 
 export const HeaderCellWeek = styled.div`
     display: flex;
@@ -34,12 +26,10 @@ export const HeaderCellWeek = styled.div`
     flex: 1;
 `;
 
-export const CellWeekText = styled(Typography.BodyXS)<CellWeekTextStyleProps>`
-    ${(props) =>
-        props.$disabled &&
-        css`
-            color: ${Colour["text-disabled-subtlest"]};
-        `}
+export const CellWeekText = styled(Typography.BodyXS)`
+    &.cellWeekTextDisabled {
+        color: ${Colour["text-disabled-subtlest"]};
+    }
 `;
 
 export const HeaderCellWeekColumn = styled.div`
@@ -70,7 +60,8 @@ export const ColumnWeekCell = styled.div`
     overflow: hidden;
 `;
 
-export const TimeColumn = styled.div<TimeColumnStyleProps>`
+export const TimeColumn = styled.div`
+    ${tokens.timeColumn.height}: initial;
     display: flex;
     flex-direction: column;
     grid-row: 3 / auto;
@@ -78,8 +69,7 @@ export const TimeColumn = styled.div<TimeColumnStyleProps>`
     width: 1.375rem;
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     overflow: hidden;
-
-    ${(props) => props.$height && `height: ${props.$height}px;`}
+    height: var(${tokens.timeColumn.height});
 `;
 
 export const TimeColumnWrapper = styled.div`
@@ -121,12 +111,17 @@ export const CollapseExpandAllButton = styled(Button.Small)`
     }
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)<ChevronIconStyleProps>`
-    transform: rotate(${(props) => (props.$isExpanded ? 0 : 180)}deg);
+export const ChevronIcon = styled(ChevronUpIcon)`
+    transform: rotate(180deg);
     transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
+
+    &.chevronIconExpanded {
+        transform: rotate(0deg);
+    }
 `;
 
-export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
+export const TimeSlotComponent = styled(TimeSlot)`
+    ${tokens.timeSlotComponent.height}: initial;
     display: flex;
     flex-grow: 1;
     align-items: center;
@@ -134,8 +129,8 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
     width: 100%;
     position: relative;
     max-width: 200px;
-    height: ${(props) => props.$height}px;
-    min-height: ${(props) => props.$height}px;
+    height: var(${tokens.timeSlotComponent.height});
+    min-height: var(${tokens.timeSlotComponent.height});
     margin: 0;
     border-radius: ${Radius["xs"]};
 
@@ -144,30 +139,49 @@ export const TimeSlotComponent = styled(TimeSlot)<TimeSlotCellProps>`
         outline-offset: -2px;
     }
 
-    ${(props) => {
-        if (!props.$halfFill) {
-            return css`
-                background-color: ${props.bgColor};
-            `;
-        } else {
-            return css`
-                background: linear-gradient(
-                        to ${props.$halfFill},
-                        ${props.styleType === "stripes"
-                                ? "transparent"
-                                : props.bgColor}
-                            50%,
-                        ${Colour["bg-strongest"]} 0%
-                    )
-                    ${props.styleType === "stripes" &&
-                    `, repeating-linear-gradient(
-                            135deg,
-                            ${props.bgColor2 || Colour["bg-strongest"]} 0px,
-                            ${props.bgColor2 || Colour["bg-strongest"]} 10px,
-                            ${props.bgColor || Colour["bg-stronger"]} 10px,
-                            ${props.bgColor || Colour["bg-stronger"]} 20px
-                        )`};
-            `;
-        }
-    }}
+    &.timeSlotComponentDefault {
+        background-color: ${(props) => props.bgColor};
+    }
+
+    &.timeSlotComponentHalfFillTop {
+        background: linear-gradient(
+                to top,
+                ${(props) =>
+                        props.styleType === "stripes"
+                            ? "transparent"
+                            : props.bgColor}
+                    50%,
+                ${Colour["bg-strongest"]} 0%
+            )
+            ${(props) =>
+                props.styleType === "stripes" &&
+                `, repeating-linear-gradient(
+                        135deg,
+                        ${props.bgColor2 || Colour["bg-strongest"]} 0px,
+                        ${props.bgColor2 || Colour["bg-strongest"]} 10px,
+                        ${props.bgColor || Colour["bg-stronger"]} 10px,
+                        ${props.bgColor || Colour["bg-stronger"]} 20px
+                    )`};
+    }
+
+    &.timeSlotComponentHalfFillBottom {
+        background: linear-gradient(
+                to bottom,
+                ${(props) =>
+                        props.styleType === "stripes"
+                            ? "transparent"
+                            : props.bgColor}
+                    50%,
+                ${Colour["bg-strongest"]} 0%
+            )
+            ${(props) =>
+                props.styleType === "stripes" &&
+                `, repeating-linear-gradient(
+                        135deg,
+                        ${props.bgColor2 || Colour["bg-strongest"]} 0px,
+                        ${props.bgColor2 || Colour["bg-strongest"]} 10px,
+                        ${props.bgColor || Colour["bg-stronger"]} 10px,
+                        ${props.bgColor || Colour["bg-stronger"]} 20px
+                    )`};
+    }
 `;
