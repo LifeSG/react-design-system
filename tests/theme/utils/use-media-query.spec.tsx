@@ -1,11 +1,9 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { ThemeProvider } from "src/theme";
 import { Breakpoint } from "src/theme/tokens/breakpoint";
-import type { BreakpointCSSVariableString } from "src/theme/types";
 import {
     type MediaQueryOptions,
     useMediaQuery,
-    useSafeMaxWidthMediaQuery,
 } from "src/theme/utils/use-media-query";
 
 import {
@@ -16,18 +14,6 @@ import {
 
 const CoreConsumer = ({ options }: { options: MediaQueryOptions }) => {
     const result = useMediaQuery(options);
-
-    return <div data-testid="result">{String(result)}</div>;
-};
-
-const SafeMaxWidthConsumer = ({
-    fallback,
-    maxWidth,
-}: {
-    fallback?: string;
-    maxWidth?: BreakpointCSSVariableString;
-}) => {
-    const result = useSafeMaxWidthMediaQuery(maxWidth, fallback);
 
     return <div data-testid="result">{String(result)}</div>;
 };
@@ -218,21 +204,6 @@ describe("useMediaQuery", () => {
 
         await waitFor(() => {
             expect(screen.getByTestId("result").textContent).toBe("false");
-        });
-    });
-
-    it("keeps the safe max-width wrapper fallback behavior", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
-
-        renderWithTheme(
-            <SafeMaxWidthConsumer fallback="480px" maxWidth={undefined} />
-        );
-
-        await waitFor(() => {
-            expect(matchMedia).toHaveBeenCalledWith("(max-width: 480px)");
-        });
-        await waitFor(() => {
-            expect(screen.getByTestId("result").textContent).toBe("true");
         });
     });
 });

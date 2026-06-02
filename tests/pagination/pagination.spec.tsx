@@ -1,7 +1,7 @@
 import { render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Pagination } from "src/pagination";
-import { useSafeMaxWidthMediaQuery } from "src/theme";
+import { useMaxWidthMediaQuery } from "src/theme";
 
 jest.mock("react-resize-detector");
 jest.mock("src/theme", () => {
@@ -10,7 +10,7 @@ jest.mock("src/theme", () => {
     return {
         __esModule: true,
         ...originalModule,
-        useSafeMaxWidthMediaQuery: jest.fn(),
+        useMaxWidthMediaQuery: jest.fn(),
     };
 });
 
@@ -26,7 +26,7 @@ const LAST_PAGE_LABEL = "Last page";
 describe("Pagination", () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(false);
+        jest.mocked(useMaxWidthMediaQuery).mockReturnValue(false);
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
@@ -552,7 +552,7 @@ describe("Pagination", () => {
 
     describe("mobile", () => {
         beforeEach(() => {
-            jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(true);
+            jest.mocked(useMaxWidthMediaQuery).mockReturnValue(true);
         });
 
         it("should render the mobile variant", async () => {
@@ -656,7 +656,7 @@ describe("Pagination", () => {
             });
 
             it("should reflect the entered page number", async () => {
-                jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(true);
+                jest.mocked(useMaxWidthMediaQuery).mockReturnValue(true);
                 const user = userEvent.setup();
                 const mockOnPageChange = jest.fn();
 

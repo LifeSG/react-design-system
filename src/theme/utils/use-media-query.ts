@@ -223,29 +223,3 @@ export const useMediaQuery = (options: MediaQueryOptions): boolean => {
 
     return useMatchMediaQuery(queryString, defaultMatch);
 };
-
-/**
- * @deprecated Use `useMaxWidthMediaQuery` from `use-breakpoint-hooks` instead.
- * This wrapper is legacy and will be removed.
- *
- * A safer wrapper around `useMediaQuery` that guards against invalid/empty
- * max-width values (e.g. unresolved tokens), and falls back to a valid default.
- */
-export const useSafeMaxWidthMediaQuery = (
-    maxWidth: string | undefined,
-    fallback: string = DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT
-) => {
-    const normalizedFallback =
-        normalizeCssLengthValue(fallback) ??
-        DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT;
-    const breakpointToken = isBreakpointToken(maxWidth) ? maxWidth : undefined;
-    const resolvedTokenMaxWidth = useResolvedBreakpointToken(breakpointToken);
-    const normalizedRawMaxWidth = normalizeCssLengthValue(maxWidth);
-    const resolvedMaxWidth =
-        resolvedTokenMaxWidth ?? normalizedRawMaxWidth ?? normalizedFallback;
-
-    const queryString =
-        getMediaQueryClause("max-width", resolvedMaxWidth) ?? "";
-
-    return useMatchMediaQuery(queryString, false);
-};

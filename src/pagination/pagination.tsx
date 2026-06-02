@@ -12,11 +12,7 @@ import { Input } from "../input";
 import { InputSelect } from "../input-select";
 import { VisuallyHidden } from "../shared/accessibility";
 import { ClickableIcon } from "../shared/clickable-icon";
-import {
-    Breakpoint,
-    useDesignToken,
-    useSafeMaxWidthMediaQuery,
-} from "../theme";
+import { useMaxWidthMediaQuery } from "../theme";
 import { Typography } from "../typography";
 import { useId, useIsMounted } from "../util";
 import * as styles from "./pagination.styles";
@@ -43,8 +39,7 @@ const Component = (
     // =============================================================================
 
     const isMounted = useIsMounted();
-    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
+    const isMobile = useMaxWidthMediaQuery("sm");
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");

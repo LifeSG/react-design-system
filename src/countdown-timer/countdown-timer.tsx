@@ -6,11 +6,9 @@ import { useInView } from "react-intersection-observer";
 
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import {
-    Breakpoint,
     formatUnitValue,
     useApplyStyle,
-    useDesignToken,
-    useSafeMaxWidthMediaQuery,
+    useMaxWidthMediaQuery,
 } from "../theme";
 import { useIsMounted } from "../util";
 import { TimeHelper } from "../util/time-helper";
@@ -64,8 +62,7 @@ export const CountdownTimer = ({
     const warn =
         typeof notifyTimer === "number" && remainingSeconds <= notifyTimer;
 
-    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
+    const isMobile = useMaxWidthMediaQuery("sm");
 
     // =============================================================================
     // EFFECTS
