@@ -1,19 +1,10 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button } from "../button";
 import { DashedBorder } from "../dashed-border";
 import { Modal } from "../modal";
-import { Border, Colour, Radius } from "../theme";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
-import {
-    V3_Border,
-    V3_Breakpoint,
-    V3_Colour,
-    V3_Font,
-    V3_MediaQuery,
-    V3_Radius,
-    V3_Spacing,
-} from "../v3_theme";
 
 // =============================================================================
 // STYLE INTERFACES
@@ -25,22 +16,9 @@ interface SignatureAreaProps {
 // =============================================================================
 // CUSTOM MEDIA QUERIES
 // =============================================================================
-// for mobileL and below in both orientations
-const mobileMediaQuery = css`
-    ${(props) => `
-        ${V3_MediaQuery.MaxWidth.sm(props)},
-        (orientation: landscape) and (max-height: ${V3_Breakpoint["sm-max"](
-            props
-        )}px)
-    `}
-`;
-const mobileLandscapeMediaQuery = css`
-    ${(props) => `
-        @media (orientation: landscape) and (max-height: ${V3_Breakpoint[
-            "sm-max"
-        ](props)}px)
-    `}
-`;
+// for mobile in landscape orientation
+const mobileLandscapeMediaQuery =
+    "@media (orientation: landscape) and (max-height: 480px)";
 
 // =============================================================================
 // STYLING
@@ -65,22 +43,22 @@ export const SignatureArea = styled(DashedBorder).attrs<SignatureAreaProps>(
     height: 14.125rem;
 `;
 
-export const AddSignatureButton = styled(Button.Default)`
+export const AddSignatureButton = styled(Button)`
     width: fit-content;
-    margin: 0 ${V3_Spacing["spacing-20"]};
+    margin: 0 ${Spacing["spacing-20"]};
 
     &:disabled {
-        border-color: ${V3_Colour["border-strong"]};
+        border-color: ${Colour["border-strong"]};
     }
 `;
 
 export const EditSignatureButton = styled(Button)`
     position: absolute;
-    top: ${V3_Spacing["spacing-16"]};
-    right: ${V3_Spacing["spacing-16"]};
+    top: ${Spacing["spacing-16"]};
+    right: ${Spacing["spacing-16"]};
 
     &:disabled {
-        border-color: ${V3_Colour["border-strong"]};
+        border-color: ${Colour["border-strong"]};
     }
 `;
 
@@ -88,26 +66,25 @@ export const SignaturePreviewImage = styled.img`
     display: block;
     object-fit: contain;
     object-position: center;
-    width: calc(100% - (3rem + ${V3_Spacing["spacing-16"]}) * 2);
+    width: calc(100% - (3rem + ${Spacing["spacing-16"]}) * 2);
     height: 100%;
 `;
 
 export const ProgressBox = styled.div`
-    background: ${V3_Colour["bg-primary-subtlest"]};
-    border: ${V3_Border["width-010"]} ${V3_Border["solid"]}
-        ${V3_Colour["border"]};
-    border-radius: ${V3_Radius["sm"]};
-    margin: 0 ${V3_Spacing["spacing-20"]};
-    padding: ${V3_Spacing["spacing-16"]};
+    background: ${Colour["bg-primary-subtlest"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    margin: 0 ${Spacing["spacing-20"]};
+    padding: ${Spacing["spacing-16"]};
     display: flex;
-    gap: ${V3_Spacing["spacing-16"]};
+    gap: ${Spacing["spacing-16"]};
     flex: 1;
     flex-direction: column;
     align-items: center;
 `;
 
 export const Instructions = styled(Typography.BodySM)`
-    margin-top: ${V3_Spacing["spacing-16"]};
+    margin-top: ${Spacing["spacing-16"]};
 `;
 
 // -----------------------------------------------------------------------------
@@ -125,9 +102,14 @@ export const ScrollableModal = styled(Modal)`
 export const GrowContainer = styled.div`
     width: 100%;
     margin: auto;
-    padding: ${V3_Spacing["layout-xxl"]} ${V3_Spacing["layout-sm"]};
+    padding: ${Spacing["layout-xxl"]} ${Spacing["layout-sm"]};
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm} {
+        padding: 0;
+        width: 100%;
+        height: 100%;
+    }
+    ${mobileLandscapeMediaQuery} {
         padding: 0;
         width: 100%;
         height: 100%;
@@ -140,9 +122,9 @@ export const ModalBox = styled(Modal.Box)`
     max-width: 672px;
     max-height: none;
     margin: 0 auto;
-    padding: ${V3_Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-16"]};
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm} {
         display: flex;
         flex-direction: column;
         max-width: none;
@@ -150,36 +132,52 @@ export const ModalBox = styled(Modal.Box)`
         border-radius: 0;
         padding: 0;
 
-        --close-button-top-inset: ${V3_Spacing["spacing-8"]};
-        --close-button-right-inset: ${V3_Spacing["spacing-20"]};
+        --close-button-top-inset: ${Spacing["spacing-8"]};
+        --close-button-right-inset: ${Spacing["spacing-20"]};
+    }
+    ${mobileLandscapeMediaQuery} {
+        display: flex;
+        flex-direction: column;
+        max-width: none;
+        height: 100%;
+        border-radius: 0;
+        padding: 0;
+
+        --close-button-top-inset: ${Spacing["spacing-8"]};
+        --close-button-right-inset: ${Spacing["spacing-20"]};
     }
 `;
 
 export const ModalTitle = styled.h2`
-    ${V3_Font["body-baseline-semibold"]}
-    color: ${V3_Colour["text"]};
-    margin-bottom: ${V3_Spacing["spacing-16"]};
+    ${Font["body-baseline-semibold"]}
+    color: ${Colour["text"]};
+    margin-bottom: ${Spacing["spacing-16"]};
     text-align: center;
 
-    ${mobileMediaQuery} {
-        ${V3_Font["body-md-semibold"]}
-        margin: ${V3_Spacing["spacing-12"]} 0;
+    ${MediaQuery.MaxWidth.sm} {
+        ${Font["body-md-semibold"]}
+        margin: ${Spacing["spacing-12"]} 0;
+    }
+    ${mobileLandscapeMediaQuery} {
+        ${Font["body-md-semibold"]}
+        margin: ${Spacing["spacing-12"]} 0;
     }
 `;
 
 export const ESignatureContainer = styled.div`
     width: 100%;
     height: 20rem;
-    border-radius: ${V3_Radius["lg"]};
+    border-radius: ${Radius["lg"]};
     overflow: hidden;
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm} {
         border-radius: 0;
         flex: 1;
     }
-
     ${mobileLandscapeMediaQuery} {
-        background: ${V3_Colour["bg-strong"]};
+        border-radius: 0;
+        flex: 1;
+        background: ${Colour["bg-strong"]};
     }
 `;
 
@@ -187,17 +185,16 @@ export const ESignatureDrawable = styled.div`
     position: relative;
     width: 100%;
     height: 100%;
-    background: ${V3_Colour["bg-stronger"]};
+    background: ${Colour["bg-stronger"]};
     margin: auto;
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm} {
         aspect-ratio: 4/3;
-    }
-    ${V3_MediaQuery.MaxWidth.sm} {
         width: 100%;
         height: auto;
     }
     ${mobileLandscapeMediaQuery} {
+        aspect-ratio: 4/3;
         width: auto;
         height: 100%;
     }
@@ -210,11 +207,16 @@ export const SignatureLine = styled.div`
     width: 300px;
     height: 2px;
     transform: translateX(-50%);
-    background-color: ${V3_Colour["border-strong"]};
+    background-color: ${Colour["border-strong"]};
     pointer-events: none;
 
-    ${mobileMediaQuery} {
-        width: calc(100% - ${V3_Spacing["spacing-40"]});
+    ${MediaQuery.MaxWidth.sm} {
+        width: calc(100% - ${Spacing["spacing-40"]});
+        max-width: 300px;
+        left: 50%;
+    }
+    ${mobileLandscapeMediaQuery} {
+        width: calc(100% - ${Spacing["spacing-40"]});
         max-width: 300px;
         left: 50%;
     }
@@ -223,24 +225,23 @@ export const SignatureLine = styled.div`
 export const ModalButtons = styled.div`
     display: flex;
     justify-content: space-between;
-    margin-top: ${V3_Spacing["spacing-16"]};
+    margin-top: ${Spacing["spacing-16"]};
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         flex-direction: column-reverse;
-        margin: ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-24"]}
-            ${V3_Spacing["spacing-48"]};
-        gap: ${V3_Spacing["spacing-16"]};
+        margin: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]}
+            ${Spacing["spacing-48"]};
+        gap: ${Spacing["spacing-16"]};
     }
-
     ${mobileLandscapeMediaQuery} {
         flex-direction: row;
-        margin: ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-20"]};
+        margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
     }
 `;
 
-export const ModalActionButton = styled(Button.Default)`
+export const ModalActionButton = styled(Button)`
     width: 8.5rem;
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
     ${mobileLandscapeMediaQuery} {

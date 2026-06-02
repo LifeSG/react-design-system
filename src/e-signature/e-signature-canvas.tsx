@@ -3,14 +3,12 @@ import type { Ref } from "react";
 import {
     forwardRef,
     useCallback,
-    useContext,
     useEffect,
     useImperativeHandle,
     useRef,
 } from "react";
-import { ThemeContext } from "styled-components";
 
-import { V3_Colour } from "../v3_theme";
+import { Colour } from "../theme";
 import {
     SignatureCanvas,
     SignatureCanvasContainer,
@@ -38,7 +36,6 @@ const Component = (
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvas = useRef<FabricCanvas>();
     const pencilBrush = useRef<PencilBrush>();
-    const theme = useContext(ThemeContext);
 
     // =============================================================================
     // HOOKS
@@ -95,7 +92,7 @@ const Component = (
             fabricCanvas.current.isDrawingMode = true;
 
             pencilBrush.current = new PencilBrush(fabricCanvas.current);
-            pencilBrush.current.color = V3_Colour["text"]({ theme });
+            pencilBrush.current.color = Colour["text"];
             pencilBrush.current.width = 3;
 
             fabricCanvas.current.freeDrawingBrush = pencilBrush.current;
