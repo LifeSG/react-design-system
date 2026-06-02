@@ -7,13 +7,6 @@ import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface SignatureAreaProps {
-    $disabled: boolean | undefined;
-}
-
-// =============================================================================
 // CUSTOM MEDIA QUERIES
 // =============================================================================
 // for mobile in landscape orientation
@@ -28,14 +21,7 @@ const mobileLandscapeMediaQuery =
 // MAIN FIELD
 // -----------------------------------------------------------------------------
 
-export const SignatureArea = styled(DashedBorder).attrs<SignatureAreaProps>(
-    (props) => ({
-        thickness: Border["width-040"],
-        radius: Radius["sm"],
-        colour: props.$disabled ? Colour["border-disabled"] : Colour["border"],
-        backgroundColor: props.$disabled ? Colour["bg-disabled"] : Colour["bg"],
-    })
-)<SignatureAreaProps>`
+export const SignatureArea = styled(DashedBorder)`
     position: relative;
     display: flex;
     align-items: center;
