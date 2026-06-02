@@ -1,4 +1,5 @@
-import { useSpring } from "@react-spring/web";
+import { ChevronUpIcon } from "@lifesg/react-icons";
+import { animated, useSpring } from "@react-spring/web";
 import clsx from "clsx";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
@@ -9,12 +10,15 @@ import type React from "react";
 import { useMemo, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { Button } from "../button";
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import type { InternalCalendarProps } from "../shared/internal-calendar";
 import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
 import { DayCell } from "../shared/internal-calendar/day-cell";
+import { TimeSlot as TimeSlotComponent } from "../shared/time-slot";
 import { Colour, formatUnitValue, useApplyStyle } from "../theme";
 import type { TimeSlot } from "../time-slot-bar/types";
+import { Typography } from "../typography";
 import { DateHelper } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
 import { StringHelper } from "../util/string-helper";
@@ -483,29 +487,31 @@ export const TimeSlotBarWeekDays = ({
     // =============================================================================
     const renderWeek = () => {
         return (
-            <styles.HeaderCellWeekColumn role="row">
+            <div className={styles.headerCellWeekColumn} role="row">
                 {currentCalendarWeek.map((day, index) => (
-                    <styles.HeaderCellWeek
+                    <div
                         key={`week-day-${index}`}
+                        className={styles.headerCellWeek}
                         role="gridcell"
                     >
-                        <styles.CellWeekText
+                        <Typography.BodyXS
                             weight={"semibold"}
                             className={clsx(
-                                isDisabled(day) && "cellWeekTextDisabled"
+                                isDisabled(day) && styles.cellWeekTextDisabled
                             )}
                         >
                             {dayjs(day).format("ddd")}
-                        </styles.CellWeekText>
-                    </styles.HeaderCellWeek>
+                        </Typography.BodyXS>
+                    </div>
                 ))}
-            </styles.HeaderCellWeekColumn>
+            </div>
         );
     };
 
     const renderHeader = () => {
         return (
-            <styles.HeaderCellWeekColumn
+            <div
+                className={styles.headerCellWeekColumn}
                 role="row"
                 onBlur={handleDayHoverClear}
             >
@@ -532,7 +538,7 @@ export const TimeSlotBarWeekDays = ({
                         ></DayCell>
                     );
                 })}
-            </styles.HeaderCellWeekColumn>
+            </div>
         );
     };
 
@@ -565,17 +571,20 @@ export const TimeSlotBarWeekDays = ({
         };
 
         return (
-            <styles.TimeColumn ref={timeColumnRef} aria-hidden>
+            <div className={styles.timeColumn} ref={timeColumnRef} aria-hidden>
                 {Array(Math.ceil(numberOfCells / 4))
                     .fill(undefined)
                     .map((_, index) => (
-                        <styles.TimeColumnWrapper key={`time-${index}`}>
-                            <styles.TimeColumnText>
+                        <div
+                            key={`time-${index}`}
+                            className={styles.timeColumnWrapper}
+                        >
+                            <div className={styles.timeColumnText}>
                                 {formatTime(index)}
-                            </styles.TimeColumnText>
-                        </styles.TimeColumnWrapper>
+                            </div>
+                        </div>
                     ))}
-            </styles.TimeColumn>
+            </div>
         );
     };
     const renderSlotCell = (formattedDate: string, slot: TimeSlotCell) => {
@@ -609,10 +618,13 @@ export const TimeSlotBarWeekDays = ({
                 slotHeight,
                 "px"
             ),
+            [styles.tokens.timeSlotComponent.halfFillBgColor]: backgroundColor,
+            [styles.tokens.timeSlotComponent.halfFillBgColor2]:
+                backgroundColor2,
         });
 
         return (
-            <styles.TimeSlotComponent
+            <TimeSlotComponent
                 key={id}
                 ref={slotRef}
                 styleType={styleType}
@@ -620,9 +632,10 @@ export const TimeSlotBarWeekDays = ({
                 bgColor2={backgroundColor2}
                 clickable={clickable}
                 className={clsx(
-                    !halfFill && "timeSlotComponentDefault",
-                    halfFill === "top" && "timeSlotComponentHalfFillTop",
-                    halfFill === "bottom" && "timeSlotComponentHalfFillBottom"
+                    styles.timeSlotComponent,
+                    halfFill === "top" && styles.timeSlotComponentHalfFillTop,
+                    halfFill === "bottom" &&
+                        styles.timeSlotComponentHalfFillBottom
                 )}
                 onClick={() =>
                     clickable && handleSlotClick(formattedDate, slot)
@@ -652,14 +665,19 @@ export const TimeSlotBarWeekDays = ({
                         />
                     </VisuallyHidden>
                 )}
-            </styles.TimeSlotComponent>
+            </TimeSlotComponent>
         );
     };
 
     const renderTimeSlotBarCells = () => {
         return (
-            <styles.Expandable style={expandableStyles} role="row">
-                <styles.ColumnWeekCell
+            <animated.div
+                className={styles.expandable}
+                style={expandableStyles}
+                role="row"
+            >
+                <div
+                    className={styles.columnWeekCell}
                     ref={cellsRef}
                     key={`week-cell-${calendarDate.format(dateFormat)}`}
                 >
@@ -667,49 +685,57 @@ export const TimeSlotBarWeekDays = ({
                         const formattedDate = day.format(dateFormat);
                         const cellsArray = getCellsForDate(formattedDate);
                         return (
-                            <styles.TimeSlotWrapper
+                            <div
                                 key={`wrapper-${dayIndex}`}
+                                className={styles.timeSlotWrapper}
                                 role="gridcell"
                             >
                                 {cellsArray.map((slot) =>
                                     renderSlotCell(formattedDate, slot)
                                 )}
-                            </styles.TimeSlotWrapper>
+                            </div>
                         );
                     })}
-                </styles.ColumnWeekCell>
-            </styles.Expandable>
+                </div>
+            </animated.div>
         );
     };
 
     const renderCollapseExpandAll = () => {
         if (!maxVisibleCellHeight || !cellsRef.current) return;
         return (
-            <styles.CollapseExpandAllWrapper>
-                <styles.CollapseExpandAllButton
+            <div className={styles.collapseExpandAllWrapper}>
+                <Button
                     data-testid="time-bar-expand-collapse-button"
                     styleType="light"
+                    sizeType="small"
                     aria-expanded={expandAll}
                     onClick={handleExpandCollapseClick}
+                    className={styles.collapseExpandAllButton}
                 >
-                    <styles.ChevronIcon
-                        className={clsx(expandAll && "chevronIconExpanded")}
-                    />
-                    {`${expandAll ? "Hide" : "Show"} later times`}
-                </styles.CollapseExpandAllButton>
-            </styles.CollapseExpandAllWrapper>
+                    <span className={styles.collapseExpandAllButtonContent}>
+                        <ChevronUpIcon
+                            className={clsx(
+                                styles.chevronIcon,
+                                expandAll && styles.chevronIconExpanded
+                            )}
+                        />
+                        {`${expandAll ? "Hide" : "Show"} later times`}
+                    </span>
+                </Button>
+            </div>
         );
     };
 
     return (
-        <styles.Wrapper>
-            <styles.GridWrapper role="grid">
+        <div className={styles.wrapper}>
+            <div className={styles.gridWrapper} role="grid">
                 {renderHeader()}
                 {renderWeek()}
                 {renderTimeColumn()}
                 {renderTimeSlotBarCells()}
-            </styles.GridWrapper>
+            </div>
             {renderCollapseExpandAll()}
-        </styles.Wrapper>
+        </div>
     );
 };

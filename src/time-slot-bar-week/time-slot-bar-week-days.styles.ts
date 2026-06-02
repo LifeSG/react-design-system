@@ -1,11 +1,6 @@
-import { ChevronUpIcon } from "@lifesg/react-icons";
-import { animated } from "@react-spring/web";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
-import { TimeSlot } from "../shared/time-slot";
 import { Colour, Font, Motion, Radius, Spacing } from "../theme";
-import { Typography } from "../typography";
 
 export const tokens = {
     timeColumn: {
@@ -13,10 +8,14 @@ export const tokens = {
     },
     timeSlotComponent: {
         height: "--fds-internal-timeSlotBarWeek-timeSlotComponent-height",
+        halfFillBgColor:
+            "--fds-internal-timeSlotBarWeek-timeSlotComponent-halfFillBgColor",
+        halfFillBgColor2:
+            "--fds-internal-timeSlotBarWeek-timeSlotComponent-halfFillBgColor2",
     },
 };
 
-export const HeaderCellWeek = styled.div`
+export const headerCellWeek = css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -26,41 +25,39 @@ export const HeaderCellWeek = styled.div`
     flex: 1;
 `;
 
-export const CellWeekText = styled(Typography.BodyXS)`
-    &.cellWeekTextDisabled {
-        color: ${Colour["text-disabled-subtlest"]};
-    }
+export const cellWeekTextDisabled = css`
+    color: ${Colour["text-disabled-subtlest"]};
 `;
 
-export const HeaderCellWeekColumn = styled.div`
+export const headerCellWeekColumn = css`
     grid-column: 2 / -1;
     display: flex;
 `;
 
-export const Wrapper = styled.div`
+export const wrapper = css`
     width: 100%;
 `;
 
-export const GridWrapper = styled.div`
+export const gridWrapper = css`
     width: 100%;
     display: grid;
     grid-template-columns: auto repeat(7, 1fr);
     column-gap: ${Spacing["spacing-4"]};
 `;
 
-export const Expandable = animated(styled.div`
+export const expandable = css`
     grid-column: 2 / -1;
     overflow: hidden;
-`);
+`;
 
-export const ColumnWeekCell = styled.div`
+export const columnWeekCell = css`
     display: flex;
     gap: ${Spacing["spacing-4"]};
     transition: all ${Motion["duration-250"]} ${Motion["ease-default"]};
     overflow: hidden;
 `;
 
-export const TimeColumn = styled.div`
+export const timeColumn = css`
     ${tokens.timeColumn.height}: initial;
     display: flex;
     flex-direction: column;
@@ -72,56 +69,61 @@ export const TimeColumn = styled.div`
     height: var(${tokens.timeColumn.height});
 `;
 
-export const TimeColumnWrapper = styled.div`
+export const timeColumnWrapper = css`
     min-height: 60px;
+
     &:last-child {
         min-height: 0;
     }
 `;
 
-export const TimeColumnText = styled.div`
+export const timeColumnText = css`
     ${Font["body-xs-bold"]}
     color: ${Colour["text-subtler"]};
     text-align: center;
     line-height: 12px; // align with cell on the same row
+
     &:first-line {
         font-size: ${Font.Spec["body-size-sm"]};
     }
 `;
 
-export const TimeSlotWrapper = styled.div`
+export const timeSlotWrapper = css`
     display: flex;
     flex-direction: column;
     flex: 1;
     gap: ${Spacing["spacing-4"]};
 `;
 
-export const CollapseExpandAllWrapper = styled.div`
+export const collapseExpandAllWrapper = css`
     display: flex;
     margin-top: ${Spacing["spacing-8"]};
 `;
 
-export const CollapseExpandAllButton = styled(Button.Small)`
+export const collapseExpandAllButton = css`
     width: 100%;
     height: 2.5rem;
-    span {
-        display: flex;
-        align-items: center;
-        gap: ${Spacing["spacing-8"]};
-    }
 `;
 
-export const ChevronIcon = styled(ChevronUpIcon)`
+export const collapseExpandAllButtonContent = css`
+    display: flex;
+    align-items: center;
+    gap: ${Spacing["spacing-8"]};
+`;
+
+export const chevronIcon = css`
     transform: rotate(180deg);
     transition: transform ${Motion["duration-250"]} ${Motion["ease-default"]};
-
-    &.chevronIconExpanded {
-        transform: rotate(0deg);
-    }
 `;
 
-export const TimeSlotComponent = styled(TimeSlot)`
+export const chevronIconExpanded = css`
+    transform: rotate(0deg);
+`;
+
+export const timeSlotComponent = css`
     ${tokens.timeSlotComponent.height}: initial;
+    ${tokens.timeSlotComponent.halfFillBgColor}: ${Colour["bg-stronger"]};
+    ${tokens.timeSlotComponent.halfFillBgColor2}: ${Colour["bg-strongest"]};
     display: flex;
     flex-grow: 1;
     align-items: center;
@@ -138,50 +140,50 @@ export const TimeSlotComponent = styled(TimeSlot)`
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: -2px;
     }
+`;
 
-    &.timeSlotComponentDefault {
-        background-color: ${(props) => props.bgColor};
+const halfFillStripesRepeatingGradient = `repeating-linear-gradient(
+    135deg,
+    var(${tokens.timeSlotComponent.halfFillBgColor2}) 0px,
+    var(${tokens.timeSlotComponent.halfFillBgColor2}) 10px,
+    var(${tokens.timeSlotComponent.halfFillBgColor}) 10px,
+    var(${tokens.timeSlotComponent.halfFillBgColor}) 20px
+)`;
+
+export const timeSlotComponentHalfFillTop = css`
+    &[data-style-type="default"] {
+        background: linear-gradient(
+            to top,
+            var(${tokens.timeSlotComponent.halfFillBgColor}) 50%,
+            ${Colour["bg-strongest"]} 0%
+        );
     }
 
-    &.timeSlotComponentHalfFillTop {
+    &[data-style-type="stripes"] {
         background: linear-gradient(
                 to top,
-                ${(props) =>
-                        props.styleType === "stripes"
-                            ? "transparent"
-                            : props.bgColor}
-                    50%,
+                transparent 50%,
                 ${Colour["bg-strongest"]} 0%
-            )
-            ${(props) =>
-                props.styleType === "stripes" &&
-                `, repeating-linear-gradient(
-                        135deg,
-                        ${props.bgColor2 || Colour["bg-strongest"]} 0px,
-                        ${props.bgColor2 || Colour["bg-strongest"]} 10px,
-                        ${props.bgColor || Colour["bg-stronger"]} 10px,
-                        ${props.bgColor || Colour["bg-stronger"]} 20px
-                    )`};
+            ),
+            ${halfFillStripesRepeatingGradient};
+    }
+`;
+
+export const timeSlotComponentHalfFillBottom = css`
+    &[data-style-type="default"] {
+        background: linear-gradient(
+            to bottom,
+            var(${tokens.timeSlotComponent.halfFillBgColor}) 50%,
+            ${Colour["bg-strongest"]} 0%
+        );
     }
 
-    &.timeSlotComponentHalfFillBottom {
+    &[data-style-type="stripes"] {
         background: linear-gradient(
                 to bottom,
-                ${(props) =>
-                        props.styleType === "stripes"
-                            ? "transparent"
-                            : props.bgColor}
-                    50%,
+                transparent 50%,
                 ${Colour["bg-strongest"]} 0%
-            )
-            ${(props) =>
-                props.styleType === "stripes" &&
-                `, repeating-linear-gradient(
-                        135deg,
-                        ${props.bgColor2 || Colour["bg-strongest"]} 0px,
-                        ${props.bgColor2 || Colour["bg-strongest"]} 10px,
-                        ${props.bgColor || Colour["bg-stronger"]} 10px,
-                        ${props.bgColor || Colour["bg-stronger"]} 20px
-                    )`};
+            ),
+            ${halfFillStripesRepeatingGradient};
     }
 `;
