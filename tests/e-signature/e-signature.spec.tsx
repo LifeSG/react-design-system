@@ -1,6 +1,8 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { ESignature } from "src/e-signature";
 
+import { createMatchMediaMock } from "../theme/setup";
+
 jest.mock("../../src/theme", () => {
     const actual = jest.requireActual("../../src/theme");
     return {
@@ -24,6 +26,7 @@ jest.mock("../../src/theme", () => {
         },
     };
 });
+createMatchMediaMock();
 
 // =============================================================================
 // UNIT TESTS

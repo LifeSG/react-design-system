@@ -1,16 +1,7 @@
 import { isEmpty } from "lodash";
-import {
-    useCallback,
-    useContext,
-    useEffect,
-    useMemo,
-    useRef,
-    useState,
-} from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { V3_Breakpoint } from "../v3_theme";
+import { Breakpoint, useMediaQuery } from "../theme";
 import {
     Container,
     EmptyTableContainer,
@@ -50,10 +41,8 @@ export const Schedule = ({
     // CONST, STATE, REF
     // =============================================================================
     const [currentView, setCurrentView] = useState<"day" | "week">(view);
-    const theme = useContext(ThemeContext);
-    const tabletBreakpoint = V3_Breakpoint["lg-max"]({ theme });
     const isSmallScreen = useMediaQuery({
-        maxWidth: tabletBreakpoint,
+        maxWidth: Breakpoint["lg-max"],
     });
     const effectiveView = isSmallScreen ? "day" : currentView;
     const contentContainerRef = useRef<HTMLDivElement>(null);

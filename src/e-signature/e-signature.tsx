@@ -1,11 +1,9 @@
 import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
-import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import { ProgressBar } from "../shared/progress-bar";
+import { Breakpoint, useMediaQuery } from "../theme";
 import { Typography } from "../typography";
-import { V3_Breakpoint } from "../v3_theme";
 import * as styles from "./e-signature.styles";
 import type { ESignatureCanvasRef } from "./e-signature-canvas";
 import type { EsignatureProps } from "./types";
@@ -14,6 +12,25 @@ import type { EsignatureProps } from "./types";
 const ESignatureCanvas = lazy(async () => ({
     default: (await import("./e-signature-canvas")).ESignatureCanvas,
 }));
+
+// =============================================================================
+// HELPER FUNCTIONS
+// =============================================================================
+const checkIsMobileLandscape = () => {
+    if (typeof window === "undefined") {
+        return false;
+    }
+
+    const breakpointRaw = getComputedStyle(document.documentElement)
+        .getPropertyValue("--fds-breakpoint-sm-max")
+        .trim();
+    const breakpointPx = Number.parseFloat(breakpointRaw);
+    const maxHeight = Number.isFinite(breakpointPx) ? breakpointPx : 0;
+
+    const isLandscape = window.matchMedia("(orientation: landscape)").matches;
+
+    return isLandscape && window.innerHeight <= maxHeight;
+};
 
 const {
     AddSignatureButton,
@@ -48,15 +65,11 @@ export const ESignature = (props: EsignatureProps) => {
         ...otherProps
     } = props;
     const [showModal, setShowModal] = useState(false);
+    const [isMobileLandscape, setIsMobileLandscape] = useState(false);
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string | null | undefined>(value);
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
+    const mobileBreakpoint = Breakpoint["sm-max"];
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
-    const isMobileLandscape = useMediaQuery({
-        maxHeight: mobileBreakpoint,
-        orientation: "landscape",
-    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -80,6 +93,24 @@ export const ESignature = (props: EsignatureProps) => {
     useEffect(() => {
         setDataURL(value);
     }, [value]);
+
+    useEffect(() => {
+        const updateIsMobileLandscape = () => {
+            setIsMobileLandscape(checkIsMobileLandscape());
+        };
+
+        updateIsMobileLandscape();
+        window.addEventListener("resize", updateIsMobileLandscape);
+        window.addEventListener("orientationchange", updateIsMobileLandscape);
+
+        return () => {
+            window.removeEventListener("resize", updateIsMobileLandscape);
+            window.removeEventListener(
+                "orientationchange",
+                updateIsMobileLandscape
+            );
+        };
+    }, []);
 
     // =============================================================================
     // RENDER FUNCTIONS
