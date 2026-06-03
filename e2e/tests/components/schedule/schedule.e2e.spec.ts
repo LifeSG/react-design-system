@@ -256,7 +256,14 @@ test.describe("Schedule", () => {
             });
         });
     });
-            });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("initial-scroll-time");
+        });
+
+        test("Initial scroll time", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 });
