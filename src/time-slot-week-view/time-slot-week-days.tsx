@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
@@ -8,7 +9,7 @@ import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import type { InternalCalendarProps } from "../shared/internal-calendar";
 import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
 import { DayCell } from "../shared/internal-calendar/day-cell";
-import { Colour } from "../theme";
+import { Colour, useApplyStyle } from "../theme";
 import type { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
 import { TimeHelper } from "../util/time-helper";
@@ -48,6 +49,22 @@ const fallbackSlot: TimeSlot = {
         backgroundColor: Colour["bg-stronger"],
         backgroundColor2: Colour["bg-strongest"],
     },
+};
+
+const TimeSlotTextWithColor = ({
+    color,
+    children,
+}: {
+    color: string | undefined;
+    children: React.ReactNode;
+}) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(ref, {
+        [styles.tokens.timeSlotText.color]: color,
+    });
+
+    return <styles.TimeSlotText ref={ref}>{children}</styles.TimeSlotText>;
 };
 
 export const TimeSlotWeekDays = ({
@@ -253,7 +270,10 @@ export const TimeSlotWeekDays = ({
                             />
                             <styles.DayLabel
                                 aria-hidden
-                                $disabled={dayCellStyleProps.disabled}
+                                className={clsx(
+                                    dayCellStyleProps.disabled &&
+                                        "dayLabelDisabled"
+                                )}
                             >
                                 {dayjs(day).format("ddd")}
                             </styles.DayLabel>
@@ -312,8 +332,8 @@ export const TimeSlotWeekDays = ({
                                                 )
                                             }
                                         >
-                                            <styles.TimeSlotText
-                                                style={{ color: color }}
+                                            <TimeSlotTextWithColor
+                                                color={color}
                                             >
                                                 <span>
                                                     {CalendarHelper.convertTo12HourFormat(
@@ -329,7 +349,7 @@ export const TimeSlotWeekDays = ({
                                                         slotEndTime
                                                     )}
                                                 </span>
-                                            </styles.TimeSlotText>
+                                            </TimeSlotTextWithColor>
                                             {isActualSlot && (
                                                 <VisuallyHidden>
                                                     <button

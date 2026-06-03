@@ -1,14 +1,16 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { TimeSlot } from "../shared/time-slot";
 import { Colour, Font } from "../theme";
 
 // =============================================================================
-// STYLE INTERFACES
+// TOKENS
 // =============================================================================
-interface LabelStyleProps {
-    $disabled: boolean | undefined;
-}
+export const tokens = {
+    timeSlotText: {
+        color: "--fds-internal-timeSlotWeekDays-timeSlotText-color",
+    },
+};
 
 // =============================================================================
 // STYLING
@@ -28,15 +30,13 @@ export const HeaderRow = styled.div`
     grid-template-columns: repeat(7, 1fr);
 `;
 
-export const DayLabel = styled.div<LabelStyleProps>`
+export const DayLabel = styled.div`
     ${Font["body-xs-semibold"]}
-    color:${Colour["text"]};
+    color: ${Colour["text"]};
 
-    ${(props) =>
-        props.$disabled &&
-        css`
-            color: ${Colour["text-disabled-subtlest"]};
-        `};
+    &.dayLabelDisabled {
+        color: ${Colour["text-disabled-subtlest"]};
+    }
 `;
 
 export const Wrapper = styled.div`
@@ -52,6 +52,8 @@ export const ColumnWeekCell = styled.div`
 `;
 
 export const TimeSlotText = styled.div`
+    ${tokens.timeSlotText.color}: initial;
+
     ${Font["body-xs-semibold"]}
     margin: 1rem 0rem;
     display: flex;
@@ -59,7 +61,7 @@ export const TimeSlotText = styled.div`
     align-items: center;
     text-align: center;
     max-width: 2.5rem;
-    color: ${Colour["text"]};
+    color: var(${tokens.timeSlotText.color}, ${Colour["text"]});
     span {
         display: block;
     }
