@@ -6,28 +6,34 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "time-slot-bar-week";
 
     public readonly locators: {
-        navigationHeader: {
-            monthButton: Locator;
-            yearButton: Locator;
+        internal: {
+            columnHeader: Locator;
+            navigationHeader: {
+                monthButton: Locator;
+                yearButton: Locator;
+            };
+            expandCollapseButton: Locator;
         };
-        expandCollapseButton: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
-            navigationHeader: {
-                monthButton: page.getByRole("button", {
-                    name: /Select month/,
-                }),
-                yearButton: page.getByRole("button", {
-                    name: /Select year/,
-                }),
+            internal: {
+                columnHeader: page.getByRole("columnheader"),
+                navigationHeader: {
+                    monthButton: page.getByRole("button", {
+                        name: /Select month/,
+                    }),
+                    yearButton: page.getByRole("button", {
+                        name: /Select year/,
+                    }),
+                },
+                expandCollapseButton: page.getByTestId(
+                    "time-bar-expand-collapse-button"
+                ),
             },
-            expandCollapseButton: page.getByTestId(
-                "time-bar-expand-collapse-button"
-            ),
         };
     }
 }
@@ -50,13 +56,31 @@ test.describe("TimeSlotBarWeek", () => {
         });
 
         test("Month dropdown", async ({ story }) => {
-            await story.locators.navigationHeader.monthButton.click();
+            await story.locators.internal.navigationHeader.monthButton.click();
             await compareScreenshot(story, "expanded");
         });
 
         test("Year dropdown", async ({ story }) => {
-            await story.locators.navigationHeader.yearButton.click();
+            await story.locators.internal.navigationHeader.yearButton.click();
             await compareScreenshot(story, "expanded");
+        });
+
+        test("Hover", async ({ story }) => {
+            await test.step("Hover over first column header", async () => {
+                await story.locators.internal.columnHeader.first().hover();
+                await compareScreenshot(story, "unselected");
+            });
+
+            await test.step("Select first column header", async () => {
+                await story.locators.internal.columnHeader.first().click();
+                await story.page.mouse.move(0, 0);
+                await compareScreenshot(story, "selected");
+            });
+
+            await test.step("Hover over selected column header", async () => {
+                await story.locators.internal.columnHeader.first().hover();
+                await compareScreenshot(story, "selected-hover");
+            });
         });
     });
 
@@ -73,13 +97,31 @@ test.describe("TimeSlotBarWeek", () => {
         });
 
         test("Month dropdown (dark mode)", async ({ story }) => {
-            await story.locators.navigationHeader.monthButton.click();
+            await story.locators.internal.navigationHeader.monthButton.click();
             await compareScreenshot(story, "expanded");
         });
 
         test("Year dropdown (dark mode)", async ({ story }) => {
-            await story.locators.navigationHeader.yearButton.click();
+            await story.locators.internal.navigationHeader.yearButton.click();
             await compareScreenshot(story, "expanded");
+        });
+
+        test("Hover (dark mode)", async ({ story }) => {
+            await test.step("Hover over first column header", async () => {
+                await story.locators.internal.columnHeader.first().hover();
+                await compareScreenshot(story, "unselected");
+            });
+
+            await test.step("Select first column header", async () => {
+                await story.locators.internal.columnHeader.first().click();
+                await story.page.mouse.move(0, 0);
+                await compareScreenshot(story, "selected");
+            });
+
+            await test.step("Hover over selected column header", async () => {
+                await story.locators.internal.columnHeader.first().hover();
+                await compareScreenshot(story, "selected-hover");
+            });
         });
     });
 
@@ -135,11 +177,11 @@ test.describe("TimeSlotBarWeek", () => {
 
         test("Max height", async ({ story }) => {
             await test.step("Initial render", async () => {
-                await compareScreenshot(story, "mount");
+                await compareScreenshot(story, "collapsed");
             });
 
             await test.step("Click 'Show later times' button", async () => {
-                await story.locators.expandCollapseButton.click();
+                await story.locators.internal.expandCollapseButton.click();
                 await compareScreenshot(story, "expanded");
             });
         });
@@ -152,6 +194,19 @@ test.describe("TimeSlotBarWeek", () => {
 
         test("No header", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("min-max-date", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Min and Max Date", async ({ story }) => {
+            await story.locators.internal.navigationHeader.monthButton.click();
+            await compareScreenshot(story, "dropdown");
         });
     });
 });

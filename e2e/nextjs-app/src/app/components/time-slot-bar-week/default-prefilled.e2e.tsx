@@ -38,7 +38,7 @@ export default function Story() {
             },
             {
                 id: "4",
-                startTime: "16:00",
+                startTime: "15:45",
                 endTime: "17:00",
                 styleAttributes: {
                     backgroundColor: "#E1BEE7",
@@ -61,10 +61,21 @@ export default function Story() {
             {
                 id: "6",
                 startTime: "14:00",
-                endTime: "15:00",
+                endTime: "15:15",
                 styleAttributes: {
                     backgroundColor: "#FFCC80",
                     color: "#BF360C",
+                },
+            },
+        ],
+        "2026-05-30": [
+            {
+                id: "7",
+                startTime: "10:45",
+                endTime: "12:15",
+                styleAttributes: {
+                    backgroundColor: "#2ca943",
+                    color: "#00e62a",
                 },
             },
         ],
