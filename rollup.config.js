@@ -19,13 +19,7 @@ import { createFixCssImportPathsPlugin } from "./rollup/fix-css-import-paths-plu
 const fixCssImportPathsPlugin = createFixCssImportPathsPlugin({
     outputDirs: ["dist", "dist/cjs"],
 });
-const dirsToIgnore = new Set([
-    "custom-types",
-    "shared",
-    "util",
-    "v2_spec",
-    "__mocks__",
-]);
+const dirsToIgnore = new Set(["custom-types", "shared", "util", "__mocks__"]);
 
 const srcDir = "src";
 const subDirs = fs
