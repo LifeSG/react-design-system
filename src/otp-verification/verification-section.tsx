@@ -1,7 +1,7 @@
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
 import { concatIds } from "../shared/accessibility";
-import { Breakpoint, useMediaQuery } from "../theme";
+import { useMaxWidthMediaQuery } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import type { VerificationSectionProps } from "./internal-types";
@@ -30,9 +30,7 @@ export const VerificationSection = ({
     otpPrefix,
     otpSeparator,
 }: VerificationSectionProps) => {
-    const isMobile = useMediaQuery({
-        maxWidth: Breakpoint["sm-max"],
-    });
+    const isMobile = useMaxWidthMediaQuery("sm");
     const thumbnailSize = isMobile ? 64 : 120;
     const internalId = useId();
 

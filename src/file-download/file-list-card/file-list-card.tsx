@@ -2,7 +2,7 @@ import { DownloadIcon } from "@lifesg/react-icons";
 import { memo, useEffect, useRef, useState } from "react";
 
 import { FileUploadHelper } from "../../file-upload/helper";
-import { Breakpoint, useMediaQuery } from "../../theme";
+import { useMaxWidthMediaQuery } from "../../theme";
 import { StringHelper } from "../../util";
 import * as styles from "./file-list-card.styles";
 import type { FileListItemProps } from "./types";
@@ -42,7 +42,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
-    const isMobile = useMediaQuery({ maxWidth: Breakpoint["sm-max"] });
+    const isMobile = useMaxWidthMediaQuery("sm");
     const [displayText, setDisplayText] = useState<string>();
     const containerRef = useRef<HTMLDivElement>(null);
 

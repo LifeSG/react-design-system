@@ -1,6 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
-import { Breakpoint, useMediaQuery } from "src";
+import { useMaxWidthMediaQuery } from "src";
 import type { LocalNavItemProps } from "src/local-nav";
 import { LocalNavDropdown, LocalNavMenu } from "src/local-nav";
 import { V3_LifeSGTheme } from "src/v3_theme";
@@ -206,9 +206,7 @@ export const CombinedUsage: StoryObj = {
         const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
             undefined
         );
-        const isMobile = useMediaQuery({
-            maxWidth: Breakpoint["sm-max"],
-        });
+        const isMobile = useMaxWidthMediaQuery("sm");
 
         const handleNavItemClick = (
             e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,

@@ -1,7 +1,7 @@
 import { isEmpty } from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
-import { Breakpoint, useMediaQuery } from "../theme";
+import { useMaxWidthMediaQuery } from "../theme";
 import {
     Container,
     EmptyTableContainer,
@@ -41,9 +41,7 @@ export const Schedule = ({
     // CONST, STATE, REF
     // =============================================================================
     const [currentView, setCurrentView] = useState<"day" | "week">(view);
-    const isSmallScreen = useMediaQuery({
-        maxWidth: Breakpoint["lg-max"],
-    });
+    const isSmallScreen = useMaxWidthMediaQuery("lg");
     const effectiveView = isSmallScreen ? "day" : currentView;
     const contentContainerRef = useRef<HTMLDivElement>(null);
     const [visibleServiceIdx, setVisibleServiceIdx] = useState(0);

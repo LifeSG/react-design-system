@@ -2,7 +2,7 @@ import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import { ProgressBar } from "../shared/progress-bar";
-import { Breakpoint, useMediaQuery } from "../theme";
+import { useMaxWidthMediaQuery } from "../theme";
 import { Typography } from "../typography";
 import * as styles from "./e-signature.styles";
 import type { ESignatureCanvasRef } from "./e-signature-canvas";
@@ -68,8 +68,7 @@ export const ESignature = (props: EsignatureProps) => {
     const [isMobileLandscape, setIsMobileLandscape] = useState(false);
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string | null | undefined>(value);
-    const mobileBreakpoint = Breakpoint["sm-max"];
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobile = useMaxWidthMediaQuery("sm");
 
     // =============================================================================
     // EVENT HANDLERS
