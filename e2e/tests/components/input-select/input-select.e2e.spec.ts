@@ -34,6 +34,10 @@ class StoryPage extends AbstractStoryPage {
             default: Locator;
             withSearch: Locator;
         };
+        dropdownWidth: {
+            minWidth: Locator;
+            customWidth: Locator;
+        };
         cta: Locator;
         virtualization: Locator;
     };
@@ -71,6 +75,10 @@ class StoryPage extends AbstractStoryPage {
                 default: page.getByTestId("input-select-small-default"),
                 withSearch: page.getByTestId("input-select-small-search"),
             },
+            dropdownWidth: {
+                minWidth: page.getByTestId("input-select-min-width"),
+                customWidth: page.getByTestId("input-select-custom-width"),
+            },
             cta: page.getByTestId("input-select-cta-base"),
             virtualization: page.getByTestId("input-select-virtualization"),
         };
@@ -90,6 +98,13 @@ class StoryPage extends AbstractStoryPage {
         await select.click();
         await expect(this.locators.internal.dropdownContainer).toBeVisible();
         await expect(this.locators.internal.dropdownList).toBeVisible();
+    }
+
+    public async closeDropdown() {
+        await this.page.mouse.click(0, 0);
+        await expect(
+            this.locators.internal.dropdownContainer
+        ).not.toBeVisible();
     }
 }
 
@@ -390,6 +405,46 @@ test.describe("InputSelect", () => {
 
         test("Grid layout", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("dropdown-width");
+        });
+
+        test("Dropdown width", async ({ story }) => {
+            await story.openDropdown(story.locators.dropdownWidth.minWidth);
+            await compareScreenshot(story, "min", {
+                fullscreen: true,
+            });
+            await story.closeDropdown();
+
+            await story.openDropdown(story.locators.dropdownWidth.customWidth);
+            await compareScreenshot(story, "custom", {
+                fullscreen: true,
+            });
+            await story.closeDropdown();
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("dropdown-width", { size: "mobile" });
+        });
+
+        test("Dropdown width (mobile)", async ({ story }) => {
+            await story.openDropdown(story.locators.dropdownWidth.minWidth);
+            await compareScreenshot(story, "min", {
+                fullscreen: true,
+            });
+            await story.closeDropdown();
+
+            await story.openDropdown(story.locators.dropdownWidth.customWidth);
+            await compareScreenshot(story, "custom", {
+                fullscreen: true,
+            });
+            await story.closeDropdown();
         });
     });
 });
