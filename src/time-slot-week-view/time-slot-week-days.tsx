@@ -9,6 +9,7 @@ import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import type { InternalCalendarProps } from "../shared/internal-calendar";
 import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
 import { DayCell } from "../shared/internal-calendar/day-cell";
+import { TimeSlot as TimeSlotComponent } from "../shared/time-slot";
 import { Colour, useApplyStyle } from "../theme";
 import type { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
@@ -64,7 +65,11 @@ const TimeSlotTextWithColor = ({
         [styles.tokens.timeSlotText.color]: color,
     });
 
-    return <styles.TimeSlotText ref={ref}>{children}</styles.TimeSlotText>;
+    return (
+        <div ref={ref} className={styles.timeSlotText}>
+            {children}
+        </div>
+    );
 };
 
 export const TimeSlotWeekDays = ({
@@ -240,12 +245,17 @@ export const TimeSlotWeekDays = ({
     // =============================================================================
     const renderHeader = () => {
         return (
-            <styles.HeaderRow role="row" onBlur={handleDayHoverClear}>
+            <div
+                className={styles.headerRow}
+                role="row"
+                onBlur={handleDayHoverClear}
+            >
                 {currentCalendarWeek.map((day, index) => {
                     const dayCellStyleProps = generateStyleProps(day);
 
                     return (
-                        <styles.HeaderCellWeek
+                        <div
+                            className={styles.headerCellWeek}
                             key={`week-day-${index}`}
                             role="presentation"
                         >
@@ -268,25 +278,27 @@ export const TimeSlotWeekDays = ({
                                 }
                                 {...dayCellStyleProps}
                             />
-                            <styles.DayLabel
+                            <div
                                 aria-hidden
                                 className={clsx(
+                                    styles.dayLabel,
                                     dayCellStyleProps.disabled &&
-                                        "dayLabelDisabled"
+                                        styles.dayLabelDisabled
                                 )}
                             >
                                 {dayjs(day).format("ddd")}
-                            </styles.DayLabel>
-                        </styles.HeaderCellWeek>
+                            </div>
+                        </div>
                     );
                 })}
-            </styles.HeaderRow>
+            </div>
         );
     };
 
     const renderTimeSlotBarCells = () => {
         return (
-            <styles.ColumnWeekCell
+            <div
+                className={styles.columnWeekCell}
                 key={`week-cell-${calendarDate.format(dateFormat)}`}
                 role="row"
             >
@@ -295,7 +307,8 @@ export const TimeSlotWeekDays = ({
                     const slots = daySlots?.[formattedDate] ?? [fallbackSlot];
 
                     return (
-                        <styles.TimeSlotWrapper
+                        <div
+                            className={styles.timeSlotWrapper}
                             key={`wrapper-${dayIndex}`}
                             role="gridcell"
                         >
@@ -318,8 +331,9 @@ export const TimeSlotWeekDays = ({
                                     const isActualSlot = slot !== fallbackSlot;
 
                                     return (
-                                        <styles.TimeSlotComponent
+                                        <TimeSlotComponent
                                             key={id}
+                                            className={styles.timeSlotComponent}
                                             styleType={styleType}
                                             bgColor={backgroundColor}
                                             bgColor2={backgroundColor2}
@@ -383,20 +397,20 @@ export const TimeSlotWeekDays = ({
                                                     />
                                                 </VisuallyHidden>
                                             )}
-                                        </styles.TimeSlotComponent>
+                                        </TimeSlotComponent>
                                     );
                                 })}
-                        </styles.TimeSlotWrapper>
+                        </div>
                     );
                 })}
-            </styles.ColumnWeekCell>
+            </div>
         );
     };
 
     return (
-        <styles.Wrapper role="grid">
+        <div className={styles.wrapper} role="grid">
             {renderHeader()}
             {renderTimeSlotBarCells()}
-        </styles.Wrapper>
+        </div>
     );
 };

@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { MediaQuery } from "../theme";
 
-export const Wrapper = styled.div`
+export const wrapper = css`
     --header-bottom-spacing: 0.5rem;
 
     ${MediaQuery.MaxWidth.sm} {

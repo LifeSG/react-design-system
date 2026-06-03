@@ -96,7 +96,7 @@ export const TimeSlotWeekView = ({
     // =============================================================================
 
     return (
-        <styles.Wrapper {...otherProps}>
+        <div className={styles.wrapper} {...otherProps}>
             <CalendarManager
                 ref={calendarManagerRef}
                 dynamicHeight
@@ -142,6 +142,6 @@ export const TimeSlotWeekView = ({
                     );
                 }}
             </CalendarManager>
-        </styles.Wrapper>
+        </div>
     );
 };
