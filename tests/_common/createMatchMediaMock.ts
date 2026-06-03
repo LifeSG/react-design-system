@@ -14,7 +14,13 @@ export type MockMediaQueryList = {
     ) => void;
 };
 
-export const createMatchMediaMock = (initialMatches = false) => {
+type CreateMatchMediaMockOptions = {
+    initialMatches?: boolean;
+};
+
+export const createMatchMediaMock = ({
+    initialMatches = false,
+}: CreateMatchMediaMockOptions = {}) => {
     const mediaQueryLists = new Map<string, MockMediaQueryList>();
     const matchMedia = jest.fn((query: string) => {
         const existingMediaQueryList = mediaQueryLists.get(query);

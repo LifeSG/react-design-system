@@ -28,7 +28,7 @@ describe("useMediaQuery", () => {
     });
 
     it("builds a query from resolved widths", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
+        const { matchMedia } = createMatchMediaMock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -50,7 +50,7 @@ describe("useMediaQuery", () => {
     });
 
     it("builds a query from resolved widths and custom clauses", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
+        const { matchMedia } = createMatchMediaMock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -76,7 +76,7 @@ describe("useMediaQuery", () => {
     });
 
     it("builds a query from custom clauses only", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
+        const { matchMedia } = createMatchMediaMock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -100,7 +100,7 @@ describe("useMediaQuery", () => {
     });
 
     it("drops invalid or disabled custom clauses", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
+        const { matchMedia } = createMatchMediaMock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -123,7 +123,7 @@ describe("useMediaQuery", () => {
     });
 
     it("updates when the media query match changes", async () => {
-        const { mediaQueryLists } = createMatchMediaMock(false);
+        const { mediaQueryLists } = createMatchMediaMock();
 
         renderWithTheme(
             <CoreConsumer options={{ minWidth: Breakpoint["md-min"] }} />
@@ -147,7 +147,7 @@ describe("useMediaQuery", () => {
     });
 
     it("updates listeners when options change between renders", async () => {
-        const { mediaQueryLists } = createMatchMediaMock(false);
+        const { mediaQueryLists } = createMatchMediaMock();
 
         const { rerender } = renderWithTheme(
             <CoreConsumer
