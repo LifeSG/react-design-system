@@ -135,9 +135,6 @@ export default function Story() {
     const [date, setDate] = useState(INITIAL_DATE);
     const [lastEmptySlotClick, setLastEmptySlotClick] =
         useState<ScheduleEmptySlotProps | null>(null);
-    const [lastHiddenServices, setLastHiddenServices] = useState<
-        string[] | null
-    >(null);
 
     const shiftDate = (targetDate: string, days: number) => {
         setDate((currentDate) => {
@@ -163,18 +160,10 @@ export default function Story() {
                 onNextDayClick={(d) => shiftDate(d, 1)}
                 onCalendarDateSelect={(d) => setDate(d)}
                 onTodayClick={() => setDate(INITIAL_DATE)}
-                onClickHiddenSlots={(services) =>
-                    setLastHiddenServices(services)
-                }
             />
             {lastEmptySlotClick !== null && (
                 <div data-testid="empty-slot-click-result">
                     {JSON.stringify(lastEmptySlotClick)}
-                </div>
-            )}
-            {lastHiddenServices !== null && (
-                <div data-testid="hidden-services-result">
-                    {JSON.stringify(lastHiddenServices)}
                 </div>
             )}
         </div>
