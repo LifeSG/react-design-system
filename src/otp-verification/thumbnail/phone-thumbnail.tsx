@@ -1,4 +1,6 @@
-import { StyledSvg } from "./phone-thumbnail.styles";
+import clsx from "clsx";
+
+import * as styles from "./phone-thumbnail.styles";
 
 interface PhoneThumbnailProps {
     className?: string;
@@ -6,11 +8,11 @@ interface PhoneThumbnailProps {
 
 export const PhoneThumbnail = ({ className }: PhoneThumbnailProps) => {
     return (
-        <StyledSvg
+        <svg
             viewBox="0 0 120 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={className}
+            className={clsx(styles.thumbnail, className)}
         >
             <g clipPath="url(#clip0_phone_icon)">
                 <circle
@@ -49,6 +51,6 @@ export const PhoneThumbnail = ({ className }: PhoneThumbnailProps) => {
                     <rect width="120" height="120" fill="white" />
                 </clipPath>
             </defs>
-        </StyledSvg>
+        </svg>
     );
 };

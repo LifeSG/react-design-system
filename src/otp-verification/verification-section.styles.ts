@@ -1,10 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
 import { Colour, MediaQuery, Spacing } from "../theme";
-import { Typography } from "../typography";
 
-export const VerificationSectionWrapper = styled.div`
+export const verificationSectionWrapper = css`
     display: flex;
     align-items: center;
     background-color: ${Colour["bg-strong"]};
@@ -19,23 +17,23 @@ export const VerificationSectionWrapper = styled.div`
     }
 `;
 
-export const SectionContainer = styled.div`
+export const sectionContainer = css`
     display: flex;
     flex-direction: column;
     gap: ${Spacing["spacing-16"]};
 `;
 
-export const ReSendMessage = styled(Typography.BodyMD)`
+export const resendMessage = css`
     color: ${Colour["text-subtlest"]};
 `;
 
-export const VerifyInputWrapper = styled.div`
+export const verifyInputWrapper = css`
     display: flex;
     gap: ${Spacing["spacing-8"]};
     max-width: 472px;
 `;
 
-export const VerifyButton = styled(Button.Default)`
+export const verifyButton = css`
     flex-shrink: 0;
     width: 83px;
 `;

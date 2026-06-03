@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Colour, MediaQuery } from "../../theme";
 
-export const StyledSvg = styled.svg`
+export const thumbnail = css`
     .background-circle {
         fill: ${Colour["bg-stronger"]};
     }

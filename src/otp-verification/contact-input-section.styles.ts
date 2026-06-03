@@ -1,20 +1,17 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../button";
-import { InputGroup } from "../input-group";
-import { PhoneNumberInput } from "../phone-number-input";
 import { Colour, MediaQuery, Radius, Spacing } from "../theme";
 
-export const ContactSectionWrapper = styled.div`
+export const contactSectionWrapper = css`
     display: flex;
     flex-direction: column;
 `;
 
-export const ContactInputSectionWrapper = styled.div`
+export const contactInputSectionWrapper = css`
     display: flex;
 `;
 
-export const ContactInputWrapper = styled.div`
+export const contactInputWrapper = css`
     display: flex;
     align-items: center;
     padding: 0 ${Spacing["spacing-16"]};
@@ -31,58 +28,58 @@ export const ContactInputWrapper = styled.div`
     &[data-max-width="true"] {
         width: 100%;
     }
+`;
 
-    &.contactInputWrapperError {
-        box-shadow: inset 1px 0 0 ${Colour["border-error"]},
-            inset 0 1px 0 ${Colour["border-error"]},
-            inset 0 -1px 0 ${Colour["border-error"]};
+export const contactInputWrapperError = css`
+    box-shadow: inset 1px 0 0 ${Colour["border-error"]},
+        inset 0 1px 0 ${Colour["border-error"]},
+        inset 0 -1px 0 ${Colour["border-error"]};
 
-        &:focus-within {
-            box-shadow: inset 2px 0 0 ${Colour["border-error-focus"]},
-                inset 0 2px 0 ${Colour["border-error-focus"]},
-                inset 0 -2px 0 ${Colour["border-error-focus"]};
-        }
+    &:focus-within {
+        box-shadow: inset 2px 0 0 ${Colour["border-error-focus"]},
+            inset 0 2px 0 ${Colour["border-error-focus"]},
+            inset 0 -2px 0 ${Colour["border-error-focus"]};
+    }
+`;
+
+export const contactInputWrapperDisabled = css`
+    box-shadow: inset 0 0 0 1px ${Colour["border"]};
+    border-radius: ${Radius["sm"]};
+    background: ${Colour["bg-disabled"]};
+    color: ${Colour["text-disabled"]};
+
+    &:focus-within {
+        box-shadow: inset 0 0 0 2px ${Colour["border"]};
     }
 
-    &.contactInputWrapperDisabled {
-        box-shadow: inset 0 0 0 1px ${Colour["border"]};
-        border-radius: ${Radius["sm"]};
-        background: ${Colour["bg-disabled"]};
-        color: ${Colour["text-disabled"]};
-
-        &:focus-within {
-            box-shadow: inset 0 0 0 2px ${Colour["border"]};
+    &[data-max-width="false"] {
+        /* Spacer to maintain width when disabled */
+        &::after {
+            content: "";
+            min-width: 120px;
+            flex-shrink: 0;
         }
 
-        &[data-max-width="false"] {
-            /* Spacer to maintain width when disabled */
+        /* Hide spacer on mobile to prevent text coverage */
+        ${MediaQuery.MaxWidth.sm} {
             &::after {
-                content: "";
-                min-width: 120px;
-                flex-shrink: 0;
+                display: none;
             }
-
-            /* Hide spacer on mobile to prevent text coverage */
-            ${MediaQuery.MaxWidth.sm} {
-                &::after {
-                    display: none;
-                }
-            }
-        }
-    }
-
-    &.contactInputWrapperReadonly {
-        padding-left: 0;
-        box-shadow: none;
-        border-radius: ${Radius["sm"]};
-
-        &:focus-within {
-            box-shadow: inset 0 0 0 2px ${Colour["border-focus"]};
         }
     }
 `;
 
-export const VerifiedIconWrapper = styled.div`
+export const contactInputWrapperReadonly = css`
+    padding-left: 0;
+    box-shadow: none;
+    border-radius: ${Radius["sm"]};
+
+    &:focus-within {
+        box-shadow: inset 0 0 0 2px ${Colour["border-focus"]};
+    }
+`;
+
+export const verifiedIconWrapper = css`
     display: flex;
     align-items: center;
     justify-content: center;
@@ -96,47 +93,48 @@ export const VerifiedIconWrapper = styled.div`
     }
 `;
 
-export const ContactButton = styled(Button.Default)`
+export const contactButton = css`
     min-width: 120px;
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     flex-shrink: 0;
+
     ${MediaQuery.MaxWidth.sm} {
         width: fit-content;
     }
 `;
 
-export const EmailContactInput = styled(InputGroup)`
+export const emailContactInput = css`
     padding: 0 ${Spacing["spacing-16"]};
     width: 100%;
     background: transparent;
+`;
 
-    &.emailContactInputDisabled {
-        input {
-            color: ${Colour["text-disabled"]};
-        }
-    }
-
-    &.emailContactInputReadonly {
-        padding: 0;
+export const emailContactInputDisabled = css`
+    input {
+        color: ${Colour["text-disabled"]};
     }
 `;
 
-export const PhoneContactInput = styled(PhoneNumberInput)`
+export const emailContactInputReadonly = css`
+    padding: 0;
+`;
+
+export const phoneContactInput = css`
     padding: 0 ${Spacing["spacing-16"]};
     background: transparent;
+`;
 
-    &.phoneContactInputDisabled {
-        input {
-            color: ${Colour["text-disabled"]};
-        }
+export const phoneContactInputDisabled = css`
+    input {
+        color: ${Colour["text-disabled"]};
     }
+`;
 
-    &.phoneContactInputReadonly {
-        padding: 0;
+export const phoneContactInputReadonly = css`
+    padding: 0;
 
-        input {
-            margin-left: ${Spacing["spacing-12"]};
-        }
+    input {
+        margin-left: ${Spacing["spacing-12"]};
     }
 `;
