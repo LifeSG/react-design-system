@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { BasicInput } from "../shared/input-wrapper/input-wrapper";
 
 // =============================================================================
@@ -12,12 +12,5 @@ export const InputSelectorElement = styled(BasicInput)<{
     $disabled?: boolean | undefined;
 }>`
     height: calc(3rem - 2px); // exclude top and bottom borders
-
-    ${(props) => {
-        if (props.$disabled) {
-            return css`
-                cursor: not-allowed;
-            `;
-        }
-    }}
+    cursor: inherit;
 `;

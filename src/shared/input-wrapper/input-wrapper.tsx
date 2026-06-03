@@ -118,7 +118,7 @@ export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
             return css`
                 cursor: not-allowed;
                 &:focus-within {
-                    ${noFocusCss}
+                    ${disabledFocusCss}
                 }
             `;
         }

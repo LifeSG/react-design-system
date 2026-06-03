@@ -202,5 +202,29 @@ describe("Timepicker (Floating UI)", () => {
                 screen.queryByTestId(dropdownTestId)
             ).not.toBeInTheDocument();
         });
+
+        it("should not call onFocus when disabled", async () => {
+            const user = userEvent.setup();
+            const onFocus = jest.fn();
+
+            render(<Timepicker id={ID} disabled onFocus={onFocus} />);
+
+            await user.click(screen.getByTestId(selectorTestId));
+            expect(onFocus).not.toHaveBeenCalled();
+        });
+
+        it("should not call onBlur when disabled", async () => {
+            const user = userEvent.setup();
+            const onBlur = jest.fn();
+
+            render(<Timepicker id={ID} disabled onBlur={onBlur} />);
+
+            await user.click(screen.getByTestId(selectorTestId));
+            await act(async () => {
+                await user.click(document.body);
+            });
+
+            expect(onBlur).not.toHaveBeenCalled();
+        });
     });
 });
