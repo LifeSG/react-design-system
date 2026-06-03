@@ -1,5 +1,5 @@
 import type { ApiTableSectionProps } from "stories/storybook-common";
-import { ApiTable, code, StorybookLink } from "stories/storybook-common";
+import { ApiTable, code } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -8,7 +8,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        This component also inherits props from{" "}
                         <a
                             href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement"
                             rel="noreferrer"
@@ -43,64 +43,6 @@ const DATA: ApiTableSectionProps[] = [
                 name: "color",
                 description: <>The color for the {code("Divider")} line</>,
                 propTypes: ["string"],
-            },
-            // Copied from `layout/col-div-props-table.tsx`
-            {
-                name: "mobileCols",
-                description: (
-                    <>
-                        Refer to{" "}
-                        <StorybookLink path="/docs/core-layout-coldiv--docs">
-                            ColDiv
-                        </StorybookLink>
-                        &nbsp; for more details
-                        <br />
-                        <em>
-                            Note: This works only if you are using the
-                            {code(`"grid"`)} layout type
-                        </em>
-                    </>
-                ),
-                propTypes: [`number`, `number[]`],
-                defaultValue: "4",
-            },
-            {
-                name: "tabletCols",
-                description: (
-                    <>
-                        Refer to{" "}
-                        <StorybookLink path="/docs/core-layout-coldiv--docs">
-                            ColDiv
-                        </StorybookLink>
-                        &nbsp; for more details
-                        <br />
-                        <em>
-                            Note: This works only if you are using the
-                            {code(`"grid"`)} layout type
-                        </em>
-                    </>
-                ),
-                propTypes: [`number`, `number[]`],
-                defaultValue: "8",
-            },
-            {
-                name: "desktopCols",
-                description: (
-                    <>
-                        Refer to{" "}
-                        <StorybookLink path="/docs/core-layout-coldiv--docs">
-                            ColDiv
-                        </StorybookLink>
-                        &nbsp; for more details
-                        <br />
-                        <em>
-                            Note: This works only if you are using the
-                            {code(`"grid"`)} layout type
-                        </em>
-                    </>
-                ),
-                propTypes: [`number`, `number[]`],
-                defaultValue: "12",
             },
         ],
     },

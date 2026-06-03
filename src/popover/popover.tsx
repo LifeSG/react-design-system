@@ -1,130 +1,53 @@
-import debounce from "lodash/debounce";
-import { useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
+import clsx from "clsx";
+import { useMemo, useRef } from "react";
 
 import { Card } from "../card";
-import { Modal } from "../modal/modal";
-import { MediaWidths } from "../v2_spec/media-spec";
-import { V2_Text } from "../v2_text/text";
-import type { OffsetPosition } from "./popover.styles";
-import { BubbleWrap, ContentWrapper, MobileModalBox } from "./popover.styles";
+import { Markup } from "../markup";
+import { ModalV2 } from "../modal-v2";
+import {
+    Breakpoint,
+    useApplyStyle,
+    useDesignToken,
+    useSafeMaxWidthMediaQuery,
+} from "../theme";
+import { Typography } from "../typography";
+import * as styles from "./popover.styles";
 import type { PopoverProps } from "./types";
 
-/**
- * @deprecated Use `PopoverV2` for improved positioning behaviour. This component will be removed in DS v3.
- */
 export const Popover = ({
     children,
-    visible,
+    visible = false,
     onMobileClose,
+    maxHeight,
+    overflow,
+    ariaLabel = "More information",
+    id,
+    className,
+    "data-testid": testId = "popover",
     ...otherProps
 }: PopoverProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const testId = otherProps["data-testid"] || "popover";
-    const [offset, _setOffset] = useState<OffsetPosition>("none");
-    const bubbleRef = useRef<HTMLDivElement>(null);
-    const isMobile = useMediaQuery({
-        maxWidth: MediaWidths.mobileL,
-    });
-
-    /**
-     * Have to use refs to allow the state values to be accessible
-     * by the event listener callback functions
-     * Reference:
-     * https://stackoverflow.com/questions/55265255/react-usestate-hook-event-handler-using-initial-state
-     */
-    const offsetStateRef = useRef<OffsetPosition>(offset);
-
-    // =============================================================================
-    // REF FUNCTIONS
-    // =============================================================================
-    const setOffset = (value: OffsetPosition) => {
-        offsetStateRef.current = value;
-        _setOffset(value);
-    };
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    useEffect(() => {
-        updateOffsetPosition();
-        window.addEventListener("resize", debounce(handleViewportResize, 300));
-
-        return () => {
-            window.removeEventListener(
-                "resize",
-                debounce(handleViewportResize, 300)
-            );
-        };
-    }, []);
+    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
+    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
+    const popoverContainerRef = useRef<HTMLDivElement>(null);
+    const popoverCardStyle = useMemo(
+        () => ({
+            [styles.tokens.popoverCard.maxHeight]:
+                maxHeight === undefined ? null : `${maxHeight}px`,
+            [styles.tokens.popoverCard.overflowY]: overflow ?? null,
+        }),
+        [maxHeight, overflow]
+    );
+    useApplyStyle(popoverContainerRef, popoverCardStyle);
 
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleViewportResize = () => {
-        updateOffsetPosition();
-    };
-
     const handleMobileClose = () => {
         if (onMobileClose) {
             onMobileClose();
-        }
-    };
-
-    // =============================================================================
-    // HELPER FUNCTIONS
-    // =============================================================================
-    const updateOffsetPosition = () => {
-        const newOffsetPosition = getOffsetPosition();
-
-        if (newOffsetPosition) {
-            setOffset(newOffsetPosition);
-        }
-    };
-
-    const getOffsetPosition = (): OffsetPosition | undefined => {
-        if (bubbleRef.current) {
-            const bubbleRect = bubbleRef.current.getBoundingClientRect();
-            const paddingBuffer = 24; // buffer for all sides
-            const hasExceededTop = bubbleRect.y < paddingBuffer;
-            const rightLimit = window.innerWidth - paddingBuffer;
-
-            if (bubbleRect.x < paddingBuffer) {
-                // Exceed left
-                return hasExceededTop ? "top-left" : "left";
-            } else if (bubbleRect.x + bubbleRect.width > rightLimit) {
-                // Exceed right
-                return hasExceededTop ? "top-right" : "right";
-            }
-
-            /**
-             * Handle cases where there is more space and we can
-             * shift bubble back to center
-             */
-            if (
-                (offsetStateRef.current === "top-left" ||
-                    offsetStateRef.current === "left") &&
-                bubbleRect.x - bubbleRect.width / 2 > paddingBuffer
-            ) {
-                return hasExceededTop ? "top-center" : "none";
-            }
-
-            if (
-                (offsetStateRef.current === "top-right" ||
-                    offsetStateRef.current === "right") &&
-                bubbleRect.x + bubbleRect.width * 2 < rightLimit
-            ) {
-                return hasExceededTop ? "top-center" : "none";
-            }
-
-            if (hasExceededTop) {
-                return "top-center";
-            }
-
-            // All ok, do nothing
-            return undefined;
         }
     };
 
@@ -133,31 +56,54 @@ export const Popover = ({
     // =============================================================================
     const renderContent = () =>
         typeof children === "string" ? (
-            <V2_Text.BodySmall>{children}</V2_Text.BodySmall>
+            <Typography.BodyMD>{children}</Typography.BodyMD>
         ) : (
             children
         );
 
     return (
         <>
-            <BubbleWrap
-                ref={bubbleRef}
-                data-testid={testId}
-                $visible={visible}
-                $offset={offset}
-                {...otherProps}
-            >
-                <Card>{renderContent()}</Card>
-            </BubbleWrap>
-            {isMobile && (
-                <Modal
-                    show={visible ?? false}
-                    onOverlayClick={handleMobileClose}
+            {visible && !isMobile && (
+                <div
+                    ref={popoverContainerRef}
+                    tabIndex={0}
+                    data-testid={testId}
+                    {...otherProps}
+                    className={clsx(styles.popoverContainer, className)}
+                    id={id}
+                    role="dialog"
+                    aria-label={ariaLabel}
                 >
-                    <MobileModalBox onClose={handleMobileClose}>
-                        <ContentWrapper>{renderContent()}</ContentWrapper>
-                    </MobileModalBox>
-                </Modal>
+                    <Card
+                        className={clsx(
+                            styles.popoverCard,
+                            maxHeight !== undefined &&
+                                styles.popoverCardWithMaxHeight,
+                            overflow && styles.popoverCardWithOverflow
+                        )}
+                    >
+                        <Markup baseTextSize="body-md">
+                            {renderContent()}
+                        </Markup>
+                    </Card>
+                </div>
+            )}
+            {isMobile && (
+                <ModalV2
+                    show={visible}
+                    onOverlayClick={handleMobileClose}
+                    onClose={handleMobileClose}
+                    id={id}
+                    role="dialog"
+                    aria-label={ariaLabel}
+                >
+                    <ModalV2.Card>
+                        <ModalV2.Content>
+                            <Markup>{renderContent()}</Markup>
+                        </ModalV2.Content>
+                        <ModalV2.CloseButton />
+                    </ModalV2.Card>
+                </ModalV2>
             )}
         </>
     );

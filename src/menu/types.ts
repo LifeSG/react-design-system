@@ -5,13 +5,12 @@ import type {
     ReactElement,
 } from "react";
 
-import type { PopoverRenderProps, PopoverV2TriggerProps } from "../popover-v2";
+import type { PopoverRenderProps, PopoverTriggerProps } from "../popover";
 import type { MenuItem } from "./menu-item";
 import type { MenuLink } from "./menu-link";
 import type { MenuSection } from "./menu-section";
 
-export interface MenuProps
-    extends Omit<PopoverV2TriggerProps, "popoverContent"> {
+export interface MenuProps extends Omit<PopoverTriggerProps, "popoverContent"> {
     menuContent: FunctionComponentElement<MenuContentProps>;
 }
 

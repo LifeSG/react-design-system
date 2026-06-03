@@ -26,9 +26,9 @@ import {
     useSafeMaxWidthMediaQuery,
 } from "../theme";
 import { useId } from "../util";
-import { PopoverV2 } from "./popover";
+import { Popover } from "./popover";
 import * as styles from "./popover-trigger.styles";
-import type { PopoverV2TriggerProps, PopoverV2TriggerType } from "./types";
+import type { PopoverTriggerProps, PopoverTriggerType } from "./types";
 
 export const PopoverTrigger = ({
     children,
@@ -49,7 +49,7 @@ export const PopoverTrigger = ({
     isModal = true,
     className,
     ...otherProps
-}: PopoverV2TriggerProps) => {
+}: PopoverTriggerProps) => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
@@ -91,7 +91,7 @@ export const PopoverTrigger = ({
     const parentZIndex = useFloatingChild();
     const { themeProps, themeStyle } = useInheritedThemeScope(visible);
 
-    const trigger: PopoverV2TriggerType = isMobile ? "click" : _trigger;
+    const trigger: PopoverTriggerType = isMobile ? "click" : _trigger;
     const isTooltip = trigger === "hover";
 
     const click = useClick(context, {
@@ -182,7 +182,7 @@ export const PopoverTrigger = ({
         }
 
         return (
-            <PopoverV2
+            <Popover
                 visible
                 onMobileClose={handlePopoverMobileClose}
                 maxHeight={enableResize ? availableHeight : undefined}
@@ -191,7 +191,7 @@ export const PopoverTrigger = ({
                 id={popoverContainerId}
             >
                 {popoverContent}
-            </PopoverV2>
+            </Popover>
         );
     };
 

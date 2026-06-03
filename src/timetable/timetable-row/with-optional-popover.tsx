@@ -1,5 +1,5 @@
-import type { PopoverV2TriggerProps } from "../../popover-v2";
-import { PopoverTrigger } from "../../popover-v2";
+import type { PopoverTriggerProps } from "../../popover";
+import { PopoverTrigger } from "../../popover";
 import type { TimeTablePopoverProps } from "../types";
 
 interface ConditionalCellWrapperProps {
@@ -15,7 +15,7 @@ export const WithOptionalPopover = ({
         return children;
     }
 
-    const popoverTriggerProps: PopoverV2TriggerProps = {
+    const popoverTriggerProps: PopoverTriggerProps = {
         position: "bottom-start",
         customOffset: customPopover.offset,
         children: children,

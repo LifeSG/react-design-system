@@ -1,23 +1,77 @@
-/** @deprecated Use `PopoverV2` */
-export interface PopoverProps {
+import type { RefObject } from "react";
+
+export interface PopoverProps extends PopoverRenderProps {
     children: string | JSX.Element;
     visible?: boolean | undefined;
     id?: string | undefined;
     className?: string | undefined;
     "data-testid"?: string | undefined;
     onMobileClose?: (() => void) | undefined;
+    ariaLabel?: string | undefined;
 }
 
-/** @deprecated Use `PopoverV2` */
-export interface PopoverHOCProps {
+export interface PopoverRenderProps {
+    overflow?: PopoverOverflowType | undefined;
+    maxHeight?: number | undefined;
+}
+
+export type PopoverTriggerType = "click" | "hover";
+
+type Position = "top" | "right" | "bottom" | "left";
+type Alignment = "start" | "end";
+type AlignedPosition = `${Position}-${Alignment}`;
+
+export type PopoverOverflowType =
+    | "visible"
+    | "hidden"
+    | "clip"
+    | "scroll"
+    | "auto";
+
+export type PopoverPosition = Position | AlignedPosition;
+
+export interface PopoverTriggerProps {
+    children: React.ReactNode;
+    popoverContent:
+        | string
+        | JSX.Element
+        | ((renderProps: PopoverRenderProps) => React.ReactNode);
+    trigger?: PopoverTriggerType | undefined;
+    position?: PopoverPosition | undefined;
+    id?: string | undefined;
+    zIndex?: number | undefined;
+    className?: string | undefined;
+    "data-testid"?: string | undefined;
+    /**
+     * The root element that contains the popover element. Defaults to the document body.
+     *
+     * If the parent that contains the trigger element has a higher z-index than the popover,
+     * the popover may not be visible. Specify the parent element here instead
+     */
+    rootNode?: RefObject<HTMLElement> | undefined;
+    customOffset?: number | undefined;
+    // in milliseconds
+    delay?:
+        | { open?: number | undefined; close?: number | undefined }
+        | undefined;
+    enableFlip?: boolean | undefined;
+    /* if the popover will resize to fit the remaining vertical space and contents become scrollable */
+    enableResize?: boolean | undefined;
+    overflow?: PopoverOverflowType | undefined;
+    popoverAriaLabel?: string | undefined;
+    triggerOnFocus?: boolean | undefined;
+    isModal?: boolean | undefined;
     onPopoverAppear?: (() => void) | undefined;
     onPopoverDismiss?: (() => void) | undefined;
 }
 
-/** @deprecated Use `PopoverV2` */
-export interface PopoverHOCOptionsProps {
-    content: string | JSX.Element;
-    trigger?: "click" | "hover" | undefined;
-    id?: string | undefined;
-    "data-testid"?: string | undefined;
+export type PopoverInlineStyle = "default" | "underline" | "underline-dashed";
+
+export interface PopoverInlineProps
+    extends Omit<PopoverTriggerProps, "children"> {
+    ariaLabel?: string | undefined;
+    content?: React.ReactNode | undefined;
+    icon?: JSX.Element | undefined;
+    underlineStyle?: PopoverInlineStyle | undefined;
+    underlineHoverStyle?: PopoverInlineStyle | undefined;
 }

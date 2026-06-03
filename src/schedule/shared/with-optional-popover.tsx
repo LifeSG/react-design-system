@@ -1,8 +1,8 @@
 import type { RefObject } from "react";
 import styled from "styled-components";
 
-import type { PopoverV2TriggerProps } from "../../popover-v2";
-import { PopoverTrigger } from "../../popover-v2";
+import type { PopoverTriggerProps } from "../../popover";
+import { PopoverTrigger } from "../../popover";
 import type { SchedulePopoverProps } from "../types";
 
 interface ConditionalCellWrapperProps {
@@ -26,7 +26,7 @@ export const WithOptionalPopover = ({
         return children;
     }
 
-    const popoverTriggerProps: PopoverV2TriggerProps = {
+    const popoverTriggerProps: PopoverTriggerProps = {
         position: "bottom-start",
         rootNode: containerRef,
         customOffset: customPopover.offset,

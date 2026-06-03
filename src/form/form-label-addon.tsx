@@ -1,7 +1,7 @@
 import { ICircleFillIcon } from "@lifesg/react-icons/i-circle-fill";
 import type { RefObject } from "react";
 
-import { PopoverInline } from "../popover-v2";
+import { PopoverInline } from "../popover";
 import * as styles from "./form-label-addon.styles";
 import type { FormLabelAddonProps } from "./types";
 

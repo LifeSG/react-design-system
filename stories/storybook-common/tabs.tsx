@@ -1,6 +1,6 @@
 import { useState } from "react";
-import { V2_Color } from "src/v2_color";
-import { V2_Text, V2_TextStyleHelper } from "src/v2_text";
+import { Border, Colour, Font, ThemeProvider } from "src/theme";
+import { Typography } from "src/typography";
 import styled, { css } from "styled-components";
 
 export interface TabAttribute {
@@ -16,10 +16,10 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
     const [selectedTab, setSelectedTab] = useState<string>(tabs[0].title);
 
     const renderTabs = () => {
-        return tabs.map((tab, index) => {
+        return tabs.map((tab) => {
             return (
                 <Button
-                    key={index}
+                    key={tab.title}
                     onClick={() => setSelectedTab(tab.title)}
                     $selected={selectedTab === tab.title}
                 >
@@ -35,14 +35,16 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
             return selectedTabItem.component;
         }
 
-        return <V2_Text.BodySmall>No content</V2_Text.BodySmall>;
+        return <Typography.BodyBL>No content</Typography.BodyBL>;
     };
 
     return (
-        <Wrapper>
-            <ButtonRow>{renderTabs()}</ButtonRow>
-            <Content>{renderContent()}</Content>
-        </Wrapper>
+        <ThemeProvider>
+            <Wrapper>
+                <ButtonRow>{renderTabs()}</ButtonRow>
+                <Content>{renderContent()}</Content>
+            </Wrapper>
+        </ThemeProvider>
     );
 };
 
@@ -50,7 +52,7 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
 // STYLE INTERFACE
 // =============================================================================
 interface StyleProps {
-    $selected?: boolean | undefined;
+    $selected?: boolean;
 }
 
 // =============================================================================
@@ -61,8 +63,8 @@ const Wrapper = styled.div`
     flex-direction: column;
     width: 100%;
     border-radius: 4px;
-    background: ${V2_Color.Neutral[8]};
-    border: 1px solid ${V2_Color.Neutral[6]};
+    background: ${Colour["bg"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     box-shadow: rgb(0 0 0 / 10%) 0 1px 3px 0;
     padding: 0 0 1rem;
 `;
@@ -73,7 +75,7 @@ const ButtonRow = styled.div`
 `;
 
 const Button = styled.button<StyleProps>`
-    ${V2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
+    ${Font["body-md-regular"]}
     border: none;
     background: none;
     cursor: pointer;
@@ -88,7 +90,7 @@ const Button = styled.button<StyleProps>`
                     bottom: -0.5rem;
                     left: 0;
                     width: 100%;
-                    background: ${V2_Color.Primary(props)};
+                    background: ${Colour["text-primary"]};
                     height: 4px;
                 }
             `;

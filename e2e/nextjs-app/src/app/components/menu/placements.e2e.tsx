@@ -2,13 +2,13 @@
 
 import { Button } from "@lifesg/react-design-system/button";
 import { Menu } from "@lifesg/react-design-system/menu";
-import type { PopoverV2Position } from "@lifesg/react-design-system/popover-v2";
+import type { PopoverPosition } from "@lifesg/react-design-system/popover";
 import styles from "./menu.module.css";
 
 type PlacementEntry = {
     key: string;
     label: string;
-    position: PopoverV2Position;
+    position: PopoverPosition;
 };
 
 const placements: PlacementEntry[] = [

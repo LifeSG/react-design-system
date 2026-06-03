@@ -12,8 +12,8 @@ import { useResizeDetector } from "react-resize-detector";
 
 import { LoadingDotsSpinner } from "../animations";
 import { ErrorDisplay } from "../error-display";
-import type { PopoverV2TriggerProps } from "../popover-v2";
-import { PopoverTrigger } from "../popover-v2";
+import type { PopoverTriggerProps } from "../popover";
+import { PopoverTrigger } from "../popover";
 import { VisuallyHidden } from "../shared/accessibility";
 import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
@@ -220,7 +220,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
             return child;
         }
 
-        const popoverTriggerProps: PopoverV2TriggerProps = {
+        const popoverTriggerProps: PopoverTriggerProps = {
             position: "bottom-start",
             customOffset: data.rowHeaderPopover.offset,
             children: child,

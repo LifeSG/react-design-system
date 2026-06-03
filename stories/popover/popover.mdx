@@ -1,5 +1,4 @@
 import { Canvas, Meta } from "@storybook/addon-docs/blocks";
-import { Alert } from "src/alert";
 import * as PopoverStories from "./popover.stories";
 import { PropsTable } from "./props-table";
 
@@ -7,125 +6,97 @@ import { PropsTable } from "./props-table";
 
 # Popover
 
-<Alert type="warning">
-    This component is deprecated and will be removed in a future version. It is
-    recommended to switch to [PopoverV2](/docs/overlays-popoverv2--docs) which
-    offers improved positioning and easier usage.
-</Alert>
-
 ## Overview
 
 A component which appears when hovering or clicking on a target element and displays information about a certain element in the page.
 
-> **It is recommended to use this if you have more content to display within the popover bubble. If the content is short, consider using the [Tooltip](/docs/deprecated-tooltip--docs) instead.**
+This module contains:
+
+-   Popover - the presentational component
+-   PopoverTrigger - a utility component that handles triggering of the popover
+-   [PopoverInline](/docs/overlays-popoverinline--docs) - a utility component that displays a text or icon-based trigger
 
 ```tsx
-import { withPopover } from "@lifesg/react-design-system/popover";
+import { PopoverTrigger } from "@lifesg/react-design-system/popover";
 ```
 
 <Canvas of={PopoverStories.Default} />
 
-### Appearance information
+<Canvas of={PopoverStories.HoverInteraction} />
 
--   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself on top of the trigger component by default
+### Behaviour
+
+**Appearance**
+
+-   The `Popover` component automatically positions itself based on the amount of space available. It will always attempt to display itself at the preferred position by default
 -   The `Popover` appears as a modal in mobile viewports
 
-<br />
+**Keyboard support**
 
-{/* USAGE */}
+The trigger should be included in the page's tab sequence. This way, users who
+navigate via keyboard can open the popover with `Space`/`Enter`. On open, focus
+will move to the popover. Press `Escape` to dismiss the popover.
 
-## Usage
+The example below illustrates the positioning behaviour when viewed on desktop.
 
-We recommend using the `withPopover` higher order component (HOC) to construct the component. Here
-is how you can do it.
+<Canvas of={PopoverStories.Appearance} />
 
-### Step 1: Create the trigger component
+## Default styling
 
-```tsx
-import { V2_Text } from "@lifesg/react-design-system/v2_text";
+The component comes with basic styling for commonly used markup such as `<strong>` or `<a>`.
 
-const Trigger = () => (
-    <CustomDiv>
-        <V2_Text.Body>Hover me</V2_Text.Body>
-    </CustomDiv>
-);
-```
+<Canvas of={PopoverStories.DefaultStyling} />
 
-### Step 2: Use the HOC function to create a HOC
+## Customisation
 
-```tsx
-const PopoverHOC = withPopover(Trigger, {
-    content: "This is the popover content",
-    trigger: "hover",
-});
-```
+You can opt out of the default appearance to display custom content such as menus and dialogs.
 
-### Step 3: Compose the component with the HOC
+<Canvas of={PopoverStories.Customisation} />
 
-```tsx
-export const PopoverHOCExample = () => {
-    return (
-        <Container>
-            <PopoverHOC />
-        </Container>
-    );
-};
-```
+## Z-index conflicts
 
-> Take note that when using a HOC, it is important to
-> **ensure that the declaration of the HOC is not within the functional component**.
-> Doing so would cause certain display animations to not function correctly.
+The popover uses z-index to display above elements. It may end up rendering
+below another element with a higher z-index.
 
-```tsx
-/** Wrong **/
+The popover is `Modal` and `Overlay`-aware by default; when rendered as a child
+of either component, it will automatically adjust its z-index to remain visible.
+The story below illustrates the default behaviour.
 
-export const WrongExample = () => {
-    const PopoverHOC = withPopover(Trigger, {
-        content: "This is the popover content",
-        trigger: "hover",
-    }); // You should not do this
+If you still encounter z-index issues, try setting a custom `zIndex` or
+`rootNode`.
 
-    return (
-        <Container>
-            <PopoverHOC />
-        </Container>
-    );
-};
+<Canvas of={PopoverStories.UsageInOverlay} />
 
-/** Correct **/
+## Resize and Flip
 
-const PopoverHOC = withPopover(Trigger, {
-    content: "This is the popover content",
-    trigger: "hover",
-});
+Use `enableResize` to enable resize of the `popoverContent` to fit the remaining
+vertical space of the window and become scrollable.
 
-export const CorrectExample = () => {
-    return (
-        <Container>
-            <PopoverHOC />
-        </Container>
-    );
-};
-```
+Use `enableFlip` to disable flipping of the `popoverContent`.
 
-{/* USING AS A COMPONENT */}
+<Canvas of={PopoverStories.ResizeAndFlip} />
 
-## Using as a component
+With `enableResize`, when `popoverContent` is a render function, additional
+props are provided. You are responsible for applying the `maxHeight` and
+`overflow` values to your custom component to ensure correct sizing and scroll
+behavior.
 
-You also have the freedom to construct the `Popover` as a separate component from its trigger.
+<Canvas of={PopoverStories.ResizeAndFlipWithCustomContent} />
 
-```tsx
-import { Popover } from "@lifesg/react-design-system/popover";
-```
+### Overflow
 
-<Canvas of={PopoverStories.UsingAsAComponent} />
+Use `overflow` with `enableResize` to control the popover content&rsquo;s
+overflow behavior.
+
+<Canvas of={PopoverStories.Overflow} />
+
+## Nested overlays
+
+This popover contains a component with a dropdown. In most cases, the popover
+should be able to coexist with a nested floating element without issue.
+
+<Canvas of={PopoverStories.NestedOverlays} />
 
 ## Component API
-
-```tsx
-withPopover(component: JSX.Element, options: PopoverHOCOptionsProps): (props: PopoverHOCProps) => JSX.Element
-```
-
-The derived HOC component has its own set of props that are typed under `PopoverHOCProps`
 
 <PropsTable />
