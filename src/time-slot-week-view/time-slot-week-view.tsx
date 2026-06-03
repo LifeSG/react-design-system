@@ -7,7 +7,7 @@ import { CalendarManager } from "../shared/internal-calendar/calendar-manager";
 import type { TimeSlot } from "../time-slot-bar";
 import { DateHelper } from "../util";
 import { TimeSlotWeekDays } from "./time-slot-week-days";
-import { Wrapper } from "./time-slot-week-view.styles";
+import * as styles from "./time-slot-week-view.styles";
 import type { TimeSlotWeekViewProps } from "./types";
 
 const DATE_FORMAT = "YYYY-MM-DD";
@@ -96,7 +96,7 @@ export const TimeSlotWeekView = ({
     // =============================================================================
 
     return (
-        <Wrapper {...otherProps}>
+        <styles.Wrapper {...otherProps}>
             <CalendarManager
                 ref={calendarManagerRef}
                 dynamicHeight
@@ -142,6 +142,6 @@ export const TimeSlotWeekView = ({
                     );
                 }}
             </CalendarManager>
-        </Wrapper>
+        </styles.Wrapper>
     );
 };
