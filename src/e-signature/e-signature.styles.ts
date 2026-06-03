@@ -3,11 +3,13 @@ import { css } from "@linaria/core";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
-// CUSTOM MEDIA QUERIES
+// TOKENS
 // =============================================================================
-// for mobile in landscape orientation
-const MOBILE_LANDSCAPE =
-    "@media (orientation: landscape) and (max-height: 480px)";
+
+export const tokens = {
+    buttonTopInset: "--fds-internal-e-signature-close-button-topInset",
+    buttonRightInset: "--fds-internal-e-signature-close-button-rightInset",
+};
 
 // =============================================================================
 // STYLING
@@ -91,14 +93,12 @@ export const growContainer = css`
         width: 100%;
         height: 100%;
     }
-    ${MOBILE_LANDSCAPE} {
-        padding: 0;
-        width: 100%;
-        height: 100%;
-    }
 `;
 
 export const modalBox = css`
+    ${tokens.buttonTopInset}: initial;
+    ${tokens.buttonRightInset}: initial;
+
     width: 100%;
     height: 29rem;
     max-width: 672px;
@@ -114,19 +114,8 @@ export const modalBox = css`
         border-radius: 0;
         padding: 0;
 
-        --close-button-top-inset: ${Spacing["spacing-8"]};
-        --close-button-right-inset: ${Spacing["spacing-20"]};
-    }
-    ${MOBILE_LANDSCAPE} {
-        display: flex;
-        flex-direction: column;
-        max-width: none;
-        height: 100%;
-        border-radius: 0;
-        padding: 0;
-
-        --close-button-top-inset: ${Spacing["spacing-8"]};
-        --close-button-right-inset: ${Spacing["spacing-20"]};
+        ${tokens.buttonTopInset}: ${Spacing["spacing-8"]};
+        ${tokens.buttonRightInset}: ${Spacing["spacing-20"]};
     }
 `;
 
@@ -137,10 +126,6 @@ export const modalTitle = css`
     text-align: center;
 
     ${MediaQuery.MaxWidth.sm} {
-        ${Font["body-md-semibold"]}
-        margin: ${Spacing["spacing-12"]} 0;
-    }
-    ${MOBILE_LANDSCAPE} {
         ${Font["body-md-semibold"]}
         margin: ${Spacing["spacing-12"]} 0;
     }
@@ -156,11 +141,6 @@ export const eSignatureContainer = css`
         border-radius: 0;
         flex: 1;
     }
-    ${MOBILE_LANDSCAPE} {
-        border-radius: 0;
-        flex: 1;
-        background: ${Colour["bg-strong"]};
-    }
 `;
 
 export const eSignatureDrawable = css`
@@ -174,11 +154,6 @@ export const eSignatureDrawable = css`
         aspect-ratio: 4/3;
         width: 100%;
         height: auto;
-    }
-    ${MOBILE_LANDSCAPE} {
-        aspect-ratio: 4/3;
-        width: auto;
-        height: 100%;
     }
 `;
 
@@ -197,11 +172,6 @@ export const signatureLine = css`
         max-width: 300px;
         left: 50%;
     }
-    ${MOBILE_LANDSCAPE} {
-        width: calc(100% - ${Spacing["spacing-40"]});
-        max-width: 300px;
-        left: 50%;
-    }
 `;
 
 export const modalButtons = css`
@@ -215,10 +185,6 @@ export const modalButtons = css`
             ${Spacing["spacing-48"]};
         gap: ${Spacing["spacing-16"]};
     }
-    ${MOBILE_LANDSCAPE} {
-        flex-direction: row;
-        margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
-    }
 `;
 
 export const modalActionButton = css`
@@ -226,9 +192,56 @@ export const modalActionButton = css`
     ${MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
-    ${MOBILE_LANDSCAPE} {
-        height: 2.5rem;
-    }
+`;
+
+export const growContainerLandscape = css`
+    padding: 0;
+    width: 100%;
+    height: 100%;
+`;
+
+export const modalBoxLandscape = css`
+    display: flex;
+    flex-direction: column;
+    max-width: none;
+    height: 100%;
+    border-radius: 0;
+    padding: 0;
+
+    ${tokens.buttonTopInset}: ${Spacing["spacing-8"]};
+    ${tokens.buttonRightInset}: ${Spacing["spacing-20"]};
+`;
+
+export const modalTitleLandscape = css`
+    ${Font["body-md-semibold"]}
+    margin: ${Spacing["spacing-12"]} 0;
+`;
+
+export const eSignatureContainerLandscape = css`
+    border-radius: 0;
+    flex: 1;
+    background: ${Colour["bg-strong"]};
+`;
+
+export const eSignatureDrawableLandscape = css`
+    aspect-ratio: 4/3;
+    width: auto;
+    height: 100%;
+`;
+
+export const signatureLineLandscape = css`
+    width: calc(100% - ${Spacing["spacing-40"]});
+    max-width: 300px;
+    left: 50%;
+`;
+
+export const modalButtonsLandscape = css`
+    flex-direction: row;
+    margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
+`;
+
+export const modalActionButtonLandscape = css`
+    height: 2.5rem;
 `;
 
 export const signatureCanvasContainer = css`
