@@ -1,25 +1,33 @@
 import styled from "styled-components";
 
-import { V3_Colour } from "../../v3_theme";
+import { Colour, MediaQuery } from "../../theme";
 
 export const StyledSvg = styled.svg`
     .background-circle {
-        fill: ${V3_Colour["bg-stronger"]};
+        fill: ${Colour["bg-stronger"]};
     }
 
     .primary-path {
-        fill: ${V3_Colour["icon-primary"]};
+        fill: ${Colour["icon-primary"]};
     }
 
     .validation-icon {
-        fill: ${V3_Colour["bg-available"]};
+        fill: ${Colour["bg-available"]};
     }
 
     .accent-light-3 {
-        fill: ${V3_Colour["icon-primary-subtle"]};
+        fill: ${Colour["icon-primary-subtle"]};
     }
 
     .accent-light-4 {
-        fill: ${V3_Colour["icon-primary-subtlest"]};
+        fill: ${Colour["icon-primary-subtlest"]};
+    }
+
+    width: 120px;
+    height: 120px;
+
+    ${MediaQuery.MaxWidth.sm} {
+        width: 64px;
+        height: 64px;
     }
 `;

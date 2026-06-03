@@ -1,7 +1,6 @@
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
 import { concatIds } from "../shared/accessibility";
-import { useMaxWidthMediaQuery } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import type { VerificationSectionProps } from "./internal-types";
@@ -30,8 +29,6 @@ export const VerificationSection = ({
     otpPrefix,
     otpSeparator,
 }: VerificationSectionProps) => {
-    const isMobile = useMaxWidthMediaQuery("sm");
-    const thumbnailSize = isMobile ? 64 : 120;
     const internalId = useId();
 
     const titleId = `${internalId}-title`;
@@ -44,17 +41,7 @@ export const VerificationSection = ({
 
         return (
             <div aria-hidden>
-                {type === "email" ? (
-                    <EmailThumbnail
-                        width={thumbnailSize}
-                        height={thumbnailSize}
-                    />
-                ) : (
-                    <PhoneThumbnail
-                        width={thumbnailSize}
-                        height={thumbnailSize}
-                    />
-                )}
+                {type === "email" ? <EmailThumbnail /> : <PhoneThumbnail />}
             </div>
         );
     };

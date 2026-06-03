@@ -1,19 +1,12 @@
 import { StyledSvg } from "./email-thumbnail.styles";
 
 interface EmailThumbnailProps {
-    width?: number;
-    height?: number;
     className?: string;
 }
-export const EmailThumbnail = ({
-    width = 120,
-    height = 120,
-    className,
-}: EmailThumbnailProps) => {
+
+export const EmailThumbnail = ({ className }: EmailThumbnailProps) => {
     return (
         <StyledSvg
-            width={width}
-            height={height}
             viewBox="0 0 120 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"

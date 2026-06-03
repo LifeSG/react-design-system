@@ -1,20 +1,12 @@
 import { StyledSvg } from "./phone-thumbnail.styles";
 
 interface PhoneThumbnailProps {
-    width?: number;
-    height?: number;
     className?: string;
 }
 
-export const PhoneThumbnail = ({
-    width = 120,
-    height = 120,
-    className,
-}: PhoneThumbnailProps) => {
+export const PhoneThumbnail = ({ className }: PhoneThumbnailProps) => {
     return (
         <StyledSvg
-            width={width}
-            height={height}
             viewBox="0 0 120 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
