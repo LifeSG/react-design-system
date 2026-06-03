@@ -138,6 +138,19 @@ export const TimeCell: React.FC<TimeCellProps> = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const getHiddenSlotsInRange = (rangeStart: number, rangeEnd: number) => {
+        return hiddenOverlappingSlots.filter((slot) => {
+            const slotStartMinutes = TimeHelper.timeToMinutes(slot.startTime);
+            const slotEndMinutes = TimeHelper.timeToMinutes(slot.endTime);
+
+            return slotStartMinutes < rangeEnd && slotEndMinutes > rangeStart;
+        });
+    };
+
+    const getHiddenServices = (slots: SlotWithService[]) => {
+        return Array.from(new Set(slots.map((slot) => slot.serviceName)));
+    };
+
     // Calculate 15-minute intervals within this 30-minute cell
     const calculateHiddenSlotsFor15MinIntervals = () => {
         const timeMinutes = TimeHelper.timeToMinutes(time);
@@ -151,40 +164,23 @@ export const TimeCell: React.FC<TimeCellProps> = ({
         };
 
         // Get hidden slots for first 15-minute interval
-        const hiddenSlotsFirstInterval = hiddenOverlappingSlots.filter(
-            (slot) => {
-                const slotStartMinutes = TimeHelper.timeToMinutes(
-                    slot.startTime
-                );
-                const slotEndMinutes = TimeHelper.timeToMinutes(slot.endTime);
-                // Slot overlaps with first 15-minute interval
-                return (
-                    slotStartMinutes < timeMinutes + 15 &&
-                    slotEndMinutes > timeMinutes
-                );
-            }
+        const hiddenSlotsFirstInterval = getHiddenSlotsInRange(
+            // Slot overlaps with first 15-minute interval
+            timeMinutes,
+            timeMinutes + 15
         );
-
         // Get hidden slots for second 15-minute interval
-        const hiddenSlotsSecondInterval = hiddenOverlappingSlots.filter(
-            (slot) => {
-                const slotStartMinutes = TimeHelper.timeToMinutes(
-                    slot.startTime
-                );
-                const slotEndMinutes = TimeHelper.timeToMinutes(slot.endTime);
-                // Slot overlaps with second 15-minute interval
-                return (
-                    slotStartMinutes < timeMinutes + 30 &&
-                    slotEndMinutes > timeMinutes + 15
-                );
-            }
+        const hiddenSlotsSecondInterval = getHiddenSlotsInRange(
+            // Slot overlaps with second 15-minute interval
+            timeMinutes + 15,
+            timeMinutes + 30
         );
 
-        const firstIntervalServices = Array.from(
-            new Set(hiddenSlotsFirstInterval.map((slot) => slot.serviceName))
+        const firstIntervalServices = getHiddenServices(
+            hiddenSlotsFirstInterval
         );
-        const secondIntervalServices = Array.from(
-            new Set(hiddenSlotsSecondInterval.map((slot) => slot.serviceName))
+        const secondIntervalServices = getHiddenServices(
+            hiddenSlotsSecondInterval
         );
 
         // Check if the services are different between intervals
