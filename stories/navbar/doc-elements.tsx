@@ -5,7 +5,7 @@ import { Badge } from "src/badge";
 import { Button } from "src/button";
 import { Divider } from "src/divider";
 import { Menu } from "src/menu";
-import { PopoverTrigger } from "src/popover-v2";
+import { PopoverTrigger } from "src/popover";
 import { Typography } from "src/typography";
 import { V3_Breakpoint, V3_Colour } from "src/v3_theme";
 import styled, { useTheme } from "styled-components";

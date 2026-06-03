@@ -56,7 +56,7 @@ export * from "./overlay";
 export * from "./pagination";
 export * from "./phone-number-input";
 export * from "./pill";
-export * from "./popover-v2";
+export * from "./popover";
 export * from "./predictive-text-input";
 export * from "./progress-indicator";
 export * from "./radio-button";

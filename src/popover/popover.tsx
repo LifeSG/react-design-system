@@ -12,9 +12,9 @@ import {
 } from "../theme";
 import { Typography } from "../typography";
 import * as styles from "./popover.styles";
-import type { PopoverV2Props } from "./types";
+import type { PopoverProps } from "./types";
 
-export const PopoverV2 = ({
+export const Popover = ({
     children,
     visible = false,
     onMobileClose,
@@ -25,7 +25,7 @@ export const PopoverV2 = ({
     className,
     "data-testid": testId = "popover",
     ...otherProps
-}: PopoverV2Props): JSX.Element => {
+}: PopoverProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================

@@ -1,6 +1,6 @@
 "use client";
 
-import { PopoverTrigger } from "@lifesg/react-design-system/popover-v2";
+import { PopoverTrigger } from "@lifesg/react-design-system/popover";
 
 export default function Story() {
     return (

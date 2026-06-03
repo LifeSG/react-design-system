@@ -1,4 +1,4 @@
-import type { PopoverV2TriggerType } from "../popover-v2";
+import type { PopoverTriggerType } from "../popover";
 
 export type TimeTableCellType =
     | "filled"
@@ -50,7 +50,7 @@ export interface TimeTableRowData {
 
 export interface TimeTablePopoverProps {
     /** The trigger type for showing the popover */
-    trigger: PopoverV2TriggerType;
+    trigger: PopoverTriggerType;
     /** The content to display in the popover */
     content: string | JSX.Element | (() => React.ReactNode);
     /** Delay in milliseconds before opening/closing the popover */

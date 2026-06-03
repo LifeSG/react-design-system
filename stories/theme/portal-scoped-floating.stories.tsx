@@ -4,7 +4,7 @@ import "src/theme/styles/oneservice.css";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { type CSSProperties, useMemo } from "react";
 import { Button } from "src/button";
-import { PopoverTrigger } from "src/popover-v2";
+import { PopoverTrigger } from "src/popover";
 import type { ResolvedThemeMode } from "src/theme";
 import { ThemeProvider, useTheme } from "src/theme";
 import { useApplyStyle } from "src/theme/utils/use-apply-styles";

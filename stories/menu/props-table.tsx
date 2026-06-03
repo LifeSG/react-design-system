@@ -16,7 +16,7 @@ const MENU_DATA: ApiTableSectionProps[] = [
                             target="_blank"
                             rel="noreferrer"
                         >
-                            PopoverV2TriggerProps
+                            PopoverTriggerProps
                         </a>
                         , except <code>popoverContent</code>
                     </>

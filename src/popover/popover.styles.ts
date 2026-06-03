@@ -4,8 +4,8 @@ import { Colour, MediaQuery, Radius } from "../theme";
 
 export const tokens = {
     popoverCard: {
-        maxHeight: "--fds-internal-popoverV2-popoverCard-maxHeight",
-        overflowY: "--fds-internal-popoverV2-popoverCard-overflowY",
+        maxHeight: "--fds-internal-popover-popoverCard-maxHeight",
+        overflowY: "--fds-internal-popover-popoverCard-overflowY",
     },
 } as const;
 

@@ -1,6 +1,5 @@
 import type { ReactNode } from "react";
 
-import type { V2_ThemeSpec } from "../v2_theme/types";
 import type { V3_BorderSetOptions } from "./border/types";
 import type { V3_BreakpointSetOptions } from "./breakpoint/types";
 import type { V3_PrimitiveColourSetOptions } from "./colour-primitive/types";
@@ -88,6 +87,9 @@ export type V3_ResourceScheme =
 
 export type V3_ColourMode = "light" | "dark";
 
+// Keep the legacy v2 slot typed without depending on removed v2 modules.
+type V2_ThemeSpecLegacy = Record<string, unknown>;
+
 export interface V3_ThemeSpecOptions {
     primitiveColour?: V3_PrimitiveColourSetOptions | undefined;
     primitiveColourDark?: V3_PrimitiveColourSetOptions | undefined;
@@ -121,7 +123,7 @@ export interface V3_ThemeSpec {
 
     maxColumns?: any;
     /** @deprecated For backwards compatibility with V2 theme */
-    _v2?: V2_ThemeSpec;
+    _v2?: V2_ThemeSpecLegacy;
 }
 export interface V3_ThemeStyleProps {
     theme?: V3_ThemeSpec;

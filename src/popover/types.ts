@@ -1,6 +1,6 @@
 import type { RefObject } from "react";
 
-export interface PopoverV2Props extends PopoverRenderProps {
+export interface PopoverProps extends PopoverRenderProps {
     children: string | JSX.Element;
     visible?: boolean | undefined;
     id?: string | undefined;
@@ -15,7 +15,7 @@ export interface PopoverRenderProps {
     maxHeight?: number | undefined;
 }
 
-export type PopoverV2TriggerType = "click" | "hover";
+export type PopoverTriggerType = "click" | "hover";
 
 type Position = "top" | "right" | "bottom" | "left";
 type Alignment = "start" | "end";
@@ -28,16 +28,16 @@ export type PopoverOverflowType =
     | "scroll"
     | "auto";
 
-export type PopoverV2Position = Position | AlignedPosition;
+export type PopoverPosition = Position | AlignedPosition;
 
-export interface PopoverV2TriggerProps {
+export interface PopoverTriggerProps {
     children: React.ReactNode;
     popoverContent:
         | string
         | JSX.Element
         | ((renderProps: PopoverRenderProps) => React.ReactNode);
-    trigger?: PopoverV2TriggerType | undefined;
-    position?: PopoverV2Position | undefined;
+    trigger?: PopoverTriggerType | undefined;
+    position?: PopoverPosition | undefined;
     id?: string | undefined;
     zIndex?: number | undefined;
     className?: string | undefined;
@@ -68,7 +68,7 @@ export interface PopoverV2TriggerProps {
 export type PopoverInlineStyle = "default" | "underline" | "underline-dashed";
 
 export interface PopoverInlineProps
-    extends Omit<PopoverV2TriggerProps, "children"> {
+    extends Omit<PopoverTriggerProps, "children"> {
     ariaLabel?: string | undefined;
     content?: React.ReactNode | undefined;
     icon?: JSX.Element | undefined;

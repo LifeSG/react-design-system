@@ -3,17 +3,17 @@ import { useState } from "react";
 import { Button } from "src/button";
 import { Form } from "src/form";
 import { Modal } from "src/modal";
-import { PopoverTrigger, PopoverV2 } from "src/popover-v2";
+import { Popover, PopoverTrigger } from "src/popover";
 import { GridDecorator } from "stories/storybook-common";
 
 import { CustomPopover, POPOVER_CONTENT } from "./doc-elements";
 
-type Component = typeof PopoverV2;
+type Component = typeof Popover;
 type TriggerComponent = typeof PopoverTrigger;
 
 const meta: Meta<Component> = {
-    title: "Overlays/PopoverV2",
-    component: PopoverV2,
+    title: "Overlays/Popover",
+    component: Popover,
 };
 
 export default meta;

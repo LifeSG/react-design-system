@@ -1,4 +1,4 @@
-import type { PopoverV2TriggerType } from "../popover-v2";
+import type { PopoverTriggerType } from "../popover";
 
 export type ScheduleCellType = "booked" | "available" | "blocked" | "pending";
 
@@ -11,7 +11,7 @@ export interface ScheduleEntityProps {
 }
 
 export interface SchedulePopoverProps {
-    trigger: PopoverV2TriggerType;
+    trigger: PopoverTriggerType;
     content: string | JSX.Element | (() => React.ReactNode);
     delay?: { open?: number; close?: number } | undefined;
     offset?: number | undefined;
