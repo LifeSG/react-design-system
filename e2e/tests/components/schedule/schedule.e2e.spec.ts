@@ -54,12 +54,12 @@ class StoryPage extends AbstractStoryPage {
         };
     }
 
-    /** Switches the header view selector from Day to Week view. */
     public async switchToWeekView() {
         await this.page
             .locator('[data-id="schedule-header"]')
             .getByText("Day", { exact: true })
             .click();
+        await compareScreenshot(this, "view-selection");
         await this.page.getByRole("option", { name: "Week" }).click();
     }
 }
@@ -73,81 +73,136 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Schedule", () => {
     test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.page.clock.install({
-                time: new Date("2026-06-01T09:30:00"),
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.page.clock.install({
+                    time: new Date("2026-06-01T09:30:00"),
+                });
+                await story.init("default");
             });
-            await story.init("default");
+
+            test("Day view", async ({ story }) => {
+                await test.step("Day view", async () => {
+                    await compareScreenshot(story, "mount");
+                });
+
+                await test.step("Day view open calendar", async () => {
+                    await story.locators.internal.dateText.click();
+                    await compareScreenshot(story, "calendar-open");
+
+                    await story.page.keyboard.press("Escape");
+                });
+
+                await test.step("Navigate to next day", async () => {
+                    await story.locators.internal.nextDayBtn.click();
+                    await compareScreenshot(story, "next-day");
+                });
+
+                await test.step("Navigate back to previous day", async () => {
+                    await story.locators.internal.prevDayBtn.click();
+                    await story.locators.internal.prevDayBtn.click();
+                    await compareScreenshot(story, "prev-day");
+                });
+
+                await test.step("Empty slot click", async () => {
+                    await story.locators.internal.emptySlot.click();
+                    await expect(
+                        story.locators.emptySlotClickResult
+                    ).toBeVisible();
+                    await expect(
+                        story.locators.emptySlotClickResult
+                    ).toContainText('"startTime":"08:00"');
+                    await expect(
+                        story.locators.emptySlotClickResult
+                    ).toContainText('"endTime":"08:30"');
+                    await expect(
+                        story.locators.emptySlotClickResult
+                    ).toContainText('"name":"Service A"');
+                });
+            });
         });
 
-        test("Day view", async ({ story }) => {
-            await test.step("Day view", async () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.page.clock.install({
+                    time: new Date("2026-06-01T09:30:00"),
+                });
+                await story.init("default", { mode: "dark" });
+            });
+
+            test("Day view - dark mode", async ({ story }) => {
                 await compareScreenshot(story, "mount");
-            });
-
-            await test.step("Day view open calendar", async () => {
-                await story.locators.internal.dateText.click();
-                await compareScreenshot(story, "calendar-open");
-
-                await story.page.keyboard.press("Escape");
-            });
-
-            await test.step("Navigate to next day", async () => {
-                await story.locators.internal.nextDayBtn.click();
-                await compareScreenshot(story, "next-day");
-            });
-
-            await test.step("Navigate back to previous day", async () => {
-                await story.locators.internal.prevDayBtn.click();
-                await story.locators.internal.prevDayBtn.click();
-                await compareScreenshot(story, "prev-day");
-            });
-
-            await test.step("Empty slot click", async () => {
-                await story.locators.internal.emptySlot.click();
-                await expect(story.locators.emptySlotClickResult).toBeVisible();
-                await expect(story.locators.emptySlotClickResult).toContainText(
-                    '"startTime":"08:00"'
-                );
-                await expect(story.locators.emptySlotClickResult).toContainText(
-                    '"endTime":"08:30"'
-                );
-                await expect(story.locators.emptySlotClickResult).toContainText(
-                    '"name":"Service A"'
-                );
             });
         });
     });
 
     test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.page.clock.install({
-                time: new Date("2026-06-01T09:30:00"),
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.page.clock.install({
+                    time: new Date("2026-06-01T09:30:00"),
+                });
+                await story.init("default");
             });
-            await story.init("default");
+
+            test("Week view", async ({ story }) => {
+                await test.step("Week view switch", async () => {
+                    await story.switchToWeekView();
+                    await compareScreenshot(story, "mount");
+                });
+
+                await test.step("Hidden slots indicator is visible", async () => {
+                    await expect(
+                        story.locators.internal.hiddenSlotsIndicator
+                    ).toBeVisible();
+                    await story.locators.internal.hiddenSlotsIndicator.hover();
+                    await compareScreenshot(
+                        story,
+                        "hidden-slots-indicator-hover"
+                    );
+                });
+
+                await test.step("Navigate to next week", async () => {
+                    await story.locators.internal.nextDayBtn.click();
+                    await compareScreenshot(story, "next-week");
+                });
+
+                await test.step("Navigate back to previous week", async () => {
+                    await story.locators.internal.prevDayBtn.click();
+                    await story.locators.internal.prevDayBtn.click();
+                    await compareScreenshot(story, "prev-week");
+                });
+            });
         });
 
-        test("Week view", async ({ story }) => {
-            await test.step("Week view switch", async () => {
-                await story.switchToWeekView();
-                await compareScreenshot(story, "mount");
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.page.clock.install({
+                    time: new Date("2026-06-01T09:30:00"),
+                });
+                await story.init("default", { mode: "dark" });
             });
 
-            await test.step("Hidden slots indicator is visible", async () => {
-                await expect(
-                    story.locators.internal.hiddenSlotsIndicator
-                ).toBeVisible();
-            });
+            test("Week view - dark mode", async ({ story }) => {
+                await test.step("Week view switch", async () => {
+                    await story.switchToWeekView();
+                    await compareScreenshot(story, "mount");
+                });
 
-            await test.step("Navigate to next week", async () => {
-                await story.locators.internal.nextDayBtn.click();
-                await compareScreenshot(story, "next-week");
+                await test.step("Hidden slots indicator is visible", async () => {
+                    await expect(
+                        story.locators.internal.hiddenSlotsIndicator
+                    ).toBeVisible();
+                    await story.locators.internal.hiddenSlotsIndicator.hover();
+                    await compareScreenshot(
+                        story,
+                        "hidden-slots-indicator-hover"
+                    );
+                });
             });
+        });
+    });
 
-            await test.step("Navigate back to previous week", async () => {
-                await story.locators.internal.prevDayBtn.click();
-                await story.locators.internal.prevDayBtn.click();
-                await compareScreenshot(story, "prev-week");
             });
         });
     });
