@@ -1,10 +1,13 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 import type { MouseEvent } from "react";
-import { useMemo, useRef } from "react";
+import { useContext, useMemo, useRef } from "react";
+import { ThemeContext } from "styled-components";
 
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
+import type { SlotStyle } from "../../shared/time-slot";
 import { DateHelper } from "../../util/date-helper";
 import { TimeHelper } from "../../util/time-helper";
+import { V3_Colour } from "../../v3_theme";
 import {
     calculateSlotOffset,
     findSlotsStartingInTimeRange,
@@ -64,6 +67,13 @@ export const ScheduleDayView = ({
     const timelineOffset = useTimelineOffset(minTime, maxTime);
     const bodyRef = useInitialScroll(loading, minTime, initialScrollTime);
     const headerRef = useRef<HTMLDivElement>(null);
+    const theme = useContext(ThemeContext);
+    const bgDefault = V3_Colour["bg"]({ theme });
+    const bgWarning = V3_Colour["bg-warning"]({ theme });
+    const bgWarningHover = V3_Colour["bg-warning-hover"]({ theme });
+    const bgInverseSubtle = V3_Colour["bg-inverse-subtle"]({ theme });
+    const bgSuccessHover = V3_Colour["bg-success-hover"]({ theme });
+    const bgPrimarySubtler = V3_Colour["bg-primary-subtler"]({ theme });
     const timeSlots = useMemo(
         () => TimeHelper.generateTimings(30, "24hr", minTime, maxTime),
         [minTime, maxTime]
@@ -164,6 +174,43 @@ export const ScheduleDayView = ({
     // RENDER FUNCTION
     // =============================================================================
 
+    const getSlotStyleProps = (
+        status: ScheduleSlotProps["status"]
+    ): {
+        styleType: SlotStyle;
+        bgColor: string;
+        bgColor2?: string;
+    } => {
+        switch (status) {
+            case "pending":
+                return {
+                    styleType: "stripes",
+                    bgColor: bgWarning,
+                    bgColor2: bgWarningHover,
+                };
+            case "blocked":
+                return {
+                    styleType: "default",
+                    bgColor: bgInverseSubtle,
+                };
+            case "available":
+                return {
+                    styleType: "default",
+                    bgColor: bgSuccessHover,
+                };
+            case "booked":
+                return {
+                    styleType: "default",
+                    bgColor: bgPrimarySubtler,
+                };
+            default:
+                return {
+                    styleType: "default",
+                    bgColor: bgDefault,
+                };
+        }
+    };
+
     const renderHeader = () => {
         return (
             <ServiceContainer $columnCount={serviceData.length}>
@@ -220,14 +267,16 @@ export const ScheduleDayView = ({
             slot.endTime
         );
         const offsetTop = calculateSlotOffset(slot.startTime, timeSlotStart);
+        const slotStyleProps = getSlotStyleProps(slot.status);
         return (
             <SlotContent
                 $status={slot.status}
                 $duration={duration}
                 $offsetTop={offsetTop}
-                onClick={(e: MouseEvent) =>
-                    slot.onClick && slot.onClick(slot, e)
-                }
+                styleType={slotStyleProps.styleType}
+                bgColor={slotStyleProps.bgColor}
+                bgColor2={slotStyleProps.bgColor2}
+                onClick={(e: MouseEvent) => slot.onClick?.(slot, e)}
             >
                 {duration >= 15 && (
                     <>

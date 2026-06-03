@@ -2,6 +2,7 @@ import styled, { css } from "styled-components";
 
 import { Button } from "../../button";
 import { lineClampCss } from "../../shared/styles";
+import { TimeSlot } from "../../shared/time-slot";
 import { Typography } from "../../typography";
 import {
     V3_Border,
@@ -192,7 +193,7 @@ export const SlotCell = styled.div<SlotCellStyleProps>`
     cursor: pointer;
 `;
 
-export const SlotContent = styled(Typography.BodyXS)<SlotContentStyleProps>`
+export const SlotContent = styled(TimeSlot)<SlotContentStyleProps>`
     margin-top: 0;
     overflow: hidden;
     width: calc(100% - 27px);
@@ -208,28 +209,6 @@ export const SlotContent = styled(Typography.BodyXS)<SlotContentStyleProps>`
             : `${CELL_HEIGHT - 1}px`};
     display: flex;
     justify-content: space-between;
-    background: ${(props) => {
-        switch (props.$status) {
-            case "pending":
-                return css`
-                    repeating-linear-gradient(
-                        135deg,
-                        ${V3_Colour["bg-warning"]},
-                        ${V3_Colour["bg-warning"]} 5px,
-                        ${V3_Colour["bg-warning-hover"]} 5px,
-                        ${V3_Colour["bg-warning-hover"]} 10px
-                    )
-                `;
-            case "blocked":
-                return V3_Colour["bg-inverse-subtle"];
-            case "available":
-                return V3_Colour["bg-success-hover"];
-            case "booked":
-                return V3_Colour["bg-primary-subtler"];
-            default:
-                return V3_Colour["bg"];
-        }
-    }};
 
     color: ${(props) =>
         props.$status === "blocked"
