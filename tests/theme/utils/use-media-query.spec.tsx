@@ -6,11 +6,8 @@ import {
     useMediaQuery,
 } from "src/theme/utils/use-media-query";
 
-import {
-    createMatchMediaMock,
-    getThemeVariablesStyle,
-    setupThemeVariables,
-} from "../setup";
+import { createMatchMediaMock } from "../../_common/createMatchMediaMock";
+import { getThemeVariablesStyle, setupThemeVariables } from "../setup";
 
 const CoreConsumer = ({ options }: { options: MediaQueryOptions }) => {
     const result = useMediaQuery(options);
