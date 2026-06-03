@@ -88,8 +88,15 @@ const Component = (
             fabricCanvas.current.selection = false;
             fabricCanvas.current.isDrawingMode = true;
 
+            const cssVarName = Colour["text"].match(/var\(([^,)]+)/)?.[1] ?? "";
+            const resolvedColor = cssVarName
+                ? getComputedStyle(containerRef.current)
+                      .getPropertyValue(cssVarName)
+                      .trim()
+                : "";
+
             pencilBrush.current = new PencilBrush(fabricCanvas.current);
-            pencilBrush.current.color = Colour["text"];
+            pencilBrush.current.color = resolvedColor || "#000000";
             pencilBrush.current.width = 3;
 
             fabricCanvas.current.freeDrawingBrush = pencilBrush.current;
