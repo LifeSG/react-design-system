@@ -121,16 +121,6 @@ export const itemNameText = css`
     }
 `;
 
-export const itemDescriptionText = css`
-    ${Font["body-md-regular"]}
-    color: ${Colour["text"]};
-    margin-top: ${Spacing["spacing-4"]};
-
-    ${MediaQuery.MaxWidth.lg} {
-        ${lineClampCss(2)}
-    }
-`;
-
 export const errorIcon = css`
     height: 1lh;
     width: 1em;
@@ -166,10 +156,6 @@ export const mobileErrorMessage = css`
         visibility: visible;
         margin-top: ${Spacing["spacing-8"]};
     }
-`;
-
-export const spinner = css`
-    color: ${Colour["icon-primary"]};
 `;
 
 export const actionContainer = css`
