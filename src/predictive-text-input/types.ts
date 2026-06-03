@@ -24,7 +24,7 @@ export interface PredictiveTextInputProps<T, V> extends React.AriaAttributes {
      */
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /**
-     * Custom width for the dropdown in pixels. When specified, the dropdown will use this
+     * Custom width for the dropdown. When specified, the dropdown will use this
      * width instead of matching the input element width.
      */
     dropdownWidth?: string | undefined;
