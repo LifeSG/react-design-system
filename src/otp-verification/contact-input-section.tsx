@@ -1,4 +1,5 @@
 import { TickCircleFillIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 
 import { FormErrorMessage } from "../form/form-label";
 import type {
@@ -107,6 +108,10 @@ export const ContactInputSection = ({
                 )}
                 disabled={disabled}
                 readOnly={readOnly}
+                className={clsx(
+                    disabled && "emailContactInputDisabled",
+                    readOnly && "emailContactInputReadonly"
+                )}
             />
         ) : (
             <PhoneContactInput
@@ -129,6 +134,10 @@ export const ContactInputSection = ({
                 )}
                 disabled={disabled}
                 readOnly={readOnly}
+                className={clsx(
+                    disabled && "phoneContactInputDisabled",
+                    readOnly && "phoneContactInputReadonly"
+                )}
             />
         );
 
@@ -139,10 +148,12 @@ export const ContactInputSection = ({
         <ContactSectionWrapper id={id} data-testid={dataTestId}>
             <ContactInputSectionWrapper>
                 <ContactInputWrapper
-                    $isMaxWidth={type === "email"}
-                    $error={!!sendOtpError}
-                    $disabled={disabled}
-                    $readonly={readOnly}
+                    data-max-width={type === "email"}
+                    className={clsx(
+                        !!sendOtpError && "contactInputWrapperError",
+                        disabled && "contactInputWrapperDisabled",
+                        readOnly && "contactInputWrapperReadonly"
+                    )}
                 >
                     {renderContactInput()}
                     {isVerified && (
