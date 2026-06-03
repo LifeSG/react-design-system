@@ -5,15 +5,14 @@ import { Typography } from "../../typography";
 import { HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
 // =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface TimelineStyleProps {
-    $top: number;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
+export const tokens = {
+    timeline: {
+        top: "--fds-internal-scheduleWeekView-timeline-top",
+    },
+};
+
 export const LoadingContainer = styled.div`
     display: flex;
     justify-content: center;
@@ -74,12 +73,13 @@ export const SlotGrid = styled.div`
     min-width: max-content;
 `;
 
-export const Timeline = styled.div<TimelineStyleProps>`
+export const Timeline = styled.div`
+    ${tokens.timeline.top}: 0px;
     position: absolute;
     width: 100%;
     height: 2px;
     background: ${Colour["icon-primary"]};
-    top: ${(props) => props.$top}px;
+    top: var(${tokens.timeline.top});
     z-index: 2;
 
     &::before {

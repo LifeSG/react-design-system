@@ -1,12 +1,14 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 import type { MouseEvent } from "react";
 import { useMemo, useRef } from "react";
 
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 import type { SlotStyle } from "../../shared/time-slot";
-import { Colour } from "../../theme";
+import { Colour, useApplyStyle } from "../../theme";
 import { DateHelper } from "../../util/date-helper";
 import { TimeHelper } from "../../util/time-helper";
+import { CELL_HEIGHT } from "../const";
 import {
     calculateSlotOffset,
     findSlotsStartingInTimeRange,
@@ -44,6 +46,63 @@ const {
     BodyContainer,
 } = styles;
 
+interface SlotContentItemProps {
+    slot: ScheduleSlotProps;
+    timeSlotStart: string;
+    blockedMessage: string;
+    styleType: SlotStyle;
+    bgColor: string;
+    bgColor2?: string;
+}
+
+const SlotContentItem = ({
+    slot,
+    timeSlotStart,
+    blockedMessage,
+    styleType,
+    bgColor,
+    bgColor2,
+}: SlotContentItemProps) => {
+    const duration = TimeHelper.calculateDuration(slot.startTime, slot.endTime);
+    const offsetTop = calculateSlotOffset(slot.startTime, timeSlotStart);
+    const slotContentRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(slotContentRef, {
+        [styles.tokens.slotContent.offsetTop]: `${offsetTop}px`,
+        [styles.tokens.slotContent.height]: `${
+            (duration / 30) * CELL_HEIGHT - 1
+        }px`,
+    });
+
+    return (
+        <SlotContent
+            ref={slotContentRef}
+            className={clsx(
+                slot.status === "blocked" && styles.slotContentBlocked,
+                slot.status === "available" && styles.slotContentAvailable
+            )}
+            styleType={styleType}
+            bgColor={bgColor}
+            bgColor2={bgColor2}
+            onClick={(e: MouseEvent) => slot.onClick?.(slot, e)}
+        >
+            {duration >= 15 && (
+                <>
+                    <SlotTime>
+                        {TimeHelper.parseInput(slot.startTime, "12hr")}
+                        {"\u2013"} {TimeHelper.parseInput(slot.endTime, "12hr")}
+                    </SlotTime>
+                    <SlotAvailability>
+                        {slot.status === "blocked"
+                            ? blockedMessage
+                            : `${slot.booked} / ${slot.capacity}`}
+                    </SlotAvailability>
+                </>
+            )}
+        </SlotContent>
+    );
+};
+
 export const ScheduleDayView = ({
     serviceData,
     isMobile,
@@ -66,6 +125,9 @@ export const ScheduleDayView = ({
     const timelineOffset = useTimelineOffset(minTime, maxTime);
     const bodyRef = useInitialScroll(loading, minTime, initialScrollTime);
     const headerRef = useRef<HTMLDivElement>(null);
+    const serviceContainerRef = useRef<HTMLDivElement>(null);
+    const slotGridRef = useRef<HTMLDivElement>(null);
+    const timelineRef = useRef<HTMLDivElement>(null);
     const bgDefault = Colour["bg"];
     const bgWarning = Colour["bg-warning"];
     const bgWarningHover = Colour["bg-warning-hover"];
@@ -76,6 +138,19 @@ export const ScheduleDayView = ({
         () => TimeHelper.generateTimings(30, "24hr", minTime, maxTime),
         [minTime, maxTime]
     );
+
+    useApplyStyle(serviceContainerRef, {
+        [styles.tokens.serviceContainer.columnCount]: `${serviceData.length}`,
+    });
+
+    useApplyStyle(slotGridRef, {
+        [styles.tokens.slotGrid.columnCount]: `${serviceData.length}`,
+    });
+
+    useApplyStyle(timelineRef, {
+        [styles.tokens.timeline.top]:
+            timelineOffset === null ? null : `${timelineOffset}px`,
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -211,7 +286,7 @@ export const ScheduleDayView = ({
 
     const renderHeader = () => {
         return (
-            <ServiceContainer $columnCount={serviceData.length}>
+            <ServiceContainer ref={serviceContainerRef}>
                 {serviceData.map((service) => (
                     <ServiceColumn key={service.id}>
                         {isMobile && (
@@ -260,37 +335,17 @@ export const ScheduleDayView = ({
         slot: ScheduleSlotProps,
         timeSlotStart: string
     ) => {
-        const duration = TimeHelper.calculateDuration(
-            slot.startTime,
-            slot.endTime
-        );
-        const offsetTop = calculateSlotOffset(slot.startTime, timeSlotStart);
         const slotStyleProps = getSlotStyleProps(slot.status);
+
         return (
-            <SlotContent
-                $status={slot.status}
-                $duration={duration}
-                $offsetTop={offsetTop}
+            <SlotContentItem
+                slot={slot}
+                timeSlotStart={timeSlotStart}
+                blockedMessage={blockedMessage}
                 styleType={slotStyleProps.styleType}
                 bgColor={slotStyleProps.bgColor}
                 bgColor2={slotStyleProps.bgColor2}
-                onClick={(e: MouseEvent) => slot.onClick?.(slot, e)}
-            >
-                {duration >= 15 && (
-                    <>
-                        <SlotTime>
-                            {TimeHelper.parseInput(slot.startTime, "12hr")}
-                            {"\u2013"}{" "}
-                            {TimeHelper.parseInput(slot.endTime, "12hr")}
-                        </SlotTime>
-                        <SlotAvailability>
-                            {slot.status === "blocked"
-                                ? blockedMessage
-                                : `${slot.booked} / ${slot.capacity}`}
-                        </SlotAvailability>
-                    </>
-                )}
-            </SlotContent>
+            />
         );
     };
 
@@ -298,7 +353,12 @@ export const ScheduleDayView = ({
         const slots = findSlotsForTimeCell(service, time);
         if (slots.length > 0) {
             return (
-                <SlotCell key={time} $dashed={time.endsWith(":00")}>
+                <SlotCell
+                    key={time}
+                    className={clsx(
+                        time.endsWith(":00") && styles.slotCellDashed
+                    )}
+                >
                     {slots.map((slot, index) => {
                         const popoverConfig = getPopoverConfig(
                             service,
@@ -321,7 +381,9 @@ export const ScheduleDayView = ({
             return (
                 <SlotCell
                     key={time}
-                    $dashed={time.endsWith(":00")}
+                    className={clsx(
+                        time.endsWith(":00") && styles.slotCellDashed
+                    )}
                     onClick={() => handleEmptySlotClick(time, service.name)}
                     data-testid={`empty-slot-${service.id}-${time}`}
                 >
@@ -342,8 +404,8 @@ export const ScheduleDayView = ({
 
     const renderTimeSlotGrid = () => {
         return (
-            <SlotGrid $columnCount={serviceData.length}>
-                {timelineOffset !== null && <Timeline $top={timelineOffset} />}
+            <SlotGrid ref={slotGridRef}>
+                {timelineOffset !== null && <Timeline ref={timelineRef} />}
                 {serviceData.map((service) => (
                     <SlotColumn key={service.id}>
                         {timeSlots.map((time) => renderSlotCell(service, time))}
@@ -365,7 +427,9 @@ export const ScheduleDayView = ({
                     <HeaderContainer
                         ref={headerRef}
                         onScroll={handleHeaderScroll}
-                        $isMobile={isMobile}
+                        className={clsx(
+                            isMobile && styles.headerContainerMobile
+                        )}
                     >
                         <BlankCell />
                         {renderHeader()}

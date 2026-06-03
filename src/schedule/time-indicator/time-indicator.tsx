@@ -1,3 +1,7 @@
+import clsx from "clsx";
+import { useRef } from "react";
+
+import { useApplyStyle } from "../../theme";
 import { TimeHelper } from "../../util/time-helper";
 import {
     HourDisplay,
@@ -5,6 +9,8 @@ import {
     TimeColumnWrapper,
     TimeLabel,
     TimelineCircle,
+    timelineCircleWeekView,
+    tokens,
 } from "./time-indicator.styles";
 
 interface TimeSlotTimeIndicatorProps {
@@ -30,12 +36,19 @@ export const TimeIndicator = ({
 }: TimeSlotTimeIndicatorProps) => {
     const timeSlots = TimeHelper.generateTimings(30, format, minTime, maxTime);
     const hourLabels = timeSlots.filter((t) => t.includes(":00"));
+    const timelineCircleRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(timelineCircleRef, {
+        [tokens.timelineCircle.top]:
+            timelineOffset === null ? null : `${timelineOffset - 6}px`,
+    });
+
     return (
         <TimeColumnWrapper>
             {timelineOffset !== null && (
                 <TimelineCircle
-                    $top={timelineOffset}
-                    $isWeekView={isWeekView}
+                    ref={timelineCircleRef}
+                    className={clsx(isWeekView && timelineCircleWeekView)}
                 />
             )}
             <TimeColumn>

@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Button } from "../../button";
 import { lineClampCss } from "../../shared/styles";
@@ -13,37 +13,30 @@ import {
 } from "../const";
 
 // =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface HeaderContainerStyleProps {
-    $isMobile: boolean;
-}
-
-interface ServiceContainerStyleProps {
-    $columnCount: number;
-}
-
-interface SlotGridStyleProps {
-    $columnCount: number;
-}
-
-interface SlotCellStyleProps {
-    $dashed?: boolean;
-}
-
-interface SlotContentStyleProps {
-    $status?: string;
-    $duration?: number;
-    $offsetTop?: number;
-}
-
-interface TimelineStyleProps {
-    $top: number;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
+export const tokens = {
+    serviceContainer: {
+        columnCount:
+            "--fds-internal-scheduleDayView-serviceContainer-columnCount",
+    },
+    slotGrid: {
+        columnCount: "--fds-internal-scheduleDayView-slotGrid-columnCount",
+    },
+    slotContent: {
+        offsetTop: "--fds-internal-scheduleDayView-slotContent-offsetTop",
+        height: "--fds-internal-scheduleDayView-slotContent-height",
+    },
+    timeline: {
+        top: "--fds-internal-scheduleDayView-timeline-top",
+    },
+};
+
+export const headerContainerMobile = "scheduleDayViewHeaderContainerMobile";
+export const slotCellDashed = "scheduleDayViewSlotCellDashed";
+export const slotContentBlocked = "scheduleDayViewSlotContentBlocked";
+export const slotContentAvailable = "scheduleDayViewSlotContentAvailable";
+
 export const ArrowButton = styled(Button)`
     color: ${Colour["icon"]};
 `;
@@ -68,7 +61,7 @@ export const LoadingContainer = styled.div`
     background: ${Colour["bg"]};
 `;
 
-export const HeaderContainer = styled.div<HeaderContainerStyleProps>`
+export const HeaderContainer = styled.div`
     z-index: 3;
     max-height: ${HEADER_HEIGHT}px;
     border-top-right-radius: ${Radius["md"]};
@@ -77,17 +70,13 @@ export const HeaderContainer = styled.div<HeaderContainerStyleProps>`
     border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     overflow-x: hidden;
     overflow-y: hidden;
+    display: grid;
+    grid-template-columns: ${TIME_INDICATOR_WIDTH}px 1fr;
 
-    ${(props) =>
-        props.$isMobile
-            ? css`
-                  display: block;
-                  overflow: hidden;
-              `
-            : css`
-                  display: grid;
-                  grid-template-columns: ${TIME_INDICATOR_WIDTH}px 1fr;
-              `}
+    &.${headerContainerMobile} {
+        display: block;
+        overflow: hidden;
+    }
 `;
 
 export const BlankCell = styled.div`
@@ -96,9 +85,13 @@ export const BlankCell = styled.div`
     position: sticky;
     left: 0;
 `;
-export const ServiceContainer = styled.div<ServiceContainerStyleProps>`
+export const ServiceContainer = styled.div`
+    ${tokens.serviceContainer.columnCount}: 1;
     display: grid;
-    grid-template-columns: repeat(${(props) => props.$columnCount}, 1fr);
+    grid-template-columns: repeat(
+        var(${tokens.serviceContainer.columnCount}),
+        1fr
+    );
 `;
 
 export const ServiceColumn = styled.div`
@@ -155,9 +148,10 @@ export const BodyContainer = styled.div`
     border-bottom-left-radius: ${Radius["md"]};
 `;
 
-export const SlotGrid = styled.div<SlotGridStyleProps>`
+export const SlotGrid = styled.div`
+    ${tokens.slotGrid.columnCount}: 1;
     display: grid;
-    grid-template-columns: repeat(${(props) => props.$columnCount}, 1fr);
+    grid-template-columns: repeat(var(${tokens.slotGrid.columnCount}), 1fr);
     min-width: max-content;
     position: relative;
 `;
@@ -173,43 +167,42 @@ export const SlotColumn = styled.div`
     }
 `;
 
-export const SlotCell = styled.div<SlotCellStyleProps>`
+export const SlotCell = styled.div`
     min-height: ${CELL_HEIGHT}px;
     position: relative;
     border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
-    ${(props) =>
-        props.$dashed &&
-        css`
-            border-bottom-style: dashed;
-        `}
     cursor: pointer;
+
+    &.${slotCellDashed} {
+        border-bottom-style: dashed;
+    }
 `;
 
-export const SlotContent = styled(TimeSlot)<SlotContentStyleProps>`
+export const SlotContent = styled(TimeSlot)`
+    ${tokens.slotContent.offsetTop}: 0px;
+    ${tokens.slotContent.height}: ${CELL_HEIGHT - 1}px;
     margin-top: 0;
     overflow: hidden;
     width: calc(100% - 27px);
     padding: 2px ${Spacing["spacing-8"]};
     position: absolute;
-    top: ${(props) => props.$offsetTop || 0}px;
+    top: var(${tokens.slotContent.offsetTop});
     ${Font["body-xs-semibold"]};
     border-radius: ${Radius["sm"]};
     z-index: 1;
-    height: ${(props) =>
-        props.$duration
-            ? `${(props.$duration / 30) * CELL_HEIGHT - 1}px`
-            : `${CELL_HEIGHT - 1}px`};
+    height: var(${tokens.slotContent.height});
     display: flex;
     justify-content: space-between;
+    color: ${Colour["text-subtle"]};
+    border-left: 0;
 
-    color: ${(props) =>
-        props.$status === "blocked"
-            ? Colour["text-inverse"]
-            : Colour["text-subtle"]};
+    &.${slotContentBlocked} {
+        color: ${Colour["text-inverse"]};
+    }
 
-    border-left: ${Border["width-040"]} solid
-        ${(props) =>
-            props.$status === "available" ? Colour["icon-success"] : "none"};
+    &.${slotContentAvailable} {
+        border-left: ${Border["width-040"]} solid ${Colour["icon-success"]};
+    }
 `;
 
 export const SlotTime = styled.span`
@@ -220,12 +213,13 @@ export const SlotAvailability = styled.span`
     ${Font["body-xs-semibold"]};
 `;
 
-export const Timeline = styled.div<TimelineStyleProps>`
+export const Timeline = styled.div`
+    ${tokens.timeline.top}: 0px;
     position: absolute;
     width: 100%;
     height: 2px;
     background: ${Colour["icon-primary"]};
-    top: ${(props) => props.$top}px;
+    top: var(${tokens.timeline.top});
     z-index: 2;
 `;
 

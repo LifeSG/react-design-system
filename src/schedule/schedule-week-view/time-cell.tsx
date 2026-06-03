@@ -1,12 +1,21 @@
+import clsx from "clsx";
 import type { RefObject } from "react";
 import type React from "react";
+import { useRef } from "react";
 
+import { useApplyStyle } from "../../theme";
 import { TimeHelper } from "../../util/time-helper";
 import { calculateSlotOffset, minutesToTime } from "../shared";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
 import type { ScheduleEntityProps } from "../types";
 import { SlotContent } from "./slot-content";
-import { HiddenColumns, SlotCell, SlotColumnOverlay } from "./time-cell.styles";
+import {
+    HiddenColumns,
+    SlotCell,
+    slotCellDashed,
+    SlotColumnOverlay,
+    tokens,
+} from "./time-cell.styles";
 import type { SlotLayoutMap, SlotWithService } from "./types";
 import {
     calculateCellServiceLayout,
@@ -24,6 +33,53 @@ interface TimeCellProps {
     blockedMessage?: string;
     onClickHiddenSlots?: (hiddenServices: string[]) => void;
 }
+
+interface SlotOverlayProps {
+    actualWidthPercentage: number;
+    leftPosition: number;
+    children: React.ReactNode;
+}
+
+const SlotOverlay = ({
+    actualWidthPercentage,
+    leftPosition,
+    children,
+}: SlotOverlayProps) => {
+    const overlayRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(overlayRef, {
+        [tokens.slotColumnOverlay.leftPosition]: `${leftPosition}`,
+        [tokens.slotColumnOverlay
+            .actualWidthPercentage]: `${actualWidthPercentage}`,
+    });
+
+    return <SlotColumnOverlay ref={overlayRef}>{children}</SlotColumnOverlay>;
+};
+
+interface HiddenColumnsButtonProps {
+    heightPercentage: number;
+    onClick: () => void;
+    children: React.ReactNode;
+}
+
+const HiddenColumnsButton = ({
+    heightPercentage,
+    onClick,
+    children,
+}: HiddenColumnsButtonProps) => {
+    const hiddenColumnsRef = useRef<HTMLButtonElement>(null);
+
+    useApplyStyle(hiddenColumnsRef, {
+        [tokens.hiddenColumns.minHeight]: `${heightPercentage}%`,
+        [tokens.hiddenColumns.height]: `${heightPercentage}%`,
+    });
+
+    return (
+        <HiddenColumns ref={hiddenColumnsRef} onClick={onClick}>
+            {children}
+        </HiddenColumns>
+    );
+};
 
 export const TimeCell: React.FC<TimeCellProps> = ({
     dayDate,
@@ -205,28 +261,31 @@ export const TimeCell: React.FC<TimeCellProps> = ({
         if (hiddenIntervals.length === 0) return null;
 
         return (
-            <SlotColumnOverlay
+            <SlotOverlay
                 key="hidden-slots-column"
-                $actualWidthPercentage={actualWidthPercentage}
-                $leftPosition={3 * actualWidthPercentage}
+                actualWidthPercentage={actualWidthPercentage}
+                leftPosition={3 * actualWidthPercentage}
             >
                 {hiddenIntervals.map((intervalData) => (
-                    <HiddenColumns
+                    <HiddenColumnsButton
                         key={`hidden-btn-${intervalData.interval.start}-${intervalData.interval.end}`}
-                        $heightPercentage={100 / hiddenIntervals.length}
+                        heightPercentage={100 / hiddenIntervals.length}
                         onClick={() => {
                             onClickHiddenSlots?.(intervalData.hiddenServices);
                         }}
                     >
                         +{intervalData.hiddenServices.length}
-                    </HiddenColumns>
+                    </HiddenColumnsButton>
                 ))}
-            </SlotColumnOverlay>
+            </SlotOverlay>
         );
     };
 
     return (
-        <SlotCell key={time} $dashed={time.endsWith(":00")}>
+        <SlotCell
+            key={time}
+            className={clsx(time.endsWith(":00") && slotCellDashed)}
+        >
             {cellServiceLayout.visibleServices.map(
                 (serviceName, serviceIndex) => {
                     const serviceSlots = slotsStartingInCell.filter((slot) => {
@@ -241,10 +300,10 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                     const leftPosition = serviceIndex * actualWidthPercentage;
 
                     return (
-                        <SlotColumnOverlay
+                        <SlotOverlay
                             key={serviceName}
-                            $actualWidthPercentage={actualWidthPercentage}
-                            $leftPosition={leftPosition}
+                            actualWidthPercentage={actualWidthPercentage}
+                            leftPosition={leftPosition}
                         >
                             {serviceSlots.map((slot, slotIndex) =>
                                 renderSlotWithPopover(
@@ -253,7 +312,7 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                                     serviceIndex
                                 )
                             )}
-                        </SlotColumnOverlay>
+                        </SlotOverlay>
                     );
                 }
             )}

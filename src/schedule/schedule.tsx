@@ -1,13 +1,9 @@
+import clsx from "clsx";
 import { isEmpty } from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { useMaxWidthMediaQuery } from "../theme";
-import {
-    Container,
-    EmptyTableContainer,
-    NoResultsFound,
-    ScheduleBodyContainer,
-} from "./schedule.styles";
+import * as styles from "./schedule.styles";
 import { ScheduleDayView } from "./schedule-day-view/schedule-day-view";
 import { ScheduleHeader } from "./schedule-header/schedule-header";
 import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
@@ -94,7 +90,12 @@ export const Schedule = ({
 
     if (isEmptyContent) {
         return (
-            <Container {...otherProps} data-testid={testId} $loading={loading}>
+            <styles.Container
+                {...otherProps}
+                data-testid={testId}
+                id={id}
+                className={clsx(loading && styles.containerLoading, className)}
+            >
                 <ScheduleHeader
                     data-id="schedule-header"
                     date={date}
@@ -107,20 +108,19 @@ export const Schedule = ({
                     onViewChange={handleViewChange}
                     onTodayClick={handleTodayClick}
                 />
-                <EmptyTableContainer className="empty-container">
-                    <NoResultsFound
+                <styles.EmptyTableContainer className="empty-container">
+                    <styles.NoResultsFound
                         type="no-item-found"
                         description={emptyContentMessage}
                     />
-                </EmptyTableContainer>
-            </Container>
+                </styles.EmptyTableContainer>
+            </styles.Container>
         );
     }
     return (
-        <Container
+        <styles.Container
             id={id}
-            className={className}
-            $loading={loading}
+            className={clsx(loading && styles.containerLoading, className)}
             data-testid={testId}
             {...otherProps}
         >
@@ -137,7 +137,7 @@ export const Schedule = ({
                 onTodayClick={handleTodayClick}
             />
 
-            <ScheduleBodyContainer
+            <styles.ScheduleBodyContainer
                 ref={contentContainerRef}
                 data-id="schedule-container"
             >
@@ -175,7 +175,7 @@ export const Schedule = ({
                         onClickHiddenSlots={onClickHiddenSlots}
                     />
                 )}
-            </ScheduleBodyContainer>
-        </Container>
+            </styles.ScheduleBodyContainer>
+        </styles.Container>
     );
 };

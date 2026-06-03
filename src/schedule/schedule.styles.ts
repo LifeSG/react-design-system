@@ -1,4 +1,4 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { ErrorDisplay } from "../error-display";
 import { Border, Colour, Radius, Spacing } from "../theme";
@@ -7,23 +7,16 @@ import { MIN_COLUMN_WIDTH } from "./const";
 // =============================================================================
 // STYLING
 // =============================================================================
-interface ScheduleProps {
-    $loading: boolean | undefined;
-}
+export const containerLoading = "scheduleContainerLoading";
 
-export const Container = styled.div<ScheduleProps>`
+export const Container = styled.div`
     min-width: 320px;
     max-width: 90vw;
     box-sizing: border-box;
-    ${(props) => {
-        if (props.$loading) {
-            return css`
-                &:hover {
-                    cursor: not-allowed;
-                }
-            `;
-        }
-    }}
+
+    &.${containerLoading}:hover {
+        cursor: not-allowed;
+    }
 `;
 
 export const ScheduleBodyContainer = styled.div`

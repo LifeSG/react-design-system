@@ -1,28 +1,32 @@
 import dayjs from "dayjs";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 import type { CellStyleProps } from "../../shared/internal-calendar/day-cell";
 import { DayCell } from "../../shared/internal-calendar/day-cell";
+import { useApplyStyle } from "../../theme";
 import { TimeHelper } from "../../util/time-helper";
 import { ScheduleContainer } from "../schedule-day-view/schedule-day-view.styles";
 import { useInitialScroll, useTimelineOffset } from "../shared";
 import { TimeIndicator } from "../time-indicator/time-indicator";
-import {
-    BlankCell,
-    BodyContainer,
-    Description,
-    HeaderContainer,
-    LoadingContainer,
-    ServiceContainer,
-    ServiceHeader,
-    SlotColumn,
-    SlotGrid,
-    Timeline,
-} from "./schedule-week-view.styles";
+import * as styles from "./schedule-week-view.styles";
 import { TimeCell } from "./time-cell";
 import type { ScheduleWeekViewProps } from "./types";
 import { calculateSlotWidths } from "./week-view-utils";
+
+interface WeekTimelineProps {
+    top: number;
+}
+
+const WeekTimeline = ({ top }: WeekTimelineProps) => {
+    const timelineRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(timelineRef, {
+        [styles.tokens.timeline.top]: `${top}px`,
+    });
+
+    return <styles.Timeline ref={timelineRef} />;
+};
 
 // =============================================================================
 // MAIN COMPONENT
@@ -84,36 +88,40 @@ export const ScheduleWeekView = ({
     // =============================================================================
     const renderHeader = () => {
         return (
-            <HeaderContainer>
-                <BlankCell />
-                <ServiceContainer>
+            <styles.HeaderContainer>
+                <styles.BlankCell />
+                <styles.ServiceContainer>
                     {weekDays.map((day) => {
                         const dayCellStyleProps = generateStyleProps(day);
                         return (
-                            <ServiceHeader key={day.format("YYYY-MM-DD")}>
+                            <styles.ServiceHeader
+                                key={day.format("YYYY-MM-DD")}
+                            >
                                 <DayCell
                                     date={day}
                                     calendarDate={dayjs(date)}
                                     {...dayCellStyleProps}
                                 />
-                                <Description>{day.format("ddd")}</Description>
-                            </ServiceHeader>
+                                <styles.Description>
+                                    {day.format("ddd")}
+                                </styles.Description>
+                            </styles.ServiceHeader>
                         );
                     })}
-                </ServiceContainer>
-            </HeaderContainer>
+                </styles.ServiceContainer>
+            </styles.HeaderContainer>
         );
     };
 
     const renderSlotGrid = () => (
-        <SlotGrid>
+        <styles.SlotGrid>
             {weekDays.map((day) => {
                 const dayDate = day.format("YYYY-MM-DD");
                 return (
-                    <SlotColumn key={dayDate}>
+                    <styles.SlotColumn key={dayDate}>
                         {timelineOffset !== null &&
                             day.isSame(today, "day") && (
-                                <Timeline $top={timelineOffset} />
+                                <WeekTimeline top={timelineOffset} />
                             )}
                         {timeSlots.map((time) => (
                             <TimeCell
@@ -127,14 +135,14 @@ export const ScheduleWeekView = ({
                                 onClickHiddenSlots={onClickHiddenSlots}
                             />
                         ))}
-                    </SlotColumn>
+                    </styles.SlotColumn>
                 );
             })}
-        </SlotGrid>
+        </styles.SlotGrid>
     );
 
     const renderBodyContainer = () => (
-        <BodyContainer ref={bodyRef}>
+        <styles.BodyContainer ref={bodyRef}>
             <TimeIndicator
                 minTime={minTime}
                 maxTime={maxTime}
@@ -143,15 +151,15 @@ export const ScheduleWeekView = ({
                 isWeekView={true}
             />
             {renderSlotGrid()}
-        </BodyContainer>
+        </styles.BodyContainer>
     );
 
     return (
         <ScheduleContainer>
             {loading ? (
-                <LoadingContainer>
+                <styles.LoadingContainer>
                     <ThemedLoadingSpinner data-testid="loading-spinner" />
-                </LoadingContainer>
+                </styles.LoadingContainer>
             ) : (
                 <>
                     {renderHeader()}

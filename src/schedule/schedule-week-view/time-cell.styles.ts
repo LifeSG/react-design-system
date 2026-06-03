@@ -1,48 +1,49 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Border, Colour, Font, Radius, Shadow } from "../../theme";
 import { CELL_HEIGHT } from "../const";
 
 // =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface SlotCellStyleProps {
-    $dashed?: boolean;
-}
-
-interface SlotColumnOverlayStyleProps {
-    $actualWidthPercentage?: number;
-    $leftPosition?: number;
-}
-
-interface HiddenColumnsStyleProps {
-    $heightPercentage?: number;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-export const SlotCell = styled.div<SlotCellStyleProps>`
+export const tokens = {
+    slotColumnOverlay: {
+        leftPosition:
+            "--fds-internal-scheduleWeekView-slotColumnOverlay-leftPosition",
+        actualWidthPercentage:
+            "--fds-internal-scheduleWeekView-slotColumnOverlay-actualWidthPercentage",
+    },
+    hiddenColumns: {
+        minHeight: "--fds-internal-scheduleWeekView-hiddenColumns-minHeight",
+        height: "--fds-internal-scheduleWeekView-hiddenColumns-height",
+    },
+};
+
+export const slotCellDashed = "scheduleWeekViewSlotCellDashed";
+
+export const SlotCell = styled.div`
     min-height: ${CELL_HEIGHT}px;
     position: relative;
     border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
-    ${(props) =>
-        props.$dashed &&
-        css`
-            border-bottom-style: dashed;
-        `}
     cursor: pointer;
+
+    &.${slotCellDashed} {
+        border-bottom-style: dashed;
+    }
 `;
 
-export const SlotColumnOverlay = styled.div<SlotColumnOverlayStyleProps>`
+export const SlotColumnOverlay = styled.div`
+    ${tokens.slotColumnOverlay.leftPosition}: 0;
+    ${tokens.slotColumnOverlay.actualWidthPercentage}: 100;
     position: absolute;
     top: 0;
-    left: ${(props) => {
-        return `calc((100% - 14px) * ${props.$leftPosition} / 100)`;
-    }};
-    width: ${(props) => {
-        return `calc((100% - 14px) * ${props.$actualWidthPercentage} / 100)`;
-    }};
+    left: calc(
+        (100% - 14px) * var(${tokens.slotColumnOverlay.leftPosition}) / 100
+    );
+    width: calc(
+        (100% - 14px) * var(${tokens.slotColumnOverlay.actualWidthPercentage}) /
+            100
+    );
     height: 100%;
     display: flex;
     flex-direction: column;
@@ -50,7 +51,9 @@ export const SlotColumnOverlay = styled.div<SlotColumnOverlayStyleProps>`
     z-index: 1;
 `;
 
-export const HiddenColumns = styled.button<HiddenColumnsStyleProps>`
+export const HiddenColumns = styled.button`
+    ${tokens.hiddenColumns.minHeight}: ${CELL_HEIGHT}px;
+    ${tokens.hiddenColumns.height}: auto;
     background-color: unset;
     border: none;
     display: flex;
@@ -59,12 +62,8 @@ export const HiddenColumns = styled.button<HiddenColumnsStyleProps>`
     cursor: pointer;
     color: ${Colour["text-primary"]};
     ${Font["body-xs-semibold"]};
-    min-height: ${(props) =>
-        props.$heightPercentage
-            ? `${props.$heightPercentage}%`
-            : `${CELL_HEIGHT}px`};
-    height: ${(props) =>
-        props.$heightPercentage ? `${props.$heightPercentage}%` : "auto"};
+    min-height: var(${tokens.hiddenColumns.minHeight});
+    height: var(${tokens.hiddenColumns.height});
     &:hover {
         border-radius: ${Radius["sm"]};
         box-shadow: ${Shadow["sm-subtle"]};

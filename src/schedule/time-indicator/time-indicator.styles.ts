@@ -5,16 +5,16 @@ import { Typography } from "../../typography";
 import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
 // =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface TimelineCircleStyleProps {
-    $top: number;
-    $isWeekView: boolean;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
+export const tokens = {
+    timelineCircle: {
+        top: "--fds-internal-timeIndicator-timelineCircle-top",
+    },
+};
+
+export const timelineCircleWeekView = "timeIndicatorTimelineCircleWeekView";
+
 export const TimeColumnWrapper = styled.div`
     position: sticky;
     z-index: 3;
@@ -43,14 +43,18 @@ export const HourDisplay = styled.span`
     top: -18px;
 `;
 
-export const TimelineCircle = styled.div<TimelineCircleStyleProps>`
+export const TimelineCircle = styled.div`
+    ${tokens.timelineCircle.top}: -6px;
     position: absolute;
     right: -6px;
-    top: ${(props) => props.$top - 6}px;
+    top: var(${tokens.timelineCircle.top});
     width: ${Spacing["spacing-12"]};
     height: ${Spacing["spacing-12"]};
     border-radius: ${Radius["full"]};
     background: ${Colour["icon-primary"]};
     z-index: 4;
-    display: ${(props) => (props.$isWeekView ? "none" : "block")};
+
+    &.${timelineCircleWeekView} {
+        display: none;
+    }
 `;

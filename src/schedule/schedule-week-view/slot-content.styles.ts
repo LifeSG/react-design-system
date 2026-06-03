@@ -1,67 +1,69 @@
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 
 import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 import { CELL_HEIGHT } from "../const";
 
 // =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface SlotContentContainerStyleProps {
-    $status: string;
-    $duration: number;
-    $offsetTop: number;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-export const SlotContentContainer = styled(
-    Typography.BodyXS
-)<SlotContentContainerStyleProps>`
+export const tokens = {
+    slotContentContainer: {
+        height: "--fds-internal-scheduleWeekView-slotContentContainer-height",
+        offsetTop:
+            "--fds-internal-scheduleWeekView-slotContentContainer-offsetTop",
+    },
+};
+
+export const slotContentContainerPending =
+    "scheduleWeekViewSlotContentContainerPending";
+export const slotContentContainerBlocked =
+    "scheduleWeekViewSlotContentContainerBlocked";
+export const slotContentContainerAvailable =
+    "scheduleWeekViewSlotContentContainerAvailable";
+export const slotContentContainerBooked =
+    "scheduleWeekViewSlotContentContainerBooked";
+
+export const SlotContentContainer = styled(Typography.BodyXS)`
+    ${tokens.slotContentContainer.height}: ${CELL_HEIGHT - 1}px;
+    ${tokens.slotContentContainer.offsetTop}: 0px;
     width: calc(100% - 1px);
-    height: ${(props) =>
-        props.$duration
-            ? `${(props.$duration / 30) * CELL_HEIGHT - 1}px`
-            : `${CELL_HEIGHT - 1}px`};
+    height: var(${tokens.slotContentContainer.height});
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     justify-content: flex-start;
     padding: ${Spacing["spacing-4"]};
     position: absolute;
-    top: ${(props) => props.$offsetTop || 0}px;
+    top: var(${tokens.slotContentContainer.offsetTop});
     border-radius: ${Radius["sm"]};
+    background: ${Colour["bg"]};
+    color: inherit;
+    border-left: 0;
 
-    background: ${(props) => {
-        switch (props.$status) {
-            case "pending":
-                return css`
-                    repeating-linear-gradient(
-                        135deg,
-                        ${Colour["bg-warning"]},
-                        ${Colour["bg-warning"]} 5px,
-                        ${Colour["bg-warning-hover"]} 5px,
-                        ${Colour["bg-warning-hover"]} 10px
-                    )
-                `;
-            case "blocked":
-                return Colour["bg-inverse-subtle"];
-            case "available":
-                return Colour["bg-success-hover"];
-            case "booked":
-                return Colour["bg-primary-subtler"];
-            default:
-                return Colour["bg"];
-        }
-    }};
+    &.${slotContentContainerPending} {
+        background: repeating-linear-gradient(
+            135deg,
+            ${Colour["bg-warning"]},
+            ${Colour["bg-warning"]} 5px,
+            ${Colour["bg-warning-hover"]} 5px,
+            ${Colour["bg-warning-hover"]} 10px
+        );
+    }
 
-    color: ${(props) =>
-        props.$status === "blocked" ? Colour["text-inverse"] : "inherit"};
+    &.${slotContentContainerBlocked} {
+        background: ${Colour["bg-inverse-subtle"]};
+        color: ${Colour["text-inverse"]};
+    }
 
-    border-left: ${Border["width-040"]} solid
-        ${(props) =>
-            props.$status === "available" ? Colour["icon-success"] : "none"};
+    &.${slotContentContainerAvailable} {
+        background: ${Colour["bg-success-hover"]};
+        border-left: ${Border["width-040"]} solid ${Colour["icon-success"]};
+    }
+
+    &.${slotContentContainerBooked} {
+        background: ${Colour["bg-primary-subtler"]};
+    }
 `;
 
 export const SlotServiceName = styled.span`
