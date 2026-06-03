@@ -234,6 +234,28 @@ test.describe("Schedule", () => {
             });
         });
     });
+
+    test.describe(() => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("empty-content");
+            });
+
+            test("Empty content state", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("empty-content", { mode: "dark" });
+            });
+
+            test("Empty content state - dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
             });
         });
     });
