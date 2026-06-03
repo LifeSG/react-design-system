@@ -1,6 +1,5 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { ErrorDisplay } from "../error-display";
 import { Border, Colour, Radius, Spacing } from "../theme";
 import { MIN_COLUMN_WIDTH } from "./const";
 
@@ -9,7 +8,7 @@ import { MIN_COLUMN_WIDTH } from "./const";
 // =============================================================================
 export const containerLoading = "scheduleContainerLoading";
 
-export const Container = styled.div`
+export const container = css`
     min-width: 320px;
     max-width: 90vw;
     box-sizing: border-box;
@@ -19,13 +18,13 @@ export const Container = styled.div`
     }
 `;
 
-export const ScheduleBodyContainer = styled.div`
+export const scheduleBodyContainer = css`
     height: 100%;
     position: relative;
     overflow: hidden;
 `;
 
-export const EmptyTableContainer = styled.div`
+export const emptyTableContainer = css`
     display: grid;
     overflow: auto;
     position: relative;
@@ -35,7 +34,7 @@ export const EmptyTableContainer = styled.div`
     background: ${Colour["bg"]};
 `;
 
-export const NoResultsFound = styled(ErrorDisplay)`
+export const noResultsFound = css`
     grid-column: 1 / -1;
     grid-row: 2;
     padding: ${Spacing["spacing-72"]} 0;

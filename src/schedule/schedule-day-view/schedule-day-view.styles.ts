@@ -1,10 +1,7 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../../button";
 import { lineClampCss } from "../../shared/styles";
-import { TimeSlot } from "../../shared/time-slot";
 import { Border, Colour, Font, Radius, Spacing } from "../../theme";
-import { Typography } from "../../typography";
 import {
     CELL_HEIGHT,
     HEADER_HEIGHT,
@@ -32,25 +29,20 @@ export const tokens = {
     },
 };
 
-export const headerContainerMobile = "scheduleDayViewHeaderContainerMobile";
-export const slotCellDashed = "scheduleDayViewSlotCellDashed";
-export const slotContentBlocked = "scheduleDayViewSlotContentBlocked";
-export const slotContentAvailable = "scheduleDayViewSlotContentAvailable";
-
-export const ArrowButton = styled(Button)`
+export const arrowButton = css`
     color: ${Colour["icon"]};
 `;
-export const ArrowContainer = styled.div`
+export const arrowContainer = css`
     width: 2rem;
 `;
 
-export const ScheduleContainer = styled.div`
+export const scheduleContainer = css`
     display: flex;
     flex-direction: column;
     height: 100%;
 `;
 
-export const LoadingContainer = styled.div`
+export const loadingContainer = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -61,7 +53,7 @@ export const LoadingContainer = styled.div`
     background: ${Colour["bg"]};
 `;
 
-export const HeaderContainer = styled.div`
+export const headerContainer = css`
     z-index: 3;
     max-height: ${HEADER_HEIGHT}px;
     border-top-right-radius: ${Radius["md"]};
@@ -72,20 +64,20 @@ export const HeaderContainer = styled.div`
     overflow-y: hidden;
     display: grid;
     grid-template-columns: ${TIME_INDICATOR_WIDTH}px 1fr;
-
-    &.${headerContainerMobile} {
-        display: block;
-        overflow: hidden;
-    }
 `;
 
-export const BlankCell = styled.div`
+export const headerContainerMobile = css`
+    display: block;
+    overflow: hidden;
+`;
+
+export const blankCell = css`
     min-width: ${TIME_INDICATOR_WIDTH}px;
     background: ${Colour["bg-strong"]};
     position: sticky;
     left: 0;
 `;
-export const ServiceContainer = styled.div`
+export const serviceContainer = css`
     ${tokens.serviceContainer.columnCount}: 1;
     display: grid;
     grid-template-columns: repeat(
@@ -94,7 +86,7 @@ export const ServiceContainer = styled.div`
     );
 `;
 
-export const ServiceColumn = styled.div`
+export const serviceColumn = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -107,12 +99,12 @@ export const ServiceColumn = styled.div`
     }
 `;
 
-export const ServiceHeaderContainer = styled.div`
+export const serviceHeaderContainer = css`
     width: 15rem;
     padding-left: ${Spacing["spacing-16"]};
 `;
 
-export const Title = styled(Typography.BodyMD)`
+export const title = css`
     color: ${Colour["text-primary"]};
     font-weight: ${Font.Spec["weight-semibold"]};
     margin-top: 0;
@@ -121,7 +113,7 @@ export const Title = styled(Typography.BodyMD)`
     word-wrap: break-word;
 `;
 
-export const Description = styled(Typography.BodySM)`
+export const description = css`
     margin-top: ${Spacing["spacing-8"]};
     background-color: ${Colour["bg-success-hover"]};
     border-radius: ${Radius["full"]};
@@ -134,7 +126,7 @@ export const Description = styled(Typography.BodySM)`
     }
 `;
 
-export const BodyContainer = styled.div`
+export const bodyContainer = css`
     display: grid;
     grid-template-columns: ${TIME_INDICATOR_WIDTH}px 1fr;
     width: 100%;
@@ -148,7 +140,7 @@ export const BodyContainer = styled.div`
     border-bottom-left-radius: ${Radius["md"]};
 `;
 
-export const SlotGrid = styled.div`
+export const slotGrid = css`
     ${tokens.slotGrid.columnCount}: 1;
     display: grid;
     grid-template-columns: repeat(var(${tokens.slotGrid.columnCount}), 1fr);
@@ -156,7 +148,7 @@ export const SlotGrid = styled.div`
     position: relative;
 `;
 
-export const SlotColumn = styled.div`
+export const slotColumn = css`
     display: flex;
     flex-direction: column;
     min-width: ${MIN_COLUMN_WIDTH}px;
@@ -167,18 +159,22 @@ export const SlotColumn = styled.div`
     }
 `;
 
-export const SlotCell = styled.div`
+export const slotCell = css`
     min-height: ${CELL_HEIGHT}px;
     position: relative;
     border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
     cursor: pointer;
-
-    &.${slotCellDashed} {
-        border-bottom-style: dashed;
-    }
+    background: none;
+    width: 100%;
+    padding: 0;
+    text-align: left;
 `;
 
-export const SlotContent = styled(TimeSlot)`
+export const slotCellDashed = css`
+    border-bottom-style: dashed;
+`;
+
+export const slotContent = css`
     ${tokens.slotContent.offsetTop}: 0px;
     ${tokens.slotContent.height}: ${CELL_HEIGHT - 1}px;
     margin-top: 0;
@@ -195,25 +191,25 @@ export const SlotContent = styled(TimeSlot)`
     justify-content: space-between;
     color: ${Colour["text-subtle"]};
     border-left: 0;
-
-    &.${slotContentBlocked} {
-        color: ${Colour["text-inverse"]};
-    }
-
-    &.${slotContentAvailable} {
-        border-left: ${Border["width-040"]} solid ${Colour["icon-success"]};
-    }
 `;
 
-export const SlotTime = styled.span`
+export const slotContentBlocked = css`
+    color: ${Colour["text-inverse"]};
+`;
+
+export const slotContentAvailable = css`
+    border-left: ${Border["width-040"]} solid ${Colour["icon-success"]};
+`;
+
+export const slotTime = css`
     ${Font["body-xs-regular"]};
 `;
 
-export const SlotAvailability = styled.span`
+export const slotAvailability = css`
     ${Font["body-xs-semibold"]};
 `;
 
-export const Timeline = styled.div`
+export const timeline = css`
     ${tokens.timeline.top}: 0px;
     position: absolute;
     width: 100%;
@@ -223,7 +219,7 @@ export const Timeline = styled.div`
     z-index: 2;
 `;
 
-export const EmptySlot = styled.div`
+export const emptySlot = css`
     width: 100%;
     height: ${CELL_HEIGHT - 1}px;
 `;

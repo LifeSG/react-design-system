@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Border, Colour, Font, Radius, Spacing } from "../../theme";
-import { Typography } from "../../typography";
+import { Border, Colour, Font, Radius } from "../../theme";
 import { CELL_HEIGHT } from "../const";
 
 // =============================================================================
@@ -15,69 +14,45 @@ export const tokens = {
     },
 };
 
-export const slotContentContainerPending =
-    "scheduleWeekViewSlotContentContainerPending";
-export const slotContentContainerBlocked =
-    "scheduleWeekViewSlotContentContainerBlocked";
-export const slotContentContainerAvailable =
-    "scheduleWeekViewSlotContentContainerAvailable";
-export const slotContentContainerBooked =
-    "scheduleWeekViewSlotContentContainerBooked";
-
-export const SlotContentContainer = styled(Typography.BodyXS)`
+export const slotContentContainer = css`
     ${tokens.slotContentContainer.height}: ${CELL_HEIGHT - 1}px;
     ${tokens.slotContentContainer.offsetTop}: 0px;
+    margin-top: 0;
+    overflow: hidden;
     width: calc(100% - 1px);
+    padding: 4px;
+    top: var(${tokens.slotContentContainer.offsetTop});
+    ${Font["body-xs-semibold"]};
+    z-index: 1;
     height: var(${tokens.slotContentContainer.height});
     display: flex;
     flex-direction: column;
-    align-items: flex-start;
-    justify-content: flex-start;
-    padding: ${Spacing["spacing-4"]};
     position: absolute;
-    top: var(${tokens.slotContentContainer.offsetTop});
     border-radius: ${Radius["sm"]};
-    background: ${Colour["bg"]};
     color: inherit;
     border-left: 0;
-
-    &.${slotContentContainerPending} {
-        background: repeating-linear-gradient(
-            135deg,
-            ${Colour["bg-warning"]},
-            ${Colour["bg-warning"]} 5px,
-            ${Colour["bg-warning-hover"]} 5px,
-            ${Colour["bg-warning-hover"]} 10px
-        );
-    }
-
-    &.${slotContentContainerBlocked} {
-        background: ${Colour["bg-inverse-subtle"]};
-        color: ${Colour["text-inverse"]};
-    }
-
-    &.${slotContentContainerAvailable} {
-        background: ${Colour["bg-success-hover"]};
-        border-left: ${Border["width-040"]} solid ${Colour["icon-success"]};
-    }
-
-    &.${slotContentContainerBooked} {
-        background: ${Colour["bg-primary-subtler"]};
-    }
 `;
 
-export const SlotServiceName = styled.span`
+export const slotContentContainerAvailable = css`
+    border-left: ${Border["width-040"]} solid ${Colour["icon-success"]};
+`;
+
+export const slotContentContainerBlocked = css`
+    color: ${Colour["text-inverse"]};
+`;
+
+export const slotServiceName = css`
+    ${Font["body-xs-regular"]};
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
-    font-weight: ${Font.Spec["weight-regular"]};
 `;
 
-export const SlotAvailability = styled.span`
+export const slotAvailability = css`
+    ${Font["body-xs-semibold"]};
     overflow: hidden;
     text-overflow: ellipsis;
     white-space: nowrap;
     width: 100%;
-    font-weight: ${Font.Spec["weight-semibold"]};
 `;

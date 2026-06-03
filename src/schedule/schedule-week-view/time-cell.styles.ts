@@ -1,4 +1,4 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Radius, Shadow } from "../../theme";
 import { CELL_HEIGHT } from "../const";
@@ -19,20 +19,18 @@ export const tokens = {
     },
 };
 
-export const slotCellDashed = "scheduleWeekViewSlotCellDashed";
-
-export const SlotCell = styled.div`
+export const slotCell = css`
     min-height: ${CELL_HEIGHT}px;
     position: relative;
     border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
     cursor: pointer;
-
-    &.${slotCellDashed} {
-        border-bottom-style: dashed;
-    }
 `;
 
-export const SlotColumnOverlay = styled.div`
+export const slotCellDashed = css`
+    border-bottom-style: dashed;
+`;
+
+export const slotColumnOverlay = css`
     ${tokens.slotColumnOverlay.leftPosition}: 0;
     ${tokens.slotColumnOverlay.actualWidthPercentage}: 100;
     position: absolute;
@@ -51,7 +49,7 @@ export const SlotColumnOverlay = styled.div`
     z-index: 1;
 `;
 
-export const HiddenColumns = styled.button`
+export const hiddenColumns = css`
     ${tokens.hiddenColumns.minHeight}: ${CELL_HEIGHT}px;
     ${tokens.hiddenColumns.height}: auto;
     background-color: unset;

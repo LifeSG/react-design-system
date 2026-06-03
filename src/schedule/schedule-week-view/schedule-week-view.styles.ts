@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Radius, Spacing } from "../../theme";
-import { Typography } from "../../typography";
 import { HEADER_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
 // =============================================================================
@@ -13,7 +12,7 @@ export const tokens = {
     },
 };
 
-export const LoadingContainer = styled.div`
+export const loadingContainer = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -24,26 +23,26 @@ export const LoadingContainer = styled.div`
     background: ${Colour["bg"]};
 `;
 
-export const HeaderContainer = styled.div`
+export const headerContainer = css`
     display: grid;
     grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr);
     max-height: ${HEADER_HEIGHT}px;
 `;
 
-export const BlankCell = styled.div`
+export const blankCell = css`
     min-width: ${TIME_INDICATOR_WIDTH}px;
     position: sticky;
     z-index: 2;
 `;
 
-export const ServiceContainer = styled.div`
+export const serviceContainer = css`
     display: grid;
     grid-template-columns: repeat(7, 1fr);
     grid-column-start: 2;
     grid-column-end: 9;
 `;
 
-export const ServiceHeader = styled.div`
+export const serviceHeader = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -52,11 +51,11 @@ export const ServiceHeader = styled.div`
     color: ${Colour["text-primary"]};
 `;
 
-export const Description = styled(Typography.BodyMD)`
+export const description = css`
     font-weight: ${Font.Spec["weight-semibold"]};
 `;
 
-export const BodyContainer = styled.div`
+export const bodyContainer = css`
     display: grid;
     grid-template-columns: ${TIME_INDICATOR_WIDTH}px repeat(7, 1fr);
     overflow-x: hidden;
@@ -65,7 +64,7 @@ export const BodyContainer = styled.div`
     height: 100%;
     border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
 `;
-export const SlotGrid = styled.div`
+export const slotGrid = css`
     grid-column-start: 2;
     grid-column-end: 9;
     display: grid;
@@ -73,7 +72,7 @@ export const SlotGrid = styled.div`
     min-width: max-content;
 `;
 
-export const Timeline = styled.div`
+export const timeline = css`
     ${tokens.timeline.top}: 0px;
     position: absolute;
     width: 100%;
@@ -95,7 +94,7 @@ export const Timeline = styled.div`
     }
 `;
 
-export const SlotColumn = styled.div`
+export const slotColumn = css`
     display: flex;
     position: relative;
     flex-direction: column;

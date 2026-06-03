@@ -26,12 +26,6 @@ export interface SlotWithService extends ScheduleSlotProps {
     serviceName: string;
 }
 
-// Slot with positioning information
-export interface PositionedSlot {
-    slot: SlotWithService;
-    column: number;
-    offsetTop: number;
-}
 interface SlotLayoutInfo {
     date: string;
     serviceName: string;

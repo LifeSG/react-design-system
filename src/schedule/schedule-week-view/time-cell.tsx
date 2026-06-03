@@ -6,16 +6,11 @@ import { useRef } from "react";
 import { useApplyStyle } from "../../theme";
 import { TimeHelper } from "../../util/time-helper";
 import { calculateSlotOffset, minutesToTime } from "../shared";
+import { ScheduleSlotContent } from "../shared/schedule-slot-content";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
 import type { ScheduleEntityProps } from "../types";
-import { SlotContent } from "./slot-content";
-import {
-    HiddenColumns,
-    SlotCell,
-    slotCellDashed,
-    SlotColumnOverlay,
-    tokens,
-} from "./time-cell.styles";
+import * as slotContentStyles from "./slot-content.styles";
+import * as styles from "./time-cell.styles";
 import type { SlotLayoutMap, SlotWithService } from "./types";
 import {
     calculateCellServiceLayout,
@@ -48,12 +43,16 @@ const SlotOverlay = ({
     const overlayRef = useRef<HTMLDivElement>(null);
 
     useApplyStyle(overlayRef, {
-        [tokens.slotColumnOverlay.leftPosition]: `${leftPosition}`,
-        [tokens.slotColumnOverlay
+        [styles.tokens.slotColumnOverlay.leftPosition]: `${leftPosition}`,
+        [styles.tokens.slotColumnOverlay
             .actualWidthPercentage]: `${actualWidthPercentage}`,
     });
 
-    return <SlotColumnOverlay ref={overlayRef}>{children}</SlotColumnOverlay>;
+    return (
+        <div className={styles.slotColumnOverlay} ref={overlayRef}>
+            {children}
+        </div>
+    );
 };
 
 interface HiddenColumnsButtonProps {
@@ -70,14 +69,19 @@ const HiddenColumnsButton = ({
     const hiddenColumnsRef = useRef<HTMLButtonElement>(null);
 
     useApplyStyle(hiddenColumnsRef, {
-        [tokens.hiddenColumns.minHeight]: `${heightPercentage}%`,
-        [tokens.hiddenColumns.height]: `${heightPercentage}%`,
+        [styles.tokens.hiddenColumns.minHeight]: `${heightPercentage}%`,
+        [styles.tokens.hiddenColumns.height]: `${heightPercentage}%`,
     });
 
     return (
-        <HiddenColumns ref={hiddenColumnsRef} onClick={onClick}>
+        <button
+            className={styles.hiddenColumns}
+            ref={hiddenColumnsRef}
+            onClick={onClick}
+            type="button"
+        >
             {children}
-        </HiddenColumns>
+        </button>
     );
 };
 
@@ -233,15 +237,9 @@ export const TimeCell: React.FC<TimeCellProps> = ({
     // =============================================================================
     const renderSlotWithPopover = (
         slot: SlotWithService,
-        slotIndex: number,
-        serviceIndex: number
+        slotIndex: number
     ) => {
         const offsetTop = calculateSlotOffset(slot.startTime, time);
-        const positionedSlot = {
-            slot,
-            column: serviceIndex,
-            offsetTop,
-        };
 
         return (
             <WithOptionalPopover
@@ -249,10 +247,37 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                 containerRef={containerRef}
                 customPopover={slot.customPopover}
             >
-                <SlotContent
-                    positionedSlot={positionedSlot}
-                    blockedMessage={blockedMessage}
-                />
+                <ScheduleSlotContent
+                    slot={slot}
+                    offsetTop={offsetTop}
+                    tokens={slotContentStyles.tokens.slotContentContainer}
+                    classNames={{
+                        container: slotContentStyles.slotContentContainer,
+                        blocked: slotContentStyles.slotContentContainerBlocked,
+                        available:
+                            slotContentStyles.slotContentContainerAvailable,
+                    }}
+                    clickable={!!slot.onClick}
+                >
+                    {(duration) => (
+                        <>
+                            <span className={slotContentStyles.slotServiceName}>
+                                {slot.serviceName}
+                            </span>
+                            {duration >= 30 && (
+                                <span
+                                    className={
+                                        slotContentStyles.slotAvailability
+                                    }
+                                >
+                                    {slot.status === "blocked"
+                                        ? blockedMessage
+                                        : `${slot.booked} / ${slot.capacity}`}
+                                </span>
+                            )}
+                        </>
+                    )}
+                </ScheduleSlotContent>
             </WithOptionalPopover>
         );
     };
@@ -282,9 +307,12 @@ export const TimeCell: React.FC<TimeCellProps> = ({
     };
 
     return (
-        <SlotCell
+        <div
             key={time}
-            className={clsx(time.endsWith(":00") && slotCellDashed)}
+            className={clsx(
+                styles.slotCell,
+                time.endsWith(":00") && styles.slotCellDashed
+            )}
         >
             {cellServiceLayout.visibleServices.map(
                 (serviceName, serviceIndex) => {
@@ -306,17 +334,13 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                             leftPosition={leftPosition}
                         >
                             {serviceSlots.map((slot, slotIndex) =>
-                                renderSlotWithPopover(
-                                    slot,
-                                    slotIndex,
-                                    serviceIndex
-                                )
+                                renderSlotWithPopover(slot, slotIndex)
                             )}
                         </SlotOverlay>
                     );
                 }
             )}
             {hiddenIntervals.length > 0 && renderHiddenSlots()}
-        </SlotCell>
+        </div>
     );
 };

@@ -5,8 +5,9 @@ import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/th
 import type { CellStyleProps } from "../../shared/internal-calendar/day-cell";
 import { DayCell } from "../../shared/internal-calendar/day-cell";
 import { useApplyStyle } from "../../theme";
+import { Typography } from "../../typography";
 import { TimeHelper } from "../../util/time-helper";
-import { ScheduleContainer } from "../schedule-day-view/schedule-day-view.styles";
+import * as dayViewStyles from "../schedule-day-view/schedule-day-view.styles";
 import { useInitialScroll, useTimelineOffset } from "../shared";
 import { TimeIndicator } from "../time-indicator/time-indicator";
 import * as styles from "./schedule-week-view.styles";
@@ -25,7 +26,7 @@ const WeekTimeline = ({ top }: WeekTimelineProps) => {
         [styles.tokens.timeline.top]: `${top}px`,
     });
 
-    return <styles.Timeline ref={timelineRef} />;
+    return <div ref={timelineRef} className={styles.timeline} />;
 };
 
 // =============================================================================
@@ -88,13 +89,14 @@ export const ScheduleWeekView = ({
     // =============================================================================
     const renderHeader = () => {
         return (
-            <styles.HeaderContainer>
-                <styles.BlankCell />
-                <styles.ServiceContainer>
+            <div className={styles.headerContainer}>
+                <div className={styles.blankCell} />
+                <div className={styles.serviceContainer}>
                     {weekDays.map((day) => {
                         const dayCellStyleProps = generateStyleProps(day);
                         return (
-                            <styles.ServiceHeader
+                            <div
+                                className={styles.serviceHeader}
                                 key={day.format("YYYY-MM-DD")}
                             >
                                 <DayCell
@@ -102,23 +104,25 @@ export const ScheduleWeekView = ({
                                     calendarDate={dayjs(date)}
                                     {...dayCellStyleProps}
                                 />
-                                <styles.Description>
+                                <Typography.BodyMD
+                                    className={styles.description}
+                                >
                                     {day.format("ddd")}
-                                </styles.Description>
-                            </styles.ServiceHeader>
+                                </Typography.BodyMD>
+                            </div>
                         );
                     })}
-                </styles.ServiceContainer>
-            </styles.HeaderContainer>
+                </div>
+            </div>
         );
     };
 
     const renderSlotGrid = () => (
-        <styles.SlotGrid>
+        <div className={styles.slotGrid}>
             {weekDays.map((day) => {
                 const dayDate = day.format("YYYY-MM-DD");
                 return (
-                    <styles.SlotColumn key={dayDate}>
+                    <div className={styles.slotColumn} key={dayDate}>
                         {timelineOffset !== null &&
                             day.isSame(today, "day") && (
                                 <WeekTimeline top={timelineOffset} />
@@ -135,14 +139,14 @@ export const ScheduleWeekView = ({
                                 onClickHiddenSlots={onClickHiddenSlots}
                             />
                         ))}
-                    </styles.SlotColumn>
+                    </div>
                 );
             })}
-        </styles.SlotGrid>
+        </div>
     );
 
     const renderBodyContainer = () => (
-        <styles.BodyContainer ref={bodyRef}>
+        <div className={styles.bodyContainer} ref={bodyRef}>
             <TimeIndicator
                 minTime={minTime}
                 maxTime={maxTime}
@@ -151,21 +155,21 @@ export const ScheduleWeekView = ({
                 isWeekView={true}
             />
             {renderSlotGrid()}
-        </styles.BodyContainer>
+        </div>
     );
 
     return (
-        <ScheduleContainer>
+        <div className={dayViewStyles.scheduleContainer}>
             {loading ? (
-                <styles.LoadingContainer>
+                <div className={styles.loadingContainer}>
                     <ThemedLoadingSpinner data-testid="loading-spinner" />
-                </styles.LoadingContainer>
+                </div>
             ) : (
                 <>
                     {renderHeader()}
                     {renderBodyContainer()}
                 </>
             )}
-        </ScheduleContainer>
+        </div>
     );
 };

@@ -1,7 +1,6 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
 import { Border, Colour, Font, Radius, Spacing } from "../../theme";
-import { Typography } from "../../typography";
 import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 
 // =============================================================================
@@ -13,14 +12,12 @@ export const tokens = {
     },
 };
 
-export const timelineCircleWeekView = "timeIndicatorTimelineCircleWeekView";
-
-export const TimeColumnWrapper = styled.div`
+export const timeColumnWrapper = css`
     position: sticky;
     z-index: 3;
 `;
 
-export const TimeColumn = styled.div`
+export const timeColumn = css`
     display: flex;
     flex-direction: column;
     min-width: ${TIME_INDICATOR_WIDTH}px;
@@ -28,7 +25,7 @@ export const TimeColumn = styled.div`
     border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
 `;
 
-export const TimeLabel = styled(Typography.BodySM)`
+export const timeLabel = css`
     min-height: ${CELL_HEIGHT * 2}px; /* 2 slots */
     display: flex;
     flex-direction: column;
@@ -38,12 +35,12 @@ export const TimeLabel = styled(Typography.BodySM)`
     font-weight: ${Font.Spec["weight-bold"]};
     position: relative;
 `;
-export const HourDisplay = styled.span`
+export const hourDisplay = css`
     position: absolute;
     top: -18px;
 `;
 
-export const TimelineCircle = styled.div`
+export const timelineCircle = css`
     ${tokens.timelineCircle.top}: -6px;
     position: absolute;
     right: -6px;
@@ -53,8 +50,8 @@ export const TimelineCircle = styled.div`
     border-radius: ${Radius["full"]};
     background: ${Colour["icon-primary"]};
     z-index: 4;
+`;
 
-    &.${timelineCircleWeekView} {
-        display: none;
-    }
+export const timelineCircleWeekView = css`
+    display: none;
 `;

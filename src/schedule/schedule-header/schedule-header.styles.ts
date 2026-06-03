@@ -1,14 +1,11 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-import { Button } from "../../button";
-import { DateNavigator } from "../../date-navigator";
 import { Colour, MediaQuery, Spacing } from "../../theme";
-import { Typography } from "../../typography";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const ScheduleHeaderWrapper = styled.div`
+export const scheduleHeaderWrapper = css`
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -17,7 +14,7 @@ export const ScheduleHeaderWrapper = styled.div`
     gap: ${Spacing["spacing-16"]};
 `;
 
-export const LeftSection = styled.div`
+export const leftSection = css`
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-16"]};
@@ -29,7 +26,7 @@ export const LeftSection = styled.div`
     }
 `;
 
-export const RightSection = styled.div`
+export const rightSection = css`
     display: flex;
     align-items: center;
     gap: ${Spacing["spacing-16"]};
@@ -39,16 +36,16 @@ export const RightSection = styled.div`
     }
 `;
 
-export const StyledDateNavigator = styled(DateNavigator)`
+export const dateNavigator = css`
     width: 100%;
     max-width: 400px;
 `;
 
-export const StyledText = styled(Typography.BodyMD)`
+export const text = css`
     color: ${Colour["text-subtler"]};
 `;
 
-export const StyledButton = styled(Button.Default)`
+export const button = css`
     min-width: 5rem;
 
     ${MediaQuery.MaxWidth.lg} {
