@@ -33,6 +33,7 @@ import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { useDropdownRender } from "../dropdown-wrapper";
 import { BasicButton } from "../input-wrapper";
 import { DropdownLabel } from "./dropdown-label";
+import type { ContainerWidthType } from "./dropdown-list.styles";
 import * as styles from "./dropdown-list.styles";
 import { DropdownListStateContext } from "./dropdown-list-state";
 import { DropdownSearch } from "./dropdown-search";
@@ -119,18 +120,22 @@ const DropdownListInner = <T, V>(
         !!selectedItems &&
         selectedItems?.length === maxSelectable;
 
-    let containerWidthStyle = {};
+    // =========================================================================
+    // APPLY STYLES
+    // =========================================================================
+    let containerWidthType: ContainerWidthType = "default";
+    let containerWidth: string | undefined = undefined;
     if (width) {
-        containerWidthStyle = {
-            [styles.tokens.containerWidth]: `${width}px`,
-            [styles.tokens.containerMinWidth]: `0px`,
-        };
+        containerWidth = width;
+        containerWidthType = "custom";
     } else if (matchElementWidth && elementWidth) {
-        containerWidthStyle = {
-            [styles.tokens.containerWidth]: `${elementWidth}px`,
-            [styles.tokens.containerMinWidth]: `${elementWidth}px`,
-        };
+        containerWidth = `${elementWidth}px`;
+        containerWidthType = "match";
     }
+
+    useApplyStyle(nodeRef, {
+        [styles.tokens.containerWidth]: containerWidth,
+    });
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -401,14 +406,6 @@ const DropdownListInner = <T, V>(
         mounted,
         setFocusedIndex,
     ]);
-
-    // =========================================================================
-    // APPLY STYLES
-    // =========================================================================
-
-    useApplyStyle(nodeRef, {
-        ...containerWidthStyle,
-    });
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -709,6 +706,7 @@ const DropdownListInner = <T, V>(
             data-testid="dropdown-container"
             ref={mergeRefs(nodeRef, setFloatingRef)}
             {...getFloatingProps()}
+            data-width-type={containerWidthType}
             className={clsx(
                 styles.container,
                 variant === "small" && styles.containerVariantSmall
