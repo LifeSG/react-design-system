@@ -9,7 +9,7 @@ import {
     StyledButton,
     StyledDateNavigator,
     StyledText,
-} from "./schedule-header.style";
+} from "./schedule-header.styles";
 
 export interface ScheduleHeaderProps {
     id?: string | undefined;
