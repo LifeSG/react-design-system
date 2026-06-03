@@ -22,9 +22,16 @@ const renderWithTheme = (ui: React.ReactElement) => {
 };
 
 describe("useMediaQuery", () => {
+    let restoreMatchMedia: (() => void) | undefined;
+
     beforeEach(() => {
         setupThemeVariables();
-        createMatchMediaMock();
+        ({ restore: restoreMatchMedia } = createMatchMediaMock());
+    });
+
+    afterEach(() => {
+        restoreMatchMedia?.();
+        restoreMatchMedia = undefined;
     });
 
     it("builds a query from resolved widths", async () => {

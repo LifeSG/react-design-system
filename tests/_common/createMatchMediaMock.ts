@@ -21,6 +21,10 @@ type CreateMatchMediaMockOptions = {
 export const createMatchMediaMock = ({
     initialMatches = false,
 }: CreateMatchMediaMockOptions = {}) => {
+    const originalMatchMediaDescriptor = Object.getOwnPropertyDescriptor(
+        globalThis.window,
+        "matchMedia"
+    );
     const mediaQueryLists = new Map<string, MockMediaQueryList>();
     const matchMedia = jest.fn((query: string) => {
         const existingMediaQueryList = mediaQueryLists.get(query);
@@ -71,5 +75,18 @@ export const createMatchMediaMock = ({
         writable: true,
     });
 
-    return { matchMedia, mediaQueryLists };
+    const restore = () => {
+        if (originalMatchMediaDescriptor) {
+            Object.defineProperty(
+                globalThis.window,
+                "matchMedia",
+                originalMatchMediaDescriptor
+            );
+            return;
+        }
+
+        delete (globalThis.window as Partial<Window>).matchMedia;
+    };
+
+    return { matchMedia, mediaQueryLists, restore };
 };
