@@ -12,7 +12,7 @@ import {
     VerificationSectionWrapper,
     VerifyButton,
     VerifyInputWrapper,
-} from "./verification-section-styles";
+} from "./verification-section.styles";
 
 export const VerificationSection = ({
     id,

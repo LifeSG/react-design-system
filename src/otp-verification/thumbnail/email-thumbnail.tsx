@@ -1,34 +1,10 @@
-import styled from "styled-components";
-
-import { V3_Colour } from "../../v3_theme";
+import { StyledSvg } from "./email-thumbnail.styles";
 
 interface EmailThumbnailProps {
     width?: number;
     height?: number;
     className?: string;
 }
-
-const StyledSvg = styled.svg`
-    .background-circle {
-        fill: ${V3_Colour["bg-stronger"]};
-    }
-
-    .primary-path {
-        fill: ${V3_Colour["icon-primary"]};
-    }
-
-    .validation-icon {
-        fill: ${V3_Colour["bg-available"]};
-    }
-
-    .accent-light-3 {
-        fill: ${V3_Colour["icon-primary-subtle"]};
-    }
-
-    .accent-light-4 {
-        fill: ${V3_Colour["icon-primary-subtlest"]};
-    }
-`;
 export const EmailThumbnail = ({
     width = 120,
     height = 120,

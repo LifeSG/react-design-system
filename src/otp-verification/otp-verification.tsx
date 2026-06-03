@@ -3,7 +3,7 @@ import { useState } from "react";
 
 import { useCountdown } from "../util";
 import { ContactInputSection } from "./contact-input-section";
-import { OTPInputWrapper } from "./otp-verification-styles";
+import { OTPInputWrapper } from "./otp-verification.styles";
 import type { OtpVerificationProps } from "./types";
 import { VerificationSection } from "./verification-section";
 

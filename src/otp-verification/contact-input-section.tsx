@@ -14,7 +14,7 @@ import {
     EmailContactInput,
     PhoneContactInput,
     VerifiedIconWrapper,
-} from "./contact-input-section-styles";
+} from "./contact-input-section.styles";
 import type { ContactInputSectionProps } from "./internal-types";
 
 export const ContactInputSection = ({
