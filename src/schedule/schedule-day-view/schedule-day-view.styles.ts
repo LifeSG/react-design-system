@@ -3,14 +3,8 @@ import styled, { css } from "styled-components";
 import { Button } from "../../button";
 import { lineClampCss } from "../../shared/styles";
 import { TimeSlot } from "../../shared/time-slot";
+import { Border, Colour, Font, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
-import {
-    V3_Border,
-    V3_Colour,
-    V3_Font,
-    V3_Radius,
-    V3_Spacing,
-} from "../../v3_theme";
 import {
     CELL_HEIGHT,
     HEADER_HEIGHT,
@@ -51,7 +45,7 @@ interface TimelineStyleProps {
 // STYLING
 // =============================================================================
 export const ArrowButton = styled(Button)`
-    color: ${V3_Colour["icon"]};
+    color: ${Colour["icon"]};
 `;
 export const ArrowContainer = styled.div`
     width: 2rem;
@@ -69,18 +63,18 @@ export const LoadingContainer = styled.div`
     align-items: center;
     min-height: 25rem;
     height: 100%;
-    border: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour["border"]};
-    border-radius: ${V3_Radius["md"]};
-    background: ${V3_Colour["bg"]};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-radius: ${Radius["md"]};
+    background: ${Colour["bg"]};
 `;
 
 export const HeaderContainer = styled.div<HeaderContainerStyleProps>`
     z-index: 3;
     max-height: ${HEADER_HEIGHT}px;
-    border-top-right-radius: ${V3_Radius["md"]};
-    border-top-left-radius: ${V3_Radius["md"]};
+    border-top-right-radius: ${Radius["md"]};
+    border-top-left-radius: ${Radius["md"]};
     position: sticky;
-    border: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour["border"]};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     overflow-x: hidden;
     overflow-y: hidden;
 
@@ -98,7 +92,7 @@ export const HeaderContainer = styled.div<HeaderContainerStyleProps>`
 
 export const BlankCell = styled.div`
     min-width: ${TIME_INDICATOR_WIDTH}px;
-    background: ${V3_Colour["bg-strong"]};
+    background: ${Colour["bg-strong"]};
     position: sticky;
     left: 0;
 `;
@@ -112,10 +106,9 @@ export const ServiceColumn = styled.div`
     justify-content: space-between;
     align-items: center;
     min-width: ${MIN_COLUMN_WIDTH}px;
-    padding: ${V3_Spacing["spacing-16"]} ${V3_Spacing["spacing-8"]};
-    background: ${V3_Colour["bg-strong"]};
-    border-right: ${V3_Border["width-010"]} ${V3_Border.solid}
-        ${V3_Colour["border"]};
+    padding: ${Spacing["spacing-16"]} ${Spacing["spacing-8"]};
+    background: ${Colour["bg-strong"]};
+    border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     &:last-child {
         border-right: none;
     }
@@ -123,12 +116,12 @@ export const ServiceColumn = styled.div`
 
 export const ServiceHeaderContainer = styled.div`
     width: 15rem;
-    padding-left: ${V3_Spacing["spacing-16"]};
+    padding-left: ${Spacing["spacing-16"]};
 `;
 
 export const Title = styled(Typography.BodyMD)`
-    color: ${V3_Colour["text-primary"]};
-    font-weight: ${V3_Font.Spec["weight-semibold"]};
+    color: ${Colour["text-primary"]};
+    font-weight: ${Font.Spec["weight-semibold"]};
     margin-top: 0;
     ${lineClampCss(2)}
     text-overflow: ellipsis;
@@ -136,15 +129,15 @@ export const Title = styled(Typography.BodyMD)`
 `;
 
 export const Description = styled(Typography.BodySM)`
-    margin-top: ${V3_Spacing["spacing-8"]};
-    background-color: ${V3_Colour["bg-success-hover"]};
-    border-radius: ${V3_Radius["full"]};
+    margin-top: ${Spacing["spacing-8"]};
+    background-color: ${Colour["bg-success-hover"]};
+    border-radius: ${Radius["full"]};
     width: fit-content;
-    padding: ${V3_Spacing["spacing-4"]} ${V3_Spacing["spacing-8"]};
-    color: ${V3_Colour["text-success"]};
-    font-weight: ${V3_Font.Spec["weight-regular"]};
+    padding: ${Spacing["spacing-4"]} ${Spacing["spacing-8"]};
+    color: ${Colour["text-success"]};
+    font-weight: ${Font.Spec["weight-regular"]};
     span {
-        font-weight: ${V3_Font.Spec["weight-semibold"]};
+        font-weight: ${Font.Spec["weight-semibold"]};
     }
 `;
 
@@ -156,10 +149,10 @@ export const BodyContainer = styled.div`
     overflow-y: auto;
     flex: 1;
     height: 100%;
-    border: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour["border"]};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     border-top: none;
-    border-bottom-right-radius: ${V3_Radius["md"]};
-    border-bottom-left-radius: ${V3_Radius["md"]};
+    border-bottom-right-radius: ${Radius["md"]};
+    border-bottom-left-radius: ${Radius["md"]};
 `;
 
 export const SlotGrid = styled.div<SlotGridStyleProps>`
@@ -174,8 +167,7 @@ export const SlotColumn = styled.div`
     flex-direction: column;
     min-width: ${MIN_COLUMN_WIDTH}px;
     min-height: fit-content;
-    border-right: ${V3_Border["width-010"]} ${V3_Border.solid}
-        ${V3_Colour["border"]};
+    border-right: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
     &:last-child {
         border-right: none;
     }
@@ -184,7 +176,7 @@ export const SlotColumn = styled.div`
 export const SlotCell = styled.div<SlotCellStyleProps>`
     min-height: ${CELL_HEIGHT}px;
     position: relative;
-    border-bottom: ${V3_Border["width-010"]} solid ${V3_Colour["border"]};
+    border-bottom: ${Border["width-010"]} solid ${Colour["border"]};
     ${(props) =>
         props.$dashed &&
         css`
@@ -197,11 +189,11 @@ export const SlotContent = styled(TimeSlot)<SlotContentStyleProps>`
     margin-top: 0;
     overflow: hidden;
     width: calc(100% - 27px);
-    padding: 2px ${V3_Spacing["spacing-8"]};
+    padding: 2px ${Spacing["spacing-8"]};
     position: absolute;
     top: ${(props) => props.$offsetTop || 0}px;
-    ${V3_Font["body-xs-semibold"]};
-    border-radius: ${V3_Radius["sm"]};
+    ${Font["body-xs-semibold"]};
+    border-radius: ${Radius["sm"]};
     z-index: 1;
     height: ${(props) =>
         props.$duration
@@ -212,27 +204,27 @@ export const SlotContent = styled(TimeSlot)<SlotContentStyleProps>`
 
     color: ${(props) =>
         props.$status === "blocked"
-            ? V3_Colour["text-inverse"]
-            : V3_Colour["text-subtle"]};
+            ? Colour["text-inverse"]
+            : Colour["text-subtle"]};
 
-    border-left: ${V3_Border["width-040"]} solid
+    border-left: ${Border["width-040"]} solid
         ${(props) =>
-            props.$status === "available" ? V3_Colour["icon-success"] : "none"};
+            props.$status === "available" ? Colour["icon-success"] : "none"};
 `;
 
 export const SlotTime = styled.span`
-    ${V3_Font["body-xs-regular"]};
+    ${Font["body-xs-regular"]};
 `;
 
 export const SlotAvailability = styled.span`
-    ${V3_Font["body-xs-semibold"]};
+    ${Font["body-xs-semibold"]};
 `;
 
 export const Timeline = styled.div<TimelineStyleProps>`
     position: absolute;
     width: 100%;
     height: 2px;
-    background: ${V3_Colour["icon-primary"]};
+    background: ${Colour["icon-primary"]};
     top: ${(props) => props.$top}px;
     z-index: 2;
 `;

@@ -1,13 +1,12 @@
 import { ChevronLeftIcon, ChevronRightIcon } from "@lifesg/react-icons";
 import type { MouseEvent } from "react";
-import { useContext, useMemo, useRef } from "react";
-import { ThemeContext } from "styled-components";
+import { useMemo, useRef } from "react";
 
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 import type { SlotStyle } from "../../shared/time-slot";
+import { Colour } from "../../theme";
 import { DateHelper } from "../../util/date-helper";
 import { TimeHelper } from "../../util/time-helper";
-import { V3_Colour } from "../../v3_theme";
 import {
     calculateSlotOffset,
     findSlotsStartingInTimeRange,
@@ -67,13 +66,12 @@ export const ScheduleDayView = ({
     const timelineOffset = useTimelineOffset(minTime, maxTime);
     const bodyRef = useInitialScroll(loading, minTime, initialScrollTime);
     const headerRef = useRef<HTMLDivElement>(null);
-    const theme = useContext(ThemeContext);
-    const bgDefault = V3_Colour["bg"]({ theme });
-    const bgWarning = V3_Colour["bg-warning"]({ theme });
-    const bgWarningHover = V3_Colour["bg-warning-hover"]({ theme });
-    const bgInverseSubtle = V3_Colour["bg-inverse-subtle"]({ theme });
-    const bgSuccessHover = V3_Colour["bg-success-hover"]({ theme });
-    const bgPrimarySubtler = V3_Colour["bg-primary-subtler"]({ theme });
+    const bgDefault = Colour["bg"];
+    const bgWarning = Colour["bg-warning"];
+    const bgWarningHover = Colour["bg-warning-hover"];
+    const bgInverseSubtle = Colour["bg-inverse-subtle"];
+    const bgSuccessHover = Colour["bg-success-hover"];
+    const bgPrimarySubtler = Colour["bg-primary-subtler"];
     const timeSlots = useMemo(
         () => TimeHelper.generateTimings(30, "24hr", minTime, maxTime),
         [minTime, maxTime]

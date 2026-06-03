@@ -2,8 +2,8 @@ import styled from "styled-components";
 
 import { Button } from "../../button";
 import { DateNavigator } from "../../date-navigator";
+import { Colour, MediaQuery, Spacing } from "../../theme";
 import { Typography } from "../../typography";
-import { V3_Colour, V3_MediaQuery, V3_Spacing } from "../../v3_theme";
 
 // =============================================================================
 // STYLING
@@ -12,17 +12,17 @@ export const ScheduleHeaderWrapper = styled.div`
     display: flex;
     justify-content: space-between;
     align-items: center;
-    padding-bottom: ${V3_Spacing["spacing-16"]};
-    color: ${V3_Colour["text-primary"]};
-    gap: ${V3_Spacing["spacing-16"]};
+    padding-bottom: ${Spacing["spacing-16"]};
+    color: ${Colour["text-primary"]};
+    gap: ${Spacing["spacing-16"]};
 `;
 
 export const LeftSection = styled.div`
     display: flex;
     align-items: center;
-    gap: ${V3_Spacing["spacing-16"]};
+    gap: ${Spacing["spacing-16"]};
 
-    ${V3_MediaQuery.MaxWidth.md} {
+    ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
         align-items: stretch;
         width: 100%;
@@ -32,9 +32,9 @@ export const LeftSection = styled.div`
 export const RightSection = styled.div`
     display: flex;
     align-items: center;
-    gap: ${V3_Spacing["spacing-16"]};
+    gap: ${Spacing["spacing-16"]};
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;
@@ -45,13 +45,13 @@ export const StyledDateNavigator = styled(DateNavigator)`
 `;
 
 export const StyledText = styled(Typography.BodyMD)`
-    color: ${V3_Colour["text-subtler"]};
+    color: ${Colour["text-subtler"]};
 `;
 
 export const StyledButton = styled(Button.Default)`
     min-width: 5rem;
 
-    ${V3_MediaQuery.MaxWidth.lg} {
+    ${MediaQuery.MaxWidth.lg} {
         display: none;
     }
 `;

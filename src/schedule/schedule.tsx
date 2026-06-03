@@ -55,11 +55,13 @@ export const Schedule = ({
         [serviceData, date]
     );
 
-    const visibleServiceData = isSmallScreen
-        ? filteredServiceData && filteredServiceData.length > 0
-            ? [filteredServiceData[visibleServiceIdx]]
-            : []
-        : filteredServiceData;
+    let visibleServiceData = filteredServiceData;
+    if (isSmallScreen) {
+        visibleServiceData =
+            filteredServiceData.length > 0
+                ? [filteredServiceData[visibleServiceIdx]]
+                : [];
+    }
 
     useEffect(() => {
         setVisibleServiceIdx(0);

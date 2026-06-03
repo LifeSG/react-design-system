@@ -1,7 +1,7 @@
 import styled, { css } from "styled-components";
 
 import { ErrorDisplay } from "../error-display";
-import { V3_Border, V3_Colour, V3_Radius, V3_Spacing } from "../v3_theme";
+import { Border, Colour, Radius, Spacing } from "../theme";
 import { MIN_COLUMN_WIDTH } from "./const";
 
 // =============================================================================
@@ -37,13 +37,13 @@ export const EmptyTableContainer = styled.div`
     overflow: auto;
     position: relative;
     grid-template-columns: ${MIN_COLUMN_WIDTH}px auto;
-    border: ${V3_Border["width-010"]} ${V3_Border.solid} ${V3_Colour["border"]};
-    border-radius: ${V3_Radius["md"]};
-    background: ${V3_Colour["bg"]};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour["border"]};
+    border-radius: ${Radius["md"]};
+    background: ${Colour["bg"]};
 `;
 
 export const NoResultsFound = styled(ErrorDisplay)`
     grid-column: 1 / -1;
     grid-row: 2;
-    padding: ${V3_Spacing["spacing-72"]} 0;
+    padding: ${Spacing["spacing-72"]} 0;
 `;
