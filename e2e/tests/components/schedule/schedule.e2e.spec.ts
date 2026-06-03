@@ -203,6 +203,37 @@ test.describe("Schedule", () => {
         });
     });
 
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.page.clock.install({
+                time: new Date("2026-06-01T09:30:00"),
+            });
+            await story.init("default", { size: "mobile" });
+        });
+
+        test("Mobile view", async ({ story }) => {
+            await test.step("Initial state shows first service with next arrow", async () => {
+                await compareScreenshot(story, "first-service");
+            });
+
+            await test.step("Navigate to next service", async () => {
+                await story.locators.internal.nextServiceBtn.click();
+                await expect(
+                    story.locators.internal.prevServiceBtn
+                ).toBeVisible();
+                await compareScreenshot(story, "middle-service");
+            });
+
+            await test.step("Navigate to last service", async () => {
+                await story.locators.internal.nextServiceBtn.click();
+                await story.locators.internal.nextServiceBtn.click();
+                await expect(
+                    story.locators.internal.prevServiceBtn
+                ).toBeVisible();
+                await compareScreenshot(story, "last-service");
+            });
+        });
+    });
             });
         });
     });
