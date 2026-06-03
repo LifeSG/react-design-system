@@ -1,11 +1,11 @@
 import styled from "styled-components";
 
-import { V3_MediaQuery } from "../v3_theme";
+import { MediaQuery } from "../theme";
 
 export const Wrapper = styled.div`
     --header-bottom-spacing: 0.5rem;
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         --header-horizontal-inset: 1.25rem;
     }
 
