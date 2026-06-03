@@ -147,7 +147,7 @@ export default function Story() {
     };
 
     return (
-        <div>
+        <div className="story-background">
             <Schedule
                 data-testid="schedule"
                 date={date}
