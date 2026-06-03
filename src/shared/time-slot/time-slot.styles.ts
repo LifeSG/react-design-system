@@ -2,6 +2,23 @@ import { css } from "@linaria/core";
 
 import { Colour } from "../../theme";
 
+/**
+ * @param bgColorToken - CSS custom property for the primary background color
+ * @param bgColor2Token - CSS custom property for the secondary background color
+ * @param segmentSize - Size of each stripe segment in pixels (default: 6)
+ */
+export const createStripesGradient = (
+    bgColorToken: string,
+    bgColor2Token: string,
+    segmentSize: number = 6
+) => `repeating-linear-gradient(
+    135deg,
+    var(${bgColor2Token}) 0px,
+    var(${bgColor2Token}) ${segmentSize}px,
+    var(${bgColorToken}) ${segmentSize}px,
+    var(${bgColorToken}) ${segmentSize * 2}px
+)`;
+
 export const tokens = {
     slot: {
         bgColor: "--fds-internal-timeSlot-slot-bgColor",
@@ -35,13 +52,11 @@ export const timeSlot = css`
     }
 
     &[data-style-type="stripes"] {
-        background: repeating-linear-gradient(
-            135deg,
-            var(${tokens.slot.bgColor2}) 0px,
-            var(${tokens.slot.bgColor2}) 6px,
-            var(${tokens.slot.bgColor}) 6px,
-            var(${tokens.slot.bgColor}) 12px
-        );
+        background: ${createStripesGradient(
+            tokens.slot.bgColor,
+            tokens.slot.bgColor2,
+            6
+        )};
     }
 
     &[data-style-type="stripes"][data-hoverable="true"] {

@@ -1,12 +1,17 @@
 import { css } from "@linaria/core";
 
-import { MediaQuery } from "../theme";
+import * as calendarDropdownStyles from "../shared/internal-calendar/calendar-dropdown.styles";
+import { MediaQuery, Spacing } from "../theme";
 
 export const wrapper = css`
-    --header-bottom-spacing: 0.5rem;
+    ${calendarDropdownStyles.tokens.headerBottomSpacing}: ${Spacing[
+        "spacing-8"
+    ]};
 
     ${MediaQuery.MaxWidth.sm} {
-        --header-horizontal-inset: 1.25rem;
+        ${calendarDropdownStyles.tokens.horizontalInset}: ${Spacing[
+            "spacing-20"
+        ]};
     }
 
     min-width: 18.5rem;

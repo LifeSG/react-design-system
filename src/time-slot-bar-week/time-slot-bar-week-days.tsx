@@ -57,6 +57,28 @@ interface FocusableSlotMeta {
     rowIndex: number;
 }
 
+interface WeekTimeSlotCellProps {
+    formattedDate: string;
+    slot: TimeSlotCell;
+    variant: TimeSlotCellsVariant;
+    hasCollapsedContent: boolean;
+    expandAll: boolean;
+    visibleRowCount: number;
+    onSlotClick: (date: string, slot: TimeSlot) => void;
+    getSlotAriaLabel: (date: string, slot: TimeSlot) => string;
+    onSlotKeyDown: (
+        event: React.KeyboardEvent<HTMLButtonElement>,
+        meta: FocusableSlotMeta
+    ) => void;
+    onSlotButtonClick: (
+        date: string,
+        slot: TimeSlot
+    ) => (event: React.MouseEvent<HTMLButtonElement>) => void;
+    slotButtonRefs: React.MutableRefObject<
+        Record<string, HTMLButtonElement | null>
+    >;
+}
+
 const SLOT_HEIGHT = 12; // px
 const SLOT_GAP = 4; // px
 const ROW_HEIGHT = SLOT_HEIGHT + SLOT_GAP;
@@ -587,7 +609,20 @@ export const TimeSlotBarWeekDays = ({
             </div>
         );
     };
-    const renderSlotCell = (formattedDate: string, slot: TimeSlotCell) => {
+
+    const WeekTimeSlotCell = ({
+        formattedDate,
+        slot,
+        variant,
+        hasCollapsedContent,
+        expandAll,
+        visibleRowCount,
+        onSlotClick,
+        getSlotAriaLabel,
+        onSlotKeyDown,
+        onSlotButtonClick,
+        slotButtonRefs,
+    }: WeekTimeSlotCellProps) => {
         const {
             id,
             clickable = true,
@@ -614,13 +649,7 @@ export const TimeSlotBarWeekDays = ({
 
         const slotRef = useRef<HTMLDivElement>(null);
         useApplyStyle(slotRef, {
-            [styles.tokens.timeSlotComponent.height]: formatUnitValue(
-                slotHeight,
-                "px"
-            ),
-            [styles.tokens.timeSlotComponent.halfFillBgColor]: backgroundColor,
-            [styles.tokens.timeSlotComponent.halfFillBgColor2]:
-                backgroundColor2,
+            [styles.tokens.timeSlot.height]: formatUnitValue(slotHeight, "px"),
         });
 
         return (
@@ -637,9 +666,7 @@ export const TimeSlotBarWeekDays = ({
                     halfFill === "bottom" &&
                         styles.timeSlotComponentHalfFillBottom
                 )}
-                onClick={() =>
-                    clickable && handleSlotClick(formattedDate, slot)
-                }
+                onClick={() => clickable && onSlotClick(formattedDate, slot)}
             >
                 {isActualSlot && (
                     <VisuallyHidden inert={inertValue(isCollapsedSlot)}>
@@ -651,7 +678,7 @@ export const TimeSlotBarWeekDays = ({
                             aria-disabled={!clickable}
                             aria-label={getSlotAriaLabel(formattedDate, slot)}
                             onKeyDown={(event) =>
-                                handleSlotKeyDown(event, {
+                                onSlotKeyDown(event, {
                                     key: slotId,
                                     date: formattedDate,
                                     rowIndex: slot.rowIndex ?? 0,
@@ -659,13 +686,31 @@ export const TimeSlotBarWeekDays = ({
                             }
                             onClick={
                                 clickable
-                                    ? handleSlotButtonClick(formattedDate, slot)
+                                    ? onSlotButtonClick(formattedDate, slot)
                                     : undefined
                             }
                         />
                     </VisuallyHidden>
                 )}
             </TimeSlotComponent>
+        );
+    };
+
+    const renderSlotCell = (formattedDate: string, slot: TimeSlotCell) => {
+        return (
+            <WeekTimeSlotCell
+                formattedDate={formattedDate}
+                slot={slot}
+                variant={variant}
+                hasCollapsedContent={hasCollapsedContent}
+                expandAll={expandAll}
+                visibleRowCount={visibleRowCount}
+                onSlotClick={handleSlotClick}
+                getSlotAriaLabel={getSlotAriaLabel}
+                onSlotKeyDown={handleSlotKeyDown}
+                onSlotButtonClick={handleSlotButtonClick}
+                slotButtonRefs={slotButtonRefs}
+            />
         );
     };
 

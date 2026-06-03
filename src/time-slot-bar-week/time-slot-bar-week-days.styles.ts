@@ -1,17 +1,15 @@
 import { css } from "@linaria/core";
 
-import { Colour, Font, Motion, Radius, Spacing } from "../theme";
+import { createStripesGradient } from "../shared/time-slot/time-slot.styles";
+import * as timeSlotStyles from "../shared/time-slot/time-slot.styles";
+import { Colour, Font, Motion, Spacing } from "../theme";
 
 export const tokens = {
     timeColumn: {
         height: "--fds-internal-timeSlotBarWeek-timeColumn-height",
     },
-    timeSlotComponent: {
+    timeSlot: {
         height: "--fds-internal-timeSlotBarWeek-timeSlotComponent-height",
-        halfFillBgColor:
-            "--fds-internal-timeSlotBarWeek-timeSlotComponent-halfFillBgColor",
-        halfFillBgColor2:
-            "--fds-internal-timeSlotBarWeek-timeSlotComponent-halfFillBgColor2",
     },
 };
 
@@ -121,40 +119,24 @@ export const chevronIconExpanded = css`
 `;
 
 export const timeSlotComponent = css`
-    ${tokens.timeSlotComponent.height}: initial;
-    ${tokens.timeSlotComponent.halfFillBgColor}: ${Colour["bg-stronger"]};
-    ${tokens.timeSlotComponent.halfFillBgColor2}: ${Colour["bg-strongest"]};
-    display: flex;
+    ${tokens.timeSlot.height}: initial;
     flex-grow: 1;
-    align-items: center;
-    justify-content: center;
-    width: 100%;
-    position: relative;
     max-width: 200px;
-    height: var(${tokens.timeSlotComponent.height});
-    min-height: var(${tokens.timeSlotComponent.height});
-    margin: 0;
-    border-radius: ${Radius["xs"]};
-
-    &:focus-within {
-        outline: 2px solid ${Colour["focus-ring"]};
-        outline-offset: -2px;
-    }
+    height: var(${tokens.timeSlot.height});
+    min-height: var(${tokens.timeSlot.height});
 `;
 
-const halfFillStripesRepeatingGradient = `repeating-linear-gradient(
-    135deg,
-    var(${tokens.timeSlotComponent.halfFillBgColor2}) 0px,
-    var(${tokens.timeSlotComponent.halfFillBgColor2}) 10px,
-    var(${tokens.timeSlotComponent.halfFillBgColor}) 10px,
-    var(${tokens.timeSlotComponent.halfFillBgColor}) 20px
-)`;
+const halfFillStripesRepeatingGradient = createStripesGradient(
+    timeSlotStyles.tokens.slot.bgColor,
+    timeSlotStyles.tokens.slot.bgColor2,
+    10
+);
 
 export const timeSlotComponentHalfFillTop = css`
     &[data-style-type="default"] {
         background: linear-gradient(
             to top,
-            var(${tokens.timeSlotComponent.halfFillBgColor}) 50%,
+            var(${timeSlotStyles.tokens.slot.bgColor}) 50%,
             ${Colour["bg-strongest"]} 0%
         );
     }
@@ -173,7 +155,7 @@ export const timeSlotComponentHalfFillBottom = css`
     &[data-style-type="default"] {
         background: linear-gradient(
             to bottom,
-            var(${tokens.timeSlotComponent.halfFillBgColor}) 50%,
+            var(${timeSlotStyles.tokens.slot.bgColor}) 50%,
             ${Colour["bg-strongest"]} 0%
         );
     }
