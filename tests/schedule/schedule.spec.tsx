@@ -1,11 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import { useMediaQuery } from "react-responsive";
 import type { ScheduleEntityProps, ScheduleProps } from "src/schedule";
 import { Schedule } from "src/schedule";
+import { useMaxWidthMediaQuery } from "src/theme";
 
-jest.mock("react-responsive", () => ({
-    useMediaQuery: jest.fn(() => false),
+jest.mock("src/theme", () => ({
+    ...jest.requireActual("src/theme"),
+    useMaxWidthMediaQuery: jest.fn(() => false),
 }));
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -32,8 +33,7 @@ describe("Schedule", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         jest.useFakeTimers().setSystemTime(new Date("2024-09-11").getTime());
-
-        (useMediaQuery as jest.Mock).mockReturnValue(false);
+        (useMaxWidthMediaQuery as jest.Mock).mockReturnValue(false);
     });
 
     afterEach(() => {
@@ -198,7 +198,7 @@ describe("Schedule", () => {
     });
 
     it("should navigate between services on mobile", () => {
-        (useMediaQuery as jest.Mock).mockReturnValue(true);
+        (useMaxWidthMediaQuery as jest.Mock).mockReturnValue(true);
 
         render(
             <Schedule

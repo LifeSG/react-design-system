@@ -24,6 +24,8 @@ type MediaQueryFeature =
     | "device-width"
     | "grid"
     | "height"
+    | "max-height"
+    | "min-height"
     | "hover"
     | "monochrome"
     | "orientation"
@@ -37,7 +39,7 @@ export type MediaQueryClauseValue = string | number | boolean;
 
 export interface MediaQueryClause {
     feature: MediaQueryFeature;
-    value: MediaQueryClauseValue;
+    value: MediaQueryClauseValue | undefined;
 }
 
 export interface MediaQueryOptions {
@@ -104,18 +106,12 @@ const getMediaQueryClause = (
 const getCustomMediaQueryClause = (
     clause: MediaQueryClause | null | undefined
 ) => {
-    if (!clause?.feature) {
-        return undefined;
-    }
-
-    const trimmedFeature = clause.feature.trim();
-
-    if (!trimmedFeature) {
+    if (clause?.value === undefined) {
         return undefined;
     }
 
     if (clause.value === true) {
-        return `(${trimmedFeature})`;
+        return `(${clause.feature})`;
     }
 
     if (clause.value === false) {
@@ -128,7 +124,7 @@ const getCustomMediaQueryClause = (
         return undefined;
     }
 
-    return `(${trimmedFeature}: ${value})`;
+    return `(${clause.feature}: ${value})`;
 };
 
 const getDefaultMatch = (hasMinWidth: boolean, hasMaxWidth: boolean) => {
@@ -155,7 +151,7 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
     return globalThis.window.matchMedia(queryString).matches;
 };
 
-const useResolvedBreakpointToken = (
+export const useResolvedBreakpointToken = (
     breakpointToken: WidthBreakpointCSSVariableString | undefined,
     fallbackLength?: string
 ): string | undefined => {
@@ -222,30 +218,4 @@ export const useMediaQuery = (options: MediaQueryOptions): boolean => {
     const defaultMatch = getDefaultMatch(hasMinWidth, hasMaxWidth);
 
     return useMatchMediaQuery(queryString, defaultMatch);
-};
-
-/**
- * @deprecated Use `useMaxWidthMediaQuery` from `use-breakpoint-hooks` instead.
- * This wrapper is legacy and will be removed.
- *
- * A safer wrapper around `useMediaQuery` that guards against invalid/empty
- * max-width values (e.g. unresolved tokens), and falls back to a valid default.
- */
-export const useSafeMaxWidthMediaQuery = (
-    maxWidth: string | undefined,
-    fallback: string = DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT
-) => {
-    const normalizedFallback =
-        normalizeCssLengthValue(fallback) ??
-        DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT;
-    const breakpointToken = isBreakpointToken(maxWidth) ? maxWidth : undefined;
-    const resolvedTokenMaxWidth = useResolvedBreakpointToken(breakpointToken);
-    const normalizedRawMaxWidth = normalizeCssLengthValue(maxWidth);
-    const resolvedMaxWidth =
-        resolvedTokenMaxWidth ?? normalizedRawMaxWidth ?? normalizedFallback;
-
-    const queryString =
-        getMediaQueryClause("max-width", resolvedMaxWidth) ?? "";
-
-    return useMatchMediaQuery(queryString, false);
 };

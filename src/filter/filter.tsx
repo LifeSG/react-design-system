@@ -1,10 +1,6 @@
 import { useEffect } from "react";
 
-import {
-    Breakpoint,
-    useDesignToken,
-    useSafeMaxWidthMediaQuery,
-} from "../theme";
+import { useMaxWidthMediaQuery } from "../theme";
 import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
 import { FilterItem } from "./filter-item";
 import { FilterItemPage } from "./filter-item-page";
@@ -25,8 +21,7 @@ export const Filter = ({
     "data-testid": testId,
     ...props
 }: FilterProps) => {
-    const mobileBreakpoint = useDesignToken(Breakpoint["lg-max"]);
-    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
+    const isMobile = useMaxWidthMediaQuery("lg");
 
     useEffect(() => {
         if (!isMobile) {

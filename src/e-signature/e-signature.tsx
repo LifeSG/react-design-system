@@ -1,11 +1,15 @@
 import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
-import { lazy, Suspense, useContext, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import { ProgressBar } from "../shared/progress-bar";
+import {
+    Breakpoint,
+    DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT,
+    useMaxWidthMediaQuery,
+    useMediaQuery,
+    useResolvedBreakpointToken,
+} from "../theme";
 import { Typography } from "../typography";
-import { V3_Breakpoint } from "../v3_theme";
 import * as styles from "./e-signature.styles";
 import type { ESignatureCanvasRef } from "./e-signature-canvas";
 import type { EsignatureProps } from "./types";
@@ -50,12 +54,22 @@ export const ESignature = (props: EsignatureProps) => {
     const [showModal, setShowModal] = useState(false);
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string | null | undefined>(value);
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobile = useMaxWidthMediaQuery("sm");
+    const mobileBreakpoint = useResolvedBreakpointToken(
+        Breakpoint["sm-max"],
+        DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT
+    );
     const isMobileLandscape = useMediaQuery({
-        maxHeight: mobileBreakpoint,
-        orientation: "landscape",
+        clauses: [
+            {
+                feature: "orientation",
+                value: "landscape",
+            },
+            {
+                feature: "max-height",
+                value: mobileBreakpoint,
+            },
+        ],
     });
 
     // =============================================================================

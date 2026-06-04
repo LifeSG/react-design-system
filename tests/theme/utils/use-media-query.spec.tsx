@@ -1,93 +1,16 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { ThemeProvider } from "src/theme";
 import { Breakpoint } from "src/theme/tokens/breakpoint";
-import type { BreakpointCSSVariableString } from "src/theme/types";
 import {
     type MediaQueryOptions,
     useMediaQuery,
-    useSafeMaxWidthMediaQuery,
 } from "src/theme/utils/use-media-query";
 
+import { createMatchMediaMock } from "../../_common";
 import { getThemeVariablesStyle, setupThemeVariables } from "../setup";
-
-type MockMediaQueryList = {
-    addEventListener: jest.Mock;
-    dispatch: (matches: boolean) => void;
-    matches: boolean;
-    media: string;
-    removeEventListener: jest.Mock;
-};
-
-const originalMatchMedia = globalThis.window.matchMedia;
-
-const createMatchMediaMock = (initialMatches = false) => {
-    const mediaQueryLists = new Map<string, MockMediaQueryList>();
-    const matchMedia = jest.fn((query: string) => {
-        const existingMediaQueryList = mediaQueryLists.get(query);
-
-        if (existingMediaQueryList) {
-            return existingMediaQueryList;
-        }
-
-        let changeListener: ((event: MediaQueryListEvent) => void) | undefined;
-
-        const mediaQueryList: MockMediaQueryList = {
-            addEventListener: jest.fn(
-                (
-                    eventName: string,
-                    listener: (event: MediaQueryListEvent) => void
-                ) => {
-                    if (eventName === "change") {
-                        changeListener = listener;
-                    }
-                }
-            ),
-            dispatch: (matches: boolean) => {
-                mediaQueryList.matches = matches;
-                changeListener?.({ matches } as MediaQueryListEvent);
-            },
-            matches: initialMatches,
-            media: query,
-            removeEventListener: jest.fn(
-                (
-                    eventName: string,
-                    listener: (event: MediaQueryListEvent) => void
-                ) => {
-                    if (eventName === "change" && changeListener === listener) {
-                        changeListener = undefined;
-                    }
-                }
-            ),
-        };
-
-        mediaQueryLists.set(query, mediaQueryList);
-
-        return mediaQueryList;
-    });
-
-    Object.defineProperty(globalThis.window, "matchMedia", {
-        configurable: true,
-        value: matchMedia,
-        writable: true,
-    });
-
-    return { matchMedia, mediaQueryLists };
-};
 
 const CoreConsumer = ({ options }: { options: MediaQueryOptions }) => {
     const result = useMediaQuery(options);
-
-    return <div data-testid="result">{String(result)}</div>;
-};
-
-const SafeMaxWidthConsumer = ({
-    fallback,
-    maxWidth,
-}: {
-    fallback?: string;
-    maxWidth?: BreakpointCSSVariableString;
-}) => {
-    const result = useSafeMaxWidthMediaQuery(maxWidth, fallback);
 
     return <div data-testid="result">{String(result)}</div>;
 };
@@ -99,21 +22,19 @@ const renderWithTheme = (ui: React.ReactElement) => {
 };
 
 describe("useMediaQuery", () => {
+    let matchMediaMock: ReturnType<typeof createMatchMediaMock>;
+
     beforeEach(() => {
         setupThemeVariables();
-        createMatchMediaMock();
+        matchMediaMock = createMatchMediaMock();
     });
 
-    afterAll(() => {
-        Object.defineProperty(globalThis.window, "matchMedia", {
-            configurable: true,
-            value: originalMatchMedia,
-            writable: true,
-        });
+    afterEach(() => {
+        matchMediaMock.restore();
     });
 
     it("builds a query from resolved widths", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
+        const { matchMedia } = matchMediaMock.mock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -135,7 +56,7 @@ describe("useMediaQuery", () => {
     });
 
     it("builds a query from resolved widths and custom clauses", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
+        const { matchMedia } = matchMediaMock.mock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -161,7 +82,7 @@ describe("useMediaQuery", () => {
     });
 
     it("builds a query from custom clauses only", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
+        const { matchMedia } = matchMediaMock.mock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -185,7 +106,7 @@ describe("useMediaQuery", () => {
     });
 
     it("drops invalid or disabled custom clauses", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
+        const { matchMedia } = matchMediaMock.mock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -193,6 +114,7 @@ describe("useMediaQuery", () => {
                     clauses: [
                         { feature: "orientation", value: "" },
                         { feature: "pointer", value: false },
+                        { feature: "pointer", value: undefined },
                         { feature: "orientation", value: "landscape" },
                     ],
                 }}
@@ -208,7 +130,7 @@ describe("useMediaQuery", () => {
     });
 
     it("updates when the media query match changes", async () => {
-        const { mediaQueryLists } = createMatchMediaMock(false);
+        const { mediaQueryLists } = matchMediaMock.mock();
 
         renderWithTheme(
             <CoreConsumer options={{ minWidth: Breakpoint["md-min"] }} />
@@ -232,7 +154,7 @@ describe("useMediaQuery", () => {
     });
 
     it("updates listeners when options change between renders", async () => {
-        const { mediaQueryLists } = createMatchMediaMock(false);
+        const { mediaQueryLists } = matchMediaMock.mock();
 
         const { rerender } = renderWithTheme(
             <CoreConsumer
@@ -286,21 +208,6 @@ describe("useMediaQuery", () => {
 
         await waitFor(() => {
             expect(screen.getByTestId("result").textContent).toBe("false");
-        });
-    });
-
-    it("keeps the safe max-width wrapper fallback behavior", async () => {
-        const { matchMedia } = createMatchMediaMock(true);
-
-        renderWithTheme(
-            <SafeMaxWidthConsumer fallback="480px" maxWidth={undefined} />
-        );
-
-        await waitFor(() => {
-            expect(matchMedia).toHaveBeenCalledWith("(max-width: 480px)");
-        });
-        await waitFor(() => {
-            expect(screen.getByTestId("result").textContent).toBe("true");
         });
     });
 });

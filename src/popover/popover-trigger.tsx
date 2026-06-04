@@ -19,12 +19,7 @@ import type React from "react";
 import { useRef, useState } from "react";
 
 import { useFloatingChild } from "../overlay/use-floating-context";
-import {
-    Breakpoint,
-    useDesignToken,
-    useInheritedThemeScope,
-    useSafeMaxWidthMediaQuery,
-} from "../theme";
+import { useInheritedThemeScope, useMaxWidthMediaQuery } from "../theme";
 import { useId } from "../util";
 import { Popover } from "./popover";
 import * as styles from "./popover-trigger.styles";
@@ -56,8 +51,7 @@ export const PopoverTrigger = ({
     const [visible, setVisible] = useState<boolean>(false);
     const nodeRef = useRef<HTMLElement | null>(null);
     const popoverRef = useRef<HTMLElement | null>(null);
-    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
+    const isMobile = useMaxWidthMediaQuery("sm");
     const [availableHeight, setAvailableHeight] = useState(0);
     const internalId = useId();
     const popoverContainerId = `${internalId}-popover`;

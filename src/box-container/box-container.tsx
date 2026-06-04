@@ -6,11 +6,7 @@ import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
-import {
-    Breakpoint,
-    useDesignToken,
-    useSafeMaxWidthMediaQuery,
-} from "../theme";
+import { useMaxWidthMediaQuery } from "../theme";
 import { useId } from "../util";
 import * as styles from "./box-container.styles";
 import type { BoxContainerProps } from "./types";
@@ -35,8 +31,7 @@ export const BoxContainer = ({
     );
     const resizeDetector = useResizeDetector();
     const childRef = resizeDetector.ref;
-    const mobileBreakpoint = useDesignToken(Breakpoint["sm-max"]);
-    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
+    const isMobile = useMaxWidthMediaQuery("sm");
     const interactiveHeader = clickableHeader && collapsible;
     const internalId = useId();
     const contentId = `${internalId}-content`;

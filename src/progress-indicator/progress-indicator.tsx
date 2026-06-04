@@ -2,11 +2,7 @@ import clsx from "clsx";
 import kebabCase from "lodash/kebabCase";
 
 import { VisuallyHidden } from "../shared/accessibility";
-import {
-    Breakpoint,
-    useDesignToken,
-    useSafeMaxWidthMediaQuery,
-} from "../theme";
+import { useMaxWidthMediaQuery } from "../theme";
 import { Typography } from "../typography";
 import * as styles from "./progress-indicator.styles";
 import type { ProgressIndicatorProps } from "./types";
@@ -21,8 +17,7 @@ export const ProgressIndicator = <T,>({
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const tabletBreakpointToken = useDesignToken(Breakpoint["lg-max"]);
-    const isTablet = useSafeMaxWidthMediaQuery(tabletBreakpointToken);
+    const isTablet = useMaxWidthMediaQuery("lg");
 
     // =============================================================================
     // EFFECTS

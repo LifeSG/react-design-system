@@ -111,7 +111,6 @@ import {
     useMaxWidthMediaQuery,
     useMediaQuery,
     useMinWidthMediaQuery,
-    useSafeMaxWidthMediaQuery,
 } from "@lifesg/react-design-system/theme";
 
 const tabletAndUp = useMediaQuery({ minWidth: Breakpoint["md-min"] });
@@ -119,7 +118,6 @@ const mobileOnly = useMediaQuery({ maxWidth: Breakpoint["sm-max"] });
 
 const desktopUp = useMinWidthMediaQuery("lg");
 const tabletDown = useMaxWidthMediaQuery("md");
-const safeMobile = useSafeMaxWidthMediaQuery(Breakpoint["sm-max"]);
 ```
 
 `minWidth` and `maxWidth` accept breakpoint CSS variable tokens like

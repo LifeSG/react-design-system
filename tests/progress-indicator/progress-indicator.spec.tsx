@@ -1,13 +1,13 @@
 import { render, screen } from "@testing-library/react";
 import { ProgressIndicator } from "src/progress-indicator";
-import { useSafeMaxWidthMediaQuery } from "src/theme";
+import { useMaxWidthMediaQuery } from "src/theme";
 
 jest.mock("src/theme", () => {
     const originalModule = jest.requireActual("src/theme");
     return {
         __esModule: true,
         ...originalModule,
-        useSafeMaxWidthMediaQuery: jest.fn(() => false),
+        useMaxWidthMediaQuery: jest.fn(() => false),
     };
 });
 
@@ -16,7 +16,7 @@ const STEPS = ["Test One", "Test Two", "Test Three"];
 describe("ProgressIndicator", () => {
     beforeEach(() => {
         jest.clearAllMocks();
-        jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(false);
+        jest.mocked(useMaxWidthMediaQuery).mockReturnValue(false);
     });
 
     it("should include hidden status text for each step in desktop view", () => {
@@ -56,7 +56,7 @@ describe("ProgressIndicator", () => {
 
     describe("tablet view", () => {
         beforeEach(() => {
-            jest.mocked(useSafeMaxWidthMediaQuery).mockReturnValue(true);
+            jest.mocked(useMaxWidthMediaQuery).mockReturnValue(true);
         });
 
         it("should render step counter text and only the current step title", () => {

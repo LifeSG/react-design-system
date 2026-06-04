@@ -1,11 +1,9 @@
 import { DownloadIcon } from "@lifesg/react-icons";
-import { memo, useContext, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import { memo, useEffect, useRef, useState } from "react";
 
 import { FileUploadHelper } from "../../file-upload/helper";
+import { useMaxWidthMediaQuery } from "../../theme";
 import { StringHelper } from "../../util";
-import { V3_Breakpoint } from "../../v3_theme";
 import * as styles from "./file-list-card.styles";
 import type { FileListItemProps } from "./types";
 
@@ -44,9 +42,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = V3_Breakpoint["sm-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobile = useMaxWidthMediaQuery("sm");
     const [displayText, setDisplayText] = useState<string>();
     const containerRef = useRef<HTMLDivElement>(null);
 

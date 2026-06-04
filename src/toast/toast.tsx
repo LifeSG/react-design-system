@@ -12,11 +12,7 @@ import React, { useEffect, useRef, useState } from "react";
 import { Button } from "../button";
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import { ClickableIcon } from "../shared/clickable-icon";
-import {
-    Breakpoint,
-    useDesignToken,
-    useSafeMaxWidthMediaQuery,
-} from "../theme";
+import { useMaxWidthMediaQuery } from "../theme";
 import { Typography } from "../typography";
 import * as styles from "./toast.styles";
 import type { ToastProps } from "./types";
@@ -49,8 +45,7 @@ export const Toast = ({
     const toastRef = useRef<HTMLDivElement>(null);
     const [isVisible, setVisible] = useState<boolean>(false);
 
-    const mobileBreakpoint = useDesignToken(Breakpoint["lg-max"]);
-    const isMobile = useSafeMaxWidthMediaQuery(mobileBreakpoint);
+    const isMobile = useMaxWidthMediaQuery("lg");
 
     // =============================================================================
     // EFFECTS
