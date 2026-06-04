@@ -24,6 +24,8 @@ type MediaQueryFeature =
     | "device-width"
     | "grid"
     | "height"
+    | "max-height"
+    | "min-height"
     | "hover"
     | "monochrome"
     | "orientation"
@@ -37,7 +39,7 @@ export type MediaQueryClauseValue = string | number | boolean;
 
 export interface MediaQueryClause {
     feature: MediaQueryFeature;
-    value: MediaQueryClauseValue;
+    value: MediaQueryClauseValue | undefined;
 }
 
 export interface MediaQueryOptions {
@@ -104,18 +106,12 @@ const getMediaQueryClause = (
 const getCustomMediaQueryClause = (
     clause: MediaQueryClause | null | undefined
 ) => {
-    if (!clause?.feature) {
-        return undefined;
-    }
-
-    const trimmedFeature = clause.feature.trim();
-
-    if (!trimmedFeature) {
+    if (clause?.value === undefined) {
         return undefined;
     }
 
     if (clause.value === true) {
-        return `(${trimmedFeature})`;
+        return `(${clause.feature})`;
     }
 
     if (clause.value === false) {
@@ -128,7 +124,7 @@ const getCustomMediaQueryClause = (
         return undefined;
     }
 
-    return `(${trimmedFeature}: ${value})`;
+    return `(${clause.feature}: ${value})`;
 };
 
 const getDefaultMatch = (hasMinWidth: boolean, hasMaxWidth: boolean) => {
@@ -155,7 +151,7 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
     return globalThis.window.matchMedia(queryString).matches;
 };
 
-const useResolvedBreakpointToken = (
+export const useResolvedBreakpointToken = (
     breakpointToken: WidthBreakpointCSSVariableString | undefined,
     fallbackLength?: string
 ): string | undefined => {
