@@ -4,6 +4,7 @@ import type { V3_ThemeCollectionSpec } from "../internal-types";
 import type { V3_ColourScheme, V3_PrimitiveColourSet } from "../types";
 import { V3_A11yPlaygroundColourSet } from "./specs/a11yplayground-colour-set";
 import { V3_BookingSgColourSet } from "./specs/bookingsg-colour-set";
+import { V3_CareerCompassColourSet } from "./specs/careercompass-colour-set";
 import { V3_CCubeColourSet } from "./specs/ccube-colour-set";
 import { V3_IMDAColourSet } from "./specs/imda-colour-set";
 import { V3_LifeSgColourSet } from "./specs/lifesg-colour-set";
@@ -34,6 +35,7 @@ export const V3_ColourSpec: V3_ThemeCollectionSpec<
         supportgowhere: V3_SupportGoWhereColourSet,
         smgs: V3_SMGSColourSet,
         sgwdigitallobby: V3_SupportGoWhereColourSet,
+        careercompass: V3_CareerCompassColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -60,6 +62,7 @@ export const V3_DarkColourSpec: V3_ThemeCollectionSpec<
         spf: V3_SPFColourSet,
         smgs: V3_SMGSColourSet,
         sgwdigitallobby: V3_SupportGoWhereColourSet,
+        careercompass: V3_CareerCompassColourSet,
     },
     defaultValue: "lifesg",
 };
