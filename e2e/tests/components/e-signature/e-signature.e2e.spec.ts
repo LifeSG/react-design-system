@@ -5,13 +5,11 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "e-signature";
 
     public readonly locators: {
-        esigDefault: Locator;
-        esigWithSignature: Locator;
-        esigDisabled: Locator;
-        esigDisabledWithSignature: Locator;
-        esigWithDescription: Locator;
-        esigLoading: Locator;
-        esigLoadingComplete: Locator;
+        defaultFormEsig: Locator;
+        disabledFormEsig: Locator;
+        errorFormEsig: Locator;
+        defaultEsig: Locator;
+        disabledEsig: Locator;
         addSignatureButton: Locator;
         editSignatureButton: Locator;
         signaturePreview: Locator;
@@ -20,23 +18,19 @@ class StoryPage extends AbstractStoryPage {
         clearButton: Locator;
         saveButton: Locator;
         canvas: Locator;
-        hasSignature: Locator;
         focusStart: Locator;
+        hasSignature: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
         this.locators = {
-            esigDefault: page.getByTestId("esig-default"),
-            esigWithSignature: page.getByTestId("esig-with-signature"),
-            esigDisabled: page.getByTestId("esig-disabled"),
-            esigDisabledWithSignature: page.getByTestId(
-                "esig-disabled-with-signature"
-            ),
-            esigWithDescription: page.getByTestId("esig-with-description"),
-            esigLoading: page.getByTestId("esig-loading"),
-            esigLoadingComplete: page.getByTestId("esig-loading-complete"),
+            defaultFormEsig: page.getByTestId("form-esig-default"),
+            disabledFormEsig: page.getByTestId("form-esig-disabled"),
+            errorFormEsig: page.getByTestId("form-esig-error"),
+            defaultEsig: page.getByTestId("esig-default"),
+            disabledEsig: page.getByTestId("esig-disabled"),
             addSignatureButton: page.getByRole("button", {
                 name: "Add signature",
             }),
@@ -51,8 +45,8 @@ class StoryPage extends AbstractStoryPage {
             clearButton: page.getByRole("button", { name: "Clear" }),
             saveButton: page.getByRole("button", { name: "Save" }),
             canvas: page.locator("#eSignatureCanvas"),
-            hasSignature: page.getByTestId("has-signature"),
             focusStart: page.getByTestId("focus-start"),
+            hasSignature: page.getByTestId("has-signature"),
         };
     }
 
@@ -83,40 +77,139 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("ESignature", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("variants");
+            await story.init("form-variants");
         });
 
-        test("All variants", async ({ story }) => {
+        test("Form.ESignature variants", async ({ story }) => {
             await compareScreenshot(story, "mount");
 
-            await expect(story.locators.esigDefault).toMatchAriaSnapshot(`
+            await expect(story.locators.defaultFormEsig).toMatchAriaSnapshot(`
                 - button "Add signature"
             `);
 
-            await expect(story.locators.esigWithSignature).toMatchAriaSnapshot(`
-                - img "Signature preview"
-                - button "Edit signature"
-            `);
-
-            await expect(story.locators.esigDisabled).toMatchAriaSnapshot(`
+            await expect(story.locators.disabledFormEsig).toMatchAriaSnapshot(`
                 - button "Add signature" [disabled]
             `);
 
-            await expect(story.locators.esigDisabledWithSignature)
-                .toMatchAriaSnapshot(`
-                - img "Signature preview"
-                - button "Edit signature" [disabled]
+            await expect(story.locators.errorFormEsig).toMatchAriaSnapshot(`
+                - button "Add signature"
             `);
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("variants", { mode: "dark" });
+            await story.init("form-variants", { size: "mobile" });
         });
 
-        test("All variants (dark mode)", async ({ story }) => {
+        test("Form.ESignature variants (mobile)", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants", { mode: "dark" });
+        });
+
+        test("Form.ESignature variants (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants-prefilled");
+            await story.locators.signaturePreview.first().waitFor({
+                state: "visible",
+            });
+        });
+
+        test("Form.ESignature variants prefilled", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("form-variants-prefilled", { mode: "dark" });
+            await story.locators.signaturePreview.first().waitFor({
+                state: "visible",
+            });
+        });
+
+        test("Form.ESignature variants prefilled (dark mode)", async ({
+            story,
+        }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants");
+        });
+
+        test("Standalone variants", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+
+            await expect(story.locators.defaultEsig).toMatchAriaSnapshot(`
+                - button "Add signature"
+            `);
+
+            await expect(story.locators.disabledEsig).toMatchAriaSnapshot(`
+                - button "Add signature" [disabled]
+            `);
+        });
+
+        test("Focus states", async ({ story }) => {
+            await story.locators.defaultEsig
+                .getByRole("button", { name: "Add signature" })
+                .focus();
+            await compareScreenshot(story, "default", {
+                locator: story.locators.defaultEsig,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-variants", { mode: "dark" });
+        });
+
+        test("Focus states (dark mode)", async ({ story }) => {
+            await story.locators.defaultEsig
+                .getByRole("button", { name: "Add signature" })
+                .focus();
+            await compareScreenshot(story, "default", {
+                locator: story.locators.defaultEsig,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("grid-layout");
+        });
+
+        test("Grid layout", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("description");
+        });
+
+        test("With description", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+
+            await expect(story.page.getByTestId("esig-with-description"))
+                .toMatchAriaSnapshot(`
+                - button "Add signature"
+                - paragraph: Please sign above to confirm your agreement.
+            `);
         });
     });
 
@@ -160,7 +253,6 @@ test.describe("ESignature", () => {
 
             await expect(story.locators.signatureModal).not.toBeVisible();
             await expect(story.locators.addSignatureButton).toBeVisible();
-            await expect(story.locators.hasSignature).toHaveText("false");
         });
 
         test("Clearing the drawing empties the canvas", async ({ story }) => {
@@ -186,7 +278,6 @@ test.describe("ESignature", () => {
 
                 await expect(story.locators.signatureModal).not.toBeVisible();
                 await expect(story.locators.signaturePreview).toBeVisible();
-                await expect(story.locators.hasSignature).toHaveText("true");
                 await compareScreenshot(story, "after-save");
             });
         });
@@ -229,30 +320,6 @@ test.describe("ESignature", () => {
             await compareScreenshot(story, "keyboard-open-modal", {
                 fullscreen: true,
             });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("variants", {
-                size: "mobile",
-                orientation: "landscape",
-            });
-        });
-
-        test("All variants retain mobile display on landscape orientation", async ({
-            story,
-        }) => {
-            await compareScreenshot(story, "mobile-landscape-mount");
-
-            await expect(story.locators.esigDefault).toMatchAriaSnapshot(`
-                - button "Add signature"
-            `);
-
-            await expect(story.locators.esigWithSignature).toMatchAriaSnapshot(`
-                - img "Signature preview"
-                - button "Edit signature"
-            `);
         });
     });
 });

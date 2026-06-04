@@ -1,18 +1,19 @@
 "use client";
 import { ESignature } from "@lifesg/react-design-system/e-signature";
 
+import { signatureDataURL } from "./doc-elements";
+
 export default function Story() {
     return (
         <div className="story-column-container story-background">
             <ESignature
-                data-testid="esig-loading"
-                loadingProgress={45}
-                loadingLabel="Uploading..."
+                data-testid="esig-with-signature"
+                value={signatureDataURL}
             />
             <ESignature
-                data-testid="esig-loading-complete"
-                loadingProgress={100}
-                loadingLabel="Upload complete"
+                data-testid="esig-disabled-with-signature"
+                disabled
+                value={signatureDataURL}
             />
         </div>
     );
