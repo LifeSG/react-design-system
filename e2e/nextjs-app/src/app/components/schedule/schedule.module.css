@@ -1,0 +1,6 @@
+.popover-content {
+    padding: 8px 12px;
+    font-weight: bold;
+    border: 2px solid red;
+    border-radius: 4px;
+}

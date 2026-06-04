@@ -229,6 +229,43 @@ test.describe("Schedule", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("custom-popover", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Custom popover - Day View", async ({ story }) => {
+            await test.step("Slot popover on hover", async () => {
+                await story.page
+                    .getByTestId("schedule")
+                    .getByText(/9:00am/)
+                    .first()
+                    .hover();
+                await compareScreenshot(story, "slot-hover");
+            });
+
+            await test.step("Empty slot popover on hover", async () => {
+                const emptySlot = story.page.getByTestId(
+                    "empty-slot-service-a-08:00"
+                );
+                await emptySlot.hover();
+                await compareScreenshot(story, "empty-slot-hover");
+            });
+        });
+
+        test("Custom popover - Week View", async ({ story }) => {
+            await story.switchToWeekView(false);
+            await story.page
+                .getByTestId("schedule")
+                .getByText(/Service A/)
+                .first()
+                .hover();
+            await compareScreenshot(story, "slot-hover");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("loading");
         });
 
