@@ -310,7 +310,7 @@ export const ScheduleDayView = ({
         <ScheduleContainer>
             {loading ? (
                 <LoadingContainer>
-                    <ThemedLoadingSpinner />
+                    <ThemedLoadingSpinner data-testid="loading-spinner" />
                 </LoadingContainer>
             ) : (
                 <>
