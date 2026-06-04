@@ -7,7 +7,7 @@ import isEmpty from "lodash/isEmpty";
 import maxBy from "lodash/maxBy";
 import minBy from "lodash/minBy";
 import type React from "react";
-import { useMemo, useRef, useState } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { Button } from "../button";
@@ -83,6 +83,87 @@ const SLOT_HEIGHT = 12; // px
 const SLOT_GAP = 4; // px
 const ROW_HEIGHT = SLOT_HEIGHT + SLOT_GAP;
 
+const WeekTimeSlotCell = ({
+    formattedDate,
+    slot,
+    variant,
+    hasCollapsedContent,
+    expandAll,
+    visibleRowCount,
+    onSlotClick,
+    getSlotAriaLabel,
+    onSlotKeyDown,
+    onSlotButtonClick,
+    slotButtonRefs,
+}: WeekTimeSlotCellProps) => {
+    const {
+        id,
+        clickable = true,
+        isActualSlot,
+        styleAttributes,
+        cellLength,
+        halfFill,
+    } = slot;
+    const {
+        styleType = "default",
+        backgroundColor,
+        backgroundColor2,
+    } = styleAttributes;
+    const slotId = `${formattedDate}-${id}`;
+    const isCollapsedSlot =
+        hasCollapsedContent &&
+        !expandAll &&
+        (slot.rowIndex ?? 0) >= visibleRowCount;
+
+    const slotHeight =
+        variant === "fixed"
+            ? cellLength * SLOT_HEIGHT + (cellLength - 1) * SLOT_GAP
+            : SLOT_HEIGHT;
+
+    const slotRef = useRef<HTMLDivElement>(null);
+    useApplyStyle(slotRef, {
+        [styles.tokens.timeSlot.height]: formatUnitValue(slotHeight, "px"),
+    });
+
+    return (
+        <TimeSlotComponent
+            ref={slotRef}
+            styleType={styleType}
+            bgColor={backgroundColor}
+            bgColor2={backgroundColor2}
+            clickable={clickable}
+            fill={halfFill}
+            className={styles.timeSlotComponent}
+            onClick={() => clickable && onSlotClick(formattedDate, slot)}
+        >
+            {isActualSlot && (
+                <VisuallyHidden inert={inertValue(isCollapsedSlot)}>
+                    <button
+                        type="button"
+                        ref={(element) => {
+                            slotButtonRefs.current[slotId] = element;
+                        }}
+                        aria-disabled={!clickable}
+                        aria-label={getSlotAriaLabel(formattedDate, slot)}
+                        onKeyDown={(event) =>
+                            onSlotKeyDown(event, {
+                                key: slotId,
+                                date: formattedDate,
+                                rowIndex: slot.rowIndex ?? 0,
+                            })
+                        }
+                        onClick={
+                            clickable
+                                ? onSlotButtonClick(formattedDate, slot)
+                                : undefined
+                        }
+                    />
+                </VisuallyHidden>
+            )}
+        </TimeSlotComponent>
+    );
+};
+
 export const TimeSlotBarWeekDays = ({
     calendarDate,
     disabledDates,
@@ -105,6 +186,7 @@ export const TimeSlotBarWeekDays = ({
     const dateFormat = "YYYY-MM-DD";
     const [expandAll, setExpandAll] = useState<boolean>(false);
     const [hoverDay, setHoverDay] = useState<Dayjs>();
+    const [isMounted, setIsMounted] = useState<boolean>(false);
     const slotButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
     const timeColumnRef = useRef<HTMLDivElement>(null);
     const currentCalendarWeek = useMemo((): Dayjs[] => {
@@ -186,6 +268,10 @@ export const TimeSlotBarWeekDays = ({
     useApplyStyle(timeColumnRef, {
         [styles.tokens.timeColumn.height]: formatUnitValue(height, "px"),
     });
+
+    useEffect(() => {
+        setIsMounted(true);
+    }, []);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -612,95 +698,10 @@ export const TimeSlotBarWeekDays = ({
         );
     };
 
-    const WeekTimeSlotCell = ({
-        formattedDate,
-        slot,
-        variant,
-        hasCollapsedContent,
-        expandAll,
-        visibleRowCount,
-        onSlotClick,
-        getSlotAriaLabel,
-        onSlotKeyDown,
-        onSlotButtonClick,
-        slotButtonRefs,
-    }: WeekTimeSlotCellProps) => {
-        const {
-            id,
-            clickable = true,
-            isActualSlot,
-            styleAttributes,
-            cellLength,
-            halfFill,
-        } = slot;
-        const {
-            styleType = "default",
-            backgroundColor,
-            backgroundColor2,
-        } = styleAttributes;
-        const slotId = `${formattedDate}-${id}`;
-        const isCollapsedSlot =
-            hasCollapsedContent &&
-            !expandAll &&
-            (slot.rowIndex ?? 0) >= visibleRowCount;
-
-        const slotHeight =
-            variant === "fixed"
-                ? cellLength * SLOT_HEIGHT + (cellLength - 1) * SLOT_GAP
-                : SLOT_HEIGHT;
-
-        const slotRef = useRef<HTMLDivElement>(null);
-        useApplyStyle(slotRef, {
-            [styles.tokens.timeSlot.height]: formatUnitValue(slotHeight, "px"),
-        });
-
-        return (
-            <TimeSlotComponent
-                key={id}
-                ref={slotRef}
-                styleType={styleType}
-                bgColor={backgroundColor}
-                bgColor2={backgroundColor2}
-                clickable={clickable}
-                className={clsx(
-                    styles.timeSlotComponent,
-                    halfFill === "top" && styles.timeSlotComponentHalfFillTop,
-                    halfFill === "bottom" &&
-                        styles.timeSlotComponentHalfFillBottom
-                )}
-                onClick={() => clickable && onSlotClick(formattedDate, slot)}
-            >
-                {isActualSlot && (
-                    <VisuallyHidden inert={inertValue(isCollapsedSlot)}>
-                        <button
-                            type="button"
-                            ref={(element) => {
-                                slotButtonRefs.current[slotId] = element;
-                            }}
-                            aria-disabled={!clickable}
-                            aria-label={getSlotAriaLabel(formattedDate, slot)}
-                            onKeyDown={(event) =>
-                                onSlotKeyDown(event, {
-                                    key: slotId,
-                                    date: formattedDate,
-                                    rowIndex: slot.rowIndex ?? 0,
-                                })
-                            }
-                            onClick={
-                                clickable
-                                    ? onSlotButtonClick(formattedDate, slot)
-                                    : undefined
-                            }
-                        />
-                    </VisuallyHidden>
-                )}
-            </TimeSlotComponent>
-        );
-    };
-
     const renderSlotCell = (formattedDate: string, slot: TimeSlotCell) => {
         return (
             <WeekTimeSlotCell
+                key={slot.id}
                 formattedDate={formattedDate}
                 slot={slot}
                 variant={variant}
@@ -720,7 +721,7 @@ export const TimeSlotBarWeekDays = ({
         return (
             <animated.div
                 className={styles.expandable}
-                style={expandableStyles}
+                style={isMounted ? expandableStyles : undefined}
                 role="row"
             >
                 <div
