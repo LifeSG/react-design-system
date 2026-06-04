@@ -4,7 +4,8 @@ import {
     type ScheduleEntityProps,
 } from "@lifesg/react-design-system/schedule";
 
-const INITIAL_DATE = "2026-06-01";
+const INITIAL_DATE = "2026-04-08";
+const INITIAL_DATE_PLUS_ONE = "2026-04-09";
 
 const serviceData: ScheduleEntityProps[] = [
     {
@@ -69,7 +70,7 @@ const serviceData: ScheduleEntityProps[] = [
             },
             {
                 id: "b3",
-                date: "2026-06-02",
+                date: INITIAL_DATE_PLUS_ONE,
                 startTime: "14:00",
                 endTime: "15:00",
                 status: "available",
@@ -137,6 +138,7 @@ export default function Story() {
                 serviceData={serviceData}
                 minTime="08:00"
                 maxTime="18:00"
+                initialScrollTime="08:00"
                 blockedMessage="Not available"
                 onPreviousDayClick={() => {}}
                 onNextDayClick={() => {}}

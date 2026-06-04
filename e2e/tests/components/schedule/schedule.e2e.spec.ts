@@ -5,6 +5,7 @@ import {
     type Page,
 } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import { fixedTimestamp } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "schedule";
@@ -65,10 +66,9 @@ test.describe("Schedule", () => {
     test.describe(() => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.page.clock.install({
-                    time: new Date("2026-06-01T09:30:00"),
+                await story.init("default", {
+                    mockedTimestamp: fixedTimestamp,
                 });
-                await story.init("default");
             });
 
             test("Day view", async ({ story }) => {
@@ -87,10 +87,10 @@ test.describe("Schedule", () => {
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.page.clock.install({
-                    time: new Date("2026-06-01T09:30:00"),
+                await story.init("default", {
+                    mode: "dark",
+                    mockedTimestamp: fixedTimestamp,
                 });
-                await story.init("default", { mode: "dark" });
             });
 
             test("Day view - dark mode", async ({ story }) => {
@@ -102,10 +102,9 @@ test.describe("Schedule", () => {
     test.describe(() => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.page.clock.install({
-                    time: new Date("2026-06-01T09:30:00"),
+                await story.init("default", {
+                    mockedTimestamp: fixedTimestamp,
                 });
-                await story.init("default");
             });
 
             test("Week view", async ({ story }) => {
@@ -129,10 +128,10 @@ test.describe("Schedule", () => {
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.page.clock.install({
-                    time: new Date("2026-06-01T09:30:00"),
+                await story.init("default", {
+                    mode: "dark",
+                    mockedTimestamp: fixedTimestamp,
                 });
-                await story.init("default", { mode: "dark" });
             });
 
             test("Week view - dark mode", async ({ story }) => {
@@ -157,10 +156,10 @@ test.describe("Schedule", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.page.clock.install({
-                time: new Date("2026-06-01T09:30:00"),
+            await story.init("default", {
+                size: "mobile",
+                mockedTimestamp: fixedTimestamp,
             });
-            await story.init("default", { size: "mobile" });
         });
 
         test("Mobile view", async ({ story }) => {
@@ -190,7 +189,9 @@ test.describe("Schedule", () => {
     test.describe(() => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("empty-content");
+                await story.init("empty-content", {
+                    mockedTimestamp: fixedTimestamp,
+                });
             });
 
             test("Empty content state", async ({ story }) => {
@@ -200,7 +201,10 @@ test.describe("Schedule", () => {
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("empty-content", { mode: "dark" });
+                await story.init("empty-content", {
+                    mode: "dark",
+                    mockedTimestamp: fixedTimestamp,
+                });
             });
 
             test("Empty content state - dark mode", async ({ story }) => {
@@ -211,7 +215,9 @@ test.describe("Schedule", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("initial-scroll-time");
+            await story.init("initial-scroll-time", {
+                mockedTimestamp: fixedTimestamp,
+            });
         });
 
         test("Initial scroll time", async ({ story }) => {
