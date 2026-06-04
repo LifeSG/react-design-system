@@ -3,6 +3,7 @@ import {
     Schedule,
     type ScheduleEntityProps,
 } from "@lifesg/react-design-system/schedule";
+import styles from "./schedule.module.css";
 
 const DATE = "2026-06-01";
 
@@ -35,19 +36,18 @@ const serviceData: ScheduleEntityProps[] = [
 
 export default function Story() {
     return (
-        <div>
-            <Schedule
-                data-testid="schedule"
-                date={DATE}
-                serviceData={serviceData}
-                minTime="06:00"
-                maxTime="22:00"
-                initialScrollTime="12:00"
-                onPreviousDayClick={() => {}}
-                onNextDayClick={() => {}}
-                onCalendarDateSelect={() => {}}
-                onTodayClick={() => {}}
-            />
-        </div>
+        <Schedule
+            className={styles["limited-height"]}
+            data-testid="schedule"
+            date={DATE}
+            serviceData={serviceData}
+            minTime="06:00"
+            maxTime="22:00"
+            initialScrollTime="12:00"
+            onPreviousDayClick={() => {}}
+            onNextDayClick={() => {}}
+            onCalendarDateSelect={() => {}}
+            onTodayClick={() => {}}
+        />
     );
 }
