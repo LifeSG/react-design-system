@@ -1,2 +1,2 @@
-export * from "./createMatchMediaMock";
 export * from "./data";
+export * from "./match-media-mock";
