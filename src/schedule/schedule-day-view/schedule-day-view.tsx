@@ -269,59 +269,56 @@ export const ScheduleDayView = ({
         );
     };
 
+    const getSlotCellClassName = (time: string) =>
+        clsx(styles.slotCell, time.endsWith(":00") && styles.slotCellDashed);
+
+    const renderFilledSlotCell = (
+        service: ScheduleEntityProps,
+        time: string,
+        slots: ScheduleSlotProps[]
+    ) => {
+        return (
+            <div key={time} className={getSlotCellClassName(time)}>
+                {slots.map((slot, index) => (
+                    <WithOptionalPopover
+                        key={`${slot.id}-${index}`}
+                        containerRef={containerRef}
+                        customPopover={getPopoverConfig(service, slot, time)}
+                    >
+                        {renderSlotContent(slot, time)}
+                    </WithOptionalPopover>
+                ))}
+            </div>
+        );
+    };
+
+    const renderEmptySlotCell = (
+        service: ScheduleEntityProps,
+        time: string
+    ) => {
+        return (
+            <div
+                key={time}
+                className={getSlotCellClassName(time)}
+                onClick={() => handleEmptySlotClick(time, service.name)}
+                data-testid={`empty-slot-${service.id}-${time}`}
+            >
+                <WithOptionalPopover
+                    containerRef={containerRef}
+                    customPopover={getPopoverConfig(service, undefined, time)}
+                >
+                    <div className={styles.emptySlot} />
+                </WithOptionalPopover>
+            </div>
+        );
+    };
+
     const renderSlotCell = (service: ScheduleEntityProps, time: string) => {
         const slots = findSlotsForTimeCell(service, time);
-        if (slots.length > 0) {
-            return (
-                <div
-                    key={time}
-                    className={clsx(
-                        styles.slotCell,
-                        time.endsWith(":00") && styles.slotCellDashed
-                    )}
-                >
-                    {slots.map((slot, index) => {
-                        const popoverConfig = getPopoverConfig(
-                            service,
-                            slot,
-                            time
-                        );
-                        return (
-                            <WithOptionalPopover
-                                key={`${slot.id}-${index}`}
-                                containerRef={containerRef}
-                                customPopover={popoverConfig}
-                            >
-                                {renderSlotContent(slot, time)}
-                            </WithOptionalPopover>
-                        );
-                    })}
-                </div>
-            );
-        } else {
-            return (
-                <div
-                    key={time}
-                    className={clsx(
-                        styles.slotCell,
-                        time.endsWith(":00") && styles.slotCellDashed
-                    )}
-                    onClick={() => handleEmptySlotClick(time, service.name)}
-                    data-testid={`empty-slot-${service.id}-${time}`}
-                >
-                    <WithOptionalPopover
-                        containerRef={containerRef}
-                        customPopover={getPopoverConfig(
-                            service,
-                            undefined,
-                            time
-                        )}
-                    >
-                        <div className={styles.emptySlot} />
-                    </WithOptionalPopover>
-                </div>
-            );
-        }
+
+        return slots.length > 0
+            ? renderFilledSlotCell(service, time, slots)
+            : renderEmptySlotCell(service, time);
     };
 
     const renderTimeSlotGrid = () => {
