@@ -1,7 +1,6 @@
 "use client";
 import {
     Schedule,
-    type ScheduleEmptySlotProps,
     type ScheduleEntityProps,
 } from "@lifesg/react-design-system/schedule";
 import dayjs from "dayjs";
@@ -133,8 +132,6 @@ const serviceData: ScheduleEntityProps[] = [
 
 export default function Story() {
     const [date, setDate] = useState(INITIAL_DATE);
-    const [lastEmptySlotClick, setLastEmptySlotClick] =
-        useState<ScheduleEmptySlotProps | null>(null);
 
     const shiftDate = (targetDate: string, days: number) => {
         setDate((currentDate) => {
@@ -155,17 +152,11 @@ export default function Story() {
                 minTime="08:00"
                 maxTime="18:00"
                 blockedMessage="Not available"
-                onEmptySlotClick={(slot) => setLastEmptySlotClick(slot)}
                 onPreviousDayClick={(d) => shiftDate(d, -1)}
                 onNextDayClick={(d) => shiftDate(d, 1)}
                 onCalendarDateSelect={(d) => setDate(d)}
                 onTodayClick={() => setDate(INITIAL_DATE)}
             />
-            {lastEmptySlotClick !== null && (
-                <div data-testid="empty-slot-click-result">
-                    {JSON.stringify(lastEmptySlotClick)}
-                </div>
-            )}
         </div>
     );
 }
