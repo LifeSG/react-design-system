@@ -8,8 +8,7 @@ export default function Story() {
             <TimeSlotBarWeek
                 data-testid="time-slot-bar-week"
                 slots={{}}
-                maxDate="2026-04-08"
-                minDate="2026-04-07"
+                disabledDates={["2026-04-07", "2026-04-10"]}
             />
         </div>
     );

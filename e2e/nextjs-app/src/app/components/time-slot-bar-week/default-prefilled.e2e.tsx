@@ -89,7 +89,6 @@ export default function Story() {
                 startTime="08:00"
                 endTime="18:00"
                 currentCalendarDate="2026-05-24"
-                disabledDates={["2026-05-25", "2026-05-29"]}
             />
         </div>
     );

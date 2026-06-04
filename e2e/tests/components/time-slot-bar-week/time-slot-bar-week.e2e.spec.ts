@@ -205,8 +205,19 @@ test.describe("TimeSlotBarWeek", () => {
         });
 
         test("Min and Max Date", async ({ story }) => {
-            await story.locators.internal.navigationHeader.monthButton.click();
-            await compareScreenshot(story, "dropdown");
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("disabled-dates", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Disabled Dates", async ({ story }) => {
+            await compareScreenshot(story, "mount");
         });
     });
 });
