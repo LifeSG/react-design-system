@@ -1,0 +1,2 @@
+"use strict";require("./timeline.styles_1wcnzot.css");exports.circleIndicator="c1epf9wu",exports.lineIndicator="l1ff2pyq",exports.timelineIndicators="t1qzwom7",exports.timelineItem="t1d2q33u",exports.timelineItemContent="tvlbvjk",exports.timelineItemTitle="t1qpo82v",exports.timelinePills="t1afag3x",exports.timelineTitle="tfsmff8",exports.timelineWrapper="tuaspcp",exports.tokens={wrapper:{startCol:"--fds-internal-timeline-wrapper-startCol",colSpan:"--fds-internal-timeline-wrapper-colSpan"}};
+//# sourceMappingURL=timeline.styles.js.map

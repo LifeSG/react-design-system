@@ -1,0 +1,2 @@
+"use strict";require("./markup.style_1iu40x9.css");exports.baseMarkup="b2c8sfe",exports.sizedMarkup="stfuo83",exports.tokens={rootFontFamily:"--fds-internal-markup-root-fontFamily",rootFontVariant:"--fds-internal-markup-root-fontVariant",rootFontSize:"--fds-internal-markup-root-fontSize",rootFontWeight:"--fds-internal-markup-root-fontWeight",rootLineHeight:"--fds-internal-markup-root-lineHeight",rootLetterSpacing:"--fds-internal-markup-root-letterSpacing"};
+//# sourceMappingURL=markup.style.js.map

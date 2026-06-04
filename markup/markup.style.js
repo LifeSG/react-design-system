@@ -1,0 +1,2 @@
+import"./markup.style_1iu40x9.css";const t={rootFontFamily:"--fds-internal-markup-root-fontFamily",rootFontVariant:"--fds-internal-markup-root-fontVariant",rootFontSize:"--fds-internal-markup-root-fontSize",rootFontWeight:"--fds-internal-markup-root-fontWeight",rootLineHeight:"--fds-internal-markup-root-lineHeight",rootLetterSpacing:"--fds-internal-markup-root-letterSpacing"},o="b2c8sfe",r="stfuo83";export{o as baseMarkup,r as sizedMarkup,t as tokens};
+//# sourceMappingURL=markup.style.js.map

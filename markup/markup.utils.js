@@ -1,0 +1,2 @@
+import{tokens as t}from"./markup.style.js";const o={[t.rootFontFamily]:"font-family",[t.rootFontVariant]:"font-variant",[t.rootFontSize]:"font-size",[t.rootFontWeight]:"font-weight",[t.rootLineHeight]:"line-height",[t.rootLetterSpacing]:"letter-spacing"},r=t=>{return r=o,n=t,Object.fromEntries(Object.entries(r).map((([t,o])=>{var r;return[t,null!==(r=null==n?void 0:n[o])&&void 0!==r?r:null]})));var r,n};export{r as createMarkupFontStyles};
+//# sourceMappingURL=markup.utils.js.map

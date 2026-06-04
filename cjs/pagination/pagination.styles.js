@@ -1,0 +1,2 @@
+"use strict";require("./pagination.styles_1u898rb.css");exports.ellipsisContainer="e1peilt2",exports.hover="h1x6xag5",exports.iconButton="irakt3t",exports.iconButtonNavigation="i1eo6n86",exports.inputSelectWrapper="issm41d",exports.inputView="i1hj21s6",exports.label="l1nxoktb",exports.labelDivider="lquxmfr",exports.pageItem="pia4hww",exports.pageItemSelected="p673w5b",exports.paginationList="p1ma9kw3",exports.paginationMenu="p1sz1s7f",exports.paginationMobileInput="p1yg278j",exports.paginationWrapper="p1afjf30";
+//# sourceMappingURL=pagination.styles.js.map

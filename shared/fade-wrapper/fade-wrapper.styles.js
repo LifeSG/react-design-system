@@ -1,0 +1,2 @@
+import"./fade-wrapper.styles_16iug7l.css";const r={backgroundColor:"--fds-internal-fadeWrapper-fade-backgroundColor"},a="wslc1qs",d="f4ndmik",e="f10r53jk",f="f1mdli9d",o="cv4qfjc",s="fgwhr72",c="i135a9q0",p="i18cgy8z";export{o as content,d as fade,s as fadeIndicatorButton,e as fadeLeft,f as fadeRight,c as indicatorLeft,p as indicatorRight,r as tokens,a as wrapper};
+//# sourceMappingURL=fade-wrapper.styles.js.map

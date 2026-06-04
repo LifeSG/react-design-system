@@ -1,0 +1,2 @@
+"use strict";require("./drawer.styles_7hnxp5.css");exports.closeButton="c4lb5hz",exports.closeIcon="csth4gk",exports.container="c1dn2jn3",exports.containerHidden="c9clmba",exports.containerShown="cc2efvs",exports.content="c1yr3tbf",exports.tokens={container:{viewHeight:"--fds-internal-navbar-drawer-viewHeight"}},exports.topBar="tkfa6sy",exports.wrapper="w13l2hkd";
+//# sourceMappingURL=drawer.styles.js.map

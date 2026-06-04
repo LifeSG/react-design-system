@@ -1,0 +1,2 @@
+"use strict";require("./typography-text.styles_1734x2k.css"),require("./typography.styles_1jqils.css");exports.displayBlock="d1ruq6ql",exports.displayInline="du0nvfw",exports.externalIcon="e3g791q",exports.hyperlinkBase="h1ydob6f",exports.lineClamp="l4n1hjq",exports.noUnderline="nspw24h",exports.paragraph="p1cfdq56",exports.tokens={typographyBase:{maxLines:"--fds-internal-typography-base-maxLines"}},exports.typographyBase="ts2ljtd",exports.underline="u1w2xa0l";
+//# sourceMappingURL=typography.styles.js.map

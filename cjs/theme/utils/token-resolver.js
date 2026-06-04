@@ -1,0 +1,2 @@
+"use strict";const e=(e,t)=>e&&e.trim().length>0?e:t;exports.getEffectiveTokenOrCustom=({value:t,resolvedValue:s,guard:o,normalizeCustom:r})=>o(t)?e(s,t):r(t),exports.getResolvedValue=e,exports.getTokenOrDefault=(e,t,s)=>t(e)?e:s,exports.isTokenFromSet=(e,t)=>"string"==typeof e&&t.has(e),exports.isTokenWithPrefix=(e,t)=>"string"==typeof e&&e.startsWith(t),exports.toCssValue=e=>"number"==typeof e?`${e}px`:String(e);
+//# sourceMappingURL=token-resolver.js.map

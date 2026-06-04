@@ -1,0 +1,2 @@
+"use strict";require("./time-slot.styles_1r9na3f.css");exports.timeSlot="tsti7hb",exports.tokens={slot:{bgColor:"--fds-internal-timeSlot-slot-bgColor",bgColor2:"--fds-internal-timeSlot-slot-bgColor2",hoverBgColor:"--fds-internal-timeSlot-slot-hoverBgColor",hoverBgColor2:"--fds-internal-timeSlot-slot-hoverBgColor2",cursor:"--fds-internal-timeSlot-slot-cursor"}};
+//# sourceMappingURL=time-slot.styles.js.map

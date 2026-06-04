@@ -1,0 +1,13 @@
+export declare const inputSection: import("@linaria/core").LinariaClassName;
+export declare const baseInput: import("@linaria/core").LinariaClassName;
+export declare const baseInputHover: import("@linaria/core").LinariaClassName;
+export declare const divider: import("@linaria/core").LinariaClassName;
+export declare const dividerHover: import("@linaria/core").LinariaClassName;
+export declare const inputContainer: import("@linaria/core").LinariaClassName;
+export declare const inputSizerBase: import("@linaria/core").LinariaClassName;
+export declare const dayInputSizer: import("@linaria/core").LinariaClassName;
+export declare const monthInputSizer: import("@linaria/core").LinariaClassName;
+export declare const yearInputSizer: import("@linaria/core").LinariaClassName;
+export declare const placeholder: import("@linaria/core").LinariaClassName;
+export declare const placeholderDisabled: import("@linaria/core").LinariaClassName;
+export declare const placeholderHide: import("@linaria/core").LinariaClassName;
