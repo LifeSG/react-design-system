@@ -18,62 +18,89 @@ type CreateMatchMediaMockOptions = {
     initialMatches?: boolean;
 };
 
+export type MatchMediaMockController = {
+    matchMedia: jest.MockedFunction<(query: string) => MockMediaQueryList>;
+    mediaQueryLists: Map<string, MockMediaQueryList>;
+    mock: (options?: CreateMatchMediaMockOptions) => {
+        matchMedia: jest.MockedFunction<(query: string) => MockMediaQueryList>;
+        mediaQueryLists: Map<string, MockMediaQueryList>;
+    };
+    restore: () => void;
+};
+
 export const createMatchMediaMock = ({
     initialMatches = false,
-}: CreateMatchMediaMockOptions = {}) => {
+}: CreateMatchMediaMockOptions = {}): MatchMediaMockController => {
     const originalMatchMediaDescriptor = Object.getOwnPropertyDescriptor(
         globalThis.window,
         "matchMedia"
     );
-    const mediaQueryLists = new Map<string, MockMediaQueryList>();
-    const matchMedia = jest.fn((query: string) => {
-        const existingMediaQueryList = mediaQueryLists.get(query);
+    let mediaQueryLists = new Map<string, MockMediaQueryList>();
+    let matchMedia: jest.MockedFunction<(query: string) => MockMediaQueryList> =
+        jest.fn<(query: string) => MockMediaQueryList>();
 
-        if (existingMediaQueryList) {
-            return existingMediaQueryList;
-        }
+    const mock: MatchMediaMockController["mock"] = (
+        options: CreateMatchMediaMockOptions = {}
+    ) => {
+        const { initialMatches = false } = options;
 
-        let changeListener: ((event: MediaQueryListEvent) => void) | undefined;
+        mediaQueryLists = new Map<string, MockMediaQueryList>();
+        matchMedia = jest.fn((query: string) => {
+            const existingMediaQueryList = mediaQueryLists.get(query);
 
-        const mediaQueryList: MockMediaQueryList = {
-            addEventListener: jest.fn(
-                (
-                    eventName: string,
-                    listener: (event: MediaQueryListEvent) => void
-                ) => {
-                    if (eventName === "change") {
-                        changeListener = listener;
+            if (existingMediaQueryList) {
+                return existingMediaQueryList;
+            }
+
+            let changeListener:
+                | ((event: MediaQueryListEvent) => void)
+                | undefined;
+
+            const mediaQueryList: MockMediaQueryList = {
+                addEventListener: jest.fn(
+                    (
+                        eventName: string,
+                        listener: (event: MediaQueryListEvent) => void
+                    ) => {
+                        if (eventName === "change") {
+                            changeListener = listener;
+                        }
                     }
-                }
-            ),
-            dispatch: (matches: boolean) => {
-                mediaQueryList.matches = matches;
-                changeListener?.({ matches } as MediaQueryListEvent);
-            },
-            matches: initialMatches,
-            media: query,
-            removeEventListener: jest.fn(
-                (
-                    eventName: string,
-                    listener: (event: MediaQueryListEvent) => void
-                ) => {
-                    if (eventName === "change" && changeListener === listener) {
-                        changeListener = undefined;
+                ),
+                dispatch: (matches: boolean) => {
+                    mediaQueryList.matches = matches;
+                    changeListener?.({ matches } as MediaQueryListEvent);
+                },
+                matches: initialMatches,
+                media: query,
+                removeEventListener: jest.fn(
+                    (
+                        eventName: string,
+                        listener: (event: MediaQueryListEvent) => void
+                    ) => {
+                        if (
+                            eventName === "change" &&
+                            changeListener === listener
+                        ) {
+                            changeListener = undefined;
+                        }
                     }
-                }
-            ),
-        };
+                ),
+            };
 
-        mediaQueryLists.set(query, mediaQueryList);
+            mediaQueryLists.set(query, mediaQueryList);
 
-        return mediaQueryList;
-    });
+            return mediaQueryList;
+        });
 
-    Object.defineProperty(globalThis.window, "matchMedia", {
-        configurable: true,
-        value: matchMedia,
-        writable: true,
-    });
+        Object.defineProperty(globalThis.window, "matchMedia", {
+            configurable: true,
+            value: matchMedia,
+            writable: true,
+        });
+
+        return { matchMedia, mediaQueryLists };
+    };
 
     const restore = () => {
         if (originalMatchMediaDescriptor) {
@@ -88,5 +115,16 @@ export const createMatchMediaMock = ({
         delete (globalThis.window as Partial<Window>).matchMedia;
     };
 
-    return { matchMedia, mediaQueryLists, restore };
+    mock({ initialMatches });
+
+    return {
+        get matchMedia() {
+            return matchMedia;
+        },
+        get mediaQueryLists() {
+            return mediaQueryLists;
+        },
+        mock,
+        restore,
+    };
 };

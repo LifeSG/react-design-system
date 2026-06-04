@@ -1,7 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ESignature } from "src/e-signature";
 
-import { createMatchMediaMock } from "../_common/createMatchMediaMock";
+import { createMatchMediaMock } from "../_common";
 
 jest.mock("../../src/theme", () => {
     const actual = jest.requireActual("../../src/theme");

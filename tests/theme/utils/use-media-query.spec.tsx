@@ -6,7 +6,7 @@ import {
     useMediaQuery,
 } from "src/theme/utils/use-media-query";
 
-import { createMatchMediaMock } from "../../_common/createMatchMediaMock";
+import { createMatchMediaMock } from "../../_common";
 import { getThemeVariablesStyle, setupThemeVariables } from "../setup";
 
 const CoreConsumer = ({ options }: { options: MediaQueryOptions }) => {
@@ -22,20 +22,19 @@ const renderWithTheme = (ui: React.ReactElement) => {
 };
 
 describe("useMediaQuery", () => {
-    let restoreMatchMedia: (() => void) | undefined;
+    let matchMediaMock: ReturnType<typeof createMatchMediaMock>;
 
     beforeEach(() => {
         setupThemeVariables();
-        ({ restore: restoreMatchMedia } = createMatchMediaMock());
+        matchMediaMock = createMatchMediaMock();
     });
 
     afterEach(() => {
-        restoreMatchMedia?.();
-        restoreMatchMedia = undefined;
+        matchMediaMock.restore();
     });
 
     it("builds a query from resolved widths", async () => {
-        const { matchMedia } = createMatchMediaMock({ initialMatches: true });
+        const { matchMedia } = matchMediaMock.mock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -57,7 +56,7 @@ describe("useMediaQuery", () => {
     });
 
     it("builds a query from resolved widths and custom clauses", async () => {
-        const { matchMedia } = createMatchMediaMock({ initialMatches: true });
+        const { matchMedia } = matchMediaMock.mock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -83,7 +82,7 @@ describe("useMediaQuery", () => {
     });
 
     it("builds a query from custom clauses only", async () => {
-        const { matchMedia } = createMatchMediaMock({ initialMatches: true });
+        const { matchMedia } = matchMediaMock.mock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -107,7 +106,7 @@ describe("useMediaQuery", () => {
     });
 
     it("drops invalid or disabled custom clauses", async () => {
-        const { matchMedia } = createMatchMediaMock({ initialMatches: true });
+        const { matchMedia } = matchMediaMock.mock({ initialMatches: true });
 
         renderWithTheme(
             <CoreConsumer
@@ -131,7 +130,7 @@ describe("useMediaQuery", () => {
     });
 
     it("updates when the media query match changes", async () => {
-        const { mediaQueryLists } = createMatchMediaMock();
+        const { mediaQueryLists } = matchMediaMock.mock();
 
         renderWithTheme(
             <CoreConsumer options={{ minWidth: Breakpoint["md-min"] }} />
@@ -155,7 +154,7 @@ describe("useMediaQuery", () => {
     });
 
     it("updates listeners when options change between renders", async () => {
-        const { mediaQueryLists } = createMatchMediaMock();
+        const { mediaQueryLists } = matchMediaMock.mock();
 
         const { rerender } = renderWithTheme(
             <CoreConsumer
