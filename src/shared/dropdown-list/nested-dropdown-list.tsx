@@ -21,6 +21,7 @@ import { ComponentLoadingSpinner } from "../component-loading-spinner";
 import { useDropdownRender } from "../dropdown-wrapper";
 import { BasicButton } from "../input-wrapper";
 import { DropdownLabel } from "./dropdown-label";
+import type { ContainerWidthType } from "./dropdown-list.styles";
 import * as styles from "./dropdown-list.styles";
 import { DropdownSearch } from "./dropdown-search";
 import * as nestedStyles from "./nested-dropdown-list.styles";
@@ -128,18 +129,22 @@ export const NestedDropdownList = <T,>({
     // NOTE: Maintaining a separate index for UI to keep track on which item (in terms of Virtuoso's indexing) is currently focused on keyboard press events.
     const [virtuosoIndex, setVirtuosoIndex] = useState(0);
 
-    let containerWidthStyle = {};
+    // =========================================================================
+    // APPLY STYLES
+    // =========================================================================
+    let containerWidthType: ContainerWidthType = "default";
+    let containerWidth: string | undefined = undefined;
     if (width) {
-        containerWidthStyle = {
-            [styles.tokens.containerWidth]: `${width}px`,
-            [styles.tokens.containerMinWidth]: `0px`,
-        };
+        containerWidth = width;
+        containerWidthType = "custom";
     } else if (matchElementWidth && elementWidth) {
-        containerWidthStyle = {
-            [styles.tokens.containerWidth]: `${elementWidth}px`,
-            [styles.tokens.containerMinWidth]: `${elementWidth}px`,
-        };
+        containerWidth = `${elementWidth}px`;
+        containerWidthType = "match";
     }
+
+    useApplyStyle(nodeRef, {
+        [styles.tokens.containerWidth]: containerWidth,
+    });
 
     // =========================================================================
     // EVENT HANDLERS
@@ -416,14 +421,6 @@ export const NestedDropdownList = <T,>({
             setTimeout(() => listItemRefs.current[0]?.focus(), 200);
         }
     }, [focusedIndex, virtuosoIndex, mounted]);
-
-    // =========================================================================
-    // APPLY STYLE
-    // =========================================================================
-
-    useApplyStyle(nodeRef, {
-        ...containerWidthStyle,
-    });
 
     // =========================================================================
     // RENDER FUNCTIONS
@@ -759,6 +756,7 @@ export const NestedDropdownList = <T,>({
             data-testid="dropdown-container"
             ref={mergeRefs(nodeRef, setFloatingRef)}
             {...getFloatingProps()}
+            data-width-type={containerWidthType}
             className={clsx(
                 styles.container,
                 variant === "small" && styles.containerVariantSmall

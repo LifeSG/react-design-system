@@ -11,12 +11,11 @@ import {
 } from "../../theme";
 import * as elementWithDropdownStyles from "../dropdown-wrapper/element-with-dropdown.styles";
 
+export type ContainerWidthType = "default" | "custom" | "match";
+
 export const tokens = {
     availableWidth: "--fds-internal-dropdownList-container-availableWidth",
-
     containerWidth: "--fds-internal-dropdownList-containerWidth",
-    containerMinWidth: "--fds-internal-dropdownList-containerMinWidth",
-
     xSpacing: "--fds-internal-dropdownList-container-xSpacing",
 } as const;
 
@@ -30,7 +29,6 @@ export const container = css`
     background: ${Colour["bg"]};
 
     ${tokens.xSpacing}: 0px;
-    ${elementWithDropdownStyles.tokens.availableHeight}: initial;
     ${tokens.availableWidth}: calc(
         100vw - var(${tokens.xSpacing}) * 2
     );
@@ -48,12 +46,19 @@ export const container = css`
         ${tokens.xSpacing}: ${Breakpoint["xxs-margin"]};
     }
 
-    max-width: var(${tokens.availableWidth});
-    min-width: var(
-        ${tokens.containerMinWidth},
-        min(23rem, var(${tokens.availableWidth}))
-    );
-    width: var(${tokens.containerWidth});
+    &[data-width-type="default"] {
+        min-width: min(23rem, var(${tokens.availableWidth}));
+    }
+
+    &[data-width-type="custom"] {
+        width: var(${tokens.containerWidth});
+    }
+
+    &[data-width-type="match"] {
+        width: var(${tokens.containerWidth});
+        min-width: min(23rem, var(${tokens.availableWidth}));
+    }
+
     max-height: min(
         27rem,
         var(${elementWithDropdownStyles.tokens.availableHeight}, 9999px)
