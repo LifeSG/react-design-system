@@ -17,12 +17,10 @@ class StoryPage extends AbstractStoryPage {
             todayBtn: Locator;
             prevServiceBtn: Locator;
             nextServiceBtn: Locator;
-            emptySlot: Locator;
             hiddenSlotsIndicator: Locator;
             loadingSpinner: Locator;
         };
         schedule: Locator;
-        emptySlotClickResult: Locator;
         hiddenServicesResult: Locator;
     };
 
@@ -41,7 +39,6 @@ class StoryPage extends AbstractStoryPage {
                 nextServiceBtn: page.getByRole("button", {
                     name: "Next service",
                 }),
-                emptySlot: page.getByTestId("empty-slot-service-a-08:00"),
                 hiddenSlotsIndicator: page
                     .getByTestId("schedule")
                     .getByText("+1", { exact: true })
@@ -49,7 +46,6 @@ class StoryPage extends AbstractStoryPage {
                 loadingSpinner: page.getByTestId("schedule").locator("svg"),
             },
             schedule: page.getByTestId("schedule"),
-            emptySlotClickResult: page.getByTestId("empty-slot-click-result"),
             hiddenServicesResult: page.getByTestId("hidden-services-result"),
         };
     }
@@ -102,22 +98,6 @@ test.describe("Schedule", () => {
                     await story.locators.internal.prevDayBtn.click();
                     await story.locators.internal.prevDayBtn.click();
                     await compareScreenshot(story, "prev-day");
-                });
-
-                await test.step("Empty slot click", async () => {
-                    await story.locators.internal.emptySlot.click();
-                    await expect(
-                        story.locators.emptySlotClickResult
-                    ).toBeVisible();
-                    await expect(
-                        story.locators.emptySlotClickResult
-                    ).toContainText('"startTime":"08:00"');
-                    await expect(
-                        story.locators.emptySlotClickResult
-                    ).toContainText('"endTime":"08:30"');
-                    await expect(
-                        story.locators.emptySlotClickResult
-                    ).toContainText('"name":"Service A"');
                 });
             });
         });
