@@ -150,7 +150,7 @@ export const ScheduleWeekView = ({
         <ScheduleContainer>
             {loading ? (
                 <LoadingContainer>
-                    <ThemedLoadingSpinner />
+                    <ThemedLoadingSpinner data-testid="loading-spinner" />
                 </LoadingContainer>
             ) : (
                 <>

@@ -38,19 +38,21 @@ class StoryPage extends AbstractStoryPage {
                     .getByTestId("schedule")
                     .getByText("+1", { exact: true })
                     .first(),
-                loadingSpinner: page.getByTestId("schedule").locator("svg"),
+                loadingSpinner: page.getByTestId("loading-spinner"),
             },
             schedule: page.getByTestId("schedule"),
             hiddenServicesResult: page.getByTestId("hidden-services-result"),
         };
     }
 
-    public async switchToWeekView() {
+    public async switchToWeekView(withSnapshot: boolean = true) {
         await this.page
             .locator('[data-id="schedule-header"]')
             .getByText("Day", { exact: true })
             .click();
-        await compareScreenshot(this, "view-selection");
+        if (withSnapshot) {
+            await compareScreenshot(this, "view-selection");
+        }
         await this.page.getByRole("option", { name: "Week" }).click();
     }
 }
@@ -222,6 +224,25 @@ test.describe("Schedule", () => {
 
         test("Initial scroll time", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("loading");
+        });
+
+        test("Loading - day view", async ({ story }) => {
+            await compareScreenshot(story, "state", {
+                mask: [story.locators.internal.loadingSpinner],
+            });
+        });
+
+        test("Loading - week view", async ({ story }) => {
+            await story.switchToWeekView(false);
+            await compareScreenshot(story, "state", {
+                mask: [story.locators.internal.loadingSpinner],
+            });
         });
     });
 });
