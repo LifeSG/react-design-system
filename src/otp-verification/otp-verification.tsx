@@ -46,7 +46,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     // =============================================================================
     // Send OTP
     const handleSendOtp = async () => {
-        if (!onSendOtp) return;
+        if (!onSendOtp || isLoading) return;
 
         try {
             setIsLoading(true);
@@ -63,7 +63,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
 
     // Verify OTP
     const handleVerifyOtp = async () => {
-        if (!onVerifyOtp || !otpValue?.value) return;
+        if (!onVerifyOtp || isVerifyLoading || !otpValue?.value) return;
 
         try {
             setIsVerifyLoading(true);
