@@ -115,6 +115,7 @@ describe("useMediaQuery", () => {
                     clauses: [
                         { feature: "orientation", value: "" },
                         { feature: "pointer", value: false },
+                        { feature: "pointer", value: undefined },
                         { feature: "orientation", value: "landscape" },
                     ],
                 }}
