@@ -59,4 +59,4 @@ export const StyledButton = styled(Button.Default)`
 // =============================================================================
 // CONSTANTS
 // =============================================================================
-export const DROPDOWN_WIDTH = "240";
+export const DROPDOWN_WIDTH = "240px";
