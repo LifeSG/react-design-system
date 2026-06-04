@@ -37,7 +37,6 @@ export const FilterTitleGroup = styled.div`
 
 export const FilterTitle = styled.h2`
     ${Font["heading-xs-semibold"]}
-    margin: 0;
 `;
 
 export const FilterClearButton = styled(Button.Small)`

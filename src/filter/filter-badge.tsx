@@ -1,6 +1,10 @@
 import { Badge } from "../badge";
 
-export const renderFilterBadge = (count?: number) =>
+interface FilterBadgeProps {
+    count?: number;
+}
+
+export const FilterBadge = ({ count }: FilterBadgeProps) =>
     count !== undefined && count > 0 ? (
         <Badge
             count={count}

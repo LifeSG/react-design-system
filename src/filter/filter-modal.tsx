@@ -3,7 +3,7 @@ import { CrossIcon, FilterIcon } from "@lifesg/react-icons";
 import { useEffect, useRef, useState } from "react";
 import { Overlay } from "src/overlay";
 import { inertValue } from "src/shared/accessibility";
-import { renderFilterBadge } from "./filter-badge";
+import { FilterBadge } from "./filter-badge";
 import { FilterContext } from "./filter-context";
 import {
     FilterButton,
@@ -88,7 +88,7 @@ export const FilterModal = ({
                 >
                     <FilterToggleContent>
                         <span>{labels.toggle}</span>
-                        {renderFilterBadge(count)}
+                        <FilterBadge count={count} />
                     </FilterToggleContent>
                 </FilterButton>
             </div>
@@ -114,7 +114,7 @@ export const FilterModal = ({
                                         <FilterTitle>
                                             {labels.title}
                                         </FilterTitle>
-                                        {renderFilterBadge(count)}
+                                        <FilterBadge count={count} />
                                     </FilterTitleGroup>
                                     <FilterClearButton
                                         styleType="link"

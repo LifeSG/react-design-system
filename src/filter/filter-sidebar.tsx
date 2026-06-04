@@ -1,5 +1,5 @@
 import { useRef } from "react";
-import { renderFilterBadge } from "./filter-badge";
+import { FilterBadge } from "./filter-badge";
 import { FilterContext } from "./filter-context";
 import {
     DesktopContainer,
@@ -38,7 +38,7 @@ export const FilterSidebar = ({
                 <FilterHeader>
                     <FilterTitleGroup>
                         <FilterTitle>{labels.title}</FilterTitle>
-                        {renderFilterBadge(count)}
+                        <FilterBadge count={count} />
                     </FilterTitleGroup>
                     <FilterClearButton
                         styleType="link"

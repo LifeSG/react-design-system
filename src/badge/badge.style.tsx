@@ -20,7 +20,7 @@ interface BadgeWrapperProps extends BadgeContainerProps {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const BadgeOverlay = styled.div<BadgeContainerProps>`
+export const BadgeOverlay = styled.span<BadgeContainerProps>`
     ${(props) =>
         props.$isOverlay &&
         css`
@@ -30,7 +30,7 @@ export const BadgeOverlay = styled.div<BadgeContainerProps>`
         `}
 `;
 
-export const BadgeWrapper = styled.div<BadgeWrapperProps>`
+export const BadgeWrapper = styled.span<BadgeWrapperProps>`
     ${(props) =>
         props.$isOverlay &&
         css`
