@@ -1,7 +1,5 @@
 import { css } from "@linaria/core";
 
-import { createStripesGradient } from "../shared/time-slot/time-slot.styles";
-import * as timeSlotStyles from "../shared/time-slot/time-slot.styles";
 import { Colour, Font, Motion, Spacing } from "../theme";
 
 export const tokens = {
@@ -124,48 +122,4 @@ export const timeSlotComponent = css`
     max-width: 200px;
     height: var(${tokens.timeSlot.height});
     min-height: var(${tokens.timeSlot.height});
-`;
-
-const halfFillStripesRepeatingGradient = createStripesGradient(
-    timeSlotStyles.tokens.slot.bgColor,
-    timeSlotStyles.tokens.slot.bgColor2,
-    10
-);
-
-export const timeSlotComponentHalfFillTop = css`
-    &[data-style-type="default"] {
-        background: linear-gradient(
-            to top,
-            var(${timeSlotStyles.tokens.slot.bgColor}) 50%,
-            ${Colour["bg-strongest"]} 0%
-        );
-    }
-
-    &[data-style-type="stripes"] {
-        background: linear-gradient(
-                to top,
-                transparent 50%,
-                ${Colour["bg-strongest"]} 0%
-            ),
-            ${halfFillStripesRepeatingGradient};
-    }
-`;
-
-export const timeSlotComponentHalfFillBottom = css`
-    &[data-style-type="default"] {
-        background: linear-gradient(
-            to bottom,
-            var(${timeSlotStyles.tokens.slot.bgColor}) 50%,
-            ${Colour["bg-strongest"]} 0%
-        );
-    }
-
-    &[data-style-type="stripes"] {
-        background: linear-gradient(
-                to bottom,
-                transparent 50%,
-                ${Colour["bg-strongest"]} 0%
-            ),
-            ${halfFillStripesRepeatingGradient};
-    }
 `;

@@ -46,7 +46,7 @@ interface TimeSlotWeekDaysProps
 
 interface TimeSlotCell extends TimeSlot {
     cellLength: number;
-    halfFill?: "top" | "bottom" | undefined;
+    halfFill?: "default" | "top" | "bottom" | undefined;
     isActualSlot?: boolean | undefined;
     rowIndex?: number | undefined;
 }
@@ -402,15 +402,17 @@ export const TimeSlotBarWeekDays = ({
                             interval
                         );
 
-                        let halfFill: string | undefined;
+                        let halfFill: "default" | "top" | "bottom";
 
                         if (!isEmpty(cellsArray[Math.floor(startIndex + i)])) {
                             // Previous cell extends into current cell, fill entire cell
-                            halfFill = undefined;
+                            halfFill = "default";
                         } else if (i === 0 && startIndex % 1 !== 0) {
                             halfFill = "top";
                         } else if (i === cellLength - 1 && endIndex % 1 !== 0) {
                             halfFill = "bottom";
+                        } else {
+                            halfFill = "default";
                         }
 
                         cellsArray[Math.floor(startIndex + i)] = {

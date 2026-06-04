@@ -14,6 +14,7 @@ export interface TimeSlotProps {
     children?: ReactNode;
     className?: string | undefined;
     clickable?: boolean | undefined;
+    fill?: "default" | "top" | "bottom" | undefined;
     hoverBgColor?: string | undefined;
     hoverBgColor2?: string | undefined;
     nonClickableCursor?: "default" | "not-allowed" | undefined;
@@ -30,6 +31,7 @@ const Component = (
         bgColor2,
         children,
         clickable,
+        fill = "default",
         hoverBgColor,
         hoverBgColor2,
         nonClickableCursor,
@@ -64,7 +66,14 @@ const Component = (
     return (
         <div
             ref={mergeRefs(slotRef, ref)}
-            className={clsx(styles.timeSlot, className)}
+            className={clsx(
+                styles.timeSlot,
+                {
+                    [styles.timeSlotHalfFillTop]: fill === "top",
+                    [styles.timeSlotHalfFillBottom]: fill === "bottom",
+                },
+                className
+            )}
             data-style-type={styleType}
             data-clickable={!!clickable}
             data-hoverable={isHoverable()}

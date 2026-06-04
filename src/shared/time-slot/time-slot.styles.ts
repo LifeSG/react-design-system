@@ -2,23 +2,6 @@ import { css } from "@linaria/core";
 
 import { Colour } from "../../theme";
 
-/**
- * @param bgColorToken - CSS custom property for the primary background color
- * @param bgColor2Token - CSS custom property for the secondary background color
- * @param segmentSize - Size of each stripe segment in pixels (default: 6)
- */
-export const createStripesGradient = (
-    bgColorToken: string,
-    bgColor2Token: string,
-    segmentSize: number = 6
-) => `repeating-linear-gradient(
-    135deg,
-    var(${bgColor2Token}) 0px,
-    var(${bgColor2Token}) ${segmentSize}px,
-    var(${bgColorToken}) ${segmentSize}px,
-    var(${bgColorToken}) ${segmentSize * 2}px
-)`;
-
 export const tokens = {
     slot: {
         bgColor: "--fds-internal-timeSlot-slot-bgColor",
@@ -28,6 +11,14 @@ export const tokens = {
         cursor: "--fds-internal-timeSlot-slot-cursor",
     },
 };
+
+const stripesGradient = `repeating-linear-gradient(
+    135deg,
+    var(${tokens.slot.bgColor2}) 0px,
+    var(${tokens.slot.bgColor2}) 6px,
+    var(${tokens.slot.bgColor}) 6px,
+    var(${tokens.slot.bgColor}) 12px
+)`;
 
 export const timeSlot = css`
     ${tokens.slot.bgColor}: ${Colour["bg-stronger"]};
@@ -52,11 +43,7 @@ export const timeSlot = css`
     }
 
     &[data-style-type="stripes"] {
-        background: ${createStripesGradient(
-            tokens.slot.bgColor,
-            tokens.slot.bgColor2,
-            6
-        )};
+        background: ${stripesGradient};
     }
 
     &[data-style-type="stripes"][data-hoverable="true"] {
@@ -73,5 +60,43 @@ export const timeSlot = css`
                     12px
             );
         }
+    }
+`;
+
+export const timeSlotHalfFillTop = css`
+    &[data-style-type="default"] {
+        background: linear-gradient(
+            to top,
+            var(${tokens.slot.bgColor}) 50%,
+            ${Colour["bg-strongest"]} 50%
+        );
+    }
+
+    &[data-style-type="stripes"] {
+        background: linear-gradient(
+                to top,
+                transparent 50%,
+                ${Colour["bg-strongest"]} 50%
+            ),
+            ${stripesGradient};
+    }
+`;
+
+export const timeSlotHalfFillBottom = css`
+    &[data-style-type="default"] {
+        background: linear-gradient(
+            to bottom,
+            var(${tokens.slot.bgColor}) 50%,
+            ${Colour["bg-strongest"]} 50%
+        );
+    }
+
+    &[data-style-type="stripes"] {
+        background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                ${Colour["bg-strongest"]} 50%
+            ),
+            ${stripesGradient};
     }
 `;
