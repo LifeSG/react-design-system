@@ -238,7 +238,7 @@ test.describe("Schedule", () => {
             await test.step("Slot popover on hover", async () => {
                 await story.page
                     .getByTestId("schedule")
-                    .getByText(/9:00am/)
+                    .getByText(/2 \/ 5/)
                     .first()
                     .hover();
                 await compareScreenshot(story, "slot-hover");
