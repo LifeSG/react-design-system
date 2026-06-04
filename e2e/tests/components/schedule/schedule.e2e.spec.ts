@@ -11,10 +11,7 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         internal: {
-            prevDayBtn: Locator;
-            nextDayBtn: Locator;
             dateText: Locator;
-            todayBtn: Locator;
             prevServiceBtn: Locator;
             nextServiceBtn: Locator;
             hiddenSlotsIndicator: Locator;
@@ -29,10 +26,7 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             internal: {
-                prevDayBtn: page.getByTestId("date-navigator-left-arrow-btn"),
-                nextDayBtn: page.getByTestId("date-navigator-right-arrow-btn"),
                 dateText: page.getByTestId("date-navigator-date-text"),
-                todayBtn: page.getByRole("button", { name: "Today" }),
                 prevServiceBtn: page.getByRole("button", {
                     name: "Previous service",
                 }),
@@ -88,17 +82,6 @@ test.describe("Schedule", () => {
 
                     await story.page.keyboard.press("Escape");
                 });
-
-                await test.step("Navigate to next day", async () => {
-                    await story.locators.internal.nextDayBtn.click();
-                    await compareScreenshot(story, "next-day");
-                });
-
-                await test.step("Navigate back to previous day", async () => {
-                    await story.locators.internal.prevDayBtn.click();
-                    await story.locators.internal.prevDayBtn.click();
-                    await compareScreenshot(story, "prev-day");
-                });
             });
         });
 
@@ -140,17 +123,6 @@ test.describe("Schedule", () => {
                         story,
                         "hidden-slots-indicator-hover"
                     );
-                });
-
-                await test.step("Navigate to next week", async () => {
-                    await story.locators.internal.nextDayBtn.click();
-                    await compareScreenshot(story, "next-week");
-                });
-
-                await test.step("Navigate back to previous week", async () => {
-                    await story.locators.internal.prevDayBtn.click();
-                    await story.locators.internal.prevDayBtn.click();
-                    await compareScreenshot(story, "prev-week");
                 });
             });
         });

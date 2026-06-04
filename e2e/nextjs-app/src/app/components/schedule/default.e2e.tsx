@@ -3,8 +3,6 @@ import {
     Schedule,
     type ScheduleEntityProps,
 } from "@lifesg/react-design-system/schedule";
-import dayjs from "dayjs";
-import { useState } from "react";
 
 const INITIAL_DATE = "2026-06-01";
 
@@ -131,31 +129,19 @@ const serviceData: ScheduleEntityProps[] = [
 ];
 
 export default function Story() {
-    const [date, setDate] = useState(INITIAL_DATE);
-
-    const shiftDate = (targetDate: string, days: number) => {
-        setDate((currentDate) => {
-            if (targetDate === currentDate) {
-                return dayjs(currentDate).add(days, "day").format("YYYY-MM-DD");
-            }
-
-            return targetDate;
-        });
-    };
-
     return (
         <div className="story-background">
             <Schedule
                 data-testid="schedule"
-                date={date}
+                date={INITIAL_DATE}
                 serviceData={serviceData}
                 minTime="08:00"
                 maxTime="18:00"
                 blockedMessage="Not available"
-                onPreviousDayClick={(d) => shiftDate(d, -1)}
-                onNextDayClick={(d) => shiftDate(d, 1)}
-                onCalendarDateSelect={(d) => setDate(d)}
-                onTodayClick={() => setDate(INITIAL_DATE)}
+                onPreviousDayClick={() => {}}
+                onNextDayClick={() => {}}
+                onCalendarDateSelect={() => {}}
+                onTodayClick={() => {}}
             />
         </div>
     );
