@@ -1,20 +1,16 @@
 import { TickCircleFillIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 
+import { Button } from "../button";
 import { FormErrorMessage } from "../form/form-label";
+import { InputGroup } from "../input-group";
 import type {
     CountryValue,
     PhoneNumberInputValue,
 } from "../phone-number-input";
+import { PhoneNumberInput } from "../phone-number-input";
 import { concatIds } from "../shared/accessibility";
-import {
-    ContactButton,
-    ContactInputSectionWrapper,
-    ContactInputWrapper,
-    ContactSectionWrapper,
-    EmailContactInput,
-    PhoneContactInput,
-    VerifiedIconWrapper,
-} from "./contact-input-section-styles";
+import * as styles from "./contact-input-section.styles";
 import type { ContactInputSectionProps } from "./internal-types";
 
 export const ContactInputSection = ({
@@ -87,7 +83,7 @@ export const ContactInputSection = ({
     // =============================================================================
     const renderContactInput = () =>
         type === "email" ? (
-            <EmailContactInput
+            <InputGroup
                 id={inputId}
                 data-testid={
                     dataTestId ? `${dataTestId}-contact-input` : undefined
@@ -107,9 +103,14 @@ export const ContactInputSection = ({
                 )}
                 disabled={disabled}
                 readOnly={readOnly}
+                className={clsx(
+                    styles.emailContactInput,
+                    disabled && styles.emailContactInputDisabled,
+                    readOnly && styles.emailContactInputReadonly
+                )}
             />
         ) : (
-            <PhoneContactInput
+            <PhoneNumberInput
                 id={inputId}
                 data-testid={
                     dataTestId ? `${dataTestId}-contact-input` : undefined
@@ -129,6 +130,11 @@ export const ContactInputSection = ({
                 )}
                 disabled={disabled}
                 readOnly={readOnly}
+                className={clsx(
+                    styles.phoneContactInput,
+                    disabled && styles.phoneContactInputDisabled,
+                    readOnly && styles.phoneContactInputReadonly
+                )}
             />
         );
 
@@ -136,24 +142,34 @@ export const ContactInputSection = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <ContactSectionWrapper id={id} data-testid={dataTestId}>
-            <ContactInputSectionWrapper>
-                <ContactInputWrapper
-                    $isMaxWidth={type === "email"}
-                    $error={!!sendOtpError}
-                    $disabled={disabled}
-                    $readonly={readOnly}
+        <div
+            id={id}
+            data-testid={dataTestId}
+            className={styles.contactSectionWrapper}
+        >
+            <div className={styles.contactInputSectionWrapper}>
+                <div
+                    data-max-width={type === "email"}
+                    className={clsx(
+                        styles.contactInputWrapper,
+                        !!sendOtpError && styles.contactInputWrapperError,
+                        disabled && styles.contactInputWrapperDisabled,
+                        readOnly && styles.contactInputWrapperReadonly
+                    )}
                 >
                     {renderContactInput()}
                     {isVerified && (
-                        <VerifiedIconWrapper aria-label="Verified" role="img">
+                        <div
+                            className={styles.verifiedIconWrapper}
+                            aria-label="Verified"
+                            role="img"
+                        >
                             <TickCircleFillIcon />
-                        </VerifiedIconWrapper>
+                        </div>
                     )}
-                </ContactInputWrapper>
+                </div>
                 {!disabled && !readOnly && (
-                    <ContactButton
-                        id={id ? `${id}-contact-button` : undefined}
+                    <Button
                         type="button"
                         data-testid={
                             dataTestId
@@ -163,11 +179,12 @@ export const ContactInputSection = ({
                         onClick={onSendOtp}
                         disabled={countdown.isRunning || isVerified}
                         loading={isLoading}
+                        className={styles.contactButton}
                     >
                         {getContactButtonText()}
-                    </ContactButton>
+                    </Button>
                 )}
-            </ContactInputSectionWrapper>
+            </div>
             {sendOtpError && (
                 <FormErrorMessage
                     id={contactErrorId}
@@ -179,6 +196,6 @@ export const ContactInputSection = ({
                     {sendOtpError}
                 </FormErrorMessage>
             )}
-        </ContactSectionWrapper>
+        </div>
     );
 };

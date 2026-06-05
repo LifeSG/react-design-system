@@ -1,44 +1,18 @@
-import styled from "styled-components";
+import clsx from "clsx";
 
-import { V3_Colour } from "../../v3_theme";
+import * as styles from "./thumbnail.styles";
 
 interface PhoneThumbnailProps {
-    width?: number;
-    height?: number;
     className?: string;
 }
 
-const StyledSvg = styled.svg`
-    .background-circle {
-        fill: ${V3_Colour["bg-stronger"]};
-    }
-
-    .primary-path {
-        fill: ${V3_Colour["icon-primary"]};
-    }
-
-    .validation-icon {
-        fill: ${V3_Colour["bg-available"]};
-    }
-
-    .accent-light {
-        fill: ${V3_Colour["bg-selected-stronger"]};
-    }
-`;
-
-export const PhoneThumbnail = ({
-    width = 120,
-    height = 120,
-    className,
-}: PhoneThumbnailProps) => {
+export const PhoneThumbnail = ({ className }: PhoneThumbnailProps) => {
     return (
-        <StyledSvg
-            width={width}
-            height={height}
+        <svg
             viewBox="0 0 120 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={className}
+            className={clsx(styles.thumbnail, styles.phoneThumbnail, className)}
         >
             <g clipPath="url(#clip0_phone_icon)">
                 <circle
@@ -77,6 +51,6 @@ export const PhoneThumbnail = ({
                     <rect width="120" height="120" fill="white" />
                 </clipPath>
             </defs>
-        </StyledSvg>
+        </svg>
     );
 };

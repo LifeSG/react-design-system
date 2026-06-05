@@ -1,9 +1,10 @@
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
+import clsx from "clsx";
 import { useState } from "react";
 
 import { useCountdown } from "../util";
 import { ContactInputSection } from "./contact-input-section";
-import { OTPInputWrapper } from "./otp-verification-styles";
+import * as styles from "./otp-verification.styles";
 import type { OtpVerificationProps } from "./types";
 import { VerificationSection } from "./verification-section";
 
@@ -45,7 +46,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     // =============================================================================
     // Send OTP
     const handleSendOtp = async () => {
-        if (!onSendOtp) return;
+        if (!onSendOtp || isLoading) return;
 
         try {
             setIsLoading(true);
@@ -62,7 +63,7 @@ export const OtpVerification = (props: OtpVerificationProps) => {
 
     // Verify OTP
     const handleVerifyOtp = async () => {
-        if (!onVerifyOtp || !otpValue?.value) return;
+        if (!onVerifyOtp || isVerifyLoading || !otpValue?.value) return;
 
         try {
             setIsVerifyLoading(true);
@@ -99,7 +100,11 @@ export const OtpVerification = (props: OtpVerificationProps) => {
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <OTPInputWrapper id={id} data-testid={dataTestId} className={className}>
+        <div
+            id={id}
+            data-testid={dataTestId}
+            className={clsx(styles.otpInputWrapper, className)}
+        >
             <ContactInputSection
                 {...props}
                 inputId={inputId}
@@ -131,6 +136,6 @@ export const OtpVerification = (props: OtpVerificationProps) => {
                     verifyOtpError={verifyOtpError}
                 />
             )}
-        </OTPInputWrapper>
+        </div>
     );
 };
