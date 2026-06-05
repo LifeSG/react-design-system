@@ -44,7 +44,7 @@ export const Modal = ({
             (document.activeElement as HTMLElement)?.blur?.();
         }
     });
-    const { verticalHeight } = useViewport({
+    const { verticalHeight, ready } = useViewport({
         enabled: show,
         onBeforeStart: dismissKeyboard,
     });
@@ -81,6 +81,7 @@ export const Modal = ({
                     ANIMATION_FROM_CLASS_MAP[animationFrom],
                     show && ANIMATION_FROM_SHOW_CLASS_MAP[animationFrom],
                     show ? styles.containerShow : styles.containerHide,
+                    show && !ready && styles.containerNotReady,
                     className
                 )}
             >

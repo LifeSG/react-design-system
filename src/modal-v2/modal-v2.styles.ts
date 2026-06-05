@@ -28,6 +28,10 @@ export const container = css`
         top: var(${tokens.container.offsetTop}, 0px);
     }
 
+    @supports (height: 100dvh) {
+        height: 100dvh;
+    }
+
     &[data-status="initial"] {
         opacity: 0;
     }

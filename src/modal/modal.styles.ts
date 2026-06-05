@@ -69,3 +69,7 @@ export const containerFromLeftShow = css`
 export const containerFromRightShow = css`
     right: 0;
 `;
+
+export const containerNotReady = css`
+    transition: none;
+`;
