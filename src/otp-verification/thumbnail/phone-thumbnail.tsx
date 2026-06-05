@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import * as styles from "./phone-thumbnail.styles";
+import * as styles from "./thumbnail.styles";
 
 interface PhoneThumbnailProps {
     className?: string;
@@ -12,7 +12,7 @@ export const PhoneThumbnail = ({ className }: PhoneThumbnailProps) => {
             viewBox="0 0 120 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={clsx(styles.thumbnail, className)}
+            className={clsx(styles.thumbnail, styles.phoneThumbnail, className)}
         >
             <g clipPath="url(#clip0_phone_icon)">
                 <circle

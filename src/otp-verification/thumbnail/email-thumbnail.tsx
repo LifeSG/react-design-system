@@ -1,6 +1,6 @@
 import clsx from "clsx";
 
-import * as styles from "./email-thumbnail.styles";
+import * as styles from "./thumbnail.styles";
 
 interface EmailThumbnailProps {
     className?: string;
@@ -12,7 +12,7 @@ export const EmailThumbnail = ({ className }: EmailThumbnailProps) => {
             viewBox="0 0 120 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={clsx(styles.thumbnail, className)}
+            className={clsx(styles.thumbnail, styles.emailThumbnail, className)}
         >
             <g clipPath="url(#clip0_email_icon)">
                 <circle cx="60" cy="60" r="60" className="background-circle" />
