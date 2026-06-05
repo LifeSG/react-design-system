@@ -43,11 +43,23 @@ export const FilterHeader = styled.div<FilterHeaderProps>`
     ${(props) => props.$insetTop && `padding-top: ${props.$insetTop}px;`}
 `;
 
+export const FilterTitleGroup = styled.div`
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: ${Spacing["spacing-8"]};
+    margin: ${Spacing["spacing-24"]} 0;
+`;
+
 export const FilterTitle = styled.h2`
     ${Font["heading-xs-semibold"]}
-    flex: 1;
-    text-align: center;
-    margin: ${Spacing["spacing-24"]} 0;
+`;
+
+export const FilterToggleContent = styled.span`
+    display: inline-flex;
+    align-items: center;
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const FilterClearButton = styled(Button.Small)`
