@@ -16,8 +16,8 @@ import {
     ScheduleSlotContent,
     useInitialScroll,
     useTimelineOffset,
-} from "../shared";
-import { WithOptionalPopover } from "../shared/with-optional-popover";
+} from "../schedule-slot-content";
+import { WithOptionalPopover } from "../schedule-slot-content/with-optional-popover";
 import { TimeIndicator } from "../time-indicator/time-indicator";
 import type { ScheduleEntityProps, ScheduleSlotProps } from "../types";
 import * as styles from "./schedule-day-view.styles";
@@ -35,6 +35,7 @@ const SlotContentItem = ({
     blockedMessage,
 }: SlotContentItemProps) => {
     const offsetTop = calculateSlotOffset(slot.startTime, timeSlotStart);
+    const duration = TimeHelper.calculateDuration(slot.startTime, slot.endTime);
 
     return (
         <ScheduleSlotContent
@@ -47,22 +48,19 @@ const SlotContentItem = ({
                 available: styles.slotContentAvailable,
             }}
         >
-            {(duration) =>
-                duration >= 15 && (
-                    <>
-                        <span className={styles.slotTime}>
-                            {TimeHelper.parseInput(slot.startTime, "12hr")}
-                            {"\u2013"}{" "}
-                            {TimeHelper.parseInput(slot.endTime, "12hr")}
-                        </span>
-                        <span className={styles.slotAvailability}>
-                            {slot.status === "blocked"
-                                ? blockedMessage
-                                : `${slot.booked} / ${slot.capacity}`}
-                        </span>
-                    </>
-                )
-            }
+            {duration >= 15 && (
+                <>
+                    <span className={styles.slotTime}>
+                        {TimeHelper.parseInput(slot.startTime, "12hr")}
+                        {"\u2013"} {TimeHelper.parseInput(slot.endTime, "12hr")}
+                    </span>
+                    <span className={styles.slotAvailability}>
+                        {slot.status === "blocked"
+                            ? blockedMessage
+                            : `${slot.booked} / ${slot.capacity}`}
+                    </span>
+                </>
+            )}
         </ScheduleSlotContent>
     );
 };

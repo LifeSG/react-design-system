@@ -8,7 +8,7 @@ import { useApplyStyle } from "../../theme";
 import { Typography } from "../../typography";
 import { TimeHelper } from "../../util/time-helper";
 import * as dayViewStyles from "../schedule-day-view/schedule-day-view.styles";
-import { useInitialScroll, useTimelineOffset } from "../shared";
+import { useInitialScroll, useTimelineOffset } from "../schedule-slot-content";
 import { TimeIndicator } from "../time-indicator/time-indicator";
 import * as styles from "./schedule-week-view.styles";
 import { TimeCell } from "./time-cell";

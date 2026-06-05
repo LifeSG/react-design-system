@@ -7,7 +7,7 @@ import { useApplyStyle } from "../../theme";
 import { TimeHelper } from "../../util/time-helper";
 import { CELL_HEIGHT } from "../const";
 import type { ScheduleSlotProps } from "../types";
-import { getTimeSlotStyleProps } from "./time-slot-style";
+import { getTimeSlotStyleProps } from "./style-helper";
 
 interface SlotContentClassNames {
     container: string;
@@ -26,7 +26,7 @@ interface ScheduleSlotContentProps {
     classNames: SlotContentClassNames;
     tokens: SlotContentTokens;
     clickable?: boolean;
-    children: (duration: number) => React.ReactNode;
+    children: React.ReactNode;
 }
 
 export const ScheduleSlotContent = ({
@@ -61,7 +61,7 @@ export const ScheduleSlotContent = ({
             clickable={clickable}
             onClick={(e: React.MouseEvent) => slot.onClick?.(slot, e)}
         >
-            {children(duration)}
+            {children}
         </TimeSlot>
     );
 };

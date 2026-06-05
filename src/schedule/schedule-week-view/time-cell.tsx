@@ -5,9 +5,9 @@ import { useRef } from "react";
 
 import { useApplyStyle } from "../../theme";
 import { TimeHelper } from "../../util/time-helper";
-import { calculateSlotOffset, minutesToTime } from "../shared";
-import { ScheduleSlotContent } from "../shared/schedule-slot-content";
-import { WithOptionalPopover } from "../shared/with-optional-popover";
+import { calculateSlotOffset, minutesToTime } from "../schedule-slot-content";
+import { ScheduleSlotContent } from "../schedule-slot-content/schedule-slot-content";
+import { WithOptionalPopover } from "../schedule-slot-content/with-optional-popover";
 import type { ScheduleEntityProps } from "../types";
 import * as slotContentStyles from "./slot-content.styles";
 import * as styles from "./time-cell.styles";
@@ -236,6 +236,10 @@ export const TimeCell: React.FC<TimeCellProps> = ({
         slotIndex: number
     ) => {
         const offsetTop = calculateSlotOffset(slot.startTime, time);
+        const duration = TimeHelper.calculateDuration(
+            slot.startTime,
+            slot.endTime
+        );
 
         return (
             <WithOptionalPopover
@@ -255,23 +259,15 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                     }}
                     clickable={!!slot.onClick}
                 >
-                    {(duration) => (
-                        <>
-                            <span className={slotContentStyles.slotServiceName}>
-                                {slot.serviceName}
-                            </span>
-                            {duration >= 30 && (
-                                <span
-                                    className={
-                                        slotContentStyles.slotAvailability
-                                    }
-                                >
-                                    {slot.status === "blocked"
-                                        ? blockedMessage
-                                        : `${slot.booked} / ${slot.capacity}`}
-                                </span>
-                            )}
-                        </>
+                    <span className={slotContentStyles.slotServiceName}>
+                        {slot.serviceName}
+                    </span>
+                    {duration >= 30 && (
+                        <span className={slotContentStyles.slotAvailability}>
+                            {slot.status === "blocked"
+                                ? blockedMessage
+                                : `${slot.booked} / ${slot.capacity}`}
+                        </span>
                     )}
                 </ScheduleSlotContent>
             </WithOptionalPopover>
