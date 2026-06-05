@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Colour, Font, Motion, Spacing } from "../theme";
+import { Colour, Font, Motion, Radius, Spacing } from "../theme";
 
 export const tokens = {
     timeColumn: {
@@ -122,4 +122,10 @@ export const timeSlotComponent = css`
     max-width: 200px;
     height: var(${tokens.timeSlot.height});
     min-height: var(${tokens.timeSlot.height});
+    border-radius: ${Radius.xs};
+
+    &:focus-within {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 1px;
+    }
 `;

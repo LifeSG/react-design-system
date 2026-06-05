@@ -6,24 +6,24 @@ import dayjs from "dayjs";
 import isEmpty from "lodash/isEmpty";
 import maxBy from "lodash/maxBy";
 import minBy from "lodash/minBy";
-import type React from "react";
-import { useEffect, useMemo, useRef, useState } from "react";
+import { useMemo, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { Button } from "../button";
-import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import type { InternalCalendarProps } from "../shared/internal-calendar";
 import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
 import { DayCell } from "../shared/internal-calendar/day-cell";
-import { TimeSlot as TimeSlotComponent } from "../shared/time-slot";
 import { Colour, formatUnitValue, useApplyStyle } from "../theme";
 import type { TimeSlot } from "../time-slot-bar/types";
 import { Typography } from "../typography";
-import { DateHelper } from "../util";
+import { DateHelper, useIsMounted } from "../util";
 import { CalendarHelper } from "../util/calendar-helper";
 import { StringHelper } from "../util/string-helper";
 import { TimeHelper } from "../util/time-helper";
+import { ROW_HEIGHT, SLOT_GAP } from "./consts";
 import * as styles from "./time-slot-bar-week-days.styles";
+import type { FocusableSlotMeta, TimeSlotCell } from "./time-slot-cell";
+import { WeekTimeSlotCell } from "./time-slot-cell";
 import type { TimeSlotCellsVariant } from "./types";
 
 interface TimeSlotWeekDaysProps
@@ -43,126 +43,6 @@ interface TimeSlotWeekDaysProps
     enableSelection?: boolean | undefined;
     onSlotClick?: ((date: string, timeSlot: TimeSlot) => void) | undefined;
 }
-
-interface TimeSlotCell extends TimeSlot {
-    cellLength: number;
-    halfFill?: "default" | "top" | "bottom" | undefined;
-    isActualSlot?: boolean | undefined;
-    rowIndex?: number | undefined;
-}
-
-interface FocusableSlotMeta {
-    key: string;
-    date: string;
-    rowIndex: number;
-}
-
-interface WeekTimeSlotCellProps {
-    formattedDate: string;
-    slot: TimeSlotCell;
-    variant: TimeSlotCellsVariant;
-    hasCollapsedContent: boolean;
-    expandAll: boolean;
-    visibleRowCount: number;
-    onSlotClick: (date: string, slot: TimeSlot) => void;
-    getSlotAriaLabel: (date: string, slot: TimeSlot) => string;
-    onSlotKeyDown: (
-        event: React.KeyboardEvent<HTMLButtonElement>,
-        meta: FocusableSlotMeta
-    ) => void;
-    onSlotButtonClick: (
-        date: string,
-        slot: TimeSlot
-    ) => (event: React.MouseEvent<HTMLButtonElement>) => void;
-    slotButtonRefs: React.MutableRefObject<
-        Record<string, HTMLButtonElement | null>
-    >;
-}
-
-const SLOT_HEIGHT = 12; // px
-const SLOT_GAP = 4; // px
-const ROW_HEIGHT = SLOT_HEIGHT + SLOT_GAP;
-
-const WeekTimeSlotCell = ({
-    formattedDate,
-    slot,
-    variant,
-    hasCollapsedContent,
-    expandAll,
-    visibleRowCount,
-    onSlotClick,
-    getSlotAriaLabel,
-    onSlotKeyDown,
-    onSlotButtonClick,
-    slotButtonRefs,
-}: WeekTimeSlotCellProps) => {
-    const {
-        id,
-        clickable = true,
-        isActualSlot,
-        styleAttributes,
-        cellLength,
-        halfFill,
-    } = slot;
-    const {
-        styleType = "default",
-        backgroundColor,
-        backgroundColor2,
-    } = styleAttributes;
-    const slotId = `${formattedDate}-${id}`;
-    const isCollapsedSlot =
-        hasCollapsedContent &&
-        !expandAll &&
-        (slot.rowIndex ?? 0) >= visibleRowCount;
-
-    const slotHeight =
-        variant === "fixed"
-            ? cellLength * SLOT_HEIGHT + (cellLength - 1) * SLOT_GAP
-            : SLOT_HEIGHT;
-
-    const slotRef = useRef<HTMLDivElement>(null);
-    useApplyStyle(slotRef, {
-        [styles.tokens.timeSlot.height]: formatUnitValue(slotHeight, "px"),
-    });
-
-    return (
-        <TimeSlotComponent
-            ref={slotRef}
-            styleType={styleType}
-            bgColor={backgroundColor}
-            bgColor2={backgroundColor2}
-            clickable={clickable}
-            fill={halfFill}
-            className={styles.timeSlotComponent}
-            onClick={() => clickable && onSlotClick(formattedDate, slot)}
-        >
-            {isActualSlot && (
-                <VisuallyHidden inert={inertValue(isCollapsedSlot)}>
-                    <button
-                        type="button"
-                        ref={(element) => {
-                            slotButtonRefs.current[slotId] = element;
-                        }}
-                        aria-disabled={!clickable}
-                        aria-label={getSlotAriaLabel(formattedDate, slot)}
-                        onKeyDown={(event) =>
-                            onSlotKeyDown(event, {
-                                key: slotId,
-                                date: formattedDate,
-                                rowIndex: slot.rowIndex ?? 0,
-                            })
-                        }
-                        onClick={
-                            clickable
-                                ? onSlotButtonClick(formattedDate, slot)
-                                : undefined
-                        }
-                    />
-                </VisuallyHidden>
-            )}
-        </TimeSlotComponent>
-    );
-};
 
 export const TimeSlotBarWeekDays = ({
     calendarDate,
@@ -186,7 +66,7 @@ export const TimeSlotBarWeekDays = ({
     const dateFormat = "YYYY-MM-DD";
     const [expandAll, setExpandAll] = useState<boolean>(false);
     const [hoverDay, setHoverDay] = useState<Dayjs>();
-    const [isMounted, setIsMounted] = useState<boolean>(false);
+    const isMounted = useIsMounted();
     const slotButtonRefs = useRef<Record<string, HTMLButtonElement | null>>({});
     const timeColumnRef = useRef<HTMLDivElement>(null);
     const currentCalendarWeek = useMemo((): Dayjs[] => {
@@ -268,10 +148,6 @@ export const TimeSlotBarWeekDays = ({
     useApplyStyle(timeColumnRef, {
         [styles.tokens.timeColumn.height]: formatUnitValue(height, "px"),
     });
-
-    useEffect(() => {
-        setIsMounted(true);
-    }, []);
 
     // =============================================================================
     // EVENT HANDLERS
