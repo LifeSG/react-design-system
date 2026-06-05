@@ -1,12 +1,9 @@
-import {
-    Container,
-    Description,
-    DescriptionContainer,
-    ListWrapper,
-    TextContainer,
-    Title,
-    TitleContainer,
-} from "./file-download.styles";
+import clsx from "clsx";
+
+import { DashedBorder } from "../dashed-border";
+import { Markup } from "../markup";
+import { Border, Colour, Radius } from "../theme";
+import * as styles from "./file-download.styles";
 import { FileListCard } from "./file-list-card";
 import type { FileDownloadProps, FileItemDownloadProps } from "./types";
 
@@ -38,11 +35,13 @@ export const FileDownload = ({
         }
 
         if (typeof title === "string") {
-            return <Title>{title}</Title>;
+            return <p className={styles.title}>{title}</p>;
         }
 
         return (
-            <TitleContainer baseTextSize="heading-xs">{title}</TitleContainer>
+            <Markup className={styles.titleContainer} baseTextSize="heading-xs">
+                {title}
+            </Markup>
         );
     };
 
@@ -52,30 +51,42 @@ export const FileDownload = ({
         }
 
         if (typeof description === "string") {
-            return <Description>{description}</Description>;
+            return <p className={styles.description}>{description}</p>;
         }
 
         return (
-            <DescriptionContainer baseTextSize="body-md">
+            <Markup
+                className={styles.descriptionContainer}
+                baseTextSize="body-md"
+            >
                 {description}
-            </DescriptionContainer>
+            </Markup>
         );
     };
 
+    const isBordered = styleType === "bordered";
+
     return (
-        <Container
+        <DashedBorder
             id={id ? `${id}-file-download` : "file-download"}
-            className={className}
+            className={clsx(
+                styles.container,
+                isBordered && styles.containerBordered,
+                className
+            )}
             data-testid={testId}
-            $border={styleType === "bordered"}
+            enabled={isBordered}
+            thickness={Border["width-040"]}
+            radius={Radius["sm"]}
+            colour={Colour["border"]}
         >
             {(title || description) && (
-                <TextContainer>
+                <div className={styles.textContainer}>
                     {renderTitle()}
                     {renderDescription()}
-                </TextContainer>
+                </div>
             )}
-            <ListWrapper>
+            <ul className={styles.listWrapper}>
                 {fileItems &&
                     fileItems.length > 0 &&
                     fileItems.map((item) => (
@@ -85,7 +96,7 @@ export const FileDownload = ({
                             onDownload={handleDownloadItem}
                         />
                     ))}
-            </ListWrapper>
-        </Container>
+            </ul>
+        </DashedBorder>
     );
 };
