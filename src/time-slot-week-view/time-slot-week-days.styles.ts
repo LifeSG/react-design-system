@@ -61,9 +61,6 @@ export const timeSlotText = css`
     text-align: center;
     max-width: 2.5rem;
     color: var(${tokens.timeSlotText.color}, ${Colour["text"]});
-    span {
-        display: block;
-    }
 `;
 
 export const timeSlotComponent = css`
@@ -71,7 +68,6 @@ export const timeSlotComponent = css`
     flex-grow: 1;
     align-items: center;
     justify-content: center;
-    width: 100%;
     margin: 1px 0px;
     position: relative;
 

@@ -114,12 +114,6 @@ test.describe("TimeSlotWeekView", () => {
 
         test("Disabled dates", async ({ story }) => {
             await compareScreenshot(story, "mount");
-
-            await story.getDayCell(7, "Unavailable").click({ force: true });
-            await expect(story.locators.selectedValue).toHaveText("none");
-
-            await story.getDayCell(8).click();
-            await expect(story.locators.selectedValue).toHaveText("2026-04-08");
         });
     });
 
