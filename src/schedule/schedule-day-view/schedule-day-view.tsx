@@ -276,6 +276,7 @@ export const ScheduleDayView = ({
                     key={time}
                     $dashed={time.endsWith(":00")}
                     onClick={() => handleEmptySlotClick(time, service.name)}
+                    data-testid={`empty-slot-${service.id}-${time}`}
                 >
                     <WithOptionalPopover
                         containerRef={containerRef}
@@ -309,7 +310,7 @@ export const ScheduleDayView = ({
         <ScheduleContainer>
             {loading ? (
                 <LoadingContainer>
-                    <ThemedLoadingSpinner />
+                    <ThemedLoadingSpinner data-testid="loading-spinner" />
                 </LoadingContainer>
             ) : (
                 <>
