@@ -7,7 +7,7 @@ import { useApplyStyle } from "../../theme";
 import { TimeHelper } from "../../util/time-helper";
 import { calculateSlotOffset, minutesToTime } from "../schedule-slot-content";
 import { ScheduleSlotContent } from "../schedule-slot-content/schedule-slot-content";
-import { WithOptionalPopover } from "../schedule-slot-content/with-optional-popover";
+import { WithOptionalPopover } from "../shared/with-optional-popover";
 import type { ScheduleEntityProps } from "../types";
 import * as slotContentStyles from "./slot-content.styles";
 import * as styles from "./time-cell.styles";

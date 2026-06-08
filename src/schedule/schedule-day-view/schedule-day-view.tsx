@@ -17,7 +17,7 @@ import {
     useInitialScroll,
     useTimelineOffset,
 } from "../schedule-slot-content";
-import { WithOptionalPopover } from "../schedule-slot-content/with-optional-popover";
+import { WithOptionalPopover } from "../shared/with-optional-popover";
 import { TimeIndicator } from "../time-indicator/time-indicator";
 import type { ScheduleEntityProps, ScheduleSlotProps } from "../types";
 import * as styles from "./schedule-day-view.styles";

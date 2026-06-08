@@ -1,20 +1,15 @@
-import type { RefObject } from "react";
+import type {
+    CommonScheduleViewProps,
+    ScheduleEntityProps,
+    ScheduleSlotProps,
+} from "../types";
 
-import type { ScheduleEntityProps, ScheduleSlotProps } from "../types";
-
-export interface ScheduleWeekViewProps {
-    date: string;
+export interface ScheduleWeekViewProps extends CommonScheduleViewProps {
     serviceData: ScheduleEntityProps[];
-    loading: boolean;
-    minTime: string;
-    maxTime: string;
-    initialScrollTime?: string | undefined;
     onSlotClick?: (
         data: ScheduleSlotProps,
         e: React.MouseEvent
     ) => void | undefined;
-    containerRef: RefObject<HTMLDivElement>;
-    blockedMessage?: string | undefined;
     onClickHiddenSlots?: (hiddenServices: string[]) => void | undefined;
 }
 
