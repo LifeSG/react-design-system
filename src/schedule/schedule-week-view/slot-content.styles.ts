@@ -17,7 +17,7 @@ export const tokens = {
 export const slotContentContainer = css`
     ${tokens.slotContentContainer.height}: ${CELL_HEIGHT - 1}px;
     ${tokens.slotContentContainer.offsetTop}: 0px;
-    margin-top: 0;
+
     overflow: hidden;
     width: calc(100% - 1px);
     padding: 4px;

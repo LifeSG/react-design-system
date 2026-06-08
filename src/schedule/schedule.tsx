@@ -58,11 +58,6 @@ export const Schedule = ({
                 ? [filteredServiceData[visibleServiceIdx]]
                 : [];
     }
-    const containerClassName = clsx(
-        styles.container,
-        loading && styles.containerLoading,
-        className
-    );
     const showPrevArrow = isSmallScreen && visibleServiceIdx > 0;
     const showNextArrow =
         isSmallScreen && visibleServiceIdx < filteredServiceData.length - 1;
@@ -99,7 +94,11 @@ export const Schedule = ({
     return (
         <div
             id={id}
-            className={containerClassName}
+            className={clsx(
+                styles.container,
+                loading && styles.containerLoading,
+                className
+            )}
             data-testid={testId}
             {...otherProps}
         >

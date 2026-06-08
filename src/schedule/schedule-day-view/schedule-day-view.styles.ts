@@ -190,7 +190,6 @@ export const slotContent = css`
     display: flex;
     justify-content: space-between;
     color: ${Colour["text-subtle"]};
-    border-left: 0;
 `;
 
 export const slotContentBlocked = css`

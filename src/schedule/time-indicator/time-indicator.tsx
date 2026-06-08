@@ -32,8 +32,8 @@ export const TimeIndicator = ({
     const timelineCircleRef = useRef<HTMLDivElement>(null);
 
     useApplyStyle(timelineCircleRef, {
-        [styles.tokens.timelineCircle.top]:
-            timelineOffset === null ? null : `${timelineOffset - 6}px`,
+        [styles.tokens.timelineCircle.offset]:
+            timelineOffset === null ? null : `${timelineOffset}px`,
     });
 
     return (

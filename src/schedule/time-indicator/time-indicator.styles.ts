@@ -8,7 +8,7 @@ import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 // =============================================================================
 export const tokens = {
     timelineCircle: {
-        top: "--fds-internal-timeIndicator-timelineCircle-top",
+        offset: "--fds-internal-timeIndicator-timelineCircle-top",
     },
 };
 
@@ -41,10 +41,10 @@ export const hourDisplay = css`
 `;
 
 export const timelineCircle = css`
-    ${tokens.timelineCircle.top}: -6px;
+    ${tokens.timelineCircle.offset}: 0px;
     position: absolute;
     right: -6px;
-    top: var(${tokens.timelineCircle.top});
+    top: calc(var(${tokens.timelineCircle.offset}) - 6px);
     width: ${Spacing["spacing-12"]};
     height: ${Spacing["spacing-12"]};
     border-radius: ${Radius["full"]};
