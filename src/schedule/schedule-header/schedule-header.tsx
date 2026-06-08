@@ -66,7 +66,6 @@ export const ScheduleHeader = ({
                 <Button
                     className={styles.button}
                     styleType="light"
-                    sizeType="default"
                     onClick={onTodayClick}
                 >
                     Today
