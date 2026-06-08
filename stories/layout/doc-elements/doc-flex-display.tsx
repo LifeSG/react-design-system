@@ -1,41 +1,41 @@
+import { css } from "@linaria/core";
 import { Layout } from "src/layout";
-import styled from "styled-components";
 
-const Content = styled.div`
+const content = css`
     background: #f9b5b2;
     border: 2px dotted #f26664;
     height: 100vh;
     flex: 1;
 `;
 
-const VerticalContent = styled.div`
+const verticalContent = css`
     background: #f9b5b2;
     border: 2px dotted #f26664;
     height: 50vh;
     padding: 4px;
 `;
 
-const Background = styled.div`
+const background = css`
     background: #fdddd7;
 `;
 
 export const FlexDisplay = () => {
     return (
-        <Background>
+        <div className={background}>
             <Layout.Content type="flex">
-                <Content />
+                <div className={content} />
             </Layout.Content>
-        </Background>
+        </div>
     );
 };
 
 export const FlexColumnDisplay = () => {
     return (
-        <Background>
+        <div className={background}>
             <Layout.Content type="flex-column">
-                <VerticalContent>First item</VerticalContent>
-                <VerticalContent>Second item</VerticalContent>
+                <div className={verticalContent}>First item</div>
+                <div className={verticalContent}>Second item</div>
             </Layout.Content>
-        </Background>
+        </div>
     );
 };
