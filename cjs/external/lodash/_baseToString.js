@@ -1,0 +1,2 @@
+"use strict";var r=require("./_Symbol.js"),i=require("./_arrayMap.js"),e=require("./isArray.js"),t=require("./isSymbol.js"),a=r._Symbol,o=i._arrayMap,s=e.isArray_1,u=t.isSymbol_1,y=a?a.prototype:void 0,n=y?y.toString:void 0;var _=function r(i){if("string"==typeof i)return i;if(s(i))return o(i,r)+"";if(u(i))return n?n.call(i):"";var e=i+"";return"0"==e&&1/i==-1/0?"-0":e};exports._baseToString=_;
+//# sourceMappingURL=_baseToString.js.map

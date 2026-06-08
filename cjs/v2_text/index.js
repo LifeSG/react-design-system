@@ -1,0 +1,2 @@
+"use strict";var e=require("./helper.js"),t=require("./text-style.js"),r=require("./text.js"),p=require("./types.js");exports.V2_TextStyleHelper=e.V2_TextStyleHelper,exports.V2_TextStyle=t.V2_TextStyle,Object.defineProperty(exports,"V2_Text",{enumerable:!0,get:function(){return r.V2_Text}}),Object.defineProperty(exports,"RedirectScope",{enumerable:!0,get:function(){return p.RedirectScope}});
+//# sourceMappingURL=index.js.map
