@@ -8,7 +8,7 @@ import { CELL_HEIGHT, TIME_INDICATOR_WIDTH } from "../const";
 // =============================================================================
 export const tokens = {
     timelineCircle: {
-        offset: "--fds-internal-timeIndicator-timelineCircle-top",
+        offset: "--fds-internal-schedule-timeIndicator-timelineCircle-top",
     },
 };
 
