@@ -3,14 +3,14 @@ import { css } from "@linaria/core";
 import { Border, Colour, Radius, Spacing } from "../theme";
 import { MIN_COLUMN_WIDTH } from "./const";
 
-export const containerLoading = css``;
-
 export const container = css`
     min-width: 320px;
     max-width: 90vw;
     box-sizing: border-box;
+`;
 
-    &.${containerLoading}:hover {
+export const containerLoading = css`
+    &:hover {
         cursor: not-allowed;
     }
 `;
