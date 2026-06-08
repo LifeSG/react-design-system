@@ -1,6 +1,7 @@
+import { css } from "@linaria/core";
+import clsx from "clsx";
 import type { ThemeType } from "src/theme";
 import { Shadow, ThemeProvider, useDesignToken } from "src/theme";
-import styled from "styled-components";
 
 interface ShadowDisplayProps {
     theme: ThemeType;
@@ -26,13 +27,13 @@ const shadowColorTokens: Record<
 export const ShadowDisplay = ({ theme }: ShadowDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
-            <Display>
-                <HeaderRow>
+            <div className={display}>
+                <div className={clsx(row, headerRow)}>
                     <div>Token</div>
                     <div>Value</div>
                     <div>Colour Token</div>
                     <div></div>
-                </HeaderRow>
+                </div>
                 <ShadowCollection token="xs-subtle" />
                 <ShadowCollection token="xs-strong" />
                 <ShadowCollection token="xs-focus-strong" />
@@ -43,7 +44,7 @@ export const ShadowDisplay = ({ theme }: ShadowDisplayProps) => {
                 <ShadowCollection token="md-strong" />
                 <ShadowCollection token="lg-subtle" />
                 <ShadowCollection token="lg-strong" />
-            </Display>
+            </div>
         </ThemeProvider>
     );
 };
@@ -57,41 +58,37 @@ const ShadowCollection = ({ token }: ShadowCollectionProps) => {
     const colorInfo = shadowColorTokens[token];
 
     return (
-        <Row key={token}>
+        <div className={row} key={token}>
             <div>
                 <code>{token}</code>
             </div>
             <div>{value}</div>
             <div>
-                <ColorTokenInfo>
+                <div className={colorTokenInfo}>
                     {colorInfo.colorToken}
-                    <TokenType $type={colorInfo.type}>
+                    <span
+                        className={clsx(
+                            tokenType,
+                            colorInfo.type === "semantic"
+                                ? tokenTypeSemantic
+                                : tokenTypePrimitive
+                        )}
+                    >
                         {colorInfo.type}
-                    </TokenType>
-                </ColorTokenInfo>
+                    </span>
+                </div>
             </div>
             <div>
-                <ShadowExample $shadow={value} />
+                <div className={shadowExample} style={{ boxShadow: value }} />
             </div>
-        </Row>
+        </div>
     );
 };
 
 // =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface ShadowStyleProps {
-    $shadow: string;
-}
-
-interface TokenTypeProps {
-    $type: "primitive" | "semantic";
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-const Display = styled.div`
+const display = css`
     display: grid;
     grid-template-columns: repeat(4, minmax(max-content, 1fr));
     flex-wrap: wrap;
@@ -105,7 +102,7 @@ const Display = styled.div`
     overflow-x: auto;
 `;
 
-const Row = styled.div`
+const row = css`
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
@@ -115,28 +112,27 @@ const Row = styled.div`
     margin-bottom: 2rem;
 `;
 
-const HeaderRow = styled(Row)`
+const headerRow = css`
     margin-bottom: 1rem;
     font-weight: bold;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #dde1e2;
 `;
 
-const ShadowExample = styled.div<ShadowStyleProps>`
+const shadowExample = css`
     height: 48px;
     width: 128px;
     background: white;
     border-radius: 4px;
-    box-shadow: ${(props) => props.$shadow};
 `;
 
-const ColorTokenInfo = styled.div`
+const colorTokenInfo = css`
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
 `;
 
-const TokenType = styled.span<TokenTypeProps>`
+const tokenType = css`
     font-size: 0.75rem;
     padding: 0.125rem 0.375rem;
     border-radius: 0.25rem;
@@ -144,15 +140,14 @@ const TokenType = styled.span<TokenTypeProps>`
     text-transform: uppercase;
     letter-spacing: 0.025em;
     width: fit-content;
+`;
 
-    ${(props) =>
-        props.$type === "semantic"
-            ? `
-            background-color: #e0f2fe;
-            color: #0369a1;
-        `
-            : `
-            background-color: #f3f4f6;
-            color: #374151;
-        `}
+const tokenTypeSemantic = css`
+    background-color: #e0f2fe;
+    color: #0369a1;
+`;
+
+const tokenTypePrimitive = css`
+    background-color: #f3f4f6;
+    color: #374151;
 `;

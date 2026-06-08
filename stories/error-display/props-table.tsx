@@ -53,7 +53,10 @@ const DATA: ApiTableSectionProps[] = [
                         }}
                     >
                         {codes.map((code) => (
-                            <code className={styledCode} key={code}>{`"${code}"`}</code>
+                            <code
+                                className={styledCode}
+                                key={code}
+                            >{`"${code}"`}</code>
                         ))}
                     </div>
                 ),
