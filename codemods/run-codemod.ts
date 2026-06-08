@@ -20,6 +20,7 @@ enum Codemod {
     MigrateMediaQuery = "migrate-media-query",
     MigrateText = "migrate-text",
     MigrateTextList = "migrate-text-list",
+    MigratePopover = "migrate-popover",
 }
 
 const theme = {
@@ -36,6 +37,8 @@ const CodemodDescriptions: { [key in Codemod]: string } = {
         "Replace V2_Text with new Typography components and V2_TextStyleHelper.getTextStyle() with Font",
     [Codemod.MigrateTextList]:
         "Replace V2_TextList with new Textlist components",
+    [Codemod.MigratePopover]:
+        "Replace deprecated Popover and migrate PopoverV2 imports",
 };
 
 const TargetDirectoryPaths = {
