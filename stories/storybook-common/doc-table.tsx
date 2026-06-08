@@ -1,4 +1,5 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
+import type { ReactNode } from "react";
 
 export const DocTextStyle = css`
     font-family: "Nunito Sans", -apple-system, ".SFNSText-Regular",
@@ -24,7 +25,18 @@ export const DocTextStyle = css`
     }
 `;
 
-export const DocTable = styled.table`
+interface DocTableProps {
+    children: ReactNode;
+    className?: string;
+}
+
+export const DocTable = ({ children, className }: DocTableProps) => {
+    return (
+        <table className={`${docTable} ${className ?? ""}`}>{children}</table>
+    );
+};
+
+const docTable = css`
     width: 100%;
     position: relative;
     border-collapse: collapse;

@@ -1,6 +1,6 @@
-import type React from "react";
+import { css } from "@linaria/core";
+import type { ReactNode } from "react";
 import { useDesignToken } from "src/theme";
-import styled from "styled-components";
 
 import { DocTable, DocTextStyle } from "../doc-table";
 import { useInspectColour } from "../token-inspector";
@@ -9,9 +9,12 @@ import type {
     TokenTableDefaultValueDefaultProps,
 } from "./types";
 
-export const Usage = styled.div`
+export const Usage = ({ children }: { children: ReactNode }) => {
+    return <div className={`${usage} ${DocTextStyle}`}>{children}</div>;
+};
+
+const usage = css`
     margin: 16px 0;
-    ${DocTextStyle}
 
     svg {
         width: 0.75lh;
@@ -29,7 +32,7 @@ interface TableProps {
 
 export const Table = ({ children }: TableProps) => {
     return (
-        <StyledTable>
+        <DocTable className={styledTable}>
             <thead>
                 <tr>
                     <th>Name</th>
@@ -38,11 +41,11 @@ export const Table = ({ children }: TableProps) => {
                 </tr>
             </thead>
             <tbody>{children}</tbody>
-        </StyledTable>
+        </DocTable>
     );
 };
 
-const StyledTable = styled(DocTable)`
+const styledTable = css`
     td {
         &:first-child {
             width: 20%;
@@ -63,12 +66,12 @@ interface SectionProps {
 }
 
 export const Section = ({ children }: SectionProps) => (
-    <SectionRow>
+    <tr className={sectionRow}>
         <td colSpan={3}>{children}</td>
-    </SectionRow>
+    </tr>
 );
 
-const SectionRow = styled.tr`
+const sectionRow = css`
     background: #686868 !important;
     color: white;
     font-weight: bold;
@@ -84,12 +87,12 @@ interface NameColProps {
 export const NameCol = ({ children }: NameColProps) => {
     return (
         <td>
-            <Label>{children}</Label>
+            <div className={label}>{children}</div>
         </td>
     );
 };
 
-const Label = styled.div`
+const label = css`
     font-weight: bold;
     color: #333333;
 `;
@@ -98,18 +101,18 @@ const Label = styled.div`
 // DESCRIPTION COLUMN
 // =============================================================================
 interface DescriptionColProps {
-    children: React.ReactNode;
+    children: ReactNode;
 }
 
 export const DescriptionCol = ({ children }: DescriptionColProps) => {
     return (
         <td>
-            <Description>{children}</Description>
+            <div className={description}>{children}</div>
         </td>
     );
 };
 
-const Description = styled.div`
+const description = css`
     color: #333333;
 
     code {
@@ -125,8 +128,7 @@ const Description = styled.div`
 interface DefaultColProps {
     attributes?:
         | TokenTableDefaultValueColourTokenProps
-        | TokenTableDefaultValueDefaultProps
-        | undefined;
+        | TokenTableDefaultValueDefaultProps;
 }
 
 interface SwatchColourProps {
@@ -177,22 +179,30 @@ export const DefaultCol = ({ attributes }: DefaultColProps) => {
                 <ColourDisplay attributes={attributes} />
             </td>
         );
-    } else {
-        return (
-            <td>
-                <DefaultDisplay attributes={attributes} />
-            </td>
-        );
     }
+
+    return (
+        <td>
+            <DefaultDisplay attributes={attributes} />
+        </td>
+    );
 };
 
-const Default = styled.div`
+const Default = ({ children }: { children: ReactNode }) => {
+    return <div className={defaultContainer}>{children}</div>;
+};
+
+const defaultContainer = css`
     display: flex;
     flex-wrap: wrap;
     color: #333333;
 `;
 
-const SwatchColour = styled.div<SwatchColourProps>`
+const SwatchColour = ({ $colour }: SwatchColourProps) => {
+    return <div className={swatchColour} style={{ background: $colour }} />;
+};
+
+const swatchColour = css`
     flex-shrink: 0;
     height: 1.5rem;
     width: 1.5rem;
@@ -206,7 +216,5 @@ const SwatchColour = styled.div<SwatchColourProps>`
         #dde1e2 10px,
         #dde1e2 20px
     );
-    background: ${(props) => props.$colour};
-
     margin-right: 4px;
 `;

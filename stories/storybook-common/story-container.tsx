@@ -1,22 +1,7 @@
+import { css } from "@linaria/core";
 import type { ReactRenderer } from "@storybook/react-webpack5";
 import { Typography } from "src/typography";
-import { V3_Colour } from "src/v3_theme";
 import type { DecoratorFunction } from "storybook/internal/types";
-import styled from "styled-components";
-
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-
-interface StoryStyleProps {
-    $maxWidth?: boolean;
-}
-
-interface FullscreenStoryStyleProps {
-    $fullWidth?: boolean;
-    $fullHeight?: boolean;
-    $fixedWidth?: boolean;
-}
 
 // =============================================================================
 // STYLING
@@ -34,23 +19,39 @@ export const FullWidthStoryDecorator: (options?: {
     function StoryWrapper(Story, { viewMode, parameters }) {
         parameters.layout = "fullscreen";
         return (
-            <FullWidthContainer
+            <div
                 data-testid="full-width-story"
-                $fullHeight={options?.fullHeight}
-                $fullWidth={options?.fullWidth}
-                $fixedWidth={viewMode === "story"}
+                className={`${fullWidthContainer} ${
+                    viewMode === "story" ? fullWidthContainerFixedWidth : ""
+                } ${
+                    options?.fullWidth
+                        ? ""
+                        : fullWidthContainerHorizontalPadding
+                } ${
+                    options?.fullHeight ? "" : fullWidthContainerVerticalPadding
+                }`}
             >
                 <Story />
-            </FullWidthContainer>
+            </div>
         );
     };
 
-const FullWidthContainer = styled.div<FullscreenStoryStyleProps>`
-    ${(props) => props.$fixedWidth && "width: 100vw;"}
-    ${(props) =>
-        !props.$fullWidth && "padding-left: 16px; padding-right: 16px;"}
-    ${(props) =>
-        !props.$fullHeight && "padding-top: 16px; padding-bottom: 16px;"}
+const fullWidthContainer = css`
+    width: 100%;
+`;
+
+const fullWidthContainerFixedWidth = css`
+    width: 100vw;
+`;
+
+const fullWidthContainerHorizontalPadding = css`
+    padding-left: 16px;
+    padding-right: 16px;
+`;
+
+const fullWidthContainerVerticalPadding = css`
+    padding-top: 16px;
+    padding-bottom: 16px;
 `;
 
 // -----------------------------------------------------------------------------
@@ -64,42 +65,52 @@ export const StoryDecorator: (options?: {
     function StoryWrapper(Story, { viewMode }) {
         if (viewMode === "docs") {
             return (
-                <DocsViewModeContainer
+                <div
                     data-testid="story"
-                    $maxWidth={options?.maxWidth}
+                    className={`${docsViewModeContainer} ${
+                        options?.maxWidth ? docsViewModeContainerMaxWidth : ""
+                    }`}
                 >
                     <Story />
-                </DocsViewModeContainer>
+                </div>
             );
         }
 
         return (
-            <StoryViewModeContainer
+            <div
                 data-testid="story"
-                $maxWidth={options?.maxWidth}
+                className={`${storyViewModeContainer} ${
+                    options?.maxWidth ? storyViewModeContainerMaxWidth : ""
+                }`}
             >
                 <Story />
-            </StoryViewModeContainer>
+            </div>
         );
     };
 
-const StoryViewModeContainer = styled.div<StoryStyleProps>`
+const storyViewModeContainer = css`
     min-width: min(500px, calc(100vw - 32px));
     width: fit-content;
-    ${(props) => props.$maxWidth && "max-width: 500px;"}
     margin: auto;
 `;
 
-const DocsViewModeContainer = styled.div<StoryStyleProps>`
+const storyViewModeContainerMaxWidth = css`
+    max-width: 500px;
+`;
+
+const docsViewModeContainer = css`
     min-width: 500px;
     width: fit-content;
-    ${(props) => props.$maxWidth && "max-width: 500px;"}
     margin: auto;
 
     @media screen and (max-width: 600px) {
         min-width: unset;
         width: 100%;
     }
+`;
+
+const docsViewModeContainerMaxWidth = css`
+    max-width: 500px;
 `;
 
 // -----------------------------------------------------------------------------
@@ -110,13 +121,13 @@ const DocsViewModeContainer = styled.div<StoryStyleProps>`
 export const RowDecorator: () => DecoratorFunction<ReactRenderer> = () =>
     function Row(Story) {
         return (
-            <RowStoryContainer data-testid="row-story">
+            <div className={rowStoryContainer} data-testid="row-story">
                 <Story />
-            </RowStoryContainer>
+            </div>
         );
     };
 
-const RowStoryContainer = styled.div`
+const rowStoryContainer = css`
     display: flex;
     gap: 1rem;
     flex-wrap: wrap;
@@ -131,13 +142,13 @@ const RowStoryContainer = styled.div`
 export const StackDecorator: () => DecoratorFunction<ReactRenderer> = () =>
     function Stack(Story) {
         return (
-            <StackStoryContainer data-testid="stack-story">
+            <div className={stackStoryContainer} data-testid="stack-story">
                 <Story />
-            </StackStoryContainer>
+            </div>
         );
     };
 
-const StackStoryContainer = styled.div`
+const stackStoryContainer = css`
     display: flex;
     flex-direction: column;
     gap: 1rem;
@@ -159,49 +170,55 @@ export const GridDecorator: (options: {
 }) =>
     function Grid(Story) {
         return (
-            <GridStoryContainer
+            <div
                 data-testid="grid-story"
-                $grid={columns}
-                $rowHeader={!!rowHeaders}
+                className={gridStoryContainer}
+                style={{
+                    gridTemplateColumns: `${
+                        rowHeaders ? "auto " : ""
+                    }repeat(${columns}, minmax(min-content, 1fr))`,
+                }}
             >
-                {rowHeaders && columnHeaders ? <GridStoryRowHeader /> : null}
+                {rowHeaders && columnHeaders ? <div /> : null}
                 {columnHeaders
                     ? columnHeaders.map((header) => (
-                          <GridStoryColumnHeader key={header} weight="semibold">
+                          <Typography.BodySM
+                              key={header}
+                              className={gridStoryColumnHeader}
+                              weight="semibold"
+                          >
                               {header}
-                          </GridStoryColumnHeader>
+                          </Typography.BodySM>
                       ))
                     : null}
                 {rowHeaders?.map((header) => (
-                    <GridStoryRowHeader key={header} weight="semibold">
+                    <Typography.BodySM
+                        key={header}
+                        className={gridStoryRowHeader}
+                        weight="semibold"
+                    >
                         {header}
-                    </GridStoryRowHeader>
+                    </Typography.BodySM>
                 ))}
                 <Story />
-            </GridStoryContainer>
+            </div>
         );
     };
 
-const GridStoryContainer = styled.div<{ $grid: number; $rowHeader: boolean }>`
+const gridStoryContainer = css`
     display: grid;
     grid-auto-flow: dense;
-    grid-template-columns:
-        ${(props) => (props.$rowHeader ? "auto " : "")}
-        repeat(${(props) => props.$grid}, minmax(min-content, 1fr));
     gap: 1rem;
     align-items: center;
     justify-items: center;
 `;
 
-export const GridStoryColumnHeader = styled(Typography.BodySM)`
+const gridStoryColumnHeader = css`
     text-align: center;
-    color: ${V3_Colour["text"]};
 `;
 
-export const GridStoryRowHeader = styled(Typography.BodySM)`
+const gridStoryRowHeader = css`
     justify-self: end;
     text-align: right;
-    color: ${V3_Colour["text"]};
-
     grid-column: 1 / 2;
 `;

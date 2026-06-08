@@ -1,7 +1,7 @@
+import { css } from "@linaria/core";
 import { useState } from "react";
 import { Border, Colour, Font, ThemeProvider } from "src/theme";
 import { Typography } from "src/typography";
-import styled, { css } from "styled-components";
 
 export interface TabAttribute {
     title: string;
@@ -18,13 +18,16 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
     const renderTabs = () => {
         return tabs.map((tab) => {
             return (
-                <Button
+                <button
+                    className={`${buttonBase} ${
+                        selectedTab === tab.title ? buttonSelected : ""
+                    }`}
                     key={tab.title}
+                    type="button"
                     onClick={() => setSelectedTab(tab.title)}
-                    $selected={selectedTab === tab.title}
                 >
                     {tab.title}
-                </Button>
+                </button>
             );
         });
     };
@@ -40,25 +43,18 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
 
     return (
         <ThemeProvider>
-            <Wrapper>
-                <ButtonRow>{renderTabs()}</ButtonRow>
-                <Content>{renderContent()}</Content>
-            </Wrapper>
+            <div className={wrapper}>
+                <div className={buttonRow}>{renderTabs()}</div>
+                <div className={content}>{renderContent()}</div>
+            </div>
         </ThemeProvider>
     );
 };
 
 // =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface StyleProps {
-    $selected?: boolean;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-const Wrapper = styled.div`
+const wrapper = css`
     display: flex;
     flex-direction: column;
     width: 100%;
@@ -69,40 +65,36 @@ const Wrapper = styled.div`
     padding: 0 0 1rem;
 `;
 
-const ButtonRow = styled.div`
+const buttonRow = css`
     display: flex;
     padding: 1rem;
 `;
 
-const Button = styled.button<StyleProps>`
+const buttonBase = css`
     ${Font["body-md-regular"]}
     border: none;
     background: none;
     cursor: pointer;
     position: relative;
 
-    ${(props) => {
-        if (props.$selected) {
-            return css`
-                &:after {
-                    content: "";
-                    position: absolute;
-                    bottom: -0.5rem;
-                    left: 0;
-                    width: 100%;
-                    background: ${Colour["text-primary"]};
-                    height: 4px;
-                }
-            `;
-        }
-    }}
-
     &:not(:last-of-type) {
         margin-right: 1rem;
     }
 `;
 
-const Content = styled.div`
+const buttonSelected = css`
+    &:after {
+        content: "";
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        width: 100%;
+        background: ${Colour["text-primary"]};
+        height: 4px;
+    }
+`;
+
+const content = css`
     display: flex;
     align-items: center;
     justify-content: center;
