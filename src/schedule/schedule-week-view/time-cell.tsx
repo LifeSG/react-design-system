@@ -9,7 +9,6 @@ import { calculateSlotOffset, minutesToTime } from "../schedule-slot-content";
 import { ScheduleSlotContent } from "../schedule-slot-content/schedule-slot-content";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
 import type { ScheduleEntityProps } from "../types";
-import * as slotContentStyles from "./slot-content.styles";
 import * as styles from "./time-cell.styles";
 import type { SlotLayoutMap, SlotWithService } from "./types";
 import {
@@ -250,20 +249,19 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                 <ScheduleSlotContent
                     slot={slot}
                     offsetTop={offsetTop}
-                    tokens={slotContentStyles.tokens.slotContentContainer}
+                    tokens={styles.tokens.slotContentContainer}
                     classNames={{
-                        container: slotContentStyles.slotContentContainer,
-                        blocked: slotContentStyles.slotContentContainerBlocked,
-                        available:
-                            slotContentStyles.slotContentContainerAvailable,
+                        container: styles.slotContentContainer,
+                        blocked: styles.slotContentContainerBlocked,
+                        available: styles.slotContentContainerAvailable,
                     }}
                     clickable={!!slot.onClick}
                 >
-                    <span className={slotContentStyles.slotServiceName}>
+                    <span className={styles.slotServiceName}>
                         {slot.serviceName}
                     </span>
                     {duration >= 30 && (
-                        <span className={slotContentStyles.slotAvailability}>
+                        <span className={styles.slotAvailability}>
                             {slot.status === "blocked"
                                 ? blockedMessage
                                 : `${slot.booked} / ${slot.capacity}`}
