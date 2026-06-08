@@ -1,15 +1,15 @@
 import { MagnifierIcon } from "@lifesg/react-icons";
-import { V3_Colour } from "src/v3_theme";
-import styled from "styled-components";
+import { css } from "@linaria/core";
+import { Colour } from "src/theme";
 
-const Container = styled.div`
-    color: ${V3_Colour["text"]};
+const container = css`
+    color: ${Colour["text"]};
 `;
 
 export const Icon = () => {
     return (
-        <Container>
+        <div className={container}>
             <MagnifierIcon />
-        </Container>
+        </div>
     );
 };
