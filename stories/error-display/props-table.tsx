@@ -1,12 +1,12 @@
+import { css } from "@linaria/core";
 import { THEME_TYPES } from "src/theme/types";
 import type { ApiTableSectionProps } from "stories/storybook-common";
 import { ApiTable } from "stories/storybook-common";
-import styled from "styled-components";
 
 // =============================================================================
 // CUSTOM STYLING
 // =============================================================================
-const StyledCode = styled.code`
+const styledCode = css`
     margin-right: 0.25rem;
 `;
 
@@ -45,36 +45,30 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description: "The type of error",
                 propTypes: (
-                    <>
-                        <div
-                            style={{
-                                display: "flex",
-                                flexWrap: "wrap",
-                                marginBottom: "0.25rem",
-                            }}
-                        >
-                            {codes.map((code) => (
-                                <StyledCode
-                                    key={code}
-                                >{`"${code}"`}</StyledCode>
-                            ))}
-                        </div>
-                    </>
+                    <div
+                        style={{
+                            display: "flex",
+                            flexWrap: "wrap",
+                            marginBottom: "0.25rem",
+                        }}
+                    >
+                        {codes.map((code) => (
+                            <code className={styledCode} key={code}>{`"${code}"`}</code>
+                        ))}
+                    </div>
                 ),
             },
             {
                 name: "img",
                 description: "The error image properties",
                 propTypes: (
-                    <>
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <code>HTMLImageElement</code>
-                        </a>
-                    </>
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <code>HTMLImageElement</code>
+                    </a>
                 ),
             },
             {
@@ -100,15 +94,13 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "The properties of the action button that appears at the bottom of the component",
                 propTypes: (
-                    <>
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <code>HTMLButtonElement</code>
-                        </a>
-                    </>
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <code>HTMLButtonElement</code>
+                    </a>
                 ),
                 defaultValue: (
                     <>
