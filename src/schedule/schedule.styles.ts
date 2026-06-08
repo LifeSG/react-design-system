@@ -3,10 +3,7 @@ import { css } from "@linaria/core";
 import { Border, Colour, Radius, Spacing } from "../theme";
 import { MIN_COLUMN_WIDTH } from "./const";
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const containerLoading = "scheduleContainerLoading";
+export const containerLoading = css``;
 
 export const container = css`
     min-width: 320px;
