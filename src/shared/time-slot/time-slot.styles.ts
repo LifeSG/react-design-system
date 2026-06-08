@@ -12,6 +12,14 @@ export const tokens = {
     },
 };
 
+const stripesGradient = `repeating-linear-gradient(
+    135deg,
+    var(${tokens.slot.bgColor2}) 0px,
+    var(${tokens.slot.bgColor2}) 6px,
+    var(${tokens.slot.bgColor}) 6px,
+    var(${tokens.slot.bgColor}) 12px
+)`;
+
 export const timeSlot = css`
     ${tokens.slot.bgColor}: ${Colour["bg-stronger"]};
     ${tokens.slot.bgColor2}: ${Colour["bg-strongest"]};
@@ -35,13 +43,7 @@ export const timeSlot = css`
     }
 
     &[data-style-type="stripes"] {
-        background: repeating-linear-gradient(
-            135deg,
-            var(${tokens.slot.bgColor2}) 0px,
-            var(${tokens.slot.bgColor2}) 6px,
-            var(${tokens.slot.bgColor}) 6px,
-            var(${tokens.slot.bgColor}) 12px
-        );
+        background: ${stripesGradient};
     }
 
     &[data-style-type="stripes"][data-hoverable="true"] {
@@ -58,5 +60,43 @@ export const timeSlot = css`
                     12px
             );
         }
+    }
+`;
+
+export const timeSlotHalfFillTop = css`
+    &[data-style-type="default"] {
+        background: linear-gradient(
+            to top,
+            var(${tokens.slot.bgColor}) 50%,
+            ${Colour["bg-strongest"]} 50%
+        );
+    }
+
+    &[data-style-type="stripes"] {
+        background: linear-gradient(
+                to top,
+                transparent 50%,
+                ${Colour["bg-strongest"]} 50%
+            ),
+            ${stripesGradient};
+    }
+`;
+
+export const timeSlotHalfFillBottom = css`
+    &[data-style-type="default"] {
+        background: linear-gradient(
+            to bottom,
+            var(${tokens.slot.bgColor}) 50%,
+            ${Colour["bg-strongest"]} 50%
+        );
+    }
+
+    &[data-style-type="stripes"] {
+        background: linear-gradient(
+                to bottom,
+                transparent 50%,
+                ${Colour["bg-strongest"]} 50%
+            ),
+            ${stripesGradient};
     }
 `;

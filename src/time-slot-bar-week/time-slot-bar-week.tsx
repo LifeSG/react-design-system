@@ -6,7 +6,7 @@ import type { CalendarManagerRef } from "../shared/internal-calendar";
 import { CalendarManager } from "../shared/internal-calendar/calendar-manager";
 import type { TimeSlot } from "../time-slot-bar";
 import { DateHelper } from "../util";
-import { Wrapper } from "./time-slot-bar-week.style";
+import * as styles from "./time-slot-bar-week.styles";
 import { TimeSlotBarWeekDays } from "./time-slot-bar-week-days";
 import type { TimeSlotBarWeekProps } from "./types";
 
@@ -121,7 +121,7 @@ export const TimeSlotBarWeek = ({
     };
 
     return (
-        <Wrapper {...otherProps}>
+        <div className={styles.wrapper} {...otherProps}>
             <CalendarManager
                 ref={calendarManagerRef}
                 dynamicHeight
@@ -155,6 +155,6 @@ export const TimeSlotBarWeek = ({
                     return renderTimeSlotWeekDays(calendarDate);
                 }}
             </CalendarManager>
-        </Wrapper>
+        </div>
     );
 };
