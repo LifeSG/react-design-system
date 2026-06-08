@@ -1,6 +1,7 @@
+import { css } from "@linaria/core";
+import clsx from "clsx";
 import type { ThemeType } from "src/theme";
 import { Breakpoint, ThemeProvider, useDesignToken } from "src/theme";
-import styled from "styled-components";
 
 interface BreakpointDisplayProps {
     theme: ThemeType;
@@ -9,14 +10,14 @@ interface BreakpointDisplayProps {
 export const BreakpointDisplay = ({ theme }: BreakpointDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
-            <Display>
-                <HeaderRow>
+            <div className={display}>
+                <div className={clsx(row, headerRow)}>
                     <div>Screen width</div>
                     <div>Range</div>
                     <div>Column number</div>
                     <div>Column gutter</div>
                     <div>Horizontal inset</div>
-                </HeaderRow>
+                </div>
                 <BreakpointCollection size="xxs" />
                 <BreakpointCollection size="xs" />
                 <BreakpointCollection size="sm" />
@@ -24,7 +25,7 @@ export const BreakpointDisplay = ({ theme }: BreakpointDisplayProps) => {
                 <BreakpointCollection size="lg" />
                 <BreakpointCollection size="xl" />
                 <BreakpointCollection size="xxl" />
-            </Display>
+            </div>
         </ThemeProvider>
     );
 };
@@ -47,7 +48,7 @@ const BreakpointCollection = ({ size }: BreakpointCollectionProps) => {
     const insetValue = useDesignToken(Breakpoint[insetToken]);
 
     return (
-        <Row key={size}>
+        <div className={row} key={size}>
             <div>
                 <code>{size}</code>
             </div>
@@ -61,14 +62,14 @@ const BreakpointCollection = ({ size }: BreakpointCollectionProps) => {
             <div>{columnNumberValue}</div>
             <div>{columnSpacingValue}</div>
             <div>{insetValue}</div>
-        </Row>
+        </div>
     );
 };
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const Display = styled.div`
+const display = css`
     display: grid;
     grid-template-columns: repeat(5, minmax(max-content, 1fr));
     flex-wrap: wrap;
@@ -82,7 +83,7 @@ const Display = styled.div`
     overflow-x: auto;
 `;
 
-const Row = styled.div`
+const row = css`
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
@@ -92,7 +93,7 @@ const Row = styled.div`
     margin-bottom: 2rem;
 `;
 
-const HeaderRow = styled(Row)`
+const headerRow = css`
     margin-bottom: 1rem;
     font-weight: bold;
     padding-bottom: 0.5rem;

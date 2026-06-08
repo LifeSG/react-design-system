@@ -1,6 +1,6 @@
+import { css } from "@linaria/core";
 import type { ThemeType } from "src/theme";
 import { PrimitiveColours, ThemeProvider, useDesignToken } from "src/theme";
-import styled from "styled-components";
 
 interface ColourSwatchProps {
     token: keyof typeof PrimitiveColours;
@@ -9,11 +9,11 @@ interface ColourSwatchProps {
 const ColourSwatch = ({ token }: ColourSwatchProps) => {
     const colour = useDesignToken(PrimitiveColours[token]) as string;
     return (
-        <SwatchItem>
-            <SwatchColour $colour={colour} />
-            <SwatchLabel>{token}</SwatchLabel>
-            <SwatchValue>{colour}</SwatchValue>
-        </SwatchItem>
+        <li className={swatchItem}>
+            <div className={swatchColour} style={{ background: colour }} />
+            <span className={swatchLabel}>{token}</span>
+            <span className={swatchValue}>{colour}</span>
+        </li>
     );
 };
 
@@ -27,14 +27,14 @@ const PrimitiveColourPalette = ({
     category,
 }: PrimitiveColourPaletteProps) => {
     return (
-        <Palette>
-            <PaletteLabel>{category}</PaletteLabel>
-            <Swatch>
+        <div>
+            <div className={paletteLabel}>{category}</div>
+            <ul className={swatch}>
                 {tokens.map((token) => (
                     <ColourSwatch key={token} token={token} />
                 ))}
-            </Swatch>
-        </Palette>
+            </ul>
+        </div>
     );
 };
 
@@ -47,7 +47,7 @@ export const PrimitiveColourDisplay = ({
 }: PrimitiveColourDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
-            <Display>
+            <div className={display}>
                 <PrimitiveColourPalette
                     category="Brand"
                     tokens={[
@@ -180,22 +180,15 @@ export const PrimitiveColourDisplay = ({
                     category="Miscellaneous"
                     tokens={["white", "black"]}
                 />
-            </Display>
+            </div>
         </ThemeProvider>
     );
 };
 
 // =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface SwatchColourProps {
-    $colour: string;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-const Display = styled.div`
+const display = css`
     display: grid;
     grid-template-columns: repeat(auto-fill, minmax(350px, 1fr));
     gap: 2.5rem;
@@ -208,15 +201,13 @@ const Display = styled.div`
     }
 `;
 
-const Palette = styled.div``;
-
-const PaletteLabel = styled.div`
+const paletteLabel = css`
     font-size: 1.25rem;
     font-weight: bolder;
     margin-bottom: 1rem;
 `;
 
-const Swatch = styled.ul`
+const swatch = css`
     display: grid;
     grid-template-columns: repeat(3, max-content);
     margin: 0;
@@ -224,7 +215,7 @@ const Swatch = styled.ul`
     gap: 0.5rem 1rem;
 `;
 
-const SwatchItem = styled.li`
+const swatchItem = css`
     display: grid;
     grid-column: 1 / span 3;
     grid-template-columns: subgrid;
@@ -233,7 +224,7 @@ const SwatchItem = styled.li`
     gap: 0.5rem;
 `;
 
-const SwatchColour = styled.div<SwatchColourProps>`
+const swatchColour = css`
     height: 2.5rem;
     width: 8rem;
     box-shadow: rgba(0, 0, 0, 0.1) 0 1px 3px 0;
@@ -246,17 +237,16 @@ const SwatchColour = styled.div<SwatchColourProps>`
         #dde1e2 10px,
         #dde1e2 20px
     );
-    background: ${(props) => props.$colour};
 `;
 
-const SwatchLabel = styled.span`
+const swatchLabel = css`
     font-family: monospace;
     font-size: 1rem;
     border-radius: 4px;
     padding: 0 0.5rem;
 `;
 
-const SwatchValue = styled.span`
+const swatchValue = css`
     font-size: 0.875rem;
     color: #787878;
     text-transform: uppercase;
