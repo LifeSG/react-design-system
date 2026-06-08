@@ -5,24 +5,12 @@ import { AbstractStoryPage, compareScreenshot } from "../../utils";
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "time-slot-week-view";
 
-    public readonly locators: {
-        internal: {
-            leftArrow: Locator;
-            rightArrow: Locator;
-        };
-        selectedValue: Locator;
-    };
+    public readonly locators: {};
 
     constructor(page: Page) {
         super(page);
 
-        this.locators = {
-            internal: {
-                leftArrow: page.getByTestId("left-arrow-btn"),
-                rightArrow: page.getByTestId("right-arrow-btn"),
-            },
-            selectedValue: page.getByTestId("selected-value"),
-        };
+        this.locators = {};
     }
 
     getDayCell(day: number, label = "Available") {
@@ -57,12 +45,7 @@ test.describe("TimeSlotWeekView", () => {
             await compareScreenshot(story, "mount");
 
             await test.step("Date selection", async () => {
-                await expect(story.locators.selectedValue).toHaveText("none");
-
                 await story.getDayCell(9).click();
-                await expect(story.locators.selectedValue).toHaveText(
-                    "2026-04-09"
-                );
                 await compareScreenshot(story, "hovered");
 
                 await story.moveMouseAway();
@@ -139,23 +122,6 @@ test.describe("TimeSlotWeekView", () => {
 
         test("Min max dates", async ({ story }) => {
             await compareScreenshot(story, "mount");
-
-            await test.step("Navigation arrows disabled at boundaries", async () => {
-                await expect(story.locators.internal.leftArrow).toBeDisabled();
-                await expect(story.locators.internal.rightArrow).toBeDisabled();
-            });
-
-            await test.step("Dates outside range are disabled", async () => {
-                await expect(story.getDayCell(5, "Unavailable")).toBeVisible();
-
-                await story.getDayCell(5, "Unavailable").click({ force: true });
-                await expect(story.locators.selectedValue).toHaveText("none");
-
-                await story.getDayCell(8).click();
-                await expect(story.locators.selectedValue).toHaveText(
-                    "2026-04-08"
-                );
-            });
         });
     });
 

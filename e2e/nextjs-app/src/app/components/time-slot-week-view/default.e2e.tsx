@@ -1,6 +1,5 @@
 "use client";
 
-import { useState } from "react";
 import { Colour } from "@lifesg/react-design-system";
 import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-view";
 import type { TimeSlot } from "@lifesg/react-design-system/time-slot-bar";
@@ -62,18 +61,13 @@ const SLOTS: { [date: string]: TimeSlot[] } = {
 };
 
 export default function Story() {
-    const [selectedDate, setSelectedDate] = useState<string>("");
-
     return (
         <div className="story-column-container story-background">
             <TimeSlotWeekView
                 data-testid="time-slot-week-view"
-                value={selectedDate}
-                onChange={setSelectedDate}
                 currentCalendarDate="2026-04-08"
                 slots={SLOTS}
             />
-            <p data-testid="selected-value">{selectedDate || "none"}</p>
         </div>
     );
 }

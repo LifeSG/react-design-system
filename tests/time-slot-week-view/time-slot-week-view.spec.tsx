@@ -320,7 +320,7 @@ describe("TimeSlotWeekCalendar", () => {
         expect(screen.getByText("1")).toBeVisible();
     });
 
-    it("calls the onChange callback when a date is selected", () => {
+    it("calls the onChange callback with formatted date when a date is selected", () => {
         const onChange = jest.fn();
         render(
             <TimeSlotWeekView
@@ -331,6 +331,22 @@ describe("TimeSlotWeekCalendar", () => {
         const dateButton = screen.getByText("29");
         fireEvent.click(dateButton);
         expect(onChange).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledWith("2021-01-29");
+    });
+
+    it("does not call onChange when a disabled date is clicked", () => {
+        const onChange = jest.fn();
+        render(
+            <TimeSlotWeekView
+                onChange={onChange}
+                currentCalendarDate={"2021-01-29"}
+                minDate={"2021-01-28"}
+                maxDate={"2021-01-30"}
+            />
+        );
+        const disabledDate = screen.getByText("27");
+        fireEvent.click(disabledDate);
+        expect(onChange).not.toHaveBeenCalled();
     });
 
     describe("Keyboard navigation", () => {
