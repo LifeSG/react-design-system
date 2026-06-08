@@ -1,21 +1,15 @@
 import type { RefObject } from "react";
-import styled from "styled-components";
 
 import type { PopoverTriggerProps } from "../../popover";
 import { PopoverTrigger } from "../../popover";
 import type { SchedulePopoverProps } from "../types";
+import * as styles from "./with-optional-popover.styles";
 
 interface ConditionalCellWrapperProps {
     containerRef: RefObject<HTMLDivElement>;
     children: JSX.Element;
-    customPopover?: SchedulePopoverProps | undefined;
+    customPopover?: SchedulePopoverProps;
 }
-
-const StyledPopoverTrigger = styled(PopoverTrigger)`
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-`;
 
 export const WithOptionalPopover = ({
     containerRef,
@@ -36,5 +30,11 @@ export const WithOptionalPopover = ({
         popoverContent: customPopover.content,
     };
 
-    return <StyledPopoverTrigger zIndex={2} {...popoverTriggerProps} />;
+    return (
+        <PopoverTrigger
+            className={styles.popoverTrigger}
+            zIndex={2}
+            {...popoverTriggerProps}
+        />
+    );
 };
