@@ -1,9 +1,9 @@
+import { css } from "@linaria/core";
 import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { Layout } from "src/layout";
-import styled from "styled-components";
 
-const Column = styled.div`
+const column = css`
     background: #f9b5b2;
     border: 2px dotted #f26664;
     height: 100vh;
@@ -11,7 +11,7 @@ const Column = styled.div`
     padding: 4px;
 `;
 
-const Background = styled.div`
+const background = css`
     background: #fdddd7;
 `;
 
@@ -25,7 +25,9 @@ export const GridDisplay = () => {
         handleHeight: false,
         onResize() {
             if (ref.current) {
-                const gridComputedStyle = window.getComputedStyle(ref.current);
+                const gridComputedStyle = globalThis.getComputedStyle(
+                    ref.current
+                );
 
                 const count = gridComputedStyle
                     .getPropertyValue("grid-template-columns")
@@ -37,18 +39,18 @@ export const GridDisplay = () => {
     });
 
     return (
-        <Background>
+        <div className={background}>
             <Layout.Container
                 type="grid"
                 ref={ref}
                 style={{ alignItems: "center" }}
             >
-                {Array(gridColumnCount)
-                    .fill(null)
-                    .map((_, i) => (
-                        <Column key={i}>{i + 1}</Column>
-                    ))}
+                {new Array(gridColumnCount).fill(null).map((_, i) => (
+                    <div className={column} key={i + 1}>
+                        {i + 1}
+                    </div>
+                ))}
             </Layout.Container>
-        </Background>
+        </div>
     );
 };
