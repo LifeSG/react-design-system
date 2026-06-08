@@ -1,4 +1,4 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
+import { test as base, expect, Page } from "@playwright/test";
 import { fixedTimestamp } from "../../consts";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
@@ -145,14 +145,16 @@ test.describe("TimeSlotWeekView", () => {
         });
 
         test("Disabled selection", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-
             await test.step("Day headers are not interactive", async () => {
                 const dayCell = story.page.getByRole("columnheader").first();
                 await expect(dayCell).toBeVisible();
 
                 await expect(dayCell).toHaveAttribute("tabindex", "-1");
+
+                await dayCell.hover({ force: true });
             });
+
+            await compareScreenshot(story, "mount");
         });
     });
 });

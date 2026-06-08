@@ -162,6 +162,36 @@ describe("TimeSlotWeekCalendar", () => {
                 fireEvent.click(leftArrowButton);
                 expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
             });
+
+            it("should not disable arrows when boundaries extend beyond current week", () => {
+                const minDate = dayjs("2021-01-01")
+                    .startOf("week")
+                    .subtract(1, "day");
+                const maxDate = dayjs("2021-01-01").endOf("week").add(1, "day");
+                render(
+                    <TimeSlotWeekView
+                        currentCalendarDate={"2021-01-01"}
+                        minDate={minDate.format(DATE_FORMAT)}
+                        maxDate={maxDate.format(DATE_FORMAT)}
+                    />
+                );
+                expect(screen.getByTestId("left-arrow-btn")).toBeEnabled();
+                expect(screen.getByTestId("right-arrow-btn")).toBeEnabled();
+            });
+
+            it("should disable both arrows when current week is at both boundaries", () => {
+                const minDate = dayjs("2021-01-01").startOf("week");
+                const maxDate = dayjs("2021-01-01").endOf("week");
+                render(
+                    <TimeSlotWeekView
+                        currentCalendarDate={"2021-01-01"}
+                        minDate={minDate.format(DATE_FORMAT)}
+                        maxDate={maxDate.format(DATE_FORMAT)}
+                    />
+                );
+                expect(screen.getByTestId("left-arrow-btn")).toBeDisabled();
+                expect(screen.getByTestId("right-arrow-btn")).toBeDisabled();
+            });
         });
     });
 
