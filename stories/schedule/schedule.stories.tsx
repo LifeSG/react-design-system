@@ -1,11 +1,12 @@
 import { ClockIcon } from "@lifesg/react-icons";
+import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { useState } from "react";
 import type { ScheduleEntityProps, SchedulePopoverProps } from "src/schedule";
 import { Schedule } from "src/schedule";
-import { V3_Colour } from "src/v3_theme";
-import styled from "styled-components";
+import { Colour } from "src/theme";
 
 import { mockScheduleData } from "./mockScheduleData";
 
@@ -54,17 +55,24 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-const StyledSchedule = styled(Schedule)`
+const styledSchedule = css`
     height: 500px;
     width: 900px;
 `;
 
-const PopoverContent = styled.div`
+const StyledSchedule = ({
+    className,
+    ...props
+}: React.ComponentProps<typeof Schedule>) => (
+    <Schedule {...props} className={clsx(styledSchedule, className)} />
+);
+
+const popoverContent = css`
     display: flex;
     align-items: center;
     justify-content: space-between;
     gap: 10px;
-    color: ${V3_Colour["bg-primary"]};
+    color: ${Colour["bg-primary"]};
 `;
 
 export const Default: StoryObj<Component> = {
@@ -97,10 +105,10 @@ export const Default: StoryObj<Component> = {
         const emptySlotPopover = (): SchedulePopoverProps => ({
             trigger: "click",
             content: (
-                <PopoverContent>
+                <div className={popoverContent}>
                     <ClockIcon />
                     <span>Empty Time Slot</span>
-                </PopoverContent>
+                </div>
             ),
             offset: 0,
         });

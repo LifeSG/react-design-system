@@ -1,9 +1,9 @@
+import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
+import { Colour } from "src/theme";
 import { Toggle } from "src/toggle";
 import { Typography } from "src/typography";
-import { V3_Colour } from "src/v3_theme";
-import styled from "styled-components";
 
 type Component = typeof Toggle;
 
@@ -13,9 +13,18 @@ const meta: Meta<Component> = {
 };
 export default meta;
 
-const ErrorText = styled(Typography.BodyMD)`
-    color: ${V3_Colour["text-error"]};
+const errorText = css`
+    color: ${Colour["text-error"]};
 `;
+
+const ErrorText = ({
+    children,
+    ...props
+}: React.ComponentProps<typeof Typography.BodyMD>) => (
+    <Typography.BodyMD {...props} className={errorText}>
+        {children}
+    </Typography.BodyMD>
+);
 
 export const GroupExample: StoryObj<Component> = {
     render: (_args) => {
