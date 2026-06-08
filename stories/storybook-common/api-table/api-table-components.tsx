@@ -1,7 +1,7 @@
 import { css } from "@linaria/core";
 import type { ReactNode } from "react";
 
-import { DocTable } from "../doc-table";
+import { DocTable } from "../docs/doc-table";
 import type { DefaultColProps, DescriptionColProps } from "./types";
 
 // =============================================================================

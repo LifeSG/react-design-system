@@ -1,7 +1,7 @@
+import type { TabAttribute } from "stories/storybook-common";
+import { Tabs } from "stories/storybook-common";
 import { ApiTable } from "stories/storybook-common/api-table";
 import type { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
-import type { TabAttribute } from "stories/storybook-common/tabs";
-import { Tabs } from "stories/storybook-common/tabs";
 
 export const COMMON_POPOVER_ATTRIBUTES: ApiTableSectionProps["attributes"] = [
     {
@@ -299,8 +299,7 @@ const POPOVER_DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         The callback when the user dismisses the{" "}
-                        <code>Popover</code>
-                        (modal form) in mobile viewports
+                        <code>Popover</code> (modal form) in mobile viewports
                     </>
                 ),
                 propTypes: ["() => void"],

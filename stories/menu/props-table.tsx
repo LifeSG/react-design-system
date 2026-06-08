@@ -1,7 +1,7 @@
+import type { TabAttribute } from "stories/storybook-common";
+import { Tabs } from "stories/storybook-common";
 import { ApiTable } from "stories/storybook-common/api-table";
 import type { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
-import type { TabAttribute } from "stories/storybook-common/tabs";
-import { Tabs } from "stories/storybook-common/tabs";
 
 const MENU_DATA: ApiTableSectionProps[] = [
     {
@@ -10,7 +10,7 @@ const MENU_DATA: ApiTableSectionProps[] = [
                 name: "-",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        This component also inherits props from{" "}
                         <a
                             href="/?path=/docs/overlays-popover--docs"
                             target="_blank"
@@ -18,7 +18,8 @@ const MENU_DATA: ApiTableSectionProps[] = [
                         >
                             PopoverTriggerProps
                         </a>
-                        , except <code>popoverContent</code>
+                        {", except "}
+                        <code>popoverContent</code>
                     </>
                 ),
             },
@@ -69,7 +70,7 @@ const MENU_CONTENT_DATA: ApiTableSectionProps[] = [
                 name: "-",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        This component also inherits props from{" "}
                         <a
                             href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
                             target="_blank"
@@ -130,7 +131,7 @@ const MENU_SECTION_DATA: ApiTableSectionProps[] = [
                 name: "-",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        This component also inherits props from{" "}
                         <a
                             href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement"
                             target="_blank"
@@ -186,7 +187,7 @@ const MENU_LINK_DATA: ApiTableSectionProps[] = [
                 name: "-",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        This component also inherits props from{" "}
                         <a
                             href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLAnchorElement"
                             target="_blank"
@@ -214,7 +215,7 @@ const MENU_ITEM_DATA: ApiTableSectionProps[] = [
                 name: "-",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        This component also inherits props from{" "}
                         <a
                             href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLLIElement"
                             target="_blank"

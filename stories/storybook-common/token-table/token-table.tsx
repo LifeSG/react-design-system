@@ -2,7 +2,7 @@ import { DocIcon } from "@lifesg/react-icons/doc";
 import { Unstyled } from "@storybook/addon-docs/blocks";
 import { Fragment } from "react";
 
-import { StorybookLink } from "../storybook-link";
+import { StorybookLink } from "../docs/storybook-link";
 import {
     DefaultCol,
     DescriptionCol,
@@ -16,11 +16,11 @@ import type { TokenTableAttributeRowProps, TokenTableProps } from "./types";
 export const TokenTable = (props: TokenTableProps): JSX.Element => {
     const renderSection = (
         attributes: TokenTableAttributeRowProps[],
-        sectionIndex: number
+        sectionKey: string
     ) => {
-        return attributes.map((attribute, index) => {
+        return attributes.map((attribute) => {
             return (
-                <tr key={`${sectionIndex}-${index}`}>
+                <tr key={`${sectionKey}-${attribute.name}`}>
                     <NameCol>{attribute.name}</NameCol>
                     <DescriptionCol>{attribute.description}</DescriptionCol>
                     <DefaultCol attributes={attribute.defaultValue} />
@@ -30,15 +30,19 @@ export const TokenTable = (props: TokenTableProps): JSX.Element => {
     };
 
     const renderContents = () => {
-        return props.sections.map((section, index) => {
+        return props.sections.map((section) => {
+            const sectionKey =
+                section.name ||
+                section.attributes.map((attribute) => attribute.name).join("|");
+
             return (
-                <Fragment key={index}>
+                <Fragment key={sectionKey}>
                     {section.name && (
-                        <Section key={`section-${index + 1}`}>
+                        <Section key={`section-${sectionKey}`}>
                             {section.name}
                         </Section>
                     )}
-                    {renderSection(section.attributes, index)}
+                    {renderSection(section.attributes, sectionKey)}
                 </Fragment>
             );
         });

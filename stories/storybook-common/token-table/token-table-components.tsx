@@ -2,8 +2,8 @@ import { css } from "@linaria/core";
 import type { ReactNode } from "react";
 import { useDesignToken } from "src/theme";
 
-import { DocTable, DocTextStyle } from "../doc-table";
-import { useInspectColour } from "../token-inspector";
+import { DocTable, DocTextStyle } from "../docs/doc-table";
+import { useInspectColour } from "../inspectors/token-inspector";
 import type {
     TokenTableDefaultValueColourTokenProps,
     TokenTableDefaultValueDefaultProps,
