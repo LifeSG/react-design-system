@@ -1,7 +1,16 @@
+import { css } from "@linaria/core";
+import type { ReactNode } from "react";
 import { Typography } from "src/typography";
-import styled from "styled-components";
 
-export const Content = styled.div`
+interface ContentProps {
+    children: ReactNode;
+}
+
+export const Content = ({ children }: ContentProps) => (
+    <div className={content}>{children}</div>
+);
+
+const content = css`
     padding: 1.5rem;
 `;
 

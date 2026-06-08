@@ -1,9 +1,18 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
+import type { ReactNode } from "react";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
+interface ContainerProps {
+    children: ReactNode;
+}
+
+export const Container = ({ children }: ContainerProps) => (
+    <div className={container}>{children}</div>
+);
+
+const container = css`
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;

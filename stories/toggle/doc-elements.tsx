@@ -1,18 +1,31 @@
+import { css } from "@linaria/core";
 import type { ReactRenderer } from "@storybook/react-webpack5";
+import type { ReactNode } from "react";
 import { Typography } from "src/typography";
 import type { DecoratorFunction } from "storybook/internal/types";
-import styled from "styled-components";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const SimpleStoryWrapper = styled.div`
+interface WrapperProps {
+    children: ReactNode;
+}
+
+export const SimpleStoryWrapper = ({ children }: WrapperProps) => (
+    <div className={simpleStoryWrapper}>{children}</div>
+);
+
+const simpleStoryWrapper = css`
     display: flex;
     gap: 1.5rem;
     flex-wrap: wrap;
 `;
 
-export const VariantStoryWrapper = styled.div`
+export const VariantStoryWrapper = ({ children }: WrapperProps) => (
+    <div className={variantStoryWrapper}>{children}</div>
+);
+
+const variantStoryWrapper = css`
     display: grid;
     grid-template-columns: repeat(5, 1fr);
     gap: 2rem;
@@ -25,7 +38,18 @@ export const VariantStoryWrapper = styled.div`
     }
 `;
 
-export const VariantHeading = styled(Typography.BodyMD)`
+interface VariantHeadingProps {
+    children: ReactNode;
+    weight?: "regular" | "semibold" | "bold";
+}
+
+export const VariantHeading = ({ children, weight }: VariantHeadingProps) => (
+    <Typography.BodyMD className={variantHeading} weight={weight}>
+        {children}
+    </Typography.BodyMD>
+);
+
+const variantHeading = css`
     text-align: center;
 
     @media only screen and (max-width: 1200px) {
@@ -33,7 +57,11 @@ export const VariantHeading = styled(Typography.BodyMD)`
     }
 `;
 
-export const SubLabelStoryWrapper = styled.div`
+export const SubLabelStoryWrapper = ({ children }: WrapperProps) => (
+    <div className={subLabelStoryWrapper}>{children}</div>
+);
+
+const subLabelStoryWrapper = css`
     display: grid;
     gap: 1.5rem;
     align-items: center;

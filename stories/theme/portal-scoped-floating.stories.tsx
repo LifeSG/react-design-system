@@ -8,8 +8,6 @@ import { PopoverTrigger } from "src/popover";
 import type { ResolvedThemeMode } from "src/theme";
 import { ThemeProvider, useTheme } from "src/theme";
 import { useApplyStyle } from "src/theme/utils/use-apply-styles";
-import { V3_LifeSGTheme, V3_OneServiceTheme, V3_RBSTheme } from "src/v3_theme";
-import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 
 type ShowcaseTheme = "lifesg" | "oneservice" | "rbs";
 
@@ -26,12 +24,6 @@ interface InlineStylePortalStoryArgs {
     primaryColor: string;
     inverseColor: string;
 }
-
-const STYLED_THEME_MAP = {
-    lifesg: V3_LifeSGTheme,
-    oneservice: V3_OneServiceTheme,
-    rbs: V3_RBSTheme,
-};
 
 const SCOPE_STYLE: CSSProperties = {
     border: "1px solid var(--fds-colour-border)",
@@ -133,37 +125,32 @@ const ScopedPortalDemo = ({
 }) => {
     return (
         <ThemeProvider theme={theme} mode={mode}>
-            <StyledComponentsThemeProvider
-                theme={{ ...STYLED_THEME_MAP[theme], colourMode: mode }}
-            >
-                <div style={SCOPE_STYLE}>
-                    <div
-                        style={{
-                            marginBottom: "12px",
-                            fontWeight: 700,
-                            display: "flex",
-                            justifyContent: "space-between",
-                            alignItems: "center",
-                        }}
-                    >
-                        <span>{label}</span>
-                        <span style={{ fontWeight: 500 }}>
-                            {theme} / {mode}
-                        </span>
-                    </div>
-                    <div style={{ marginBottom: "12px", fontSize: "14px" }}>
-                        Open the popover and confirm it matches this scopes
-                        colours.
-                    </div>
-                    <PopoverTrigger
-                        popoverContent={
-                            <PreviewPopoverContent theme={theme} mode={mode} />
-                        }
-                    >
-                        <Button.Default>Open scoped portal</Button.Default>
-                    </PopoverTrigger>
+            <div style={SCOPE_STYLE}>
+                <div
+                    style={{
+                        marginBottom: "12px",
+                        fontWeight: 700,
+                        display: "flex",
+                        justifyContent: "space-between",
+                        alignItems: "center",
+                    }}
+                >
+                    <span>{label}</span>
+                    <span style={{ fontWeight: 500 }}>
+                        {theme} / {mode}
+                    </span>
                 </div>
-            </StyledComponentsThemeProvider>
+                <div style={{ marginBottom: "12px", fontSize: "14px" }}>
+                    Open the popover and confirm it matches this scopes colours.
+                </div>
+                <PopoverTrigger
+                    popoverContent={
+                        <PreviewPopoverContent theme={theme} mode={mode} />
+                    }
+                >
+                    <Button>Open scoped portal</Button>
+                </PopoverTrigger>
+            </div>
         </ThemeProvider>
     );
 };
@@ -262,49 +249,42 @@ export const WithUseApplyStyleOverrides: InlineStyleStory = {
     render: (args) => {
         return (
             <ThemeProvider theme={args.theme} mode={args.mode}>
-                <StyledComponentsThemeProvider
-                    theme={{
-                        ...STYLED_THEME_MAP[args.theme],
-                        colourMode: args.mode,
-                    }}
-                >
-                    <ThemeScopeInlineVariables
-                        primaryColor={args.primaryColor}
-                        inverseColor={args.inverseColor}
-                    />
-                    <div style={SCOPE_STYLE}>
-                        <div
-                            style={{
-                                marginBottom: "12px",
-                                fontWeight: 700,
-                                display: "flex",
-                                justifyContent: "space-between",
-                                alignItems: "center",
-                            }}
-                        >
-                            <span>Scope with useApplyStyle overrides</span>
-                            <span style={{ fontWeight: 500 }}>
-                                {args.theme} / {args.mode}
-                            </span>
-                        </div>
-                        <div style={{ marginBottom: "12px", fontSize: "14px" }}>
-                            The popover should reflect inline CSS variable
-                            overrides applied via <code>useApplyStyle</code>.
-                        </div>
-                        <PopoverTrigger
-                            popoverContent={
-                                <PreviewPopoverContent
-                                    theme={args.theme}
-                                    mode={args.mode}
-                                />
-                            }
-                        >
-                            <Button.Default>
-                                Open popover with overridden vars
-                            </Button.Default>
-                        </PopoverTrigger>
+                <ThemeScopeInlineVariables
+                    primaryColor={args.primaryColor}
+                    inverseColor={args.inverseColor}
+                />
+                <div style={SCOPE_STYLE}>
+                    <div
+                        style={{
+                            marginBottom: "12px",
+                            fontWeight: 700,
+                            display: "flex",
+                            justifyContent: "space-between",
+                            alignItems: "center",
+                        }}
+                    >
+                        <span>Scope with useApplyStyle overrides</span>
+                        <span style={{ fontWeight: 500 }}>
+                            {args.theme} / {args.mode}
+                        </span>
                     </div>
-                </StyledComponentsThemeProvider>
+                    <div style={{ marginBottom: "12px", fontSize: "14px" }}>
+                        The popover should reflect inline CSS variable overrides
+                        applied via <code>useApplyStyle</code>.
+                    </div>
+                    <PopoverTrigger
+                        popoverContent={
+                            <PreviewPopoverContent
+                                theme={args.theme}
+                                mode={args.mode}
+                            />
+                        }
+                    >
+                        <Button.Default>
+                            Open popover with overridden vars
+                        </Button.Default>
+                    </PopoverTrigger>
+                </div>
             </ThemeProvider>
         );
     },

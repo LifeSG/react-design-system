@@ -1,4 +1,5 @@
 import { css } from "@linaria/core";
+import clsx from "clsx";
 import type { ReactNode } from "react";
 
 export const DocTextStyle = css`
@@ -32,7 +33,9 @@ interface DocTableProps {
 
 export const DocTable = ({ children, className }: DocTableProps) => {
     return (
-        <table className={`${docTable} ${className ?? ""}`}>{children}</table>
+        <table className={clsx(DocTextStyle, docTable, className)}>
+            {children}
+        </table>
     );
 };
 
@@ -42,8 +45,6 @@ const docTable = css`
     border-collapse: collapse;
     border-spacing: 0;
     line-height: 1.5;
-
-    ${DocTextStyle}
 
     td,
     th {
