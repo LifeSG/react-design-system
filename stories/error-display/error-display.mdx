@@ -56,8 +56,26 @@ If you require customisations down to the style, you can use the relevant `data-
 | title       | `"error-display-title"`       |
 | description | `"error-display-description"` |
 
+### Linaria
+
 ```tsx
-// If you are using Styled Components
+import { css } from "@linaria/core";
+
+const customErrorDisplay = css`
+    [data-id="error-display-image"] {
+        /* Your styles here */
+    }
+`;
+
+export const CustomErrorDisplay = () => (
+    <ErrorDisplay className={customErrorDisplay} type="default" />
+);
+```
+
+### Styled Components
+
+```tsx
+import styled from "styled-components";
 
 export const CustomErrorDisplay = styled(ErrorDisplay)`
     [data-id="error-display-image"] {

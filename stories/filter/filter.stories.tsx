@@ -42,20 +42,18 @@ export const Default: StoryObj<Component> = {
                 {(mode) => (
                     <>
                         <StyledFilterItem
-                            $mode={mode}
+                            mode={mode}
                             collapsible={false}
                             showMobileDivider={false}
                             showDivider={false}
                         >
                             <SearchFilter
-                                mode={mode}
                                 value={draftFilters.search}
                                 onChange={updateFilter(mode, "search")}
                             />
                         </StyledFilterItem>
                         <Filter.Item title="Date">
                             <DateFilter
-                                mode={mode}
                                 value={draftFilters.date}
                                 onChange={updateFilter(mode, "date")}
                             />
@@ -82,14 +80,12 @@ export const SidebarOnly: StoryObj<Component> = {
             <Filter.Sidebar clearButtonDisabled={false} onClear={clearFilters}>
                 <Filter.Item title="Search">
                     <SearchFilter
-                        mode="default"
                         value={draftFilters.search}
                         onChange={updateFilter("default", "search")}
                     />
                 </Filter.Item>
                 <Filter.Item title="Date">
                     <DateFilter
-                        mode="default"
                         value={draftFilters.date}
                         onChange={updateFilter("default", "date")}
                     />
@@ -124,14 +120,12 @@ export const ModalOnly: StoryObj<Component> = {
             >
                 <Filter.Item title="Search">
                     <SearchFilter
-                        mode="mobile"
                         value={draftFilters.search}
                         onChange={updateFilter("mobile", "search")}
                     />
                 </Filter.Item>
                 <Filter.Item title="Date">
                     <DateFilter
-                        mode="mobile"
                         value={draftFilters.date}
                         onChange={updateFilter("mobile", "date")}
                     />

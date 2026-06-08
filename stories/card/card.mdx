@@ -28,12 +28,14 @@ You can customize/override the style of the `Card` component by extending it:
 
 ```tsx
 import { Card } from "@lifesg/react-design-system/card";
-import styled from "styled-components";
+import { css } from "@linaria/core";
 
-export const StyledCard = styled(Card)`
+const customCard = css`
     max-width: 30rem;
     /* Other CSS properties... */
 `;
+
+export const Example = () => <Card className={customCard} />;
 ```
 
 ## Component API
