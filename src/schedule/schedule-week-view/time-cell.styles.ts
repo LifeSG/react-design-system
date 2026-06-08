@@ -40,7 +40,6 @@ export const slotContentContainer = css`
     position: absolute;
     border-radius: ${Radius["sm"]};
     color: inherit;
-    border-left: 0;
 `;
 
 export const slotContentContainerAvailable = css`
