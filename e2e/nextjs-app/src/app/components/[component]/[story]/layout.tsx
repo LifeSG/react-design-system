@@ -30,7 +30,7 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
     const searchParams = useSearchParams();
-    const themeParam = searchParams.get("theme");
+    const themeParam = searchParams?.get("theme");
 
     const theme: ThemeType | undefined =
         themeParam && THEME_TYPES.includes(themeParam as ThemeType)

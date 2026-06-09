@@ -10,20 +10,7 @@ import {
  * Components that must be rendered client-side only to avoid hydration mismatches.
  * These typically have complex state initialization or rely on browser APIs.
  */
-const CSR_ONLY_COMPONENTS = new Set([
-    "badge",
-    "date-range-input",
-    "date-input",
-    "file-upload",
-    "select",
-    "input-multi-select",
-    "input-select",
-    "nested-select",
-    "nested-multi-select",
-    "input-group",
-    "language-switcher",
-    "otp-verification",
-]);
+const CSR_ONLY_COMPONENTS = new Set([]);
 
 export default async function Page({
     params,
