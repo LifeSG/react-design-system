@@ -14,6 +14,7 @@ import {
     SGWDigitalLobbyColourSet,
     SGWDigitalLobbyDarkColourSet,
 } from "./specs/sgwdigitallobby-tokens";
+import { SPFColourSet } from "./specs/spf-semantic-tokens";
 import { SemanticColourCollectionMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -32,7 +33,7 @@ export const ColourSpec: ThemeCollectionSpec<
         supportgowhere: LifeSGColourSet,
         sgwdigitallobby: SGWDigitalLobbyColourSet,
         imda: LifeSGColourSet,
-        spf: LifeSGColourSet,
+        spf: SPFColourSet,
         smgs: LifeSGColourSet,
         careercompass: LifeSGColourSet,
     },
