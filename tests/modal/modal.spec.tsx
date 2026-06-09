@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { Modal } from "src/modal";
 
 describe("Modal", () => {
@@ -6,7 +6,7 @@ describe("Modal", () => {
         jest.clearAllMocks();
     });
 
-    it("should render the component when show=true", () => {
+    it("should render the component when show=true", async () => {
         render(
             <Modal show>
                 <Modal.Box>
@@ -15,7 +15,10 @@ describe("Modal", () => {
             </Modal>
         );
 
-        expect(screen.getByTestId("modal")).toBeVisible();
+        await waitFor(() => {
+            expect(screen.getByTestId("modal")).toBeVisible();
+        });
+
         expect(screen.getByTestId("modal-box")).toBeVisible();
         expect(screen.getByTestId("close-button")).toBeVisible();
         expect(screen.getByTestId("test-content")).toBeVisible();
