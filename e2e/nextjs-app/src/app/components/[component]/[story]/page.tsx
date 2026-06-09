@@ -10,7 +10,7 @@ import {
  * Components that must be rendered client-side only to avoid hydration mismatches.
  * These typically have complex state initialization or rely on browser APIs.
  */
-const CSR_ONLY_COMPONENTS = new Set([]);
+const CSR_ONLY_COMPONENTS = new Set<string>([]);
 
 export default async function Page({
     params,
