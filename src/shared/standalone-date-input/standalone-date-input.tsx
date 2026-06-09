@@ -383,7 +383,11 @@ export const Component = (
                 <span
                     className={clsx(
                         styles.divider,
-                        !!hoverValue && styles.dividerHover
+                        !!hoverValue && styles.dividerHover,
+                        disabled && styles.dividerDisabled,
+                        !disabled &&
+                            dayValue.length === 0 &&
+                            styles.dividerInactive
                     )}
                 >
                     /
@@ -424,7 +428,11 @@ export const Component = (
                 <span
                     className={clsx(
                         styles.divider,
-                        !!hoverValue && styles.dividerHover
+                        !!hoverValue && styles.dividerHover,
+                        disabled && styles.dividerDisabled,
+                        !disabled &&
+                            monthValue.length === 0 &&
+                            styles.dividerInactive
                     )}
                 >
                     /

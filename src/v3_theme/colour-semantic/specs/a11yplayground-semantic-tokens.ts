@@ -13,6 +13,8 @@ export const V3_A11yPlaygroundColourSet: V3_SemanticColourSet = {
     "text-subtlest": getPrimitiveColour("neutral-60"),
     "text-primary": getPrimitiveColour("primary-50"),
     "text-primary-strongest": getPrimitiveColour("primary-20"),
+    "text-secondary": getPrimitiveColour("secondary-50"),
+    "text-secondary-subtle": getPrimitiveColour("secondary-60"),
 
     "text-hover": getPrimitiveColour("primary-40"),
     "text-selected": getPrimitiveColour("primary-50"),
@@ -36,6 +38,8 @@ export const V3_A11yPlaygroundColourSet: V3_SemanticColourSet = {
     "icon-primary": getPrimitiveColour("primary-50"),
     "icon-primary-subtle": getPrimitiveColour("primary-60"),
     "icon-primary-subtlest": getPrimitiveColour("primary-70"),
+    "icon-secondary": getPrimitiveColour("secondary-50"),
+    "icon-secondary-subtle": getPrimitiveColour("secondary-60"),
 
     "icon-hover": getPrimitiveColour("primary-40"),
     "icon-selected": getPrimitiveColour("primary-50"),
@@ -134,6 +138,11 @@ export const V3_A11yPlaygroundColourSet: V3_SemanticColourSet = {
     "bg-primary-subtlest": getPrimitiveColour("primary-100"),
     "bg-available": "#6DD0A1",
 
+    "bg-secondary": getPrimitiveColour("secondary-50"),
+    "bg-secondary-subtle": getPrimitiveColour("secondary-60"),
+    "bg-secondary-subtler": getPrimitiveColour("secondary-95"),
+    "bg-secondary-subtlest": getPrimitiveColour("secondary-100"),
+
     "bg-primary-hover": getPrimitiveColour("primary-40"),
     "bg-primary-subtlest-hover": getPrimitiveColour("primary-90"),
     "bg-primary-subtlest-selected": getPrimitiveColour("primary-90"),
@@ -165,6 +174,8 @@ export const V3_A11yPlaygroundDarkColourSet: V3_SemanticColourSet = {
     "text-subtlest": getPrimitiveColour("neutral-50"),
     "text-primary": getPrimitiveColour("primary-60"),
     "text-primary-strongest": getPrimitiveColour("primary-90"),
+    "text-secondary": getPrimitiveColour("secondary-60"),
+    "text-secondary-subtle": getPrimitiveColour("secondary-50"),
 
     "text-hover": getPrimitiveColour("primary-70"),
     "text-selected": getPrimitiveColour("primary-60"),
@@ -188,6 +199,8 @@ export const V3_A11yPlaygroundDarkColourSet: V3_SemanticColourSet = {
     "icon-primary": getPrimitiveColour("primary-60"),
     "icon-primary-subtle": getPrimitiveColour("primary-50"),
     "icon-primary-subtlest": getPrimitiveColour("primary-40"),
+    "icon-secondary": getPrimitiveColour("secondary-60"),
+    "icon-secondary-subtle": getPrimitiveColour("secondary-50"),
 
     "icon-hover": getPrimitiveColour("primary-70"),
     "icon-selected": getPrimitiveColour("primary-60"),
@@ -285,6 +298,11 @@ export const V3_A11yPlaygroundDarkColourSet: V3_SemanticColourSet = {
     "bg-primary-subtler": getPrimitiveColour("primary-20"),
     "bg-primary-subtlest": getPrimitiveColour("primary-10"),
     "bg-available": "#185339", // Darker green for dark mode
+
+    "bg-secondary": getPrimitiveColour("secondary-60"),
+    "bg-secondary-subtle": getPrimitiveColour("secondary-50"),
+    "bg-secondary-subtler": getPrimitiveColour("secondary-20"),
+    "bg-secondary-subtlest": getPrimitiveColour("secondary-10"),
 
     "bg-primary-hover": getPrimitiveColour("primary-70"),
     "bg-primary-subtlest-hover": getPrimitiveColour("primary-20"),

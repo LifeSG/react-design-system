@@ -5,4 +5,5 @@ import { css } from "@linaria/core";
 // =============================================================================
 export const inputSelectorElement = css`
     height: calc(3rem - 2px); /* exclude top and bottom borders */
+    cursor: inherit;
 `;

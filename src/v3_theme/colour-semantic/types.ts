@@ -16,6 +16,8 @@ export type V3_SemanticColourSet = {
     "text-subtlest": V3_SemanticColourValue;
     "text-primary": V3_SemanticColourValue;
     "text-primary-strongest": V3_SemanticColourValue;
+    "text-secondary": V3_SemanticColourValue;
+    "text-secondary-subtle": V3_SemanticColourValue;
 
     "text-hover": V3_SemanticColourValue;
     "text-selected": V3_SemanticColourValue;
@@ -39,6 +41,8 @@ export type V3_SemanticColourSet = {
     "icon-primary": V3_SemanticColourValue;
     "icon-primary-subtle": V3_SemanticColourValue;
     "icon-primary-subtlest": V3_SemanticColourValue;
+    "icon-secondary": V3_SemanticColourValue;
+    "icon-secondary-subtle": V3_SemanticColourValue;
 
     "icon-hover": V3_SemanticColourValue;
     "icon-selected": V3_SemanticColourValue;
@@ -136,6 +140,10 @@ export type V3_SemanticColourSet = {
     "bg-primary-subtler": V3_SemanticColourValue;
     "bg-primary-subtlest": V3_SemanticColourValue;
     "bg-available": V3_SemanticColourValue;
+    "bg-secondary": V3_SemanticColourValue;
+    "bg-secondary-subtle": V3_SemanticColourValue;
+    "bg-secondary-subtler": V3_SemanticColourValue;
+    "bg-secondary-subtlest": V3_SemanticColourValue;
 
     "bg-primary-hover": V3_SemanticColourValue;
     "bg-primary-subtlest-hover": V3_SemanticColourValue;

@@ -35,6 +35,12 @@ const FILTER_DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "count",
+                description:
+                    "Displays the selected filter count in the filter header when greater than zero",
+                propTypes: ["number"],
+            },
+            {
                 name: "toggleFilterButtonStyle",
                 description:
                     "The style type of the filter toggle button (in mobile)",
@@ -154,6 +160,12 @@ const FILTER_SIDEBAR_DATA: ApiTableSectionProps[] = [
                 defaultValue: "false",
             },
             {
+                name: "count",
+                description:
+                    "Displays the selected filter count in the filter header when greater than zero",
+                propTypes: ["number"],
+            },
+            {
                 name: "onClear",
                 description: "Called when clear button is pressed",
                 propTypes: ["() => void"],
@@ -219,6 +231,12 @@ const FILTER_MODAL_DATA: ApiTableSectionProps[] = [
                     "Specifies if the feature to expand/collapse all child items is enabled",
                 propTypes: ["boolean"],
                 defaultValue: "false",
+            },
+            {
+                name: "count",
+                description:
+                    "Displays the selected filter count in the filter header when greater than zero",
+                propTypes: ["number"],
             },
             {
                 name: "onDismiss",

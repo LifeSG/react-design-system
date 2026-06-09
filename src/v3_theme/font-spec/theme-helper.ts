@@ -10,7 +10,6 @@ import { V3_MyLegacyFontSpecSet } from "./specs/mylegacy-font-spec-set";
 import { V3_OneServiceFontSpecSet } from "./specs/oneservice-font-spec-set";
 import { V3_PAFontSpecSet } from "./specs/pa-font-spec-set";
 import { V3_SGWDigitalLobbyFontSpecSet } from "./specs/sgw-digital-lobby-font-spec-set";
-import { V3_SMGSFontSpecSet } from "./specs/smgs-font-spec-set";
 import { V3_SPFFontSpecSet } from "./specs/spf-font-spec-set";
 import { V3_SupportGoWhereFontSpecSet } from "./specs/supportgowhere-font-spec-set";
 import type { V3_FontSpecCollectionMap, V3_FontSpecSet } from "./types";
@@ -30,7 +29,6 @@ const V3_FontSpec: V3_ThemeCollectionSpec<
         sgwdigitallobby: V3_SGWDigitalLobbyFontSpecSet,
         spf: V3_SPFFontSpecSet,
         supportgowhere: V3_SupportGoWhereFontSpecSet,
-        smgs: V3_SMGSFontSpecSet,
     },
     defaultValue: "default",
 };

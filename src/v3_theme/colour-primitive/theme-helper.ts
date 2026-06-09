@@ -34,6 +34,7 @@ export const V3_ColourSpec: V3_ThemeCollectionSpec<
         supportgowhere: V3_SupportGoWhereColourSet,
         smgs: V3_SMGSColourSet,
         sgwdigitallobby: V3_SupportGoWhereColourSet,
+        careercompass: V3_LifeSgColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -60,6 +61,7 @@ export const V3_DarkColourSpec: V3_ThemeCollectionSpec<
         spf: V3_SPFColourSet,
         smgs: V3_SMGSColourSet,
         sgwdigitallobby: V3_SupportGoWhereColourSet,
+        careercompass: V3_LifeSgColourSet,
     },
     defaultValue: "lifesg",
 };

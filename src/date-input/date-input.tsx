@@ -172,6 +172,7 @@ export const DateInput = ({
     };
 
     const handleHoverDayCell = (value: string) => {
+        if (!calendarOpen) return;
         setHoveredDate(value);
     };
 

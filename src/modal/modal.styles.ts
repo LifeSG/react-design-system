@@ -5,7 +5,6 @@ import { MediaQuery } from "../theme";
 export const tokens = {
     container: {
         verticalHeight: "--fds-internal-modal-container-verticalHeight",
-        offsetTop: "--fds-internal-modal-container-offsetTop",
     },
 } as const;
 
@@ -19,11 +18,9 @@ export const container = css`
     overflow: hidden;
 
     ${tokens.container.verticalHeight}: initial;
-    ${tokens.container.offsetTop}: initial;
 
     ${MediaQuery.MaxWidth.sm} {
         height: calc(var(${tokens.container.verticalHeight}, 1vh) * 100);
-        top: var(${tokens.container.offsetTop}, 0px);
     }
 `;
 

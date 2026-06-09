@@ -236,7 +236,7 @@ const V3_SPFThemeBase: V3_ThemeSpec = {
 
 const V3_SMGSThemeBase: V3_ThemeSpec = {
     colourScheme: "smgs",
-    fontScheme: "smgs",
+    fontScheme: "default",
     motionScheme: "default",
     borderScheme: "default",
     spacingScheme: "default",

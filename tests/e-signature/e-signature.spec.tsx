@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ESignature } from "src/e-signature";
 
 import { createMatchMediaMock } from "../_common";
@@ -70,18 +70,18 @@ describe("ESignature", () => {
         expect(getEditSignatureButton()).toBeInTheDocument();
     });
 
-    it("should show signature modal on clicking add signature button", () => {
+    it("should show signature modal on clicking add signature button", async () => {
         render(<ESignature />);
         fireEvent.click(getAddSignatureButton());
 
-        expect(getSignatureModal()).toBeVisible();
+        await waitFor(() => expect(getSignatureModal()).toBeVisible());
     });
 
-    it("should show signature modal on clicking edit button", () => {
+    it("should show signature modal on clicking edit button", async () => {
         render(<ESignature value={PNG_BASE64} />);
         fireEvent.click(getEditSignatureButton());
 
-        expect(getSignatureModal()).toBeVisible();
+        await waitFor(() => expect(getSignatureModal()).toBeVisible());
     });
 
     it("should call onChange and show signature preview on clicking save button", () => {

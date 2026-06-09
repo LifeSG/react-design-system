@@ -33,6 +33,12 @@ You may also use a specific variant directly, depending on your layout needs.
 
 <Canvas of={FilterStories.ModalOnly} />
 
+## With counter
+
+You may pass a `count` prop to show a badge counter in the filter header. The badge is only shown when the count is greater than zero. See the [Badge](/docs/feedback-indicators-badge--docs) docs for details on count formatting and truncation.
+
+<Canvas of={FilterStories.WithCounter} />
+
 ## Configuring filter item
 
 Each item can be configured with `collapsible`, `showDivider` and `showMobileDivider` props.

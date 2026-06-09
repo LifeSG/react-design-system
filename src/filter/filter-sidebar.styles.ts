@@ -25,11 +25,18 @@ export const filterHeader = css`
     background-color: ${Colour["bg"]};
 `;
 
+export const filterTitleGroup = css`
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: ${Spacing["spacing-8"]};
+    margin: ${Spacing["spacing-24"]} 0 ${Spacing["spacing-24"]}
+        ${Spacing["spacing-20"]};
+`;
+
 export const filterTitle = css`
     ${Font["heading-xs-semibold"]}
-    flex: 1;
-    margin: ${Spacing["spacing-24"]} 0;
-    margin-left: ${Spacing["spacing-20"]};
 `;
 
 export const filterClearButton = css`

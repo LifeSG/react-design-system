@@ -67,6 +67,14 @@ export const dividerHover = css`
     color: ${Colour["text-subtler"]};
 `;
 
+export const dividerInactive = css`
+    color: ${Colour["text-subtler"]};
+`;
+
+export const dividerDisabled = css`
+    color: ${Colour["text-disabled"]};
+`;
+
 export const inputContainer = css`
     display: flex;
     align-items: center;

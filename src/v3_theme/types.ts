@@ -45,7 +45,8 @@ export type V3_ColourScheme =
     | "sgwdigitallobby"
     | "imda"
     | "spf"
-    | "smgs";
+    | "smgs"
+    | "careercompass";
 export type V3_FontScheme =
     | "default"
     | "bookingsg"
@@ -56,8 +57,7 @@ export type V3_FontScheme =
     | "sgwdigitallobby"
     | "imda"
     | "spf"
-    | "oneservice"
-    | "smgs";
+    | "oneservice";
 export type V3_MotionScheme = "default";
 export type V3_BorderScheme = "default";
 export type V3_SpacingScheme = "default";
