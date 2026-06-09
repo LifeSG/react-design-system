@@ -5,7 +5,7 @@ import {
     findSlotsInTimeRange,
     findSlotsStartingInTimeRange,
     minutesToTime,
-} from "../shared";
+} from "../schedule-slot-content";
 import type { ScheduleEntityProps } from "../types";
 import type { SlotLayoutMap, SlotWithService } from "./types";
 

@@ -1,15 +1,10 @@
+import { Button } from "../../button";
+import { DateNavigator } from "../../date-navigator";
 import { InputSelect } from "../../input-select";
+import { Typography } from "../../typography";
 import { DateHelper } from "../../util";
 import type { ScheduleView } from "../types";
-import {
-    DROPDOWN_WIDTH,
-    LeftSection,
-    RightSection,
-    ScheduleHeaderWrapper,
-    StyledButton,
-    StyledDateNavigator,
-    StyledText,
-} from "./schedule-header.style";
+import * as styles from "./schedule-header.styles";
 
 export interface ScheduleHeaderProps {
     id?: string | undefined;
@@ -66,12 +61,17 @@ export const ScheduleHeader = ({
     };
 
     return (
-        <ScheduleHeaderWrapper {...otherProps}>
-            <LeftSection>
-                <StyledButton styleType="light" onClick={onTodayClick}>
+        <div className={styles.scheduleHeaderWrapper} {...otherProps}>
+            <div className={styles.leftSection}>
+                <Button
+                    className={styles.button}
+                    styleType="light"
+                    onClick={onTodayClick}
+                >
                     Today
-                </StyledButton>
-                <StyledDateNavigator
+                </Button>
+                <DateNavigator
+                    className={styles.dateNavigator}
                     selectedDate={date}
                     minDate={minDate}
                     maxDate={maxDate}
@@ -80,19 +80,21 @@ export const ScheduleHeader = ({
                     onRightArrowClick={handleRightArrowClick}
                     onCalendarDateSelect={onCalendarDateSelect}
                 />
-            </LeftSection>
+            </div>
 
-            <RightSection>
-                <StyledText>View by:</StyledText>
+            <div className={styles.rightSection}>
+                <Typography.BodyMD className={styles.text}>
+                    View by:
+                </Typography.BodyMD>
                 <InputSelect
                     options={viewOptions}
                     selectedOption={selectedViewOption}
                     onSelectOption={(option) => onViewChange?.(option.value)}
                     listExtractor={(option) => option.label}
                     displayValueExtractor={(option) => option.label}
-                    dropdownWidth={DROPDOWN_WIDTH}
+                    dropdownWidth={styles.DROPDOWN_WIDTH}
                 />
-            </RightSection>
-        </ScheduleHeaderWrapper>
+            </div>
+        </div>
     );
 };

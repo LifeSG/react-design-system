@@ -1,28 +1,33 @@
 import dayjs from "dayjs";
-import { useMemo } from "react";
+import { useMemo, useRef } from "react";
 
 import { ThemedLoadingSpinner } from "../../animations/themed-loading-spinner/themed-loading-spinner";
 import type { CellStyleProps } from "../../shared/internal-calendar/day-cell";
 import { DayCell } from "../../shared/internal-calendar/day-cell";
+import { useApplyStyle } from "../../theme";
+import { Typography } from "../../typography";
 import { TimeHelper } from "../../util/time-helper";
-import { ScheduleContainer } from "../schedule-day-view/schedule-day-view.styles";
-import { useInitialScroll, useTimelineOffset } from "../shared";
+import * as dayViewStyles from "../schedule-day-view/schedule-day-view.styles";
+import { useInitialScroll, useTimelineOffset } from "../schedule-slot-content";
 import { TimeIndicator } from "../time-indicator/time-indicator";
-import {
-    BlankCell,
-    BodyContainer,
-    Description,
-    HeaderContainer,
-    LoadingContainer,
-    ServiceContainer,
-    ServiceHeader,
-    SlotColumn,
-    SlotGrid,
-    Timeline,
-} from "./schedule-week-view.styles";
+import * as styles from "./schedule-week-view.styles";
 import { TimeCell } from "./time-cell";
 import type { ScheduleWeekViewProps } from "./types";
 import { calculateSlotWidths } from "./week-view-utils";
+
+interface WeekTimelineProps {
+    top: number;
+}
+
+const WeekTimeline = ({ top }: WeekTimelineProps) => {
+    const timelineRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(timelineRef, {
+        [styles.tokens.timeline.top]: `${top}px`,
+    });
+
+    return <div ref={timelineRef} className={styles.timeline} />;
+};
 
 // =============================================================================
 // MAIN COMPONENT
@@ -84,36 +89,43 @@ export const ScheduleWeekView = ({
     // =============================================================================
     const renderHeader = () => {
         return (
-            <HeaderContainer>
-                <BlankCell />
-                <ServiceContainer>
+            <div className={styles.headerContainer}>
+                <div className={styles.blankCell} />
+                <div className={styles.serviceContainer}>
                     {weekDays.map((day) => {
                         const dayCellStyleProps = generateStyleProps(day);
                         return (
-                            <ServiceHeader key={day.format("YYYY-MM-DD")}>
+                            <div
+                                className={styles.serviceHeader}
+                                key={day.format("YYYY-MM-DD")}
+                            >
                                 <DayCell
                                     date={day}
                                     calendarDate={dayjs(date)}
                                     {...dayCellStyleProps}
                                 />
-                                <Description>{day.format("ddd")}</Description>
-                            </ServiceHeader>
+                                <Typography.BodyMD
+                                    className={styles.description}
+                                >
+                                    {day.format("ddd")}
+                                </Typography.BodyMD>
+                            </div>
                         );
                     })}
-                </ServiceContainer>
-            </HeaderContainer>
+                </div>
+            </div>
         );
     };
 
     const renderSlotGrid = () => (
-        <SlotGrid>
+        <div className={styles.slotGrid}>
             {weekDays.map((day) => {
                 const dayDate = day.format("YYYY-MM-DD");
                 return (
-                    <SlotColumn key={dayDate}>
+                    <div className={styles.slotColumn} key={dayDate}>
                         {timelineOffset !== null &&
                             day.isSame(today, "day") && (
-                                <Timeline $top={timelineOffset} />
+                                <WeekTimeline top={timelineOffset} />
                             )}
                         {timeSlots.map((time) => (
                             <TimeCell
@@ -127,14 +139,14 @@ export const ScheduleWeekView = ({
                                 onClickHiddenSlots={onClickHiddenSlots}
                             />
                         ))}
-                    </SlotColumn>
+                    </div>
                 );
             })}
-        </SlotGrid>
+        </div>
     );
 
     const renderBodyContainer = () => (
-        <BodyContainer ref={bodyRef}>
+        <div className={styles.bodyContainer} ref={bodyRef}>
             <TimeIndicator
                 minTime={minTime}
                 maxTime={maxTime}
@@ -143,21 +155,21 @@ export const ScheduleWeekView = ({
                 isWeekView={true}
             />
             {renderSlotGrid()}
-        </BodyContainer>
+        </div>
     );
 
     return (
-        <ScheduleContainer>
+        <div className={dayViewStyles.scheduleContainer}>
             {loading ? (
-                <LoadingContainer>
+                <div className={styles.loadingContainer}>
                     <ThemedLoadingSpinner data-testid="loading-spinner" />
-                </LoadingContainer>
+                </div>
             ) : (
                 <>
                     {renderHeader()}
                     {renderBodyContainer()}
                 </>
             )}
-        </ScheduleContainer>
+        </div>
     );
 };

@@ -1,17 +1,14 @@
+import clsx from "clsx";
 import { isEmpty } from "lodash";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
+import { ErrorDisplay } from "../error-display";
 import { useMaxWidthMediaQuery } from "../theme";
-import {
-    Container,
-    EmptyTableContainer,
-    NoResultsFound,
-    ScheduleBodyContainer,
-} from "./schedule.styles";
+import * as styles from "./schedule.styles";
 import { ScheduleDayView } from "./schedule-day-view/schedule-day-view";
 import { ScheduleHeader } from "./schedule-header/schedule-header";
 import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
-import type { ScheduleProps } from "./types";
+import type { CommonScheduleViewProps, ScheduleProps } from "./types";
 
 export const Schedule = ({
     id,
@@ -54,12 +51,16 @@ export const Schedule = ({
             })),
         [serviceData, date]
     );
-
-    const visibleServiceData = isSmallScreen
-        ? filteredServiceData && filteredServiceData.length > 0
-            ? [filteredServiceData[visibleServiceIdx]]
-            : []
-        : filteredServiceData;
+    let visibleServiceData = filteredServiceData;
+    if (isSmallScreen) {
+        visibleServiceData =
+            filteredServiceData.length > 0
+                ? [filteredServiceData[visibleServiceIdx]]
+                : [];
+    }
+    const showPrevArrow = isSmallScreen && visibleServiceIdx > 0;
+    const showNextArrow =
+        isSmallScreen && visibleServiceIdx < filteredServiceData.length - 1;
 
     useEffect(() => {
         setVisibleServiceIdx(0);
@@ -86,39 +87,67 @@ export const Schedule = ({
     const handlePrevService = useCallback(() => {
         setVisibleServiceIdx((idx) => (idx > 0 ? idx - 1 : idx));
     }, []);
+
     // =============================================================================
     // RENDER FUNCTION
     // =============================================================================
 
-    if (isEmptyContent) {
-        return (
-            <Container {...otherProps} data-testid={testId} $loading={loading}>
-                <ScheduleHeader
-                    data-id="schedule-header"
-                    date={date}
-                    view={effectiveView}
-                    minDate={minDate}
-                    maxDate={maxDate}
-                    onPreviousDayClick={onPreviousDayClick}
-                    onNextDayClick={onNextDayClick}
-                    onCalendarDateSelect={onCalendarDateSelect}
-                    onViewChange={handleViewChange}
-                    onTodayClick={handleTodayClick}
+    const renderEmptyContent = () => (
+        <div className={clsx(styles.emptyTableContainer, "empty-container")}>
+            <ErrorDisplay
+                className={styles.noResultsFound}
+                type="no-item-found"
+                description={emptyContentMessage}
+            />
+        </div>
+    );
+
+    const commonScheduleViewProps: CommonScheduleViewProps = {
+        date,
+        loading,
+        minTime,
+        maxTime,
+        initialScrollTime,
+        containerRef: contentContainerRef,
+        blockedMessage,
+    };
+
+    const renderScheduleView = () => (
+        <div
+            className={styles.scheduleBodyContainer}
+            ref={contentContainerRef}
+            data-id="schedule-container"
+        >
+            {effectiveView === "day" ? (
+                <ScheduleDayView
+                    {...commonScheduleViewProps}
+                    serviceData={visibleServiceData}
+                    emptySlotPopover={emptySlotPopover}
+                    isMobile={isSmallScreen}
+                    onNextService={handleNextService}
+                    onPrevService={handlePrevService}
+                    showPrevArrow={showPrevArrow}
+                    showNextArrow={showNextArrow}
+                    onEmptySlotClick={onEmptySlotClick}
                 />
-                <EmptyTableContainer className="empty-container">
-                    <NoResultsFound
-                        type="no-item-found"
-                        description={emptyContentMessage}
-                    />
-                </EmptyTableContainer>
-            </Container>
-        );
-    }
+            ) : (
+                <ScheduleWeekView
+                    {...commonScheduleViewProps}
+                    serviceData={serviceData}
+                    onClickHiddenSlots={onClickHiddenSlots}
+                />
+            )}
+        </div>
+    );
+
     return (
-        <Container
+        <div
             id={id}
-            className={className}
-            $loading={loading}
+            className={clsx(
+                styles.container,
+                loading && styles.containerLoading,
+                className
+            )}
             data-testid={testId}
             {...otherProps}
         >
@@ -135,45 +164,7 @@ export const Schedule = ({
                 onTodayClick={handleTodayClick}
             />
 
-            <ScheduleBodyContainer
-                ref={contentContainerRef}
-                data-id="schedule-container"
-            >
-                {effectiveView === "day" ? (
-                    <ScheduleDayView
-                        date={date}
-                        serviceData={visibleServiceData}
-                        loading={loading}
-                        minTime={minTime}
-                        maxTime={maxTime}
-                        initialScrollTime={initialScrollTime}
-                        emptySlotPopover={emptySlotPopover}
-                        isMobile={isSmallScreen}
-                        onNextService={handleNextService}
-                        onPrevService={handlePrevService}
-                        containerRef={contentContainerRef}
-                        showPrevArrow={isSmallScreen && visibleServiceIdx > 0}
-                        showNextArrow={
-                            isSmallScreen &&
-                            visibleServiceIdx < filteredServiceData.length - 1
-                        }
-                        onEmptySlotClick={onEmptySlotClick}
-                        blockedMessage={blockedMessage}
-                    />
-                ) : (
-                    <ScheduleWeekView
-                        date={date}
-                        serviceData={serviceData}
-                        loading={loading}
-                        minTime={minTime}
-                        maxTime={maxTime}
-                        initialScrollTime={initialScrollTime}
-                        containerRef={contentContainerRef}
-                        blockedMessage={blockedMessage}
-                        onClickHiddenSlots={onClickHiddenSlots}
-                    />
-                )}
-            </ScheduleBodyContainer>
-        </Container>
+            {isEmptyContent ? renderEmptyContent() : renderScheduleView()}
+        </div>
     );
 };

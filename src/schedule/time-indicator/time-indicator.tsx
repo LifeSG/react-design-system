@@ -1,11 +1,10 @@
+import clsx from "clsx";
+import { useRef } from "react";
+
+import { useApplyStyle } from "../../theme";
+import { Typography } from "../../typography";
 import { TimeHelper } from "../../util/time-helper";
-import {
-    HourDisplay,
-    TimeColumn,
-    TimeColumnWrapper,
-    TimeLabel,
-    TimelineCircle,
-} from "./time-indicator.styles";
+import * as styles from "./time-indicator.styles";
 
 interface TimeSlotTimeIndicatorProps {
     minTime: string;
@@ -30,30 +29,45 @@ export const TimeIndicator = ({
 }: TimeSlotTimeIndicatorProps) => {
     const timeSlots = TimeHelper.generateTimings(30, format, minTime, maxTime);
     const hourLabels = timeSlots.filter((t) => t.includes(":00"));
+    const timelineCircleRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(timelineCircleRef, {
+        [styles.tokens.timelineCircle.offset]:
+            timelineOffset === null ? null : `${timelineOffset}px`,
+    });
+
     return (
-        <TimeColumnWrapper>
+        <div className={styles.timeColumnWrapper}>
             {timelineOffset !== null && (
-                <TimelineCircle
-                    $top={timelineOffset}
-                    $isWeekView={isWeekView}
+                <div
+                    className={clsx(
+                        styles.timelineCircle,
+                        isWeekView && styles.timelineCircleWeekView
+                    )}
+                    ref={timelineCircleRef}
                 />
             )}
-            <TimeColumn>
+            <div className={styles.timeColumn}>
                 {hourLabels.map((time) => {
                     const { hour, ampm } = formatHourLabel(time);
                     const isFirstSlot = time === minTime;
                     return (
-                        <TimeLabel key={time}>
+                        <Typography.BodySM
+                            className={styles.timeLabel}
+                            key={time}
+                        >
                             {!isFirstSlot && (
                                 <>
-                                    <HourDisplay>{hour}</HourDisplay>
+                                    <span className={styles.hourDisplay}>
+                                        {hour}
+                                    </span>
                                     <span>{ampm}</span>
                                 </>
                             )}
-                        </TimeLabel>
+                        </Typography.BodySM>
                     );
                 })}
-            </TimeColumn>
-        </TimeColumnWrapper>
+            </div>
+        </div>
     );
 };
