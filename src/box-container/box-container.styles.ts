@@ -25,7 +25,6 @@ export const handleIconContainerCollapsed = css`
 export const container = css`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
-    margin-bottom: ${Spacing["spacing-32"]};
 `;
 
 export const expandable = css`
