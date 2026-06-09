@@ -1,6 +1,13 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Modal } from "src/modal";
 
+jest.mock("src/shared/hooks/useViewport", () => ({
+    useViewport: jest.fn().mockReturnValue({
+        verticalHeight: 800,
+        ready: true,
+    }),
+}));
+
 describe("Modal", () => {
     beforeEach(() => {
         jest.clearAllMocks();
