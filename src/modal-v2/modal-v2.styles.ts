@@ -9,7 +9,6 @@ const IS_INITIAL_OR_CLOSE =
 export const tokens = {
     container: {
         verticalHeight: "--fds-internal-modalV2-container-verticalHeight",
-        offsetTop: "--fds-internal-modalV2-container-offsetTop",
     },
 } as const;
 
@@ -21,11 +20,13 @@ export const container = css`
     overflow: auto;
 
     ${tokens.container.verticalHeight}: initial;
-    ${tokens.container.offsetTop}: initial;
 
     ${MediaQuery.MaxWidth.sm} {
         height: calc(var(${tokens.container.verticalHeight}, 1vh) * 100);
-        top: var(${tokens.container.offsetTop}, 0px);
+    }
+
+    @supports (height: 100dvh) {
+        height: 100dvh;
     }
 
     &[data-status="initial"] {
