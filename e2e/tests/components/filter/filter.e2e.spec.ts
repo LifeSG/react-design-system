@@ -9,88 +9,82 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "filter";
 
     public readonly locators: {
-        sidebar: Locator;
-        modal: Locator;
-        showButton: Locator;
+        internal: {
+            sidebar: Locator;
+            modal: Locator;
+            showButton: Locator;
+            clearButton: Locator;
+            item: {
+                viewMoreButton: (item?: Locator) => Locator;
+                viewLessButton: (item?: Locator) => Locator;
+                tooltipTrigger: (item?: Locator) => Locator;
+            };
+            page: {
+                dismissButton: Locator;
+                doneButton: Locator;
+            };
+        };
         minimisableItem: Locator;
         minimisableCustomItem: Locator;
-        minimisableItemViewMoreButton: Locator;
-        minimisableItemViewLessButton: Locator;
-        minimisableCustomItemViewMoreButton: Locator;
-        minimisableCustomItemViewLessButton: Locator;
         itemNoDivider: Locator;
         itemWithDivider: Locator;
         itemDefault: Locator;
         itemNoTitleCollapsible: Locator;
         itemNoTitleNotCollapsible: Locator;
         itemNotCollapsible: Locator;
-        addonTriggerButton: Locator;
-        pageWrapper: Locator;
-        pageDismissButton: Locator;
-        pageDoneButton: Locator;
-        pageDismissCount: Locator;
-        pageDoneCount: Locator;
-        sidebarClearButton: Locator;
-        modalClearButton: Locator;
+        page: Locator;
     };
 
     constructor(page: Page) {
         super(page);
 
-        const sidebar = page.getByTestId("filter-desktop");
-        const modal = page.getByTestId("filter-mobile");
-        const minimisableItem = sidebar.getByTestId("item-minimised");
-        const minimisableCustomItem = sidebar.getByTestId(
-            "item-minimised-custom"
-        );
-
         this.locators = {
-            sidebar,
-            modal,
-            showButton: page.getByTestId("filter-show-button"),
-            minimisableItem,
-            minimisableCustomItem,
-            minimisableItemViewMoreButton: minimisableItem.getByRole("button", {
-                name: /view more/i,
-            }),
-            minimisableItemViewLessButton: minimisableItem.getByRole("button", {
-                name: /view less/i,
-            }),
-            minimisableCustomItemViewMoreButton:
-                minimisableCustomItem.getByRole("button", {
-                    name: /view more/i,
+            internal: {
+                sidebar: page.getByTestId("filter-desktop"),
+                modal: page.getByTestId("filter-mobile"),
+                showButton: page.getByTestId("filter-show-button"),
+                clearButton: page.getByRole("button", {
+                    name: /clear filter/i,
                 }),
-            minimisableCustomItemViewLessButton:
-                minimisableCustomItem.getByRole("button", {
-                    name: /view less/i,
-                }),
-            itemNoDivider: sidebar.getByTestId("item-no-divider"),
-            itemWithDivider: sidebar.getByTestId("item-with-divider"),
-            itemDefault: sidebar.getByTestId("item-default"),
-            itemNoTitleCollapsible: sidebar.getByTestId(
+                item: {
+                    viewMoreButton: (item?: Locator) =>
+                        (item ?? page).getByRole("button", {
+                            name: /view more/i,
+                        }),
+                    viewLessButton: (item?: Locator) =>
+                        (item ?? page).getByRole("button", {
+                            name: /view less/i,
+                        }),
+                    tooltipTrigger: (item?: Locator) =>
+                        (item ?? page).getByRole("button", {
+                            name: "More info",
+                        }),
+                },
+                page: {
+                    dismissButton: page.getByRole("button", {
+                        name: "Dismiss",
+                    }),
+                    doneButton: page.getByRole("button", { name: "Done" }),
+                },
+            },
+            minimisableItem: page.getByTestId("item-minimised"),
+            minimisableCustomItem: page.getByTestId("item-minimised-custom"),
+            itemNoDivider: page.getByTestId("item-no-divider"),
+            itemWithDivider: page.getByTestId("item-with-divider"),
+            itemDefault: page.getByTestId("item-default"),
+            itemNoTitleCollapsible: page.getByTestId(
                 "item-no-title-collapsible"
             ),
-            itemNoTitleNotCollapsible: sidebar.getByTestId(
+            itemNoTitleNotCollapsible: page.getByTestId(
                 "item-no-title-not-collapsible"
             ),
-            itemNotCollapsible: sidebar.getByTestId("item-not-collapsible"),
-            addonTriggerButton: page.getByRole("button", { name: "More info" }),
-            pageWrapper: page.getByTestId("page-wrapper"),
-            pageDismissButton: page.getByRole("button", { name: "Dismiss" }),
-            pageDoneButton: page.getByRole("button", { name: "Done" }),
-            pageDismissCount: page.getByTestId("dismiss-count"),
-            pageDoneCount: page.getByTestId("done-count"),
-            sidebarClearButton: sidebar.getByRole("button", {
-                name: /clear filter sidebar/i,
-            }),
-            modalClearButton: modal.getByRole("button", {
-                name: /clear filter modal/i,
-            }),
+            itemNotCollapsible: page.getByTestId("item-not-collapsible"),
+            page: page.getByTestId("page-wrapper"),
         };
     }
 
     async expandAllItems() {
-        const collapsedButtons = this.locators.sidebar
+        const collapsedButtons = this.locators.internal.sidebar
             .getByTestId("expand-collapse-button")
             .and(this.page.locator('[aria-expanded="false"]'));
 
@@ -113,23 +107,23 @@ test.describe("Filter", () => {
         test("Desktop", async ({ story }) => {
             await story.init("default", { size: "desktop" });
 
-            await expect(story.locators.sidebar).toBeVisible();
-            await expect(story.locators.modal).toBeHidden();
-            await expect(story.locators.showButton).toBeHidden();
+            await expect(story.locators.internal.sidebar).toBeVisible();
+            await expect(story.locators.internal.modal).toBeHidden();
+            await expect(story.locators.internal.showButton).toBeHidden();
         });
 
         test("Tablet", async ({ story }) => {
             await story.init("default", { size: "tablet" });
 
-            await expect(story.locators.sidebar).toBeHidden();
-            await expect(story.locators.showButton).toBeVisible();
+            await expect(story.locators.internal.sidebar).toBeHidden();
+            await expect(story.locators.internal.showButton).toBeVisible();
         });
 
         test("Mobile", async ({ story }) => {
             await story.init("default", { size: "mobile" });
 
-            await expect(story.locators.sidebar).toBeHidden();
-            await expect(story.locators.showButton).toBeVisible();
+            await expect(story.locators.internal.sidebar).toBeHidden();
+            await expect(story.locators.internal.showButton).toBeVisible();
         });
     });
 
@@ -140,21 +134,21 @@ test.describe("Filter", () => {
 
         test("Default", async ({ story }) => {
             await compareScreenshot(story, "collapsed");
+
             await story.expandAllItems();
-            await waitForAnimationEnd(story.locators.sidebar);
+            await waitForAnimationEnd(story.locators.internal.sidebar);
+
             await compareScreenshot(story, "expanded");
         });
 
         test("Tooltip", async ({ story }) => {
-            const { addonTriggerButton } = story.locators;
+            await story.locators.internal.item.tooltipTrigger().click();
 
-            await addonTriggerButton.click();
             await compareScreenshot(story, "open");
         });
 
         test("Disabled clear button", async ({ story }) => {
-            const { sidebarClearButton } = story.locators;
-            await expect(sidebarClearButton).toBeDisabled();
+            await expect(story.locators.internal.clearButton).toBeDisabled();
         });
     });
 
@@ -166,7 +160,7 @@ test.describe("Filter", () => {
         test("Sidebar (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "collapsed");
             await story.expandAllItems();
-            await waitForAnimationEnd(story.locators.sidebar);
+            await waitForAnimationEnd(story.locators.internal.sidebar);
             await compareScreenshot(story, "expanded");
         });
     });
@@ -178,24 +172,25 @@ test.describe("Filter", () => {
 
         test("Default", async ({ story }) => {
             await compareScreenshot(story, "closed");
-            await story.locators.showButton.click();
+
+            await story.locators.internal.showButton.click();
+
             await compareScreenshot(story, "open", { fullscreen: true });
         });
 
         test("Tooltip", async ({ story }) => {
-            const { showButton, addonTriggerButton } = story.locators;
+            await story.locators.internal.showButton.click();
+            await story.locators.internal.item.tooltipTrigger().click();
 
-            await showButton.click();
-            await addonTriggerButton.click();
-            await compareScreenshot(story, "open", {
-                fullscreen: true,
-            });
+            await compareScreenshot(story, "open", { fullscreen: true });
         });
 
         test("Enabled clear button", async ({ story }) => {
-            const { showButton, modalClearButton } = story.locators;
-            await showButton.click();
-            await expect(modalClearButton).not.toBeDisabled();
+            await story.locators.internal.showButton.click();
+
+            await expect(
+                story.locators.internal.clearButton
+            ).not.toBeDisabled();
         });
     });
 
@@ -206,7 +201,9 @@ test.describe("Filter", () => {
 
         test("Modal (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "closed");
-            await story.locators.showButton.click();
+
+            await story.locators.internal.showButton.click();
+
             await compareScreenshot(story, "open", { fullscreen: true });
         });
     });
@@ -217,21 +214,27 @@ test.describe("Filter", () => {
         });
 
         test("Minimisable item", async ({ story }) => {
-            const {
-                minimisableItemViewMoreButton,
-                minimisableItemViewLessButton,
-                minimisableCustomItemViewMoreButton,
-                minimisableCustomItemViewLessButton,
-            } = story.locators;
+            const minimisableItem = story.locators.minimisableItem;
+            const minimisableCustomItem = story.locators.minimisableCustomItem;
 
             await compareScreenshot(story, "minimised");
 
             await test.step("Expand both items", async () => {
-                await minimisableItemViewMoreButton.click();
-                await minimisableCustomItemViewMoreButton.click();
+                await story.locators.internal.item
+                    .viewMoreButton(minimisableItem)
+                    .click();
+                await story.locators.internal.item
+                    .viewMoreButton(minimisableCustomItem)
+                    .click();
 
-                await expect(minimisableItemViewLessButton).toBeVisible();
-                await expect(minimisableCustomItemViewLessButton).toBeVisible();
+                await expect(
+                    story.locators.internal.item.viewLessButton(minimisableItem)
+                ).toBeVisible();
+                await expect(
+                    story.locators.internal.item.viewLessButton(
+                        minimisableCustomItem
+                    )
+                ).toBeVisible();
             });
 
             await compareScreenshot(story, "expanded");
@@ -245,9 +248,34 @@ test.describe("Filter", () => {
 
         test("Item configurations", async ({ story }) => {
             await compareScreenshot(story, "collapsed-all");
+
             await story.expandAllItems();
-            await waitForAnimationEnd(story.locators.sidebar);
+            await waitForAnimationEnd(story.locators.internal.sidebar);
+
             await compareScreenshot(story, "expanded-all");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("counter");
+        });
+
+        test("Counter (sidebar)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("counter", { size: "mobile" });
+        });
+
+        test("Counter (modal)", async ({ story }) => {
+            await compareScreenshot(story, "button");
+
+            await story.locators.internal.showButton.click();
+            await compareScreenshot(story, "modal", { fullscreen: true });
         });
     });
 
@@ -259,12 +287,12 @@ test.describe("Filter", () => {
 
             test("Default", async ({ story }) => {
                 await compareScreenshot(story, "mount", {
-                    locator: story.locators.pageWrapper,
+                    locator: story.locators.page,
                 });
             });
 
             test("Accessibility", async ({ story }) => {
-                await expect(story.locators.pageWrapper).toMatchAriaSnapshot(`
+                await expect(story.locators.page).toMatchAriaSnapshot(`
                     - button "Dismiss":
                         - img
                     - paragraph: Custom filter page content

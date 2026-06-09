@@ -94,6 +94,7 @@ export interface FilterItemProps {
 }
 
 export interface FilterPageProps {
+    "data-testid"?: string | undefined;
     children: React.ReactNode;
     /** Called when dismiss button is pressed */
     onDismiss?: (() => void) | undefined;

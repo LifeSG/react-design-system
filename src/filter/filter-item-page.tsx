@@ -10,9 +10,13 @@ export const FilterItemPage = ({
     onDismiss,
     onDone,
     children,
+    "data-testid": dataTestId,
 }: FilterPageProps) => {
     return (
-        <div className={styles.filterItemPageContainer}>
+        <div
+            className={styles.filterItemPageContainer}
+            data-testid={dataTestId}
+        >
             <ClickableIcon
                 className={filterStyles.filterHeaderButton}
                 onClick={onDismiss}
