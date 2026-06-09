@@ -23,6 +23,7 @@ export const FilterHeader = styled.div`
     align-items: center;
 
     background-color: ${Colour["bg"]};
+    color: ${Colour["text"]};
 `;
 
 export const FilterTitleGroup = styled.div`
