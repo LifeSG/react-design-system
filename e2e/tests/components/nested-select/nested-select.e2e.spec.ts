@@ -113,14 +113,13 @@ test.describe("NestedSelect", () => {
             await test.step("Selected + open - selected item should be selected and active", async () => {
                 await story.openDropdown();
 
-                // TODO: uncomment when aria tree is fixed in master
-                // await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
-                //     - tree:
-                //       - treeitem "Category 1"
-                //       - treeitem "Option 1.1" [selected]
-                //       - treeitem "Option 1.2"
-                //       - treeitem "Category 2"
-                // `);
+                await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                    - tree:
+                      - treeitem "Category 1"
+                      - treeitem "Option 1.1" [selected]
+                      - treeitem "Option 1.2"
+                      - treeitem "Category 2"
+                `);
 
                 await compareScreenshot(story, "selected-open", {
                     fullscreen: true,
@@ -132,14 +131,13 @@ test.describe("NestedSelect", () => {
 
                 await selected.hover();
 
-                // TODO: uncomment when aria tree is fixed in master
-                // await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
-                //     - tree:
-                //       - treeitem "Category 1"
-                //       - treeitem "Option 1.1" [selected]
-                //       - treeitem "Option 1.2"
-                //       - treeitem "Category 2"
-                // `);
+                await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                    - tree:
+                      - treeitem "Category 1"
+                      - treeitem "Option 1.1" [selected]
+                      - treeitem "Option 1.2"
+                      - treeitem "Category 2"
+                `);
 
                 await compareScreenshot(story, "selected-hover", {
                     fullscreen: true,
@@ -151,14 +149,13 @@ test.describe("NestedSelect", () => {
 
                 await hovered.hover();
 
-                // TODO: uncomment when aria tree is fixed in master
-                // await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
-                //     - tree:
-                //       - treeitem "Category 1"
-                //       - treeitem "Option 1.1" [selected]
-                //       - treeitem "Option 1.2"
-                //       - treeitem "Category 2"
-                // `);
+                await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                    - tree:
+                      - treeitem "Category 1"
+                      - treeitem "Option 1.1" [selected]
+                      - treeitem "Option 1.2"
+                      - treeitem "Category 2"
+                `);
 
                 await compareScreenshot(story, "selected-hover-other", {
                     fullscreen: true,
@@ -228,6 +225,48 @@ test.describe("NestedSelect", () => {
 
             await story.locators.nestedSelect.click({ force: true });
             await expect(story.locators.dropdownContainer).not.toBeVisible();
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("all-expanded");
+        });
+
+        test("Expanded state", async ({ story }) => {
+            await story.locators.selector.click();
+            await compareScreenshot(story, "dropdown-open", {
+                fullscreen: true,
+            });
+
+            await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                - tree:
+                    - treeitem "Category 1" [expanded=true] 
+                    - treeitem "Option 1.1" 
+                    - treeitem "Option 1.2" 
+                    - treeitem "Category 2" [expanded=true] 
+                    - treeitem "Option 2.1" 
+                    - treeitem "Option 2.2" 
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("all-collapsed");
+        });
+
+        test("Collapsed state", async ({ story }) => {
+            await story.locators.selector.click();
+            await compareScreenshot(story, "dropdown-open", {
+                fullscreen: true,
+            });
+
+            await expect(story.locators.dropdownList).toMatchAriaSnapshot(`
+                - tree:
+                    - treeitem "Category 1" [expanded=false] 
+                    - treeitem "Category 2" [expanded=false] 
+            `);
         });
     });
 });
