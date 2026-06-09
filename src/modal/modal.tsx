@@ -1,5 +1,5 @@
 import clsx from "clsx";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 import type { ModalAnimationDirection } from "../modal-v2/types";
 import { Overlay } from "../overlay/overlay";
@@ -39,7 +39,15 @@ export const Modal = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const { verticalHeight, offsetTop } = useViewport();
+    const dismissKeyboard = useEvent(() => {
+        if (dismissKeyboardOnShow) {
+            (document.activeElement as HTMLElement)?.blur?.();
+        }
+    });
+    const { verticalHeight, ready } = useViewport({
+        enabled: show,
+        onBeforeStart: dismissKeyboard,
+    });
     const childRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const childWithRef =
@@ -48,24 +56,7 @@ export const Modal = ({
     useApplyStyle(containerRef, {
         [styles.tokens.container.verticalHeight]:
             verticalHeight == null ? null : `${verticalHeight}px`,
-        [styles.tokens.container.offsetTop]:
-            offsetTop == null ? null : `${offsetTop}px`,
     });
-
-    // =============================================================================
-    // EFFECTS
-    // =============================================================================
-    const dismissKeyboard = useEvent(() => {
-        if (dismissKeyboardOnShow) {
-            (document.activeElement as HTMLElement)?.blur?.();
-        }
-    });
-
-    useEffect(() => {
-        if (show) {
-            dismissKeyboard();
-        }
-    }, [show, dismissKeyboard]);
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -88,8 +79,12 @@ export const Modal = ({
                 className={clsx(
                     styles.container,
                     ANIMATION_FROM_CLASS_MAP[animationFrom],
-                    show && ANIMATION_FROM_SHOW_CLASS_MAP[animationFrom],
-                    show ? styles.containerShow : styles.containerHide,
+                    show && ready
+                        ? [
+                              ANIMATION_FROM_SHOW_CLASS_MAP[animationFrom],
+                              styles.containerShow,
+                          ]
+                        : styles.containerHide,
                     className
                 )}
             >

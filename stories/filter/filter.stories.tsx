@@ -149,6 +149,60 @@ export const ModalOnly: StoryObj<Component> = {
     },
 };
 
+export const WithCounter: StoryObj<Component> = {
+    render: (_args) => {
+        const {
+            draftFilters,
+            updateFilter,
+            clearFilters,
+            saveFilters,
+            dismissFilters,
+        } = useFilters({
+            search: "",
+            date: undefined,
+        });
+
+        return (
+            <Filter
+                count={8}
+                onClear={clearFilters}
+                onDismiss={dismissFilters}
+                onDone={saveFilters}
+            >
+                {(mode) => (
+                    <>
+                        <Filter.Item title="Search">
+                            <SearchFilter
+                                mode={mode}
+                                value={draftFilters.search}
+                                onChange={updateFilter(mode, "search")}
+                            />
+                        </Filter.Item>
+                        <Filter.Item title="Date">
+                            <DateFilter
+                                mode={mode}
+                                value={draftFilters.date}
+                                onChange={updateFilter(mode, "date")}
+                            />
+                        </Filter.Item>
+                        <Filter.Item title="More filters">
+                            <TextFilter />
+                        </Filter.Item>
+                    </>
+                )}
+            </Filter>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+    parameters: {
+        docs: {
+            description: {
+                story: "Consumers can pass a count prop to show selected filter counts in the filter header.",
+            },
+        },
+    },
+};
+
 export const ConfiguringFilterItem: StoryObj<Component> = {
     render: (_args) => {
         return (

@@ -646,6 +646,7 @@ export const getErrorDisplayData = (
         case "ccube":
             return generateErrorDisplayData(CCubeImgPaths).get(type);
         case "mylegacy":
+        case "smgs":
             return generateErrorDisplayData(MyLegacyImgPaths).get(type);
         default:
             return generateErrorDisplayData(ImgPaths).get(type);

@@ -6,7 +6,7 @@ import {
     useTransitionStatus,
 } from "@floating-ui/react";
 import clsx from "clsx";
-import React, { useEffect, useRef } from "react";
+import React, { useRef } from "react";
 
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
@@ -38,7 +38,15 @@ export const ModalV2 = ({
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
-    const { verticalHeight, offsetTop } = useViewport();
+    const dismissKeyboard = useEvent(() => {
+        if (dismissKeyboardOnShow) {
+            (document.activeElement as HTMLElement)?.blur?.();
+        }
+    });
+    const { verticalHeight } = useViewport({
+        enabled: show,
+        onBeforeStart: dismissKeyboard,
+    });
     const childRef = useRef<HTMLDivElement>(null);
     const containerRef = useRef<HTMLDivElement>(null);
     const childWithRef =
@@ -47,8 +55,6 @@ export const ModalV2 = ({
     useApplyStyle(containerRef, {
         [styles.tokens.container.verticalHeight]:
             verticalHeight == null ? null : `${verticalHeight}px`,
-        [styles.tokens.container.offsetTop]:
-            offsetTop == null ? null : `${offsetTop}px`,
     });
 
     // =========================================================================
@@ -73,27 +79,12 @@ export const ModalV2 = ({
     const { getFloatingProps } = useInteractions([dismiss]);
 
     // =========================================================================
-    // EFFECTS
-    // =========================================================================
-    const dismissKeyboard = useEvent(() => {
-        if (dismissKeyboardOnShow) {
-            (document.activeElement as HTMLElement)?.blur?.();
-        }
-    });
-
-    useEffect(() => {
-        if (show) {
-            dismissKeyboard();
-        }
-    }, [show, dismissKeyboard]);
-
-    // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     return (
         <Overlay
             data-testid={`${testId}-overlay`}
-            show={isMounted}
+            show={show}
             enableOverlayClick={enableOverlayClick}
             onOverlayClick={onOverlayClick}
             id={id}

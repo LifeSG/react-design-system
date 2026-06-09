@@ -58,6 +58,7 @@ export const SemanticColourDisplay = ({
                         "text-subtler",
                         "text-subtlest",
                         "text-primary",
+                        "text-primary-strongest",
                     ]}
                 />
                 <SemanticColourPalette
@@ -245,6 +246,9 @@ export const SemanticColourDisplay = ({
             <Display>
                 <SemanticColourPalette
                     tokens={["hyperlink", "hyperlink-inverse"]}
+                />
+                <SemanticColourPalette
+                    tokens={["hyperlink-hover", "hyperlink-visited"]}
                 />
             </Display>
 

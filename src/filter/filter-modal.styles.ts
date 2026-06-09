@@ -45,11 +45,23 @@ export const filterHeaderWithInsetTop = css`
     padding-top: var(${tokens.filterHeader.insetTop});
 `;
 
+export const filterTitleGroup = css`
+    flex: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: ${Spacing["spacing-8"]};
+    margin: ${Spacing["spacing-24"]} 0;
+`;
+
 export const filterTitle = css`
     ${Font["heading-xs-semibold"]}
-    flex: 1;
-    text-align: center;
-    margin: ${Spacing["spacing-24"]} 0;
+`;
+
+export const filterToggleContent = css`
+    display: inline-flex;
+    align-items: center;
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const filterClearButton = css`

@@ -35,7 +35,7 @@ export const Badge = ({
     // =============================================================================
     // REFS
     // =============================================================================
-    const wrapperRef = useRef<HTMLDivElement>(null);
+    const wrapperRef = useRef<HTMLSpanElement>(null);
 
     useApplyStyle(wrapperRef, {
         [styles.tokens.wrapper.offsetX]: badgeOffset?.[0],
@@ -46,15 +46,15 @@ export const Badge = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <div className={clsx(children !== undefined && styles.badgeOverlay)}>
-            <div
+        <span className={clsx(children !== undefined && styles.badgeOverlay)}>
+            <span
                 ref={wrapperRef}
                 className={clsx(
                     styles.badgeWrapper,
                     children !== undefined && styles.badgeWrapperIsOverlay
                 )}
             >
-                <div
+                <span
                     data-testid={testId}
                     data-variant={variant}
                     data-color={color}
@@ -62,9 +62,9 @@ export const Badge = ({
                     {...otherProps}
                 >
                     {shouldShowCount ? displayCount : null}
-                </div>
-            </div>
+                </span>
+            </span>
             {children}
-        </div>
+        </span>
     );
 };

@@ -16,6 +16,7 @@ const THEME_TO_DISPLAY_NAME_MAPPING: Record<ThemeType, string> = {
     "sgw-digital-lobby": "SGW Digital Lobby",
     spf: "SPF",
     supportgowhere: "SupportGoWhere",
+    smgs: "SMGS",
 };
 
 const THEME_TO_FONT_MAPPING: Record<ThemeType, string> = {
@@ -31,6 +32,7 @@ const THEME_TO_FONT_MAPPING: Record<ThemeType, string> = {
     "sgw-digital-lobby": "libre-franklin",
     spf: "public-sans",
     supportgowhere: "libre-franklin",
+    smgs: "plus-jakarta-sans",
 };
 
 const ThemePicker = ({

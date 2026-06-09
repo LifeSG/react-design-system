@@ -35,6 +35,7 @@ export const V3_ColourSpec: V3_ThemeCollectionSpec<
         supportgowhere: V3_LifeSGColourSet,
         sgwdigitallobby: V3_SGWDigitalLobbyColourSet,
         smgs: V3_LifeSGColourSet,
+        careercompass: V3_LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -57,6 +58,7 @@ export const V3_DarkColourSpec: V3_ThemeCollectionSpec<
         supportgowhere: V3_LifeSGDarkColourSet,
         sgwdigitallobby: V3_SGWDigitalLobbyDarkColourSet,
         smgs: V3_LifeSGDarkColourSet,
+        careercompass: V3_LifeSGDarkColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -105,6 +107,8 @@ export const V3_ColourSemantic: {
     "text-subtlest": getSemanticColour("text-subtlest"),
     "text-primary": getSemanticColour("text-primary"),
     "text-primary-strongest": getSemanticColour("text-primary-strongest"),
+    "text-secondary": getSemanticColour("text-secondary"),
+    "text-secondary-subtle": getSemanticColour("text-secondary-subtle"),
 
     "text-hover": getSemanticColour("text-hover"),
     "text-selected": getSemanticColour("text-selected"),
@@ -128,6 +132,8 @@ export const V3_ColourSemantic: {
     "icon-primary": getSemanticColour("icon-primary"),
     "icon-primary-subtle": getSemanticColour("icon-primary-subtle"),
     "icon-primary-subtlest": getSemanticColour("icon-primary-subtlest"),
+    "icon-secondary": getSemanticColour("icon-secondary"),
+    "icon-secondary-subtle": getSemanticColour("icon-secondary-subtle"),
 
     "icon-hover": getSemanticColour("icon-hover"),
     "icon-selected": getSemanticColour("icon-selected"),
@@ -229,6 +235,11 @@ export const V3_ColourSemantic: {
     "bg-primary-subtler": getSemanticColour("bg-primary-subtler"),
     "bg-primary-subtlest": getSemanticColour("bg-primary-subtlest"),
     "bg-available": getSemanticColour("bg-available"),
+
+    "bg-secondary": getSemanticColour("bg-secondary"),
+    "bg-secondary-subtle": getSemanticColour("bg-secondary-subtle"),
+    "bg-secondary-subtler": getSemanticColour("bg-secondary-subtler"),
+    "bg-secondary-subtlest": getSemanticColour("bg-secondary-subtlest"),
 
     "bg-primary-hover": getSemanticColour("bg-primary-hover"),
     "bg-primary-subtlest-hover": getSemanticColour("bg-primary-subtlest-hover"),

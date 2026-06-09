@@ -3,6 +3,7 @@ import { useRef } from "react";
 
 import { Button } from "../button";
 import * as filterStyles from "./filter.styles";
+import { FilterBadge } from "./filter-badge";
 import { FilterContext } from "./filter-context";
 import * as styles from "./filter-sidebar.styles";
 import type { FilterSidebarProps } from "./types";
@@ -11,6 +12,7 @@ export const FilterSidebar = ({
     customLabels,
     onClear,
     clearButtonDisabled = false,
+    count,
     children,
     headerTitle: _headerTitle,
     className,
@@ -33,7 +35,10 @@ export const FilterSidebar = ({
                 {...otherProps}
             >
                 <div className={styles.filterHeader}>
-                    <h2 className={styles.filterTitle}>{labels.title}</h2>
+                    <div className={styles.filterTitleGroup}>
+                        <h2 className={styles.filterTitle}>{labels.title}</h2>
+                        <FilterBadge count={count} />
+                    </div>
                     <Button
                         className={styles.filterClearButton}
                         styleType="link"

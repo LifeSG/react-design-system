@@ -5,7 +5,7 @@
  */
 
 import type { ElementType } from "react";
-import { Children, cloneElement } from "react";
+import { Children, cloneElement, Fragment, isValidElement } from "react";
 
 import { ColDiv } from "../layout/col-div";
 import { useId } from "../util";
@@ -143,9 +143,12 @@ export const FormWrapper = ({
             "aria-describedby": getAriaDescribedBy(),
             "aria-labelledby": label ? labelId : undefined,
         };
-        return Children.map(children, (child) =>
-            cloneElement(child, ariaState)
-        );
+        return Children.map(children, (child) => {
+            if (isValidElement(child) && child.type === Fragment) {
+                return cloneElement(child);
+            }
+            return cloneElement(child, ariaState);
+        });
     };
 
     const ContainerComponent = getContainerComponent(updatedLayoutType);

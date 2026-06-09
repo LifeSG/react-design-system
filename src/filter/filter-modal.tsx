@@ -10,6 +10,7 @@ import { inertValue } from "../shared/accessibility";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { useApplyStyle } from "../theme";
 import * as filterStyles from "./filter.styles";
+import { FilterBadge } from "./filter-badge";
 import { FilterContext } from "./filter-context";
 import * as styles from "./filter-modal.styles";
 import type { FilterModalProps } from "./types";
@@ -23,6 +24,7 @@ export const FilterModal = ({
     toggleFilterButtonStyle = "light",
     clearButtonDisabled = false,
     insets,
+    count,
     children,
     toggleFilterButtonLabel: _toggleFilterButtonLabel,
     headerTitle: _headerTitle,
@@ -91,7 +93,10 @@ export const FilterModal = ({
                     type="button"
                     icon={<FilterIcon />}
                 >
-                    {labels.toggle}
+                    <span className={styles.filterToggleContent}>
+                        <span>{labels.toggle}</span>
+                        <FilterBadge count={count} />
+                    </span>
                 </Button>
             </div>
             <Overlay show={visible} disableTransition>
@@ -130,9 +135,12 @@ export const FilterModal = ({
                                     >
                                         <CrossIcon />
                                     </ClickableIcon>
-                                    <h2 className={styles.filterTitle}>
-                                        {labels.title}
-                                    </h2>
+                                    <div className={styles.filterTitleGroup}>
+                                        <h2 className={styles.filterTitle}>
+                                            {labels.title}
+                                        </h2>
+                                        <FilterBadge count={count} />
+                                    </div>
                                     <Button
                                         className={styles.filterClearButton}
                                         styleType="link"
