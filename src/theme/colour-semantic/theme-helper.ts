@@ -2,19 +2,19 @@ import { StyledComponentProps, getCollection, getValue } from "../helpers";
 import { ThemeCollectionSpec } from "../internal-types";
 import { ColourScheme, SemanticColourSet } from "../types";
 import {
+    A11yPlaygroundColourSet,
+    A11yPlaygroundDarkColourSet,
+} from "./specs/a11yplayground-semantic-tokens";
+import {
     LifeSGColourSet,
     LifeSGDarkColourSet,
 } from "./specs/lifesg-semantic-tokens";
 import { PAColourSet } from "./specs/pa-semantic-tokens";
 import {
-    A11yPlaygroundColourSet,
-    A11yPlaygroundDarkColourSet,
-} from "./specs/a11yplayground-semantic-tokens";
-import { SemanticColourCollectionMap } from "./types";
-import {
     SGWDigitalLobbyColourSet,
     SGWDigitalLobbyDarkColourSet,
 } from "./specs/sgwdigitallobby-tokens";
+import { SemanticColourCollectionMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
     SemanticColourCollectionMap,
@@ -103,7 +103,9 @@ export const ColourSemantic: {
     "text-subtler": getSemanticColour("text-subtler"),
     "text-subtlest": getSemanticColour("text-subtlest"),
     "text-primary": getSemanticColour("text-primary"),
+    "text-primary-strong": getSemanticColour("text-primary-strong"),
     "text-primary-strongest": getSemanticColour("text-primary-strongest"),
+    "text-brand": getSemanticColour("text-brand"),
     "text-secondary": getSemanticColour("text-secondary"),
     "text-secondary-subtle": getSemanticColour("text-secondary-subtle"),
 
@@ -129,6 +131,7 @@ export const ColourSemantic: {
     "icon-primary": getSemanticColour("icon-primary"),
     "icon-primary-subtle": getSemanticColour("icon-primary-subtle"),
     "icon-primary-subtlest": getSemanticColour("icon-primary-subtlest"),
+    "icon-brand": getSemanticColour("icon-brand"),
     "icon-secondary": getSemanticColour("icon-secondary"),
     "icon-secondary-subtle": getSemanticColour("icon-secondary-subtle"),
 
@@ -153,6 +156,7 @@ export const ColourSemantic: {
     "border-strong": getSemanticColour("border-strong"),
     "border-stronger": getSemanticColour("border-stronger"),
     "border-primary": getSemanticColour("border-primary"),
+    "border-primary-strong": getSemanticColour("border-primary-strong"),
     "border-primary-subtle": getSemanticColour("border-primary-subtle"),
 
     "border-hover": getSemanticColour("border-hover"),
@@ -228,18 +232,20 @@ export const ColourSemantic: {
     "bg-inverse-hover": getSemanticColour("bg-inverse-hover"),
 
     "bg-primary": getSemanticColour("bg-primary"),
+    "bg-primary-strong": getSemanticColour("bg-primary-strong"),
     "bg-primary-subtle": getSemanticColour("bg-primary-subtle"),
     "bg-primary-subtler": getSemanticColour("bg-primary-subtler"),
     "bg-primary-subtlest": getSemanticColour("bg-primary-subtlest"),
-    "bg-available": getSemanticColour("bg-available"),
-
     "bg-secondary": getSemanticColour("bg-secondary"),
     "bg-secondary-subtle": getSemanticColour("bg-secondary-subtle"),
     "bg-secondary-subtler": getSemanticColour("bg-secondary-subtler"),
     "bg-secondary-subtlest": getSemanticColour("bg-secondary-subtlest"),
+    "bg-available": getSemanticColour("bg-available"),
 
     "bg-primary-hover": getSemanticColour("bg-primary-hover"),
+    "bg-primary-strong-hover": getSemanticColour("bg-primary-strong-hover"),
     "bg-primary-subtlest-hover": getSemanticColour("bg-primary-subtlest-hover"),
+
     "bg-primary-subtlest-selected": getSemanticColour(
         "bg-primary-subtlest-selected"
     ),

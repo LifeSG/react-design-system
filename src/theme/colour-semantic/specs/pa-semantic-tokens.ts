@@ -12,7 +12,9 @@ export const PAColourSet: SemanticColourSet = {
     "text-subtler": getPrimitiveColour("neutral-50"),
     "text-subtlest": getPrimitiveColour("neutral-70"),
     "text-primary": getPrimitiveColour("neutral-10"),
+    "text-primary-strong": getPrimitiveColour("neutral-10"),
     "text-primary-strongest": getPrimitiveColour("neutral-10"),
+    "text-brand": getPrimitiveColour("brand-50"),
     "text-secondary": getPrimitiveColour("secondary-50"),
     "text-secondary-subtle": getPrimitiveColour("secondary-60"),
 
@@ -38,10 +40,12 @@ export const PAColourSet: SemanticColourSet = {
     "icon-primary": getPrimitiveColour("neutral-10"),
     "icon-primary-subtle": getPrimitiveColour("neutral-30"),
     "icon-primary-subtlest": getPrimitiveColour("neutral-60"),
+    "icon-brand": getPrimitiveColour("brand-50"),
     "icon-secondary": getPrimitiveColour("secondary-50"),
     "icon-secondary-subtle": getPrimitiveColour("secondary-60"),
 
     "icon-hover": getPrimitiveColour("neutral-70"),
+
     "icon-selected": getPrimitiveColour("brand-20"),
     "icon-selected-hover": getPrimitiveColour("brand-10"),
 
@@ -54,6 +58,7 @@ export const PAColourSet: SemanticColourSet = {
     "icon-error": getPrimitiveColour("brand-30"),
     "icon-error-strong": getPrimitiveColour("brand-10"),
     "icon-info": getPrimitiveColour("neutral-40"),
+
     "icon-inverse": getPrimitiveColour("neutral-100"),
     "icon-primary-inverse": "#F9B371",
 
@@ -62,6 +67,7 @@ export const PAColourSet: SemanticColourSet = {
     "border-strong": getPrimitiveColour("neutral-30"),
     "border-stronger": getPrimitiveColour("neutral-20"),
     "border-primary": getPrimitiveColour("neutral-40"),
+    "border-primary-strong": getPrimitiveColour("neutral-30"),
     "border-primary-subtle": getPrimitiveColour("neutral-60"),
 
     "border-hover": getPrimitiveColour("neutral-80"),
@@ -133,17 +139,18 @@ export const PAColourSet: SemanticColourSet = {
     "bg-inverse-hover": getPrimitiveColour("neutral-30"),
 
     "bg-primary": getPrimitiveColour("brand-20"),
+    "bg-primary-strong": getPrimitiveColour("brand-10"),
     "bg-primary-subtle": getPrimitiveColour("brand-60"),
     "bg-primary-subtler": getPrimitiveColour("brand-80"),
     "bg-primary-subtlest": getPrimitiveColour("brand-100"),
-    "bg-available": getPrimitiveColour("success-60"),
-
     "bg-secondary": getPrimitiveColour("secondary-50"),
     "bg-secondary-subtle": getPrimitiveColour("secondary-60"),
     "bg-secondary-subtler": getPrimitiveColour("secondary-95"),
     "bg-secondary-subtlest": getPrimitiveColour("secondary-100"),
+    "bg-available": getPrimitiveColour("success-60"),
 
     "bg-primary-hover": getPrimitiveColour("brand-10"),
+    "bg-primary-strong-hover": getPrimitiveColour("brand-10"),
     "bg-primary-subtlest-hover": getPrimitiveColour("brand-80"),
     "bg-primary-subtlest-selected": getPrimitiveColour("brand-40"),
 
