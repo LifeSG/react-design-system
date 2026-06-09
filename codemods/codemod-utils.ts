@@ -122,6 +122,23 @@ export class CodemodUtils {
         });
     }
 
+    public static replaceImport(
+        source: Collection,
+        api: API,
+        oldImportPath: string | string[],
+        oldImportSpecifier: string,
+        newImportPath: string,
+        newImportSpecifier: string
+    ) {
+        CodemodUtils.addImport(source, api, newImportPath, newImportSpecifier);
+        CodemodUtils.removeImport(
+            source,
+            api,
+            oldImportPath,
+            oldImportSpecifier
+        );
+    }
+
     public static hasReferences(
         source: Collection,
         api: API,

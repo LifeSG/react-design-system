@@ -3,8 +3,6 @@ import { execSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 
-import { Theme } from "./common";
-
 const codemodsDir =
     process.env.ENV === "dev"
         ? path.join(process.cwd(), "codemods")
@@ -14,12 +12,7 @@ const codemodsDir =
           );
 
 enum Codemod {
-    DeprecateV2Tokens = "deprecate-v2-tokens",
-    MigrateColour = "migrate-colour",
-    MigrateLayout = "migrate-layout",
-    MigrateMediaQuery = "migrate-media-query",
-    MigrateText = "migrate-text",
-    MigrateTextList = "migrate-text-list",
+    MigratePopover = "migrate-popover",
 }
 
 const theme = {
@@ -27,15 +20,8 @@ const theme = {
 };
 
 const CodemodDescriptions: { [key in Codemod]: string } = {
-    [Codemod.DeprecateV2Tokens]: "Migrate deprecated V2 imports",
-    [Codemod.MigrateColour]: "Replace V2_Color with new Colour tokens",
-    [Codemod.MigrateLayout]: "Replace V2_Layout with new Layout components",
-    [Codemod.MigrateMediaQuery]:
-        "Replace V2 media queries with new Breakpoint tokens",
-    [Codemod.MigrateText]:
-        "Replace V2_Text with new Typography components and V2_TextStyleHelper.getTextStyle() with Font",
-    [Codemod.MigrateTextList]:
-        "Replace V2_TextList with new Textlist components",
+    [Codemod.MigratePopover]:
+        "Replace deprecated Popover and migrate PopoverV2 imports",
 };
 
 const TargetDirectoryPaths = {
@@ -45,7 +31,6 @@ const TargetDirectoryPaths = {
 
 interface UserSelection {
     selectedCodemods: string[];
-    selectedTheme: Theme | null;
     targetPath: string;
 }
 
@@ -65,15 +50,11 @@ function listCodemods(): { name: string; value: string }[] {
 }
 
 function runCodemods(selection: UserSelection): void {
-    const { selectedCodemods, targetPath, selectedTheme } = selection;
+    const { selectedCodemods, targetPath } = selection;
 
     selectedCodemods.forEach((codemod) => {
         const codemodPath = path.join(codemodsDir, codemod, "index.ts");
         let command = `npx --yes jscodeshift --parser=tsx -t ${codemodPath} ${targetPath}`;
-
-        if (codemod === Codemod.MigrateColour && selectedTheme) {
-            command = `npx --yes jscodeshift --parser=tsx -t ${codemodPath} --mapping=${selectedTheme} ${targetPath}`;
-        }
 
         console.log(
             `Running codemod: ${codemod} on target path: ${targetPath}`
@@ -133,24 +114,6 @@ async function chooseTargetPath(): Promise<string | null> {
     return selectedOption;
 }
 
-async function chooseTheme(): Promise<Theme | null> {
-    const themeOptions = [
-        { name: "LifeSG", value: Theme.LifeSG },
-        { name: "BookingSG", value: Theme.BookingSG },
-        { name: "MyLegacy", value: Theme.MyLegacy },
-        { name: "CCube", value: Theme.CCube },
-        { name: "RBS", value: Theme.RBS },
-        { name: "OneService", value: Theme.OneService },
-    ];
-
-    const selectedTheme = await select({
-        message: "Select the theme that your project is using:",
-        choices: themeOptions,
-    });
-
-    return selectedTheme;
-}
-
 async function getCodemodSelections(): Promise<UserSelection> {
     const codemods = listCodemods();
     if (codemods.length === 0) {
@@ -164,31 +127,21 @@ async function getCodemodSelections(): Promise<UserSelection> {
         theme,
     });
 
-    let selectedTheme: Theme | null = null;
-    if (selectedCodemods.includes(Codemod.MigrateColour)) {
-        selectedTheme = await chooseTheme();
-    }
-
     const targetPath = await chooseTargetPath();
     if (!targetPath) {
         throw new Error("No target path selected or provided");
     }
 
-    return { selectedCodemods, selectedTheme, targetPath };
+    return { selectedCodemods, targetPath };
 }
 
 async function getConfirmation(selection: UserSelection) {
-    const { selectedCodemods, selectedTheme, targetPath } = selection;
+    const { selectedCodemods, targetPath } = selection;
 
     const codemods = selectedCodemods.join(", ");
     const finalConfirmationMessage =
         `\nYou are about to run the following codemods: ${codemods}\n` +
-        `Target path: ${targetPath}\n` +
-        `${
-            selectedTheme
-                ? `Selected theme for "migrate-colour": ${selectedTheme}\n`
-                : ""
-        }`;
+        `Target path: ${targetPath}\n`;
 
     console.log(finalConfirmationMessage);
 
