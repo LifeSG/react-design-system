@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import type { Dayjs } from "dayjs";
 import dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
@@ -8,20 +9,12 @@ import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import type { InternalCalendarProps } from "../shared/internal-calendar";
 import type { CellStyleProps } from "../shared/internal-calendar/day-cell";
 import { DayCell } from "../shared/internal-calendar/day-cell";
-import { Colour } from "../theme";
+import { TimeSlot as TimeSlotComponent } from "../shared/time-slot";
+import { Colour, useApplyStyle } from "../theme";
 import type { TimeSlot } from "../time-slot-bar/types";
 import { CalendarHelper } from "../util/calendar-helper";
 import { TimeHelper } from "../util/time-helper";
-import {
-    ColumnWeekCell,
-    DayLabel,
-    HeaderCellWeek,
-    HeaderRow,
-    TimeSlotComponent,
-    TimeSlotText,
-    TimeSlotWrapper,
-    Wrapper,
-} from "./time-slot-week-days.style";
+import * as styles from "./time-slot-week-days.styles";
 
 dayjs.extend(isBetween);
 
@@ -57,6 +50,26 @@ const fallbackSlot: TimeSlot = {
         backgroundColor: Colour["bg-stronger"],
         backgroundColor2: Colour["bg-strongest"],
     },
+};
+
+const TimeSlotTextWithColor = ({
+    color,
+    children,
+}: {
+    color: string | undefined;
+    children: React.ReactNode;
+}) => {
+    const ref = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(ref, {
+        [styles.tokens.timeSlotText.color]: color,
+    });
+
+    return (
+        <div ref={ref} className={styles.timeSlotText}>
+            {children}
+        </div>
+    );
 };
 
 export const TimeSlotWeekDays = ({
@@ -232,12 +245,17 @@ export const TimeSlotWeekDays = ({
     // =============================================================================
     const renderHeader = () => {
         return (
-            <HeaderRow role="row" onBlur={handleDayHoverClear}>
+            <div
+                className={styles.headerRow}
+                role="row"
+                onBlur={handleDayHoverClear}
+            >
                 {currentCalendarWeek.map((day, index) => {
                     const dayCellStyleProps = generateStyleProps(day);
 
                     return (
-                        <HeaderCellWeek
+                        <div
+                            className={styles.headerCellWeek}
                             key={`week-day-${index}`}
                             role="presentation"
                         >
@@ -260,22 +278,27 @@ export const TimeSlotWeekDays = ({
                                 }
                                 {...dayCellStyleProps}
                             />
-                            <DayLabel
+                            <div
                                 aria-hidden
-                                $disabled={dayCellStyleProps.disabled}
+                                className={clsx(
+                                    styles.dayLabel,
+                                    dayCellStyleProps.disabled &&
+                                        styles.dayLabelDisabled
+                                )}
                             >
                                 {dayjs(day).format("ddd")}
-                            </DayLabel>
-                        </HeaderCellWeek>
+                            </div>
+                        </div>
                     );
                 })}
-            </HeaderRow>
+            </div>
         );
     };
 
     const renderTimeSlotBarCells = () => {
         return (
-            <ColumnWeekCell
+            <div
+                className={styles.columnWeekCell}
                 key={`week-cell-${calendarDate.format(dateFormat)}`}
                 role="row"
             >
@@ -284,7 +307,8 @@ export const TimeSlotWeekDays = ({
                     const slots = daySlots?.[formattedDate] ?? [fallbackSlot];
 
                     return (
-                        <TimeSlotWrapper
+                        <div
+                            className={styles.timeSlotWrapper}
                             key={`wrapper-${dayIndex}`}
                             role="gridcell"
                         >
@@ -309,6 +333,7 @@ export const TimeSlotWeekDays = ({
                                     return (
                                         <TimeSlotComponent
                                             key={id}
+                                            className={styles.timeSlotComponent}
                                             styleType={styleType}
                                             bgColor={backgroundColor}
                                             bgColor2={backgroundColor2}
@@ -321,8 +346,8 @@ export const TimeSlotWeekDays = ({
                                                 )
                                             }
                                         >
-                                            <TimeSlotText
-                                                style={{ color: color }}
+                                            <TimeSlotTextWithColor
+                                                color={color}
                                             >
                                                 <span>
                                                     {CalendarHelper.convertTo12HourFormat(
@@ -338,7 +363,7 @@ export const TimeSlotWeekDays = ({
                                                         slotEndTime
                                                     )}
                                                 </span>
-                                            </TimeSlotText>
+                                            </TimeSlotTextWithColor>
                                             {isActualSlot && (
                                                 <VisuallyHidden>
                                                     <button
@@ -375,17 +400,17 @@ export const TimeSlotWeekDays = ({
                                         </TimeSlotComponent>
                                     );
                                 })}
-                        </TimeSlotWrapper>
+                        </div>
                     );
                 })}
-            </ColumnWeekCell>
+            </div>
         );
     };
 
     return (
-        <Wrapper role="grid">
+        <div className={styles.wrapper} role="grid">
             {renderHeader()}
             {renderTimeSlotBarCells()}
-        </Wrapper>
+        </div>
     );
 };

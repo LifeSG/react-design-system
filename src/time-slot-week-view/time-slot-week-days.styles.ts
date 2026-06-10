@@ -1,19 +1,20 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
 
-import { TimeSlot } from "../shared/time-slot";
 import { Colour, Font } from "../theme";
 
 // =============================================================================
-// STYLE INTERFACES
+// TOKENS
 // =============================================================================
-interface LabelStyleProps {
-    $disabled: boolean | undefined;
-}
+export const tokens = {
+    timeSlotText: {
+        color: "--fds-internal-timeSlotWeekDays-timeSlotText-color",
+    },
+};
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const HeaderCellWeek = styled.div`
+export const headerCellWeek = css`
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -22,36 +23,36 @@ export const HeaderCellWeek = styled.div`
     margin-bottom: 0.188rem;
 `;
 
-export const HeaderRow = styled.div`
+export const headerRow = css`
     grid-column: 1 / -1;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 `;
 
-export const DayLabel = styled.div<LabelStyleProps>`
+export const dayLabel = css`
     ${Font["body-xs-semibold"]}
-    color:${Colour["text"]};
-
-    ${(props) =>
-        props.$disabled &&
-        css`
-            color: ${Colour["text-disabled-subtlest"]};
-        `};
+    color: ${Colour["text"]};
 `;
 
-export const Wrapper = styled.div`
+export const dayLabelDisabled = css`
+    color: ${Colour["text-disabled-subtlest"]};
+`;
+
+export const wrapper = css`
     width: 100%;
     display: grid;
     grid-template-columns: repeat(7, 1fr);
 `;
 
-export const ColumnWeekCell = styled.div`
+export const columnWeekCell = css`
     grid-column: 1 / -1;
     display: flex;
     min-height: 7.625rem;
 `;
 
-export const TimeSlotText = styled.div`
+export const timeSlotText = css`
+    ${tokens.timeSlotText.color}: initial;
+
     ${Font["body-xs-semibold"]}
     margin: 1rem 0rem;
     display: flex;
@@ -59,18 +60,14 @@ export const TimeSlotText = styled.div`
     align-items: center;
     text-align: center;
     max-width: 2.5rem;
-    color: ${Colour["text"]};
-    span {
-        display: block;
-    }
+    color: var(${tokens.timeSlotText.color}, ${Colour["text"]});
 `;
 
-export const TimeSlotComponent = styled(TimeSlot)`
+export const timeSlotComponent = css`
     display: flex;
     flex-grow: 1;
     align-items: center;
     justify-content: center;
-    width: 100%;
     margin: 1px 0px;
     position: relative;
 
@@ -81,7 +78,7 @@ export const TimeSlotComponent = styled(TimeSlot)`
     }
 `;
 
-export const TimeSlotWrapper = styled.div`
+export const timeSlotWrapper = css`
     display: flex;
     flex-direction: column;
     flex: 1;

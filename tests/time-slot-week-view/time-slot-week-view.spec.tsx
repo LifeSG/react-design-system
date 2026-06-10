@@ -162,6 +162,36 @@ describe("TimeSlotWeekCalendar", () => {
                 fireEvent.click(leftArrowButton);
                 expect(onWeekDisplayChange).toHaveBeenCalledTimes(1);
             });
+
+            it("should not disable arrows when boundaries extend beyond current week", () => {
+                const minDate = dayjs("2021-01-01")
+                    .startOf("week")
+                    .subtract(1, "day");
+                const maxDate = dayjs("2021-01-01").endOf("week").add(1, "day");
+                render(
+                    <TimeSlotWeekView
+                        currentCalendarDate={"2021-01-01"}
+                        minDate={minDate.format(DATE_FORMAT)}
+                        maxDate={maxDate.format(DATE_FORMAT)}
+                    />
+                );
+                expect(screen.getByTestId("left-arrow-btn")).toBeEnabled();
+                expect(screen.getByTestId("right-arrow-btn")).toBeEnabled();
+            });
+
+            it("should disable both arrows when current week is at both boundaries", () => {
+                const minDate = dayjs("2021-01-01").startOf("week");
+                const maxDate = dayjs("2021-01-01").endOf("week");
+                render(
+                    <TimeSlotWeekView
+                        currentCalendarDate={"2021-01-01"}
+                        minDate={minDate.format(DATE_FORMAT)}
+                        maxDate={maxDate.format(DATE_FORMAT)}
+                    />
+                );
+                expect(screen.getByTestId("left-arrow-btn")).toBeDisabled();
+                expect(screen.getByTestId("right-arrow-btn")).toBeDisabled();
+            });
         });
     });
 
@@ -320,7 +350,7 @@ describe("TimeSlotWeekCalendar", () => {
         expect(screen.getByText("1")).toBeVisible();
     });
 
-    it("calls the onChange callback when a date is selected", () => {
+    it("calls the onChange callback with formatted date when a date is selected", () => {
         const onChange = jest.fn();
         render(
             <TimeSlotWeekView
@@ -331,6 +361,22 @@ describe("TimeSlotWeekCalendar", () => {
         const dateButton = screen.getByText("29");
         fireEvent.click(dateButton);
         expect(onChange).toHaveBeenCalledTimes(1);
+        expect(onChange).toHaveBeenCalledWith("2021-01-29");
+    });
+
+    it("does not call onChange when a disabled date is clicked", () => {
+        const onChange = jest.fn();
+        render(
+            <TimeSlotWeekView
+                onChange={onChange}
+                currentCalendarDate={"2021-01-29"}
+                minDate={"2021-01-28"}
+                maxDate={"2021-01-30"}
+            />
+        );
+        const disabledDate = screen.getByText("27");
+        fireEvent.click(disabledDate);
+        expect(onChange).not.toHaveBeenCalled();
     });
 
     describe("Keyboard navigation", () => {
