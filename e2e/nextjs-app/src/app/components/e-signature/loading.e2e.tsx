@@ -6,12 +6,12 @@ export default function Story() {
         <div className="story-column-container story-background">
             <ESignature
                 data-testid="esig-loading"
-                loadingProgress={45}
+                loadingProgress={0.45}
                 loadingLabel="Uploading..."
             />
             <ESignature
                 data-testid="esig-loading-complete"
-                loadingProgress={100}
+                loadingProgress={1}
                 loadingLabel="Upload complete"
             />
         </div>

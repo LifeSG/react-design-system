@@ -238,48 +238,72 @@ test.describe("ESignature", () => {
             await story.init("interactive");
         });
 
-        test("Clicking Add signature opens the modal", async ({ story }) => {
-            await story.locators.addSignatureButton.click();
+        test("Drawing", async ({ story }) => {
+            await test.step("Clicking Add signature opens the modal", async () => {
+                await story.locators.addSignatureButton.click();
 
-            await expect(story.locators.signatureModal).toBeVisible();
-            await compareScreenshot(story, "modal-open", { fullscreen: true });
-        });
-
-        test("Closing the modal via close button", async ({ story }) => {
-            await story.locators.addSignatureButton.click();
-            await expect(story.locators.signatureModal).toBeVisible();
-
-            await story.locators.modalCloseButton.click();
-
-            await expect(story.locators.signatureModal).not.toBeVisible();
-            await expect(story.locators.addSignatureButton).toBeVisible();
-        });
-
-        test("Clearing the drawing empties the canvas", async ({ story }) => {
-            await story.locators.addSignatureButton.click();
-
-            await story.drawOnCanvas();
-            await story.locators.clearButton.click();
-
-            await compareScreenshot(story, "after-clear", { fullscreen: true });
-        });
-
-        test("Saving a drawn signature shows the preview", async ({
-            story,
-        }) => {
-            await story.locators.addSignatureButton.click();
-
-            await test.step("Draw on canvas", async () => {
-                await story.drawOnCanvas();
+                await expect(story.locators.signatureModal).toBeVisible();
+                await compareScreenshot(story, "modal-open", {
+                    fullscreen: true,
+                });
             });
 
-            await test.step("Save and verify preview", async () => {
+            await test.step("Closing the modal via close button", async () => {
+                await story.locators.modalCloseButton.click();
+
+                await expect(story.locators.signatureModal).not.toBeVisible();
+                await expect(story.locators.addSignatureButton).toBeVisible();
+            });
+
+            await test.step("Clearing the drawing empties the canvas", async () => {
+                await story.locators.addSignatureButton.click();
+
+                await story.drawOnCanvas();
+                await story.locators.clearButton.click();
+
+                await compareScreenshot(story, "after-clear", {
+                    fullscreen: true,
+                });
+            });
+
+            await test.step("Saving a drawn signature shows the preview", async () => {
+                await story.drawOnCanvas();
                 await story.locators.saveButton.click();
 
                 await expect(story.locators.signatureModal).not.toBeVisible();
                 await expect(story.locators.signaturePreview).toBeVisible();
                 await compareScreenshot(story, "after-save");
             });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("interactive", { size: "mobile" });
+        });
+
+        test("Clicking Add signature opens the modal (mobile)", async ({
+            story,
+        }) => {
+            await story.locators.addSignatureButton.click();
+
+            await expect(story.locators.signatureModal).toBeVisible();
+            await compareScreenshot(story, "modal-open", { fullscreen: true });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("interactive", { mode: "dark" });
+        });
+
+        test("Clicking Add signature opens the modal (dark mode)", async ({
+            story,
+        }) => {
+            await story.locators.addSignatureButton.click();
+
+            await expect(story.locators.signatureModal).toBeVisible();
+            await compareScreenshot(story, "modal-open", { fullscreen: true });
         });
     });
 
