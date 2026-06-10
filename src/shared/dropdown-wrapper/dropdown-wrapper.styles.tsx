@@ -63,6 +63,7 @@ export const ValueLabel = styled.div<ValueLabelStyleProps>`
         props.$variant === "small"
             ? Font["body-md-regular"]
             : Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
     text-align: left;
     ${(props) => {
         switch (props.$truncateType) {
