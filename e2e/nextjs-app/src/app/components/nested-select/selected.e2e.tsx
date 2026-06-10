@@ -1,12 +1,12 @@
 "use client";
 
-import { InputNestedSelect } from "@lifesg/react-design-system/input-nested-select";
+import { Form } from "@lifesg/react-design-system/form";
 import { OPTIONS } from "./mock";
 
 export default function Story() {
     return (
-        <InputNestedSelect
-            data-testid="nested-select"
+        <Form.NestedSelect
+            data-testid="form-nested-select-default"
             options={OPTIONS}
             selectedKeyPath={["1", "11"]}
         />
