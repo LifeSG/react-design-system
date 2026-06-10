@@ -15,6 +15,7 @@ export const labelContainer = css`
 
 export const valueLabel = css`
     ${Font["body-baseline-regular"]}
+    color: ${Colour["text"]};
     text-align: left;
     overflow: hidden;
 
