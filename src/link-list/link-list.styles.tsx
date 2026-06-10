@@ -47,11 +47,11 @@ export const Item = styled.a`
     align-items: center;
     min-height: 4rem;
 
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         border-bottom: 1px solid ${Color.Neutral[5]};
     }
 
-    :hover {
+    &:hover {
         ${ItemTitleDefault},
         ${ItemTitleSmall},
         ${ItemIcon} {
@@ -103,7 +103,7 @@ export const ToggleButton = styled.button<ToggleStyleProps>`
     transition: border-width 300ms linear;
     border-top: 1px solid ${Color.Neutral[5]};
 
-    :hover {
+    &:hover {
         ${ToggleButtonLabel},
         ${ViewMoreIcon},
         ${ViewLessIcon} {

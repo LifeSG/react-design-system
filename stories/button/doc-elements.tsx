@@ -8,7 +8,7 @@ export const Container = styled.div`
     flex-wrap: wrap;
     gap: 1.5rem;
 
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-bottom: 1.5rem;
     }
 

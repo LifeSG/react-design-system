@@ -10,7 +10,7 @@ export const Container = styled.div`
 
     ul,
     ol {
-        :not(:last-of-type) {
+        &:not(:last-of-type) {
             margin-right: 1.5rem;
         }
     }

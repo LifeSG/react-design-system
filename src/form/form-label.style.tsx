@@ -21,9 +21,9 @@ export const Label = styled.label`
         color: ${Color.Primary};
         text-decoration: none;
 
-        :hover,
-        :active,
-        :focus {
+        &:hover,
+        &:active,
+        &focus {
             color: ${Color.Secondary};
 
             svg {

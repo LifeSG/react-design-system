@@ -83,7 +83,7 @@ const Button = styled.button<StyleProps>`
     ${(props) => {
         if (props.$selected) {
             return css`
-                :after {
+                &:after {
                     content: "";
                     position: absolute;
                     bottom: -0.5rem;
@@ -96,7 +96,7 @@ const Button = styled.button<StyleProps>`
         }
     }}
 
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         margin-right: 1rem;
     }
 `;

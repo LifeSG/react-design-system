@@ -39,8 +39,8 @@ export const LinkButton = styled(Button.Default)<LinkButtonStyleProp>`
         color: ${Color.Neutral[1]} !important;
     }
 
-    :hover,
-    :focus {
+    &:hover,
+    &:focus {
         background-color: ${Color.Accent.Light[4]};
 
         span {

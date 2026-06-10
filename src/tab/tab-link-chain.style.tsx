@@ -31,7 +31,7 @@ export const Chain = styled.ul<ChainStyleProps>`
     ${(props) => {
         if (props.$fullWidthIndicatorLine) {
             return css`
-                ::after {
+                &::after {
                     content: "";
                     height: inherit;
                     flex-grow: 1;

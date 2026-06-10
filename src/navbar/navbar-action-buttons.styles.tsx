@@ -56,7 +56,7 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
     display: flex;
     align-items: center;
 
-    :not(:last-of-type) {
+    &:not(:last-of-type) {
         margin-right: 1rem;
     }
 
@@ -65,7 +65,7 @@ export const ButtonItem = styled.li<{ $mobile?: boolean }>`
         padding: 0 0 0 1rem;
         justify-content: center;
 
-        :not(:last-of-type) {
+        &:not(:last-of-type) {
             margin-right: 0;
             margin-bottom: ${(props) => (props.$mobile ? "1rem" : "0")};
         }
@@ -111,7 +111,7 @@ export const DownloadAppImageLinkWrapper = styled.div`
 `;
 
 export const DownloadAppImageLink = styled.a`
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-right: 1rem;
     }
 

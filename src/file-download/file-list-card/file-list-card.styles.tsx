@@ -24,7 +24,7 @@ export const Item = styled.li`
     width: 100%;
     border: none;
 
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-bottom: 1rem;
     }
 `;
@@ -41,7 +41,7 @@ export const Box = styled.div`
     ${MediaQuery.MaxWidth.mobileL} {
         padding: 1rem;
     }
-    :hover {
+    &:hover {
         background: ${Color.Accent.Light[5]};
     }
 `;
@@ -184,7 +184,7 @@ export const ActionContainer = styled.div`
 export const IconButton = styled(DSIconButton)`
     min-width: unset;
 
-    :not(:last-child) {
+    &:not(:last-child) {
         margin-right: 1rem;
     }
 `;

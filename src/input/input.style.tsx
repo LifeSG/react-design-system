@@ -24,15 +24,15 @@ export const InputElement = styled.input<InputStyleProps>`
     width: 100%;
     padding: 0;
 
-    :focus,
-    :active {
+    &:focus,
+    &:active {
         outline: none;
         border: none;
         box-shadow: none;
     }
 
-    ::placeholder,
-    ::-webkit-input-placeholder {
+    &::placeholder,
+    &::-webkit-input-placeholder {
         color: ${Color.Neutral[3]};
     }
 

@@ -65,11 +65,11 @@ const StyledTable = styled.table`
     }
 
     td {
-        :first-child {
+        &:first-child {
             width: 20%;
         }
 
-        :last-child {
+        &:last-child {
             width: 20%;
         }
     }
@@ -78,7 +78,7 @@ const StyledTable = styled.table`
         tr {
             border: none;
             border-bottom: 1px solid ${Color.Neutral[6]};
-            :nth-child(even) {
+            &:nth-child(even) {
                 background: ${Color.Neutral[7]};
             }
         }
@@ -151,7 +151,7 @@ const Label = styled.td<NameColStyleProps>`
 
 const Mandatory = styled.td<NameColStyleProps>`
     font-weight: bold;
-    :after {
+    &:after {
         content: " *";
         color: ${Color.Validation.Red.Text};
     }
@@ -205,7 +205,7 @@ const PropsContainer = styled.div`
     display: flex;
     flex-wrap: wrap;
     code {
-        :not(:last-child) {
+        &:not(:last-child) {
             margin-right: 0.25rem;
         }
     }

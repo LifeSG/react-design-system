@@ -2,6 +2,8 @@ import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { NestedDropdownList } from "../../../src/shared/dropdown-list-v2/nested-dropdown-list";
 import { NestedDropdownListItemProps } from "../../../src/shared/dropdown-list-v2/types";
+import { ThemeProvider } from "styled-components";
+import { BaseTheme } from "../../../src";
 
 describe("NestedDropdownList", () => {
     beforeEach(() => {
@@ -14,10 +16,14 @@ describe("NestedDropdownList", () => {
         }));
     });
 
+    const renderWithTheme = (node: React.ReactNode) => {
+        return render(<ThemeProvider theme={BaseTheme}>{node}</ThemeProvider>);
+    };
+
     describe("mode = default", () => {
         it("should expand the first subtree (1 tier)", () => {
             const options = buildOptions([["1"], ["2"]]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -33,7 +39,7 @@ describe("NestedDropdownList", () => {
                 ["1", [["1.1"], ["1.2"]]],
                 ["2", [["2.1"], ["2.2"]]],
             ]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -71,7 +77,7 @@ describe("NestedDropdownList", () => {
                 ],
                 ["2", [["2.1"], ["2.2", [["2.2.1"]]]]],
             ]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -115,7 +121,7 @@ describe("NestedDropdownList", () => {
     describe("mode = expand", () => {
         it("should expand all subtrees (1 tier)", () => {
             const options = buildOptions([["1"], ["2"]]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -132,7 +138,7 @@ describe("NestedDropdownList", () => {
                 ["1", [["1.1"], ["1.2"]]],
                 ["2", [["2.1"], ["2.2"]]],
             ]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -167,7 +173,7 @@ describe("NestedDropdownList", () => {
                 ],
                 ["2", [["2.1"], ["2.2", [["2.2.1"]]]]],
             ]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -204,7 +210,7 @@ describe("NestedDropdownList", () => {
     describe("mode = collapse", () => {
         it("should collapse all subtrees (1 tier)", () => {
             const options = buildOptions([["1"], ["2"]]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -221,7 +227,7 @@ describe("NestedDropdownList", () => {
                 ["1", [["1.1"], ["1.2"]]],
                 ["2", [["2.1"], ["2.2"]]],
             ]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -264,7 +270,7 @@ describe("NestedDropdownList", () => {
                 ],
                 ["2", [["2.1"], ["2.2", [["2.2.1"]]]]],
             ]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -321,7 +327,7 @@ describe("NestedDropdownList", () => {
                 ],
             ],
         ]);
-        render(
+        renderWithTheme(
             <NestedDropdownList
                 listItems={options}
                 selectedKeyPaths={new Set<string>()}
@@ -366,7 +372,7 @@ describe("NestedDropdownList", () => {
                 ],
             ],
         ]);
-        render(
+        renderWithTheme(
             <NestedDropdownList
                 listItems={options}
                 selectedKeyPaths={new Set<string>()}
@@ -421,7 +427,7 @@ describe("NestedDropdownList", () => {
                 ],
             ],
         ]);
-        render(
+        renderWithTheme(
             <NestedDropdownList
                 listItems={options}
                 selectedKeyPaths={new Set<string>()}
@@ -466,7 +472,7 @@ describe("NestedDropdownList", () => {
                 ],
             ],
         ]);
-        render(
+        renderWithTheme(
             <NestedDropdownList
                 listItems={options}
                 selectedKeyPaths={new Set<string>()}
@@ -522,7 +528,7 @@ describe("NestedDropdownList", () => {
                     ],
                 ],
             ]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -555,7 +561,7 @@ describe("NestedDropdownList", () => {
                     ],
                 ],
             ]);
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     selectedKeyPaths={new Set<string>()}
@@ -594,7 +600,7 @@ describe("NestedDropdownList", () => {
                 ["2", "2.2", "2.2.1"],
             ];
 
-            render(
+            renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     multiSelect
@@ -647,7 +653,7 @@ describe("NestedDropdownList", () => {
             ]);
             const selectedKeyPaths = [["A", "AA", "Apple"]];
 
-            const { rerender } = render(
+            const { rerender } = renderWithTheme(
                 <NestedDropdownList
                     listItems={options}
                     multiSelect
@@ -676,16 +682,20 @@ describe("NestedDropdownList", () => {
             ];
 
             rerender(
-                <NestedDropdownList
-                    listItems={options}
-                    multiSelect
-                    selectedKeyPaths={
-                        new Set<string>(
-                            newSelectedKeyPaths.map((path) => path.join(","))
-                        )
-                    }
-                    enableSearch
-                />
+                <ThemeProvider theme={BaseTheme}>
+                    <NestedDropdownList
+                        listItems={options}
+                        multiSelect
+                        selectedKeyPaths={
+                            new Set<string>(
+                                newSelectedKeyPaths.map((path) =>
+                                    path.join(",")
+                                )
+                            )
+                        }
+                        enableSearch
+                    />
+                </ThemeProvider>
             );
 
             expect(

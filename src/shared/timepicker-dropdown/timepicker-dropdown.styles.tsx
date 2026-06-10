@@ -138,13 +138,13 @@ export const TimeInput = styled(BasicInput)`
     border: 1px solid ${Color.Neutral[5]};
     background: ${Color.Neutral[8]};
 
-    :focus,
-    :active {
+    &:focus,
+    &:active {
         border: 1px solid ${Color.Accent.Light[1]};
         box-shadow: inset 0 0 5px 1px ${Color.Shadow.Accent};
     }
 
-    :focus::placeholder {
+    &:focus::placeholder {
         color: transparent;
     }
 
