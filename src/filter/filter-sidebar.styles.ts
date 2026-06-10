@@ -23,6 +23,7 @@ export const filterHeader = css`
     align-items: center;
 
     background-color: ${Colour["bg"]};
+    color: ${Colour["text"]};
 `;
 
 export const filterTitleGroup = css`

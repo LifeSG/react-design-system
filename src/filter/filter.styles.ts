@@ -16,6 +16,7 @@ export const filterBody = css`
     flex: 1;
     width: 100%;
     overflow-y: auto;
+    color: ${Colour["text"]};
 `;
 
 // =============================================================================
