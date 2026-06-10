@@ -8,7 +8,7 @@ import {
     useRef,
 } from "react";
 
-import { Colour } from "../theme";
+import { Colour, useDesignToken } from "../theme";
 import * as styles from "./e-signature.styles";
 
 interface ESignatureCanvasProps {
@@ -33,6 +33,7 @@ const Component = (
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvas = useRef<FabricCanvas>();
     const pencilBrush = useRef<PencilBrush>();
+    const resolvedColor = useDesignToken(Colour["text"]);
 
     // =============================================================================
     // HOOKS
@@ -87,13 +88,6 @@ const Component = (
             fabricCanvas.current = new FabricCanvas("eSignatureCanvas");
             fabricCanvas.current.selection = false;
             fabricCanvas.current.isDrawingMode = true;
-
-            const cssVarName = Colour["text"].match(/var\(([^,)]+)/)?.[1] ?? "";
-            const resolvedColor = cssVarName
-                ? getComputedStyle(containerRef.current)
-                      .getPropertyValue(cssVarName)
-                      .trim()
-                : "";
 
             pencilBrush.current = new PencilBrush(fabricCanvas.current);
             pencilBrush.current.color = resolvedColor || "#000000";
