@@ -56,6 +56,7 @@ export const filterTitleGroup = css`
 
 export const filterTitle = css`
     ${Font["heading-xs-semibold"]}
+    color: ${Colour["text"]};
 `;
 
 export const filterToggleContent = css`
