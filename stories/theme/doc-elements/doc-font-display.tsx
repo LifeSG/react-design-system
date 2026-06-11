@@ -199,7 +199,7 @@ export const FontDisplay = ({ theme }: FontDisplayProps) => {
             <div className={display}>
                 <div className={clsx(row, headerRow)}>
                     <div>Token</div>
-                    <div>V3_Font size</div>
+                    <div>Font size</div>
                     <div>Line height</div>
                     <div>Letter spacing</div>
                 </div>
