@@ -59,32 +59,20 @@ If you require customisations down to the style, you can use the relevant `data-
 ### Style declaration
 
 ```css
-/* Plain CSS (custom-error-display.css) */
+/* custom-error-display.css */
 .customErrorDisplay [data-id="error-display-image"] {
     /* Your styles here */
 }
-
-/* CSS Module (custom-error-display.module.css) */
-.customErrorDisplay [data-id="error-display-image"] {
-    /* Your styles here */
-}
-
-/* CSS in JS */
-const customErrorDisplay = css`
-    [data-id="error-display-image"] {
-        /* Your styles here */
-    }
-`;
 ```
 
 ### Applying className
 
 ```tsx
+import "./custom-error-display.css";
+
 export const CustomErrorDisplay = () => (
     <ErrorDisplay
-        // className="customErrorDisplay" // Plain CSS
-        // className={styles.customErrorDisplay} // CSS Module
-        className={customErrorDisplay} // CSS in JS
+        className="customErrorDisplay" // Plain CSS
         type="default"
     />
 );
