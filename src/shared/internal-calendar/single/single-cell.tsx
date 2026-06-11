@@ -125,7 +125,7 @@ export const SingleCell = ({
             props.labelType = "current";
         }
 
-        const isSelected = date.isSame(selectedDate, "day");
+        const isSelected = selectedDate && date.isSame(selectedDate, "day");
         const isHover = date.isSame(hoverDate, "day");
 
         if (isSelected && isHover) {
