@@ -130,22 +130,10 @@ const FONT_ROWS: FontCollectionProps[] = [
     },
 ];
 
-const toCamelCase = (value: string) =>
-    value.replace(/-([a-z])/g, (_, char: string) => char.toUpperCase());
-
 const fontDeclarationToStyle = (declarations: string) => {
     const style: Record<string, string> = {};
 
-    declarations
-        .split(";")
-        .map((declaration) => declaration.trim())
-        .filter(Boolean)
-        .forEach((declaration) => {
-            const [rawProperty, ...rawValue] = declaration.split(":");
-            if (!rawProperty || rawValue.length === 0) return;
-
-            style[toCamelCase(rawProperty.trim())] = rawValue.join(":").trim();
-        });
+    style.cssText = declarations;
 
     return style;
 };
@@ -171,6 +159,8 @@ const FontCollection = ({
         <div className={row} key={fontSizeToken}>
             <div>
                 {tokens.map((token) => {
+                    console.log({ font: Font[token] });
+
                     return (
                         <div
                             className={textPreview}
