@@ -1,4 +1,5 @@
 import { css } from "@linaria/core";
+import clsx from "clsx";
 import { useDesignToken } from "src/theme";
 
 import { DocTable, docText } from "../docs/doc-table";
@@ -9,7 +10,7 @@ import type {
 } from "./types";
 
 export const Usage = ({ children }: React.ComponentProps<"div">) => {
-    return <div className={`${usage} ${docText}`}>{children}</div>;
+    return <div className={clsx(usage, docText)}>{children}</div>;
 };
 
 const usage = css`
