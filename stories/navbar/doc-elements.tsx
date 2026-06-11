@@ -79,7 +79,7 @@ export const MobileCustomComponent = ({ onClick }: Props) => {
 };
 
 export const NavbarAvatar = () => {
-    const isTablet = useMaxWidthMediaQuery("xl");
+    const isTablet = useMaxWidthMediaQuery("lg");
 
     return (
         <Menu
