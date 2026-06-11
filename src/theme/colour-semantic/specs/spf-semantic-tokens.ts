@@ -40,7 +40,7 @@ export const SPFColourSet: SemanticColourSet = {
     "icon-primary": getPrimitiveColour("primary-40"),
     "icon-primary-subtle": getPrimitiveColour("primary-50"),
     "icon-primary-subtlest": getPrimitiveColour("primary-60"),
-    "icon-brand": getPrimitiveColour("primary-10"),
+    "icon-brand": getPrimitiveColour("brand-10"),
     "icon-secondary": getPrimitiveColour("secondary-50"),
     "icon-secondary-subtle": getPrimitiveColour("secondary-60"),
 
