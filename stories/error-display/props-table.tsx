@@ -71,7 +71,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "actionButton",
-                description: `"The properties of the action button that appears at the bottom of the component"`,
+                description:
+                    "The properties of the action button that appears at the bottom of the component",
                 propTypes: (
                     <a
                         href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
@@ -91,7 +92,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "illustrationScheme",
-                description: `"Use resource scheme provided instead of default theme"`,
+                description:
+                    "Use resource scheme provided instead of default theme",
                 propTypes: [...THEME_TYPES],
             },
             {
@@ -104,7 +106,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "imageOnly",
-                description: `"Specifying will allow only the image to be rendered"`,
+                description:
+                    "Specifying will allow only the image to be rendered",
                 propTypes: ["boolean"],
             },
         ],
@@ -126,12 +129,14 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "secondsLeft",
                 mandatory: true,
-                description: `"The amount of time left (in seconds) for the inactivity display"`,
+                description:
+                    "The amount of time left (in seconds) for the inactivity display",
                 propTypes: ["number"],
             },
             {
                 name: "reminderInterval",
-                description: `"Interval (in seconds) for announcing remaining time via screen readers"`,
+                description:
+                    "Interval (in seconds) for announcing remaining time via screen readers",
                 propTypes: ["number"],
             },
         ],
