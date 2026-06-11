@@ -128,7 +128,7 @@ interface DefaultColProps {
 }
 
 interface SwatchColourProps {
-    $colour: string;
+    colour: string;
 }
 
 const ColourDisplay = ({
@@ -139,7 +139,7 @@ const ColourDisplay = ({
     const { value, reference } = useInspectColour(attributes.token);
     return (
         <Default>
-            <SwatchColour $colour={value} />
+            <SwatchColour colour={value} />
             <code>{reference || value}</code>
         </Default>
     );
@@ -194,8 +194,8 @@ const defaultContainer = css`
     color: #333333;
 `;
 
-const SwatchColour = ({ $colour }: SwatchColourProps) => {
-    return <div className={swatchColour} style={{ background: $colour }} />;
+const SwatchColour = ({ colour }: SwatchColourProps) => {
+    return <div className={swatchColour} style={{ background: colour }} />;
 };
 
 const swatchColour = css`
