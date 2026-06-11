@@ -80,7 +80,7 @@ export const growContainer = css`
     margin: auto;
     padding: ${Spacing["layout-xxl"]} ${Spacing["layout-sm"]};
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         padding: 0;
         width: 100%;
         height: 100%;
@@ -98,7 +98,7 @@ export const modalBox = css`
     margin: 0 auto;
     padding: ${Spacing["spacing-16"]};
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         display: flex;
         flex-direction: column;
         max-width: none;
@@ -117,7 +117,7 @@ export const modalTitle = css`
     margin-bottom: ${Spacing["spacing-16"]};
     text-align: center;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         ${Font["body-md-semibold"]}
         margin: ${Spacing["spacing-12"]} 0;
     }
@@ -129,9 +129,13 @@ export const eSignatureContainer = css`
     border-radius: ${Radius["lg"]};
     overflow: hidden;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         border-radius: 0;
         flex: 1;
+    }
+
+    &[data-mobile-landscape="true"] {
+        background: ${Colour["bg-strong"]};
     }
 `;
 
@@ -142,10 +146,15 @@ export const eSignatureDrawable = css`
     background: ${Colour["bg-stronger"]};
     margin: auto;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         aspect-ratio: 4/3;
         width: 100%;
         height: auto;
+    }
+
+    &[data-mobile-landscape="true"] {
+        width: auto;
+        height: 100%;
     }
 `;
 
@@ -159,7 +168,7 @@ export const signatureLine = css`
     background-color: ${Colour["border-strong"]};
     pointer-events: none;
 
-    ${MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         width: calc(100% - ${Spacing["spacing-40"]});
         max-width: 300px;
         left: 50%;
@@ -177,63 +186,23 @@ export const modalButtons = css`
             ${Spacing["spacing-48"]};
         gap: ${Spacing["spacing-16"]};
     }
+
+    &[data-mobile-landscape="true"] {
+        flex-direction: row;
+        margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
+    }
 `;
 
 export const modalActionButton = css`
     width: 8.5rem;
+
     ${MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
-`;
 
-export const growContainerLandscape = css`
-    padding: 0;
-    width: 100%;
-    height: 100%;
-`;
-
-export const modalBoxLandscape = css`
-    display: flex;
-    flex-direction: column;
-    max-width: none;
-    height: 100%;
-    border-radius: 0;
-    padding: 0;
-
-    ${modalBoxStyles.tokens.buttonTopInset}: ${Spacing["spacing-8"]};
-    ${modalBoxStyles.tokens.buttonRightInset}: ${Spacing["spacing-20"]};
-`;
-
-export const modalTitleLandscape = css`
-    ${Font["body-md-semibold"]}
-    margin: ${Spacing["spacing-12"]} 0;
-`;
-
-export const eSignatureContainerLandscape = css`
-    border-radius: 0;
-    flex: 1;
-    background: ${Colour["bg-strong"]};
-`;
-
-export const eSignatureDrawableLandscape = css`
-    aspect-ratio: 4/3;
-    width: auto;
-    height: 100%;
-`;
-
-export const signatureLineLandscape = css`
-    width: calc(100% - ${Spacing["spacing-40"]});
-    max-width: 300px;
-    left: 50%;
-`;
-
-export const modalButtonsLandscape = css`
-    flex-direction: row;
-    margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
-`;
-
-export const modalActionButtonLandscape = css`
-    height: 2.5rem;
+    &[data-mobile-landscape="true"] {
+        height: 2.5rem;
+    }
 `;
 
 export const signatureCanvasContainer = css`

@@ -1,5 +1,4 @@
 import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
-import clsx from "clsx";
 import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import { Button } from "../button";
@@ -146,46 +145,31 @@ export const ESignature = (props: EsignatureProps) => {
                 show={showModal}
             >
                 <div
-                    className={clsx(
-                        styles.growContainer,
-                        isMobileLandscape && styles.growContainerLandscape
-                    )}
+                    className={styles.growContainer}
+                    data-mobile-landscape={isMobileLandscape}
                 >
                     <Modal.Box
-                        className={clsx(
-                            styles.modalBox,
-                            isMobileLandscape && styles.modalBoxLandscape
-                        )}
+                        className={styles.modalBox}
+                        data-mobile-landscape={isMobileLandscape}
                         onClose={() => setShowModal(false)}
                     >
                         <h2
-                            className={clsx(
-                                styles.modalTitle,
-                                isMobileLandscape && styles.modalTitleLandscape
-                            )}
+                            className={styles.modalTitle}
+                            data-mobile-landscape={isMobileLandscape}
                         >
                             Signature
                         </h2>
                         <div
-                            className={clsx(
-                                styles.eSignatureContainer,
-                                isMobileLandscape &&
-                                    styles.eSignatureContainerLandscape
-                            )}
+                            className={styles.eSignatureContainer}
+                            data-mobile-landscape={isMobileLandscape}
                         >
                             <div
-                                className={clsx(
-                                    styles.eSignatureDrawable,
-                                    isMobileLandscape &&
-                                        styles.eSignatureDrawableLandscape
-                                )}
+                                className={styles.eSignatureDrawable}
+                                data-mobile-landscape={isMobileLandscape}
                             >
                                 <div
-                                    className={clsx(
-                                        styles.signatureLine,
-                                        isMobileLandscape &&
-                                            styles.signatureLineLandscape
-                                    )}
+                                    className={styles.signatureLine}
+                                    data-mobile-landscape={isMobileLandscape}
                                 />
                                 <Suspense fallback={null}>
                                     {showModal && (
@@ -198,18 +182,12 @@ export const ESignature = (props: EsignatureProps) => {
                             </div>
                         </div>
                         <div
-                            className={clsx(
-                                styles.modalButtons,
-                                isMobileLandscape &&
-                                    styles.modalButtonsLandscape
-                            )}
+                            className={styles.modalButtons}
+                            data-mobile-landscape={isMobileLandscape}
                         >
                             <Button
-                                className={clsx(
-                                    styles.modalActionButton,
-                                    isMobileLandscape &&
-                                        styles.modalActionButtonLandscape
-                                )}
+                                className={styles.modalActionButton}
+                                data-mobile-landscape={isMobileLandscape}
                                 sizeType={
                                     isMobileLandscape ? "small" : "default"
                                 }
@@ -225,11 +203,8 @@ export const ESignature = (props: EsignatureProps) => {
                                 Clear
                             </Button>
                             <Button
-                                className={clsx(
-                                    styles.modalActionButton,
-                                    isMobileLandscape &&
-                                        styles.modalActionButtonLandscape
-                                )}
+                                className={styles.modalActionButton}
+                                data-mobile-landscape={isMobileLandscape}
                                 sizeType={
                                     isMobileLandscape ? "small" : "default"
                                 }
