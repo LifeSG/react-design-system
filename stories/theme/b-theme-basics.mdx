@@ -79,16 +79,15 @@ const component = css`
 `;
 ```
 
-#### CSS variables
+#### Styled Components
 
 ```tsx
 import { Colour } from "@lifesg/react-design-system/theme";
+import styled from "styled-components";
 
-const style = {
-    background: Colour["background-error"],
-};
-
-const SomeComponent = () => <div style={style}>...</div>;
+const SomeComponent = styled.div`
+    background: ${Colour["background-error"]};
+`;
 ```
 
 ### As a constant
