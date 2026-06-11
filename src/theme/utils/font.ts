@@ -74,13 +74,13 @@ const sizeVarMap: Record<
         ls: "var(--fds-font-body-ls-xs)",
     },
     "form-label": {
-        fontFamily: "var(--fds-font-family)",
+        fontFamily: "var(--fds-body-font-family)",
         size: "var(--fds-font-form-label-size)",
         lh: "var(--fds-font-form-label-lh)",
         ls: "var(--fds-font-form-label-ls)",
     },
     "form-description": {
-        fontFamily: "var(--fds-font-family)",
+        fontFamily: "var(--fds-body-font-family)",
         size: "var(--fds-font-form-description-size)",
         lh: "var(--fds-font-form-description-lh)",
         ls: "var(--fds-font-form-description-ls)",
@@ -99,7 +99,7 @@ const weightVarMap: Record<FontWeight, string> = {
  *
  * @example
  * generateFontProperties("heading-xxl", "light")
- * // => { "font-family": "var(--fds-font-family)", ... }
+ * // => { "font-family": "var(--fds-heading-font-family)", ... }
  */
 export const generateFontProperties = (
     size: FontSize,
@@ -135,7 +135,7 @@ export const generateFontProperties = (
  *
  * @example
  * generateFont("heading-xxl", "light")
- * // => "font-family: var(--fds-font-family); font-variant: var(--fds-font-variant); ..."
+ * // => "font-family: var(--fds-heading-font-family); font-variant: var(--fds-font-variant); ..."
  */
 export const generateFont = (
     size: FontSize,

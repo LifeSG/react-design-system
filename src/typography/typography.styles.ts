@@ -13,9 +13,16 @@ export const tokens = {
 
 export const typographyBase = css`
     ${tokens.typographyBase.maxLines}: initial;
-    font-family: ${Font.Spec["font-family"]};
     font-variant: ${Font.Spec["font-variant"]};
     color: ${Colour.text};
+`;
+
+export const typographyHeader = css`
+    font-family: ${Font.Spec["heading-font-family"]};
+`;
+
+export const typographyBody = css`
+    font-family: ${Font.Spec["body-font-family"]};
 `;
 
 export const displayInline = css`
