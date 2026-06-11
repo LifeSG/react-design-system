@@ -305,6 +305,8 @@ PRIMITIVE COLORS
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
     --fds-font-family: "Lato";
+    --fds-heading-font-family: var(--fds-font-family);
+    --fds-body-font-family: var(--fds-font-family);
     --fds-font-body-size-baseline: 1rem;
     --fds-font-body-size-md: 0.875rem;
     --fds-font-body-size-sm: 0.75rem;
