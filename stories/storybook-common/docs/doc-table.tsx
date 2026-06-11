@@ -2,7 +2,7 @@ import { css } from "@linaria/core";
 import clsx from "clsx";
 import type { ReactNode } from "react";
 
-export const DocTextStyle = css`
+export const docText = css`
     font-family: "Nunito Sans", -apple-system, ".SFNSText-Regular",
         "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
         Helvetica, Arial, sans-serif;
@@ -33,9 +33,7 @@ interface DocTableProps {
 
 export const DocTable = ({ children, className }: DocTableProps) => {
     return (
-        <table className={clsx(DocTextStyle, docTable, className)}>
-            {children}
-        </table>
+        <table className={clsx(docText, docTable, className)}>{children}</table>
     );
 };
 

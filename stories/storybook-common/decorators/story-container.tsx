@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 import type { ReactRenderer } from "@storybook/react-webpack5";
 import clsx from "clsx";
+import type { CSSProperties } from "react";
 import { Typography } from "src/typography";
 import type { DecoratorFunction } from "storybook/internal/types";
 
@@ -169,14 +170,15 @@ export const GridDecorator: (options: {
         return (
             <div
                 data-testid="grid-story"
-                className={gridStoryContainer}
-                style={{
-                    gridTemplateColumns: `${
-                        rowHeaders ? "auto " : ""
-                    }repeat(${columns}, minmax(min-content, 1fr))`,
-                }}
+                className={clsx(gridStoryContainer, {
+                    [gridStoryContainerWithRowHeaders]: !!rowHeaders,
+                    [gridStoryContainerWithoutRowHeaders]: !rowHeaders,
+                })}
+                style={{ "--grid-columns": columns } as CSSProperties}
             >
-                {rowHeaders && columnHeaders ? <div /> : null}
+                {rowHeaders && columnHeaders ? (
+                    <div className={gridStoryColumnHeader} />
+                ) : null}
                 {columnHeaders
                     ? columnHeaders.map((header) => (
                           <Typography.BodySM
@@ -208,6 +210,20 @@ const gridStoryContainer = css`
     gap: 1rem;
     align-items: center;
     justify-items: center;
+`;
+
+const gridStoryContainerWithRowHeaders = css`
+    grid-template-columns: auto repeat(
+            var(--grid-columns),
+            minmax(min-content, 1fr)
+        );
+`;
+
+const gridStoryContainerWithoutRowHeaders = css`
+    grid-template-columns: repeat(
+        var(--grid-columns),
+        minmax(min-content, 1fr)
+    );
 `;
 
 const gridStoryColumnHeader = css`

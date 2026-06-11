@@ -1,7 +1,7 @@
 import { css } from "@linaria/core";
 import { useDesignToken } from "src/theme";
 
-import { DocTable, DocTextStyle } from "../docs/doc-table";
+import { DocTable, docText } from "../docs/doc-table";
 import { useInspectColour } from "../inspectors/token-inspector";
 import type {
     TokenTableDefaultValueColourTokenProps,
@@ -9,7 +9,7 @@ import type {
 } from "./types";
 
 export const Usage = ({ children }: React.ComponentProps<"div">) => {
-    return <div className={`${usage} ${DocTextStyle}`}>{children}</div>;
+    return <div className={`${usage} ${docText}`}>{children}</div>;
 };
 
 const usage = css`

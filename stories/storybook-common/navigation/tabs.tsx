@@ -1,4 +1,5 @@
 import { css } from "@linaria/core";
+import clsx from "clsx";
 import { useState } from "react";
 import { Border, Colour, Font, ThemeProvider } from "src/theme";
 import { Typography } from "src/typography";
@@ -19,9 +20,9 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
         return tabs.map((tab) => {
             return (
                 <button
-                    className={`${buttonBase} ${
-                        selectedTab === tab.title ? buttonSelected : ""
-                    }`}
+                    className={clsx(buttonBase, {
+                        [buttonSelected]: selectedTab === tab.title,
+                    })}
                     key={tab.title}
                     type="button"
                     onClick={() => setSelectedTab(tab.title)}
