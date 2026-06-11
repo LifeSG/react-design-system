@@ -1,9 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
-import { useMaxWidthMediaQuery } from "src";
+import { ThemeProvider, useMaxWidthMediaQuery } from "src";
 import type { LocalNavItemProps } from "src/local-nav";
 import { LocalNavDropdown, LocalNavMenu } from "src/local-nav";
-import { ThemeProvider } from "src/theme";
 
 import { Content, Page, TopContent } from "./doc-elements";
 
@@ -22,129 +21,49 @@ const NAV_ITEMS = [
     { title: "Title 3" },
 ];
 
-const scrollToSelectedSection = (
-    contentRef: React.RefObject<HTMLDivElement>,
-    index: number
-) => {
-    const element = contentRef.current?.children[index];
-    if (!element) return;
+export const Menu: StoryObj<MenuComponent> = {
+    render: function MenuRender(_args) {
+        const [selectedIndex, setSelectedIndex] = useState(-1);
 
-    const top = element.getBoundingClientRect().top + window.scrollY - 200;
-    window.scrollTo({ top, behavior: "smooth" });
-};
+        const handleNavItemClick = (
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
+            setSelectedIndex(index);
+        };
 
-const MenuStory = () => {
-    const [selectedIndex, setSelectedIndex] = useState(-1);
-
-    const handleNavItemClick = (
-        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-        item: LocalNavItemProps,
-        index: number
-    ) => {
-        setSelectedIndex(index);
-    };
-
-    return (
-        <LocalNavMenu
-            items={NAV_ITEMS}
-            selectedItemIndex={selectedIndex}
-            onNavItemSelect={(e, item, index) =>
-                handleNavItemClick(e, item, index)
-            }
-        />
-    );
-};
-
-const MenuWithCustomTitleStory = () => {
-    const [selectedIndex, setSelectedIndex] = useState(-1);
-
-    const handleNavItemClick = (
-        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-        item: LocalNavItemProps,
-        index: number
-    ) => {
-        setSelectedIndex(index);
-    };
-
-    return (
-        <LocalNavMenu
-            items={NAV_ITEMS}
-            selectedItemIndex={selectedIndex}
-            onNavItemSelect={(e, item, index) =>
-                handleNavItemClick(e, item, index)
-            }
-            renderItem={(item, { selected }) => (
-                <div
-                    style={{
-                        padding: "8px 16px",
-                        fontWeight: selected ? "bold" : "normal",
-                        color: selected ? "tomato" : "darkcyan",
-                        display: "flex",
-                        alignItems: "center",
-                    }}
-                >
-                    {item.title}
-                    {selected && <span style={{ marginLeft: "8px" }}>✔</span>}
-                </div>
-            )}
-        />
-    );
-};
-
-const DropdownStory = () => {
-    const [selectedIndex, setSelectedIndex] = useState(-1);
-    const contentRef = useRef<HTMLDivElement>(null);
-
-    const handleNavItemClick = (
-        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-        item: LocalNavItemProps,
-        index: number
-    ) => {
-        setSelectedIndex(index);
-        scrollToSelectedSection(contentRef, index);
-    };
-
-    return (
-        <div style={{ height: "200vh", padding: "2rem" }}>
-            <TopContent />
-            <LocalNavDropdown
-                defaultLabel={"Initial"}
+        return (
+            <LocalNavMenu
                 items={NAV_ITEMS}
-                stickyOffset={0}
                 selectedItemIndex={selectedIndex}
                 onNavItemSelect={(e, item, index) =>
                     handleNavItemClick(e, item, index)
                 }
             />
-            <div style={{ padding: "1rem" }} ref={contentRef}>
-                <Content />
-            </div>
-        </div>
-    );
+        );
+    },
 };
 
-const DropdownWithCustomTitleStory = () => {
-    const [selectedIndex, setSelectedIndex] = useState(-1);
-    const contentRef = useRef<HTMLDivElement>(null);
+export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
+    render: function MenuWithCustomTitleRender(_args) {
+        const [selectedIndex, setSelectedIndex] = useState(-1);
 
-    const handleNavItemClick = (
-        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-        item: LocalNavItemProps,
-        index: number
-    ) => {
-        setSelectedIndex(index);
-        scrollToSelectedSection(contentRef, index);
-    };
+        const handleNavItemClick = (
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
+            setSelectedIndex(index);
+        };
 
-    return (
-        <div style={{ height: "200vh", padding: "2rem" }}>
-            <TopContent />
-            <LocalNavDropdown
-                defaultLabel="Initial"
+        return (
+            <LocalNavMenu
                 items={NAV_ITEMS}
-                stickyOffset={0}
                 selectedItemIndex={selectedIndex}
-                onNavItemSelect={handleNavItemClick}
+                onNavItemSelect={(e, item, index) =>
+                    handleNavItemClick(e, item, index)
+                }
                 renderItem={(item, { selected }) => (
                     <div
                         style={{
@@ -162,67 +81,54 @@ const DropdownWithCustomTitleStory = () => {
                     </div>
                 )}
             />
-            <div style={{ padding: "1rem" }} ref={contentRef}>
-                <Content />
-            </div>
-        </div>
-    );
+        );
+    },
 };
 
-const CombinedUsageStory = () => {
-    const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
-        undefined
-    );
-    const isMobile = useMaxWidthMediaQuery("sm");
+export const Dropdown: StoryObj<DropdownComponent> = {
+    render: function DropdownRender(_args) {
+        const [selectedIndex, setSelectedIndex] = useState(-1);
+        const contentRef = useRef<HTMLDivElement>(null);
 
-    const handleNavItemClick = (
-        e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
-        item: LocalNavItemProps,
-        index: number
-    ) => {
-        setSelectedIndex(index);
-    };
+        const handleNavItemClick = (
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
+            setSelectedIndex(index);
 
-    return (
-        <Page>
-            {!isMobile && (
-                <LocalNavMenu
+            // Scroll to the selected section
+            const section = NAV_ITEMS[index];
+            if (section) {
+                const element = contentRef.current?.children[index];
+                if (element) {
+                    const top =
+                        element.getBoundingClientRect().top +
+                        window.scrollY -
+                        200;
+                    window.scrollTo({ top, behavior: "smooth" });
+                }
+            }
+        };
+
+        return (
+            <div style={{ height: "200vh", padding: "2rem" }}>
+                <TopContent />
+                <LocalNavDropdown
+                    defaultLabel={"Initial"}
                     items={NAV_ITEMS}
+                    stickyOffset={0}
                     selectedItemIndex={selectedIndex}
                     onNavItemSelect={(e, item, index) =>
                         handleNavItemClick(e, item, index)
                     }
                 />
-            )}
-            <main>
-                {isMobile && (
-                    <LocalNavDropdown
-                        defaultLabel="Initial"
-                        items={NAV_ITEMS}
-                        stickyOffset={0}
-                        selectedItemIndex={selectedIndex}
-                        onNavItemSelect={(e, item, index) =>
-                            handleNavItemClick(e, item, index)
-                        }
-                    />
-                )}
-                <TopContent />
-                <Content />
-            </main>
-        </Page>
-    );
-};
-
-export const Menu: StoryObj<MenuComponent> = {
-    render: () => <MenuStory />,
-};
-
-export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
-    render: () => <MenuWithCustomTitleStory />,
-};
-
-export const Dropdown: StoryObj<DropdownComponent> = {
-    render: () => <DropdownStory />,
+                <div style={{ padding: "1rem" }} ref={contentRef}>
+                    <Content />
+                </div>
+            </div>
+        );
+    },
     parameters: {
         layout: "fullscreen",
         docs: { story: { inline: false, iframeHeight: 500 } },
@@ -230,7 +136,63 @@ export const Dropdown: StoryObj<DropdownComponent> = {
 };
 
 export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
-    render: () => <DropdownWithCustomTitleStory />,
+    render: function DropdownWithCustomTitleRender(_args) {
+        const [selectedIndex, setSelectedIndex] = useState(-1);
+        const contentRef = useRef<HTMLDivElement>(null);
+
+        const handleNavItemClick = (
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
+            setSelectedIndex(index);
+
+            // Scroll to the selected section
+            const section = NAV_ITEMS[index];
+            if (section) {
+                const element = contentRef.current?.children[index];
+                if (element) {
+                    const top =
+                        element.getBoundingClientRect().top +
+                        window.scrollY -
+                        200;
+                    window.scrollTo({ top, behavior: "smooth" });
+                }
+            }
+        };
+
+        return (
+            <div style={{ height: "200vh", padding: "2rem" }}>
+                <TopContent />
+                <LocalNavDropdown
+                    defaultLabel="Initial"
+                    items={NAV_ITEMS}
+                    stickyOffset={0}
+                    selectedItemIndex={selectedIndex}
+                    onNavItemSelect={handleNavItemClick}
+                    renderItem={(item, { selected }) => (
+                        <div
+                            style={{
+                                padding: "8px 16px",
+                                fontWeight: selected ? "bold" : "normal",
+                                color: selected ? "tomato" : "darkcyan",
+                                display: "flex",
+                                alignItems: "center",
+                            }}
+                        >
+                            {item.title}
+                            {selected && (
+                                <span style={{ marginLeft: "8px" }}>✔</span>
+                            )}
+                        </div>
+                    )}
+                />
+                <div style={{ padding: "1rem" }} ref={contentRef}>
+                    <Content />
+                </div>
+            </div>
+        );
+    },
     parameters: {
         layout: "fullscreen",
         docs: { story: { inline: false, iframeHeight: 500 } },
@@ -238,14 +200,56 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
 };
 
 export const CombinedUsage: StoryObj = {
-    render: () => <CombinedUsageStory />,
+    render: function CombinedUsageRender(_args) {
+        const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
+            undefined
+        );
+        const isMobile = useMaxWidthMediaQuery("sm");
+
+        const handleNavItemClick = (
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
+            setSelectedIndex(index);
+        };
+
+        return (
+            <Page>
+                {!isMobile && (
+                    <LocalNavMenu
+                        items={NAV_ITEMS}
+                        selectedItemIndex={selectedIndex}
+                        onNavItemSelect={(e, item, index) =>
+                            handleNavItemClick(e, item, index)
+                        }
+                    />
+                )}
+                <main>
+                    {isMobile && (
+                        <LocalNavDropdown
+                            defaultLabel="Initial"
+                            items={NAV_ITEMS}
+                            stickyOffset={0}
+                            selectedItemIndex={selectedIndex}
+                            onNavItemSelect={(e, item, index) =>
+                                handleNavItemClick(e, item, index)
+                            }
+                        />
+                    )}
+                    <TopContent />
+                    <Content />
+                </main>
+            </Page>
+        );
+    },
     parameters: {
         layout: "fullscreen",
         docs: { story: { inline: false, iframeHeight: 500 } },
     },
     decorators: [
         (Story) => (
-            <ThemeProvider theme="lifesg">
+            <ThemeProvider>
                 <Story />
             </ThemeProvider>
         ),
