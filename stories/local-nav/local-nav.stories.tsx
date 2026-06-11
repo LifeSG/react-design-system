@@ -22,7 +22,7 @@ const NAV_ITEMS = [
 ];
 
 export const Menu: StoryObj<MenuComponent> = {
-    render: function MenuRender(_args) {
+    render: (_args) => {
         const [selectedIndex, setSelectedIndex] = useState(-1);
 
         const handleNavItemClick = (
@@ -46,7 +46,7 @@ export const Menu: StoryObj<MenuComponent> = {
 };
 
 export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
-    render: function MenuWithCustomTitleRender(_args) {
+    render: (_args) => {
         const [selectedIndex, setSelectedIndex] = useState(-1);
 
         const handleNavItemClick = (
@@ -86,7 +86,7 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
 };
 
 export const Dropdown: StoryObj<DropdownComponent> = {
-    render: function DropdownRender(_args) {
+    render: (_args) => {
         const [selectedIndex, setSelectedIndex] = useState(-1);
         const contentRef = useRef<HTMLDivElement>(null);
 
@@ -136,7 +136,7 @@ export const Dropdown: StoryObj<DropdownComponent> = {
 };
 
 export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
-    render: function DropdownWithCustomTitleRender(_args) {
+    render: (_args) => {
         const [selectedIndex, setSelectedIndex] = useState(-1);
         const contentRef = useRef<HTMLDivElement>(null);
 
@@ -200,7 +200,7 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
 };
 
 export const CombinedUsage: StoryObj = {
-    render: function CombinedUsageRender(_args) {
+    render: (_args) => {
         const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
             undefined
         );
