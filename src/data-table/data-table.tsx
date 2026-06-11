@@ -116,7 +116,10 @@ export const DataTable = ({
     // HELPER FUNCTIONS
     // ===========================================================================
     const isAllCheckboxSelected = (): boolean => {
-        return selectedIds?.length === rows?.length;
+        if (!rows || !selectedIds) {
+            return false;
+        }
+        return selectedIds.length === rows.length;
     };
 
     const isIndeterminateCheckbox = (): boolean => {
@@ -125,6 +128,10 @@ export const DataTable = ({
             selectedIds.length !== 0 &&
             !isAllCheckboxSelected()
         );
+    };
+
+    const isHeaderCheckboxDisabled = (): boolean => {
+        return !rows || !selectedIds;
     };
 
     const isRowSelected = (rowId: string): boolean => {
@@ -357,6 +364,7 @@ export const DataTable = ({
                         <Checkbox
                             checked={isAllCheckboxSelected()}
                             indeterminate={isIndeterminateCheckbox()}
+                            disabled={isHeaderCheckboxDisabled()}
                             aria-label="Select all rows"
                             onClick={() => {
                                 if (onSelectAll) {
@@ -372,7 +380,7 @@ export const DataTable = ({
 
     const renderRows = () => {
         return !rows || rows.length < 1 ? (
-            <tr>
+            <tr className={styles.bodyRow}>
                 <td
                     className={styles.emptyStateCell}
                     colSpan={getTotalColumns()}
@@ -505,7 +513,7 @@ export const DataTable = ({
 
     const renderLoader = () => {
         return (
-            <tr>
+            <tr className={styles.bodyRow}>
                 <td colSpan={getTotalColumns()}>
                     <div
                         className={styles.loadingStateWrapper}
