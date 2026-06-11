@@ -3,7 +3,7 @@ import { generateFont, generateFontProperties } from "src/theme/utils";
 describe("font utils", () => {
     it("generates structured font declarations", () => {
         expect(generateFontProperties("body-md", "regular")).toEqual({
-            "font-family": "var(--fds-font-family)",
+            "font-family": "var(--fds-body-font-family)",
             "font-variant": "var(--fds-font-variant)",
             "font-size": "var(--fds-font-body-size-md)",
             "font-weight": "var(--fds-font-weight-regular)",
@@ -23,7 +23,7 @@ describe("font utils", () => {
 
     it("keeps generateFont string output compatible", () => {
         expect(generateFont("body-md", "regular")).toBe(
-            "font-family: var(--fds-font-family); " +
+            "font-family: var(--fds-body-font-family); " +
                 "font-variant: var(--fds-font-variant); " +
                 "font-size: var(--fds-font-body-size-md); " +
                 "font-weight: var(--fds-font-weight-regular); " +
