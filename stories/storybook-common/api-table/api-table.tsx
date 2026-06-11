@@ -14,7 +14,7 @@ import type { ApiTableAttributeRowProps, ApiTableProps } from "./types";
 export const ApiTable = (props: ApiTableProps): JSX.Element => {
     const renderSection = (
         attributes: ApiTableAttributeRowProps[],
-        sectionKey: string
+        sectionIndex: number
     ) => {
         const sortedAttributes = orderBy(attributes, ["name"], ["asc"]);
         const reorderedAttributes = [
@@ -26,9 +26,9 @@ export const ApiTable = (props: ApiTableProps): JSX.Element => {
             ),
         ];
 
-        return reorderedAttributes.map((attribute) => {
+        return reorderedAttributes.map((attribute, index) => {
             return (
-                <tr key={`${sectionKey}-${attribute.name}`}>
+                <tr key={`${sectionIndex}-${index}`}>
                     <NameCol mandatory={attribute.mandatory}>
                         {attribute.name}
                     </NameCol>
@@ -42,19 +42,15 @@ export const ApiTable = (props: ApiTableProps): JSX.Element => {
     };
 
     const renderContents = () => {
-        return props.sections.map((section) => {
-            const sectionKey =
-                section.name ||
-                section.attributes.map((attribute) => attribute.name).join("|");
-
+        return props.sections.map((section, index) => {
             return (
-                <Fragment key={sectionKey}>
+                <Fragment key={index}>
                     {section.name && (
-                        <Section key={`section-${sectionKey}`}>
+                        <Section key={`section-${index + 1}`}>
                             {section.name}
                         </Section>
                     )}
-                    {renderSection(section.attributes, sectionKey)}
+                    {renderSection(section.attributes, index)}
                 </Fragment>
             );
         });
