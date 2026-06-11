@@ -16,7 +16,7 @@ export default function Story() {
             <InputNestedMultiSelect
                 data-testid="nested-multi-select-custom-width"
                 options={OPTIONS}
-                dropdownWidth="345px"
+                dropdownWidth="200px"
             />
         </div>
     );
