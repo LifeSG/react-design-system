@@ -1,40 +1,32 @@
-import { css } from "@linaria/core";
 import { THEME_TYPES } from "src/theme/types";
 import type { ApiTableSectionProps } from "stories/storybook-common";
 import { ApiTable } from "stories/storybook-common";
-
-// =============================================================================
-// CUSTOM STYLING
-// =============================================================================
-const styledCode = css`
-    margin-right: 0.25rem;
-`;
 
 // =============================================================================
 // DATA
 // =============================================================================
 
 const codes = [
-    "400",
-    "403",
-    "404",
-    "408",
-    "500",
-    "502",
-    "503",
-    "504",
-    "confirmation",
-    "inactivity",
-    "insufficient-credits",
-    "link-error",
-    "logout",
-    "warning",
-    "maintenance",
-    "no-item-found",
-    "payment-unsuccessful",
-    "transfer-unsuccessful",
-    "unsupported-browser",
-    "partially-supported-browser",
+    `"400"`,
+    `"403"`,
+    `"404"`,
+    `"408"`,
+    `"500"`,
+    `"502"`,
+    `"503"`,
+    `"504"`,
+    `"confirmation"`,
+    `"inactivity"`,
+    `"insufficient-credits"`,
+    `"link-error"`,
+    `"logout"`,
+    `"warning"`,
+    `"maintenance"`,
+    `"no-item-found"`,
+    `"payment-unsuccessful"`,
+    `"transfer-unsuccessful"`,
+    `"unsupported-browser"`,
+    `"partially-supported-browser"`,
 ];
 
 const DATA: ApiTableSectionProps[] = [
@@ -44,22 +36,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "type",
                 mandatory: true,
                 description: "The type of error",
-                propTypes: (
-                    <div
-                        style={{
-                            display: "flex",
-                            flexWrap: "wrap",
-                            marginBottom: "0.25rem",
-                        }}
-                    >
-                        {codes.map((code) => (
-                            <code
-                                className={styledCode}
-                                key={code}
-                            >{`"${code}"`}</code>
-                        ))}
-                    </div>
-                ),
+                propTypes: codes,
             },
             {
                 name: "img",
@@ -94,8 +71,7 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "actionButton",
-                description:
-                    "The properties of the action button that appears at the bottom of the component",
+                description: `"The properties of the action button that appears at the bottom of the component"`,
                 propTypes: (
                     <a
                         href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
@@ -115,22 +91,20 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "illustrationScheme",
-                description:
-                    "Use resource scheme provided instead of default theme",
+                description: `"Use resource scheme provided instead of default theme"`,
                 propTypes: [...THEME_TYPES],
             },
             {
                 name: "additionalProps",
                 description: "Additional properties for certain error types",
                 propTypes: [
-                    "MaintenanceAdditionalAttributes",
-                    "InactivityAdditionalAttributes",
+                    `"MaintenanceAdditionalAttributes"`,
+                    `"InactivityAdditionalAttributes"`,
                 ],
             },
             {
                 name: "imageOnly",
-                description:
-                    "Specifying will allow only the image to be rendered",
+                description: `"Specifying will allow only the image to be rendered"`,
                 propTypes: ["boolean"],
             },
         ],
@@ -152,14 +126,12 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "secondsLeft",
                 mandatory: true,
-                description:
-                    "The amount of time left (in seconds) for the inactivity display",
+                description: `"The amount of time left (in seconds) for the inactivity display"`,
                 propTypes: ["number"],
             },
             {
                 name: "reminderInterval",
-                description:
-                    "Interval (in seconds) for announcing remaining time via screen readers",
+                description: `"Interval (in seconds) for announcing remaining time via screen readers"`,
                 propTypes: ["number"],
             },
         ],
