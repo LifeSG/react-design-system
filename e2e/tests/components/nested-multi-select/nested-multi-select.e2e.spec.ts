@@ -4,6 +4,7 @@ import {
     compareScreenshot,
     isInViewport,
 } from "../../utils";
+import { modes } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "nested-multi-select";
@@ -103,36 +104,48 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("InputNestedMultiSelect", () => {
     test.describe("Form", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("form-variants");
-        });
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants");
+            });
 
-        test("Visual", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
+            test("Visual", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
 
-        test("Readonly disabled", async ({ story }) => {
-            await expect(story.locators.form.readonly).not.toBeDisabled();
+            test("Readonly disabled", async ({ story }) => {
+                await expect(story.locators.form.readonly).not.toBeDisabled();
 
-            await story.locators.form.readonly.click();
-            await expect(
-                story.locators.internal.dropdownContainer
-            ).not.toBeVisible();
+                await story.locators.form.readonly.click();
+                await expect(
+                    story.locators.internal.dropdownContainer
+                ).not.toBeVisible();
 
-            await story.locators.form.readonly.focus();
-            await story.page.keyboard.press("Enter");
-            await expect(
-                story.locators.internal.dropdownContainer
-            ).not.toBeVisible();
+                await story.locators.form.readonly.focus();
+                await story.page.keyboard.press("Enter");
+                await expect(
+                    story.locators.internal.dropdownContainer
+                ).not.toBeVisible();
 
-            await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
+                await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
                 - combobox [disabled]
             `);
 
-            await story.locators.form.disabled.click({ force: true });
-            await expect(
-                story.locators.internal.dropdownContainer
-            ).not.toBeVisible();
+                await story.locators.form.disabled.click({ force: true });
+                await expect(
+                    story.locators.internal.dropdownContainer
+                ).not.toBeVisible();
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("form-variants", { mode: "dark" });
+            });
+
+            test("Visual - dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
     });
 
@@ -171,62 +184,65 @@ test.describe("InputNestedMultiSelect", () => {
         });
     });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("default");
+    modes.forEach((mode) => {
+        test.describe(`Default States`, () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default", { mode });
+            });
+
+            test(`Visual - ${mode}`, async ({ story }) => {
+                await expect(
+                    story.locators.internal.dropdownContainer
+                ).not.toBeVisible();
+                await compareScreenshot(story, "mount-closed");
+
+                await story.openDropdown(story.locators.nestedMultiSelect);
+                await expect(story.getTreeItem("Category 1")).toBeVisible();
+                await compareScreenshot(story, "open-default", {
+                    fullscreen: true,
+                });
+
+                await story.getTreeItem("Option 1.1").hover();
+                await compareScreenshot(story, "open-hover-other", {
+                    fullscreen: true,
+                });
+
+                await story.page
+                    .getByRole("button", { name: "Select all" })
+                    .click();
+                await expect(
+                    story.page.getByTestId("nested-multi-select")
+                ).toContainText("4 selected");
+                await compareScreenshot(story, "select-all", {
+                    fullscreen: true,
+                });
+
+                await story.page
+                    .getByRole("button", { name: "Clear all" })
+                    .click();
+                await expect(
+                    story.page.getByTestId("nested-multi-select")
+                ).toContainText("Select");
+                await compareScreenshot(story, "clear-all", {
+                    fullscreen: true,
+                });
+            });
         });
 
-        test("Default states", async ({ story }) => {
-            await expect(
-                story.locators.internal.dropdownContainer
-            ).not.toBeVisible();
-            await compareScreenshot(story, "mount-closed");
-
-            await story.openDropdown(story.locators.nestedMultiSelect);
-            await expect(story.getTreeItem("Category 1")).toBeVisible();
-            await compareScreenshot(story, "open-default", {
-                fullscreen: true,
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("multi-selected", { mode });
             });
 
-            await story.getTreeItem("Option 1.1").hover();
-            await compareScreenshot(story, "open-hover-other", {
-                fullscreen: true,
-            });
+            test(`Selected states - ${mode}`, async ({ story }) => {
+                await expect(story.locators.nestedMultiSelect).toContainText(
+                    "2 selected"
+                );
+                await compareScreenshot(story, "selected-on-mount");
 
-            await story.page
-                .getByRole("button", { name: "Select all" })
-                .click();
-            await expect(
-                story.page.getByTestId("nested-multi-select")
-            ).toContainText("4 selected");
-            await compareScreenshot(story, "select-all", {
-                fullscreen: true,
-            });
-
-            await story.page.getByRole("button", { name: "Clear all" }).click();
-            await expect(
-                story.page.getByTestId("nested-multi-select")
-            ).toContainText("Select");
-            await compareScreenshot(story, "clear-all", {
-                fullscreen: true,
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("multi-selected");
-        });
-
-        test("Selected states", async ({ story }) => {
-            await expect(story.locators.nestedMultiSelect).toContainText(
-                "2 selected"
-            );
-            await compareScreenshot(story, "selected-on-mount");
-
-            await story.openDropdown(story.locators.nestedMultiSelect);
-            await expect(story.locators.internal.dropdownList)
-                .toMatchAriaSnapshot(`
+                await story.openDropdown(story.locators.nestedMultiSelect);
+                await expect(story.locators.internal.dropdownList)
+                    .toMatchAriaSnapshot(`
                     - button "Clear all"
                     - tree:
                       - treeitem "Category 1" [checked=mixed] [expanded] [level=1] [selected]
@@ -235,75 +251,80 @@ test.describe("InputNestedMultiSelect", () => {
                       - treeitem "Category 2" [checked=mixed] [expanded] [level=1] [selected]
                       - treeitem "Option 2.1" [checked] [level=2] [selected]
                       - treeitem "Option 2.2" [level=2]
-            `);
+                `);
 
-            await compareScreenshot(story, "selected-open", {
-                fullscreen: true,
-            });
+                await compareScreenshot(story, "selected-open", {
+                    fullscreen: true,
+                });
 
-            await story.getTreeItem("Option 2.1").hover();
-            await compareScreenshot(story, "selected-hover-selected", {
-                fullscreen: true,
-            });
+                await story.getTreeItem("Option 2.1").hover();
+                await compareScreenshot(story, "selected-hover-selected", {
+                    fullscreen: true,
+                });
 
-            await story.getTreeItem("Option 2.2").hover();
-            await compareScreenshot(story, "selected-hover-other", {
-                fullscreen: true,
+                await story.getTreeItem("Option 2.2").hover();
+                await compareScreenshot(story, "selected-hover-other", {
+                    fullscreen: true,
+                });
             });
         });
-    });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("single-selected");
-        });
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("single-selected", { mode });
+            });
 
-        test("Single selected state", async ({ story }) => {
-            await story.openDropdown(story.locators.nestedMultiSelect);
+            test(`Single selected state - ${mode}`, async ({ story }) => {
+                await story.openDropdown(story.locators.nestedMultiSelect);
 
-            await expect(story.locators.internal.dropdownList)
-                .toMatchAriaSnapshot(`
+                await expect(story.locators.internal.dropdownList)
+                    .toMatchAriaSnapshot(`
                     - button "Clear all"
                     - tree:
                       - treeitem "Category 1" [checked=mixed] [expanded] [level=1] [selected]
                       - treeitem "Option 1.1" [checked] [level=2] [selected]
                       - treeitem "Option 1.2" [level=2]
                       - treeitem "Category 2" [level=1]
-            `);
+                `);
 
-            await compareScreenshot(story, "single-selected", {
-                fullscreen: true,
+                await compareScreenshot(story, "single-selected", {
+                    fullscreen: true,
+                });
             });
         });
-    });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("with-search");
-        });
-
-        test("Search states", async ({ story }) => {
-            await story.openDropdown(story.locators.nestedMultiSelect);
-            await expect(story.locators.internal.searchInput).toBeVisible();
-            await expect(story.locators.internal.searchInput).toBeFocused();
-            await compareScreenshot(story, "open-with-search", {
-                fullscreen: true,
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("with-search", { mode });
             });
 
-            await story.locators.internal.searchInput.fill("zz");
-            await expect(story.locators.internal.noResults).not.toBeVisible();
+            test(`Search states - ${mode}`, async ({ story }) => {
+                await story.openDropdown(story.locators.nestedMultiSelect);
+                await expect(story.locators.internal.searchInput).toBeVisible();
+                await expect(story.locators.internal.searchInput).toBeFocused();
+                await compareScreenshot(story, "open-with-search", {
+                    fullscreen: true,
+                });
 
-            await story.locators.internal.searchInput.fill("zzz");
-            await expect(story.locators.internal.noResults).toBeVisible();
-            await compareScreenshot(story, "search-no-results", {
-                fullscreen: true,
-            });
+                await story.locators.internal.searchInput.fill("zz");
+                await expect(
+                    story.locators.internal.noResults
+                ).not.toBeVisible();
 
-            await story.locators.internal.searchInput.fill("");
-            await expect(story.locators.internal.noResults).not.toBeVisible();
-            await expect(story.getTreeItem("Category 1")).toBeVisible();
-            await compareScreenshot(story, "search-cleared", {
-                fullscreen: true,
+                await story.locators.internal.searchInput.fill("zzz");
+                await expect(story.locators.internal.noResults).toBeVisible();
+                await compareScreenshot(story, "search-no-results", {
+                    fullscreen: true,
+                });
+
+                await story.locators.internal.searchInput.fill("");
+                await expect(
+                    story.locators.internal.noResults
+                ).not.toBeVisible();
+                await expect(story.getTreeItem("Category 1")).toBeVisible();
+                await compareScreenshot(story, "search-cleared", {
+                    fullscreen: true,
+                });
             });
         });
     });

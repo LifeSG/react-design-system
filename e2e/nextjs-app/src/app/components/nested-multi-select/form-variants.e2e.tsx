@@ -5,7 +5,7 @@ import { OPTIONS } from "./mock";
 
 export default function Story() {
     return (
-        <div className="story-column-container">
+        <div className="story-column-container story-background">
             <Form.NestedMultiSelect
                 data-testid="nested-multi-select-default"
                 label="Default"
