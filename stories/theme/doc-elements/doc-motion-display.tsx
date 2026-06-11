@@ -162,12 +162,12 @@ const motionCircle = css`
     top: 50%;
     transform: translateY(-50%);
 
-    animation-name: slideAnimation;
+    animation-name: storybook-motion-slide-animation;
     animation-duration: 3s;
     animation-iteration-count: infinite;
     animation-direction: normal;
 
-    @keyframes slideAnimation {
+    @keyframes storybook-motion-slide-animation {
         0% {
             left: 0;
         }
