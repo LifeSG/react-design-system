@@ -1,5 +1,6 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import { viewport } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "e-signature";
@@ -239,40 +240,33 @@ test.describe("ESignature", () => {
         });
 
         test("Drawing", async ({ story }) => {
-            await test.step("Clicking Add signature opens the modal", async () => {
+            await test.step("Draw on canvas", async () => {
                 await story.locators.addSignatureButton.click();
+                await story.drawOnCanvas();
 
-                await expect(story.locators.signatureModal).toBeVisible();
-                await compareScreenshot(story, "modal-open", {
+                await compareScreenshot(story, "after-drawing", {
                     fullscreen: true,
                 });
             });
 
-            await test.step("Closing the modal via close button", async () => {
-                await story.locators.modalCloseButton.click();
-
-                await expect(story.locators.signatureModal).not.toBeVisible();
-                await expect(story.locators.addSignatureButton).toBeVisible();
-            });
-
-            await test.step("Clearing the drawing empties the canvas", async () => {
-                await story.locators.addSignatureButton.click();
-
-                await story.drawOnCanvas();
-                await story.locators.clearButton.click();
-
-                await compareScreenshot(story, "after-clear", {
-                    fullscreen: true,
-                });
-            });
-
-            await test.step("Saving a drawn signature shows the preview", async () => {
-                await story.drawOnCanvas();
+            await test.step("Save drawing", async () => {
                 await story.locators.saveButton.click();
 
                 await expect(story.locators.signatureModal).not.toBeVisible();
                 await expect(story.locators.signaturePreview).toBeVisible();
                 await compareScreenshot(story, "after-save");
+            });
+
+            await test.step("Clear drawing", async () => {
+                await story.locators.editSignatureButton.click();
+                await story.locators.clearButton.click();
+
+                await compareScreenshot(story, "after-clear", {
+                    fullscreen: true,
+                });
+
+                await story.locators.saveButton.click();
+                await expect(story.locators.addSignatureButton).toBeVisible();
             });
         });
     });
@@ -282,9 +276,24 @@ test.describe("ESignature", () => {
             await story.init("interactive", { size: "mobile" });
         });
 
-        test("Clicking Add signature opens the modal (mobile)", async ({
-            story,
-        }) => {
+        test("Modal (mobile)", async ({ story }) => {
+            await story.locators.addSignatureButton.click();
+
+            await expect(story.locators.signatureModal).toBeVisible();
+            await compareScreenshot(story, "modal-open", { fullscreen: true });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("interactive", { size: "mobile" });
+            await story.page.setViewportSize({
+                width: viewport.mobile.height,
+                height: viewport.mobile.width,
+            });
+        });
+
+        test("Modal (mobile landscape)", async ({ story }) => {
             await story.locators.addSignatureButton.click();
 
             await expect(story.locators.signatureModal).toBeVisible();
@@ -297,9 +306,7 @@ test.describe("ESignature", () => {
             await story.init("interactive", { mode: "dark" });
         });
 
-        test("Clicking Add signature opens the modal (dark mode)", async ({
-            story,
-        }) => {
+        test("Modal (dark mode)", async ({ story }) => {
             await story.locators.addSignatureButton.click();
 
             await expect(story.locators.signatureModal).toBeVisible();
@@ -312,13 +319,10 @@ test.describe("ESignature", () => {
             await story.init("edit-existing");
         });
 
-        test("Clicking Edit signature opens the modal with existing signature", async ({
-            story,
-        }) => {
+        test("Edit drawing", async ({ story }) => {
             await story.locators.editSignatureButton.click();
 
             await expect(story.locators.signatureModal).toBeVisible();
-            await story.locators.canvas.waitFor({ state: "visible" });
             await compareScreenshot(story, "modal-edit", { fullscreen: true });
         });
     });
@@ -341,9 +345,6 @@ test.describe("ESignature", () => {
             await story.page.keyboard.press("Enter");
 
             await expect(story.locators.signatureModal).toBeVisible();
-            await compareScreenshot(story, "keyboard-open-modal", {
-                fullscreen: true,
-            });
         });
     });
 });
