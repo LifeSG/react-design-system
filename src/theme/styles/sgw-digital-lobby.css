@@ -330,9 +330,8 @@
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
-    --fds-font-family: "Libre Franklin";
-    --fds-heading-font-family: var(--fds-font-family);
-    --fds-body-font-family: var(--fds-font-family);
+    --fds-heading-font-family: "Libre Franklin";
+    --fds-body-font-family: "Libre Franklin";
     --fds-font-body-size-baseline: 1.375rem;
     --fds-font-body-size-md: 1.2rem;
     --fds-font-body-size-sm: 1.125rem;

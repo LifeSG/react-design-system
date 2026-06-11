@@ -330,9 +330,8 @@
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
-    --fds-font-family: "Atkinson Hyperlegible Next";
-    --fds-heading-font-family: var(--fds-font-family);
-    --fds-body-font-family: var(--fds-font-family);
+    --fds-heading-font-family: "Atkinson Hyperlegible Next";
+    --fds-body-font-family: "Atkinson Hyperlegible Next";
     --fds-font-body-size-baseline: 1.125rem;
     --fds-font-body-size-md: 1rem;
     --fds-font-body-size-sm: 0.875rem;
