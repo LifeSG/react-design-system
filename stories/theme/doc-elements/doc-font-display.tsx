@@ -159,8 +159,6 @@ const FontCollection = ({
         <div className={row} key={fontSizeToken}>
             <div>
                 {tokens.map((token) => {
-                    console.log({ font: Font[token] });
-
                     return (
                         <div
                             className={textPreview}
