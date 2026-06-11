@@ -9,12 +9,14 @@ export default function Story() {
             <Form.NestedMultiSelect
                 data-testid="nested-multi-select-default"
                 label="Default"
+                mode="expand"
                 options={OPTIONS}
             />
 
             <Form.NestedMultiSelect
                 data-testid="nested-multi-select-selected"
                 label="Selected"
+                mode="expand"
                 options={OPTIONS}
                 selectedKeyPaths={[
                     ["1", "11"],
@@ -25,6 +27,7 @@ export default function Story() {
             <Form.NestedMultiSelect
                 data-testid="nested-multi-select-readonly"
                 label="Read only"
+                mode="expand"
                 options={OPTIONS}
                 readOnly
             />
@@ -32,6 +35,7 @@ export default function Story() {
             <Form.NestedMultiSelect
                 data-testid="nested-multi-select-disabled"
                 label="Disabled"
+                mode="expand"
                 options={OPTIONS}
                 disabled
             />
@@ -39,6 +43,7 @@ export default function Story() {
             <Form.NestedMultiSelect
                 data-testid="nested-multi-select-error"
                 label="Error"
+                mode="expand"
                 options={OPTIONS}
                 errorMessage="Selection is required"
             />

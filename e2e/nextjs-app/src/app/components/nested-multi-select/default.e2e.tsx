@@ -8,6 +8,7 @@ export default function Story() {
         <div className="story-background">
             <InputNestedMultiSelect
                 data-testid="nested-multi-select"
+                mode="expand"
                 options={OPTIONS}
             />
         </div>

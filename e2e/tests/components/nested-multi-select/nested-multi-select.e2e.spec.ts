@@ -202,7 +202,7 @@ test.describe("InputNestedMultiSelect", () => {
                     fullscreen: true,
                 });
 
-                await story.getTreeItem("Option 1.1").hover();
+                await story.getTreeItem("Subcategory 1.1").hover();
                 await compareScreenshot(story, "open-hover-other", {
                     fullscreen: true,
                 });
@@ -246,8 +246,8 @@ test.describe("InputNestedMultiSelect", () => {
                     - button "Clear all"
                     - tree:
                       - treeitem "Category 1" [checked=mixed] [expanded] [level=1] [selected]
-                      - treeitem "Option 1.1" [checked] [level=2] [selected]
-                      - treeitem "Option 1.2" [level=2]
+                      - treeitem "Subcategory 1.1" [checked] [level=2] [selected]
+                      - treeitem "Options 1.1.1" [checked] [level=3] [selected]
                       - treeitem "Category 2" [checked=mixed] [expanded] [level=1] [selected]
                       - treeitem "Option 2.1" [checked] [level=2] [selected]
                       - treeitem "Option 2.2" [level=2]
@@ -282,9 +282,11 @@ test.describe("InputNestedMultiSelect", () => {
                     - button "Clear all"
                     - tree:
                       - treeitem "Category 1" [checked=mixed] [expanded] [level=1] [selected]
-                      - treeitem "Option 1.1" [checked] [level=2] [selected]
-                      - treeitem "Option 1.2" [level=2]
+                      - treeitem "Subcategory 1.1" [checked] [level=2] [selected]
+                      - treeitem "Option 1.1.1" [checked] [level=3] [selected]
                       - treeitem "Category 2" [level=1]
+                      - treeitem "Option 2.1" [level=2]
+                      - treeitem "Option 2.2" [level=2]
                 `);
 
                 await compareScreenshot(story, "single-selected", {
@@ -344,7 +346,7 @@ test.describe("InputNestedMultiSelect", () => {
 
             await story.page.keyboard.press("ArrowDown");
             await story.page.keyboard.press("ArrowDown");
-            await expect(story.getTreeItem("Option 1.2")).toHaveAttribute(
+            await expect(story.getTreeItem("Option 1.1.1")).toHaveAttribute(
                 "tabindex",
                 "0"
             );
