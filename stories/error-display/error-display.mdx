@@ -56,19 +56,37 @@ If you require customisations down to the style, you can use the relevant `data-
 | title       | `"error-display-title"`       |
 | description | `"error-display-description"` |
 
-### Linaria
+### Style declaration
 
-```tsx
-import { css } from "@linaria/core";
+```css
+/* Plain CSS (custom-error-display.css) */
+.customErrorDisplay [data-id="error-display-image"] {
+    /* Your styles here */
+}
 
+/* CSS Module (custom-error-display.module.css) */
+.customErrorDisplay [data-id="error-display-image"] {
+    /* Your styles here */
+}
+
+/* CSS in JS */
 const customErrorDisplay = css`
     [data-id="error-display-image"] {
         /* Your styles here */
     }
 `;
+```
 
+### Applying className
+
+```tsx
 export const CustomErrorDisplay = () => (
-    <ErrorDisplay className={customErrorDisplay} type="default" />
+    <ErrorDisplay
+        // className="customErrorDisplay" // Plain CSS
+        // className={styles.customErrorDisplay} // CSS Module
+        className={customErrorDisplay} // CSS in JS
+        type="default"
+    />
 );
 ```
 
