@@ -1,5 +1,4 @@
 import { css } from "@linaria/core";
-import type { ReactNode } from "react";
 import { useDesignToken } from "src/theme";
 
 import { DocTable, DocTextStyle } from "../docs/doc-table";
@@ -9,7 +8,7 @@ import type {
     TokenTableDefaultValueDefaultProps,
 } from "./types";
 
-export const Usage = ({ children }: { children: ReactNode }) => {
+export const Usage = ({ children }: React.ComponentProps<"div">) => {
     return <div className={`${usage} ${DocTextStyle}`}>{children}</div>;
 };
 
@@ -100,11 +99,7 @@ const label = css`
 // =============================================================================
 // DESCRIPTION COLUMN
 // =============================================================================
-interface DescriptionColProps {
-    children: ReactNode;
-}
-
-export const DescriptionCol = ({ children }: DescriptionColProps) => {
+export const DescriptionCol = ({ children }: React.ComponentProps<"div">) => {
     return (
         <td>
             <div className={description}>{children}</div>
@@ -188,7 +183,7 @@ export const DefaultCol = ({ attributes }: DefaultColProps) => {
     );
 };
 
-const Default = ({ children }: { children: ReactNode }) => {
+const Default = ({ children }: React.ComponentProps<"div">) => {
     return <div className={defaultContainer}>{children}</div>;
 };
 

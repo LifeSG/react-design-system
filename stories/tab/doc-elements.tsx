@@ -1,12 +1,7 @@
 import { css } from "@linaria/core";
-import type { ReactNode } from "react";
 import { Typography } from "src/typography";
 
-interface ContentProps {
-    children: ReactNode;
-}
-
-export const Content = ({ children }: ContentProps) => (
+export const Content = ({ children }: React.ComponentProps<"div">) => (
     <div className={content}>{children}</div>
 );
 

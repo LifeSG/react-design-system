@@ -11,10 +11,6 @@ interface Props {
     storybookPath?: string;
 }
 
-interface DocThemeScopeProps {
-    children: ReactNode;
-}
-
 interface DocAlertContentProps extends Props {
     type: ComponentProps<typeof Alert>["type"];
     customIcon?: JSX.Element | undefined;
@@ -81,7 +77,7 @@ export const DocNote = ({ children, storybookPath }: Props) => {
     );
 };
 
-const DocThemeScope = ({ children }: DocThemeScopeProps) => {
+const DocThemeScope = ({ children }: React.ComponentProps<"div">) => {
     return (
         <div data-fds-theme="lifesg" data-fds-theme-mode="light">
             {children}

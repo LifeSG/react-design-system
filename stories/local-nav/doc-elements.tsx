@@ -1,13 +1,8 @@
 import { css } from "@linaria/core";
-import type { ReactNode } from "react";
 import { MediaQuery } from "src/theme";
 import { Typography } from "src/typography";
 
-interface PageProps {
-    children: ReactNode;
-}
-
-export const Page = ({ children }: PageProps) => (
+export const Page = ({ children }: React.ComponentProps<"div">) => (
     <div className={page}>{children}</div>
 );
 

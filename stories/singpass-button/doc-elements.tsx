@@ -1,14 +1,6 @@
 import { css } from "@linaria/core";
-import type { ReactNode } from "react";
 
-// =============================================================================
-// STYLING
-// =============================================================================
-interface ContainerProps {
-    children: ReactNode;
-}
-
-export const Container = ({ children }: ContainerProps) => (
+export const Container = ({ children }: React.ComponentProps<"div">) => (
     <div className={container}>{children}</div>
 );
 

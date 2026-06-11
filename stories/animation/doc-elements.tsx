@@ -1,12 +1,7 @@
 import { css } from "@linaria/core";
-import type { ReactNode } from "react";
 import { MediaQuery } from "src/theme";
 
-interface WrapperProps {
-    children: ReactNode;
-}
-
-export const AnimationDisplay = ({ children }: WrapperProps) => (
+export const AnimationDisplay = ({ children }: React.ComponentProps<"div">) => (
     <div className={animationDisplay}>{children}</div>
 );
 
@@ -20,7 +15,7 @@ const animationDisplay = css`
     }
 `;
 
-export const AnimationItem = ({ children }: WrapperProps) => (
+export const AnimationItem = ({ children }: React.ComponentProps<"div">) => (
     <div className={animationItem}>{children}</div>
 );
 
@@ -30,7 +25,7 @@ const animationItem = css`
     flex-direction: column;
 `;
 
-export const AnimationPane = ({ children }: WrapperProps) => (
+export const AnimationPane = ({ children }: React.ComponentProps<"div">) => (
     <div className={animationPane}>{children}</div>
 );
 
@@ -42,7 +37,7 @@ const animationPane = css`
     height: 18rem;
 `;
 
-export const Content = ({ children }: WrapperProps) => (
+export const Content = ({ children }: React.ComponentProps<"div">) => (
     <div className={content}>{children}</div>
 );
 

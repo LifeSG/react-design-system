@@ -167,14 +167,12 @@ export const WithCounter: StoryObj<Component> = {
                     <>
                         <Filter.Item title="Search">
                             <SearchFilter
-                                mode={mode}
                                 value={draftFilters.search}
                                 onChange={updateFilter(mode, "search")}
                             />
                         </Filter.Item>
                         <Filter.Item title="Date">
                             <DateFilter
-                                mode={mode}
                                 value={draftFilters.date}
                                 onChange={updateFilter(mode, "date")}
                             />

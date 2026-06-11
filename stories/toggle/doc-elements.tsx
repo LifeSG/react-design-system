@@ -7,11 +7,10 @@ import type { DecoratorFunction } from "storybook/internal/types";
 // =============================================================================
 // STYLING
 // =============================================================================
-interface WrapperProps {
-    children: ReactNode;
-}
 
-export const SimpleStoryWrapper = ({ children }: WrapperProps) => (
+export const SimpleStoryWrapper = ({
+    children,
+}: React.ComponentProps<"div">) => (
     <div className={simpleStoryWrapper}>{children}</div>
 );
 
@@ -21,7 +20,9 @@ const simpleStoryWrapper = css`
     flex-wrap: wrap;
 `;
 
-export const VariantStoryWrapper = ({ children }: WrapperProps) => (
+export const VariantStoryWrapper = ({
+    children,
+}: React.ComponentProps<"div">) => (
     <div className={variantStoryWrapper}>{children}</div>
 );
 
@@ -57,7 +58,9 @@ const variantHeading = css`
     }
 `;
 
-export const SubLabelStoryWrapper = ({ children }: WrapperProps) => (
+export const SubLabelStoryWrapper = ({
+    children,
+}: React.ComponentProps<"div">) => (
     <div className={subLabelStoryWrapper}>{children}</div>
 );
 
