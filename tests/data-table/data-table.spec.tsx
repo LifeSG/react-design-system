@@ -312,6 +312,7 @@ describe("DataTable", () => {
                 <DataTable
                     headers={MOCK_HEADERS}
                     rows={MOCK_ROWS}
+                    selectedIds={["1"]}
                     enableMultiSelect
                     enableSelectAll
                     onSelectAll={onSelectAll}
