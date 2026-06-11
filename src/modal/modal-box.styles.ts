@@ -1,7 +1,11 @@
 import { css } from "@linaria/core";
 
-import * as eSignatureStyles from "../e-signature/e-signature.styles";
 import { Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
+
+export const tokens = {
+    buttonTopInset: "--fds-internal-e-signature-close-button-topInset",
+    buttonRightInset: "--fds-internal-e-signature-close-button-rightInset",
+};
 
 export const box = css`
     position: relative;
@@ -22,14 +26,8 @@ export const box = css`
 
 export const closeButton = css`
     position: absolute;
-    top: var(
-        ${eSignatureStyles.tokens.buttonTopInset},
-        ${Spacing["spacing-16"]}
-    );
-    right: var(
-        ${eSignatureStyles.tokens.buttonRightInset},
-        ${Spacing["spacing-16"]}
-    );
+    top: var(${tokens.buttonTopInset}, ${Spacing["spacing-16"]});
+    right: var(${tokens.buttonRightInset}, ${Spacing["spacing-16"]});
     padding: 0;
     color: ${Colour.icon};
 
@@ -39,9 +37,6 @@ export const closeButton = css`
     }
 
     ${MediaQuery.MaxWidth.sm} {
-        right: var(
-            ${eSignatureStyles.tokens.buttonRightInset},
-            ${Spacing["spacing-20"]}
-        );
+        right: var(${tokens.buttonRightInset}, ${Spacing["spacing-20"]});
     }
 `;

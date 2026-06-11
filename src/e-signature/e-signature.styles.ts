@@ -1,15 +1,7 @@
 import { css } from "@linaria/core";
 
+import * as modalBoxStyles from "../modal/modal-box.styles";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
-
-// =============================================================================
-// TOKENS
-// =============================================================================
-
-export const tokens = {
-    buttonTopInset: "--fds-internal-e-signature-close-button-topInset",
-    buttonRightInset: "--fds-internal-e-signature-close-button-rightInset",
-};
 
 // =============================================================================
 // STYLING
@@ -96,8 +88,8 @@ export const growContainer = css`
 `;
 
 export const modalBox = css`
-    ${tokens.buttonTopInset}: initial;
-    ${tokens.buttonRightInset}: initial;
+    ${modalBoxStyles.tokens.buttonTopInset}: initial;
+    ${modalBoxStyles.tokens.buttonRightInset}: initial;
 
     width: 100%;
     height: 29rem;
@@ -114,8 +106,8 @@ export const modalBox = css`
         border-radius: 0;
         padding: 0;
 
-        ${tokens.buttonTopInset}: ${Spacing["spacing-8"]};
-        ${tokens.buttonRightInset}: ${Spacing["spacing-20"]};
+        ${modalBoxStyles.tokens.buttonTopInset}: ${Spacing["spacing-8"]};
+        ${modalBoxStyles.tokens.buttonRightInset}: ${Spacing["spacing-20"]};
     }
 `;
 
@@ -208,8 +200,8 @@ export const modalBoxLandscape = css`
     border-radius: 0;
     padding: 0;
 
-    ${tokens.buttonTopInset}: ${Spacing["spacing-8"]};
-    ${tokens.buttonRightInset}: ${Spacing["spacing-20"]};
+    ${modalBoxStyles.tokens.buttonTopInset}: ${Spacing["spacing-8"]};
+    ${modalBoxStyles.tokens.buttonRightInset}: ${Spacing["spacing-20"]};
 `;
 
 export const modalTitleLandscape = css`
