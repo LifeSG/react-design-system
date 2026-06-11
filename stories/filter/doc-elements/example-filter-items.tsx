@@ -1,5 +1,6 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
 import { css } from "@linaria/core";
+import clsx from "clsx";
 import isEmpty from "lodash/isEmpty";
 import { type ComponentPropsWithoutRef, useState } from "react";
 import type { Mode } from "src/filter";
@@ -36,11 +37,10 @@ export const StyledFilterItem = ({
 }: FilterItemProps) => {
     const modeClassName =
         mode === "default" ? defaultFilterItem : nonDefaultFilterItem;
-    const mergedClassName = [modeClassName, className]
-        .filter(Boolean)
-        .join(" ");
 
-    return <Filter.Item {...props} className={mergedClassName} />;
+    return (
+        <Filter.Item {...props} className={clsx(modeClassName, className)} />
+    );
 };
 
 export const SearchFilter = ({ value, onChange }: Props<string>) => {
