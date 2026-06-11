@@ -45,11 +45,13 @@ export const GridDisplay = () => {
                 ref={ref}
                 style={{ alignItems: "center" }}
             >
-                {new Array(gridColumnCount).fill(null).map((_, i) => (
-                    <div className={column} key={i + 1}>
-                        {i + 1}
-                    </div>
-                ))}
+                {Array(gridColumnCount)
+                    .fill(null)
+                    .map((_, i) => (
+                        <div className={column} key={i + 1}>
+                            {i + 1}
+                        </div>
+                    ))}
             </Layout.Container>
         </div>
     );
