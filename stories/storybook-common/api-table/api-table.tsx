@@ -17,20 +17,16 @@ export const ApiTable = (props: ApiTableProps): JSX.Element => {
         sectionIndex: number
     ) => {
         const sortedAttributes = orderBy(attributes, ["name"], ["asc"]);
-        const normalAttributes: ApiTableAttributeRowProps[] = [];
-        const callbackAttributes: ApiTableAttributeRowProps[] = [];
+        const reorderedAttributes = [
+            ...sortedAttributes.filter(
+                (attribute) => !attribute.name.startsWith("on")
+            ),
+            ...sortedAttributes.filter((attribute) =>
+                attribute.name.startsWith("on")
+            ),
+        ];
 
-        sortedAttributes.forEach((attribute) => {
-            if (attribute.name.startsWith("on")) {
-                callbackAttributes.push(attribute);
-            } else {
-                normalAttributes.push(attribute);
-            }
-        });
-
-        const newArr = [...normalAttributes, ...callbackAttributes];
-
-        return newArr.map((attribute, index) => {
+        return reorderedAttributes.map((attribute, index) => {
             return (
                 <tr key={`${sectionIndex}-${index}`}>
                     <NameCol mandatory={attribute.mandatory}>

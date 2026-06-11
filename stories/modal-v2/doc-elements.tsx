@@ -1,27 +1,42 @@
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ComponentPropsWithoutRef } from "react";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Checkbox } from "src/checkbox";
 import { ModalV2 } from "src/modal-v2";
+import { Colour, Font } from "src/theme";
 import { Typography } from "src/typography";
-import { V3_Colour, V3_Font } from "src/v3_theme";
-import styled from "styled-components";
 
-const Options = styled.div`
+type DivProps = ComponentPropsWithoutRef<"div">;
+type LabelProps = ComponentPropsWithoutRef<"label">;
+
+const options = css`
     display: flex;
     flex-wrap: wrap;
     gap: 1rem;
     margin-bottom: 1rem;
 `;
 
-const Label = styled.label`
-    ${V3_Font["body-baseline-regular"]}
-    color: ${V3_Colour.text};
+const label = css`
+    ${Font["body-baseline-regular"]}
+    color: ${Colour.text};
     cursor: pointer;
 
     display: flex;
     gap: 0.25rem;
     align-items: center;
 `;
+
+const Options = ({ className, ...props }: DivProps) => (
+    <div {...props} className={clsx(options, className)} />
+);
+
+const Label = ({ className, children, ...props }: LabelProps) => (
+    <label {...props} className={clsx(label, className)}>
+        {children}
+    </label>
+);
 
 interface OptionProps {
     checked: boolean;

@@ -1,6 +1,7 @@
+import { css } from "@linaria/core";
+import clsx from "clsx";
 import type { ThemeType } from "src/theme";
 import { Border, ThemeProvider, useDesignToken } from "src/theme";
-import styled from "styled-components";
 
 interface BorderDisplayProps {
     theme: ThemeType;
@@ -9,18 +10,18 @@ interface BorderDisplayProps {
 export const BorderDisplay = ({ theme }: BorderDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
-            <Display>
-                <HeaderRow>
+            <div className={display}>
+                <div className={clsx(row, headerRow)}>
                     <div>Token</div>
                     <div>Value</div>
                     <div></div>
-                </HeaderRow>
+                </div>
                 <BorderWidthCollection token="width-005" />
                 <BorderWidthCollection token="width-010" />
                 <BorderWidthCollection token="width-020" />
-                <Divider />
+                <div className={divider} />
                 <BorderStyleCollection token="solid" />
-            </Display>
+            </div>
         </ThemeProvider>
     );
 };
@@ -33,15 +34,18 @@ const BorderWidthCollection = ({ token }: BorderWidthCollectionProps) => {
     const value = useDesignToken(Border[token]) as string;
 
     return (
-        <Row key={token}>
+        <div className={row} key={token}>
             <div>
                 <code>{token}</code>
             </div>
             <div>{value}</div>
             <div>
-                <BorderWidthExample $size={value as unknown as string} />
+                <div
+                    className={borderWidthExample}
+                    style={{ border: `${value} solid tomato` }}
+                />
             </div>
-        </Row>
+        </div>
     );
 };
 
@@ -53,33 +57,25 @@ const BorderStyleCollection = ({ token }: BorderStyleCollectionProps) => {
     const value = useDesignToken(Border[token]) as string;
 
     return (
-        <Row key={token}>
+        <div className={row} key={token}>
             <div>
                 <code>{token}</code>
             </div>
             <div>{value}</div>
             <div>
-                <BorderStyleExample $style={value as unknown as string} />
+                <div
+                    className={borderStyleExample}
+                    style={{ border: `1px ${value} tomato` }}
+                />
             </div>
-        </Row>
+        </div>
     );
 };
 
 // =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface BorderWidthProps {
-    $size: string;
-}
-
-interface BorderStyleProps {
-    $style: string;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-const Display = styled.div`
+const display = css`
     display: grid;
     grid-template-columns: max-content max-content minmax(250px, 1fr);
     flex-wrap: wrap;
@@ -89,7 +85,7 @@ const Display = styled.div`
     overflow-x: auto;
 `;
 
-const Row = styled.div`
+const row = css`
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
@@ -99,26 +95,24 @@ const Row = styled.div`
     margin-bottom: 2rem;
 `;
 
-const HeaderRow = styled(Row)`
+const headerRow = css`
     margin-bottom: 1rem;
     font-weight: bold;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #dde1e2;
 `;
 
-const BorderWidthExample = styled.div<BorderWidthProps>`
+const borderWidthExample = css`
     height: 24px;
     width: 48px;
-    border: ${(props) => props.$size} solid tomato;
 `;
 
-const BorderStyleExample = styled.div<BorderStyleProps>`
+const borderStyleExample = css`
     height: 24px;
     width: 48px;
-    border: 1px ${(props) => props.$style} tomato;
 `;
 
-const Divider = styled.div`
+const divider = css`
     grid-column: 1 / -1;
     height: 1px;
     background: #dde1e2;

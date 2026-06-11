@@ -2,7 +2,7 @@ import { DocIcon } from "@lifesg/react-icons/doc";
 import { Unstyled } from "@storybook/addon-docs/blocks";
 import { Fragment } from "react";
 
-import { StorybookLink } from "../storybook-link";
+import { StorybookLink } from "../docs/storybook-link";
 import {
     DefaultCol,
     DescriptionCol,

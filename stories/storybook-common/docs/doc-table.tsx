@@ -1,6 +1,8 @@
-import styled, { css } from "styled-components";
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ReactNode } from "react";
 
-export const DocTextStyle = css`
+export const docText = css`
     font-family: "Nunito Sans", -apple-system, ".SFNSText-Regular",
         "San Francisco", BlinkMacSystemFont, "Segoe UI", "Helvetica Neue",
         Helvetica, Arial, sans-serif;
@@ -24,14 +26,23 @@ export const DocTextStyle = css`
     }
 `;
 
-export const DocTable = styled.table`
+interface DocTableProps {
+    children: ReactNode;
+    className?: string;
+}
+
+export const DocTable = ({ children, className }: DocTableProps) => {
+    return (
+        <table className={clsx(docText, docTable, className)}>{children}</table>
+    );
+};
+
+const docTable = css`
     width: 100%;
     position: relative;
     border-collapse: collapse;
     border-spacing: 0;
     line-height: 1.5;
-
-    ${DocTextStyle}
 
     td,
     th {

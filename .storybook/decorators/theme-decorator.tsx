@@ -4,7 +4,6 @@ import { useDarkMode } from "@storybook-community/storybook-dark-mode";
 import { DecoratorHelpers } from "@storybook/addon-themes";
 import type { DecoratorFunction, Renderer } from "storybook/internal/types";
 import { ThemeProvider, ThemeType } from "../../src/theme";
-import { ThemeProvider as StyledComponentsThemeProvider } from "styled-components";
 import {
     V3_A11yPlaygroundTheme,
     V3_BookingSGTheme,
@@ -70,9 +69,6 @@ export const withThemeFromJSXProvider = <
 
         const selected: ThemeMapKey =
             themeOverride || selectedTheme || initialTheme;
-        const pairs = Object.entries(V3_THEME_MAP);
-
-        const theme = pairs.length === 1 ? pairs[0] : V3_THEME_MAP[selected];
         const mode = isDark ? "dark" : "light";
 
         return (
@@ -80,11 +76,7 @@ export const withThemeFromJSXProvider = <
                 theme={THEME_KEY_TO_TYPE_MAPPING[selected] as ThemeType}
                 mode={mode}
             >
-                <StyledComponentsThemeProvider
-                    theme={{ ...theme, colourMode: mode }}
-                >
-                    {storyFn()}
-                </StyledComponentsThemeProvider>
+                {storyFn()}
             </ThemeProvider>
         );
     };

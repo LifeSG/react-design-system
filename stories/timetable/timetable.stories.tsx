@@ -1,5 +1,7 @@
 import { PinIcon } from "@lifesg/react-icons";
+import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { useEffect, useState } from "react";
 import { Card } from "src/card";
@@ -11,13 +13,12 @@ import type {
 } from "src/timetable";
 import { TimeTable } from "src/timetable";
 import { Typography } from "src/typography";
-import styled from "styled-components";
 
 import {
     buildTimeTableData,
     fetchTimeTableData,
+    HoverContent,
     lazyLoadTimeTableData,
-    StyledHoverContent,
 } from "./mock-data";
 import { timetableDefaultData } from "./timetable-default-data";
 
@@ -30,21 +31,35 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-const StyledTimeTable = styled(TimeTable)`
+const styledTimeTable = css`
     [data-id="timetable-container"] {
         width: 900px;
         height: 400px;
     }
 `;
+
+const StyledTimeTable = ({
+    className,
+    ...props
+}: React.ComponentProps<typeof TimeTable>) => (
+    <TimeTable {...props} className={clsx(styledTimeTable, className)} />
+);
 StyledTimeTable.displayName = "TimeTable";
 
-const StyledCustomPopoverCard = styled(Card)`
+const styledCustomPopoverCard = css`
     display: flex;
     flex-direction: column;
     row-gap: 2rem;
     width: 400px;
     padding: 3rem;
 `;
+
+const StyledCustomPopoverCard = ({
+    className,
+    ...props
+}: React.ComponentProps<typeof Card>) => (
+    <Card {...props} className={clsx(styledCustomPopoverCard, className)} />
+);
 
 export const Default: StoryObj<Component> = {
     render: () => {
@@ -253,10 +268,10 @@ export const CustomPopovers: StoryObj<Component> = {
                             <Typography.BodyBL weight={"regular"}>
                                 {row.name}
                             </Typography.BodyBL>
-                            <StyledHoverContent>
+                            <HoverContent>
                                 <PinIcon />
                                 Eclipse
-                            </StyledHoverContent>
+                            </HoverContent>
                         </Card>
                     ),
                     offset: 0,

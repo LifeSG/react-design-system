@@ -1,15 +1,19 @@
+import { css } from "@linaria/core";
+import { MediaQuery } from "src/theme";
 import { Typography } from "src/typography";
-import { V3_MediaQuery } from "src/v3_theme";
-import styled from "styled-components";
 
-export const Page = styled.div`
+export const Page = ({ children }: React.ComponentProps<"div">) => (
+    <div className={page}>{children}</div>
+);
+
+const page = css`
     height: 200vh;
 
     display: grid;
     gap: 1rem;
     grid-template-columns: 1fr 2fr;
 
-    ${V3_MediaQuery.MaxWidth.sm} {
+    ${MediaQuery.MaxWidth.sm} {
         grid-template-columns: 1fr;
     }
 
@@ -17,7 +21,6 @@ export const Page = styled.div`
         padding: 1rem;
     }
 `;
-Page.displayName = "Page";
 
 const renderSection = (index: number) => (
     <div>
@@ -26,7 +29,8 @@ const renderSection = (index: number) => (
         </Typography.HeadingMD>
         <Typography.BodyBL style={{ margin: "1rem 0" }}>
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Vivamus a
-            tortor vitae magna sagittis bibendum. <a href="#">Link</a>
+            tortor vitae magna sagittis bibendum.{" "}
+            <a href="https://life.gov.sg">Link</a>
         </Typography.BodyBL>
     </div>
 );
