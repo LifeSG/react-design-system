@@ -16,11 +16,11 @@ import type { TokenTableAttributeRowProps, TokenTableProps } from "./types";
 export const TokenTable = (props: TokenTableProps): JSX.Element => {
     const renderSection = (
         attributes: TokenTableAttributeRowProps[],
-        sectionKey: string
+        sectionIndex: number
     ) => {
-        return attributes.map((attribute) => {
+        return attributes.map((attribute, index) => {
             return (
-                <tr key={`${sectionKey}-${attribute.name}`}>
+                <tr key={`${sectionIndex}-${index}`}>
                     <NameCol>{attribute.name}</NameCol>
                     <DescriptionCol>{attribute.description}</DescriptionCol>
                     <DefaultCol attributes={attribute.defaultValue} />
@@ -30,19 +30,15 @@ export const TokenTable = (props: TokenTableProps): JSX.Element => {
     };
 
     const renderContents = () => {
-        return props.sections.map((section) => {
-            const sectionKey =
-                section.name ||
-                section.attributes.map((attribute) => attribute.name).join("|");
-
+        return props.sections.map((section, index) => {
             return (
-                <Fragment key={sectionKey}>
+                <Fragment key={index}>
                     {section.name && (
-                        <Section key={`section-${sectionKey}`}>
+                        <Section key={`section-${index + 1}`}>
                             {section.name}
                         </Section>
                     )}
-                    {renderSection(section.attributes, sectionKey)}
+                    {renderSection(section.attributes, index)}
                 </Fragment>
             );
         });
