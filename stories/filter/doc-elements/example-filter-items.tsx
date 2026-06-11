@@ -18,11 +18,11 @@ const searchIcon = css`
     color: ${Colour["icon"]};
 `;
 
-const defaultFilterItem = css`
+const sidebarFilterItem = css`
     padding: 0 1.25rem 1.5rem;
 `;
 
-const nonDefaultFilterItem = css`
+const modalFilterItem = css`
     padding: 1.5rem 1.25rem;
 `;
 
@@ -36,7 +36,7 @@ export const StyledFilterItem = ({
     ...props
 }: FilterItemProps) => {
     const modeClassName =
-        mode === "default" ? defaultFilterItem : nonDefaultFilterItem;
+        mode === "default" ? sidebarFilterItem : modalFilterItem;
 
     return (
         <Filter.Item {...props} className={clsx(modeClassName, className)} />
