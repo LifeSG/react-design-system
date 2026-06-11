@@ -11,7 +11,7 @@ export const Calendar = (props: CalendarProps) => {
     const {
         className,
         styleType = "bordered",
-        variant,
+        variant = "single",
         id,
         minDate,
         maxDate,
