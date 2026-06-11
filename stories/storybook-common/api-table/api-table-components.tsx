@@ -1,4 +1,5 @@
 import { css } from "@linaria/core";
+import clsx from "clsx";
 import type { ReactNode } from "react";
 
 import { DocTable } from "../docs/doc-table";
@@ -68,20 +69,13 @@ interface NameColProps {
 
 export const NameCol = ({ children, mandatory = false }: NameColProps) => {
     const isFunction = children.startsWith("on");
+    const className = clsx({
+        [mandatoryCol]: mandatory,
+        [labelCol]: !mandatory,
+        [functionCol]: isFunction,
+    });
 
-    if (mandatory) {
-        return (
-            <td className={`${mandatoryCol} ${isFunction ? functionCol : ""}`}>
-                {children}
-            </td>
-        );
-    }
-
-    return (
-        <td className={`${labelCol} ${isFunction ? functionCol : ""}`}>
-            {children}
-        </td>
-    );
+    return <td className={className}>{children}</td>;
 };
 
 const labelCol = css`
