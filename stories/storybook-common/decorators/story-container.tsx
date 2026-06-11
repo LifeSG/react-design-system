@@ -1,5 +1,6 @@
 import { css } from "@linaria/core";
 import type { ReactRenderer } from "@storybook/react-webpack5";
+import clsx from "clsx";
 import { Typography } from "src/typography";
 import type { DecoratorFunction } from "storybook/internal/types";
 
@@ -21,15 +22,11 @@ export const FullWidthStoryDecorator: (options?: {
         return (
             <div
                 data-testid="full-width-story"
-                className={`${fullWidthContainer} ${
-                    viewMode === "story" ? fullWidthContainerFixedWidth : ""
-                } ${
-                    options?.fullWidth
-                        ? ""
-                        : fullWidthContainerHorizontalPadding
-                } ${
-                    options?.fullHeight ? "" : fullWidthContainerVerticalPadding
-                }`}
+                className={clsx(fullWidthContainer, {
+                    [fullWidthContainerFixedWidth]: viewMode === "story",
+                    [fullWidthContainerHorizontalPadding]: !options?.fullWidth,
+                    [fullWidthContainerVerticalPadding]: !options?.fullHeight,
+                })}
             >
                 <Story />
             </div>
@@ -67,9 +64,9 @@ export const StoryDecorator: (options?: {
             return (
                 <div
                     data-testid="story"
-                    className={`${docsViewModeContainer} ${
-                        options?.maxWidth ? docsViewModeContainerMaxWidth : ""
-                    }`}
+                    className={clsx(docsViewModeContainer, {
+                        [docsViewModeContainerMaxWidth]: options?.maxWidth,
+                    })}
                 >
                     <Story />
                 </div>
@@ -79,9 +76,9 @@ export const StoryDecorator: (options?: {
         return (
             <div
                 data-testid="story"
-                className={`${storyViewModeContainer} ${
-                    options?.maxWidth ? storyViewModeContainerMaxWidth : ""
-                }`}
+                className={clsx(storyViewModeContainer, {
+                    [storyViewModeContainerMaxWidth]: options?.maxWidth,
+                })}
             >
                 <Story />
             </div>
