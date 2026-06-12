@@ -5,9 +5,12 @@ import { OPTIONS } from "./mock";
 
 export default function Story() {
     return (
-        <InputNestedMultiSelect
-            data-testid="nested-multi-select"
-            options={OPTIONS}
-        />
+        <div className="story-background">
+            <InputNestedMultiSelect
+                data-testid="nested-multi-select"
+                mode="expand"
+                options={OPTIONS}
+            />
+        </div>
     );
 }

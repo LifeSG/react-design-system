@@ -9,6 +9,10 @@ import {
 import userEvent from "@testing-library/user-event";
 import type { L1OptionProps } from "src";
 import { InputNestedMultiSelect } from "src";
+import {
+    getSelectedItems,
+    getSelectedSubItems,
+} from "src/input-nested-multi-select/helpers";
 
 jest.mock("react-resize-detector");
 
@@ -34,6 +38,30 @@ const OPTIONS: L1OptionProps<string, string, string>[] = [
                     {
                         label: "Child 1.1.2 item",
                         value: "1.1.2",
+                        key: "200",
+                    },
+                ],
+            },
+        ],
+    },
+    {
+        label: "Parent 2 item",
+        value: "2",
+        key: "2",
+        subItems: [
+            {
+                label: "Parent 2.1 item",
+                value: "2.1",
+                key: "20",
+                subItems: [
+                    {
+                        label: "Child 2.1.1 item",
+                        value: "2.1.1",
+                        key: "100",
+                    },
+                    {
+                        label: "Child 2.1.2 item",
+                        value: "2.1.2",
                         key: "200",
                     },
                 ],
@@ -288,10 +316,12 @@ describe("InputNestedMultiSelect", () => {
             [
                 ["1", "10", "100"],
                 ["1", "10", "200"],
+                ["2", "20", "100"],
+                ["2", "20", "200"],
             ],
-            ["1.1.1", "1.1.2"]
+            ["1.1.1", "1.1.2", "2.1.1", "2.1.2"]
         );
-        expect(screen.getByText("2 selected")).toBeVisible();
+        expect(screen.getByText("4 selected")).toBeVisible();
     });
 
     it("should clear all list items correctly", async () => {
@@ -318,6 +348,177 @@ describe("InputNestedMultiSelect", () => {
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeInTheDocument();
         expect(mockOnSelectOptions).toHaveBeenCalledWith([], []);
         expect(screen.getByText("Select")).toBeVisible();
+    });
+
+    it("should render a single selected value from valueToStringFunction", async () => {
+        const valueFormatter = jest.fn((value: string) => `Value-${value}`);
+
+        render(
+            <InputNestedMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                selectedKeyPaths={[["1", "10", "100"]]}
+                valueToStringFunction={valueFormatter}
+            />
+        );
+
+        expect(valueFormatter).toHaveBeenCalledWith("1.1.1");
+        expect(
+            within(screen.getByTestId(SELECTOR_TESTID)).getByText("Value-1.1.1")
+        ).toBeInTheDocument();
+    });
+
+    it("should truncate display value in middle mode", async () => {
+        const longDisplayValue = "ABCDEFGHIJKL";
+        const getBoundingClientRectSpy = jest
+            .spyOn(HTMLElement.prototype, "getBoundingClientRect")
+            .mockImplementation(() => ({
+                width: 100,
+                height: 20,
+                top: 0,
+                right: 100,
+                bottom: 20,
+                left: 0,
+                x: 0,
+                y: 0,
+                toJSON: () => ({}),
+            }));
+
+        render(
+            <InputNestedMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                selectedKeyPaths={[["1", "10", "100"]]}
+                valueToStringFunction={() => longDisplayValue}
+                optionTruncationType="middle"
+            />
+        );
+
+        expect(
+            within(screen.getByTestId(SELECTOR_TESTID)).getByText("ABC ... JKL")
+        ).toBeInTheDocument();
+
+        getBoundingClientRectSpy.mockRestore();
+    });
+
+    it("should trigger show and hide callbacks when dropdown visibility changes", async () => {
+        const user = userEvent.setup();
+        const mockOnShowOptions = jest.fn();
+        const mockOnHideOptions = jest.fn();
+
+        render(
+            <InputNestedMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                onShowOptions={mockOnShowOptions}
+                onHideOptions={mockOnHideOptions}
+            />
+        );
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+        });
+        expect(mockOnShowOptions).toHaveBeenCalledTimes(1);
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitForElementToBeRemoved(() =>
+            screen.queryByTestId(DROPDOWN_TESTID)
+        );
+        expect(mockOnHideOptions).toHaveBeenCalledTimes(1);
+    });
+
+    describe("helper utils", () => {
+        it("should resolve selected items by full key path when leaf keys are reused", () => {
+            expect(
+                getSelectedItems(OPTIONS, [
+                    [],
+                    ["missing"],
+                    ["1", "10", "100"],
+                    ["2", "20", "100"],
+                    ["2", "20", "200"],
+                ])
+            ).toEqual([
+                {
+                    value: "1.1.1",
+                    label: "Child 1.1.1 item",
+                    keyPath: ["1", "10", "100"],
+                },
+                {
+                    value: "2.1.1",
+                    label: "Child 2.1.1 item",
+                    keyPath: ["2", "20", "100"],
+                },
+                {
+                    value: "2.1.2",
+                    label: "Child 2.1.2 item",
+                    keyPath: ["2", "20", "200"],
+                },
+            ]);
+        });
+
+        it("should return all leaf descendants for each parent branch", () => {
+            expect(getSelectedSubItems(OPTIONS, ["1", "10"])).toEqual([
+                {
+                    value: "1.1.1",
+                    label: "Child 1.1.1 item",
+                    keyPath: ["1", "10", "100"],
+                },
+                {
+                    value: "1.1.2",
+                    label: "Child 1.1.2 item",
+                    keyPath: ["1", "10", "200"],
+                },
+            ]);
+
+            expect(getSelectedSubItems(OPTIONS, ["1"])).toEqual([
+                {
+                    value: "1.1.1",
+                    label: "Child 1.1.1 item",
+                    keyPath: ["1", "10", "100"],
+                },
+                {
+                    value: "1.1.2",
+                    label: "Child 1.1.2 item",
+                    keyPath: ["1", "10", "200"],
+                },
+            ]);
+
+            expect(getSelectedSubItems(OPTIONS, ["2", "20"])).toEqual([
+                {
+                    value: "2.1.1",
+                    label: "Child 2.1.1 item",
+                    keyPath: ["2", "20", "100"],
+                },
+                {
+                    value: "2.1.2",
+                    label: "Child 2.1.2 item",
+                    keyPath: ["2", "20", "200"],
+                },
+            ]);
+
+            expect(getSelectedSubItems(OPTIONS, ["2"])).toEqual([
+                {
+                    value: "2.1.1",
+                    label: "Child 2.1.1 item",
+                    keyPath: ["2", "20", "100"],
+                },
+                {
+                    value: "2.1.2",
+                    label: "Child 2.1.2 item",
+                    keyPath: ["2", "20", "200"],
+                },
+            ]);
+        });
+
+        it("should return an empty array when subitems cannot be resolved", () => {
+            expect(getSelectedSubItems(OPTIONS, ["1", "10", "100"])).toEqual(
+                []
+            );
+            expect(getSelectedSubItems(OPTIONS, ["1", "missing"])).toEqual([]);
+        });
     });
 
     describe("focus/blur behaviour", () => {

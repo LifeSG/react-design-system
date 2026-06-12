@@ -8,6 +8,7 @@ export default function Story() {
         <InputNestedMultiSelect
             data-testid="nested-multi-select"
             options={OPTIONS}
+            mode="expand"
             selectedKeyPaths={[
                 ["1", "11"],
                 ["2", "21"],

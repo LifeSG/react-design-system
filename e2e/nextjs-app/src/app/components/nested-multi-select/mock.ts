@@ -4,9 +4,24 @@ export const OPTIONS = [
         value: "1",
         key: "1",
         subItems: [
-            { label: "Option 1.1", value: "1.1", key: "11" },
-            { label: "Option 1.2", value: "1.2", key: "12" },
+            {
+                label: "Subcategory 1.1",
+                value: "1.1",
+                key: "11",
+                subItems: [
+                    {
+                        label: "Option 1.1.1",
+                        value: "1.1.1",
+                        key: "111",
+                    },
+                ],
+            },
         ],
+    },
+    {
+        label: "Option without children",
+        value: "3",
+        key: "3",
     },
     {
         label: "Category 2",
