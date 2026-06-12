@@ -128,8 +128,8 @@ test.describe("InputNestedMultiSelect", () => {
                 ).not.toBeVisible();
 
                 await expect(story.locators.form.disabled).toMatchAriaSnapshot(`
-                - combobox [disabled]
-            `);
+                    - combobox [disabled]
+                `);
 
                 await story.locators.form.disabled.click({ force: true });
                 await expect(
@@ -174,8 +174,8 @@ test.describe("InputNestedMultiSelect", () => {
 
             await expect(story.locators.standalone.disabled)
                 .toMatchAriaSnapshot(`
-                - combobox [disabled]
-            `);
+                    - combobox [disabled]
+                `);
 
             await story.locators.standalone.disabled.click({ force: true });
             await expect(
@@ -243,15 +243,16 @@ test.describe("InputNestedMultiSelect", () => {
                 await story.openDropdown(story.locators.nestedMultiSelect);
                 await expect(story.locators.internal.dropdownList)
                     .toMatchAriaSnapshot(`
-                    - button "Clear all"
-                    - tree:
-                      - treeitem "Category 1" [checked=mixed] [expanded] [level=1] [selected]
-                      - treeitem "Subcategory 1.1" [checked] [level=2] [selected]
-                      - treeitem "Options 1.1.1" [checked] [level=3] [selected]
-                      - treeitem "Category 2" [checked=mixed] [expanded] [level=1] [selected]
-                      - treeitem "Option 2.1" [checked] [level=2] [selected]
-                      - treeitem "Option 2.2" [level=2]
-                `);
+                        - button "Clear all"
+                        - tree:
+                            - treeitem "Category 1" [checked] [expanded] [level=1] [selected]
+                            - treeitem "Subcategory 1.1" [checked] [expanded] [level=2] [selected]
+                            - treeitem "Option 1.1.1" [level=3]
+                            - treeitem "Option without children" [level=1]
+                            - treeitem "Category 2" [checked=mixed] [expanded] [level=1] [selected]
+                            - treeitem "Option 2.1" [checked] [level=2] [selected]
+                            - treeitem "Option 2.2" [level=2]
+                    `);
 
                 await compareScreenshot(story, "selected-open", {
                     fullscreen: true,
@@ -279,15 +280,16 @@ test.describe("InputNestedMultiSelect", () => {
 
                 await expect(story.locators.internal.dropdownList)
                     .toMatchAriaSnapshot(`
-                    - button "Clear all"
-                    - tree:
-                      - treeitem "Category 1" [checked=mixed] [expanded] [level=1] [selected]
-                      - treeitem "Subcategory 1.1" [checked] [level=2] [selected]
-                      - treeitem "Option 1.1.1" [checked] [level=3] [selected]
-                      - treeitem "Category 2" [level=1]
-                      - treeitem "Option 2.1" [level=2]
-                      - treeitem "Option 2.2" [level=2]
-                `);
+                        - button "Clear all"
+                        - tree:
+                            - treeitem "Category 1" [checked] [expanded] [level=1] [selected]
+                            - treeitem "Subcategory 1.1" [checked] [expanded] [level=2] [selected]
+                            - treeitem "Option 1.1.1" [level=3]
+                            - treeitem "Option without children" [level=1]
+                            - treeitem "Category 2" [expanded] [level=1]
+                            - treeitem "Option 2.1" [level=2]
+                            - treeitem "Option 2.2" [level=2]
+                    `);
 
                 await compareScreenshot(story, "single-selected", {
                     fullscreen: true,
