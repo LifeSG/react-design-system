@@ -363,6 +363,61 @@ describe("DataTable", () => {
             });
             expect(selectAllCheckbox).not.toBeChecked();
         });
+
+        it("should disable and uncheck select all checkbox when rows is undefined", () => {
+            render(
+                <DataTable
+                    headers={MOCK_HEADERS}
+                    enableMultiSelect
+                    enableSelectAll
+                    selectedIds={[]}
+                    data-testid="data-table"
+                />
+            );
+
+            const selectAllCheckbox = screen.getByRole("checkbox", {
+                name: "Select all rows",
+            });
+            expect(selectAllCheckbox).not.toBeChecked();
+            expect(selectAllCheckbox).toBeDisabled();
+        });
+
+        it("should disable and uncheck select all checkbox when selectedIds is undefined", () => {
+            render(
+                <DataTable
+                    headers={MOCK_HEADERS}
+                    rows={MOCK_ROWS}
+                    enableMultiSelect
+                    enableSelectAll
+                    data-testid="data-table"
+                />
+            );
+
+            const selectAllCheckbox = screen.getByRole("checkbox", {
+                name: "Select all rows",
+            });
+            expect(selectAllCheckbox).not.toBeChecked();
+            expect(selectAllCheckbox).toBeDisabled();
+        });
+
+        it("should disable and uncheck select all checkbox when rows is empty array", () => {
+            render(
+                <DataTable
+                    headers={MOCK_HEADERS}
+                    rows={[]}
+                    enableMultiSelect
+                    enableSelectAll
+                    selectedIds={[]}
+                    data-testid="data-table"
+                />
+            );
+
+            const selectAllCheckbox = screen.getByRole("checkbox", {
+                name: "Select all rows",
+            });
+            expect(selectAllCheckbox).not.toBeChecked();
+            expect(selectAllCheckbox).toBeDisabled();
+        });
     });
 
     describe("Action Bar", () => {
