@@ -26,6 +26,7 @@ export const THEME_TYPES = [
     "spf",
     "supportgowhere",
     "smgs",
+    "careercompass",
 ] as const;
 
 export type ThemeType = (typeof THEME_TYPES)[number];
