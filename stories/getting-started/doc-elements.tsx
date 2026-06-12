@@ -6,6 +6,7 @@ import { DocAlert } from "stories/storybook-common";
 const THEME_TO_DISPLAY_NAME_MAPPING: Record<ThemeType, string> = {
     "a11y-playground": "A11y Playground",
     bookingsg: "BookingSG",
+    careercompass: "CareerCompass",
     ccube: "CCube",
     imda: "IMDA",
     lifesg: "LifeSG",
@@ -22,6 +23,7 @@ const THEME_TO_DISPLAY_NAME_MAPPING: Record<ThemeType, string> = {
 const THEME_TO_FONT_MAPPING: Record<ThemeType, string> = {
     "a11y-playground": "atkinson-hyperlegible-next",
     bookingsg: "plus-jakarta-sans",
+    careercompass: "plus-jakarta-sans",
     ccube: "open-sans",
     imda: "montserrat",
     lifesg: "open-sans",
