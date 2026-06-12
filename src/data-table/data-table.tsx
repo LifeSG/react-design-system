@@ -116,7 +116,7 @@ export const DataTable = ({
     // HELPER FUNCTIONS
     // ===========================================================================
     const isAllCheckboxSelected = (): boolean => {
-        if (!rows || !selectedIds) {
+        if (!rows || !rows.length || !selectedIds) {
             return false;
         }
         return selectedIds.length === rows.length;
@@ -131,7 +131,7 @@ export const DataTable = ({
     };
 
     const isHeaderCheckboxDisabled = (): boolean => {
-        return !rows || !selectedIds;
+        return !rows || !rows.length || !selectedIds;
     };
 
     const isRowSelected = (rowId: string): boolean => {
