@@ -72,7 +72,8 @@ export const link = css`
 
     &:active,
     &:hover,
-    &:focus {
+    &:focus,
+    &:focus-within {
         color: ${ComponentToken.Navbar["link-colour-text-hover"]};
     }
 
@@ -146,7 +147,9 @@ export const linkIndicator = css`
 `;
 
 export const linkIndicatorSelected = css`
-    &:hover {
+    .${link}:active &,
+    .${link}:hover &,
+    .${link}:focus & {
         background-color: ${Colour["border-selected-hover"]};
     }
 `;
@@ -172,13 +175,17 @@ export const chevronIcon = css`
     width: 1.25rem;
     color: ${Colour.icon};
 
-    &:hover {
+    .${link}:active &,
+    .${link}:hover &,
+    .${link}:focus & {
         color: ${Colour["icon-hover"]};
     }
 `;
 
 export const chevronIconSelected = css`
-    &:hover {
+    .${link}:active &,
+    .${link}:hover &,
+    .${link}:focus & {
         color: ${Colour["icon-selected-hover"]};
     }
 `;
