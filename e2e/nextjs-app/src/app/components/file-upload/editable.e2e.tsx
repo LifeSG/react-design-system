@@ -10,8 +10,7 @@ const INITIAL_ITEMS: FileItemProps[] = [
         name: "editable-image.jpg",
         size: 5120,
         type: "image/jpeg",
-        thumbnailImageDataUrl:
-            "https://fastly.picsum.photos/id/445/300/300.jpg?hmac=5O-DNt4KzxZfuV5dgp9fNb7_sc3Tg6ZKtH6Bv6oktOQ",
+        thumbnailImageDataUrl: "/sample.jpg",
     },
 ];
 
