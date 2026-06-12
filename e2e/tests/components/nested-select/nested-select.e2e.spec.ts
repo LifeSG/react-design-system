@@ -13,6 +13,8 @@ class StoryPage extends AbstractStoryPage {
         nestedSelectReadonlyBase: Locator;
         nestedSelectError: Locator;
         nestedSelectErrorBase: Locator;
+        nestedSelectMinWidth: Locator;
+        nestedSelectCustomWidth: Locator;
         internal: {
             selector: Locator;
             dropdownContainer: Locator;
@@ -47,6 +49,12 @@ class StoryPage extends AbstractStoryPage {
             nestedSelectErrorBase: page.getByTestId(
                 "form-nested-select-error-base"
             ),
+            nestedSelectMinWidth: page.getByTestId(
+                "form-nested-select-min-width"
+            ),
+            nestedSelectCustomWidth: page.getByTestId(
+                "form-nested-select-custom-width"
+            ),
             internal: {
                 selector: page.getByTestId("selector"),
                 dropdownContainer: page.getByTestId("dropdown-container"),
@@ -64,10 +72,17 @@ class StoryPage extends AbstractStoryPage {
             .first();
     }
 
-    public async openDropdown() {
-        await this.locators.nestedSelectDefaultBase.click();
+    public async openDropdown(select: Locator) {
+        await select.click();
         await expect(this.locators.internal.dropdownContainer).toBeVisible();
         await expect(this.locators.internal.dropdownList).toBeVisible();
+    }
+
+    public async closeDropdown() {
+        await this.page.mouse.click(0, 0);
+        await expect(
+            this.locators.internal.dropdownContainer
+        ).not.toBeVisible();
     }
 }
 
@@ -90,7 +105,9 @@ test.describe("NestedSelect", () => {
             });
 
             await test.step("Open - dropdown should be visible and first item should be active", async () => {
-                await story.openDropdown();
+                await story.openDropdown(
+                    story.locators.nestedSelectDefaultBase
+                );
 
                 const first = story.getTreeItem("Category 1");
                 await expect(first).toBeVisible();
@@ -182,7 +199,9 @@ test.describe("NestedSelect", () => {
             });
 
             await test.step("Selected + open - selected item should be selected and active", async () => {
-                await story.openDropdown();
+                await story.openDropdown(
+                    story.locators.nestedSelectDefaultBase
+                );
 
                 await expect(story.locators.internal.dropdownList)
                     .toMatchAriaSnapshot(`
@@ -245,7 +264,9 @@ test.describe("NestedSelect", () => {
 
         test("With search", async ({ story }) => {
             await test.step("Open with search", async () => {
-                await story.openDropdown();
+                await story.openDropdown(
+                    story.locators.nestedSelectDefaultBase
+                );
 
                 await expect(story.locators.internal.searchInput).toBeVisible();
                 await expect(story.locators.internal.searchInput).toBeFocused();
@@ -353,13 +374,26 @@ test.describe("NestedSelect", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("short-dropdown");
+            await story.init("dropdown-width");
         });
 
-        test("Short dropdown", async ({ story }) => {
-            await story.locators.internal.selector.click();
-            await compareScreenshot(story, "dropdown-open", {
-                fullscreen: true,
+        test("Dropdown width", async ({ story }) => {
+            await test.step("Min width variant", async () => {
+                await story.openDropdown(story.locators.nestedSelectMinWidth);
+                await compareScreenshot(story, "min-width", {
+                    fullscreen: true,
+                });
+                await story.closeDropdown();
+            });
+
+            await test.step("Custom width variant", async () => {
+                await story.openDropdown(
+                    story.locators.nestedSelectCustomWidth
+                );
+                await compareScreenshot(story, "custom-width", {
+                    fullscreen: true,
+                });
+                await story.closeDropdown();
             });
         });
     });
@@ -370,7 +404,7 @@ test.describe("NestedSelect", () => {
         });
 
         test("Virtualization", async ({ story }) => {
-            await story.openDropdown();
+            await story.openDropdown(story.locators.nestedSelectDefaultBase);
             await expect(story.locators.internal.searchInput).toBeFocused();
 
             await story.locators.internal.searchInput.fill("Option 999");
@@ -387,6 +421,17 @@ test.describe("NestedSelect", () => {
             await expect(story.locators.internal.selector).toContainText(
                 "Option 999-1"
             );
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("options");
+        });
+
+        test("Options", async ({ story }) => {
+            await story.openDropdown(story.locators.nestedSelectDefaultBase);
+            await compareScreenshot(story, "mount");
         });
     });
 });

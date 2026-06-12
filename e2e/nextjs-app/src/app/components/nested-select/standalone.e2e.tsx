@@ -5,7 +5,7 @@ import { OPTIONS } from "./mock";
 
 export default function Story() {
     return (
-        <div>
+        <div className="story-column-container">
             <InputNestedSelect
                 data-testid="form-nested-select"
                 options={OPTIONS}
