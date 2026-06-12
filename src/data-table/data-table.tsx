@@ -389,7 +389,7 @@ export const DataTable = ({
 
     const renderRows = () => {
         return !rows || rows.length < 1 ? (
-            <BodyRow>
+            <BodyRow $alternating={false}>
                 <EmptyViewCell colSpan={getTotalColumns()}>
                     {renderCustomEmptyView
                         ? renderCustomEmptyView()
@@ -498,7 +498,7 @@ export const DataTable = ({
 
     const renderLoader = () => {
         return (
-            <BodyRow>
+            <BodyRow $alternating={false}>
                 <td colSpan={getTotalColumns()}>
                     <LoaderWrapper
                         role="status"
