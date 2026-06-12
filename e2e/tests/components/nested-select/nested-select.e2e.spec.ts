@@ -431,7 +431,9 @@ test.describe("NestedSelect", () => {
 
         test("Options", async ({ story }) => {
             await story.openDropdown(story.locators.nestedSelectDefaultBase);
-            await compareScreenshot(story, "mount");
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
         });
     });
 });
