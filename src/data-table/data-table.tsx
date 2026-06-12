@@ -127,7 +127,11 @@ export const DataTable = ({
     // HELPER FUNCTIONS
     // ===========================================================================
     const isAllCheckboxSelected = (): boolean => {
-        return selectedIds?.length === rows?.length;
+        if (!rows || !rows.length || !selectedIds) {
+            return false;
+        }
+
+        return selectedIds.length === rows.length;
     };
 
     const isIndeterminateCheckbox = (): boolean => {
@@ -136,6 +140,10 @@ export const DataTable = ({
             selectedIds.length !== 0 &&
             !isAllCheckboxSelected()
         );
+    };
+
+    const isHeaderCheckboxDisabled = (): boolean => {
+        return !rows || !rows.length || !selectedIds;
     };
 
     const isRowSelected = (rowId: string): boolean => {
@@ -365,6 +373,7 @@ export const DataTable = ({
                         <Checkbox
                             checked={isAllCheckboxSelected()}
                             indeterminate={isIndeterminateCheckbox()}
+                            disabled={isHeaderCheckboxDisabled()}
                             aria-label="Select all rows"
                             onClick={() => {
                                 if (onSelectAll) {
@@ -380,13 +389,13 @@ export const DataTable = ({
 
     const renderRows = () => {
         return !rows || rows.length < 1 ? (
-            <tr>
+            <BodyRow>
                 <EmptyViewCell colSpan={getTotalColumns()}>
                     {renderCustomEmptyView
                         ? renderCustomEmptyView()
                         : renderBasicEmptyView()}
                 </EmptyViewCell>
-            </tr>
+            </BodyRow>
         ) : (
             <>
                 {rows?.map((row: RowProps, index: number) => (
@@ -489,7 +498,7 @@ export const DataTable = ({
 
     const renderLoader = () => {
         return (
-            <tr>
+            <BodyRow>
                 <td colSpan={getTotalColumns()}>
                     <LoaderWrapper
                         role="status"
@@ -499,7 +508,7 @@ export const DataTable = ({
                         {loadState === "loading" && <LoadingDotsSpinner />}
                     </LoaderWrapper>
                 </td>
-            </tr>
+            </BodyRow>
         );
     };
 
