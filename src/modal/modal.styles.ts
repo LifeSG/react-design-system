@@ -6,6 +6,10 @@ export const tokens = {
     container: {
         verticalHeight: "--fds-internal-modal-container-verticalHeight",
     },
+    closeButton: {
+        topInset: "--fds-internal-modal-closeButton-topInset",
+        rightInset: "--fds-internal-modal-closeButton-rightInset",
+    },
 } as const;
 
 export const container = css`
@@ -18,6 +22,8 @@ export const container = css`
     overflow: hidden;
 
     ${tokens.container.verticalHeight}: initial;
+    ${tokens.closeButton.topInset}: initial;
+    ${tokens.closeButton.rightInset}: initial;
 
     ${MediaQuery.MaxWidth.sm} {
         height: calc(var(${tokens.container.verticalHeight}, 1vh) * 100);

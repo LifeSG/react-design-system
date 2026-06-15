@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import * as modalBoxStyles from "../modal/modal-box.styles";
+import * as modalStyles from "../modal/modal.styles";
 import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
@@ -103,8 +103,8 @@ export const modalBox = css`
         border-radius: 0;
         padding: 0;
 
-        ${modalBoxStyles.tokens.buttonTopInset}: ${Spacing["spacing-8"]};
-        ${modalBoxStyles.tokens.buttonRightInset}: ${Spacing["spacing-20"]};
+        ${modalStyles.tokens.closeButton.topInset}: ${Spacing["spacing-8"]};
+        ${modalStyles.tokens.closeButton.rightInset}: ${Spacing["spacing-20"]};
     }
 `;
 
