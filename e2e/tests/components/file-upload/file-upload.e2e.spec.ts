@@ -310,9 +310,7 @@ test.describe("FileUpload", () => {
 
             test("Editable", async ({ story }) => {
                 await test.step("States mount", async () => {
-                    await compareScreenshot(story, "mount", {
-                        locator: story.locators.fileUpload,
-                    });
+                    await compareScreenshot(story, "mount");
                 });
 
                 await test.step("Save description", async () => {
@@ -377,9 +375,7 @@ test.describe("FileUpload", () => {
 
             test("Editable - mobile", async ({ story }) => {
                 await test.step("States mount", async () => {
-                    await compareScreenshot(story, "mount", {
-                        locator: story.locators.fileUpload,
-                    });
+                    await compareScreenshot(story, "mount");
                 });
             });
         });
