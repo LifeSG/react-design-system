@@ -1,5 +1,9 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    waitForAnimationEnd,
+} from "../../utils";
 import { viewport } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
@@ -53,6 +57,7 @@ class StoryPage extends AbstractStoryPage {
 
     async drawOnCanvas(): Promise<void> {
         await this.locators.canvas.waitFor({ state: "visible" });
+        await waitForAnimationEnd(this.locators.signatureModal);
 
         const box = await this.locators.canvas.boundingBox();
         if (!box) throw new Error("Canvas bounding box not found");
