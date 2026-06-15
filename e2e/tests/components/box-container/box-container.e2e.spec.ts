@@ -5,6 +5,15 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "box-container";
 
     public readonly locators: {
+        internal: (container?: Locator) => {
+            nonExpandableContainer: Locator;
+            expandableContainer: Locator;
+            handle: Locator;
+            title: Locator;
+            errorIcon: Locator;
+            warningIcon: Locator;
+            ctaContainer: Locator;
+        };
         container: {
             nonCollapsible: Locator;
             error: Locator;
@@ -14,13 +23,6 @@ class StoryPage extends AbstractStoryPage {
             collapsed: Locator;
             expanded: Locator;
         };
-        handle: Locator;
-        nonExpandableContainer: Locator;
-        expandableContainer: Locator;
-        title: Locator;
-        errorIcon: Locator;
-        warningIcon: Locator;
-        ctaContainer: Locator;
         ctaButton: Locator;
         content: {
             collapsed: Locator;
@@ -32,6 +34,24 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
+            internal: (container?: Locator) => {
+                const locator = container ?? this.page;
+                return {
+                    nonExpandableContainer: locator.getByTestId(
+                        "non-expandable-container"
+                    ),
+                    expandableContainer: locator.getByTestId(
+                        "expandable-container"
+                    ),
+                    handle: locator.getByTestId("handle"),
+                    title: locator.getByTestId("title"),
+                    errorIcon: locator.getByTestId("error-icon"),
+                    warningIcon: locator.getByTestId("warning-icon"),
+                    ctaContainer: locator.getByTestId(
+                        "call-to-action-container"
+                    ),
+                };
+            },
             container: {
                 nonCollapsible: page.getByTestId(
                     "box-container-non-collapsible"
@@ -43,15 +63,6 @@ class StoryPage extends AbstractStoryPage {
                 collapsed: page.getByTestId("box-container-collapsed"),
                 expanded: page.getByTestId("box-container-expanded"),
             },
-            handle: page.getByTestId("handle"),
-            nonExpandableContainer: page.getByTestId(
-                "non-expandable-container"
-            ),
-            expandableContainer: page.getByTestId("expandable-container"),
-            title: page.getByTestId("title"),
-            errorIcon: page.getByTestId("error-icon"),
-            warningIcon: page.getByTestId("warning-icon"),
-            ctaContainer: page.getByTestId("call-to-action-container"),
             ctaButton: page.getByTestId("cta-button"),
             content: {
                 collapsed: page.getByTestId("content-collapsed"),
@@ -136,61 +147,24 @@ test.describe("BoxContainer", () => {
         });
 
         test("Expand/collapse interaction", async ({ story }) => {
-            await test.step("Visual appearance of expand/collapse states", async () => {
-                await compareScreenshot(story, "mount");
+            await compareScreenshot(story, "mount");
 
-                // First container starts collapsed
-                await expect(story.locators.container.collapsed)
-                    .toMatchAriaSnapshot(`
+            // First container starts collapsed
+            await expect(story.locators.container.collapsed)
+                .toMatchAriaSnapshot(`
                     - region "Title":
                       - status: Title
                       - button "Title" [expanded=false]
                 `);
 
-                // Second container starts expanded
-                await expect(story.locators.container.expanded)
-                    .toMatchAriaSnapshot(`
+            // Second container starts expanded
+            await expect(story.locators.container.expanded)
+                .toMatchAriaSnapshot(`
                     - region "Title":
                       - status: Title
                       - button "Title" [expanded=true]
                       - paragraph: Lorem ipsum dolor sit amet
                 `);
-            });
-
-            // Test expanding the collapsed container
-            await test.step("Clicking handle should expand collapsed container", async () => {
-                const collapsedHandle =
-                    story.locators.container.collapsed.getByTestId("handle");
-
-                // Click to expand
-                await collapsedHandle.click();
-
-                // Verify state changed using aria snapshot
-                await expect(story.locators.container.collapsed)
-                    .toMatchAriaSnapshot(`
-                    - region "Title":
-                      - status: Title
-                      - button "Title" [expanded=true]
-                      - paragraph: Lorem ipsum dolor sit amet
-                `);
-            });
-
-            // Test collapsing the expanded container
-            await test.step("Clicking handle should collapse expanded container", async () => {
-                const expandedHandle =
-                    story.locators.container.expanded.getByTestId("handle");
-
-                // Click to collapse
-                await expandedHandle.click();
-
-                // Verify state changed using aria snapshot
-                await expect(story.locators.container.expanded)
-                    .toMatchAriaSnapshot(`
-                    - region "Title":
-                      - status: Title
-                      - button "Title" [expanded=false]
-                `);
-            });
         });
     });
 });

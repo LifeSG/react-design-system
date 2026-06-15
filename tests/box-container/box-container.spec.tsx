@@ -1,12 +1,19 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { BoxContainer, Colour } from "src";
+
+jest.mock("react-resize-detector", () => ({
+    useResizeDetector: () => ({
+        height: 100,
+        ref: jest.fn(),
+    }),
+}));
 
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
 describe("BoxContainer", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
@@ -38,6 +45,17 @@ describe("BoxContainer", () => {
         expect(getExpandButton(true)).not.toBeInTheDocument();
     });
 
+    it("should be expanded if specified", () => {
+        render(
+            <BoxContainer title={DEFAULT_TITLE} expanded={true}>
+                <p>{DEFAULT_TEXT}</p>
+            </BoxContainer>
+        );
+
+        expectExpanded(screen.getByTestId(EXPANDABLE_CONTAINER_ID));
+        expect(getExpandButton()).toHaveAttribute("aria-expanded", "true");
+    });
+
     it("should not be expanded if specified", () => {
         render(
             <BoxContainer title={DEFAULT_TITLE} expanded={false}>
@@ -45,14 +63,31 @@ describe("BoxContainer", () => {
             </BoxContainer>
         );
 
-        /**
-         * NOTE: Text is wrapped within two nested divs, hence requires
-         * two traversals up to the div container that contains the styles
-         */
-        expect(
-            screen.getByText(DEFAULT_TEXT).parentElement?.parentElement
-        ).toHaveStyle({
-            height: 0,
+        expectCollapsed(screen.getByTestId(EXPANDABLE_CONTAINER_ID));
+        expect(getExpandButton()).toHaveAttribute("aria-expanded", "false");
+    });
+
+    it("should expand and collapse when clicking the expand/collapse button", async () => {
+        render(
+            <BoxContainer title={DEFAULT_TITLE}>
+                <p>{DEFAULT_TEXT}</p>
+            </BoxContainer>
+        );
+
+        const button = getExpandButton()!;
+
+        expectCollapsed(screen.getByTestId(EXPANDABLE_CONTAINER_ID));
+
+        fireEvent.click(button);
+
+        await waitFor(() => {
+            expectExpanded(screen.getByTestId(EXPANDABLE_CONTAINER_ID));
+        });
+
+        fireEvent.click(button);
+
+        await waitFor(() => {
+            expectCollapsed(screen.getByTestId(EXPANDABLE_CONTAINER_ID));
         });
     });
 
@@ -142,6 +177,7 @@ describe("BoxContainer", () => {
 // =============================================================================
 const DEFAULT_TEXT = "default text";
 const DEFAULT_TITLE = "default title";
+const EXPANDABLE_CONTAINER_ID = "expandable-container";
 
 // =============================================================================
 // HELPER FUNCTIONS
@@ -151,4 +187,16 @@ const getExpandButton = (isQuery?: boolean) => {
         return screen.queryByRole("button");
     }
     return screen.getByRole("button");
+};
+
+const expectExpanded = (element: HTMLElement) => {
+    expect(element).toHaveStyle({
+        height: "100px",
+    });
+};
+
+const expectCollapsed = (element: HTMLElement) => {
+    expect(element).toHaveStyle({
+        height: 0,
+    });
 };
