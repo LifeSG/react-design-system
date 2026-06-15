@@ -81,7 +81,8 @@ const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
 
     &:active,
     &:hover,
-    &:focus {
+    &:focus,
+    &:focus-within {
         color: ${(props) =>
             props.$selected
                 ? ThemeNavbar["navbar-link-colour-text-selected-hover"]
@@ -134,9 +135,18 @@ export const LinkIndicator = styled.div<StyleProps>`
     height: 0.25rem;
     background-color: ${Colour["border-selected"]};
 
-    &:hover {
-        ${(props) => props.$selected && Colour["border-selected-hover"]};
-    }
+    ${(props) =>
+        props.$selected &&
+        css`
+            ${Link}:active &,
+            ${Link}:hover &,
+            ${Link}:focus &,
+            ${LinkButton}:active &,
+            ${LinkButton}:hover &,
+            ${LinkButton}:focus & {
+                background-color: ${Colour["border-selected-hover"]};
+            }
+        `};
 
     ${MediaQuery.MaxWidth.lg} {
         left: 0;
@@ -164,8 +174,14 @@ export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
     height: 1.25rem;
     width: 1.25rem;
     color: ${Colour.icon};
-    &:hover {
-        ${(props) =>
+
+    ${Link}:active &,
+    ${Link}:hover &,
+    ${Link}:focus &,
+    ${LinkButton}:active &,
+    ${LinkButton}:hover &,
+    ${LinkButton}:focus & {
+        color: ${(props) =>
             props.$selected
                 ? Colour["icon-selected-hover"]
                 : Colour["icon-hover"]};
