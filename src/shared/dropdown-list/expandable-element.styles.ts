@@ -30,10 +30,6 @@ export const selectorVariantSmall = css`
     height: calc(2.5rem - 2px);
 `;
 
-export const selectorReadOnly = css`
-    padding: 0 ${Spacing["spacing-16"]};
-`;
-
 export const selectorEditable = css`
     padding: ${Spacing["spacing-16"]};
 `;

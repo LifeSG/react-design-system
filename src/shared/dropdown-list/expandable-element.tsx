@@ -50,7 +50,7 @@ export const Component = (
             className={clsx(
                 styles.selector,
                 variant === "small" && styles.selectorVariantSmall,
-                readOnly ? styles.selectorReadOnly : styles.selectorEditable,
+                !readOnly && styles.selectorEditable,
                 className
             )}
             {...otherProps}
