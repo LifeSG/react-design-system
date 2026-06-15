@@ -4,24 +4,12 @@ import { AbstractStoryPage, compareScreenshot } from "../../utils";
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "avatar";
 
-    public readonly locators: {
-        defaultAvatars: Locator;
-        smallAvatars: Locator;
-        allAvatars: Locator;
-        badges: Locator;
-        importantBadges: Locator;
-    };
+    public readonly locators: {};
 
     constructor(page: Page) {
         super(page);
 
-        this.locators = {
-            defaultAvatars: page.getByTestId(/^avatar-default-important-/),
-            smallAvatars: page.getByTestId(/^avatar-small-important-/),
-            allAvatars: page.getByTestId(/^avatar-/),
-            badges: page.getByTestId(/^badge-/),
-            importantBadges: page.getByTestId(/^badge-.*-important-/),
-        };
+        this.locators = {};
     }
 }
 
@@ -35,22 +23,30 @@ const test = base.extend<{ story: StoryPage }>({
 test.describe("Avatar", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("size-variants-text");
+            await story.init("default");
         });
 
-        test("Size variants with text content", async ({ story }) => {
+        test("Default", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("size-variants-text", { mode: "dark" });
+            await story.init("default", { mode: "dark" });
         });
 
-        test("Size variants with text content (dark mode)", async ({
-            story,
-        }) => {
+        test("Default (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("small-variant");
+        });
+
+        test("Small size variant", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
