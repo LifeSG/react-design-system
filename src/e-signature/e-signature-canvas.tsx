@@ -3,18 +3,13 @@ import type { Ref } from "react";
 import {
     forwardRef,
     useCallback,
-    useContext,
     useEffect,
     useImperativeHandle,
     useRef,
 } from "react";
-import { ThemeContext } from "styled-components";
 
-import { V3_Colour } from "../v3_theme";
-import {
-    SignatureCanvas,
-    SignatureCanvasContainer,
-} from "./e-signature.styles";
+import { Colour, useDesignToken } from "../theme";
+import * as styles from "./e-signature.styles";
 
 interface ESignatureCanvasProps {
     baseImageDataURL?: string | null | undefined;
@@ -38,7 +33,7 @@ const Component = (
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvas = useRef<FabricCanvas>();
     const pencilBrush = useRef<PencilBrush>();
-    const theme = useContext(ThemeContext);
+    const resolvedColor = useDesignToken(Colour["text"]);
 
     // =============================================================================
     // HOOKS
@@ -95,7 +90,7 @@ const Component = (
             fabricCanvas.current.isDrawingMode = true;
 
             pencilBrush.current = new PencilBrush(fabricCanvas.current);
-            pencilBrush.current.color = V3_Colour["text"]({ theme });
+            pencilBrush.current.color = resolvedColor || "#000000";
             pencilBrush.current.width = 3;
 
             fabricCanvas.current.freeDrawingBrush = pencilBrush.current;
@@ -145,9 +140,13 @@ const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <SignatureCanvasContainer ref={containerRef}>
-            <SignatureCanvas id="eSignatureCanvas" ref={canvasRef} />
-        </SignatureCanvasContainer>
+        <div className={styles.signatureCanvasContainer} ref={containerRef}>
+            <canvas
+                className={styles.signatureCanvas}
+                id="eSignatureCanvas"
+                ref={canvasRef}
+            />
+        </div>
     );
 };
 

@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 
 import { Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
+import * as modalStyles from "./modal.styles";
 
 export const box = css`
     position: relative;
@@ -21,8 +22,14 @@ export const box = css`
 
 export const closeButton = css`
     position: absolute;
-    top: var(--close-button-top-inset, ${Spacing["spacing-16"]});
-    right: var(--close-button-right-inset, ${Spacing["spacing-16"]});
+    top: var(
+        ${modalStyles.tokens.closeButton.topInset},
+        ${Spacing["spacing-16"]}
+    );
+    right: var(
+        ${modalStyles.tokens.closeButton.rightInset},
+        ${Spacing["spacing-16"]}
+    );
     padding: 0;
     color: ${Colour.icon};
 
@@ -32,6 +39,9 @@ export const closeButton = css`
     }
 
     ${MediaQuery.MaxWidth.sm} {
-        right: var(--close-button-right-inset, ${Spacing["spacing-20"]});
+        right: var(
+            ${modalStyles.tokens.closeButton.rightInset},
+            ${Spacing["spacing-20"]}
+        );
     }
 `;
