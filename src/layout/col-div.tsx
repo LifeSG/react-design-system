@@ -4,7 +4,7 @@ import React, { useRef } from "react";
 import { type BreakpointCSSVariableString, useApplyStyle } from "../theme";
 import { Breakpoint } from "../theme/tokens/breakpoint";
 import { parseCSSVariableValue } from "../theme/utils/css-variable";
-import { mergeRefs } from "../util";
+import { mergeRefs, useIsMounted } from "../util";
 import * as styles from "./col-div.styles";
 import type { ColDivProps } from "./types";
 
@@ -71,6 +71,7 @@ const Component = (
         ...otherProps
     } = props;
 
+    const isMounted = useIsMounted();
     const rootRef = useRef<HTMLDivElement>(null);
     const mergedRef = mergeRefs(rootRef, ref);
 
@@ -153,9 +154,7 @@ const Component = (
         return cssVars;
     };
 
-    useApplyStyle(rootRef, {
-        ...getCssVars(),
-    });
+    useApplyStyle(rootRef, isMounted ? getCssVars() : {});
 
     return (
         <div
