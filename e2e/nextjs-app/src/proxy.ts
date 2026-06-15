@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from "next/server";
 
-// referenced from https://nextjs.org/docs/app/guides/content-security-policy#adding-a-nonce-with-proxy
 /**
  * Middleware that injects CSP headers with a random nonce for inline scripts/styles.
  * Referenced from: https://nextjs.org/docs/app/guides/content-security-policy#adding-a-nonce-with-proxy
@@ -17,8 +16,8 @@ export function proxy(request: NextRequest) {
     const cspHeader = `
         default-src 'self';
         script-src 'self' 'nonce-${nonce}' ${
-        isDev ? "'unsafe-eval'" : ""
-    } https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3/components/Masthead/index.umd.js;
+            isDev ? "'unsafe-eval'" : ""
+        } https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3/components/Masthead/index.umd.js;
         ${styleSrcDirective}
         img-src 'self' https://*.life.gov.sg https://fastly.picsum.photos 
             https://mylegacy.life.gov.sg https://*.booking.gov.sg blob: data:;
