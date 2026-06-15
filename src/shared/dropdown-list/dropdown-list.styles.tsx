@@ -195,6 +195,7 @@ export const ResultStateContainer = styled.div`
     display: flex;
     padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
     align-items: center;
+    color: ${Colour["text"]};
 `;
 
 export const LabelIcon = styled(ExclamationCircleFillIcon)`
