@@ -6,9 +6,10 @@ import { OPTIONS } from "./mock";
 export default function Story() {
     return (
         <Form.NestedSelect
-            data-testid="form-nested-select-default"
+            label="All options are expanded"
+            data-testid="form-nested-select-all-expanded"
             options={OPTIONS}
-            enableSearch
+            mode="expand"
         />
     );
 }

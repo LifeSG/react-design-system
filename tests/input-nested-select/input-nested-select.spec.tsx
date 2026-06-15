@@ -387,5 +387,127 @@ describe("InputNestedSelect", () => {
             const option = screen.getByText("1.1.1 item", { exact: false });
             expect(option.textContent).toEqual("Child 1.1.1 item");
         });
+
+        it("should call onSearch callback when user types in search input", async () => {
+            const user = userEvent.setup();
+            const mockOnSearch = jest.fn();
+
+            render(
+                <InputNestedSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    enableSearch
+                    onSearch={mockOnSearch}
+                />
+            );
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+            await waitFor(() => {
+                expect(
+                    screen.getByLabelText("Enter text to search")
+                ).toHaveFocus();
+            });
+
+            expect(mockOnSearch).toHaveBeenCalledTimes(0);
+
+            await act(async () => {
+                await user.keyboard("Child");
+            });
+
+            expect(mockOnSearch).toHaveBeenCalled();
+        });
+    });
+
+    describe("onShowOptions callback", () => {
+        it("should call onShowOptions when dropdown is opened", async () => {
+            const user = userEvent.setup();
+            const mockOnShowOptions = jest.fn();
+
+            render(
+                <InputNestedSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    onShowOptions={mockOnShowOptions}
+                />
+            );
+
+            expect(mockOnShowOptions).toHaveBeenCalledTimes(0);
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+
+            expect(mockOnShowOptions).toHaveBeenCalledTimes(1);
+        });
+    });
+
+    describe("onHideOptions callback", () => {
+        it("should call onHideOptions when dropdown is closed by selecting an option", async () => {
+            const user = userEvent.setup();
+            const mockOnHideOptions = jest.fn();
+
+            render(
+                <InputNestedSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    onHideOptions={mockOnHideOptions}
+                />
+            );
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+
+            expect(mockOnHideOptions).toHaveBeenCalledTimes(0);
+
+            await user.click(screen.getByText("Child 1.1.1 item"));
+
+            await waitFor(() => {
+                expect(
+                    screen.queryByTestId(DROPDOWN_TESTID)
+                ).not.toBeInTheDocument();
+            });
+
+            expect(mockOnHideOptions).toHaveBeenCalledTimes(1);
+        });
+
+        it("should call onHideOptions when dropdown is toggled closed", async () => {
+            const user = userEvent.setup();
+            const mockOnHideOptions = jest.fn();
+
+            render(
+                <InputNestedSelect
+                    data-testid={FIELD_TESTID}
+                    options={OPTIONS}
+                    onHideOptions={mockOnHideOptions}
+                />
+            );
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => {
+                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+            });
+
+            expect(mockOnHideOptions).toHaveBeenCalledTimes(0);
+
+            await user.click(screen.getByTestId(FIELD_TESTID));
+
+            await waitFor(() => {
+                expect(
+                    screen.queryByTestId(DROPDOWN_TESTID)
+                ).not.toBeInTheDocument();
+            });
+
+            expect(mockOnHideOptions).toHaveBeenCalledTimes(1);
+        });
     });
 });

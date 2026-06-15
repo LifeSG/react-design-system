@@ -6,9 +6,10 @@ import { OPTIONS } from "./mock";
 export default function Story() {
     return (
         <Form.NestedSelect
-            data-testid="form-nested-select-default"
+            label="All options are collapsed"
+            data-testid="form-nested-select-all-collapsed"
             options={OPTIONS}
-            enableSearch
+            mode="collapse"
         />
     );
 }

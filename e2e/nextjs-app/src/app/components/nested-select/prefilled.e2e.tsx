@@ -5,32 +5,36 @@ import { OPTIONS } from "./mock";
 
 export default function Story() {
     return (
-        <div className="story-column-container story-background">
+        <div>
             <Form.NestedSelect
                 label="Default state"
-                data-testid="form-nested-select-default"
+                data-testid="form-nested-select"
                 options={OPTIONS}
+                selectedKeyPath={["1", "11"]}
             />
 
             <Form.NestedSelect
                 label="Disabled state"
-                data-testid="form-nested-select-disabled"
+                data-testid="form-nested-select"
                 options={OPTIONS}
                 disabled
+                selectedKeyPath={["1", "11"]}
             />
 
             <Form.NestedSelect
                 label="Readonly state"
-                data-testid="form-nested-select-readonly"
+                data-testid="form-nested-select"
                 options={OPTIONS}
                 readOnly
+                selectedKeyPath={["1", "11"]}
             />
 
             <Form.NestedSelect
                 label="Error state"
-                data-testid="form-nested-select-error"
+                data-testid="form-nested-select"
                 options={OPTIONS}
                 errorMessage="Sample error message"
+                selectedKeyPath={["1", "11"]}
             />
         </div>
     );
