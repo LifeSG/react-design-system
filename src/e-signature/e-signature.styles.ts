@@ -88,9 +88,6 @@ export const growContainer = css`
 `;
 
 export const modalBox = css`
-    ${modalBoxStyles.tokens.buttonTopInset}: initial;
-    ${modalBoxStyles.tokens.buttonRightInset}: initial;
-
     width: 100%;
     height: 29rem;
     max-width: 672px;
@@ -148,6 +145,9 @@ export const eSignatureDrawable = css`
 
     ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         aspect-ratio: 4/3;
+    }
+
+    ${MediaQuery.MaxWidth.sm} {
         width: 100%;
         height: auto;
     }

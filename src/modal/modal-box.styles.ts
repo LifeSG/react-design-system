@@ -3,8 +3,8 @@ import { css } from "@linaria/core";
 import { Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
 
 export const tokens = {
-    buttonTopInset: "--fds-internal-e-signature-close-button-topInset",
-    buttonRightInset: "--fds-internal-e-signature-close-button-rightInset",
+    buttonTopInset: "--fds-internal-modal-box-closeButton-topInset",
+    buttonRightInset: "--fds-internal-modal-box-closeButton-rightInset",
 };
 
 export const box = css`
@@ -25,6 +25,9 @@ export const box = css`
 `;
 
 export const closeButton = css`
+    ${tokens.buttonTopInset}: initial;
+    ${tokens.buttonRightInset}: initial;
+
     position: absolute;
     top: var(${tokens.buttonTopInset}, ${Spacing["spacing-16"]});
     right: var(${tokens.buttonRightInset}, ${Spacing["spacing-16"]});
