@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("../../_virtual/_commonjsHelpers.js"),r=require("./_arrayReduce.js"),a=require("./_baseEach.js"),s=require("./_baseIteratee.js"),t=require("./_baseReduce.js"),u=require("./isArray.js"),_=r._arrayReduce,i=a._baseEach,c=s._baseIteratee,j=t._baseReduce,o=u.isArray_1;var b=function(e,r,a){var s=o(e)?_:j,t=arguments.length<3;return s(e,c(r),a,t,i)},d=e.getDefaultExportFromCjs(b);exports.default=d;
+//# sourceMappingURL=reduce.js.map

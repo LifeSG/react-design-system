@@ -1,0 +1,2 @@
+"use strict";var r=require("../_virtual/_tslib.js"),e=require("react/jsx-runtime"),i=require("./dial-picker/dial-picker.js"),a=require("./combobox-picker/combobox-picker.js");exports.TimeRangePicker=s=>{var{variant:c="dial"}=s,o=r.__rest(s,["variant"]);return"combobox"===c?e.jsx(a.ComboboxPicker,Object.assign({},o)):e.jsx(i.DialPicker,Object.assign({},o))};
+//# sourceMappingURL=time-range-picker.js.map
