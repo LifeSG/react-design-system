@@ -310,9 +310,7 @@ test.describe("FileUpload", () => {
 
             test("Editable", async ({ story }) => {
                 await test.step("States mount", async () => {
-                    await compareScreenshot(story, "mount", {
-                        locator: story.locators.fileUpload,
-                    });
+                    await compareScreenshot(story, "mount");
                 });
 
                 await test.step("Save description", async () => {
@@ -377,14 +375,7 @@ test.describe("FileUpload", () => {
 
             test("Editable - mobile", async ({ story }) => {
                 await test.step("States mount", async () => {
-                    // Workaround for handling different snapshot dimension size
-                    // See: https://github.com/microsoft/playwright/issues/18827#issuecomment-2031261562
-                    // Cann see that the maintainer marked the issue as not planned to be fixed, so we will keep this workaround for now.
-                    await story.page.waitForTimeout(1000);
-
-                    await compareScreenshot(story, "mount", {
-                        locator: story.locators.fileUpload,
-                    });
+                    await compareScreenshot(story, "mount");
                 });
             });
         });
