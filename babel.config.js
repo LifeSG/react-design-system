@@ -8,7 +8,7 @@ module.exports = (api) => {
     ];
     const plugins = isTest
         ? ["./babel-plugins/babel-plugin-inject-linaria-css.js"]
-        : [["babel-plugin-styled-components", { displayName: true }]];
+        : [];
 
     return {
         presets,

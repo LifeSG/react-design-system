@@ -214,7 +214,7 @@ const libraryBuildConfig = {
         },
     ],
     plugins,
-    external: ["react", "react-dom", "styled-components"],
+    external: ["react", "react-dom"],
 };
 
 const codemodBuildConfig = {
