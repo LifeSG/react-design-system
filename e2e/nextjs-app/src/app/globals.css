@@ -1,13 +1,3 @@
-@import url("/cdn/react-design-system/v3/css/main.css");
-@import url("/cdn/react-design-system/v3/css/atkinson-hyperlegible-next.css");
-@import url("/cdn/react-design-system/v3/css/plus-jakarta-sans.css");
-@import url("/cdn/react-design-system/v3/css/open-sans.css");
-@import url("/cdn/react-design-system/v3/css/inter.css");
-@import url("/cdn/react-design-system/v3/css/montserrat.css");
-@import url("/cdn/react-design-system/v3/css/lato.css");
-@import url("/cdn/react-design-system/v3/css/libre-franklin.css");
-@import url("/cdn/react-design-system/v3/css/public-sans.css");
-
 .story-row-container {
     display: flex;
     gap: 1rem;
