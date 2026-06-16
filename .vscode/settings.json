@@ -24,8 +24,8 @@
         "mdx"
     ],
     "editor.rulers": [80],
-    "typescript.preferences.importModuleSpecifier": "relative",
-    "typescript.tsdk": "node_modules/typescript/lib",
+    "js/ts.preferences.importModuleSpecifier": "relative",
+    "js/ts.tsdk.path": "node_modules/typescript/lib",
     "[typescriptreact]": {
         "editor.defaultFormatter": "esbenp.prettier-vscode"
     },
