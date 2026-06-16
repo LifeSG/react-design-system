@@ -1,7 +1,6 @@
 import clsx from "clsx";
 import type { NamedExoticComponent } from "react";
 import React from "react";
-import { isStyledComponent } from "styled-components";
 
 import type { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
@@ -29,14 +28,9 @@ function CardInner(
     // =========================================================================
     // HELPERS
     // =========================================================================
-    const isComponentType = (child: React.ReactPortal, type: any) =>
-        isStyledComponent(child.type)
-            ? (child.type as unknown as { target: any }).target === type
-            : child.type === type;
-
     const findComponentOfType = (type: any) => {
-        return React.Children.toArray(children).find((child) =>
-            isComponentType(child as React.ReactPortal, type)
+        return React.Children.toArray(children).find(
+            (child) => (child as React.ReactPortal).type === type
         );
     };
 

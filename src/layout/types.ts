@@ -1,6 +1,14 @@
-import type { DefaultTheme } from "styled-components";
-
 import type { AddOne, Range } from "../util/utility-types";
+
+type MaxColumnsConfig = {
+    xxs?: number;
+    xs?: number;
+    sm?: number;
+    md?: number;
+    lg?: number;
+    xl?: number;
+    xxl?: number;
+};
 
 interface CommonLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
@@ -23,14 +31,10 @@ export type ColSpan<Max extends number | undefined> = Max extends number
     ? Range<Max> | [Range<AddOne<Max>>, Range<AddOne<Max>> | -1] | undefined
     : number | [number, number] | undefined;
 
-export type BreakpointSpan<
-    Breakpoint extends keyof DefaultTheme["maxColumns"]
-> = DefaultTheme["maxColumns"] extends Record<
-    Breakpoint,
-    infer Max extends number
->
-    ? ColSpan<Max>
-    : number | [number, number] | undefined;
+export type BreakpointSpan<Breakpoint extends keyof MaxColumnsConfig> =
+    MaxColumnsConfig extends Record<Breakpoint, infer Max extends number>
+        ? ColSpan<Max>
+        : number | [number, number] | undefined;
 export interface ColProps {
     /**
      * Specifies the number of columns to be spanned across for any breakpoint.
