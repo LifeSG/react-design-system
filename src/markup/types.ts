@@ -1,10 +1,11 @@
 import type { ColourCSSVariableString, FontSize } from "../theme";
 
 type CustomCssString = string & {};
+type MarkupTextSize = Exclude<FontSize, "form-label" | "form-description">;
 
 export interface MarkupProps extends React.HTMLAttributes<HTMLDivElement> {
     /** The default font size. If not specified, inherited from the parent */
-    baseTextSize?: FontSize | undefined;
+    baseTextSize?: MarkupTextSize | undefined;
     /** The default font color. If not specified, inherited from the parent */
     baseTextColor?: ColourCSSVariableString | CustomCssString | undefined;
     /**

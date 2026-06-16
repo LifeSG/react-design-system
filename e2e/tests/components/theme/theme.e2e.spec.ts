@@ -64,11 +64,11 @@ test.describe("Theme", () => {
             await expect(story.locators.colourMain).toHaveText("#1768BE", {
                 ignoreCase: true,
             });
-            await expect(story.locators.breakpointMain).toHaveText("1200");
+            await expect(story.locators.breakpointMain).toHaveText("1200px");
             await expect(story.locators.colourNested).toHaveText("#7654BC", {
                 ignoreCase: true,
             });
-            await expect(story.locators.breakpointNested).toHaveText("1200");
+            await expect(story.locators.breakpointNested).toHaveText("1200px");
         });
     });
 

@@ -14,7 +14,11 @@ import { Layout } from "../layout";
 import { Masthead } from "../masthead/masthead";
 import { Overlay } from "../overlay/overlay";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Breakpoint, parsePxOrRemValue, useDesignToken } from "../theme";
+import {
+    Breakpoint,
+    parsePxOrRemValue,
+    useResolvedBreakpointToken,
+} from "../theme";
 import { ThemeContext } from "../theme/theme-provider/context";
 import { Brand } from "./brand";
 import { Drawer } from "./drawer";
@@ -70,8 +74,9 @@ const Component = <T,>(
     const elementRef = useRef<HTMLDivElement>(null);
     const theme = useContext(ThemeContext);
     const defaultResource = getDefaultResourceLogo(theme?.theme);
-    const tabletWidthToken = useDesignToken(Breakpoint["lg-max"]);
-    const tabletWidth = parsePxOrRemValue(tabletWidthToken || "1200px");
+    const tabletWidth = parsePxOrRemValue(
+        useResolvedBreakpointToken(Breakpoint["lg-max"])
+    );
 
     const primary = resources?.primary || defaultResource.primary;
     const secondary = resources?.secondary;

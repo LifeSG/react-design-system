@@ -87,11 +87,13 @@ const container = css`
 import {
     Breakpoint,
     parsePxOrRemValue,
-    useDesignToken,
+    useResolvedBreakpointToken,
 } from "@lifesg/react-design-system/theme";
 
 export const MyComponent = () => {
-    const mobileWidth = parsePxOrRemValue(useDesignToken(Breakpoint["sm-max"]));
+    const mobileWidth = parsePxOrRemValue(
+        useResolvedBreakpointToken(Breakpoint["sm-max"])
+    );
 
     // use this value in your resize listeners, useMediaQuery hooks etc.
     const [mobile, setMobile] = useState(false);

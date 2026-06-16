@@ -112,14 +112,13 @@ Additionally, you can convert px or rem-based tokens to a numeric value with the
 import {
     Breakpoint,
     parsePxOrRemValue,
-    useDesignToken,
+    useResolvedBreakpointToken,
 } from "@lifesg/react-design-system/theme";
 
 const Component = () => {
-    const breakpoint = parsePxOrRemValue(
-        useDesignToken(Breakpoint["lg-max"]) || ""
+    const tabletBreakpoint = parsePxOrRemValue(
+        useResolvedBreakpointToken(Breakpoint["lg-max"])
     );
-
     // ...
 };
 ```

@@ -3,7 +3,11 @@ import clsx from "clsx";
 import { useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
-import { parsePxOrRemValue, useApplyStyle, useDesignToken } from "../theme";
+import {
+    parsePxOrRemValue,
+    useApplyStyle,
+    useResolvedBreakpointToken,
+} from "../theme";
 import { Breakpoint } from "../theme/tokens";
 import { Typography } from "../typography";
 import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
@@ -39,9 +43,8 @@ export const Breadcrumb = ({
     // EVENT HANDLERS
     // =============================================================================
 
-    const tabletBreakpointToken = useDesignToken(Breakpoint["lg-max"]);
     const tabletBreakpoint = parsePxOrRemValue(
-        tabletBreakpointToken || "1200px"
+        useResolvedBreakpointToken(Breakpoint["lg-max"])
     );
 
     // =============================================================================
@@ -120,7 +123,7 @@ export const Breadcrumb = ({
     useIsomorphicLayoutEffect(() => {
         onResize();
         handleShowFadeToggle();
-    }, [onResize, handleShowFadeToggle]);
+    }, [onResize, handleShowFadeToggle, tabletBreakpoint]);
 
     // To scroll left when wrapper resizes
     useResizeDetector({

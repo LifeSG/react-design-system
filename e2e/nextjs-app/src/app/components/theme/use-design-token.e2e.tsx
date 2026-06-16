@@ -2,16 +2,13 @@
 import {
     Breakpoint,
     Colour,
-    parsePxOrRemValue,
     ThemeProvider,
     useDesignToken,
 } from "@lifesg/react-design-system/theme";
 
 const Component = (props: React.HTMLAttributes<HTMLDivElement>) => {
     const colourValue = useDesignToken(Colour["bg-primary"]);
-    const breakpointValue = parsePxOrRemValue(
-        useDesignToken(Breakpoint["lg-max"]) || ""
-    );
+    const breakpointValue = useDesignToken(Breakpoint["lg-max"]);
 
     return (
         <div {...props}>

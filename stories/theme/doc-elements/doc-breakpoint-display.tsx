@@ -1,7 +1,12 @@
 import { css } from "@linaria/core";
 import clsx from "clsx";
 import type { ThemeType } from "src/theme";
-import { Breakpoint, ThemeProvider, useDesignToken } from "src/theme";
+import {
+    Breakpoint,
+    ThemeProvider,
+    useDesignToken,
+    useResolvedBreakpointToken,
+} from "src/theme";
 
 interface BreakpointDisplayProps {
     theme: ThemeType;
@@ -41,8 +46,10 @@ const BreakpointCollection = ({ size }: BreakpointCollectionProps) => {
     const columnSpacingToken = (size + "-gutter") as keyof typeof Breakpoint;
     const insetToken = (size + "-margin") as keyof typeof Breakpoint;
 
-    const minValue = useDesignToken(Breakpoint[minToken]);
-    const maxValue = useDesignToken(Breakpoint[maxToken]);
+    // @ts-expect-error - minToken/maxToken are dynamic strings but guaranteed to be valid width breakpoint tokens
+    const minValue = useResolvedBreakpointToken(Breakpoint[minToken]);
+    // @ts-expect-error - minToken/maxToken are dynamic strings but guaranteed to be valid width breakpoint tokens
+    const maxValue = useResolvedBreakpointToken(Breakpoint[maxToken]);
     const columnNumberValue = useDesignToken(Breakpoint[columnNumberToken]);
     const columnSpacingValue = useDesignToken(Breakpoint[columnSpacingToken]);
     const insetValue = useDesignToken(Breakpoint[insetToken]);

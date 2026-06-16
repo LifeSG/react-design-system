@@ -1,14 +1,8 @@
 import clsx from "clsx";
 import { forwardRef, useRef } from "react";
 
-import {
-    BorderThickness,
-    Colour,
-    Radius,
-    toCssValue,
-    useApplyStyle,
-    useResolvedTokenValue,
-} from "../theme";
+import { BorderThickness, Colour, Radius, useApplyStyle } from "../theme";
+import { toCssValue, useResolvedTokenValue } from "../theme/utils";
 import { mergeRefs } from "../util";
 import {
     isColourToken,

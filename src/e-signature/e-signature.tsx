@@ -9,7 +9,6 @@ import {
     Border,
     Breakpoint,
     Colour,
-    DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT,
     Radius,
     useMaxWidthMediaQuery,
     useMediaQuery,
@@ -43,10 +42,7 @@ export const ESignature = (props: EsignatureProps) => {
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string | null | undefined>(value);
     const isMobile = useMaxWidthMediaQuery("sm");
-    const mobileBreakpoint = useResolvedBreakpointToken(
-        Breakpoint["sm-max"],
-        DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT
-    );
+    const mobileBreakpoint = useResolvedBreakpointToken(Breakpoint["sm-max"]);
     const isMobileLandscape = useMediaQuery({
         clauses: [
             {
