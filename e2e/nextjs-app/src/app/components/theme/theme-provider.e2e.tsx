@@ -20,6 +20,9 @@ export default function Story() {
             <ThemeProvider theme="bookingsg">
                 <Swatch />
             </ThemeProvider>
+            <ThemeProvider theme="careercompass">
+                <Swatch />
+            </ThemeProvider>
             <ThemeProvider theme="ccube">
                 <Swatch />
             </ThemeProvider>
@@ -42,6 +45,9 @@ export default function Story() {
                 <Swatch />
             </ThemeProvider>
             <ThemeProvider theme="sgw-digital-lobby">
+                <Swatch />
+            </ThemeProvider>
+            <ThemeProvider theme="smgs">
                 <Swatch />
             </ThemeProvider>
             <ThemeProvider theme="spf">
