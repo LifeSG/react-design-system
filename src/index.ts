@@ -81,4 +81,3 @@ export * from "./toggle";
 export * from "./typography";
 export * from "./uneditable-section";
 export * from "./unit-number";
-export * from "./v3_theme";
