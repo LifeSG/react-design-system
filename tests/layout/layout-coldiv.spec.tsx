@@ -1,5 +1,3 @@
-import "jest-styled-components";
-
 import { render } from "@testing-library/react";
 import { ColDiv } from "src/layout/col-div";
 import * as styles from "src/layout/col-div.styles";
