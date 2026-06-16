@@ -2,12 +2,8 @@ import type {
     ColourCSSVariableString,
     RadiusCSSVariableString,
 } from "../theme";
-import {
-    BorderThickness,
-    isTokenFromSet,
-    isTokenWithPrefix,
-    Radius,
-} from "../theme";
+import { BorderThickness, Radius } from "../theme";
+import { isTokenFromSet, isTokenWithPrefix } from "../theme/utils";
 import type { ValueOf } from "./utility-types";
 
 const radiusTokenSet = new Set<string>(Object.values(Radius));

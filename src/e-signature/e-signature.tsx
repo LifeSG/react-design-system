@@ -9,12 +9,12 @@ import {
     Border,
     Breakpoint,
     Colour,
-    DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT,
     Radius,
     useMaxWidthMediaQuery,
     useMediaQuery,
     useResolvedBreakpointToken,
 } from "../theme";
+import { DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT } from "../theme/utils";
 import { Typography } from "../typography";
 import * as styles from "./e-signature.styles";
 import type { ESignatureCanvasRef } from "./e-signature-canvas";

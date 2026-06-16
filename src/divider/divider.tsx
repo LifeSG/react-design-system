@@ -2,7 +2,8 @@ import clsx from "clsx";
 import { useRef } from "react";
 
 import { ColDiv } from "../layout/col-div";
-import { Colour, useApplyStyle, useResolvedTokenValue } from "../theme";
+import { Colour, useApplyStyle } from "../theme";
+import { useResolvedTokenValue } from "../theme/utils";
 import { isColourToken } from "../util/styling-helper";
 import * as styles from "./divider.styles";
 import type { DividerLineStyleType, DividerProps } from "./types";

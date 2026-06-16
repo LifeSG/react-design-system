@@ -2,7 +2,8 @@ import clsx from "clsx";
 import type React from "react";
 import { forwardRef, useMemo, useRef } from "react";
 
-import { generateFontProperties, useApplyStyle } from "../theme";
+import { useApplyStyle } from "../theme";
+import { generateFontProperties } from "../theme/utils";
 import { mergeRefs } from "../util";
 import * as styles from "./markup.style";
 import type { MarkupProps } from "./types";
