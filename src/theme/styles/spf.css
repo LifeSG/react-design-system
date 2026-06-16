@@ -117,8 +117,8 @@ PRIMITIVE COLOURS
     */
 
     /* text */
-    --fds-colour-text: var(--fds-colour-neutral-20);
-    --fds-colour-text-subtle: var(--fds-colour-neutral-30);
+    --fds-colour-text: var(--fds-colour-neutral-10);
+    --fds-colour-text-subtle: var(--fds-colour-neutral-20);
     --fds-colour-text-subtler: var(--fds-colour-neutral-50);
     --fds-colour-text-subtlest: var(--fds-colour-neutral-60);
     --fds-colour-text-primary: var(--fds-colour-primary-40);
@@ -492,13 +492,13 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-bg-error-hover: var(--fds-colour-error-20);
     --fds-colour-bg-error-strong: var(--fds-colour-error-60);
     --fds-colour-bg-error-strong-hover: var(--fds-colour-error-70);
-    --fds-colour-bg-inverse: var(--fds-colour-neutral-90);
+    --fds-colour-bg-inverse: var(--fds-colour-neutral-10);
     --fds-colour-bg-inverse-subtle: var(--fds-colour-neutral-80);
     --fds-colour-bg-inverse-subtler: var(--fds-colour-neutral-60);
     --fds-colour-bg-inverse-subtlest: var(--fds-colour-neutral-50);
     --fds-colour-bg-inverse-hover: var(--fds-colour-neutral-70);
-    --fds-colour-bg-primary: var(--fds-colour-primary-60);
-    --fds-colour-bg-primary-strong: var(--fds-colour-primary-70);
+    --fds-colour-bg-primary: var(--fds-colour-primary-40);
+    --fds-colour-bg-primary-strong: var(--fds-colour-primary-30);
     --fds-colour-bg-primary-subtle: var(--fds-colour-primary-50);
     --fds-colour-bg-primary-subtler: var(--fds-colour-primary-20);
     --fds-colour-bg-primary-subtlest: var(--fds-colour-primary-10);
@@ -507,8 +507,8 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-bg-secondary-subtle: var(--fds-colour-secondary-50);
     --fds-colour-bg-secondary-subtler: var(--fds-colour-secondary-20);
     --fds-colour-bg-secondary-subtlest: var(--fds-colour-secondary-10);
-    --fds-colour-bg-primary-hover: var(--fds-colour-primary-70);
-    --fds-colour-bg-primary-strong-hover: var(--fds-colour-primary-80);
+    --fds-colour-bg-primary-hover: var(--fds-colour-primary-30);
+    --fds-colour-bg-primary-strong-hover: var(--fds-colour-primary-20);
     --fds-colour-bg-primary-subtlest-hover: var(--fds-colour-primary-20);
     --fds-colour-bg-primary-subtlest-selected: var(--fds-colour-primary-20);
 
