@@ -550,5 +550,187 @@ describe("Calendar - single variant", () => {
                 year: 2024,
             });
         });
+
+        it("navigates to the start of the week with Home key", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+
+            render(<Calendar value="2024-02-08" />);
+
+            screen
+                .getByRole("gridcell", {
+                    name: "8 February 2024 Thursday, Available",
+                })
+                .focus();
+
+            await user.keyboard("{Home}");
+            expect(
+                screen.getByRole("gridcell", {
+                    name: "4 February 2024 Sunday, Available",
+                })
+            ).toHaveFocus();
+        });
+
+        it("navigates to the end of the week with End key", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+
+            render(<Calendar value="2024-02-08" />);
+
+            screen
+                .getByRole("gridcell", {
+                    name: "8 February 2024 Thursday, Available",
+                })
+                .focus();
+
+            await user.keyboard("{End}");
+            expect(
+                screen.getByRole("gridcell", {
+                    name: "10 February 2024 Saturday, Available",
+                })
+            ).toHaveFocus();
+        });
+
+        it("navigates to the previous month with PageUp key", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const onYearMonthDisplayChange = jest.fn();
+
+            render(
+                <Calendar
+                    value="2024-02-15"
+                    onYearMonthDisplayChange={onYearMonthDisplayChange}
+                />
+            );
+
+            screen
+                .getByRole("gridcell", {
+                    name: "15 February 2024 Thursday, Available",
+                })
+                .focus();
+
+            await user.keyboard("{PageUp}");
+            expect(
+                screen.getByRole("gridcell", {
+                    name: "15 January 2024 Monday, Available",
+                })
+            ).toHaveFocus();
+
+            expect(screen.getByTestId(CALENDAR_ID)).toHaveAccessibleName(
+                "January, 2024"
+            );
+            expect(onYearMonthDisplayChange).toHaveBeenLastCalledWith({
+                month: 1,
+                year: 2024,
+            });
+        });
+
+        it("navigates to the next month with PageDown key", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const onYearMonthDisplayChange = jest.fn();
+
+            render(
+                <Calendar
+                    value="2024-02-15"
+                    onYearMonthDisplayChange={onYearMonthDisplayChange}
+                />
+            );
+
+            screen
+                .getByRole("gridcell", {
+                    name: "15 February 2024 Thursday, Available",
+                })
+                .focus();
+
+            await user.keyboard("{PageDown}");
+            expect(
+                screen.getByRole("gridcell", {
+                    name: "15 March 2024 Friday, Available",
+                })
+            ).toHaveFocus();
+
+            expect(screen.getByTestId(CALENDAR_ID)).toHaveAccessibleName(
+                "March, 2024"
+            );
+            expect(onYearMonthDisplayChange).toHaveBeenLastCalledWith({
+                month: 3,
+                year: 2024,
+            });
+        });
+
+        it("navigates to the previous year with Shift+PageUp", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const onYearMonthDisplayChange = jest.fn();
+
+            render(
+                <Calendar
+                    value="2024-02-15"
+                    onYearMonthDisplayChange={onYearMonthDisplayChange}
+                />
+            );
+
+            screen
+                .getByRole("gridcell", {
+                    name: "15 February 2024 Thursday, Available",
+                })
+                .focus();
+
+            await user.keyboard("{Shift>}{PageUp}{/Shift}");
+            expect(
+                screen.getByRole("gridcell", {
+                    name: "15 February 2023 Wednesday, Available",
+                })
+            ).toHaveFocus();
+
+            expect(screen.getByTestId(CALENDAR_ID)).toHaveAccessibleName(
+                "February, 2023"
+            );
+            expect(onYearMonthDisplayChange).toHaveBeenLastCalledWith({
+                month: 2,
+                year: 2023,
+            });
+        });
+
+        it("navigates to the next year with Shift+PageDown", async () => {
+            const user = userEvent.setup({
+                advanceTimers: jest.advanceTimersByTime,
+            });
+            const onYearMonthDisplayChange = jest.fn();
+
+            render(
+                <Calendar
+                    value="2024-02-15"
+                    onYearMonthDisplayChange={onYearMonthDisplayChange}
+                />
+            );
+
+            screen
+                .getByRole("gridcell", {
+                    name: "15 February 2024 Thursday, Available",
+                })
+                .focus();
+
+            await user.keyboard("{Shift>}{PageDown}{/Shift}");
+            expect(
+                screen.getByRole("gridcell", {
+                    name: "15 February 2025 Saturday, Available",
+                })
+            ).toHaveFocus();
+
+            expect(screen.getByTestId(CALENDAR_ID)).toHaveAccessibleName(
+                "February, 2025"
+            );
+            expect(onYearMonthDisplayChange).toHaveBeenLastCalledWith({
+                month: 2,
+                year: 2025,
+            });
+        });
     });
 });
