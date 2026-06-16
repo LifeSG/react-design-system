@@ -249,7 +249,7 @@ test.describe("Timepicker", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("form-timepicker-grid");
@@ -261,7 +261,7 @@ test.describe("Timepicker", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("timepicker-with-values");
         });
@@ -271,7 +271,7 @@ test.describe("Timepicker", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("form-timepicker-with-values");
         });

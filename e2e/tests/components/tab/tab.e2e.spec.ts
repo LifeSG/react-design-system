@@ -73,7 +73,7 @@ test.describe("Tab", () => {
         );
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("title-addon");
         });
@@ -83,7 +83,7 @@ test.describe("Tab", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("long-label", { size: "mobile" });
         });
@@ -93,7 +93,7 @@ test.describe("Tab", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("full-width-indicator");
         });
@@ -103,7 +103,7 @@ test.describe("Tab", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("custom-tab-width");
         });

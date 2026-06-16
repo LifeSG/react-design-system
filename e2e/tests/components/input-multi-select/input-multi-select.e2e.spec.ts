@@ -234,7 +234,7 @@ test.describe("InputMultiSelect", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("form-variants", { size: "mobile" });
         });
@@ -277,7 +277,7 @@ test.describe("InputMultiSelect", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("form-variants", { mode: "dark" });
         });

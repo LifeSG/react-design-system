@@ -256,7 +256,7 @@ test.describe("DataTable", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("multi-select", { mode: "dark" });
             });
@@ -336,7 +336,7 @@ test.describe("DataTable", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("action-bar", { mode: "dark" });
             });

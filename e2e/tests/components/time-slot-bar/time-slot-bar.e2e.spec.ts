@@ -31,7 +31,7 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("TimeSlotBar", () => {
     modes.forEach((mode) => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default", { mode });
             });
@@ -68,7 +68,7 @@ test.describe("TimeSlotBar", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("minified", { mode });
             });

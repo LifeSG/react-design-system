@@ -42,7 +42,7 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("LanguageSwitcher", () => {
     test.describe("Dropdown", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("dropdown-default");
             });
@@ -75,7 +75,7 @@ test.describe("LanguageSwitcher", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("dropdown-default", { mode: "dark" });
             });
@@ -92,7 +92,7 @@ test.describe("LanguageSwitcher", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("dropdown-default", { size: "mobile" });
             });
@@ -113,7 +113,7 @@ test.describe("LanguageSwitcher", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("dropdown-preselected");
             });
@@ -129,7 +129,7 @@ test.describe("LanguageSwitcher", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("dropdown-default");
             });
@@ -166,7 +166,7 @@ test.describe("LanguageSwitcher", () => {
     });
 
     test.describe("Link", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("link-default");
             });
@@ -191,7 +191,7 @@ test.describe("LanguageSwitcher", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("link-default", { mode: "dark" });
             });
@@ -203,7 +203,7 @@ test.describe("LanguageSwitcher", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("link-preselected");
             });
@@ -219,7 +219,7 @@ test.describe("LanguageSwitcher", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("link-default", { size: "mobile" });
             });

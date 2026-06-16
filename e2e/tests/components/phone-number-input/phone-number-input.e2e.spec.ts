@@ -103,7 +103,7 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("PhoneNumberInput", () => {
     test.describe("Form Variants", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("form-variants");
             });
@@ -229,7 +229,7 @@ test.describe("PhoneNumberInput", () => {
     });
 
     test.describe("Form Variants Prefilled", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("form-variants-prefilled");
             });
@@ -404,7 +404,7 @@ test.describe("PhoneNumberInput", () => {
 
     test.describe("Allow clear", () => {
         modes.forEach((mode) => {
-            test.describe("", () => {
+            test.describe(() => {
                 test.beforeEach(async ({ story }) => {
                     await story.init("allow-clear", { mode });
                 });
@@ -431,7 +431,7 @@ test.describe("PhoneNumberInput", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("fixed-country");
         });

@@ -167,7 +167,7 @@ test.describe("Menu", () => {
     });
 
     test.describe("Variants", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("variants");
             });
@@ -181,7 +181,7 @@ test.describe("Menu", () => {
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("variants", { mode: "dark" });
             });

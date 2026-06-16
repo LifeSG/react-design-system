@@ -152,7 +152,7 @@ test.describe("Filter", () => {
         });
     });
 
-    test.describe("", () => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("sidebar", { mode: "dark" });
         });
