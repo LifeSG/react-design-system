@@ -392,6 +392,43 @@ describe("FileUpload", () => {
                 description: "Hello world",
             });
         });
+
+        it("should return an existing described image from edit mode to display mode on cancel", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "first-image.png",
+                    type: "image/png",
+                    size: 3000,
+                    description: "existing",
+                },
+            ];
+            const onDelete = jest.fn();
+
+            const rendered = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    onDelete={onDelete}
+                />
+            );
+
+            fireEvent.click(rendered.getByTestId("img-1-edit-button"));
+            expect(
+                rendered.getByTestId("img-1-edit-display")
+            ).toBeInTheDocument();
+
+            fireEvent.click(rendered.getByTestId("img-1-cancel-button"));
+
+            expect(
+                rendered.queryByTestId("img-1-edit-display")
+            ).not.toBeInTheDocument();
+            expect(
+                rendered.getByTestId("img-1-edit-button")
+            ).toBeInTheDocument();
+            expect(onDelete).not.toHaveBeenCalled();
+            expect(screen.getByText("existing")).toBeInTheDocument();
+        });
     });
 
     describe("Sort", () => {
@@ -439,6 +476,39 @@ describe("FileUpload", () => {
     });
 
     describe("Readonly", () => {
+        it("should generate read-only aria label summary from file states", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "done-1",
+                    name: "done.pdf",
+                    type: "application/pdf",
+                    size: 1200,
+                },
+                {
+                    id: "progress-1",
+                    name: "uploading.png",
+                    type: "image/png",
+                    size: 1500,
+                    progress: 0.4,
+                },
+                {
+                    id: "error-1",
+                    name: "error.pdf",
+                    type: "application/pdf",
+                    size: 1600,
+                    errorMessage: "Failed",
+                },
+            ];
+
+            render(<FileUpload fileItems={fileItems} readOnly />);
+
+            expect(
+                screen.getByRole("list", {
+                    name: "Read-only file list. 1 completed files, 1 file in progress, 1 file with error",
+                })
+            ).toBeInTheDocument();
+        });
+
         it("should not render the action buttons if the component is in readOnly mode", () => {
             const fileItems: FileItemProps[] = [
                 MOCK_IMAGE_ITEM_WITH_DESCRIPTION,

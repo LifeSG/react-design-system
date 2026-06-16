@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Border, Colour, Spacing } from "../theme";
+import { Border, Colour, Spacing } from "../../theme";
 
 export const listWrapper = css`
     list-style-type: none;
