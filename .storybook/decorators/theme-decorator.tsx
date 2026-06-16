@@ -12,6 +12,7 @@ type ThemeMapKey = keyof typeof THEME_KEY_TO_TYPE_MAPPING;
 const THEME_KEY_TO_TYPE_MAPPING = {
     "A11y Playground": "a11y-playground",
     BookingSG: "bookingsg",
+    CareerCompass: "careercompass",
     CCube: "ccube",
     IMDA: "imda",
     LifeSG: "lifesg",
@@ -20,6 +21,7 @@ const THEME_KEY_TO_TYPE_MAPPING = {
     PA: "pa",
     RBS: "rbs",
     "SGW Digital Lobby": "sgw-digital-lobby",
+    SMGS: "smgs",
     SPF: "spf",
     SupportGoWhere: "supportgowhere",
 };
