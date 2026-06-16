@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import StyledComponentsRegistry from "../lib/registry";
 import E2EDateSeedBootstrap from "./e2e-date-seed-bootstrap";
 
 import "./globals.css";
@@ -27,7 +26,7 @@ export default async function RootLayout({
     children: React.ReactNode;
 }>) {
     // trigger side effect to force dynamic rendering of all pages
-    const nonce = (await headers()).get("x-nonce");
+    await headers();
 
     return (
         <html lang="en">
@@ -38,9 +37,7 @@ export default async function RootLayout({
             </head>
             <body>
                 <E2EDateSeedBootstrap />
-                <StyledComponentsRegistry nonce={nonce}>
-                    {children}
-                </StyledComponentsRegistry>
+                {children}
             </body>
         </html>
     );
