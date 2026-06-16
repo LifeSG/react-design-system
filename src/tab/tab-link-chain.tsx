@@ -47,6 +47,7 @@ export const TabLinkChain = ({
 
     const activeLinkRef = useRef<HTMLLIElement>(null);
     const chainLinkRefs = useRef<(HTMLButtonElement | null)[]>([]);
+    const chainRef = useRef<HTMLUListElement | null>(null);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -70,10 +71,12 @@ export const TabLinkChain = ({
             content &&
             wrapper &&
             window.innerWidth <= tabletBreakpoint &&
-            activeLinkRef.current
+            activeLinkRef.current &&
+            chainRef.current
         ) {
             content.scrollLeft =
-                activeLinkRef.current.getBoundingClientRect().left;
+                activeLinkRef.current.getBoundingClientRect().left -
+                chainRef.current.getBoundingClientRect().left;
         }
     };
 
@@ -113,6 +116,7 @@ export const TabLinkChain = ({
             <Chain
                 role="tablist"
                 $fullWidthIndicatorLine={fullWidthIndicatorLine}
+                ref={chainRef}
             >
                 {tabLinks.map(({ title, width, titleAddon }, index) => {
                     const isActive = currentActiveIndex === index;

@@ -71,7 +71,7 @@ export const TimeTableHeader = ({
                     data-testid="timetable-records-results"
                     weight={"semibold"}
                 >
-                    {totalRecords} results found
+                    {totalRecords} result{totalRecords !== 1 ? "s" : ""} found
                 </StyledResultText>
                 {onRefresh && (
                     <StyledRefreshButton
