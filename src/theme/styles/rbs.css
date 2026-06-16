@@ -246,9 +246,6 @@ PRIMITIVE COLOURS
     --fds-colour-focus-ring: var(--fds-colour-primary-50);
     --fds-colour-focus-ring-inverse: var(--fds-colour-white);
 
-    /* logo brand */
-    --fds-colour-logo-brand: var(--fds-colour-brand-50);
-
     /* 
     ========================================================================
     COMPONENT TOKENS
