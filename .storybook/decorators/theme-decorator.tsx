@@ -7,8 +7,6 @@ import { ThemeProvider, ThemeType } from "../../src/theme";
 
 const { initializeThemeState, pluckThemeFromContext } = DecoratorHelpers;
 
-type ThemeMapKey = keyof typeof THEME_KEY_TO_TYPE_MAPPING;
-
 const THEME_KEY_TO_TYPE_MAPPING = {
     "A11y Playground": "a11y-playground",
     BookingSG: "bookingsg",
@@ -25,6 +23,8 @@ const THEME_KEY_TO_TYPE_MAPPING = {
     SPF: "spf",
     SupportGoWhere: "supportgowhere",
 };
+
+type ThemeMapKey = keyof typeof THEME_KEY_TO_TYPE_MAPPING;
 
 export const withThemeFromJSXProvider = <
     TRenderer extends Renderer = any

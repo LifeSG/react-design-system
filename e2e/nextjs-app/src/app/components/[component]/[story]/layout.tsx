@@ -5,10 +5,6 @@ import {
     THEME_TYPES,
     type ThemeType,
 } from "@lifesg/react-design-system/theme";
-import {
-    V3_DSThemeProvider,
-    V3_LifeSGTheme,
-} from "@lifesg/react-design-system/v3_theme";
 import styles from "./layout.module.css";
 
 import "@lifesg/react-design-system/theme/styles/a11y-playground.css";
@@ -40,15 +36,10 @@ export default function Layout({
             : undefined;
 
     return (
-        <V3_DSThemeProvider theme={V3_LifeSGTheme}>
-            <ThemeProvider theme={theme}>
-                <div
-                    data-testid="story-layout"
-                    className={styles["story-layout"]}
-                >
-                    {children}
-                </div>
-            </ThemeProvider>
-        </V3_DSThemeProvider>
+        <ThemeProvider theme={theme}>
+            <div data-testid="story-layout" className={styles["story-layout"]}>
+                {children}
+            </div>
+        </ThemeProvider>
     );
 }
