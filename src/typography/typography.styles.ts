@@ -18,11 +18,11 @@ export const typographyBase = css`
 `;
 
 export const typographyHeader = css`
-    font-family: ${Font.Spec["heading-font-family"]};
+    font-family: ${Font.Spec["font-family-heading"]};
 `;
 
 export const typographyBody = css`
-    font-family: ${Font.Spec["body-font-family"]};
+    font-family: ${Font.Spec["font-family-body"]};
 `;
 
 export const displayInline = css`

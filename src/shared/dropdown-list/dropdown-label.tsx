@@ -37,7 +37,7 @@ export const DropdownLabel = ({
         variant === "small"
             ? Font.Spec["body-size-md"]
             : Font.Spec["body-size-baseline"];
-    const fontFamily = Font.Spec["body-font-family"];
+    const fontFamily = Font.Spec["font-family-body"];
     const { ref, width } = useResizeDetector();
 
     const primaryTextRef = useRef<HTMLDivElement>(null);
