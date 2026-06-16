@@ -2,6 +2,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SelectHistogram } from "src";
 
+import { setupCommonDomMocks } from "../_common";
+
 jest.mock("react-resize-detector");
 
 const SELECTOR_TESTID = "selector";
@@ -40,16 +42,7 @@ describe("SelectHistogram", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
 
         // required to mock the width of the slider track for calculating the thumb position in tests to not return NaN
         jest.spyOn(HTMLElement.prototype, "clientWidth", "get").mockReturnValue(

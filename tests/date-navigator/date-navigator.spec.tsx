@@ -2,6 +2,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DateNavigator } from "src";
 
+import { setupCommonDomMocks } from "../_common";
+
 describe("DateNavigator", () => {
     const today = "2024-09-05";
     const onRightArrowClick = jest.fn();
@@ -18,16 +20,7 @@ describe("DateNavigator", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     describe("Day view", () => {

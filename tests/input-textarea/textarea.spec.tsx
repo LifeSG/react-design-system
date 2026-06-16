@@ -2,14 +2,13 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Textarea } from "src/input-textarea";
 
+import { setupRequestAnimationFrameMock } from "../_common";
+
 describe("Textarea", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        globalThis.requestAnimationFrame = (callback: FrameRequestCallback) => {
-            callback(0);
-            return 0;
-        };
+        setupRequestAnimationFrameMock();
     });
 
     it("should render default component", () => {

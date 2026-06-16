@@ -2,6 +2,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Form } from "src/form";
 import { PhoneNumberInput } from "src/phone-number-input";
 
+import { setupCommonDomMocks } from "../_common";
+
 const INPUT_TESTID = "input";
 const SELECTOR_TESTID = "selector";
 const LABEL = "Test label";
@@ -18,17 +20,7 @@ describe("PhoneNumberInput", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        // Make requestAnimationFrame synchronous to avoid async focus issues in tests (see https://github.com/floating-ui/floating-ui/issues/2488)
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render default component", () => {

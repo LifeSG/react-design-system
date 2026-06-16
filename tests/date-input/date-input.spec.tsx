@@ -9,6 +9,8 @@ import {
 import userEvent from "@testing-library/user-event";
 import { DateInput } from "src";
 
+import { setupCommonDomMocks } from "../_common";
+
 jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "e2e";
@@ -31,16 +33,7 @@ describe("DateInput", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render the field with calendar not shown by default", async () => {

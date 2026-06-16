@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { FormTimeRangePicker } from "src/form/form-time-range-picker";
 import { TimeRangePicker } from "src/time-range-picker/time-range-picker";
 
+import { setupCommonDomMocks } from "../_common/setup";
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
 jest.mock("react-resize-detector");
@@ -17,17 +18,7 @@ const DROPDOWN_TESTID = "dropdown-list";
 describe("TimeRangePicker", () => {
     beforeEach(() => {
         jest.clearAllMocks();
-
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     describe("Combobox variant", () => {
@@ -442,6 +433,41 @@ describe("TimeRangePicker", () => {
                 ).toBeInTheDocument();
             });
 
+            it("should prioritise start-time validation when both inputs are invalid", async () => {
+                const user = userEvent.setup();
+
+                render(<TimeRangePicker variant={"combobox"} />);
+
+                const startInput = screen.getByLabelText(START_LABEL);
+                const endInput = screen.getByLabelText(END_LABEL);
+
+                await user.click(startInput);
+                await user.keyboard("abc");
+
+                await user.click(endInput);
+                await user.keyboard("xyz");
+
+                expect(
+                    screen.queryByText("Invalid start time")
+                ).toBeInTheDocument();
+                expect(
+                    screen.queryByText("Invalid end time")
+                ).not.toBeInTheDocument();
+            });
+
+            it("should not show internal validation when external error is set", async () => {
+                const user = userEvent.setup();
+
+                render(<TimeRangePicker variant={"combobox"} error />);
+
+                await user.click(screen.getByLabelText(START_LABEL));
+                await user.keyboard("abc");
+
+                expect(
+                    screen.queryByText("Invalid start time")
+                ).not.toBeInTheDocument();
+            });
+
             it("should show error message when 'errorMessage' prop is true", async () => {
                 render(
                     <FormTimeRangePicker
@@ -522,6 +548,57 @@ describe("TimeRangePicker", () => {
 
                 await waitFor(() => expect(startInput).toHaveValue("9:00am"));
                 expect(mockOnChange).toHaveBeenCalledTimes(1);
+            });
+
+            it("should parse compact 12hr input on Enter", async () => {
+                const user = userEvent.setup();
+                const mockOnChange = jest.fn();
+
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        onChange={mockOnChange}
+                    />
+                );
+
+                const startInput = screen.getByLabelText(START_LABEL);
+
+                startInput.focus();
+                await act(async () => {
+                    await user.keyboard("13{Enter}");
+                });
+
+                await waitFor(() => expect(startInput).toHaveValue("1:00pm"));
+                expect(mockOnChange).toHaveBeenLastCalledWith({
+                    start: "1:00pm",
+                    end: "",
+                });
+            });
+
+            it("should parse compact input to 24hr format on Enter", async () => {
+                const user = userEvent.setup();
+                const mockOnChange = jest.fn();
+
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        format={"24hr"}
+                        onChange={mockOnChange}
+                    />
+                );
+
+                const startInput = screen.getByLabelText(START_LABEL);
+
+                startInput.focus();
+                await act(async () => {
+                    await user.keyboard("9p{Enter}");
+                });
+
+                await waitFor(() => expect(startInput).toHaveValue("21:00"));
+                expect(mockOnChange).toHaveBeenLastCalledWith({
+                    start: "21:00",
+                    end: "",
+                });
             });
 
             it("should handle Tab key", async () => {

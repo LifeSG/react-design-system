@@ -24,14 +24,14 @@ import {
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
-import { VisuallyHidden } from "../shared/accessibility";
-import { FileUploadContext } from "./context";
-import { MouseSensor } from "./custom-sensors";
-import { FileItemEdit } from "./file-item-edit";
+import { VisuallyHidden } from "../../shared/accessibility";
+import { FileUploadContext } from "../context";
+import { MouseSensor } from "../custom-sensors";
+import { FileItemEdit } from "../file-item-edit";
+import { FileListItem } from "../file-list-item";
+import { FileUploadHelper } from "../helper";
+import type { FileItemProps } from "../types";
 import * as styles from "./file-list.styles";
-import { FileListItem } from "./file-list-item";
-import { FileUploadHelper } from "./helper";
-import type { FileItemProps } from "./types";
 
 // =============================================================================
 // INTERFACES

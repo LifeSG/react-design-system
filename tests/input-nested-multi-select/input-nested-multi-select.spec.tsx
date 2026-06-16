@@ -14,6 +14,8 @@ import {
     getSelectedSubItems,
 } from "src/input-nested-multi-select/helpers";
 
+import { setupCommonDomMocks } from "../_common";
+
 jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
@@ -74,16 +76,7 @@ describe("InputNestedMultiSelect", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render the component", async () => {

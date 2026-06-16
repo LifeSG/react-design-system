@@ -6,6 +6,8 @@ import { FilterSidebar } from "src/filter/filter-sidebar";
 import type { FilterItemCheckboxOptionProps } from "src/filter/types";
 import { useMaxWidthMediaQuery } from "src/theme";
 
+import { setupCommonDomMocks } from "../_common";
+
 jest.mock("src/theme", () => {
     const actual = jest.requireActual("src/theme");
 
@@ -19,16 +21,7 @@ describe("Filter", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        globalThis.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        globalThis.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
 
         jest.mocked(useMaxWidthMediaQuery).mockReturnValue(false);
     });

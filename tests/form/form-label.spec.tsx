@@ -2,6 +2,8 @@ import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FormErrorMessage, FormLabel } from "src/form/form-label";
 
+import { setupRequestAnimationFrameMock } from "../_common";
+
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
@@ -9,10 +11,7 @@ describe("FormLabel", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
+        setupRequestAnimationFrameMock();
     });
 
     it("should render children text", () => {
