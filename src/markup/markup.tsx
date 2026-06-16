@@ -5,7 +5,6 @@ import { forwardRef, useMemo, useRef } from "react";
 import { generateFontProperties, useApplyStyle } from "../theme";
 import { mergeRefs } from "../util";
 import * as styles from "./markup.style";
-import { createMarkupFontStyles } from "./markup.utils";
 import type { MarkupProps } from "./types";
 
 const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
@@ -29,7 +28,7 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
     const appliedStyles = useMemo(
         () => ({
             color: baseTextColor || null,
-            ...createMarkupFontStyles(fontDeclarations),
+            ...fontDeclarations,
         }),
         [baseTextColor, fontDeclarations]
     );
