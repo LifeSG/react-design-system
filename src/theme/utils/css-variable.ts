@@ -84,29 +84,6 @@ export function parsePxOrRemValue(cssValue: string): number {
     return parsedValue * resolvedRootFontSize;
 }
 
-/**
- * Normalizes a CSS length value and accepts px/rem or unitless zero.
- * Returns undefined for invalid inputs.
- */
-export const normalizeCssLengthValue = (
-    value: string | undefined
-): string | undefined => {
-    if (!value) return undefined;
-
-    const trimmedValue = value.trim();
-
-    // CSS allows unitless zero in width-like properties.
-    if (trimmedValue === "0") {
-        return trimmedValue;
-    }
-
-    if (!CSS_PX_OR_REM_CAPTURE_PATTERN.test(trimmedValue)) {
-        return undefined;
-    }
-
-    return trimmedValue;
-};
-
 const mergeInlineCssVariables = (
     element: HTMLElement,
     target: InlineCssVariables

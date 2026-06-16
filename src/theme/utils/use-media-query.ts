@@ -1,7 +1,6 @@
 import { useEffect, useState } from "react";
 
 import { Breakpoint } from "../tokens/breakpoint";
-import { normalizeCssLengthValue } from "./css-variable";
 import { isTokenFromSet } from "./token-resolver";
 import { useResolvedTokenValue } from "./use-design-token";
 
@@ -48,7 +47,29 @@ export interface MediaQueryOptions {
     clauses?: MediaQueryClause[];
 }
 
-export const DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT = "480px";
+/**
+ * Default LifeSG breakpoint values for width-based tokens.
+ * Extracted from src/theme/styles/default.css.
+ */
+const WIDTH_BREAKPOINT_DEFAULTS: Record<
+    WidthBreakpointCSSVariableString,
+    string
+> = {
+    [Breakpoint["xxs-min"]]: "0",
+    [Breakpoint["xs-min"]]: "321px",
+    [Breakpoint["sm-min"]]: "376px",
+    [Breakpoint["md-min"]]: "481px",
+    [Breakpoint["lg-min"]]: "769px",
+    [Breakpoint["xl-min"]]: "1201px",
+    [Breakpoint["xxl-min"]]: "1441px",
+    [Breakpoint["xxs-max"]]: "320px",
+    [Breakpoint["xs-max"]]: "375px",
+    [Breakpoint["sm-max"]]: "480px",
+    [Breakpoint["md-max"]]: "768px",
+    [Breakpoint["lg-max"]]: "1200px",
+    [Breakpoint["xl-max"]]: "1440px",
+};
+
 const WIDTH_BREAKPOINT_TOKEN_SET = new Set<WidthBreakpointCSSVariableString>([
     Breakpoint["xxs-min"],
     Breakpoint["xs-min"],
@@ -152,23 +173,20 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
 };
 
 export const useResolvedBreakpointToken = (
-    breakpointToken: WidthBreakpointCSSVariableString | undefined,
-    fallbackLength?: string
-): string | undefined => {
-    const resolvedTokenValue = useResolvedTokenValue<
-        WidthBreakpointCSSVariableString,
-        string
-    >({
+    breakpointToken: WidthBreakpointCSSVariableString | undefined
+): string => {
+    const effectiveFallback =
+        isBreakpointToken(breakpointToken) &&
+        WIDTH_BREAKPOINT_DEFAULTS[breakpointToken]
+            ? WIDTH_BREAKPOINT_DEFAULTS[breakpointToken]
+            : "";
+
+    return useResolvedTokenValue<WidthBreakpointCSSVariableString, string>({
         value: breakpointToken,
-        fallback: fallbackLength ?? breakpointToken ?? "",
+        fallback: effectiveFallback,
         isToken: isBreakpointToken,
         normalizeCustom: (value) => value,
     });
-
-    return (
-        normalizeCssLengthValue(resolvedTokenValue) ??
-        normalizeCssLengthValue(fallbackLength)
-    );
 };
 
 const useMatchMediaQuery = (
