@@ -153,7 +153,7 @@
     --fds-colour-icon-primary-inverse: var(--fds-colour-primary-inverse);
 
     /* border */
-    --fds-colour-border: var(--fds-colour-neutral-90);
+    --fds-colour-border: var(--fds-colour-neutral-50);
     --fds-colour-border-strong: var(--fds-colour-neutral-70);
     --fds-colour-border-stronger: var(--fds-colour-neutral-50);
     --fds-colour-border-primary: var(--fds-colour-primary-50);
@@ -421,7 +421,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-icon-primary-inverse: var(--fds-colour-primary-inverse);
 
     /* border - adjusted for dark mode */
-    --fds-colour-border: var(--fds-colour-neutral-20);
+    --fds-colour-border: var(--fds-colour-neutral-50);
     --fds-colour-border-strong: var(--fds-colour-neutral-40);
     --fds-colour-border-stronger: var(--fds-colour-neutral-60);
     --fds-colour-border-primary: var(--fds-colour-primary-60);
