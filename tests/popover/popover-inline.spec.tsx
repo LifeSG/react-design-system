@@ -8,6 +8,8 @@ import {
 import userEvent from "@testing-library/user-event";
 import { PopoverInline } from "src/popover";
 
+import { setupRequestAnimationFrameMock } from "../_common";
+
 const TEXT_CONTENT = "Text";
 const TOOLTIP_CONTENT = "Tooltip";
 
@@ -18,10 +20,7 @@ describe("PopoverInline", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
+        setupRequestAnimationFrameMock();
     });
 
     it("should render the popover text and icon", () => {

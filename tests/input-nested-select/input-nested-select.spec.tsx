@@ -9,6 +9,8 @@ import userEvent from "@testing-library/user-event";
 import type { L1OptionProps } from "src";
 import { InputNestedSelect } from "src";
 
+import { setupCommonDomMocks } from "../_common";
+
 jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
@@ -40,16 +42,7 @@ describe("InputNestedSelect", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render the component", async () => {

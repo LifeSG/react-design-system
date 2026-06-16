@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { InputSelect } from "src";
 import { StringHelper } from "src/util/string-helper";
 
+import { setupCommonDomMocks } from "../_common";
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
 jest.mock("react-resize-detector");
@@ -16,16 +17,7 @@ describe("InputSelect", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render the component", async () => {

@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { Form } from "src/form";
 import { InputGroup } from "src/input-group";
 
+import { setupCommonDomMocks } from "../_common";
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
 const FIELD_TESTID = "test";
@@ -20,17 +21,7 @@ describe("InputGroup - List addon", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        // Make requestAnimationFrame synchronous to avoid async focus issues in tests (see https://github.com/floating-ui/floating-ui/issues/2488)
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render the component", () => {

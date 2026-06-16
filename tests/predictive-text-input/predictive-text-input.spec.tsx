@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { act } from "react-dom/test-utils";
 import { PredictiveTextInput } from "src/predictive-text-input";
 
+import { setupCommonDomMocks } from "../_common";
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
 jest.mock("react-resize-detector");
@@ -18,16 +19,7 @@ describe("PredictiveTextInput", () => {
         jest.clearAllMocks();
         jest.useFakeTimers();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     afterEach(() => {

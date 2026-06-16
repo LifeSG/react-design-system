@@ -3,6 +3,7 @@ import userEvent from "@testing-library/user-event";
 import { FormTimeRangePicker } from "src/form/form-time-range-picker";
 import { TimeRangePicker } from "src/time-range-picker/time-range-picker";
 
+import { setupCommonDomMocks } from "../_common/setup";
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
 jest.mock("react-resize-detector");
@@ -17,17 +18,7 @@ const DROPDOWN_TESTID = "dropdown-list";
 describe("TimeRangePicker", () => {
     beforeEach(() => {
         jest.clearAllMocks();
-
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     describe("Combobox variant", () => {

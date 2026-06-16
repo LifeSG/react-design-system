@@ -2,6 +2,7 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { InputMultiSelect } from "src/input-multi-select";
 
+import { setupCommonDomMocks } from "../_common";
 import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
 jest.mock("react-resize-detector");
@@ -15,16 +16,7 @@ describe("InputMultiSelect", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render the component", async () => {

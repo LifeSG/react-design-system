@@ -2,6 +2,8 @@ import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import type { FileItemProps } from "src/file-upload";
 import { FileUpload } from "src/file-upload";
 
+import { setupResizeObserverMock } from "../_common/setup";
+
 jest.mock("../../src/theme", () => {
     const actual = jest.requireActual("../../src/theme");
     return {
@@ -29,11 +31,7 @@ jest.mock("../../src/theme", () => {
 describe("FileUpload", () => {
     beforeEach(() => {
         jest.resetAllMocks();
-        globalThis.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupResizeObserverMock();
     });
 
     describe("Basic render", () => {
