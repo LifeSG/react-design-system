@@ -48,7 +48,7 @@ const createTypographyText = <TTag extends React.ElementType>(
     tag: TTag,
     textStyle: TypographySize,
     displayName: string,
-    isHeading: boolean = false
+    isHeading: boolean
 ) => {
     const TypographyText = React.forwardRef<
         React.ComponentRef<TTag>,
@@ -117,7 +117,7 @@ export const HeadingSM = createHeading("h5", "heading-sm", "HeadingSM");
 export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 
 const createBody = (textStyle: TypographySize, displayName: string) => {
-    return createTypographyText("p", textStyle, displayName);
+    return createTypographyText("p", textStyle, displayName, false);
 };
 
 export const BodyBL = createBody("body-baseline", "BodyBL");
