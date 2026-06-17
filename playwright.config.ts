@@ -14,7 +14,9 @@ export default defineConfig({
     /* Run tests in parallel. Undefined resolves to half of the CPU cores. */
     workers: process.env.CI ? "50%" : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
-    reporter: process.env.CI ? [["github"], ["html"]] : [["list"], ["html"]],
+    reporter: process.env.CI
+        ? [["github"], ["html"], ["blob"]]
+        : [["list"], ["html"]],
     /* Location of screenshots */
     snapshotPathTemplate:
         "{testDir}/{testFileDir}/__screenshots__/{projectName}/{testName}--{arg}{ext}",
