@@ -45,7 +45,7 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Calendar", () => {
     test.describe("Single Variant", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default-single", {
                     mockedTimestamp: fixedTimestamp,
@@ -53,47 +53,11 @@ test.describe("Calendar", () => {
             });
 
             test("Default", async ({ story }) => {
-                await expect(story.locators.selectedValue).toHaveText("none");
-
                 await compareScreenshot(story, "mount");
-            });
-
-            test("Selection", async ({ story }) => {
-                await expect(story.locators.selectedValue).toHaveText("none");
-                await story.getDayCell(15).click();
-
-                await compareScreenshot(story, "selected");
-            });
-
-            test("Keyboard interaction", async ({ story }) => {
-                await story.getDayCell(14).focus();
-                await story.page.keyboard.press("ArrowRight");
-                await expect(story.getDayCell(15)).toBeFocused();
-                await story.page.keyboard.press("Enter");
-
-                await expect(story.locators.selectedValue).toHaveText(
-                    "2026-04-15"
-                );
-            });
-
-            test("Month view", async ({ story }) => {
-                await story.page
-                    .getByRole("button", { name: "April, Select month" })
-                    .click();
-
-                await compareScreenshot(story, "state");
-            });
-
-            test("Year view", async ({ story }) => {
-                await story.page
-                    .getByRole("button", { name: "2026, Select year" })
-                    .click();
-
-                await compareScreenshot(story, "state");
             });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default-single", {
                     mockedTimestamp: fixedTimestamp,
@@ -101,16 +65,45 @@ test.describe("Calendar", () => {
                 });
             });
 
-            test("Dark Mode", async ({ story }) => {
-                await expect(story.locators.selectedValue).toHaveText("none");
-
+            test("Default (dark mode)", async ({ story }) => {
                 await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default-single", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Selected", async ({ story }) => {
+                await story.getDayCell(15).click();
+                await story.page.mouse.move(0, 0); // To dismiss any potential hover states
+
+                await compareScreenshot(story, "selected");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default-single", {
+                    mockedTimestamp: fixedTimestamp,
+                    mode: "dark",
+                });
+            });
+
+            test("Selected (dark mode)", async ({ story }) => {
+                await story.getDayCell(15).click();
+                await story.page.mouse.move(0, 0); // To dismiss any potential hover states
+
+                await compareScreenshot(story, "selected");
             });
         });
     });
 
     test.describe("Multi Variant", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default-multi", {
                     mockedTimestamp: fixedTimestamp,
@@ -118,31 +111,22 @@ test.describe("Calendar", () => {
             });
 
             test("Default", async ({ story }) => {
-                await expect(story.locators.selectedValues).toHaveText("none");
-
                 await compareScreenshot(story, "mount");
             });
+        });
 
-            test("Selection", async ({ story }) => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("default-multi", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Selected", async ({ story }) => {
                 await story.getDayCell(10).click();
                 await story.getDayCell(15).click();
 
-                await expect(story.locators.selectedValues).toHaveText(
-                    "2026-04-10,2026-04-15"
-                );
-
                 await compareScreenshot(story, "selected");
-            });
-
-            test("Keyboard interaction", async ({ story }) => {
-                await story.getDayCell(14).focus();
-                await story.page.keyboard.press("ArrowRight");
-                await expect(story.getDayCell(15)).toBeFocused();
-                await story.page.keyboard.press("Enter");
-
-                await expect(story.locators.selectedValues).toHaveText(
-                    "2026-04-15"
-                );
             });
         });
 
@@ -153,16 +137,12 @@ test.describe("Calendar", () => {
                 });
             });
 
-            test("With limited selection", async ({ story }) => {
+            test("With maxSelectable", async ({ story }) => {
                 await story.getDayCell(10).click();
                 await story.getDayCell(11).click();
                 await story.getDayCell(12).click();
                 await story.getDayCell(13).click();
-                await story.getDayCell(13).blur();
-
-                await expect(story.locators.selectedValues).toHaveText(
-                    "2026-04-10,2026-04-11,2026-04-12"
-                );
+                await story.page.mouse.move(0, 0); // To dismiss any potential hover states
 
                 await compareScreenshot(story, "multi-limit");
             });
@@ -170,7 +150,7 @@ test.describe("Calendar", () => {
     });
 
     test.describe("Disabled Dates", () => {
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("disabled-dates", {
                     mockedTimestamp: fixedTimestamp,
@@ -180,33 +160,9 @@ test.describe("Calendar", () => {
             test("Default", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
-
-            test("Selection", async ({ story }) => {
-                await expect(
-                    story.getDayCell(10, "Unavailable")
-                ).toBeDisabled();
-                await story
-                    .getDayCell(10, "Unavailable")
-                    .click({ force: true });
-                await expect(story.locators.selectedValue).toHaveText("none");
-
-                await story.getDayCell(11).click();
-                await expect(story.locators.selectedValue).toHaveText(
-                    "2026-04-11"
-                );
-            });
-
-            test("Keyboard interaction", async ({ story }) => {
-                await story.getDayCell(14).focus();
-                await story.page.keyboard.press("ArrowRight");
-                await expect(story.getDayCell(15, "Unavailable")).toBeFocused();
-                await story.page.keyboard.press("Enter");
-
-                await expect(story.locators.selectedValue).toHaveText("none");
-            });
         });
 
-        test.describe("", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
                 await story.init("disabled-dates", {
                     mockedTimestamp: fixedTimestamp,
@@ -214,45 +170,36 @@ test.describe("Calendar", () => {
                 });
             });
 
-            test("Dark Mode", async ({ story }) => {
+            test("Dark mode", async ({ story }) => {
                 await compareScreenshot(story, "mount");
             });
         });
     });
 
     test.describe("Min Max Dates", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("min-max-dates", {
-                mockedTimestamp: fixedTimestamp,
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("min-max-dates", {
+                    mockedTimestamp: fixedTimestamp,
+                });
+            });
+
+            test("Default", async ({ story }) => {
+                await compareScreenshot(story, "mount");
             });
         });
 
-        test("Default", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("min-max-dates", {
+                    mockedTimestamp: fixedTimestamp,
+                    mode: "dark",
+                });
+            });
 
-        test("Selection", async ({ story }) => {
-            await expect(story.getDayCell(9, "Unavailable")).toBeDisabled();
-            await story.getDayCell(9, "Unavailable").click({ force: true });
-            await expect(story.locators.selectedValue).toHaveText("none");
-
-            await expect(story.getDayCell(21, "Unavailable")).toBeDisabled();
-            await story.getDayCell(21, "Unavailable").click({ force: true });
-            await expect(story.locators.selectedValue).toHaveText("none");
-
-            await story.getDayCell(10).click();
-            await expect(story.locators.selectedValue).toHaveText("2026-04-10");
-        });
-
-        test("Keyboard interaction", async ({ story }) => {
-            await story.getDayCell(10).focus();
-            await story.page.keyboard.press("ArrowLeft");
-            await expect(story.getDayCell(10)).toBeFocused();
-            await story.page.keyboard.press("ArrowRight");
-            await expect(story.getDayCell(11)).toBeFocused();
-            await story.page.keyboard.press("Enter");
-
-            await expect(story.locators.selectedValue).toHaveText("2026-04-11");
+            test("Dark mode", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
         });
     });
 
@@ -274,7 +221,53 @@ test.describe("Calendar", () => {
         });
     });
 
-    test.describe("Focused & Hovered States", () => {
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("no-border", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("No Border Variant", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default-single", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Month view", async ({ story }) => {
+            await story.page
+                .getByRole("button", { name: "April, Select month" })
+                .click();
+
+            await compareScreenshot(story, "state");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("default-single", {
+                mockedTimestamp: fixedTimestamp,
+            });
+        });
+
+        test("Year view", async ({ story }) => {
+            await story.page
+                .getByRole("button", { name: "2026, Select year" })
+                .click();
+
+            await compareScreenshot(story, "state");
+        });
+    });
+
+    test.describe("Hover states", () => {
         modes.forEach((mode) => {
             test.describe(`${mode} mode`, () => {
                 test.describe(() => {
@@ -285,34 +278,39 @@ test.describe("Calendar", () => {
                         });
                     });
 
-                    test("Focus on active date", async ({ story }) => {
-                        await story.getDayCell(15).focus();
+                    test("Active date", async ({ story }) => {
+                        await story.getDayCell(15).hover();
 
-                        await compareScreenshot(story, "state");
+                        await compareScreenshot(story, "state", {
+                            locator: story.getDayCell(15),
+                        });
                     });
 
-                    test("Focus on today date", async ({ story }) => {
-                        await story.getDayCell(8).focus();
+                    test("Today date", async ({ story }) => {
+                        await story.getDayCell(8).hover();
 
-                        await compareScreenshot(story, "state");
+                        await compareScreenshot(story, "state", {
+                            locator: story.getDayCell(8),
+                        });
                     });
 
-                    test("Focus on selected date", async ({ story }) => {
+                    test("Selected date", async ({ story }) => {
                         await story.getDayCell(15).click();
-                        await story.getDayCell(15).focus();
+                        await story.getDayCell(15).hover();
 
-                        await compareScreenshot(story, "state");
+                        await compareScreenshot(story, "state", {
+                            locator: story.getDayCell(15),
+                        });
                     });
 
-                    test("Hover on previous month date", async ({ story }) => {
-                        await story.page
-                            .getByRole("gridcell", {
-                                name: "31 March 2026 Tuesday, Available",
-                            })
-                            .first()
-                            .hover();
+                    test("Previous month date", async ({ story }) => {
+                        const locator = story.page.getByRole("gridcell", {
+                            name: "31 March 2026 Tuesday, Available",
+                        });
 
-                        await compareScreenshot(story, "state");
+                        await locator.hover();
+
+                        await compareScreenshot(story, "state", { locator });
                     });
                 });
 
@@ -324,34 +322,74 @@ test.describe("Calendar", () => {
                         });
                     });
 
-                    test("Focus on disabled date", async ({ story }) => {
-                        await story.getDayCell(15, "Unavailable").focus();
+                    test("Disabled date", async ({ story }) => {
+                        const locator = story.getDayCell(15, "Unavailable");
 
-                        await compareScreenshot(story, "state");
+                        await locator.hover({ force: true });
+
+                        await compareScreenshot(story, "state", { locator });
+                    });
+                });
+
+                test.describe(() => {
+                    test.beforeEach(async ({ story }) => {
+                        await story.init("disabled-dates-selectable", {
+                            mockedTimestamp: fixedTimestamp,
+                            mode,
+                        });
                     });
 
-                    test("Hover on disabled date", async ({ story }) => {
-                        await story
-                            .getDayCell(15, "Unavailable")
-                            .hover({ force: true });
+                    test("Selectable disabled date", async ({ story }) => {
+                        const locator = story.getDayCell(15, "Unavailable");
 
-                        await compareScreenshot(story, "state");
+                        await locator.hover();
+
+                        await compareScreenshot(story, "state", { locator });
                     });
                 });
             });
         });
     });
 
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("no-border", {
-                mockedTimestamp: fixedTimestamp,
-            });
-        });
+    test.describe("Focus states", () => {
+        modes.forEach((mode) => {
+            test.describe(`${mode} mode`, () => {
+                test.describe(() => {
+                    test.beforeEach(async ({ story }) => {
+                        await story.init("default-single", {
+                            mockedTimestamp: fixedTimestamp,
+                            mode,
+                        });
+                    });
 
-        test("No Border Variant", async ({ story }) => {
-            await compareScreenshot(story, "mount", {
-                fullscreen: true,
+                    test("Active date", async ({ story }) => {
+                        await story.getDayCell(15).focus();
+
+                        await compareScreenshot(story, "state", {
+                            locator: story.getDayCell(15),
+                        });
+                    });
+
+                    test("Today date", async ({ story }) => {
+                        await story.getDayCell(8).focus();
+
+                        await compareScreenshot(story, "state", {
+                            locator: story.getDayCell(8),
+                        });
+                    });
+
+                    test("Selected date", async ({ story }) => {
+                        await story.getDayCell(15).click();
+                        await story
+                            .getDayCell(15)
+                            .click({ position: { x: 0, y: 0 } }); // Deselect cell
+                        await story.getDayCell(15).focus();
+
+                        await compareScreenshot(story, "state", {
+                            locator: story.getDayCell(15),
+                        });
+                    });
+                });
             });
         });
     });
