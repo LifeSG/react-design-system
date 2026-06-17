@@ -44,6 +44,11 @@ export const signaturePreviewImage = css`
     object-position: center;
     width: calc(100% - (3rem + ${Spacing["spacing-16"]}) * 2);
     height: 100%;
+
+    [data-fds-theme-mode="dark"] & {
+        background: ${Colour.Primitive["neutral-95"]};
+        /* filter: invert(1); */
+    }
 `;
 
 export const progressBox = css`
@@ -143,6 +148,10 @@ export const eSignatureDrawable = css`
     background: ${Colour["bg-stronger"]};
     margin: auto;
 
+    [data-fds-theme-mode="dark"] & {
+        background: ${Colour.Primitive["neutral-95"]};
+    }
+
     ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         aspect-ratio: 4/3;
     }
@@ -213,4 +222,8 @@ export const signatureCanvasContainer = css`
 
 export const signatureCanvas = css`
     cursor: crosshair;
+
+    /* [data-fds-theme-mode="dark"] & {
+        filter: invert(1);
+    } */
 `;
