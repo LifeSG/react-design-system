@@ -12,7 +12,7 @@ export default defineConfig({
     /* Disable retries */
     retries: 0,
     /* Run tests in parallel. Undefined resolves to half of the CPU cores. */
-    workers: process.env.CI ? 2 : undefined,
+    workers: process.env.CI ? "50%" : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: process.env.CI ? [["github"], ["html"]] : [["list"], ["html"]],
     /* Location of screenshots */
