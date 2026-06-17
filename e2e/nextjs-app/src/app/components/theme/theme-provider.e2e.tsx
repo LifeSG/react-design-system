@@ -1,5 +1,9 @@
 "use client";
-import { ThemeProvider, useTheme } from "@lifesg/react-design-system/theme";
+import {
+    THEME_TYPES,
+    ThemeProvider,
+    useTheme,
+} from "@lifesg/react-design-system/theme";
 import styles from "./theme-provider.module.css";
 
 const Swatch = () => {
@@ -14,48 +18,11 @@ const Swatch = () => {
 export default function Story() {
     return (
         <div>
-            <ThemeProvider theme="a11y-playground">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="bookingsg">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="careercompass">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="ccube">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="imda">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="lifesg">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="mylegacy">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="oneservice">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="pa">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="rbs">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="sgw-digital-lobby">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="smgs">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="spf">
-                <Swatch />
-            </ThemeProvider>
-            <ThemeProvider theme="supportgowhere">
-                <Swatch />
-            </ThemeProvider>
+            {THEME_TYPES.map((theme) => (
+                <ThemeProvider theme={theme} key={theme}>
+                    <Swatch />
+                </ThemeProvider>
+            ))}
         </div>
     );
 }
