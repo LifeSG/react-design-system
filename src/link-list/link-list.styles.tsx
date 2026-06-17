@@ -22,8 +22,8 @@ interface ToggleButtonStyleProps {
 // STYLING
 // =============================================================================
 const iconStyle = css`
-    height: 1.125rem;
-    width: 1.125rem;
+    height: 1.375rem;
+    width: 1.375rem;
     color: ${Colour["icon-primary"]};
 `;
 
@@ -34,7 +34,6 @@ export const Container = styled.div`
 
 export const ItemTitleDefault = styled(Typography.HeadingSM)`
     color: ${Colour["text-primary"]};
-    margin-bottom: 0.5rem;
 `;
 
 export const ItemTitleSmall = styled(Typography.HeadingXS)`
