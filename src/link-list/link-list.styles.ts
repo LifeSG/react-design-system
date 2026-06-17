@@ -11,14 +11,13 @@ export const container = css`
 // ITEM STYLES
 // =============================================================================
 export const itemIcon = css`
-    height: 1.125rem;
-    width: 1.125rem;
+    height: 1.375rem;
+    width: 1.375rem;
     color: ${Colour["icon-primary"]};
 `;
 
 export const itemTitleDefault = css`
     color: ${Colour["text-primary"]};
-    margin-bottom: 0.5rem;
 `;
 
 export const itemTitleSmall = css`
