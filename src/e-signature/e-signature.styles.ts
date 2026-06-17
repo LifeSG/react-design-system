@@ -46,8 +46,7 @@ export const signaturePreviewImage = css`
     height: 100%;
 
     [data-fds-theme-mode="dark"] & {
-        background: ${Colour.Primitive["neutral-95"]};
-        /* filter: invert(1); */
+        filter: invert(1);
     }
 `;
 
@@ -148,10 +147,6 @@ export const eSignatureDrawable = css`
     background: ${Colour["bg-stronger"]};
     margin: auto;
 
-    [data-fds-theme-mode="dark"] & {
-        background: ${Colour.Primitive["neutral-95"]};
-    }
-
     ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         aspect-ratio: 4/3;
     }
@@ -223,7 +218,7 @@ export const signatureCanvasContainer = css`
 export const signatureCanvas = css`
     cursor: crosshair;
 
-    /* [data-fds-theme-mode="dark"] & {
+    [data-fds-theme-mode="dark"] & {
         filter: invert(1);
-    } */
+    }
 `;

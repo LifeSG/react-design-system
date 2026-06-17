@@ -101,12 +101,6 @@ const Component = (
         }
     }, []);
 
-    // useEffect(() => {
-    //     if (pencilBrush.current) {
-    //         pencilBrush.current.color = "#000000";
-    //     }
-    // }, [resolvedColor]);
-
     // resize
     useEffect(() => {
         if (window) {
