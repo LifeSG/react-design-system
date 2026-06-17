@@ -44,6 +44,10 @@ export const signaturePreviewImage = css`
     object-position: center;
     width: calc(100% - (3rem + ${Spacing["spacing-16"]}) * 2);
     height: 100%;
+
+    [data-fds-theme-mode="dark"] & {
+        filter: invert(1);
+    }
 `;
 
 export const progressBox = css`
@@ -213,4 +217,8 @@ export const signatureCanvasContainer = css`
 
 export const signatureCanvas = css`
     cursor: crosshair;
+
+    [data-fds-theme-mode="dark"] & {
+        filter: invert(1);
+    }
 `;
