@@ -1,44 +1,44 @@
 @import url("./default.css");
 
-[data-fds-theme="a11y-playground"] {
-    /* 
+[data-fds-theme="careercompass"] {
+    /*
     ============================================================================
     PRIMITIVE COLOURS
     ============================================================================
     */
-    --fds-colour-brand-10: #170F39;
-    --fds-colour-brand-20: #281C62;
-    --fds-colour-brand-30: #38268B;
-    --fds-colour-brand-40: #4D34BF;
-    --fds-colour-brand-50: #5735DF;
-    --fds-colour-brand-60: #9986F9;
-    --fds-colour-brand-70: #B2A5F8;
-    --fds-colour-brand-80: #CDC2FA;
-    --fds-colour-brand-90: #E2DCFC;
-    --fds-colour-brand-95: #EFEDFE;
-    --fds-colour-brand-100: #FAF8FD;
-    --fds-colour-primary-10: #170F39;
-    --fds-colour-primary-20: #281C62;
-    --fds-colour-primary-30: #38268B;
-    --fds-colour-primary-40: #4D34BF;
-    --fds-colour-primary-50: #5735DF;
-    --fds-colour-primary-60: #9986F9;
-    --fds-colour-primary-70: #B2A5F8;
-    --fds-colour-primary-80: #CDC2FA;
-    --fds-colour-primary-90: #E2DCFC;
-    --fds-colour-primary-95: #EFEDFE;
-    --fds-colour-primary-100: #FAF8FD;
-    --fds-colour-secondary-10: #251204;
-    --fds-colour-secondary-20: #401F08;
-    --fds-colour-secondary-30: #5B2C0B;
-    --fds-colour-secondary-40: #7E3D0F;
-    --fds-colour-secondary-50: #B04900;
-    --fds-colour-secondary-60: #E26E1C;
-    --fds-colour-secondary-70: #FF9445;
-    --fds-colour-secondary-80: #FFBB8E;
-    --fds-colour-secondary-90: #FFD9BF;
-    --fds-colour-secondary-95: #FFECDF;
-    --fds-colour-secondary-100: #FFF8F3;
+    --fds-colour-brand-10: #001731;
+    --fds-colour-brand-20: #002752;
+    --fds-colour-brand-30: #003874;
+    --fds-colour-brand-40: #004D9F;
+    --fds-colour-brand-50: #1768BE;
+    --fds-colour-brand-60: #3C91EC;
+    --fds-colour-brand-70: #6CB4FF;
+    --fds-colour-brand-80: #A5CDFF;
+    --fds-colour-brand-90: #CFE1FE;
+    --fds-colour-brand-95: #E8F0FE;
+    --fds-colour-brand-100: #F7F9FF;
+    --fds-colour-primary-10: #001731;
+    --fds-colour-primary-20: #002752;
+    --fds-colour-primary-30: #003874;
+    --fds-colour-primary-40: #004D9F;
+    --fds-colour-primary-50: #1768BE;
+    --fds-colour-primary-60: #3C91EC;
+    --fds-colour-primary-70: #6CB4FF;
+    --fds-colour-primary-80: #A5CDFF;
+    --fds-colour-primary-90: #CFE1FE;
+    --fds-colour-primary-95: #E8F0FE;
+    --fds-colour-primary-100: #F7F9FF;
+    --fds-colour-secondary-10: #001A19;
+    --fds-colour-secondary-20: #002D2B;
+    --fds-colour-secondary-30: #00413D;
+    --fds-colour-secondary-40: #005954;
+    --fds-colour-secondary-50: #00756F;
+    --fds-colour-secondary-60: #03A098;
+    --fds-colour-secondary-70: #55BFBA;
+    --fds-colour-secondary-80: #92D6D2;
+    --fds-colour-secondary-90: #BFE7E5;
+    --fds-colour-secondary-95: #DDF2F1;
+    --fds-colour-secondary-100: #F4FBFA;
     --fds-colour-neutral-10: #161616;
     --fds-colour-neutral-20: #282828;
     --fds-colour-neutral-30: #393939;
@@ -50,50 +50,50 @@
     --fds-colour-neutral-90: #DDE1E2;
     --fds-colour-neutral-95: #EDEFEF;
     --fds-colour-neutral-100: #F9F9F9;
-    --fds-colour-success-10: #031B15;
-    --fds-colour-success-20: #082D24;
-    --fds-colour-success-30: #094134;
-    --fds-colour-success-40: #0D5947;
-    --fds-colour-success-50: #10755E;
-    --fds-colour-success-60: #16A181;
-    --fds-colour-success-70: #1EC59D;
-    --fds-colour-success-80: #6FDDC2;
-    --fds-colour-success-90: #AFECDE;
-    --fds-colour-success-95: #D5F5ED;
-    --fds-colour-success-100: #F1FCF9;
-    --fds-colour-warning-10: #1F1500;
-    --fds-colour-warning-20: #362500;
-    --fds-colour-warning-30: #4D3501;
-    --fds-colour-warning-40: #6A4801;
-    --fds-colour-warning-50: #8B6001;
-    --fds-colour-warning-60: #BF8301;
-    --fds-colour-warning-70: #EAA102;
-    --fds-colour-warning-80: #FFBF34;
-    --fds-colour-warning-90: #FFDC8F;
-    --fds-colour-warning-95: #FFEDC7;
-    --fds-colour-warning-100: #FFF8EA;
-    --fds-colour-error-10: #270F10;
-    --fds-colour-error-20: #441B1B;
-    --fds-colour-error-30: #612627;
-    --fds-colour-error-40: #853535;
-    --fds-colour-error-50: #AF4546;
-    --fds-colour-error-60: #EC6162;
-    --fds-colour-error-70: #F29696;
-    --fds-colour-error-80: #F7BBBC;
-    --fds-colour-error-90: #FAD8D8;
-    --fds-colour-error-95: #FCEAEA;
-    --fds-colour-error-100: #FEF7F7;
-    --fds-colour-info-10: #0F1627;
-    --fds-colour-info-20: #1B2745;
-    --fds-colour-info-30: #273763;
-    --fds-colour-info-40: #354D88;
-    --fds-colour-info-50: #4665B3;
-    --fds-colour-info-60: #618AF6;
-    --fds-colour-info-70: #8DADFF;
-    --fds-colour-info-80: #B4C9FF;
-    --fds-colour-info-90: #D3DFFF;
-    --fds-colour-info-95: #E9EFFF;
-    --fds-colour-info-100: #F5F8FF;
+    --fds-colour-success-10: #081A0F;
+    --fds-colour-success-20: #0E2D1B;
+    --fds-colour-success-30: #154126;
+    --fds-colour-success-40: #1C5A34;
+    --fds-colour-success-50: #257645;
+    --fds-colour-success-60: #44A068;
+    --fds-colour-success-70: #64C189;
+    --fds-colour-success-80: #80DCA5;
+    --fds-colour-success-90: #B4ECCB;
+    --fds-colour-success-95: #D5F6E2;
+    --fds-colour-success-100: #EFFCF4;
+    --fds-colour-warning-10: #221302;
+    --fds-colour-warning-20: #3B2204;
+    --fds-colour-warning-30: #543106;
+    --fds-colour-warning-40: #744408;
+    --fds-colour-warning-50: #98590C;
+    --fds-colour-warning-60: #D07A13;
+    --fds-colour-warning-70: #E4A244;
+    --fds-colour-warning-80: #F5C26C;
+    --fds-colour-warning-90: #FADBA6;
+    --fds-colour-warning-95: #FCECD4;
+    --fds-colour-warning-100: #FDF7F0;
+    --fds-colour-error-10: #330505;
+    --fds-colour-error-20: #550808;
+    --fds-colour-error-30: #750C0C;
+    --fds-colour-error-40: #9E130F;
+    --fds-colour-error-50: #CB2213;
+    --fds-colour-error-60: #DE6C6C;
+    --fds-colour-error-70: #E89B9B;
+    --fds-colour-error-80: #EFBEBE;
+    --fds-colour-error-90: #F5D9D9;
+    --fds-colour-error-95: #F9ECEC;
+    --fds-colour-error-100: #FCF7F7;
+    --fds-colour-info-10: #021824;
+    --fds-colour-info-20: #032B3F;
+    --fds-colour-info-30: #053D59;
+    --fds-colour-info-40: #06547B;
+    --fds-colour-info-50: #176E9B;
+    --fds-colour-info-60: #5296BE;
+    --fds-colour-info-70: #82B5DA;
+    --fds-colour-info-80: #ACCFE7;
+    --fds-colour-info-90: #CCE3F1;
+    --fds-colour-info-95: #E3F1F8;
+    --fds-colour-info-100: #F4FAFD;
     --fds-colour-white: #FFFFFF;
     --fds-colour-black: #000000;
     --fds-colour-primary-inverse: #FEAB10;
@@ -253,7 +253,7 @@
     */
 
     /* Button */
-    --fds-button-radius: var(--fds-radius-md);
+    --fds-button-radius: var(--fds-radius-sm);
     --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
     --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
     --fds-button-default-colour-text: var(--fds-colour-text-inverse);
@@ -316,7 +316,7 @@
     --fds-shadow-lg-strong: 0 2px 12px 1px
         rgb(from var(--fds-colour-neutral-50) r g b / 50%);
 
-    /* 
+    /*
     ============================================================================
     FONT
     ============================================================================
@@ -333,7 +333,7 @@
     --fds-font-heading-lh-lg: 2.5rem;
     --fds-font-heading-lh-md: 2.25rem;
     --fds-font-heading-lh-sm: 1.75rem;
-    --fds-font-heading-lh-xs: 1.625rem;
+    --fds-font-heading-lh-xs: 1.75rem;
     --fds-font-heading-ls-xxl: -0.035rem;
     --fds-font-heading-ls-xl: -0.02rem;
     --fds-font-heading-ls-lg: -0.02rem;
@@ -344,8 +344,8 @@
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
-    --fds-font-family-heading: "Atkinson Hyperlegible Next";
-    --fds-font-family-body: "Atkinson Hyperlegible Next";
+    --fds-font-family-heading: "Plus Jakarta Sans";
+    --fds-font-family-body: "Plus Jakarta Sans";
     --fds-font-body-size-baseline: 1.125rem;
     --fds-font-body-size-md: 1rem;
     --fds-font-body-size-sm: 0.875rem;
@@ -358,21 +358,21 @@
     --fds-font-body-ls-md: 0.009rem;
     --fds-font-body-ls-sm: 0.008rem;
     --fds-font-body-ls-xs: 0.008rem;
-    --fds-font-form-label-size: 1.125rem;
-    --fds-font-form-description-size: 1rem;
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
     --fds-font-form-label-lh: 1.5rem;
     --fds-font-form-description-lh: 1.625rem;
-    --fds-font-form-label-ls: 0rem;
-    --fds-font-form-description-ls: 0.009rem;
+    --fds-font-form-label-ls: 0.009rem;
+    --fds-font-form-description-ls: 0.008rem;
 }
 
-/* 
+/*
 ============================================================================
 SEMANTIC COLOURS - DARK MODE
 ============================================================================
 */
-[data-fds-theme="a11y-playground"][data-fds-theme-mode="dark"] {
-    /* text - lighter colours for dark backgrounds */
+[data-fds-theme="careercompass"][data-fds-theme-mode="dark"] {
+    /* text */
     --fds-colour-text: var(--fds-colour-neutral-100);
     --fds-colour-text-subtle: var(--fds-colour-neutral-80);
     --fds-colour-text-subtler: var(--fds-colour-neutral-60);
@@ -396,7 +396,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-text-info: var(--fds-colour-info-70);
     --fds-colour-text-inverse: var(--fds-colour-black);
 
-    /* icon - adjusted for dark mode */
+    /* icon */
     --fds-colour-icon: var(--fds-colour-neutral-60);
     --fds-colour-icon-subtle: var(--fds-colour-neutral-50);
     --fds-colour-icon-strongest: var(--fds-colour-neutral-90);
@@ -420,7 +420,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-icon-inverse: var(--fds-colour-black);
     --fds-colour-icon-primary-inverse: var(--fds-colour-primary-inverse);
 
-    /* border - adjusted for dark mode */
+    /* border */
     --fds-colour-border: var(--fds-colour-neutral-20);
     --fds-colour-border-strong: var(--fds-colour-neutral-40);
     --fds-colour-border-stronger: var(--fds-colour-neutral-60);
@@ -445,7 +445,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-border-error-strong: var(--fds-colour-error-70);
     --fds-colour-border-info: var(--fds-colour-info-50);
 
-    /* background - dark backgrounds */
+    /* background */
     --fds-colour-bg: var(--fds-colour-black);
     --fds-colour-bg-strong: var(--fds-colour-neutral-10);
     --fds-colour-bg-stronger: var(--fds-colour-neutral-20);
@@ -500,17 +500,17 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-bg-primary-subtlest-hover: var(--fds-colour-primary-20);
     --fds-colour-bg-primary-subtlest-selected: var(--fds-colour-primary-20);
 
-    /* overlay - lighter overlays for dark backgrounds */
+    /* overlay */
     --fds-colour-overlay-strong: rgb(78 78 78 / 80%);
     --fds-colour-overlay-subtle: rgb(78 78 78 / 50%);
 
-    /* hyperlink - adjusted for dark mode */
+    /* hyperlink */
     --fds-colour-hyperlink: var(--fds-colour-primary-60);
     --fds-colour-hyperlink-hover: var(--fds-colour-primary-70);
     --fds-colour-hyperlink-visited: var(--fds-colour-primary-70);
     --fds-colour-hyperlink-inverse: var(--fds-colour-primary-inverse);
 
-    /* focus ring - adjusted for dark mode */
+    /* focus ring */
     --fds-colour-focus-ring: var(--fds-colour-primary-60);
     --fds-colour-focus-ring-inverse: var(--fds-colour-black);
 }

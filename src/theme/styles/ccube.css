@@ -110,7 +110,11 @@ PRIMITIVE COLOURS
     --fds-colour-text-subtler: var(--fds-colour-neutral-50);
     --fds-colour-text-subtlest: var(--fds-colour-neutral-60);
     --fds-colour-text-primary: var(--fds-colour-primary-50);
+    --fds-colour-text-primary-strong: var(--fds-colour-primary-40);
     --fds-colour-text-primary-strongest: var(--fds-colour-primary-20);
+    --fds-colour-text-brand: var(--fds-colour-brand-50);
+    --fds-colour-text-secondary: var(--fds-colour-secondary-50);
+    --fds-colour-text-secondary-subtle: var(--fds-colour-secondary-60);
     --fds-colour-text-hover: var(--fds-colour-primary-40);
     --fds-colour-text-selected: var(--fds-colour-primary-50);
     --fds-colour-text-selected-hover: var(--fds-colour-primary-40);
@@ -131,6 +135,9 @@ PRIMITIVE COLOURS
     --fds-colour-icon-primary: var(--fds-colour-primary-50);
     --fds-colour-icon-primary-subtle: var(--fds-colour-primary-60);
     --fds-colour-icon-primary-subtlest: var(--fds-colour-primary-70);
+    --fds-colour-icon-brand: var(--fds-colour-brand-50);
+    --fds-colour-icon-secondary: var(--fds-colour-secondary-50);
+    --fds-colour-icon-secondary-subtle: var(--fds-colour-secondary-60);
     --fds-colour-icon-hover: var(--fds-colour-primary-40);
     --fds-colour-icon-selected: var(--fds-colour-primary-50);
     --fds-colour-icon-selected-hover: var(--fds-colour-primary-40);
@@ -150,6 +157,7 @@ PRIMITIVE COLOURS
     --fds-colour-border-strong: var(--fds-colour-neutral-70);
     --fds-colour-border-stronger: var(--fds-colour-neutral-50);
     --fds-colour-border-primary: var(--fds-colour-primary-50);
+    --fds-colour-border-primary-strong: var(--fds-colour-primary-40);
     --fds-colour-border-primary-subtle: var(--fds-colour-primary-60);
     --fds-colour-border-hover: var(--fds-colour-primary-90);
     --fds-colour-border-hover-strong: var(--fds-colour-primary-60);
@@ -210,11 +218,17 @@ PRIMITIVE COLOURS
     --fds-colour-bg-inverse-subtlest: var(--fds-colour-neutral-60);
     --fds-colour-bg-inverse-hover: var(--fds-colour-neutral-40);
     --fds-colour-bg-primary: var(--fds-colour-primary-50);
+    --fds-colour-bg-primary-strong: var(--fds-colour-primary-40);
     --fds-colour-bg-primary-subtle: var(--fds-colour-primary-60);
     --fds-colour-bg-primary-subtler: var(--fds-colour-primary-95);
     --fds-colour-bg-primary-subtlest: var(--fds-colour-primary-100);
+    --fds-colour-bg-secondary: var(--fds-colour-secondary-50);
+    --fds-colour-bg-secondary-subtle: var(--fds-colour-secondary-60);
+    --fds-colour-bg-secondary-subtler: var(--fds-colour-secondary-95);
+    --fds-colour-bg-secondary-subtlest: var(--fds-colour-secondary-100);
     --fds-colour-bg-available: #6DD0A1;
     --fds-colour-bg-primary-hover: var(--fds-colour-primary-40);
+    --fds-colour-bg-primary-strong-hover: var(--fds-colour-primary-30);
     --fds-colour-bg-primary-subtlest-hover: var(--fds-colour-primary-90);
     --fds-colour-bg-primary-subtlest-selected: var(--fds-colour-primary-90);
 
@@ -315,7 +329,11 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-text-subtler: var(--fds-colour-neutral-60);
     --fds-colour-text-subtlest: var(--fds-colour-neutral-50);
     --fds-colour-text-primary: var(--fds-colour-primary-60);
+    --fds-colour-text-primary-strong: var(--fds-colour-primary-70);
     --fds-colour-text-primary-strongest: var(--fds-colour-primary-90);
+    --fds-colour-text-brand: var(--fds-colour-brand-50);
+    --fds-colour-text-secondary: var(--fds-colour-secondary-60);
+    --fds-colour-text-secondary-subtle: var(--fds-colour-secondary-50);
     --fds-colour-text-hover: var(--fds-colour-primary-70);
     --fds-colour-text-selected: var(--fds-colour-primary-60);
     --fds-colour-text-selected-hover: var(--fds-colour-primary-70);
@@ -336,6 +354,9 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-icon-primary: var(--fds-colour-primary-60);
     --fds-colour-icon-primary-subtle: var(--fds-colour-primary-50);
     --fds-colour-icon-primary-subtlest: var(--fds-colour-primary-40);
+    --fds-colour-icon-brand: var(--fds-colour-brand-50);
+    --fds-colour-icon-secondary: var(--fds-colour-secondary-60);
+    --fds-colour-icon-secondary-subtle: var(--fds-colour-secondary-50);
     --fds-colour-icon-hover: var(--fds-colour-primary-70);
     --fds-colour-icon-selected: var(--fds-colour-primary-60);
     --fds-colour-icon-selected-hover: var(--fds-colour-primary-70);
@@ -355,6 +376,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-border-strong: var(--fds-colour-neutral-40);
     --fds-colour-border-stronger: var(--fds-colour-neutral-60);
     --fds-colour-border-primary: var(--fds-colour-primary-60);
+    --fds-colour-border-primary-strong: var(--fds-colour-primary-70);
     --fds-colour-border-primary-subtle: var(--fds-colour-primary-50);
     --fds-colour-border-hover: var(--fds-colour-primary-20);
     --fds-colour-border-hover-strong: var(--fds-colour-primary-50);
@@ -415,11 +437,17 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-bg-inverse-subtlest: var(--fds-colour-neutral-50);
     --fds-colour-bg-inverse-hover: var(--fds-colour-neutral-70);
     --fds-colour-bg-primary: var(--fds-colour-primary-60);
+    --fds-colour-bg-primary-strong: var(--fds-colour-primary-70);
     --fds-colour-bg-primary-subtle: var(--fds-colour-primary-50);
     --fds-colour-bg-primary-subtler: var(--fds-colour-primary-20);
     --fds-colour-bg-primary-subtlest: var(--fds-colour-primary-10);
     --fds-colour-bg-available: #185339;
+    --fds-colour-bg-secondary: var(--fds-colour-secondary-60);
+    --fds-colour-bg-secondary-subtle: var(--fds-colour-secondary-50);
+    --fds-colour-bg-secondary-subtler: var(--fds-colour-secondary-20);
+    --fds-colour-bg-secondary-subtlest: var(--fds-colour-secondary-10);
     --fds-colour-bg-primary-hover: var(--fds-colour-primary-70);
+    --fds-colour-bg-primary-strong-hover: var(--fds-colour-primary-80);
     --fds-colour-bg-primary-subtlest-hover: var(--fds-colour-primary-20);
     --fds-colour-bg-primary-subtlest-selected: var(--fds-colour-primary-20);
 

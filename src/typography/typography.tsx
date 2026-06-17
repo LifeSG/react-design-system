@@ -47,7 +47,8 @@ const shouldLineClamp = (
 const createTypographyText = <TTag extends React.ElementType>(
     tag: TTag,
     textStyle: TypographySize,
-    displayName: string
+    displayName: string,
+    isHeading: boolean
 ) => {
     const TypographyText = React.forwardRef<
         React.ComponentRef<TTag>,
@@ -82,6 +83,7 @@ const createTypographyText = <TTag extends React.ElementType>(
                 ref={mergedRef}
                 className={clsx(
                     styles.typographyBase,
+                    isHeading ? styles.typographyHeader : styles.typographyBody,
                     getTypographyTextClassName(textStyle),
                     getTypographyWeightClassName(textWeight),
                     getTypographyDisplayClassName(inline, paragraph),
@@ -104,7 +106,7 @@ const createHeading = (
     textStyle: TypographySize,
     displayName: string
 ) => {
-    return createTypographyText(tag, textStyle, displayName);
+    return createTypographyText(tag, textStyle, displayName, true);
 };
 
 export const HeadingXXL = createHeading("h1", "heading-xxl", "HeadingXXL");
@@ -115,7 +117,7 @@ export const HeadingSM = createHeading("h5", "heading-sm", "HeadingSM");
 export const HeadingXS = createHeading("h6", "heading-xs", "HeadingXS");
 
 const createBody = (textStyle: TypographySize, displayName: string) => {
-    return createTypographyText("p", textStyle, displayName);
+    return createTypographyText("p", textStyle, displayName, false);
 };
 
 export const BodyBL = createBody("body-baseline", "BodyBL");
@@ -146,6 +148,7 @@ const createLinkComponent = (
                     ref={ref}
                     className={clsx(
                         styles.typographyBase,
+                        styles.typographyBody,
                         styles.hyperlinkBase,
                         getTypographyTextClassName(textStyle),
                         getTypographyWeightClassName(textWeight),

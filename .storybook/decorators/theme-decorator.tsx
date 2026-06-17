@@ -4,43 +4,15 @@ import { useDarkMode } from "@storybook-community/storybook-dark-mode";
 import { DecoratorHelpers } from "@storybook/addon-themes";
 import type { DecoratorFunction, Renderer } from "storybook/internal/types";
 import { ThemeProvider, ThemeType } from "../../src/theme";
-import {
-    V3_A11yPlaygroundTheme,
-    V3_BookingSGTheme,
-    V3_CCubeTheme,
-    V3_IMDATheme,
-    V3_LifeSGTheme,
-    V3_MyLegacyTheme,
-    V3_OneServiceTheme,
-    V3_PATheme,
-    V3_RBSTheme,
-    V3_SPFTheme,
-    V3_SupportGoWhereTheme,
-    V3_SGWDigitalLobbyTheme,
-} from "../../src/v3_theme";
 
 const { initializeThemeState, pluckThemeFromContext } = DecoratorHelpers;
 
-type ThemeMapKey = keyof typeof V3_THEME_MAP;
-
-const V3_THEME_MAP = {
-    "A11y Playground": V3_A11yPlaygroundTheme,
-    BookingSG: V3_BookingSGTheme,
-    CCube: V3_CCubeTheme,
-    IMDA: V3_IMDATheme,
-    LifeSG: V3_LifeSGTheme,
-    MyLegacy: V3_MyLegacyTheme,
-    OneService: V3_OneServiceTheme,
-    PA: V3_PATheme,
-    RBS: V3_RBSTheme,
-    "SGW Digital Lobby": V3_SGWDigitalLobbyTheme,
-    SPF: V3_SPFTheme,
-    SupportGoWhere: V3_SupportGoWhereTheme,
-};
+type ThemeMapKey = keyof typeof THEME_KEY_TO_TYPE_MAPPING;
 
 const THEME_KEY_TO_TYPE_MAPPING = {
     "A11y Playground": "a11y-playground",
     BookingSG: "bookingsg",
+    CareerCompass: "careercompass",
     CCube: "ccube",
     IMDA: "imda",
     LifeSG: "lifesg",
@@ -49,6 +21,7 @@ const THEME_KEY_TO_TYPE_MAPPING = {
     PA: "pa",
     RBS: "rbs",
     "SGW Digital Lobby": "sgw-digital-lobby",
+    SMGS: "smgs",
     SPF: "spf",
     SupportGoWhere: "supportgowhere",
 };
@@ -56,7 +29,7 @@ const THEME_KEY_TO_TYPE_MAPPING = {
 export const withThemeFromJSXProvider = <
     TRenderer extends Renderer = any
 >(): DecoratorFunction<TRenderer> => {
-    const themeNames = Object.keys(V3_THEME_MAP);
+    const themeNames = Object.keys(THEME_KEY_TO_TYPE_MAPPING);
     const initialTheme: ThemeMapKey = "LifeSG";
 
     initializeThemeState(themeNames, initialTheme);

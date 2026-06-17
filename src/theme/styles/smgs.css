@@ -1,99 +1,99 @@
 @import url("./default.css");
 
-[data-fds-theme="a11y-playground"] {
-    /* 
-    ============================================================================
-    PRIMITIVE COLOURS
-    ============================================================================
-    */
-    --fds-colour-brand-10: #170F39;
-    --fds-colour-brand-20: #281C62;
-    --fds-colour-brand-30: #38268B;
-    --fds-colour-brand-40: #4D34BF;
-    --fds-colour-brand-50: #5735DF;
-    --fds-colour-brand-60: #9986F9;
-    --fds-colour-brand-70: #B2A5F8;
-    --fds-colour-brand-80: #CDC2FA;
-    --fds-colour-brand-90: #E2DCFC;
-    --fds-colour-brand-95: #EFEDFE;
-    --fds-colour-brand-100: #FAF8FD;
-    --fds-colour-primary-10: #170F39;
-    --fds-colour-primary-20: #281C62;
-    --fds-colour-primary-30: #38268B;
-    --fds-colour-primary-40: #4D34BF;
-    --fds-colour-primary-50: #5735DF;
-    --fds-colour-primary-60: #9986F9;
-    --fds-colour-primary-70: #B2A5F8;
-    --fds-colour-primary-80: #CDC2FA;
-    --fds-colour-primary-90: #E2DCFC;
-    --fds-colour-primary-95: #EFEDFE;
-    --fds-colour-primary-100: #FAF8FD;
-    --fds-colour-secondary-10: #251204;
-    --fds-colour-secondary-20: #401F08;
-    --fds-colour-secondary-30: #5B2C0B;
-    --fds-colour-secondary-40: #7E3D0F;
-    --fds-colour-secondary-50: #B04900;
-    --fds-colour-secondary-60: #E26E1C;
-    --fds-colour-secondary-70: #FF9445;
-    --fds-colour-secondary-80: #FFBB8E;
-    --fds-colour-secondary-90: #FFD9BF;
-    --fds-colour-secondary-95: #FFECDF;
-    --fds-colour-secondary-100: #FFF8F3;
+/*
+============================================================================
+PRIMITIVE COLOURS
+============================================================================
+*/
+[data-fds-theme="smgs"] {
+    --fds-colour-brand-10: #0B181F;
+    --fds-colour-brand-20: #132B35;
+    --fds-colour-brand-30: #1B3D4C;
+    --fds-colour-brand-40: #25546A;
+    --fds-colour-brand-50: #306F8B;
+    --fds-colour-brand-60: #459EC6;
+    --fds-colour-brand-70: #70B5D3;
+    --fds-colour-brand-80: #93C7DE;
+    --fds-colour-brand-90: #CBE4EF;
+    --fds-colour-brand-95: #EBF4F9;
+    --fds-colour-brand-100: #F3F9FB;
+    --fds-colour-primary-10: #0B181F;
+    --fds-colour-primary-20: #132B35;
+    --fds-colour-primary-30: #1B3D4C;
+    --fds-colour-primary-40: #25546A;
+    --fds-colour-primary-50: #306F8B;
+    --fds-colour-primary-60: #459EC6;
+    --fds-colour-primary-70: #70B5D3;
+    --fds-colour-primary-80: #93C7DE;
+    --fds-colour-primary-90: #CBE4EF;
+    --fds-colour-primary-95: #EBF4F9;
+    --fds-colour-primary-100: #F3F9FB;
+    --fds-colour-secondary-10: #1E1500;
+    --fds-colour-secondary-20: #352500;
+    --fds-colour-secondary-30: #4B3500;
+    --fds-colour-secondary-40: #674A00;
+    --fds-colour-secondary-50: #896100;
+    --fds-colour-secondary-60: #C28A00;
+    --fds-colour-secondary-70: #E1A100;
+    --fds-colour-secondary-80: #FAB200;
+    --fds-colour-secondary-90: #FDDD8E;
+    --fds-colour-secondary-95: #FEF2D5;
+    --fds-colour-secondary-100: #FFF9EA;
     --fds-colour-neutral-10: #161616;
     --fds-colour-neutral-20: #282828;
     --fds-colour-neutral-30: #393939;
     --fds-colour-neutral-40: #4E4E4E;
     --fds-colour-neutral-50: #686868;
-    --fds-colour-neutral-60: #8E8E8E;
-    --fds-colour-neutral-70: #AFAFB0;
-    --fds-colour-neutral-80: #C7CACA;
-    --fds-colour-neutral-90: #DDE1E2;
-    --fds-colour-neutral-95: #EDEFEF;
-    --fds-colour-neutral-100: #F9F9F9;
-    --fds-colour-success-10: #031B15;
-    --fds-colour-success-20: #082D24;
-    --fds-colour-success-30: #094134;
-    --fds-colour-success-40: #0D5947;
-    --fds-colour-success-50: #10755E;
-    --fds-colour-success-60: #16A181;
-    --fds-colour-success-70: #1EC59D;
-    --fds-colour-success-80: #6FDDC2;
-    --fds-colour-success-90: #AFECDE;
-    --fds-colour-success-95: #D5F5ED;
-    --fds-colour-success-100: #F1FCF9;
-    --fds-colour-warning-10: #1F1500;
-    --fds-colour-warning-20: #362500;
-    --fds-colour-warning-30: #4D3501;
-    --fds-colour-warning-40: #6A4801;
-    --fds-colour-warning-50: #8B6001;
-    --fds-colour-warning-60: #BF8301;
-    --fds-colour-warning-70: #EAA102;
-    --fds-colour-warning-80: #FFBF34;
-    --fds-colour-warning-90: #FFDC8F;
-    --fds-colour-warning-95: #FFEDC7;
-    --fds-colour-warning-100: #FFF8EA;
-    --fds-colour-error-10: #270F10;
-    --fds-colour-error-20: #441B1B;
-    --fds-colour-error-30: #612627;
-    --fds-colour-error-40: #853535;
-    --fds-colour-error-50: #AF4546;
-    --fds-colour-error-60: #EC6162;
-    --fds-colour-error-70: #F29696;
-    --fds-colour-error-80: #F7BBBC;
-    --fds-colour-error-90: #FAD8D8;
-    --fds-colour-error-95: #FCEAEA;
-    --fds-colour-error-100: #FEF7F7;
+    --fds-colour-neutral-60: #969492;
+    --fds-colour-neutral-70: #AFACA7;
+    --fds-colour-neutral-80: #C2BFBB;
+    --fds-colour-neutral-90: #E4DFD9;
+    --fds-colour-neutral-95: #F4F1EF;
+    --fds-colour-neutral-100: #F9F8F7;
+    --fds-colour-success-10: #071913;
+    --fds-colour-success-20: #0D2D22;
+    --fds-colour-success-30: #134031;
+    --fds-colour-success-40: #1A5944;
+    --fds-colour-success-50: #237559;
+    --fds-colour-success-60: #31A77E;
+    --fds-colour-success-70: #39C293;
+    --fds-colour-success-80: #67D2AD;
+    --fds-colour-success-90: #B8EAD9;
+    --fds-colour-success-95: #E3F7F0;
+    --fds-colour-success-100: #F1FBF8;
+    --fds-colour-warning-10: #211403;
+    --fds-colour-warning-20: #3B2205;
+    --fds-colour-warning-30: #543108;
+    --fds-colour-warning-40: #73440B;
+    --fds-colour-warning-50: #98590E;
+    --fds-colour-warning-60: #D38221;
+    --fds-colour-warning-70: #DEA057;
+    --fds-colour-warning-80: #E5B77F;
+    --fds-colour-warning-90: #F3DDC3;
+    --fds-colour-warning-95: #FAF2E8;
+    --fds-colour-warning-100: #FDF9F4;
+    --fds-colour-error-10: #2E0A0C;
+    --fds-colour-error-20: #4F1114;
+    --fds-colour-error-30: #70171C;
+    --fds-colour-error-40: #972026;
+    --fds-colour-error-50: #C62932;
+    --fds-colour-error-60: #F7636B;
+    --fds-colour-error-70: #F98D93;
+    --fds-colour-error-80: #FAAAAE;
+    --fds-colour-error-90: #FDD7D9;
+    --fds-colour-error-95: #FEF0F1;
+    --fds-colour-error-100: #FFF6F6;
     --fds-colour-info-10: #0F1627;
     --fds-colour-info-20: #1B2745;
     --fds-colour-info-30: #273763;
     --fds-colour-info-40: #354D88;
     --fds-colour-info-50: #4665B3;
-    --fds-colour-info-60: #618AF6;
-    --fds-colour-info-70: #8DADFF;
-    --fds-colour-info-80: #B4C9FF;
-    --fds-colour-info-90: #D3DFFF;
-    --fds-colour-info-95: #E9EFFF;
-    --fds-colour-info-100: #F5F8FF;
+    --fds-colour-info-60: #6A90F6;
+    --fds-colour-info-70: #8DAAF8;
+    --fds-colour-info-80: #A7BEFA;
+    --fds-colour-info-90: #D4DFFD;
+    --fds-colour-info-95: #EEF3FE;
+    --fds-colour-info-100: #F5F8FE;
     --fds-colour-white: #FFFFFF;
     --fds-colour-black: #000000;
     --fds-colour-primary-inverse: #FEAB10;
@@ -253,7 +253,7 @@
     */
 
     /* Button */
-    --fds-button-radius: var(--fds-radius-md);
+    --fds-button-radius: var(--fds-radius-sm);
     --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
     --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
     --fds-button-default-colour-text: var(--fds-colour-text-inverse);
@@ -316,7 +316,7 @@
     --fds-shadow-lg-strong: 0 2px 12px 1px
         rgb(from var(--fds-colour-neutral-50) r g b / 50%);
 
-    /* 
+    /*
     ============================================================================
     FONT
     ============================================================================
@@ -344,8 +344,8 @@
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
-    --fds-font-family-heading: "Atkinson Hyperlegible Next";
-    --fds-font-family-body: "Atkinson Hyperlegible Next";
+    --fds-font-family-heading: "Plus Jakarta Sans";
+    --fds-font-family-body: "Plus Jakarta Sans";
     --fds-font-body-size-baseline: 1.125rem;
     --fds-font-body-size-md: 1rem;
     --fds-font-body-size-sm: 0.875rem;
@@ -358,21 +358,21 @@
     --fds-font-body-ls-md: 0.009rem;
     --fds-font-body-ls-sm: 0.008rem;
     --fds-font-body-ls-xs: 0.008rem;
-    --fds-font-form-label-size: 1.125rem;
-    --fds-font-form-description-size: 1rem;
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
     --fds-font-form-label-lh: 1.5rem;
     --fds-font-form-description-lh: 1.625rem;
-    --fds-font-form-label-ls: 0rem;
-    --fds-font-form-description-ls: 0.009rem;
+    --fds-font-form-label-ls: 0.009rem;
+    --fds-font-form-description-ls: 0.008rem;
 }
 
-/* 
+/*
 ============================================================================
 SEMANTIC COLOURS - DARK MODE
 ============================================================================
 */
-[data-fds-theme="a11y-playground"][data-fds-theme-mode="dark"] {
-    /* text - lighter colours for dark backgrounds */
+[data-fds-theme="smgs"][data-fds-theme-mode="dark"] {
+    /* text */
     --fds-colour-text: var(--fds-colour-neutral-100);
     --fds-colour-text-subtle: var(--fds-colour-neutral-80);
     --fds-colour-text-subtler: var(--fds-colour-neutral-60);
@@ -396,7 +396,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-text-info: var(--fds-colour-info-70);
     --fds-colour-text-inverse: var(--fds-colour-black);
 
-    /* icon - adjusted for dark mode */
+    /* icon */
     --fds-colour-icon: var(--fds-colour-neutral-60);
     --fds-colour-icon-subtle: var(--fds-colour-neutral-50);
     --fds-colour-icon-strongest: var(--fds-colour-neutral-90);
@@ -420,7 +420,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-icon-inverse: var(--fds-colour-black);
     --fds-colour-icon-primary-inverse: var(--fds-colour-primary-inverse);
 
-    /* border - adjusted for dark mode */
+    /* border */
     --fds-colour-border: var(--fds-colour-neutral-20);
     --fds-colour-border-strong: var(--fds-colour-neutral-40);
     --fds-colour-border-stronger: var(--fds-colour-neutral-60);
@@ -445,7 +445,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-border-error-strong: var(--fds-colour-error-70);
     --fds-colour-border-info: var(--fds-colour-info-50);
 
-    /* background - dark backgrounds */
+    /* background */
     --fds-colour-bg: var(--fds-colour-black);
     --fds-colour-bg-strong: var(--fds-colour-neutral-10);
     --fds-colour-bg-stronger: var(--fds-colour-neutral-20);
@@ -500,17 +500,17 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-bg-primary-subtlest-hover: var(--fds-colour-primary-20);
     --fds-colour-bg-primary-subtlest-selected: var(--fds-colour-primary-20);
 
-    /* overlay - lighter overlays for dark backgrounds */
+    /* overlay */
     --fds-colour-overlay-strong: rgb(78 78 78 / 80%);
     --fds-colour-overlay-subtle: rgb(78 78 78 / 50%);
 
-    /* hyperlink - adjusted for dark mode */
+    /* hyperlink */
     --fds-colour-hyperlink: var(--fds-colour-primary-60);
     --fds-colour-hyperlink-hover: var(--fds-colour-primary-70);
     --fds-colour-hyperlink-visited: var(--fds-colour-primary-70);
     --fds-colour-hyperlink-inverse: var(--fds-colour-primary-inverse);
 
-    /* focus ring - adjusted for dark mode */
+    /* focus ring */
     --fds-colour-focus-ring: var(--fds-colour-primary-60);
     --fds-colour-focus-ring-inverse: var(--fds-colour-black);
 }

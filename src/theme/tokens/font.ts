@@ -1,7 +1,8 @@
 import { generateFont } from "../utils/font";
 
 export const FontSpec = {
-    "font-family": "var(--fds-font-family)",
+    "font-family-heading": "var(--fds-font-family-heading)",
+    "font-family-body": "var(--fds-font-family-body)",
     "font-variant": "var(--fds-font-variant)",
 
     "weight-light": "var(--fds-font-weight-light)",
