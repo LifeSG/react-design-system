@@ -80,6 +80,17 @@ const component = css`
 `;
 ```
 
+#### Styled Components
+
+```tsx
+import { Colour } from "@lifesg/react-design-system/theme";
+import styled from "styled-components";
+
+const SomeComponent = styled.div`
+    background: ${Colour["background-error"]};
+`;
+```
+
 ### As a constant
 
 If you require the token as a constant value, you could retrieve the value at
