@@ -16,7 +16,11 @@ export const useTheme = () => {
     const context = useContext(ThemeContext);
 
     if (!context) {
-        throw new Error("useTheme must be used within ThemeProvider");
+        return {
+            theme: "lifesg" as const,
+            mode: "light" as const,
+            themeElement: null,
+        };
     }
 
     return context;
