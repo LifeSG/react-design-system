@@ -20,8 +20,6 @@ npm i @lifesg/react-design-system
 }
 ```
 
-<br />
-
 ## Getting Started
 
 The module requires some custom css for fonts and certain components to work
@@ -54,8 +52,6 @@ Or if you are importing to an existing css file:
 @import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
 ```
 
-<br />
-
 ## Setting up the theme
 
 To use themes, you will need [**Styled Components**](https://styled-components.com/docs).
@@ -87,8 +83,6 @@ export default App;
 
 For more information on themes and available presets, visit our [documentation](https://designsystem.life.gov.sg/react/index.html?path=/docs/foundations-themes-introduction--docs).
 
-<br />
-
 ## Importing the components
 
 ```tsx
@@ -101,8 +95,24 @@ import { Button } from "@lifesg/react-design-system";
 
 To see the full suite of components available, visit our [Storybook documentation](https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-installation--docs).
 
-<br />
-
 ## Migrations
 
 If you are migrating from an older version of the Design System, you may refer to our [migration guides](https://github.com/LifeSG/react-design-system/wiki).
+
+## Testing the latest build
+
+Run this command to build and package the library:
+
+```bash
+npm run build-lib
+```
+
+The tarball file is generated at `dist/lifesg-react-design-system-<version>.tgz`
+
+In your project directory, you can install the tarball file directly:
+
+```bash
+npm i /path/to/repo/dist/lifesg-react-design-system-<version>.tgz
+```
+
+You can now verify the changes in your local environment.
