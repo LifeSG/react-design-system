@@ -24,6 +24,7 @@ export const V3_ColourSpec: V3_ThemeCollectionSpec<
     collections: {
         a11yplayground: V3_A11yPlaygroundColourSet,
         bookingsg: V3_LifeSGColourSet,
+        careercompass: V3_LifeSGColourSet,
         ccube: V3_LifeSGColourSet,
         imda: V3_LifeSGColourSet,
         lifesg: V3_LifeSGColourSet,
@@ -31,11 +32,10 @@ export const V3_ColourSpec: V3_ThemeCollectionSpec<
         oneservice: V3_LifeSGColourSet,
         pa: V3_PAColourSet,
         rbs: V3_LifeSGColourSet,
-        spf: V3_LifeSGColourSet,
-        supportgowhere: V3_LifeSGColourSet,
         sgwdigitallobby: V3_SGWDigitalLobbyColourSet,
         smgs: V3_LifeSGColourSet,
-        careercompass: V3_LifeSGColourSet,
+        spf: V3_LifeSGColourSet,
+        supportgowhere: V3_LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -106,7 +106,9 @@ export const V3_ColourSemantic: {
     "text-subtler": getSemanticColour("text-subtler"),
     "text-subtlest": getSemanticColour("text-subtlest"),
     "text-primary": getSemanticColour("text-primary"),
+    "text-primary-strong": getSemanticColour("text-primary-strong"),
     "text-primary-strongest": getSemanticColour("text-primary-strongest"),
+    "text-brand": getSemanticColour("text-brand"),
     "text-secondary": getSemanticColour("text-secondary"),
     "text-secondary-subtle": getSemanticColour("text-secondary-subtle"),
 
@@ -132,6 +134,7 @@ export const V3_ColourSemantic: {
     "icon-primary": getSemanticColour("icon-primary"),
     "icon-primary-subtle": getSemanticColour("icon-primary-subtle"),
     "icon-primary-subtlest": getSemanticColour("icon-primary-subtlest"),
+    "icon-brand": getSemanticColour("icon-brand"),
     "icon-secondary": getSemanticColour("icon-secondary"),
     "icon-secondary-subtle": getSemanticColour("icon-secondary-subtle"),
 
@@ -156,6 +159,7 @@ export const V3_ColourSemantic: {
     "border-strong": getSemanticColour("border-strong"),
     "border-stronger": getSemanticColour("border-stronger"),
     "border-primary": getSemanticColour("border-primary"),
+    "border-primary-strong": getSemanticColour("border-primary-strong"),
     "border-primary-subtle": getSemanticColour("border-primary-subtle"),
 
     "border-hover": getSemanticColour("border-hover"),
@@ -231,18 +235,20 @@ export const V3_ColourSemantic: {
     "bg-inverse-hover": getSemanticColour("bg-inverse-hover"),
 
     "bg-primary": getSemanticColour("bg-primary"),
+    "bg-primary-strong": getSemanticColour("bg-primary-strong"),
     "bg-primary-subtle": getSemanticColour("bg-primary-subtle"),
     "bg-primary-subtler": getSemanticColour("bg-primary-subtler"),
     "bg-primary-subtlest": getSemanticColour("bg-primary-subtlest"),
-    "bg-available": getSemanticColour("bg-available"),
-
     "bg-secondary": getSemanticColour("bg-secondary"),
     "bg-secondary-subtle": getSemanticColour("bg-secondary-subtle"),
     "bg-secondary-subtler": getSemanticColour("bg-secondary-subtler"),
     "bg-secondary-subtlest": getSemanticColour("bg-secondary-subtlest"),
+    "bg-available": getSemanticColour("bg-available"),
 
     "bg-primary-hover": getSemanticColour("bg-primary-hover"),
+    "bg-primary-strong-hover": getSemanticColour("bg-primary-strong-hover"),
     "bg-primary-subtlest-hover": getSemanticColour("bg-primary-subtlest-hover"),
+
     "bg-primary-subtlest-selected": getSemanticColour(
         "bg-primary-subtlest-selected"
     ),
