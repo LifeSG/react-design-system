@@ -59,6 +59,16 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "<theme service logo>",
             },
             {
+                name: "logoAlt",
+                description: (
+                    <>
+                        The logo image alt text of the <code>Footer</code>
+                    </>
+                ),
+                propTypes: ["string"],
+                defaultValue: "",
+            },
+            {
                 name: "lastUpdated",
                 description: (
                     <>

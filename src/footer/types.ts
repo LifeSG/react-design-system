@@ -29,6 +29,8 @@ export interface FooterProps<T = void> {
     copyrightInfo?: string | undefined;
     /** Custom logo source */
     logoSrc?: string | undefined;
+    /** Custom logo alt text */
+    logoAlt?: string | undefined;
     /** Last updated date value that is displayed in the bottom of the Footer */
     lastUpdated?: Date | undefined;
     onFooterLinkClick?: ((link: FooterLinkProps<T>) => void) | undefined;

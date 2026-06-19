@@ -208,6 +208,23 @@ describe("Footer", () => {
             expect(screen.getByRole("img")).toHaveAttribute("src", customLogo);
         });
 
+        it("should be able to render a custom alt text", () => {
+            const customLogo = "https://www.abc.com/test.png";
+            render(
+                <Footer
+                    links={CUSTOM_LINKS}
+                    logoSrc={customLogo}
+                    logoAlt="custom logo"
+                />
+            );
+
+            expect(screen.getByRole("img")).toHaveAttribute("src", customLogo);
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "alt",
+                "custom logo"
+            );
+        });
+
         it("should render a logo if the theme provides one and no logoSrc provided", () => {
             const themeLogo =
                 "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
