@@ -11,10 +11,6 @@ const ciConfig: NextConfig = {
     typescript: {
         tsconfigPath: "tsconfig.ci.json",
     },
-    // TODO: remove Styled Components after V4 migration
-    compiler: {
-        styledComponents: true,
-    },
 };
 
 const devConfig: LinariaConfig = withLinaria({

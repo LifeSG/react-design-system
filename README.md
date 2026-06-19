@@ -15,8 +15,7 @@ npm i @lifesg/react-design-system
     "@floating-ui/react": ">=0.26.23 <1.0.0",
     "@lifesg/react-icons": "^1.5.0",
     "react": "^17.0.2 || ^18.0.0 || ^19.0.0",
-    "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0",
-    "styled-components": "^6.1.19"
+    "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0"
 }
 ```
 
@@ -54,25 +53,24 @@ Or if you are importing to an existing css file:
 
 ## Setting up the theme
 
-To use themes, you will need [**Styled Components**](https://styled-components.com/docs).
-
 To configure the theme in your project:
 
-1. Import the theme preset
+1. Import the theme-specific stylesheet
 2. Wrap your components in the `ThemeProvider` context (typically at the root of the application)
-3. Pass in the theme object via the `theme` prop
+3. Pass in the theme name via the `theme` prop
 
 If a theme is not specified, components will use LifeSG as the default.
 
 ```tsx
 // app.tsx
-import { LifeSGTheme } from "@lifesg/react-design-system/theme";
-import { ThemeProvider } from "styled-components";
+import { ThemeProvider } from "@lifesg/react-design-system/theme";
 import { Component } from "./index";
+
+import "@lifesg/react-design-system/theme/styles/lifesg.css";
 
 const App = () => {
     return (
-        <ThemeProvider theme={LifeSGTheme}>
+        <ThemeProvider theme="lifesg">
             <Component />
         </ThemeProvider>
     );

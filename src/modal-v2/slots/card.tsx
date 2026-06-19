@@ -1,8 +1,8 @@
 import clsx from "clsx";
 import type { NamedExoticComponent } from "react";
 import React from "react";
-import { isStyledComponent } from "styled-components";
 
+import isStyledComponent from "../../util/is-styled-components";
 import type { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
 import { Content } from "./content";

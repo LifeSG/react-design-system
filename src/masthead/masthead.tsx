@@ -2,15 +2,16 @@ import "@govtechsg/sgds-web-component/themes/day.css";
 import "@govtechsg/sgds-web-component/themes/night.css";
 
 import clsx from "clsx";
-import { memo, useContext, useEffect } from "react";
-import { ThemeContext } from "styled-components";
+import { memo, useEffect } from "react";
+
+import { useTheme } from "../theme";
 
 import * as styles from "./masthead.styles";
 import type { MastheadProps } from "./types";
 
 const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
-    const theme = useContext(ThemeContext);
-    const isDarkMode = theme?.colourMode === "dark";
+    const { mode } = useTheme();
+    const isDarkMode = mode === "dark";
 
     // =============================================================================
     // EFFECTS

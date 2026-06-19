@@ -1,10 +1,9 @@
 import { render, screen } from "@testing-library/react";
 import React from "react";
 import type { ErrorDisplayType } from "src";
-import { ErrorDisplay, V3_BookingSGTheme, V3_LifeSGTheme } from "src";
+import { ErrorDisplay } from "src";
 import { getErrorDisplayData } from "src/error-display/error-display-data";
-import { ThemeProvider as V4ThemeProvider } from "src/theme";
-import { ThemeProvider as StyledThemeProvider } from "styled-components";
+import { ThemeProvider } from "src/theme";
 
 // =============================================================================
 // UNIT TESTS
@@ -138,7 +137,6 @@ describe("ErrorDisplay", () => {
             "should render bookingsg %s error correctly",
             (type: ErrorDisplayType) => {
                 renderErrorDisplay(<ErrorDisplay type={type} />, {
-                    styledTheme: V3_BookingSGTheme,
                     v4Theme: "bookingsg",
                 });
 
@@ -173,7 +171,7 @@ describe("ErrorDisplay", () => {
         it("should use the specified illustration based on the illustrationScheme prop", () => {
             renderErrorDisplay(
                 <ErrorDisplay type={"400"} illustrationScheme="lifesg" />,
-                { styledTheme: V3_BookingSGTheme, v4Theme: "bookingsg" }
+                { v4Theme: "bookingsg" }
             );
 
             const error = getErrorDisplayData("400", "lifesg")!;
@@ -300,15 +298,10 @@ const transformJSXElementToString = (element: JSX.Element): string => {
 const renderErrorDisplay = (
     ui: React.ReactElement,
     options?: {
-        styledTheme?: typeof V3_LifeSGTheme | typeof V3_BookingSGTheme;
         v4Theme?: "lifesg" | "bookingsg";
     }
 ) => {
-    const { styledTheme = V3_LifeSGTheme, v4Theme = "lifesg" } = options || {};
+    const { v4Theme = "lifesg" } = options || {};
 
-    return render(
-        <V4ThemeProvider theme={v4Theme}>
-            <StyledThemeProvider theme={styledTheme}>{ui}</StyledThemeProvider>
-        </V4ThemeProvider>
-    );
+    return render(<ThemeProvider theme={v4Theme}>{ui}</ThemeProvider>);
 };
