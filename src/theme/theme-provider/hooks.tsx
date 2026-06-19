@@ -3,6 +3,7 @@ import { useContext, useMemo } from "react";
 
 import { getInheritedInlineCssVariables } from "../utils/css-variable";
 import { ThemeContext } from "./context";
+import type { ThemeContextValue } from "./types";
 
 type InheritedThemeScope = {
     themeProps: {
@@ -12,11 +13,15 @@ type InheritedThemeScope = {
     themeStyle: CSSProperties;
 };
 
-export const useTheme = () => {
+export const useTheme = (): ThemeContextValue => {
     const context = useContext(ThemeContext);
 
     if (!context) {
-        throw new Error("useTheme must be used within ThemeProvider");
+        return {
+            theme: "lifesg",
+            mode: "light",
+            themeElement: null,
+        };
     }
 
     return context;
