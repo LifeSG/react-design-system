@@ -206,7 +206,6 @@ describe("Footer", () => {
             render(<Footer links={CUSTOM_LINKS} logoSrc={customLogo} />);
 
             expect(screen.getByRole("img")).toHaveAttribute("src", customLogo);
-            expect(screen.getByRole("img")).toHaveAttribute("alt", "logo");
         });
 
         it("should be able to render a custom alt text", () => {

@@ -28,7 +28,7 @@ export const Footer = <T,>({
     showDownloadAddon,
     showResourceAddon,
     logoSrc,
-    logoAlt = "logo",
+    logoAlt = "",
     copyrightInfo,
     onFooterLinkClick,
     layout = "default",
