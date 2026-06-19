@@ -28,6 +28,7 @@ export const Footer = <T,>({
     showDownloadAddon,
     showResourceAddon,
     logoSrc,
+    logoAlt = "logo",
     copyrightInfo,
     onFooterLinkClick,
     layout = "default",
@@ -116,6 +117,7 @@ export const Footer = <T,>({
                             <img
                                 src={logoSrc || src}
                                 data-testid="logo"
+                                alt={logoAlt}
                                 {...otherLogoAttributes}
                             />
                         </LogoSection>

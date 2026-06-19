@@ -206,6 +206,7 @@ describe("Footer", () => {
             render(<Footer links={CUSTOM_LINKS} logoSrc={customLogo} />);
 
             expect(screen.getByRole("img")).toHaveAttribute("src", customLogo);
+            expect(screen.getByRole("img")).toHaveAttribute("alt", "logo");
         });
 
         it("should render a logo if the theme provides one and no logoSrc provided", () => {
