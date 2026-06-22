@@ -4,6 +4,11 @@ import type { TypographyLinkProps } from "../typography";
 // =============================================================================
 // NAV ITEM TYPES
 // =============================================================================
+export interface NavItemCommonProps<T> extends TypographyLinkProps {
+    id: string;
+    "data-testid"?: string | undefined;
+    options?: T | undefined;
+}
 
 export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
     itemType?: "link";
@@ -15,12 +20,6 @@ export interface NavItemComponentProps {
 }
 
 export type NavItemProps<T> = NavItemLinkProps<T> | NavItemComponentProps;
-
-export interface NavItemCommonProps<T> extends TypographyLinkProps {
-    id: string;
-    "data-testid"?: string | undefined;
-    options?: T | undefined;
-}
 
 export interface NavItemsProps<T> {
     desktop: NavItemProps<T>[];

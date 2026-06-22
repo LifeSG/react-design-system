@@ -26,6 +26,10 @@ const meta: Meta<Component> = {
     component: Navbar,
     decorators: [FullWidthStoryDecorator({})],
     parameters: { layout: "fullscreen" },
+    tags: ["autodocs"],
+    // argTypes: {
+    //     ...navbarExtraArgTypes,
+    // },
 };
 
 export default meta;

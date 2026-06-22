@@ -8,6 +8,16 @@ const __dirname = dirname(__filename);
 
 const config: StorybookConfig = {
     stories: ["../stories/**/*.mdx", "../stories/**/*.stories.@(ts|tsx)"],
+    typescript: {
+        reactDocgen: "react-docgen-typescript",
+        reactDocgenTypescriptOptions: {
+            shouldExtractLiteralValuesFromEnum: true,
+            shouldExtractValuesFromUnion: true,
+            shouldRemoveUndefinedFromOptional: true,
+            propFilter: (prop) =>
+                prop.parent ? !/node_modules/.test(prop.parent.fileName) : true,
+        },
+    },
     addons: [
         "@storybook/addon-webpack5-compiler-swc",
         "@storybook/addon-links",
@@ -25,7 +35,11 @@ const config: StorybookConfig = {
             },
         },
     ],
-    features: { interactions: false, sidebarOnboardingChecklist: false },
+    features: {
+        interactions: false,
+        sidebarOnboardingChecklist: false,
+        controls: false,
+    },
     staticDirs: ["../public"],
     webpackFinal: async (config) => {
         config.module?.rules?.unshift({

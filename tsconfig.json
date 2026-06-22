@@ -29,11 +29,13 @@
         "noFallthroughCasesInSwitch": true // report error for fallthrough cases
     },
     "include": [
+        ".storybook/**/*",
         "src/**/*",
         "tests/**/*",
         "custom-types/*",
         "stories",
-        "codemods"
+        "codemods",
+        "scripts/**/*"
     ],
     "exclude": ["node_modules", "rollup.config.js"]
 }

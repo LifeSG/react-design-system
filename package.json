@@ -30,8 +30,9 @@
         "test-e2e-ci": "npm run test-e2e:setup && ./scripts/e2e-ci.sh",
         "prepare": "(test -d ./.git && npx husky install) || true",
         "postinstall": "patch-package",
-        "storybook": "storybook dev -p 6006",
-        "build-storybook": "storybook build",
+        "storybook": "concurrently -k -n types,storybook \"npm run storybook:argtypes -- --watch\" \"storybook dev -p 6006\"",
+        "storybook:argtypes": "tsx ./scripts/generate-storybook-argtypes.ts",
+        "build-storybook": "npm run storybook:argtypes && storybook build",
         "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
         "lint": "npm run lint:js && npm run lint:css",
         "lint:js": "eslint '**/*.{ts,tsx,js,jsx}' && npm --prefix e2e/nextjs-app run lint:src",
@@ -107,6 +108,7 @@
         "@wyw-in-js/shared": "^1.1.0",
         "@wyw-in-js/transform": "^1.1.0",
         "@wyw-in-js/webpack-loader": "^1.0.6",
+        "concurrently": "^10.0.3",
         "dayjs": "^1.11.3",
         "dedent": "^1.7.0",
         "dompurify": "^3.2.5",
@@ -150,7 +152,10 @@
         "stylelint": "^17.4.0",
         "stylelint-config-recess-order": "^7.6.1",
         "stylelint-config-standard": "^40.0.0",
-        "typescript": "^5.7.3"
+        "ts-morph": "^28.0.0",
+        "tsx": "^4.22.4",
+        "typescript": "^5.7.3",
+        "vite": "^8.0.16"
     },
     "peerDependencies": {
         "@floating-ui/react": ">=0.26.23 <1.0.0",

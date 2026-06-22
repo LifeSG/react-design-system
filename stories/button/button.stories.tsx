@@ -12,6 +12,7 @@ type Component = typeof Button;
 const meta: Meta<Component> = {
     title: "Selection and input/Button",
     component: Button,
+    tags: ["autodocs"],
 };
 
 export default meta;
