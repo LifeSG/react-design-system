@@ -6,9 +6,11 @@ import {
     useEffect,
     useImperativeHandle,
     useRef,
+    useState,
 } from "react";
 
-import { Colour, useDesignToken } from "../theme";
+import { Colour, useTheme } from "../theme";
+import { parseCSSVariableValue } from "../theme/utils/css-variable";
 import * as styles from "./e-signature.styles";
 
 interface ESignatureCanvasProps {
@@ -33,7 +35,23 @@ const Component = (
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvas = useRef<FabricCanvas>();
     const pencilBrush = useRef<PencilBrush>();
-    const resolvedColor = useDesignToken(Colour["text"]);
+    const { theme, themeElement } = useTheme();
+    const [resolvedColor, setResolvedColor] = useState<string | undefined>();
+
+    useEffect(() => {
+        if (!themeElement) return;
+
+        const tempEl = document.createElement("div");
+        tempEl.setAttribute("data-fds-theme", theme);
+        tempEl.setAttribute("data-fds-theme-mode", "light");
+        tempEl.style.display = "none";
+        themeElement.appendChild(tempEl);
+
+        const value = parseCSSVariableValue(Colour["text"], tempEl);
+        setResolvedColor(value || undefined);
+
+        themeElement.removeChild(tempEl);
+    }, [theme, themeElement, resolvedColor]);
 
     // =============================================================================
     // HOOKS
