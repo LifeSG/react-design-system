@@ -3,7 +3,6 @@ import { useEffect, useState } from "react";
 import { useTheme } from "../theme-provider/hooks";
 import type { CSSVariableString } from "../types";
 import { parseCSSVariableValue } from "./css-variable";
-import { getResolvedValue } from "./token-resolver";
 
 const isEmptyValue = (value: unknown) => {
     return value == null || value === "";
@@ -53,13 +52,24 @@ export const useResolvedTokenValue = <
     options: UseResolvedTokenValueOptions<TToken, TCustom>
 ) => {
     const { value, fallback, isToken, normalizeCustom } = options;
-    const effectiveValue = isEmptyValue(value) ? fallback : value;
-    const tokenString = isToken(effectiveValue) ? effectiveValue : undefined;
-    const resolvedTokenValue = useDesignToken(tokenString);
+    const tokenString = isToken(value) ? value : undefined;
+    const resolvedToken = useDesignToken(tokenString);
+    const fallbackString = isToken(fallback) ? fallback : undefined;
+    const resolvedFallback = useDesignToken(fallbackString);
 
-    if (tokenString) {
-        return getResolvedValue(resolvedTokenValue, tokenString);
+    if (isToken(value)) {
+        if (!isEmptyValue(resolvedToken)) {
+            return resolvedToken;
+        }
+    } else if (!isEmptyValue(value)) {
+        return normalizeCustom(value);
     }
 
-    return normalizeCustom(effectiveValue as TCustom);
+    if (isToken(fallback)) {
+        if (!isEmptyValue(resolvedFallback)) {
+            return resolvedFallback;
+        }
+    }
+
+    return normalizeCustom(fallback as TCustom);
 };

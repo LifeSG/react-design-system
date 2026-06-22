@@ -1,9 +1,10 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import { ThemeProvider } from "src/theme";
 import { Breakpoint } from "src/theme/tokens/breakpoint";
+import type { MediaQueryOptions } from "src/theme/utils/use-media-query";
 import {
-    type MediaQueryOptions,
     useMediaQuery,
+    useResolvedBreakpointToken,
 } from "src/theme/utils/use-media-query";
 
 import { createMatchMediaMock } from "../../_common";
@@ -210,4 +211,57 @@ describe("useMediaQuery", () => {
             expect(screen.getByTestId("result").textContent).toBe("false");
         });
     });
+});
+
+describe("useResolvedBreakpointToken", () => {
+    type Token = Parameters<typeof useResolvedBreakpointToken>[0];
+
+    const TestComponent = ({ token }: { token: Token }) => {
+        const resolvedValue = useResolvedBreakpointToken(token);
+        return <div data-testid="resolved">{resolvedValue}</div>;
+    };
+
+    it("resolves breakpoint tokens to their corresponding CSS variable values", () => {
+        render(
+            <ThemeProvider
+                style={
+                    {
+                        "--fds-breakpoint-md-min": "100px",
+                    } as React.CSSProperties
+                }
+            >
+                <TestComponent token={Breakpoint["md-min"]} />
+            </ThemeProvider>
+        );
+
+        expect(screen.getByTestId("resolved").textContent).toBe("100px");
+    });
+
+    it.each`
+        variable                 | expected
+        ${Breakpoint["xxs-min"]} | ${"0"}
+        ${Breakpoint["xxs-max"]} | ${"320px"}
+        ${Breakpoint["xs-min"]}  | ${"321px"}
+        ${Breakpoint["xs-max"]}  | ${"375px"}
+        ${Breakpoint["sm-min"]}  | ${"376px"}
+        ${Breakpoint["sm-max"]}  | ${"480px"}
+        ${Breakpoint["md-min"]}  | ${"481px"}
+        ${Breakpoint["md-max"]}  | ${"768px"}
+        ${Breakpoint["lg-min"]}  | ${"769px"}
+        ${Breakpoint["lg-max"]}  | ${"1200px"}
+        ${Breakpoint["xl-min"]}  | ${"1201px"}
+        ${Breakpoint["xl-max"]}  | ${"1440px"}
+        ${Breakpoint["xxl-min"]} | ${"1441px"}
+    `(
+        "returns a default if $variable token cannot be resolved",
+        ({ variable, expected }) => {
+            render(
+                <ThemeProvider>
+                    <TestComponent token={variable} />
+                </ThemeProvider>
+            );
+
+            expect(screen.getByTestId("resolved").textContent).toBe(expected);
+        }
+    );
 });

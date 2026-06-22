@@ -177,12 +177,14 @@ describe("useDesignToken", () => {
 
 const ResolvedValueTestComponent = ({
     value,
+    fallback,
 }: {
     value: CSSVariableString | number | undefined;
+    fallback: string | number | undefined;
 }) => {
     const resolved = useResolvedTokenValue({
         value,
-        fallback: "var(--fds-breakpoint-md-min)",
+        fallback,
         isToken: (candidate): candidate is CSSVariableString =>
             isTokenWithPrefix<CSSVariableString>(candidate, "var(--fds-"),
         normalizeCustom: String,
@@ -199,7 +201,10 @@ describe("useResolvedTokenValue", () => {
     it("resolves token values", async () => {
         render(
             <ThemeProvider style={getThemeVariablesStyle()}>
-                <ResolvedValueTestComponent value="var(--fds-breakpoint-md-min)" />
+                <ResolvedValueTestComponent
+                    value="var(--fds-breakpoint-md-min)"
+                    fallback="custom"
+                />
             </ThemeProvider>
         );
 
@@ -210,10 +215,13 @@ describe("useResolvedTokenValue", () => {
         });
     });
 
-    it("returns fallback when value is empty", async () => {
+    it("resolves fallback values when value is empty", async () => {
         render(
             <ThemeProvider style={getThemeVariablesStyle()}>
-                <ResolvedValueTestComponent value={undefined} />
+                <ResolvedValueTestComponent
+                    value={undefined}
+                    fallback="var(--fds-breakpoint-md-min)"
+                />
             </ThemeProvider>
         );
 
@@ -224,10 +232,24 @@ describe("useResolvedTokenValue", () => {
         });
     });
 
-    it("returns custom values as-is after normalization", async () => {
+    it("returns custom token values as-is after normalization", async () => {
         render(
             <ThemeProvider style={getThemeVariablesStyle()}>
-                <ResolvedValueTestComponent value={12} />
+                <ResolvedValueTestComponent value={12} fallback="custom" />
+            </ThemeProvider>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByTestId("resolved-value")).toHaveTextContent(
+                "12"
+            );
+        });
+    });
+
+    it("returns custom fallback values as-is after normalization", async () => {
+        render(
+            <ThemeProvider style={getThemeVariablesStyle()}>
+                <ResolvedValueTestComponent value={undefined} fallback={12} />
             </ThemeProvider>
         );
 
