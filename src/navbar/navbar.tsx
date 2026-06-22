@@ -380,4 +380,23 @@ const Component = <T,>(
     );
 };
 
+/**
+ * Renders the main navigation bar for desktop and mobile layouts.
+ *
+ * Use this component to present branding, primary navigation items, and
+ * action buttons in a single responsive header. The mobile drawer reuses
+ * desktop navigation and action buttons when mobile-specific entries are not
+ * provided, and its dismissal behavior can be controlled with
+ * `drawerDismissalExclusions`.
+ *
+ * @example
+ * ```tsx
+ * <Navbar
+ *   selectedId="overview"
+ *   items={{
+ *     desktop: [{ id: "overview", label: "Overview", href: "/overview" }],
+ *   }}
+ * />
+ * ```
+ */
 export const Navbar = forwardRef(Component);

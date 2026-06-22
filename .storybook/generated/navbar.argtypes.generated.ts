@@ -4,6 +4,8 @@
 export const navbarExtraArgTypes = {
     "NavItemCommonProps.id": {
         name: "id",
+        description:
+            "Unique identifier used for selection state and click callbacks.",
         control: false,
         table: {
             category: "NavItemCommonProps<T>",
@@ -14,6 +16,8 @@ export const navbarExtraArgTypes = {
     },
     "NavItemCommonProps.data-testid": {
         name: "data-testid",
+        description:
+            "Sets the `data-testid` attribute for targeting the element in automated\ntests.",
         control: false,
         table: {
             category: "NavItemCommonProps<T>",
@@ -24,6 +28,8 @@ export const navbarExtraArgTypes = {
     },
     "NavItemCommonProps.options": {
         name: "options",
+        description:
+            "Additional metadata returned in click callbacks for the item.",
         control: false,
         table: {
             category: "NavItemCommonProps<T>",
@@ -34,6 +40,7 @@ export const navbarExtraArgTypes = {
     },
     "NavItemLinkProps.itemType": {
         name: "itemType",
+        description: "Discriminator for union narrowing.",
         control: false,
         table: {
             category: "NavItemLinkProps<T>",
@@ -44,6 +51,8 @@ export const navbarExtraArgTypes = {
     },
     "NavItemLinkProps.subMenu": {
         name: "subMenu",
+        description:
+            "Optional nested links rendered as a submenu for this item.",
         control: false,
         table: {
             category: "NavItemLinkProps<T>",
@@ -84,6 +93,8 @@ export const navbarExtraArgTypes = {
     },
     "NavItemsProps.mobile": {
         name: "mobile",
+        description:
+            "Items rendered in the mobile drawer.\nFalls back to `desktop` when omitted.",
         control: false,
         table: {
             category: "NavItemsProps<T>",
@@ -114,6 +125,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarActionButtonDownloadProps.uncollapsible": {
         name: "uncollapsible",
+        description:
+            "Keeps this action visible in the top bar instead of collapsing into the\nmobile drawer.",
         control: false,
         table: {
             category: "NavbarActionButtonDownloadProps",
@@ -144,6 +157,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarActionButtonCtaProps.uncollapsible": {
         name: "uncollapsible",
+        description:
+            "Keeps this action visible in the top bar instead of collapsing into the\nmobile drawer.",
         control: false,
         table: {
             category: "NavbarActionButtonCtaProps",
@@ -184,6 +199,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarActionButtonComponentProps.uncollapsible": {
         name: "uncollapsible",
+        description:
+            "Keeps this action visible in the top bar instead of collapsing into the\nmobile drawer.",
         control: false,
         table: {
             category: "NavbarActionButtonComponentProps",
@@ -205,7 +222,7 @@ export const navbarExtraArgTypes = {
     "NavbarActionButtonsProps.mobile": {
         name: "mobile",
         description:
-            "Navbar action buttons for mobile drawer. Takes desktop if not specified",
+            "Action buttons rendered in the mobile drawer.\nFalls back to `desktop` when omitted.",
         control: false,
         table: {
             category: "NavbarActionButtonsProps",
@@ -276,7 +293,7 @@ export const navbarExtraArgTypes = {
     },
     "NavbarSharedProps.hideNavBranding": {
         name: "hideNavBranding",
-        description: "Specifies if brand logos are visible",
+        description: "Hides primary and secondary brand logos from the navbar.",
         control: false,
         table: {
             category: "NavbarSharedProps",
@@ -287,7 +304,7 @@ export const navbarExtraArgTypes = {
     },
     "NavbarSharedProps.hideLinkIndicator": {
         name: "hideLinkIndicator",
-        description: "Hide the selected link indicator across the navbar",
+        description: "Hides the selected-item indicator for navigation links.",
         control: false,
         table: {
             category: "NavbarSharedProps",
@@ -328,7 +345,7 @@ export const navbarExtraArgTypes = {
     },
     "NavbarDrawerProps.onBrandClick": {
         name: "onBrandClick",
-        description: "Triggered when the brand icon is being clicked",
+        description: "Called when a brand link inside the drawer is activated.",
         control: false,
         table: {
             category: "NavbarDrawerProps",
@@ -340,7 +357,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarDrawerProps.drawerLabel": {
         name: "drawerLabel",
-        description: "Custom aria-label for the mobile navigation drawer",
+        description:
+            "Accessible label announced for the mobile navigation drawer.",
         control: false,
         table: {
             category: "NavbarDrawerProps",
@@ -351,7 +369,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarDrawerProps.mobileMenuRef": {
         name: "mobileMenuRef",
-        description: "Ref to the mobile menu button for focus management",
+        description:
+            "Ref to the mobile menu trigger used for returning focus when closed.",
         control: false,
         table: {
             category: "NavbarDrawerProps",
@@ -362,6 +381,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarProps.items": {
         name: "items",
+        description:
+            "Navigation items rendered in desktop and mobile navbar layouts.",
         control: false,
         table: {
             category: "NavbarProps<T>",
@@ -392,6 +413,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarProps.data-testid": {
         name: "data-testid",
+        description:
+            "Sets the `data-testid` attribute for targeting the element in automated\ntests.",
         control: false,
         table: {
             category: "NavbarProps<T>",
@@ -402,6 +425,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarProps.selectedId": {
         name: "selectedId",
+        description:
+            "Currently selected navigation item id.\nShould match an `id` from the rendered item set.",
         control: false,
         table: {
             category: "NavbarProps<T>",
@@ -412,39 +437,50 @@ export const navbarExtraArgTypes = {
     },
     "NavbarProps.compress": {
         name: "compress",
-        description: "Specifies if the Navbar should be compressed",
+        description: "Reduces navbar vertical spacing for compact layouts.",
         control: false,
         table: {
             category: "NavbarProps<T>",
             type: {
                 summary: "boolean",
+            },
+            defaultValue: {
+                summary: "false",
             },
         },
     },
     "NavbarProps.fixed": {
         name: "fixed",
-        description: "Specifies if Navbar should be fixed to top",
+        description: "Pins the navbar to the top of the viewport.",
         control: false,
         table: {
             category: "NavbarProps<T>",
             type: {
                 summary: "boolean",
             },
+            defaultValue: {
+                summary: "true",
+            },
         },
     },
     "NavbarProps.drawerDismissalExclusions": {
         name: "drawerDismissalExclusions",
-        description: "Specifies which methods will not dismiss the drawer",
+        description: "Drawer dismissal methods that should be ignored.",
         control: false,
         table: {
             category: "NavbarProps<T>",
             type: {
                 summary: "DrawerDismissalMethod[]",
             },
+            defaultValue: {
+                summary: "[]",
+            },
         },
     },
     "NavbarProps.hideNavElements": {
         name: "hideNavElements",
+        description:
+            "Hides desktop navigation items, action buttons, and mobile menu trigger.",
         control: false,
         table: {
             category: "NavbarProps<T>",
@@ -455,6 +491,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarProps.onBrandClick": {
         name: "onBrandClick",
+        description:
+            "Called when either primary or secondary brand is activated.",
         control: false,
         table: {
             category: "NavbarProps<T>",
@@ -465,6 +503,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarProps.onItemClick": {
         name: "onItemClick",
+        description:
+            "Called when a navigation item is activated.\n\nFor link items without an item-level `onClick`, the default anchor\nnavigation is prevented so selection can be controlled externally.",
         control: false,
         table: {
             category: "NavbarProps<T>",
@@ -476,6 +516,8 @@ export const navbarExtraArgTypes = {
     },
     "NavbarProps.onActionButtonClick": {
         name: "onActionButtonClick",
+        description:
+            "Called when an action button is activated and no item-level click handler\nis provided.",
         control: false,
         table: {
             category: "NavbarProps<T>",
@@ -486,39 +528,52 @@ export const navbarExtraArgTypes = {
     },
     "NavbarProps.masthead": {
         name: "masthead",
-        description: "Specifies if masthead should be rendered",
+        description: "Shows the masthead above the navbar.",
         control: false,
         table: {
             category: "NavbarProps<T>",
             type: {
                 summary: "boolean",
             },
+            defaultValue: {
+                summary: "true",
+            },
         },
     },
     "NavbarProps.layout": {
         name: "layout",
+        description:
+            "Controls content width behavior inside the navbar container.",
         control: false,
         table: {
             category: "NavbarProps<T>",
             type: {
                 summary: '"default" | "stretch"',
             },
+            defaultValue: {
+                summary: '"default"',
+            },
         },
     },
     "NavbarProps.headerLabel": {
         name: "headerLabel",
-        description: "Custom aria-label for the main navigation header",
+        description:
+            "Accessible label announced for the main navigation region.",
         control: false,
         table: {
             category: "NavbarProps<T>",
             type: {
                 summary: "string",
             },
+            defaultValue: {
+                summary: '"Main navigation menu"',
+            },
         },
     },
     "NavbarProps.drawerLabel": {
         name: "drawerLabel",
-        description: "Custom aria-label for the mobile navigation drawer",
+        description:
+            "Accessible label announced for the mobile navigation drawer.",
         control: false,
         table: {
             category: "NavbarProps<T>",
@@ -529,6 +584,8 @@ export const navbarExtraArgTypes = {
     },
     NavItemProps: {
         name: "NavItemProps<T>",
+        description:
+            "Navigation item rendered by the navbar.\n\n`itemType` determines whether the item is a standard link or a custom\ncomponent slot.",
         control: false,
         table: {
             category: "NavItemProps<T>",
@@ -539,6 +596,7 @@ export const navbarExtraArgTypes = {
     },
     NavbarButtonProps: {
         name: "NavbarButtonProps",
+        description: "Action button entry rendered by the navbar.",
         control: false,
         table: {
             category: "NavbarButtonProps",
@@ -550,6 +608,7 @@ export const navbarExtraArgTypes = {
     },
     DrawerDismissalMethod: {
         name: "DrawerDismissalMethod",
+        description: "User actions that can trigger mobile drawer dismissal.",
         control: false,
         table: {
             category: "DrawerDismissalMethod",
@@ -561,6 +620,7 @@ export const navbarExtraArgTypes = {
     },
     BrandType: {
         name: "BrandType",
+        description: "Brand slot identifier passed to brand-click callbacks.",
         control: false,
         table: {
             category: "BrandType",
@@ -571,16 +631,20 @@ export const navbarExtraArgTypes = {
     },
     NavbarDrawerApi: {
         name: "NavbarDrawerApi",
+        description: "Imperative API exposed by the navbar ref.",
         control: false,
         table: {
             category: "NavbarDrawerApi",
             type: {
-                summary: "{ dismissDrawer: () => void; }",
+                summary:
+                    "{ /** * Closes the mobile drawer programmatically. */ dismissDrawer: () => void; }",
             },
         },
     },
     NavbarDrawerHandle: {
         name: "NavbarDrawerHandle",
+        description:
+            "Navbar ref handle that combines the root element with drawer controls.",
         control: false,
         table: {
             category: "NavbarDrawerHandle",
