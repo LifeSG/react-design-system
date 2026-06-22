@@ -135,7 +135,7 @@ const baseErrorMessage = `
 
 export const desktopErrorMessage = css`
     ${baseErrorMessage}
-    margin-top: ${Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-8"]};
     display: flex;
     gap: ${Spacing["spacing-4"]};
 

@@ -7,6 +7,9 @@ import { Colour, Font, Spacing } from "../theme";
 // =============================================================================
 export const labelContainer = css`
     margin-bottom: ${Spacing["spacing-8"]};
+    display: flex;
+    flex-direction: column;
+    gap: ${Spacing["spacing-4"]};
 `;
 
 export const label = css`
