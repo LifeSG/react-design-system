@@ -101,6 +101,8 @@ const Component = (
                         colourMode: "light",
                     },
                 });
+            } else {
+                pencilBrush.current.color = "#000000";
             }
             pencilBrush.current.width = 3;
 

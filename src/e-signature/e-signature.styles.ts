@@ -96,8 +96,7 @@ export const SignaturePreviewImage = styled.img`
     width: calc(100% - (3rem + ${Spacing["spacing-16"]}) * 2);
     height: 100%;
 
-    ${(props) =>
-        props.theme?.colourMode === "dark" ? `filter: invert(1);` : ""}
+    ${(props) => props.theme?.colourMode === "dark" && `filter: invert(1);`}
 `;
 
 export const ProgressBox = styled.div`
@@ -264,6 +263,5 @@ export const SignatureCanvasContainer = styled.div`
 export const SignatureCanvas = styled.canvas`
     cursor: crosshair;
 
-    ${(props) =>
-        props.theme?.colourMode === "dark" ? `filter: invert(1);` : ""}
+    ${(props) => props.theme?.colourMode === "dark" && `filter: invert(1);`}
 `;
