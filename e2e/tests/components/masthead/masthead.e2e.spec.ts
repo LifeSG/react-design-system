@@ -38,6 +38,15 @@ class StoryPage extends AbstractStoryPage {
     public async expandHowToIdentify() {
         await this.locators.component.howToIdentifyButton.click();
     }
+
+    async waitForMasthead(page: Page) {
+        await page.waitForFunction(
+            () =>
+                !!customElements.get("sgds-masthead") &&
+                !!document.querySelector("sgds-masthead")?.shadowRoot
+                    ?.firstElementChild
+        );
+    }
 }
 
 const test = base.extend<{ story: StoryPage }>({
@@ -51,6 +60,7 @@ test.describe("Masthead", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("basic", { size: "xxl" });
+            await story.waitForMasthead(story.page);
         });
 
         test("Basic", async ({ story }) => {
@@ -63,6 +73,7 @@ test.describe("Masthead", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("basic", { mode: "dark", size: "xxl" });
+            await story.waitForMasthead(story.page);
         });
 
         test("Basic (dark mode)", async ({ story }) => {
@@ -73,6 +84,7 @@ test.describe("Masthead", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("stretch", { size: "xxl" });
+            await story.waitForMasthead(story.page);
         });
 
         test("Stretch", async ({ story }) => {
