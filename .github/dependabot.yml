@@ -1,0 +1,42 @@
+version: 2
+updates:
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    target-branch: "master"
+    open-pull-requests-limit: 0
+    labels:
+      - "type: chore"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+  - package-ecosystem: "npm"
+    directory: "/"
+    schedule:
+      interval: "weekly"
+    # TODO: Update to v3 branch once v4 is fully merged into master
+    target-branch: "pre-release/v4"
+    open-pull-requests-limit: 0
+    labels:
+      - "type: chore"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
+  - package-ecosystem: "npm"
+    directory: "/e2e/nextjs-app"
+    schedule:
+      interval: "weekly"
+    target-branch: "pre-release/v4"
+    open-pull-requests-limit: 0
+    labels:
+      - "type: chore"
+    groups:
+      minor-and-patch:
+        update-types:
+          - "minor"
+          - "patch"
