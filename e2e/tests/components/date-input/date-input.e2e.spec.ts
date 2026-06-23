@@ -1,5 +1,11 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
-import { fixedTimestamp } from "../../consts";
+import {
+    test as base,
+    chromium,
+    expect,
+    Locator,
+    Page,
+} from "@playwright/test";
+import { fixedTimestamp, viewport } from "../../consts";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -17,6 +23,7 @@ class StoryPage extends AbstractStoryPage {
         dateInput: Locator;
         calendarContainer: Locator;
         calendarContent: Locator;
+        toggleZone: Locator;
         doneButton: Locator;
         cancelButton: Locator;
         selectedValue: Locator;
@@ -40,6 +47,7 @@ class StoryPage extends AbstractStoryPage {
             dateInput: page.getByTestId("date-input"),
             calendarContainer: page.getByTestId("calendar-container"),
             calendarContent: page.getByTestId("calendar-content"),
+            toggleZone: page.getByTestId("toggle-zone"),
             doneButton: page.getByTestId("done-button"),
             cancelButton: page.getByTestId("cancel-button"),
             selectedValue: page.getByTestId("selected-value"),
@@ -171,6 +179,43 @@ test.describe("DateInput", () => {
         test("Form.DateInput variants (mobile)", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
+    });
+
+    test("With Custom Browser Font Size", async () => {
+        const browser = await chromium.launch({
+            args: ["--blink-settings=defaultFontSize=16,minimumFontSize=24"],
+        });
+
+        const context = await browser.newContext({
+            baseURL: "http://localhost:3000",
+        });
+
+        const page = await context.newPage();
+        const story = new StoryPage(page);
+
+        await story.init("custom-font-size", {
+            mockedTimestamp: fixedTimestamp,
+            size: "xxs",
+        });
+
+        await story.locators.dateInput.click();
+
+        await expect(story.locators.calendarContainer).toBeVisible();
+
+        await compareScreenshot(story, "before", {
+            fullscreen: true,
+        });
+
+        // Scroll calendar content to the right
+        await story.locators.toggleZone.evaluate((el) => {
+            el.scrollLeft = el.scrollWidth;
+        });
+
+        await compareScreenshot(story, "after", {
+            fullscreen: true,
+        });
+
+        await browser.close();
     });
 
     test.describe(() => {

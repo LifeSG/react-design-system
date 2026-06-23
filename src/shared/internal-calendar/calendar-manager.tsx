@@ -595,7 +595,9 @@ const Component = (
             {...otherProps}
         >
             {showNavigationHeader && renderHeader()}
-            <div className={styles.toggleZone}>{renderViews()}</div>
+            <div className={styles.toggleZone} data-testid="toggle-zone">
+                {renderViews()}
+            </div>
             {renderActionButtons()}
         </div>
     );
