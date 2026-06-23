@@ -87,6 +87,7 @@ export const ScheduleHeader = ({
                     View by:
                 </Typography.BodyMD>
                 <InputSelect
+                    data-testid="view-selector"
                     options={viewOptions}
                     selectedOption={selectedViewOption}
                     onSelectOption={(option) => onViewChange?.(option.value)}

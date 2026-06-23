@@ -46,14 +46,20 @@ class StoryPage extends AbstractStoryPage {
     }
 
     public async switchToWeekView(withSnapshot: boolean = true) {
-        await this.page
-            .locator('[data-id="schedule-header"]')
-            .getByText("Day", { exact: true })
-            .click();
+        const dayViewTrigger = this.page.locator(
+            '[data-testid="view-selector"]'
+        );
+
+        await dayViewTrigger.click();
+
+        await expect(dayViewTrigger).toHaveAttribute("data-focused", "true");
+
         if (withSnapshot) {
             await compareScreenshot(this, "view-selection");
         }
         await this.page.getByRole("option", { name: "Week" }).click();
+
+        await this.page.mouse.click(0, 0);
     }
 }
 
