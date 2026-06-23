@@ -35,7 +35,7 @@ export default function Story() {
             <Alert
                 type="info"
                 sizeType="small"
-                maxCollapsedHeight={40}
+                maxCollapsedHeight={30}
                 showIcon
             >
                 Small size alert, collapsed.
