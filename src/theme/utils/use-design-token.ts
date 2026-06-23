@@ -51,24 +51,24 @@ export const useResolvedTokenValue = <
 >(
     options: UseResolvedTokenValueOptions<TToken, TCustom>
 ) => {
-    const { value, fallback, isToken, normalizeCustom } = options;
-    const tokenString = isToken(value) ? value : undefined;
-    const resolvedToken = useDesignToken(tokenString);
-    const fallbackString = isToken(fallback) ? fallback : undefined;
-    const resolvedFallback = useDesignToken(fallbackString);
+    const { value, fallback, isToken: checkToken, normalizeCustom } = options;
+    const isToken = checkToken(value);
+    const tokenName = isToken ? value : undefined;
+    const resolvedToken = useDesignToken(tokenName);
+    const isFallbackToken = checkToken(fallback);
+    const fallbackTokenName = isFallbackToken ? fallback : undefined;
+    const resolvedFallback = useDesignToken(fallbackTokenName);
 
-    if (isToken(value)) {
-        if (!isEmptyValue(resolvedToken)) {
-            return resolvedToken;
-        }
-    } else if (!isEmptyValue(value)) {
+    if (isToken && !isEmptyValue(resolvedToken)) {
+        return resolvedToken;
+    }
+
+    if (!isToken && !isEmptyValue(value)) {
         return normalizeCustom(value);
     }
 
-    if (isToken(fallback)) {
-        if (!isEmptyValue(resolvedFallback)) {
-            return resolvedFallback;
-        }
+    if (isFallbackToken && !isEmptyValue(resolvedFallback)) {
+        return resolvedFallback;
     }
 
     return normalizeCustom(fallback as TCustom);
