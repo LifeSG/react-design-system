@@ -1,0 +1,18 @@
+.wcpniaz{position:relative;width:100%;z-index:1;margin:var(--fds-spacing-32) 0;}:where(body.fds-breakpoint-xl-max) .wcpniaz{margin:var(--fds-spacing-24) 0;}:where(body.fds-breakpoint-lg-max) .wcpniaz{margin:var(--fds-spacing-16) 0;}
+.c10gatr7{display:-webkit-inline-box;display:-webkit-inline-flex;display:-ms-inline-flexbox;display:inline-flex;width:100%;-webkit-box-flex-wrap:wrap;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;white-space:nowrap;margin-left:calc(var(--fds-spacing-8) * -1);font-size:var(--fds-font-body-size-md);overflow-x:scroll;overflow-y:hidden;scrollbar-width:none;-ms-overflow-style:none;}.c10gatr7::-webkit-scrollbar{display:none;}:where(body.fds-breakpoint-lg-max) .c10gatr7{-webkit-box-flex-wrap:nowrap;-webkit-flex-wrap:nowrap;-ms-flex-wrap:nowrap;flex-wrap:nowrap;}
+.fbyhxo7{--fds-internal-breadcrumb-fade-backgroundColor:initial;width:var(--fds-spacing-64);height:calc(1lh + var(--fds-spacing-4));position:absolute;top:50%;-webkit-transform:translateY(-50%);-moz-transform:translateY(-50%);-ms-transform:translateY(-50%);transform:translateY(-50%);pointer-events:none;}
+:where(body.fds-breakpoint-lg-max) .f1xa0lk7{left:calc(var(--fds-spacing-8) * -1);background-image:linear-gradient(
+            to right,
+            var(--fds-internal-breadcrumb-fade-backgroundColor, var(--fds-colour-bg)),
+            rgba(255, 255, 255, 0.001)
+        );}
+:where(body.fds-breakpoint-lg-max) .f1oxmxuo{right:var(--fds-spacing-8);background-image:linear-gradient(
+            to left,
+            var(--fds-internal-breadcrumb-fade-backgroundColor, var(--fds-colour-bg)),
+            rgba(255, 255, 255, 0.001)
+        );}
+.ikhkv84{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;line-height:inherit;font-size:inherit;}
+.co9wmrd{height:1em;width:1em;color:var(--fds-colour-icon-subtle);}
+.spyv6ve{display:inline-block;color:var(--fds-colour-text-subtlest);}
+.c1mfqdvn{margin:var(--fds-spacing-8)!important;}
+.pm022dc{margin:var(--fds-spacing-8)!important;}

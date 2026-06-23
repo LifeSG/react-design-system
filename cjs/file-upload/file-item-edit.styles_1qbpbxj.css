@@ -1,0 +1,10 @@
+.i1432lvs{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;padding:var(--fds-spacing-32) 0;background:transparent;}.i1432lvs:not(:last-child){border-bottom:var(--fds-border-width-010) var(--fds-border-style-solid) var(--fds-colour-border);}
+.c1i0crev{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;margin-bottom:var(--fds-spacing-16);width:100%;}
+.d4rbbwx{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex:1;-ms-flex:1;flex:1;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}
+.n18lt6ho{width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-box-pack:justify;-ms-flex-pack:space-between;-webkit-justify-content:space-between;justify-content:space-between;margin-bottom:var(--fds-spacing-16);}:where(body.fds-breakpoint-md-max) .n18lt6ho{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;-webkit-box-pack:start;-ms-flex-pack:start;-webkit-justify-content:flex-start;justify-content:flex-start;}
+.fuau9z6{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex:1;-ms-flex:1;flex:1;margin-right:var(--fds-spacing-16);}:where(body.fds-breakpoint-md-max) .fuau9z6{margin-right:0;margin-bottom:var(--fds-spacing-8);}
+.a18dc1yj{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;}:where(body.fds-breakpoint-md-max) .a18dc1yj{-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}
+.ajknckh{margin-left:calc(
+        96px + var(--fds-spacing-32)
+    );}:where(body.fds-breakpoint-md-max) .ajknckh{margin-left:0;}
+.awg16zc{width:7.5rem;}.awg16zc:not(:last-of-type){margin-right:var(--fds-spacing-16);}:where(body.fds-breakpoint-md-max) .awg16zc{width:100%;}:where(body.fds-breakpoint-md-max) .awg16zc:not(:last-of-type){margin-bottom:var(--fds-spacing-16);}

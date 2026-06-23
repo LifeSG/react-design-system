@@ -1,0 +1,29 @@
+.tsti7hb{--fds-internal-timeSlot-slot-bgColor:var(--fds-colour-bg-stronger);--fds-internal-timeSlot-slot-bgColor2:var(--fds-colour-bg-strongest);--fds-internal-timeSlot-slot-hoverBgColor:var(--fds-colour-bg-stronger);--fds-internal-timeSlot-slot-hoverBgColor2:var(--fds-colour-bg-strongest);cursor:var(--fds-internal-timeSlot-slot-cursor, default);}.tsti7hb[data-clickable="true"]{cursor:pointer;}.tsti7hb[data-style-type="default"]{background-color:var(--fds-internal-timeSlot-slot-bgColor);}.tsti7hb[data-style-type="default"][data-hoverable="true"]:hover{background-color:var(--fds-internal-timeSlot-slot-hoverBgColor);}.tsti7hb[data-style-type="stripes"]{background:repeating-linear-gradient(     135deg,     var(--fds-internal-timeSlot-slot-bgColor2) 0px,     var(--fds-internal-timeSlot-slot-bgColor2) 6px,     var(--fds-internal-timeSlot-slot-bgColor) 6px,     var(--fds-internal-timeSlot-slot-bgColor) 12px );}.tsti7hb[data-style-type="stripes"][data-hoverable="true"]:hover{background:repeating-linear-gradient(
+                135deg,
+                var(--fds-internal-timeSlot-slot-hoverBgColor2, var(--fds-internal-timeSlot-slot-bgColor2))
+                    0px,
+                var(--fds-internal-timeSlot-slot-hoverBgColor2, var(--fds-internal-timeSlot-slot-bgColor2))
+                    6px,
+                var(--fds-internal-timeSlot-slot-hoverBgColor, var(--fds-internal-timeSlot-slot-bgColor))
+                    6px,
+                var(--fds-internal-timeSlot-slot-hoverBgColor, var(--fds-internal-timeSlot-slot-bgColor))
+                    12px
+            );}
+.tmgdrss[data-style-type="default"]{background:linear-gradient(
+            to top,
+            var(--fds-internal-timeSlot-slot-bgColor) 50%,
+            var(--fds-colour-bg-strongest) 50%
+        );}.tmgdrss[data-style-type="stripes"]{background:linear-gradient(
+                to top,
+                transparent 50%,
+                var(--fds-colour-bg-strongest) 50%
+            ),repeating-linear-gradient(     135deg,     var(--fds-internal-timeSlot-slot-bgColor2) 0px,     var(--fds-internal-timeSlot-slot-bgColor2) 6px,     var(--fds-internal-timeSlot-slot-bgColor) 6px,     var(--fds-internal-timeSlot-slot-bgColor) 12px );}
+.t31kbad[data-style-type="default"]{background:linear-gradient(
+            to bottom,
+            var(--fds-internal-timeSlot-slot-bgColor) 50%,
+            var(--fds-colour-bg-strongest) 50%
+        );}.t31kbad[data-style-type="stripes"]{background:linear-gradient(
+                to bottom,
+                transparent 50%,
+                var(--fds-colour-bg-strongest) 50%
+            ),repeating-linear-gradient(     135deg,     var(--fds-internal-timeSlot-slot-bgColor2) 0px,     var(--fds-internal-timeSlot-slot-bgColor2) 6px,     var(--fds-internal-timeSlot-slot-bgColor) 6px,     var(--fds-internal-timeSlot-slot-bgColor) 12px );}

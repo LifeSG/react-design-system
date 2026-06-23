@@ -1,0 +1,2 @@
+"use strict";require("./typography-text.styles_1734x2k.css"),require("./typography.styles_1155j4c.css");exports.displayBlock="d4n1hjq",exports.displayInline="d1cfdq56",exports.externalIcon="e1f7dy7t",exports.hyperlinkBase="hspw24h",exports.lineClamp="l1w2xa0l",exports.noUnderline="nlbpwo0",exports.paragraph="p1ydob6f",exports.tokens={typographyBase:{maxLines:"--fds-internal-typography-base-maxLines"}},exports.typographyBase="ts2ljtd",exports.typographyBody="t1ruq6ql",exports.typographyHeader="tu0nvfw",exports.underline="u3g791q";
+//# sourceMappingURL=typography.styles.js.map

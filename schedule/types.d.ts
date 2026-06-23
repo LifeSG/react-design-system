@@ -1,0 +1,66 @@
+import type { RefObject } from "react";
+import type { PopoverTriggerType } from "../popover";
+export type ScheduleCellType = "booked" | "available" | "blocked" | "pending";
+export type ScheduleView = "day" | "week";
+export interface ScheduleEntityProps {
+    id: string;
+    name: string;
+    slots: ScheduleSlotProps[];
+}
+export interface SchedulePopoverProps {
+    trigger: PopoverTriggerType;
+    content: string | JSX.Element | (() => React.ReactNode);
+    delay?: {
+        open?: number;
+        close?: number;
+    } | undefined;
+    offset?: number | undefined;
+}
+export interface ScheduleProps {
+    id?: string | undefined;
+    className?: string | undefined;
+    "data-testid"?: string | undefined;
+    view?: ScheduleView | undefined;
+    date: string;
+    emptyContentMessage?: string | undefined;
+    serviceData: ScheduleEntityProps[];
+    loading?: boolean | undefined;
+    minTime?: string | undefined;
+    maxTime?: string | undefined;
+    initialScrollTime?: string | undefined;
+    minDate?: string | undefined;
+    maxDate?: string | undefined;
+    onPreviousDayClick: (currentDate: string) => void;
+    onNextDayClick: (currentDate: string) => void;
+    onCalendarDateSelect: (currentDate: string) => void;
+    onTodayClick: () => void;
+    onEmptySlotClick?: ((slot: ScheduleEmptySlotProps) => void) | undefined;
+    emptySlotPopover?: ((slot: ScheduleEmptySlotProps) => SchedulePopoverProps) | undefined;
+    blockedMessage?: string | undefined;
+    onClickHiddenSlots?: ((hiddenServices: string[]) => void) | undefined;
+}
+export interface CommonScheduleViewProps {
+    date: string;
+    loading: boolean;
+    minTime: string;
+    maxTime: string;
+    initialScrollTime?: string | undefined;
+    containerRef: RefObject<HTMLDivElement>;
+    blockedMessage?: string | undefined;
+}
+export interface ScheduleSlotProps {
+    id: string;
+    startTime: string;
+    endTime: string;
+    status: ScheduleCellType;
+    capacity?: number | undefined;
+    date: string | undefined;
+    booked?: number | undefined;
+    customPopover?: SchedulePopoverProps | undefined;
+    onClick?: ((data: ScheduleSlotProps, e: React.MouseEvent) => void) | undefined;
+}
+export interface ScheduleEmptySlotProps {
+    startTime: string;
+    endTime: string;
+    name: string;
+}

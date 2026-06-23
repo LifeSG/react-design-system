@@ -1,0 +1,2 @@
+import{__rest as t}from"../_virtual/_tslib.js";import{jsx as r}from"react/jsx-runtime";import s from"clsx";import e from"react";import{section as i,sectionStretched as a}from"./section.styles.js";const c=e.forwardRef(((e,c)=>{const{children:o,"data-testid":m="section",className:n,stretch:d=!1}=e,l=t(e,["children","data-testid","className","stretch"]);return r("section",Object.assign({ref:c,"data-testid":m,className:s(i,n,d&&a)},l,{children:o}))}));export{c as Section};
+//# sourceMappingURL=section.js.map
