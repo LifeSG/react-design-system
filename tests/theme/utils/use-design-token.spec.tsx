@@ -194,68 +194,26 @@ const ResolvedValueTestComponent = ({
 };
 
 describe("useResolvedTokenValue", () => {
-    beforeEach(() => {
-        setupThemeVariables();
-    });
-
-    it("resolves token values", async () => {
+    it.each`
+        description                                                     | value                             | fallback                          | expected
+        ${"resolved token value"}                                       | ${"var(--fds-breakpoint-md-min)"} | ${"custom"}                       | ${"481px"}
+        ${"resolved fallback token value when resolved value is empty"} | ${"var(--fds-invalid)"}           | ${"var(--fds-breakpoint-md-min)"} | ${"481px"}
+        ${"resolved fallback token value when custom value is empty"}   | ${undefined}                      | ${"var(--fds-breakpoint-md-min)"} | ${"481px"}
+        ${"custom token value"}                                         | ${12}                             | ${"custom"}                       | ${"12"}
+        ${"falsy custom token value"}                                   | ${0}                              | ${"custom"}                       | ${"0"}
+        ${"custom fallback value"}                                      | ${undefined}                      | ${12}                             | ${"12"}
+        ${"falsy custom fallback value"}                                | ${undefined}                      | ${0}                              | ${"0"}
+        ${"empty value and fallback"}                                   | ${undefined}                      | ${undefined}                      | ${"undefined"}
+    `("$description", async ({ value, fallback, expected }) => {
         render(
             <ThemeProvider style={getThemeVariablesStyle()}>
-                <ResolvedValueTestComponent
-                    value="var(--fds-breakpoint-md-min)"
-                    fallback="custom"
-                />
+                <ResolvedValueTestComponent value={value} fallback={fallback} />
             </ThemeProvider>
         );
 
         await waitFor(() => {
             expect(screen.getByTestId("resolved-value")).toHaveTextContent(
-                "481px"
-            );
-        });
-    });
-
-    it("resolves fallback values when value is empty", async () => {
-        render(
-            <ThemeProvider style={getThemeVariablesStyle()}>
-                <ResolvedValueTestComponent
-                    value={undefined}
-                    fallback="var(--fds-breakpoint-md-min)"
-                />
-            </ThemeProvider>
-        );
-
-        await waitFor(() => {
-            expect(screen.getByTestId("resolved-value")).toHaveTextContent(
-                "481px"
-            );
-        });
-    });
-
-    it("returns custom token values as-is after normalization", async () => {
-        render(
-            <ThemeProvider style={getThemeVariablesStyle()}>
-                <ResolvedValueTestComponent value={12} fallback="custom" />
-            </ThemeProvider>
-        );
-
-        await waitFor(() => {
-            expect(screen.getByTestId("resolved-value")).toHaveTextContent(
-                "12"
-            );
-        });
-    });
-
-    it("returns custom fallback values as-is after normalization", async () => {
-        render(
-            <ThemeProvider style={getThemeVariablesStyle()}>
-                <ResolvedValueTestComponent value={undefined} fallback={12} />
-            </ThemeProvider>
-        );
-
-        await waitFor(() => {
-            expect(screen.getByTestId("resolved-value")).toHaveTextContent(
-                "12"
+                expected
             );
         });
     });
