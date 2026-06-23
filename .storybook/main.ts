@@ -40,6 +40,45 @@ const config: StorybookConfig = {
                     loader: "@wyw-in-js/webpack-loader",
                     options: {
                         sourceMap: process.env.NODE_ENV !== "production",
+                        importOverrides: {
+                            dayjs: { unknown: "allow" },
+                            "dayjs/plugin/customParseFormat": {
+                                unknown: "allow",
+                            },
+                            "dayjs/plugin/isBetween": { unknown: "allow" },
+                            "dayjs/plugin/isSameOrAfter": { unknown: "allow" },
+                            "dayjs/plugin/isSameOrBefore": { unknown: "allow" },
+                            "dayjs/plugin/timezone": { unknown: "allow" },
+                            "./src/theme/tokens/spacing.ts": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/tokens/border.ts": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/tokens/breakpoint.ts": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/tokens/colour.ts": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/tokens/component.ts": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/tokens/font.ts": { unknown: "allow" },
+                            "./src/theme/tokens/media-query.ts": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/tokens/motion.ts": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/tokens/radius.ts": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/tokens/shadow.ts": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/utils/font.ts": { unknown: "allow" },
+                        },
                     },
                 },
             ],
