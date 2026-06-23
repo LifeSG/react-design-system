@@ -28,15 +28,15 @@ const mobileMediaQuery = css`
     ${(props) => `
         ${MediaQuery.MaxWidth.sm(props)},
         (orientation: landscape) and (max-height: ${Breakpoint["sm-max"](
-    props
-)}px)
+            props
+        )}px)
     `}
 `;
 const mobileLandscapeMediaQuery = css`
     ${(props) => `
         @media (orientation: landscape) and (max-height: ${Breakpoint["sm-max"](
-    props
-)}px)
+            props
+        )}px)
     `}
 `;
 
@@ -56,12 +56,12 @@ export const SignatureArea = styled.div<SignatureAreaProps>`
     ${(props) =>
         css`
             ${Border.Util["dashed-default"]({
-            radius: Radius["sm"],
-            thickness: Border["width-040"],
-            colour: props.$disabled
-                ? Colour["border-disabled"]
-                : Colour["border"],
-        })}
+                radius: Radius["sm"],
+                thickness: Border["width-040"],
+                colour: props.$disabled
+                    ? Colour["border-disabled"]
+                    : Colour["border"],
+            })}
 
             background-color: ${props.$disabled
                 ? Colour["bg-disabled"]
@@ -95,6 +95,8 @@ export const SignaturePreviewImage = styled.img`
     object-position: center;
     width: calc(100% - (3rem + ${Spacing["spacing-16"]}) * 2);
     height: 100%;
+
+    ${(props) => props.theme?.colourMode === "dark" && `filter: invert(1);`}
 `;
 
 export const ProgressBox = styled.div`
@@ -260,4 +262,6 @@ export const SignatureCanvasContainer = styled.div`
 
 export const SignatureCanvas = styled.canvas`
     cursor: crosshair;
+
+    ${(props) => props.theme?.colourMode === "dark" && `filter: invert(1);`}
 `;

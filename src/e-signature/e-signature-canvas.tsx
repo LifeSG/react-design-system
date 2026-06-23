@@ -94,7 +94,16 @@ const Component = (
             fabricCanvas.current.isDrawingMode = true;
 
             pencilBrush.current = new PencilBrush(fabricCanvas.current);
-            pencilBrush.current.color = Colour["text"]({ theme });
+            if (theme) {
+                pencilBrush.current.color = Colour["text"]({
+                    theme: {
+                        ...theme,
+                        colourMode: "light",
+                    },
+                });
+            } else {
+                pencilBrush.current.color = "#000000";
+            }
             pencilBrush.current.width = 3;
 
             fabricCanvas.current.freeDrawingBrush = pencilBrush.current;
