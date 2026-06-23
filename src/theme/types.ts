@@ -15,6 +15,7 @@ import type {
 export const THEME_TYPES = [
     "a11y-playground",
     "bookingsg",
+    "careercompass",
     "ccube",
     "imda",
     "lifesg",
@@ -23,10 +24,9 @@ export const THEME_TYPES = [
     "pa",
     "rbs",
     "sgw-digital-lobby",
+    "smgs",
     "spf",
     "supportgowhere",
-    "smgs",
-    "careercompass",
 ] as const;
 
 export type ThemeType = (typeof THEME_TYPES)[number];

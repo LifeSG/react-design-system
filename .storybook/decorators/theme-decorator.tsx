@@ -7,24 +7,33 @@ import { ThemeProvider, ThemeType } from "../../src/theme";
 
 const { initializeThemeState, pluckThemeFromContext } = DecoratorHelpers;
 
-const THEME_KEY_TO_TYPE_MAPPING = {
-    "A11y Playground": "a11y-playground",
-    BookingSG: "bookingsg",
-    CareerCompass: "careercompass",
-    CCube: "ccube",
-    IMDA: "imda",
-    LifeSG: "lifesg",
-    MyLegacy: "mylegacy",
-    OneService: "oneservice",
-    PA: "pa",
-    RBS: "rbs",
-    "SGW Digital Lobby": "sgw-digital-lobby",
-    SMGS: "smgs",
-    SPF: "spf",
-    SupportGoWhere: "supportgowhere",
+const THEME_TYPE_TO_KEY_MAPPING: Record<ThemeType, string> = {
+    "a11y-playground": "A11y Playground",
+    bookingsg: "BookingSG",
+    careercompass: "CareerCompass",
+    ccube: "CCube",
+    imda: "IMDA",
+    lifesg: "LifeSG",
+    mylegacy: "MyLegacy",
+    oneservice: "OneService",
+    pa: "PA",
+    rbs: "RBS",
+    "sgw-digital-lobby": "SGW Digital Lobby",
+    smgs: "SMGS",
+    spf: "SPF",
+    supportgowhere: "SupportGoWhere",
 };
 
-type ThemeMapKey = keyof typeof THEME_KEY_TO_TYPE_MAPPING;
+type ThemeMapKey =
+    (typeof THEME_TYPE_TO_KEY_MAPPING)[keyof typeof THEME_TYPE_TO_KEY_MAPPING];
+
+const THEME_KEY_TO_TYPE_MAPPING: Record<ThemeMapKey, ThemeType> =
+    Object.fromEntries(
+        Object.entries(THEME_TYPE_TO_KEY_MAPPING).map(([key, value]) => [
+            value as ThemeMapKey,
+            key as ThemeType,
+        ])
+    );
 
 export const withThemeFromJSXProvider = <
     TRenderer extends Renderer = any
