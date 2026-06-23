@@ -1,9 +1,11 @@
+import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import clsx from "clsx";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
 import { ClickableIcon } from "../shared/clickable-icon";
 import { useApplyStyle } from "../theme";
+import { mergeRefs } from "../util";
 import { Brand } from "./brand";
 import * as styles from "./drawer.styles";
 import * as navbarStyles from "./navbar.styles";
@@ -36,6 +38,18 @@ const Component = (
     });
 
     const { primary, secondary } = resources;
+
+    // =========================================================================
+    // FLOATING UI CONFIG
+    // =========================================================================
+    const { context, refs: floatingRefs } = useFloating({
+        open: show,
+        onOpenChange: (open) => {
+            if (!open && onClose) {
+                onClose();
+            }
+        },
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -152,23 +166,34 @@ const Component = (
     );
 
     return (
-        <div className={styles.wrapper} ref={ref} data-testid="drawer">
-            <nav
-                ref={containerRef}
-                className={clsx(
-                    styles.container,
-                    show ? styles.containerShown : styles.containerHidden
-                )}
-                onKeyDown={handleKeyDown}
-                tabIndex={show ? 0 : -1}
-                aria-label={drawerLabel}
+        <FloatingFocusManager
+            context={context}
+            initialFocus={-1}
+            returnFocus={true}
+            disabled={!show}
+        >
+            <div
+                className={styles.wrapper}
+                ref={mergeRefs(ref, floatingRefs.setFloating)}
+                data-testid="drawer"
             >
-                <div className={styles.content}>
-                    {renderTopBar()}
-                    {children}
-                </div>
-            </nav>
-        </div>
+                <nav
+                    ref={containerRef}
+                    className={clsx(
+                        styles.container,
+                        show ? styles.containerShown : styles.containerHidden
+                    )}
+                    onKeyDown={handleKeyDown}
+                    tabIndex={-1}
+                    aria-label={drawerLabel}
+                >
+                    <div className={styles.content}>
+                        {renderTopBar()}
+                        {children}
+                    </div>
+                </nav>
+            </div>
+        </FloatingFocusManager>
     );
 };
 
