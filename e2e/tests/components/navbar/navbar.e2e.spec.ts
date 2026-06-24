@@ -329,7 +329,9 @@ test.describe("Navbar", () => {
 
             test("Focus is trapped in drawer when open", async ({ story }) => {
                 await story.openMobileDrawer();
-                await story.page.waitForTimeout(600);
+                await story.locators.internal.closeButton.waitFor({
+                    state: "visible",
+                });
 
                 const closeButton = story.locators.internal.closeButton;
                 const outsideButton = story.locators.outsideButton;
@@ -367,7 +369,6 @@ test.describe("Navbar", () => {
 
                 await test.step("Escape closes the drawer", async () => {
                     await story.page.keyboard.press("Escape");
-                    await story.page.waitForTimeout(400);
 
                     await expect(
                         story.page.getByRole("navigation", {
