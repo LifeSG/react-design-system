@@ -9,7 +9,7 @@ import {
 } from "react";
 
 import { Colour } from "../theme";
-import { useForcedModeToken } from "../util";
+import { useForcedModeToken } from "../theme/utils";
 import * as styles from "./e-signature.styles";
 
 interface ESignatureCanvasProps {

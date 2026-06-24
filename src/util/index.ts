@@ -8,7 +8,6 @@ export * from "./use-container-query";
 export * from "./use-countdown";
 export * from "./use-event";
 export * from "./use-event-listener";
-export * from "./use-forced-mode-token";
 export * from "./use-isomorphic-layout-effect";
 export * from "./use-mount";
 export * from "./use-next-input-state";
