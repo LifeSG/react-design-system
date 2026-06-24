@@ -10,11 +10,11 @@ class StoryPage extends AbstractStoryPage {
             mobileMenuButton: Locator;
             servicesTrigger: Locator;
             servicesMobileTrigger: Locator;
-            focusStart: Locator;
-            outsideButton: Locator;
             closeButton: Locator;
             drawer: Locator;
         };
+        focusStart: Locator;
+        outsideButton: Locator;
     };
 
     constructor(page: Page) {
@@ -27,13 +27,13 @@ class StoryPage extends AbstractStoryPage {
                 servicesMobileTrigger: page.getByTestId(
                     "link__mobile-2-expand-collapse-button"
                 ),
-                focusStart: page.getByTestId("focus-start"),
-                outsideButton: page.getByTestId("outside-button"),
                 closeButton: page.getByRole("button", {
                     name: "Close nav menu",
                 }),
                 drawer: page.getByTestId("drawer"),
             },
+            focusStart: page.getByTestId("focus-start"),
+            outsideButton: page.getByTestId("outside-button"),
         };
     }
 
@@ -332,8 +332,8 @@ test.describe("Navbar", () => {
                 await story.page.waitForTimeout(600);
 
                 const closeButton = story.locators.internal.closeButton;
-                const outsideButton = story.locators.internal.outsideButton;
-                const focusStart = story.locators.internal.focusStart;
+                const outsideButton = story.locators.outsideButton;
+                const focusStart = story.locators.focusStart;
 
                 await test.step("Tab through drawer items and verify focus cycles back", async () => {
                     await closeButton.focus();
@@ -379,7 +379,9 @@ test.describe("Navbar", () => {
 
             test("Can open and navigate submenu", async ({ story }) => {
                 await story.openMobileDrawer();
-                await story.page.waitForTimeout(600);
+                await story.locators.internal.closeButton.waitFor({
+                    state: "visible",
+                });
 
                 await test.step("Tab to expand button and expand submenu", async () => {
                     await story.locators.internal.servicesMobileTrigger.focus();
@@ -408,7 +410,7 @@ test.describe("Navbar", () => {
                 story,
             }) => {
                 await test.step("Tab to hamburger button", async () => {
-                    await story.locators.internal.focusStart.focus();
+                    await story.locators.focusStart.focus();
                     await story.page.keyboard.press("Tab");
                     await story.page.keyboard.press("Tab");
 
@@ -434,7 +436,7 @@ test.describe("Navbar", () => {
                 const page = story.page;
 
                 await test.step("Tab from focus-start to brand link", async () => {
-                    await story.locators.internal.focusStart.focus();
+                    await story.locators.focusStart.focus();
                     await page.keyboard.press("Tab");
 
                     await expect(page.getByTestId("main__brand")).toBeFocused();
@@ -490,7 +492,6 @@ test.describe("Navbar", () => {
 
                 await test.step("Focus Services button to open submenu", async () => {
                     await page.getByTestId("link__2").focus();
-                    await page.waitForTimeout(300);
                 });
 
                 await test.step("Tab into submenu items", async () => {
