@@ -1,4 +1,4 @@
-import { test as base, Locator, Page } from "@playwright/test";
+import { expect, test as base, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 import { THEME_TYPES } from "../../../../src/theme/types";
 
@@ -10,6 +10,10 @@ class StoryPage extends AbstractStoryPage {
             mobileMenuButton: Locator;
             servicesTrigger: Locator;
             servicesMobileTrigger: Locator;
+            focusStart: Locator;
+            outsideButton: Locator;
+            closeButton: Locator;
+            drawer: Locator;
         };
     };
 
@@ -23,6 +27,12 @@ class StoryPage extends AbstractStoryPage {
                 servicesMobileTrigger: page.getByTestId(
                     "link__mobile-2-expand-collapse-button"
                 ),
+                focusStart: page.getByTestId("focus-start"),
+                outsideButton: page.getByTestId("outside-button"),
+                closeButton: page.getByRole("button", {
+                    name: "Close nav menu",
+                }),
+                drawer: page.getByTestId("drawer"),
             },
         };
     }
@@ -303,6 +313,207 @@ test.describe("Navbar", () => {
 
             test("Uncollapsible action buttons", async ({ story }) => {
                 await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    // =======================================================================
+    // KEYBOARD NAVIGATION
+    // =======================================================================
+
+    test.describe("Keyboard navigation", () => {
+        test.describe("Mobile", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("keyboard-navigation", { size: "mobile" });
+            });
+
+            test("Focus is trapped in drawer when open", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.page.waitForTimeout(600);
+
+                const closeButton = story.locators.internal.closeButton;
+                const outsideButton = story.locators.internal.outsideButton;
+                const focusStart = story.locators.internal.focusStart;
+
+                await test.step("Tab through drawer items and verify focus cycles back", async () => {
+                    await closeButton.focus();
+                    await expect(closeButton).toBeFocused();
+
+                    await story.page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
+
+                    await expect(outsideButton).not.toBeFocused();
+                    await expect(focusStart).not.toBeFocused();
+                });
+
+                await test.step("Shift+Tab backward and verify focus does not escape", async () => {
+                    await closeButton.focus();
+                    await expect(closeButton).toBeFocused();
+
+                    await story.page.keyboard.press("Shift+Tab");
+                    await story.page.keyboard.press("Shift+Tab");
+                    await story.page.keyboard.press("Shift+Tab");
+                    await story.page.keyboard.press("Shift+Tab");
+                    await story.page.keyboard.press("Shift+Tab");
+                    await story.page.keyboard.press("Shift+Tab");
+
+                    await expect(outsideButton).not.toBeFocused();
+                    await expect(focusStart).not.toBeFocused();
+                });
+
+                await test.step("Escape closes the drawer", async () => {
+                    await story.page.keyboard.press("Escape");
+                    await story.page.waitForTimeout(400);
+
+                    await expect(
+                        story.page.getByRole("navigation", {
+                            name: "Mobile navigation menu",
+                        })
+                    ).toBeHidden();
+                });
+            });
+
+            test("Can open and navigate submenu", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.page.waitForTimeout(600);
+
+                await test.step("Tab to expand button and expand submenu", async () => {
+                    await story.locators.internal.servicesMobileTrigger.focus();
+                    await story.page.keyboard.press("Space");
+                });
+
+                await test.step("Tab through submenu items", async () => {
+                    await story.page.keyboard.press("Tab");
+                    await expect(
+                        story.page.getByTestId("menu__mobile-1")
+                    ).toBeFocused();
+
+                    await story.page.keyboard.press("Tab");
+                    await expect(
+                        story.page.getByTestId("menu__mobile-2")
+                    ).toBeFocused();
+
+                    await story.page.keyboard.press("Tab");
+                    await expect(
+                        story.page.getByTestId("menu__mobile-3")
+                    ).toBeFocused();
+                });
+            });
+
+            test("Hamburger button shows focus highlight", async ({
+                story,
+            }) => {
+                await test.step("Tab to hamburger button", async () => {
+                    await story.locators.internal.focusStart.focus();
+                    await story.page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
+
+                    await expect(
+                        story.locators.internal.mobileMenuButton
+                    ).toBeFocused();
+                });
+
+                await test.step("Screenshot focused hamburger button", async () => {
+                    await compareScreenshot(story, "focus-hamburger");
+                });
+            });
+        });
+
+        test.describe("Desktop", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("keyboard-navigation");
+            });
+
+            test("Tab through nav links and action button", async ({
+                story,
+            }) => {
+                const page = story.page;
+
+                await test.step("Tab from focus-start to brand link", async () => {
+                    await story.locators.internal.focusStart.focus();
+                    await page.keyboard.press("Tab");
+
+                    await expect(page.getByTestId("main__brand")).toBeFocused();
+                });
+
+                await test.step("Tab to first nav item (Home)", async () => {
+                    await page.keyboard.press("Tab");
+
+                    await expect(page.getByTestId("link__1")).toBeFocused();
+                });
+
+                await test.step("Tab to second nav item (Services)", async () => {
+                    await page.keyboard.press("Tab");
+
+                    await expect(page.getByTestId("link__2")).toBeFocused();
+                });
+
+                await test.step("Tab through submenu items (opened on focus)", async () => {
+                    await page.keyboard.press("Tab");
+                    await expect(
+                        page.getByRole("link", { name: "Birth registration" })
+                    ).toBeFocused();
+
+                    await page.keyboard.press("Tab");
+
+                    await expect(
+                        page.getByRole("link", { name: "Baby bonus" })
+                    ).toBeFocused();
+
+                    await page.keyboard.press("Tab");
+                    await expect(
+                        page.getByRole("link", { name: "Preschool search" })
+                    ).toBeFocused();
+                });
+
+                await test.step("Tab to third nav item (LifeSG app)", async () => {
+                    await page.keyboard.press("Tab");
+
+                    await expect(page.getByTestId("link__3")).toBeFocused();
+                });
+
+                await test.step("Tab to download action button", async () => {
+                    await page.keyboard.press("Tab");
+
+                    await expect(
+                        page.getByTestId("action-button__download")
+                    ).toBeFocused();
+                });
+            });
+
+            test("Can open and navigate submenu", async ({ story }) => {
+                const page = story.page;
+
+                await test.step("Focus Services button to open submenu", async () => {
+                    await page.getByTestId("link__2").focus();
+                    await page.waitForTimeout(300);
+                });
+
+                await test.step("Tab into submenu items", async () => {
+                    await page.keyboard.press("Tab");
+                    await expect(
+                        page.getByRole("link", { name: "Birth registration" })
+                    ).toBeFocused();
+
+                    await page.keyboard.press("Tab");
+                    await expect(
+                        page.getByRole("link", { name: "Baby bonus" })
+                    ).toBeFocused();
+
+                    await page.keyboard.press("Tab");
+                    await expect(
+                        page.getByRole("link", { name: "Preschool search" })
+                    ).toBeFocused();
+                });
+
+                await test.step("Tab past submenu goes to next nav item", async () => {
+                    await page.keyboard.press("Tab");
+                    await expect(page.getByTestId("link__3")).toBeFocused();
+                });
             });
         });
     });
