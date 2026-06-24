@@ -37,7 +37,7 @@ export const DefaultFontSpecSet: FontSpecSet = {
 
     "body-lh-baseline": "1.625rem",
     "body-lh-md": "1.5rem",
-    "body-lh-sm": "1.625rem",
+    "body-lh-sm": "1.25rem",
     "body-lh-xs": "1.25rem",
 
     "body-ls-baseline": "0rem",
@@ -48,9 +48,9 @@ export const DefaultFontSpecSet: FontSpecSet = {
     "form-label-size": "1rem",
     "form-description-size": "0.875rem",
 
-    "form-label-lh": "1.5rem",
-    "form-description-lh": "1.625rem",
+    "form-label-lh": "1.375rem",
+    "form-description-lh": "1.25rem",
 
-    "form-label-ls": "0.009rem",
-    "form-description-ls": "0.008rem",
+    "form-label-ls": "0rem",
+    "form-description-ls": "0rem",
 };

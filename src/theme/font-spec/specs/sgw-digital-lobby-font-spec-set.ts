@@ -16,7 +16,7 @@ export const SGWDigitalLobbyFontSpecSet: FontSpecSet = {
     "heading-lh-xs": "1.75rem",
 
     "heading-ls-xxl": "-0.035rem",
-    "heading-ls-xl": "-0.035em",
+    "heading-ls-xl": "-0.035rem",
     "heading-ls-lg": "-0.02rem",
     "heading-ls-md": "-0.02rem",
     "heading-ls-sm": "0rem",
