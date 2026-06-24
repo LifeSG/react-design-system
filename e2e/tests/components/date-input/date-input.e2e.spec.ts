@@ -5,7 +5,7 @@ import {
     Locator,
     Page,
 } from "@playwright/test";
-import { fixedTimestamp, viewport } from "../../consts";
+import { fixedTimestamp } from "../../consts";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -182,12 +182,12 @@ test.describe("DateInput", () => {
     });
 
     test("With Custom Browser Font Size", async () => {
-        const browser = await chromium.launch({
-            args: ["--blink-settings=defaultFontSize=16,minimumFontSize=24"],
-        });
+        const browser = await chromium.connect(
+            "ws://127.0.0.1:3011/custom-font"
+        );
 
         const context = await browser.newContext({
-            baseURL: "http://localhost:3000",
+            baseURL: "http://host.docker.internal:3000",
         });
 
         const page = await context.newPage();

@@ -59,6 +59,13 @@ export default defineConfig({
             stdout: "pipe",
         },
         {
+            // Ensure custom-font Playwright server is ready before tests connect to it.
+            command: "node scripts/wait-for-port.js 127.0.0.1 3011 6000",
+            reuseExistingServer: !process.env.CI,
+            stderr: "pipe",
+            stdout: "pipe",
+        },
+        {
             command: process.env.CI
                 ? "cd e2e/nextjs-app && npm run build && npm run start"
                 : "cd e2e/nextjs-app && npm run dev",

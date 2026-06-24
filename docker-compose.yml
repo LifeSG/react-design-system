@@ -4,3 +4,13 @@ services:
         network_mode: "host"
         extra_hosts:
             - "host.docker.internal:host-gateway"
+    playwright-tests-custom-font:
+        build: .
+        network_mode: "host"
+        extra_hosts:
+            - "host.docker.internal:host-gateway"
+        command:
+            [
+                "sh",
+                "/home/pwuser/scripts/playwright-launch-custom-font-server.sh",
+            ]
