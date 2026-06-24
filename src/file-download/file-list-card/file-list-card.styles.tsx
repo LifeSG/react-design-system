@@ -162,7 +162,7 @@ const BaseErrorMessage = styled.div`
 `;
 
 export const DesktopErrorMessage = styled(BaseErrorMessage)`
-    margin-top: ${Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-8"]};
     display: flex;
     gap: ${Spacing["spacing-4"]};
 

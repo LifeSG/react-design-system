@@ -50,5 +50,5 @@ export const StyledExternalIcon = styled(ExternalIcon)`
     height: 1lh;
     width: 1em;
     margin-left: 0.4em;
-    vertical-align: middle;
+    vertical-align: top;
 `;
