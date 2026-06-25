@@ -5,6 +5,7 @@ import { IconButton as DSIconButton } from "../../icon-button";
 import {
     Border,
     Colour,
+    Font,
     MediaQuery,
     Radius,
     Shadow,
@@ -33,16 +34,20 @@ interface BoxStyleProps {
     $focused?: boolean | undefined;
     $loading?: boolean | undefined;
     $editable?: boolean | undefined;
+    $hasDescription?: boolean | undefined;
 }
 
 interface ContentSectionStyleProps {
     $hasThumbnail?: boolean | undefined;
+    $hasDescription?: boolean | undefined;
+    $editable?: boolean | undefined;
 }
 
 interface ActionContainerStyleProps {
     $editable?: boolean | undefined;
     $error?: boolean | undefined;
     $loading?: boolean | undefined;
+    $hasDescription?: boolean | undefined;
 }
 
 interface FileSizeSectionStyleProps {
@@ -152,6 +157,19 @@ export const Box = styled.div<BoxStyleProps>`
             `;
         }
     }}
+
+    ${(props) => {
+        if (
+            props.$editable &&
+            props.$hasDescription &&
+            !props.$error &&
+            !props.$loading
+        ) {
+            return css`
+                flex-wrap: wrap;
+            `;
+        }
+    }}
 `;
 
 export const ContentSection = styled.div<ContentSectionStyleProps>`
@@ -166,7 +184,22 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     }
 
     ${(props) => {
-        if (props.$hasThumbnail) {
+        if (props.$hasThumbnail && props.$hasDescription && props.$editable) {
+            return css`
+                display: grid;
+                grid-template-columns: calc(96px + ${Spacing["spacing-16"]}) 1fr;
+                grid-template-rows: auto auto;
+                align-items: start;
+                grid-row-gap: ${Spacing["spacing-16"]};
+                grid-column-gap: ${Spacing["spacing-16"]};
+
+                ${MediaQuery.MaxWidth.md} {
+                    grid-template-columns: calc(64px + ${Spacing["spacing-16"]}) 1fr;
+                    display: grid;
+                    align-items: start;
+                }
+            `;
+        } else if (props.$hasThumbnail) {
             return css`
                 ${MediaQuery.MaxWidth.md} {
                     flex-direction: row;
@@ -187,11 +220,10 @@ export const NameSection = styled.div`
 export const ExtendedNameSection = styled.div`
     display: flex;
     flex: 1;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
 
     ${MediaQuery.MaxWidth.md} {
-        flex-direction: column;
-        align-items: flex-start;
         width: 100%;
     }
 `;
@@ -201,6 +233,13 @@ export const FileSizeSection = styled.div<FileSizeSectionStyleProps>`
     width: 5rem;
     margin-left: ${Spacing["spacing-8"]};
     justify-content: flex-end;
+
+    ${ExtendedNameSection} > & {
+        width: auto;
+        margin-left: 0;
+        margin-top: ${Spacing["spacing-16"]};
+        justify-content: flex-start;
+    }
 
     ${MediaQuery.MaxWidth.md} {
         ${(props) => {
@@ -225,7 +264,19 @@ export const FileSizeText = styled(Typography.BodyMD)`
     color: ${Colour["text-subtler"]};
 `;
 
+export const DescriptionFileSizeText = styled(Typography.BodyMD)`
+    color: ${Colour["text-subtler"]};
+    margin-top: ${Spacing["spacing-16"]};
+`;
+
 export const ItemText = styled(Typography.BodyMD)``;
+
+export const ItemDescriptionLabel = styled.span`
+    ${Font["form-label"]}
+    font-weight: ${Font.Spec["weight-semibold"]};
+    color: ${Colour["text-subtle"]};
+    display: block;
+`;
 
 export const ItemDescriptionText = styled(ItemText)`
     margin-top: ${Spacing["spacing-4"]};
@@ -272,6 +323,22 @@ export const ActionContainer = styled.div<ActionContainerStyleProps>`
     justify-content: flex-end;
     align-items: center;
 
+    ${(props) => {
+        if (
+            props.$hasDescription &&
+            props.$editable &&
+            !props.$error &&
+            !props.$loading
+        ) {
+            return css`
+                width: 100%;
+                margin-left: 0;
+                margin-top: ${Spacing["spacing-16"]};
+                justify-content: flex-end;
+            `;
+        }
+    }}
+
     ${MediaQuery.MaxWidth.md} {
         width: fit-content;
 
@@ -297,6 +364,6 @@ export const IconButton = styled(DSIconButton)`
     min-width: unset;
 
     &:not(:last-child) {
-        margin-right: ${Spacing["spacing-16"]};
+        margin-right: ${Spacing["spacing-8"]};
     }
 `;

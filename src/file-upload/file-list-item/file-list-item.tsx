@@ -2,7 +2,14 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
-import { memo, useCallback, useContext, useEffect, useRef, useState } from "react";
+import {
+    memo,
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { ProgressBar } from "../../shared/progress-bar";
 import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
@@ -12,6 +19,7 @@ import {
     ActionContainer,
     Box,
     ContentSection,
+    DescriptionFileSizeText,
     DesktopErrorMessage,
     DragHandleIcon,
     ErrorIcon,
@@ -20,6 +28,7 @@ import {
     FileSizeText,
     IconButton,
     Item,
+    ItemDescriptionLabel,
     ItemDescriptionText,
     ItemFocusType,
     ItemText,
@@ -30,6 +39,7 @@ import { FileListItemProps } from "./types";
 
 interface Props extends FileListItemProps {
     readOnly?: boolean | undefined;
+    descriptionLabel?: { label: string; subtext: string } | undefined;
 }
 
 const Component = ({
@@ -39,6 +49,7 @@ const Component = ({
     wrapperWidth,
     disabled,
     readOnly,
+    descriptionLabel,
     onDelete,
     onEditClick,
 }: Props) => {
@@ -148,7 +159,12 @@ const Component = ({
                 {formattedName}
             </ItemText>
             {description && (
-                <ItemDescriptionText>{description}</ItemDescriptionText>
+                <>
+                    <ItemDescriptionLabel>
+                        {descriptionLabel?.label ?? "Photo description"}
+                    </ItemDescriptionLabel>
+                    <ItemDescriptionText>{description}</ItemDescriptionText>
+                </>
             )}
         </>
     );
@@ -176,23 +192,52 @@ const Component = ({
         </>
     );
 
-    const renderWithThumbnail = (thumbnailImageDataUrl: string) => (
-        <>
-            <FileListItemThumbnail
-                thumbnailImageDataUrl={thumbnailImageDataUrl}
-                fileType={fileItem.type}
-                data-testid={`${id}-thumbnail`}
-            />
-            <ExtendedNameSection>
-                <NameSection ref={detailSectionRef}>
-                    {renderNameDescription()}
-                </NameSection>
-                <FileSizeSection>
-                    <FileSizeText>{fileSize}</FileSizeText>
-                </FileSizeSection>
-            </ExtendedNameSection>
-        </>
-    );
+    const renderWithThumbnail = (thumbnailImageDataUrl: string) => {
+        if (description && editable) {
+            return (
+                <>
+                    {/* Row 1: empty | filename */}
+                    <div />
+                    <NameSection ref={detailSectionRef}>
+                        <ItemText weight="semibold">{formattedName}</ItemText>
+                    </NameSection>
+                    {/* Row 2: thumbnail | label + description + file size */}
+                    <FileListItemThumbnail
+                        thumbnailImageDataUrl={thumbnailImageDataUrl}
+                        fileType={fileItem.type}
+                        data-testid={`${id}-thumbnail`}
+                    />
+                    <NameSection>
+                        <ItemDescriptionLabel>
+                            {descriptionLabel?.label ?? "Photo description"}
+                        </ItemDescriptionLabel>
+                        <ItemDescriptionText>{description}</ItemDescriptionText>
+                        <DescriptionFileSizeText>
+                            {fileSize}
+                        </DescriptionFileSizeText>
+                    </NameSection>
+                </>
+            );
+        }
+
+        return (
+            <>
+                <FileListItemThumbnail
+                    thumbnailImageDataUrl={thumbnailImageDataUrl}
+                    fileType={fileItem.type}
+                    data-testid={`${id}-thumbnail`}
+                />
+                <ExtendedNameSection>
+                    <NameSection ref={detailSectionRef}>
+                        {renderNameDescription()}
+                    </NameSection>
+                    <FileSizeSection>
+                        <FileSizeText>{fileSize}</FileSizeText>
+                    </FileSizeSection>
+                </ExtendedNameSection>
+            </>
+        );
+    };
 
     const renderDefault = () => (
         <>
@@ -220,7 +265,11 @@ const Component = ({
         }
 
         return (
-            <ContentSection $hasThumbnail={shouldShowThumbnail}>
+            <ContentSection
+                $hasThumbnail={shouldShowThumbnail}
+                $hasDescription={!!description}
+                $editable={editable}
+            >
                 {content}
             </ContentSection>
         );
@@ -292,6 +341,7 @@ const Component = ({
                 $editable={editable}
                 $error={!!errorMessage}
                 $loading={isLoading}
+                $hasDescription={!!description}
             >
                 {content}
             </ActionContainer>
@@ -320,6 +370,7 @@ const Component = ({
                 $loading={isLoading}
                 $disabled={shouldDisable()}
                 $editable={editable}
+                $hasDescription={!!description}
             >
                 {renderContents()}
                 {!readOnly && renderActions()}

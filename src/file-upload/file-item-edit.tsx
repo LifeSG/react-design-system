@@ -19,6 +19,8 @@ interface Props {
     fileItem: FileItemProps;
     wrapperWidth: number;
     fileDescriptionMaxLength?: number | undefined;
+    descriptionRequired?: boolean | undefined;
+    descriptionLabel?: { label: string; subtext: string } | undefined;
     onSave: (description: string) => void;
     onCancel: () => void;
     onBlur: (value: string) => void;
@@ -27,6 +29,8 @@ interface Props {
 export const FileItemEdit = ({
     fileItem,
     fileDescriptionMaxLength,
+    descriptionRequired = true,
+    descriptionLabel,
     wrapperWidth,
     onSave,
     onCancel,
@@ -102,6 +106,7 @@ export const FileItemEdit = ({
     };
 
     const shouldDisableSave = () => {
+        if (!descriptionRequired) return false;
         const trimmedDescription = currentDescription.trim();
         return trimmedDescription.length === 0;
     };
@@ -115,7 +120,7 @@ export const FileItemEdit = ({
     const renderFileNameAndSize = () => (
         <NameSection ref={nameSectionRef}>
             <FileNameText weight="semibold">{formattedName}</FileNameText>
-            <FileSizeText>
+            <FileSizeText weight="light">
                 {FileUploadHelper.formatFileSizeDisplay(size)}
             </FileSizeText>
         </NameSection>
@@ -141,10 +146,14 @@ export const FileItemEdit = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={3}
-                        aria-label={`Photo description for ${name}`}
+                        aria-label={`${
+                            descriptionLabel?.label ?? "Photo description"
+                        } for ${name}`}
                         label={{
-                            children: "Photo description",
+                            children:
+                                descriptionLabel?.label ?? "Photo description",
                             subtitle:
+                                descriptionLabel?.subtext ??
                                 "Describe this photo to users who may not be able to see the image.",
                         }}
                     />

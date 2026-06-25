@@ -412,6 +412,91 @@ describe("FileUpload", () => {
         });
     });
 
+    describe("Description Required", () => {
+        it("should disable the save button when descriptionRequired is true (default) and description is empty", () => {
+            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
+
+            const rendered = render(
+                <FileUpload fileItems={fileItems} editableFileItems />
+            );
+
+            const saveButton = rendered.getByTestId("some-save-button");
+            expect(saveButton).toBeDisabled();
+        });
+
+        it("should enable the save button when descriptionRequired is false even with empty description", () => {
+            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
+
+            const rendered = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    descriptionRequired={false}
+                />
+            );
+
+            const saveButton = rendered.getByTestId("some-save-button");
+            expect(saveButton).not.toBeDisabled();
+        });
+    });
+
+    describe("Description Label", () => {
+        it("should render default label and subtext when descriptionLabel is not provided", () => {
+            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
+
+            render(<FileUpload fileItems={fileItems} editableFileItems />);
+
+            expect(screen.getByText("Photo description")).toBeInTheDocument();
+            expect(
+                screen.getByText(
+                    "Describe this photo to users who may not be able to see the image."
+                )
+            ).toBeInTheDocument();
+        });
+
+        it("should render custom label and subtext when descriptionLabel is provided", () => {
+            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
+
+            render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    descriptionLabel={{
+                        label: "Document description",
+                        subtext: "Describe what this document contains.",
+                    }}
+                />
+            );
+
+            expect(
+                screen.getByText("Document description")
+            ).toBeInTheDocument();
+            expect(
+                screen.getByText("Describe what this document contains.")
+            ).toBeInTheDocument();
+        });
+
+        it("should render the description label in view mode when file has a description", () => {
+            const fileItems: FileItemProps[] = [
+                MOCK_IMAGE_ITEM_WITH_DESCRIPTION,
+            ];
+
+            render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    descriptionLabel={{
+                        label: "Custom label",
+                        subtext: "Custom subtext",
+                    }}
+                />
+            );
+
+            expect(screen.getByText("Custom label")).toBeInTheDocument();
+            expect(screen.getByText("Some description")).toBeInTheDocument();
+        });
+    });
+
     describe("Progress Announcements", () => {
         it("should announce the start of file upload when progress begins", () => {
             const fileItems: FileItemProps[] = [

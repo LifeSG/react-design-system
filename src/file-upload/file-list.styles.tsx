@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Border, Colour, Spacing } from "../theme";
+import { Spacing } from "../theme";
 
 // =============================================================================
 // STYLE INTERFACE
@@ -18,15 +18,8 @@ export const ListWrapper = styled.ul<ListWrapperStyleProps>`
 `;
 
 export const EditableItemsContainer = styled.li`
-    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-
     &:not(:last-child) {
-        margin-bottom: ${Spacing["spacing-32"]};
-    }
-
-    &:not(:first-child) {
-        margin-top: ${Spacing["spacing-32"]};
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 
     ul {

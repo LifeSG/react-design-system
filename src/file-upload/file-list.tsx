@@ -45,6 +45,8 @@ interface Props {
     fileItems: FileItemProps[] | undefined;
     editableFileItems: boolean;
     fileDescriptionMaxLength?: number | undefined;
+    descriptionRequired?: boolean | undefined;
+    descriptionLabel?: { label: string; subtext: string } | undefined;
     sortable?: boolean | undefined;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
@@ -75,6 +77,8 @@ function Component(
         fileItems = [],
         editableFileItems,
         fileDescriptionMaxLength,
+        descriptionRequired,
+        descriptionLabel,
         sortable,
         disabled,
         readOnly,
@@ -150,6 +154,28 @@ function Component(
         return true;
     };
 
+    const getItemsRenderMode = (
+        fileItems: FileItemProps[] | undefined
+    ): FileItemRenderModes => {
+        if (!fileItems || fileItems.length === 0) return {};
+
+        const newRenderModes: FileItemRenderModes = {};
+
+        for (const item of fileItems) {
+            if (item.errorMessage) {
+                newRenderModes[item.id] = "error";
+            } else if (!renderModes[item.id]) {
+                newRenderModes[item.id] = shouldRenderEditMode(item)
+                    ? "edit"
+                    : "display";
+            } else {
+                newRenderModes[item.id] = renderModes[item.id];
+            }
+        }
+
+        return newRenderModes;
+    };
+
     // =========================================================================
     // EFFECTS
     // =========================================================================
@@ -161,7 +187,13 @@ function Component(
             return;
         }
         setRenderModes(nextModes);
-    }, [fileItems, editableFileItems, readOnly]);
+    }, [
+        fileItems,
+        editableFileItems,
+        readOnly,
+        renderModes,
+        getItemsRenderMode,
+    ]);
 
     // Progress announcements only at start and completion
     useEffect(() => {
@@ -316,28 +348,6 @@ function Component(
         );
     };
 
-    const getItemsRenderMode = (
-        fileItems: FileItemProps[] | undefined
-    ): FileItemRenderModes => {
-        if (!fileItems || fileItems.length === 0) return {};
-
-        const newRenderModes: FileItemRenderModes = {};
-
-        for (const item of fileItems) {
-            if (item.errorMessage) {
-                newRenderModes[item.id] = "error";
-            } else if (!renderModes[item.id]) {
-                newRenderModes[item.id] = shouldRenderEditMode(item)
-                    ? "edit"
-                    : "display";
-            } else {
-                newRenderModes[item.id] = renderModes[item.id];
-            }
-        }
-
-        return newRenderModes;
-    };
-
     const updateRenderModes = (itemId: string, mode: RenderMode) => {
         setRenderModes((prevRenderModes) => {
             return {
@@ -449,6 +459,8 @@ function Component(
                     fileItem={updatedFileItem}
                     wrapperWidth={wrapperWidth}
                     fileDescriptionMaxLength={fileDescriptionMaxLength}
+                    descriptionRequired={descriptionRequired}
+                    descriptionLabel={descriptionLabel}
                     onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}
                     onBlur={handleBlurEdit(item)}
@@ -481,6 +493,7 @@ function Component(
                         sortable={shouldEnableSort()}
                         disabled={disabled}
                         readOnly={readOnly}
+                        descriptionLabel={descriptionLabel}
                         onDelete={handleDelete(item)}
                         onEditClick={handleInitiateEdit(item)}
                     />
