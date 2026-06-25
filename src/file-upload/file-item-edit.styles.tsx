@@ -62,7 +62,9 @@ export const FileNameText = styled(Typography.BodyMD)`
     }
 `;
 
-export const FileSizeText = styled(Typography.BodyMD)``;
+export const FileSizeText = styled(Typography.BodyMD)`
+    color: ${Colour["text-subtler"]};
+`;
 
 export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
     display: flex;

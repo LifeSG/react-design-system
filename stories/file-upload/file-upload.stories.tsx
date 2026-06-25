@@ -462,8 +462,8 @@ export const CustomDescriptionLabel: StoryObj<Component> = {
                 fileItems={fileItems}
                 editableFileItems
                 descriptionLabel={{
-                    label: "Document description",
-                    subtext: "Describe what this document contains.",
+                    children: "Document description",
+                    subtitle: "Describe what this document contains.",
                 }}
                 onEdit={handleEdit}
                 onDelete={handleDelete}

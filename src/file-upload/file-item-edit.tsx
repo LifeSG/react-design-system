@@ -14,13 +14,14 @@ import {
 import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
+import { FormLabelProps } from "../form/types";
 
 interface Props {
     fileItem: FileItemProps;
     wrapperWidth: number;
     fileDescriptionMaxLength?: number | undefined;
     descriptionRequired?: boolean | undefined;
-    descriptionLabel?: { label: string; subtext: string } | undefined;
+    descriptionLabel?: FormLabelProps | undefined;
     onSave: (description: string) => void;
     onCancel: () => void;
     onBlur: (value: string) => void;
@@ -120,7 +121,7 @@ export const FileItemEdit = ({
     const renderFileNameAndSize = () => (
         <NameSection ref={nameSectionRef}>
             <FileNameText weight="semibold">{formattedName}</FileNameText>
-            <FileSizeText weight="light">
+            <FileSizeText>
                 {FileUploadHelper.formatFileSizeDisplay(size)}
             </FileSizeText>
         </NameSection>
@@ -146,15 +147,11 @@ export const FileItemEdit = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={3}
-                        aria-label={`${
-                            descriptionLabel?.label ?? "Photo description"
-                        } for ${name}`}
                         label={{
-                            children:
-                                descriptionLabel?.label ?? "Photo description",
+                            children: "Photo description",
                             subtitle:
-                                descriptionLabel?.subtext ??
                                 "Describe this photo to users who may not be able to see the image.",
+                            ...descriptionLabel,
                         }}
                     />
                 </DetailsSection>

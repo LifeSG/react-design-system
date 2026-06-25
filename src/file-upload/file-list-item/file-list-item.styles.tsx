@@ -157,19 +157,6 @@ export const Box = styled.div<BoxStyleProps>`
             `;
         }
     }}
-
-    ${(props) => {
-        if (
-            props.$editable &&
-            props.$hasDescription &&
-            !props.$error &&
-            !props.$loading
-        ) {
-            return css`
-                flex-wrap: wrap;
-            `;
-        }
-    }}
 `;
 
 export const ContentSection = styled.div<ContentSectionStyleProps>`
@@ -186,17 +173,12 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     ${(props) => {
         if (props.$hasThumbnail && props.$hasDescription && props.$editable) {
             return css`
-                display: grid;
-                grid-template-columns: calc(96px + ${Spacing["spacing-16"]}) 1fr;
-                grid-template-rows: auto auto;
-                align-items: start;
-                grid-row-gap: ${Spacing["spacing-16"]};
-                grid-column-gap: ${Spacing["spacing-16"]};
+                flex-direction: row;
+                align-items: center;
 
                 ${MediaQuery.MaxWidth.md} {
-                    grid-template-columns: calc(64px + ${Spacing["spacing-16"]}) 1fr;
-                    display: grid;
-                    align-items: start;
+                    flex-direction: row;
+                    align-items: center;
                 }
             `;
         } else if (props.$hasThumbnail) {
@@ -276,6 +258,7 @@ export const ItemDescriptionLabel = styled.span`
     font-weight: ${Font.Spec["weight-semibold"]};
     color: ${Colour["text-subtle"]};
     display: block;
+    margin-top: ${Spacing["spacing-16"]};
 `;
 
 export const ItemDescriptionText = styled(ItemText)`

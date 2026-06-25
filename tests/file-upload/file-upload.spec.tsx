@@ -420,8 +420,21 @@ describe("FileUpload", () => {
                 <FileUpload fileItems={fileItems} editableFileItems />
             );
 
-            const saveButton = rendered.getByTestId("some-save-button");
-            expect(saveButton).toBeDisabled();
+            expect(rendered.getByTestId("some-save-button")).toBeDisabled();
+        });
+
+        it("should disable the save button when descriptionRequired is true (not default) and description is empty", () => {
+            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
+
+            const rendered = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    descriptionRequired={true}
+                />
+            );
+
+            expect(rendered.getByTestId("some-save-button")).toBeDisabled();
         });
 
         it("should enable the save button when descriptionRequired is false even with empty description", () => {
@@ -435,8 +448,7 @@ describe("FileUpload", () => {
                 />
             );
 
-            const saveButton = rendered.getByTestId("some-save-button");
-            expect(saveButton).not.toBeDisabled();
+            expect(rendered.getByTestId("some-save-button")).not.toBeDisabled();
         });
     });
 
@@ -446,12 +458,11 @@ describe("FileUpload", () => {
 
             render(<FileUpload fileItems={fileItems} editableFileItems />);
 
-            expect(screen.getByText("Photo description")).toBeInTheDocument();
-            expect(
-                screen.getByText(
-                    "Describe this photo to users who may not be able to see the image."
-                )
-            ).toBeInTheDocument();
+            const textarea = screen.getByRole("textbox");
+            expect(textarea).toHaveAccessibleName("Photo description");
+            expect(textarea).toHaveAccessibleDescription(
+                "Describe this photo to users who may not be able to see the image."
+            );
         });
 
         it("should render custom label and subtext when descriptionLabel is provided", () => {
@@ -462,18 +473,17 @@ describe("FileUpload", () => {
                     fileItems={fileItems}
                     editableFileItems
                     descriptionLabel={{
-                        label: "Document description",
-                        subtext: "Describe what this document contains.",
+                        children: "Document description",
+                        subtitle: "Describe what this document contains.",
                     }}
                 />
             );
 
-            expect(
-                screen.getByText("Document description")
-            ).toBeInTheDocument();
-            expect(
-                screen.getByText("Describe what this document contains.")
-            ).toBeInTheDocument();
+            const textarea = screen.getByRole("textbox");
+            expect(textarea).toHaveAccessibleName("Document description");
+            expect(textarea).toHaveAccessibleDescription(
+                "Describe what this document contains."
+            );
         });
 
         it("should render the description label in view mode when file has a description", () => {
@@ -486,8 +496,8 @@ describe("FileUpload", () => {
                     fileItems={fileItems}
                     editableFileItems
                     descriptionLabel={{
-                        label: "Custom label",
-                        subtext: "Custom subtext",
+                        children: "Custom label",
+                        subtitle: "Custom subtext",
                     }}
                 />
             );

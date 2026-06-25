@@ -29,6 +29,7 @@ import { FileListItem } from "./file-list-item";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
+import { FormLabelProps } from "../form/types";
 import { VisuallyHidden } from "../shared/accessibility";
 
 // =============================================================================
@@ -46,7 +47,7 @@ interface Props {
     editableFileItems: boolean;
     fileDescriptionMaxLength?: number | undefined;
     descriptionRequired?: boolean | undefined;
-    descriptionLabel?: { label: string; subtext: string } | undefined;
+    descriptionLabel?: FormLabelProps | undefined;
     sortable?: boolean | undefined;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
@@ -154,28 +155,6 @@ function Component(
         return true;
     };
 
-    const getItemsRenderMode = (
-        fileItems: FileItemProps[] | undefined
-    ): FileItemRenderModes => {
-        if (!fileItems || fileItems.length === 0) return {};
-
-        const newRenderModes: FileItemRenderModes = {};
-
-        for (const item of fileItems) {
-            if (item.errorMessage) {
-                newRenderModes[item.id] = "error";
-            } else if (!renderModes[item.id]) {
-                newRenderModes[item.id] = shouldRenderEditMode(item)
-                    ? "edit"
-                    : "display";
-            } else {
-                newRenderModes[item.id] = renderModes[item.id];
-            }
-        }
-
-        return newRenderModes;
-    };
-
     // =========================================================================
     // EFFECTS
     // =========================================================================
@@ -187,13 +166,7 @@ function Component(
             return;
         }
         setRenderModes(nextModes);
-    }, [
-        fileItems,
-        editableFileItems,
-        readOnly,
-        renderModes,
-        getItemsRenderMode,
-    ]);
+    }, [fileItems, editableFileItems, readOnly]);
 
     // Progress announcements only at start and completion
     useEffect(() => {
@@ -346,6 +319,28 @@ function Component(
             checkEditable(item) &&
             !item.description
         );
+    };
+
+    const getItemsRenderMode = (
+        fileItems: FileItemProps[] | undefined
+    ): FileItemRenderModes => {
+        if (!fileItems || fileItems.length === 0) return {};
+
+        const newRenderModes: FileItemRenderModes = {};
+
+        for (const item of fileItems) {
+            if (item.errorMessage) {
+                newRenderModes[item.id] = "error";
+            } else if (!renderModes[item.id]) {
+                newRenderModes[item.id] = shouldRenderEditMode(item)
+                    ? "edit"
+                    : "display";
+            } else {
+                newRenderModes[item.id] = renderModes[item.id];
+            }
+        }
+
+        return newRenderModes;
     };
 
     const updateRenderModes = (itemId: string, mode: RenderMode) => {
