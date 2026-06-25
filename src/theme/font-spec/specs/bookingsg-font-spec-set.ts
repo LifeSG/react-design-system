@@ -13,7 +13,7 @@ export const BookingSgFontSpecSet: FontSpecSet = {
     "heading-lh-lg": "2.5rem",
     "heading-lh-md": "2.25rem",
     "heading-lh-sm": "1.75rem",
-    "heading-lh-xs": "1.75rem",
+    "heading-lh-xs": "1.625rem",
 
     "heading-ls-xxl": "-0.035rem",
     "heading-ls-xl": "-0.02rem",
@@ -35,10 +35,10 @@ export const BookingSgFontSpecSet: FontSpecSet = {
     "body-size-sm": "0.875rem",
     "body-size-xs": "0.75rem",
 
-    "body-lh-baseline": "1.75rem",
+    "body-lh-baseline": "1.625rem",
     "body-lh-md": "1.5rem",
-    "body-lh-sm": "1.6rem",
-    "body-lh-xs": "1.2rem",
+    "body-lh-sm": "1.625rem",
+    "body-lh-xs": "1.25rem",
 
     "body-ls-baseline": "0rem",
     "body-ls-md": "0.009rem",

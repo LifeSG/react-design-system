@@ -8,6 +8,9 @@ import { Colour, Font, Spacing } from "../theme";
 // =============================================================================
 export const LabelContainer = styled.div`
     margin-bottom: ${Spacing["spacing-8"]};
+    display: flex;
+    flex-direction: column;
+    gap: ${Spacing["spacing-4"]};
 `;
 export const Label = styled.label`
     color: ${Colour["text-subtle"]};
