@@ -46,9 +46,7 @@ class StoryPage extends AbstractStoryPage {
     }
 
     public async switchToWeekView(withSnapshot: boolean = true) {
-        const dayViewTrigger = this.page.locator(
-            '[data-testid="view-selector"]'
-        );
+        const dayViewTrigger = this.page.getByTestId("view-selector");
 
         await dayViewTrigger.click();
 
