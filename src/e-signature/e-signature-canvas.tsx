@@ -1,4 +1,9 @@
-import { Canvas as FabricCanvas, FabricImage, PencilBrush } from "fabric";
+import {
+    Canvas as FabricCanvas,
+    FabricImage,
+    filters,
+    PencilBrush,
+} from "fabric";
 import type { Ref } from "react";
 import {
     forwardRef,
@@ -9,7 +14,7 @@ import {
 } from "react";
 
 import { Colour } from "../theme";
-import { useForcedModeToken } from "../theme/utils";
+import { useDesignTokenOverride } from "../theme/utils";
 import * as styles from "./e-signature.styles";
 
 interface ESignatureCanvasProps {
@@ -34,7 +39,7 @@ const Component = (
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvas = useRef<FabricCanvas>();
     const pencilBrush = useRef<PencilBrush>();
-    const resolvedColor = useForcedModeToken(Colour["text"]);
+    const resolvedColor = useDesignTokenOverride({ token: Colour["text"] });
 
     // =============================================================================
     // HOOKS
@@ -102,6 +107,12 @@ const Component = (
         }
     }, []);
 
+    useEffect(() => {
+        if (pencilBrush.current && resolvedColor) {
+            pencilBrush.current.color = resolvedColor;
+        }
+    }, [resolvedColor]);
+
     // resize
     useEffect(() => {
         if (window) {
@@ -125,6 +136,17 @@ const Component = (
                     img.selectable = false;
                     img.hoverCursor = "default";
 
+                    if (resolvedColor) {
+                        img.filters = [
+                            new filters.BlendColor({
+                                color: resolvedColor,
+                                mode: "tint",
+                                alpha: 1,
+                            }),
+                        ];
+                        img.applyFilters();
+                    }
+
                     if (fabricCanvas.current.width && img.width) {
                         img.scale(fabricCanvas.current.width / img.width);
                     }
@@ -135,7 +157,7 @@ const Component = (
         };
 
         updateImage();
-    }, [baseImageDataURL]);
+    }, [baseImageDataURL, resolvedColor]);
 
     // =============================================================================
     // RENDER FUNCTIONS

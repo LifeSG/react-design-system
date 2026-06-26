@@ -4,14 +4,19 @@ import { useTheme } from "../theme-provider/hooks";
 import type { CSSVariableString, ResolvedThemeMode } from "../types";
 import { parseCSSVariableValue } from "./css-variable";
 
+interface UseDesignTokenOverrideOptions {
+    token: CSSVariableString;
+    mode?: ResolvedThemeMode;
+}
+
 /**
  * Resolves a design token's value in a specific theme mode,
  * defaulting to light mode regardless of the current theme mode.
  */
-export const useForcedModeToken = (
-    tokenName: CSSVariableString,
-    mode: ResolvedThemeMode = "light"
-): string | undefined => {
+export const useDesignTokenOverride = ({
+    token,
+    mode = "light",
+}: UseDesignTokenOverrideOptions): string | undefined => {
     const { theme, themeElement } = useTheme();
     const [value, setValue] = useState<string | undefined>();
 
@@ -24,11 +29,11 @@ export const useForcedModeToken = (
         tempEl.style.display = "none";
         themeElement.appendChild(tempEl);
 
-        const resolved = parseCSSVariableValue(tokenName, tempEl);
+        const resolved = parseCSSVariableValue(token, tempEl);
         setValue(resolved || undefined);
 
         tempEl.remove();
-    }, [theme, themeElement, tokenName, mode]);
+    }, [theme, themeElement, token, mode]);
 
     return value;
 };
