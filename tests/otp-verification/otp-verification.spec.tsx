@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { OtpVerification } from "src/otp-verification";
 
@@ -130,7 +130,9 @@ describe("OtpVerification", () => {
             const sendButton = screen.getByRole("button", {
                 name: /send otp/i,
             });
-            await user.click(sendButton);
+            await act(async () => {
+                await user.click(sendButton);
+            });
 
             expect(defaultEmailProps.onSendOtp).toHaveBeenCalled();
         });
