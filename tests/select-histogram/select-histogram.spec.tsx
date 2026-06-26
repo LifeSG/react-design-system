@@ -1,6 +1,7 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { SelectHistogram } from "../../src";
+import { act } from "react-dom/test-utils";
 
 const SELECTOR_TESTID = "selector";
 const FIELD_TESTID = "select-histogram";
@@ -81,7 +82,9 @@ describe("SelectHistogram", () => {
             />
         );
 
-        await user.click(screen.getByTestId(SELECTOR_TESTID));
+        await act(async () => {
+            await user.click(screen.getByTestId(SELECTOR_TESTID));
+        });
 
         expect(screen.getByTestId(SELECTOR_TESTID)).toBeVisible();
         expectRangeLabel(1, 2);
@@ -113,7 +116,9 @@ describe("SelectHistogram", () => {
             />
         );
 
-        await user.click(screen.getByTestId(SELECTOR_TESTID));
+        await act(async () => {
+            await user.click(screen.getByTestId(SELECTOR_TESTID));
+        });
 
         const thumb = screen.getByTestId("slider-track-0");
 
@@ -136,7 +141,9 @@ describe("SelectHistogram", () => {
             />
         );
 
-        await user.click(screen.getByTestId(SELECTOR_TESTID));
+        await act(async () => {
+            await user.click(screen.getByTestId(SELECTOR_TESTID));
+        });
 
         await waitFor(() => {
             expect(screen.queryByTestId(FIELD_TESTID)).toBeVisible();
