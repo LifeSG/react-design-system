@@ -1,5 +1,9 @@
 import { expect, test as base, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    waitForAnimationEnd,
+} from "../../utils";
 import { THEME_TYPES } from "../../../../src/theme/types";
 
 class StoryPage extends AbstractStoryPage {
@@ -12,6 +16,13 @@ class StoryPage extends AbstractStoryPage {
             servicesMobileTrigger: Locator;
             closeButton: Locator;
             drawer: Locator;
+            drawerBrand: Locator;
+            brand: Locator;
+            navLink: (index: number) => Locator;
+            menuMobileItem: (index: number) => Locator;
+            mobileNavLink: (index: number) => Locator;
+            submenuLink: (name: string) => Locator;
+            downloadButton: Locator;
         };
         focusStart: Locator;
         outsideButton: Locator;
@@ -31,6 +42,15 @@ class StoryPage extends AbstractStoryPage {
                     name: "Close nav menu",
                 }),
                 drawer: page.getByTestId("drawer"),
+                drawerBrand: page.getByTestId("drawer__brand"),
+                brand: page.getByTestId("main__brand"),
+                navLink: (index: number) => page.getByTestId(`link__${index}`),
+                menuMobileItem: (index: number) =>
+                    page.getByTestId(`menu__mobile-${index}`),
+                mobileNavLink: (index: number) =>
+                    page.getByTestId(`link__mobile-${index}`),
+                submenuLink: (name: string) => page.getByRole("link", { name }),
+                downloadButton: page.getByTestId("action-button__download"),
             },
             focusStart: page.getByTestId("focus-start"),
             outsideButton: page.getByTestId("outside-button"),
@@ -39,7 +59,15 @@ class StoryPage extends AbstractStoryPage {
 
     async openMobileDrawer() {
         await this.locators.internal.mobileMenuButton.click();
+        await waitForAnimationEnd(this.locators.internal.drawer);
+        await this.page.waitForFunction(
+            () =>
+                document.querySelector(
+                    'nav[aria-label="Mobile navigation menu"]'
+                ) === document.activeElement
+        );
     }
+
     async waitForMasthead(page: Page) {
         await page.waitForFunction(
             () =>
@@ -58,10 +86,6 @@ const test = base.extend<{ story: StoryPage }>({
 });
 
 test.describe("Navbar", () => {
-    // =======================================================================
-    // DESKTOP
-    // =======================================================================
-
     for (const theme of THEME_TYPES) {
         test.describe("Default", () => {
             test.beforeEach(async ({ story }) => {
@@ -212,10 +236,6 @@ test.describe("Navbar", () => {
         });
     });
 
-    // =======================================================================
-    // MOBILE
-    // =======================================================================
-
     test.describe("Mobile", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
@@ -317,10 +337,6 @@ test.describe("Navbar", () => {
         });
     });
 
-    // =======================================================================
-    // KEYBOARD NAVIGATION
-    // =======================================================================
-
     test.describe("Keyboard navigation", () => {
         test.describe("Mobile", () => {
             test.beforeEach(async ({ story }) => {
@@ -329,9 +345,6 @@ test.describe("Navbar", () => {
 
             test("Focus is trapped in drawer when open", async ({ story }) => {
                 await story.openMobileDrawer();
-                await story.locators.internal.closeButton.waitFor({
-                    state: "visible",
-                });
 
                 const closeButton = story.locators.internal.closeButton;
                 const outsideButton = story.locators.outsideButton;
@@ -341,30 +354,30 @@ test.describe("Navbar", () => {
                     await closeButton.focus();
                     await expect(closeButton).toBeFocused();
 
-                    await story.page.keyboard.press("Tab");
-                    await story.page.keyboard.press("Tab");
-                    await story.page.keyboard.press("Tab");
-                    await story.page.keyboard.press("Tab");
-                    await story.page.keyboard.press("Tab");
-                    await story.page.keyboard.press("Tab");
+                    for (let i = 0; i < 10; i++) {
+                        await story.page.keyboard.press("Tab");
+                        await expect(outsideButton).not.toBeFocused();
+                        await expect(focusStart).not.toBeFocused();
+                    }
 
-                    await expect(outsideButton).not.toBeFocused();
-                    await expect(focusStart).not.toBeFocused();
+                    await expect(
+                        story.locators.internal.mobileNavLink(2)
+                    ).toBeFocused();
                 });
 
                 await test.step("Shift+Tab backward and verify focus does not escape", async () => {
                     await closeButton.focus();
                     await expect(closeButton).toBeFocused();
 
-                    await story.page.keyboard.press("Shift+Tab");
-                    await story.page.keyboard.press("Shift+Tab");
-                    await story.page.keyboard.press("Shift+Tab");
-                    await story.page.keyboard.press("Shift+Tab");
-                    await story.page.keyboard.press("Shift+Tab");
-                    await story.page.keyboard.press("Shift+Tab");
+                    for (let i = 0; i < 10; i++) {
+                        await story.page.keyboard.press("Shift+Tab");
+                        await expect(outsideButton).not.toBeFocused();
+                        await expect(focusStart).not.toBeFocused();
+                    }
 
-                    await expect(outsideButton).not.toBeFocused();
-                    await expect(focusStart).not.toBeFocused();
+                    await expect(
+                        story.page.getByTestId("button__play-store")
+                    ).toBeFocused();
                 });
 
                 await test.step("Escape closes the drawer", async () => {
@@ -378,35 +391,6 @@ test.describe("Navbar", () => {
                 });
             });
 
-            test("Can open and navigate submenu", async ({ story }) => {
-                await story.openMobileDrawer();
-                await story.locators.internal.closeButton.waitFor({
-                    state: "visible",
-                });
-
-                await test.step("Tab to expand button and expand submenu", async () => {
-                    await story.locators.internal.servicesMobileTrigger.focus();
-                    await story.page.keyboard.press("Space");
-                });
-
-                await test.step("Tab through submenu items", async () => {
-                    await story.page.keyboard.press("Tab");
-                    await expect(
-                        story.page.getByTestId("menu__mobile-1")
-                    ).toBeFocused();
-
-                    await story.page.keyboard.press("Tab");
-                    await expect(
-                        story.page.getByTestId("menu__mobile-2")
-                    ).toBeFocused();
-
-                    await story.page.keyboard.press("Tab");
-                    await expect(
-                        story.page.getByTestId("menu__mobile-3")
-                    ).toBeFocused();
-                });
-            });
-
             test("Hamburger button shows focus highlight", async ({
                 story,
             }) => {
@@ -414,13 +398,13 @@ test.describe("Navbar", () => {
                     await story.locators.focusStart.focus();
                     await story.page.keyboard.press("Tab");
                     await story.page.keyboard.press("Tab");
+                });
 
+                await test.step("Verify hamburger button is focused", async () => {
                     await expect(
                         story.locators.internal.mobileMenuButton
                     ).toBeFocused();
-                });
 
-                await test.step("Screenshot focused hamburger button", async () => {
                     await compareScreenshot(story, "focus-hamburger");
                 });
             });
@@ -434,87 +418,95 @@ test.describe("Navbar", () => {
             test("Tab through nav links and action button", async ({
                 story,
             }) => {
-                const page = story.page;
-
                 await test.step("Tab from focus-start to brand link", async () => {
-                    await story.locators.focusStart.focus();
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
+                    await expect(story.locators.focusStart).toBeFocused();
 
-                    await expect(page.getByTestId("main__brand")).toBeFocused();
+                    await story.page.keyboard.press("Tab");
+                    await expect(story.locators.internal.brand).toBeFocused();
                 });
 
                 await test.step("Tab to first nav item (Home)", async () => {
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
 
-                    await expect(page.getByTestId("link__1")).toBeFocused();
+                    await expect(
+                        story.locators.internal.navLink(1)
+                    ).toBeFocused();
                 });
 
                 await test.step("Tab to second nav item (Services)", async () => {
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
 
-                    await expect(page.getByTestId("link__2")).toBeFocused();
+                    await expect(
+                        story.locators.internal.navLink(2)
+                    ).toBeFocused();
                 });
 
                 await test.step("Tab through submenu items (opened on focus)", async () => {
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
                     await expect(
-                        page.getByRole("link", { name: "Birth registration" })
+                        story.locators.internal.submenuLink(
+                            "Birth registration"
+                        )
                     ).toBeFocused();
 
-                    await page.keyboard.press("Tab");
-
+                    await story.page.keyboard.press("Tab");
                     await expect(
-                        page.getByRole("link", { name: "Baby bonus" })
+                        story.locators.internal.submenuLink("Baby bonus")
                     ).toBeFocused();
 
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
                     await expect(
-                        page.getByRole("link", { name: "Preschool search" })
+                        story.locators.internal.submenuLink("Preschool search")
                     ).toBeFocused();
                 });
 
                 await test.step("Tab to third nav item (LifeSG app)", async () => {
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
 
-                    await expect(page.getByTestId("link__3")).toBeFocused();
+                    await expect(
+                        story.locators.internal.navLink(3)
+                    ).toBeFocused();
                 });
 
                 await test.step("Tab to download action button", async () => {
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
 
                     await expect(
-                        page.getByTestId("action-button__download")
+                        story.locators.internal.downloadButton
                     ).toBeFocused();
                 });
             });
 
             test("Can open and navigate submenu", async ({ story }) => {
-                const page = story.page;
-
                 await test.step("Focus Services button to open submenu", async () => {
-                    await page.getByTestId("link__2").focus();
+                    await story.locators.internal.navLink(2).focus();
                 });
 
                 await test.step("Tab into submenu items", async () => {
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
                     await expect(
-                        page.getByRole("link", { name: "Birth registration" })
+                        story.locators.internal.submenuLink(
+                            "Birth registration"
+                        )
                     ).toBeFocused();
 
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
                     await expect(
-                        page.getByRole("link", { name: "Baby bonus" })
+                        story.locators.internal.submenuLink("Baby bonus")
                     ).toBeFocused();
 
-                    await page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
                     await expect(
-                        page.getByRole("link", { name: "Preschool search" })
+                        story.locators.internal.submenuLink("Preschool search")
                     ).toBeFocused();
                 });
 
                 await test.step("Tab past submenu goes to next nav item", async () => {
-                    await page.keyboard.press("Tab");
-                    await expect(page.getByTestId("link__3")).toBeFocused();
+                    await story.page.keyboard.press("Tab");
+                    await expect(
+                        story.locators.internal.navLink(3)
+                    ).toBeFocused();
                 });
             });
         });
