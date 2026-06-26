@@ -1,4 +1,4 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DropdownList } from "src/shared/dropdown-list/dropdown-list";
 import { DropdownListState } from "src/shared/dropdown-list/dropdown-list-state";
@@ -188,7 +188,9 @@ describe("DropdownList", () => {
             const options = screen.getAllByRole("option");
             await waitFor(() => expect(options[0]).toHaveFocus());
 
-            await user.keyboard("{ArrowDown}");
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+            });
 
             expect(options[1]).toHaveFocus();
         });
@@ -200,9 +202,11 @@ describe("DropdownList", () => {
             const options = screen.getAllByRole("option");
             await waitFor(() => expect(options[0]).toHaveFocus());
 
-            await user.keyboard("{ArrowDown}");
-            await user.keyboard("{ArrowDown}");
-            await user.keyboard("{ArrowUp}");
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+                await user.keyboard("{ArrowDown}");
+                await user.keyboard("{ArrowUp}");
+            });
 
             expect(options[1]).toHaveFocus();
         });
@@ -215,7 +219,9 @@ describe("DropdownList", () => {
             const options = screen.getAllByRole("option");
             await waitFor(() => expect(options[0]).toHaveFocus());
 
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
 
             expect(onSelectItem).toHaveBeenCalledWith("Option A", "Option A");
         });
@@ -228,8 +234,10 @@ describe("DropdownList", () => {
             const options = screen.getAllByRole("option");
             await waitFor(() => expect(options[0]).toHaveFocus());
 
-            await user.keyboard("{ArrowDown}");
-            await user.keyboard(" ");
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+                await user.keyboard(" ");
+            });
 
             expect(onSelectItem).toHaveBeenCalledWith("Option B", "Option B");
         });
