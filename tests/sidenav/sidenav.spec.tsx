@@ -10,6 +10,14 @@ const SIDENAV_DRAWER_TEST_ID = "sidenav-drawer";
 // UNIT TESTS
 // =============================================================================
 describe("Sidenav", () => {
+    beforeAll(() => {
+        jest.useFakeTimers();
+    });
+
+    afterAll(() => {
+        jest.useRealTimers();
+    });
+
     beforeEach(() => {
         jest.resetAllMocks();
 
@@ -114,7 +122,9 @@ describe("Sidenav", () => {
     });
 
     it("should trigger onClick when clicking sidenav item without subitems", async () => {
-        const user = userEvent.setup();
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
         const mockOnClick = jest.fn();
 
         render(
@@ -138,7 +148,9 @@ describe("Sidenav", () => {
     });
 
     it("should trigger onClick when selecting sidenav item without subitems", async () => {
-        const user = userEvent.setup();
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
         const mockOnClick = jest.fn();
 
         render(
@@ -163,7 +175,9 @@ describe("Sidenav", () => {
     });
 
     it("should open drawer if Sidenav item contain children", async () => {
-        const user = userEvent.setup();
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
         const ITEM = "Dashboard";
         const DRAWER_ITEM = "Mini Dashboard";
         const DRAWER_ITEM_2 = "Big Dashboard";
@@ -216,7 +230,9 @@ describe("Sidenav", () => {
     });
 
     it("should apply the correct tab sequence", async () => {
-        const user = userEvent.setup();
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
         const ITEM_1 = "Dashboard";
         const ITEM_2 = "Profile";
         const DRAWER_ITEM_1 = "Mini Dashboard";
@@ -260,7 +276,9 @@ describe("Sidenav", () => {
 
         /* forward tab navigation */
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(screen.getByTestId("before")).toHaveFocus();
 
@@ -271,25 +289,33 @@ describe("Sidenav", () => {
         expect(screen.getByRole("button", { name: ITEM_1 })).toHaveFocus();
         await waitFor(() => screen.getByTestId(SIDENAV_DRAWER_TEST_ID));
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(
             screen.getByRole("button", { name: DRAWER_ITEM_1 })
         ).toHaveFocus();
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(
             screen.getByRole("button", { name: DRAWER_ITEM_2 })
         ).toHaveFocus();
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(
             screen.getByRole("button", { name: DRAWER_SUBITEM })
         ).toHaveFocus();
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(screen.getByRole("button", { name: ITEM_2 })).toHaveFocus();
         await waitForElementToBeRemoved(() =>
@@ -304,7 +330,9 @@ describe("Sidenav", () => {
 
         /* backward tab navigation */
 
-        await user.keyboard("{Shift>}{Tab}{/Shift}");
+        await act(async () => {
+            await user.keyboard("{Shift>}{Tab}{/Shift}");
+        });
 
         expect(screen.getByRole("button", { name: ITEM_2 })).toHaveFocus();
 
