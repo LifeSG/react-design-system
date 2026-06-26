@@ -1,3 +1,10 @@
 .selected-value {
     margin-top: 16px;
 }
+
+.custom-font-size {
+    --fds-font-body-size-baseline: 32px;
+    --fds-font-body-size-md: 30px;
+    --fds-font-body-size-sm: 28px;
+    --fds-font-body-size-xs: 24px;
+}

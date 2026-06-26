@@ -632,40 +632,36 @@ test.describe("DateInput", () => {
         });
     });
 
-    test("With Custom Browser Font Size", async () => {
-        const browser = await chromium.connect(
-            "ws://127.0.0.1:3011/custom-font"
-        );
-
-        const context = await browser.newContext({
-            baseURL: "http://host.docker.internal:3000",
+    /*
+     * Custom font size test
+     * This test is to ensure that the calendar content can be scrolled to the right
+     * to replicate custom browser large font size setting issue and the calendar content overflows the container.
+     */
+    test.describe("", async () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-font-size", {
+                mockedTimestamp: fixedTimestamp,
+                size: "xxs",
+            });
         });
 
-        const page = await context.newPage();
-        const story = new StoryPage(page);
+        test("With Custom Font Size", async ({ story }) => {
+            await story.locators.dateInput.click();
 
-        await story.init("default", {
-            mockedTimestamp: fixedTimestamp,
-            size: "xxs",
+            await expect(story.locators.calendarContainer).toBeVisible();
+
+            await compareScreenshot(story, "before", {
+                fullscreen: true,
+            });
+
+            // Scroll calendar content to the right
+            await story.locators.toggleZone.evaluate((el) => {
+                el.scrollLeft = el.scrollWidth;
+            });
+
+            await compareScreenshot(story, "after", {
+                fullscreen: true,
+            });
         });
-
-        await story.locators.dateInput.click();
-
-        await expect(story.locators.calendarContainer).toBeVisible();
-
-        await compareScreenshot(story, "before", {
-            fullscreen: true,
-        });
-
-        // Scroll calendar content to the right
-        await story.locators.toggleZone.evaluate((el) => {
-            el.scrollLeft = el.scrollWidth;
-        });
-
-        await compareScreenshot(story, "after", {
-            fullscreen: true,
-        });
-
-        await browser.close();
     });
 });

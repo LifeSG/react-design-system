@@ -3,5 +3,4 @@ FROM mcr.microsoft.com/playwright:v1.58.2-noble
 
 # Set working directory inside the container
 WORKDIR /home/pwuser
-COPY scripts/playwright-launch-custom-font-server.sh /home/pwuser/scripts/playwright-launch-custom-font-server.sh
 CMD ["npx", "-y", "playwright@1.58.2", "run-server", "--port", "3010", "--host", "0.0.0.0"]
