@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Pagination } from "src/pagination";
 
@@ -329,7 +329,9 @@ describe("Pagination", () => {
                 />
             );
 
-            await user.click(screen.getByTestId(SELECTOR_TESTID));
+            await act(async () => {
+                await user.click(screen.getByTestId(SELECTOR_TESTID));
+            });
 
             const dropdown = await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(async () => {
@@ -356,7 +358,9 @@ describe("Pagination", () => {
                 />
             );
 
-            await user.click(screen.getByTestId(SELECTOR_TESTID));
+            await act(async () => {
+                await user.click(screen.getByTestId(SELECTOR_TESTID));
+            });
 
             const dropdown = await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(async () => {
@@ -381,7 +385,9 @@ describe("Pagination", () => {
                     />
                 );
 
-                await user.click(screen.getByTestId(SELECTOR_TESTID));
+                await act(async () => {
+                    await user.click(screen.getByTestId(SELECTOR_TESTID));
+                });
 
                 await waitFor(() => {
                     expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -405,7 +411,9 @@ describe("Pagination", () => {
                     />
                 );
 
-                await user.click(screen.getByTestId(SELECTOR_TESTID));
+                await act(async () => {
+                    await user.click(screen.getByTestId(SELECTOR_TESTID));
+                });
 
                 await waitFor(() => {
                     expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
