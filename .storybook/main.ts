@@ -40,6 +40,19 @@ const config: StorybookConfig = {
                     loader: "@wyw-in-js/webpack-loader",
                     options: {
                         sourceMap: process.env.NODE_ENV !== "production",
+                        importOverrides: {
+                            react: { unknown: "allow" },
+                            dayjs: { unknown: "allow" },
+                            "dayjs/*": {
+                                unknown: "allow",
+                            },
+                            "./src/theme/**": {
+                                unknown: "allow",
+                            },
+                            "./src/util/*": {
+                                unknown: "allow",
+                            },
+                        },
                     },
                 },
             ],
