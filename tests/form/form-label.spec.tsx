@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { act, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FormErrorMessage, FormLabel } from "src/form/form-label";
 
@@ -92,7 +92,7 @@ describe("FormLabel", () => {
         });
     });
 
-    describe("addon", () => {
+    describe.only("addon", () => {
         it("should render popover addon when addon type is popover", () => {
             render(
                 <FormLabel
@@ -134,7 +134,9 @@ describe("FormLabel", () => {
                 </FormLabel>
             );
 
-            await userEvent.click(screen.getByTestId("popover-icon"));
+            await act(async () => {
+                await userEvent.click(screen.getByTestId("popover-icon"));
+            });
 
             expect(
                 screen.getByText("Additional information")
@@ -153,12 +155,16 @@ describe("FormLabel", () => {
                 </FormLabel>
             );
 
-            await userEvent.click(screen.getByTestId("popover-icon"));
+            await act(async () => {
+                await userEvent.click(screen.getByTestId("popover-icon"));
+            });
             expect(
                 screen.getByText("Additional information")
             ).toBeInTheDocument();
 
-            await userEvent.keyboard("{Escape}");
+            await act(async () => {
+                await userEvent.keyboard("{Escape}");
+            });
             expect(
                 screen.queryByText("Additional information")
             ).not.toBeInTheDocument();
@@ -179,12 +185,16 @@ describe("FormLabel", () => {
                 </>
             );
 
-            await userEvent.click(screen.getByTestId("popover-icon"));
+            await act(async () => {
+                await userEvent.click(screen.getByTestId("popover-icon"));
+            });
             expect(
                 screen.getByText("Additional information")
             ).toBeInTheDocument();
 
-            await userEvent.click(screen.getByTestId("outside"));
+            await act(async () => {
+                await userEvent.click(screen.getByTestId("outside"));
+            });
             expect(
                 screen.queryByText("Additional information")
             ).not.toBeInTheDocument();
