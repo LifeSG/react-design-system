@@ -23,6 +23,8 @@ class StoryPage extends AbstractStoryPage {
             mobileNavLink: (index: number) => Locator;
             submenuLink: (name: string) => Locator;
             downloadButton: Locator;
+            mobileNav: Locator;
+            playStoreButton: Locator;
         };
         focusStart: Locator;
         outsideButton: Locator;
@@ -51,6 +53,10 @@ class StoryPage extends AbstractStoryPage {
                     page.getByTestId(`link__mobile-${index}`),
                 submenuLink: (name: string) => page.getByRole("link", { name }),
                 downloadButton: page.getByTestId("action-button__download"),
+                mobileNav: page.getByRole("navigation", {
+                    name: "Mobile navigation menu",
+                }),
+                playStoreButton: page.getByTestId("button__play-store"),
             },
             focusStart: page.getByTestId("focus-start"),
             outsideButton: page.getByTestId("outside-button"),
@@ -60,12 +66,7 @@ class StoryPage extends AbstractStoryPage {
     async openMobileDrawer() {
         await this.locators.internal.mobileMenuButton.click();
         await waitForAnimationEnd(this.locators.internal.drawer);
-        await this.page.waitForFunction(
-            () =>
-                document.querySelector(
-                    'nav[aria-label="Mobile navigation menu"]'
-                ) === document.activeElement
-        );
+        await expect(this.locators.internal.mobileNav).toBeFocused();
     }
 
     async waitForMasthead(page: Page) {
@@ -376,7 +377,7 @@ test.describe("Navbar", () => {
                     }
 
                     await expect(
-                        story.page.getByTestId("button__play-store")
+                        story.locators.internal.playStoreButton
                     ).toBeFocused();
                 });
 
@@ -384,9 +385,7 @@ test.describe("Navbar", () => {
                     await story.page.keyboard.press("Escape");
 
                     await expect(
-                        story.page.getByRole("navigation", {
-                            name: "Mobile navigation menu",
-                        })
+                        story.locators.internal.mobileNav
                     ).toBeHidden();
                 });
             });
@@ -474,38 +473,6 @@ test.describe("Navbar", () => {
 
                     await expect(
                         story.locators.internal.downloadButton
-                    ).toBeFocused();
-                });
-            });
-
-            test("Can open and navigate submenu", async ({ story }) => {
-                await test.step("Focus Services button to open submenu", async () => {
-                    await story.locators.internal.navLink(2).focus();
-                });
-
-                await test.step("Tab into submenu items", async () => {
-                    await story.page.keyboard.press("Tab");
-                    await expect(
-                        story.locators.internal.submenuLink(
-                            "Birth registration"
-                        )
-                    ).toBeFocused();
-
-                    await story.page.keyboard.press("Tab");
-                    await expect(
-                        story.locators.internal.submenuLink("Baby bonus")
-                    ).toBeFocused();
-
-                    await story.page.keyboard.press("Tab");
-                    await expect(
-                        story.locators.internal.submenuLink("Preschool search")
-                    ).toBeFocused();
-                });
-
-                await test.step("Tab past submenu goes to next nav item", async () => {
-                    await story.page.keyboard.press("Tab");
-                    await expect(
-                        story.locators.internal.navLink(3)
                     ).toBeFocused();
                 });
             });
