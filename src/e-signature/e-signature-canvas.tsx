@@ -8,7 +8,8 @@ import {
     useRef,
 } from "react";
 
-import { Colour, useDesignToken } from "../theme";
+import { Colour } from "../theme";
+import { useDesignTokenOverride } from "../theme/utils";
 import * as styles from "./e-signature.styles";
 
 interface ESignatureCanvasProps {
@@ -33,7 +34,7 @@ const Component = (
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvas = useRef<FabricCanvas>();
     const pencilBrush = useRef<PencilBrush>();
-    const resolvedColor = useDesignToken(Colour["text"]);
+    const resolvedColor = useDesignTokenOverride({ token: Colour["text"] });
 
     // =============================================================================
     // HOOKS
@@ -100,6 +101,12 @@ const Component = (
             };
         }
     }, []);
+
+    useEffect(() => {
+        if (pencilBrush.current && resolvedColor) {
+            pencilBrush.current.color = resolvedColor;
+        }
+    }, [resolvedColor]);
 
     // resize
     useEffect(() => {
