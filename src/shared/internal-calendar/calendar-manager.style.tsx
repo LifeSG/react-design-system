@@ -61,6 +61,7 @@ export const ToggleZone = styled.div`
     display: flex;
     flex: 1;
     position: relative;
+    overflow-y: scroll;
 `;
 
 export const DefaultView = styled.div`
