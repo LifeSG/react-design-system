@@ -2,7 +2,14 @@ import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
-import { memo, useCallback, useContext, useEffect, useRef, useState } from "react";
+import {
+    memo,
+    useCallback,
+    useContext,
+    useEffect,
+    useRef,
+    useState,
+} from "react";
 import { ProgressBar } from "../../shared/progress-bar";
 import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
@@ -12,6 +19,7 @@ import {
     ActionContainer,
     Box,
     ContentSection,
+    DescriptionFileSizeText,
     DesktopErrorMessage,
     DragHandleIcon,
     ErrorIcon,
@@ -20,16 +28,19 @@ import {
     FileSizeText,
     IconButton,
     Item,
+    ItemDescriptionLabel,
     ItemDescriptionText,
     ItemFocusType,
     ItemText,
     MobileErrorMessage,
     NameSection,
 } from "./file-list-item.styles";
+import { FormLabelProps } from "../../form/types";
 import { FileListItemProps } from "./types";
 
 interface Props extends FileListItemProps {
     readOnly?: boolean | undefined;
+    descriptionLabel?: FormLabelProps | undefined;
 }
 
 const Component = ({
@@ -39,6 +50,7 @@ const Component = ({
     wrapperWidth,
     disabled,
     readOnly,
+    descriptionLabel,
     onDelete,
     onEditClick,
 }: Props) => {
@@ -76,6 +88,7 @@ const Component = ({
     // Local variables
     const isLoading = progress < 1;
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
+    const hasInlineActions = !!description && !!editable;
     const focusType: ItemFocusType = activeId
         ? activeId === id
             ? "self"
@@ -148,7 +161,12 @@ const Component = ({
                 {formattedName}
             </ItemText>
             {description && (
-                <ItemDescriptionText>{description}</ItemDescriptionText>
+                <>
+                    <ItemDescriptionLabel>
+                        {descriptionLabel?.children ?? "Photo description"}
+                    </ItemDescriptionLabel>
+                    <ItemDescriptionText>{description}</ItemDescriptionText>
+                </>
             )}
         </>
     );
@@ -176,48 +194,101 @@ const Component = ({
         </>
     );
 
-    const renderWithThumbnail = (thumbnailImageDataUrl: string) => (
-        <>
-            <FileListItemThumbnail
-                thumbnailImageDataUrl={thumbnailImageDataUrl}
-                fileType={fileItem.type}
-                data-testid={`${id}-thumbnail`}
-            />
-            <ExtendedNameSection>
-                <NameSection ref={detailSectionRef}>
-                    {renderNameDescription()}
-                </NameSection>
-                <FileSizeSection>
-                    <FileSizeText>{fileSize}</FileSizeText>
-                </FileSizeSection>
-            </ExtendedNameSection>
-        </>
+    const renderInlineActions = () => (
+        <ActionContainer
+            $editable={editable}
+            $error={false}
+            $loading={false}
+            $hasDescription={true}
+        >
+            <IconButton
+                key="edit"
+                data-testid={`${id}-edit-button`}
+                data-no-dnd="true"
+                type="button"
+                styleType="light"
+                sizeType="small"
+                aria-label={`edit ${name}`}
+                disabled={shouldDisable()}
+                onClick={handleEdit}
+                onKeyDown={handleKeyDown}
+            >
+                <PencilIcon aria-hidden />
+            </IconButton>
+            <IconButton
+                key="delete"
+                data-testid={`${id}-delete-button`}
+                data-no-dnd="true"
+                type="button"
+                styleType="light"
+                sizeType="small"
+                aria-label={`delete ${name}`}
+                disabled={shouldDisable()}
+                onClick={handleDelete}
+                onKeyDown={handleKeyDown}
+            >
+                <BinIcon aria-hidden />
+            </IconButton>
+        </ActionContainer>
     );
 
-    const renderDefault = () => (
-        <>
-            <NameSection ref={detailSectionRef}>
-                {renderNameDescription()}
-            </NameSection>
-            <FileSizeSection $hideInMobile={isLoading}>
-                <FileSizeText>{fileSize}</FileSizeText>
-            </FileSizeSection>
-        </>
+    const renderDescriptionContent = () => (
+        <ExtendedNameSection ref={detailSectionRef}>
+            <ItemText weight="semibold">{formattedName}</ItemText>
+            <ItemDescriptionLabel>
+                {descriptionLabel?.children ?? "Photo description"}
+            </ItemDescriptionLabel>
+            <ItemDescriptionText>{description}</ItemDescriptionText>
+            <DescriptionFileSizeText>{fileSize}</DescriptionFileSizeText>
+            {!readOnly && hasInlineActions && renderInlineActions()}
+        </ExtendedNameSection>
     );
 
-    const renderContents = () => {
-        let content: JSX.Element;
+    const renderFileContent = (thumbnailImageDataUrl?: string) => {
         const shouldShowThumbnail =
             !!thumbnailImageDataUrl ||
             fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
 
-        if (errorMessage) {
-            content = renderErrorState();
-        } else if (shouldShowThumbnail) {
-            content = renderWithThumbnail(thumbnailImageDataUrl || "");
-        } else {
-            content = renderDefault();
+        const thumbnail = shouldShowThumbnail ? (
+            <FileListItemThumbnail
+                thumbnailImageDataUrl={thumbnailImageDataUrl || ""}
+                fileType={fileItem.type}
+                data-testid={`${id}-thumbnail`}
+            />
+        ) : null;
+
+        if (hasInlineActions) {
+            return (
+                <>
+                    {thumbnail}
+                    {renderDescriptionContent()}
+                </>
+            );
         }
+
+        return (
+            <>
+                {thumbnail}
+                <NameSection ref={detailSectionRef}>
+                    {renderNameDescription()}
+                    {!isLoading && (
+                        <DescriptionFileSizeText>
+                            {fileSize}
+                        </DescriptionFileSizeText>
+                    )}
+                </NameSection>
+            </>
+        );
+    };
+
+    const renderContents = () => {
+        const shouldShowThumbnail =
+            !!thumbnailImageDataUrl ||
+            fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
+
+        const content = errorMessage
+            ? renderErrorState()
+            : renderFileContent(thumbnailImageDataUrl);
 
         return (
             <ContentSection $hasThumbnail={shouldShowThumbnail}>
@@ -292,6 +363,7 @@ const Component = ({
                 $editable={editable}
                 $error={!!errorMessage}
                 $loading={isLoading}
+                $hasDescription={!!description}
             >
                 {content}
             </ActionContainer>
@@ -320,9 +392,10 @@ const Component = ({
                 $loading={isLoading}
                 $disabled={shouldDisable()}
                 $editable={editable}
+                $hasDescription={!!description}
             >
                 {renderContents()}
-                {!readOnly && renderActions()}
+                {!readOnly && !hasInlineActions && renderActions()}
             </Box>
         </Item>
     );

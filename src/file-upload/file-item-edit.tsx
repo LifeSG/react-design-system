@@ -14,11 +14,14 @@ import {
 import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
+import { FormLabelProps } from "../form/types";
 
 interface Props {
     fileItem: FileItemProps;
     wrapperWidth: number;
     fileDescriptionMaxLength?: number | undefined;
+    descriptionRequired?: boolean | undefined;
+    descriptionLabel?: FormLabelProps | undefined;
     onSave: (description: string) => void;
     onCancel: () => void;
     onBlur: (value: string) => void;
@@ -27,6 +30,8 @@ interface Props {
 export const FileItemEdit = ({
     fileItem,
     fileDescriptionMaxLength,
+    descriptionRequired = true,
+    descriptionLabel,
     wrapperWidth,
     onSave,
     onCancel,
@@ -102,6 +107,7 @@ export const FileItemEdit = ({
     };
 
     const shouldDisableSave = () => {
+        if (!descriptionRequired) return false;
         const trimmedDescription = currentDescription.trim();
         return trimmedDescription.length === 0;
     };
@@ -141,12 +147,13 @@ export const FileItemEdit = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={3}
-                        aria-label={`Photo description for ${name}`}
-                        label={{
-                            children: "Photo description",
-                            subtitle:
-                                "Describe this photo to users who may not be able to see the image.",
-                        }}
+                        label={
+                            descriptionLabel ?? {
+                                children: "Photo description",
+                                subtitle:
+                                    "Describe this photo to users who may not be able to see the image.",
+                            }
+                        }
                     />
                 </DetailsSection>
             </ContentSection>

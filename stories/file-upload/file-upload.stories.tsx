@@ -376,6 +376,102 @@ export const TextStyling: StoryObj<Component> = {
     },
 };
 
+export const EditableOptionalDescription: StoryObj<Component> = {
+    render: () => {
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([
+            {
+                id: "1",
+                name: "photo-1.jpg",
+                type: "image/jpeg",
+                size: 512000,
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/optional1/200/300",
+            },
+            {
+                id: "2",
+                name: "photo-2.jpg",
+                type: "image/jpeg",
+                size: 819200,
+                description: "An existing description",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/optional2/200/300",
+            },
+        ]);
+
+        const handleEdit = (fileItem: FileItemProps) => {
+            setFileItems((prev) =>
+                prev.map((f) => (f.id === fileItem.id ? fileItem : f))
+            );
+        };
+
+        const handleDelete = (fileItem: FileItemProps) => {
+            setFileItems((prev) => prev.filter((f) => f.id !== fileItem.id));
+        };
+
+        return (
+            <FileUpload
+                title="Optional Description"
+                description="Save is enabled even without a description"
+                fileItems={fileItems}
+                editableFileItems
+                descriptionRequired={false}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+                fileDescriptionMaxLength={200}
+            />
+        );
+    },
+};
+
+export const CustomDescriptionLabel: StoryObj<Component> = {
+    render: () => {
+        const [fileItems, setFileItems] = useState<FileItemProps[]>([
+            {
+                id: "1",
+                name: "document-scan.jpg",
+                type: "image/jpeg",
+                size: 1228800,
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/custom1/200/300",
+            },
+            {
+                id: "2",
+                name: "receipt.jpg",
+                type: "image/jpeg",
+                size: 614400,
+                description: "Monthly electricity bill",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/custom2/200/300",
+            },
+        ]);
+
+        const handleEdit = (fileItem: FileItemProps) => {
+            setFileItems((prev) =>
+                prev.map((f) => (f.id === fileItem.id ? fileItem : f))
+            );
+        };
+
+        const handleDelete = (fileItem: FileItemProps) => {
+            setFileItems((prev) => prev.filter((f) => f.id !== fileItem.id));
+        };
+
+        return (
+            <FileUpload
+                title="Custom Labels"
+                description="Uses custom description label and subtext"
+                fileItems={fileItems}
+                editableFileItems
+                descriptionLabel={{
+                    children: "Document description",
+                    subtitle: "Describe what this document contains.",
+                }}
+                onEdit={handleEdit}
+                onDelete={handleDelete}
+            />
+        );
+    },
+};
+
 export const WithPDFFiles: StoryObj<Component> = {
     render: () => {
         const [fileItems, setFileItems] = useState<FileItemProps[]>([

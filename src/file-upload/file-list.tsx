@@ -29,6 +29,7 @@ import { FileListItem } from "./file-list-item";
 import { EditableItemsContainer, ListWrapper } from "./file-list.styles";
 import { FileUploadHelper } from "./helper";
 import { FileItemProps } from "./types";
+import { FormLabelProps } from "../form/types";
 import { VisuallyHidden } from "../shared/accessibility";
 
 // =============================================================================
@@ -45,6 +46,8 @@ interface Props {
     fileItems: FileItemProps[] | undefined;
     editableFileItems: boolean;
     fileDescriptionMaxLength?: number | undefined;
+    descriptionRequired?: boolean | undefined;
+    descriptionLabel?: FormLabelProps | undefined;
     sortable?: boolean | undefined;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
@@ -75,6 +78,8 @@ function Component(
         fileItems = [],
         editableFileItems,
         fileDescriptionMaxLength,
+        descriptionRequired,
+        descriptionLabel,
         sortable,
         disabled,
         readOnly,
@@ -449,6 +454,8 @@ function Component(
                     fileItem={updatedFileItem}
                     wrapperWidth={wrapperWidth}
                     fileDescriptionMaxLength={fileDescriptionMaxLength}
+                    descriptionRequired={descriptionRequired}
+                    descriptionLabel={descriptionLabel}
                     onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}
                     onBlur={handleBlurEdit(item)}
@@ -481,6 +488,7 @@ function Component(
                         sortable={shouldEnableSort()}
                         disabled={disabled}
                         readOnly={readOnly}
+                        descriptionLabel={descriptionLabel}
                         onDelete={handleDelete(item)}
                         onEditClick={handleInitiateEdit(item)}
                     />

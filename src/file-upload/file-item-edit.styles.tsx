@@ -1,6 +1,6 @@
 import styled, { css } from "styled-components";
 import { Button } from "../button/button";
-import { Border, Colour, MediaQuery, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
 import { Typography } from "../typography";
 
 // =============================================================================
@@ -16,11 +16,13 @@ interface ActionButtonSectionStyleProps {
 export const Item = styled.li`
     display: flex;
     flex-direction: column;
-    padding: ${Spacing["spacing-32"]} 0;
-    background: transparent;
+    padding: ${Spacing["spacing-32"]};
+    background: ${Colour["bg-primary-subtlest"]};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-radius: ${Radius["sm"]};
 
     &:not(:last-child) {
-        border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 `;
 
@@ -60,10 +62,13 @@ export const FileNameText = styled(Typography.BodyMD)`
     }
 `;
 
-export const FileSizeText = styled(Typography.BodyMD)``;
+export const FileSizeText = styled(Typography.BodyMD)`
+    color: ${Colour["text-subtler"]};
+`;
 
 export const ActionButtonsSection = styled.div<ActionButtonSectionStyleProps>`
     display: flex;
+    justify-content: flex-end;
     ${MediaQuery.MaxWidth.md} {
         flex-direction: column;
     }
