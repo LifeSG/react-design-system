@@ -41,6 +41,7 @@ export const toggleZone = css`
     display: flex;
     flex: 1;
     position: relative;
+    overflow-y: scroll;
 `;
 
 export const defaultView = css`

@@ -1,4 +1,10 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
+import {
+    test as base,
+    chromium,
+    expect,
+    Locator,
+    Page,
+} from "@playwright/test";
 import { fixedTimestamp } from "../../consts";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
@@ -17,6 +23,7 @@ class StoryPage extends AbstractStoryPage {
         dateInput: Locator;
         calendarContainer: Locator;
         calendarContent: Locator;
+        toggleZone: Locator;
         doneButton: Locator;
         cancelButton: Locator;
         selectedValue: Locator;
@@ -40,6 +47,7 @@ class StoryPage extends AbstractStoryPage {
             dateInput: page.getByTestId("date-input"),
             calendarContainer: page.getByTestId("calendar-container"),
             calendarContent: page.getByTestId("calendar-content"),
+            toggleZone: page.getByTestId("toggle-zone"),
             doneButton: page.getByTestId("done-button"),
             cancelButton: page.getByTestId("cancel-button"),
             selectedValue: page.getByTestId("selected-value"),
@@ -621,6 +629,39 @@ test.describe("DateInput", () => {
             await story.page.keyboard.press("Escape");
 
             await expect(story.locators.calendarContainer).not.toBeVisible();
+        });
+    });
+
+    /*
+     * Custom font size test
+     * This test is to ensure that the calendar content can be scrolled to the right
+     * to replicate custom browser large font size setting issue and the calendar content overflows the container.
+     */
+    test.describe("", async () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-font-size", {
+                mockedTimestamp: fixedTimestamp,
+                size: "xxs",
+            });
+        });
+
+        test("With Custom Font Size", async ({ story }) => {
+            await story.locators.dateInput.click();
+
+            await expect(story.locators.calendarContainer).toBeVisible();
+
+            await compareScreenshot(story, "before", {
+                fullscreen: true,
+            });
+
+            // Scroll calendar content to the right
+            await story.locators.toggleZone.evaluate((el) => {
+                el.scrollLeft = el.scrollWidth;
+            });
+
+            await compareScreenshot(story, "after", {
+                fullscreen: true,
+            });
         });
     });
 });
