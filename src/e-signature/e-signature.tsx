@@ -11,14 +11,12 @@ import {
     Colour,
     DEFAULT_MOBILE_MAX_WIDTH_BREAKPOINT,
     Radius,
-    useDesignTokenOverride,
     useMaxWidthMediaQuery,
     useMediaQuery,
     useResolvedBreakpointToken,
 } from "../theme";
 import { Typography } from "../typography";
 import * as styles from "./e-signature.styles";
-import { recolorImage } from "./e-signature.utils";
 import type { ESignatureCanvasRef } from "./e-signature-canvas";
 import type { EsignatureProps } from "./types";
 
@@ -44,7 +42,6 @@ export const ESignature = (props: EsignatureProps) => {
     const [showModal, setShowModal] = useState(false);
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string | null | undefined>(value);
-    const [previewDataURL, setPreviewDataURL] = useState<string | null>();
     const isMobile = useMaxWidthMediaQuery("sm");
     const mobileBreakpoint = useResolvedBreakpointToken(
         Breakpoint["sm-max"],
@@ -62,7 +59,6 @@ export const ESignature = (props: EsignatureProps) => {
             },
         ],
     });
-    const resolvedColor = useDesignTokenOverride({ token: Colour["text"] });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -86,14 +82,6 @@ export const ESignature = (props: EsignatureProps) => {
     useEffect(() => {
         setDataURL(value);
     }, [value]);
-
-    useEffect(() => {
-        if (dataURL && resolvedColor) {
-            recolorImage(dataURL, resolvedColor).then(setPreviewDataURL);
-        } else {
-            setPreviewDataURL(dataURL ?? null);
-        }
-    }, [dataURL, resolvedColor]);
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -119,7 +107,7 @@ export const ESignature = (props: EsignatureProps) => {
             <>
                 <img
                     className={styles.signaturePreviewImage}
-                    src={previewDataURL ?? undefined}
+                    src={dataURL}
                     alt="Signature preview"
                 />
                 <Button

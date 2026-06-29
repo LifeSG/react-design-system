@@ -1,9 +1,4 @@
-import {
-    Canvas as FabricCanvas,
-    FabricImage,
-    filters,
-    PencilBrush,
-} from "fabric";
+import { Canvas as FabricCanvas, FabricImage, PencilBrush } from "fabric";
 import type { Ref } from "react";
 import {
     forwardRef,
@@ -136,17 +131,6 @@ const Component = (
                     img.selectable = false;
                     img.hoverCursor = "default";
 
-                    if (resolvedColor) {
-                        img.filters = [
-                            new filters.BlendColor({
-                                color: resolvedColor,
-                                mode: "tint",
-                                alpha: 1,
-                            }),
-                        ];
-                        img.applyFilters();
-                    }
-
                     if (fabricCanvas.current.width && img.width) {
                         img.scale(fabricCanvas.current.width / img.width);
                     }
@@ -157,7 +141,7 @@ const Component = (
         };
 
         updateImage();
-    }, [baseImageDataURL, resolvedColor]);
+    }, [baseImageDataURL]);
 
     // =============================================================================
     // RENDER FUNCTIONS
