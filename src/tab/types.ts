@@ -1,5 +1,9 @@
 import type { FadeColorSet } from "../shared/fade-wrapper";
 
+/**
+ * Main props for the `Tab` component.
+ * @storybookSection Tab
+ */
 export interface TabProps {
     children: JSX.Element | JSX.Element[];
     /** Specify the initial tab index that is to be displayed */
@@ -17,6 +21,10 @@ export interface TabProps {
     fadeColor?: string[] | FadeColorSet | undefined;
 }
 
+/**
+ * Props for `Tab.Item`.
+ * @storybookSection Tab.Item
+ */
 export interface TabItemProps {
     title: string;
     children: JSX.Element | JSX.Element[];
@@ -28,6 +36,10 @@ export interface TabItemProps {
     width?: string | undefined;
 }
 
+/**
+ * Props for the optional title addon used in `Tab.Item`.
+ * @storybookSection Tab.Item
+ */
 export interface TitleAddonProps {
     /** addon content */
     content: JSX.Element;

@@ -49,6 +49,7 @@ type JsDocMeta = {
     defaultValue?: string | undefined;
     remarks?: string | undefined;
     examples?: string[] | undefined;
+    tabGroup?: string | undefined;
 };
 
 /** Read and trim the textual value of a JSDoc tag. */
@@ -60,7 +61,7 @@ function getTagCommentText(tag: { getCommentText: () => string | undefined }) {
 
 /**
  * Collect supported JSDoc metadata tags for Storybook mapping.
- * Supported tags: "@deprecated, @default, @remarks, @example".
+ * Supported tags: "@deprecated, @default, @remarks, @example, @storybookSection".
  */
 function getJsDocMeta(
     node: InterfaceDeclaration | PropertySignature | TypeAliasDeclaration
@@ -83,6 +84,7 @@ function getJsDocMeta(
     let defaultValue: string | undefined;
     const remarks: string[] = [];
     const examples: string[] = [];
+    let tabGroup: string | undefined;
 
     for (const tag of tags) {
         const tagName = tag.getTagName();
@@ -107,6 +109,11 @@ function getJsDocMeta(
 
         if (tagName === "example" && comment) {
             examples.push(comment);
+            continue;
+        }
+
+        if (tagName === "storybookSection" && comment) {
+            tabGroup = comment;
         }
     }
 
@@ -116,6 +123,7 @@ function getJsDocMeta(
         defaultValue,
         remarks: remarks.length > 0 ? remarks.join("\n\n") : undefined,
         examples: examples.length > 0 ? examples : undefined,
+        tabGroup,
     };
 }
 
@@ -374,6 +382,7 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
     function getInterfaceArgTypes(interfaceName: string) {
         const interfaceDeclaration =
             sourceFile.getInterfaceOrThrow(interfaceName);
+        const interfaceJsDocMeta = getJsDocMeta(interfaceDeclaration);
 
         const category =
             interfaceDeclaration.getTypeParameters().length > 0
@@ -393,6 +402,7 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                     control: false,
                     table: {
                         category,
+                        tabGroup: interfaceJsDocMeta.tabGroup,
                         type: {
                             summary: getPropertyTypeText(property),
                         },
@@ -426,6 +436,7 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                 control: false,
                 table: {
                     category,
+                    tabGroup: jsDocMeta.tabGroup,
                     type: {
                         summary: cleanType(
                             typeAlias.getTypeNodeOrThrow().getText()

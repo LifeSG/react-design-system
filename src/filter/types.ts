@@ -6,10 +6,13 @@ import type { Insets } from "../shared/types";
 
 export type Mode = "default" | "mobile";
 
+/** @storybookSection Filter.Sidebar */
 interface FilterSidebarCustomLabelProps {
     headerTitle?: string | undefined;
     clearButtonLabel?: string | undefined;
 }
+
+/** @storybookSection Filter.Modal */
 interface FilterModalCustomLabelProps {
     headerTitle?: string | undefined;
     toggleFilterButtonLabel?: string | undefined;
@@ -17,6 +20,7 @@ interface FilterModalCustomLabelProps {
     clearButtonLabel?: string | undefined;
 }
 
+/** @storybookSection Filter */
 export interface FilterBaseProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
@@ -44,10 +48,12 @@ export interface FilterBaseProps {
     doneButtonLabel?: string | undefined;
 }
 
+/** @storybookSection Filter.Sidebar */
 export interface FilterSidebarProps extends FilterBaseProps {
     customLabels?: FilterSidebarCustomLabelProps | undefined;
 }
 
+/** @storybookSection Filter.Modal */
 export interface FilterModalProps extends FilterBaseProps {
     /** Called when dismiss button is pressed (mobile mode only) */
     onDismiss?: (() => void) | undefined;
@@ -59,6 +65,7 @@ export interface FilterModalProps extends FilterBaseProps {
     insets?: Insets | undefined;
 }
 
+/** @storybookSection Filter */
 export interface FilterProps
     extends Omit<FilterSidebarProps, "customLabels">,
         Omit<FilterModalProps, "customLabels"> {
@@ -68,6 +75,7 @@ export interface FilterProps
         | undefined;
 }
 
+/** @storybookSection Filter.Item */
 export interface FilterItemProps {
     children:
         | React.ReactNode
@@ -93,6 +101,7 @@ export interface FilterItemProps {
     style?: React.CSSProperties | undefined;
 }
 
+/** @storybookSection Filter.Page */
 export interface FilterPageProps {
     "data-testid"?: string | undefined;
     children: React.ReactNode;
@@ -102,12 +111,14 @@ export interface FilterPageProps {
     onDone?: (() => void) | undefined;
 }
 
+/** @storybookSection Filter.Checkbox */
 export interface FilterItemCheckboxOptionProps {
     value: any;
     label: string;
     options?: FilterItemCheckboxOptionProps[] | undefined;
 }
 
+/** @storybookSection Filter.Checkbox */
 export interface FilterItemCheckboxProps<T = FilterItemCheckboxOptionProps>
     extends Omit<FilterItemProps, "children"> {
     options: T[];
