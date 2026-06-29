@@ -3,6 +3,7 @@ import { css } from "@linaria/core";
 import {
     Border,
     Colour,
+    Font,
     MediaQuery,
     Radius,
     Shadow,
@@ -122,11 +123,10 @@ export const nameSection = css`
 export const extendedNameSection = css`
     display: flex;
     flex: 1;
-    align-items: center;
+    flex-direction: column;
+    align-items: flex-start;
 
     ${MediaQuery.MaxWidth.md} {
-        flex-direction: column;
-        align-items: flex-start;
         width: 100%;
     }
 `;
@@ -156,6 +156,18 @@ export const fileSizeSection = css`
 
 export const fileSizeText = css`
     color: ${Colour["text-subtler"]};
+`;
+
+export const descriptionFileSizeText = css`
+    color: ${Colour["text-subtler"]};
+    margin-top: ${Spacing["spacing-16"]};
+`;
+
+export const itemDescriptionLabel = css`
+    ${Font["form-label"]}
+    font-weight: ${Font.Spec["weight-semibold"]};
+    color: ${Colour["text-subtle"]};
+    margin-top: ${Spacing["spacing-16"]};
 `;
 
 export const itemDescriptionText = css`
@@ -222,10 +234,18 @@ export const actionContainer = css`
     }
 `;
 
+export const inlineActionContainer = css`
+    width: 100%;
+    margin-top: ${Spacing["spacing-16"]};
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+`;
+
 export const iconButton = css`
     min-width: unset;
 
     &:not(:last-child) {
-        margin-right: ${Spacing["spacing-16"]};
+        margin-right: ${Spacing["spacing-8"]};
     }
 `;

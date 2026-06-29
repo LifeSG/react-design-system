@@ -86,6 +86,19 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["number"],
             },
             {
+                name: "descriptionRequired",
+                description:
+                    "When false, save button is enabled even with empty description",
+                propTypes: ["boolean"],
+                defaultValue: "true",
+            },
+            {
+                name: "descriptionLabel",
+                description:
+                    "Overrides the default label and subtext for the description field",
+                propTypes: ["FormLabelProps"],
+            },
+            {
                 name: "sortable",
                 description:
                     "Specifies if sorting is enabled for the file items",

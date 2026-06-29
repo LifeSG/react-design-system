@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Border, Colour, Spacing } from "../../theme";
+import { Spacing } from "../../theme";
 
 export const listWrapper = css`
     list-style-type: none;
@@ -12,15 +12,8 @@ export const listWrapperReadOnly = css`
 `;
 
 export const editableItemsContainer = css`
-    border-top: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-    border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-
     &:not(:last-child) {
-        margin-bottom: ${Spacing["spacing-32"]};
-    }
-
-    &:not(:first-child) {
-        margin-top: ${Spacing["spacing-32"]};
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 
     ul {

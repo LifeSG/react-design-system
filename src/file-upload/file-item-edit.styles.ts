@@ -1,15 +1,17 @@
 import { css } from "@linaria/core";
 
-import { Border, Colour, MediaQuery, Spacing } from "../theme";
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
 
 export const item = css`
     display: flex;
     flex-direction: column;
-    padding: ${Spacing["spacing-32"]} 0;
-    background: transparent;
+    padding: ${Spacing["spacing-32"]};
+    background: ${Colour["bg-primary-subtlest"]};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-radius: ${Radius["sm"]};
 
     &:not(:last-child) {
-        border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+        margin-bottom: ${Spacing["spacing-16"]};
     }
 `;
 
@@ -49,8 +51,13 @@ export const fileNameText = css`
     }
 `;
 
+export const fileSizeText = css`
+    color: ${Colour["text-subtler"]};
+`;
+
 export const actionButtonsSection = css`
     display: flex;
+    justify-content: flex-end;
 
     ${MediaQuery.MaxWidth.md} {
         flex-direction: column;

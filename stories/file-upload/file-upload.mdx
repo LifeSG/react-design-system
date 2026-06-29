@@ -55,6 +55,18 @@ the flexibility to reorder items after uploading them.
 
 <Canvas of={FileUploadStories.ReadonlyState} />
 
+## Optional description
+
+When `descriptionRequired` is set to `false`, the save button is enabled even when the description field is empty.
+
+<Canvas of={FileUploadStories.EditableOptionalDescription} />
+
+## Custom description label
+
+Use `descriptionLabel` to override the default label and subtext for the description field.
+
+<Canvas of={FileUploadStories.CustomDescriptionLabel} />
+
 ## PDF Files
 
 The component automatically displays a PDF icon for PDF files instead of attempting to render a thumbnail. This provides a clear visual distinction between document files and image files.
