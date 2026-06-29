@@ -1,0 +1,2 @@
+"use strict";var n=require("react/jsx-runtime"),e=require("./component-loading-spinner.style.js");exports.ComponentLoadingSpinner=({color:i,className:r,size:s})=>n.jsxs(e.OuterRing,{className:r,$size:s,$color:i,"data-testid":"component-loading-spinner",children:[n.jsx(e.InnerRing1,{id:"inner1"}),n.jsx(e.InnerRing2,{id:"inner2"}),n.jsx(e.InnerRing3,{id:"inner3"}),n.jsx(e.InnerRing4,{id:"inner4"})]});
+//# sourceMappingURL=component-loading-spinner.js.map
