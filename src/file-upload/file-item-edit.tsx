@@ -147,12 +147,13 @@ export const FileItemEdit = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={3}
-                        label={{
-                            children: "Photo description",
-                            subtitle:
-                                "Describe this photo to users who may not be able to see the image.",
-                            ...descriptionLabel,
-                        }}
+                        label={
+                            descriptionLabel ?? {
+                                children: "Photo description",
+                                subtitle:
+                                    "Describe this photo to users who may not be able to see the image.",
+                            }
+                        }
                     />
                 </DetailsSection>
             </ContentSection>
