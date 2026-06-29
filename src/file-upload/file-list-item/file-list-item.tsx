@@ -244,15 +244,23 @@ const Component = ({
         </ExtendedNameSection>
     );
 
-    const renderWithThumbnail = (thumbnailImageDataUrl: string) => {
-        if (description && editable) {
+    const renderFileContent = (thumbnailImageDataUrl?: string) => {
+        const shouldShowThumbnail =
+            !!thumbnailImageDataUrl ||
+            fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
+
+        const thumbnail = shouldShowThumbnail ? (
+            <FileListItemThumbnail
+                thumbnailImageDataUrl={thumbnailImageDataUrl || ""}
+                fileType={fileItem.type}
+                data-testid={`${id}-thumbnail`}
+            />
+        ) : null;
+
+        if (hasInlineActions) {
             return (
                 <>
-                    <FileListItemThumbnail
-                        thumbnailImageDataUrl={thumbnailImageDataUrl}
-                        fileType={fileItem.type}
-                        data-testid={`${id}-thumbnail`}
-                    />
+                    {thumbnail}
                     {renderDescriptionContent()}
                 </>
             );
@@ -260,60 +268,30 @@ const Component = ({
 
         return (
             <>
-                <FileListItemThumbnail
-                    thumbnailImageDataUrl={thumbnailImageDataUrl}
-                    fileType={fileItem.type}
-                    data-testid={`${id}-thumbnail`}
-                />
-                <ExtendedNameSection>
-                    <NameSection ref={detailSectionRef}>
-                        {renderNameDescription()}
-                    </NameSection>
-                    <FileSizeSection>
-                        <FileSizeText>{fileSize}</FileSizeText>
-                    </FileSizeSection>
-                </ExtendedNameSection>
-            </>
-        );
-    };
-
-    const renderDefault = () => {
-        if (hasInlineActions) {
-            return renderDescriptionContent();
-        }
-
-        return (
-            <>
+                {thumbnail}
                 <NameSection ref={detailSectionRef}>
                     {renderNameDescription()}
+                    {!isLoading && (
+                        <DescriptionFileSizeText>
+                            {fileSize}
+                        </DescriptionFileSizeText>
+                    )}
                 </NameSection>
-                <FileSizeSection $hideInMobile={isLoading}>
-                    <FileSizeText>{fileSize}</FileSizeText>
-                </FileSizeSection>
             </>
         );
     };
 
     const renderContents = () => {
-        let content: JSX.Element;
         const shouldShowThumbnail =
             !!thumbnailImageDataUrl ||
             fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
 
-        if (errorMessage) {
-            content = renderErrorState();
-        } else if (shouldShowThumbnail) {
-            content = renderWithThumbnail(thumbnailImageDataUrl || "");
-        } else {
-            content = renderDefault();
-        }
+        const content = errorMessage
+            ? renderErrorState()
+            : renderFileContent(thumbnailImageDataUrl);
 
         return (
-            <ContentSection
-                $hasThumbnail={shouldShowThumbnail}
-                $hasDescription={!!description}
-                $editable={editable}
-            >
+            <ContentSection $hasThumbnail={shouldShowThumbnail}>
                 {content}
             </ContentSection>
         );

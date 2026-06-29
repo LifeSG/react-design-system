@@ -39,8 +39,6 @@ interface BoxStyleProps {
 
 interface ContentSectionStyleProps {
     $hasThumbnail?: boolean | undefined;
-    $hasDescription?: boolean | undefined;
-    $editable?: boolean | undefined;
 }
 
 interface ActionContainerStyleProps {
@@ -171,17 +169,7 @@ export const ContentSection = styled.div<ContentSectionStyleProps>`
     }
 
     ${(props) => {
-        if (props.$hasThumbnail && props.$hasDescription && props.$editable) {
-            return css`
-                flex-direction: row;
-                align-items: center;
-
-                ${MediaQuery.MaxWidth.md} {
-                    flex-direction: row;
-                    align-items: center;
-                }
-            `;
-        } else if (props.$hasThumbnail) {
+        if (props.$hasThumbnail) {
             return css`
                 ${MediaQuery.MaxWidth.md} {
                     flex-direction: row;
