@@ -1,0 +1,2 @@
+"use strict";var e=require("../theme/index.js");exports.ErrorDisplayHelper=void 0,(exports.ErrorDisplayHelper||(exports.ErrorDisplayHelper={})).imgAttributeHelper=(r,t)=>{const{base:i,md:p,lg:s,width:x,height:a}=r;return{srcSet:`${i} 400w, ${p} 800w, ${s} 1200w`,src:s,sizes:`(max-width: ${e.Breakpoint["sm-max"]({theme:t})}px) 400px, (max-width: ${e.Breakpoint["lg-max"]({theme:t})}px) 800px, 1200px`,width:x,height:a}};
+//# sourceMappingURL=helper.js.map

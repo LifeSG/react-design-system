@@ -1,0 +1,2 @@
+import{__rest as t}from"../_virtual/_tslib.js";import{jsx as n,Fragment as e}from"react/jsx-runtime";import{MobileWrapper as i,MenuItem as o,Link as r}from"./menu.styles.js";const l=({items:l,onItemClick:s})=>{const m=t=>n=>{n.stopPropagation(),s(n,t)};return(null==l?void 0:l.length)?n(i,{children:l.map(((e,i)=>{const{children:l,options:s}=e,c=t(e,["children","options"]),d=`menu__mobile-${i+1}`;return n(o,{children:n(r,Object.assign({"data-testid":d},c,s,{onClick:m(e),underlineStyle:"none",children:l}))},i)}))}):n(e,{})};export{l as Menu};
+//# sourceMappingURL=menu.js.map
