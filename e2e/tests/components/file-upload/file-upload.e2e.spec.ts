@@ -381,6 +381,33 @@ test.describe("FileUpload", () => {
         });
     });
 
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("editable-optional");
+        });
+
+        test("Editable with optional description", async ({ story }) => {
+            await test.step("Save without description", async () => {
+                const saveButton = story.locators.fileUpload.getByTestId(
+                    "editable-image-save-button"
+                );
+                await saveButton.click();
+            });
+
+            await test.step("Verify file item without description", async () => {
+                await expect(
+                    story.locators.fileUpload.getByTestId(
+                        "editable-image-edit-button"
+                    )
+                ).toBeVisible();
+
+                await compareScreenshot(story, "saved", {
+                    locator: story.locators.fileUpload,
+                });
+            });
+        });
+    });
+
     test.describe("Sortable", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("sortable");
