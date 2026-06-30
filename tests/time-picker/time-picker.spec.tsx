@@ -26,7 +26,9 @@ describe("Timepicker (Floating UI)", () => {
     const cancelBtnId = `${ID}-cancel-button`;
 
     const openDropdown = async (user: ReturnType<typeof userEvent.setup>) => {
-        await user.click(screen.getByTestId(selectorTestId));
+        await act(async () => {
+            await user.click(screen.getByTestId(selectorTestId));
+        });
         await waitFor(() =>
             expect(screen.getByTestId(dropdownTestId)).toBeVisible()
         );
@@ -130,12 +132,8 @@ describe("Timepicker (Floating UI)", () => {
 
             render(<Timepicker id={ID} onFocus={onFocus} />);
 
-            await user.click(screen.getByTestId(selectorTestId));
+            await openDropdown(user);
             expect(onFocus).toHaveBeenCalledTimes(1);
-
-            await waitFor(() =>
-                expect(screen.getByTestId(dropdownTestId)).toBeVisible()
-            );
         });
 
         it("should dismiss dropdown and call onBlur on outside click", async () => {
@@ -190,7 +188,9 @@ describe("Timepicker (Floating UI)", () => {
             const user = userEvent.setup();
             render(<Timepicker id={ID} disabled />);
 
-            await user.click(screen.getByTestId(selectorTestId));
+            await act(async () => {
+                await user.click(screen.getByTestId(selectorTestId));
+            });
             expect(
                 screen.queryByTestId(dropdownTestId)
             ).not.toBeInTheDocument();
@@ -200,7 +200,9 @@ describe("Timepicker (Floating UI)", () => {
             const user = userEvent.setup();
             render(<Timepicker id={ID} readOnly />);
 
-            await user.click(screen.getByTestId(selectorTestId));
+            await act(async () => {
+                await user.click(screen.getByTestId(selectorTestId));
+            });
             expect(
                 screen.queryByTestId(dropdownTestId)
             ).not.toBeInTheDocument();
@@ -212,7 +214,9 @@ describe("Timepicker (Floating UI)", () => {
 
             render(<Timepicker id={ID} disabled onFocus={onFocus} />);
 
-            await user.click(screen.getByTestId(selectorTestId));
+            await act(async () => {
+                await user.click(screen.getByTestId(selectorTestId));
+            });
             expect(onFocus).not.toHaveBeenCalled();
         });
 
@@ -222,7 +226,9 @@ describe("Timepicker (Floating UI)", () => {
 
             render(<Timepicker id={ID} disabled onBlur={onBlur} />);
 
-            await user.click(screen.getByTestId(selectorTestId));
+            await act(async () => {
+                await user.click(screen.getByTestId(selectorTestId));
+            });
             await act(async () => {
                 await user.click(document.body);
             });
@@ -241,7 +247,9 @@ describe("Timepicker (Floating UI)", () => {
 
             // Test Enter key
             selector.focus();
-            await user.keyboard("{Enter}");
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
             await waitFor(() =>
                 expect(screen.getByTestId(dropdownTestId)).toBeVisible()
             );
@@ -253,7 +261,9 @@ describe("Timepicker (Floating UI)", () => {
 
             const selector = screen.getByTestId(selectorTestId);
             selector.focus();
-            await user.keyboard(" ");
+            await act(async () => {
+                await user.keyboard(" ");
+            });
             await waitFor(() =>
                 expect(screen.getByTestId(dropdownTestId)).toBeVisible()
             );
@@ -265,7 +275,9 @@ describe("Timepicker (Floating UI)", () => {
 
             const selector = screen.getByTestId(selectorTestId);
             selector.focus();
-            await user.keyboard("{ArrowDown}");
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+            });
             await waitFor(() =>
                 expect(screen.getByTestId(dropdownTestId)).toBeVisible()
             );

@@ -84,7 +84,9 @@ describe("TimeRangePicker", () => {
                     />
                 );
 
-                await user.click(screen.getByLabelText(START_LABEL));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(START_LABEL));
+                });
 
                 await waitFor(() => {
                     expect(
@@ -111,7 +113,9 @@ describe("TimeRangePicker", () => {
                     />
                 );
 
-                await user.click(screen.getByLabelText(END_LABEL));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(END_LABEL));
+                });
 
                 await waitFor(() => {
                     expect(
@@ -150,7 +154,9 @@ describe("TimeRangePicker", () => {
                     "10:00am"
                 );
 
-                await user.click(screen.getByLabelText(START_LABEL));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(START_LABEL));
+                });
 
                 // Scroll start should be 10:00am (from the initialised value)
                 await waitFor(() => {
@@ -177,7 +183,9 @@ describe("TimeRangePicker", () => {
                     />
                 );
 
-                await user.click(screen.getByLabelText(START_LABEL));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(START_LABEL));
+                });
 
                 // Assert that scroll time is as expected (from initialScrollStartTime)
                 await waitFor(() => {
@@ -187,9 +195,11 @@ describe("TimeRangePicker", () => {
                 });
 
                 // After clicking on 10:00am selection and reopening the dropdown, first option should be 10:00am instead
-                await user.click(
-                    screen.getByRole("option", { name: "10:00am" })
-                );
+                await act(async () => {
+                    await user.click(
+                        screen.getByRole("option", { name: "10:00am" })
+                    );
+                });
 
                 expect(screen.getByLabelText(START_LABEL)).toHaveValue(
                     "10:00am"
