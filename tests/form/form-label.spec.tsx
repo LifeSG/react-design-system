@@ -92,7 +92,7 @@ describe("FormLabel", () => {
         });
     });
 
-    describe.only("addon", () => {
+    describe("addon", () => {
         it("should render popover addon when addon type is popover", () => {
             render(
                 <FormLabel
