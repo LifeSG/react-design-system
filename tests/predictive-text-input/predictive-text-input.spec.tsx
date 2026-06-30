@@ -1,6 +1,5 @@
-import { render, screen, waitFor } from "@testing-library/react";
+import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 import { PredictiveTextInput } from "../../src/predictive-text-input";
 import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
 
@@ -56,7 +55,9 @@ describe("PredictiveTextInput", () => {
             />
         );
 
-        await user.type(screen.getByPlaceholderText("Enter here..."), "ab");
+        await act(async () => {
+            await user.type(screen.getByPlaceholderText("Enter here..."), "ab");
+        });
         jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
         expect(mockFetchOptions).not.toHaveBeenCalled();
@@ -83,7 +84,12 @@ describe("PredictiveTextInput", () => {
             />
         );
 
-        await user.type(screen.getByPlaceholderText("Enter here..."), "abc");
+        await act(async () => {
+            await user.type(
+                screen.getByPlaceholderText("Enter here..."),
+                "abc"
+            );
+        });
         jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
         expect(mockFetchOptions).toHaveBeenCalledWith("abc");
@@ -117,14 +123,21 @@ describe("PredictiveTextInput", () => {
             />
         );
 
-        await user.type(screen.getByPlaceholderText("Enter here..."), "abc");
+        await act(async () => {
+            await user.type(
+                screen.getByPlaceholderText("Enter here..."),
+                "abc"
+            );
+        });
         jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         });
 
-        await user.click(screen.getByText("Option 1"));
+        await act(async () => {
+            await user.click(screen.getByText("Option 1"));
+        });
 
         await waitForElementToBeRemoved(() =>
             screen.queryByTestId(DROPDOWN_TESTID)
@@ -149,7 +162,12 @@ describe("PredictiveTextInput", () => {
             />
         );
 
-        await user.type(screen.getByPlaceholderText("Enter here..."), "abc");
+        await act(async () => {
+            await user.type(
+                screen.getByPlaceholderText("Enter here..."),
+                "abc"
+            );
+        });
         jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
         await waitFor(() => {
@@ -173,7 +191,12 @@ describe("PredictiveTextInput", () => {
             />
         );
 
-        await user.type(screen.getByPlaceholderText("Enter here..."), "abc");
+        await act(async () => {
+            await user.type(
+                screen.getByPlaceholderText("Enter here..."),
+                "abc"
+            );
+        });
         jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
         await act(async () => {
@@ -206,10 +229,12 @@ describe("PredictiveTextInput", () => {
             />
         );
 
-        await user.type(
-            screen.getByPlaceholderText("Enter here..."),
-            "hello world"
-        );
+        await act(async () => {
+            await user.type(
+                screen.getByPlaceholderText("Enter here..."),
+                "hello world"
+            );
+        });
         jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
         expect(mockFetchOptions).toHaveBeenCalledWith("hello world");
@@ -242,7 +267,12 @@ describe("PredictiveTextInput", () => {
             />
         );
 
-        await user.type(screen.getByPlaceholderText("Enter here..."), "abc");
+        await act(async () => {
+            await user.type(
+                screen.getByPlaceholderText("Enter here..."),
+                "abc"
+            );
+        });
         jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
         expect(mockFetchOptions).not.toHaveBeenCalled();
@@ -263,7 +293,12 @@ describe("PredictiveTextInput", () => {
             />
         );
 
-        await user.type(screen.getByPlaceholderText("Enter here..."), "abc");
+        await act(async () => {
+            await user.type(
+                screen.getByPlaceholderText("Enter here..."),
+                "abc"
+            );
+        });
         jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
         expect(mockFetchOptions).not.toHaveBeenCalled();
@@ -284,10 +319,12 @@ describe("PredictiveTextInput", () => {
                 />
             );
 
-            await user.type(
-                screen.getByPlaceholderText("Enter here..."),
-                "abc"
-            );
+            await act(async () => {
+                await user.type(
+                    screen.getByPlaceholderText("Enter here..."),
+                    "abc"
+                );
+            });
             jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
             await waitFor(() => {
@@ -319,7 +356,9 @@ describe("PredictiveTextInput", () => {
             );
 
             const input = screen.getByPlaceholderText("Enter here...");
-            await user.type(input, "abc");
+            await act(async () => {
+                await user.type(input, "abc");
+            });
             jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
             await waitFor(() => {
@@ -356,17 +395,21 @@ describe("PredictiveTextInput", () => {
                 />
             );
 
-            await user.type(
-                screen.getByPlaceholderText("Enter here..."),
-                "abc"
-            );
+            await act(async () => {
+                await user.type(
+                    screen.getByPlaceholderText("Enter here..."),
+                    "abc"
+                );
+            });
             jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
             });
 
-            await user.click(screen.getByText("Option 1"));
+            await act(async () => {
+                await user.click(screen.getByText("Option 1"));
+            });
 
             await waitForElementToBeRemoved(() =>
                 screen.queryByTestId(DROPDOWN_TESTID)
@@ -400,18 +443,24 @@ describe("PredictiveTextInput", () => {
                 </>
             );
 
-            await user.keyboard("{Tab}");
+            await act(async () => {
+                await user.keyboard("{Tab}");
+            });
 
             expect(screen.getByTestId("before")).toHaveFocus();
 
-            await user.keyboard("{Tab} ");
+            await act(async () => {
+                await user.keyboard("{Tab} ");
+            });
 
             expect(screen.getByPlaceholderText("Enter here...")).toHaveFocus();
 
-            await user.type(
-                screen.getByPlaceholderText("Enter here..."),
-                "abc"
-            );
+            await act(async () => {
+                await user.type(
+                    screen.getByPlaceholderText("Enter here..."),
+                    "abc"
+                );
+            });
             jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
             await waitFor(() => {
@@ -476,10 +525,12 @@ describe("PredictiveTextInput", () => {
                 />
             );
 
-            await user.type(
-                screen.getByPlaceholderText("Enter here..."),
-                "abc"
-            );
+            await act(async () => {
+                await user.type(
+                    screen.getByPlaceholderText("Enter here..."),
+                    "abc"
+                );
+            });
             jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
             await waitFor(() => {
@@ -522,10 +573,12 @@ describe("PredictiveTextInput", () => {
                 />
             );
 
-            await user.type(
-                screen.getByPlaceholderText("Enter here..."),
-                "abc"
-            );
+            await act(async () => {
+                await user.type(
+                    screen.getByPlaceholderText("Enter here..."),
+                    "abc"
+                );
+            });
             jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
@@ -581,7 +634,9 @@ describe("PredictiveTextInput", () => {
             const input = screen.getByPlaceholderText("Enter here...");
             expect(input).toHaveValue("Option 1");
 
-            await user.type(input, "abc");
+            await act(async () => {
+                await user.type(input, "abc");
+            });
             jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
             await waitFor(() => {
@@ -625,7 +680,9 @@ describe("PredictiveTextInput", () => {
             const input = screen.getByPlaceholderText("Enter here...");
             expect(input).toHaveValue("Option 1");
 
-            await user.type(input, "abc");
+            await act(async () => {
+                await user.type(input, "abc");
+            });
             jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));

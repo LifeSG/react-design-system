@@ -1,4 +1,4 @@
-import { render, screen, waitFor, within } from "@testing-library/react";
+import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Pagination } from "src/pagination";
 
@@ -329,12 +329,18 @@ describe("Pagination", () => {
                 />
             );
 
-            await user.click(screen.getByTestId(SELECTOR_TESTID));
+            await act(async () => {
+                await user.click(screen.getByTestId(SELECTOR_TESTID));
+            });
 
             const dropdown = await screen.findByTestId(DROPDOWN_TESTID);
-            expect(within(dropdown).queryByText("10 per page")).toBeVisible();
-            expect(within(dropdown).queryByText("20 per page")).toBeVisible();
-            expect(within(dropdown).queryByText("30 per page")).toBeVisible();
+            await waitFor(async () => {
+                await expect(dropdown).toBeVisible();
+            });
+
+            expect(within(dropdown).getByText("10 per page")).toBeVisible();
+            expect(within(dropdown).getByText("20 per page")).toBeVisible();
+            expect(within(dropdown).getByText("30 per page")).toBeVisible();
         });
 
         it("should show the custom options when selector is clicked", async () => {
@@ -352,11 +358,17 @@ describe("Pagination", () => {
                 />
             );
 
-            await user.click(screen.getByTestId(SELECTOR_TESTID));
+            await act(async () => {
+                await user.click(screen.getByTestId(SELECTOR_TESTID));
+            });
 
             const dropdown = await screen.findByTestId(DROPDOWN_TESTID);
-            expect(within(dropdown).queryByText("1 per page")).toBeVisible();
-            expect(within(dropdown).queryByText("2 per page")).toBeVisible();
+            await waitFor(async () => {
+                await expect(dropdown).toBeVisible();
+            });
+
+            expect(within(dropdown).getByText("1 per page")).toBeVisible();
+            expect(within(dropdown).getByText("2 per page")).toBeVisible();
         });
 
         describe("onPageSizeChange", () => {
@@ -373,7 +385,9 @@ describe("Pagination", () => {
                     />
                 );
 
-                await user.click(screen.getByTestId(SELECTOR_TESTID));
+                await act(async () => {
+                    await user.click(screen.getByTestId(SELECTOR_TESTID));
+                });
 
                 await waitFor(() => {
                     expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -397,7 +411,9 @@ describe("Pagination", () => {
                     />
                 );
 
-                await user.click(screen.getByTestId(SELECTOR_TESTID));
+                await act(async () => {
+                    await user.click(screen.getByTestId(SELECTOR_TESTID));
+                });
 
                 await waitFor(() => {
                     expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
