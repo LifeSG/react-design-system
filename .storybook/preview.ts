@@ -16,6 +16,7 @@ import {
     SGWDigitalLobbyTheme,
     SMGSTheme,
     CareerCompassTheme,
+    ToteBoardTheme,
 } from "../src/theme";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
@@ -37,6 +38,7 @@ const preview: Preview = {
                 SPF: SPFTheme,
                 SMGS: SMGSTheme,
                 CareerCompass: CareerCompassTheme,
+                ToteBoard: ToteBoardTheme,
             },
             Provider: ThemeProvider,
         }),
