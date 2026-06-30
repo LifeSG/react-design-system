@@ -10,14 +10,6 @@ const SIDENAV_DRAWER_TEST_ID = "sidenav-drawer";
 // UNIT TESTS
 // =============================================================================
 describe("Sidenav", () => {
-    beforeAll(() => {
-        jest.useFakeTimers();
-    });
-
-    afterAll(() => {
-        jest.useRealTimers();
-    });
-
     beforeEach(() => {
         jest.resetAllMocks();
 
@@ -122,9 +114,7 @@ describe("Sidenav", () => {
     });
 
     it("should trigger onClick when clicking sidenav item without subitems", async () => {
-        const user = userEvent.setup({
-            advanceTimers: jest.advanceTimersByTime,
-        });
+        const user = userEvent.setup();
         const mockOnClick = jest.fn();
 
         render(
@@ -148,9 +138,7 @@ describe("Sidenav", () => {
     });
 
     it("should trigger onClick when selecting sidenav item without subitems", async () => {
-        const user = userEvent.setup({
-            advanceTimers: jest.advanceTimersByTime,
-        });
+        const user = userEvent.setup();
         const mockOnClick = jest.fn();
 
         render(
@@ -175,9 +163,7 @@ describe("Sidenav", () => {
     });
 
     it("should open drawer if Sidenav item contain children", async () => {
-        const user = userEvent.setup({
-            advanceTimers: jest.advanceTimersByTime,
-        });
+        const user = userEvent.setup();
         const ITEM = "Dashboard";
         const DRAWER_ITEM = "Mini Dashboard";
         const DRAWER_ITEM_2 = "Big Dashboard";
@@ -230,9 +216,7 @@ describe("Sidenav", () => {
     });
 
     it("should apply the correct tab sequence", async () => {
-        const user = userEvent.setup({
-            advanceTimers: jest.advanceTimersByTime,
-        });
+        const user = userEvent.setup();
         const ITEM_1 = "Dashboard";
         const ITEM_2 = "Profile";
         const DRAWER_ITEM_1 = "Mini Dashboard";
