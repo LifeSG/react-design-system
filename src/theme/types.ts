@@ -51,7 +51,8 @@ export type ColourScheme =
     | "imda"
     | "spf"
     | "smgs"
-    | "careercompass";
+    | "careercompass"
+    | "toteboard";
 export type FontScheme =
     | "default"
     | "bookingsg"
@@ -62,7 +63,8 @@ export type FontScheme =
     | "sgwdigitallobby"
     | "imda"
     | "spf"
-    | "oneservice";
+    | "oneservice"
+    | "toteboard";
 export type MotionScheme = "default";
 export type BorderScheme = "default";
 export type SpacingScheme = "default";

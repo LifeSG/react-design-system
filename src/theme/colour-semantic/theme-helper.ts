@@ -36,6 +36,7 @@ export const ColourSpec: ThemeCollectionSpec<
         spf: SPFColourSet,
         smgs: LifeSGColourSet,
         careercompass: LifeSGColourSet,
+        toteboard: LifeSGColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -59,6 +60,7 @@ export const DarkColourSpec: ThemeCollectionSpec<
         spf: LifeSGDarkColourSet,
         smgs: LifeSGDarkColourSet,
         careercompass: LifeSGDarkColourSet,
+        toteboard: LifeSGDarkColourSet,
     },
     defaultValue: "lifesg",
 };

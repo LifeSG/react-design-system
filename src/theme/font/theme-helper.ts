@@ -24,6 +24,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
         imda: IMDAFontSet,
         spf: SPFFontSet,
         oneservice: OneServiceFontSet,
+        toteboard: DefaultFontSet,
     },
     defaultValue: "default",
 };

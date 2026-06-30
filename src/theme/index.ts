@@ -354,3 +354,22 @@ export const SMGSTheme = {
     light: createThemeWithColourMode(SMGSThemeBase, "light"),
     dark: createThemeWithColourMode(SMGSThemeBase, "dark"),
 };
+
+const ToteBoardThemeBase: ThemeSpec = {
+    colourScheme: "toteboard",
+    fontScheme: "toteboard",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "lifesg",
+    componentScheme: "default",
+};
+
+export const ToteBoardTheme = {
+    ...ToteBoardThemeBase,
+    light: createThemeWithColourMode(ToteBoardThemeBase, "light"),
+    dark: createThemeWithColourMode(ToteBoardThemeBase, "dark"),
+};
