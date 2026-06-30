@@ -401,12 +401,14 @@ describe("FileUpload", () => {
                     description: "existing",
                 },
             ];
+            const onEdit = jest.fn();
             const onDelete = jest.fn();
 
             const rendered = render(
                 <FileUpload
                     fileItems={fileItems}
                     editableFileItems
+                    onEdit={onEdit}
                     onDelete={onDelete}
                 />
             );
@@ -424,6 +426,7 @@ describe("FileUpload", () => {
             expect(
                 rendered.getByTestId("img-1-edit-button")
             ).toBeInTheDocument();
+            expect(onEdit).not.toHaveBeenCalled();
             expect(onDelete).not.toHaveBeenCalled();
             expect(screen.getByText("existing")).toBeInTheDocument();
         });
