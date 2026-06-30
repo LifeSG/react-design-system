@@ -436,23 +436,29 @@ test.describe("FileUpload", () => {
         });
 
         test("Focus states", async ({ story }) => {
-            const sortableItem = story.locators.fileUpload.locator("#sort-1");
+            await test.step("Focus on sortable item", async () => {
+                await story.locators.internal.dropzone.focus();
 
-            await expect(sortableItem).toBeVisible();
-            await sortableItem.focus();
-            await expect(sortableItem).toBeFocused();
+                await story.page.keyboard.press("Tab");
 
-            await compareScreenshot(story, "focus-item", {
-                locator: story.locators.fileUpload,
+                const sortableItem =
+                    story.locators.fileUpload.locator("#sort-1");
+
+                await expect(sortableItem).toBeFocused();
+                await compareScreenshot(story, "focus-item", {
+                    locator: story.locators.fileUpload,
+                });
             });
 
-            await story.page.keyboard.press("Space");
+            await test.step("Enable sorting", async () => {
+                await story.page.keyboard.press("Space");
 
-            await compareScreenshot(story, "focus-sorting", {
-                locator: story.locators.fileUpload,
+                await compareScreenshot(story, "focus-sorting", {
+                    locator: story.locators.fileUpload,
+                });
+
+                await story.page.keyboard.press("Space");
             });
-
-            await story.page.keyboard.press("Space");
         });
     });
 
