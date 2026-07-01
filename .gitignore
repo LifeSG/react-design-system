@@ -28,3 +28,4 @@ junit.xml
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+.screenshot-manifest*.txt
