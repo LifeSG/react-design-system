@@ -23,7 +23,7 @@ export default defineConfig({
                   "./e2e/screenshot-manifest-reporter.ts",
                   {
                       outputFile: `.screenshot-manifest-${
-                          (process.env.SHARD || "full").replace(/\//g, "-")
+                          (process.env.SHARD || "full").split("/")[0]
                       }.txt`,
                   },
               ],
