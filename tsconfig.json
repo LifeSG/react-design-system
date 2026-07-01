@@ -30,6 +30,7 @@
     },
     "include": [
         "src/**/*",
+        "scripts/**/*",
         "tests/**/*",
         "custom-types/*",
         "stories",

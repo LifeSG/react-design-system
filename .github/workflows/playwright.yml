@@ -56,12 +56,21 @@ jobs:
         run: npm run test-e2e:setup
       - name: Run Playwright tests (shard ${{ matrix.shard }}/4)
         run: ./scripts/e2e-ci-test.sh ${{ matrix.shard }}/4
+        env:
+          SHARD: ${{ matrix.shard }}
       - name: Upload blob report
         uses: actions/upload-artifact@v7
         if: ${{ !cancelled() }}
         with:
           name: blob-report-${{ matrix.shard }}
           path: blob-report/
+          retention-days: 1
+      - name: Upload screenshot manifest
+        uses: actions/upload-artifact@v7
+        if: ${{ !cancelled() }}
+        with:
+          name: screenshot-manifest-${{ matrix.shard }}
+          path: .screenshot-manifest-*.txt
           retention-days: 1
 
   merge-reports:
@@ -82,8 +91,16 @@ jobs:
           pattern: blob-report-*
           path: blob-reports/
           merge-multiple: true
+      - name: Download all screenshot manifests
+        uses: actions/download-artifact@v8
+        with:
+          pattern: screenshot-manifest-*
+          path: screenshot-manifests/
+          merge-multiple: true
       - name: Merge reports
         run: npx playwright merge-reports --reporter=github,html ./blob-reports
+      - name: Check for stale screenshots
+        run: npx tsx scripts/check-stale-screenshots.ts --manifest='screenshot-manifests/.screenshot-manifest-*.txt'
       - uses: actions/upload-artifact@v7
         with:
           name: playwright-report
