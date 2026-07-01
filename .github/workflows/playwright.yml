@@ -70,7 +70,7 @@ jobs:
         if: ${{ !cancelled() }}
         with:
           name: screenshot-manifest-${{ matrix.shard }}
-          path: .screenshot-manifest-*.txt
+          path: .screenshot-manifest-${{ matrix.shard }}.txt
           retention-days: 1
 
   merge-reports:
@@ -100,6 +100,7 @@ jobs:
       - name: Merge reports
         run: npx playwright merge-reports --reporter=github,html ./blob-reports
       - name: Check for stale screenshots
+        if: ${{ needs.test.result == 'success' }}
         run: npx tsx scripts/check-stale-screenshots.ts --manifest='screenshot-manifests/.screenshot-manifest-*.txt'
       - uses: actions/upload-artifact@v7
         with:
