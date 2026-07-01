@@ -1,0 +1,308 @@
+/* ==========================================================================
+   Font Presets
+   Shared font declarations grouped by font family and metrics.
+   ========================================================================== */
+
+/* --------------------------------------------------------------------------
+   SHARED METRICS GROUP
+   bookingsg, careercompass, smgs, imda, supportgowhere share identical metrics.
+   mylegacy and a11y-playground share most metrics (override form sizes below).
+   -------------------------------------------------------------------------- */
+:is(
+    [data-fds-theme="a11y-playground"],
+    [data-fds-theme="bookingsg"],
+    [data-fds-theme="careercompass"],
+    [data-fds-theme="imda"],
+    [data-fds-theme="mylegacy"],
+    [data-fds-theme="smgs"],
+    [data-fds-theme="supportgowhere"]
+) {
+    --fds-font-heading-size-xxl: 3rem;
+    --fds-font-heading-size-xl: 2.5rem;
+    --fds-font-heading-size-lg: 2rem;
+    --fds-font-heading-size-md: 1.625rem;
+    --fds-font-heading-size-sm: 1.375rem;
+    --fds-font-heading-size-xs: 1.125rem;
+    --fds-font-heading-lh-xxl: 3.5rem;
+    --fds-font-heading-lh-xl: 3rem;
+    --fds-font-heading-lh-lg: 2.5rem;
+    --fds-font-heading-lh-md: 2.25rem;
+    --fds-font-heading-lh-sm: 1.75rem;
+    --fds-font-heading-lh-xs: 1.625rem;
+    --fds-font-heading-ls-xxl: -0.035rem;
+    --fds-font-heading-ls-xl: -0.02rem;
+    --fds-font-heading-ls-lg: -0.02rem;
+    --fds-font-heading-ls-md: 0rem;
+    --fds-font-heading-ls-sm: 0rem;
+    --fds-font-heading-ls-xs: 0rem;
+    --fds-font-weight-light: 300;
+    --fds-font-weight-regular: 400;
+    --fds-font-weight-semibold: 600;
+    --fds-font-weight-bold: 700;
+    --fds-font-body-size-baseline: 1.125rem;
+    --fds-font-body-size-md: 1rem;
+    --fds-font-body-size-sm: 0.875rem;
+    --fds-font-body-size-xs: 0.75rem;
+    --fds-font-body-lh-baseline: 1.625rem;
+    --fds-font-body-lh-md: 1.5rem;
+    --fds-font-body-lh-sm: 1.625rem;
+    --fds-font-body-lh-xs: 1.25rem;
+    --fds-font-body-ls-baseline: 0rem;
+    --fds-font-body-ls-md: 0.009rem;
+    --fds-font-body-ls-sm: 0.008rem;
+    --fds-font-body-ls-xs: 0.008rem;
+    --fds-font-form-label-lh: 1.5rem;
+    --fds-font-form-description-lh: 1.625rem;
+}
+
+/* Form sizes for the majority subgroup */
+:is(
+    [data-fds-theme="bookingsg"],
+    [data-fds-theme="careercompass"],
+    [data-fds-theme="imda"],
+    [data-fds-theme="smgs"],
+    [data-fds-theme="supportgowhere"]
+) {
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
+    --fds-font-form-label-ls: 0.009rem;
+    --fds-font-form-description-ls: 0.008rem;
+}
+
+/* Form sizes for mylegacy and a11y-playground (larger) */
+:is([data-fds-theme="a11y-playground"], [data-fds-theme="mylegacy"]) {
+    --fds-font-form-label-size: 1.125rem;
+    --fds-font-form-description-size: 1rem;
+    --fds-font-form-label-ls: 0rem;
+    --fds-font-form-description-ls: 0.009rem;
+}
+
+/* --------------------------------------------------------------------------
+   FONT VARIANT
+   -------------------------------------------------------------------------- */
+:is(
+    [data-fds-theme="a11y-playground"],
+    [data-fds-theme="bookingsg"],
+    [data-fds-theme="careercompass"],
+    [data-fds-theme="imda"],
+    [data-fds-theme="pa"],
+    [data-fds-theme="sgw-digital-lobby"],
+    [data-fds-theme="smgs"],
+    [data-fds-theme="spf"],
+    [data-fds-theme="supportgowhere"]
+) {
+    --fds-font-variant: no-common-ligatures;
+}
+
+:is([data-fds-theme="mylegacy"], [data-fds-theme="oneservice"]) {
+    --fds-font-variant: normal;
+    --fds-font-family-heading: "Open Sans";
+    --fds-font-family-body: "Open Sans";
+}
+
+/* --------------------------------------------------------------------------
+   FONT FAMILIES
+   -------------------------------------------------------------------------- */
+:is(
+    [data-fds-theme="bookingsg"],
+    [data-fds-theme="careercompass"],
+    [data-fds-theme="smgs"]
+) {
+    --fds-font-family-heading: "Plus Jakarta Sans";
+    --fds-font-family-body: "Plus Jakarta Sans";
+}
+
+:is([data-fds-theme="sgw-digital-lobby"], [data-fds-theme="supportgowhere"]) {
+    --fds-font-family-heading: "Libre Franklin";
+    --fds-font-family-body: "Libre Franklin";
+}
+
+[data-fds-theme="imda"] {
+    --fds-font-family-heading: "Montserrat";
+    --fds-font-family-body: "Montserrat";
+}
+
+[data-fds-theme="a11y-playground"] {
+    --fds-font-family-heading: "Atkinson Hyperlegible Next";
+    --fds-font-family-body: "Atkinson Hyperlegible Next";
+}
+
+/* --------------------------------------------------------------------------
+   STANDALONE FONT SYSTEMS
+   These themes have unique metrics that don't overlap with the shared group.
+   -------------------------------------------------------------------------- */
+[data-fds-theme="oneservice"] {
+    --fds-font-heading-size-xxl: 2.5rem;
+    --fds-font-heading-size-xl: 2rem;
+    --fds-font-heading-size-lg: 1.75rem;
+    --fds-font-heading-size-md: 1.375rem;
+    --fds-font-heading-size-sm: 1.125rem;
+    --fds-font-heading-size-xs: 1rem;
+    --fds-font-heading-lh-xxl: 3.5rem;
+    --fds-font-heading-lh-xl: 3rem;
+    --fds-font-heading-lh-lg: 2.625rem;
+    --fds-font-heading-lh-md: 2rem;
+    --fds-font-heading-lh-sm: 1.625rem;
+    --fds-font-heading-lh-xs: 1.5rem;
+    --fds-font-heading-ls-xxl: 0rem;
+    --fds-font-heading-ls-xl: 0rem;
+    --fds-font-heading-ls-lg: 0rem;
+    --fds-font-heading-ls-md: 0rem;
+    --fds-font-heading-ls-sm: 0rem;
+    --fds-font-heading-ls-xs: 0rem;
+    --fds-font-weight-light: 300;
+    --fds-font-weight-regular: 400;
+    --fds-font-weight-semibold: 600;
+    --fds-font-weight-bold: 700;
+    --fds-font-body-size-baseline: 1rem;
+    --fds-font-body-size-md: 0.875rem;
+    --fds-font-body-size-sm: 0.75rem;
+    --fds-font-body-size-xs: 0.75rem;
+    --fds-font-body-lh-baseline: 1.5rem;
+    --fds-font-body-lh-md: 1.313rem;
+    --fds-font-body-lh-sm: 1.125rem;
+    --fds-font-body-lh-xs: 1.125rem;
+    --fds-font-body-ls-baseline: 0rem;
+    --fds-font-body-ls-md: 0rem;
+    --fds-font-body-ls-sm: 0rem;
+    --fds-font-body-ls-xs: 0rem;
+    --fds-font-form-label-size: 0.875rem;
+    --fds-font-form-description-size: 0.875rem;
+    --fds-font-form-label-lh: 1.313rem;
+    --fds-font-form-description-lh: 1.313rem;
+    --fds-font-form-label-ls: 0rem;
+    --fds-font-form-description-ls: 0rem;
+}
+
+[data-fds-theme="pa"] {
+    --fds-font-family-heading: "Lato";
+    --fds-font-family-body: "Lato";
+    --fds-font-heading-size-xxl: 2.5rem;
+    --fds-font-heading-size-xl: 2rem;
+    --fds-font-heading-size-lg: 1.75rem;
+    --fds-font-heading-size-md: 1.5rem;
+    --fds-font-heading-size-sm: 1.25rem;
+    --fds-font-heading-size-xs: 1rem;
+    --fds-font-heading-lh-xxl: 3rem;
+    --fds-font-heading-lh-xl: 2.5rem;
+    --fds-font-heading-lh-lg: 2.25rem;
+    --fds-font-heading-lh-md: 2rem;
+    --fds-font-heading-lh-sm: 2rem;
+    --fds-font-heading-lh-xs: 1.75rem;
+    --fds-font-heading-ls-xxl: -0.032rem;
+    --fds-font-heading-ls-xl: -0.032rem;
+    --fds-font-heading-ls-lg: 0rem;
+    --fds-font-heading-ls-md: 0rem;
+    --fds-font-heading-ls-sm: 0rem;
+    --fds-font-heading-ls-xs: 0rem;
+    --fds-font-weight-light: 300;
+    --fds-font-weight-regular: 400;
+    --fds-font-weight-semibold: 600;
+    --fds-font-weight-bold: 700;
+    --fds-font-body-size-baseline: 1rem;
+    --fds-font-body-size-md: 0.875rem;
+    --fds-font-body-size-sm: 0.75rem;
+    --fds-font-body-size-xs: 0.625rem;
+    --fds-font-body-lh-baseline: 1.75rem;
+    --fds-font-body-lh-md: 1.5rem;
+    --fds-font-body-lh-sm: 1.25rem;
+    --fds-font-body-lh-xs: 1.25rem;
+    --fds-font-body-ls-baseline: 0rem;
+    --fds-font-body-ls-md: 0.014rem;
+    --fds-font-body-ls-sm: 0.012rem;
+    --fds-font-body-ls-xs: 0.012rem;
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
+    --fds-font-form-label-lh: 1.5rem;
+    --fds-font-form-description-lh: 1.6rem;
+    --fds-font-form-label-ls: 0.014rem;
+    --fds-font-form-description-ls: 0.012rem;
+}
+
+[data-fds-theme="spf"] {
+    --fds-font-family-heading: "Public Sans";
+    --fds-font-family-body: "Public Sans";
+    --fds-font-heading-size-xxl: 3.75rem;
+    --fds-font-heading-size-xl: 3rem;
+    --fds-font-heading-size-lg: 2.5rem;
+    --fds-font-heading-size-md: 2rem;
+    --fds-font-heading-size-sm: 1.75rem;
+    --fds-font-heading-size-xs: 1.5rem;
+    --fds-font-heading-lh-xxl: 4.5rem;
+    --fds-font-heading-lh-xl: 3.5rem;
+    --fds-font-heading-lh-lg: 3rem;
+    --fds-font-heading-lh-md: 2.25rem;
+    --fds-font-heading-lh-sm: 2rem;
+    --fds-font-heading-lh-xs: 1.75rem;
+    --fds-font-heading-ls-xxl: -0.035rem;
+    --fds-font-heading-ls-xl: -0.02rem;
+    --fds-font-heading-ls-lg: -0.02rem;
+    --fds-font-heading-ls-md: 0rem;
+    --fds-font-heading-ls-sm: 0rem;
+    --fds-font-heading-ls-xs: 0rem;
+    --fds-font-weight-light: 300;
+    --fds-font-weight-regular: 400;
+    --fds-font-weight-semibold: 600;
+    --fds-font-weight-bold: 700;
+    --fds-font-body-size-baseline: 1.2rem;
+    --fds-font-body-size-md: 1.125rem;
+    --fds-font-body-size-sm: 1rem;
+    --fds-font-body-size-xs: 0.875rem;
+    --fds-font-body-lh-baseline: 1.5rem;
+    --fds-font-body-lh-md: 1.5rem;
+    --fds-font-body-lh-sm: 1.5rem;
+    --fds-font-body-lh-xs: 1.125rem;
+    --fds-font-body-ls-baseline: 0rem;
+    --fds-font-body-ls-md: 0.009rem;
+    --fds-font-body-ls-sm: 0.008rem;
+    --fds-font-body-ls-xs: 0.008rem;
+    --fds-font-form-label-size: 1.125rem;
+    --fds-font-form-description-size: 1rem;
+    --fds-font-form-label-lh: 1.5rem;
+    --fds-font-form-description-lh: 1.625rem;
+    --fds-font-form-label-ls: 0.009rem;
+    --fds-font-form-description-ls: 0.008rem;
+}
+
+[data-fds-theme="sgw-digital-lobby"] {
+    --fds-font-heading-size-xxl: 3.75rem;
+    --fds-font-heading-size-xl: 3rem;
+    --fds-font-heading-size-lg: 2.5rem;
+    --fds-font-heading-size-md: 2rem;
+    --fds-font-heading-size-sm: 1.625rem;
+    --fds-font-heading-size-xs: 1.375rem;
+    --fds-font-heading-lh-xxl: 4.5rem;
+    --fds-font-heading-lh-xl: 3.5rem;
+    --fds-font-heading-lh-lg: 3rem;
+    --fds-font-heading-lh-md: 2.5rem;
+    --fds-font-heading-lh-sm: 2.25rem;
+    --fds-font-heading-lh-xs: 1.75rem;
+    --fds-font-heading-ls-xxl: -0.035rem;
+    --fds-font-heading-ls-xl: -0.035rem;
+    --fds-font-heading-ls-lg: -0.02rem;
+    --fds-font-heading-ls-md: -0.02rem;
+    --fds-font-heading-ls-sm: 0rem;
+    --fds-font-heading-ls-xs: 0rem;
+    --fds-font-weight-light: 300;
+    --fds-font-weight-regular: 400;
+    --fds-font-weight-semibold: 600;
+    --fds-font-weight-bold: 700;
+    --fds-font-body-size-baseline: 1.375rem;
+    --fds-font-body-size-md: 1.25rem;
+    --fds-font-body-size-sm: 1.125rem;
+    --fds-font-body-size-xs: 1rem;
+    --fds-font-body-lh-baseline: 1.75rem;
+    --fds-font-body-lh-md: 1.625rem;
+    --fds-font-body-lh-sm: 1.625rem;
+    --fds-font-body-lh-xs: 1.5rem;
+    --fds-font-body-ls-baseline: 0rem;
+    --fds-font-body-ls-md: 0rem;
+    --fds-font-body-ls-sm: 0rem;
+    --fds-font-body-ls-xs: 0.009rem;
+    --fds-font-form-label-size: 1.25rem;
+    --fds-font-form-description-size: 1.125rem;
+    --fds-font-form-label-lh: 1.625rem;
+    --fds-font-form-description-lh: 1.625rem;
+    --fds-font-form-label-ls: 0rem;
+    --fds-font-form-description-ls: 0rem;
+}
