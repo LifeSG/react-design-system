@@ -14,6 +14,7 @@ import {
 } from "react";
 
 import { Button } from "../../button";
+import type { FormLabelProps } from "../../form/types";
 import { ProgressBar } from "../../shared/progress-bar";
 import { Typography } from "../../typography";
 import { StringHelper } from "../../util";
@@ -26,6 +27,7 @@ import type { FileListItemProps } from "./types";
 
 interface Props extends FileListItemProps {
     readOnly?: boolean | undefined;
+    descriptionLabel?: FormLabelProps | undefined;
 }
 
 const Component = ({
@@ -35,6 +37,7 @@ const Component = ({
     wrapperWidth,
     disabled,
     readOnly,
+    descriptionLabel,
     onDelete,
     onEditClick,
 }: Props) => {
@@ -72,6 +75,7 @@ const Component = ({
     // Local variables
     const isLoading = progress < 1;
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
+    const hasInlineActions = !!description && !!editable;
     const focusType: ItemFocusType = activeId
         ? activeId === id
             ? "self"
@@ -200,9 +204,14 @@ const Component = ({
                 {formattedName}
             </Typography.BodyMD>
             {description && (
-                <Typography.BodyMD className={styles.itemDescriptionText}>
-                    {description}
-                </Typography.BodyMD>
+                <>
+                    <Typography.BodyMD className={styles.itemDescriptionLabel}>
+                        {descriptionLabel?.children ?? "Photo description"}
+                    </Typography.BodyMD>
+                    <Typography.BodyMD className={styles.itemDescriptionText}>
+                        {description}
+                    </Typography.BodyMD>
+                </>
             )}
         </>
     );
@@ -247,58 +256,104 @@ const Component = ({
         </>
     );
 
-    const renderWithThumbnail = (thumbnailImageDataUrl: string) => (
-        <>
-            <FileListItemThumbnail
-                thumbnailImageDataUrl={thumbnailImageDataUrl}
-                fileType={fileItem.type}
-                data-testid={`${id}-thumbnail`}
+    const renderInlineActions = () => (
+        <div className={styles.inlineActionContainer}>
+            <Button
+                key="edit"
+                data-testid={`${id}-edit-button`}
+                data-no-dnd="true"
+                type="button"
+                styleType="light"
+                sizeType="small"
+                aria-label={`edit ${name}`}
+                disabled={shouldDisable()}
+                onClick={handleEdit}
+                onKeyDown={handleKeyDown}
+                icon={<PencilIcon aria-hidden />}
+                className={styles.iconButton}
             />
-            <div className={styles.extendedNameSection}>
-                <div ref={detailSectionRef} className={styles.nameSection}>
-                    {renderNameDescription()}
-                </div>
-                <div
-                    className={styles.fileSizeSection}
-                    data-mobile-visibility={isLoading ? "hidden" : "expand"}
-                >
-                    <Typography.BodyMD className={styles.fileSizeText}>
-                        {fileSize}
-                    </Typography.BodyMD>
-                </div>
-            </div>
-        </>
+            <Button
+                key="delete"
+                data-testid={`${id}-delete-button`}
+                data-no-dnd="true"
+                type="button"
+                styleType="light"
+                sizeType="small"
+                aria-label={`delete ${name}`}
+                disabled={shouldDisable()}
+                onClick={handleDelete}
+                onKeyDown={handleKeyDown}
+                icon={<BinIcon aria-hidden />}
+                className={styles.iconButton}
+            />
+        </div>
     );
 
-    const renderDefault = () => (
-        <>
-            <div ref={detailSectionRef} className={styles.nameSection}>
-                {renderNameDescription()}
-            </div>
-            <div
-                className={styles.fileSizeSection}
-                data-mobile-visibility={isLoading ? "hidden" : "expand"}
-            >
-                <Typography.BodyMD className={styles.fileSizeText}>
-                    {fileSize}
-                </Typography.BodyMD>
-            </div>
-        </>
+    const renderDescriptionContent = () => (
+        <div ref={detailSectionRef} className={styles.extendedNameSection}>
+            <Typography.BodyMD weight="semibold">
+                {formattedName}
+            </Typography.BodyMD>
+            <Typography.BodyMD className={styles.itemDescriptionLabel}>
+                {descriptionLabel?.children ?? "Photo description"}
+            </Typography.BodyMD>
+            <Typography.BodyMD className={styles.itemDescriptionText}>
+                {description}
+            </Typography.BodyMD>
+            <Typography.BodyMD className={styles.descriptionFileSizeText}>
+                {fileSize}
+            </Typography.BodyMD>
+            {!readOnly && hasInlineActions && renderInlineActions()}
+        </div>
     );
 
-    const renderContents = () => {
-        let content: JSX.Element;
+    const renderFileContent = (thumbnailImageDataUrl?: string) => {
         const shouldShowThumbnail =
             !!thumbnailImageDataUrl ||
             fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
 
-        if (errorMessage) {
-            content = renderErrorState();
-        } else if (shouldShowThumbnail) {
-            content = renderWithThumbnail(thumbnailImageDataUrl || "");
-        } else {
-            content = renderDefault();
+        const thumbnail = shouldShowThumbnail ? (
+            <FileListItemThumbnail
+                thumbnailImageDataUrl={thumbnailImageDataUrl || ""}
+                fileType={fileItem.type}
+                data-testid={`${id}-thumbnail`}
+            />
+        ) : null;
+
+        if (hasInlineActions) {
+            return (
+                <>
+                    {thumbnail}
+                    {renderDescriptionContent()}
+                </>
+            );
         }
+
+        return (
+            <>
+                {thumbnail}
+                <div ref={detailSectionRef} className={styles.nameSection}>
+                    {renderNameDescription()}
+                    {!isLoading && (
+                        <Typography.BodyMD
+                            className={styles.descriptionFileSizeText}
+                        >
+                            {fileSize}
+                        </Typography.BodyMD>
+                    )}
+                </div>
+            </>
+        );
+    };
+
+    const renderContents = () => {
+        const shouldShowThumbnail =
+            !!thumbnailImageDataUrl ||
+            fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
+
+        const content = errorMessage
+            ? renderErrorState()
+            : renderFileContent(thumbnailImageDataUrl);
 
         return (
             <div
@@ -403,7 +458,7 @@ const Component = ({
                 data-stack-mobile={!errorMessage && (isLoading || editable)}
             >
                 {renderContents()}
-                {!readOnly && renderActions()}
+                {!readOnly && !hasInlineActions && renderActions()}
             </div>
         </li>
     );

@@ -13,6 +13,11 @@ class StoryPage extends AbstractStoryPage {
             uploadInput: Locator;
             uploadButton: Locator;
             dragOverlayText: Locator;
+            editDisplay: (fileId: string) => Locator;
+            textarea: (fileId: string) => Locator;
+            saveButton: (fileId: string) => Locator;
+            cancelButton: (fileId: string) => Locator;
+            editButton: (fileId: string) => Locator;
         };
         readonlyComponent: Locator;
         disabledComponent: Locator;
@@ -32,6 +37,16 @@ class StoryPage extends AbstractStoryPage {
                     name: "Upload files",
                 }),
                 dragOverlayText: page.getByText("Drop files here"),
+                editDisplay: (fileId: string) =>
+                    page.getByTestId(`${fileId}-edit-display`),
+                textarea: (fileId: string) =>
+                    page.getByTestId(`${fileId}-textarea-base`),
+                saveButton: (fileId: string) =>
+                    page.getByTestId(`${fileId}-save-button`),
+                cancelButton: (fileId: string) =>
+                    page.getByTestId(`${fileId}-cancel-button`),
+                editButton: (fileId: string) =>
+                    page.getByTestId(`${fileId}-edit-button`),
             },
             readonlyComponent: page.getByTestId("file-upload-readonly"),
             disabledComponent: page.getByTestId("file-upload-disabled"),
@@ -303,79 +318,87 @@ test.describe("FileUpload", () => {
     });
 
     test.describe(() => {
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("editable");
-            });
-
-            test("Editable", async ({ story }) => {
-                await test.step("States mount", async () => {
-                    await compareScreenshot(story, "mount");
-                });
-
-                await test.step("Save description", async () => {
-                    await expect(
-                        story.locators.fileUpload.getByTestId(
-                            "editable-image-edit-display"
-                        )
-                    ).toBeVisible();
-
-                    const textarea = story.locators.fileUpload.getByTestId(
-                        "editable-image-textarea-base"
-                    );
-                    const saveButton = story.locators.fileUpload.getByTestId(
-                        "editable-image-save-button"
-                    );
-
-                    await expect(saveButton).toBeDisabled();
-                    await expect(textarea).toBeVisible();
-
-                    await textarea.fill("A person walking beside a tree");
-
-                    await expect(saveButton).not.toBeDisabled();
-                    await saveButton.click();
-                    await expect(
-                        story.locators.fileUpload.getByTestId(
-                            "editable-image-edit-button"
-                        )
-                    ).toBeVisible();
-
-                    await compareScreenshot(story, "edited", {
-                        locator: story.locators.fileUpload,
-                    });
-                });
-
-                await test.step("Cancel edit keeps saved description", async () => {
-                    await story.locators.fileUpload
-                        .getByTestId("editable-image-edit-button")
-                        .click();
-
-                    const textarea = story.locators.fileUpload.getByTestId(
-                        "editable-image-textarea-base"
-                    );
-
-                    await textarea.fill("Temporary change");
-                    await story.locators.fileUpload
-                        .getByTestId("editable-image-cancel-button")
-                        .click();
-
-                    await expect(
-                        story.locators.fileUpload.getByText(
-                            "A person walking beside a tree"
-                        )
-                    ).toBeVisible();
-                });
-            });
+        test.beforeEach(async ({ story }) => {
+            await story.init("editable");
         });
 
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("editable", { size: "mobile" });
+        test("Editable", async ({ story }) => {
+            await test.step("Initial state", async () => {
+                await expect(
+                    story.locators.internal.editDisplay("editable-image")
+                ).toBeVisible();
+
+                await compareScreenshot(story, "mount");
             });
 
-            test("Editable - mobile", async ({ story }) => {
-                await test.step("States mount", async () => {
-                    await compareScreenshot(story, "mount");
+            await test.step("Save description", async () => {
+                await story.locators.internal
+                    .textarea("editable-image")
+                    .fill("A person walking beside a tree");
+                await story.locators.internal
+                    .saveButton("editable-image")
+                    .click();
+            });
+
+            await test.step("File item is saved with description", async () => {
+                await expect(
+                    story.locators.internal.editButton("editable-image")
+                ).toBeVisible();
+
+                await compareScreenshot(story, "edited", {
+                    locator: story.locators.fileUpload,
+                });
+            });
+
+            await test.step("Cancel edit keeps saved description", async () => {
+                await story.locators.internal
+                    .editButton("editable-image")
+                    .click();
+                await story.locators.internal
+                    .textarea("editable-image")
+                    .fill("Temporary change");
+                await story.locators.internal
+                    .cancelButton("editable-image")
+                    .click();
+
+                await expect(
+                    story.locators.fileUpload.getByText(
+                        "A person walking beside a tree"
+                    )
+                ).toBeVisible();
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("editable", { size: "mobile" });
+        });
+
+        test("Editable - mobile", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("editable-optional");
+        });
+
+        test("Editable with optional description", async ({ story }) => {
+            await test.step("Save without description", async () => {
+                const saveButton =
+                    story.locators.internal.saveButton("editable-image");
+                await saveButton.click();
+            });
+
+            await test.step("File item is saved without description", async () => {
+                await expect(
+                    story.locators.internal.editButton("editable-image")
+                ).toBeVisible();
+
+                await compareScreenshot(story, "saved", {
+                    locator: story.locators.fileUpload,
                 });
             });
         });
@@ -413,23 +436,29 @@ test.describe("FileUpload", () => {
         });
 
         test("Focus states", async ({ story }) => {
-            const sortableItem = story.locators.fileUpload.locator("#sort-1");
+            await test.step("Focus on sortable item", async () => {
+                await story.locators.internal.dropzone.focus();
 
-            await expect(sortableItem).toBeVisible();
-            await sortableItem.focus();
-            await expect(sortableItem).toBeFocused();
+                await story.page.keyboard.press("Tab");
 
-            await compareScreenshot(story, "focus-item", {
-                locator: story.locators.fileUpload,
+                const sortableItem =
+                    story.locators.fileUpload.locator("#sort-1");
+
+                await expect(sortableItem).toBeFocused();
+                await compareScreenshot(story, "focus-item", {
+                    locator: story.locators.fileUpload,
+                });
             });
 
-            await story.page.keyboard.press("Space");
+            await test.step("Enable sorting", async () => {
+                await story.page.keyboard.press("Space");
 
-            await compareScreenshot(story, "focus-sorting", {
-                locator: story.locators.fileUpload,
+                await compareScreenshot(story, "focus-sorting", {
+                    locator: story.locators.fileUpload,
+                });
+
+                await story.page.keyboard.press("Space");
             });
-
-            await story.page.keyboard.press("Space");
         });
     });
 

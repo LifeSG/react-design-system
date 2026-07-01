@@ -30,6 +30,8 @@ export const FileUpload = ({
     sortable = false,
     fileDescriptionMaxLength,
     editableFileItems = false,
+    descriptionRequired = true,
+    descriptionLabel,
     errorMessage,
     readOnly,
     customLabels,
@@ -180,6 +182,8 @@ export const FileUpload = ({
                     ref={fileListRef}
                     fileItems={fileItems}
                     editableFileItems={editableFileItems}
+                    descriptionRequired={descriptionRequired}
+                    descriptionLabel={descriptionLabel}
                     fileDescriptionMaxLength={fileDescriptionMaxLength}
                     sortable={sortable}
                     disabled={disabled}

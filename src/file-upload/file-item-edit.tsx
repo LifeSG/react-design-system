@@ -3,6 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Button } from "../button";
 import { Form } from "../form";
+import type { FormLabelProps } from "../form/types";
 import { Typography } from "../typography";
 import { StringHelper } from "../util";
 import * as styles from "./file-item-edit.styles";
@@ -14,6 +15,8 @@ interface Props {
     fileItem: FileItemProps;
     wrapperWidth: number;
     fileDescriptionMaxLength?: number | undefined;
+    descriptionRequired?: boolean | undefined;
+    descriptionLabel?: FormLabelProps | undefined;
     onSave: (description: string) => void;
     onCancel: () => void;
     onBlur: (value: string) => void;
@@ -22,6 +25,8 @@ interface Props {
 export const FileItemEdit = ({
     fileItem,
     fileDescriptionMaxLength,
+    descriptionRequired = true,
+    descriptionLabel,
     wrapperWidth,
     onSave,
     onCancel,
@@ -97,6 +102,7 @@ export const FileItemEdit = ({
     };
 
     const shouldDisableSave = () => {
+        if (!descriptionRequired) return false;
         const trimmedDescription = currentDescription.trim();
         return trimmedDescription.length === 0;
     };
@@ -115,7 +121,7 @@ export const FileItemEdit = ({
             >
                 {formattedName}
             </Typography.BodyMD>
-            <Typography.BodyMD>
+            <Typography.BodyMD className={styles.fileSizeText}>
                 {FileUploadHelper.formatFileSizeDisplay(size)}
             </Typography.BodyMD>
         </div>
@@ -141,12 +147,13 @@ export const FileItemEdit = ({
                         onChange={handleChange}
                         onBlur={handleBlur}
                         rows={3}
-                        aria-label={`Photo description for ${name}`}
-                        label={{
-                            children: "Photo description",
-                            subtitle:
-                                "Describe this photo to users who may not be able to see the image.",
-                        }}
+                        label={
+                            descriptionLabel ?? {
+                                children: "Photo description",
+                                subtitle:
+                                    "Describe this photo to users who may not be able to see the image.",
+                            }
+                        }
                     />
                 </div>
             </div>

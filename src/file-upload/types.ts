@@ -1,3 +1,5 @@
+import type { FormLabelProps } from "../form/types";
+
 export interface FileItemProps {
     id: string;
     /** The name of the file */
@@ -47,6 +49,10 @@ export interface FileUploadProps extends FileInputProps {
     editableFileItems?: boolean | undefined;
     /** The max length of the description of the file (only image files) */
     fileDescriptionMaxLength?: number | undefined;
+    /** When false, save button is enabled even with empty description. Default: true */
+    descriptionRequired?: boolean | undefined;
+    /** Overrides default label and subtext for description field */
+    descriptionLabel?: FormLabelProps | undefined;
     /** Specifies if sorting is enabled for the file items */
     sortable?: boolean | undefined;
     /** The general error message for the component */
