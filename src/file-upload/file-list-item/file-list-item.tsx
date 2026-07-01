@@ -4,7 +4,6 @@ import { BinIcon } from "@lifesg/react-icons/bin";
 import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
-import clsx from "clsx";
 import {
     memo,
     useCallback,
@@ -258,7 +257,7 @@ const Component = ({
     );
 
     const renderInlineActions = () => (
-        <div className={clsx(styles.inlineActionContainer)}>
+        <div className={styles.inlineActionContainer}>
             <Button
                 key="edit"
                 data-testid={`${id}-edit-button`}
