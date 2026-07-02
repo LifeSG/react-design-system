@@ -156,6 +156,29 @@ const AccordionBase = ({
     );
 };
 
+/**
+ * A vertically stacked set of collapsible content panels.
+ *
+ * Use `Accordion` to organise related content into independently expandable sections,
+ * reducing visual clutter while keeping all information accessible. The container manages
+ * shared expand/collapse state across all `Accordion.Item` children: a "Show all" / "Hide all"
+ * button is rendered by default, and the state automatically synchronises when individual items
+ * are opened or closed. Item heading levels are derived from the `headingLevel` prop to maintain
+ * correct document outline hierarchy.
+ *
+ * Sub-components:
+ * - `Accordion.Item` — a single collapsible panel with a clickable header. Supports an
+ *   imperative ref handle (`AccordionItemHandle`) for programmatic expand/collapse control.
+ */
 export const Accordion = Object.assign(AccordionBase, {
+    /**
+     * Renders an individual collapsible section within an `Accordion`.
+     *
+     * Each item has a clickable header that toggles its content panel. The expanded
+     * state can be individually controlled via the `expanded` prop, or left to the
+     * parent `Accordion` to manage through its "Show all" / "Hide all" mechanism.
+     * Exposes an imperative ref handle (`AccordionItemHandle`) for programmatic
+     * expand/collapse control.
+     */
     Item: AccordionItem,
 });
