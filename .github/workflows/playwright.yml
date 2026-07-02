@@ -71,6 +71,7 @@ jobs:
         with:
           name: screenshot-manifest-${{ matrix.shard }}
           path: .screenshot-manifest-${{ matrix.shard }}.txt
+          include-hidden-files: true
           retention-days: 1
 
   merge-reports:
