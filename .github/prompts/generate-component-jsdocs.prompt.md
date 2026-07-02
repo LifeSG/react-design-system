@@ -61,10 +61,6 @@ Read these files in order when they exist:
 3. `src/[COMPONENT_NAME]/index.ts`
    Purpose: detect sub-component exposure patterns.
 
-4. `src/[COMPONENT_NAME]/[COMPONENT_NAME].style.tsx` or related style files
-   Purpose: identify transient `$`-prefixed props and internal style-only types to
-   skip.
-
 If `types.ts` does not exist, do not create it. Only document the exported
 component function and any sub-components in existing `src/` files.
 
@@ -89,7 +85,6 @@ Do not document:
 
 -   Internal helper types
 -   `StyleProps` or `*StyleProps` interfaces
--   `$`-prefixed transient style props
 -   Pure implementation details
 -   Obvious passthrough props unless a short comment materially helps
 
@@ -105,8 +100,6 @@ The component JSDoc should usually include:
 -   A one-line purpose statement
 -   One short paragraph describing when to use it, key behavior, and notable
     interaction model
-
-Do not add `@keywords`.
 
 Include in the prose when relevant:
 
@@ -211,8 +204,6 @@ Check for exposure patterns in:
 Place the JSDoc on the exported sub-component constant itself, not on a private
 inner render function.
 
-Do not add `@keywords` to sub-components.
-
 Example:
 
 ```tsx
@@ -232,7 +223,7 @@ Skip documentation for:
     behavior
 -   obvious passthrough props with no behavioral meaning
 -   private helpers
--   style-only and transient props
+-   style-only
 -   comments that would only restate the property name or type
 
 Do not create new type files.
