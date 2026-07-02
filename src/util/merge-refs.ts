@@ -1,4 +1,5 @@
-import { MutableRefObject, Ref } from "react";
+import type { MutableRefObject, Ref } from "react";
+
 import { isReact19 } from "./version";
 
 export const mergeRefs = <T>(...refs: Ref<T>[]) => {
@@ -10,7 +11,7 @@ export const mergeRefs = <T>(...refs: Ref<T>[]) => {
                 const cleanup = ref(value);
                 const isCleanup = typeof cleanup === "function";
                 cleanups.push(isCleanup ? cleanup : () => ref(null));
-            } else {
+            } else if (ref) {
                 (ref as MutableRefObject<T | null>).current = value;
                 cleanups.push(() => {
                     (ref as MutableRefObject<T | null>).current = null;

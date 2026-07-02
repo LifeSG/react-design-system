@@ -1,6 +1,7 @@
 import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
 
+import { mergeRefs } from "../util";
 import { Brand } from "./brand";
 import {
     CloseButton,
@@ -12,7 +13,6 @@ import {
 } from "./drawer.styles";
 import { NavBrandContainer, NavSeparator } from "./navbar.styles";
 import { NavbarDrawerProps } from "./types";
-import { mergeRefs } from "../util";
 
 const Component = (
     props: NavbarDrawerProps,
@@ -47,10 +47,6 @@ const Component = (
             }
         },
     });
-
-    const mergedRef = ref
-        ? mergeRefs(ref, floatingRefs.setFloating)
-        : floatingRefs.setFloating;
 
     // =============================================================================
     // EVENT HANDLERS
@@ -159,7 +155,10 @@ const Component = (
             returnFocus={true}
             disabled={!show}
         >
-            <Wrapper ref={mergedRef} data-testid="drawer">
+            <Wrapper
+                ref={mergeRefs(ref, floatingRefs.setFloating)}
+                data-testid="drawer"
+            >
                 <Container
                     ref={containerRef}
                     $show={show}
