@@ -288,7 +288,7 @@ const Component = <T,>(
                     aria-expanded={showDrawer}
                     data-testid="button__mobile-menu"
                     onClick={handleMobileMenuButtonClick}
-                    focusHighlight={false}
+                    focusHighlight={true}
                 >
                     <MobileMenuIcon />
                 </MobileMenuButton>

@@ -1,4 +1,7 @@
+import { FloatingFocusManager, useFloating } from "@floating-ui/react";
 import React, { useEffect, useLayoutEffect, useRef, useState } from "react";
+
+import { mergeRefs } from "../util";
 import { Brand } from "./brand";
 import {
     CloseButton,
@@ -32,6 +35,18 @@ const Component = (
     const containerRef = useRef<HTMLDivElement>(null);
 
     const { primary, secondary } = resources;
+
+    // =========================================================================
+    // FLOATING UI CONFIG
+    // =========================================================================
+    const { context, refs: floatingRefs } = useFloating({
+        open: show,
+        onOpenChange: (open) => {
+            if (!open && onClose) {
+                onClose();
+            }
+        },
+    });
 
     // =============================================================================
     // EVENT HANDLERS
@@ -134,21 +149,31 @@ const Component = (
     );
 
     return (
-        <Wrapper ref={ref} data-testid="drawer">
-            <Container
-                ref={containerRef}
-                $show={show}
-                $viewHeight={viewHeight}
-                onKeyDown={handleKeyDown}
-                tabIndex={show ? 0 : -1}
-                aria-label={drawerLabel}
+        <FloatingFocusManager
+            context={context}
+            initialFocus={-1}
+            returnFocus={true}
+            disabled={!show}
+        >
+            <Wrapper
+                ref={mergeRefs(ref, floatingRefs.setFloating)}
+                data-testid="drawer"
             >
-                <Content>
-                    {renderTopBar()}
-                    {children}
-                </Content>
-            </Container>
-        </Wrapper>
+                <Container
+                    ref={containerRef}
+                    $show={show}
+                    $viewHeight={viewHeight}
+                    onKeyDown={handleKeyDown}
+                    tabIndex={-1}
+                    aria-label={drawerLabel}
+                >
+                    <Content>
+                        {renderTopBar()}
+                        {children}
+                    </Content>
+                </Container>
+            </Wrapper>
+        </FloatingFocusManager>
     );
 };
 
