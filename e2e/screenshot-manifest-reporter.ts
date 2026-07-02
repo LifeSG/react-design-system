@@ -46,7 +46,8 @@ class ScreenshotManifestReporter implements Reporter {
             path.relative(testDir, testFilePath)
         );
         const projectName = sanitizeForFilePath(project.name);
-        const fullTitleWithoutSpec = test.titlePath().slice(1).join(" ");
+        // slice(3) skips [root, projectName, filePath] to match Playwright's internal _fsSanitizedTestName
+        const fullTitleWithoutSpec = test.titlePath().slice(3).join(" ");
         const testName = sanitizeForFilePath(
             trimLongString(fullTitleWithoutSpec)
         );
