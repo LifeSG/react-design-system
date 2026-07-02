@@ -69,6 +69,7 @@ const plugins = [
             // Override base tsconfig.json during build
             exclude: [
                 "tests",
+                "scripts",
                 "**/stories/**",
                 "**/__mocks__/**",
                 "**/custom-types/css.d.ts",
