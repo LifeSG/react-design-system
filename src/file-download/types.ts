@@ -12,7 +12,7 @@ export interface FileItemDownloadProps {
     /** The remote path or URL used to fetch the file for download. */
     filePath: string;
     /**
-     * Custom content shown when the file download fails.
+     * Error message shown on the file item to indicate a download failure.
      * Accepts a plain string or a React node for richer error display.
      */
     errorMessage?: string | React.ReactNode | undefined;
