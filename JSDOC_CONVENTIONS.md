@@ -9,8 +9,6 @@ JSDoc should explain the public behavior of component APIs that TypeScript types
 -   AI-friendly API understanding
 -   Public API references
 
-<br />
-
 ## Scope
 
 Add JSDoc to public exported API types in component `types.ts` files.
@@ -27,7 +25,77 @@ Not required for:
 -   Style-only types
 -   Obvious passthrough props such as `id`, `className`, `style`, and `data-testid`
 
-<br />
+## Component function comments
+
+Add a JSDoc block on the consumer-facing exported component constant (not a
+private inner function). This JSDoc appears when consumers hover the component
+in IntelliSense.
+
+The component JSDoc should contain:
+
+-   A one-line purpose statement
+-   One short paragraph on **when to use** the component and its overall
+    interaction model
+
+Do **not** restate individual prop behaviors in the component JSDoc. Prop-level
+details belong in the props interface. The component comment should give context
+that no single prop can provide — for example, the relationship between
+sub-components, or the overall controlled/uncontrolled contract.
+
+```tsx
+// Good — high-level "what and when"
+/**
+ * A vertically stacked set of collapsible content panels.
+ *
+ * Use `Accordion` to organise related content into independently expandable
+ * sections with shared expand/collapse state. Sub-components:
+ * - `Accordion.Item` — a single collapsible panel with an imperative ref handle.
+ */
+export const Accordion = Object.assign(AccordionBase, { ... });
+```
+
+```tsx
+// Avoid — restating prop behaviors
+/**
+ * Displays a badge. When `children` is provided the badge positions itself
+ * absolutely over the top-right corner. The `count` prop is capped at 1K+.
+ * Use `badgeOffset` to fine-tune overlay position.
+ */
+```
+
+```tsx
+// Avoid — micro-level responsive layout detail
+/**
+ * The collapse handle repositions responsively between mobile and desktop
+ * viewports.
+ */
+```
+
+### Responsive behavior
+
+Only mention responsive behavior when the component adopts a **fundamentally
+different interaction model** across breakpoints — for example, a sidebar that
+becomes a modal on mobile, or a schedule that switches between a week view and a
+collapsed day view.
+
+Do **not** document minor layout repositioning (e.g. an element moving from one
+edge to another, text wrapping differently, spacing changes). These are
+implementation details that consumers discover visually and that do not affect
+the API contract.
+
+### Sub-components
+
+For components that expose sub-components via `Object.assign` or object-literal
+exports, place the JSDoc **on the property inside the object literal** so that
+IntelliSense resolves it when consumers type `Parent.Child`. Do not duplicate
+the comment on the internal constant.
+
+```tsx
+export const Accordion = Object.assign(AccordionBase, {
+    /** Renders an individual collapsible section within an Accordion. */
+    Item: AccordionItem,
+});
+```
 
 ## Type-level comments
 
@@ -50,23 +118,10 @@ For main component props, an example may be added when it helps clarify usage.
 /**
  * Props for rendering and controlling the navbar selection state.
  *
- * Use `selectedId` with `onItemClick` for controlled selection behavior.
- *
- * @example
- * <Navbar
- *   selectedId="overview"
- *   items={{
- *     desktop: [{ id: "overview", label: "Overview", href: "/overview" }],
- *   }}
- *   onItemClick={(item) => trackNavClick(item.id)}
- * />
- */
 export interface NavbarProps {
     // ...
 }
 ```
-
-<br />
 
 ## Prop-level comments
 
@@ -117,8 +172,6 @@ className?: string | undefined;
 style?: React.CSSProperties | undefined;
 ```
 
-<br />
-
 ## What to document
 
 Always document these when they exist:
@@ -163,7 +216,21 @@ export interface NavItemComponentProps {
 -   Deprecated API.  
     Example: what prop or type should be used instead.
 
-<br />
+-   Imperative handle / ref types.  
+    Example:
+
+```tsx
+/**
+ * Imperative handle returned by NavbarDrawer via `ref`.
+ * Use the ref to dismiss the drawer programmatically.
+ */
+export type NavbarDrawerHandle = HTMLDivElement & {
+    dismissDrawer: () => void;
+};
+```
+
+-   Generic public types when the generic meaning is important to consumers.  
+    Explain in plain prose what the type parameter represents.
 
 ## Recommended tags
 
@@ -173,19 +240,15 @@ Recommended:
 
 -   `@default` when the default is enforced by code
 -   `@deprecated` with a migration path
--   `@example` for main props or complex public APIs
 -   `@remarks` for important caveats or relationships
 
 Avoid:
 
--   `@param` and `@returns` on interface properties
+-   `@returns` on interface properties
 -   Tags that only repeat the type
--   Examples on every type
 -   Long explanations of internal implementation details
 
-<br />
-
-## Defaults
+### Defaults
 
 Use `@default` only when the default value is stable and enforced by the component.
 
@@ -202,9 +265,7 @@ export interface ExampleProps {
 
 Do not document a default when the value is only assumed by convention.
 
-<br />
-
-## Deprecation
+### Deprecation
 
 Deprecated props and types should include a direct migration target.
 
@@ -217,80 +278,7 @@ export interface ExampleProps {
 }
 ```
 
-## Example
-
-Use `@example` for main component props or complex public APIs where a short usage example helps clarify the API.
-
-Avoid adding examples to every nested type.
-
-```tsx
-/**
- * Props for rendering and controlling the navbar selection state.
- *
- * @remarks
- * Mobile items fall back to desktop items when `items.mobile` is not provided.
- *
- */
-export interface NavbarProps {
-    // ...
-}
-```
-
-## Component function comments
-
-Add a JSDoc block on the consumer-facing exported component constant (not a
-private inner function). This JSDoc appears when consumers hover the component
-in IntelliSense.
-
-The component JSDoc should contain:
-
--   A one-line purpose statement
--   One short paragraph on **when to use** the component and its overall
-    interaction model
-
-Do **not** restate individual prop behaviors in the component JSDoc. Prop-level
-details belong in the props interface. The component comment should give context
-that no single prop can provide — for example, the relationship between
-sub-components, or the overall controlled/uncontrolled contract.
-
-```tsx
-// Good — high-level "what and when"
-/**
- * A vertically stacked set of collapsible content panels.
- *
- * Use `Accordion` to organise related content into independently expandable
- * sections with shared expand/collapse state. Sub-components:
- * - `Accordion.Item` — a single collapsible panel with an imperative ref handle.
- */
-export const Accordion = Object.assign(AccordionBase, { ... });
-```
-
-```tsx
-// Avoid — restating prop behaviors
-/**
- * Displays a badge. When `children` is provided the badge positions itself
- * absolutely over the top-right corner. The `count` prop is capped at 1K+.
- * Use `badgeOffset` to fine-tune overlay position.
- */
-```
-
-### Sub-components
-
-For components that expose sub-components via `Object.assign` or object-literal
-exports, place the JSDoc **on the property inside the object literal** so that
-IntelliSense resolves it when consumers type `Parent.Child`. Do not duplicate
-the comment on the internal constant.
-
-```tsx
-export const Accordion = Object.assign(AccordionBase, {
-    /** Renders an individual collapsible section within an Accordion. */
-    Item: AccordionItem,
-});
-```
-
-<br />
-
-## Params
+### Params
 
 @param for public function-like APIs when the parameter needs explanation beyond its TypeScript type.
 

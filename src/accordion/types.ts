@@ -26,7 +26,7 @@ export interface AccordionProps {
     className?: string | undefined;
     /**
      * The ARIA heading level for the accordion and item titles.
-     * Specify a custom value to reflect the component's hierarchy (position?) within a page.
+     * Specify a custom value to reflect the component's hierarchy within a page.
      * When a title is provided, the title level = n and the item title level = n + 1.
      * Otherwise, the item title level = n.
      *
