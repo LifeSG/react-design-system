@@ -16,6 +16,13 @@ const variantsToShowCount: Set<BadgeVariant> = new Set([
     "square-number",
 ]);
 
+/**
+ * Displays a small indicator badge for notifications or status.
+ *
+ * Use `Badge` to surface counts or status dots on icons, avatars, and
+ * navigation items. Renders as an overlay on a child element or as a standalone
+ * inline indicator when no child is provided.
+ */
 export const Badge = ({
     badgeOffset,
     children,
