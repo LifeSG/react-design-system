@@ -13,6 +13,12 @@ import { CalendarHelper, DateHelper } from "../util";
 import * as styles from "./date-navigator.styles";
 import type { DateNavigatorProps } from "./types";
 
+/**
+ * Displays a date with left/right navigation arrows for stepping through dates or weeks.
+ *
+ * Use when users need to browse content organised by day or week — such as schedules,
+ * calendars, or time-based feeds.
+ */
 export const DateNavigator = ({
     selectedDate,
     minDate,
