@@ -16,6 +16,13 @@ import { useId } from "../util";
 import * as styles from "./drawer.styles";
 import type { DrawerProps } from "./types";
 
+/**
+ * A slide-in panel that overlays the page content.
+ *
+ * Use `Drawer` to surface supplementary content or navigation options without
+ * navigating away from the current page. Focus is trapped inside the dialog
+ * while it is open and returns to the triggering element on close.
+ */
 export const Drawer = ({
     children,
     heading,
