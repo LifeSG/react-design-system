@@ -16,6 +16,12 @@ import * as styles from "./countdown-timer.styles";
 import type { CountdownTimerProps } from "./types";
 import { useTimer } from "./use-timer";
 
+/**
+ * Displays a live countdown of time remaining until a deadline.
+ *
+ * Use when a time-limited interaction — such as a session timeout or a timed
+ * form — needs a persistent visual reminder.
+ */
 export const CountdownTimer = ({
     className,
     align = "right",
@@ -23,7 +29,7 @@ export const CountdownTimer = ({
     timestamp,
     notifyTimer,
     offset,
-    mobileOffset,
+    mobileOffset = { top: 80 },
     show,
     fixed = true,
     reminderInterval = 120,
@@ -184,7 +190,7 @@ export const CountdownTimer = ({
 
     function getOffsetY() {
         const desktopTop = offset?.top ?? 168;
-        const mobileTop = mobileOffset?.top ?? 80;
+        const mobileTop = mobileOffset.top!;
         const offsetY = isMobile ? mobileTop : desktopTop;
 
         return offsetY;
