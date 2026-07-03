@@ -16,13 +16,9 @@ import type { BoxContainerProps } from "./types";
  * labelled header.
  *
  * Use `BoxContainer` when you need to visually separate a block of content
- * under a heading and optionally allow users to collapse it. The header
- * supports an optional call-to-action slot and a display state (`"error"` or
- * `"warning"`) that surfaces an alert icon with an accessible label. On mobile
- * viewports the collapse handle is repositioned inside the label row; on wider
- * viewports it sits at the trailing edge of the header. When `clickableHeader`
- * is enabled the entire header row acts as the expand/collapse trigger in
- * addition to the dedicated chevron button.
+ * under a heading and optionally allow users to collapse it. The header supports
+ * a call-to-action slot and a visual status indicator. The collapse handle
+ * repositions responsively between mobile and desktop viewports.
  */
 export const BoxContainer = ({
     children,

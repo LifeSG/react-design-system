@@ -40,15 +40,12 @@ const TYPE_CLASS_MAP = {
 };
 
 /**
- * Displays an inline contextual banner with a severity-coded message and allows call-outs that notify users of important information.
+ * Displays an inline contextual banner with a severity-coded message.
  *
  * Use `Alert` to surface feedback, status, or supplementary information without
- * interrupting the user's workflow. The `type` prop sets the visual tone
- * (`success`, `warning`, `error`, `info`, or `description`) and determines the
- * default icon when `showIcon` is enabled. An optional `actionLink` renders a
- * styled call-to-action below the content. When content may be lengthy, set
- * `maxCollapsedHeight` to clip the body and expose a "Show more / Show less"
- * toggle; hidden content is removed from the tab order while collapsed.
+ * interrupting the user's workflow. Supports five severity tones, an optional
+ * icon, a call-to-action link, and a collapsible content area for lengthy
+ * messages.
  */
 export const Alert = ({
     type,

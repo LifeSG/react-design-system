@@ -221,7 +221,7 @@ export interface ExampleProps {
 
 Use `@example` for main component props or complex public APIs where a short usage example helps clarify the API.
 
-Avoid adding examples to every nested type. Prefer one useful example on the main public props type.
+Avoid adding examples to every nested type.
 
 ```tsx
 /**
@@ -230,41 +230,80 @@ Avoid adding examples to every nested type. Prefer one useful example on the mai
  * @remarks
  * Mobile items fall back to desktop items when `items.mobile` is not provided.
  *
- * @example
- * <Navbar
- *   selectedId="overview"
- *   items={{
- *     desktop: [{ id: "overview", label: "Overview", href: "/overview" }],
- *   }}
- *   drawerDismissalExclusions={["item-click"]}
- * />
  */
 export interface NavbarProps {
     // ...
 }
 ```
 
-## Remarks
+## Component function comments
 
-Use `@remarks` for important notes that are useful to consumers but do not belong in the first sentence.
+Add a JSDoc block on the consumer-facing exported component constant (not a
+private inner function). This JSDoc appears when consumers hover the component
+in IntelliSense.
 
-Good use cases:
+The component JSDoc should contain:
 
--   fallback behavior
--   accessibility notes
--   controlled/uncontrolled behavior
--   lifecycle or callback timing notes
--   constraints between props
+-   A one-line purpose statement
+-   One short paragraph on **when to use** the component and its overall
+    interaction model
+
+Do **not** restate individual prop behaviors in the component JSDoc. Prop-level
+details belong in the props interface. The component comment should give context
+that no single prop can provide — for example, the relationship between
+sub-components, or the overall controlled/uncontrolled contract.
+
+```tsx
+// Good — high-level "what and when"
+/**
+ * A vertically stacked set of collapsible content panels.
+ *
+ * Use `Accordion` to organise related content into independently expandable
+ * sections with shared expand/collapse state. Sub-components:
+ * - `Accordion.Item` — a single collapsible panel with an imperative ref handle.
+ */
+export const Accordion = Object.assign(AccordionBase, { ... });
+```
+
+```tsx
+// Avoid — restating prop behaviors
+/**
+ * Displays a badge. When `children` is provided the badge positions itself
+ * absolutely over the top-right corner. The `count` prop is capped at 1K+.
+ * Use `badgeOffset` to fine-tune overlay position.
+ */
+```
+
+### Sub-components
+
+For components that expose sub-components via `Object.assign` or object-literal
+exports, place the JSDoc **on the property inside the object literal** so that
+IntelliSense resolves it when consumers type `Parent.Child`. Do not duplicate
+the comment on the internal constant.
+
+```tsx
+export const Accordion = Object.assign(AccordionBase, {
+    /** Renders an individual collapsible section within an Accordion. */
+    Item: AccordionItem,
+});
+```
+
+<br />
+
+## Params
+
+@param for public function-like APIs when the parameter needs explanation beyond its TypeScript type.
 
 ```tsx
 /**
- * Props for rendering an input-select with optional controlled selection.
+ * Called when the drawer dismissal state changes.
  *
- * @remarks
- * Use `selectedKey` with `onSelectionChange` for controlled behavior.
- * When `selectedKey` is omitted, the component manages selection internally.
+ * @param args Details about the dismissal event.
+ * @param args.reason Reason the drawer was dismissed.
+ * @param args.source Element or interaction that triggered the dismissal.
  */
-export interface InputSelectProps {
-    // ...
-}
+onDrawerDismiss?: (( args: {
+  reason: "escape-key" | "outside-click" | "item-click";
+  source?: HTMLElement | undefined; }
+) => void) | undefined;
 ```

@@ -92,37 +92,42 @@ Do not document:
 
 ## Component Function JSDoc
 
-Add or improve JSDoc on the exported component function in
-`src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx`.
+Add or improve JSDoc on the **consumer-facing exported constant** in
+`src/[COMPONENT_NAME]/[COMPONENT_NAME].tsx`. If the component is exported via
+`Object.assign`, place the JSDoc on the final `export const`, not on the
+internal base function.
 
 The component JSDoc should usually include:
 
 -   A one-line purpose statement
--   One short paragraph describing when to use it, key behavior, and notable
+-   One short paragraph describing **when to use** the component and its overall
     interaction model
+
+Do **not** restate individual prop behaviors in the component JSDoc. Prop-level
+details (defaults, relationships, fallback rules) belong in the props interface.
+The component comment should give context that no single prop can provide — for
+example, the relationship between sub-components, or the overall
+controlled/uncontrolled contract.
 
 Include in the prose when relevant:
 
--   Controlled vs uncontrolled behavior
--   Desktop/mobile or responsive behavior
--   Main capabilities
+-   Controlled vs uncontrolled behavior (at a high level)
+-   Desktop/mobile or responsive behavior (at a high level)
 -   Sub-component anatomy
--   Accessibility behavior
+-   Overall accessibility model
 
 Example:
 
-````tsx
+```tsx
 /**
- * Renders the main navigation bar for desktop and mobile layouts.
+ * A vertically stacked set of collapsible content panels.
  *
- * Use this component to present primary site navigation, optional branding,
- * and action buttons in a single responsive header. Mobile navigation falls
- * back to desktop items when mobile-specific items are not provided.
- *
- * ```
+ * Use `Accordion` to organise related content into independently expandable
+ * sections with shared expand/collapse state. Sub-components:
+ * - `Accordion.Item` — a single collapsible panel with an imperative ref handle.
  */
-export const Navbar = ({
-````
+export const Accordion = Object.assign(AccordionBase, {
+```
 
 ---
 
@@ -194,23 +199,24 @@ important to consumers.
 ## Sub-Components
 
 If the component exposes sub-components, add or improve JSDoc on each
-sub-component's exported constant.
+sub-component.
 
 Check for exposure patterns in:
 
 -   `Object.assign` in `[COMPONENT_NAME].tsx`
 -   object-literal exports in `index.ts`
 
-Place the JSDoc on the exported sub-component constant itself, not on a private
-inner render function.
+Place the JSDoc **on the property inside the `Object.assign` object literal** (or
+the object-literal export) so that IntelliSense resolves it when consumers type
+`Parent.Child`. Do **not** duplicate the JSDoc on the internal constant — maintain it in one place only.
 
 Example:
 
 ```tsx
-/**
- * Renders an individual accordion section within Accordion.
- */
-export const AccordionItem = ({
+export const Accordion = Object.assign(AccordionBase, {
+    /** Renders an individual collapsible section within an Accordion. */
+    Item: AccordionItem,
+});
 ```
 
 ---

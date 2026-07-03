@@ -17,15 +17,11 @@ const variantsToShowCount: Set<BadgeVariant> = new Set([
 ]);
 
 /**
- * Displays a small indicator badge as visual indicator for notifications or status, optionally overlaid on another element.
+ * Displays a small indicator badge for notifications or status.
  *
- * Use `Badge` to surface counts, status dots, or highlighted numbers on icons,
- * avatars, and navigation items. When `children` is provided the badge
- * positions itself absolutely over the top-right corner of the child; without
- * children it renders inline as a standalone indicator. The `count` prop
- * controls the displayed number for numeric variants and is automatically
- * capped at `"1K+"` for values above 1000. The `badgeOffset` prop fine-tunes
- * the overlay position when the default placement needs adjusting.
+ * Use `Badge` to surface counts or status dots on icons, avatars, and
+ * navigation items. Renders as an overlay on a child element or as a standalone
+ * inline indicator when no child is provided.
  */
 export const Badge = ({
     badgeOffset,
