@@ -16,6 +16,11 @@ import { DateInputHelper } from "../util";
 import * as styles from "./date-input.styles";
 import type { DateInputProps } from "./types";
 
+/**
+ * A single-date input field with an attached calendar dropdown.
+ *
+ * Use this to enter or pick a single date.
+ */
 export const DateInput = ({
     minDate,
     maxDate,
