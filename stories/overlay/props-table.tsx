@@ -36,18 +36,6 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["string"],
             },
             {
-                name: "backgroundOpacity (deprecated)",
-                description: (
-                    <>
-                        The opacity value of the <code>Overlay</code>
-                        <br />
-                        <strong>Note:</strong> This attribute has no effect and
-                        will be removed in a future version
-                    </>
-                ),
-                propTypes: ["number"],
-            },
-            {
                 name: "backgroundBlur",
                 description: "Specifies if the background should be blurred",
                 propTypes: ["boolean"],
