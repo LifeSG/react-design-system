@@ -6,6 +6,13 @@ import { Typography } from "../typography";
 import * as styles from "./card.styles";
 import type { CardProps } from "./types";
 
+/**
+ * A themed container surface for grouping related content.
+ *
+ * Adapts its visual treatment (shadow vs. border) based on the active theme.
+ * When `children` is a plain string, it is automatically wrapped in a body
+ * text element.
+ */
 export const Card = ({
     children,
     className,
