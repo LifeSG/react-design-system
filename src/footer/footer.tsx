@@ -13,6 +13,13 @@ import { FooterHelper } from "./footer-helper";
 import { ResourceAddon } from "./footer-resource-addon";
 import type { FooterLinkProps, FooterProps } from "./types";
 
+/**
+ * Site-wide footer with navigation links, branding, and legal copy.
+ *
+ * Use `Footer` at the bottom of a page to surface navigation links grouped
+ * into columns, a theme-appropriate logo, download-app or resource add-ons,
+ * and disclaimer links with auto-generated copyright text.
+ */
 export const Footer = <T,>({
     children,
     links,
