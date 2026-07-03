@@ -11,6 +11,14 @@ import { useId } from "../util";
 import * as styles from "./box-container.styles";
 import type { BoxContainerProps } from "./types";
 
+/**
+ * A titled, collapsible section container that groups related content behind a
+ * labelled header.
+ *
+ * Use `BoxContainer` when you need to visually separate a block of content
+ * under a heading and optionally allow users to collapse it. The header supports
+ * a call-to-action slot and a visual status indicator.
+ */
 export const BoxContainer = ({
     children,
     title,

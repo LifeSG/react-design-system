@@ -39,6 +39,14 @@ const TYPE_CLASS_MAP = {
     },
 };
 
+/**
+ * Displays an inline contextual banner with a severity-coded message.
+ *
+ * Use `Alert` to surface feedback, status, or supplementary information without
+ * interrupting the user's workflow. Supports five severity tones, an optional
+ * icon, a call-to-action link, and a collapsible content area for lengthy
+ * messages.
+ */
 export const Alert = ({
     type,
     className,
