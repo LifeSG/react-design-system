@@ -7,6 +7,12 @@ import * as styles from "./file-download.styles";
 import { FileListCard } from "./file-list-card";
 import type { FileDownloadProps, FileItemDownloadProps } from "./types";
 
+/**
+ * Displays a list of downloadable files, optionally grouped under a title and description.
+ *
+ * Use `FileDownload` to present one or more files that users can download individually.
+ * Each file item renders as a card with file metadata and a download trigger.
+ */
 export const FileDownload = ({
     id,
     fileItems,
