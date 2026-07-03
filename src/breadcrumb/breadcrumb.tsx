@@ -14,6 +14,15 @@ import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
 import * as styles from "./breadcrumb.styles";
 import type { BreadcrumbProps, FadeColorSet } from "./types";
 
+/**
+ * Horizontal breadcrumb navigation trail.
+ *
+ * Links are separated by a configurable separator. The last item receives
+ * `aria-current="page"` and renders as a non-clickable label. Items without
+ * an `href` also render as non-clickable labels. On tablet and below the trail
+ * scrolls horizontally, with optional fade overlays at either edge to indicate
+ * hidden content.
+ */
 export const Breadcrumb = ({
     links,
     fadeColor,
