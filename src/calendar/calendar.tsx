@@ -5,6 +5,16 @@ import { InternalCalendar } from "../shared/internal-calendar";
 import * as styles from "./calendar.styles";
 import type { CalendarProps } from "./types";
 
+/**
+ * Date picker calendar for single-date or multi-date selection.
+ *
+ * The `variant` prop selects the selection mode: `"single"` (default) accepts
+ * one date via `value` and `onChange`; `"multi"` accepts multiple dates via
+ * `values` and `onChange`. Both modes are fully controlled — the component
+ * synchronises its internal state whenever the controlled value changes.
+ * Use `minSelectable` and `maxSelectable` with `"multi"` to constrain the
+ * number of selectable dates.
+ */
 export const Calendar = (props: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF
