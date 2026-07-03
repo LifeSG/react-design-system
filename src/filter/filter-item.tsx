@@ -15,6 +15,8 @@ import { FilterContext } from "./filter-context";
 import * as styles from "./filter-item.styles";
 import type { FilterItemProps } from "./types";
 
+const DEFAULT_MINIMISED_HEIGHT_CAP = 216;
+
 export const FilterItem = ({
     collapsible: desktopCollapsible = true,
     initialExpanded = false,
@@ -46,7 +48,10 @@ export const FilterItem = ({
     });
     const contentHeight = contentMinimised
         ? minimisedHeight ??
-          Math.min((contentResizeDetector.height ?? 0) * 0.5, 216)
+          Math.min(
+              (contentResizeDetector.height ?? 0) * 0.5,
+              DEFAULT_MINIMISED_HEIGHT_CAP
+          )
         : contentResizeDetector.height;
     const internalId = useId();
     const contentId = `${internalId}-content`;
