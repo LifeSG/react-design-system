@@ -125,13 +125,6 @@ LargeButtonComponent.displayName = "Button.Large";
 /**
  * Interactive button with support for style variants, sizes, icons, loading
  * state, and accessible disabled behavior.
- *
- * @example
- * ```tsx
- * <Button styleType="secondary" icon={<AddIcon />} onClick={handleClick}>
- *   Add item
- * </Button>
- * ```
  */
 export const Button = Object.assign(BaseButton, {
     /** @deprecated Use the `sizeType` prop instead: `<Button>` or `<Button sizeType="default">` */

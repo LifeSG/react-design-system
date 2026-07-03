@@ -14,16 +14,6 @@ export interface FadeColorSet {
 /**
  * Props for configuring the Breadcrumb navigation trail, including separator
  * style, scroll fade, and link items.
- *
- * @example
- * <Breadcrumb
- *   links={[
- *     { href: "/home", children: "Home" },
- *     { href: "/products", children: "Products" },
- *     { children: "Current Page" },
- *   ]}
- *   fadeColor={["#fff", "transparent"]}
- * />
  */
 export interface BreadcrumbProps {
     /**
