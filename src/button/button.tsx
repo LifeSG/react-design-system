@@ -126,13 +126,6 @@ LargeButtonComponent.displayName = "Button.Large";
  * Interactive button with support for style variants, sizes, icons, loading
  * state, and accessible disabled behavior.
  *
- * When `disabled` is true, click handlers are suppressed and `aria-disabled` is
- * set. Use `focusableWhenDisabled` to keep the button keyboard-focusable while
- * logically disabled. When `loading` is true, the icon slot is replaced by a
- * spinner and `aria-busy` is set; children continue to render. When `icon` is
- * provided without children, the button renders in icon-only mode — provide
- * `aria-label` for accessibility.
- *
  * @example
  * ```tsx
  * <Button styleType="secondary" icon={<AddIcon />} onClick={handleClick}>
