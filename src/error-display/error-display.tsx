@@ -15,6 +15,13 @@ import type {
     MaintenanceAdditionalAttributes,
 } from "./types";
 
+/**
+ * Displays a predefined error or status state with an illustration, title,
+ * description, and optional action button.
+ *
+ * Use `ErrorDisplay` to communicate HTTP error codes, session lifecycle states,
+ * maintenance windows, and other system-level statuses to users.
+ */
 export const ErrorDisplay = ({
     type,
     img,
