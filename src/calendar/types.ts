@@ -5,7 +5,6 @@ import type {
 
 export type { Variant as CalendarVariant } from "../shared/internal-calendar/types";
 
-/** Shared props for all Calendar variants. */
 interface CalendarBaseProps extends CommonCalendarProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
