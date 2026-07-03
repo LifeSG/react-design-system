@@ -13,6 +13,12 @@ const lineStyleMap: Record<DividerLineStyleType, string> = {
     dashed: styles.dashedLine,
 };
 
+/**
+ * A horizontal line that visually separates sections of content.
+ *
+ * Use `Divider` to draw a clear boundary between distinct groups of content on
+ * a page or within a layout.
+ */
 export const Divider = ({
     thickness = 1,
     lineStyle = "solid",
