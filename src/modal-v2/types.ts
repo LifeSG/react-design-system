@@ -35,6 +35,8 @@ export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     enableOverlayClick?: boolean | undefined;
     /** The identifier of the element to inject the Modal into */
     rootComponentId?: string | undefined;
+    /** The actual portal root node, useful when embedding in an open shadow root */
+    rootNode?: DocumentFragment | HTMLElement | null | undefined;
     zIndex?: number | undefined;
     onClose?: (() => void) | undefined;
     onOverlayClick?: (() => void) | undefined;

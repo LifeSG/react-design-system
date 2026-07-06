@@ -39,6 +39,7 @@ const subEntries = subDirs.reduce((acc, name) => {
 
 const input = {
     index: "src/index.ts",
+    "web-components": "src/web-components.ts",
     ...subEntries,
 };
 
@@ -52,6 +53,15 @@ const subExports = subDirs.reduce((acc, name) => {
     };
     return acc;
 }, {});
+
+const additionalExports = {
+    "./web-components": {
+        types: "./web-components.d.ts",
+        import: "./web-components.js",
+        require: "./cjs/web-components.js",
+        default: "./web-components.js",
+    },
+};
 
 const basePlugins = [
     excludeDependenciesFromBundle(), // Exclude dependencies and peer dependencies from the bundle
@@ -110,6 +120,7 @@ const plugins = [
                     import: "./theme/styles/*.css",
                     require: "./theme/styles/*.css",
                 },
+                ...additionalExports,
                 ...subExports,
             },
             dependencies: pkg.dependencies,

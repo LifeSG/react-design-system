@@ -11,6 +11,12 @@
             "import": "./dist/index.js",
             "require": "./dist/cjs/index.js",
             "default": "./dist/index.js"
+        },
+        "./web-components": {
+            "types": "./dist/web-components.d.ts",
+            "import": "./dist/web-components.js",
+            "require": "./dist/cjs/web-components.js",
+            "default": "./dist/web-components.js"
         }
     },
     "bin": {
@@ -59,6 +65,7 @@
         "clsx": "^2.1.1",
         "fabric": "^7.2.0",
         "immer": "^10.0.2",
+        "react-to-webcomponent": "^2.0.1",
         "react-slider": "^2.0.6",
         "react-virtuoso": "^4.12.5",
         "react-zoom-pan-pinch": "^3.3.0"

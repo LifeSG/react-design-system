@@ -3,6 +3,8 @@ export interface OverlayProps {
     show?: boolean | undefined;
     /** The id of the root element to attach the overlay to */
     rootId?: string | undefined;
+    /** The actual root node to attach the overlay to, useful for shadow DOM hosts */
+    rootNode?: DocumentFragment | HTMLElement | null | undefined;
     /** @deprecated no longer has effect */
     backgroundOpacity?: number | undefined;
     backgroundBlur?: boolean | undefined;

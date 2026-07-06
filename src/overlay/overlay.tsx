@@ -17,6 +17,7 @@ import { useFloatingParent } from "./use-floating-context";
 const OverlayComponent = ({
     show = false,
     rootId,
+    rootNode,
     onOverlayClick,
     children,
     backgroundOpacity: _backgroundOpacity,
@@ -30,7 +31,9 @@ const OverlayComponent = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const [rootElement, setRootElement] = useState<HTMLElement | null>(null);
+    const [rootElement, setRootElement] = useState<
+        HTMLElement | DocumentFragment | null
+    >(null);
     const [isStacked, _setIsStacked] = useState<boolean>();
     const uid = useId();
     const nodeId = useFloatingNodeId();
@@ -70,7 +73,7 @@ const OverlayComponent = ({
                 applyBodyStyleClass("remove");
             }
         };
-    }, []);
+    }, [rootId, rootNode]);
 
     useEffect(() => {
         if (show) {
@@ -134,15 +137,21 @@ const OverlayComponent = ({
     // =============================================================================
     const isIOS = () => /(iPad|iPhone|iPod)/g.test(navigator.userAgent);
 
-    const getRootElement = (): HTMLElement | null => {
+    const getRootElement = (): HTMLElement | DocumentFragment | null => {
+        if (rootNode) {
+            return rootNode;
+        }
+
         if (document && rootId) {
             return document.getElementById(rootId);
-        } else if (document) {
-            // If rootId not specified, we'll use body
-            return document.body;
-        } else {
-            return null;
         }
+
+        if (document) {
+            // If no root is specified, we'll use body
+            return document.body;
+        }
+
+        return null;
     };
 
     const checkIfStacked = () => {

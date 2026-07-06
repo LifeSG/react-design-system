@@ -24,6 +24,7 @@ export const ModalV2 = ({
     children,
     enableOverlayClick = true,
     rootComponentId,
+    rootNode,
     zIndex,
     onOverlayClick,
     dismissKeyboardOnShow = true,
@@ -89,6 +90,7 @@ export const ModalV2 = ({
             onOverlayClick={onOverlayClick}
             id={id}
             rootId={rootComponentId}
+            rootNode={rootNode}
             containerRef={childRef}
             zIndex={zIndex}
         >
