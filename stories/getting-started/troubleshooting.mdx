@@ -1,0 +1,30 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+
+<Meta title="Getting started/Troubleshooting" />
+
+# Troubleshooting
+
+## Specificity
+
+Depending on your project setup, you may encounter specificity issues where
+styles from `main.css` take precedence over component styles.
+
+In your CSS entrypoint, include the following cascade layer declaration at the
+top. This line must be loaded **before** any other CSS declarations:
+
+```css
+@layer main, fds;
+```
+
+## CSS ordering issues in Next.js
+
+With Turbopack, CSS resolution order may differ between `dev` and `build`,
+manifesting as broken styles on production.
+
+Review the
+[recommendations](https://nextjs.org/docs/app/getting-started/css#recommendations)
+from Next.js for possible workarounds.
+
+Alternatively, switch to
+[Webpack](https://nextjs.org/docs/app/api-reference/turbopack#using-webpack-instead)
+instead.

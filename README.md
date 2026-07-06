@@ -35,7 +35,7 @@ Add this into the `head` of your html file:
 <link
     rel="stylesheet"
     type="text/css"
-    href="https://assets.life.gov.sg/react-design-system/v3/css/main.css"
+    href="https://assets.life.gov.sg/react-design-system/v4/css/main.css"
 />
 <link
     rel="stylesheet"
@@ -47,7 +47,7 @@ Add this into the `head` of your html file:
 Or if you are importing to an existing css file:
 
 ```css
-@import url("https://assets.life.gov.sg/react-design-system/v3/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v4/css/main.css");
 @import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
 ```
 
