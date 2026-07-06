@@ -255,7 +255,9 @@ describe("Sidenav", () => {
 
         /* forward tab navigation */
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(screen.getByTestId("before")).toHaveFocus();
 
@@ -266,25 +268,33 @@ describe("Sidenav", () => {
         expect(screen.getByRole("button", { name: ITEM_1 })).toHaveFocus();
         await waitFor(() => screen.getByTestId(SIDENAV_DRAWER_TEST_ID));
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(
             screen.getByRole("button", { name: DRAWER_ITEM_1 })
         ).toHaveFocus();
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(
             screen.getByRole("button", { name: DRAWER_ITEM_2 })
         ).toHaveFocus();
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(
             screen.getByRole("button", { name: DRAWER_SUBITEM })
         ).toHaveFocus();
 
-        await user.keyboard("{Tab}");
+        await act(async () => {
+            await user.keyboard("{Tab}");
+        });
 
         expect(screen.getByRole("button", { name: ITEM_2 })).toHaveFocus();
         await waitForElementToBeRemoved(() =>
@@ -299,7 +309,9 @@ describe("Sidenav", () => {
 
         /* backward tab navigation */
 
-        await user.keyboard("{Shift>}{Tab}{/Shift}");
+        await act(async () => {
+            await user.keyboard("{Shift>}{Tab}{/Shift}");
+        });
 
         expect(screen.getByRole("button", { name: ITEM_2 })).toHaveFocus();
 

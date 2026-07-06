@@ -21,6 +21,7 @@ export const Footer = <T,>({
     showDownloadAddon,
     showResourceAddon,
     logoSrc,
+    logoAlt = "",
     copyrightInfo,
     onFooterLinkClick,
     layout = "default",
@@ -103,7 +104,7 @@ export const Footer = <T,>({
         }
 
         if (links || showDownloadAddon) {
-            const { src, logoType, ...otherLogoAttributes } =
+            const { src, alt, logoType, ...otherLogoAttributes } =
                 FooterHelper.getFooterLogoAttribute(theme?.theme);
             component = (
                 <>
@@ -119,6 +120,7 @@ export const Footer = <T,>({
                                     styles.logoImage,
                                     logoType && styles.logoSize[logoType]
                                 )}
+                                alt={logoAlt || alt}
                                 {...otherLogoAttributes}
                             />
                         </div>
