@@ -1,5 +1,25 @@
 const SAME_DIR_STYLE_MODULE_IMPORT_PATTERN = /^\.\/[^/]+\.styles$/;
 
+function getQuote(rawSource) {
+    if (!rawSource || rawSource.length < 2) return '"';
+    const quote = rawSource[0];
+    return quote === "'" || quote === '"' ? quote : '"';
+}
+
+function getStyleNamespaceLocalName(node) {
+    const namespaceSpecifier = node.specifiers.find(
+        (specifier) => specifier.type === "ImportNamespaceSpecifier"
+    );
+    if (namespaceSpecifier) return namespaceSpecifier.local.name;
+
+    const defaultSpecifier = node.specifiers.find(
+        (specifier) => specifier.type === "ImportDefaultSpecifier"
+    );
+    if (defaultSpecifier) return defaultSpecifier.local.name;
+
+    return "styles";
+}
+
 export const styleNamespaceImportRule = {
     meta: {
         type: "suggestion",
@@ -40,14 +60,13 @@ export const styleNamespaceImportRule = {
                 context.report({
                     node,
                     messageId: "namespaceStyleImport",
-                    // TODO: Autofix is disabled until linaria migration is complete.
 
-                    // fix(fixer) {
-                    //     const quote = getQuote(node.source.raw);
-                    //     const localName = getStyleNamespaceLocalName(node);
-                    //     const fixedImport = `import * as ${localName} from ${quote}${importSource}${quote};`;
-                    //     return fixer.replaceText(node, fixedImport);
-                    // },
+                    fix(fixer) {
+                        const quote = getQuote(node.source.raw);
+                        const localName = getStyleNamespaceLocalName(node);
+                        const fixedImport = `import * as ${localName} from ${quote}${importSource}${quote};`;
+                        return fixer.replaceText(node, fixedImport);
+                    },
                 });
             },
         };
