@@ -177,4 +177,10 @@ const Component = (
     );
 };
 
+/**
+ * A single-line text input field.
+ *
+ * Use `Input` for free-form text entry. It supports controlled and uncontrolled
+ * usage.
+ */
 export const Input = React.forwardRef(Component);
