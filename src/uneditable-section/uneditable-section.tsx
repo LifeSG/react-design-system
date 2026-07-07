@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import type { NamedExoticComponent } from "react";
 import React from "react";
 
 import { Layout } from "../layout";
@@ -7,7 +8,6 @@ import { UneditableSectionItem } from "./section-item";
 import type {
     UneditableSectionItemProps,
     UneditableSectionProps,
-    UneditableSectionRef,
 } from "./types";
 import * as styles from "./uneditable-section.styles";
 
@@ -28,7 +28,7 @@ const Component = (
         className,
         ...otherProps
     }: UneditableSectionProps,
-    ref: UneditableSectionRef
+    ref: React.Ref<HTMLDivElement>
 ) => {
     // =============================================================================
     // EVENT HANDLERS
@@ -165,6 +165,7 @@ const Component = (
     );
 };
 
-Component.displayName = "UneditableSection";
-
 export const UneditableSectionBase = React.forwardRef(Component);
+
+(UneditableSectionBase as NamedExoticComponent).displayName =
+    "UneditableSection";
