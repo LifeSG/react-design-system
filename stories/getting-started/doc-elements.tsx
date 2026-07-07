@@ -82,7 +82,7 @@ The next set of instructions will differ based on your theme, so select the them
                 {`
 ### 3. Set up the base stylesheets
 
-The library depends on custom CSS for fonts and certain components to work properly. You will need to load the corresponding stylesheets in your app.
+The library depends on custom CSS to normalise browser styles and display fonts. You will need to load the corresponding stylesheets in your app.
 `}
             </Markdown>
             <Markdown>
@@ -93,7 +93,7 @@ Add this into the \`head\` of your html file:
 <link
     rel="stylesheet"
     type="text/css"
-    href="https://assets.life.gov.sg/react-design-system/v3/css/main.css"
+    href="https://assets.life.gov.sg/react-design-system/v4/css/main.css"
 />
 <link
     rel="stylesheet"
@@ -105,7 +105,7 @@ Add this into the \`head\` of your html file:
 Or if you are importing to an existing css file:
 
 \`\`\`css
-@import url("https://assets.life.gov.sg/react-design-system/v3/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v4/css/main.css");
 @import url("https://assets.life.gov.sg/react-design-system/v3/css/${THEME_TO_FONT_MAPPING[theme]}.css");
 \`\`\`
 

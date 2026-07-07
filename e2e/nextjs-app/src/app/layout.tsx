@@ -5,7 +5,7 @@ import E2EDateSeedBootstrap from "./e2e-date-seed-bootstrap";
 import "./globals.css";
 
 const CDN_STYLE_ASSETS = [
-    "/cdn/react-design-system/v3/css/main.css",
+    "/cdn/react-design-system/v4/css/main.css",
     "/cdn/react-design-system/v3/css/atkinson-hyperlegible-next.css",
     "/cdn/react-design-system/v3/css/plus-jakarta-sans.css",
     "/cdn/react-design-system/v3/css/open-sans.css",

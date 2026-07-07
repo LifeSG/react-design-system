@@ -126,6 +126,9 @@ const plugins = [
     // COMPONENT-SPECIFIC PLUGINS
     // =========================================================================
     image(),
+    wyw({
+        sourcemap: true,
+    }),
     // Handles local component CSS modules (excludes node_modules).
     // Injects an import statement in the source style file and outputs CSS in the same location.
     libStylePlugin({
@@ -136,6 +139,21 @@ const plugins = [
             return "/" + outputPath;
         },
         scopedName: "[local]",
+        postCssPlugins: [
+            // Inject `@layer fds` into the generated CSS files
+            {
+                postcssPlugin: "postcss-layer",
+                Once(root, { postcss }) {
+                    const layer = postcss.atRule({
+                        name: "layer",
+                        params: "fds",
+                        nodes: root.nodes,
+                    });
+                    root.removeAll();
+                    root.append(layer);
+                },
+            },
+        ],
     }),
     // Handles external SGDS web component CSS from node_modules.
     // Ensures SGDS styles are bundled and output to a fixed path for masthead usage.
@@ -161,12 +179,30 @@ const plugins = [
             return "/masthead/sgds-night.css";
         },
     }),
-    wyw({
-        sourcemap: true,
-    }),
     // Copies static assets to the build output
     copy({
-        targets: [{ src: "src/theme/styles/*", dest: "dist/theme/styles" }],
+        targets: [
+            {
+                src: "src/theme/styles/*",
+                dest: "dist/theme/styles",
+                transform: (contents) => {
+                    // Inject `@layer fds` into the copied CSS files, ensuring
+                    // that imports are hoisted to the top
+                    const lines = contents.toString().split("\n");
+                    const lastImportLineIndex = lines.findLastIndex((line) =>
+                        line.trim().startsWith("@import")
+                    );
+                    const importLines = lines
+                        .slice(0, lastImportLineIndex + 1)
+                        .join("\n");
+                    const cssLines = lines
+                        .slice(lastImportLineIndex + 1)
+                        .join("\n");
+
+                    return `${importLines}\n@layer fds {\n${cssLines}\n}`;
+                },
+            },
+        ],
     }),
     fixCssImportPathsPlugin,
 ];
