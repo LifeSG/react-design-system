@@ -1,4 +1,5 @@
 import clsx from "clsx";
+import React from "react";
 
 import { Layout } from "../layout";
 import { Typography } from "../typography";
@@ -6,25 +7,29 @@ import { UneditableSectionItem } from "./section-item";
 import type {
     UneditableSectionItemProps,
     UneditableSectionProps,
+    UneditableSectionRef,
 } from "./types";
 import * as styles from "./uneditable-section.styles";
 
-export const UneditableSectionBase = ({
-    items,
-    title,
-    description,
-    topSection,
-    bottomSection,
-    children,
-    background = true,
-    stretch,
-    fullWidth,
-    onMask,
-    onUnmask,
-    onTryAgain,
-    className,
-    ...otherProps
-}: UneditableSectionProps) => {
+const Component = (
+    {
+        items,
+        title,
+        description,
+        topSection,
+        bottomSection,
+        children,
+        background = true,
+        stretch,
+        fullWidth,
+        onMask,
+        onUnmask,
+        onTryAgain,
+        className,
+        ...otherProps
+    }: UneditableSectionProps,
+    ref: UneditableSectionRef
+) => {
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -133,6 +138,7 @@ export const UneditableSectionBase = ({
     if (fullWidth) {
         return (
             <div
+                ref={ref}
                 className={clsx(
                     background && styles.wrapperBackground,
                     className
@@ -145,6 +151,7 @@ export const UneditableSectionBase = ({
     }
     return (
         <Layout.Content
+            ref={ref}
             className={clsx(
                 styles.wrapper,
                 background && styles.wrapperBackground,
@@ -157,3 +164,7 @@ export const UneditableSectionBase = ({
         </Layout.Content>
     );
 };
+
+Component.displayName = "UneditableSection";
+
+export const UneditableSectionBase = React.forwardRef(Component);

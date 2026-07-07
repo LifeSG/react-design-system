@@ -67,3 +67,5 @@ export interface UneditableSectionProps {
     /** The callback function when the "Try again" button is clicked in error state */
     onTryAgain?: ((item: UneditableSectionItemProps) => void) | undefined;
 }
+
+export type UneditableSectionRef = React.Ref<HTMLDivElement>;
