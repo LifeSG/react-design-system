@@ -15,6 +15,7 @@ import localRules from "./eslint-local-rules/index.mjs";
 const sourceFileGlobs = ["**/*.{js,jsx,mjs,cjs,ts,tsx}"];
 const reactSourceFileGlobs = ["**/*.{js,jsx,ts,tsx}"];
 const tsFileGlobs = ["**/*.{ts,tsx}"];
+const vueExampleTsFileGlobs = ["example/vue-app/**/*.{ts,tsx}"];
 const testFileGlobs = [
     "**/*.spec.{js,jsx,ts,tsx}",
     "**/*.test.{js,jsx,ts,tsx}",
@@ -168,6 +169,14 @@ export default defineConfig([
         rules: {
             ...sharedTsRules,
             "react/prop-types": "off",
+        },
+    },
+    {
+        files: vueExampleTsFileGlobs,
+        languageOptions: {
+            parserOptions: {
+                project: "./example/vue-app/tsconfig.json",
+            },
         },
     },
     {
