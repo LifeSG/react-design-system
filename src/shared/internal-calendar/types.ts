@@ -1,4 +1,5 @@
 import type { Dayjs } from "dayjs";
+import type { RefObject } from "react";
 
 export interface CommonCalendarProps {
     /**
@@ -15,6 +16,41 @@ export interface CommonCalendarProps {
     allowDisabledSelection?: boolean | undefined;
     /** Specifies if the calendar should display only dates for the selected month */
     showActiveMonthDaysOnly?: boolean | undefined;
+}
+
+export interface CommonDateFieldBoundaryProps {
+    /**
+     * The earliest selectable date in `YYYY-MM-DD` format. The left arrow is
+     * disabled when `selectedDate` reaches this boundary.
+     */
+    minDate?: string | undefined;
+    /**
+     * The latest selectable date in `YYYY-MM-DD` format. The right arrow is
+     * disabled when `selectedDate` reaches this boundary.
+     */
+    maxDate?: string | undefined;
+}
+
+export interface CommonDateFieldDropdownProps {
+    /**
+     * The root element that contains the dropdown element.
+     * Specify this if you need to change the parent of the dropdown in the HTML DOM.
+     * Possible use case: sharing a stacking context.
+     *
+     * @remarks If a parent of the trigger has a higher `z-index` than
+     * the dropdown, the dropdown may be obscured.
+     *
+     * @default `document.body`
+     */
+    dropdownRootNode?: RefObject<HTMLElement> | undefined;
+}
+
+export interface CommonDateFieldProps
+    extends CommonDateFieldBoundaryProps,
+        CommonDateFieldDropdownProps {
+    id?: string | undefined;
+    className?: string | undefined;
+    "data-testid"?: string | undefined;
 }
 
 // =============================================================================

@@ -1,22 +1,9 @@
-import type { RefObject } from "react";
+import type { CommonDateFieldProps } from "../shared/internal-calendar/types";
 
 /** Props for the `DateNavigator` component. */
-export interface DateNavigatorProps {
-    id?: string | undefined;
-    className?: string | undefined;
-    "data-testid"?: string | undefined;
+export interface DateNavigatorProps extends CommonDateFieldProps {
     /** The currently displayed date in `YYYY-MM-DD` format. */
     selectedDate: string;
-    /**
-     * The earliest selectable date in `YYYY-MM-DD` format. The left arrow is
-     * disabled when `selectedDate` reaches this boundary.
-     */
-    minDate?: string | undefined;
-    /**
-     * The latest selectable date in `YYYY-MM-DD` format. The right arrow is
-     * disabled when `selectedDate` reaches this boundary.
-     */
-    maxDate?: string | undefined;
     /**
      * When `true`, both navigation arrows and the calendar trigger are disabled.
      */
@@ -49,12 +36,4 @@ export interface DateNavigatorProps {
      * calendar dropdown is not shown.
      */
     onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
-    /**
-     * The root element that contains the dropdown element.
-     *
-     * @remarks
-     * Defaults to the document body. If a parent of the trigger has a higher
-     * `z-index` than the dropdown, the dropdown may be obscured.
-     */
-    dropdownRootNode?: RefObject<HTMLElement> | undefined;
 }

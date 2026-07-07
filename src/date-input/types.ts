@@ -1,29 +1,13 @@
-import type { RefObject } from "react";
-
 import type {
     CommonCalendarProps,
+    CommonDateFieldProps,
     YearMonthDisplay,
 } from "../shared/internal-calendar/types";
 
 /** Props for the `DateInput` component. */
-export interface DateInputProps extends CommonCalendarProps {
-    // Standard HTML Attributes
-    className?: string | undefined;
-    id?: string | undefined;
-    /**
-     * The root element that contains the dropdown element.
-     * Specify this if you need to change the parent of the dropdown in the HTML DOM.
-     * Possible use case: sharing a stacking context.
-     *
-     * @remarks If a parent of the trigger has a higher `z-index` than
-     * the dropdown, the dropdown may be obscured.
-     *
-     * @default `document.body`
-     */
-    dropdownRootNode?: RefObject<HTMLElement> | undefined;
-
-    // Input-specific Attributes
-    "data-testid"?: string | undefined;
+export interface DateInputProps
+    extends CommonCalendarProps,
+        CommonDateFieldProps {
     readOnly?: boolean | undefined;
     /**
      * When `true`, suppresses the native on-screen keyboard on mobile devices
