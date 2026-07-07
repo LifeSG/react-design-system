@@ -61,7 +61,9 @@ describe("InputNestedSelect", () => {
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
-        await user.click(screen.getByTestId(FIELD_TESTID));
+        await act(async () => {
+            await user.click(screen.getByTestId(FIELD_TESTID));
+        });
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -79,7 +81,9 @@ describe("InputNestedSelect", () => {
             <InputNestedSelect data-testid={FIELD_TESTID} options={OPTIONS} />
         );
 
-        await user.click(screen.getByTestId(FIELD_TESTID));
+        await act(async () => {
+            await user.click(screen.getByTestId(FIELD_TESTID));
+        });
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -128,7 +132,9 @@ describe("InputNestedSelect", () => {
             />
         );
 
-        await user.click(screen.getByTestId(FIELD_TESTID));
+        await act(async () => {
+            await user.click(screen.getByTestId(FIELD_TESTID));
+        });
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -161,7 +167,9 @@ describe("InputNestedSelect", () => {
             />
         );
 
-        await user.click(screen.getByTestId(FIELD_TESTID));
+        await act(async () => {
+            await user.click(screen.getByTestId(FIELD_TESTID));
+        });
 
         await waitFor(() => {
             expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
@@ -191,7 +199,9 @@ describe("InputNestedSelect", () => {
                 />
             );
 
-            await user.click(screen.getByTestId(FIELD_TESTID));
+            await act(async () => {
+                await user.click(screen.getByTestId(FIELD_TESTID));
+            });
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -229,7 +239,9 @@ describe("InputNestedSelect", () => {
                 />
             );
 
-            await user.click(screen.getByTestId(FIELD_TESTID));
+            await act(async () => {
+                await user.click(screen.getByTestId(FIELD_TESTID));
+            });
 
             await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
             await waitFor(() =>
@@ -311,7 +323,9 @@ describe("InputNestedSelect", () => {
                 </>
             );
 
-            await user.keyboard("{Tab}");
+            await act(async () => {
+                await user.keyboard("{Tab}");
+            });
 
             expect(screen.getByTestId("before")).toHaveFocus();
 
@@ -362,7 +376,9 @@ describe("InputNestedSelect", () => {
                 />
             );
 
-            await user.click(screen.getByTestId(FIELD_TESTID));
+            await act(async () => {
+                await user.click(screen.getByTestId(FIELD_TESTID));
+            });
 
             await waitFor(() => {
                 expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
