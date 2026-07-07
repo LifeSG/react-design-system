@@ -24,6 +24,11 @@ const ESignatureCanvas = lazy(async () => ({
     default: (await import("./e-signature-canvas")).ESignatureCanvas,
 }));
 
+/**
+ * A field that lets users draw and save a signature.
+ *
+ * Use in forms that require a handwritten signature.
+ */
 export const ESignature = (props: EsignatureProps) => {
     // =============================================================================
     // CONST, STATE, REF
