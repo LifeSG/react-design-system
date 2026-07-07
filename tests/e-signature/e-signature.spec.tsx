@@ -84,7 +84,7 @@ describe("ESignature", () => {
         await waitFor(() => expect(getSignatureModal()).toBeVisible());
     });
 
-    it("should call onChange and show signature preview on clicking save button", () => {
+    it("should call onChange and show signature preview on clicking save button", async () => {
         const changeFn = jest.fn();
         render(<ESignature onChange={changeFn} />);
 
@@ -92,8 +92,9 @@ describe("ESignature", () => {
         drawSignature();
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
-        // TODO: Test linaria css
-        // expect(getSignatureModal()).not.toBeVisible();
+        await waitFor(() => {
+            expect(getSignatureModal()).not.toBeVisible();
+        });
         expect(queryAddSignatureButton()).not.toBeInTheDocument();
         expect(getEditSignatureButton()).toBeInTheDocument();
         expect(changeFn).toHaveBeenCalled();
@@ -113,7 +114,7 @@ describe("ESignature", () => {
         );
     });
 
-    it("should clear the field value on clicking clear button and save button subsequently", () => {
+    it("should clear the field value on clicking clear button and save button subsequently", async () => {
         render(<ESignature />);
 
         fireEvent.click(getAddSignatureButton());
@@ -121,8 +122,9 @@ describe("ESignature", () => {
         fireEvent.click(screen.getByRole("button", { name: "Clear" }));
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
-        // TODO: Test linaria css
-        // expect(getSignatureModal()).not.toBeVisible();
+        await waitFor(() => {
+            expect(getSignatureModal()).not.toBeVisible();
+        });
         expect(getAddSignatureButton()).toBeInTheDocument();
     });
 });
