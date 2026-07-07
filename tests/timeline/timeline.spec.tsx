@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { Timeline } from "../../src/timeline";
+import { Timeline } from "src/timeline";
 
 // =============================================================================
 // UNIT TESTS
@@ -236,6 +236,38 @@ describe("Timeline", () => {
                 "circleindicator2_div_mixed-offset"
             );
             expect(numericIndicator).toHaveTextContent("5");
+        });
+    });
+
+    describe("status announcements", () => {
+        it("should include hidden status text for non-numeric variants", () => {
+            render(
+                <Timeline
+                    items={[
+                        {
+                            title: "Current",
+                            variant: "current",
+                            content: "Current content",
+                        },
+                        {
+                            title: "Completed",
+                            variant: "completed",
+                            content: "Completed content",
+                        },
+                        {
+                            title: "Error",
+                            variant: "error",
+                            content: "Error content",
+                        },
+                    ]}
+                />
+            );
+
+            expect(screen.getByText("Current step")).toBeInTheDocument();
+            expect(screen.getByText("Completed step")).toBeInTheDocument();
+            expect(
+                screen.getByText("Current step, action required")
+            ).toBeInTheDocument();
         });
     });
 });

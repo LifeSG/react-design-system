@@ -1,15 +1,12 @@
+import clsx from "clsx";
 import { useRef } from "react";
+
+import { Button } from "../button";
+import * as filterStyles from "./filter.styles";
 import { FilterBadge } from "./filter-badge";
 import { FilterContext } from "./filter-context";
-import {
-    DesktopContainer,
-    FilterClearButton,
-    FilterHeader,
-    FilterTitle,
-    FilterTitleGroup,
-} from "./filter-sidebar.styles";
-import { FilterSidebarProps } from "./types";
-import { FilterBody } from "./filter.styles";
+import * as styles from "./filter-sidebar.styles";
+import type { FilterSidebarProps } from "./types";
 
 export const FilterSidebar = ({
     customLabels,
@@ -18,6 +15,7 @@ export const FilterSidebar = ({
     count,
     children,
     headerTitle: _headerTitle,
+    className,
     ...otherProps
 }: FilterSidebarProps) => {
     const nodeRef = useRef<HTMLDivElement>(null);
@@ -29,29 +27,32 @@ export const FilterSidebar = ({
 
     return (
         <FilterContext.Provider value={{ mode: "default", rootNode: nodeRef }}>
-            <DesktopContainer
+            <div
                 data-id="filter-desktop"
                 data-testid="filter-desktop"
                 ref={nodeRef}
+                className={clsx(styles.desktopContainer, className)}
                 {...otherProps}
             >
-                <FilterHeader>
-                    <FilterTitleGroup>
-                        <FilterTitle>{labels.title}</FilterTitle>
+                <div className={styles.filterHeader}>
+                    <div className={styles.filterTitleGroup}>
+                        <h2 className={styles.filterTitle}>{labels.title}</h2>
                         <FilterBadge count={count} />
-                    </FilterTitleGroup>
-                    <FilterClearButton
+                    </div>
+                    <Button
+                        className={styles.filterClearButton}
                         styleType="link"
                         type="button"
+                        sizeType="small"
                         onClick={() => onClear?.()}
                         disabled={clearButtonDisabled}
                         aria-label={`clear ${labels.title}`}
                     >
                         {labels.clear}
-                    </FilterClearButton>
-                </FilterHeader>
-                <FilterBody>{children}</FilterBody>
-            </DesktopContainer>
+                    </Button>
+                </div>
+                <div className={filterStyles.filterBody}>{children}</div>
+            </div>
         </FilterContext.Provider>
     );
 };

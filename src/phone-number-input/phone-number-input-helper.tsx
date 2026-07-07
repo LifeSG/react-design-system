@@ -1,6 +1,7 @@
 import reduce from "lodash/reduce";
+
 import { CountryData } from "./data/country-code";
-import { CountryValue } from "./types";
+import type { CountryValue } from "./types";
 
 // Format stucture: prefix+countryCode+' '+defaultMask
 const defaultMask = "... ... ... ... ..";
@@ -24,8 +25,8 @@ const getMask = (
     }
 };
 
-export namespace PhoneNumberInputHelper {
-    export const getCountries = (): CountryValue[] => {
+export class PhoneNumberInputHelper {
+    public static getCountries(): CountryValue[] {
         const countries: CountryValue[] = [];
         return countries.concat(
             ...CountryData.map((country): CountryValue => {
@@ -45,12 +46,12 @@ export namespace PhoneNumberInputHelper {
                 return countryItem;
             })
         );
-    };
+    }
 
-    export const formatNumber = (
+    public static formatNumber(
         numberText = "",
         country?: CountryValue
-    ): string => {
+    ): string {
         if (!country) return numberText;
 
         const numberTextWithoutSpace = numberText.replace(/[\s()]+/g, "");
@@ -97,5 +98,5 @@ export namespace PhoneNumberInputHelper {
 
         const formattedNumber = formattedObject.formattedText;
         return formattedNumber;
-    };
+    }
 }

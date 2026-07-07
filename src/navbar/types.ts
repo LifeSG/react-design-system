@@ -1,5 +1,5 @@
-import { ButtonProps } from "../button";
-import { TypographyLinkProps } from "../typography";
+import type { ButtonProps } from "../button";
+import type { TypographyLinkProps } from "../typography";
 
 // =============================================================================
 // NAV ITEM TYPES

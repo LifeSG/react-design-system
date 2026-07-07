@@ -1,23 +1,23 @@
+import { css } from "@linaria/core";
 import { Layout } from "src/layout";
-import styled from "styled-components";
 
-const Content = styled.div`
+const content = css`
     background: #f9b5b2;
     border: 2px dotted #f26664;
     height: 100vh;
     flex: 1;
 `;
 
-const Background = styled.div`
+const background = css`
     background: #fdddd7;
 `;
 
 export const StretchDisplay = () => {
     return (
-        <Background>
+        <div className={background}>
             <Layout.Container type="flex" stretch>
-                <Content />
+                <div className={content} />
             </Layout.Container>
-        </Background>
+        </div>
     );
 };

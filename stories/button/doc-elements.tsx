@@ -1,9 +1,13 @@
-import styled from "styled-components";
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ComponentPropsWithoutRef } from "react";
+
+type DivProps = ComponentPropsWithoutRef<"div">;
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const Container = styled.div`
+const container = css`
     display: flex;
     flex-wrap: wrap;
     gap: 1.5rem;
@@ -16,3 +20,7 @@ export const Container = styled.div`
         flex: 0 fit-content;
     }
 `;
+
+export const Container = ({ className, ...props }: DivProps) => (
+    <div {...props} className={clsx(container, className)} />
+);

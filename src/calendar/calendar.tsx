@@ -1,8 +1,9 @@
+import clsx from "clsx";
 import { useEffect, useState } from "react";
-import styled, { css } from "styled-components";
+
 import { InternalCalendar } from "../shared/internal-calendar";
-import { Border, Colour, Radius, Spacing } from "../theme";
-import { CalendarProps } from "./types";
+import * as styles from "./calendar.styles";
+import type { CalendarProps } from "./types";
 
 export const Calendar = (props: CalendarProps) => {
     // =============================================================================
@@ -23,14 +24,11 @@ export const Calendar = (props: CalendarProps) => {
         "data-testid": dataTestId,
     } = props;
 
-    const controlledValue =
-        props.variant !== "multi" ? props.value : undefined;
-    const controlledValues =
-        props.variant === "multi" ? props.values : undefined;
-    const minSelectable =
-        props.variant === "multi" ? props.minSelectable : undefined;
-    const maxSelectable =
-        props.variant === "multi" ? props.maxSelectable : undefined;
+    const isMultiVariant = props.variant === "multi";
+    const controlledValue = isMultiVariant ? undefined : props.value;
+    const controlledValues = isMultiVariant ? props.values : undefined;
+    const minSelectable = isMultiVariant ? props.minSelectable : undefined;
+    const maxSelectable = isMultiVariant ? props.maxSelectable : undefined;
 
     const resolveValues = (): string[] => {
         if (controlledValues !== undefined) return controlledValues;
@@ -47,11 +45,15 @@ export const Calendar = (props: CalendarProps) => {
     useEffect(() => {
         if (controlledValues !== undefined) {
             setSelectedValues(controlledValues);
-        } else if (controlledValue !== undefined) {
-            setSelectedValues([controlledValue]);
-        } else {
-            setSelectedValues([]);
+            return;
         }
+
+        if (controlledValue !== undefined) {
+            setSelectedValues([controlledValue]);
+            return;
+        }
+
+        setSelectedValues([]);
     }, [controlledValue, controlledValues]);
 
     // =============================================================================
@@ -59,10 +61,12 @@ export const Calendar = (props: CalendarProps) => {
     // =============================================================================
     const handleSelect = (date: string) => {
         setSelectedValues([date]);
-        if (props.variant !== "multi") {
-            props.onChange?.(date);
-            props.onSelect?.(date);
+        if (props.variant === "multi") {
+            return;
         }
+
+        props.onChange?.(date);
+        props.onSelect?.(date);
     };
 
     const handleMultiSelect = (nextValues: string[]) => {
@@ -76,11 +80,14 @@ export const Calendar = (props: CalendarProps) => {
     // RENDER FUNCTION
     // =============================================================================
     return (
-        <Wrapper
-            className={className}
+        <div
+            className={clsx(
+                styles.wrapper,
+                styleType === "bordered" && styles.wrapperBordered,
+                className
+            )}
             id={id}
             data-testid={dataTestId}
-            $hasBorder={styleType === "bordered"}
         >
             <InternalCalendar
                 value={selectedValues[0]}
@@ -100,34 +107,6 @@ export const Calendar = (props: CalendarProps) => {
                 minSelectable={minSelectable}
                 maxSelectable={maxSelectable}
             />
-        </Wrapper>
+        </div>
     );
 };
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface StyleProps {
-    $hasBorder?: boolean;
-}
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const Wrapper = styled.div<StyleProps>`
-    --vertical-inset: ${Spacing["spacing-24"]};
-    --horizontal-inset: ${Spacing["spacing-32"]};
-    --header-bottom-spacing: ${Spacing["spacing-8"]};
-
-    width: 41rem;
-
-    ${(props) => {
-        if (props.$hasBorder) {
-            return css`
-                border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
-                border-radius: ${Radius["lg"]};
-                overflow: hidden;
-            `;
-        }
-    }}
-`;

@@ -1,12 +1,10 @@
+import clsx from "clsx";
 import React from "react";
-import { LocalNavMenuItemComponentProps } from "../internal-types";
-import { LocalNavMenuProps } from "../types";
-import {
-    Nav,
-    NavItem,
-    NavItemContent,
-    TextLabel,
-} from "./local-nav-menu.styles";
+
+import { Typography } from "../../typography";
+import type { LocalNavMenuItemComponentProps } from "../internal-types";
+import type { LocalNavMenuProps } from "../types";
+import * as styles from "./local-nav-menu.styles";
 
 /**
  * A sidebar navigation element. The currently visible section will be highlighted.
@@ -66,15 +64,26 @@ const Component = (
                 return renderItem(item, { selected: isSelected });
             }
             return (
-                <TextLabel weight={isSelected ? "semibold" : "regular"}>
+                <Typography.BodyBL
+                    className={styles.textLabel}
+                    weight={isSelected ? "semibold" : "regular"}
+                >
                     {title}
-                </TextLabel>
+                </Typography.BodyBL>
             );
         };
 
         return (
-            <NavItem id={id} key={index} $isSelected={isSelected}>
-                <NavItemContent
+            <li
+                id={id}
+                key={index}
+                className={clsx(
+                    styles.navItem,
+                    isSelected && styles.navItemSelected
+                )}
+            >
+                <div
+                    className={styles.navItemContent}
                     role="link"
                     onClick={handleClick}
                     onKeyDown={(e) => handleNavItemKeyDown(e, handleClick)}
@@ -82,15 +91,15 @@ const Component = (
                     aria-current={isSelected ? true : undefined}
                 >
                     {renderTitle()}
-                </NavItemContent>
-            </NavItem>
+                </div>
+            </li>
         );
     };
     return (
-        <Nav
+        <ul
             ref={ref}
             id={id}
-            className={className}
+            className={clsx(styles.nav, className)}
             data-testid={localNavMenuId}
         >
             {items.map((item, i) => {
@@ -103,7 +112,7 @@ const Component = (
                     index: i,
                 });
             })}
-        </Nav>
+        </ul>
     );
 };
 

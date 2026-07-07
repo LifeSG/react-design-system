@@ -1,57 +1,22 @@
-import { INITIAL_VIEWPORTS } from "storybook/viewport";
 import type { Preview } from "@storybook/react-webpack5";
-import { ThemeProvider } from "styled-components";
-import {
-    A11yPlaygroundTheme,
-    BookingSGTheme,
-    CCubeTheme,
-    IMDATheme,
-    LifeSGTheme,
-    MyLegacyTheme,
-    OneServiceTheme,
-    PATheme,
-    RBSTheme,
-    SPFTheme,
-    SupportGoWhereTheme,
-    SGWDigitalLobbyTheme,
-    SMGSTheme,
-    CareerCompassTheme,
-} from "../src/theme";
+import { INITIAL_VIEWPORTS } from "storybook/viewport";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
+import "./preview.css";
+
 const preview: Preview = {
-    decorators: [
-        withThemeFromJSXProvider({
-            themes: {
-                LifeSG: LifeSGTheme,
-                BookingSG: BookingSGTheme,
-                CCube: CCubeTheme,
-                MyLegacy: MyLegacyTheme,
-                OneService: OneServiceTheme,
-                PA: PATheme,
-                SupportGoWhere: SupportGoWhereTheme,
-                SGWDigitalLobby: SGWDigitalLobbyTheme,
-                A11yPlayground: A11yPlaygroundTheme,
-                IMDA: IMDATheme,
-                RBS: RBSTheme,
-                SPF: SPFTheme,
-                SMGS: SMGSTheme,
-                CareerCompass: CareerCompassTheme,
-            },
-            Provider: ThemeProvider,
-        }),
-    ],
+    decorators: [withThemeFromJSXProvider()],
     parameters: {
         options: {
             storySort: {
                 order: [
                     "Getting started",
-                    ["Installation", "Themes", "Media Query", "Layout"],
+                    "Installation",
                     "Foundations",
                     [
                         "Introduction",
-                        "Themes",
-                        ["Introduction", "Advanced Usage", "Dark Mode", "*"],
+                        "Basics",
+                        "Advanced",
                         "Colours",
                         "Font",
                         "Breakpoint",
@@ -59,9 +24,10 @@ const preview: Preview = {
                         "Motion",
                         "Radius",
                         "Border",
+                        "Shadow",
                     ],
                     "Core",
-                    ["Typography", "Layout", "Icon"],
+                    ["Typography", "Layout", "Icon", "DashedBorder"],
                     "Content",
                     "Navigation",
                     "Selection and input",
@@ -73,15 +39,6 @@ const preview: Preview = {
                     "Form",
                     "Data Input",
                     "Modules",
-                    "V2",
-                    [
-                        "Introduction",
-                        "Themes",
-                        "Color",
-                        "Text",
-                        "Media Query",
-                        "Layout",
-                    ],
                 ],
             },
         },

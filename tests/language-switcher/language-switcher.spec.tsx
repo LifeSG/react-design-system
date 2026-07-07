@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
 import { announce } from "@react-aria/live-announcer";
-import { LanguageSwitcher } from "../../src/language-switcher";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { LanguageSwitcher } from "src/language-switcher";
 
 jest.mock("@react-aria/live-announcer", () => ({
     announce: jest.fn(),

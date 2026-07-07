@@ -1,27 +1,25 @@
 import { InboxIcon } from "@lifesg/react-icons/inbox";
-import { useEffect, useState } from "react";
+import { css } from "@linaria/core";
+import { Avatar } from "src/avatar";
+import { Badge } from "src/badge";
 import { Button } from "src/button";
 import { Divider } from "src/divider";
-import { IconButton } from "src/icon-button";
-import { PopoverTrigger } from "src/popover-v2";
-import { Breakpoint, Colour } from "src/theme";
+import { Menu } from "src/menu";
+import { PopoverTrigger } from "src/popover";
+import { Colour, useMaxWidthMediaQuery } from "src/theme";
 import { Typography } from "src/typography";
-import styled, { useTheme } from "styled-components";
-import { Avatar } from "../../src/avatar";
-import { Badge } from "../../src/badge";
-import { Menu } from "../../src/menu";
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const MobileCustomComponentWrapper = styled.div`
+const mobileCustomComponentWrapper = css`
     display: flex;
     flex-direction: column;
     gap: 0.25rem;
     padding: 1rem 1.25rem 0.5rem 1.25rem;
 `;
 
-const DesktopCustomComponentWrapper = styled.div`
+const desktopCustomComponentWrapper = css`
     display: flex;
     position: relative;
     align-items: center;
@@ -30,7 +28,7 @@ const DesktopCustomComponentWrapper = styled.div`
     margin-left: 1rem;
 `;
 
-const SubLabel = styled(Typography.BodySM)`
+const subLabel = css`
     color: ${Colour["text-subtle"]};
 `;
 
@@ -43,50 +41,45 @@ interface Props {
 
 export const DesktopCustomComponent = () => {
     return (
-        <DesktopCustomComponentWrapper>
+        <div className={desktopCustomComponentWrapper}>
             <PopoverTrigger popoverContent="Popover content" zIndex={100}>
-                <IconButton sizeType="small" styleType="light">
-                    <InboxIcon aria-label="Inbox" />
-                </IconButton>
+                <Button
+                    sizeType="small"
+                    styleType="light"
+                    icon={<InboxIcon />}
+                    aria-label="Inbox"
+                />
             </PopoverTrigger>
-        </DesktopCustomComponentWrapper>
+        </div>
     );
 };
 
 export const MobileCustomComponent = ({ onClick }: Props) => {
     return (
         <>
-            <MobileCustomComponentWrapper>
+            <div className={mobileCustomComponentWrapper}>
                 <Typography.BodyMD>John Smith</Typography.BodyMD>
-                <SubLabel>john_smith@tech.gov.sg</SubLabel>
-                <Button.Small
+                <Typography.BodySM className={subLabel}>
+                    john_smith@tech.gov.sg
+                </Typography.BodySM>
+                <Button
                     style={{
                         marginTop: "1rem",
                         marginBottom: "1rem",
                     }}
                     onClick={onClick}
+                    sizeType="small"
                 >
                     Click to close the drawer
-                </Button.Small>
-            </MobileCustomComponentWrapper>
+                </Button>
+            </div>
             <Divider />
         </>
     );
 };
 
 export const NavbarAvatar = () => {
-    const theme = useTheme();
-    const desktop = Breakpoint["xl-min"]({ theme });
-    const [isTablet, setIsTablet] = useState(window.innerWidth < desktop);
-
-    useEffect(() => {
-        const handleResize = () => {
-            setIsTablet(window.innerWidth < desktop);
-        };
-
-        window.addEventListener("resize", handleResize);
-        return () => window.removeEventListener("resize", handleResize);
-    }, [desktop]);
+    const isTablet = useMaxWidthMediaQuery("lg");
 
     return (
         <Menu

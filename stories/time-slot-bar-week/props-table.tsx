@@ -1,4 +1,5 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable } from "stories/storybook-common";
 
 const STRING_FORMAT = (
     <>

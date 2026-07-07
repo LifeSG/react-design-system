@@ -1,7 +1,7 @@
 import { InputNestedSelect } from "../input-nested-select";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormNestedSelectProps } from "./types";
+import type { FormNestedSelectProps } from "./types";
 
 export const FormNestedSelect = <V1, V2, V3>({
     label,
@@ -10,9 +10,6 @@ export const FormNestedSelect = <V1, V2, V3>({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -31,11 +28,7 @@ export const FormNestedSelect = <V1, V2, V3>({
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

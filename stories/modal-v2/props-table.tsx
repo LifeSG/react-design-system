@@ -1,9 +1,8 @@
-import {
-    ApiTable,
+import type {
     ApiTableSectionProps,
     TabAttribute,
-    Tabs,
 } from "stories/storybook-common";
+import { ApiTable, Tabs } from "stories/storybook-common";
 
 const MODAL_DATA: ApiTableSectionProps[] = [
     {
@@ -106,6 +105,19 @@ const MODAL_DATA: ApiTableSectionProps[] = [
                 description: <>Dismisses keyboard when modal is shown</>,
                 propTypes: ["boolean"],
                 defaultValue: "true",
+            },
+            {
+                name: "disableInitialFocus",
+                description: (
+                    <>
+                        Disables automatic focus placement when the modal is
+                        shown. When enabled, you must move focus to an element
+                        inside the modal yourself (for example in an effect
+                        after opening).
+                    </>
+                ),
+                propTypes: ["boolean"],
+                defaultValue: "false",
             },
         ],
     },

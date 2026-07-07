@@ -1,5 +1,5 @@
-import { ApiTable } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { ApiTable } from "stories/storybook-common/api-table";
+import type { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -28,6 +28,16 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: [`"red-filled"`, `"white-filled"`],
                 defaultValue: `"white-filled"`,
+            },
+            {
+                name: "sizeType",
+                description: (
+                    <>
+                        The size of the <code>SingpassButton</code>
+                    </>
+                ),
+                propTypes: [`"default"`, `"small"`, `"large"`],
+                defaultValue: `"default"`,
             },
         ],
     },

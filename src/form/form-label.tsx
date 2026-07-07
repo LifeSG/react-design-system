@@ -1,13 +1,11 @@
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
+import type React from "react";
+
+import { Markup } from "../markup";
+import * as styles from "./form-label.styles";
 import { PopoverAddon } from "./form-label-addon";
-import {
-    ErrorIcon,
-    ErrorMessage,
-    ErrorMessageContainer,
-    Label,
-    LabelContainer,
-    Subtitle,
-} from "./form-label.style";
-import { FormLabelProps } from "./types";
+import type { FormLabelProps } from "./types";
 
 export const FormLabel = ({
     id,
@@ -32,36 +30,43 @@ export const FormLabel = ({
     };
 
     return (
-        <LabelContainer
-            className={className}
+        <div
+            className={clsx(styles.labelContainer, className)}
             style={style}
             data-testid={testId}
         >
-            <Label id={id} {...otherProps}>
-                {children}
-                {addon && addon.type && renderAddon()}
-            </Label>
+            <label id={id} className={styles.label} {...otherProps}>
+                <Markup inline>
+                    {children}
+                    {addon?.type && renderAddon()}
+                </Markup>
+            </label>
             {typeof subtitle === "string" ? (
-                <Subtitle
+                <span
                     id={id ? `${id}-subtitle` : undefined}
+                    className={styles.subtitle}
                     data-testid={testId ? `${testId}-subtitle` : "subtitle"}
                 >
                     {subtitle}
-                </Subtitle>
+                </span>
             ) : (
                 subtitle
             )}
-        </LabelContainer>
+        </div>
     );
 };
 
-export const FormErrorMessage = (
-    props: React.HTMLAttributes<HTMLElement>
-): JSX.Element => {
+export const FormErrorMessage = ({
+    className,
+    ...otherProps
+}: React.HTMLAttributes<HTMLElement>): JSX.Element => {
     return (
-        <ErrorMessageContainer>
-            <ErrorIcon aria-hidden />
-            <ErrorMessage {...props} />
-        </ErrorMessageContainer>
+        <div className={clsx(styles.errorMessageContainer, className)}>
+            <ExclamationCircleFillIcon
+                className={styles.errorIcon}
+                aria-hidden
+            />
+            <p className={styles.errorMessage} {...otherProps} />
+        </div>
     );
 };

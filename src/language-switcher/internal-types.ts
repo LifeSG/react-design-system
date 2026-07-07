@@ -1,5 +1,6 @@
-import React from "react";
-import { LanguageSwitcherCode } from "./types";
+import type React from "react";
+
+import type { LanguageSwitcherCode } from "./types";
 
 export interface VariantInternalProps
     extends React.HTMLAttributes<HTMLDivElement> {

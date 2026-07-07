@@ -1,13 +1,10 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
-import { DisclaimerLinks, Footer, FooterLinkProps } from "src/footer";
-import {
-    FooterHelper,
-    InternalDisclaimerLinks,
-} from "src/footer/footer-helper";
-import { ResourceScheme } from "src/theme";
-import { KeyOf } from "src/util/utility-types";
-import { ThemeProvider } from "styled-components";
-import { MOCK_THEME } from "../theme/mock-theme-data";
+import type { DisclaimerLinks, FooterLinkProps } from "src/footer";
+import { Footer } from "src/footer";
+import type { InternalDisclaimerLinks } from "src/footer/footer-helper";
+import { FooterHelper } from "src/footer/footer-helper";
+import { ThemeProvider, type ThemeType } from "src/theme";
+import type { KeyOf } from "src/util/utility-types";
 
 // =============================================================================
 // UNIT TESTS
@@ -93,6 +90,20 @@ describe("Footer", () => {
                 screen.getByRole("link", { name: "Get it on Google Play" })
             ).toBeInTheDocument();
         });
+
+        it("should render showDownloadAddon over showResourceAddon when both are enabled", () => {
+            render(<Footer showDownloadAddon showResourceAddon />);
+
+            expect(
+                screen.getByRole("link", { name: "Download on the App Store" })
+            ).toBeInTheDocument();
+            expect(
+                screen.getByRole("link", { name: "Get it on Google Play" })
+            ).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("resource-addon-section")
+            ).not.toBeInTheDocument();
+        });
     });
 
     describe("disclaimerLinks", () => {
@@ -142,6 +153,31 @@ describe("Footer", () => {
             expect(defaultPrivacyText).toBeInTheDocument();
             expect(overridenPrivacyText).not.toBeInTheDocument();
         });
+
+        it("should support partial custom disclaimer links", () => {
+            const disclaimerLinks: DisclaimerLinks = {
+                privacy: {
+                    href: "https://test.com/privacy",
+                    target: "_blank",
+                    rel: "noopener noreferrer",
+                },
+            };
+
+            render(<Footer disclaimerLinks={disclaimerLinks} />);
+
+            const privacyLink = getAnchorElement("Privacy Statement");
+            expect(privacyLink.href).toBe("https://test.com/privacy");
+            expect(privacyLink.target).toBe("_blank");
+            expect(privacyLink.rel).toBe("noopener noreferrer");
+
+            const termsLink = getAnchorElement("Terms of Use");
+            expect(termsLink.href).toBe("https://www.life.gov.sg/terms-of-use");
+
+            const reportLink = getAnchorElement("Report Vulnerability");
+            expect(reportLink.href).toBe(
+                "https://tech.gov.sg/report_vulnerability"
+            );
+        });
     });
 
     describe("copyrightInfo", () => {
@@ -170,7 +206,7 @@ describe("Footer", () => {
             expect(copyrightText.textContent).not.toContain("Last updated");
         });
 
-        it.each<[ResourceScheme, string]>([
+        it.each<[ThemeType, string]>([
             ["lifesg", "© 2023 LifeSG, Government of Singapore"],
             ["bookingsg", "© 2023 BookingSG, Government of Singapore"],
             ["mylegacy", "© 2023 MyLegacy@LifeSG, Government of Singapore"],
@@ -180,10 +216,10 @@ describe("Footer", () => {
             ],
             ["imda", "© 2023 IMDA, Government of Singapore"],
         ])(
-            "should render the copyright information for %s resourceScheme by default",
-            (resourceScheme, expected) => {
+            "should render the copyright information for %s theme by default",
+            (theme, expected) => {
                 render(
-                    <ThemeProvider theme={{ ...MOCK_THEME, resourceScheme }}>
+                    <ThemeProvider theme={theme}>
                         <Footer />
                     </ThemeProvider>
                 );
@@ -230,7 +266,7 @@ describe("Footer", () => {
                 "https://assets.life.gov.sg/react-design-system/img/logo/lifesg-primary-logo.svg";
 
             render(
-                <ThemeProvider theme={MOCK_THEME}>
+                <ThemeProvider theme="lifesg">
                     <Footer links={CUSTOM_LINKS} />
                 </ThemeProvider>
             );

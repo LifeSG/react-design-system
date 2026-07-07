@@ -1,18 +1,22 @@
+import clsx from "clsx";
 import dayjs from "dayjs";
-import React, { RefObject } from "react";
-import { VisuallyHidden, concatIds } from "../../shared/accessibility";
+import type { RefObject } from "react";
+import React, { useRef } from "react";
+
+import { concatIds, VisuallyHidden } from "../../shared/accessibility";
+import type { SlotStyle, TimeSlotProps } from "../../shared/time-slot";
+import { TimeSlot } from "../../shared/time-slot";
+import { Colour, formatUnitValue, useApplyStyle } from "../../theme";
+import { Typography } from "../../typography";
 import { DateHelper } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
 import { ROW_CELL_GAP, ROW_INTERVAL } from "../const";
-import { InternalTimeTableRowCellData, RowBarColors } from "../internal-types";
-import {
-    Block,
-    BlockContainer,
-    BlockDescription,
-    BlockTitle,
-    Gap,
-    Wrapper,
-} from "./row-cell.style";
+import type {
+    InternalTimeTableRowCellData,
+    RowBarColors,
+} from "../internal-types";
+import type { TimeTableCellType } from "../types";
+import * as styles from "./row-cell.styles";
 import { WithOptionalPopover } from "./with-optional-popover";
 
 interface RowCellProps extends InternalTimeTableRowCellData {
@@ -23,6 +27,51 @@ interface RowCellProps extends InternalTimeTableRowCellData {
     ariaColSpan: number;
     rowName: string;
 }
+
+const styleTypeToSlotType: Record<"solid" | "stripes", SlotStyle> = {
+    stripes: "stripes",
+    solid: "default",
+};
+
+const statusToTimeSlotPropsMap: Record<
+    TimeTableCellType,
+    Pick<
+        TimeSlotProps,
+        | "bgColor"
+        | "bgColor2"
+        | "hoverBgColor"
+        | "hoverBgColor2"
+        | "styleType"
+        | "nonClickableCursor"
+    >
+> = {
+    blocked: {
+        styleType: "stripes",
+        bgColor: Colour["bg-stronger"],
+        bgColor2: Colour["bg-strongest"],
+        nonClickableCursor: "not-allowed",
+    },
+    filled: {
+        styleType: "default",
+        bgColor: `var(${styles.tokens.block.mainColor})`,
+    },
+    disabled: {
+        styleType: "default",
+        bgColor: Colour["bg-disabled"],
+        nonClickableCursor: "not-allowed",
+    },
+    pending: {
+        styleType: "stripes",
+        bgColor: `var(${styles.tokens.block.mainColor})`,
+        bgColor2: `var(${styles.tokens.block.altColor})`,
+        nonClickableCursor: "not-allowed",
+    },
+    default: {
+        styleType: "default",
+        bgColor: "transparent",
+        hoverBgColor: Colour["bg-hover-subtle"],
+    },
+};
 
 const Component = ({
     id,
@@ -62,6 +111,14 @@ const Component = ({
         `${status}`
     );
 
+    const blockRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(blockRef, {
+        [styles.tokens.block.width]: formatUnitValue(adjustedCellWidth, "px"),
+        [styles.tokens.block.mainColor]: rowBarColor.mainColor,
+        [styles.tokens.block.altColor]: rowBarColor.alternateColor,
+    });
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -85,55 +142,85 @@ const Component = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
-    const renderCellContent = () => (
-        <WithOptionalPopover customPopover={customPopover}>
-            <Wrapper>
-                <Block
-                    $width={adjustedCellWidth}
-                    $status={status}
-                    $mainColor={rowBarColor.mainColor}
-                    $altColor={rowBarColor.alternateColor}
-                    $isClickable={isClickable}
-                    $customMainColor={cellStyleAttributes?.backgroundColor}
-                    $customAltColor={cellStyleAttributes?.altBackgroundColor}
-                    $customHoverColor={
-                        cellStyleAttributes?.hoverBackgroundColor
-                    }
-                    $customAltHoverColor={
-                        cellStyleAttributes?.altHoverBackgroundColor
-                    }
-                    $styleType={cellStyleAttributes?.styleType}
-                    tabIndex={isFocusable ? 0 : undefined}
-                    onClick={handleCellClick}
-                >
-                    <VisuallyHidden>{rowAriaLabel}</VisuallyHidden>
-                    {title && (
-                        <BlockTitle weight={"semibold"} aria-hidden>
-                            {title}
-                        </BlockTitle>
-                    )}
-                    {subtitle && (
-                        <BlockDescription weight={"bold"} aria-hidden>
-                            {subtitle}
-                        </BlockDescription>
-                    )}
-                </Block>
-                <Gap />
-            </Wrapper>
-        </WithOptionalPopover>
-    );
+    const renderCellContent = () => {
+        const {
+            styleType,
+            bgColor,
+            bgColor2,
+            hoverBgColor,
+            hoverBgColor2,
+            nonClickableCursor,
+        } = statusToTimeSlotPropsMap[status];
+
+        const timetableStyleType = cellStyleAttributes?.styleType ?? "default";
+        const timeslotStyleType =
+            timetableStyleType === "default"
+                ? styleType
+                : styleTypeToSlotType[timetableStyleType];
+        const customBgColor = cellStyleAttributes?.backgroundColor || bgColor;
+        const customBg2Color =
+            cellStyleAttributes?.altBackgroundColor || bgColor2;
+        const customHoverBgColor =
+            cellStyleAttributes?.hoverBackgroundColor || hoverBgColor;
+        const customHoverBg2Color =
+            cellStyleAttributes?.altHoverBackgroundColor || hoverBgColor2;
+
+        return (
+            <WithOptionalPopover customPopover={customPopover}>
+                <div className={styles.wrapper}>
+                    <TimeSlot
+                        className={styles.block}
+                        ref={blockRef}
+                        clickable={isClickable}
+                        bgColor={customBgColor}
+                        bgColor2={customBg2Color}
+                        hoverBgColor={customHoverBgColor}
+                        hoverBgColor2={customHoverBg2Color}
+                        nonClickableCursor={nonClickableCursor}
+                        onClick={handleCellClick}
+                        styleType={timeslotStyleType}
+                        tabIndex={isFocusable ? 0 : undefined}
+                    >
+                        <VisuallyHidden>{rowAriaLabel}</VisuallyHidden>
+                        {title && (
+                            <Typography.BodySM
+                                className={styles.blockTitle}
+                                weight="semibold"
+                                aria-hidden
+                            >
+                                {title}
+                            </Typography.BodySM>
+                        )}
+                        {subtitle && (
+                            <Typography.BodyXS
+                                className={styles.blockDescription}
+                                weight="bold"
+                                aria-hidden
+                            >
+                                {subtitle}
+                            </Typography.BodyXS>
+                        )}
+                    </TimeSlot>
+                    <div className={styles.gap} />
+                </div>
+            </WithOptionalPopover>
+        );
+    };
 
     return (
-        <BlockContainer
+        <div
             key={`block-container-key`}
             data-testid={`block-container`}
-            $isOnTheHour={isOnTheHour}
+            className={clsx(
+                styles.blockContainer,
+                isOnTheHour && styles.blockContainerOnTheHour
+            )}
             role="gridcell"
             aria-colindex={ariaColIndex}
             aria-colspan={ariaColSpan}
         >
             {renderCellContent()}
-        </BlockContainer>
+        </div>
     );
 };
 

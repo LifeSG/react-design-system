@@ -1,12 +1,22 @@
-import { Typography } from "../typography/typography";
-import { StyledCard } from "./card.style";
-import { CardProps } from "./types";
+import clsx from "clsx";
+import { useContext } from "react";
 
-export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
+import { ThemeContext } from "../theme/theme-provider/context";
+import { Typography } from "../typography";
+import * as styles from "./card.styles";
+import type { CardProps } from "./types";
+
+export const Card = ({
+    children,
+    className,
+    "data-testid": dataTestId = "card",
+    ...otherProps
+}: CardProps): JSX.Element => {
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const testId = otherProps["data-testid"] || "card";
+    const theme = useContext(ThemeContext);
+    const isDarkMode = theme?.mode === "dark";
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -19,8 +29,16 @@ export const Card = ({ children, ...otherProps }: CardProps): JSX.Element => {
         );
 
     return (
-        <StyledCard {...otherProps} data-testid={testId}>
+        <div
+            {...otherProps}
+            data-testid={dataTestId}
+            className={clsx(
+                styles.card,
+                isDarkMode ? styles.cardDarkMode : styles.cardLightMode,
+                className
+            )}
+        >
             {renderContent()}
-        </StyledCard>
+        </div>
     );
 };

@@ -1,10 +1,8 @@
-import {
-    ApiTable,
+import type {
     ApiTableSectionProps,
     TabAttribute,
-    Tabs,
-    code,
 } from "stories/storybook-common";
+import { ApiTable, code, Tabs } from "stories/storybook-common";
 
 const TAB_DATA: ApiTableSectionProps[] = [
     {
@@ -60,13 +58,6 @@ const TAB_DATA: ApiTableSectionProps[] = [
                 description:
                     "The color of the fade effect when the tab is too long",
                 propTypes: ["string[]", "FadeColorSet"],
-            },
-            {
-                name: "headingLevel",
-                description:
-                    "Specify a custom heading level to match the component's position in the page",
-                propTypes: ["number"],
-                defaultValue: "2",
             },
         ],
     },

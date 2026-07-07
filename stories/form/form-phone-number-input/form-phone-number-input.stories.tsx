@@ -2,10 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
-import {
-    PhoneNumberInput,
-    PhoneNumberInputValue,
-} from "src/phone-number-input";
+import type { PhoneNumberInputValue } from "src/phone-number-input";
+import { PhoneNumberInput } from "src/phone-number-input";
 import {
     FullWidthStoryDecorator,
     StoryDecorator,

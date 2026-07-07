@@ -1,63 +1,21 @@
-import styled from "styled-components";
-import { V2_Color } from "../../src/v2_color";
-import { V2_MediaQuery } from "../../src/v2_media";
-import { withPopover } from "../../src/popover";
-import { V2_Text } from "../../src/v2_text";
+import type { HTMLAttributes } from "react";
 
-// =============================================================================
-// STYLING
-// =============================================================================
-export const Container = styled.div`
-    display: flex;
-    justify-content: center;
-    margin: 3rem 0;
+export const POPOVER_CONTENT =
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Phasellus facilisis felis vitae libero ullamcorper tristique eu in ante. Curabitur tempor mauris ac commodo convallis. Sed id aliquet nisi. In scelerisque dictum diam ac malesuada. Vivamus efficitur nec massa sit amet suscipit. Aenean at dictum nisl. Mauris eget facilisis lectus. Nunc sed neque quis est auctor consequat. Suspendisse nec arcu enim. Pellentesque vehicula lectus ullamcorper fermentum pharetra. Pellentesque diam enim, ullamcorper a tincidunt sed, tempus ac nisi. Phasellus dignissim interdum ligula bibendum ornare. Morbi ut lorem tempor, rhoncus lectus quis, consequat turpis. Aenean at purus consectetur, tempor mauris nec, facilisis lorem. Maecenas id pellentesque tellus, nec pellentesque metus. Vestibulum volutpat elit sed ante facilisis, sit amet hendrerit tortor semper. Nullam dignissim pretium nunc facilisis mollis. Phasellus nulla magna, ultricies dignissim nibh in, sagittis aliquam est. Vestibulum mi ligula, bibendum ut magna ut, aliquam rutrum felis. Quisque tristique tortor ut dignissim malesuada.";
 
-    ${V2_MediaQuery.MaxWidth.mobileL} {
-        flex-direction: column;
-        justify-content: flex-start;
-        align-items: center;
-        width: auto;
-    }
-`;
-
-export const Item = styled.div`
-    position: relative;
-    &:not(:last-of-type) {
-        margin-right: 2.5rem;
-    }
-
-    ${V2_MediaQuery.MaxWidth.mobileL} {
-        &:not(:last-of-type) {
-            margin-right: 0;
-            margin-bottom: 2.5rem;
-        }
-    }
-`;
-
-export const CustomDiv = styled.div`
-    padding: 1rem;
-    background: ${V2_Color.Neutral[6]};
-    border-radius: 4px;
-`;
-
-// =============================================================================
-// POPOVER HOC
-// =============================================================================
-const Trigger = () => (
-    <CustomDiv>
-        <V2_Text.Body>Hover me</V2_Text.Body>
-    </CustomDiv>
-);
-
-const HOC = withPopover(Trigger, {
-    content: "This is the popover content",
-    trigger: "hover",
-});
-
-export const PopoverHOCExample = () => {
+export const CustomPopover = (props: HTMLAttributes<HTMLElement>) => {
     return (
-        <Container>
-            <HOC />
-        </Container>
+        <div
+            style={{
+                height: "60vh",
+                background: "aliceblue",
+                padding: "1rem",
+                ...props.style,
+            }}
+        >
+            This is the start of custom content
+            <div style={{ height: "100vh" }} />
+            This is the end of custom content
+        </div>
     );
 };

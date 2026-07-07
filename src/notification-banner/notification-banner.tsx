@@ -1,20 +1,16 @@
 import { CrossIcon } from "@lifesg/react-icons";
-import React, { NamedExoticComponent, useEffect, useState } from "react";
+import clsx from "clsx";
+import type { NamedExoticComponent } from "react";
+import React, { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import {
-    AccessibleBannerButton,
-    ActionButton,
-    Container,
-    Content,
-    ContentContainer,
-    ContentText,
-    ContentWrapper,
-    IconContainer,
-    ContentLink as NBLink,
-    StyledIconButton,
-    Wrapper,
-} from "./notification-banner.styles";
-import {
+
+import { Layout } from "../layout";
+import { VisuallyHidden } from "../shared/accessibility";
+import { ClickableIcon } from "../shared/clickable-icon";
+import { formatUnitValue, useApplyStyle } from "../theme";
+import { Typography } from "../typography";
+import * as styles from "./notification-banner.styles";
+import type {
     NotificationBannerProps,
     NotificationBannerWithForwardedRefProps,
 } from "./types";
@@ -31,6 +27,7 @@ export const NBComponent = ({
     onClick,
     actionButton,
     icon,
+    className,
     ...otherProps
 }: NotificationBannerWithForwardedRefProps) => {
     // =============================================================================
@@ -40,6 +37,16 @@ export const NBComponent = ({
 
     const [isVisible, setVisible] = useState<boolean>(visible);
     const { height: contentHeight = 0, ref: contentRef } = useResizeDetector();
+    const contentTextRef = useRef<HTMLDivElement>(null);
+
+    const isCollapsed =
+        maxCollapsedHeight && contentHeight > maxCollapsedHeight;
+
+    useApplyStyle(contentTextRef, {
+        [styles.tokens.contentText.maxCollapsedHeight]: isCollapsed
+            ? formatUnitValue(maxCollapsedHeight, "px")
+            : undefined,
+    });
 
     // =============================================================================
     // EFFECTS
@@ -75,7 +82,8 @@ export const NBComponent = ({
     if (!isVisible) return null;
 
     const renderDismissButton = () => (
-        <StyledIconButton
+        <ClickableIcon
+            className={styles.dismissButton}
             tabIndex={0}
             onClick={handleDismiss}
             id={formatId("dismiss-button", id)}
@@ -86,14 +94,15 @@ export const NBComponent = ({
             aria-label="close"
         >
             <CrossIcon aria-hidden />
-        </StyledIconButton>
+        </ClickableIcon>
     );
 
     const renderActionButton = () => {
         if (!actionButton) return null;
 
         return (
-            <ActionButton
+            <button
+                className={styles.actionButton}
                 id={formatId("action-button", id)}
                 data-testid={formatId("action-button", testId)}
                 type="button"
@@ -101,47 +110,60 @@ export const NBComponent = ({
                 onClick={handleActionButtonOnClick}
             >
                 {actionButton.children}
-            </ActionButton>
+            </button>
         );
     };
 
     const renderContent = () => (
-        <Content data-testid={formatId("text-content", testId)}>
-            <ContentWrapper>
-                <ContentText
-                    $maxCollapsedHeight={
-                        maxCollapsedHeight && contentHeight > maxCollapsedHeight
-                            ? maxCollapsedHeight
-                            : undefined
-                    }
+        <div
+            className={styles.content}
+            data-testid={formatId("text-content", testId)}
+        >
+            <div className={styles.contentWrapper}>
+                <div
+                    ref={contentTextRef}
+                    className={clsx(
+                        styles.contentText,
+                        isCollapsed && styles.contentTextCollapsed
+                    )}
                 >
                     <div ref={contentRef}>{children}</div>
-                </ContentText>
+                </div>
                 {renderActionButton()}
-            </ContentWrapper>
-        </Content>
+            </div>
+        </div>
     );
 
     const renderAccessibleBannerButton = () => (
-        <AccessibleBannerButton aria-label={"Clickable banner"} type="button" />
+        <VisuallyHidden>
+            <button aria-label={"Clickable banner"} type="button" />
+        </VisuallyHidden>
     );
 
     return (
-        <Wrapper
+        <div
             ref={forwardedRef}
-            $sticky={sticky}
-            $clickable={!!onClick}
+            className={clsx(
+                styles.wrapper,
+                sticky && styles.wrapperSticky,
+                !!onClick && styles.wrapperClickable,
+                className
+            )}
             onClick={onClick}
             role="region"
             {...otherProps}
         >
-            <Container id={formatId("container", id)}>
-                {icon && <IconContainer aria-hidden>{icon}</IconContainer>}
-                <ContentContainer>{renderContent()}</ContentContainer>
+            <Layout.Content id={formatId("container", id)}>
+                {icon && (
+                    <div className={styles.iconContainer} aria-hidden>
+                        {icon}
+                    </div>
+                )}
+                <div className={styles.contentContainer}>{renderContent()}</div>
                 {dismissible && renderDismissButton()}
-            </Container>
+            </Layout.Content>
             {onClick && renderAccessibleBannerButton()}
-        </Wrapper>
+        </div>
     );
 };
 
@@ -154,6 +176,20 @@ const NBWithRef = (
 ) => {
     return <NBComponent {...props} forwardedRef={ref} />;
 };
+
+const NBLink = React.forwardRef<
+    HTMLAnchorElement,
+    React.ComponentProps<typeof Typography.LinkBL>
+>(function NotificationBannerLink(props, ref) {
+    return (
+        <Typography.LinkBL
+            ref={ref}
+            className={clsx(styles.contentLink, props.className)}
+            {...props}
+        />
+    );
+});
+(NBLink as NamedExoticComponent).displayName = "NotificationBanner.Link";
 
 // =============================================================================
 // HELPER FUNCTIONS

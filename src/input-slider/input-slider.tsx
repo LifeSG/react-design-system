@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
+
 import { InputRangeSlider } from "../input-range-slider";
-import { InputSliderProps } from "./types";
+import type { InputSliderProps } from "./types";
 
 export const InputSlider = ({
     value,

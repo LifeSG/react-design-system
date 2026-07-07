@@ -1,12 +1,14 @@
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
+
 import { CalendarHelper, DateHelper } from "../../../util";
-import {
+import type {
     CellStyleProps,
     CellType,
-    DayCell,
     DayCellProps,
     LabelType,
 } from "../day-cell";
+import { DayCell } from "../day-cell";
 
 interface Props {
     date: Dayjs;

@@ -1,4 +1,4 @@
-import { UneditableSectionItemProps } from "src/uneditable-section";
+import type { UneditableSectionItemProps } from "src/uneditable-section";
 
 export const SAMPLE_ITEMS: UneditableSectionItemProps[] = [
     {

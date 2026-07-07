@@ -1,7 +1,11 @@
 import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { DateRangeInput } from "src/date-range-input";
-import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
+
+import { setupCommonDomMocks } from "../_common";
+import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "e2e";
 const CALENDAR_TESTID = "calendar-dropdown";
@@ -21,19 +25,9 @@ describe("DateRangeInput (week variant)", () => {
     });
 
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
-        // Make requestAnimationFrame synchronous to avoid async focus issues in tests (see https://github.com/floating-ui/floating-ui/issues/2488)
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render the field with calendar not shown by default", async () => {

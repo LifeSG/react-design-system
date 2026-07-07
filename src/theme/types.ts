@@ -1,143 +1,84 @@
-import { ReactNode } from "react";
-import { V2_ThemeSpec } from "../v2_theme/types";
-import { BorderSetOptions } from "./border/types";
-import { BreakpointSetOptions } from "./breakpoint/types";
-import { PrimitiveColourSetOptions } from "./colour-primitive/types";
-import { SemanticColourSetOptions } from "./colour-semantic/types";
-import { ComponentOverrideOptions } from "./components/types";
-import { FontSpecSetOptions } from "./font-spec/types";
-import { FontSetOptions } from "./font/types";
-import { MotionSetOptions } from "./motion/types";
-import { RadiusSetOptions } from "./radius/types";
-import { ShadowSetOptions } from "./shadow/types";
-import { SpacingSetOptions } from "./spacing/types";
+import type { ValueOf } from "../util/utility-types";
+import type {
+    Border,
+    Breakpoint,
+    ComponentToken,
+    FontSpec,
+    Motion,
+    PrimitiveColours,
+    Radius,
+    SemanticColours,
+    Shadow,
+    Spacing,
+} from "./tokens";
 
-export type {
-    PrimitiveColourSet,
-    PrimitiveColourSetOptions,
-} from "./colour-primitive/types";
-export type {
-    SemanticColourSet,
-    SemanticColourSetOptions,
-} from "./colour-semantic/types";
+export const THEME_TYPES = [
+    "a11y-playground",
+    "bookingsg",
+    "careercompass",
+    "ccube",
+    "imda",
+    "lifesg",
+    "mylegacy",
+    "oneservice",
+    "pa",
+    "rbs",
+    "sgw-digital-lobby",
+    "smgs",
+    "spf",
+    "supportgowhere",
+] as const;
 
-export type { FontSpecSet, FontSpecSetOptions } from "./font-spec/types";
+export type ThemeType = (typeof THEME_TYPES)[number];
+export type ThemeMode = "light" | "dark" | "auto";
 
-export type { FontSet, FontSetOptions } from "./font/types";
+export type ResolvedThemeMode = "light" | "dark";
 
-export type { MotionSet, MotionSetOptions } from "./motion/types";
+export type FontSize =
+    | "heading-xxl"
+    | "heading-xl"
+    | "heading-lg"
+    | "heading-md"
+    | "heading-sm"
+    | "heading-xs"
+    | "body-baseline"
+    | "body-md"
+    | "body-sm"
+    | "body-xs"
+    | "form-label"
+    | "form-description";
 
-export type { BorderSet, BorderSetOptions } from "./border/types";
+export type FontWeight = "light" | "regular" | "semibold" | "bold";
 
-export type { RadiusSet, RadiusSetOptions } from "./radius/types";
+export type BreakpointCSSVariableString = ValueOf<typeof Breakpoint>;
+export type BorderCSSVariableString = ValueOf<typeof Border>;
+export type ComponentTokenCSSVariableString =
+    | ValueOf<typeof ComponentToken.Animation>
+    | ValueOf<typeof ComponentToken.Button>
+    | ValueOf<typeof ComponentToken.Footer>
+    | ValueOf<typeof ComponentToken.Navbar>;
+export type FontSpecCSSVariableString = ValueOf<typeof FontSpec>;
+export type MotionCSSVariableString = ValueOf<typeof Motion>;
+export type PrimitiveColourCSSVariableString = ValueOf<typeof PrimitiveColours>;
+export type RadiusCSSVariableString = ValueOf<typeof Radius>;
+export type SemanticColourCSSVariableString = ValueOf<typeof SemanticColours>;
+export type ColourCSSVariableString =
+    | PrimitiveColourCSSVariableString
+    | SemanticColourCSSVariableString;
+export type ShadowCSSVariableString = ValueOf<typeof Shadow>;
+export type SpacingCSSVariableString = ValueOf<typeof Spacing>;
 
-export type { ShadowSet, ShadowSetOptions } from "./shadow/types";
+export type CSSVariableString =
+    | BreakpointCSSVariableString
+    | BorderCSSVariableString
+    | ColourCSSVariableString
+    | ComponentTokenCSSVariableString
+    | FontSpecCSSVariableString
+    | MotionCSSVariableString
+    | RadiusCSSVariableString
+    | ShadowCSSVariableString
+    | SpacingCSSVariableString;
 
-export type { SpacingSet, SpacingSetOptions } from "./spacing/types";
-
-export type { BreakpointSet, BreakpointSetOptions } from "./breakpoint/types";
-
-export type ColourScheme =
-    | "lifesg"
-    | "bookingsg"
-    | "rbs"
-    | "mylegacy"
-    | "ccube"
-    | "oneservice"
-    | "pa"
-    | "a11yplayground"
-    | "supportgowhere"
-    | "sgwdigitallobby"
-    | "imda"
-    | "spf"
-    | "smgs"
-    | "careercompass";
-export type FontScheme =
-    | "default"
-    | "bookingsg"
-    | "mylegacy"
-    | "pa"
-    | "a11yplayground"
-    | "supportgowhere"
-    | "sgwdigitallobby"
-    | "imda"
-    | "spf"
-    | "oneservice";
-export type MotionScheme = "default";
-export type BorderScheme = "default";
-export type SpacingScheme = "default";
-export type RadiusScheme = "default" | "spf";
-export type ShadowScheme = "default";
-export type BreakpointScheme = "default";
-export type ComponentScheme =
-    | "default"
-    | "pa"
-    | "a11yplayground"
-    | "lifesg"
-    | "spf"
-    | "smgs";
-export type ResourceScheme =
-    | "lifesg"
-    | "bookingsg"
-    | "rbs"
-    | "mylegacy"
-    | "ccube"
-    | "oneservice"
-    | "pa"
-    | "a11yplayground"
-    | "supportgowhere"
-    | "imda"
-    | "spf"
-    | "smgs"
-    | "careercompass";
-
-export type ColourMode = "light" | "dark";
-
-export interface ThemeSpecOptions {
-    primitiveColour?: PrimitiveColourSetOptions | undefined;
-    primitiveColourDark?: PrimitiveColourSetOptions | undefined;
-    semanticColour?: SemanticColourSetOptions | undefined;
-    semanticColourDark?: SemanticColourSetOptions | undefined;
-    fontSpec?: FontSpecSetOptions | undefined;
-    font?: FontSetOptions | undefined;
-    motion?: MotionSetOptions | undefined;
-    spacing?: SpacingSetOptions | undefined;
-    border?: BorderSetOptions | undefined;
-    radius?: RadiusSetOptions | undefined;
-    shadow?: ShadowSetOptions | undefined;
-    resourceScheme?: ResourceScheme | undefined;
-    breakpoint?: BreakpointSetOptions | undefined;
-}
-
-export interface ThemeSpec {
-    colourScheme: ColourScheme;
-    colourMode?: ColourMode | undefined;
-    fontScheme: FontScheme;
-    motionScheme: MotionScheme;
-    borderScheme: BorderScheme;
-    spacingScheme: SpacingScheme;
-    radiusScheme: RadiusScheme;
-    shadowScheme: ShadowScheme;
-    breakpointScheme: BreakpointScheme;
-    resourceScheme: ResourceScheme;
-    componentScheme?: ComponentScheme | undefined;
-    componentOverrides?: ComponentOverrideOptions | undefined;
-    overrides?: ThemeSpecOptions | undefined;
-
-    maxColumns?: any;
-    /** @deprecated For backwards compatibility with V2 theme */
-    _v2?: V2_ThemeSpec;
-}
-export interface ThemeStyleProps {
-    theme?: ThemeSpec;
-}
-
-export interface DSThemeProviderProps {
-    theme: ThemeSpec;
-    children: ReactNode;
-}
-
-export interface DSTheme {
-    colourMode: ColourMode;
-    theme: ThemeSpec | null;
-}
+type ExtractCleanCSSVariableName<T extends string> =
+    T extends `var(${infer Name})` ? Name : never;
+export type CSSVariableKey = ExtractCleanCSSVariableName<CSSVariableString>;

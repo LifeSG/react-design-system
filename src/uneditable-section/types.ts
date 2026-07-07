@@ -1,6 +1,7 @@
-import React from "react";
-import { AlertProps } from "../alert";
-import { MaskAttributeProps } from "../masked-input";
+import type React from "react";
+
+import type { AlertProps } from "../alert";
+import type { MaskAttributeProps } from "../masked-input";
 
 export type UneditableSectionItemDisplayWidth = "half" | "full";
 export type UneditableSectionItemMaskState = "masked" | "unmasked";

@@ -1,4 +1,5 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable } from "stories/storybook-common";
 
 const TIME_FORMAT = (
     <>
@@ -432,23 +433,23 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "backgroundColor",
                 description: "Main background color for the cell",
-                propTypes: ["string", "(props: ThemeStyleProps) => string"],
+                propTypes: ["string"],
             },
             {
                 name: "altBackgroundColor",
                 description:
                     "Alternate background color (used for striped displays)",
-                propTypes: ["string", "(props: ThemeStyleProps) => string"],
+                propTypes: ["string"],
             },
             {
                 name: "hoverBackgroundColor",
                 description: "Background color on hover",
-                propTypes: ["string", "(props: ThemeStyleProps) => string"],
+                propTypes: ["string"],
             },
             {
                 name: "altHoverBackgroundColor",
                 description: "Alternative background color on hover",
-                propTypes: ["string", "(props: ThemeStyleProps) => string"],
+                propTypes: ["string"],
             },
             {
                 name: "styleType",

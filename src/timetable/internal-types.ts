@@ -1,5 +1,5 @@
-import { RowBarAlternateColors, RowBarMainColors } from "./const";
-import { TimeTableRowCellData } from "./types";
+import type { RowBarAlternateColors, RowBarMainColors } from "./const";
+import type { TimeTableRowCellData } from "./types";
 
 export type InternalTimeTableRowCellData = TimeTableRowCellData & {
     roundedStartTime?: string;

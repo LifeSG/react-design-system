@@ -1,4 +1,4 @@
-import { SingpassButtonStyleType } from "./types";
+import type { SingpassButtonStyleType } from "./types";
 
 const singpassLogoRed =
     "https://assets.life.gov.sg/react-design-system/img/singpass/singpass_red_filled.svg";

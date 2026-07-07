@@ -1,6 +1,9 @@
-import styled, { css } from "styled-components";
-import { DocTable } from "../doc-table";
-import { DefaultColProps, DescriptionColProps } from "./types";
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ReactNode } from "react";
+
+import { DocTable } from "../docs/doc-table";
+import type { DefaultColProps, DescriptionColProps } from "./types";
 
 // =============================================================================
 // TABLE
@@ -11,7 +14,7 @@ interface TableProps {
 
 export const Table = ({ children }: TableProps) => {
     return (
-        <StyledTable>
+        <DocTable className={styledTable}>
             <thead>
                 <tr>
                     <th>Name</th>
@@ -20,11 +23,11 @@ export const Table = ({ children }: TableProps) => {
                 </tr>
             </thead>
             <tbody>{children}</tbody>
-        </StyledTable>
+        </DocTable>
     );
 };
 
-const StyledTable = styled(DocTable)`
+const styledTable = css`
     td {
         &:first-child {
             width: 20%;
@@ -45,12 +48,12 @@ interface SectionProps {
 }
 
 export const Section = ({ children }: SectionProps) => (
-    <SectionRow>
+    <tr className={sectionRow}>
         <td colSpan={3}>{children}</td>
-    </SectionRow>
+    </tr>
 );
 
-const SectionRow = styled.tr`
+const sectionRow = css`
     background: #686868 !important;
     color: white;
     font-weight: bold;
@@ -64,46 +67,32 @@ interface NameColProps {
     mandatory?: boolean;
 }
 
-interface NameColStyleProps {
-    $isFunction?: boolean;
-}
-
 export const NameCol = ({ children, mandatory = false }: NameColProps) => {
-    const isFunction = children.substring(0, 2) === "on";
+    const isFunction = children.startsWith("on");
+    const className = clsx({
+        [mandatoryCol]: mandatory,
+        [labelCol]: !mandatory,
+        [functionCol]: isFunction,
+    });
 
-    if (mandatory) {
-        return <Mandatory $isFunction={isFunction}>{children}</Mandatory>;
-    }
-
-    return <Label $isFunction={isFunction}>{children}</Label>;
+    return <td className={className}>{children}</td>;
 };
 
-const Label = styled.td<NameColStyleProps>`
+const labelCol = css`
     font-weight: bold;
     color: #333333;
-    ${(props) => {
-        if (props.$isFunction) {
-            return css`
-                color: #1768be;
-            `;
-        }
-    }}
 `;
 
-const Mandatory = styled.td<NameColStyleProps>`
+const mandatoryCol = css`
     font-weight: bold;
     &:after {
         content: " *";
         color: #9e130f;
     }
+`;
 
-    ${(props) => {
-        if (props.$isFunction) {
-            return css`
-                color: #1768be;
-            `;
-        }
-    }}
+const functionCol = css`
+    color: #1768be;
 `;
 
 // =============================================================================
@@ -122,8 +111,8 @@ export const DescriptionCol = ({
     ) {
         component = (
             <PropsContainer>
-                {propTypes.map((prop, index) => (
-                    <code key={index}>{prop}</code>
+                {propTypes.map((prop) => (
+                    <code key={prop}>{prop}</code>
                 ))}
             </PropsContainer>
         );
@@ -142,9 +131,14 @@ export const DescriptionCol = ({
     );
 };
 
-const PropsContainer = styled.div`
+const PropsContainer = ({ children }: { children: ReactNode }) => (
+    <div className={propsContainer}>{children}</div>
+);
+
+const propsContainer = css`
     display: flex;
     flex-wrap: wrap;
+
     code {
         &:not(:last-child) {
             margin-right: 0.25rem;
@@ -172,8 +166,8 @@ export const DefaultCol = ({ children }: DefaultColProps) => {
         return (
             <td>
                 <PropsContainer>
-                    {children.map((value, index) => (
-                        <code key={index}>{value}</code>
+                    {children.map((value) => (
+                        <code key={value}>{value}</code>
                     ))}
                 </PropsContainer>
             </td>

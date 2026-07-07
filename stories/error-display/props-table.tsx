@@ -1,38 +1,32 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
-import styled from "styled-components";
-
-// =============================================================================
-// CUSTOM STYLING
-// =============================================================================
-const StyledCode = styled.code`
-    margin-right: 0.25rem;
-`;
+import { THEME_TYPES } from "src/theme/types";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable } from "stories/storybook-common";
 
 // =============================================================================
 // DATA
 // =============================================================================
 
 const codes = [
-    "400",
-    "403",
-    "404",
-    "408",
-    "500",
-    "502",
-    "503",
-    "504",
-    "confirmation",
-    "inactivity",
-    "insufficient-credits",
-    "link-error",
-    "logout",
-    "warning",
-    "maintenance",
-    "no-item-found",
-    "payment-unsuccessful",
-    "transfer-unsuccessful",
-    "unsupported-browser",
-    "partially-supported-browser",
+    `"400"`,
+    `"403"`,
+    `"404"`,
+    `"408"`,
+    `"500"`,
+    `"502"`,
+    `"503"`,
+    `"504"`,
+    `"confirmation"`,
+    `"inactivity"`,
+    `"insufficient-credits"`,
+    `"link-error"`,
+    `"logout"`,
+    `"warning"`,
+    `"maintenance"`,
+    `"no-item-found"`,
+    `"payment-unsuccessful"`,
+    `"transfer-unsuccessful"`,
+    `"unsupported-browser"`,
+    `"partially-supported-browser"`,
 ];
 
 const DATA: ApiTableSectionProps[] = [
@@ -42,37 +36,19 @@ const DATA: ApiTableSectionProps[] = [
                 name: "type",
                 mandatory: true,
                 description: "The type of error",
-                propTypes: (
-                    <>
-                        <div
-                            style={{
-                                display: "flex",
-                                flexWrap: "wrap",
-                                marginBottom: "0.25rem",
-                            }}
-                        >
-                            {codes.map((code) => (
-                                <StyledCode
-                                    key={code}
-                                >{`"${code}"`}</StyledCode>
-                            ))}
-                        </div>
-                    </>
-                ),
+                propTypes: codes,
             },
             {
                 name: "img",
                 description: "The error image properties",
                 propTypes: (
-                    <>
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <code>HTMLImageElement</code>
-                        </a>
-                    </>
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLImageElement"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <code>HTMLImageElement</code>
+                    </a>
                 ),
             },
             {
@@ -98,15 +74,13 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     "The properties of the action button that appears at the bottom of the component",
                 propTypes: (
-                    <>
-                        <a
-                            href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
-                            target="_blank"
-                            rel="noreferrer"
-                        >
-                            <code>HTMLButtonElement</code>
-                        </a>
-                    </>
+                    <a
+                        href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLButtonElement"
+                        target="_blank"
+                        rel="noreferrer"
+                    >
+                        <code>HTMLButtonElement</code>
+                    </a>
                 ),
                 defaultValue: (
                     <>
@@ -120,14 +94,14 @@ const DATA: ApiTableSectionProps[] = [
                 name: "illustrationScheme",
                 description:
                     "Use resource scheme provided instead of default theme",
-                propTypes: ["base", "bookingsg", "rbs"],
+                propTypes: [...THEME_TYPES],
             },
             {
                 name: "additionalProps",
                 description: "Additional properties for certain error types",
                 propTypes: [
-                    "MaintenanceAdditionalAttributes",
-                    "InactivityAdditionalAttributes",
+                    `"MaintenanceAdditionalAttributes"`,
+                    `"InactivityAdditionalAttributes"`,
                 ],
             },
             {
@@ -157,6 +131,12 @@ const DATA: ApiTableSectionProps[] = [
                 mandatory: true,
                 description:
                     "The amount of time left (in seconds) for the inactivity display",
+                propTypes: ["number"],
+            },
+            {
+                name: "reminderInterval",
+                description:
+                    "Interval (in seconds) for announcing remaining time via screen readers",
                 propTypes: ["number"],
             },
         ],

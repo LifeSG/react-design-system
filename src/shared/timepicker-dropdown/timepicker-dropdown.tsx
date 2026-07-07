@@ -1,24 +1,18 @@
 import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
-import React, { useCallback, useEffect, useRef, useState } from "react";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
+import { Button } from "../../button";
+import { Toggle } from "../../toggle";
+import { Typography } from "../../typography";
 import { StringHelper } from "../../util/string-helper";
-import { EPeriod, TimeFormat, TimeHelper } from "../../util/time-helper";
+import type { TimeFormat } from "../../util/time-helper";
+import { EPeriod, TimeHelper } from "../../util/time-helper";
 import { inertValue } from "../accessibility";
-import {
-    Container,
-    ControlButton,
-    ControlSection,
-    DividerLabel,
-    HourMinuteSection,
-    InputContainer,
-    InputSection,
-    StyledDiv,
-    SwitchButton,
-    TimeInput,
-    TimeInputBox,
-    TimePeriodSection,
-    TimePeriodToggle,
-} from "./timepicker-dropdown.styles";
+import { ClickableIcon } from "../clickable-icon";
+import { BasicInput, InputBox } from "../input-wrapper";
+import * as styles from "./timepicker-dropdown.styles";
 
 enum EInputButtonName {
     HOUR_UP = "hour-up",
@@ -273,8 +267,9 @@ export const TimepickerDropdown = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHourInput = () => (
-        <InputContainer>
-            <SwitchButton
+        <div className={styles.inputContainer}>
+            <ClickableIcon
+                className={styles.switchButton}
                 aria-label="increase hour"
                 name={EInputButtonName.HOUR_UP}
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
@@ -282,9 +277,10 @@ export const TimepickerDropdown = ({
                 data-testid={getTestId("hour-increment-button")}
             >
                 <ChevronUpIcon />
-            </SwitchButton>
-            <TimeInputBox>
-                <TimeInput
+            </ClickableIcon>
+            <InputBox className={styles.timeInputBox}>
+                <BasicInput
+                    className={styles.timeInput}
                     aria-label="hour"
                     type="number"
                     name={EInputName.HOUR}
@@ -301,8 +297,9 @@ export const TimepickerDropdown = ({
                     placeholder="HH"
                     data-testid={getTestId("hour-input")}
                 />
-            </TimeInputBox>
-            <SwitchButton
+            </InputBox>
+            <ClickableIcon
+                className={styles.switchButton}
                 aria-label="decrease hour"
                 name={EInputButtonName.HOUR_DOWN}
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
@@ -310,13 +307,14 @@ export const TimepickerDropdown = ({
                 data-testid={getTestId("hour-decrement-button")}
             >
                 <ChevronDownIcon />
-            </SwitchButton>
-        </InputContainer>
+            </ClickableIcon>
+        </div>
     );
 
     const renderMinuteInput = () => (
-        <InputContainer>
-            <SwitchButton
+        <div className={styles.inputContainer}>
+            <ClickableIcon
+                className={styles.switchButton}
                 aria-label="increase minute"
                 name={EInputButtonName.MINUTE_UP}
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
@@ -324,9 +322,10 @@ export const TimepickerDropdown = ({
                 data-testid={getTestId("minute-increment-button")}
             >
                 <ChevronUpIcon />
-            </SwitchButton>
-            <TimeInputBox>
-                <TimeInput
+            </ClickableIcon>
+            <InputBox className={styles.timeInputBox}>
+                <BasicInput
+                    className={styles.timeInput}
                     aria-label="minute"
                     type="number"
                     name={EInputName.MINUTE}
@@ -343,8 +342,9 @@ export const TimepickerDropdown = ({
                     placeholder="MM"
                     data-testid={getTestId("minute-input")}
                 />
-            </TimeInputBox>
-            <SwitchButton
+            </InputBox>
+            <ClickableIcon
+                className={styles.switchButton}
                 aria-label="decrease minute"
                 name={EInputButtonName.MINUTE_DOWN}
                 tabIndex={-1} /* Prevent tab, use arrow keys to change */
@@ -352,13 +352,14 @@ export const TimepickerDropdown = ({
                 data-testid={getTestId("minute-decrement-button")}
             >
                 <ChevronDownIcon />
-            </SwitchButton>
-        </InputContainer>
+            </ClickableIcon>
+        </div>
     );
 
     const renderTimePeriodControl = () => (
-        <TimePeriodSection>
-            <TimePeriodToggle
+        <div className={styles.timePeriodSection}>
+            <Toggle
+                className={styles.timePeriodToggle}
                 checked={timePeriod === EPeriod.AM}
                 name={ETimePeriodToggleName.AM}
                 type="radio"
@@ -367,8 +368,9 @@ export const TimepickerDropdown = ({
                 aria-label="AM"
             >
                 AM
-            </TimePeriodToggle>
-            <TimePeriodToggle
+            </Toggle>
+            <Toggle
+                className={styles.timePeriodToggle}
                 checked={timePeriod === EPeriod.PM}
                 name={ETimePeriodToggleName.PM}
                 type="radio"
@@ -377,43 +379,50 @@ export const TimepickerDropdown = ({
                 aria-label="PM"
             >
                 PM
-            </TimePeriodToggle>
-        </TimePeriodSection>
+            </Toggle>
+        </div>
     );
 
     return (
-        <StyledDiv>
-            <Container
+        <div className={styles.root}>
+            <div
+                className={styles.container}
                 data-testid={getTestId("timepicker-dropdown")}
                 inert={inertValue(!show)}
             >
-                <InputSection>
-                    <HourMinuteSection>
+                <div className={styles.inputSection}>
+                    <div className={styles.hourMinuteSection}>
                         {renderHourInput()}
-                        <DividerLabel>:</DividerLabel>
+                        <Typography.BodyBL className={styles.dividerLabel}>
+                            :
+                        </Typography.BodyBL>
                         {renderMinuteInput()}
-                    </HourMinuteSection>
+                    </div>
                     {renderTimePeriodControl()}
-                </InputSection>
-                <ControlSection>
-                    <ControlButton
-                        type="button"
-                        styleType="secondary"
-                        onClick={onCancel}
-                        data-testid={getTestId("cancel-button")}
-                    >
-                        Cancel
-                    </ControlButton>
-                    <ControlButton
+                </div>
+                <div className={styles.controlSection}>
+                    <Button
+                        className={styles.controlButton}
+                        sizeType="small"
                         type="button"
                         onClick={handleConfirm}
                         disabled={hourValue === "" || minuteValue === ""}
                         data-testid={getTestId("confirm-button")}
                     >
                         Done
-                    </ControlButton>
-                </ControlSection>
-            </Container>
-        </StyledDiv>
+                    </Button>
+                    <Button
+                        className={styles.controlButton}
+                        sizeType="small"
+                        type="button"
+                        styleType="secondary"
+                        onClick={onCancel}
+                        data-testid={getTestId("cancel-button")}
+                    >
+                        Cancel
+                    </Button>
+                </div>
+            </div>
+        </div>
     );
 };

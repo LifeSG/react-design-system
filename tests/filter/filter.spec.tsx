@@ -1,29 +1,29 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
-import { useMediaQuery } from "react-responsive";
-import { Filter } from "../../src";
-import { FilterContext } from "../../src/filter/filter-context";
-import { FilterItemCheckboxOptionProps } from "../../src/filter/types";
+import { Filter } from "src";
+import { FilterContext } from "src/filter/filter-context";
 import { FilterModal } from "src/filter/filter-modal";
 import { FilterSidebar } from "src/filter/filter-sidebar";
+import type { FilterItemCheckboxOptionProps } from "src/filter/types";
+import { useMaxWidthMediaQuery } from "src/theme";
 
-jest.mock("react-responsive");
+import { setupCommonDomMocks } from "../_common";
+
+jest.mock("src/theme", () => {
+    const actual = jest.requireActual("src/theme");
+
+    return {
+        ...actual,
+        useMaxWidthMediaQuery: jest.fn(),
+    };
+});
 
 describe("Filter", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
+        setupCommonDomMocks();
 
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
-
-        (useMediaQuery as jest.Mock).mockReturnValue(false);
+        jest.mocked(useMaxWidthMediaQuery).mockReturnValue(false);
     });
 
     it("should render the relevant components correctly on desktop", () => {
@@ -40,7 +40,7 @@ describe("Filter", () => {
     });
 
     it("should render the relevant components correctly on mobile", () => {
-        (useMediaQuery as jest.Mock).mockReturnValue(true);
+        jest.mocked(useMaxWidthMediaQuery).mockReturnValue(true);
 
         render(
             <Filter>
@@ -65,11 +65,28 @@ describe("Filter", () => {
             );
 
             expect(
-                within(screen.getByTestId("filter-item-title")).getByText(
-                    ITEM_TITLE
-                )
+                screen.getByRole("button", { name: ITEM_TITLE })
             ).toBeInTheDocument();
             expect(screen.getByText(ITEM_CONTENT)).toBeInTheDocument();
+        });
+
+        it("should toggle inert on expandable content when collapsed and expanded", () => {
+            render(
+                <Filter.Item title={ITEM_TITLE}>{ITEM_CONTENT}</Filter.Item>
+            );
+
+            const expandButton = screen.getByTestId("expand-collapse-button");
+            const expandableContainer = screen.getByTestId(
+                "expandable-container"
+            );
+
+            expect(expandableContainer).toHaveAttribute("inert");
+
+            act(() => {
+                fireEvent.click(expandButton);
+            });
+
+            expect(expandableContainer).not.toHaveAttribute("inert");
         });
 
         it("should render children specified as render prop correctly", () => {
@@ -518,16 +535,33 @@ describe("FilterSidebar", () => {
 });
 
 describe("FilterModal", () => {
-    it("renders modal header and buttons", () => {
+    it("renders visible button and hidden modal initially", () => {
         render(
             <FilterModal>
                 <div data-testid="modal-child">Hidden content</div>
             </FilterModal>
         );
 
-        const child = screen.getByTestId("modal-child");
-        expect(child).toBeInTheDocument();
-        expect(child).not.toBeVisible();
+        expect(
+            screen.getByRole("button", { name: "Filters" })
+        ).toBeInTheDocument();
+
+        expect(
+            screen.queryByRole("heading", { name: "Filters" })
+        ).not.toBeInTheDocument();
+    });
+
+    it("renders visible modal when button is clicked", () => {
+        render(
+            <FilterModal>
+                <div data-testid="modal-child">Hidden content</div>
+            </FilterModal>
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Filters" }));
+
+        expect(screen.getByRole("heading", { name: "Filters" })).toBeVisible();
+        expect(screen.queryByTestId("modal-child")).toBeVisible();
     });
 
     it("calls onClear when Clear button is clicked", () => {
@@ -545,18 +579,31 @@ describe("FilterModal", () => {
         fireEvent.click(screen.getByText("Done"));
         expect(mockOnDone).toHaveBeenCalled();
     });
+});
 
-    it("renders children correctly", () => {
+describe("Filter.Page", () => {
+    it("calls onDismiss when Dismiss button is clicked", () => {
+        const mockOnDismiss = jest.fn();
         render(
-            <FilterModal>
-                <div data-testid="modal-item">Item content</div>
-            </FilterModal>
+            <Filter.Page onDismiss={mockOnDismiss}>
+                <div>Content</div>
+            </Filter.Page>
         );
 
-        fireEvent.click(screen.getByTestId("filter-show-button"));
+        fireEvent.click(screen.getByRole("button", { name: "Dismiss" }));
+        expect(mockOnDismiss).toHaveBeenCalled();
+    });
 
-        expect(screen.getByTestId("modal-item")).toBeInTheDocument();
-        expect(screen.getByTestId("modal-item")).toBeVisible();
+    it("calls onDone when Done button is clicked", () => {
+        const mockOnDone = jest.fn();
+        render(
+            <Filter.Page onDone={mockOnDone}>
+                <div>Content</div>
+            </Filter.Page>
+        );
+
+        fireEvent.click(screen.getByRole("button", { name: "Done" }));
+        expect(mockOnDone).toHaveBeenCalled();
     });
 });
 

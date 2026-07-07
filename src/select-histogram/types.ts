@@ -1,7 +1,8 @@
-import { AriaAttributes, RefObject } from "react";
-import { HistogramSliderProps } from "../histogram-slider";
-import { TruncateType } from "../shared/dropdown-list/types";
-import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
+import type { AriaAttributes, RefObject } from "react";
+
+import type { HistogramSliderProps } from "../histogram-slider";
+import type { TruncateType } from "../shared/dropdown-list/types";
+import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export type SelectHistogramSliderProps = Pick<
     HistogramSliderProps,

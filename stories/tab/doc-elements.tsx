@@ -1,7 +1,11 @@
+import { css } from "@linaria/core";
 import { Typography } from "src/typography";
-import styled from "styled-components";
 
-export const Content = styled.div`
+export const Content = ({ children }: React.ComponentProps<"div">) => (
+    <div className={content}>{children}</div>
+);
+
+const content = css`
     padding: 1.5rem;
 `;
 

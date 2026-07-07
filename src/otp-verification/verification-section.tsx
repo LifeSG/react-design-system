@@ -1,21 +1,12 @@
-import { useContext } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import { Button } from "../button";
 import { FormErrorMessage } from "../form/form-label";
 import { InputGroup } from "../input-group";
 import { concatIds } from "../shared/accessibility";
-import { Breakpoint } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
-import { VerificationSectionProps } from "./internal-types";
+import type { VerificationSectionProps } from "./internal-types";
 import { EmailThumbnail, PhoneThumbnail } from "./thumbnail";
-import {
-    ReSendMessage,
-    SectionContainer,
-    VerificationSectionWrapper,
-    VerifyButton,
-    VerifyInputWrapper,
-} from "./verification-section-styles";
+import * as styles from "./verification-section.styles";
 
 export const VerificationSection = ({
     id,
@@ -33,11 +24,6 @@ export const VerificationSection = ({
     otpPrefix,
     otpSeparator,
 }: VerificationSectionProps) => {
-    const theme = useContext(ThemeContext);
-    const isMobile = useMediaQuery({
-        maxWidth: Breakpoint["sm-max"]({ theme }),
-    });
-    const thumbnailSize = isMobile ? 64 : 120;
     const internalId = useId();
 
     const titleId = `${internalId}-title`;
@@ -50,29 +36,20 @@ export const VerificationSection = ({
 
         return (
             <div aria-hidden>
-                {type === "email" ? (
-                    <EmailThumbnail
-                        width={thumbnailSize}
-                        height={thumbnailSize}
-                    />
-                ) : (
-                    <PhoneThumbnail
-                        width={thumbnailSize}
-                        height={thumbnailSize}
-                    />
-                )}
+                {type === "email" ? <EmailThumbnail /> : <PhoneThumbnail />}
             </div>
         );
     };
 
     return (
-        <VerificationSectionWrapper
+        <div
             id={id}
             data-testid={dataTestId}
             role="group"
+            className={styles.verificationSectionWrapper}
         >
             {renderThumbnail()}
-            <SectionContainer>
+            <div className={styles.sectionContainer}>
                 <div>
                     <Typography.BodyMD
                         weight="semibold"
@@ -94,7 +71,7 @@ export const VerificationSection = ({
                     </Typography.BodyMD>
                 </div>
                 <div>
-                    <VerifyInputWrapper>
+                    <div className={styles.verifyInputWrapper}>
                         <InputGroup
                             id={id ? `${id}-verify-input` : undefined}
                             data-testid={
@@ -124,7 +101,7 @@ export const VerificationSection = ({
                             aria-invalid={!!verifyOtpError}
                             aria-required={true}
                         />
-                        <VerifyButton
+                        <Button
                             id={id ? `${id}-verify-button` : undefined}
                             type="button"
                             data-testid={
@@ -136,10 +113,11 @@ export const VerificationSection = ({
                             loading={isVerifyLoading}
                             styleType="light"
                             disabled={!otpCode || otpCode.length === 0}
+                            className={styles.verifyButton}
                         >
                             {!isVerifyLoading && "Verify"}
-                        </VerifyButton>
-                    </VerifyInputWrapper>
+                        </Button>
+                    </div>
                     {verifyOtpError && (
                         <FormErrorMessage
                             id={verifyErrorId}
@@ -155,16 +133,17 @@ export const VerificationSection = ({
                     )}
                 </div>
                 {countdown.isRunning && (
-                    <ReSendMessage
+                    <Typography.BodyMD
                         id={id ? `${id}-countdown` : undefined}
                         data-testid={
                             dataTestId ? `${dataTestId}-countdown` : undefined
                         }
+                        className={styles.resendMessage}
                     >
                         Resend OTP in {countdown.formatTime()}
-                    </ReSendMessage>
+                    </Typography.BodyMD>
                 )}
-            </SectionContainer>
-        </VerificationSectionWrapper>
+            </div>
+        </div>
     );
 };

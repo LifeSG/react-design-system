@@ -53,6 +53,21 @@ describe("HistogramSlider", () => {
         );
     });
 
+    it("should forward className to the root element", () => {
+        render(
+            <HistogramSlider
+                bins={MOCK_BIN_DATA}
+                interval={1}
+                data-testid="histogram-slider"
+                className="custom-class"
+            />
+        );
+
+        expect(screen.getByTestId("histogram-slider")).toHaveClass(
+            "custom-class"
+        );
+    });
+
     it("should handle change", () => {
         const mockChange = jest.fn();
         render(
@@ -67,6 +82,15 @@ describe("HistogramSlider", () => {
         fireEvent.mouseDown(thumb);
 
         expect(mockChange).toHaveBeenCalledWith([1, 2]);
+    });
+
+    describe("bars", () => {
+        it("should render a bar for each bin", () => {
+            render(<HistogramSlider bins={MOCK_BIN_DATA} interval={1} />);
+
+            const bars = screen.getAllByTestId("histogram-bar");
+            expect(bars).toHaveLength(MOCK_BIN_DATA.length);
+        });
     });
 
     describe("range labels", () => {

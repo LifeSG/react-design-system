@@ -1,34 +1,20 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { useInView } from "react-intersection-observer";
 import { useResizeDetector } from "react-resize-detector";
+
 import { LoadingDotsSpinner } from "../animations";
 import { Checkbox } from "../checkbox";
 import { ErrorDisplay } from "../error-display";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import { BasicButton } from "../shared/input-wrapper";
+import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import { useEventListener } from "../util/use-event-listener";
-import {
-    ActionBar,
-    ActionBarWrapper,
-    BodyCell,
-    BodyCellContent,
-    BodyRow,
-    CheckBoxWrapper,
-    EmptyViewCell,
-    ErrorDisplayTitle,
-    HeaderCell,
-    HeaderCellWrapper,
-    HeaderRow,
-    LoaderWrapper,
-    Table,
-    TableBody,
-    TableContainer,
-    TableWrapper,
-    TextButton,
-} from "./data-table.styles";
-import { DataTableProps, HeaderProps, RowProps } from "./types";
+import * as styles from "./data-table.styles";
+import type { DataTableProps, HeaderProps, RowProps } from "./types";
 
 export const DataTable = ({
     id,
@@ -70,11 +56,21 @@ export const DataTable = ({
 
     const [scrollable, setScrollable] = useState(false);
     const [scrollEnd, setScrollEnd] = useState(false);
-    const [tableEnd, setTableEnd] = useState(false);
     const [isFloatingActionBar, setIsFloatingActionBar] = useState(false);
     const [showLastBorder, setShowLastBorder] = useState(false);
 
     const { ref: endRef, inView: end } = useInView();
+
+    useApplyStyle(actionBarRef, {
+        [styles.tokens.actionBarWrapperLeft]:
+            isFloatingActionBar && tableRef.current
+                ? `${tableRef.current.getBoundingClientRect().left}px`
+                : undefined,
+        [styles.tokens.actionBarWrapperWidth]:
+            isFloatingActionBar && tableRef.current
+                ? `${tableRef.current.clientWidth}px`
+                : undefined,
+    });
 
     // =============================================================================
     // EFFECTS, EVENT LISTENERS
@@ -108,13 +104,6 @@ export const DataTable = ({
                 calculateStickyInViewport();
             }
         });
-
-        if (wrapperRef.current) {
-            setTableEnd(
-                wrapperRef.current.getBoundingClientRect().bottom <=
-                    window.innerHeight
-            );
-        }
     };
 
     useEventListener("scroll", scrollHandler, "window");
@@ -130,7 +119,6 @@ export const DataTable = ({
         if (!rows || !rows.length || !selectedIds) {
             return false;
         }
-
         return selectedIds.length === rows.length;
     };
 
@@ -188,7 +176,7 @@ export const DataTable = ({
         return ` by ${nextSortDirection} order`;
     };
 
-    const getHeaderWrapperId = (fieldKey: string) => {
+    const getHeaderCellId = (fieldKey: string) => {
         return `${internalId}-header-${fieldKey}`;
     };
     const getCellId = (rowId: string, fieldKey: string) => {
@@ -274,11 +262,14 @@ export const DataTable = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHeaders = () => (
-        <thead ref={headerRef}>
-            <HeaderRow>
+        <thead
+            ref={headerRef}
+            className={enableStickyHeader ? styles.stickyHeader : undefined}
+        >
+            <tr className={styles.headerRow}>
                 {enableMultiSelect && renderHeaderCheckBox()}
                 {headers.map(renderHeaderCell)}
-            </HeaderRow>
+            </tr>
         </thead>
     );
 
@@ -297,20 +288,21 @@ export const DataTable = ({
             : header;
 
         const isSortable = !!getSortDirection(fieldKey);
-        const headerCellWrapperId = getHeaderWrapperId(fieldKey);
-
+        const headerCellId = getHeaderCellId(fieldKey);
         return (
-            <HeaderCell
+            <th
                 data-testid={getDataTestId(`header-${fieldKey}`)}
                 key={fieldKey}
-                $clickable={clickable}
+                className={clsx(
+                    styles.headerCell,
+                    clickable && styles.headerCellClickable
+                )}
                 scope="col"
                 aria-sort={getHeaderAriaSort(fieldKey)}
                 style={style}
-                $isCheckbox={false}
                 onClick={() => handleHeaderClick(fieldKey)}
             >
-                <HeaderCellWrapper id={headerCellWrapperId}>
+                <div className={styles.headerCellContent} id={headerCellId}>
                     {typeof label === "string" ? (
                         <Typography.BodyBL weight="bold">
                             {label}
@@ -319,7 +311,7 @@ export const DataTable = ({
                         label
                     )}
                     {renderSortedArrow(fieldKey)}
-                </HeaderCellWrapper>
+                </div>
                 {(clickable || isSortable) && (
                     <VisuallyHidden>
                         <button
@@ -328,12 +320,12 @@ export const DataTable = ({
                             }
                         >
                             {isSortable && "Sort "}
-                            <span aria-labelledby={headerCellWrapperId} />
+                            <span aria-labelledby={headerCellId} />
                             {isSortable && getSortButtonAriaLabel(fieldKey)}
                         </button>
                     </VisuallyHidden>
                 )}
-            </HeaderCell>
+            </th>
         );
     };
 
@@ -361,13 +353,12 @@ export const DataTable = ({
 
     const renderHeaderCheckBox = () => {
         return (
-            <HeaderCell
+            <th
                 data-testid={getDataTestId("header-selection")}
-                $clickable={false}
-                $isCheckbox={true}
+                className={clsx(styles.headerCell, styles.headerCellCheckbox)}
                 scope="col"
             >
-                <CheckBoxWrapper>
+                <div className={styles.selectionCheckboxWrapper}>
                     <VisuallyHidden>Row selection</VisuallyHidden>
                     {enableSelectAll && (
                         <Checkbox
@@ -382,63 +373,78 @@ export const DataTable = ({
                             }}
                         />
                     )}
-                </CheckBoxWrapper>
-            </HeaderCell>
+                </div>
+            </th>
         );
     };
 
     const renderRows = () => {
         return !rows || rows.length < 1 ? (
-            <BodyRow $alternating={false}>
-                <EmptyViewCell colSpan={getTotalColumns()}>
+            <tr className={styles.bodyRow}>
+                <td
+                    className={styles.emptyStateCell}
+                    colSpan={getTotalColumns()}
+                >
                     {renderCustomEmptyView
                         ? renderCustomEmptyView()
                         : renderBasicEmptyView()}
-                </EmptyViewCell>
-            </BodyRow>
+                </td>
+            </tr>
         ) : (
             <>
                 {rows?.map((row: RowProps, index: number) => (
-                    <BodyRow
+                    <tr
                         data-testid={getDataTestId(`row-${row.id.toString()}`)}
                         key={row.id.toString()}
-                        $alternating={isAlternatingRow(index)}
-                        $isSelectable={enableMultiSelect}
-                        $isSelected={isRowSelected(row.id.toString())}
+                        className={clsx(
+                            styles.bodyRow,
+                            showLastBorder && styles.bodyRowWithBottomBorder,
+                            isAlternatingRow(index) &&
+                                styles.bodyRowAlternating,
+                            enableMultiSelect && styles.bodyRowSelectable,
+                            isRowSelected(row.id.toString()) &&
+                                styles.bodyRowSelected
+                        )}
                     >
                         {enableMultiSelect && renderRowCheckBox(row)}
 
                         {headers.map((header) => renderRowCell(header, row))}
-                    </BodyRow>
+                    </tr>
                 ))}
             </>
         );
     };
 
     const renderRowCell = (header: HeaderProps, row: RowProps) => {
-        const style = typeof header !== "string" ? header.style : undefined;
+        const style = typeof header === "string" ? undefined : header.style;
         const fieldKey = typeof header === "string" ? header : header.fieldKey;
         const rowId = row.id.toString();
         const cellData = row[fieldKey];
         const cellId = `${rowId}-${fieldKey}`;
 
+        let cellContent: React.ReactNode;
+        if (typeof cellData === "string" || typeof cellData === "number") {
+            cellContent = (
+                <Typography.BodyBL className={styles.bodyCellText}>
+                    {cellData}
+                </Typography.BodyBL>
+            );
+        } else if (typeof cellData === "function") {
+            cellContent = cellData(row, { isSelected: isRowSelected(rowId) });
+        } else {
+            cellContent = cellData;
+        }
+
         return (
-            <BodyCell
+            <td
                 data-testid={getDataTestId(`row-${cellId}`)}
                 key={cellId}
                 id={getCellId(rowId, fieldKey)}
+                className={styles.bodyCell}
                 style={style}
-                $isCheckbox={false}
             >
-                {typeof cellData === "string" ||
-                typeof cellData === "number" ? (
-                    <BodyCellContent>{cellData}</BodyCellContent>
-                ) : typeof cellData === "function" ? (
-                    cellData(row, { isSelected: isRowSelected(rowId) })
-                ) : (
-                    cellData
-                )}
-            </BodyCell>
+                {cellContent}
+            </td>
         );
     };
 
@@ -446,11 +452,11 @@ export const DataTable = ({
         const rowId = row.id.toString();
 
         return (
-            <BodyCell
+            <td
                 data-testid={getDataTestId(`row-${rowId}-selection`)}
-                $isCheckbox={true}
+                className={clsx(styles.bodyCell, styles.bodyCellCheckbox)}
             >
-                <CheckBoxWrapper>
+                <div className={styles.selectionCheckboxWrapper}>
                     <Checkbox
                         checked={isRowSelected(rowId)}
                         aria-labelledby={getRowCheckboxAriaLabelledBy(rowId)}
@@ -462,31 +468,40 @@ export const DataTable = ({
                         disabled={isDisabledRow(rowId)}
                         focusableWhenDisabled={isDisabledRow(rowId)}
                     />
-                </CheckBoxWrapper>
-            </BodyCell>
+                </div>
+            </td>
         );
     };
 
     const renderBasicEmptyView = () => {
+        let emptyTitle: JSX.Element;
+        if (!emptyView?.title) {
+            emptyTitle = (
+                <Typography.HeadingSM
+                    className={styles.emptyStateTitle}
+                    weight="bold"
+                >
+                    {"No <items> found"}
+                </Typography.HeadingSM>
+            );
+        } else if (typeof emptyView.title === "string") {
+            emptyTitle = (
+                <Typography.HeadingSM
+                    className={styles.emptyStateTitle}
+                    weight="bold"
+                >
+                    {emptyView.title}
+                </Typography.HeadingSM>
+            );
+        } else {
+            emptyTitle = emptyView.title;
+        }
+
         return (
             <ErrorDisplay
                 type={"no-item-found"}
                 {...emptyView}
-                title={
-                    emptyView?.title ? (
-                        typeof emptyView.title === "string" ? (
-                            <ErrorDisplayTitle weight="bold">
-                                {emptyView.title}
-                            </ErrorDisplayTitle>
-                        ) : (
-                            emptyView.title
-                        )
-                    ) : (
-                        <ErrorDisplayTitle weight="bold">
-                            {"No <items> found"}
-                        </ErrorDisplayTitle>
-                    )
-                }
+                title={emptyTitle}
                 description={
                     emptyView?.description
                         ? emptyView.description
@@ -498,40 +513,49 @@ export const DataTable = ({
 
     const renderLoader = () => {
         return (
-            <BodyRow $alternating={false}>
+            <tr className={styles.bodyRow}>
                 <td colSpan={getTotalColumns()}>
-                    <LoaderWrapper
+                    <div
+                        className={styles.loadingStateWrapper}
                         role="status"
                         aria-live="polite"
                         aria-label="Loading table"
                     >
                         {loadState === "loading" && <LoadingDotsSpinner />}
-                    </LoaderWrapper>
+                    </div>
                 </td>
-            </BodyRow>
+            </tr>
         );
     };
 
     const renderSelectionBar = () => {
         const count = selectedIds?.length ?? 0;
+        const hasNotReachedScrollableEnd = scrollable && !scrollEnd;
+        const hasNotReachedTableEnd = !scrollable && !end;
+        const shouldUseFloatingActionBar =
+            hasNotReachedScrollableEnd ||
+            hasNotReachedTableEnd ||
+            isFloatingActionBar;
 
         return (
-            <ActionBarWrapper
+            <div
                 ref={actionBarRef}
-                $fixed={isFloatingActionBar}
-                $left={tableRef?.current?.getBoundingClientRect()?.left}
-                $width={tableRef?.current?.clientWidth}
+                className={clsx(
+                    styles.actionBarWrapper,
+                    isFloatingActionBar && styles.actionBarWrapperFloating
+                )}
             >
-                <ActionBar
-                    $float={
-                        (scrollable ? !scrollEnd : !end) || isFloatingActionBar
-                    }
-                    $scrollable={scrollable}
+                <div
+                    className={clsx(
+                        styles.actionBar,
+                        shouldUseFloatingActionBar && styles.actionBarFloating
+                    )}
                 >
                     <Typography.BodyMD weight="semibold">{`${count} item${
                         count > 1 ? "s" : ""
                     } selected`}</Typography.BodyMD>
-                    <TextButton
+                    <BasicButton
+                        className={styles.actionBarButton}
                         type="button"
                         aria-label={`Clear selection of ${count} item${
                             count === 1 ? "" : "s"
@@ -539,18 +563,18 @@ export const DataTable = ({
                         onClick={onClearSelectionClick}
                     >
                         Clear selection
-                    </TextButton>
+                    </BasicButton>
                     {actionBarContent}
-                </ActionBar>
-            </ActionBarWrapper>
+                </div>
+            </div>
         );
     };
 
     return (
-        <TableWrapper
+        <div
             id={id || "table-wrapper"}
             data-testid={otherProps["data-testid"] || "table"}
-            className={className}
+            className={clsx(styles.tableWrapper, className)}
             ref={wrapperRef}
             onScroll={() => {
                 if (scrollable && wrapperRef.current) {
@@ -563,21 +587,16 @@ export const DataTable = ({
             }}
             tabIndex={0} // scrollable container must be focusable to support keyboard users
         >
-            <TableContainer>
-                <Table
-                    $end={tableEnd}
-                    $scrollable={scrollable}
-                    ref={tableRef}
-                    $stickyHeader={enableStickyHeader}
-                >
+            <div className={styles.tableContainer}>
+                <table ref={tableRef} className={clsx(styles.table)}>
                     {renderHeaders()}
-                    <TableBody $showLastRowBottomBorder={showLastBorder}>
+                    <tbody>
                         {loadState === "success"
                             ? renderRows()
                             : renderLoader()}
-                    </TableBody>
-                </Table>
-            </TableContainer>
+                    </tbody>
+                </table>
+            </div>
             {enableActionBar &&
                 selectedIds &&
                 selectedIds.length > 0 &&
@@ -588,6 +607,6 @@ export const DataTable = ({
                     endRef(r);
                 }}
             />
-        </TableWrapper>
+        </div>
     );
 };

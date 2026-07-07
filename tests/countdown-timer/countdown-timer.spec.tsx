@@ -1,6 +1,7 @@
 import { act, render, screen } from "@testing-library/react";
+import type { InViewHookResponse } from "react-intersection-observer";
+import { useInView } from "react-intersection-observer";
 import { CountdownTimer } from "src/countdown-timer";
-import { InViewHookResponse, useInView } from "react-intersection-observer";
 
 jest.mock("react-intersection-observer");
 
@@ -30,8 +31,18 @@ describe("CountdownTimer", () => {
             render(<CountdownTimer show timer={seconds} />);
 
             expect(screen.getByText(expectedDisplay)).toBeInTheDocument();
+            expect(
+                screen.getByRole("timer", { name: "Countdown timer" })
+            ).toBeInTheDocument();
         }
     );
+
+    it("should render the remaining time left when timestamp is specified", () => {
+        const timestamp = Date.now() + 155 * 1000;
+        render(<CountdownTimer show timestamp={timestamp} />);
+
+        expect(screen.getByText("2 mins 35 secs")).toBeInTheDocument();
+    });
 
     it("should invoke event callbacks correctly", async () => {
         const mockOnFinish = jest.fn();
@@ -84,5 +95,40 @@ describe("CountdownTimer", () => {
         expect(mockOnTick).toHaveBeenCalledWith(2);
         expect(mockOnNotify).toHaveBeenCalledTimes(1);
         expect(mockOnFinish).toHaveBeenCalledTimes(1);
+    });
+
+    it("should transition announcement from polite to assertive at notify threshold", async () => {
+        render(
+            <CountdownTimer
+                show
+                timer={10}
+                notifyTimer={4}
+                reminderInterval={2}
+            />
+        );
+
+        await act(async () => {
+            jest.advanceTimersByTime(2000);
+        });
+
+        const politeAnnouncement = screen.getByText("Time left: 8 seconds");
+        expect(
+            politeAnnouncement.closest('[aria-live="polite"]')
+        ).toBeInTheDocument();
+        expect(
+            politeAnnouncement.closest('[aria-atomic="true"]')
+        ).toBeInTheDocument();
+
+        await act(async () => {
+            jest.advanceTimersByTime(4000);
+        });
+
+        const assertiveAnnouncement = screen.getByText("Time left: 4 seconds");
+        expect(
+            assertiveAnnouncement.closest('[aria-live="assertive"]')
+        ).toBeInTheDocument();
+        expect(
+            assertiveAnnouncement.closest('[aria-atomic="true"]')
+        ).toBeInTheDocument();
     });
 });

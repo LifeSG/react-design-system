@@ -1,20 +1,21 @@
-import { getSpace } from "src/theme/spacing/theme-helper";
-import { SpacingSet, ThemeSpec } from "src/theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ThemeType } from "src/theme";
+import { Spacing, ThemeProvider, useDesignToken } from "src/theme";
 
 interface SpacingDisplayProps {
-    theme: ThemeSpec;
+    theme: ThemeType;
 }
 
 export const SpacingDisplay = ({ theme }: SpacingDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
-            <Display>
-                <HeaderRow>
+            <div className={display}>
+                <div className={clsx(row, headerRow)}>
                     <div>Token</div>
                     <div>Value</div>
                     <div></div>
-                </HeaderRow>
+                </div>
                 <SpacingCollection token="spacing-0" />
                 <SpacingCollection token="spacing-4" />
                 <SpacingCollection token="spacing-8" />
@@ -27,7 +28,7 @@ export const SpacingDisplay = ({ theme }: SpacingDisplayProps) => {
                 <SpacingCollection token="spacing-48" />
                 <SpacingCollection token="spacing-64" />
                 <SpacingCollection token="spacing-72" />
-                <Divider />
+                <div className={divider} />
                 <SpacingCollection token="layout-xs" />
                 <SpacingCollection token="layout-sm" />
                 <SpacingCollection token="layout-md" />
@@ -35,7 +36,7 @@ export const SpacingDisplay = ({ theme }: SpacingDisplayProps) => {
                 <SpacingCollection token="layout-xl" />
                 <SpacingCollection token="layout-xxl" />
                 <SpacingCollection token="layout-xxxl" />
-            </Display>
+            </div>
         </ThemeProvider>
     );
 };
@@ -43,49 +44,41 @@ export const SpacingDisplay = ({ theme }: SpacingDisplayProps) => {
 export const LayoutDisplay = ({ theme }: SpacingDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
-            <Display>
-                <HeaderRow>
+            <div className={display}>
+                <div className={clsx(row, headerRow)}>
                     <div>Token</div>
                     <div>Value</div>
                     <div></div>
-                </HeaderRow>
-            </Display>
+                </div>
+            </div>
         </ThemeProvider>
     );
 };
 
 interface SpacingCollectionProps {
-    token: keyof SpacingSet;
+    token: keyof typeof Spacing;
 }
 
 const SpacingCollection = ({ token }: SpacingCollectionProps) => {
-    const theme = useTheme();
-    const value = getSpace(token)({ theme });
+    const value = useDesignToken(Spacing[token]) as string;
 
     return (
-        <Row key={token}>
+        <div className={row} key={token}>
             <div>
                 <code>{token}</code>
             </div>
             <div>{value}</div>
             <div>
-                <Box $size={value} />
+                <div className={box} style={{ width: value }} />
             </div>
-        </Row>
+        </div>
     );
 };
 
 // =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface BoxProps {
-    $size: string;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-const Display = styled.div`
+const display = css`
     display: grid;
     grid-template-columns: repeat(3, minmax(max-content, 1fr));
     flex-wrap: wrap;
@@ -99,7 +92,7 @@ const Display = styled.div`
     overflow-x: auto;
 `;
 
-const Row = styled.div`
+const row = css`
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
@@ -109,20 +102,19 @@ const Row = styled.div`
     margin-bottom: 2rem;
 `;
 
-const HeaderRow = styled(Row)`
+const headerRow = css`
     margin-bottom: 1rem;
     font-weight: bold;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #dde1e2;
 `;
 
-const Box = styled.div<BoxProps>`
+const box = css`
     background: tomato;
     height: 24px;
-    width: ${(props) => props.$size};
 `;
 
-const Divider = styled.div`
+const divider = css`
     grid-column: 1 / -1;
     height: 1px;
     background: #dde1e2;

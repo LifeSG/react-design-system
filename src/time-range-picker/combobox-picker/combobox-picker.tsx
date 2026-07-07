@@ -1,22 +1,24 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
+import clsx from "clsx";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
-import {
-    ErrorIcon,
-    ErrorMessage,
-    ErrorMessageContainer,
-} from "../../form/form-label.style";
-import { ClearIconContainer } from "../../input-range-select/input-range-select.style";
-import { ClearIcon } from "../../input/input.style";
-import { VisuallyHidden, concatIds } from "../../shared/accessibility";
+
+import { FormErrorMessage } from "../../form/form-label";
+import { concatIds, VisuallyHidden } from "../../shared/accessibility";
 import { DropdownListState } from "../../shared/dropdown-list";
 import { DropdownList } from "../../shared/dropdown-list/dropdown-list";
 import { ElementWithDropdown } from "../../shared/dropdown-wrapper";
+import {
+    BasicInput,
+    ClearButton,
+    InputWrapper,
+} from "../../shared/input-wrapper";
+import * as inputWrapperStyles from "../../shared/input-wrapper/input-wrapper.styles";
 import { RangeInputInnerContainer } from "../../shared/range-input-inner-container";
 import { useId } from "../../util";
 import { TimeHelper } from "../../util/time-helper";
-import { SelectorInput, Wrapper } from "../common.styles";
-import { TimeRangePickerProps, TimeRangePickerValue } from "../types";
-import { TimeFieldContainer } from "./combobox-picker.styles";
+import * as commonStyles from "../common.styles";
+import type { TimeRangePickerProps, TimeRangePickerValue } from "../types";
+import * as styles from "./combobox-picker.styles";
 
 type TimeRangeInputType = "start" | "end";
 interface TimeChangeOptions {
@@ -338,13 +340,13 @@ export const ComboboxPicker = ({
             (startTimeVal?.length > 0 || endTimeVal?.length > 0)
         ) {
             return (
-                <ClearIconContainer
-                    onClick={handleClear}
-                    type="button"
-                    aria-label="Clear"
-                >
-                    <ClearIcon aria-hidden />
-                </ClearIconContainer>
+                <div className={inputWrapperStyles.clearButtonContainer}>
+                    <ClearButton
+                        onClick={handleClear}
+                        type="button"
+                        aria-label="Clear"
+                    />
+                </div>
             );
         }
     };
@@ -394,13 +396,15 @@ export const ComboboxPicker = ({
     };
 
     const renderElement = () => (
-        <TimeFieldContainer
+        <InputWrapper
             ref={nodeRef}
-            $disabled={disabled}
-            $error={error || !!validationError}
-            $readOnly={readOnly}
+            disabled={disabled}
+            error={error || !!validationError}
+            readOnly={readOnly}
             onBlur={handleBlur}
             role="group"
+            data-testid="timepicker-container"
+            className={styles.timeFieldContainer}
         >
             <VisuallyHidden id={startLabelId}>Start time</VisuallyHidden>
             <VisuallyHidden id={endLabelId}>End time</VisuallyHidden>
@@ -412,7 +416,7 @@ export const ComboboxPicker = ({
                 }
             >
                 {/* From */}
-                <SelectorInput
+                <BasicInput
                     ref={startInputRef}
                     onFocus={() => handleInputFocus("start")}
                     placeholder={
@@ -441,9 +445,10 @@ export const ComboboxPicker = ({
                     aria-invalid={error || ariaInvalid || !!validationError}
                     aria-disabled={disabled}
                     aria-readonly={readOnly}
+                    className={commonStyles.selectorInput}
                 />
                 {/* To */}
-                <SelectorInput
+                <BasicInput
                     ref={endInputRef}
                     onFocus={() => handleInputFocus("end")}
                     placeholder={activeTimeSelector === "end" ? "hh:mm" : "To"}
@@ -470,30 +475,32 @@ export const ComboboxPicker = ({
                     }
                     aria-disabled={disabled || undefined}
                     aria-readonly={readOnly || undefined}
+                    className={commonStyles.selectorInput}
                 />
             </RangeInputInnerContainer>
             {renderClearButton()}
-        </TimeFieldContainer>
+        </InputWrapper>
     );
 
     const renderError = () =>
         // Only display internal error message if user does not provide one
         !error &&
         validationError && (
-            <ErrorMessageContainer>
-                <ErrorIcon aria-hidden />
-                <ErrorMessage
-                    id={errorId}
-                    tabIndex={0}
-                    data-testid={id ? `${id}-error-message` : "error-message"}
-                >
-                    {validationError}
-                </ErrorMessage>
-            </ErrorMessageContainer>
+            <FormErrorMessage
+                id={errorId}
+                tabIndex={0}
+                data-testid={id ? `${id}-error-message` : "error-message"}
+            >
+                {validationError}
+            </FormErrorMessage>
         );
 
     return (
-        <Wrapper id={id} {...otherProps}>
+        <div
+            id={id}
+            {...otherProps}
+            className={clsx(commonStyles.wrapper, otherProps.className)}
+        >
             <DropdownListState>
                 <ElementWithDropdown
                     enabled={!readOnly && !disabled}
@@ -510,6 +517,6 @@ export const ComboboxPicker = ({
                 />
             </DropdownListState>
             {renderError()}
-        </Wrapper>
+        </div>
     );
 };

@@ -1,145 +1,91 @@
-import { getBorder, getBorderWidth } from "src/theme/border/theme-helper";
-import { ThemeSpec } from "src/theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
-import { Border } from "../../../src/theme";
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ThemeType } from "src/theme";
+import { Border, ThemeProvider, useDesignToken } from "src/theme";
 
 interface BorderDisplayProps {
-    theme: ThemeSpec;
+    theme: ThemeType;
 }
 
 export const BorderDisplay = ({ theme }: BorderDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
-            <Display>
-                <HeaderRow>
+            <div className={display}>
+                <div className={clsx(row, headerRow)}>
                     <div>Token</div>
                     <div>Value</div>
                     <div></div>
-                </HeaderRow>
+                </div>
                 <BorderWidthCollection token="width-005" />
                 <BorderWidthCollection token="width-010" />
                 <BorderWidthCollection token="width-020" />
-                <Divider />
+                <div className={divider} />
                 <BorderStyleCollection token="solid" />
-            </Display>
-            <Display>
-                <HeaderRow>
-                    <div>Utility</div>
-                    <div>Parameters</div>
-                    <div></div>
-                </HeaderRow>
-                <SolidBorderUtilCollection />
-                <DashedBorderUtilCollection />
-            </Display>
+            </div>
         </ThemeProvider>
     );
 };
 
 interface BorderWidthCollectionProps {
-    token: Parameters<typeof getBorderWidth>[0];
+    token: keyof typeof Border;
 }
 
 const BorderWidthCollection = ({ token }: BorderWidthCollectionProps) => {
-    const theme = useTheme();
-    const value = getBorderWidth(token)({
-        theme,
-    });
+    const value = useDesignToken(Border[token]) as string;
 
     return (
-        <Row key={token}>
+        <div className={row} key={token}>
             <div>
                 <code>{token}</code>
             </div>
             <div>{value}</div>
             <div>
-                <BorderWidthExample $size={value as unknown as string} />
+                <div
+                    className={borderWidthExample}
+                    style={{ border: `${value} solid tomato` }}
+                />
             </div>
-        </Row>
+        </div>
     );
 };
 
 interface BorderStyleCollectionProps {
-    token: Parameters<typeof getBorder>[0];
+    token: keyof typeof Border;
 }
 
 const BorderStyleCollection = ({ token }: BorderStyleCollectionProps) => {
-    const theme = useTheme();
-    const value = getBorder(token)({ theme });
+    const value = useDesignToken(Border[token]) as string;
 
     return (
-        <Row key={token}>
+        <div className={row} key={token}>
             <div>
                 <code>{token}</code>
             </div>
             <div>{value}</div>
             <div>
-                <BorderStyleExample $style={value as unknown as string} />
+                <div
+                    className={borderStyleExample}
+                    style={{ border: `1px ${value} tomato` }}
+                />
             </div>
-        </Row>
+        </div>
     );
 };
-
-const SolidBorderUtilCollection = () => {
-    return (
-        <Row>
-            <div>
-                <code>solid</code>
-            </div>
-            <div>
-                <code>{"{ thickness, colour, radius }"}</code>
-            </div>
-            <div>
-                <SolidBorderExample />
-            </div>
-        </Row>
-    );
-};
-
-const DashedBorderUtilCollection = () => {
-    return (
-        <Row>
-            <div>
-                <code>dashed-default</code>
-            </div>
-            <div>
-                <code>{"{ thickness, colour, radius }"}</code>
-            </div>
-            <div>
-                <DashedBorderExample />
-            </div>
-        </Row>
-    );
-};
-
-// =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface BorderWidthProps {
-    $size: string;
-}
-
-interface BorderStyleProps {
-    $style: string;
-}
 
 // =============================================================================
 // STYLING
 // =============================================================================
-const Display = styled.div`
+const display = css`
     display: grid;
     grid-template-columns: max-content max-content minmax(250px, 1fr);
     flex-wrap: wrap;
 
     margin-bottom: 2.5rem;
 
-    &:last-child {
-        margin-bottom: 1rem;
-    }
-
     overflow-x: auto;
 `;
 
-const Row = styled.div`
+const row = css`
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
@@ -149,38 +95,24 @@ const Row = styled.div`
     margin-bottom: 2rem;
 `;
 
-const HeaderRow = styled(Row)`
+const headerRow = css`
     margin-bottom: 1rem;
     font-weight: bold;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #dde1e2;
 `;
 
-const BorderWidthExample = styled.div<BorderWidthProps>`
+const borderWidthExample = css`
     height: 24px;
     width: 48px;
-    border: ${(props) => props.$size} solid tomato;
 `;
 
-const BorderStyleExample = styled.div<BorderStyleProps>`
+const borderStyleExample = css`
     height: 24px;
     width: 48px;
-    border: 1px ${(props) => props.$style} tomato;
 `;
 
-const SolidBorderExample = styled.div`
-    height: 24px;
-    width: 48px;
-    ${Border.Util["solid"]({ colour: "tomato" })}
-`;
-
-const DashedBorderExample = styled.div`
-    height: 24px;
-    width: 48px;
-    ${Border.Util["dashed-default"]({ colour: "tomato" })}
-`;
-
-const Divider = styled.div`
+const divider = css`
     grid-column: 1 / -1;
     height: 1px;
     background: #dde1e2;

@@ -1,5 +1,5 @@
-import { useEffect, useRef, useState } from "react";
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
+import { useEffect, useRef, useState } from "react";
 
 export interface UseCountdownOptions {
     /** Duration in seconds */
@@ -44,7 +44,6 @@ export const useCountdown = ({
 }: UseCountdownOptions): UseCountdownReturn => {
     const [timeLeft, setTimeLeft] = useState(duration);
     const [isRunning, setIsRunning] = useState(false);
-
     const intervalRef = useRef<ReturnType<typeof setInterval> | null>(null);
     const startTimeRef = useRef<number | null>(null);
 

@@ -1,10 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import {
-    TimeTable,
-    TimeTableProps,
-    TimeTableRowData,
-} from "../../src/timetable";
+import type { TimeTableProps, TimeTableRowData } from "src/timetable";
+import { TimeTable } from "src/timetable";
 
 describe("TimeTable", () => {
     const date = dayjs("2024-09-11");
@@ -78,6 +75,30 @@ describe("TimeTable", () => {
         expect(
             screen.getByText(timeTableMockProps.emptyContentMessage)
         ).toBeVisible();
+    });
+
+    it("should render result count in plural", () => {
+        render(
+            <TimeTable
+                {...timeTableMockProps}
+                rowData={buildMockRowData(2)}
+                totalRecords={2}
+            />
+        );
+
+        expect(screen.getByText("2 results found")).toBeVisible();
+    });
+
+    it("should render result count in singular", () => {
+        render(
+            <TimeTable
+                {...timeTableMockProps}
+                rowData={buildMockRowData(1)}
+                totalRecords={1}
+            />
+        );
+
+        expect(screen.getByText("1 result found")).toBeVisible();
     });
 
     it("should display calendar dropdown when onCalendarDateSelect prop is specified and the date navigator date text is clicked", () => {
@@ -233,6 +254,8 @@ describe("TimeTable", () => {
     });
 
     it("should have lazy load and a lazy loader should appear when user scrolls to the bottom of the TimeTable", async () => {
+        const mockOnPage = jest.fn().mockResolvedValue(buildMockRowData(2));
+
         render(
             <TimeTable
                 date={timeTableMockProps.date}
@@ -244,7 +267,7 @@ describe("TimeTable", () => {
                 onNextDayClick={timeTableMockProps.onNextDayClick}
                 onPreviousDayClick={timeTableMockProps.onPreviousDayClick}
                 emptyContentMessage={timeTableMockProps.emptyContentMessage}
-                onPage={() => buildMockRowData(1)}
+                onPage={mockOnPage}
             />
         );
         const container = screen.getByTestId("timetable-container");
@@ -257,6 +280,7 @@ describe("TimeTable", () => {
         });
 
         expect(await screen.findByTestId("lazy-loader")).toBeInTheDocument();
+        expect(mockOnPage).toHaveBeenCalledTimes(1);
     });
 
     it("should render a full bar of blocked slot when row cells are empty and rowMinTime and rowMaxTime are omitted for that row", async () => {

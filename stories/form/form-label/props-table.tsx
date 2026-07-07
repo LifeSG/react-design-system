@@ -1,5 +1,5 @@
-import { ApiTable } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable } from "stories/storybook-common/api-table";
+import type { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
 
 export const FORM_LABEL_USED_WITH_WRAPPER_PROPS_DATA: ApiTableSectionProps = {
     attributes: [
@@ -18,11 +18,6 @@ export const FORM_LABEL_USED_WITH_WRAPPER_PROPS_DATA: ApiTableSectionProps = {
 export const FORM_LABEL_PROPS_DATA: ApiTableSectionProps = {
     attributes: [
         ...FORM_LABEL_USED_WITH_WRAPPER_PROPS_DATA.attributes,
-        {
-            name: "disabled",
-            description: "Indicates if a disabled display should be applied",
-            propTypes: ["string"],
-        },
         {
             name: "subtitle",
             description: (

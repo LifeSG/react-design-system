@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { FeedbackRating } from "src/feedback-rating";
 import { Modal } from "src/modal";
+
 import { ModalBoxDiv } from "./doc-elements";
 
 type Component = typeof FeedbackRating;

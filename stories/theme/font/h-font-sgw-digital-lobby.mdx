@@ -1,5 +1,4 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import { SGWDigitalLobbyTheme } from "src/theme";
 import { DocInfo } from "stories/storybook-common";
 import { FontDisplay } from "../doc-elements";
 
@@ -7,14 +6,7 @@ import { FontDisplay } from "../doc-elements";
 
 # SGW Digital Lobby font
 
-This is the font set used when the `fontScheme` is `"sgwdigitallobby"`.
-
-```tsx
-const theme: ThemeSpec = {
-    fontScheme: "sgwdigitallobby",
-    // ...other specifications
-};
-```
+This is the font set used when the theme is `"sgw-digital-lobby"`.
 
 This stylesheet should be loaded in your app.
 
@@ -28,4 +20,4 @@ https://assets.life.gov.sg/react-design-system/v3/css/libre-franklin.css
     are **disabled** for this font
 </DocInfo>
 
-<FontDisplay theme={SGWDigitalLobbyTheme} />
+<FontDisplay theme="sgw-digital-lobby" />

@@ -1,9 +1,6 @@
-import {
-    ApiTable,
-    ApiTableSectionProps,
-    code,
-    quote,
-} from "stories/storybook-common";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable, code, quote } from "stories/storybook-common";
+
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const TIME_FORMAT = (

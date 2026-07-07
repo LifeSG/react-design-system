@@ -1,12 +1,14 @@
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import { CalendarManagerRef } from "../shared/internal-calendar";
+
+import type { CalendarManagerRef } from "../shared/internal-calendar";
 import { CalendarManager } from "../shared/internal-calendar/calendar-manager";
-import { TimeSlot } from "../time-slot-bar";
+import type { TimeSlot } from "../time-slot-bar";
 import { DateHelper } from "../util";
+import * as styles from "./time-slot-bar-week.styles";
 import { TimeSlotBarWeekDays } from "./time-slot-bar-week-days";
-import { Wrapper } from "./time-slot-bar-week.style";
-import { TimeSlotBarWeekProps } from "./types";
+import type { TimeSlotBarWeekProps } from "./types";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 
@@ -119,7 +121,7 @@ export const TimeSlotBarWeek = ({
     };
 
     return (
-        <Wrapper {...otherProps}>
+        <div className={styles.wrapper} {...otherProps}>
             <CalendarManager
                 ref={calendarManagerRef}
                 dynamicHeight
@@ -153,6 +155,6 @@ export const TimeSlotBarWeek = ({
                     return renderTimeSlotWeekDays(calendarDate);
                 }}
             </CalendarManager>
-        </Wrapper>
+        </div>
     );
 };

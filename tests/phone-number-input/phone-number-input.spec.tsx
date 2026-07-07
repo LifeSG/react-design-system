@@ -2,6 +2,8 @@ import { fireEvent, render, screen } from "@testing-library/react";
 import { Form } from "src/form";
 import { PhoneNumberInput } from "src/phone-number-input";
 
+import { setupCommonDomMocks } from "../_common";
+
 const INPUT_TESTID = "input";
 const SELECTOR_TESTID = "selector";
 const LABEL = "Test label";
@@ -18,17 +20,7 @@ describe("PhoneNumberInput", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        // Make requestAnimationFrame synchronous to avoid async focus issues in tests (see https://github.com/floating-ui/floating-ui/issues/2488)
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render default component", () => {
@@ -53,41 +45,111 @@ describe("PhoneNumberInput", () => {
         );
     });
 
-    describe("change handling", () => {
-        it("should format number and preserve caret position", async () => {
-            render(<PhoneNumberInput value={{ countryCode: "994" }} />);
+    describe("clear handling", () => {
+        it("should call onClear when clear button is clicked", () => {
+            const onClear = jest.fn();
+            render(
+                <PhoneNumberInput
+                    value={{ countryCode: "+65", number: "91234567" }}
+                    allowClear
+                    onClear={onClear}
+                />
+            );
 
-            const input: HTMLInputElement = screen.getByTestId("input");
-            const inputSpy = jest.spyOn(input, "setSelectionRange");
+            fireEvent.click(
+                screen.getByRole("button", { name: "Clear input" })
+            );
 
-            fireEvent.change(input, {
-                target: {
-                    value: "231",
-                    selectionStart: 2,
-                    selectionEnd: 2,
-                },
-            });
-
-            expect(input).toHaveValue("(23) 1");
-            expect(inputSpy).toHaveBeenCalledWith(3, 3);
+            expect(onClear).toHaveBeenCalledTimes(1);
         });
 
-        it("should remove non-numeric characters and preserve caret position", async () => {
-            render(<PhoneNumberInput value={{ countryCode: "994" }} />);
+        it("should clear the input when no onClear handler is provided", () => {
+            render(
+                <PhoneNumberInput
+                    value={{ countryCode: "+65", number: "91234567" }}
+                    allowClear
+                />
+            );
 
-            const input: HTMLInputElement = screen.getByTestId("input");
-            const inputSpy = jest.spyOn(input, "setSelectionRange");
+            expect(screen.queryByTestId(INPUT_TESTID)).not.toHaveValue("");
 
-            fireEvent.change(input, {
-                target: {
-                    value: "(1!2",
-                    selectionStart: 3,
-                    selectionEnd: 3,
-                },
+            fireEvent.click(
+                screen.getByRole("button", { name: "Clear input" })
+            );
+
+            expect(screen.queryByTestId(INPUT_TESTID)).toHaveValue("");
+        });
+    });
+
+    describe("change handling", () => {
+        describe("formatting", () => {
+            it("should format number and preserve caret position", async () => {
+                render(<PhoneNumberInput value={{ countryCode: "994" }} />);
+
+                const input: HTMLInputElement = screen.getByTestId("input");
+                const inputSpy = jest.spyOn(input, "setSelectionRange");
+
+                fireEvent.change(input, {
+                    target: {
+                        value: "231",
+                        selectionStart: 2,
+                        selectionEnd: 2,
+                    },
+                });
+
+                expect(input).toHaveValue("(23) 1");
+                expect(inputSpy).toHaveBeenCalledWith(3, 3);
             });
 
-            expect(input).toHaveValue("(12");
-            expect(inputSpy).toHaveBeenCalledWith(2, 2);
+            it("should remove non-numeric characters and preserve caret position", async () => {
+                render(<PhoneNumberInput value={{ countryCode: "994" }} />);
+
+                const input: HTMLInputElement = screen.getByTestId("input");
+                const inputSpy = jest.spyOn(input, "setSelectionRange");
+
+                fireEvent.change(input, {
+                    target: {
+                        value: "(1!2",
+                        selectionStart: 3,
+                        selectionEnd: 3,
+                    },
+                });
+
+                expect(input).toHaveValue("(12");
+                expect(inputSpy).toHaveBeenCalledWith(2, 2);
+            });
+        });
+
+        describe("country selection", () => {
+            it("should update selector, reformat number, and call onChange when a country is selected", () => {
+                const onChange = jest.fn();
+                render(
+                    <PhoneNumberInput
+                        value={{ countryCode: "+994", number: "12345678" }}
+                        onChange={onChange}
+                    />
+                );
+
+                fireEvent.click(screen.getByTestId(SELECTOR_TESTID));
+                fireEvent.click(
+                    screen.getByRole("option", { name: /Singapore/i })
+                );
+
+                expect(screen.queryByTestId(SELECTOR_TESTID)).toHaveTextContent(
+                    "+65"
+                );
+                expect(screen.queryByTestId(INPUT_TESTID)).toHaveValue(
+                    "1234 5678"
+                );
+
+                expect(onChange).toHaveBeenCalledTimes(1);
+                expect(onChange).toHaveBeenCalledWith(
+                    expect.objectContaining({
+                        number: "12345678",
+                        countryCode: "+65",
+                    })
+                );
+            });
         });
     });
 

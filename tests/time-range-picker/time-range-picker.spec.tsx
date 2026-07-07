@@ -1,8 +1,12 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { FormTimeRangePicker } from "../../src/form/form-time-range-picker";
-import { TimeRangePicker } from "../../src/time-range-picker/time-range-picker";
-import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
+import { FormTimeRangePicker } from "src/form/form-time-range-picker";
+import { TimeRangePicker } from "src/time-range-picker/time-range-picker";
+
+import { setupCommonDomMocks } from "../_common/setup";
+import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 // =============================================================================
 // UNIT TESTS
@@ -13,18 +17,8 @@ const DROPDOWN_TESTID = "dropdown-list";
 
 describe("TimeRangePicker", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
-
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        jest.clearAllMocks();
+        setupCommonDomMocks();
     });
 
     describe("Combobox variant", () => {
@@ -90,7 +84,9 @@ describe("TimeRangePicker", () => {
                     />
                 );
 
-                await user.click(screen.getByLabelText(START_LABEL));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(START_LABEL));
+                });
 
                 await waitFor(() => {
                     expect(
@@ -117,7 +113,9 @@ describe("TimeRangePicker", () => {
                     />
                 );
 
-                await user.click(screen.getByLabelText(END_LABEL));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(END_LABEL));
+                });
 
                 await waitFor(() => {
                     expect(
@@ -156,7 +154,9 @@ describe("TimeRangePicker", () => {
                     "10:00am"
                 );
 
-                await user.click(screen.getByLabelText(START_LABEL));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(START_LABEL));
+                });
 
                 // Scroll start should be 10:00am (from the initialised value)
                 await waitFor(() => {
@@ -183,7 +183,9 @@ describe("TimeRangePicker", () => {
                     />
                 );
 
-                await user.click(screen.getByLabelText(START_LABEL));
+                await act(async () => {
+                    await user.click(screen.getByLabelText(START_LABEL));
+                });
 
                 // Assert that scroll time is as expected (from initialScrollStartTime)
                 await waitFor(() => {
@@ -193,9 +195,11 @@ describe("TimeRangePicker", () => {
                 });
 
                 // After clicking on 10:00am selection and reopening the dropdown, first option should be 10:00am instead
-                await user.click(
-                    screen.getByRole("option", { name: "10:00am" })
-                );
+                await act(async () => {
+                    await user.click(
+                        screen.getByRole("option", { name: "10:00am" })
+                    );
+                });
 
                 expect(screen.getByLabelText(START_LABEL)).toHaveValue(
                     "10:00am"
@@ -292,6 +296,60 @@ describe("TimeRangePicker", () => {
                         "4:00pm",
                     ]);
                 });
+
+                screen.getByLabelText(END_LABEL).focus();
+
+                await waitFor(() => {
+                    const options = screen
+                        .getAllByRole("option")
+                        .map((option) => option.textContent);
+
+                    expect(options).toEqual([
+                        "1:00pm",
+                        "2:00pm",
+                        "3:00pm",
+                        "4:00pm",
+                    ]);
+                });
+            });
+
+            it("should have correct 60-minute interval", async () => {
+                render(<TimeRangePicker variant={"combobox"} interval={60} />);
+
+                screen.getByLabelText(START_LABEL).focus();
+
+                await waitFor(() => {
+                    const options = screen
+                        .getAllByRole("option")
+                        .map((option) => option.textContent);
+
+                    expect(options).toEqual([
+                        "12:00am",
+                        "1:00am",
+                        "2:00am",
+                        "3:00am",
+                        "4:00am",
+                        "5:00am",
+                        "6:00am",
+                        "7:00am",
+                        "8:00am",
+                        "9:00am",
+                        "10:00am",
+                        "11:00am",
+                        "12:00pm",
+                        "1:00pm",
+                        "2:00pm",
+                        "3:00pm",
+                        "4:00pm",
+                        "5:00pm",
+                        "6:00pm",
+                        "7:00pm",
+                        "8:00pm",
+                        "9:00pm",
+                        "10:00pm",
+                        "11:00pm",
+                    ]);
+                });
             });
         });
 
@@ -320,6 +378,19 @@ describe("TimeRangePicker", () => {
                     "3:00pm"
                 );
                 expect(screen.getByLabelText(END_LABEL)).toHaveValue("2:00pm");
+                expect(
+                    screen.queryByText("End time must be after start time")
+                ).toBeInTheDocument();
+            });
+
+            it("should show validation error when end time is before start time", async () => {
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        value={{ start: "2:00pm", end: "1:00pm" }}
+                    />
+                );
+
                 expect(
                     screen.queryByText("End time must be after start time")
                 ).toBeInTheDocument();
@@ -370,6 +441,41 @@ describe("TimeRangePicker", () => {
                 expect(
                     screen.queryByText("Invalid end time")
                 ).toBeInTheDocument();
+            });
+
+            it("should prioritise start-time validation when both inputs are invalid", async () => {
+                const user = userEvent.setup();
+
+                render(<TimeRangePicker variant={"combobox"} />);
+
+                const startInput = screen.getByLabelText(START_LABEL);
+                const endInput = screen.getByLabelText(END_LABEL);
+
+                await user.click(startInput);
+                await user.keyboard("abc");
+
+                await user.click(endInput);
+                await user.keyboard("xyz");
+
+                expect(
+                    screen.queryByText("Invalid start time")
+                ).toBeInTheDocument();
+                expect(
+                    screen.queryByText("Invalid end time")
+                ).not.toBeInTheDocument();
+            });
+
+            it("should not show internal validation when external error is set", async () => {
+                const user = userEvent.setup();
+
+                render(<TimeRangePicker variant={"combobox"} error />);
+
+                await user.click(screen.getByLabelText(START_LABEL));
+                await user.keyboard("abc");
+
+                expect(
+                    screen.queryByText("Invalid start time")
+                ).not.toBeInTheDocument();
             });
 
             it("should show error message when 'errorMessage' prop is true", async () => {
@@ -452,6 +558,57 @@ describe("TimeRangePicker", () => {
 
                 await waitFor(() => expect(startInput).toHaveValue("9:00am"));
                 expect(mockOnChange).toHaveBeenCalledTimes(1);
+            });
+
+            it("should parse compact 12hr input on Enter", async () => {
+                const user = userEvent.setup();
+                const mockOnChange = jest.fn();
+
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        onChange={mockOnChange}
+                    />
+                );
+
+                const startInput = screen.getByLabelText(START_LABEL);
+
+                startInput.focus();
+                await act(async () => {
+                    await user.keyboard("13{Enter}");
+                });
+
+                await waitFor(() => expect(startInput).toHaveValue("1:00pm"));
+                expect(mockOnChange).toHaveBeenLastCalledWith({
+                    start: "1:00pm",
+                    end: "",
+                });
+            });
+
+            it("should parse compact input to 24hr format on Enter", async () => {
+                const user = userEvent.setup();
+                const mockOnChange = jest.fn();
+
+                render(
+                    <TimeRangePicker
+                        variant={"combobox"}
+                        format={"24hr"}
+                        onChange={mockOnChange}
+                    />
+                );
+
+                const startInput = screen.getByLabelText(START_LABEL);
+
+                startInput.focus();
+                await act(async () => {
+                    await user.keyboard("9p{Enter}");
+                });
+
+                await waitFor(() => expect(startInput).toHaveValue("21:00"));
+                expect(mockOnChange).toHaveBeenLastCalledWith({
+                    start: "21:00",
+                    end: "",
+                });
             });
 
             it("should handle Tab key", async () => {

@@ -1,7 +1,7 @@
 import { DateRangeInput } from "../date-range-input";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormDateRangeInputProps } from "./types";
+import type { FormDateRangeInputProps } from "./types";
 
 export const FormDateRangeInput = ({
     label,
@@ -10,9 +10,6 @@ export const FormDateRangeInput = ({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -31,11 +28,7 @@ export const FormDateRangeInput = ({
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

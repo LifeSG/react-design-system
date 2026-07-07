@@ -1,11 +1,8 @@
-import {
-    ApiTable,
+import type {
     ApiTableSectionProps,
-    StorybookLink,
     TabAttribute,
-    Tabs,
-    code,
 } from "stories/storybook-common";
+import { ApiTable, code, StorybookLink, Tabs } from "stories/storybook-common";
 
 const MAIN_DATA: ApiTableSectionProps[] = [
     {

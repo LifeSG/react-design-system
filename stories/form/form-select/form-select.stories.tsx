@@ -1,5 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { ComponentProps, useEffect, useState } from "react";
+import type { ComponentProps } from "react";
+import { useEffect, useState } from "react";
 import { Button } from "src/button";
 import { Form } from "src/form";
 import { InputSelect } from "src/input-select";
@@ -9,6 +10,7 @@ import {
     StackDecorator,
     StoryDecorator,
 } from "stories/storybook-common";
+
 import {
     Checkmark,
     CustomCTAContainer,
@@ -213,7 +215,7 @@ export const WithCustomCallToAction: StoryObj<Component> = {
                 renderCustomCallToAction={(hideOptions, options) => {
                     return (
                         <CustomCTAContainer>
-                            <Button.Default
+                            <Button
                                 style={{ width: "100%" }}
                                 onClick={() => {
                                     alert("Clicked on custom CTA");
@@ -223,7 +225,7 @@ export const WithCustomCallToAction: StoryObj<Component> = {
                                 {options.length === 0
                                     ? "Add first option"
                                     : "Add another option"}
-                            </Button.Default>
+                            </Button>
                         </CustomCTAContainer>
                     );
                 }}

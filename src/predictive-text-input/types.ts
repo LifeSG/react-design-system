@@ -1,6 +1,7 @@
-import { RefObject } from "react";
-import { DropdownAlignmentType } from "src/shared/dropdown-wrapper";
-import { ListItemDisplayProps } from "../shared/dropdown-list/types";
+import type { RefObject } from "react";
+
+import type { ListItemDisplayProps } from "../shared/dropdown-list/types";
+import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 export interface PredictiveTextInputProps<T, V> extends React.AriaAttributes {
     id?: string | undefined;
@@ -23,7 +24,7 @@ export interface PredictiveTextInputProps<T, V> extends React.AriaAttributes {
      */
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /**
-     * Custom width for the dropdown in pixels. When specified, the dropdown will use this
+     * Custom width for the dropdown. When specified, the dropdown will use this
      * width instead of matching the input element width.
      */
     dropdownWidth?: string | undefined;

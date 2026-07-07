@@ -1,11 +1,13 @@
-import {
-    FloatingFocusManager,
-    FloatingPortal,
+import type {
     Middleware,
     OpenChangeReason,
     Placement,
+} from "@floating-ui/react";
+import {
     autoUpdate,
     flip,
+    FloatingFocusManager,
+    FloatingPortal,
     limitShift,
     offset,
     shift,
@@ -16,18 +18,14 @@ import {
     useInteractions,
     useTransitionStyles,
 } from "@floating-ui/react";
-import {
-    CSSProperties,
-    RefObject,
-    createContext,
-    useContext,
-    useRef,
-} from "react";
+import type { CSSProperties, RefObject } from "react";
+import { createContext, useContext, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { ThemeContext } from "styled-components";
+
 import { useFloatingChild } from "../../overlay/use-floating-context";
-import { Breakpoint } from "../../theme";
-import { DropdownAlignmentType } from "./types";
+import { useInheritedThemeScope, useMaxWidthMediaQuery } from "../../theme";
+import * as elementWithDropdownStyles from "./element-with-dropdown.styles";
+import type { DropdownAlignmentType } from "./types";
 
 export interface DropdownRenderProps {
     elementWidth: number;
@@ -138,8 +136,7 @@ export const ElementWithDropdown = ({
     // =============================================================================
     // CONST, STATE, REF
     // =============================================================================
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
+    const isMobile = useMaxWidthMediaQuery("sm");
     const elementRef = useRef<HTMLDivElement | null>(null);
     const { width: referenceWidth = 0 } = useResizeDetector({
         targetRef: positionRef ?? elementRef,
@@ -150,10 +147,9 @@ export const ElementWithDropdown = ({
         fn: ({ x, rects }) => {
             const noGapInBetween =
                 x === 0 || x + rects.floating.width === window.innerWidth;
-            const isMobileScreen = window.innerWidth < mobileBreakpoint;
             return {
                 x:
-                    noGapInBetween && isMobileScreen
+                    noGapInBetween && isMobile
                         ? (window.innerWidth - rects.floating.width) / 2
                         : x,
             };
@@ -187,14 +183,14 @@ export const ElementWithDropdown = ({
                     ) {
                         // reset this so that dropdown can expand as needed
                         elements.floating.style.setProperty(
-                            "--available-height",
+                            elementWithDropdownStyles.tokens.availableHeight,
                             ""
                         );
                         return;
                     }
 
                     elements.floating.style.setProperty(
-                        "--available-height",
+                        elementWithDropdownStyles.tokens.availableHeight,
                         `${Math.max(0, availableHeight)}px`
                     );
                 },
@@ -209,6 +205,7 @@ export const ElementWithDropdown = ({
         open: { opacity: 1 },
         duration: 300,
     });
+    const { themeProps, themeStyle } = useInheritedThemeScope(isMounted);
 
     const click = useClick(context, {
         enabled,
@@ -258,7 +255,9 @@ export const ElementWithDropdown = ({
                         <DropdownRenderContext.Provider
                             value={dropdownRenderProps}
                         >
-                            {renderDropdown(dropdownRenderProps)}
+                            <div {...themeProps} style={themeStyle}>
+                                {renderDropdown(dropdownRenderProps)}
+                            </div>
                         </DropdownRenderContext.Provider>
                     </FloatingFocusManager>
                 </FloatingPortal>

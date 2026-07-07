@@ -1,4 +1,5 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -36,7 +37,7 @@ const DATA: ApiTableSectionProps[] = [
                         The title of the <code>Toast</code>
                     </>
                 ),
-                propTypes: [`string`, `JSX.Element`],
+                propTypes: [`string`, `React.ReactNode`],
                 defaultValue: "",
             },
             {
@@ -47,7 +48,7 @@ const DATA: ApiTableSectionProps[] = [
                         display the content information.
                     </>
                 ),
-                propTypes: [`string`, `JSX.Element`],
+                propTypes: [`string`, `React.ReactNode`],
                 defaultValue: "",
                 mandatory: true,
             },
@@ -104,12 +105,12 @@ const DATA: ApiTableSectionProps[] = [
                         Renders a call to action in the <code>Toast</code>
                     </>
                 ),
-                propTypes: ["ActionButtonProps"],
+                propTypes: ["ToastActionButtonProps"],
             },
         ],
     },
     {
-        name: "ActionButtonProps",
+        name: "ToastActionButtonProps",
         attributes: [
             {
                 name: "label",

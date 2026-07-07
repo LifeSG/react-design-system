@@ -1,4 +1,4 @@
-import { FilterItemCheckboxOptionProps } from "../types";
+import type { FilterItemCheckboxOptionProps } from "../types";
 
 export interface FlattenedFilterOption<T = FilterItemCheckboxOptionProps> {
     originalItem: T;

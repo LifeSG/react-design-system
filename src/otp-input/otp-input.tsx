@@ -1,21 +1,21 @@
-import React, {
+import clsx from "clsx";
+import type React from "react";
+import {
     forwardRef,
     useEffect,
     useImperativeHandle,
     useRef,
     useState,
 } from "react";
-import { FormErrorMessage } from "src/form/form-label";
+
+import { Button } from "../button";
+import { FormErrorMessage } from "../form/form-label";
+import { Input } from "../input";
 import { VisuallyHidden } from "../shared/accessibility";
+import { Typography } from "../typography";
 import { StringHelper, useId } from "../util";
-import {
-    CTAButton,
-    InputContainer,
-    InputField,
-    Prefix,
-    Wrapper,
-} from "./otp-input.styles";
-import { OtpInputProps, OtpInputRef } from "./types";
+import * as styles from "./otp-input.styles";
+import type { OtpInputProps, OtpInputRef } from "./types";
 import { stripOtpFromAutofill, validateUserInput } from "./utils";
 
 const Component = (
@@ -268,24 +268,31 @@ const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <Wrapper id={id} data-testid={dataTestId} className={className}>
-            <InputContainer
+        <div
+            id={id}
+            data-testid={dataTestId}
+            className={clsx(styles.wrapper, className)}
+        >
+            <div
+                className={styles.inputContainer}
                 role="group"
                 aria-label={`${numOfInput}-digit OTP input field`}
             >
                 {prefix && (
-                    <Prefix
-                        forwardedAs="span"
+                    <Typography.BodyBL
+                        as="span"
+                        className={styles.prefix}
                         data-testid="otp-prefix"
                         weight="semibold"
                     >
                         <VisuallyHidden>O T P prefix</VisuallyHidden>
                         {`${prefix.value} ${prefix.separator}`}
-                    </Prefix>
+                    </Typography.BodyBL>
                 )}
                 {otpValues.map((data, index) => {
                     return (
-                        <InputField
+                        <Input
+                            className={styles.inputField}
                             id={generateId(index, "otp-input", id)}
                             data-testid={generateId(
                                 index,
@@ -310,9 +317,11 @@ const Component = (
                         />
                     );
                 })}
-            </InputContainer>
+            </div>
             {errorMessage && (
-                <FormErrorMessage id={errorId}>{errorMessage}</FormErrorMessage>
+                <FormErrorMessage id={errorId} data-testid="otp-error-message">
+                    {errorMessage}
+                </FormErrorMessage>
             )}
             {/* visually hidden elements need to be rendered before the button so that Voiceover/Chrome doesn't skip the button */}
             <VisuallyHidden role="timer" id={timerId}>
@@ -322,16 +331,18 @@ const Component = (
                 {countDown > 0 ? "" : "Ready to resend OTP"}
             </VisuallyHidden>
             {!otpOnly && (
-                <CTAButton
+                <Button
+                    className={styles.ctaButton}
                     styleType={styleType}
                     type="button"
+                    sizeType="small"
                     {...otherCtaProps}
                     onClick={handleClick}
                     disabled={disabled || isWithinCooldown()}
                     {...getCTALabelProps()}
                 />
             )}
-        </Wrapper>
+        </div>
     );
 };
 

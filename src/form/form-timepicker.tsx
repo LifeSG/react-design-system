@@ -1,7 +1,7 @@
 import { Timepicker } from "../timepicker";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormTimepickerProps } from "./types";
+import type { FormTimepickerProps } from "./types";
 
 export const FormTimepicker = ({
     label,
@@ -10,9 +10,6 @@ export const FormTimepicker = ({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -30,12 +27,8 @@ export const FormTimepicker = ({
             id={inputId}
             label={label}
             errorMessage={errorMessage}
-            disabled={otherProps.disabled}
             data-error-testid={errorTestId}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

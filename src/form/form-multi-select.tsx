@@ -1,7 +1,7 @@
 import { InputMultiSelect } from "../input-multi-select/input-multi-select";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormMultiSelectProps } from "./types";
+import type { FormMultiSelectProps } from "./types";
 
 export const FormMultiSelect = <T, V>({
     label,
@@ -11,9 +11,6 @@ export const FormMultiSelect = <T, V>({
     "data-testid": testId,
     enableSearch = false,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -33,11 +30,7 @@ export const FormMultiSelect = <T, V>({
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

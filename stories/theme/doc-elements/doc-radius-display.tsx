@@ -1,65 +1,59 @@
-import { getRadius } from "src/theme/radius/theme-helper";
-import { RadiusSet, ThemeSpec } from "src/theme/types";
-import styled, { ThemeProvider, useTheme } from "styled-components";
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ThemeType } from "src/theme";
+import { Radius, ThemeProvider, useDesignToken } from "src/theme";
 
 interface RadiusDisplayProps {
-    theme: ThemeSpec;
+    theme: ThemeType;
 }
 
 export const RadiusDisplay = ({ theme }: RadiusDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
-            <Display>
-                <HeaderRow>
+            <div className={display}>
+                <div className={clsx(row, headerRow)}>
                     <div>Token</div>
                     <div>Value</div>
                     <div></div>
-                </HeaderRow>
+                </div>
                 <RadiusCollection token="none" />
                 <RadiusCollection token="xs" />
                 <RadiusCollection token="sm" />
                 <RadiusCollection token="md" />
                 <RadiusCollection token="lg" />
                 <RadiusCollection token="full" />
-            </Display>
+            </div>
         </ThemeProvider>
     );
 };
 
 interface RadiusCollectionProps {
-    token: keyof RadiusSet;
+    token: keyof typeof Radius;
 }
 
 const RadiusCollection = ({ token }: RadiusCollectionProps) => {
-    const theme = useTheme();
-    const value = getRadius(token)({
-        theme,
-    });
+    const value = useDesignToken(Radius[token]) as string;
 
     return (
-        <Row key={token}>
+        <div className={row} key={token}>
             <div>
                 <code>{token}</code>
             </div>
             <div>{value}</div>
             <div>
-                <RadiusExample $radius={value} />
+                <div
+                    className={radiusExample}
+                    style={{ borderRadius: value }}
+                />
             </div>
-        </Row>
+        </div>
     );
 };
 
 // =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface RadiusStyleProps {
-    $radius: string;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-const Display = styled.div`
+const display = css`
     display: grid;
     grid-template-columns: repeat(3, minmax(max-content, 1fr));
     flex-wrap: wrap;
@@ -73,7 +67,7 @@ const Display = styled.div`
     overflow-x: auto;
 `;
 
-const Row = styled.div`
+const row = css`
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
@@ -83,16 +77,15 @@ const Row = styled.div`
     margin-bottom: 2rem;
 `;
 
-const HeaderRow = styled(Row)`
+const headerRow = css`
     margin-bottom: 1rem;
     font-weight: bold;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #dde1e2;
 `;
 
-const RadiusExample = styled.div<RadiusStyleProps>`
+const radiusExample = css`
     height: 48px;
     width: 128px;
     background: tomato;
-    border-radius: ${(props) => props.$radius};
 `;

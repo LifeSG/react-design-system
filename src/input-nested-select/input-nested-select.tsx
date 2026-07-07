@@ -1,23 +1,27 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
 import isEmpty from "lodash/isEmpty";
-import React, { useEffect, useRef, useState } from "react";
-import {
-    ExpandableElement,
-    NestedDropdownList,
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
+import type {
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
+} from "../shared/dropdown-list";
+import {
     buildKeyPathToSet,
+    ExpandableElement,
     findItemByKeyPath,
+    NestedDropdownList,
 } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
     PlaceholderLabel,
     ValueLabel,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+} from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper, useId } from "../util";
-import {
+import type {
     InputNestedSelectProps,
     L1OptionProps,
     L2OptionProps,
@@ -205,13 +209,13 @@ export const InputNestedSelect = <V1, V2, V3>({
     const renderLabel = () => {
         if (isEmpty(selectedItem)) {
             return (
-                <PlaceholderLabel $truncateType={optionTruncationType}>
+                <PlaceholderLabel truncateType={optionTruncationType}>
                     {placeholder}
                 </PlaceholderLabel>
             );
         } else {
             return (
-                <ValueLabel $truncateType={optionTruncationType}>
+                <ValueLabel truncateType={optionTruncationType}>
                     {truncateValue(getDisplayValue())}
                 </ValueLabel>
             );
@@ -219,7 +223,7 @@ export const InputNestedSelect = <V1, V2, V3>({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+        <LabelContainer ref={labelContainerRef} disabled={disabled}>
             {renderLabel()}
         </LabelContainer>
     );
@@ -234,10 +238,10 @@ export const InputNestedSelect = <V1, V2, V3>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}

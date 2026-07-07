@@ -1,7 +1,7 @@
-import { useState } from "react";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { useState } from "react";
 import { LanguageSwitcher } from "src/language-switcher";
-import { LanguageSwitcherCode } from "src/language-switcher/types";
+import type { LanguageSwitcherCode } from "src/language-switcher/types";
 
 type Component = typeof LanguageSwitcher;
 

@@ -1,7 +1,7 @@
 import { UnitNumberInput } from "../unit-number";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormUnitNumberInputProps } from "./types";
+import type { FormUnitNumberInputProps } from "./types";
 
 export const FormUnitNumberInput = ({
     label,
@@ -10,9 +10,6 @@ export const FormUnitNumberInput = ({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -31,11 +28,7 @@ export const FormUnitNumberInput = ({
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

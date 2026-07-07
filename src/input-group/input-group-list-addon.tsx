@@ -1,23 +1,24 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
+import clsx from "clsx";
 import React, { useEffect, useRef, useState } from "react";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
-import { DropdownList, DropdownListState } from "../shared/dropdown-list";
+
+import { Input } from "../input";
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import {
+    DropdownList,
+    DropdownListState,
+    ExpandableElement,
+} from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
     PlaceholderLabel,
     ValueLabel,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+} from "../shared/dropdown-wrapper/dropdown-wrapper";
+import { InputBox } from "../shared/input-wrapper";
 import { useId } from "../util";
-import {
-    Divider,
-    FieldInput,
-    FieldSelector,
-    FieldWrapper,
-    SelectorReadOnly,
-    StyledExpandableElement,
-} from "./input-group-list-addon.style";
-import { InputGroupProps, ListAddon } from "./types";
+import * as styles from "./input-group-list-addon.styles";
+import type { InputGroupProps, ListAddon } from "./types";
 
 export const Component = <T, V>(
     {
@@ -66,7 +67,7 @@ export const Component = <T, V>(
         "aria-label": comboboxAriaLabel,
     } = addon!.attributes as ListAddon<T, V>;
 
-    const { position } = addon!;
+    const { position = "left" } = addon!;
 
     // =============================================================================
     // CONST, STATE, REF
@@ -183,21 +184,21 @@ export const Component = <T, V>(
     // RENDER FUNCTIONS
     // =============================================================================
     const renderLabel = () => {
-        if (!selected) {
-            return <PlaceholderLabel>{placeholder}</PlaceholderLabel>;
-        } else {
+        if (selected) {
             return <ValueLabel>{getDisplayValue()}</ValueLabel>;
         }
+
+        return <PlaceholderLabel>{placeholder}</PlaceholderLabel>;
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer $disabled={disabled}>{renderLabel()}</LabelContainer>
+        <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
     );
 
     const renderElement = () => {
         return (
             <div>
-                <StyledExpandableElement
+                <ExpandableElement
                     ref={selectorRef}
                     disabled={disabled}
                     expanded={showOptions}
@@ -207,11 +208,13 @@ export const Component = <T, V>(
                     aria-labelledby={concatIds(ariaLabelledBy, comboboxLabelId)}
                     aria-describedby={concatIds(ariaDescribedBy, instructionId)}
                     aria-invalid={ariaInvalid}
-                    $noBorder={noBorder}
-                    $position={position}
+                    data-position={position}
+                    className={clsx(
+                        noBorder && styles.expandableElementNoBorder
+                    )}
                 >
                     {renderSelectorContent()}
-                </StyledExpandableElement>
+                </ExpandableElement>
                 <VisuallyHidden id={instructionId}>
                     Press space to open options
                 </VisuallyHidden>
@@ -246,7 +249,7 @@ export const Component = <T, V>(
     const renderSelector = () => {
         if (readOnly) {
             return selected ? (
-                <SelectorReadOnly
+                <div
                     data-testid="selector-label"
                     tabIndex={0}
                     role="combobox"
@@ -256,9 +259,10 @@ export const Component = <T, V>(
                     aria-labelledby={ariaLabelledBy}
                     aria-describedby={ariaDescribedBy}
                     aria-invalid={ariaInvalid}
+                    className={styles.selectorReadOnly}
                 >
                     <ValueLabel>{getDisplayValue()}</ValueLabel>
-                </SelectorReadOnly>
+                </div>
             ) : null;
         } else {
             return (
@@ -284,46 +288,65 @@ export const Component = <T, V>(
 
     return (
         <DropdownListState>
-            <FieldWrapper
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
-                $position={position}
+            <InputBox
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
                 ref={nodeRef}
-                className={className}
+                noBorder={noBorder}
                 data-testid={testId}
-                $noBorder={noBorder}
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
+                data-position={position}
+                className={clsx(styles.fieldWrapper, className)}
             >
                 <VisuallyHidden aria-hidden id={comboboxLabelId}>
                     {comboboxAriaLabel}
                 </VisuallyHidden>
-                <FieldSelector data-testid={selectorTestId}>
+                <div
+                    data-testid={selectorTestId}
+                    className={styles.fieldSelector}
+                >
                     {renderSelector()}
-                </FieldSelector>
-                <Divider $readOnly={readOnly} $position={position} />
+                </div>
+                <div
+                    data-position={position}
+                    className={clsx(
+                        styles.divider,
+                        readOnly && styles.dividerReadOnly
+                    )}
+                />
                 <VisuallyHidden aria-hidden id={textboxLabelId}>
                     {textboxAriaLabel}
                 </VisuallyHidden>
-                <FieldInput
-                    ref={ref}
-                    {...otherProps}
-                    $position={position}
-                    $noBorder={noBorder}
-                    readOnly={readOnly}
-                    disabled={disabled}
-                    error={error}
-                    onChange={handleInputChange}
-                    data-testid="input"
-                    styleType="no-border"
-                    aria-labelledby={concatIds(ariaLabelledBy, textboxLabelId)}
-                    aria-describedby={ariaDescribedBy}
-                    aria-invalid={ariaInvalid}
-                />
-            </FieldWrapper>
+                <div
+                    data-position={position}
+                    className={clsx(
+                        styles.fieldInput,
+                        noBorder && styles.fieldInputNoBorder,
+                        readOnly && styles.fieldInputReadOnly
+                    )}
+                >
+                    <Input
+                        ref={ref}
+                        {...otherProps}
+                        readOnly={readOnly}
+                        disabled={disabled}
+                        error={error}
+                        onChange={handleInputChange}
+                        data-testid="input"
+                        styleType="no-border"
+                        aria-labelledby={concatIds(
+                            ariaLabelledBy,
+                            textboxLabelId
+                        )}
+                        aria-describedby={ariaDescribedBy}
+                        aria-invalid={ariaInvalid}
+                    />
+                </div>
+            </InputBox>
         </DropdownListState>
     );
 };

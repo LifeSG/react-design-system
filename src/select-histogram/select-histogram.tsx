@@ -1,21 +1,16 @@
+import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+
 import { HistogramSlider } from "../histogram-slider";
 import { DropdownListState, ExpandableElement } from "../shared/dropdown-list";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
-import { LabelContainer } from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
-import { InputBox } from "../shared/input-wrapper/input-wrapper";
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import * as dropdownWrapperStyles from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+import { InputBox } from "../shared/input-wrapper";
 import { Typography } from "../typography";
 import { useId } from "../util";
-import {
-    HistogramSliderDropdownContainer,
-    Label,
-    PlaceholderLabel,
-    Separator,
-} from "./select-histogram.styles";
-import { SelectHistogramProps } from "./types";
+import * as styles from "./select-histogram.styles";
+import type { SelectHistogramProps } from "./types";
 
 export const SelectHistogram = ({
     alignment = "left",
@@ -143,25 +138,32 @@ export const SelectHistogram = ({
 
     const getDisplayValue = () => {
         return !values || values.length === 0 ? (
-            <PlaceholderLabel
-                $truncateType={optionTruncationType}
-                $variant="default"
+            <div
+                className={clsx(
+                    styles.placeholderLabel,
+                    optionTruncationType !== "middle" &&
+                        styles.placeholderLabelTruncateEnd
+                )}
             >
                 {placeholder}
-            </PlaceholderLabel>
+            </div>
         ) : (
-            <Label>
+            <div className={styles.label}>
                 {renderSelector(selection[0])}
-                <Separator>-</Separator>
+                <div className={styles.separator}>-</div>
                 {renderSelector(selection[1])}
-            </Label>
+            </div>
         );
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+        <div
+            className={dropdownWrapperStyles.labelContainer}
+            ref={labelContainerRef}
+            data-disabled={disabled || undefined}
+        >
             {getDisplayValue()}
-        </LabelContainer>
+        </div>
     );
 
     const renderElement = () => {
@@ -174,10 +176,10 @@ export const SelectHistogram = ({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}
@@ -199,13 +201,15 @@ export const SelectHistogram = ({
 
     const renderDropdown = ({
         elementWidth,
-        styles,
+        styles: floatingStyles,
         setFloatingRef,
         getFloatingProps,
     }: DropdownRenderProps) => (
-        <HistogramSliderDropdownContainer
-            style={{ ...styles, width: elementWidth }}
+        <div
+            className={styles.histogramSliderDropdownContainer}
+            style={{ ...floatingStyles, width: elementWidth }}
             ref={setFloatingRef}
+            data-testid={`${testId}-dropdown`}
             {...getFloatingProps()}
         >
             <HistogramSlider
@@ -218,7 +222,7 @@ export const SelectHistogram = ({
                 renderEmptyView={renderEmptyView}
                 ariaLabels={ariaLabels}
             />
-        </HistogramSliderDropdownContainer>
+        </div>
     );
 
     return (

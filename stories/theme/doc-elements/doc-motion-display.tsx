@@ -1,20 +1,21 @@
-import { MotionSet, ThemeSpec } from "src/theme/types";
-import styled, { ThemeProvider, keyframes, useTheme } from "styled-components";
-import { getMotion } from "../../../src/theme/motion/theme-helper";
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ThemeType } from "src/theme";
+import { Motion, ThemeProvider, useDesignToken } from "src/theme";
 
 interface MotionDisplayProps {
-    theme: ThemeSpec;
+    theme: ThemeType;
 }
 
 export const MotionDisplay = ({ theme }: MotionDisplayProps) => {
     return (
         <ThemeProvider theme={theme}>
-            <Display>
-                <HeaderRow>
+            <div className={display}>
+                <div className={clsx(row, headerRow)}>
                     <div>Token</div>
                     <div>Value</div>
                     <div>Usage</div>
-                </HeaderRow>
+                </div>
                 <DurationCollection token="duration-150">
                     For very small and short interactions.
                     <br />
@@ -65,62 +66,56 @@ export const MotionDisplay = ({ theme }: MotionDisplayProps) => {
                     <br />
                     <small>e.g. closing a modal</small>
                 </TimingCollection>
-            </Display>
+            </div>
         </ThemeProvider>
     );
 };
 
 interface MotionCollectionProps {
-    token: keyof MotionSet;
+    token: keyof typeof Motion;
     children: React.ReactNode;
 }
 
 const DurationCollection = ({ token, children }: MotionCollectionProps) => {
-    const theme = useTheme();
-    const value = getMotion(token)({ theme });
+    const value = useDesignToken(Motion[token]) as string;
 
     return (
-        <Row key={token}>
+        <div className={row} key={token}>
             <div>
                 <code>{token}</code>
             </div>
             <div>{value}</div>
             <div>{children}</div>
-        </Row>
+        </div>
     );
 };
 
 const TimingCollection = ({ token, children }: MotionCollectionProps) => {
-    const theme = useTheme();
-    const value = getMotion(token)({ theme });
+    const value = useDesignToken(Motion[token]) as string;
 
     return (
-        <Row key={token}>
+        <div className={row} key={token}>
             <div>
                 <code>{token}</code>
             </div>
             <div>{value}</div>
             <div>
                 <div>{children}</div>
-                <MotionContainer>
-                    <MotionCircle $timing={value} />
-                </MotionContainer>
+                <div className={motionContainer}>
+                    <div
+                        className={motionCircle}
+                        style={{ animationTimingFunction: value }}
+                    />
+                </div>
             </div>
-        </Row>
+        </div>
     );
 };
 
 // =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface MotionProps {
-    $timing: string;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-const Display = styled.div`
+const display = css`
     display: grid;
     grid-template-columns: max-content max-content minmax(250px, 1fr);
     flex-wrap: wrap;
@@ -134,7 +129,7 @@ const Display = styled.div`
     overflow-x: auto;
 `;
 
-const Row = styled.div`
+const row = css`
     display: grid;
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
@@ -144,26 +139,21 @@ const Row = styled.div`
     margin-bottom: 2rem;
 `;
 
-const HeaderRow = styled(Row)`
+const headerRow = css`
     margin-bottom: 1rem;
     font-weight: bold;
     padding-bottom: 0.5rem;
     border-bottom: 1px solid #dde1e2;
 `;
 
-const MotionContainer = styled.div`
+const motionContainer = css`
     position: relative;
     margin-top: 1rem;
     height: 1rem;
     max-width: 500px;
 `;
 
-const slideAnimation = keyframes`
-    0% { left: 0; }
-    100% { left: calc(100% - 1rem); }
-`;
-
-const MotionCircle = styled.div<MotionProps>`
+const motionCircle = css`
     position: absolute;
     height: 1rem;
     width: 1rem;
@@ -172,9 +162,17 @@ const MotionCircle = styled.div<MotionProps>`
     top: 50%;
     transform: translateY(-50%);
 
-    animation-name: ${slideAnimation};
+    animation-name: storybook-motion-slide-animation;
     animation-duration: 3s;
     animation-iteration-count: infinite;
-    animation-timing-function: ${(props) => props.$timing};
     animation-direction: normal;
+
+    @keyframes storybook-motion-slide-animation {
+        0% {
+            left: 0;
+        }
+        100% {
+            left: calc(100% - 1rem);
+        }
+    }
 `;

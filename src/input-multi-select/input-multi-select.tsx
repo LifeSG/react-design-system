@@ -1,6 +1,8 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
 import findIndex from "lodash/findIndex";
-import React, { useEffect, useRef, useState } from "react";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
 import {
     DropdownList,
     DropdownListState,
@@ -11,10 +13,10 @@ import {
     LabelContainer,
     PlaceholderLabel,
     ValueLabel,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+} from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { useId } from "../util";
-import { InputMultiSelectProps } from "./types";
+import type { InputMultiSelectProps } from "./types";
 
 export const InputMultiSelect = <T, V>({
     selectedOptions,
@@ -188,21 +190,26 @@ export const InputMultiSelect = <T, V>({
         if (!selected || selected.length === 0) {
             return (
                 <PlaceholderLabel
-                    $truncateType={optionTruncationType}
-                    $variant={variant}
+                    variant={variant}
+                    truncateType={optionTruncationType}
                 >
                     {placeholder}
                 </PlaceholderLabel>
             );
         } else {
             return (
-                <ValueLabel $variant={variant}>{getDisplayValue()}</ValueLabel>
+                <ValueLabel
+                    variant={variant}
+                    truncateType={optionTruncationType}
+                >
+                    {getDisplayValue()}
+                </ValueLabel>
             );
         }
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer $disabled={disabled}>{renderLabel()}</LabelContainer>
+        <LabelContainer disabled={disabled}>{renderLabel()}</LabelContainer>
     );
 
     const renderElement = () => {
@@ -215,10 +222,10 @@ export const InputMultiSelect = <T, V>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}

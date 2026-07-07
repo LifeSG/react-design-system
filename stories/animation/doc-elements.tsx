@@ -1,7 +1,11 @@
+import { css } from "@linaria/core";
 import { MediaQuery } from "src/theme";
-import styled from "styled-components";
 
-export const AnimationDisplay = styled.div`
+export const AnimationDisplay = ({ children }: React.ComponentProps<"div">) => (
+    <div className={animationDisplay}>{children}</div>
+);
+
+const animationDisplay = css`
     display: grid;
     grid-template-columns: repeat(3, minmax(0, 1fr));
     grid-gap: 1.25rem;
@@ -11,13 +15,21 @@ export const AnimationDisplay = styled.div`
     }
 `;
 
-export const AnimationItem = styled.div`
+export const AnimationItem = ({ children }: React.ComponentProps<"div">) => (
+    <div className={animationItem}>{children}</div>
+);
+
+const animationItem = css`
     grid-column: span 1;
     display: flex;
     flex-direction: column;
 `;
 
-export const AnimationPane = styled.div`
+export const AnimationPane = ({ children }: React.ComponentProps<"div">) => (
+    <div className={animationPane}>{children}</div>
+);
+
+const animationPane = css`
     display: flex;
     justify-content: center;
     align-items: center;
@@ -25,7 +37,11 @@ export const AnimationPane = styled.div`
     height: 18rem;
 `;
 
-export const Content = styled.div`
+export const Content = ({ children }: React.ComponentProps<"div">) => (
+    <div className={content}>{children}</div>
+);
+
+const content = css`
     margin-top: 1rem;
     font-family: "Nunito Sans";
     padding: 0 0.5rem;

@@ -4,15 +4,17 @@
 {
     "recommendations": [
         // General
-        "naumovs.color-highlight",
+        "christian-kohler.path-intellisense",
+        "eamodio.gitlens",
+        "esbenp.prettier-vscode",
         "formulahendry.auto-close-tag",
         "formulahendry.auto-rename-tag",
         "mikestead.dotenv",
-        "eamodio.gitlens",
+        "naumovs.color-highlight",
+        "stylelint.vscode-stylelint",
         "unifiedjs.vscode-mdx",
-        "christian-kohler.path-intellisense",
-        "esbenp.prettier-vscode",
-        "styled-components.vscode-styled-components",
+        "vunguyentuan.vscode-css-variables",
+        "raywiis.png-image-diff",
 
         // Documentation
         "dinhani.divider",

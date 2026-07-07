@@ -1,5 +1,6 @@
 import { useReducer } from "react";
-import { RequiredKeys } from "./utility-types";
+
+import type { RequiredKeys } from "./utility-types";
 
 type ReducerObj<State> = {
     [action: string]: (state: State, payload: any) => State;

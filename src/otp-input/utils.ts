@@ -1,4 +1,4 @@
-import { OtpInputProps } from "./types";
+import type { OtpInputProps } from "./types";
 
 export const validateUserInput = (value: string, length = 1) =>
     !value ? false : RegExp(`^[0-9]{${length}}$`).test(value);

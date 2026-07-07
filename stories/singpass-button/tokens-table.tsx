@@ -1,5 +1,6 @@
-import { ThemeButton } from "src/theme/components/theme-helper";
-import { TokenTable, TokenTableSectionProps } from "../storybook-common";
+import { ComponentToken } from "src/theme";
+import type { TokenTableSectionProps } from "stories/storybook-common";
+import { TokenTable } from "stories/storybook-common";
 
 const DATA: TokenTableSectionProps[] = [
     {
@@ -9,7 +10,7 @@ const DATA: TokenTableSectionProps[] = [
                 description: "The radius of the button",
                 defaultValue: {
                     type: "default",
-                    token: ThemeButton["button-radius"],
+                    token: ComponentToken.Button["radius"],
                 },
             },
         ],

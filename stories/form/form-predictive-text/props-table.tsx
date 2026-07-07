@@ -1,4 +1,6 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable } from "stories/storybook-common";
+
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
@@ -77,6 +79,44 @@ const DATA: ApiTableSectionProps[] = [
                 name: "onSelectOption",
                 description: "Called when an option is selected",
                 propTypes: ["(option: T, extractedValue: T | V) => void"],
+            },
+            {
+                name: "dropdownZIndex",
+                description:
+                    "The custom z-index of the dropdown. Try specifying this if you encounter z-index conflicts.",
+                propTypes: ["number"],
+                defaultValue: "50",
+            },
+            {
+                name: "dropdownRootNode",
+                description: (
+                    <>
+                        The root element that hosts the dropdown element. Only
+                        specify this if you absolutely need to change the parent
+                        of the dropdown.
+                        <br />
+                        <br />
+                        For example, the dropdown is rendered in{" "}
+                        <code>body</code> by default. This could cause scroll
+                        issues if your UI only scrolls within a certain
+                        container. In that case, you can specify this prop so
+                        that they share the same stacking context. However, note
+                        that this might cause z-index issues since it will no
+                        longer be rendered in <code>body</code>.
+                    </>
+                ),
+                propTypes: ["RefObject<HTMLElement>"],
+                defaultValue: (
+                    <>
+                        document <code>body</code>
+                    </>
+                ),
+            },
+            {
+                name: "dropdownWidth",
+                description:
+                    "Custom width for the dropdown. When specified, the dropdown will use this exact width instead of matching the input element width.",
+                propTypes: ["string"],
             },
         ],
     },

@@ -1,47 +1,18 @@
-import React from "react";
-import styled from "styled-components";
-import { Colour } from "../../theme";
+import clsx from "clsx";
+
+import * as styles from "./thumbnail.styles";
 
 interface EmailThumbnailProps {
-    width?: number;
-    height?: number;
     className?: string;
 }
 
-const StyledSvg = styled.svg`
-    .background-circle {
-        fill: ${Colour["bg-stronger"]};
-    }
-
-    .primary-path {
-        fill: ${Colour["icon-primary"]};
-    }
-
-    .validation-icon {
-        fill: ${Colour["bg-available"]};
-    }
-
-    .accent-light-3 {
-        fill: ${Colour["icon-primary-subtle"]};
-    }
-
-    .accent-light-4 {
-        fill: ${Colour["icon-primary-subtlest"]};
-    }
-`;
-export const EmailThumbnail = ({
-    width = 120,
-    height = 120,
-    className,
-}: EmailThumbnailProps) => {
+export const EmailThumbnail = ({ className }: EmailThumbnailProps) => {
     return (
-        <StyledSvg
-            width={width}
-            height={height}
+        <svg
             viewBox="0 0 120 120"
             fill="none"
             xmlns="http://www.w3.org/2000/svg"
-            className={className}
+            className={clsx(styles.thumbnail, styles.emailThumbnail, className)}
         >
             <g clipPath="url(#clip0_email_icon)">
                 <circle cx="60" cy="60" r="60" className="background-circle" />
@@ -71,6 +42,6 @@ export const EmailThumbnail = ({
                     <rect width="120" height="120" fill="white" />
                 </clipPath>
             </defs>
-        </StyledSvg>
+        </svg>
     );
 };

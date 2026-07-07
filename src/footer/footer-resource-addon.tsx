@@ -1,36 +1,36 @@
-import { useTheme } from "styled-components";
+import clsx from "clsx";
+import { useContext } from "react";
+
+import { ThemeContext } from "../theme/theme-provider/context";
 import { Typography } from "../typography";
-import { Img, Items } from "./footer-resource-addon.styles";
+import * as styles from "./footer-resource-addon.styles";
 
 export const ResourceAddon = (): JSX.Element => {
-    const theme = useTheme();
+    const theme = useContext(ThemeContext);
 
     const getResourceContent = () => {
-        switch (theme?.resourceScheme) {
+        switch (theme?.theme) {
             case "mylegacy":
                 return (
                     <>
-                        <Typography.BodyMD
-                            weight="regular"
-                            data-testid="resource-addon-title"
-                        >
+                        <Typography.BodyMD data-testid="resource-addon-title">
                             My Legacy is a LifeSG initiative, brought to you by
                             the following government agencies:
                         </Typography.BodyMD>
-                        <Items>
-                            <Img
+                        <div className={styles.items}>
+                            <img
+                                className={clsx(styles.img, styles.govtechLogo)}
                                 data-testid="footer-govtech-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/govtech-logo.png"
                                 alt="GovTech Singapore"
-                                style={{ height: "4.5rem" }}
                             />
-                            <Img
+                            <img
+                                className={clsx(styles.img, styles.psdLogo)}
                                 data-testid="footer-psd-logo"
                                 src="https://mylegacy.life.gov.sg/images/agencies/psd-logo.png"
                                 alt="Public Service Division"
-                                style={{ height: "3.5rem" }}
                             />
-                        </Items>
+                        </div>
                     </>
                 );
             default:

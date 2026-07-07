@@ -1,7 +1,10 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { Timepicker } from "../../src/timepicker/timepicker";
-import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
+import { Timepicker } from "src/timepicker/timepicker";
+
+import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 describe("Timepicker (Floating UI)", () => {
     beforeEach(() => {
@@ -231,6 +234,53 @@ describe("Timepicker (Floating UI)", () => {
             });
 
             expect(onBlur).not.toHaveBeenCalled();
+        });
+    });
+
+    describe("keyboard navigation", () => {
+        it("should open dropdown on Enter key", async () => {
+            const user = userEvent.setup();
+            render(<Timepicker id={ID} />);
+
+            const selector = screen.getByTestId(selectorTestId);
+            await user.click(selector);
+
+            // Test Enter key
+            selector.focus();
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
+            await waitFor(() =>
+                expect(screen.getByTestId(dropdownTestId)).toBeVisible()
+            );
+        });
+
+        it("should open dropdown on Space key", async () => {
+            const user = userEvent.setup();
+            render(<Timepicker id={ID} />);
+
+            const selector = screen.getByTestId(selectorTestId);
+            selector.focus();
+            await act(async () => {
+                await user.keyboard(" ");
+            });
+            await waitFor(() =>
+                expect(screen.getByTestId(dropdownTestId)).toBeVisible()
+            );
+        });
+
+        it("should open dropdown on ArrowDown key", async () => {
+            const user = userEvent.setup();
+            render(<Timepicker id={ID} />);
+
+            const selector = screen.getByTestId(selectorTestId);
+            selector.focus();
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+            });
+            await waitFor(() =>
+                expect(screen.getByTestId(dropdownTestId)).toBeVisible()
+            );
         });
     });
 });

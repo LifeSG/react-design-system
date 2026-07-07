@@ -1,18 +1,13 @@
 import { render } from "@testing-library/react";
-import "jest-styled-components";
-import { Typography } from "../../src/typography/typography";
-import { ThemeProvider } from "styled-components";
-import { MOCK_THEME } from "./mock-theme-data";
+import { Typography } from "src/typography";
 
 describe("Typography Components", () => {
     describe("Body Text", () => {
         it("renders BodyMD with correct text", () => {
             const { getByText } = render(
-                <ThemeProvider theme={MOCK_THEME}>
-                    <Typography.BodyMD weight="semibold" inline>
-                        This is medium body text
-                    </Typography.BodyMD>
-                </ThemeProvider>
+                <Typography.BodyMD weight="semibold" inline>
+                    This is medium body text
+                </Typography.BodyMD>
             );
 
             expect(getByText("This is medium body text")).toBeInTheDocument();
@@ -22,11 +17,9 @@ describe("Typography Components", () => {
     describe("Link Components", () => {
         it("renders external LinkSM with external icon", () => {
             const { getByText, container } = render(
-                <ThemeProvider theme={MOCK_THEME}>
-                    <Typography.LinkSM external>
-                        External Small Link
-                    </Typography.LinkSM>
-                </ThemeProvider>
+                <Typography.LinkSM external>
+                    External Small Link
+                </Typography.LinkSM>
             );
 
             expect(getByText("External Small Link")).toBeInTheDocument();
@@ -39,14 +32,23 @@ describe("Typography Components", () => {
     describe("Heading Components", () => {
         it("renders HeadingXXL with correct text", () => {
             const { getByText } = render(
-                <ThemeProvider theme={MOCK_THEME}>
-                    <Typography.HeadingXXL weight="bold" inline>
-                        Hello World
-                    </Typography.HeadingXXL>
-                </ThemeProvider>
+                <Typography.HeadingXXL weight="bold" inline>
+                    Hello World
+                </Typography.HeadingXXL>
             );
 
             expect(getByText("Hello World")).toBeInTheDocument();
+        });
+
+        it("renders HeadingSM as forwarded heading element", () => {
+            const { getByText } = render(
+                <Typography.HeadingSM as="h2">
+                    Heading Semantics Override
+                </Typography.HeadingSM>
+            );
+
+            const heading = getByText("Heading Semantics Override");
+            expect(heading.tagName).toBe("H2");
         });
     });
 });

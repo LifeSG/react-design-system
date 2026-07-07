@@ -1,4 +1,4 @@
-import { ThemeStyleProps } from "src/theme";
+import type { CSSVariableString } from "src/theme";
 
 export interface TokenTableAttributeRowProps {
     name: string;
@@ -11,12 +11,12 @@ export interface TokenTableAttributeRowProps {
 
 export interface TokenTableDefaultValueColourTokenProps {
     type: "colour-token";
-    token: (props: ThemeStyleProps) => string;
+    token: string;
 }
 
 export interface TokenTableDefaultValueDefaultProps {
     type: "default";
-    token: (props: ThemeStyleProps) => string;
+    token: CSSVariableString;
 }
 
 export interface TokenTableSectionProps {

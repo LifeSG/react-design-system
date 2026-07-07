@@ -1,44 +1,7 @@
-import styled, { css } from "styled-components";
-import { Button } from "../button";
-import { IconButton } from "../icon-button";
-import { Modal } from "../modal";
-import {
-    Border,
-    Breakpoint,
-    Colour,
-    Font,
-    MediaQuery,
-    Radius,
-    Spacing,
-} from "../theme";
-import { Typography } from "../typography";
+import { css } from "@linaria/core";
 
-// =============================================================================
-// STYLE INTERFACES
-// =============================================================================
-interface SignatureAreaProps {
-    $disabled: boolean | undefined;
-}
-
-// =============================================================================
-// CUSTOM MEDIA QUERIES
-// =============================================================================
-// for mobileL and below in both orientations
-const mobileMediaQuery = css`
-    ${(props) => `
-        ${MediaQuery.MaxWidth.sm(props)},
-        (orientation: landscape) and (max-height: ${Breakpoint["sm-max"](
-            props
-        )}px)
-    `}
-`;
-const mobileLandscapeMediaQuery = css`
-    ${(props) => `
-        @media (orientation: landscape) and (max-height: ${Breakpoint["sm-max"](
-            props
-        )}px)
-    `}
-`;
+import * as modalStyles from "../modal/modal.styles";
+import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
@@ -48,29 +11,15 @@ const mobileLandscapeMediaQuery = css`
 // MAIN FIELD
 // -----------------------------------------------------------------------------
 
-export const SignatureArea = styled.div<SignatureAreaProps>`
+export const signatureArea = css`
     position: relative;
     display: flex;
     align-items: center;
     justify-content: center;
-    ${(props) =>
-        css`
-            ${Border.Util["dashed-default"]({
-                radius: Radius["sm"],
-                thickness: Border["width-040"],
-                colour: props.$disabled
-                    ? Colour["border-disabled"]
-                    : Colour["border"],
-            })}
-
-            background-color: ${props.$disabled
-                ? Colour["bg-disabled"]
-                : Colour["bg"]};
-        `}
     height: 14.125rem;
 `;
 
-export const AddSignatureButton = styled(Button.Default)`
+export const addSignatureButton = css`
     width: fit-content;
     margin: 0 ${Spacing["spacing-20"]};
 
@@ -79,7 +28,7 @@ export const AddSignatureButton = styled(Button.Default)`
     }
 `;
 
-export const EditSignatureButton = styled(IconButton)`
+export const editSignatureButton = css`
     position: absolute;
     top: ${Spacing["spacing-16"]};
     right: ${Spacing["spacing-16"]};
@@ -89,17 +38,19 @@ export const EditSignatureButton = styled(IconButton)`
     }
 `;
 
-export const SignaturePreviewImage = styled.img`
+export const signaturePreviewImage = css`
     display: block;
     object-fit: contain;
     object-position: center;
     width: calc(100% - (3rem + ${Spacing["spacing-16"]}) * 2);
     height: 100%;
 
-    ${(props) => props.theme?.colourMode === "dark" && `filter: invert(1);`}
+    [data-fds-theme-mode="dark"] & {
+        filter: invert(1);
+    }
 `;
 
-export const ProgressBox = styled.div`
+export const progressBox = css`
     background: ${Colour["bg-primary-subtlest"]};
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["sm"]};
@@ -112,7 +63,7 @@ export const ProgressBox = styled.div`
     align-items: center;
 `;
 
-export const Instructions = styled(Typography.BodySM)`
+export const instructions = css`
     margin-top: ${Spacing["spacing-16"]};
 `;
 
@@ -120,7 +71,7 @@ export const Instructions = styled(Typography.BodySM)`
 // SIGNATURE MODAL
 // -----------------------------------------------------------------------------
 
-export const ScrollableModal = styled(Modal)`
+export const scrollableModal = css`
     /* increase specificity as the styles are overwritten */
     && {
         height: 100%;
@@ -128,19 +79,19 @@ export const ScrollableModal = styled(Modal)`
     }
 `;
 
-export const GrowContainer = styled.div`
+export const growContainer = css`
     width: 100%;
     margin: auto;
     padding: ${Spacing["layout-xxl"]} ${Spacing["layout-sm"]};
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         padding: 0;
         width: 100%;
         height: 100%;
     }
 `;
 
-export const ModalBox = styled(Modal.Box)`
+export const modalBox = css`
     width: 100%;
     height: 29rem;
     max-width: 672px;
@@ -148,7 +99,7 @@ export const ModalBox = styled(Modal.Box)`
     margin: 0 auto;
     padding: ${Spacing["spacing-16"]};
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         display: flex;
         flex-direction: column;
         max-width: none;
@@ -156,60 +107,62 @@ export const ModalBox = styled(Modal.Box)`
         border-radius: 0;
         padding: 0;
 
-        --close-button-top-inset: ${Spacing["spacing-8"]};
-        --close-button-right-inset: ${Spacing["spacing-20"]};
+        ${modalStyles.tokens.closeButton.topInset}: ${Spacing["spacing-8"]};
+        ${modalStyles.tokens.closeButton.rightInset}: ${Spacing["spacing-20"]};
     }
 `;
 
-export const ModalTitle = styled.h2`
+export const modalTitle = css`
     ${Font["body-baseline-semibold"]}
     color: ${Colour["text"]};
     margin-bottom: ${Spacing["spacing-16"]};
     text-align: center;
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         ${Font["body-md-semibold"]}
         margin: ${Spacing["spacing-12"]} 0;
     }
 `;
 
-export const ESignatureContainer = styled.div`
+export const eSignatureContainer = css`
     width: 100%;
     height: 20rem;
     border-radius: ${Radius["lg"]};
     overflow: hidden;
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         border-radius: 0;
         flex: 1;
     }
 
-    ${mobileLandscapeMediaQuery} {
+    &[data-mobile-landscape="true"] {
         background: ${Colour["bg-strong"]};
     }
 `;
 
-export const ESignatureDrawable = styled.div`
+export const eSignatureDrawable = css`
     position: relative;
     width: 100%;
     height: 100%;
     background: ${Colour["bg-stronger"]};
     margin: auto;
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         aspect-ratio: 4/3;
     }
+
     ${MediaQuery.MaxWidth.sm} {
         width: 100%;
         height: auto;
     }
-    ${mobileLandscapeMediaQuery} {
+
+    &[data-mobile-landscape="true"] {
         width: auto;
         height: 100%;
     }
 `;
 
-export const SignatureLine = styled.div`
+export const signatureLine = css`
     position: absolute;
     left: 50%;
     top: calc(75% - 1px);
@@ -219,14 +172,14 @@ export const SignatureLine = styled.div`
     background-color: ${Colour["border-strong"]};
     pointer-events: none;
 
-    ${mobileMediaQuery} {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
         width: calc(100% - ${Spacing["spacing-40"]});
         max-width: 300px;
         left: 50%;
     }
 `;
 
-export const ModalButtons = styled.div`
+export const modalButtons = css`
     display: flex;
     justify-content: space-between;
     margin-top: ${Spacing["spacing-16"]};
@@ -238,30 +191,34 @@ export const ModalButtons = styled.div`
         gap: ${Spacing["spacing-16"]};
     }
 
-    ${mobileLandscapeMediaQuery} {
+    &[data-mobile-landscape="true"] {
         flex-direction: row;
         margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
     }
 `;
 
-export const ModalActionButton = styled(Button.Default)`
+export const modalActionButton = css`
     width: 8.5rem;
+
     ${MediaQuery.MaxWidth.sm} {
         width: 100%;
     }
-    ${mobileLandscapeMediaQuery} {
+
+    &[data-mobile-landscape="true"] {
         height: 2.5rem;
     }
 `;
 
-export const SignatureCanvasContainer = styled.div`
+export const signatureCanvasContainer = css`
     width: 100%;
     height: 100%;
     overflow: hidden;
 `;
 
-export const SignatureCanvas = styled.canvas`
+export const signatureCanvas = css`
     cursor: crosshair;
 
-    ${(props) => props.theme?.colourMode === "dark" && `filter: invert(1);`}
+    [data-fds-theme-mode="dark"] & {
+        filter: invert(1);
+    }
 `;

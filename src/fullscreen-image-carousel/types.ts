@@ -1,5 +1,5 @@
-import { ModalProps } from "../modal";
-import { Insets } from "../shared/types";
+import type { ModalProps } from "../modal";
+import type { Insets } from "../shared/types";
 
 export interface FullscreenImageCarouselRef {
     currentItemIndex: number;

@@ -1,19 +1,13 @@
-import {
+import type {
+    CommonScheduleViewProps,
     ScheduleEmptySlotProps,
     ScheduleEntityProps,
     SchedulePopoverProps,
 } from "../types";
-import { RefObject } from "react";
 
-export interface ScheduleDayViewProps {
-    date: string;
+export interface ScheduleDayViewProps extends CommonScheduleViewProps {
     serviceData: ScheduleEntityProps[];
-    loading: boolean;
-    minTime: string;
-    maxTime: string;
-    initialScrollTime?: string | undefined;
     isMobile: boolean;
-    containerRef: RefObject<HTMLDivElement>;
     onNextService?: () => void | undefined;
     onPrevService?: () => void | undefined;
     onEmptySlotClick?: (slot: ScheduleEmptySlotProps) => void | undefined;
@@ -22,5 +16,4 @@ export interface ScheduleDayViewProps {
     emptySlotPopover?:
         | ((slot: ScheduleEmptySlotProps) => SchedulePopoverProps)
         | undefined;
-    blockedMessage?: string | undefined;
 }

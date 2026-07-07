@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import {
     NotificationBanner,
     withNotificationBanner,
@@ -44,6 +44,44 @@ describe("NotificationBanner", () => {
         expect(
             screen.queryByTestId("notification-banner-dismiss-button")
         ).not.toBeInTheDocument();
+    });
+
+    it("should call onDismiss when dismiss button is clicked", () => {
+        const mockOnDismiss = jest.fn();
+
+        render(
+            <NotificationBanner
+                data-testid="notification-banner"
+                onDismiss={mockOnDismiss}
+            >
+                {DEFAULT_TEXT}
+            </NotificationBanner>
+        );
+
+        const dismissButton = screen.getByTestId(
+            "notification-banner-dismiss-button"
+        );
+        fireEvent.click(dismissButton);
+
+        expect(mockOnDismiss).toHaveBeenCalledTimes(1);
+    });
+
+    it("should call onClick when banner is clicked", () => {
+        const mockOnClick = jest.fn();
+
+        render(
+            <NotificationBanner
+                data-testid="notification-banner"
+                onClick={mockOnClick}
+            >
+                {DEFAULT_TEXT}
+            </NotificationBanner>
+        );
+
+        const banner = screen.getByTestId("notification-banner");
+        fireEvent.click(banner);
+
+        expect(mockOnClick).toHaveBeenCalledTimes(1);
     });
 
     it("should sanitise the content", () => {

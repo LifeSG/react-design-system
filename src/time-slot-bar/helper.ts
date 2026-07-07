@@ -1,8 +1,10 @@
 import dayjs from "dayjs";
 import customParseFormat from "dayjs/plugin/customParseFormat";
-import { DateHelper, SimpleIdGenerator, StringHelper } from "src/util";
+
+import { DateHelper, SimpleIdGenerator, StringHelper } from "../util";
 import { TimeHelper } from "../util/time-helper";
-import { TimeSlot as TTimeSlot, TimeSlotBarVariant } from "./types";
+import * as styles from "./time-slot-bar.styles";
+import type { TimeSlot as TTimeSlot, TimeSlotBarVariant } from "./types";
 // Load plugins
 dayjs.extend(customParseFormat);
 
@@ -48,15 +50,15 @@ const buildUnavailableSlot = (
 // HELPER FUNCTIONS
 // ===========================================================================
 
-export namespace TimeSlotBarHelper {
+export class TimeSlotBarHelper {
     /**
      * Format HH:mm to am/pm display
      * @param timeString input timeString string
      */
-    export const formatHourlyDisplay = (timeString: string) => {
+    public static formatHourlyDisplay(timeString: string): string {
         const parsedTime = dayjs(timeString, "HH:mm");
         return parsedTime.format("ha");
-    };
+    }
 
     /**
      * Calculate width in px base on the time range in respect the cell width
@@ -64,11 +66,11 @@ export namespace TimeSlotBarHelper {
      * @param end input end string
      * @param cellWidth input cellWidth number
      */
-    export const calculateWidth = (
+    public static calculateWidth(
         start: string,
         end: string,
         cellWidth: number
-    ) => {
+    ): number {
         /**
          * Each CELL_WIDTH is 30min interval
          * Assuming 15 minutes corresponds to a fixed width of x cellWidth pixels (1/2 of CELL_WIDTH)
@@ -76,7 +78,7 @@ export namespace TimeSlotBarHelper {
         return (
             (DateHelper.getTimeDiffInMinutes(start, end) / 15) * (cellWidth / 2)
         );
-    };
+    }
 
     /**
      * Based on the time type, adjust the time to the nearest hour or 30 minuites marker.
@@ -84,10 +86,10 @@ export namespace TimeSlotBarHelper {
      * @param time - time to be adjusted
      * @param type - "start" or "end" indicating which boundary to adjust
      */
-    export const adjustTimeForMarker = (
+    public static adjustTimeForMarker(
         time: string,
         type: "start" | "end"
-    ): string => {
+    ): string {
         const parsedTime = dayjs(time, "HH:mm");
         switch (type) {
             case "start": {
@@ -121,7 +123,7 @@ export namespace TimeSlotBarHelper {
                 return time;
         }
         return time;
-    };
+    }
 
     /**
      * Process raw slots and any gaps in the given time range.
@@ -136,11 +138,11 @@ export namespace TimeSlotBarHelper {
      * @param variant - display variant controlling summary and aria label behavior.
      * @returns summary for container aria-label and computed slots ready for rendering.
      */
-    export const processSlots = (
+    public static processSlots(
         range: { start: string; end: string },
         slots: TTimeSlot[],
         variant: TimeSlotBarVariant
-    ) => {
+    ) {
         const summaryParts: string[] = ["Time slot bar"];
         // Build visible slots plus any unavailable gaps
         const computedSlots: (TTimeSlot & {
@@ -230,5 +232,12 @@ export namespace TimeSlotBarHelper {
             summary: StringHelper.joinNonEmptyStrings(summaryParts),
             computedSlots,
         };
-    };
+    }
 }
+
+// Function to get the width of a cell in px
+export const getCellWidth = (variant: TimeSlotBarVariant) => {
+    return variant === "minified"
+        ? styles.MINIFIED_CELL_SIZE
+        : styles.DEFAULT_CELL_SIZE;
+};

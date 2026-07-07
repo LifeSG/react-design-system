@@ -1,5 +1,6 @@
-import { ThemeAnimation } from "src/theme/components/theme-helper";
-import { TokenTable, TokenTableSectionProps } from "../storybook-common";
+import { ComponentToken } from "src/theme";
+import type { TokenTableSectionProps } from "stories/storybook-common";
+import { TokenTable } from "stories/storybook-common";
 
 const DATA: TokenTableSectionProps[] = [
     {
@@ -13,7 +14,9 @@ const DATA: TokenTableSectionProps[] = [
                 ),
                 defaultValue: {
                     type: "colour-token",
-                    token: ThemeAnimation["loading-dots-spinner-colour"],
+                    token: ComponentToken.Animation[
+                        "loading-dots-spinner-colour"
+                    ],
                 },
             },
         ],

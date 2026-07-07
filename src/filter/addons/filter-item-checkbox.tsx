@@ -1,5 +1,6 @@
+import clsx from "clsx";
+import type { AriaAttributes } from "react";
 import {
-    AriaAttributes,
     useCallback,
     useContext,
     useEffect,
@@ -8,11 +9,17 @@ import {
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
+
+import { Button } from "../../button";
+import { Checkbox } from "../../checkbox";
+import { Toggle } from "../../toggle";
 import { FilterContext } from "../filter-context";
-import {
+import { FilterItem } from "../filter-item";
+import type {
     FilterItemCheckboxOptionProps,
     FilterItemCheckboxProps,
 } from "../types";
+import * as styles from "./filter-item-checkbox.styles";
 import {
     buildKeyPath,
     flattenNestedOptions,
@@ -20,15 +27,7 @@ import {
     getAllDescendantKeyPaths,
     hasNestedOptions,
 } from "./filter-item-checkbox-helpers";
-import {
-    Group,
-    Item,
-    SelectAllButton,
-    StyledCheckbox,
-    StyledFilterItem,
-    StyledToggle,
-} from "./filter-item-checkbox.styles";
-import { FlattenedFilterOption } from "./types";
+import type { FlattenedFilterOption } from "./types";
 
 export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
     selectedOptions,
@@ -50,7 +49,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
     const [lastVisibleElementIndex, setLastVisibleElementIndex] =
         useState<number>(options.length);
     const parentRef = useRef<HTMLDivElement>(null);
-    const lastVisibleElement = useRef<HTMLLabelElement>(null);
+    const lastVisibleElement = useRef<HTMLElement | null>(null);
 
     // Check if options have nested structure
     const isNested = useMemo(
@@ -310,7 +309,8 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         const { checked, indeterminate } = getCheckboxState(flatOption);
 
         return (
-            <StyledCheckbox
+            <Checkbox
+                className={styles.checkbox}
                 displaySize="small"
                 checked={checked}
                 indeterminate={indeterminate}
@@ -343,23 +343,57 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
               }
             : {};
 
-        return (
-            <Item
-                key={buildKeyPath(option.keyPath)}
-                as={isNested ? "div" : "label"}
-                role={isNested ? "treeitem" : undefined}
-                {...treeItemAriaAttributes}
-                onClick={isNested ? handleItemClick(originalItem) : undefined}
-                onKeyDown={handleListItemKeyDown(originalItem)}
-                tabIndex={isNested ? 0 : undefined}
-                $visible={isVisible}
-                $selected={isSelected}
-                $level={option.level}
-                ref={index === 4 ? lastVisibleElement : undefined}
-            >
+        const itemRef = (el: HTMLElement | null) => {
+            if (el && option.level) {
+                el.style.setProperty(
+                    styles.tokens.item.level,
+                    String(option.level)
+                );
+            }
+            if (index === 4) {
+                lastVisibleElement.current = el;
+            }
+        };
+
+        const itemClassName = clsx(
+            styles.item,
+            !isVisible && styles.itemHidden,
+            isSelected && styles.itemSelected
+        );
+
+        const itemContent = (
+            <>
                 {renderCheckboxIcon(originalItem, option)}
                 {optionLabel}
-            </Item>
+            </>
+        );
+
+        if (isNested) {
+            return (
+                <div
+                    key={buildKeyPath(option.keyPath)}
+                    role="treeitem"
+                    {...treeItemAriaAttributes}
+                    onClick={handleItemClick(originalItem)}
+                    onKeyDown={handleListItemKeyDown(originalItem)}
+                    tabIndex={0}
+                    className={itemClassName}
+                    ref={itemRef}
+                >
+                    {itemContent}
+                </div>
+            );
+        }
+
+        return (
+            <label
+                key={buildKeyPath(option.keyPath)}
+                onKeyDown={handleListItemKeyDown(originalItem)}
+                className={itemClassName}
+                ref={itemRef}
+            >
+                {itemContent}
+            </label>
         );
     };
 
@@ -372,20 +406,23 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         const optionLabel = getLabel(originalItem);
         const optionValue = getValue(originalItem);
         const checked = !!selected.find((s) => getValue(s) === optionValue);
+        const isToggleVisible =
+            !minimised ||
+            (!!minimisedHeight && index <= lastVisibleElementIndex);
         return (
-            <StyledToggle
+            <Toggle
                 key={optionValue}
                 type="checkbox"
                 checked={checked}
-                $visible={
-                    !minimised ||
-                    (!!minimisedHeight && index <= lastVisibleElementIndex)
-                }
+                className={clsx(
+                    !useToggleContentWidth && styles.toggle,
+                    !isToggleVisible && styles.toggleHidden
+                )}
                 onChange={handleItemClick(originalItem)}
                 useContentWidth={useToggleContentWidth}
             >
                 {optionLabel}
-            </StyledToggle>
+            </Toggle>
         );
     };
 
@@ -394,9 +431,11 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             return null;
         }
         return (
-            <SelectAllButton
+            <Button
+                className={styles.selectAllButton}
                 styleType="link"
                 type="button"
+                sizeType="small"
                 onClick={handleSelectClearAll}
                 aria-label={
                     selected.length
@@ -407,12 +446,12 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
                 }
             >
                 {selected.length ? "Clear all" : "Select all"}
-            </SelectAllButton>
+            </Button>
         );
     };
 
     return (
-        <StyledFilterItem
+        <FilterItem
             minimisable={
                 minimisableOptions
                     ? isMobileToggleMode // set minimisable base on mobile toggle mode
@@ -422,26 +461,30 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             }
             minimisedHeight={minimisedHeight}
             {...filterItemProps}
+            className={clsx(styles.filterItem, filterItemProps.className)}
         >
             {(_, { minimised }) => (
                 <>
                     {renderSelectClearAllButton()}
-                    <Group
+                    <div
                         role={isNested ? "tree" : "group"}
                         aria-label={filterItemProps.title}
                         aria-multiselectable={true}
                         ref={parentRef}
-                        $isMobileToggleMode={isMobileToggleMode}
+                        className={clsx(
+                            styles.group,
+                            isMobileToggleMode && styles.groupMobileToggleMode
+                        )}
                     >
                         {flattenedOptions.map((option, i) =>
                             isMobileToggleMode
                                 ? renderToggle(option, i, minimised)
                                 : renderCheckbox(option, i, minimised)
                         )}
-                    </Group>
+                    </div>
                 </>
             )}
-        </StyledFilterItem>
+        </FilterItem>
     );
 };
 

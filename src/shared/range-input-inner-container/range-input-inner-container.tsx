@@ -1,11 +1,8 @@
-import {
-    ArrowRight,
-    Break,
-    ElementContainer,
-    Indicator,
-    Wrapper,
-} from "./range-input-inner-container.styles";
-import { RangeInputInnerContainerProps } from "./types";
+import { ArrowRightIcon } from "@lifesg/react-icons";
+import clsx from "clsx";
+
+import * as styles from "./range-input-inner-container.styles";
+import type { RangeInputInnerContainerProps } from "./types";
 
 /**
  * This component allows for input fields to be added within the containers
@@ -27,21 +24,36 @@ export const RangeInputInnerContainer = ({
     // RENDER FUNCTIONS
     // =========================================================================
     return (
-        <Wrapper className={className} $wrap={wrap}>
-            <ElementContainer data-id="range-container-elem1-container">
+        <div
+            className={clsx(
+                styles.wrapper,
+                wrap && styles.wrapperWrap,
+                className
+            )}
+        >
+            <div
+                className={styles.elementContainer}
+                data-id="range-container-elem1-container"
+            >
                 {elem1}
-            </ElementContainer>
-            <ArrowRight aria-hidden="true" />
-            {wrap && <Break />}
-            <ElementContainer data-id="range-container-elem2-container">
+            </div>
+            <ArrowRightIcon aria-hidden="true" className={styles.arrowRight} />
+            {wrap && <div className={styles.lineBreak} />}
+            <div
+                className={styles.elementContainer}
+                data-id="range-container-elem2-container"
+            >
                 {elem2}
-            </ElementContainer>
-            <Indicator
+            </div>
+            <div
+                className={clsx(
+                    styles.indicator,
+                    error && styles.indicatorError,
+                    wrap && styles.indicatorWrap
+                )}
                 data-id="range-container-indicator"
-                $position={currentActive}
-                $error={error}
-                $wrap={wrap}
+                data-position={currentActive}
             />
-        </Wrapper>
+        </div>
     );
 };

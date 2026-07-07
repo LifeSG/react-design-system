@@ -1,6 +1,8 @@
+import clsx from "clsx";
 import React from "react";
-import styled from "styled-components";
-import { SectionProps } from "./types";
+
+import * as styles from "./section.styles";
+import type { SectionProps } from "./types";
 
 const Component = (
     props: SectionProps,
@@ -9,29 +11,25 @@ const Component = (
     const {
         children,
         "data-testid": testId = "section",
+        className,
         stretch = false,
         ...otherProps
     } = props;
 
     return (
-        <StyledSection
+        <section
             ref={ref}
             data-testid={testId}
-            $stretch={stretch}
+            className={clsx(
+                styles.section,
+                className,
+                stretch && styles.sectionStretched
+            )}
             {...otherProps}
         >
             {children}
-        </StyledSection>
+        </section>
     );
 };
 
 export const Section = React.forwardRef(Component);
-
-interface StyleProps {
-    $stretch: boolean;
-}
-
-const StyledSection = styled.section<StyleProps>`
-    display: block;
-    position: relative;
-`;

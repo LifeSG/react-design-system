@@ -1,7 +1,12 @@
 import { CrossIcon } from "@lifesg/react-icons/cross";
-import React, { NamedExoticComponent } from "react";
-import { Box, CloseButton } from "./modal-box.styles";
-import { ModalBoxProps } from "./types";
+import clsx from "clsx";
+import type React from "react";
+import type { NamedExoticComponent } from "react";
+import { forwardRef } from "react";
+
+import { ClickableIcon } from "../shared/clickable-icon";
+import * as styles from "./modal-box.styles";
+import type { ModalBoxProps } from "./types";
 
 function ModalBoxInner(
     {
@@ -9,6 +14,7 @@ function ModalBoxInner(
         children,
         onClose,
         showCloseButton = true,
+        className,
         ...otherProps
     }: ModalBoxProps,
     ref: React.ForwardedRef<HTMLDivElement>
@@ -25,31 +31,33 @@ function ModalBoxInner(
     // =============================================================================
     const renderCloseButton = () => {
         return (
-            <CloseButton
+            <ClickableIcon
                 onClick={onClose}
                 data-testid="close-button"
                 focusHighlight={false}
                 focusOutline="browser"
+                className={styles.closeButton}
             >
                 <CrossIcon />
-            </CloseButton>
+            </ClickableIcon>
         );
     };
 
     return (
-        <Box
+        <div
             ref={ref}
             data-testid={id}
             {...otherProps}
             onClick={handleOnClick}
+            className={clsx(styles.box, className)}
         >
             {showCloseButton && renderCloseButton()}
             {children}
-        </Box>
+        </div>
     );
 }
 
-export const ModalBox = React.forwardRef<HTMLDivElement, ModalBoxProps>(
+export const ModalBox = forwardRef<HTMLDivElement, ModalBoxProps>(
     ModalBoxInner
 );
 

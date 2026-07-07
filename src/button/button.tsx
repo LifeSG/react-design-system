@@ -1,124 +1,132 @@
+import clsx from "clsx";
 import React from "react";
-import { Main, MainStyleProps, Spinner } from "./button.style";
-import { ButtonProps, ButtonRef } from "./types";
+
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
+import * as styles from "./button.styles";
 import { hasValidChildren } from "./button-helper";
+import type { ButtonProps, ButtonRef } from "./types";
 
-/**
- * NOTE: Due to the way we intend to customise both components, with forwardRef behaviour
- * we are unable to create a single component and have them share.
- *
- * Will refactor if there is a better way
- */
-const DefaultComponent = (props: ButtonProps, ref: ButtonRef) => {
+const styleClassMap: Record<string, Record<string, string>> = {
+    disabled: {
+        base: styles.mainStyleDisabled,
+        danger: styles.mainStyleDisabled,
+    },
+    default: {
+        base: styles.mainStyleDefault,
+        danger: styles.mainStyleDefaultDanger,
+    },
+    secondary: {
+        base: styles.mainStyleSecondary,
+        danger: styles.mainStyleSecondaryDanger,
+    },
+    light: { base: styles.mainStyleLight, danger: styles.mainStyleLightDanger },
+    link: { base: styles.mainStyleLink, danger: styles.mainStyleLinkDanger },
+};
+
+const sizeClassMap: Record<string, { base: string; iconOnly: string }> = {
+    default: {
+        base: styles.mainSizeDefault,
+        iconOnly: styles.mainSizeDefaultIconOnly,
+    },
+    small: {
+        base: styles.mainSizeSmall,
+        iconOnly: styles.mainSizeSmallIconOnly,
+    },
+    large: {
+        base: styles.mainSizeLarge,
+        iconOnly: styles.mainSizeLargeIconOnly,
+    },
+};
+
+const getStyleClass = (effectiveStyle: string, danger: boolean) =>
+    danger
+        ? styleClassMap[effectiveStyle]?.danger
+        : styleClassMap[effectiveStyle]?.base;
+
+const getSizeClass = (sizeType: string, iconOnly: boolean) =>
+    iconOnly
+        ? clsx(sizeClassMap[sizeType]?.base, sizeClassMap[sizeType]?.iconOnly)
+        : sizeClassMap[sizeType]?.base;
+
+const Component = (props: ButtonProps, ref: ButtonRef) => {
     const {
         children,
+        className,
         disabled = false,
         loading = false,
         styleType = "default",
+        sizeType = "default",
         danger = false,
         focusableWhenDisabled = false,
+        icon,
+        iconPosition = "left",
         onClick,
         ...otherProps
     } = props;
 
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSizeStyle: "default",
-        $buttonIsDanger: danger,
-    };
+    const hasChildren = hasValidChildren(children);
+    const iconOnly = !!icon && !hasChildren;
+    const effectiveStyle = disabled ? "disabled" : styleType;
 
     return (
-        <Main
+        <button
             ref={ref}
             data-testid={otherProps["data-testid"] || "button"}
             disabled={disabled && !focusableWhenDisabled}
             aria-disabled={disabled}
             aria-busy={loading}
             onClick={disabled ? undefined : onClick}
-            {...mainStyle}
+            className={clsx(
+                styles.main,
+                icon &&
+                    iconPosition === "right" &&
+                    styles.mainIconPositionRight,
+                !iconOnly && styles.mainHasMinWidth,
+                getStyleClass(effectiveStyle, danger),
+                getSizeClass(sizeType, iconOnly),
+                className
+            )}
             {...otherProps}
         >
-            {loading && <Spinner $hasChildren={hasValidChildren(children)} />}
-            <span>{children}</span>
-        </Main>
+            {loading ? (
+                <ComponentLoadingSpinner
+                    className={clsx(
+                        styles.spinner,
+                        hasChildren && styles.spinnerHasChildren
+                    )}
+                />
+            ) : icon ? (
+                React.cloneElement(icon, { "aria-hidden": true })
+            ) : null}
+            {hasChildren && <span>{children}</span>}
+        </button>
     );
 };
-DefaultComponent.displayName = "Button.Default";
 
-const SmallComponent = (props: ButtonProps, ref: ButtonRef) => {
-    const {
-        children,
-        disabled = false,
-        loading = false,
-        styleType = "default",
-        danger = false,
-        focusableWhenDisabled = false,
-        onClick,
-        ...otherProps
-    } = props;
+Component.displayName = "Button";
 
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSizeStyle: "small",
-        $buttonIsDanger: danger,
-    };
+const BaseButton = React.forwardRef(Component);
 
-    return (
-        <Main
-            ref={ref}
-            data-testid={otherProps["data-testid"] || "button"}
-            disabled={disabled && !focusableWhenDisabled}
-            aria-disabled={disabled}
-            aria-busy={loading}
-            onClick={disabled ? undefined : onClick}
-            {...mainStyle}
-            {...otherProps}
-        >
-            {loading && <Spinner $hasChildren={hasValidChildren(children)} />}
-            <span>{children}</span>
-        </Main>
-    );
-};
-SmallComponent.displayName = "Button.Small";
+const DefaultButtonComponent = (props: ButtonProps, ref: ButtonRef) => (
+    <BaseButton {...props} sizeType={props.sizeType ?? "default"} ref={ref} />
+);
+DefaultButtonComponent.displayName = "Button.Default";
 
-const LargeComponent = (props: ButtonProps, ref: ButtonRef) => {
-    const {
-        children,
-        disabled = false,
-        loading = false,
-        styleType = "default",
-        danger = false,
-        focusableWhenDisabled = false,
-        onClick,
-        ...otherProps
-    } = props;
+const SmallButtonComponent = (props: ButtonProps, ref: ButtonRef) => (
+    <BaseButton {...props} sizeType="small" ref={ref} />
+);
+SmallButtonComponent.displayName = "Button.Small";
 
-    const mainStyle: MainStyleProps = {
-        $buttonStyle: disabled ? "disabled" : styleType,
-        $buttonSizeStyle: "large",
-        $buttonIsDanger: danger,
-    };
+const LargeButtonComponent = (props: ButtonProps, ref: ButtonRef) => (
+    <BaseButton {...props} sizeType="large" ref={ref} />
+);
+LargeButtonComponent.displayName = "Button.Large";
 
-    return (
-        <Main
-            ref={ref}
-            data-testid={otherProps["data-testid"] || "button"}
-            disabled={disabled && !focusableWhenDisabled}
-            aria-disabled={disabled}
-            aria-busy={loading}
-            onClick={disabled ? undefined : onClick}
-            {...mainStyle}
-            {...otherProps}
-        >
-            {loading && <Spinner $hasChildren={hasValidChildren(children)} />}
-            <span>{children}</span>
-        </Main>
-    );
-};
-LargeComponent.displayName = "Button.Large";
-
-export const Button = {
-    Default: React.forwardRef(DefaultComponent),
-    Small: React.forwardRef(SmallComponent),
-    Large: React.forwardRef(LargeComponent),
-};
+export const Button = Object.assign(BaseButton, {
+    /** @deprecated Use the `sizeType` prop instead: `<Button>` or `<Button sizeType="default">` */
+    Default: React.forwardRef(DefaultButtonComponent),
+    /** @deprecated Use the `sizeType` prop instead: `<Button sizeType="small">` */
+    Small: React.forwardRef(SmallButtonComponent),
+    /** @deprecated Use the `sizeType` prop instead: `<Button sizeType="large">` */
+    Large: React.forwardRef(LargeButtonComponent),
+});

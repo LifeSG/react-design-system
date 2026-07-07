@@ -1,24 +1,14 @@
 import { Meta } from "@storybook/addon-docs/blocks";
-import { OneServiceTheme } from "src/theme";
 import { PrimitiveColourDisplay, SemanticColourDisplay } from "../doc-elements";
 
 <Meta title="Foundations/Colours/OneService" />
 
 # OneService colours
 
-These are the palettes used when the `colourScheme` is `"oneservice"`.
-
-```tsx
-const theme: ThemeSpec = {
-    colourScheme: "oneservice",
-    // ...other specifications
-};
-```
-
 ## Semantic colours
 
-<SemanticColourDisplay theme={OneServiceTheme} />
+<SemanticColourDisplay theme="oneservice" />
 
 ## Primitive colours
 
-<PrimitiveColourDisplay theme={OneServiceTheme} />
+<PrimitiveColourDisplay theme="oneservice" />

@@ -1,7 +1,8 @@
 import dayjs from "dayjs";
-import { CELL_HEIGHT, SLOT_INTERVAL } from "../const";
+
 import { TimeHelper } from "../../util/time-helper";
-import { ScheduleSlotProps } from "../types";
+import { CELL_HEIGHT, SLOT_INTERVAL } from "../const";
+import type { ScheduleSlotProps } from "../types";
 
 /**
  * Calculates the vertical offset (in pixels) for the current time indicator (timeline)

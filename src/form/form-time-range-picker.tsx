@@ -1,7 +1,7 @@
 import { TimeRangePicker } from "../time-range-picker";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormTimeRangePickerProps } from "./types";
+import type { FormTimeRangePickerProps } from "./types";
 
 export const FormTimeRangePicker = ({
     label,
@@ -10,9 +10,6 @@ export const FormTimeRangePicker = ({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -27,14 +24,11 @@ export const FormTimeRangePicker = ({
     return (
         <FormWrapper
             id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
-            disabled={otherProps.disabled}
             data-error-testid={errorTestId}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

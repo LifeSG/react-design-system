@@ -1,4 +1,4 @@
-import { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
 
 export type CellType =
     | "hover-subtle"
@@ -25,7 +25,7 @@ export interface CellStyleProps {
     circleRight?: CellType | undefined;
     labelType?: LabelType | undefined;
     disabled?: boolean | undefined;
-    interactive?: boolean | null | undefined;
+    interactive?: boolean | undefined;
     currentDateIndicator?: boolean | undefined;
 }
 

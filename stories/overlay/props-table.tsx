@@ -1,4 +1,5 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -33,18 +34,6 @@ const DATA: ApiTableSectionProps[] = [
                     </>
                 ),
                 propTypes: ["string"],
-            },
-            {
-                name: "backgroundOpacity (deprecated)",
-                description: (
-                    <>
-                        The opacity value of the <code>Overlay</code>
-                        <br />
-                        <strong>Note:</strong> This attribute has no effect and
-                        will be removed in a future version
-                    </>
-                ),
-                propTypes: ["number"],
             },
             {
                 name: "backgroundBlur",

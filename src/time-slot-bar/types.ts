@@ -1,10 +1,9 @@
-import { ThemeStyleProps } from "../theme/types";
-
-export type SlotStyle = "default" | "stripes";
-
-export type Direction = "right" | "left";
+import type { SlotStyle } from "../shared/time-slot/types";
 
 export type TimeSlotBarVariant = "minified" | "default";
+export type Direction = "right" | "left";
+
+export type { SlotStyle } from "../shared/time-slot/types";
 
 export interface TimeSlotBarRef {
     /** Resets the scroll position to the initialScrollTime if provided */
@@ -17,22 +16,13 @@ interface TimeSlotBarStyleAttributes {
     /** The label color */
     color?: string | undefined;
     /** The background color */
-    backgroundColor: string | ((props: ThemeStyleProps) => string);
+    backgroundColor: string;
     /** The secondary background color. Used in conjunction if styleType is "stripes" */
-    backgroundColor2?:
-        | string
-        | ((props: ThemeStyleProps) => string)
-        | undefined;
+    backgroundColor2?: string | undefined;
     /** The background color on hover */
-    hoverBackgroundColor?:
-        | string
-        | ((props: ThemeStyleProps) => string)
-        | undefined;
+    hoverBackgroundColor?: string | undefined;
     /** The secondary background color on hover. Used in conjunction if styleType is "stripes" */
-    hoverBackgroundColor2?:
-        | string
-        | ((props: ThemeStyleProps) => string)
-        | undefined;
+    hoverBackgroundColor2?: string | undefined;
 }
 
 export interface TimeSlotBarProps {

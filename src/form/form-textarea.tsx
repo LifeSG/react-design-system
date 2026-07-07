@@ -1,16 +1,13 @@
 import React, { useEffect, useState } from "react";
+
 import { TextareaBase } from "../input-textarea/textarea";
 import { TextareaCounter } from "../input-textarea/textarea-counter";
-import { TextareaRef } from "../input-textarea/types";
+import type { TextareaRef } from "../input-textarea/types";
 import { useId } from "../util";
-import { ErrorIcon } from "./form-label.style";
-import {
-    ErrorMessageContainer,
-    ErrorMessageLabel,
-    LabelContainer,
-} from "./form-textarea.style";
+import { FormErrorMessage } from "./form-label";
+import * as styles from "./form-textarea.styles";
 import { FormWrapper } from "./form-wrapper";
-import { FormTextareaProps } from "./types";
+import type { FormTextareaProps } from "./types";
 
 const FormTextareaComponent = (
     props: FormTextareaProps,
@@ -28,9 +25,6 @@ const FormTextareaComponent = (
         "data-testid": testId,
         onChange,
         layoutType,
-        mobileCols,
-        tabletCols,
-        desktopCols,
         xxsCols,
         xsCols,
         smCols,
@@ -40,6 +34,7 @@ const FormTextareaComponent = (
         xxlCols,
         transformValue,
         prefix = "",
+        renderCustomCounter,
         ...otherProps
     } = props;
 
@@ -83,25 +78,25 @@ const FormTextareaComponent = (
     const renderBottomLabels = () => {
         if (!errorMessage && !otherProps.maxLength) return <></>;
         return (
-            <LabelContainer>
+            <div className={styles.labelContainer}>
                 {errorMessage && (
-                    <ErrorMessageContainer>
-                        <ErrorIcon aria-hidden />
-                        <ErrorMessageLabel
+                    <div className={styles.errorMessageContainer}>
+                        <FormErrorMessage
+                            className={styles.errorMessageLabel}
                             data-testid={getErrorTestMessageId()}
                         >
                             {errorMessage}
-                        </ErrorMessageLabel>
-                    </ErrorMessageContainer>
+                        </FormErrorMessage>
+                    </div>
                 )}
                 {otherProps.maxLength && (
                     <TextareaCounter
                         value={stateValue}
                         maxLength={otherProps.maxLength}
-                        renderCustomCounter={otherProps.renderCustomCounter}
+                        renderCustomCounter={renderCustomCounter}
                     />
                 )}
-            </LabelContainer>
+            </div>
         );
     };
 
@@ -110,11 +105,7 @@ const FormTextareaComponent = (
             id={inputId}
             data-testid={testId}
             label={label}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

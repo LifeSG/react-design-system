@@ -1,8 +1,9 @@
 import React from "react";
+
 import { MaskedInput } from "../masked-input/masked-input";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormMaskedInputProps } from "./types";
+import type { FormMaskedInputProps } from "./types";
 
 const Component = (
     props: FormMaskedInputProps,
@@ -15,9 +16,6 @@ const Component = (
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
-        mobileCols,
-        tabletCols,
-        desktopCols,
         xxsCols,
         xsCols,
         smCols,
@@ -34,14 +32,11 @@ const Component = (
     return (
         <FormWrapper
             id={inputId}
+            data-testid={testId}
             label={label}
             errorMessage={errorMessage}
-            disabled={otherProps.disabled}
             data-error-testid={errorTestId}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

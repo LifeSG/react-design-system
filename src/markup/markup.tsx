@@ -1,22 +1,53 @@
-import React, { forwardRef } from "react";
-import { Container } from "./markup.style";
-import { MarkupProps } from "./types";
+import clsx from "clsx";
+import type React from "react";
+import { forwardRef, useMemo, useRef } from "react";
+
+import { useApplyStyle } from "../theme";
+import { generateFontProperties } from "../theme/utils";
+import { mergeRefs } from "../util";
+import * as styles from "./markup.style";
+import type { MarkupProps } from "./types";
 
 const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
-    const { baseTextColor, baseTextSize, inline, ...otherProps } = props;
+    const { baseTextColor, baseTextSize, inline, className, ...otherProps } =
+        props;
 
-    // =========================================================================
-    // RENDER FUNCTION
-    // =========================================================================
+    const containerRef = useRef<HTMLDivElement | HTMLSpanElement>(null);
+    const mergedRef = useMemo(() => mergeRefs(containerRef, ref), [ref]);
+
+    const fontDeclarations = useMemo(() => {
+        if (!baseTextSize) {
+            return undefined;
+        }
+
+        return generateFontProperties(baseTextSize, "regular");
+    }, [baseTextSize]);
+
+    const appliedStyles = useMemo(
+        () => ({
+            color: baseTextColor || null,
+            ...fontDeclarations,
+        }),
+        [baseTextColor, fontDeclarations]
+    );
+
+    useApplyStyle(containerRef, appliedStyles);
+
+    const mergedClassName = clsx(
+        styles.baseMarkup,
+        baseTextSize && styles.sizedMarkup,
+        className
+    );
+
+    const ElementTag = inline ? "span" : "div";
+
     return (
-        <Container
-            ref={ref}
-            as={inline ? "span" : "div"}
-            $textSize={baseTextSize}
-            $textColor={baseTextColor}
+        <ElementTag
+            ref={mergedRef as React.Ref<HTMLDivElement & HTMLSpanElement>}
+            className={mergedClassName}
             {...otherProps}
         />
     );

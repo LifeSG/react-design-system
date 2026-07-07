@@ -1,12 +1,12 @@
-import { ChangeEvent, useRef, useState } from "react";
+import { StarIcon } from "@lifesg/react-icons/star";
+import { StarFillIcon } from "@lifesg/react-icons/star-fill";
+import clsx from "clsx";
+import type { ChangeEvent } from "react";
+import { useRef, useState } from "react";
+
 import { VisuallyHidden } from "../shared/accessibility";
+import * as styles from "./feedback-rating-stars-container.styles";
 import { StarContainerData } from "./feedback-rating-stars-container-data";
-import {
-    Container,
-    Label,
-    StarFilled,
-    StarUnfilled,
-} from "./feedback-rating-stars-container.styles";
 
 interface FeedbackRatingStarsContainerProps {
     ariaLabelledBy: string;
@@ -56,10 +56,10 @@ export const FeedbackRatingStarsContainer = (
 
     const renderStar = (starIndex: number) => {
         if (starIndex <= currentRating) {
-            return <StarFilled aria-hidden />;
+            return <StarFillIcon aria-hidden className={styles.star} />;
         }
 
-        return <StarUnfilled aria-hidden />;
+        return <StarIcon aria-hidden className={styles.star} />;
     };
 
     const renderRatings = () => {
@@ -67,13 +67,14 @@ export const FeedbackRatingStarsContainer = (
             const starIndex = index + 1;
 
             return (
-                <Label
+                <div
                     key={starIndex}
+                    className={styles.label}
                     data-testid={`feedback-rating-star-${starIndex}`}
                     onClick={() => handleStarSelection(starIndex)}
                 >
                     {renderStar(starIndex)}
-                </Label>
+                </div>
             );
         });
     };
@@ -96,9 +97,15 @@ export const FeedbackRatingStarsContainer = (
                     onBlur={handleBlur}
                 />
             </VisuallyHidden>
-            <Container aria-hidden $isFocused={isFocused}>
+            <div
+                aria-hidden
+                className={clsx(
+                    styles.container,
+                    isFocused && styles.containerIsFocused
+                )}
+            >
                 {renderRatings()}
-            </Container>
+            </div>
         </>
     );
 };

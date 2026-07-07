@@ -1,4 +1,4 @@
-import { BaseSliderProps } from "../input-range-slider/types";
+import type { BaseSliderProps } from "../input-range-slider/types";
 
 export interface InputSliderProps extends BaseSliderProps {
     value?: number | undefined;

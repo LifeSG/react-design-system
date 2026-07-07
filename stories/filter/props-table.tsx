@@ -1,9 +1,8 @@
-import {
-    ApiTable,
+import type {
     ApiTableSectionProps,
     TabAttribute,
-    Tabs,
 } from "stories/storybook-common";
+import { ApiTable, Tabs } from "stories/storybook-common";
 
 const FILTER_DATA: ApiTableSectionProps[] = [
     {
@@ -384,6 +383,19 @@ const FILTER_ITEM_DATA: ApiTableSectionProps[] = [
                 description: "Specifies if divider is visible in mobile mode",
                 propTypes: ["boolean"],
                 defaultValue: "true",
+            },
+            {
+                name: "minimisable",
+                description: "Specifies if the filter item can be minimised",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "minimisedHeight",
+                description:
+                    "Specifies the height of the filter item when minimised",
+                propTypes: ["number"],
+                defaultValue: "50% of content height",
             },
             {
                 name: "title",

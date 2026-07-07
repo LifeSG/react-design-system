@@ -1,4 +1,4 @@
-import { FormLabelProps } from "../form/types";
+import type { FormLabelProps } from "../form/types";
 
 export interface FileItemProps {
     id: string;

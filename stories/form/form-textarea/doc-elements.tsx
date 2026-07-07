@@ -1,7 +1,7 @@
+import { css } from "@linaria/core";
 import { Colour } from "src/theme";
-import styled from "styled-components";
 
-const CustomCounterLabel = styled.p`
+const customCounterLabel = css`
     text-align: right;
     color: ${Colour["text"]};
     font-size: 14px;
@@ -13,8 +13,8 @@ export const renderCustomCounter = (
     currentValueLength: number
 ): JSX.Element => {
     return (
-        <CustomCounterLabel data-testid={"counter-label"}>
+        <p className={customCounterLabel} data-testid={"counter-label"}>
             {currentValueLength}/{maxLength}
-        </CustomCounterLabel>
+        </p>
     );
 };

@@ -1,13 +1,12 @@
 import { useCallback, useRef, useState } from "react";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import { BasicInput, InputWrapper } from "../shared/input-wrapper";
 import { TimepickerDropdown } from "../shared/timepicker-dropdown/timepicker-dropdown";
 import { TimeHelper } from "../util/time-helper";
-import { InputSelectorElement } from "./timepicker.styles";
-import { TimepickerProps } from "./types";
+import * as styles from "./timepicker.styles";
+import type { TimepickerProps } from "./types";
 
 export const Timepicker = ({
     id,
@@ -23,6 +22,7 @@ export const Timepicker = ({
     alignment,
     dropdownZIndex,
     dropdownRootNode,
+    className,
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     ...otherProps
@@ -107,14 +107,14 @@ export const Timepicker = ({
         <InputWrapper
             ref={wrapperRef}
             role="group"
-            $readOnly={readOnly}
-            $disabled={disabled}
-            $focused={isOpen}
-            $error={error}
+            readOnly={readOnly}
+            disabled={disabled}
+            focused={isOpen}
+            error={error}
+            className={className}
             {...otherProps}
         >
-            <InputSelectorElement
-                $disabled={disabled}
+            <BasicInput
                 ref={selectorRef}
                 readOnly
                 placeholder={placeholder || getPlaceholderValue()}
@@ -129,6 +129,7 @@ export const Timepicker = ({
                 data-testid={
                     id ? `${id}-timepicker-selector` : "timepicker-selector"
                 }
+                className={styles.inputSelectorElement}
                 onFocus={handleFocus}
                 onClick={handleOpen}
                 onKeyDown={handleKeyDown}

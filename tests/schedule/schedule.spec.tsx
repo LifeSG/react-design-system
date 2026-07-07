@@ -1,14 +1,12 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import dayjs from "dayjs";
-import {
-    Schedule,
-    ScheduleEntityProps,
-    ScheduleProps,
-} from "../../src/schedule";
-import { useMediaQuery } from "react-responsive";
+import type { ScheduleEntityProps, ScheduleProps } from "src/schedule";
+import { Schedule } from "src/schedule";
+import { useMaxWidthMediaQuery } from "src/theme";
 
-jest.mock("react-responsive", () => ({
-    useMediaQuery: jest.fn(() => false),
+jest.mock("src/theme", () => ({
+    ...jest.requireActual("src/theme"),
+    useMaxWidthMediaQuery: jest.fn(() => false),
 }));
 
 global.ResizeObserver = jest.fn().mockImplementation(() => ({
@@ -35,8 +33,7 @@ describe("Schedule", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         jest.useFakeTimers().setSystemTime(new Date("2024-09-11").getTime());
-
-        (useMediaQuery as jest.Mock).mockReturnValue(false);
+        (useMaxWidthMediaQuery as jest.Mock).mockReturnValue(false);
     });
 
     afterEach(() => {
@@ -165,6 +162,49 @@ describe("Schedule", () => {
         expect(onTodayClick).toHaveBeenCalledTimes(1);
     });
 
+    it("should trigger onEmptySlotClick with the empty slot details", () => {
+        const onEmptySlotClick = jest.fn();
+
+        render(
+            <Schedule
+                date={scheduleMockProps.date}
+                minTime="08:00"
+                maxTime="10:00"
+                serviceData={[
+                    {
+                        id: "service-a",
+                        name: "Service A",
+                        slots: [
+                            {
+                                id: "service-a-slot",
+                                startTime: "09:00",
+                                endTime: "10:00",
+                                status: "available",
+                                date: "2024-09-11",
+                                capacity: 5,
+                                booked: 0,
+                            },
+                        ],
+                    },
+                ]}
+                onEmptySlotClick={onEmptySlotClick}
+                onPreviousDayClick={scheduleMockProps.onPreviousDayClick}
+                onNextDayClick={scheduleMockProps.onNextDayClick}
+                onCalendarDateSelect={scheduleMockProps.onCalendarDateSelect}
+                onTodayClick={scheduleMockProps.onTodayClick}
+            />
+        );
+
+        fireEvent.click(screen.getByTestId("empty-slot-service-a-08:00"));
+
+        expect(onEmptySlotClick).toHaveBeenCalledTimes(1);
+        expect(onEmptySlotClick).toHaveBeenCalledWith({
+            startTime: "08:00",
+            endTime: "08:30",
+            name: "Service A",
+        });
+    });
+
     it("should trigger onSlotClick when a timeslot cell is clicked", () => {
         const mockSlotClick = jest.fn();
 
@@ -201,7 +241,7 @@ describe("Schedule", () => {
     });
 
     it("should navigate between services on mobile", () => {
-        (useMediaQuery as jest.Mock).mockReturnValue(true);
+        (useMaxWidthMediaQuery as jest.Mock).mockReturnValue(true);
 
         render(
             <Schedule

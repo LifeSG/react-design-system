@@ -1,8 +1,9 @@
 import React from "react";
+
 import { InputGroup } from "../input-group";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormInputGroupProps } from "./types";
+import type { FormInputGroupProps } from "./types";
 
 const Component = <T, V>(
     props: FormInputGroupProps<T, V>,
@@ -15,9 +16,6 @@ const Component = <T, V>(
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
-        mobileCols,
-        tabletCols,
-        desktopCols,
         xxsCols,
         xsCols,
         smCols,
@@ -38,11 +36,7 @@ const Component = <T, V>(
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

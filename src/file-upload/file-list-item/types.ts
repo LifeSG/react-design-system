@@ -1,4 +1,4 @@
-import { FileItemProps } from "../types";
+import type { FileItemProps } from "../types";
 
 export interface FileListItemProps {
     fileItem: FileItemProps;

@@ -1,7 +1,8 @@
 import React from "react";
+
 import { Container } from "./container";
-import { ContentProps } from "./types";
 import { Section } from "./section";
+import type { ContentProps } from "./types";
 
 const Component = (
     props: ContentProps,

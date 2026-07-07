@@ -1,28 +1,15 @@
 import { DownloadIcon } from "@lifesg/react-icons";
-import { memo, useContext, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import clsx from "clsx";
+import { memo, useEffect, useRef, useState } from "react";
+
+import { Button } from "../../button";
 import { FileUploadHelper } from "../../file-upload/helper";
-import { Breakpoint } from "../../theme";
+import { ImageWithFallback } from "../../shared/image-with-fallback/image-with-fallback";
+import { useMaxWidthMediaQuery } from "../../theme";
 import { StringHelper } from "../../util";
-import {
-    ActionContainer,
-    Box,
-    ContentSection,
-    DesktopErrorMessage,
-    ErrorIcon,
-    ExtendedNameSection,
-    FileSizeSection,
-    IconButton,
-    Item,
-    ItemNameText,
-    MobileErrorMessage,
-    NameSection,
-    Spinner,
-    Thumbnail,
-    ThumbnailContainer,
-} from "./file-list-card.styles";
-import { FileListItemProps } from "./types";
+import * as styles from "./file-list-card.styles";
+import type { FileListItemProps } from "./types";
 
 const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
@@ -42,9 +29,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobile = useMaxWidthMediaQuery("sm");
     const [displayText, setDisplayText] = useState<string>();
     const containerRef = useRef<HTMLDivElement>(null);
 
@@ -98,46 +83,60 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
     // =========================================================================
     const renderNameDescription = () => (
         <>
-            <ItemNameText ref={containerRef}>{displayText}</ItemNameText>
+            <div className={styles.itemNameText} ref={containerRef}>
+                {displayText}
+            </div>
             {isError && (
-                <DesktopErrorMessage>
-                    <ErrorIcon aria-hidden />
+                <div className={styles.desktopErrorMessage}>
+                    <ExclamationCircleFillIcon className={styles.errorIcon} />
                     {errorMessage ? errorMessage : "Something went wrong"}
-                </DesktopErrorMessage>
+                </div>
             )}
         </>
     );
 
     const renderWithThumbnail = (thumbnailSrc: string) => (
         <>
-            <ThumbnailContainer data-testid={`${id}-thumbnail`}>
-                <Thumbnail
+            <div
+                className={styles.thumbnailContainer}
+                data-testid={`${id}-thumbnail`}
+            >
+                <ImageWithFallback
+                    className={styles.thumbnail}
                     data-testid={`${id}-thumbnail-image`}
                     src={thumbnailSrc}
                 />
-            </ThumbnailContainer>
-            <ExtendedNameSection>
-                <NameSection>{renderNameDescription()}</NameSection>
-                <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
+            </div>
+            <div className={styles.extendedNameSection}>
+                <div className={styles.nameSection}>
+                    {renderNameDescription()}
+                </div>
+                <div className={styles.fileSizeSection}>
+                    {fileSize ? fileSize : "-"}
+                </div>
                 {isError && (
-                    <MobileErrorMessage>
-                        <ErrorIcon aria-hidden />
+                    <div className={styles.mobileErrorMessage}>
+                        <ExclamationCircleFillIcon
+                            className={styles.errorIcon}
+                        />
                         {errorMessage ? errorMessage : "Something went wrong"}
-                    </MobileErrorMessage>
+                    </div>
                 )}
-            </ExtendedNameSection>
+            </div>
         </>
     );
 
     const renderDefault = () => (
         <>
-            <NameSection>{renderNameDescription()}</NameSection>
-            <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
+            <div className={styles.nameSection}>{renderNameDescription()}</div>
+            <div className={styles.fileSizeSection}>
+                {fileSize ? fileSize : "-"}
+            </div>
             {isError && (
-                <MobileErrorMessage>
-                    <ErrorIcon aria-hidden />
+                <div className={styles.mobileErrorMessage}>
+                    <ExclamationCircleFillIcon className={styles.errorIcon} />
                     {errorMessage ? errorMessage : "Something went wrong"}
-                </MobileErrorMessage>
+                </div>
             )}
         </>
     );
@@ -152,39 +151,44 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         }
 
         return (
-            <ContentSection $hasThumbnail={!!thumbnailImageDataUrl}>
+            <div
+                className={clsx(
+                    styles.contentSection,
+                    !!thumbnailImageDataUrl && styles.contentSectionHasThumbnail
+                )}
+            >
                 {content}
-            </ContentSection>
+            </div>
         );
     };
 
     const renderActions = () => {
         return (
-            <ActionContainer>
-                <IconButton
+            <div className={styles.actionContainer}>
+                <Button
+                    className={styles.iconButton}
                     data-testid={`${id}-download-button`}
                     type="button"
                     styleType="light"
                     sizeType="small"
                     aria-label={`download ${name}`}
-                >
-                    {isLoading || !ready ? (
-                        <Spinner size={16} aria-hidden />
-                    ) : (
-                        <DownloadIcon aria-hidden />
-                    )}
-                </IconButton>
-            </ActionContainer>
+                    loading={isLoading || !ready}
+                    icon={<DownloadIcon />}
+                />
+            </div>
         );
     };
 
     return (
-        <Item data-testid={id}>
-            <Box onClick={handleDownload} $error={isError}>
+        <li className={styles.item} data-testid={id}>
+            <div
+                className={clsx(styles.box, isError && styles.boxError)}
+                onClick={handleDownload}
+            >
                 {renderContents()}
                 {renderActions()}
-            </Box>
-        </Item>
+            </div>
+        </li>
     );
 };
 

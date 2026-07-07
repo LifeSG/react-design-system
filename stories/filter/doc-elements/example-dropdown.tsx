@@ -1,8 +1,13 @@
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ComponentPropsWithoutRef } from "react";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Card } from "src/card";
 import { Colour } from "src/theme";
-import styled from "styled-components";
+
+type DivProps = ComponentPropsWithoutRef<"div">;
+type CardProps = ComponentPropsWithoutRef<typeof Card>;
 
 interface Props {
     onShowOptions: () => void;
@@ -14,7 +19,7 @@ export const ComponentWithFloatingElement = (props: Props) => {
 
     return (
         <Parent>
-            <Button.Default
+            <Button
                 onClick={() => {
                     setOpen(!open);
                     if (open) {
@@ -25,19 +30,27 @@ export const ComponentWithFloatingElement = (props: Props) => {
                 }}
             >
                 Toggle
-            </Button.Default>
+            </Button>
             {open && <Dropdown>Floating content</Dropdown>}
         </Parent>
     );
 };
 
-const Parent = styled.div`
+const parent = css`
     position: relative;
 `;
 
-const Dropdown = styled(Card)`
+const dropdown = css`
     position: absolute;
     top: calc(100% + 16px);
     height: 100px;
     background-color: ${Colour["bg"]};
 `;
+
+const Parent = ({ className, ...props }: DivProps) => (
+    <div {...props} className={clsx(parent, className)} />
+);
+
+const Dropdown = ({ className, ...props }: CardProps) => (
+    <Card {...props} className={clsx(dropdown, className)} />
+);

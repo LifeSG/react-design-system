@@ -1,16 +1,15 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import clsx from "clsx";
+import type React from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+import { Input } from "../input";
+import * as inputGroupStyles from "../input-group/input-group.styles";
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import { InputWrapper } from "../shared/input-wrapper";
+import { Typography } from "../typography";
 import { StringHelper, useId, useNextInputState } from "../util";
-import { UnitNumberInputProps } from "./types";
-import {
-    FloorInput,
-    HashContainer,
-    ReadOnlyContainer,
-    ReadOnlyLabel,
-    UnitInput,
-    UnitNumberDivider,
-} from "./unit-number-input.style";
+import type { UnitNumberInputProps } from "./types";
+import * as styles from "./unit-number-input.styles";
 
 type FieldType = "floor" | "unit" | "none";
 type ValueFieldTypes = Exclude<FieldType, "none">;
@@ -29,6 +28,7 @@ export const UnitNumberInput = ({
     "aria-labelledby": ariaLabelledBy,
     "aria-describedby": ariaDescribedBy,
     "aria-invalid": ariaInvalid,
+    className,
     ...otherProps
 }: UnitNumberInputProps) => {
     // =============================================================================
@@ -300,7 +300,7 @@ export const UnitNumberInput = ({
     // =============================================================================
     const renderInputs = () => (
         <>
-            <FloorInput
+            <Input
                 name="floor"
                 maxLength={3}
                 value={floorValue}
@@ -323,14 +323,20 @@ export const UnitNumberInput = ({
                 }
                 autoComplete={autoComplete}
                 styleType="no-border"
+                className={clsx(styles.input, styles.floorInput)}
             />
             <VisuallyHidden aria-hidden id={floorLabelId}>
                 Enter floor number
             </VisuallyHidden>
-            <UnitNumberDivider $inactive={floorValue.length === 0}>
+            <Typography.BodyBL
+                className={clsx(
+                    styles.unitNumberDivider,
+                    floorValue.length === 0 && styles.unitNumberDividerInactive
+                )}
+            >
                 -
-            </UnitNumberDivider>
-            <UnitInput
+            </Typography.BodyBL>
+            <Input
                 name="unit"
                 maxLength={5}
                 value={unitValue}
@@ -354,6 +360,11 @@ export const UnitNumberInput = ({
                 }
                 autoComplete={autoComplete}
                 styleType="no-border"
+                className={clsx(
+                    styles.input,
+                    styles.floorInput,
+                    styles.unitInput
+                )}
             />
             <VisuallyHidden aria-hidden id={unitLabelId}>
                 Enter unit number
@@ -373,7 +384,7 @@ export const UnitNumberInput = ({
         ].join(" ");
 
         return (
-            <ReadOnlyContainer
+            <div
                 data-testid="readonly-display"
                 tabIndex={0}
                 role="textbox"
@@ -381,12 +392,15 @@ export const UnitNumberInput = ({
                 aria-labelledby={ariaLabelledBy}
                 aria-describedby={ariaDescribedBy}
                 aria-invalid={ariaInvalid}
+                className={styles.readOnlyContainer}
             >
-                <ReadOnlyLabel>{displayValueArr[0]}</ReadOnlyLabel>
-                <UnitNumberDivider>-</UnitNumberDivider>
-                <ReadOnlyLabel>{displayValueArr[1]}</ReadOnlyLabel>
+                <Typography.BodyBL>{displayValueArr[0]}</Typography.BodyBL>
+                <Typography.BodyBL className={styles.unitNumberDivider}>
+                    -
+                </Typography.BodyBL>
+                <Typography.BodyBL>{displayValueArr[1]}</Typography.BodyBL>
                 <VisuallyHidden>{liveMessageForReadOnly}</VisuallyHidden>
-            </ReadOnlyContainer>
+            </div>
         );
     };
 
@@ -395,19 +409,24 @@ export const UnitNumberInput = ({
             {...otherProps}
             ref={nodeRef}
             onClick={handleNodeClick}
-            $disabled={disabled}
-            $error={error}
-            $readOnly={readOnly}
+            disabled={disabled}
+            error={error}
+            readOnly={readOnly}
             tabIndex={-1}
             onBlur={handleNodeBlur}
+            className={className}
         >
-            <HashContainer
+            <div
                 data-testid="addon"
-                $disabled={disabled}
-                $readOnly={readOnly}
+                className={clsx(
+                    styles.hashContainer,
+                    inputGroupStyles.labelAddonContainer
+                )}
+                data-disabled={disabled}
+                data-read-only={readOnly}
             >
                 #
-            </HashContainer>
+            </div>
             {readOnly && value ? renderReadOnly(value) : renderInputs()}
         </InputWrapper>
     );

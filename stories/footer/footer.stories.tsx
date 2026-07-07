@@ -1,8 +1,6 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Footer } from "src/footer";
 import { Layout } from "src/layout";
-import { MyLegacyTheme } from "src/theme";
-import { ThemeProvider } from "styled-components";
 
 type Component = typeof Footer;
 
@@ -113,13 +111,11 @@ export const WithResourceAddOn: StoryObj<Component> = {
             />
         );
     },
-    decorators: [
-        (Story) => (
-            <ThemeProvider theme={MyLegacyTheme}>
-                <Story />
-            </ThemeProvider>
-        ),
-    ],
+    parameters: {
+        themes: {
+            themeOverride: "MyLegacy",
+        },
+    },
 };
 
 export const WithCustomContent: StoryObj<Component> = {

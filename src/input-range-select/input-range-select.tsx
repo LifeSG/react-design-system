@@ -1,26 +1,22 @@
-import React, { useEffect, useMemo, useRef, useState } from "react";
-import { ClearIcon } from "../input/input.style";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
-import {
-    DropdownList,
-    DropdownListApi,
-    DropdownListState,
-} from "../shared/dropdown-list";
+import clsx from "clsx";
+import type React from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
+
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import type { DropdownListApi } from "../shared/dropdown-list";
+import { DropdownList, DropdownListState } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     PlaceholderLabel,
     ValueLabel,
-    Wrapper,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+} from "../shared/dropdown-wrapper/dropdown-wrapper";
+import { ClearButton, InputWrapper } from "../shared/input-wrapper";
+import * as inputWrapperStyles from "../shared/input-wrapper/input-wrapper.styles";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
 import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
-import {
-    ClearIconContainer,
-    RangeSelectorButton,
-    StyledInputWrapper,
-} from "./input-range-select.style";
-import { InputRangeSelectProps } from "./types";
+import * as styles from "./input-range-select.styles";
+import type { InputRangeSelectProps } from "./types";
 
 type RangeType = "from" | "to";
 
@@ -288,7 +284,7 @@ export const InputRangeSelect = <T, V>({
 
         if (!selected) {
             return (
-                <PlaceholderLabel $truncateType={optionTruncationType}>
+                <PlaceholderLabel truncateType={optionTruncationType}>
                     {truncateValue(rangeType, placeholders?.[rangeType] || "")}
                 </PlaceholderLabel>
             );
@@ -299,14 +295,14 @@ export const InputRangeSelect = <T, V>({
         }
 
         return (
-            <ValueLabel $truncateType={optionTruncationType}>
+            <ValueLabel truncateType={optionTruncationType}>
                 {truncateValue(rangeType, getDisplayValue(rangeType))}
             </ValueLabel>
         );
     };
 
     const renderSelectorContent = (rangeType: RangeType) => (
-        <RangeSelectorButton
+        <button
             type="button"
             role="combobox"
             aria-labelledby={getButtonLabelledBy(rangeType)}
@@ -319,20 +315,21 @@ export const InputRangeSelect = <T, V>({
             onKeyDown={handleSelectorKeyDown(rangeType)}
             ref={labelButtonRef[rangeType]}
             tabIndex={0}
+            className={styles.rangeSelectorButton}
         >
             {renderLabel(rangeType)}
-        </RangeSelectorButton>
+        </button>
     );
 
     const renderElement = () => {
         return (
-            <StyledInputWrapper
-                className={className}
+            <InputWrapper
+                className={clsx(styles.styledInputWrapper, className)}
                 data-testid={testId}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
-                $focused={isOpen}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
+                focused={isOpen}
             >
                 <VisuallyHidden id={fromLabelId}>
                     {placeholders?.from || "Select From"}
@@ -354,15 +351,17 @@ export const InputRangeSelect = <T, V>({
                     selectedToValue &&
                     !readOnly &&
                     !disabled && (
-                        <ClearIconContainer
-                            onClick={handleClear}
-                            type="button"
-                            aria-label="Clear"
+                        <div
+                            className={inputWrapperStyles.clearButtonContainer}
                         >
-                            <ClearIcon aria-hidden />
-                        </ClearIconContainer>
+                            <ClearButton
+                                onClick={handleClear}
+                                type="button"
+                                aria-label="Clear"
+                            />
+                        </div>
                     )}
-            </StyledInputWrapper>
+            </InputWrapper>
         );
     };
 
@@ -394,7 +393,7 @@ export const InputRangeSelect = <T, V>({
     };
 
     return (
-        <Wrapper id={id} {...otherProps}>
+        <div id={id} {...otherProps}>
             <DropdownListState>
                 <ElementWithDropdown
                     enabled={!readOnly && !disabled}
@@ -412,6 +411,6 @@ export const InputRangeSelect = <T, V>({
                     rootNode={dropdownRootNode}
                 />
             </DropdownListState>
-        </Wrapper>
+        </div>
     );
 };

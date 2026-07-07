@@ -1,18 +1,15 @@
-import { ScheduleEntityProps, ScheduleSlotProps } from "../types";
-import { RefObject } from "react";
-export interface ScheduleWeekViewProps {
-    date: string;
+import type {
+    CommonScheduleViewProps,
+    ScheduleEntityProps,
+    ScheduleSlotProps,
+} from "../types";
+
+export interface ScheduleWeekViewProps extends CommonScheduleViewProps {
     serviceData: ScheduleEntityProps[];
-    loading: boolean;
-    minTime: string;
-    maxTime: string;
-    initialScrollTime?: string | undefined;
     onSlotClick?: (
         data: ScheduleSlotProps,
         e: React.MouseEvent
     ) => void | undefined;
-    containerRef: RefObject<HTMLDivElement>;
-    blockedMessage?: string | undefined;
     onClickHiddenSlots?: (hiddenServices: string[]) => void | undefined;
 }
 
@@ -24,12 +21,6 @@ export interface SlotWithService extends ScheduleSlotProps {
     serviceName: string;
 }
 
-// Slot with positioning information
-export interface PositionedSlot {
-    slot: SlotWithService;
-    column: number;
-    offsetTop: number;
-}
 interface SlotLayoutInfo {
     date: string;
     serviceName: string;

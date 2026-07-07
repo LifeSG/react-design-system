@@ -1,13 +1,12 @@
-import { useContext, useEffect } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
-import { Breakpoint } from "../theme";
+import { useEffect } from "react";
+
+import { useMaxWidthMediaQuery } from "../theme";
 import { FilterItemCheckbox } from "./addons/filter-item-checkbox";
 import { FilterItem } from "./filter-item";
 import { FilterItemPage } from "./filter-item-page";
-import { FilterProps } from "./types";
 import { FilterModal } from "./filter-modal";
 import { FilterSidebar } from "./filter-sidebar";
+import type { FilterProps } from "./types";
 
 export const Filter = ({
     children,
@@ -22,9 +21,7 @@ export const Filter = ({
     "data-testid": testId,
     ...props
 }: FilterProps) => {
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["lg-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobile = useMaxWidthMediaQuery("lg");
 
     useEffect(() => {
         if (!isMobile) {

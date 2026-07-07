@@ -1,6 +1,10 @@
-import React from "react";
-import { MenuPanel } from "./menu-content.styles";
-import { MenuContentProps } from "./types";
+import clsx from "clsx";
+import type React from "react";
+import { useRef } from "react";
+
+import { useApplyStyle } from "../theme";
+import * as styles from "./menu-content.styles";
+import type { MenuContentProps } from "./types";
 
 // =============================================================================
 // HELPERS
@@ -15,11 +19,22 @@ const getFocusables = (container: HTMLElement) => {
 
 export const MenuContent = ({
     children,
+    className,
     "data-testid": testId = "menu-content",
     overflow,
     maxHeight,
     ...otherProps
 }: MenuContentProps): JSX.Element => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    const panelRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(panelRef, {
+        [styles.tokens.panel.maxHeight]:
+            maxHeight !== undefined ? `${maxHeight}px` : null,
+        [styles.tokens.panel.overflow]: overflow || null,
+    });
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -53,16 +68,16 @@ export const MenuContent = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <MenuPanel
-            $overflow={overflow}
-            $maxHeight={maxHeight}
+        <div
+            ref={panelRef}
             data-testid={testId}
             tabIndex={-1}
             onKeyDown={handleKeyDown}
+            className={clsx(styles.panel, className)}
             {...otherProps}
         >
             {children}
-        </MenuPanel>
+        </div>
     );
 };
 

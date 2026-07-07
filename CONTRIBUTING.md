@@ -9,6 +9,8 @@ Do also adhere to the guidelines mentioned below.
     -   <a href="#adding-components">Adding components</a>
     -   <a href="#previewing-components">Previewing components</a>
     -   <a href="#writing-stories">Writing stories</a>
+    -   <a href="#writing-functional-tests">Writing functional tests</a>
+    -   <a href="#linting">Linting</a>
     -   <a href="#pull-request">Creating pull requests</a>
 -   <a href="#repo-owner">As a repository owner</a>
     -   <a href="#versioning">Version Management</a>
@@ -40,7 +42,7 @@ Components are to be added in the `src` directory in a structure like this
 ├── src
 │	├── component-name
 │	│	├── component-name.tsx
-│	│	├── component-name.style.tsx
+│	│	├── component-name.styles.ts
 │	│	├── index.tsx
 │	│	└── types.ts
 │	└── index.ts
@@ -52,11 +54,11 @@ Components are to be added in the `src` directory in a structure like this
 Where
 
 -   `component-name.tsx` contains the component src
--   `component-name.style.tsx` contains the styled components of the component
+-   `component-name.styles.ts` contains the styled components of the component
 -   `types.ts` the type definitions
 -   `index.ts` to contain the exportable of the component and its typings. This is to be reexported to `src/index.ts`
 
-Tests files will sit in the `tests` folder bearing the same folder name as the component.
+Unit test files will sit in the `tests` folder bearing the same folder name as the component.
 
 > File and folder structure are in `kebab-case`
 
@@ -112,10 +114,78 @@ A suggested folder structure is as such:
 		└── types.ts
 ```
 
+<a id="writing-functional-tests"></a>
+<br />
+
+### **5. Writing functional tests**
+
+Functional tests should be written for scenarios that are difficult to cover in unit tests:
+
+-   Visual tests e.g. colour variants, hover styling
+-   Interaction tests e.g. drag-and-drop, scrolling
+-   Visual regression to ensure styles do not break unintentionally
+
+The tests are set up in this structure
+
+```
+└── e2e
+   ├── nextjs-app
+   │   └── src/app/components
+   │       ├── [component]/[story]
+   |       │   ├── layout.tsx
+   |       │   └── page.tsx
+   │       └── component-name
+   |           ├── component-name.module.css
+   │           └── story-name.e2e.tsx
+   └── tests
+       └── components
+           └── component-name
+               ├── __screenshots__
+               └── component-name.e2e.spec.ts
+```
+
+Where
+
+-   `nextjs-app` is a NextJS project configured with strict CSP
+-   `[component]/[story]` dynamically renders a component example based on the route
+-   `component-name.module.css` hosts any specific styles needed for the component story
+-   `story-name.tsx` hosts a single component example
+-   `__screenshots__` contains the Playwright snapshots for the component
+-   `component-name.e2e.spec.ts` contains the Playwright test suite for the component
+
+When the NextJS app is running, components can be accessed at http://localhost:3000/components/component-name/story-name
+
+Dev mode has hot reload for faster feedback during test implementation. To run in dev mode:
+
+```bash
+npm run test-e2e
+```
+
+CI mode uses actual builds to verify production behaviour. To run in CI mode:
+
+```bash
+npm run test-e2e-ci
+```
+
+<a id="linting"></a>
+<br />
+
+### **6. Linting**
+
+This repository uses ESLint for JS/TS and Stylelint for stylesheets. Run:
+
+```bash
+npm run lint         # checks JS/TS and CSS
+npm run lint:css     # runs Stylelint on all `.css` files
+npm run lint:css:fix # auto-fixable CSS issues
+```
+
+Linting is also wired into `lint-staged` so committed files are auto-checked.
+
 <a id="pull-request"></a>
 <br />
 
-### **5. Creating pull requests**
+### **7. Creating pull requests**
 
 Once you have committed and pushed your code, you are to create a pull request to have it approved to be in the `master` branch.
 

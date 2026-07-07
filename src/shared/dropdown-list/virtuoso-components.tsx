@@ -1,5 +1,6 @@
-import { ComponentProps, forwardRef } from "react";
-import { Components } from "react-virtuoso";
+import type { ComponentProps } from "react";
+import { forwardRef } from "react";
+import type { Components } from "react-virtuoso";
 
 interface VirtuosoContext {
     listProps: React.HTMLAttributes<HTMLDivElement>;

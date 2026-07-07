@@ -1,6 +1,7 @@
 import { useContext } from "react";
-import { TabItemProps } from "./types";
+
 import { TabContext } from "./tab-context";
+import type { TabItemProps } from "./types";
 
 export interface TabItemComponentProps extends TabItemProps {
     index?: number | undefined; // injected

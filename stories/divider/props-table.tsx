@@ -1,9 +1,13 @@
-import {
-    ApiTable,
-    ApiTableSectionProps,
-    StorybookLink,
-    code,
-} from "stories/storybook-common";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable, code } from "stories/storybook-common";
+
+const colDescription = (breakpoint: string) => (
+    <>
+        The number of columns to span at the {code(breakpoint)} breakpoint.
+        Accepts an array {code("[startCol, endCol]")} to specify column line
+        positions. Only applies when {code("layoutType")} is {code('"grid"')}
+    </>
+);
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -12,7 +16,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "",
                 description: (
                     <>
-                        This component also inherits props from&nbsp;
+                        This component also inherits props from{" "}
                         <a
                             href="https://developer.mozilla.org/en-US/docs/Web/API/HTMLElement"
                             rel="noreferrer"
@@ -46,65 +50,42 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "color",
                 description: <>The color for the {code("Divider")} line</>,
-                propTypes: ["string", "(props: ThemeStyleProps) => string"],
-            },
-            // Copied from `layout/col-div-props-table.tsx`
-            {
-                name: "mobileCols",
-                description: (
-                    <>
-                        Refer to{" "}
-                        <StorybookLink path="/docs/core-layout-coldiv--docs">
-                            ColDiv
-                        </StorybookLink>
-                        &nbsp; for more details
-                        <br />
-                        <em>
-                            Note: This works only if you are using the
-                            {code(`"grid"`)} layout type
-                        </em>
-                    </>
-                ),
-                propTypes: [`number`, `number[]`],
-                defaultValue: "4",
+                propTypes: ["string"],
             },
             {
-                name: "tabletCols",
-                description: (
-                    <>
-                        Refer to{" "}
-                        <StorybookLink path="/docs/core-layout-coldiv--docs">
-                            ColDiv
-                        </StorybookLink>
-                        &nbsp; for more details
-                        <br />
-                        <em>
-                            Note: This works only if you are using the
-                            {code(`"grid"`)} layout type
-                        </em>
-                    </>
-                ),
-                propTypes: [`number`, `number[]`],
-                defaultValue: "8",
+                name: "xxlCols",
+                description: colDescription("xxl"),
+                propTypes: ["number", "[number, number]"],
             },
             {
-                name: "desktopCols",
-                description: (
-                    <>
-                        Refer to{" "}
-                        <StorybookLink path="/docs/core-layout-coldiv--docs">
-                            ColDiv
-                        </StorybookLink>
-                        &nbsp; for more details
-                        <br />
-                        <em>
-                            Note: This works only if you are using the
-                            {code(`"grid"`)} layout type
-                        </em>
-                    </>
-                ),
-                propTypes: [`number`, `number[]`],
-                defaultValue: "12",
+                name: "xlCols",
+                description: colDescription("xl"),
+                propTypes: ["number", "[number, number]"],
+            },
+            {
+                name: "lgCols",
+                description: colDescription("lg"),
+                propTypes: ["number", "[number, number]"],
+            },
+            {
+                name: "mdCols",
+                description: colDescription("md"),
+                propTypes: ["number", "[number, number]"],
+            },
+            {
+                name: "smCols",
+                description: colDescription("sm"),
+                propTypes: ["number", "[number, number]"],
+            },
+            {
+                name: "xsCols",
+                description: colDescription("xs"),
+                propTypes: ["number", "[number, number]"],
+            },
+            {
+                name: "xxsCols",
+                description: colDescription("xxs"),
+                propTypes: ["number", "[number, number]"],
             },
         ],
     },

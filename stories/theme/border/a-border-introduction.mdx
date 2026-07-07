@@ -21,51 +21,24 @@ Apply the tokens when defining borders.
 
 ```tsx
 import { Border } from "@lifesg/react-design-system/theme";
-import styled, { css } from "styled-components";
 
-const Container = styled.div`
+const container = css`
     border-width: ${Border["width-010"]};
     border-style: ${Border.solid};
-`;
-
-const SolidBorder = styled.div`
-    ${Border.Util["solid"]};
-
-    /* optionally configure the border properties */
-    ${Border.Util["solid"]({
-        thickness: 1,
-        colour: "red",
-        radius: 5,
-    })};
-`;
-
-const DashedBorder = styled.div`
-    ${Border.Util["dashed-default"]};
-
-    /* optionally configure the border properties */
-    ${Border.Util["dashed-default"]({
-        thickness: 1,
-        colour: "red",
-        radius: 5,
-    })};
 `;
 ```
 
 ## Overriding
 
+Refer to [this section](/docs/foundations-advanced--docs#theme-customisation) to
+find out how to apply theme customisation.
+
 Even though you will rarely need to override the border style properties, the
 ability to do so is supported.
 
 ```tsx
-import { LifeSGTheme } from "@lifesg/react-design-system/theme";
-
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    overrides: {
-        border: {
-            "width-010": 10, // specify a custom pixel-based value
-            solid: "dotted", // specify a custom border style
-        },
-    },
-};
+useApplyStyle(themeElementRef, {
+    [Border["width-010"]]: "6px", // specify a custom length value
+    [Border["solid"]]: "dotted", // specify a custom border style
+});
 ```

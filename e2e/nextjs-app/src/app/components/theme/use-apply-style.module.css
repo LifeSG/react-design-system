@@ -1,0 +1,4 @@
+.element {
+    color: var(--fds-colour-text);
+    background: var(--fds-colour-bg-primary);
+}

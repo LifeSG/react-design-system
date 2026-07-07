@@ -1,7 +1,11 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { InputMultiSelect } from "../../src/input-multi-select";
-import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
+import { InputMultiSelect } from "src/input-multi-select";
+
+import { setupCommonDomMocks } from "../_common";
+import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
 const SELECTOR_TESTID = "selector";
@@ -10,18 +14,9 @@ const OPTIONS = ["Option 1", "Option 2", "Option 3"];
 
 describe("InputMultiSelect", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render the component", async () => {
@@ -73,6 +68,102 @@ describe("InputMultiSelect", () => {
         });
     });
 
+    it("should trigger onShowOptions and onHideOptions callbacks", async () => {
+        const user = userEvent.setup();
+        const mockOnShowOptions = jest.fn();
+        const mockOnHideOptions = jest.fn();
+
+        render(
+            <InputMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                onShowOptions={mockOnShowOptions}
+                onHideOptions={mockOnHideOptions}
+            />
+        );
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+        });
+
+        expect(mockOnShowOptions).toHaveBeenCalledTimes(1);
+        expect(mockOnHideOptions).toHaveBeenCalledTimes(0);
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(
+                screen.queryByTestId(DROPDOWN_TESTID)
+            ).not.toBeInTheDocument();
+        });
+
+        expect(mockOnShowOptions).toHaveBeenCalledTimes(1);
+        expect(mockOnHideOptions).toHaveBeenCalledTimes(1);
+    });
+
+    it("should dismiss dropdown through custom cta callback", async () => {
+        const user = userEvent.setup();
+        const mockOnShowOptions = jest.fn();
+        const mockOnHideOptions = jest.fn();
+
+        render(
+            <InputMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                onShowOptions={mockOnShowOptions}
+                onHideOptions={mockOnHideOptions}
+                renderCustomCallToAction={(onDismiss) => (
+                    <button type="button" onClick={onDismiss}>
+                        Done
+                    </button>
+                )}
+            />
+        );
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+        });
+
+        expect(mockOnShowOptions).toHaveBeenCalledTimes(1);
+        expect(mockOnHideOptions).toHaveBeenCalledTimes(0);
+
+        await user.click(screen.getByRole("button", { name: "Done" }));
+
+        await waitFor(() => {
+            expect(
+                screen.queryByTestId(DROPDOWN_TESTID)
+            ).not.toBeInTheDocument();
+        });
+
+        expect(mockOnHideOptions).toHaveBeenCalledTimes(1);
+    });
+
+    it("should render loading spinner when options are loading", async () => {
+        const user = userEvent.setup();
+
+        render(
+            <InputMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                optionsLoadState="loading"
+                onRetry={jest.fn()}
+            />
+        );
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.getByTestId("list-loading")).toBeVisible();
+        });
+
+        expect(screen.getByText("Loading...")).toBeVisible();
+        expect(screen.getByTestId("component-loading-spinner")).toBeVisible();
+    });
+
     it("should select list item correctly", async () => {
         const user = userEvent.setup();
         const mockOnSelectOptions = jest.fn();
@@ -95,6 +186,108 @@ describe("InputMultiSelect", () => {
 
         expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
         expect(mockOnSelectOptions).toHaveBeenCalledWith(["Option 1"]);
+    });
+
+    it("should deselect item using valueExtractor comparison", async () => {
+        const user = userEvent.setup();
+        const mockOnSelectOptions = jest.fn();
+        const objectOptions = [
+            { label: "Option 1", value: "1" },
+            { label: "Option 2", value: "2" },
+        ];
+
+        render(
+            <InputMultiSelect
+                data-testid={FIELD_TESTID}
+                options={objectOptions}
+                selectedOptions={[objectOptions[0]]}
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+                onSelectOptions={mockOnSelectOptions}
+            />
+        );
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+        });
+
+        await user.click(screen.getByText("Option 1"));
+
+        expect(mockOnSelectOptions).toHaveBeenCalledWith([]);
+    });
+
+    it("should select all items when select all is clicked", async () => {
+        const user = userEvent.setup();
+        const mockOnSelectOptions = jest.fn();
+
+        render(
+            <InputMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                onSelectOptions={mockOnSelectOptions}
+            />
+        );
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+        });
+
+        await user.click(screen.getByRole("button", { name: "Select all" }));
+
+        expect(mockOnSelectOptions).toHaveBeenCalledWith(OPTIONS);
+    });
+
+    it("should clear all items when select all is clicked twice", async () => {
+        const user = userEvent.setup();
+        const mockOnSelectOptions = jest.fn();
+
+        render(
+            <InputMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                onSelectOptions={mockOnSelectOptions}
+            />
+        );
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+        });
+
+        await user.click(screen.getByRole("button", { name: "Select all" }));
+        await user.click(screen.getByRole("button", { name: "Clear all" }));
+
+        expect(mockOnSelectOptions).toHaveBeenNthCalledWith(1, OPTIONS);
+        expect(mockOnSelectOptions).toHaveBeenNthCalledWith(2, []);
+    });
+
+    it("should clear all items when maxSelectable is set", async () => {
+        const user = userEvent.setup();
+        const mockOnSelectOptions = jest.fn();
+
+        render(
+            <InputMultiSelect
+                data-testid={FIELD_TESTID}
+                options={OPTIONS}
+                maxSelectable={2}
+                onSelectOptions={mockOnSelectOptions}
+            />
+        );
+
+        await user.click(screen.getByTestId(FIELD_TESTID));
+
+        await waitFor(() => {
+            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
+        });
+
+        await user.click(screen.getByRole("button", { name: "Clear all" }));
+
+        expect(mockOnSelectOptions).toHaveBeenCalledWith([]);
     });
 
     describe("focus/blur behaviour", () => {

@@ -4,8 +4,9 @@ import { Meta } from "@storybook/addon-docs/blocks";
 
 # Component tokens
 
-Some components offer limited style customisation on the theme level. For
-details on what can be overridden, refer to their respective docs.
+Some components offer limited style customisation on the theme level through
+design tokens. For details on what can be customised, refer to their respective
+docs.
 
 Supported components:
 
@@ -15,51 +16,25 @@ Supported components:
 
 ## Usage
 
-Component tokens can be selectively customised by setting `componentOverrides`.
+Component tokens are also available for use in custom style declarations, such
+as when certain visual elements need to be be carried over.
 
 ```tsx
-import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+import { Component } from "@lifesg/react-design-system/theme";
 
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    componentOverrides: {
-        Button: {
-            "button-radius": 15,
-            "button-default-colour-bg": Colour["bg-primary"],
-        },
-    },
-};
-
-<ThemeProvider theme={customTheme}>
-    <App />
-</ThemeProvider>;
+const customButton = css`
+    border-radius: ${Component.Button["radius"]};
+`;
 ```
 
-You can nest `ThemeProvider`s; a component will pick up the theme from the
-nearest `ThemeProvider` ancestor. This is useful if you need to customise
-component tokens only in a specific context.
+## Overriding
 
-In this example, the first button follows the default colours, while the second
-button has the custom styling.
+Refer to [this section](/docs/foundations-advanced--docs#theme-customisation) to
+find out how to apply theme customisation.
 
 ```tsx
-import { LifeSGTheme } from "@lifesg/react-design-system/theme";
-
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    componentOverrides: {
-        Button: {
-            "button-default-colour-bg": "#fab",
-        },
-    },
-};
-
-const App = (
-    <ThemeProvider theme={LifeSGTheme}>
-        <Button />
-        <ThemeProvider theme={customTheme}>
-            <Button />
-        </ThemeProvider>
-    </ThemeProvider>
-);
+useApplyStyle(themeElementRef, {
+    [Component.Button["radius"]]: "15px",
+    [Component.Button["default-colour-bg"]]: Colour["bg-primary"],
+});
 ```

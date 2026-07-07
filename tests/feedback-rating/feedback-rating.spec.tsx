@@ -1,8 +1,8 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import { useState } from "react";
-
-import { FeedbackRating, FeedbackRatingProps } from "../../src";
-import { FeedbackRatingData } from "../../src/feedback-rating/feedback-rating-data";
+import type { FeedbackRatingProps } from "src";
+import { FeedbackRating } from "src";
+import { FeedbackRatingData } from "src/feedback-rating/feedback-rating-data";
 
 // =============================================================================
 // UNIT TESTS
@@ -36,6 +36,21 @@ describe("FeedbackRating", () => {
         );
 
         expect(screen.getByText(description)).toBeInTheDocument();
+    });
+
+    it("should render slider with a user-friendly label and description", () => {
+        render(
+            <FeedbackRating
+                rating={0}
+                onRatingChange={NO_OP}
+                onSubmit={NO_OP}
+            />
+        );
+
+        const slider = getRatingSlider();
+        expect(slider).toHaveAccessibleDescription(
+            "Minimum, 1 star. Maximum, 5 stars."
+        );
     });
 
     it("should be able to render custom button label", () => {

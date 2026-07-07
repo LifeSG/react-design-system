@@ -1,25 +1,29 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
+import clsx from "clsx";
 import throttle from "lodash/throttle";
-import React, {
+import type React from "react";
+import {
     forwardRef,
+    useCallback,
     useEffect,
     useImperativeHandle,
+    useMemo,
     useRef,
     useState,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import {
-    Content,
-    Fade,
-    FadeIndicatorButton,
-    Wrapper,
-} from "./fade-wrapper.style";
-import { FadeColorSet, FadeWrapperProps, FadeWrapperRef } from "./types";
+
+import { useApplyStyle } from "../../theme";
+import { ClickableIcon } from "../clickable-icon";
+import * as styles from "./fade-wrapper.styles";
+import { getFadeBackgroundColorValue, getFadeColorSet } from "./helpers";
+import type { FadeWrapperProps, FadeWrapperRef } from "./types";
 
 const Component = (
     {
         children,
+        className,
         fadeColor,
         fadePosition = "both",
         showIndicator = false,
@@ -40,8 +44,23 @@ const Component = (
 
     const wrapperRef = useRef<HTMLDivElement>(null);
     const contentRef = useRef<HTMLDivElement>(null);
+    const fadeLeftRef = useRef<HTMLDivElement>(null);
+    const fadeRightRef = useRef<HTMLDivElement>(null);
 
-    const throttledScrollHandler = throttle(handleScroll, 50);
+    const fadeColorSet = getFadeColorSet(fadeColor);
+
+    useApplyStyle(fadeLeftRef, {
+        [styles.tokens.backgroundColor]: getFadeBackgroundColorValue(
+            fadeColorSet.left,
+            showIndicator
+        ),
+    });
+    useApplyStyle(fadeRightRef, {
+        [styles.tokens.backgroundColor]: getFadeBackgroundColorValue(
+            fadeColorSet.right,
+            showIndicator
+        ),
+    });
 
     // To scroll left when wrapper resizes
     useResizeDetector({
@@ -62,27 +81,7 @@ const Component = (
     // =========================================================================
     // EFFECTS
     // =========================================================================
-    useEffect(() => {
-        const content = contentRef.current;
-
-        handleScroll();
-
-        if (content) {
-            content.addEventListener("scroll", throttledScrollHandler);
-        }
-
-        return () => {
-            if (content) {
-                content.removeEventListener("scroll", throttledScrollHandler);
-            }
-        };
-    }, []);
-
-    // =========================================================================
-    // EVENT HANDLERS
-    // =========================================================================
-
-    function handleScroll() {
+    const handleScroll = useCallback(() => {
         const wrapper = wrapperRef.current;
         const content = contentRef.current;
 
@@ -101,7 +100,33 @@ const Component = (
             setShowFadeRight(false);
             setShowFadeLeft(false);
         }
-    }
+    }, []);
+
+    const throttledScrollHandler = useMemo(() => {
+        return throttle(handleScroll, 50);
+    }, [handleScroll]);
+
+    useEffect(() => {
+        const content = contentRef.current;
+
+        handleScroll();
+
+        if (content) {
+            content.addEventListener("scroll", throttledScrollHandler);
+        }
+
+        return () => {
+            if (content) {
+                content.removeEventListener("scroll", throttledScrollHandler);
+            }
+
+            throttledScrollHandler.cancel();
+        };
+    }, [handleScroll, throttledScrollHandler]);
+
+    // =========================================================================
+    // EVENT HANDLERS
+    // =========================================================================
 
     function handleResize() {
         handleScroll();
@@ -123,68 +148,61 @@ const Component = (
     // RENDER FUNCTIONS
     // =========================================================================
     const renderFade = () => {
-        let fadeColorSet: FadeColorSet;
-
-        if (Array.isArray(fadeColor) && fadeColor.length > 0) {
-            // Single array, apply same color
-            fadeColorSet = {
-                left: fadeColor,
-                right: fadeColor,
-            };
-        } else if (!fadeColor) {
-            fadeColorSet = {
-                left: undefined,
-                right: undefined,
-            };
-        } else {
-            fadeColorSet = fadeColor as FadeColorSet;
-        }
-
         return (
             <>
                 {showFadeLeft && (
-                    <Fade
-                        $backgroundColor={fadeColorSet.left}
-                        $position="left"
-                        $showIndicator={showIndicator}
+                    <div
+                        ref={fadeLeftRef}
+                        className={clsx(styles.fade, styles.fadeLeft)}
                         data-id="left-fade"
                     >
                         {showIndicator && (
-                            <FadeIndicatorButton
-                                $position="left"
+                            <ClickableIcon
+                                className={clsx(
+                                    styles.fadeIndicatorButton,
+                                    styles.indicatorLeft
+                                )}
                                 data-id="left-fade-indicator-button"
                             >
                                 <ChevronLeftIcon />
-                            </FadeIndicatorButton>
+                            </ClickableIcon>
                         )}
-                    </Fade>
+                    </div>
                 )}
                 {showFadeRight && (
-                    <Fade
-                        $backgroundColor={fadeColorSet.right}
-                        $position="right"
-                        $showIndicator={showIndicator}
+                    <div
+                        ref={fadeRightRef}
+                        className={clsx(styles.fade, styles.fadeRight)}
                         data-id="right-fade"
                     >
                         {showIndicator && (
-                            <FadeIndicatorButton
-                                $position="right"
+                            <ClickableIcon
+                                className={clsx(
+                                    styles.fadeIndicatorButton,
+                                    styles.indicatorRight
+                                )}
                                 data-id="right-fade-indicator-button"
                             >
                                 <ChevronRightIcon />
-                            </FadeIndicatorButton>
+                            </ClickableIcon>
                         )}
-                    </Fade>
+                    </div>
                 )}
             </>
         );
     };
 
     return (
-        <Wrapper ref={wrapperRef} {...otherProps}>
-            <Content ref={contentRef}>{children}</Content>
+        <div
+            ref={wrapperRef}
+            className={clsx(styles.wrapper, className)}
+            {...otherProps}
+        >
+            <div ref={contentRef} className={styles.content}>
+                {children}
+            </div>
             {renderFade()}
-        </Wrapper>
+        </div>
     );
 };
 

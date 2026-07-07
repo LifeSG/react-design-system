@@ -1,5 +1,6 @@
-import { RefObject } from "react";
-import {
+import type { RefObject } from "react";
+
+import type {
     DropdownCustomLabelProps,
     DropdownDisplayProps,
     DropdownSearchProps,
@@ -7,7 +8,7 @@ import {
     ItemsLoadStateType,
     TruncateType,
 } from "../shared/dropdown-list/types";
-import { DropdownAlignmentType } from "../shared/dropdown-wrapper";
+import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 // =============================================================================
 // SHARED PROPS
@@ -69,7 +70,7 @@ export interface InputSelectProps<T, V>
      */
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /**
-     * Custom width for the dropdown in pixels. When specified, the dropdown will use this
+     * Custom width for the dropdown. When specified, the dropdown will use this
      * width instead of matching the input element width.
      */
     dropdownWidth?: string | undefined;

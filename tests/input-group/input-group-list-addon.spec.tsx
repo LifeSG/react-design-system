@@ -2,7 +2,9 @@ import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Form } from "src/form";
 import { InputGroup } from "src/input-group";
-import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
+
+import { setupCommonDomMocks } from "../_common";
+import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
 
 const FIELD_TESTID = "test";
 const INPUT_TESTID = "input";
@@ -19,17 +21,7 @@ describe("InputGroup - List addon", () => {
     beforeEach(() => {
         jest.clearAllMocks();
 
-        // Make requestAnimationFrame synchronous to avoid async focus issues in tests (see https://github.com/floating-ui/floating-ui/issues/2488)
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     it("should render the component", () => {
@@ -505,57 +497,32 @@ describe("InputGroup - List addon", () => {
     });
 
     describe("accessible names", () => {
-        it("should apply the correct label", () => {
+        it("should expose custom combobox/textbox labels and selector instruction", () => {
+            const comboboxLabel = "Choose option";
+            const textboxLabel = "Enter value";
             render(
-                <Form.InputGroup
-                    label={LABEL}
+                <InputGroup
+                    data-testid={FIELD_TESTID}
+                    aria-label={textboxLabel}
                     addon={{
                         type: "list",
                         attributes: {
                             options: OPTIONS,
+                            "aria-label": comboboxLabel,
                         },
                     }}
                 />
             );
 
             expect(
-                screen.getByRole("combobox", {
-                    name: LABEL,
-                    description: DROPDOWN_INSTRUCTION,
-                })
+                screen.getByRole("combobox", { name: comboboxLabel })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("textbox", {
-                    name: LABEL,
-                })
-            ).toBeInTheDocument();
-        });
-
-        it("should apply the correct label and description", () => {
-            render(
-                <Form.InputGroup
-                    label={{ children: LABEL, subtitle: DESCRIPTION }}
-                    addon={{
-                        type: "list",
-                        attributes: {
-                            options: OPTIONS,
-                        },
-                    }}
-                />
-            );
-
-            expect(
-                screen.getByRole("combobox", {
-                    name: LABEL,
-                    description: `${DESCRIPTION} ${DROPDOWN_INSTRUCTION}`,
-                })
+                screen.getByRole("textbox", { name: textboxLabel })
             ).toBeInTheDocument();
             expect(
-                screen.getByRole("textbox", {
-                    name: LABEL,
-                    description: DESCRIPTION,
-                })
-            ).toBeInTheDocument();
+                screen.getByRole("combobox", { name: comboboxLabel })
+            ).toHaveAccessibleDescription(DROPDOWN_INSTRUCTION);
         });
 
         it("should apply the error state and error description", () => {

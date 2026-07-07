@@ -1,22 +1,28 @@
-import React, { useState } from "react";
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import { useState } from "react";
 import { Toggle } from "src/toggle";
 import { Typography } from "src/typography";
-import styled from "styled-components";
 
-const Container = styled.div<{ $height: Height }>`
+const container = css`
     #table-wrapper {
-        ${(props) => {
-            switch (props.$height) {
-                case "fixed":
-                    return "height: 50vh";
-                case "max-height":
-                    return "max-height: 50vh";
-            }
-        }}
+        min-height: 0;
     }
 `;
 
-const ToggleContainer = styled.div`
+const fixedHeight = css`
+    #table-wrapper {
+        height: 50vh;
+    }
+`;
+
+const maxHeight = css`
+    #table-wrapper {
+        max-height: 50vh;
+    }
+`;
+
+const toggleContainer = css`
     display: flex;
     gap: 1rem;
     padding: 1rem 0;
@@ -28,7 +34,7 @@ type Height = "default" | "fixed" | "max-height";
 interface Props {
     rowCount: number;
     onRowCountChange?: (count: number) => void;
-    children: React.ReactNode;
+    children: JSX.Element | JSX.Element[];
 }
 
 export const DataTableWithCustomHeight = ({
@@ -40,7 +46,14 @@ export const DataTableWithCustomHeight = ({
     const rowCountInputId = "data-table-row-count";
 
     return (
-        <Container $height={height} key={height}>
+        <div
+            className={clsx(
+                container,
+                height === "fixed" && fixedHeight,
+                height === "max-height" && maxHeight
+            )}
+            key={height}
+        >
             <div>
                 <Typography.BodyBL>
                     Modify the options to view the scroll behaviour
@@ -60,7 +73,7 @@ export const DataTableWithCustomHeight = ({
                         min={1}
                         max={15}
                         onChange={(e) => {
-                            const count = parseInt(e.target.value);
+                            const count = Number.parseInt(e.target.value, 10);
                             onRowCountChange?.(count);
                         }}
                     />
@@ -68,7 +81,7 @@ export const DataTableWithCustomHeight = ({
                 <Typography.BodySM weight="semibold">
                     Table height
                 </Typography.BodySM>
-                <ToggleContainer>
+                <div className={toggleContainer}>
                     <Toggle
                         type="radio"
                         indicator
@@ -99,9 +112,9 @@ export const DataTableWithCustomHeight = ({
                     >
                         Fixed height
                     </Toggle>
-                </ToggleContainer>
+                </div>
             </div>
             {children}
-        </Container>
+        </div>
     );
 };

@@ -1,9 +1,10 @@
 import React from "react";
+
 import { Input } from "../input";
-import { InputRef } from "../input/types";
+import type { InputRef } from "../input/types";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormInputProps } from "./types";
+import type { FormInputProps } from "./types";
 
 const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
     const {
@@ -13,9 +14,6 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
-        mobileCols,
-        tabletCols,
-        desktopCols,
         xxsCols,
         xsCols,
         smCols,
@@ -35,12 +33,8 @@ const Component = (props: FormInputProps, ref: InputRef): JSX.Element => {
             data-testid={testId}
             label={label}
             errorMessage={errorMessage}
-            disabled={otherProps.disabled}
             data-error-testid={errorTestId}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

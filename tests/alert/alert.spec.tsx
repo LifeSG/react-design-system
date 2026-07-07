@@ -1,7 +1,7 @@
-import { render, screen } from "@testing-library/react";
-import { Alert } from "../../src";
-import { V2_Color } from "../../src";
 import { StarIcon } from "@lifesg/react-icons/star";
+import { render, screen } from "@testing-library/react";
+import { Alert } from "src";
+import { Colour } from "src/theme/tokens/colour";
 
 // =============================================================================
 // UNIT TESTS
@@ -24,20 +24,23 @@ describe("Alert", () => {
 
     describe("type", () => {
         it.each`
-            type             | backgroundColor                          | borderColor
-            ${"success"}     | ${V2_Color.Validation.Green.Background}  | ${V2_Color.Validation.Green.Border}
-            ${"warning"}     | ${V2_Color.Validation.Orange.Background} | ${V2_Color.Validation.Orange.Border}
-            ${"error"}       | ${V2_Color.Validation.Red.Background}    | ${V2_Color.Validation.Red.Border}
-            ${"info"}        | ${V2_Color.Validation.Blue.Background}   | ${V2_Color.Validation.Blue.Border}
-            ${"description"} | ${V2_Color.Neutral[7]}                   | ${V2_Color.Neutral[4]}
+            type             | backgroundColor         | borderColor
+            ${"success"}     | ${Colour["bg-success"]} | ${Colour["border-success"]}
+            ${"warning"}     | ${Colour["bg-warning"]} | ${Colour["border-warning"]}
+            ${"error"}       | ${Colour["bg-error"]}   | ${Colour["border-error"]}
+            ${"info"}        | ${Colour["bg-info"]}    | ${Colour["border-info"]}
+            ${"description"} | ${Colour["bg-strong"]}  | ${Colour["border-strong"]}
         `(
             "should render background $backgroundColor with border $borderColor for $type type",
             ({ type, backgroundColor, borderColor }) => {
-                render(<Alert type={type}>{DEFAULT_TEXT}</Alert>);
-
-                expect(screen.getByText(DEFAULT_TEXT)).toHaveStyle({
-                    backgroundColor,
-                    borderColor: `2px solid ${borderColor}`,
+                render(
+                    <Alert data-testid="alert" type={type}>
+                        {DEFAULT_TEXT}
+                    </Alert>
+                );
+                expect(screen.getByTestId("alert")).toHaveStyle({
+                    background: backgroundColor,
+                    borderLeftColor: borderColor,
                 });
             }
         );
@@ -101,6 +104,26 @@ describe("Alert", () => {
         render(<Alert type="success">{CUSTOM_TEXT}</Alert>);
 
         expect(screen.getByText(CUSTOM_TEXT)).toBeInTheDocument();
+    });
+
+    describe("collapsed content accessibility", () => {
+        it("should set inert when maxCollapsedHeight is provided", () => {
+            render(
+                <Alert type="success" maxCollapsedHeight={40}>
+                    {DEFAULT_TEXT}
+                </Alert>
+            );
+
+            const content = screen.getByText(DEFAULT_TEXT);
+            expect(content.closest("[inert]")).toBeInTheDocument();
+        });
+
+        it("should not set inert when maxCollapsedHeight is not provided", () => {
+            render(<Alert type="success">{DEFAULT_TEXT}</Alert>);
+
+            const content = screen.getByText(DEFAULT_TEXT);
+            expect(content.closest("[inert]")).toBeNull();
+        });
     });
 });
 

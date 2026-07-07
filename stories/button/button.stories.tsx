@@ -1,208 +1,241 @@
+import { BoxIcon } from "@lifesg/react-icons/box";
+import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import type { ButtonProps } from "src/button";
 import { Button } from "src/button";
-import { Container } from "./doc-elements";
+import { GridDecorator } from "stories/storybook-common";
+
 import { TokensTable } from "./tokens-table";
 
-type Component = typeof Button.Default;
+type Component = typeof Button;
 
 const meta: Meta<Component> = {
-    title: "Selection and input/Button/Base",
-    component: Button.Default,
+    title: "Selection and input/Button",
+    component: Button,
 };
 
 export default meta;
 
+const VariantGrid = (args: Partial<ButtonProps>) => {
+    return (
+        <>
+            <Button {...args}>Label</Button>
+            <Button {...args} icon={<PlaceholderIcon />}>
+                Label
+            </Button>
+            <Button {...args} icon={<PlaceholderIcon />} iconPosition="right">
+                Label
+            </Button>
+            <Button {...args} icon={<PlaceholderIcon />} />
+            <Button {...args} styleType="secondary">
+                Label
+            </Button>
+            <Button {...args} styleType="secondary" icon={<PlaceholderIcon />}>
+                Label
+            </Button>
+            <Button
+                {...args}
+                styleType="secondary"
+                icon={<PlaceholderIcon />}
+                iconPosition="right"
+            >
+                Label
+            </Button>
+            <Button
+                {...args}
+                styleType="secondary"
+                icon={<PlaceholderIcon />}
+            />
+            <Button {...args} styleType="light">
+                Label
+            </Button>
+            <Button {...args} styleType="light" icon={<PlaceholderIcon />}>
+                Label
+            </Button>
+            <Button
+                {...args}
+                styleType="light"
+                icon={<PlaceholderIcon />}
+                iconPosition="right"
+            >
+                Label
+            </Button>
+            <Button {...args} styleType="light" icon={<PlaceholderIcon />} />
+            <Button {...args} styleType="link">
+                Label
+            </Button>
+            <Button {...args} styleType="link" icon={<PlaceholderIcon />}>
+                Label
+            </Button>
+            <Button
+                {...args}
+                styleType="link"
+                icon={<PlaceholderIcon />}
+                iconPosition="right"
+            >
+                Label
+            </Button>
+            <Button {...args} styleType="link" icon={<PlaceholderIcon />} />
+        </>
+    );
+};
+
 export const Default: StoryObj<Component> = {
+    render: VariantGrid,
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: [
+                "Text only",
+                "Icon (left)",
+                "Icon (right)",
+                "Icon only",
+            ],
+            rowHeaders: ["Default", "Secondary", "Light", "Link"],
+        }),
+    ],
+};
+
+export const Size: StoryObj<Component> = {
     render: (_args) => {
         return (
             <>
-                <Container>
-                    <Button.Large>Large</Button.Large>
-                    <Button.Large styleType="secondary">Secondary</Button.Large>
-                    <Button.Large styleType="light">Light</Button.Large>
-                    <Button.Large styleType="link">Link</Button.Large>
-                    <Button.Large disabled>Disabled</Button.Large>
-                </Container>
-                <Container>
-                    <Button.Default>Default</Button.Default>
-                    <Button.Default styleType="secondary">
-                        Secondary
-                    </Button.Default>
-                    <Button.Default styleType="light">Light</Button.Default>
-                    <Button.Default styleType="link">Link</Button.Default>
-                    <Button.Default disabled>Disabled</Button.Default>
-                </Container>
-                <Container>
-                    <Button.Small>Small</Button.Small>
-                    <Button.Small styleType="secondary">Secondary</Button.Small>
-                    <Button.Small styleType="light">Light</Button.Small>
-                    <Button.Small styleType="link">Link</Button.Small>
-                    <Button.Small disabled>Disabled</Button.Small>
-                </Container>
+                <Button sizeType="large">Label</Button>
+                <Button sizeType="large" icon={<PlaceholderIcon />}>
+                    Label
+                </Button>
+                <Button
+                    sizeType="large"
+                    icon={<PlaceholderIcon />}
+                    iconPosition="right"
+                >
+                    Label
+                </Button>
+                <Button sizeType="large" icon={<PlaceholderIcon />} />
+                <Button sizeType="default">Label</Button>
+                <Button sizeType="default" icon={<PlaceholderIcon />}>
+                    Label
+                </Button>
+                <Button
+                    sizeType="default"
+                    icon={<PlaceholderIcon />}
+                    iconPosition="right"
+                >
+                    Label
+                </Button>
+                <Button sizeType="default" icon={<PlaceholderIcon />} />
+                <Button sizeType="small">Label</Button>
+                <Button sizeType="small" icon={<PlaceholderIcon />}>
+                    Label
+                </Button>
+                <Button
+                    sizeType="small"
+                    icon={<PlaceholderIcon />}
+                    iconPosition="right"
+                >
+                    Label
+                </Button>
+                <Button sizeType="small" icon={<PlaceholderIcon />} />
             </>
         );
     },
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: [
+                "Text only",
+                "Icon (left)",
+                "Icon (right)",
+                "Icon only",
+            ],
+            rowHeaders: ["Large", "Default", "Small"],
+        }),
+    ],
 };
 
 export const LoadingState: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <>
-                <Container>
-                    <Button.Large loading>Large</Button.Large>
-                    <Button.Large styleType="secondary" loading>
-                        Loading
-                    </Button.Large>
-                    <Button.Large styleType="light" loading>
-                        Loading
-                    </Button.Large>
-                    <Button.Large styleType="link" loading>
-                        Loading
-                    </Button.Large>
-                    <Button.Large disabled loading>
-                        Loading
-                    </Button.Large>
-                </Container>
-                <Container>
-                    <Button.Default loading>Default</Button.Default>
-                    <Button.Default styleType="secondary" loading>
-                        Loading
-                    </Button.Default>
-                    <Button.Default styleType="light" loading>
-                        Loading
-                    </Button.Default>
-                    <Button.Default styleType="link" loading>
-                        Loading
-                    </Button.Default>
-                    <Button.Default disabled loading>
-                        Loading
-                    </Button.Default>
-                </Container>
-                <Container>
-                    <Button.Small loading>Small</Button.Small>
-                    <Button.Small styleType="secondary" loading>
-                        Loading
-                    </Button.Small>
-                    <Button.Small styleType="light" loading>
-                        Loading
-                    </Button.Small>
-                    <Button.Small styleType="link" loading>
-                        Loading
-                    </Button.Small>
-                    <Button.Small disabled loading>
-                        Loading
-                    </Button.Small>
-                </Container>
-            </>
-        );
+    render: VariantGrid,
+    args: {
+        loading: true,
     },
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: [
+                "Text only",
+                "Icon (left)",
+                "Icon (right)",
+                "Icon only",
+            ],
+            rowHeaders: ["Default", "Secondary", "Light", "Link"],
+        }),
+    ],
 };
 
 export const Danger: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <>
-                <Container>
-                    <Button.Large danger>Large</Button.Large>
-                    <Button.Large styleType="secondary" danger>
-                        Secondary
-                    </Button.Large>
-                    <Button.Large styleType="light" danger>
-                        Light
-                    </Button.Large>
-                    <Button.Large styleType="link" danger>
-                        Link
-                    </Button.Large>
-                </Container>
-                <Container>
-                    <Button.Default danger>Default</Button.Default>
-                    <Button.Default styleType="secondary" danger>
-                        Secondary
-                    </Button.Default>
-                    <Button.Default styleType="light" danger>
-                        Light
-                    </Button.Default>
-                    <Button.Default styleType="link" danger>
-                        Link
-                    </Button.Default>
-                </Container>
-                <Container>
-                    <Button.Small danger>Small</Button.Small>
-                    <Button.Small styleType="secondary" danger>
-                        Secondary
-                    </Button.Small>
-                    <Button.Small styleType="light" danger>
-                        Light
-                    </Button.Small>
-                    <Button.Small styleType="link" danger>
-                        Link
-                    </Button.Small>
-                </Container>
-            </>
-        );
+    render: VariantGrid,
+    args: {
+        danger: true,
     },
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: [
+                "Text only",
+                "Icon (left)",
+                "Icon (right)",
+                "Icon only",
+            ],
+            rowHeaders: ["Default", "Secondary", "Light", "Link"],
+        }),
+    ],
 };
 
 export const DangerLoadingState: StoryObj<Component> = {
+    render: VariantGrid,
+    args: {
+        danger: true,
+        loading: true,
+    },
+    decorators: [
+        GridDecorator({
+            columns: 4,
+            columnHeaders: [
+                "Text only",
+                "Icon (left)",
+                "Icon (right)",
+                "Icon only",
+            ],
+            rowHeaders: ["Default", "Secondary", "Light", "Link"],
+        }),
+    ],
+};
+
+export const CustomComponents: StoryObj<Component> = {
     render: (_args) => {
         return (
-            <>
-                <Container>
-                    <Button.Large loading danger>
-                        Large
-                    </Button.Large>
-                    <Button.Large styleType="secondary" loading danger>
-                        Loading
-                    </Button.Large>
-                    <Button.Large styleType="light" loading danger>
-                        Loading
-                    </Button.Large>
-                    <Button.Large styleType="link" loading danger>
-                        Loading
-                    </Button.Large>
-                </Container>
-                <Container>
-                    <Button.Default loading danger>
-                        Default
-                    </Button.Default>
-                    <Button.Default styleType="secondary" loading danger>
-                        Loading
-                    </Button.Default>
-                    <Button.Default styleType="light" loading danger>
-                        Loading
-                    </Button.Default>
-                    <Button.Default styleType="link" loading danger>
-                        Loading
-                    </Button.Default>
-                </Container>
-                <Container>
-                    <Button.Small loading danger>
-                        Small
-                    </Button.Small>
-                    <Button.Small styleType="secondary" loading danger>
-                        Loading
-                    </Button.Small>
-                    <Button.Small styleType="light" loading danger>
-                        Loading
-                    </Button.Small>
-                    <Button.Small styleType="link" loading danger>
-                        Loading
-                    </Button.Small>
-                </Container>
-            </>
+            <Button
+                icon={
+                    <img
+                        src="https://cdn-icons-png.flaticon.com/128/2171/2171991.png"
+                        alt=""
+                    />
+                }
+                aria-label="Pet a cat"
+            />
         );
     },
 };
 
 export const FocusableWhenDisabled: StoryObj<Component> = {
     render: (_args) => (
-        <Button.Default
+        <Button
+            icon={<BoxIcon />}
+            aria-label="Archive item"
             disabled
             focusableWhenDisabled
             onClick={() => alert("I shouldn't be here!")}
-        >
-            Add to cart
-        </Button.Default>
+        />
     ),
 };
 

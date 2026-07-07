@@ -1,17 +1,20 @@
-import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import {
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { act } from "react-dom/test-utils";
 import { FormRangeSelect } from "src/form/form-range-select";
 import { InputRangeSelect } from "src/input-range-select";
-import styled from "styled-components";
+
+jest.mock("react-resize-detector");
 
 // TODO: act can be removed after upgrading react-testing-library
 // =============================================================================
 // UNIT TESTS
 // =============================================================================
-const Wrapper = styled.div`
-    width: 600px;
-`;
 
 const getListItemByText = (text: string) => {
     // Workaround to get list item by truncated text.
@@ -36,27 +39,25 @@ describe("InputRangeSelect", () => {
 
     it("should render the component", () => {
         render(
-            <Wrapper>
-                <InputRangeSelect
-                    options={{
-                        from: [
-                            { value: "A", label: "From Option A" },
-                            { value: "B", label: "From Option B" },
-                            { value: "C", label: "From Option C" },
-                            { value: "D", label: "From Option D" },
-                        ],
-                        to: [
-                            { value: "TA", label: "To Option A" },
-                            { value: "TB", label: "To Option B" },
-                        ],
-                    }}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                    displayValueExtractor={(item) => item.label}
-                    placeholders={{ from: "From", to: "To" }}
-                    data-testid={testId}
-                />
-            </Wrapper>
+            <InputRangeSelect
+                options={{
+                    from: [
+                        { value: "A", label: "From Option A" },
+                        { value: "B", label: "From Option B" },
+                        { value: "C", label: "From Option C" },
+                        { value: "D", label: "From Option D" },
+                    ],
+                    to: [
+                        { value: "TA", label: "To Option A" },
+                        { value: "TB", label: "To Option B" },
+                    ],
+                }}
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+                displayValueExtractor={(item) => item.label}
+                placeholders={{ from: "From", to: "To" }}
+                data-testid={testId}
+            />
         );
 
         expect(screen.queryByTestId(testId)).toBeInTheDocument();
@@ -67,33 +68,31 @@ describe("InputRangeSelect", () => {
     describe("truncation of display values", () => {
         it("should truncate long option values", () => {
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                {
-                                    value: "B",
-                                    label: "A Very Long Option Value That Should Be Truncated",
-                                },
-                            ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        selectedOptions={{
-                            from: {
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            {
                                 value: "B",
                                 label: "A Very Long Option Value That Should Be Truncated",
                             },
-                        }}
-                        placeholders={{ from: "From", to: "To" }}
-                    />
-                </Wrapper>
+                        ],
+                        to: [
+                            { value: "TA", label: "To Option A" },
+                            { value: "TB", label: "To Option B" },
+                        ],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    selectedOptions={{
+                        from: {
+                            value: "B",
+                            label: "A Very Long Option Value That Should Be Truncated",
+                        },
+                    }}
+                    placeholders={{ from: "From", to: "To" }}
+                />
             );
 
             const truncatedOptionValue = "A Ve ... ated";
@@ -102,27 +101,25 @@ describe("InputRangeSelect", () => {
 
         it("should truncate long placeholder values", () => {
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{
-                            from: "From:This is a very long placeholder for the 'from' input",
-                            to: "To:This is a very long placeholder for the 'to' input",
-                        }}
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [
+                            { value: "TA", label: "To Option A" },
+                            { value: "TB", label: "To Option B" },
+                        ],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{
+                        from: "From:This is a very long placeholder for the 'from' input",
+                        to: "To:This is a very long placeholder for the 'to' input",
+                    }}
+                />
             );
 
             const fromPlaceholder = screen.getByText("From ... nput");
@@ -139,25 +136,23 @@ describe("InputRangeSelect", () => {
     describe("select behaviour", () => {
         it("should open dropdown list when selector is clicked", async () => {
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                        data-testid={testId}
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [
+                            { value: "TA", label: "To Option A" },
+                            { value: "TB", label: "To Option B" },
+                        ],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                    data-testid={testId}
+                />
             );
 
             fireEvent.click(getRangeButton("From"));
@@ -172,24 +167,22 @@ describe("InputRangeSelect", () => {
 
         it("should open 'to' dropdown list when 'from' value is selected", async () => {
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [
+                            { value: "TA", label: "To Option A" },
+                            { value: "TB", label: "To Option B" },
+                        ],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                />
             );
 
             fireEvent.click(getRangeButton("From"));
@@ -202,24 +195,22 @@ describe("InputRangeSelect", () => {
 
         it("should be able to complete filling up the field by selecting from and to values respectively.", async () => {
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [
+                            { value: "TA", label: "To Option A" },
+                            { value: "TB", label: "To Option B" },
+                        ],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                />
             );
 
             fireEvent.click(getRangeButton("From"));
@@ -235,25 +226,23 @@ describe("InputRangeSelect", () => {
 
         it("should open 'from' dropdown list when 'to' selector is clicked and 'from' value is not selected", () => {
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                        enableSearch
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [
+                            { value: "TA", label: "To Option A" },
+                            { value: "TB", label: "To Option B" },
+                        ],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                    enableSearch
+                />
             );
 
             fireEvent.click(getRangeButton("To"));
@@ -265,22 +254,20 @@ describe("InputRangeSelect", () => {
             const user = userEvent.setup();
 
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [{ value: "TA", label: "To Option A" }],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                        disabled
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [{ value: "TA", label: "To Option A" }],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                    disabled
+                />
             );
 
             await user.click(getRangeButton("From"));
@@ -295,23 +282,21 @@ describe("InputRangeSelect", () => {
             const user = userEvent.setup();
 
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [{ value: "TA", label: "To Option A" }],
-                        }}
-                        data-testid={testId}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                        readOnly
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [{ value: "TA", label: "To Option A" }],
+                    }}
+                    data-testid={testId}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                    readOnly
+                />
             );
 
             await user.click(getRangeButton("From"));
@@ -324,25 +309,23 @@ describe("InputRangeSelect", () => {
 
         it("should display error message when 'error' prop is true", () => {
             render(
-                <Wrapper>
-                    <FormRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                        errorMessage={"Error Message"}
-                    />
-                </Wrapper>
+                <FormRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [
+                            { value: "TA", label: "To Option A" },
+                            { value: "TB", label: "To Option B" },
+                        ],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                    errorMessage={"Error Message"}
+                />
             );
 
             const errorElement = screen.getByText("Error Message");
@@ -355,22 +338,20 @@ describe("InputRangeSelect", () => {
             const user = userEvent.setup();
 
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [{ value: "TA", label: "To Option A" }],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                        data-testid={testId}
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [{ value: "TA", label: "To Option A" }],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                    data-testid={testId}
+                />
             );
 
             await user.tab();
@@ -383,6 +364,12 @@ describe("InputRangeSelect", () => {
             });
             await waitFor(() => expect(firstOption).toHaveFocus());
 
+            await act(async () => {
+                await user.keyboard("{Enter}");
+            });
+            expect(screen.getByText("From ... on A")).toBeInTheDocument();
+
+            expect(screen.getByText("To Option A")).toBeInTheDocument();
             await act(async () => {
                 await user.click(document.body);
             });
@@ -399,24 +386,22 @@ describe("InputRangeSelect", () => {
             const user = userEvent.setup();
 
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [
-                                { value: "TA", label: "To Option A" },
-                                { value: "TB", label: "To Option B" },
-                            ],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [
+                            { value: "TA", label: "To Option A" },
+                            { value: "TB", label: "To Option B" },
+                        ],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                />
             );
 
             await user.tab();
@@ -434,7 +419,7 @@ describe("InputRangeSelect", () => {
             });
             expect(screen.getByText("From ... on A")).toBeInTheDocument();
 
-            await screen.findByText("To Option A");
+            expect(screen.getByText("To Option A")).toBeInTheDocument();
             await act(async () => {
                 await user.click(document.body);
             });
@@ -456,22 +441,20 @@ describe("InputRangeSelect", () => {
             const user = userEvent.setup();
 
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                                { value: "C", label: "From Option C" },
-                            ],
-                            to: [{ value: "TA", label: "To Option A" }],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                            { value: "C", label: "From Option C" },
+                        ],
+                        to: [{ value: "TA", label: "To Option A" }],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                />
             );
 
             await user.tab();
@@ -516,22 +499,20 @@ describe("InputRangeSelect", () => {
             const user = userEvent.setup();
 
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        options={{
-                            from: [
-                                { value: "A", label: "From Option A" },
-                                { value: "B", label: "From Option B" },
-                            ],
-                            to: [{ value: "TA", label: "To Option A" }],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                        enableSearch
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    options={{
+                        from: [
+                            { value: "A", label: "From Option A" },
+                            { value: "B", label: "From Option B" },
+                        ],
+                        to: [{ value: "TA", label: "To Option A" }],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                    enableSearch
+                />
             );
 
             await user.tab();
@@ -561,19 +542,17 @@ describe("InputRangeSelect", () => {
             const user = userEvent.setup();
 
             render(
-                <Wrapper>
-                    <InputRangeSelect
-                        data-testid="input-range-select"
-                        options={{
-                            from: [{ value: "A", label: "From Option A" }],
-                            to: [{ value: "TA", label: "To Option A" }],
-                        }}
-                        valueExtractor={(item) => item.value}
-                        listExtractor={(item) => item.label}
-                        displayValueExtractor={(item) => item.label}
-                        placeholders={{ from: "From", to: "To" }}
-                    />
-                </Wrapper>
+                <InputRangeSelect
+                    data-testid="input-range-select"
+                    options={{
+                        from: [{ value: "A", label: "From Option A" }],
+                        to: [{ value: "TA", label: "To Option A" }],
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    placeholders={{ from: "From", to: "To" }}
+                />
             );
 
             await user.tab();

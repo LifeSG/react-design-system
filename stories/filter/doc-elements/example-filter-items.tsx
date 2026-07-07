@@ -1,26 +1,47 @@
 import { MagnifierIcon } from "@lifesg/react-icons/magnifier";
+import { css } from "@linaria/core";
+import clsx from "clsx";
 import isEmpty from "lodash/isEmpty";
-import { useState } from "react";
-import { Filter, Mode } from "src/filter";
+import { type ComponentPropsWithoutRef, useState } from "react";
+import type { Mode } from "src/filter";
+import { Filter } from "src/filter";
 import { Form } from "src/form";
 import { Colour } from "src/theme";
 import { Typography } from "src/typography";
-import styled from "styled-components";
 
 interface Props<T> {
-    mode: Mode;
     value: T | undefined;
     onChange: (val: T) => void;
 }
 
-const SearchIcon = styled(MagnifierIcon)`
+const searchIcon = css`
     color: ${Colour["icon"]};
 `;
 
-export const StyledFilterItem = styled(Filter.Item)<{ $mode: Mode }>`
-    padding: ${(props) =>
-        props.$mode === "default" ? "0 1.25rem 1.5rem" : "1.5rem 1.25rem"};
+const sidebarFilterItem = css`
+    padding: 0 1.25rem 1.5rem;
 `;
+
+const modalFilterItem = css`
+    padding: 1.5rem 1.25rem;
+`;
+
+type FilterItemProps = ComponentPropsWithoutRef<typeof Filter.Item> & {
+    mode: Mode;
+};
+
+export const StyledFilterItem = ({
+    mode,
+    className,
+    ...props
+}: FilterItemProps) => {
+    const modeClassName =
+        mode === "default" ? sidebarFilterItem : modalFilterItem;
+
+    return (
+        <Filter.Item {...props} className={clsx(modeClassName, className)} />
+    );
+};
 
 export const SearchFilter = ({ value, onChange }: Props<string>) => {
     return (
@@ -29,7 +50,7 @@ export const SearchFilter = ({ value, onChange }: Props<string>) => {
             addon={{
                 type: "custom",
                 attributes: {
-                    children: <SearchIcon />,
+                    children: <MagnifierIcon className={searchIcon} />,
                 },
             }}
             value={value}
@@ -60,7 +81,9 @@ export const TextFilter = () => {
     );
 };
 
-export const useFilters = <T extends Record<string, any>>(initialState: T) => {
+export const useFilters = <T extends Record<string, unknown>>(
+    initialState: T
+) => {
     const [currentFilters, setCurrentFilters] = useState(initialState);
     const [draftFilters, setDraftFilters] = useState(initialState);
     const clearButtonDisabled = Object.values(draftFilters).every((filter) =>

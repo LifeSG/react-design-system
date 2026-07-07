@@ -1,7 +1,7 @@
 import { InputRangeSelect } from "../input-range-select/input-range-select";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormInputRangeSelectProps } from "./types";
+import type { FormInputRangeSelectProps } from "./types";
 
 export const FormRangeSelect = <T, V>({
     label,
@@ -11,9 +11,6 @@ export const FormRangeSelect = <T, V>({
     "data-testid": testId,
     enableSearch = false,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -32,11 +29,7 @@ export const FormRangeSelect = <T, V>({
             label={label}
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

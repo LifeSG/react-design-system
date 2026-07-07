@@ -1,10 +1,18 @@
-import {
-    InnerRing1,
-    InnerRing2,
-    InnerRing3,
-    InnerRing4,
-    OuterRing,
-} from "./component-loading-spinner.style";
+import clsx from "clsx";
+import type { HTMLAttributes } from "react";
+import { useRef } from "react";
+
+import { useApplyStyle } from "../../theme/utils";
+import * as styles from "./component-loading-spinner.styles";
+
+type BaseProps = Omit<HTMLAttributes<HTMLDivElement>, "color">;
+
+export interface ComponentLoadingSpinnerProps extends BaseProps {
+    /** Measurement in px */
+    size?: number | undefined;
+    /** rgb/hex value or Color token */
+    color?: string | undefined;
+}
 
 /**
  * This component is mainly used within components and is not to be confused
@@ -12,39 +20,50 @@ import {
  *
  * By default it inherits the font size and color of the parent container.
  *
- * The color can be customised via the prop or through styled-components.
+ * The font size and color can be customised via the prop or through css.
  *
  * Example:
  * ```
- * styled(ComponentLoadingSpinner)`
+ * const spinner = css`
  *   color: red;
+ *   font-size: 1lh;
  * `
+ *
+ * <ComponentLoadingSpinner className={styles.spinner} />
  * ```
  */
-export interface ComponentLoadingSpinnerProps {
-    className?: string | undefined;
-    /** Measurement in px */
-    size?: number | undefined;
-    /** rgb/hex value or Color token */
-    color?: string | ((props: any) => string) | undefined;
-}
-
 export const ComponentLoadingSpinner = ({
     color,
     className,
     size,
+    ...otherProps
 }: ComponentLoadingSpinnerProps): JSX.Element => {
+    const spinnerRef = useRef<HTMLDivElement>(null);
+    useApplyStyle(spinnerRef, {
+        [styles.tokens.rootSize]: size ? `${size}px` : undefined,
+        [styles.tokens.rootColour]: color,
+    });
+
     return (
-        <OuterRing
-            className={className}
-            $size={size}
-            $color={color}
+        <div
+            ref={spinnerRef}
+            className={clsx(styles.outerRing, className)}
+            {...otherProps}
             data-testid={"component-loading-spinner"}
         >
-            <InnerRing1 id="inner1" />
-            <InnerRing2 id="inner2" />
-            <InnerRing3 id="inner3" />
-            <InnerRing4 id="inner4" />
-        </OuterRing>
+            <div id="inner1" className={styles.innerRing} />
+            <div
+                id="inner2"
+                className={clsx(styles.innerRing, styles.innerRing2)}
+            />
+            <div
+                id="inner3"
+                className={clsx(styles.innerRing, styles.innerRing3)}
+            />
+            <div
+                id="inner4"
+                className={clsx(styles.innerRing, styles.innerRing4)}
+            />
+        </div>
     );
 };

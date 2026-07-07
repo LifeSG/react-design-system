@@ -1,18 +1,25 @@
+import fs from "node:fs";
+import path from "node:path";
+
 import commonjs from "@rollup/plugin-commonjs";
 import image from "@rollup/plugin-image";
 import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
-import fs from "fs";
-import path from "path";
+import wyw from "@wyw-in-js/rollup";
+import postcssImports from "postcss-import";
 import copy from "rollup-plugin-copy";
 import excludeDependenciesFromBundle from "rollup-plugin-exclude-dependencies-from-bundle";
 import generatePackageJson from "rollup-plugin-generate-package-json";
-import postcss from "rollup-plugin-postcss";
+import { libStylePlugin } from "rollup-plugin-lib-style";
 import typescript from "rollup-plugin-typescript2";
-import { injectCss } from "./scripts/build-util";
 
-const dirsToIgnore = ["custom-types", "shared", "util", "v2_spec", "__mocks__"];
+import { createFixCssImportPathsPlugin } from "./rollup/fix-css-import-paths-plugin.js";
+
+const fixCssImportPathsPlugin = createFixCssImportPathsPlugin({
+    outputDirs: ["dist", "dist/cjs"],
+});
+const dirsToIgnore = new Set(["custom-types", "shared", "util", "__mocks__"]);
 
 const srcDir = "src";
 const subDirs = fs
@@ -21,7 +28,7 @@ const subDirs = fs
         (dirent) =>
             dirent.isDirectory() &&
             fs.existsSync(path.join(srcDir, dirent.name, "index.ts")) &&
-            !dirsToIgnore.includes(dirent.name)
+            !dirsToIgnore.has(dirent.name)
     )
     .map((dirent) => dirent.name);
 
@@ -72,11 +79,6 @@ const plugins = [
             ],
         },
     }),
-    postcss({
-        plugins: [require("postcss-import")],
-        inject: injectCss,
-    }),
-    image(),
     terser(), // Helps remove comments, whitespace or logging codes
     generatePackageJson({
         outputFolder: "dist",
@@ -104,6 +106,10 @@ const plugins = [
                     // Reference: https://nodejs.org/api/packages.html#conditional-exports
                     default: "./index.js", // For any unknown JS environment, fallback to ESM build
                 },
+                "./theme/styles/*.css": {
+                    import: "./theme/styles/*.css",
+                    require: "./theme/styles/*.css",
+                },
                 ...subExports,
             },
             dependencies: pkg.dependencies,
@@ -115,6 +121,54 @@ const plugins = [
         outputFolder: "dist/cjs",
         baseContents: { type: "commonjs" },
     }),
+
+    // =========================================================================
+    // COMPONENT-SPECIFIC PLUGINS
+    // =========================================================================
+    image(),
+    // Handles local component CSS modules (excludes node_modules).
+    // Injects an import statement in the source style file and outputs CSS in the same location.
+    libStylePlugin({
+        exclude: ["**/node_modules/**"],
+        customCSSPath: (id) => {
+            const relative = path.relative(process.cwd(), id);
+            const outputPath = relative.replace("src/", "");
+            return "/" + outputPath;
+        },
+        scopedName: "[local]",
+    }),
+    // Handles external SGDS web component CSS from node_modules.
+    // Ensures SGDS styles are bundled and output to a fixed path for masthead usage.
+    libStylePlugin({
+        include: ["node_modules/@govtechsg/sgds-web-component/themes/day.css"],
+        postCssPlugins: [postcssImports()],
+        customCSSInjectedPath: () => {
+            return "/sgds-day.css";
+        },
+        customCSSPath: () => {
+            return "/masthead/sgds-day.css";
+        },
+    }),
+    libStylePlugin({
+        include: [
+            "node_modules/@govtechsg/sgds-web-component/themes/night.css",
+        ],
+        postCssPlugins: [postcssImports()],
+        customCSSInjectedPath: () => {
+            return "/sgds-night.css";
+        },
+        customCSSPath: () => {
+            return "/masthead/sgds-night.css";
+        },
+    }),
+    wyw({
+        sourcemap: true,
+    }),
+    // Copies static assets to the build output
+    copy({
+        targets: [{ src: "src/theme/styles/*", dest: "dist/theme/styles" }],
+    }),
+    fixCssImportPathsPlugin,
 ];
 
 const libraryBuildConfig = {
@@ -132,7 +186,7 @@ const libraryBuildConfig = {
             entryFileNames: (chunkInfo) => {
                 if (chunkInfo.name.includes("node_modules")) {
                     return (
-                        chunkInfo.name.replace(/node_modules/g, "external") +
+                        chunkInfo.name.replaceAll("node_modules", "external") +
                         ".js"
                     );
                 }
@@ -151,7 +205,7 @@ const libraryBuildConfig = {
             entryFileNames: (chunkInfo) => {
                 if (chunkInfo.name.includes("node_modules")) {
                     return (
-                        chunkInfo.name.replace(/node_modules/g, "external") +
+                        chunkInfo.name.replaceAll("node_modules", "external") +
                         ".js"
                     );
                 }
@@ -160,7 +214,6 @@ const libraryBuildConfig = {
         },
     ],
     plugins,
-    external: ["react", "react-dom", "styled-components"],
 };
 
 const codemodBuildConfig = {

@@ -1,6 +1,6 @@
-import { fireEvent, render, screen } from "@testing-library/react";
-import { Tag } from "../../src/tag";
 import { PlusCircleFillIcon } from "@lifesg/react-icons";
+import { fireEvent, render, screen } from "@testing-library/react";
+import { Tag } from "src/tag";
 
 describe("Tag", () => {
     const label = "Some label";

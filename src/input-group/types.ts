@@ -1,6 +1,7 @@
-import { RefObject } from "react";
-import { InputProps } from "../input/types";
-import {
+import type { RefObject } from "react";
+
+import type { InputProps } from "../input/types";
+import type {
     DropdownDisplayProps,
     DropdownSearchProps,
     ItemsLoadStateType,

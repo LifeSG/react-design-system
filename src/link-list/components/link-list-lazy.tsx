@@ -1,21 +1,20 @@
-import React, { useState } from "react";
+import { PlusIcon } from "@lifesg/react-icons/plus";
+import { animated, useSpring } from "@react-spring/web";
+import clsx from "clsx";
+import type React from "react";
+import { useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
-import { useSpring } from "@react-spring/web";
+
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
-import {
+import { Colour } from "../../theme";
+import { Typography } from "../../typography";
+import type {
     BaseProps,
     LinkListItemProps,
     LinkListLazyProps,
 } from "../internal-types";
-import {
-    Expandable,
-    ExpandableChild,
-    ToggleButton,
-    ToggleButtonLabel,
-    ViewMoreIcon,
-} from "../link-list.styles";
+import * as styles from "../link-list.styles";
 import { LinkListItems } from "./common";
-import { Colour } from "../../theme";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListLazyProps, "loadMode">;
@@ -78,28 +77,32 @@ export const LazyLinkList = <T,>({
             : customLabels?.viewMore || "View more";
 
         return (
-            <ToggleButton
+            <button
                 type="button"
                 onClick={handleClickViewMore}
                 data-testid="toggle-button"
                 aria-disabled={isLoading}
-                $loading={isLoading}
+                className={clsx(
+                    styles.toggleButton,
+                    isLoading && styles.toggleButtonLoading
+                )}
             >
-                <ToggleButtonLabel
-                    forwardedAs="span"
+                <Typography.BodyMD
+                    as="span"
                     weight="semibold"
                     data-testid="toggle-button-label"
                     aria-busy={isLoading}
+                    className={styles.toggleButtonLabel}
                 >
                     {label}
-                </ToggleButtonLabel>
+                </Typography.BodyMD>
 
                 {isLoading ? (
                     <ComponentLoadingSpinner color={Colour["text-disabled"]} />
                 ) : (
-                    <ViewMoreIcon aria-hidden />
+                    <PlusIcon aria-hidden className={styles.toggleButtonIcon} />
                 )}
-            </ToggleButton>
+            </button>
         );
     };
 
@@ -110,16 +113,20 @@ export const LazyLinkList = <T,>({
 
     return (
         <>
-            <Expandable style={expandableStyles} data-testid="content">
-                <ExpandableChild ref={childRef}>
+            <animated.div
+                style={expandableStyles}
+                data-testid="content"
+                className={styles.expandable}
+            >
+                <div ref={childRef}>
                     <LinkListItems
                         data-testid="link-list-items"
                         items={items}
                         handleItemClick={handleListItemClick}
                         style={style}
                     />
-                </ExpandableChild>
-            </Expandable>
+                </div>
+            </animated.div>
             {loadMore && renderToggle()}
         </>
     );

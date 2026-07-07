@@ -1,7 +1,7 @@
 import { InputSlider } from "../input-slider";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
-import { FormSliderProps } from "./types";
+import type { FormSliderProps } from "./types";
 
 export const FormSlider = ({
     label,
@@ -10,9 +10,6 @@ export const FormSlider = ({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -30,12 +27,9 @@ export const FormSlider = ({
             id={inputId}
             label={label}
             errorMessage={errorMessage}
+            data-testid={testId}
             data-error-testid={errorTestId}
-            disabled={otherProps.disabled}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

@@ -1,10 +1,15 @@
 import dayjs from "dayjs";
-import { RefObject, useMemo } from "react";
+import type { RefObject } from "react";
+import { useMemo } from "react";
+
 import { TimeHelper } from "../../util/time-helper";
 import { ROW_INTERVAL } from "../const";
-import { InternalTimeTableRowCellData, RowBarColors } from "../internal-types";
-import { TimeTableRowData } from "../types";
-import { RowCellContainer } from "./row-bar.style";
+import type {
+    InternalTimeTableRowCellData,
+    RowBarColors,
+} from "../internal-types";
+import type { TimeTableRowData } from "../types";
+import * as styles from "./row-bar.styles";
 import { RowCell } from "./row-cell";
 
 interface RowBarProps extends TimeTableRowData {
@@ -202,7 +207,11 @@ export const RowBar = ({
     ]);
 
     return (
-        <RowCellContainer data-testid="timetable-row" role="presentation">
+        <div
+            className={styles.rowCellContainer}
+            data-testid="timetable-row"
+            role="presentation"
+        >
             {rowCellArray.map((cell, index) => {
                 return (
                     <RowCell
@@ -222,6 +231,6 @@ export const RowBar = ({
                     />
                 );
             })}
-        </RowCellContainer>
+        </div>
     );
 };

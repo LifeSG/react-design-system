@@ -1,4 +1,5 @@
-import React, { HTMLAttributes } from "react";
+import type { HTMLAttributes } from "react";
+import type React from "react";
 
 export type ToastType = "success" | "warning" | "error" | "info";
 

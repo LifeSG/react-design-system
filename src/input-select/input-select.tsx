@@ -1,5 +1,7 @@
-import { OpenChangeReason } from "@floating-ui/react";
-import React, { useEffect, useRef, useState } from "react";
+import type { OpenChangeReason } from "@floating-ui/react";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
 import {
     DropdownList,
     DropdownListState,
@@ -10,11 +12,11 @@ import {
     LabelContainer,
     PlaceholderLabel,
     ValueLabel,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+} from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
-import { InputSelectProps } from "./types";
+import type { InputSelectProps } from "./types";
 
 export const InputSelect = <T, V>({
     selectedOption,
@@ -182,8 +184,8 @@ export const InputSelect = <T, V>({
         if (!selected) {
             return (
                 <PlaceholderLabel
-                    $truncateType={optionTruncationType}
-                    $variant={variant}
+                    variant={variant}
+                    truncateType={optionTruncationType}
                 >
                     {placeholder}
                 </PlaceholderLabel>
@@ -193,8 +195,8 @@ export const InputSelect = <T, V>({
         } else {
             return (
                 <ValueLabel
-                    $truncateType={optionTruncationType}
-                    $variant={variant}
+                    variant={variant}
+                    truncateType={optionTruncationType}
                 >
                     {truncateValue(getDisplayValue())}
                 </ValueLabel>
@@ -203,7 +205,7 @@ export const InputSelect = <T, V>({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+        <LabelContainer ref={labelContainerRef} disabled={disabled}>
             {renderLabel()}
         </LabelContainer>
     );
@@ -218,10 +220,10 @@ export const InputSelect = <T, V>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}

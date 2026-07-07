@@ -1,10 +1,23 @@
-import { act, fireEvent, render, screen } from "@testing-library/react";
+import {
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor,
+} from "@testing-library/react";
 import { Accordion } from "src/accordion";
 import { Typography } from "src/typography";
 
+jest.mock("react-resize-detector", () => ({
+    useResizeDetector: () => ({
+        height: 100,
+        ref: jest.fn(),
+    }),
+}));
+
 describe("Accordion", () => {
     beforeEach(() => {
-        jest.resetAllMocks();
+        jest.clearAllMocks();
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
@@ -28,9 +41,7 @@ describe("Accordion", () => {
 
         expect(screen.getByTestId("item1")).toBeInTheDocument();
         expect(screen.getByTestId("item1-content")).toBeInTheDocument();
-        expect(
-            screen.getByRole("button", { name: "Hide all" })
-        ).toBeInTheDocument();
+        expect(screen.getByTestId(ACCORDION_BUTTON_ID)).toBeInTheDocument();
     });
 
     it("should render the accordion title if specified", () => {
@@ -46,8 +57,8 @@ describe("Accordion", () => {
             </Accordion>
         );
 
-        expect(screen.getByTestId("accordion-title")).toBeInTheDocument();
-        expect(screen.getByTestId("accordion-title").textContent).toEqual(
+        expect(screen.getByTestId(ACCORDION_TITLE_ID)).toBeInTheDocument();
+        expect(screen.getByTestId(ACCORDION_TITLE_ID).textContent).toEqual(
             ACCORDION_TITLE
         );
     });
@@ -63,14 +74,16 @@ describe("Accordion", () => {
             </Accordion>
         );
 
-        expect(screen.queryByTestId("accordion-title")).not.toBeInTheDocument();
+        expect(
+            screen.queryByTestId(ACCORDION_TITLE_ID)
+        ).not.toBeInTheDocument();
     });
 
     describe("Expand/Collapse all button", () => {
-        describe("Default behaviour", () => {
-            it("should render the button label as 'Hide all' by default", () => {
+        describe("initialDisplay='expand-all'", () => {
+            it("should render the button label as 'Hide all'", () => {
                 render(
-                    <Accordion>
+                    <Accordion initialDisplay="expand-all">
                         <Accordion.Item data-testid="item1" title="Item title">
                             <Typography.BodyBL data-testid="item1-content">
                                 {DEFAULT_TEXT_CONTENT}
@@ -79,35 +92,16 @@ describe("Accordion", () => {
                     </Accordion>
                 );
 
-                expect(getAccordionButton("Hide all")).toBeInTheDocument();
+                expect(
+                    screen.getByRole("button", {
+                        name: ACCORDION_HIDE_ALL_BUTTON_LABEL,
+                    })
+                ).toBeInTheDocument();
             });
 
-            it("should render the button label as 'Show all' if it has been clicked", () => {
+            it("should collapse all the children items on toggle", async () => {
                 render(
-                    <Accordion>
-                        <Accordion.Item data-testid="item1" title="Item title">
-                            <Typography.BodyBL data-testid="item1-content">
-                                {DEFAULT_TEXT_CONTENT}
-                            </Typography.BodyBL>
-                        </Accordion.Item>
-                    </Accordion>
-                );
-
-                // Checking if the same button did indeed change it's label
-                const button = screen.getByTestId(ACCORDION_BUTTON_ID);
-                expect(button).toBeInTheDocument();
-                expect(button.innerHTML).toBe("<span>Hide all</span>");
-
-                act(() => {
-                    fireEvent.click(button);
-                });
-
-                expect(button.innerHTML).toBe("<span>Show all</span>");
-            });
-
-            it("should minimise all the children items if the button has been clicked", () => {
-                render(
-                    <Accordion>
+                    <Accordion initialDisplay="expand-all">
                         <Accordion.Item data-testid="item1" title="Item title">
                             <Typography.BodyBL>
                                 {DEFAULT_TEXT_CONTENT}
@@ -121,27 +115,107 @@ describe("Accordion", () => {
                     </Accordion>
                 );
 
-                const button = getAccordionButton("Hide all");
+                expectItemExpanded(
+                    screen.getByTestId("item1-expandable-container")
+                );
+                expectItemExpanded(
+                    screen.getByTestId("item2-expandable-container")
+                );
 
                 act(() => {
-                    fireEvent.click(button);
+                    fireEvent.click(
+                        screen.getByRole("button", {
+                            name: ACCORDION_HIDE_ALL_BUTTON_LABEL,
+                        })
+                    );
                 });
 
                 expect(
-                    screen.queryByTestId("item1-expandable-container")
-                ).toHaveStyle({
-                    height: 0,
-                });
-                expect(
-                    screen.queryByTestId("item2-expandable-container")
-                ).toHaveStyle({
-                    height: 0,
+                    screen.getByRole("button", {
+                        name: ACCORDION_EXPAND_ALL_BUTTON_LABEL,
+                    })
+                ).toBeInTheDocument();
+
+                await waitFor(() => {
+                    expectItemCollapsed(
+                        screen.getByTestId("item1-expandable-container")
+                    );
+                    expectItemCollapsed(
+                        screen.getByTestId("item2-expandable-container")
+                    );
                 });
             });
         });
 
-        describe("If expandAll is false", () => {
-            it("should not render the button", () => {
+        describe("initialDisplay='collapse-all'", () => {
+            it("should render the button label as 'Show all'", () => {
+                render(
+                    <Accordion initialDisplay="collapse-all">
+                        <Accordion.Item data-testid="item1" title="Item title">
+                            <Typography.BodyBL data-testid="item1-content">
+                                {DEFAULT_TEXT_CONTENT}
+                            </Typography.BodyBL>
+                        </Accordion.Item>
+                    </Accordion>
+                );
+
+                expect(
+                    screen.getByRole("button", {
+                        name: ACCORDION_EXPAND_ALL_BUTTON_LABEL,
+                    })
+                ).toBeInTheDocument();
+            });
+
+            it("should expand all the children items on toggle", async () => {
+                render(
+                    <Accordion initialDisplay="collapse-all">
+                        <Accordion.Item data-testid="item1" title="Item title">
+                            <Typography.BodyBL>
+                                {DEFAULT_TEXT_CONTENT}
+                            </Typography.BodyBL>
+                        </Accordion.Item>
+                        <Accordion.Item data-testid="item2" title="Item title">
+                            <Typography.BodyBL>
+                                {DEFAULT_TEXT_CONTENT}
+                            </Typography.BodyBL>
+                        </Accordion.Item>
+                    </Accordion>
+                );
+
+                expectItemCollapsed(
+                    screen.getByTestId("item1-expandable-container")
+                );
+                expectItemCollapsed(
+                    screen.getByTestId("item2-expandable-container")
+                );
+
+                act(() => {
+                    fireEvent.click(
+                        screen.getByRole("button", {
+                            name: ACCORDION_EXPAND_ALL_BUTTON_LABEL,
+                        })
+                    );
+                });
+
+                expect(
+                    screen.getByRole("button", {
+                        name: ACCORDION_HIDE_ALL_BUTTON_LABEL,
+                    })
+                ).toBeInTheDocument();
+
+                await waitFor(() => {
+                    expectItemExpanded(
+                        screen.getByTestId("item1-expandable-container")
+                    );
+                    expectItemExpanded(
+                        screen.getByTestId("item2-expandable-container")
+                    );
+                });
+            });
+        });
+
+        describe("enableExpandAll", () => {
+            it("should not render the button if enableExpandAll=false", () => {
                 render(
                     <Accordion enableExpandAll={false}>
                         <Accordion.Item data-testid="item1" title="Item title">
@@ -155,6 +229,9 @@ describe("Accordion", () => {
                 expect(
                     screen.queryByTestId(ACCORDION_BUTTON_ID)
                 ).not.toBeInTheDocument();
+                expectItemExpanded(
+                    screen.getByTestId("item1-expandable-container")
+                );
             });
         });
     });
@@ -220,17 +297,88 @@ describe("Accordion", () => {
                 </Accordion>
             );
 
+            const expandableContainer = screen.getByTestId(
+                "item1-expandable-container"
+            );
+
+            expectItemExpanded(expandableContainer);
+
+            act(() => {
+                fireEvent.click(
+                    screen.getByTestId("item1-expand-collapse-button")
+                );
+            });
+
+            await waitFor(() => expectItemCollapsed(expandableContainer));
+        });
+
+        it("should minimize the contents if expanded=false regardless of initialDisplay", () => {
+            render(
+                <Accordion initialDisplay="expand-all">
+                    <Accordion.Item
+                        data-testid="item1"
+                        title="Item title"
+                        expanded={false}
+                    >
+                        <Typography.BodyBL>
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
+                    </Accordion.Item>
+                </Accordion>
+            );
+
+            expectItemCollapsed(
+                screen.getByTestId("item1-expandable-container")
+            );
+        });
+
+        it("should expand the contents if expanded=true regardless of initialDisplay", () => {
+            render(
+                <Accordion initialDisplay="collapse-all">
+                    <Accordion.Item
+                        data-testid="item1"
+                        title="Item title"
+                        expanded={true}
+                    >
+                        <Typography.BodyBL>
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
+                    </Accordion.Item>
+                </Accordion>
+            );
+
+            expectItemExpanded(
+                screen.getByTestId("item1-expandable-container")
+            );
+        });
+
+        it("should toggle inert on accordion content when collapsed and expanded", () => {
+            render(
+                <Accordion>
+                    <Accordion.Item data-testid="item1" title="Item title">
+                        <Typography.BodyBL>
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
+                    </Accordion.Item>
+                </Accordion>
+            );
+
             const button = screen.getByTestId("item1-expand-collapse-button");
+            const expandableContainer = screen.getByTestId(
+                "item1-expandable-container"
+            );
+
+            expect(expandableContainer).not.toHaveAttribute("inert");
 
             act(() => {
                 fireEvent.click(button);
             });
+            expect(expandableContainer).toHaveAttribute("inert");
 
-            expect(
-                screen.getByTestId("item1-expandable-container")
-            ).toHaveStyle({
-                height: 0,
+            act(() => {
+                fireEvent.click(button);
             });
+            expect(expandableContainer).not.toHaveAttribute("inert");
         });
 
         it("should disable expand/collapse functionality if collapsible=false specified", () => {
@@ -306,8 +454,16 @@ describe("Accordion", () => {
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-const getAccordionButton = (label: string) => {
-    return screen.getByRole("button", { name: label });
+const expectItemExpanded = (element: HTMLElement) => {
+    expect(element).not.toHaveStyle({
+        height: 0,
+    });
+};
+
+const expectItemCollapsed = (element: HTMLElement) => {
+    expect(element).toHaveStyle({
+        height: 0,
+    });
 };
 
 // =============================================================================
@@ -315,3 +471,6 @@ const getAccordionButton = (label: string) => {
 // =============================================================================
 const DEFAULT_TEXT_CONTENT = "This is some default text";
 const ACCORDION_BUTTON_ID = "accordion-expand-collapse-button";
+const ACCORDION_HIDE_ALL_BUTTON_LABEL = "Hide all";
+const ACCORDION_EXPAND_ALL_BUTTON_LABEL = "Show all";
+const ACCORDION_TITLE_ID = "accordion-title";

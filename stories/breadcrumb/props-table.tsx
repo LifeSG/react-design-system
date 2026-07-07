@@ -1,4 +1,5 @@
-import { ApiTable, ApiTableSectionProps } from "stories/storybook-common";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -39,16 +40,6 @@ const DATA: ApiTableSectionProps[] = [
                 ),
                 propTypes: [`"left"`, `"right"`, `"both"`],
                 defaultValue: `"both"`,
-            },
-            {
-                name: "itemStyle",
-                description: (
-                    <>
-                        Custom style that can be passed to the
-                        <code>Breadcrumb</code> items
-                    </>
-                ),
-                propTypes: ["CSS-JS string"],
             },
             {
                 name: "separatorStyle",

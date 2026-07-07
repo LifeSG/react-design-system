@@ -1,4 +1,4 @@
-import { StringHelper } from "../../src/util/string-helper";
+import { StringHelper } from "src/util/string-helper";
 
 describe("StringHelper", () => {
     describe("padValue", () => {

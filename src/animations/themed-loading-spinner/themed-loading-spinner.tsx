@@ -1,14 +1,18 @@
-import { ThemeContext } from "styled-components";
-import { LoadingDotsSpinner } from "../loading-dots-spinner/loading-dots-spinner";
-import { LoadingSpinner } from "../loading-spinner/loading-spinner";
-import { BaseAnimationProps } from "../types";
 import { useContext } from "react";
 
-export const ThemedLoadingSpinner = (props: BaseAnimationProps) => {
-    const theme = useContext(ThemeContext);
+import { ThemeContext } from "../../theme/theme-provider/context";
+import { LoadingDotsSpinner } from "../loading-dots-spinner/loading-dots-spinner";
+import { LoadingSpinner } from "../loading-spinner/loading-spinner";
+import type { BaseAnimationProps } from "../types";
 
-    if (theme?.resourceScheme === "lifesg") {
+export const ThemedLoadingSpinner = (props: BaseAnimationProps) => {
+    const fdsThemeContext = useContext(ThemeContext);
+
+    const isLifesgTheme = fdsThemeContext?.theme === "lifesg";
+
+    if (isLifesgTheme) {
         return <LoadingSpinner {...props} />;
     }
+
     return <LoadingDotsSpinner {...props} />;
 };

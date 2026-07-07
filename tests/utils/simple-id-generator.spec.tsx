@@ -1,5 +1,5 @@
 import { render, screen } from "@testing-library/react";
-import { SimpleIdGenerator, useId } from "../../src/util/simple-id-generator";
+import { SimpleIdGenerator, useId } from "src/util/simple-id-generator";
 
 describe("SimpleIdGenerator", () => {
     describe("generate", () => {

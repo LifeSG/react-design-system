@@ -1,8 +1,10 @@
-import dayjs, { Dayjs } from "dayjs";
+import type { Dayjs } from "dayjs";
+import dayjs from "dayjs";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+
 import { CalendarHelper } from "../../../util/calendar-helper";
-import { HeaderCell, RowDayCell, Wrapper } from "../standard";
-import { CommonCalendarProps } from "../types";
+import * as styles from "../standard/standard-calendar-day-view.styles";
+import type { CommonCalendarProps } from "../types";
 import { FixedRangeDayCell } from "./fixed-range-cell";
 
 interface FixedRangeCalendarDayViewProps extends CommonCalendarProps {
@@ -148,19 +150,24 @@ export const FixedRangeCalendarDayView = ({
     // =============================================================================
     const renderHeader = () => {
         return weeksOfTheMonth[0].map((day, index) => (
-            <HeaderCell key={`week-day-${index}`} aria-hidden>
+            <div
+                key={`week-day-${index}`}
+                className={styles.headerCell}
+                aria-hidden
+            >
                 {dayjs(day).format("ddd")}
-            </HeaderCell>
+            </div>
         ));
     };
 
     const renderDayCells = () => {
         return weeksOfTheMonth.map((week, weekIndex) => {
             return (
-                <RowDayCell
+                <div
                     role="row"
                     key={weekIndex}
                     onMouseLeave={handleMouseLeaveCell}
+                    className={styles.rowDayCell}
                 >
                     {week.map((day, dayIndex) => {
                         return (
@@ -188,20 +195,21 @@ export const FixedRangeCalendarDayView = ({
                             />
                         );
                     })}
-                </RowDayCell>
+                </div>
             );
         });
     };
 
     return (
-        <Wrapper
+        <div
             role="grid"
             onBlur={handleOnBlur}
             data-testid="calendar-content"
             aria-label="Date grid"
+            className={styles.wrapper}
         >
             {renderHeader()}
             {renderDayCells()}
-        </Wrapper>
+        </div>
     );
 };

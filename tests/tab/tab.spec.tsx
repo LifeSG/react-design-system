@@ -5,7 +5,7 @@ describe("Tab", () => {
     beforeEach(() => {
         jest.resetAllMocks();
 
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
+        globalThis.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
             unobserve: jest.fn(),
             disconnect: jest.fn(),
@@ -118,6 +118,30 @@ describe("Tab", () => {
             fireEvent.click(button);
         });
 
+        expect(mockFn).toHaveBeenCalledWith("Section B", 1);
+    });
+
+    it("should not switch the active content when used in controlled mode", () => {
+        const mockFn = jest.fn();
+
+        render(
+            <Tab currentActive={0} onTabClick={mockFn}>
+                <Tab.Item title="Section A">
+                    <p>Contents of A</p>
+                </Tab.Item>
+                <Tab.Item title="Section B">
+                    <p>Contents of B</p>
+                </Tab.Item>
+            </Tab>
+        );
+
+        const button = screen.getByRole("tab", { name: /Section B/i });
+        act(() => {
+            fireEvent.click(button);
+        });
+
+        expect(screen.queryByText("Contents of A")).toBeInTheDocument();
+        expect(screen.queryByText("Contents of B")).not.toBeInTheDocument();
         expect(mockFn).toHaveBeenCalledWith("Section B", 1);
     });
 });

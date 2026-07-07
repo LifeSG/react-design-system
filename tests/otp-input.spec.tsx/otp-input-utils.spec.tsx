@@ -1,7 +1,4 @@
-import {
-    stripOtpFromAutofill,
-    validateUserInput,
-} from "../../src/otp-input/utils";
+import { stripOtpFromAutofill, validateUserInput } from "src/otp-input/utils";
 
 describe("stripOtpFromAutofill", () => {
     const EXPECTED_OTP_LENGTH = 4;

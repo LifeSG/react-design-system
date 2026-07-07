@@ -20,24 +20,19 @@ Apply the tokens when defining border radius.
 
 ```tsx
 import { Radius } from "@lifesg/react-design-system/theme";
-import styled from "styled-components";
 
-const Container = styled.div`
+const container = css`
     border-radius: ${Radius["sm"]};
 `;
 ```
 
 ## Overriding
 
-```tsx
-import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+Refer to [this section](/docs/foundations-advanced--docs#theme-customisation) to
+find out how to apply theme customisation.
 
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    overrides: {
-        radius: {
-            sm: 6, // specify a custom pixel-based value
-        },
-    },
-};
+```tsx
+useApplyStyle(themeElementRef, {
+    [Radius["sm"]]: "6px", // specify a custom length value
+});
 ```

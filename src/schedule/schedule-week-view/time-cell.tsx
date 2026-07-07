@@ -1,17 +1,22 @@
-import React, { RefObject } from "react";
-import { ScheduleEntityProps } from "../types";
-import { SlotLayoutMap, SlotWithService } from "./types";
-import { calculateSlotOffset, minutesToTime } from "../shared";
+import clsx from "clsx";
+import type { RefObject } from "react";
+import type React from "react";
+import { useRef } from "react";
+
+import { useApplyStyle } from "../../theme";
+import { TimeHelper } from "../../util/time-helper";
+import { calculateSlotOffset, minutesToTime } from "../schedule-slot-content";
+import { ScheduleSlotContent } from "../schedule-slot-content/schedule-slot-content";
 import { WithOptionalPopover } from "../shared/with-optional-popover";
-import { HiddenColumns, SlotCell, SlotColumnOverlay } from "./time-cell.styles";
-import { SlotContent } from "./slot-content";
+import type { ScheduleEntityProps } from "../types";
+import * as styles from "./time-cell.styles";
+import type { SlotLayoutMap, SlotWithService } from "./types";
 import {
     calculateCellServiceLayout,
     getMinimumWidthForCell,
     getSlotsInTimeCell,
     getSlotsStartingInTimeCell,
 } from "./week-view-utils";
-import { TimeHelper } from "../../util/time-helper";
 
 interface TimeCellProps {
     dayDate: string;
@@ -22,6 +27,62 @@ interface TimeCellProps {
     blockedMessage?: string;
     onClickHiddenSlots?: (hiddenServices: string[]) => void;
 }
+
+interface SlotOverlayProps {
+    actualWidthPercentage: number;
+    leftPosition: number;
+    children: React.ReactNode;
+}
+
+const SlotOverlay = ({
+    actualWidthPercentage,
+    leftPosition,
+    children,
+}: SlotOverlayProps) => {
+    const overlayRef = useRef<HTMLDivElement>(null);
+
+    useApplyStyle(overlayRef, {
+        [styles.tokens.slotColumnOverlay.leftPosition]: `${leftPosition}`,
+        [styles.tokens.slotColumnOverlay
+            .actualWidthPercentage]: `${actualWidthPercentage}`,
+    });
+
+    return (
+        <div className={styles.slotColumnOverlay} ref={overlayRef}>
+            {children}
+        </div>
+    );
+};
+
+interface HiddenColumnsButtonProps {
+    heightPercentage: number;
+    onClick: () => void;
+    children: React.ReactNode;
+}
+
+const HiddenColumnsButton = ({
+    heightPercentage,
+    onClick,
+    children,
+}: HiddenColumnsButtonProps) => {
+    const hiddenColumnsRef = useRef<HTMLButtonElement>(null);
+
+    useApplyStyle(hiddenColumnsRef, {
+        [styles.tokens.hiddenColumns.minHeight]: `${heightPercentage}%`,
+        [styles.tokens.hiddenColumns.height]: `${heightPercentage}%`,
+    });
+
+    return (
+        <button
+            className={styles.hiddenColumns}
+            ref={hiddenColumnsRef}
+            onClick={onClick}
+            type="button"
+        >
+            {children}
+        </button>
+    );
+};
 
 export const TimeCell: React.FC<TimeCellProps> = ({
     dayDate,
@@ -76,6 +137,19 @@ export const TimeCell: React.FC<TimeCellProps> = ({
     // =============================================================================
     // HELPER FUNCTIONS
     // =============================================================================
+    const getHiddenSlotsInRange = (rangeStart: number, rangeEnd: number) => {
+        return hiddenOverlappingSlots.filter((slot) => {
+            const slotStartMinutes = TimeHelper.timeToMinutes(slot.startTime);
+            const slotEndMinutes = TimeHelper.timeToMinutes(slot.endTime);
+
+            return slotStartMinutes < rangeEnd && slotEndMinutes > rangeStart;
+        });
+    };
+
+    const getHiddenServices = (slots: SlotWithService[]) => {
+        return Array.from(new Set(slots.map((slot) => slot.serviceName)));
+    };
+
     // Calculate 15-minute intervals within this 30-minute cell
     const calculateHiddenSlotsFor15MinIntervals = () => {
         const timeMinutes = TimeHelper.timeToMinutes(time);
@@ -89,40 +163,23 @@ export const TimeCell: React.FC<TimeCellProps> = ({
         };
 
         // Get hidden slots for first 15-minute interval
-        const hiddenSlotsFirstInterval = hiddenOverlappingSlots.filter(
-            (slot) => {
-                const slotStartMinutes = TimeHelper.timeToMinutes(
-                    slot.startTime
-                );
-                const slotEndMinutes = TimeHelper.timeToMinutes(slot.endTime);
-                // Slot overlaps with first 15-minute interval
-                return (
-                    slotStartMinutes < timeMinutes + 15 &&
-                    slotEndMinutes > timeMinutes
-                );
-            }
+        const hiddenSlotsFirstInterval = getHiddenSlotsInRange(
+            // Slot overlaps with first 15-minute interval
+            timeMinutes,
+            timeMinutes + 15
         );
-
         // Get hidden slots for second 15-minute interval
-        const hiddenSlotsSecondInterval = hiddenOverlappingSlots.filter(
-            (slot) => {
-                const slotStartMinutes = TimeHelper.timeToMinutes(
-                    slot.startTime
-                );
-                const slotEndMinutes = TimeHelper.timeToMinutes(slot.endTime);
-                // Slot overlaps with second 15-minute interval
-                return (
-                    slotStartMinutes < timeMinutes + 30 &&
-                    slotEndMinutes > timeMinutes + 15
-                );
-            }
+        const hiddenSlotsSecondInterval = getHiddenSlotsInRange(
+            // Slot overlaps with second 15-minute interval
+            timeMinutes + 15,
+            timeMinutes + 30
         );
 
-        const firstIntervalServices = Array.from(
-            new Set(hiddenSlotsFirstInterval.map((slot) => slot.serviceName))
+        const firstIntervalServices = getHiddenServices(
+            hiddenSlotsFirstInterval
         );
-        const secondIntervalServices = Array.from(
-            new Set(hiddenSlotsSecondInterval.map((slot) => slot.serviceName))
+        const secondIntervalServices = getHiddenServices(
+            hiddenSlotsSecondInterval
         );
 
         // Check if the services are different between intervals
@@ -175,15 +232,13 @@ export const TimeCell: React.FC<TimeCellProps> = ({
     // =============================================================================
     const renderSlotWithPopover = (
         slot: SlotWithService,
-        slotIndex: number,
-        serviceIndex: number
+        slotIndex: number
     ) => {
         const offsetTop = calculateSlotOffset(slot.startTime, time);
-        const positionedSlot = {
-            slot,
-            column: serviceIndex,
-            offsetTop,
-        };
+        const duration = TimeHelper.calculateDuration(
+            slot.startTime,
+            slot.endTime
+        );
 
         return (
             <WithOptionalPopover
@@ -191,10 +246,28 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                 containerRef={containerRef}
                 customPopover={slot.customPopover}
             >
-                <SlotContent
-                    positionedSlot={positionedSlot}
-                    blockedMessage={blockedMessage}
-                />
+                <ScheduleSlotContent
+                    slot={slot}
+                    offsetTop={offsetTop}
+                    tokens={styles.tokens.slotContentContainer}
+                    classNames={{
+                        container: styles.slotContentContainer,
+                        blocked: styles.slotContentContainerBlocked,
+                        available: styles.slotContentContainerAvailable,
+                    }}
+                    clickable={!!slot.onClick}
+                >
+                    <span className={styles.slotServiceName}>
+                        {slot.serviceName}
+                    </span>
+                    {duration >= 30 && (
+                        <span className={styles.slotAvailability}>
+                            {slot.status === "blocked"
+                                ? blockedMessage
+                                : `${slot.booked} / ${slot.capacity}`}
+                        </span>
+                    )}
+                </ScheduleSlotContent>
             </WithOptionalPopover>
         );
     };
@@ -203,28 +276,34 @@ export const TimeCell: React.FC<TimeCellProps> = ({
         if (hiddenIntervals.length === 0) return null;
 
         return (
-            <SlotColumnOverlay
+            <SlotOverlay
                 key="hidden-slots-column"
-                $actualWidthPercentage={actualWidthPercentage}
-                $leftPosition={3 * actualWidthPercentage}
+                actualWidthPercentage={actualWidthPercentage}
+                leftPosition={3 * actualWidthPercentage}
             >
                 {hiddenIntervals.map((intervalData) => (
-                    <HiddenColumns
+                    <HiddenColumnsButton
                         key={`hidden-btn-${intervalData.interval.start}-${intervalData.interval.end}`}
-                        $heightPercentage={100 / hiddenIntervals.length}
+                        heightPercentage={100 / hiddenIntervals.length}
                         onClick={() => {
                             onClickHiddenSlots?.(intervalData.hiddenServices);
                         }}
                     >
                         +{intervalData.hiddenServices.length}
-                    </HiddenColumns>
+                    </HiddenColumnsButton>
                 ))}
-            </SlotColumnOverlay>
+            </SlotOverlay>
         );
     };
 
     return (
-        <SlotCell key={time} $dashed={time.endsWith(":00")}>
+        <div
+            key={time}
+            className={clsx(
+                styles.slotCell,
+                time.endsWith(":00") && styles.slotCellDashed
+            )}
+        >
             {cellServiceLayout.visibleServices.map(
                 (serviceName, serviceIndex) => {
                     const serviceSlots = slotsStartingInCell.filter((slot) => {
@@ -239,23 +318,19 @@ export const TimeCell: React.FC<TimeCellProps> = ({
                     const leftPosition = serviceIndex * actualWidthPercentage;
 
                     return (
-                        <SlotColumnOverlay
+                        <SlotOverlay
                             key={serviceName}
-                            $actualWidthPercentage={actualWidthPercentage}
-                            $leftPosition={leftPosition}
+                            actualWidthPercentage={actualWidthPercentage}
+                            leftPosition={leftPosition}
                         >
                             {serviceSlots.map((slot, slotIndex) =>
-                                renderSlotWithPopover(
-                                    slot,
-                                    slotIndex,
-                                    serviceIndex
-                                )
+                                renderSlotWithPopover(slot, slotIndex)
                             )}
-                        </SlotColumnOverlay>
+                        </SlotOverlay>
                     );
                 }
             )}
             {hiddenIntervals.length > 0 && renderHiddenSlots()}
-        </SlotCell>
+        </div>
     );
 };

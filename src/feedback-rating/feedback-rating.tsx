@@ -1,15 +1,14 @@
+import clsx from "clsx";
+import { useEffect, useRef, useState } from "react";
+
+import { Button } from "../button";
 import { VisuallyHidden } from "../shared/accessibility";
-import { Typography } from "../typography/typography";
+import { Typography } from "../typography";
 import { useId } from "../util";
+import * as styles from "./feedback-rating.styles";
 import { FeedbackRatingData } from "./feedback-rating-data";
 import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
-import {
-    ChildContainer,
-    Image,
-    MainContainer,
-    SubmitButton,
-} from "./feedback-rating.styles";
-import { FeedbackRatingProps } from "./types";
+import type { FeedbackRatingProps } from "./types";
 
 export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
     // =========================================================================
@@ -22,8 +21,13 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         rating,
         onRatingChange,
         onSubmit,
+        className,
+        id,
+        "data-testid": testId,
         ...otherProps
     } = props;
+    const [hasImageError, setHasImageError] = useState(false);
+    const imgRef = useRef<HTMLImageElement>(null);
     const internalId = useId();
     const descriptionId = `${internalId}-description`;
     const bannerSrc = imgSrc ?? FeedbackRatingData.IMG;
@@ -33,23 +37,38 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
         buttonLabel ?? FeedbackRatingData.DEFAULT_BUTTON_LABEL;
     const isSubmitDisabled = !rating;
 
+    useEffect(() => {
+        setHasImageError(false);
+
+        if (imgRef.current?.complete && imgRef.current.naturalWidth === 0) {
+            setHasImageError(true);
+        }
+    }, [bannerSrc]);
+
+    const handleImgError = () => {
+        setHasImageError(true);
+    };
+
     return (
-        <MainContainer
+        <div
             role="group"
             aria-labelledby={internalId}
+            className={clsx(styles.mainContainer, className)}
+            id={id}
+            data-testid={testId}
             {...otherProps}
         >
-            {bannerSrc && (
-                <Image
+            {bannerSrc && !hasImageError && (
+                <img
+                    ref={imgRef}
+                    className={styles.image}
                     data-testid="feedback-banner-image"
                     src={bannerSrc}
                     alt=""
-                    onError={(event) =>
-                        (event.currentTarget.style.display = "none")
-                    }
+                    onError={handleImgError}
                 />
             )}
-            <ChildContainer>
+            <div className={styles.childContainer}>
                 <Typography.HeadingSM as="h2" id={internalId} weight="semibold">
                     {componentDescription}
                 </Typography.HeadingSM>
@@ -62,15 +81,16 @@ export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
                 <VisuallyHidden id={descriptionId}>
                     Minimum, 1 star. Maximum, 5 stars.
                 </VisuallyHidden>
-                <SubmitButton
+                <Button
+                    className={styles.submitButton}
                     disabled={isSubmitDisabled}
                     focusableWhenDisabled
                     onClick={onSubmit}
                     type="button"
                 >
                     {resolvedButtonLabel}
-                </SubmitButton>
-            </ChildContainer>
-        </MainContainer>
+                </Button>
+            </div>
+        </div>
     );
 };

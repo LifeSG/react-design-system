@@ -1,31 +1,23 @@
 import { EraserIcon, PencilIcon } from "@lifesg/react-icons";
-import { Suspense, lazy, useContext, useEffect, useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import { ThemeContext } from "styled-components";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+
 import { Button } from "../button";
-import { ButtonWithIcon } from "../button-with-icon";
+import { DashedBorder } from "../dashed-border";
+import { Modal } from "../modal";
 import { ProgressBar } from "../shared/progress-bar";
-import { Breakpoint } from "../theme";
-import { Typography } from "../typography";
-import { ESignatureCanvasRef } from "./e-signature-canvas";
 import {
-    AddSignatureButton,
-    ESignatureContainer,
-    ESignatureDrawable,
-    EditSignatureButton,
-    GrowContainer,
-    Instructions,
-    ModalActionButton,
-    ModalBox,
-    ModalButtons,
-    ModalTitle,
-    ProgressBox,
-    ScrollableModal,
-    SignatureArea,
-    SignatureLine,
-    SignaturePreviewImage,
-} from "./e-signature.styles";
-import { EsignatureProps } from "./types";
+    Border,
+    Breakpoint,
+    Colour,
+    Radius,
+    useMaxWidthMediaQuery,
+    useMediaQuery,
+    useResolvedBreakpointToken,
+} from "../theme";
+import { Typography } from "../typography";
+import * as styles from "./e-signature.styles";
+import type { ESignatureCanvasRef } from "./e-signature-canvas";
+import type { EsignatureProps } from "./types";
 
 // lazy load to fix next.js SSR errors
 const ESignatureCanvas = lazy(async () => ({
@@ -49,12 +41,19 @@ export const ESignature = (props: EsignatureProps) => {
     const [showModal, setShowModal] = useState(false);
     const eSignatureCanvasRef = useRef<ESignatureCanvasRef>(null);
     const [dataURL, setDataURL] = useState<string | null | undefined>(value);
-    const theme = useContext(ThemeContext);
-    const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
-    const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
+    const isMobile = useMaxWidthMediaQuery("sm");
+    const mobileBreakpoint = useResolvedBreakpointToken(Breakpoint["sm-max"]);
     const isMobileLandscape = useMediaQuery({
-        maxHeight: mobileBreakpoint,
-        orientation: "landscape",
+        clauses: [
+            {
+                feature: "orientation",
+                value: "landscape",
+            },
+            {
+                feature: "max-height",
+                value: mobileBreakpoint,
+            },
+        ],
     });
 
     // =============================================================================
@@ -86,7 +85,8 @@ export const ESignature = (props: EsignatureProps) => {
     const renderSignatureArea = () => {
         if (!dataURL) {
             return (
-                <AddSignatureButton
+                <Button
+                    className={styles.addSignatureButton}
                     type="button"
                     styleType="secondary"
                     aria-label="Add signature"
@@ -95,29 +95,33 @@ export const ESignature = (props: EsignatureProps) => {
                     disabled={disabled}
                 >
                     Add signature
-                </AddSignatureButton>
+                </Button>
             );
         }
 
         return (
             <>
-                <SignaturePreviewImage src={dataURL} alt="Signature preview" />
-                <EditSignatureButton
+                <img
+                    className={styles.signaturePreviewImage}
+                    src={dataURL}
+                    alt="Signature preview"
+                />
+                <Button
+                    className={styles.editSignatureButton}
                     styleType="light"
                     onClick={() => setShowModal(true)}
                     id={id}
+                    icon={<PencilIcon />}
                     aria-label="Edit signature"
                     disabled={disabled}
-                >
-                    <PencilIcon />
-                </EditSignatureButton>
+                />
             </>
         );
     };
 
     const renderLoadingIndicator = () => {
         return (
-            <ProgressBox>
+            <div className={styles.progressBox}>
                 {loadingLabel && (
                     <Typography.BodyMD>{loadingLabel}</Typography.BodyMD>
                 )}
@@ -125,19 +129,44 @@ export const ESignature = (props: EsignatureProps) => {
                     progress={loadingProgress ?? 0}
                     data-testid={`${id || "e-signature"}-progress-bar`}
                 />
-            </ProgressBox>
+            </div>
         );
     };
 
     const renderModal = () => {
         return (
-            <ScrollableModal data-testid="signature-modal" show={showModal}>
-                <GrowContainer>
-                    <ModalBox onClose={() => setShowModal(false)}>
-                        <ModalTitle>Signature</ModalTitle>
-                        <ESignatureContainer>
-                            <ESignatureDrawable>
-                                <SignatureLine />
+            <Modal
+                className={styles.scrollableModal}
+                data-testid="signature-modal"
+                show={showModal}
+            >
+                <div
+                    className={styles.growContainer}
+                    data-mobile-landscape={isMobileLandscape}
+                >
+                    <Modal.Box
+                        className={styles.modalBox}
+                        data-mobile-landscape={isMobileLandscape}
+                        onClose={() => setShowModal(false)}
+                    >
+                        <h2
+                            className={styles.modalTitle}
+                            data-mobile-landscape={isMobileLandscape}
+                        >
+                            Signature
+                        </h2>
+                        <div
+                            className={styles.eSignatureContainer}
+                            data-mobile-landscape={isMobileLandscape}
+                        >
+                            <div
+                                className={styles.eSignatureDrawable}
+                                data-mobile-landscape={isMobileLandscape}
+                            >
+                                <div
+                                    className={styles.signatureLine}
+                                    data-mobile-landscape={isMobileLandscape}
+                                />
                                 <Suspense fallback={null}>
                                     {showModal && (
                                         <ESignatureCanvas
@@ -146,14 +175,17 @@ export const ESignature = (props: EsignatureProps) => {
                                         />
                                     )}
                                 </Suspense>
-                            </ESignatureDrawable>
-                        </ESignatureContainer>
-                        <ModalButtons>
-                            <ModalActionButton
-                                as={
-                                    isMobileLandscape
-                                        ? ButtonWithIcon.Small
-                                        : ButtonWithIcon.Default
+                            </div>
+                        </div>
+                        <div
+                            className={styles.modalButtons}
+                            data-mobile-landscape={isMobileLandscape}
+                        >
+                            <Button
+                                className={styles.modalActionButton}
+                                data-mobile-landscape={isMobileLandscape}
+                                sizeType={
+                                    isMobileLandscape ? "small" : "default"
                                 }
                                 type="button"
                                 styleType={
@@ -165,37 +197,49 @@ export const ESignature = (props: EsignatureProps) => {
                                 onClick={handleClearDrawing}
                             >
                                 Clear
-                            </ModalActionButton>
-                            <ModalActionButton
-                                as={
-                                    isMobileLandscape
-                                        ? Button.Small
-                                        : Button.Default
+                            </Button>
+                            <Button
+                                className={styles.modalActionButton}
+                                data-mobile-landscape={isMobileLandscape}
+                                sizeType={
+                                    isMobileLandscape ? "small" : "default"
                                 }
                                 type="button"
                                 onClick={handleClickSave}
                             >
                                 Save
-                            </ModalActionButton>
-                        </ModalButtons>
-                    </ModalBox>
-                </GrowContainer>
-            </ScrollableModal>
+                            </Button>
+                        </div>
+                    </Modal.Box>
+                </div>
+            </Modal>
         );
     };
 
     const renderDescription = () => {
         if (!description) return null;
-        return <Instructions>{description}</Instructions>;
+        return (
+            <Typography.BodySM className={styles.instructions}>
+                {description}
+            </Typography.BodySM>
+        );
     };
 
     return (
         <div {...otherProps}>
-            <SignatureArea $disabled={disabled}>
+            <DashedBorder
+                className={styles.signatureArea}
+                thickness={Border["width-040"]}
+                radius={Radius["sm"]}
+                colour={disabled ? Colour["border-disabled"] : Colour["border"]}
+                backgroundColor={
+                    disabled ? Colour["bg-disabled"] : Colour["bg"]
+                }
+            >
                 {typeof loadingProgress === "number"
                     ? renderLoadingIndicator()
                     : renderSignatureArea()}
-            </SignatureArea>
+            </DashedBorder>
             {renderModal()}
             {renderDescription()}
         </div>

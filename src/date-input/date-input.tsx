@@ -1,21 +1,20 @@
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
-import {
+
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import { InputWrapper } from "../shared/input-wrapper";
+import type {
     CalendarAction,
-    CalendarDropdown,
     InternalCalendarRef,
 } from "../shared/internal-calendar";
-import {
-    StandaloneDateInput,
-    StandaloneDateInputRef,
-} from "../shared/standalone-date-input/standalone-date-input";
+import { CalendarDropdown } from "../shared/internal-calendar";
+import type { StandaloneDateInputRef } from "../shared/standalone-date-input/standalone-date-input";
+import { StandaloneDateInput } from "../shared/standalone-date-input/standalone-date-input";
 import { DateInputHelper } from "../util";
-import { Container } from "./date-input.style";
-import { DateInputProps } from "./types";
+import * as styles from "./date-input.styles";
+import type { DateInputProps } from "./types";
 
 export const DateInput = ({
     minDate,
@@ -35,6 +34,7 @@ export const DateInput = ({
     allowDisabledSelection,
     zIndex,
     dropdownRootNode,
+    className,
     ...otherProps
 }: DateInputProps) => {
     // =============================================================================
@@ -219,19 +219,20 @@ export const DateInput = ({
     // =============================================================================
     const renderInput = () => {
         return (
-            <Container
+            <InputWrapper
                 role="group"
                 tabIndex={0}
                 ref={nodeRef}
                 onBlur={handleBlur}
                 onFocus={handleFocus}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $focused={focused}
-                $error={error}
+                disabled={disabled}
+                readOnly={readOnly}
+                focused={focused}
+                error={error}
                 id={id}
                 data-testid={otherProps["data-testid"]}
                 aria-disabled={disabled}
+                className={clsx(styles.container, className)}
                 {...otherProps}
             >
                 <StandaloneDateInput
@@ -245,7 +246,7 @@ export const DateInput = ({
                     hoverValue={hoveredDate}
                     hideInputKeyboard={hideInputKeyboard}
                 />
-            </Container>
+            </InputWrapper>
         );
     };
 

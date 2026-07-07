@@ -1,7 +1,8 @@
+import { css } from "@linaria/core";
+import clsx from "clsx";
 import { useState } from "react";
-import styled, { css } from "styled-components";
-import { V2_Color } from "../../src/v2_color";
-import { V2_Text, V2_TextStyleHelper } from "../../src/v2_text";
+import { Border, Colour, Font, ThemeProvider } from "src/theme";
+import { Typography } from "src/typography";
 
 export interface TabAttribute {
     title: string;
@@ -16,15 +17,18 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
     const [selectedTab, setSelectedTab] = useState<string>(tabs[0].title);
 
     const renderTabs = () => {
-        return tabs.map((tab, index) => {
+        return tabs.map((tab) => {
             return (
-                <Button
-                    key={index}
+                <button
+                    className={clsx(buttonBase, {
+                        [buttonSelected]: selectedTab === tab.title,
+                    })}
+                    key={tab.title}
+                    type="button"
                     onClick={() => setSelectedTab(tab.title)}
-                    $selected={selectedTab === tab.title}
                 >
                     {tab.title}
-                </Button>
+                </button>
             );
         });
     };
@@ -35,72 +39,63 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
             return selectedTabItem.component;
         }
 
-        return <V2_Text.BodySmall>No content</V2_Text.BodySmall>;
+        return <Typography.BodyBL>No content</Typography.BodyBL>;
     };
 
     return (
-        <Wrapper>
-            <ButtonRow>{renderTabs()}</ButtonRow>
-            <Content>{renderContent()}</Content>
-        </Wrapper>
+        <ThemeProvider>
+            <div className={wrapper}>
+                <div className={buttonRow}>{renderTabs()}</div>
+                <div className={content}>{renderContent()}</div>
+            </div>
+        </ThemeProvider>
     );
 };
 
 // =============================================================================
-// STYLE INTERFACE
-// =============================================================================
-interface StyleProps {
-    $selected?: boolean | undefined;
-}
-
-// =============================================================================
 // STYLING
 // =============================================================================
-const Wrapper = styled.div`
+const wrapper = css`
     display: flex;
     flex-direction: column;
     width: 100%;
     border-radius: 4px;
-    background: ${V2_Color.Neutral[8]};
-    border: 1px solid ${V2_Color.Neutral[6]};
+    background: ${Colour["bg"]};
+    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     box-shadow: rgb(0 0 0 / 10%) 0 1px 3px 0;
     padding: 0 0 1rem;
 `;
 
-const ButtonRow = styled.div`
+const buttonRow = css`
     display: flex;
     padding: 1rem;
 `;
 
-const Button = styled.button<StyleProps>`
-    ${V2_TextStyleHelper.getTextStyle("BodySmall", "regular")}
+const buttonBase = css`
+    ${Font["body-md-regular"]}
     border: none;
     background: none;
     cursor: pointer;
     position: relative;
-
-    ${(props) => {
-        if (props.$selected) {
-            return css`
-                &:after {
-                    content: "";
-                    position: absolute;
-                    bottom: -0.5rem;
-                    left: 0;
-                    width: 100%;
-                    background: ${V2_Color.Primary(props)};
-                    height: 4px;
-                }
-            `;
-        }
-    }}
 
     &:not(:last-of-type) {
         margin-right: 1rem;
     }
 `;
 
-const Content = styled.div`
+const buttonSelected = css`
+    &:after {
+        content: "";
+        position: absolute;
+        bottom: -0.5rem;
+        left: 0;
+        width: 100%;
+        background: ${Colour["text-primary"]};
+        height: 4px;
+    }
+`;
+
+const content = css`
     display: flex;
     align-items: center;
     justify-content: center;

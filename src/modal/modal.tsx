@@ -1,9 +1,27 @@
+import clsx from "clsx";
 import React, { useRef } from "react";
+
+import type { ModalAnimationDirection } from "../modal-v2/types";
 import { Overlay } from "../overlay/overlay";
 import { useViewport } from "../shared/hooks";
+import { useApplyStyle } from "../theme";
 import { useEvent } from "../util";
-import { Container } from "./modal.styles";
-import { ModalProps } from "./types";
+import * as styles from "./modal.styles";
+import type { ModalProps } from "./types";
+
+const ANIMATION_FROM_CLASS_MAP: Record<ModalAnimationDirection, string> = {
+    top: styles.containerFromTop,
+    bottom: styles.containerFromBottom,
+    left: styles.containerFromLeft,
+    right: styles.containerFromRight,
+};
+
+const ANIMATION_FROM_SHOW_CLASS_MAP: Record<ModalAnimationDirection, string> = {
+    top: styles.containerFromTopShow,
+    bottom: styles.containerFromBottomShow,
+    left: styles.containerFromLeftShow,
+    right: styles.containerFromRightShow,
+};
 
 export const Modal = ({
     id = "modal",
@@ -15,6 +33,7 @@ export const Modal = ({
     zIndex,
     onOverlayClick,
     dismissKeyboardOnShow = true,
+    className,
     ...otherProps
 }: ModalProps): JSX.Element => {
     // =============================================================================
@@ -30,8 +49,14 @@ export const Modal = ({
         onBeforeStart: dismissKeyboard,
     });
     const childRef = useRef<HTMLDivElement>(null);
+    const containerRef = useRef<HTMLDivElement>(null);
     const childWithRef =
         children && React.cloneElement(children, { ref: childRef });
+
+    useApplyStyle(containerRef, {
+        [styles.tokens.container.verticalHeight]:
+            verticalHeight == null ? null : `${verticalHeight}px`,
+    });
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -47,16 +72,24 @@ export const Modal = ({
             containerRef={childRef}
             zIndex={zIndex}
         >
-            <Container
-                $show={show}
-                $ready={ready}
-                $animationFrom={animationFrom}
+            <div
+                ref={containerRef}
                 data-testid={id}
-                $verticalHeight={verticalHeight}
                 {...otherProps}
+                className={clsx(
+                    styles.container,
+                    ANIMATION_FROM_CLASS_MAP[animationFrom],
+                    show && ready
+                        ? [
+                              ANIMATION_FROM_SHOW_CLASS_MAP[animationFrom],
+                              styles.containerShow,
+                          ]
+                        : styles.containerHide,
+                    className
+                )}
             >
                 {childWithRef}
-            </Container>
+            </div>
         </Overlay>
     );
 };

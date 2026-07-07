@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
-import { Toggle } from "src/toggle";
 import { Form } from "src/form";
+import { Toggle } from "src/toggle";
 
 type Component = typeof Toggle;
 

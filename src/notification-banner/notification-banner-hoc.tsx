@@ -1,7 +1,8 @@
 import DOMPurify from "dompurify";
 import React from "react";
+
 import { NBComponent, NotificationBanner } from "./notification-banner";
-import {
+import type {
     ContentLinkAttributes,
     ContentTextAttributes,
     NotificationBannerWithForwardedRefProps,

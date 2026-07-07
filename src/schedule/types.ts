@@ -1,4 +1,6 @@
-import { PopoverV2TriggerType } from "../popover-v2";
+import type { RefObject } from "react";
+
+import type { PopoverTriggerType } from "../popover";
 
 export type ScheduleCellType = "booked" | "available" | "blocked" | "pending";
 
@@ -11,7 +13,7 @@ export interface ScheduleEntityProps {
 }
 
 export interface SchedulePopoverProps {
-    trigger: PopoverV2TriggerType;
+    trigger: PopoverTriggerType;
     content: string | JSX.Element | (() => React.ReactNode);
     delay?: { open?: number; close?: number } | undefined;
     offset?: number | undefined;
@@ -44,6 +46,16 @@ export interface ScheduleProps {
         | undefined;
     blockedMessage?: string | undefined;
     onClickHiddenSlots?: ((hiddenServices: string[]) => void) | undefined;
+}
+
+export interface CommonScheduleViewProps {
+    date: string;
+    loading: boolean;
+    minTime: string;
+    maxTime: string;
+    initialScrollTime?: string | undefined;
+    containerRef: RefObject<HTMLDivElement>;
+    blockedMessage?: string | undefined;
 }
 
 export interface ScheduleSlotProps {

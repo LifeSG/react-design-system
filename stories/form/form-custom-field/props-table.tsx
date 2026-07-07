@@ -1,5 +1,6 @@
-import { ApiTable } from "../../storybook-common/api-table";
-import { ApiTableSectionProps } from "../../storybook-common/api-table/types";
+import { ApiTable } from "stories/storybook-common/api-table";
+import type { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
+
 import { SHARED_FORM_PROPS_DATA } from "../shared-props-data";
 
 const DATA: ApiTableSectionProps[] = [
@@ -15,21 +16,6 @@ const DATA: ApiTableSectionProps[] = [
                 name: "id",
                 description: "The unique identifier of the component",
                 propTypes: ["string"],
-            },
-            {
-                name: "disabled",
-                description: (
-                    <>
-                        Indicates if the component is disabled and a disabled
-                        display is to be present for the label.
-                        <br />
-                        <strong>
-                            (Note: You will need to handle the disabled state of
-                            the custom component yourself)
-                        </strong>
-                    </>
-                ),
-                propTypes: ["boolean"],
             },
         ],
     },

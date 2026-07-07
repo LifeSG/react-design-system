@@ -16,8 +16,6 @@ import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
 
 <Canvas of={ErrorDisplayStories.Default} />
 
-## Other usages
-
 ## With action button
 
 You can also add an action button to be present in the `ErrorDisplay`. The action button will
@@ -48,7 +46,7 @@ The `ErrorDisplay` component is customisable according to your project's needs. 
 
 <Canvas of={ErrorDisplayStories.CustomError} />
 
-If you require customisations down to the style, you can use the relevant `data-id` properties of each element.
+If you require customisations down to the style, you can use the relevant `data-id` properties of each element as CSS selectors.
 
 | Element     | Data id                       |
 | ----------- | ----------------------------- |
@@ -56,14 +54,18 @@ If you require customisations down to the style, you can use the relevant `data-
 | title       | `"error-display-title"`       |
 | description | `"error-display-description"` |
 
-```tsx
-// If you are using Styled Components
+### Example
 
-export const CustomErrorDisplay = styled(ErrorDisplay)`
-    [data-id="error-display-image"] {
-        /* Your styles here */
-    }
-`;
+```css
+.customErrorDisplay [data-id="error-display-image"] {
+    /* Your styles here */
+}
+```
+
+```tsx
+export const CustomErrorDisplay = () => (
+    <ErrorDisplay className="customErrorDisplay" type="400" />
+);
 ```
 
 ## Variants

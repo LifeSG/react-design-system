@@ -1,12 +1,11 @@
 import { RefreshIcon } from "@lifesg/react-icons";
-import { RefObject } from "react";
-import {
-    NavigationHeaderSubtitleWrapper,
-    NavigationHeaderWrapper,
-    StyledDateNavigator,
-    StyledRefreshButton,
-    StyledResultText,
-} from "./timetable-header.style";
+import clsx from "clsx";
+import type { RefObject } from "react";
+
+import { Button } from "../../button";
+import { DateNavigator } from "../../date-navigator";
+import { Typography } from "../../typography";
+import * as styles from "./timetable-header.styles";
 
 interface TimeTableHeaderProps {
     selectedDate: string;
@@ -66,33 +65,37 @@ export const TimeTableHeader = ({
     const renderRecordsSection = () => {
         if (totalRecords === undefined) return <></>;
         return (
-            <NavigationHeaderSubtitleWrapper>
-                <StyledResultText
+            <div className={styles.navigationHeaderSubtitleWrapper}>
+                <Typography.BodySM
+                    className={styles.resultText}
                     data-testid="timetable-records-results"
                     weight={"semibold"}
                 >
                     {totalRecords} result{totalRecords !== 1 ? "s" : ""} found
-                </StyledResultText>
+                </Typography.BodySM>
                 {onRefresh && (
-                    <StyledRefreshButton
+                    <Button
                         data-testid="timetable-records-refresh-btn"
                         aria-label="Refresh timetable records"
                         styleType="light"
                         sizeType="small"
                         disabled={loading}
                         onClick={handleRefresh}
-                        $loading={loading}
-                    >
-                        <RefreshIcon />
-                    </StyledRefreshButton>
+                        className={clsx(
+                            styles.refreshButton,
+                            loading && styles.refreshButtonLoading
+                        )}
+                        icon={<RefreshIcon />}
+                    />
                 )}
-            </NavigationHeaderSubtitleWrapper>
+            </div>
         );
     };
 
     return (
-        <NavigationHeaderWrapper>
-            <StyledDateNavigator
+        <div className={styles.navigationHeaderWrapper}>
+            <DateNavigator
+                className={styles.dateNavigator}
                 selectedDate={selectedDate}
                 loading={loading}
                 {...otherProps}
@@ -101,6 +104,6 @@ export const TimeTableHeader = ({
                 onCalendarDateSelect={onCalendarDateSelect}
             />
             {renderRecordsSection()}
-        </NavigationHeaderWrapper>
+        </div>
     );
 };

@@ -1,5 +1,6 @@
-import { RefObject } from "react";
-import {
+import type { RefObject } from "react";
+
+import type {
     CommonCalendarProps,
     YearMonthDisplay,
 } from "../shared/internal-calendar/types";

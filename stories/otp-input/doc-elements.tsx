@@ -1,4 +1,5 @@
-import { Button, Card } from "../../src";
+import { Button } from "src/button";
+import { Card } from "src/card";
 
 export const CustomContent = ({
     countdown,

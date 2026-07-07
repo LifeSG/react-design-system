@@ -1,14 +1,9 @@
 import { render, screen } from "@testing-library/react";
-
-import {
-    BookingSGTheme,
-    ErrorDisplay,
-    ErrorDisplayType,
-    LifeSGTheme,
-} from "../../src";
-import { getErrorDisplayData } from "../../src/error-display/error-display-data";
-import { ThemeProvider } from "styled-components";
 import React from "react";
+import type { ErrorDisplayType } from "src";
+import { ErrorDisplay } from "src";
+import { getErrorDisplayData } from "src/error-display/error-display-data";
+import { ThemeProvider } from "src/theme";
 
 // =============================================================================
 // UNIT TESTS
@@ -19,28 +14,23 @@ describe("ErrorDisplay", () => {
     });
 
     it("should render the component", () => {
-        render(
-            <ThemeProvider theme={LifeSGTheme}>
-                <ErrorDisplay type="404" />
-            </ThemeProvider>
-        );
+        renderErrorDisplay(<ErrorDisplay type="404" />);
 
-        const title = getErrorDisplayData("404", "lifesg", LifeSGTheme)!.title;
-        expect(screen.getByRole("heading", { level: 2, name: title }));
+        const title = getErrorDisplayData("404", "lifesg")!.title;
+        expect(
+            screen.getByRole("heading", { level: 2, name: title })
+        ).toBeInTheDocument();
     });
 
     it("should render action button if prop is provided", () => {
         const buttonLabel = "custom button";
         const actionButton = {
             children: buttonLabel,
-
             onClick: () => {},
         };
 
-        render(
-            <ThemeProvider theme={LifeSGTheme}>
-                <ErrorDisplay type="404" actionButton={actionButton} />
-            </ThemeProvider>
+        renderErrorDisplay(
+            <ErrorDisplay type="404" actionButton={actionButton} />
         );
 
         expect(
@@ -49,11 +39,7 @@ describe("ErrorDisplay", () => {
     });
 
     it("should be able to render custom title if specified", () => {
-        render(
-            <ThemeProvider theme={LifeSGTheme}>
-                <ErrorDisplay type="404" title={CUSTOM_TITLE} />
-            </ThemeProvider>
-        );
+        renderErrorDisplay(<ErrorDisplay type="404" title={CUSTOM_TITLE} />);
 
         expect(
             screen.getByRole("heading", { level: 2, name: CUSTOM_TITLE })
@@ -61,15 +47,13 @@ describe("ErrorDisplay", () => {
     });
 
     it("should not render any text content if the imageOnly prop is specified", () => {
-        render(
-            <ThemeProvider theme={LifeSGTheme}>
-                <ErrorDisplay
-                    type="404"
-                    title={CUSTOM_TITLE}
-                    description={CUSTOM_DESCRIPTION}
-                    imageOnly
-                />
-            </ThemeProvider>
+        renderErrorDisplay(
+            <ErrorDisplay
+                type="404"
+                title={CUSTOM_TITLE}
+                description={CUSTOM_DESCRIPTION}
+                imageOnly
+            />
         );
 
         expect(
@@ -80,30 +64,26 @@ describe("ErrorDisplay", () => {
 
     describe("description", () => {
         it("should be able to render custom description", () => {
-            render(
-                <ThemeProvider theme={LifeSGTheme}>
-                    <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
-                </ThemeProvider>
+            renderErrorDisplay(
+                <ErrorDisplay type="404" description={CUSTOM_DESCRIPTION} />
             );
 
             expect(screen.getByText(CUSTOM_DESCRIPTION)).toBeInTheDocument();
         });
 
         it("should be able to render JSX.Element", () => {
-            render(
-                <ThemeProvider theme={LifeSGTheme}>
-                    <ErrorDisplay
-                        type="404"
-                        description={<div>{CUSTOM_DESCRIPTION}</div>}
-                    />
-                </ThemeProvider>
+            renderErrorDisplay(
+                <ErrorDisplay
+                    type="404"
+                    description={<div>{CUSTOM_DESCRIPTION}</div>}
+                />
             );
 
             expect(screen.getByText(CUSTOM_DESCRIPTION)).toBeInTheDocument();
         });
     });
 
-    describe("ErrorDisplay components", () => {
+    describe("type", () => {
         const testData = [
             ["400"],
             ["403"],
@@ -127,24 +107,24 @@ describe("ErrorDisplay", () => {
             ["partially-supported-browser"],
         ] as const;
 
-        test.each(testData)(
+        it.each(testData)(
             "should render %s error correctly",
             (type: ErrorDisplayType) => {
-                render(
-                    <ThemeProvider theme={LifeSGTheme}>
-                        <ErrorDisplay type={type} />
-                    </ThemeProvider>
-                );
+                renderErrorDisplay(<ErrorDisplay type={type} />);
 
-                const error = getErrorDisplayData(type, "lifesg", LifeSGTheme)!;
+                const error = getErrorDisplayData(type, "lifesg")!;
+                const imgPaths = error.img!;
 
                 expect(
                     screen.getByRole("heading", { level: 2, name: error.title })
                 ).toBeInTheDocument();
 
-                expect(screen.getByRole("img")).toHaveAttribute(
-                    "src",
-                    error.img!.src
+                const img = screen.getByRole("img");
+                expect(img).toHaveAttribute("src", imgPaths.src);
+                expect(img).toHaveAttribute("srcset", imgPaths.srcSet);
+                expect(img).toHaveAttribute(
+                    "sizes",
+                    `(max-width: ${MOBILE_BREAKPOINT}) 400px, (max-width: ${TABLET_BREAKPOINT}) 800px, 1200px`
                 );
 
                 expect(
@@ -153,20 +133,14 @@ describe("ErrorDisplay", () => {
             }
         );
 
-        test.each(testData)(
+        it.each(testData)(
             "should render bookingsg %s error correctly",
             (type: ErrorDisplayType) => {
-                render(
-                    <ThemeProvider theme={BookingSGTheme}>
-                        <ErrorDisplay type={type} />
-                    </ThemeProvider>
-                );
+                renderErrorDisplay(<ErrorDisplay type={type} />, {
+                    v4Theme: "bookingsg",
+                });
 
-                const error = getErrorDisplayData(
-                    type,
-                    "bookingsg",
-                    BookingSGTheme
-                )!;
+                const error = getErrorDisplayData(type, "bookingsg")!;
 
                 expect(
                     screen.getByRole("heading", {
@@ -179,6 +153,14 @@ describe("ErrorDisplay", () => {
                     "src",
                     error.img!.src
                 );
+                expect(screen.getByRole("img")).toHaveAttribute(
+                    "srcset",
+                    error.img!.srcSet
+                );
+                expect(screen.getByRole("img")).toHaveAttribute(
+                    "sizes",
+                    error.img!.sizes
+                );
 
                 expect(
                     screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
@@ -186,14 +168,13 @@ describe("ErrorDisplay", () => {
             }
         );
 
-        test("should use the specified illustration based on the illustrationScheme prop", () => {
-            render(
-                <ThemeProvider theme={BookingSGTheme}>
-                    <ErrorDisplay type={"400"} illustrationScheme="lifesg" />
-                </ThemeProvider>
+        it("should use the specified illustration based on the illustrationScheme prop", () => {
+            renderErrorDisplay(
+                <ErrorDisplay type={"400"} illustrationScheme="lifesg" />,
+                { v4Theme: "bookingsg" }
             );
 
-            const error = getErrorDisplayData("400", "lifesg", LifeSGTheme)!;
+            const error = getErrorDisplayData("400", "lifesg")!;
 
             expect(
                 screen.getByRole("heading", {
@@ -205,6 +186,14 @@ describe("ErrorDisplay", () => {
             expect(screen.getByRole("img")).toHaveAttribute(
                 "src",
                 error.img!.src
+            );
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "srcset",
+                error.img!.srcSet
+            );
+            expect(screen.getByRole("img")).toHaveAttribute(
+                "sizes",
+                error.img!.sizes
             );
 
             expect(
@@ -218,16 +207,11 @@ describe("ErrorDisplay", () => {
             const type = "maintenance";
             const additionalProps = { dateString: "01/01/2023" };
 
-            render(
-                <ThemeProvider theme={LifeSGTheme}>
-                    <ErrorDisplay
-                        type={type}
-                        additionalProps={additionalProps}
-                    />
-                </ThemeProvider>
+            renderErrorDisplay(
+                <ErrorDisplay type={type} additionalProps={additionalProps} />
             );
 
-            const error = getErrorDisplayData(type, "lifesg", LifeSGTheme)!;
+            const error = getErrorDisplayData(type, "lifesg")!;
             const errorDescription = transformJSXElementToString(
                 error.renderDescription!(additionalProps) as JSX.Element
             );
@@ -235,6 +219,52 @@ describe("ErrorDisplay", () => {
             expect(
                 screen.getByTestId(ERROR_DESCRIPTION_TEST_ID).textContent
             ).toBe(errorDescription);
+        });
+    });
+
+    describe("inactivity timer accessibility", () => {
+        it("should render hidden live reminder text when secondsLeft is provided", () => {
+            renderErrorDisplay(
+                <ErrorDisplay
+                    type="inactivity"
+                    additionalProps={{ secondsLeft: 65 }}
+                />
+            );
+
+            const message =
+                "You’ve been inactive for a while. To protect your privacy, you’ll be logged out in 1 minutes 5 seconds.";
+
+            const component = screen.getByTestId("error-display");
+            const liveRegions = component.querySelectorAll(
+                '[aria-live="polite"][aria-atomic="true"]'
+            );
+            expect(
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.textContent?.includes(message)
+                )
+            ).toBe(true);
+
+            const visibleDescription = screen.getByTestId(
+                ERROR_DESCRIPTION_TEST_ID
+            );
+            expect(visibleDescription).toHaveTextContent(
+                "you’ll be logged out in 1 minutes 5 seconds"
+            );
+        });
+
+        it("should not render live reminder text when custom description is provided", () => {
+            renderErrorDisplay(
+                <ErrorDisplay
+                    type="inactivity"
+                    description="custom inactivity description"
+                    additionalProps={{ secondsLeft: 65 }}
+                />
+            );
+
+            const component = screen.getByTestId("error-display");
+            expect(
+                component.querySelector('[aria-live="polite"]')
+            ).not.toBeInTheDocument();
         });
     });
 });
@@ -245,6 +275,8 @@ describe("ErrorDisplay", () => {
 const CUSTOM_TITLE = "custom error";
 const CUSTOM_DESCRIPTION = "custom description";
 const ERROR_DESCRIPTION_TEST_ID = "error-display--description";
+const MOBILE_BREAKPOINT = "480px";
+const TABLET_BREAKPOINT = "1200px";
 
 // =============================================================================
 // HELPER FUNCTIONS
@@ -261,4 +293,15 @@ const transformJSXElementToString = (element: JSX.Element): string => {
     });
 
     return text;
+};
+
+const renderErrorDisplay = (
+    ui: React.ReactElement,
+    options?: {
+        v4Theme?: "lifesg" | "bookingsg";
+    }
+) => {
+    const { v4Theme = "lifesg" } = options || {};
+
+    return render(<ThemeProvider theme={v4Theme}>{ui}</ThemeProvider>);
 };

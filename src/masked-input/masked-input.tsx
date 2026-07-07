@@ -1,25 +1,19 @@
+import { ExclamationTriangleIcon } from "@lifesg/react-icons/exclamation-triangle";
 import { EyeIcon } from "@lifesg/react-icons/eye";
 import { EyeSlashIcon } from "@lifesg/react-icons/eye-slash";
+import clsx from "clsx";
 import { isEmpty } from "lodash";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
-import { VisuallyHidden, concatIds } from "../shared/accessibility";
+
+import { InputGroup } from "../input-group";
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
+import { ComponentLoadingSpinner } from "../shared/component-loading-spinner";
+import { BasicButton } from "../shared/input-wrapper";
+import { useApplyStyle } from "../theme";
+import { Typography } from "../typography";
 import { StringHelper, useId } from "../util";
-import {
-    ClickableErrorWrapper,
-    ErrorIcon,
-    ErrorLabel,
-    ErrorTextContainer,
-    IconContainer,
-    InputGroupWrapper,
-    LoadingLabel,
-    LoadingWrapper,
-    ReadOnlyClickable,
-    ReadOnlyIconContainer,
-    ReadOnlyValueText,
-    Spinner,
-    TryAgainLabel,
-} from "./masked-input.style";
-import { MaskedInputProps } from "./types";
+import * as styles from "./masked-input.styles";
+import type { MaskedInputProps } from "./types";
 
 const Component = (
     {
@@ -45,6 +39,7 @@ const Component = (
         onFocus,
         onBlur,
         onTryAgain,
+        className,
         ...otherProps
     }: MaskedInputProps,
     ref: React.Ref<HTMLInputElement>
@@ -61,10 +56,16 @@ const Component = (
     const inputRef = useRef<HTMLInputElement>(null);
     const tryAgainRef = useRef<HTMLButtonElement>(null);
     const readOnlyButtonRef = useRef<HTMLButtonElement>(null);
+    const iconContainerRef = useRef<HTMLDivElement>(null);
     const isMaskedRef = useRef<boolean>(!disableMask);
     const ariaLabelledBy = otherProps["aria-labelledby"];
 
     useImperativeHandle(ref, () => inputRef.current as HTMLInputElement, []);
+
+    useApplyStyle(iconContainerRef, {
+        [styles.tokens.iconContainer.inactiveColor]: maskIconInactiveColor,
+        [styles.tokens.iconContainer.activeColor]: maskIconActiveColor,
+    });
 
     // =============================================================================
     // EFFECTS
@@ -202,17 +203,19 @@ const Component = (
         const isDisabled = shouldDisableMasking();
 
         return (
-            <IconContainer
+            <div
+                ref={iconContainerRef}
+                className={clsx(
+                    styles.iconContainer,
+                    isDisabled && styles.iconContainerDisabled
+                )}
                 data-testid={`icon-${isMasked ? "masked" : "unmasked"}`}
                 onMouseDown={!isDisabled ? handleIconMouseDown : undefined}
                 onClick={!isDisabled ? handleToggleMask : undefined}
-                $isDisabled={isDisabled}
-                $inactiveColor={maskIconInactiveColor}
-                $activeColor={maskIconActiveColor}
                 aria-hidden="true"
             >
                 {isMasked ? iconUnmask : iconMask}
-            </IconContainer>
+            </div>
         );
     };
 
@@ -224,25 +227,28 @@ const Component = (
                 <VisuallyHidden id={valueId}>
                     {getValueDescription()}
                 </VisuallyHidden>
-                <ReadOnlyClickable
+                <button
                     ref={readOnlyButtonRef}
+                    className={styles.readOnlyClickable}
                     data-testid="masked-input-readonly-button"
                     onClick={!isButtonDisabled ? handleToggleMask : undefined}
                     type="button"
                     aria-labelledby={concatIds(valueId, ariaLabelledBy)}
                     aria-disabled={isButtonDisabled}
                 >
-                    <ReadOnlyValueText>{getValue()}</ReadOnlyValueText>
+                    <span className={styles.readOnlyValueText}>
+                        {getValue()}
+                    </span>
                     {!isButtonDisabled && (
-                        <ReadOnlyIconContainer>
+                        <span className={styles.readOnlyIconContainer}>
                             {isMasked ? (
                                 <EyeIcon data-testid="masked-icon" />
                             ) : (
                                 <EyeSlashIcon data-testid="unmasked-icon" />
                             )}
-                        </ReadOnlyIconContainer>
+                        </span>
                     )}
-                </ReadOnlyClickable>
+                </button>
             </>
         );
     };
@@ -252,25 +258,34 @@ const Component = (
             switch (loadState) {
                 case "fail":
                     return (
-                        <ClickableErrorWrapper
+                        <BasicButton
                             ref={tryAgainRef}
+                            className={styles.clickableErrorWrapper}
                             onClick={handleTryAgain}
                             data-testid="try-again-button"
                             type="button"
                         >
-                            <ErrorTextContainer>
-                                <ErrorIcon />
-                                <ErrorLabel>Error</ErrorLabel>
-                            </ErrorTextContainer>
-                            <TryAgainLabel>Try again?</TryAgainLabel>
-                        </ClickableErrorWrapper>
+                            <span className={styles.errorTextContainer}>
+                                <ExclamationTriangleIcon
+                                    className={styles.errorIcon}
+                                />
+                                <span className={styles.errorLabel}>Error</span>
+                            </span>
+                            <span className={styles.tryAgainLabel}>
+                                Try again?
+                            </span>
+                        </BasicButton>
                     );
                 case "loading":
                     return (
-                        <LoadingWrapper>
-                            <Spinner />
-                            <LoadingLabel>Retrieving...</LoadingLabel>
-                        </LoadingWrapper>
+                        <div className={styles.loadingWrapper}>
+                            <ComponentLoadingSpinner
+                                className={styles.spinner}
+                            />
+                            <Typography.BodyBL className={styles.loadingLabel}>
+                                Retrieving...
+                            </Typography.BodyBL>
+                        </div>
                     );
                 case "success":
                 default:
@@ -279,8 +294,9 @@ const Component = (
         }
 
         return (
-            <InputGroupWrapper
+            <InputGroup
                 ref={inputRef}
+                className={clsx(styles.inputGroupWrapper, className)}
                 data-testid={`${dataTestId || "masked-input"}${
                     isMasked ? "-masked" : "-unmasked"
                 }`}
@@ -298,7 +314,6 @@ const Component = (
                 value={getValue()}
                 readOnly={readOnly}
                 error={error}
-                $isDisabled={shouldDisableMasking()}
                 {...otherProps}
             />
         );

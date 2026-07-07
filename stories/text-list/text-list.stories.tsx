@@ -1,4 +1,5 @@
 import { StarIcon, TickCircleIcon } from "@lifesg/react-icons";
+import { css } from "@linaria/core";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { TextList } from "src/text-list";
 import {
@@ -6,7 +7,7 @@ import {
     StackDecorator,
     StoryDecorator,
 } from "stories/storybook-common";
-import styled from "styled-components";
+
 import { CustomOrderedList } from "./doc-elements";
 
 const meta: Meta = {
@@ -88,11 +89,10 @@ export const TextSize: StoryObj = {
     decorators: [StoryDecorator()],
 };
 
-const StyledListItem = styled.li`
+const styledListItem = css`
     color: teal;
     font-weight: 600;
 `;
-StyledListItem.displayName = "CustomListItem";
 
 export const CustomBullet: StoryObj = {
     render: (_args) => {
@@ -122,16 +122,16 @@ export const CustomBullet: StoryObj = {
                 <TextList.Ul
                     bulletType={<TickCircleIcon width={20} height={20} />}
                 >
-                    <StyledListItem>
+                    <li className={styledListItem}>
                         Lorem ipsum dolor sit amet consectetur adipisicing elit
-                    </StyledListItem>
-                    <StyledListItem>
+                    </li>
+                    <li className={styledListItem}>
                         Inventore blanditiis a, quaerat expedita necessitatibus
                         et facilis rem sed itaque
-                    </StyledListItem>
-                    <StyledListItem>
+                    </li>
+                    <li className={styledListItem}>
                         Assumenda illo ipsam asperiores
-                    </StyledListItem>
+                    </li>
                 </TextList.Ul>
             </>
         );

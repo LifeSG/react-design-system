@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Form } from "src/form";
 import { Toggle } from "src/toggle";
+
 import { VariantDecorator } from "./doc-elements";
 
 type Component = typeof Toggle;

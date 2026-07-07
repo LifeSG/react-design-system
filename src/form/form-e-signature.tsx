@@ -1,6 +1,6 @@
 import { ESignature } from "../e-signature";
 import { FormWrapper } from "./form-wrapper";
-import { FormESignatureProps } from "./types";
+import type { FormESignatureProps } from "./types";
 
 export const FormESignature = (props: FormESignatureProps) => {
     const {
@@ -10,9 +10,6 @@ export const FormESignature = (props: FormESignatureProps) => {
         "data-error-testid": errorTestId,
         "data-testid": testId,
         layoutType,
-        mobileCols,
-        tabletCols,
-        desktopCols,
         xxsCols,
         xsCols,
         smCols,
@@ -30,9 +27,6 @@ export const FormESignature = (props: FormESignatureProps) => {
             errorMessage={errorMessage}
             data-error-testid={errorTestId}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

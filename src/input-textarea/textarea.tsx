@@ -1,21 +1,25 @@
+import clsx from "clsx";
 import React, { useEffect, useState } from "react";
+
+import * as styles from "./textarea.styles";
 import { TextareaCounter } from "./textarea-counter";
-import { Element, Wrapper } from "./textarea.style";
-import { TextareaProps, TextareaRef } from "./types";
+import type { TextareaProps, TextareaRef } from "./types";
 
 // =============================================================================
 // BASE COMPONENT
 // =============================================================================
 const TextareaBaseComponent = (
     {
-        value,
+        className,
         disabled,
         error,
-        rows = 5,
-        prefix,
-        transformValue,
-        onChange,
         maxLength,
+        onChange,
+        prefix,
+        readOnly,
+        rows = 5,
+        transformValue,
+        value,
         ...otherProps
     }: TextareaProps,
     ref: TextareaRef
@@ -112,13 +116,20 @@ const TextareaBaseComponent = (
     };
 
     return (
-        <Element
+        <textarea
             ref={ref}
             disabled={disabled}
             value={getDisplayValue()}
             onChange={handleChange}
             onKeyDown={handleKeyDown}
-            $error={error}
+            readOnly={readOnly}
+            className={clsx(
+                styles.element,
+                (readOnly && styles.elementReadOnly) ||
+                    (disabled && styles.elementDisabled) ||
+                    (error && styles.elementError),
+                className
+            )}
             rows={rows}
             maxLength={
                 prefix && maxLength ? prefix.length + maxLength : maxLength
@@ -175,7 +186,7 @@ const TextareaComponent = (
     // RENDER FUNCTIONS
     // -------------------------------------------------------------------------
     return (
-        <Wrapper>
+        <div className={styles.wrapper}>
             <TextareaBase
                 ref={ref}
                 disabled={disabled}
@@ -194,7 +205,7 @@ const TextareaComponent = (
                     renderCustomCounter={renderCustomCounter}
                 />
             )}
-        </Wrapper>
+        </div>
     );
 };
 

@@ -43,20 +43,38 @@ The footer can accept any `<button>` element.
 
 <Canvas of={ModalV2Stories.Footer} />
 
+## Animation direction
+
+Use the `animationFrom` prop to control where the modal enters from:
+`"top"`, `"bottom"`, `"left"`, or `"right"`.
+
+<Canvas of={ModalV2Stories.AnimationFrom} />
+
 ## Styling slots
 
 Slots come with default margins, but if custom spacing is required, the styles
-can be overridden.
+can be overridden using the `className` prop with a Linaria `css` class.
+
+For reliable cross-environment overrides, prefer using the slot spacer CSS
+variables shown below. Direct margin overrides (for example `margin: 0`) can
+depend on CSS injection order and may behave differently between environments.
 
 ```tsx
-const StyledContent = styled(ModalV2.Content)`
-    /* replace the margins */
-    margin: ${Spacing["spacing-16"]};
+import { css } from "@linaria/core";
+import { Spacing } from "@lifesg/react-design-system/theme";
 
-    /* or reset them and use your preferred property instead */
+const customContent = css`
+    /* reliable: replace slot spacer-driven margins via CSS variables */
+    --fds-internal-modalV2-slotSpacer-firstChildMarginTopWithCloseButton: 0;
+    --fds-internal-modalV2-slotSpacer-firstChildMarginTopNoCloseButton: 0;
+    --fds-internal-modalV2-slotSpacer-contentLastChildMarginBottom: 0;
+
+    /* optional: apply your preferred spacing styles */
     margin: 0;
     padding-inline: ${Spacing["spacing-16"]};
 `;
+
+<ModalV2.Content className={customContent}>...</ModalV2.Content>;
 ```
 
 <Canvas of={ModalV2Stories.StyledSlots} />

@@ -1,5 +1,5 @@
-import { ResourceScheme } from "../theme/types";
-import { InternalDisclaimerLinks } from "./footer-helper";
+import type { ThemeType } from "../theme/types";
+import type { InternalDisclaimerLinks } from "./footer-helper";
 
 const BaseDisclaimerLinks: InternalDisclaimerLinks = {
     privacy: {
@@ -115,7 +115,7 @@ const SupportGoWhereDisclaimerLinks: InternalDisclaimerLinks = {
     },
 };
 
-export const getDefaultDisclaimerLinks = (resourceScheme?: ResourceScheme) => {
+export const getDefaultDisclaimerLinks = (resourceScheme?: ThemeType) => {
     switch (resourceScheme) {
         case "bookingsg":
             return BookingSgDisclaimerLinks;

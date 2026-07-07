@@ -1,6 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useCallback, useEffect, useState } from "react";
-import { FileItemProps, FileUpload } from "src/file-upload";
+import type { FileItemProps } from "src/file-upload";
+import { FileUpload } from "src/file-upload";
 import { SimpleIdGenerator } from "src/util/simple-id-generator";
 
 type Component = typeof FileUpload;

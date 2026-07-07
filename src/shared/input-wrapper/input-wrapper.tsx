@@ -1,180 +1,134 @@
-import styled, { css } from "styled-components";
-import { Border, Colour, Font, Radius, Spacing } from "../../theme";
+import { CrossIcon } from "@lifesg/react-icons/cross";
+import clsx from "clsx";
+import { forwardRef } from "react";
 
-// =============================================================================
-// STYLE INTERFACE, transient props are denoted with $
-// See more https://styled-components.com/docs/api#transient-props
-// =============================================================================
-export interface InputWrapperStyleProps {
-    $disabled?: boolean | undefined;
-    $error?: boolean | undefined;
-    $readOnly?: boolean | undefined;
-    $focused?: boolean | undefined;
-    $position?: "left" | "right" | undefined;
-    $noBorder?: boolean | undefined;
-}
-
-export interface InputStyleProps {
-    $variant?: "small" | "default" | undefined;
-}
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const defaultFocusCss = css`
-    outline-offset: -1px;
-    outline: ${Border["width-020"]} ${Border["solid"]} ${Colour["border-focus"]};
-`;
-
-const readOnlyFocusCss = css`
-    outline-color: ${Colour["border-focus"]};
-`;
-
-const disabledFocusCss = css`
-    outline-color: ${Colour["border-disabled"]};
-`;
-
-const errorFocusCss = css`
-    outline-color: ${Colour["border-error-focus"]};
-`;
-
-const noFocusCss = css`
-    outline: none;
-`;
+import * as styles from "./input-wrapper.styles";
+import type {
+    BasicButtonProps,
+    BasicInputProps,
+    InputBoxProps,
+    InputWrapperProps,
+} from "./types";
 
 /**
- * basic wrapper for input fields that provides the border style but does not
- * prescibe any layout for content
+ * Basic wrapper for input fields that provides the border style but does not
+ * prescribe any layout for content
  */
-export const InputBox = styled.div<InputWrapperStyleProps>`
-    border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
-    border-radius: ${Radius["sm"]};
-    background: ${Colour["bg"]};
-
-    &:focus-within {
-        ${defaultFocusCss}
+export const InputBox = forwardRef<HTMLDivElement, InputBoxProps>(
+    function InputBox(props, ref) {
+        const {
+            disabled,
+            error,
+            readOnly,
+            focused,
+            noBorder,
+            className,
+            ...otherProps
+        } = props;
+        return (
+            <div
+                ref={ref}
+                data-focused={focused}
+                className={clsx(
+                    styles.inputBox,
+                    disabled && styles.inputBoxDisabled,
+                    error && styles.inputBoxError,
+                    readOnly && styles.inputBoxReadOnly,
+                    noBorder && styles.inputBoxNoBorder,
+                    className
+                )}
+                {...otherProps}
+            />
+        );
     }
-    ${(props) => props.$focused && !props.$noBorder && defaultFocusCss}
-
-    ${(props) => {
-        if (props.$readOnly) {
-            return css`
-                border-color: transparent;
-                padding: 0;
-                background: transparent !important;
-
-                &:focus-within {
-                    ${readOnlyFocusCss}
-                }
-                ${props.$focused && readOnlyFocusCss}
-            `;
-        } else if (props.$disabled) {
-            return css`
-                background: ${Colour["bg-disabled"]};
-                cursor: not-allowed;
-
-                &:focus-within {
-                    ${disabledFocusCss}
-                }
-                ${props.$focused && disabledFocusCss}
-            `;
-        } else if (props.$error) {
-            return css`
-                border-color: ${Colour["border-error"]};
-
-                &:focus-within {
-                    ${errorFocusCss}
-                }
-                ${props.$focused && errorFocusCss}
-            `;
-        }
-    }}
-    ${(props) => {
-        if (props.$noBorder) {
-            return css`
-                border-color: transparent;
-                background: transparent;
-                &:focus-within {
-                    ${noFocusCss}
-                }
-            `;
-        }
-    }}
-`;
-
-export const InputWrapper = styled(InputBox)<InputWrapperStyleProps>`
-    display: flex;
-    align-items: center;
-    position: relative;
-    height: max-content;
-    width: 100%;
-    padding: 0 ${Spacing["spacing-16"]} 0
-        ${(props) => (props.$readOnly ? "0" : Spacing["spacing-16"])};
-    flex-direction: ${(props) =>
-        props.$position === "right" ? "row-reverse" : "row"};
-`;
+);
 
 /**
- * standalone native input with stripped-down styles, intended to be used in
+ * Basic wrapper for input fields with spacing and flex layout for content
+ */
+export const InputWrapper = forwardRef<HTMLDivElement, InputWrapperProps>(
+    function InputWrapper(props, ref) {
+        const {
+            disabled,
+            error,
+            readOnly,
+            focused,
+            noBorder,
+            position,
+            className,
+            ...otherProps
+        } = props;
+        return (
+            <div
+                ref={ref}
+                data-focused={focused}
+                className={clsx(
+                    styles.inputBox,
+                    styles.inputWrapper,
+                    disabled && styles.inputBoxDisabled,
+                    error && styles.inputBoxError,
+                    readOnly && styles.inputBoxReadOnly,
+                    noBorder && styles.inputBoxNoBorder,
+                    readOnly && styles.inputWrapperReadOnly,
+                    position === "right" && styles.inputWrapperPositionRight,
+                    className
+                )}
+                {...otherProps}
+            />
+        );
+    }
+);
+
+/**
+ * Standalone native input with stripped-down styles, intended to be used in
  * combination with `InputWrapper` or other wrappers to build composite widgets
  */
-export const BasicInput = styled.input<InputStyleProps>`
-    ${(props) =>
-        props.$variant === "small"
-            ? Font["body-md-regular"]
-            : Font["body-baseline-regular"]}
-    color: ${Colour["text"]};
-    display: block;
-    background: transparent;
-    border: none;
-    outline: none;
-    box-shadow: none;
-    padding: 0;
-    margin: 0;
-
-    &:disabled {
-        color: ${Colour["text-subtler"]};
-
-        &:hover {
-            cursor: not-allowed;
-        }
+export const BasicInput = forwardRef<HTMLInputElement, BasicInputProps>(
+    function BasicInput(props, ref) {
+        const { variant, className, ...otherProps } = props;
+        return (
+            <input
+                ref={ref}
+                className={clsx(
+                    styles.basicInput,
+                    variant === "small" && styles.basicInputSmall,
+                    className
+                )}
+                {...otherProps}
+            />
+        );
     }
-
-    &::placeholder,
-    &::-webkit-input-placeholder {
-        color: ${Colour["text-subtler"]};
-    }
-
-    // Chrome, Safari, Edge, Opera
-    &::-webkit-outer-spin-button,
-    &::-webkit-inner-spin-button {
-        -webkit-appearance: none;
-        margin: 0;
-    }
-
-    // Safari (remove top shadow)
-    --webkit-appearance: none;
-
-    // Firefox
-    --moz-appearance: textfield;
-`;
+);
 
 /**
- * standalone native button with stripped-down styles
+ * Standalone native button with stripped-down styles
  */
-export const BasicButton = styled.button<InputStyleProps>`
-    background: transparent;
-    border: none;
-    outline: none;
-
-    &:focus,
-    &:active {
-        outline: none;
+export const BasicButton = forwardRef<HTMLButtonElement, BasicButtonProps>(
+    function BasicButton({ className, ...props }, ref) {
+        return (
+            <button
+                ref={ref}
+                className={clsx(styles.basicButton, className)}
+                {...props}
+            />
+        );
     }
+);
 
-    &:focus-visible {
-        outline: ${Border["width-010"]} ${Border["solid"]}
-            ${Colour["border-focus"]};
-        border-radius: ${Radius["sm"]};
+/**
+ * Clear button with touch-target padding, offsetting negative margin, and
+ * a fixed 2px focus outline
+ */
+export const ClearButton = forwardRef<HTMLButtonElement, BasicButtonProps>(
+    function ClearButton({ className, ...props }, ref) {
+        return (
+            <button
+                ref={ref}
+                className={clsx(styles.clearButton, className)}
+                {...props}
+            >
+                <CrossIcon className={styles.clearIcon} aria-hidden />
+            </button>
+        );
     }
-`;
+);

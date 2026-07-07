@@ -1,24 +1,29 @@
-import { OpenChangeReason } from "@floating-ui/react";
+import type { OpenChangeReason } from "@floating-ui/react";
 import isEmpty from "lodash/isEmpty";
 import isEqual from "lodash/isEqual";
-import React, { useEffect, useRef, useState } from "react";
-import {
-    ExpandableElement,
-    NestedDropdownList,
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
+import type {
     NestedDropdownListItemProps,
     NestedDropdownListLocalItem,
+} from "../shared/dropdown-list";
+import {
     buildKeyPathToSet,
+    ExpandableElement,
+    NestedDropdownList,
 } from "../shared/dropdown-list";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import {
     LabelContainer,
     PlaceholderLabel,
     ValueLabel,
-} from "../shared/dropdown-wrapper/dropdown-wrapper.styles";
+} from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper, useId } from "../util";
-import { SelectedItem, getSelectedItems, getSelectedSubItems } from "./helpers";
-import { InputNestedMultiSelectProps } from "./types";
+import type { SelectedItem } from "./helpers";
+import { getSelectedItems, getSelectedSubItems } from "./helpers";
+import type { InputNestedMultiSelectProps } from "./types";
 
 export const InputNestedMultiSelect = <V1, V2, V3>({
     placeholder = "Select",
@@ -248,13 +253,13 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     const renderLabel = () => {
         if (isEmpty(selectedItems)) {
             return (
-                <PlaceholderLabel $truncateType={optionTruncationType}>
+                <PlaceholderLabel truncateType={optionTruncationType}>
                     {placeholder}
                 </PlaceholderLabel>
             );
         } else {
             return (
-                <ValueLabel $truncateType={optionTruncationType}>
+                <ValueLabel truncateType={optionTruncationType}>
                     {truncateValue(getDisplayValue())}
                 </ValueLabel>
             );
@@ -262,7 +267,7 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     };
 
     const renderSelectorContent = () => (
-        <LabelContainer ref={labelContainerRef} $disabled={disabled}>
+        <LabelContainer ref={labelContainerRef} disabled={disabled}>
             {renderLabel()}
         </LabelContainer>
     );
@@ -277,10 +282,10 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <ExpandableElement
                     ref={selectorRef}

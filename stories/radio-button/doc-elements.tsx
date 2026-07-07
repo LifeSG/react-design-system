@@ -1,10 +1,15 @@
+import { css } from "@linaria/core";
+import clsx from "clsx";
+import type { ComponentPropsWithoutRef } from "react";
 import { Font } from "src/theme";
-import styled from "styled-components";
+
+type DivProps = ComponentPropsWithoutRef<"div">;
+type LabelProps = ComponentPropsWithoutRef<"label">;
 
 // =============================================================================
 // STYLING
 // =============================================================================
-export const OptionContainer = styled.div`
+const optionContainer = css`
     display: flex;
     align-items: center;
     gap: 0.5rem;
@@ -13,16 +18,30 @@ export const OptionContainer = styled.div`
         margin-bottom: 0.5rem;
     }
 `;
+
+export const OptionContainer = ({ className, ...props }: DivProps) => (
+    <div {...props} className={clsx(optionContainer, className)} />
+);
 OptionContainer.displayName = "div";
 
-export const OptionLabel = styled.label`
+const optionLabel = css`
     ${Font["body-baseline-regular"]}
     cursor: pointer;
 `;
+
+export const OptionLabel = ({ className, children, ...props }: LabelProps) => (
+    <label {...props} className={clsx(optionLabel, className)}>
+        {children}
+    </label>
+);
 OptionLabel.displayName = "label";
 
-export const RadioGroupLabel = styled.div`
+const radioGroupLabel = css`
     ${Font["body-baseline-semibold"]}
     margin-bottom: 1rem;
 `;
+
+export const RadioGroupLabel = ({ className, ...props }: DivProps) => (
+    <div {...props} className={clsx(radioGroupLabel, className)} />
+);
 RadioGroupLabel.displayName = "div";

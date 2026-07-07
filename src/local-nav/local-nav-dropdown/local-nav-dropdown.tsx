@@ -1,18 +1,14 @@
+import { ChevronDownIcon } from "@lifesg/react-icons/chevron-down";
+import { TickIcon } from "@lifesg/react-icons/tick";
+import clsx from "clsx";
 import React, { useEffect, useImperativeHandle, useRef, useState } from "react";
+
+import { useApplyStyle } from "../../theme";
 import { Typography } from "../../typography";
 import { useId } from "../../util";
-import { LocalNavDropdownItemComponentProps } from "../internal-types";
-import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
-import {
-    Backdrop,
-    NavItem,
-    NavItemLabel,
-    NavItemList,
-    NavSelect,
-    NavSelectIcon,
-    NavWrapper,
-    StyledTickIcon,
-} from "./local-nav-dropdown.styles";
+import type { LocalNavDropdownItemComponentProps } from "../internal-types";
+import type { LocalNavDropdownProps, LocalNavItemProps } from "../types";
+import * as styles from "./local-nav-dropdown.styles";
 
 const Component = (
     {
@@ -34,6 +30,7 @@ const Component = (
     const detectStickyRef = useRef<HTMLSpanElement>(null);
     const dropdownRef = useRef<HTMLDivElement>(null);
     const navWrapperRef = useRef<HTMLElement>(null);
+    const navItemListRef = useRef<HTMLUListElement>(null);
     const listItemRefs = useRef<(HTMLLIElement | null)[]>([]);
     const [isStickied, setIsStickied] = useState<boolean>(false);
     const [isDropdownExpanded, setIsDropdownExpanded] =
@@ -46,6 +43,17 @@ const Component = (
     const dropdownListId = useId();
 
     useImperativeHandle(ref, () => navWrapperRef.current!);
+
+    useApplyStyle(navWrapperRef, {
+        [styles.tokens.navWrapper.stickyOffset]: `${stickyOffset}px`,
+        [styles.tokens.navWrapper.sideMargin]: `${dynamicMargin}px`,
+    });
+
+    useApplyStyle(navItemListRef, {
+        [styles.tokens.navItemList.viewportHeight]: `${
+            viewportHeight - dropdowntHeight - stickyOffset
+        }px`,
+    });
 
     const labelText =
         typeof selectedItemIndex === "number" &&
@@ -300,11 +308,14 @@ const Component = (
         }
 
         return (
-            <NavItem
+            <li
                 id={id}
                 key={index}
                 role="menuitem"
-                $isSelected={isSelected && isStickied}
+                className={clsx(
+                    styles.navItem,
+                    isSelected && isStickied && styles.navItemSelected
+                )}
                 onClick={handleClick}
                 onKeyDown={(e) => handleNavItemKeyDown(e, handleClick)}
                 aria-current={isSelected ? true : undefined}
@@ -313,31 +324,42 @@ const Component = (
                     listItemRefs.current[index] = el as HTMLLIElement;
                 }}
             >
-                {isSelected && <StyledTickIcon />}
-                <NavItemLabel $isSelected={isSelected}>{title}</NavItemLabel>
-            </NavItem>
+                {isSelected && <TickIcon className={styles.tickIcon} />}
+                <div
+                    className={clsx(
+                        styles.navItemLabel,
+                        isSelected && styles.navItemLabelSelected
+                    )}
+                >
+                    {title}
+                </div>
+            </li>
         );
     };
 
     return (
         <>
             <span ref={detectStickyRef} data-testid={"sticky-ref"} />
-            <NavWrapper
-                $isStickied={isStickied}
-                $sideMargin={dynamicMargin}
-                $stickyOffset={stickyOffset}
+            <nav
                 ref={navWrapperRef}
                 id={id}
                 data-testid={navTestId}
-                className={className}
+                className={clsx(
+                    styles.navWrapper,
+                    isStickied && styles.navWrapperStickied,
+                    className
+                )}
             >
-                <NavSelect
+                <div
                     ref={dropdownRef}
                     role="button"
                     onClick={handleToggleDropdown}
                     onKeyDown={handleNavSelectKeyDown}
                     data-testid={`${navTestId}-label`}
-                    $isDropdownExpanded={isDropdownExpanded}
+                    className={clsx(
+                        styles.navSelect,
+                        isDropdownExpanded && styles.navSelectExpanded
+                    )}
                     aria-haspopup="true"
                     aria-expanded={isDropdownExpanded}
                     aria-controls={dropdownListId}
@@ -346,17 +368,21 @@ const Component = (
                     <Typography.BodyBL weight="semibold">
                         {labelText}
                     </Typography.BodyBL>
-                    <NavSelectIcon $isDropdownExpanded={isDropdownExpanded} />
-                </NavSelect>
+                    <ChevronDownIcon
+                        className={clsx(
+                            styles.navSelectIcon,
+                            isDropdownExpanded && styles.navSelectIconExpanded
+                        )}
+                    />
+                </div>
                 {isDropdownExpanded && (
-                    <NavItemList
+                    <ul
+                        ref={navItemListRef}
                         id={dropdownListId}
                         role="menu"
                         onKeyDown={handleNavItemListKeyDown}
                         data-testid={`${navTestId}-dropdown-list`}
-                        $viewportHeight={
-                            viewportHeight - dropdowntHeight - stickyOffset
-                        }
+                        className={styles.navItemList}
                     >
                         {items.map((item, i) =>
                             renderDropdownNavItem({
@@ -368,12 +394,15 @@ const Component = (
                                 index: i,
                             })
                         )}
-                    </NavItemList>
+                    </ul>
                 )}
                 {isDropdownExpanded && isStickied && (
-                    <Backdrop onClick={handleDismissBackdrop} />
+                    <div
+                        className={styles.backdrop}
+                        onClick={handleDismissBackdrop}
+                    />
                 )}
-            </NavWrapper>
+            </nav>
         </>
     );
 };

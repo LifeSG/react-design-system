@@ -1,35 +1,42 @@
 import { ChevronLeftIcon } from "@lifesg/react-icons/chevron-left";
-import { FilterItemPageContainer } from "./filter-item-page.styles";
-import {
-    FilterBody,
-    FilterDoneButton,
-    FilterFooter,
-    FilterHeaderButton,
-} from "./filter.styles";
-import { FilterPageProps } from "./types";
+
+import { Button } from "../button";
+import { ClickableIcon } from "../shared/clickable-icon";
+import * as filterStyles from "./filter.styles";
+import * as styles from "./filter-item-page.styles";
+import type { FilterPageProps } from "./types";
 
 export const FilterItemPage = ({
     onDismiss,
     onDone,
     children,
+    "data-testid": dataTestId,
 }: FilterPageProps) => {
     return (
-        <FilterItemPageContainer>
-            <FilterHeaderButton
+        <div
+            className={styles.filterItemPageContainer}
+            data-testid={dataTestId}
+        >
+            <ClickableIcon
+                className={filterStyles.filterHeaderButton}
                 onClick={onDismiss}
                 focusOutline="browser"
                 focusHighlight={false}
                 aria-label="Dismiss"
             >
                 <ChevronLeftIcon />
-            </FilterHeaderButton>
-            <FilterBody>{children}</FilterBody>
-            <FilterFooter>
-                <FilterDoneButton onClick={onDone} type="button">
+            </ClickableIcon>
+            <div className={filterStyles.filterBody}>{children}</div>
+            <div className={filterStyles.filterFooter}>
+                <Button
+                    className={filterStyles.filterDoneButton}
+                    onClick={onDone}
+                    type="button"
+                >
                     Done
-                </FilterDoneButton>
-            </FilterFooter>
-        </FilterItemPageContainer>
+                </Button>
+            </div>
+        </div>
     );
 };
 

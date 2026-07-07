@@ -1,14 +1,21 @@
 import { Person2Icon } from "@lifesg/react-icons";
-import { TimeTableCellType, TimeTableRowData } from "src/timetable";
-import styled from "styled-components";
+import { css } from "@linaria/core";
+import type { TimeTableCellType, TimeTableRowData } from "src/timetable";
+
 import { timetableDefaultData } from "./timetable-default-data";
 import lazyLoadData from "./timetable-lazy-load-data.json";
 
-export const StyledHoverContent = styled.div`
+const hoverContent = css`
     display: flex;
     align-items: center;
     column-gap: 5px;
 `;
+
+export const HoverContent = ({
+    children,
+}: {
+    children: JSX.Element | (JSX.Element | string)[] | string;
+}) => <div className={hoverContent}>{children}</div>;
 
 const cellTypeMap: Record<string, TimeTableCellType> = {
     OCCUPIED: "filled",

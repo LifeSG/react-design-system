@@ -1,5 +1,6 @@
-import { CSSProperties, ReactNode } from "react";
-import { ErrorDisplayAttributes } from "../error-display/types";
+import type { CSSProperties, ReactNode } from "react";
+
+import type { ErrorDisplayAttributes } from "../error-display/types";
 
 export interface DataTableProps {
     id?: string | undefined;

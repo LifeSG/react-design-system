@@ -1,7 +1,11 @@
 import { act, render, screen, waitFor } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { PredictiveTextInput } from "../../src/predictive-text-input";
-import { waitForElementToBeRemoved } from "../common/waitForElementRemoved";
+import { PredictiveTextInput } from "src/predictive-text-input";
+
+import { setupCommonDomMocks } from "../_common";
+import { waitForElementToBeRemoved } from "../_common/waitForElementRemoved";
+
+jest.mock("react-resize-detector");
 
 const FIELD_TESTID = "test";
 const OPTIONS = ["Option 1", "Option 2", "Option 3"];
@@ -14,16 +18,7 @@ describe("PredictiveTextInput", () => {
         jest.clearAllMocks();
         jest.useFakeTimers();
 
-        global.requestAnimationFrame = (cb: FrameRequestCallback) => {
-            cb(0);
-            return 0;
-        };
-
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupCommonDomMocks();
     });
 
     afterEach(() => {
@@ -40,6 +35,30 @@ describe("PredictiveTextInput", () => {
 
         expect(screen.getByPlaceholderText("Enter here...")).toBeVisible();
         expect(screen.queryByTestId(DROPDOWN_TESTID)).not.toBeInTheDocument();
+    });
+
+    it("should associate the input with a user-friendly label and description", () => {
+        render(
+            <PredictiveTextInput
+                data-testid={FIELD_TESTID}
+                fetchOptions={jest.fn()}
+                aria-label="Search for options"
+            />
+        );
+
+        expect(screen.getByRole("combobox")).toHaveAccessibleName(
+            "Search for options"
+        );
+
+        const input = screen.getByRole("combobox");
+        const instruction = screen.getByText(
+            "Type in 3 or more characters for suggested results."
+        );
+
+        expect(instruction).toBeInTheDocument();
+        expect(input).toHaveAccessibleDescription(
+            "Type in 3 or more characters for suggested results."
+        );
     });
 
     it("should not fetch options when input length is less than minimum characters", async () => {
@@ -106,6 +125,47 @@ describe("PredictiveTextInput", () => {
         expect(screen.getByText("Option 1")).toBeVisible();
         expect(screen.getByText("Option 2")).toBeVisible();
         expect(screen.getByText("Option 3")).toBeVisible();
+    });
+
+    it("should announce loading and result count in live region", async () => {
+        const user = userEvent.setup({
+            advanceTimers: jest.advanceTimersByTime,
+        });
+        const mockFetchOptions = jest.fn().mockImplementation(
+            () =>
+                new Promise((resolve) => {
+                    setTimeout(() => {
+                        resolve(OPTIONS);
+                    }, FETCH_DELAY);
+                })
+        );
+
+        render(
+            <PredictiveTextInput
+                data-testid={FIELD_TESTID}
+                fetchOptions={mockFetchOptions}
+            />
+        );
+
+        await user.type(screen.getByPlaceholderText("Enter here..."), "abc");
+        jest.advanceTimersByTime(INPUT_DEBOUNCE_DELAY);
+
+        const loadingAnnouncement = screen.getByText(
+            "Loading suggested results"
+        );
+        expect(
+            loadingAnnouncement.closest('[aria-live="polite"]')
+        ).toBeInTheDocument();
+
+        await act(async () => {
+            jest.advanceTimersByTime(FETCH_DELAY);
+        });
+
+        expect(
+            screen.getByText(
+                "3 results found. Press down arrow to scroll through the list."
+            )
+        ).toBeInTheDocument();
     });
 
     it("should select option correctly", async () => {

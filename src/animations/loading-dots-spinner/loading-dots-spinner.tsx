@@ -1,7 +1,9 @@
-import { Suspense, lazy, useContext } from "react";
-import styled, { ThemeContext } from "styled-components";
-import { CustomisableAnimationProps } from "../types";
-import { ThemeAnimation } from "src/theme/components/theme-helper";
+import clsx from "clsx";
+import { lazy, Suspense, useEffect, useRef, useState } from "react";
+
+import { ComponentToken, useApplyStyle } from "../../theme";
+import type { CustomisableAnimationProps } from "../types";
+import * as styles from "./loading-dots-spinner.styles";
 
 // lazy load to fix next.js SSR errors
 const LottieLoadingDotsSpinner = lazy(async () => ({
@@ -9,35 +11,44 @@ const LottieLoadingDotsSpinner = lazy(async () => ({
 }));
 
 export const LoadingDotsSpinner = ({
+    className,
     color,
     ...otherProps
 }: CustomisableAnimationProps) => {
-    const theme = useContext(ThemeContext);
-    const animationColor =
-        color || ThemeAnimation["loading-dots-spinner-colour"]({ theme });
+    const containerRef = useRef<HTMLDivElement>(null);
+    const [resolvedColor, setResolvedColor] = useState<string | undefined>(
+        undefined
+    );
+
+    useApplyStyle(containerRef, {
+        [styles.tokens.containerColor]:
+            color || ComponentToken.Animation["loading-dots-spinner-colour"],
+    });
+
+    useEffect(() => {
+        const element = containerRef.current;
+        if (!element) return;
+
+        const computedColor = getComputedStyle(element)
+            .getPropertyValue(styles.tokens.containerColor)
+            .trim();
+
+        setResolvedColor(computedColor || undefined);
+    }, [color]);
+
     return (
-        <Container {...otherProps}>
+        <div
+            ref={containerRef}
+            {...otherProps}
+            className={clsx(styles.container, className)}
+        >
             <Suspense fallback={<Placeholder />}>
-                <LottieLoadingDotsSpinner color={animationColor} />
+                <LottieLoadingDotsSpinner color={resolvedColor} />
             </Suspense>
-        </Container>
+        </div>
     );
 };
 
 const Placeholder = () => {
-    return (
-        <div
-            style={{
-                height: "200px",
-                width: "200px",
-            }}
-        />
-    );
+    return <div className={styles.placeholder} />;
 };
-
-// =============================================================================
-// STYLING
-// =============================================================================
-const Container = styled.div`
-    margin: 0 auto;
-`;

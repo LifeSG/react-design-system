@@ -1,22 +1,15 @@
 import { LanguageIcon } from "@lifesg/react-icons/language";
-import React, { useEffect, useRef, useState } from "react";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
+import type React from "react";
+import { useEffect, useRef, useState } from "react";
+
+import { ExpandableElement } from "../shared/dropdown-list";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
 import { useId } from "../util";
 import { ARIA_LABEL, LANGUAGE_CODES, LANGUAGE_DISPLAY_MAP } from "./data";
-import {
-    DropdownItem,
-    DropdownList,
-    DropdownPanel,
-    LanguageIconWrapper,
-    SelectedIndicator,
-    StyledExpandableElement,
-    UnselectedIndicator,
-} from "./dropdown-variant.style";
-import { VariantInternalProps } from "./internal-types";
-import { LanguageSwitcherCode } from "./types";
+import { DropdownPanel } from "./dropdown-panel";
+import * as styles from "./dropdown-variant.styles";
+import type { VariantInternalProps } from "./internal-types";
+import type { LanguageSwitcherCode } from "./types";
 
 export const DropdownVariant = ({
     selectedLanguage,
@@ -120,8 +113,9 @@ export const DropdownVariant = ({
     // RENDER FUNCTIONS
     // =========================================================================
     const renderElement = () => (
-        <StyledExpandableElement
+        <ExpandableElement
             ref={triggerRef}
+            className={styles.expandableElement}
             disabled={false}
             expanded={isOpen}
             listboxId={listboxId}
@@ -130,61 +124,23 @@ export const DropdownVariant = ({
             aria-label={`${ARIA_LABEL}, ${LANGUAGE_DISPLAY_MAP[selectedLanguage]}`}
             data-testid={`${testId}--trigger`}
         >
-            <LanguageIconWrapper aria-hidden>
+            <span className={styles.languageIconWrapper} aria-hidden>
                 <LanguageIcon />
-            </LanguageIconWrapper>
+            </span>
             {LANGUAGE_DISPLAY_MAP[selectedLanguage]}
-        </StyledExpandableElement>
+        </ExpandableElement>
     );
 
-    const renderDropdown = ({
-        elementWidth,
-        styles,
-        setFloatingRef,
-        getFloatingProps,
-    }: DropdownRenderProps) => (
+    const renderDropdown = () => (
         <DropdownPanel
-            ref={setFloatingRef}
-            style={{ ...styles, width: elementWidth }}
-            data-testid={`${testId}--panel`}
-            {...getFloatingProps()}
-        >
-            <DropdownList
-                role="listbox"
-                id={listboxId}
-                aria-label={ARIA_LABEL}
-                onKeyDown={handleListKeyDown}
-            >
-                {LANGUAGE_CODES.map((code, index) => {
-                    const isSelected = code === selectedLanguage;
-                    const isFocused = index === focusedIndex;
-                    return (
-                        <DropdownItem
-                            key={code}
-                            ref={(el: HTMLLIElement | null) => {
-                                itemRefs.current[index] = el;
-                            }}
-                            role="option"
-                            lang={code}
-                            aria-selected={isSelected}
-                            tabIndex={isFocused ? 0 : -1}
-                            $active={isFocused}
-                            $selected={isSelected}
-                            $disabled={false}
-                            onClick={() => handleItemSelect(code)}
-                            data-testid={`${testId}--item-${code}`}
-                        >
-                            {isSelected ? (
-                                <SelectedIndicator aria-hidden />
-                            ) : (
-                                <UnselectedIndicator />
-                            )}
-                            {LANGUAGE_DISPLAY_MAP[code]}
-                        </DropdownItem>
-                    );
-                })}
-            </DropdownList>
-        </DropdownPanel>
+            focusedIndex={focusedIndex}
+            handleItemSelect={handleItemSelect}
+            handleListKeyDown={handleListKeyDown}
+            itemRefs={itemRefs}
+            listboxId={listboxId}
+            selectedLanguage={selectedLanguage}
+            testId={testId}
+        />
     );
 
     // =========================================================================

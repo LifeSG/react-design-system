@@ -4,7 +4,8 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Form } from "src/form";
 import { Layout } from "src/layout";
-import { MaskedInput, MaskedInputLoadState } from "src/masked-input";
+import type { MaskedInputLoadState } from "src/masked-input";
+import { MaskedInput } from "src/masked-input";
 import {
     FullWidthStoryDecorator,
     StoryDecorator,

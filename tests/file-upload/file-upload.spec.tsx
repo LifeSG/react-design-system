@@ -1,14 +1,37 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
-import { FileItemProps, FileUpload } from "../../src/file-upload";
+import type { FileItemProps } from "src/file-upload";
+import { FileUpload } from "src/file-upload";
+
+import { setupResizeObserverMock } from "../_common/setup";
+
+jest.mock("../../src/theme", () => {
+    const actual = jest.requireActual("../../src/theme");
+    return {
+        ...actual,
+        useResolvedTokenValue: ({
+            value,
+            fallback,
+            isToken,
+            normalizeCustom,
+        }: {
+            value: unknown;
+            fallback: unknown;
+            isToken: (candidate: unknown) => boolean;
+            normalizeCustom: (candidate: unknown) => string;
+        }) => {
+            const effectiveValue =
+                value == null || value === "" ? fallback : value;
+            return isToken(effectiveValue)
+                ? String(effectiveValue)
+                : normalizeCustom(effectiveValue);
+        },
+    };
+});
 
 describe("FileUpload", () => {
     beforeEach(() => {
         jest.resetAllMocks();
-        global.ResizeObserver = jest.fn().mockImplementation(() => ({
-            observe: jest.fn(),
-            unobserve: jest.fn(),
-            disconnect: jest.fn(),
-        }));
+        setupResizeObserverMock();
     });
 
     describe("Basic render", () => {
@@ -211,6 +234,50 @@ describe("FileUpload", () => {
 
             expect(onChangeCallback).toHaveBeenCalledWith([file]);
         });
+
+        it("should not call onChange callback if the component is disabled", () => {
+            const onChangeCallback = jest.fn();
+            render(<FileUpload disabled onChange={onChangeCallback} />);
+
+            fireEvent.click(
+                screen.getByRole("button", { name: "Upload files" })
+            );
+            expect(onChangeCallback).not.toHaveBeenCalled();
+        });
+
+        it("should disable upload button when max files limit is reached", () => {
+            render(
+                <FileUpload fileItems={[MOCK_NON_IMAGE_FILE]} maxFiles={1} />
+            );
+
+            const uploadButton = screen.getByRole("button", {
+                name: "Upload files",
+            });
+
+            expect(uploadButton).toBeDisabled();
+        });
+
+        it("should only pass remaining file slots when selected files exceed maxFiles", async () => {
+            const onChangeCallback = jest.fn();
+
+            const rendered = render(
+                <FileUpload
+                    maxFiles={1}
+                    fileItems={[]}
+                    onChange={onChangeCallback}
+                />
+            );
+
+            const dropzoneInput = rendered.getByTestId("dropzone-input");
+
+            await waitFor(() =>
+                fireEvent.change(dropzoneInput, {
+                    target: { files: [MOCK_IMAGE_ITEM, MOCK_NON_IMAGE_FILE] },
+                })
+            );
+
+            expect(onChangeCallback).toHaveBeenCalledWith([MOCK_IMAGE_ITEM]);
+        });
     });
 
     describe("Delete", () => {
@@ -323,6 +390,46 @@ describe("FileUpload", () => {
                 description: "Hello world",
             });
         });
+
+        it("should return an existing described image from edit mode to display mode on cancel", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "first-image.png",
+                    type: "image/png",
+                    size: 3000,
+                    description: "existing",
+                },
+            ];
+            const onEdit = jest.fn();
+            const onDelete = jest.fn();
+
+            const rendered = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    onEdit={onEdit}
+                    onDelete={onDelete}
+                />
+            );
+
+            fireEvent.click(rendered.getByTestId("img-1-edit-button"));
+            expect(
+                rendered.getByTestId("img-1-edit-display")
+            ).toBeInTheDocument();
+
+            fireEvent.click(rendered.getByTestId("img-1-cancel-button"));
+
+            expect(
+                rendered.queryByTestId("img-1-edit-display")
+            ).not.toBeInTheDocument();
+            expect(
+                rendered.getByTestId("img-1-edit-button")
+            ).toBeInTheDocument();
+            expect(onEdit).not.toHaveBeenCalled();
+            expect(onDelete).not.toHaveBeenCalled();
+            expect(screen.getByText("existing")).toBeInTheDocument();
+        });
     });
 
     describe("Sort", () => {
@@ -370,6 +477,39 @@ describe("FileUpload", () => {
     });
 
     describe("Readonly", () => {
+        it("should generate read-only aria label summary from file states", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "done-1",
+                    name: "done.pdf",
+                    type: "application/pdf",
+                    size: 1200,
+                },
+                {
+                    id: "progress-1",
+                    name: "uploading.png",
+                    type: "image/png",
+                    size: 1500,
+                    progress: 0.4,
+                },
+                {
+                    id: "error-1",
+                    name: "error.pdf",
+                    type: "application/pdf",
+                    size: 1600,
+                    errorMessage: "Failed",
+                },
+            ];
+
+            render(<FileUpload fileItems={fileItems} readOnly />);
+
+            expect(
+                screen.getByRole("list", {
+                    name: "Read-only file list. 1 completed files, 1 file in progress, 1 file with error",
+                })
+            ).toBeInTheDocument();
+        });
+
         it("should not render the action buttons if the component is in readOnly mode", () => {
             const fileItems: FileItemProps[] = [
                 MOCK_IMAGE_ITEM_WITH_DESCRIPTION,
@@ -521,10 +661,24 @@ describe("FileUpload", () => {
             const announcement = screen.getByText(
                 "Starting upload of bugs-bunny.pdf"
             );
-            expect(announcement).toBeInTheDocument();
+            const liveRegions = document.querySelectorAll(
+                '[aria-live="polite"]'
+            );
             expect(
-                announcement.closest('[aria-live="polite"]')
-            ).toBeInTheDocument();
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.contains(announcement)
+                )
+            ).toBe(true);
+            expect(
+                Array.from(liveRegions).some(
+                    (liveRegion) =>
+                        liveRegion.contains(announcement) &&
+                        liveRegion.getAttribute("aria-atomic") === "true"
+                )
+            ).toBe(true);
+            expect(announcement).toHaveTextContent(
+                "Starting upload of bugs-bunny.pdf"
+            );
         });
 
         it("should announce when file upload is complete", () => {
@@ -540,10 +694,17 @@ describe("FileUpload", () => {
             const announcement = screen.getByText(
                 "bugs-bunny.pdf upload is complete"
             );
-            expect(announcement).toBeInTheDocument();
+            const liveRegions = document.querySelectorAll(
+                '[aria-live="polite"]'
+            );
             expect(
-                announcement.closest('[aria-live="polite"]')
-            ).toBeInTheDocument();
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.contains(announcement)
+                )
+            ).toBe(true);
+            expect(announcement).toHaveTextContent(
+                "bugs-bunny.pdf upload is complete"
+            );
         });
 
         it("should announce errors when file upload fails", () => {
@@ -560,10 +721,17 @@ describe("FileUpload", () => {
             const announcement = screen.getByText(
                 `Error uploading bugs-bunny.pdf: ${errorMessage}`
             );
-            expect(announcement).toBeInTheDocument();
+            const liveRegions = document.querySelectorAll(
+                '[aria-live="polite"]'
+            );
             expect(
-                announcement.closest('[aria-live="polite"]')
-            ).toBeInTheDocument();
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.contains(announcement)
+                )
+            ).toBe(true);
+            expect(announcement).toHaveTextContent(
+                `Error uploading bugs-bunny.pdf: ${errorMessage}`
+            );
         });
 
         it("should announce multiple file uploads correctly", () => {
@@ -591,11 +759,18 @@ describe("FileUpload", () => {
 
             render(<FileUpload fileItems={fileItems} />);
 
-            // Should announce all three states in one message
-            const announcementText = screen.getByText(
-                /Starting upload of document1.pdf, image1.png upload is complete, Error uploading document2.pdf: Network error/
+            const liveRegionMessage =
+                "Starting upload of document1.pdf, image1.png upload is complete, Error uploading document2.pdf: Network error";
+            const announcement = screen.getByText(liveRegionMessage);
+            const liveRegions = document.querySelectorAll(
+                '[aria-live="polite"]'
             );
-            expect(announcementText).toBeInTheDocument();
+            expect(
+                Array.from(liveRegions).some((liveRegion) =>
+                    liveRegion.contains(announcement)
+                )
+            ).toBe(true);
+            expect(announcement).toHaveTextContent(liveRegionMessage);
         });
     });
 });

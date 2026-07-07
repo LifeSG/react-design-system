@@ -2,8 +2,8 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Toast } from "src/toast";
-import { Typography } from "../../src/typography";
-import { StackDecorator } from "../storybook-common";
+import { Typography } from "src/typography";
+import { StackDecorator } from "stories/storybook-common";
 
 type Component = typeof Toast;
 

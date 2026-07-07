@@ -20,9 +20,7 @@ export const Default: StoryObj<Component> = {
         const closeModal = () => setShow(false);
         return (
             <div>
-                <Button.Default onClick={openModal}>
-                    Click to open
-                </Button.Default>
+                <Button onClick={openModal}>Click to open</Button>
                 <Modal show={show} onOverlayClick={closeModal}>
                     <Modal.Box onClose={closeModal}>
                         <div
@@ -48,9 +46,7 @@ export const CustomContent: StoryObj<Component> = {
         const closeModal = () => setShow(false);
         return (
             <>
-                <Button.Default onClick={openModal}>
-                    Open custom modal
-                </Button.Default>
+                <Button onClick={openModal}>Open custom modal</Button>
                 <Modal
                     show={show}
                     onOverlayClick={closeModal}
@@ -83,9 +79,7 @@ export const StackedModals: StoryObj<Component> = {
         };
         return (
             <div>
-                <Button.Default onClick={handleFirst(true)}>
-                    Click to open
-                </Button.Default>
+                <Button onClick={handleFirst(true)}>Click to open</Button>
                 <Modal show={showFirst} onOverlayClick={handleFirst(false)}>
                     <Modal.Box onClose={handleFirst(false)}>
                         <div
@@ -98,9 +92,9 @@ export const StackedModals: StoryObj<Component> = {
                             </Typography.BodyBL>
                             <br />
                             <br />
-                            <Button.Default onClick={handleStacked(true)}>
+                            <Button onClick={handleStacked(true)}>
                                 Click to open the stacked modal
-                            </Button.Default>
+                            </Button>
                         </div>
                     </Modal.Box>
                 </Modal>

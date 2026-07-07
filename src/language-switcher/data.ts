@@ -1,4 +1,4 @@
-import { LanguageSwitcherCode } from "./types";
+import type { LanguageSwitcherCode } from "./types";
 
 export const LANGUAGE_DISPLAY_MAP: Record<LanguageSwitcherCode, string> = {
     en: "English",

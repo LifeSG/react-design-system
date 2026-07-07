@@ -1,13 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
-import { useMediaQuery } from "react-responsive";
-import {
-    LocalNavDropdown,
-    LocalNavItemProps,
-    LocalNavMenu,
-} from "src/local-nav";
-import { Breakpoint } from "src/theme";
-import { useTheme } from "styled-components";
+import { ThemeProvider, useMaxWidthMediaQuery } from "src";
+import type { LocalNavItemProps } from "src/local-nav";
+import { LocalNavDropdown, LocalNavMenu } from "src/local-nav";
+
 import { Content, Page, TopContent } from "./doc-elements";
 
 type MenuComponent = typeof LocalNavMenu;
@@ -208,10 +204,7 @@ export const CombinedUsage: StoryObj = {
         const [selectedIndex, setSelectedIndex] = useState<number | undefined>(
             undefined
         );
-        const theme = useTheme();
-        const isMobile = useMediaQuery({
-            maxWidth: Breakpoint["sm-max"]({ theme }),
-        });
+        const isMobile = useMaxWidthMediaQuery("sm");
 
         const handleNavItemClick = (
             e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
@@ -254,4 +247,11 @@ export const CombinedUsage: StoryObj = {
         layout: "fullscreen",
         docs: { story: { inline: false, iframeHeight: 500 } },
     },
+    decorators: [
+        (Story) => (
+            <ThemeProvider>
+                <Story />
+            </ThemeProvider>
+        ),
+    ],
 };

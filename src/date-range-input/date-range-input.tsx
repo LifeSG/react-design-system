@@ -1,28 +1,23 @@
+import clsx from "clsx";
 import dayjs from "dayjs";
 import { useEffect, useRef, useState } from "react";
-import {
-    DropdownRenderProps,
-    ElementWithDropdown,
-} from "../shared/dropdown-wrapper";
-import {
+
+import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
+import { ElementWithDropdown } from "../shared/dropdown-wrapper";
+import { InputWrapper } from "../shared/input-wrapper";
+import type {
     CalendarAction,
-    CalendarDropdown,
     FocusType,
     InternalCalendarRef,
 } from "../shared/internal-calendar";
+import { CalendarDropdown } from "../shared/internal-calendar";
 import { RangeInputInnerContainer } from "../shared/range-input-inner-container";
-import {
-    StandaloneDateInput,
-    StandaloneDateInputRef,
-} from "../shared/standalone-date-input/standalone-date-input";
+import type { StandaloneDateInputRef } from "../shared/standalone-date-input/standalone-date-input";
+import { StandaloneDateInput } from "../shared/standalone-date-input/standalone-date-input";
 import { DateHelper, DateInputHelper, useContainerQuery } from "../util";
 import { useStateActions } from "../util/use-state-actions";
-import {
-    Container,
-    InputContainer,
-    MOBILE_WRAP_WIDTH,
-} from "./date-range-input.style";
-import { DateRangeInputProps } from "./types";
+import * as styles from "./date-range-input.styles";
+import type { DateRangeInputProps } from "./types";
 
 interface DateRangeInputState {
     initialStart: string;
@@ -189,7 +184,7 @@ export const DateRangeInput = ({
     const startInputRef = useRef<StandaloneDateInputRef>(null);
     const endInputRef = useRef<StandaloneDateInputRef>(null);
     const shouldWrap = useContainerQuery({
-        maxWidth: MOBILE_WRAP_WIDTH,
+        maxWidth: styles.MOBILE_WRAP_WIDTH,
         targetRef: nodeRef,
     });
 
@@ -619,29 +614,38 @@ export const DateRangeInput = ({
     // =============================================================================
     const renderInput = () => {
         return (
-            <Container
+            <InputWrapper
                 role="group"
                 ref={nodeRef}
                 tabIndex={0}
                 onFocus={handleFocus}
                 onBlur={handleBlur}
-                $focused={focused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
-                $wrap={shouldWrap}
+                focused={focused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
                 id={id}
                 data-testid={otherProps["data-testid"]}
                 aria-disabled={disabled}
                 onKeyDown={handleNodeKeyDown}
                 {...otherProps}
+                className={clsx(
+                    shouldWrap && !readOnly && styles.containerWrap,
+                    shouldWrap && readOnly && styles.containerWrapReadOnly,
+                    otherProps.className
+                )}
             >
                 <RangeInputInnerContainer
                     currentActive={currentFocus}
                     wrap={shouldWrap}
                     error={error}
                 >
-                    <InputContainer $wrap={shouldWrap}>
+                    <div
+                        className={clsx(
+                            styles.inputContainer,
+                            shouldWrap && styles.inputContainerWrap
+                        )}
+                    >
                         <StandaloneDateInput
                             ref={startInputRef}
                             placeholder="From"
@@ -665,8 +669,13 @@ export const DateRangeInput = ({
                             onBlur={handleStartInputBlur}
                             hideInputKeyboard={hideInputKeyboard}
                         />
-                    </InputContainer>
-                    <InputContainer $wrap={shouldWrap}>
+                    </div>
+                    <div
+                        className={clsx(
+                            styles.inputContainer,
+                            shouldWrap && styles.inputContainerWrap
+                        )}
+                    >
                         <StandaloneDateInput
                             ref={endInputRef}
                             placeholder="To"
@@ -682,9 +691,9 @@ export const DateRangeInput = ({
                             onBlur={handleEndInputBlur}
                             hideInputKeyboard={hideInputKeyboard}
                         />
-                    </InputContainer>
+                    </div>
                 </RangeInputInnerContainer>
-            </Container>
+            </InputWrapper>
         );
     };
 

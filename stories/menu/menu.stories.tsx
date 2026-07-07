@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { Avatar } from "src";
 import { Menu } from "src/menu";
-import { GridDecorator } from "../storybook-common";
-import { Avatar } from "../../src";
+import { GridDecorator } from "stories/storybook-common";
 
 type Component = typeof Menu;
 
@@ -21,9 +21,7 @@ const menuContent = (
         <Menu.Section label="Category 1">
             <Menu.Item>Menu item</Menu.Item>
             <Menu.Link href="https://www.google.com">Menu link</Menu.Link>
-            <Menu.Item>Menu item</Menu.Item>
             <Menu.Link href="https://www.google.com">Menu link</Menu.Link>
-            <Menu.Item>Menu item</Menu.Item>
         </Menu.Section>
 
         <Menu.Section>

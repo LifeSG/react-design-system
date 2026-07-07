@@ -1,6 +1,7 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import { OtpInput, OtpInputRef } from "src/otp-input";
+import type { OtpInputRef } from "src/otp-input";
+import { OtpInput } from "src/otp-input";
 
 // =============================================================================
 // UNIT TESTS
@@ -52,6 +53,21 @@ describe("OtpInput", () => {
 
         expect(screen.queryByTestId("otp-prefix")).toHaveTextContent(
             prefixValue + " " + separator
+        );
+        expect(screen.getByText("O T P prefix")).toBeInTheDocument();
+    });
+
+    it("should expose countdown through a timer live description", () => {
+        render(<OtpInput numOfInput={3} cooldownDuration={10} />);
+
+        const timer = screen.getByRole("timer");
+        const resendButton = screen.getByRole("button", {
+            name: "Resend OTP in 10 seconds",
+        });
+
+        expect(timer).toHaveTextContent("10 seconds remaining");
+        expect(resendButton).toHaveAccessibleDescription(
+            "10 seconds remaining"
         );
     });
 
@@ -140,6 +156,23 @@ describe("OtpInput", () => {
         expect(screen.getByLabelText("1st digit")).toHaveFocus();
 
         await user.keyboard("{ArrowLeft}");
+
+        expect(screen.getByLabelText("1st digit")).toHaveFocus();
+
+        await user.keyboard("1");
+
+        expect(screen.getByLabelText("1st digit")).toHaveValue("1");
+        expect(screen.getByLabelText("2nd digit")).toHaveFocus();
+
+        await user.keyboard("{Backspace}");
+        expect(screen.getByLabelText("1st digit")).toHaveValue("");
+        expect(screen.getByLabelText("1st digit")).toHaveFocus();
+
+        await user.tab();
+
+        expect(screen.getByLabelText("2nd digit")).toHaveFocus();
+
+        await user.tab({ shift: true });
 
         expect(screen.getByLabelText("1st digit")).toHaveFocus();
     });

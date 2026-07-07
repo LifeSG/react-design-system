@@ -1,11 +1,14 @@
+import clsx from "clsx";
+
 import { Typography } from "../typography";
-import { MenuItemDiv, SubLabel } from "./menu-item.styles";
-import { MenuItemProps } from "./types";
+import * as styles from "./menu-item.styles";
+import type { MenuItemProps } from "./types";
 
 export const MenuItem = ({
     label,
     subLabel,
     children,
+    className,
     "data-testid": testId = "menu-item",
     ...otherProps
 }: MenuItemProps): JSX.Element => {
@@ -13,13 +16,23 @@ export const MenuItem = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <MenuItemDiv data-testid={testId} {...otherProps}>
+        <li
+            data-testid={testId}
+            className={clsx(styles.menuItemDiv, styles.text, className)}
+            {...otherProps}
+        >
             {label && (
-                <Typography.BodyMD weight="semibold">{label}</Typography.BodyMD>
+                <Typography.BodyMD className={styles.text} weight="semibold">
+                    {label}
+                </Typography.BodyMD>
             )}
-            {subLabel && <SubLabel>{subLabel}</SubLabel>}
+            {subLabel && (
+                <Typography.BodySM className={styles.subLabel}>
+                    {subLabel}
+                </Typography.BodySM>
+            )}
             {children}
-        </MenuItemDiv>
+        </li>
     );
 };
 

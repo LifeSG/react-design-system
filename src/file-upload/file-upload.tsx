@@ -1,20 +1,16 @@
 import { useRef, useState } from "react";
+
+import { Alert } from "../alert";
+import { Button } from "../button";
+import { Markup } from "../markup";
+import { Typography } from "../typography";
 import { FileUploadContext } from "./context";
-import { DropzoneElement, FileUploadDropzone } from "./dropzone";
-import { FileList, FileListRef } from "./file-list";
-import {
-    Description,
-    DescriptionContainer,
-    ErrorAlert,
-    TextContainer,
-    Title,
-    TitleContainer,
-    UploadButton,
-    UploadButtonContainer,
-    UploadButtonText,
-    WarningAlert,
-} from "./file-upload.styles";
-import { FileItemProps, FileUploadProps } from "./types";
+import type { DropzoneElement } from "./dropzone";
+import { FileUploadDropzone } from "./dropzone";
+import type { FileListRef } from "./file-list";
+import { FileList } from "./file-list";
+import * as styles from "./file-upload.styles";
+import type { FileItemProps, FileUploadProps } from "./types";
 
 export const FileUpload = ({
     styleType = "bordered",
@@ -58,8 +54,10 @@ export const FileUpload = ({
     // EVENT HANDLERS
     // =========================================================================
     const handleChange = (files: File[]) => {
-        if (!disabled && onChange) {
-            onChange(files);
+        const filesToProcess = limitIncomingFiles(files);
+
+        if (!disabled && onChange && filesToProcess.length > 0) {
+            onChange(filesToProcess);
             fileListRef.current?.focus();
         }
     };
@@ -97,6 +95,17 @@ export const FileUpload = ({
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
+    const limitIncomingFiles = (files: File[]) => {
+        if (maxFiles === undefined) {
+            return files;
+        }
+
+        const existingItemsCount = fileItems?.length ?? 0;
+        const remainingSlots = Math.max(maxFiles - existingItemsCount, 0);
+
+        return files.slice(0, remainingSlots);
+    };
+
     const reachedMaxFiles = () => {
         return maxFiles && fileItems ? fileItems.length >= maxFiles : false;
     };
@@ -110,10 +119,17 @@ export const FileUpload = ({
         }
 
         if (typeof title === "string") {
-            return <Title>{title}</Title>;
+            return <Typography.BodyBL>{title}</Typography.BodyBL>;
         }
 
-        return <TitleContainer>{title}</TitleContainer>;
+        return (
+            <Markup
+                className={styles.markupContainer}
+                baseTextSize="body-baseline"
+            >
+                {title}
+            </Markup>
+        );
     };
 
     const renderDescription = () => {
@@ -122,10 +138,18 @@ export const FileUpload = ({
         }
 
         if (typeof description === "string") {
-            return <Description>{description}</Description>;
+            return (
+                <Typography.BodyMD className={styles.description}>
+                    {description}
+                </Typography.BodyMD>
+            );
         }
 
-        return <DescriptionContainer>{description}</DescriptionContainer>;
+        return (
+            <Markup className={styles.markupContainer} baseTextSize="body-md">
+                {description}
+            </Markup>
+        );
     };
 
     return (
@@ -144,13 +168,15 @@ export const FileUpload = ({
                 disabled={disabled || reachedMaxFiles() || readOnly}
             >
                 {!!(title || description) && (
-                    <TextContainer>
+                    <div className={styles.textContainer}>
                         {renderTitle()}
                         {renderDescription()}
-                    </TextContainer>
+                    </div>
                 )}
                 {!!warning && (
-                    <WarningAlert type="warning">{warning}</WarningAlert>
+                    <Alert className={styles.warningAlert} type="warning">
+                        {warning}
+                    </Alert>
                 )}
                 <FileList
                     ref={fileListRef}
@@ -167,24 +193,31 @@ export const FileUpload = ({
                     onSort={handleSort}
                 />
                 {errorMessage && (
-                    <ErrorAlert type="error">{errorMessage}</ErrorAlert>
+                    <Alert className={styles.errorAlert} type="error">
+                        {errorMessage}
+                    </Alert>
                 )}
                 {!readOnly && (
-                    <UploadButtonContainer>
-                        <UploadButton
+                    <div className={styles.uploadButtonContainer}>
+                        <Button
                             type="button"
+                            sizeType="small"
                             styleType="secondary"
                             disabled={
                                 !!activeId || disabled || reachedMaxFiles()
                             }
                             onClick={handleUploadButtonClick}
+                            className={styles.uploadButton}
                         >
                             {labels.uploadButton}
-                        </UploadButton>
-                        <UploadButtonText weight="semibold">
+                        </Button>
+                        <Typography.BodyMD
+                            className={styles.uploadButtonText}
+                            weight="semibold"
+                        >
                             or drop them here
-                        </UploadButtonText>
-                    </UploadButtonContainer>
+                        </Typography.BodyMD>
+                    </div>
                 )}
             </FileUploadDropzone>
         </FileUploadContext.Provider>

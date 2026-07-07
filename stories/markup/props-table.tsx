@@ -1,6 +1,6 @@
-import { StorybookLink } from "../storybook-common";
-import { ApiTable, code } from "../storybook-common/api-table";
-import { ApiTableSectionProps } from "../storybook-common/api-table/types";
+import { StorybookLink } from "stories/storybook-common";
+import { ApiTable, code } from "stories/storybook-common/api-table";
+import type { ApiTableSectionProps } from "stories/storybook-common/api-table/types";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -33,8 +33,15 @@ const DATA: ApiTableSectionProps[] = [
             {
                 name: "baseTextColor",
                 description:
-                    "The default font color. Supports theming. If not specified, inherited from the parent",
-                propTypes: ["string", "(props: ThemeStyleProps) => string"],
+                    "The default font color. Supports V4 colour token strings (for example, Colour.text). If not specified, inherited from the parent",
+                propTypes: (
+                    <>
+                        <StorybookLink path="/docs/foundations-colours-introduction--docs">
+                            ColourCSSVariableString
+                        </StorybookLink>{" "}
+                        <code>string</code>
+                    </>
+                ),
             },
             {
                 name: "inline",

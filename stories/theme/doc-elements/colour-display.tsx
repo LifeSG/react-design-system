@@ -1,10 +1,11 @@
-import React, { useState } from "react";
-import { ColourMode, ThemeSpec } from "src/theme/types";
-import styled, { ThemeProvider } from "styled-components";
+import { css } from "@linaria/core";
+import { useState } from "react";
+import type { ThemeMode, ThemeType } from "src/theme";
+import { ThemeProvider } from "src/theme";
 
 interface ColourModeSwitcherProps {
-    colourMode: ColourMode;
-    onColourModeChange: (colourMode: ColourMode) => void;
+    colourMode: ThemeMode;
+    onColourModeChange: (colourMode: ThemeMode) => void;
 }
 
 const ColourModeSwitcher = ({
@@ -14,7 +15,7 @@ const ColourModeSwitcher = ({
     const darkMode = colourMode === "dark";
 
     return (
-        <Switcher>
+        <div className={switcher}>
             <code>light</code>
             <input
                 aria-label="Enable dark mode"
@@ -23,27 +24,27 @@ const ColourModeSwitcher = ({
                 onChange={() => onColourModeChange(darkMode ? "light" : "dark")}
             />
             <code>dark</code>
-        </Switcher>
+        </div>
     );
 };
 
 interface ColourDisplayProps {
-    theme: ThemeSpec;
-    children: React.ReactNode;
+    theme: ThemeType;
+    children: JSX.Element | JSX.Element[];
 }
 
 export const ColourDisplay = ({ theme, children }: ColourDisplayProps) => {
-    const [colourMode, setColourMode] = useState<ColourMode>("light");
+    const [colourMode, setColourMode] = useState<ThemeMode>("light");
 
     return (
-        <ThemeProvider theme={{ ...theme, colourMode }}>
-            <Container>
+        <ThemeProvider theme={theme} mode={colourMode}>
+            <div className={container}>
                 <ColourModeSwitcher
                     colourMode={colourMode}
                     onColourModeChange={(mode) => setColourMode(mode)}
                 />
                 {children}
-            </Container>
+            </div>
         </ThemeProvider>
     );
 };
@@ -51,11 +52,11 @@ export const ColourDisplay = ({ theme, children }: ColourDisplayProps) => {
 // =============================================================================
 // STYLING
 // =============================================================================
-const Container = styled.div`
+const container = css`
     position: relative;
 `;
 
-const Switcher = styled.div`
+const switcher = css`
     position: sticky;
     top: 0;
     padding: 1rem 0;

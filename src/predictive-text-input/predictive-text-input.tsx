@@ -1,13 +1,15 @@
 import debounce from "lodash/debounce";
-import React, { useCallback, useEffect, useRef, useState } from "react";
-import { VisuallyHidden, concatIds } from "src/shared/accessibility";
+import type React from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+
 import { Input } from "../input";
+import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { DropdownList, DropdownListState } from "../shared/dropdown-list";
-import { ItemsLoadStateType } from "../shared/dropdown-list/types";
+import type { ItemsLoadStateType } from "../shared/dropdown-list/types";
 import { ElementWithDropdown } from "../shared/dropdown-wrapper";
-import { InputWrapper } from "../shared/input-wrapper/input-wrapper";
+import { InputWrapper } from "../shared/input-wrapper";
 import { useId } from "../util";
-import { PredictiveTextInputProps } from "./types";
+import type { PredictiveTextInputProps } from "./types";
 
 export const PredictiveTextInput = <T, V>({
     className,
@@ -279,10 +281,10 @@ export const PredictiveTextInput = <T, V>({
                 tabIndex={-1}
                 onFocus={handleNodeFocus}
                 onBlur={handleNodeBlur}
-                $focused={isFocused}
-                $disabled={disabled}
-                $readOnly={readOnly}
-                $error={error}
+                focused={isFocused}
+                disabled={disabled}
+                readOnly={readOnly}
+                error={error}
             >
                 <VisuallyHidden id={instructionId} aria-hidden>
                     Type in {minimumCharacters} or more characters for suggested

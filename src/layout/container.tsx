@@ -1,6 +1,8 @@
+import clsx from "clsx";
 import React from "react";
-import { ContainerProps } from "./types";
-import { StyledContainer } from "./container.styles";
+
+import * as styles from "./container.styles";
+import type { ContainerProps } from "./types";
 
 const Component = (
     props: ContainerProps,
@@ -11,19 +13,26 @@ const Component = (
         "data-testid": testId = "container",
         type = "flex",
         stretch = false,
+        className,
         ...otherProps
     } = props;
 
     return (
-        <StyledContainer
+        <div
             ref={ref}
             data-testid={testId}
-            $type={type}
-            $stretch={stretch}
+            className={clsx(
+                styles.container,
+                !stretch && styles.containerNotStretched,
+                type === "grid" && styles.containerGrid,
+                type === "flex-column" && styles.containerFlexColumn,
+                type === "flex" && styles.containerFlex,
+                className
+            )}
             {...otherProps}
         >
             {children}
-        </StyledContainer>
+        </div>
     );
 };
 

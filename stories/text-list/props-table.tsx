@@ -1,8 +1,5 @@
-import {
-    ApiTable,
-    ApiTableSectionProps,
-    StorybookLink,
-} from "stories/storybook-common";
+import type { ApiTableSectionProps } from "stories/storybook-common";
+import { ApiTable, StorybookLink } from "stories/storybook-common";
 
 const DATA: ApiTableSectionProps[] = [
     {
@@ -44,7 +41,7 @@ const DATA: ApiTableSectionProps[] = [
                     "Font size of the list. Inherited from the parent if not specified",
                 propTypes: (
                     <StorybookLink path="/docs/core-typography--docs">
-                        TypographySizeType
+                        TypographySize
                     </StorybookLink>
                 ),
             },
@@ -62,7 +59,7 @@ const DATA: ApiTableSectionProps[] = [
                     `"circle"`,
                     `"square"`,
                     `"none"`,
-                    "React.ReactNode",
+                    "React.ReactNode (excluding string)",
                 ],
             },
         ],

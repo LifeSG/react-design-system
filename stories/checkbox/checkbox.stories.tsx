@@ -2,6 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Checkbox } from "src/checkbox";
 import { GridDecorator } from "stories/storybook-common";
+
 import { Label, SelectAll, SubOption } from "./doc-elements";
 
 type Component = typeof Checkbox;

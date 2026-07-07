@@ -1,19 +1,16 @@
 import { Canvas as FabricCanvas, FabricImage, PencilBrush } from "fabric";
+import type { Ref } from "react";
 import {
-    Ref,
     forwardRef,
     useCallback,
-    useContext,
     useEffect,
     useImperativeHandle,
     useRef,
 } from "react";
-import { ThemeContext } from "styled-components";
+
 import { Colour } from "../theme";
-import {
-    SignatureCanvas,
-    SignatureCanvasContainer,
-} from "./e-signature.styles";
+import { useDesignTokenOverride } from "../theme/utils";
+import * as styles from "./e-signature.styles";
 
 interface ESignatureCanvasProps {
     baseImageDataURL?: string | null | undefined;
@@ -37,7 +34,7 @@ const Component = (
     const canvasRef = useRef<HTMLCanvasElement>(null);
     const fabricCanvas = useRef<FabricCanvas>();
     const pencilBrush = useRef<PencilBrush>();
-    const theme = useContext(ThemeContext);
+    const resolvedColor = useDesignTokenOverride({ token: Colour["text"] });
 
     // =============================================================================
     // HOOKS
@@ -94,16 +91,7 @@ const Component = (
             fabricCanvas.current.isDrawingMode = true;
 
             pencilBrush.current = new PencilBrush(fabricCanvas.current);
-            if (theme) {
-                pencilBrush.current.color = Colour["text"]({
-                    theme: {
-                        ...theme,
-                        colourMode: "light",
-                    },
-                });
-            } else {
-                pencilBrush.current.color = "#000000";
-            }
+            pencilBrush.current.color = resolvedColor || "#000000";
             pencilBrush.current.width = 3;
 
             fabricCanvas.current.freeDrawingBrush = pencilBrush.current;
@@ -113,6 +101,12 @@ const Component = (
             };
         }
     }, []);
+
+    useEffect(() => {
+        if (pencilBrush.current && resolvedColor) {
+            pencilBrush.current.color = resolvedColor;
+        }
+    }, [resolvedColor]);
 
     // resize
     useEffect(() => {
@@ -153,9 +147,13 @@ const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <SignatureCanvasContainer ref={containerRef}>
-            <SignatureCanvas id="eSignatureCanvas" ref={canvasRef} />
-        </SignatureCanvasContainer>
+        <div className={styles.signatureCanvasContainer} ref={containerRef}>
+            <canvas
+                className={styles.signatureCanvas}
+                id="eSignatureCanvas"
+                ref={canvasRef}
+            />
+        </div>
     );
 };
 

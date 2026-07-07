@@ -25,9 +25,8 @@ Apply the spacing tokens when defining margin or padding styles.
 
 ```tsx
 import { Spacing } from "@lifesg/react-design-system/theme";
-import styled from "styled-components";
 
-const Container = styled.div`
+const container = css`
     padding: ${Spacing["spacing-8"]};
     margin-bottom: ${Spacing["layout-md"]};
 `;
@@ -35,16 +34,12 @@ const Container = styled.div`
 
 ## Overriding
 
-```tsx
-import { LifeSGTheme } from "@lifesg/react-design-system/theme";
+Refer to [this section](/docs/foundations-advanced--docs#theme-customisation) to
+find out how to apply theme customisation.
 
-const customTheme: ThemeSpec = {
-    ...LifeSGTheme,
-    overrides: {
-        spacing: {
-            "spacing-4": 4, // specify a custom pixel-based value
-            "layout-md": 20, // specify a custom pixel-based value
-        },
-    },
-};
+```tsx
+useApplyStyle(themeElementRef, {
+    [Spacing["spacing-4"]]: "4px", // specify a custom length value
+    [Spacing["layout-md"]]: "20px", // specify a custom length value
+});
 ```

@@ -1,5 +1,5 @@
 import { OtpVerification } from "../otp-verification";
-import { FormOtpVerificationProps } from "../otp-verification/types";
+import type { FormOtpVerificationProps } from "../otp-verification/types";
 import { useId } from "../util";
 import { FormWrapper } from "./form-wrapper";
 
@@ -9,9 +9,6 @@ export const FormOtpVerification = ({
     "data-error-testid": errorTestId,
     "data-testid": testId,
     layoutType,
-    mobileCols,
-    tabletCols,
-    desktopCols,
     xxsCols,
     xsCols,
     smCols,
@@ -31,9 +28,6 @@ export const FormOtpVerification = ({
             label={label}
             data-error-testid={errorTestId}
             layoutType={layoutType}
-            mobileCols={mobileCols}
-            tabletCols={tabletCols}
-            desktopCols={desktopCols}
             xxsCols={xxsCols}
             xsCols={xsCols}
             smCols={smCols}

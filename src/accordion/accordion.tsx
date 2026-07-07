@@ -1,13 +1,12 @@
-import React, { useEffect, useState } from "react";
+import clsx from "clsx";
+import type React from "react";
+import { useEffect, useState } from "react";
+
+import { Button } from "../button";
+import * as styles from "./accordion.styles";
 import { AccordionContext } from "./accordion-context";
 import { AccordionItem } from "./accordion-item";
-import {
-    Content,
-    ExpandCollapseLink,
-    Title,
-    TitleWrapper,
-} from "./accordion.style";
-import { AccordionProps } from "./types";
+import type { AccordionProps } from "./types";
 
 const AccordionBase = ({
     children,
@@ -87,14 +86,16 @@ const AccordionBase = ({
 
     const renderCollapseExpandAll = () => {
         return (
-            <ExpandCollapseLink
+            <Button
+                className={styles.expandCollapseLink}
                 data-testid="accordion-expand-collapse-button"
                 onClick={handleExpandCollapseClick}
                 styleType="link"
                 type="button"
+                sizeType="small"
             >
                 {expandAll ? "Hide all" : "Show all"}
-            </ExpandCollapseLink>
+            </Button>
         );
     };
 
@@ -104,21 +105,28 @@ const AccordionBase = ({
         }
 
         return (
-            <TitleWrapper
-                $showTitleInMobile={showTitleInMobile}
-                $hasExpandAll={enableExpandAll}
+            <div
+                className={clsx(
+                    styles.titleWrapper,
+                    !showTitleInMobile &&
+                        !enableExpandAll &&
+                        styles.titleWrapperHidden
+                )}
             >
                 {title && (
-                    <Title
-                        $showInMobile={showTitleInMobile}
+                    <h2
+                        className={clsx(
+                            styles.title,
+                            !showTitleInMobile && styles.titleHidden
+                        )}
                         data-testid="accordion-title"
                         aria-level={headingLevel}
                     >
                         {title}
-                    </Title>
+                    </h2>
                 )}
                 {enableExpandAll && renderCollapseExpandAll()}
-            </TitleWrapper>
+            </div>
         );
     };
 
@@ -136,14 +144,37 @@ const AccordionBase = ({
                 itemState,
             }}
         >
-            <Content id={id} data-testid={testId} className={className}>
+            <div
+                id={id}
+                data-testid={testId}
+                className={clsx(styles.accordionWrapper, className)}
+            >
                 {renderTitleWrapper()}
                 {children}
-            </Content>
+            </div>
         </AccordionContext.Provider>
     );
 };
 
+/**
+ * A vertically stacked set of collapsible content panels.
+ *
+ * Use `Accordion` to organise related content into independently expandable
+ * sections with shared expand/collapse state. The container synchronises item
+ * states and maintains correct heading-level hierarchy.
+ *
+ * Sub-components:
+ * - `Accordion.Item` — a single collapsible panel with an imperative ref handle.
+ */
 export const Accordion = Object.assign(AccordionBase, {
+    /**
+     * Renders an individual collapsible section within an `Accordion`.
+     *
+     * Each item has a clickable header that toggles its content panel. The expanded
+     * state can be individually controlled via the `expanded` prop, or left to the
+     * parent `Accordion` to manage through its "Show all" / "Hide all" mechanism.
+     * Exposes an imperative ref handle (`AccordionItemHandle`) for programmatic
+     * expand/collapse control.
+     */
     Item: AccordionItem,
 });

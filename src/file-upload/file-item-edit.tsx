@@ -1,20 +1,15 @@
+import clsx from "clsx";
 import { useCallback, useEffect, useRef, useState } from "react";
+
+import { Button } from "../button";
 import { Form } from "../form";
+import type { FormLabelProps } from "../form/types";
+import { Typography } from "../typography";
 import { StringHelper } from "../util";
-import {
-    ActionButton,
-    ActionButtonsSection,
-    ContentSection,
-    DetailsSection,
-    FileNameText,
-    FileSizeText,
-    Item,
-    NameSection,
-} from "./file-item-edit.styles";
+import * as styles from "./file-item-edit.styles";
 import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
 import { FileUploadHelper } from "./helper";
-import { FileItemProps } from "./types";
-import { FormLabelProps } from "../form/types";
+import type { FileItemProps } from "./types";
 
 interface Props {
     fileItem: FileItemProps;
@@ -119,24 +114,29 @@ export const FileItemEdit = ({
     // RENDER FUNCTIONS
     // =========================================================================
     const renderFileNameAndSize = () => (
-        <NameSection ref={nameSectionRef}>
-            <FileNameText weight="semibold">{formattedName}</FileNameText>
-            <FileSizeText>
+        <div ref={nameSectionRef} className={styles.nameSection}>
+            <Typography.BodyMD
+                className={styles.fileNameText}
+                weight="semibold"
+            >
+                {formattedName}
+            </Typography.BodyMD>
+            <Typography.BodyMD className={styles.fileSizeText}>
                 {FileUploadHelper.formatFileSizeDisplay(size)}
-            </FileSizeText>
-        </NameSection>
+            </Typography.BodyMD>
+        </div>
     );
 
     return (
-        <Item data-testid={`${id}-edit-display`}>
-            <ContentSection>
+        <li data-testid={`${id}-edit-display`} className={styles.item}>
+            <div className={styles.contentSection}>
                 {shouldShowThumbnail && (
                     <FileListItemThumbnail
                         thumbnailImageDataUrl={thumbnailImageDataUrl}
                         fileType={type}
                     />
                 )}
-                <DetailsSection>
+                <div className={styles.detailsSection}>
                     {renderFileNameAndSize()}
                     <Form.Textarea
                         ref={textareaRef}
@@ -155,26 +155,36 @@ export const FileItemEdit = ({
                             }
                         }
                     />
-                </DetailsSection>
-            </ContentSection>
-            <ActionButtonsSection $thumbnail={shouldShowThumbnail}>
-                <ActionButton
+                </div>
+            </div>
+            <div
+                className={clsx(
+                    styles.actionButtonsSection,
+                    shouldShowThumbnail &&
+                        styles.actionButtonsSectionWithThumbnail
+                )}
+            >
+                <Button
                     data-testid={`${id}-save-button`}
                     type="button"
+                    sizeType="small"
                     disabled={shouldDisableSave()}
                     onClick={handleSave}
+                    className={styles.actionButton}
                 >
                     Save
-                </ActionButton>
-                <ActionButton
+                </Button>
+                <Button
                     type="button"
+                    sizeType="small"
                     styleType="secondary"
                     data-testid={`${id}-cancel-button`}
                     onClick={onCancel}
+                    className={styles.actionButton}
                 >
                     Cancel
-                </ActionButton>
-            </ActionButtonsSection>
-        </Item>
+                </Button>
+            </div>
+        </li>
     );
 };
