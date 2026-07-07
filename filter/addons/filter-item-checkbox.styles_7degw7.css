@@ -1,0 +1,16 @@
+@layer fds{.f1m3a5f4{padding:0 0 var(--fds-spacing-16);}.f1m3a5f4 [data-id="content-container"]{position:relative;padding:var(--fds-spacing-8) var(--fds-spacing-8) 0;}:where(body.fds-breakpoint-lg-max) .f1m3a5f4 [data-id="content-container"]{padding:var(--fds-spacing-16) var(--fds-spacing-20) var(--fds-spacing-8);}.f1m3a5f4 [data-id="minimise-button"]{margin:var(--fds-spacing-8) var(--fds-spacing-20) 0;}
+.g11488am{display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:column;-ms-flex-direction:column;flex-direction:column;}:where(body.fds-breakpoint-lg-max) .g11488am{-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-box-flex-wrap:wrap;-webkit-flex-wrap:wrap;-ms-flex-wrap:wrap;flex-wrap:wrap;gap:0;}
+:where(body.fds-breakpoint-lg-max) .g1nnu0tt{gap:var(--fds-spacing-16);}
+.i4hhc1a{--fds-internal-filterItemCheckbox-item-level:0;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-align-items:flex-start;-webkit-box-align:flex-start;-ms-flex-align:flex-start;align-items:flex-start;position:relative;width:100%;min-height:1.5rem;padding:var(--fds-spacing-8) var(--fds-spacing-12);padding-left:calc(
+        var(--fds-spacing-12) + var(--fds-internal-filterItemCheckbox-item-level) *
+            var(--fds-spacing-32)
+    );cursor:pointer;font-family:var(--fds-font-family-body);font-variant:var(--fds-font-variant);font-size:var(--fds-font-body-size-md);font-weight:var(--fds-font-weight-regular);line-height:var(--fds-font-body-lh-md);letter-spacing:var(--fds-font-body-ls-md);color:var(--fds-colour-text);}:where(body.fds-breakpoint-lg-max) .i4hhc1a{padding:var(--fds-spacing-8);padding-left:calc(
+            var(--fds-spacing-8) + var(--fds-internal-filterItemCheckbox-item-level) *
+                var(--fds-spacing-32)
+        );}
+.i7vabkq{display:none;}
+.i4eh8j6{color:var(--fds-colour-text-selected);}
+.c13wglju{-webkit-flex-shrink:0;-ms-flex-negative:0;flex-shrink:0;margin-right:var(--fds-spacing-8);}
+.twhh8xx{min-width:5rem;}
+.tb2fwos{visibility:hidden;}
+.sbvftpe{height:-webkit-fit-content;height:-moz-fit-content;height:fit-content;padding:0;margin:var(--fds-spacing-16) 0 var(--fds-spacing-8) var(--fds-spacing-12);}:where(body.fds-breakpoint-lg-max) .sbvftpe{margin:0 0 var(--fds-spacing-16) 0;}}

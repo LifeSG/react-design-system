@@ -1,0 +1,2 @@
+import"./file-item-edit.styles_19bvztn.css";const i="i1432lvs",t="c1i0crev",c="d4rbbwx",e="n18lt6ho",l="fuau9z6",s="f18dc1yj",a="ajknckh",d="awg16zc",f="aigdfjq";export{f as actionButton,a as actionButtonsSection,d as actionButtonsSectionWithThumbnail,t as contentSection,c as detailsSection,l as fileNameText,s as fileSizeText,i as item,e as nameSection};
+//# sourceMappingURL=file-item-edit.styles.js.map

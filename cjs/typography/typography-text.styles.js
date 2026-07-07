@@ -1,0 +1,2 @@
+"use strict";require("./typography-text.styles_1734x2k.css");exports.typographySize={"heading-xxl":"hfl3ekz","heading-xl":"h1wbj2xe","heading-lg":"h1ml8c05","heading-md":"h12i879k","heading-sm":"h12v6vm5","heading-xs":"hzwk9ye","body-baseline":"bg0vyh3","body-md":"b1h8qozz","body-sm":"b1n2zaqp","body-xs":"b14pmtsp"},exports.typographyWeight={light:"lqvxzn1",regular:"r1kcu5nk",semibold:"s1pdcykv",bold:"b1rin8wh"};
+//# sourceMappingURL=typography-text.styles.js.map

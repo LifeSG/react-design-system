@@ -1,0 +1,1 @@
+{"version":3,"file":"feedback-rating-stars-container-data.js","sources":["../../src/feedback-rating/feedback-rating-stars-container-data.ts"],"sourcesContent":["export const StarContainerData = {\n    MAX_STAR: 5,\n};\n"],"names":["StarContainerData","MAX_STAR"],"mappings":"AAAO,MAAMA,EAAoB,CAC7BC,SAAU"}

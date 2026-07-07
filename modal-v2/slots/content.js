@@ -1,0 +1,2 @@
+import{__rest as t}from"../../_virtual/_tslib.js";import{jsx as s}from"react/jsx-runtime";import a from"clsx";import{contentContainer as e}from"./slot-styles.js";const r=r=>{var{"data-testid":i="modal-content",children:o,className:l}=r,m=t(r,["data-testid","children","className"]);return s("div",Object.assign({"data-testid":i},m,{className:a(e,l),children:o}))};r.displayName="ModalV2.Content";export{r as Content};
+//# sourceMappingURL=content.js.map

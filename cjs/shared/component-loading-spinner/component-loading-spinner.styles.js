@@ -1,0 +1,2 @@
+"use strict";require("./component-loading-spinner.styles_15eq02i.css");exports.innerRing="i5p5ltp",exports.innerRing2="i1trawld",exports.innerRing3="iav978u",exports.innerRing4="i1fnvvih",exports.outerRing="oqwr3hs",exports.tokens={rootSize:"--fds-internal-componentLoadingSpinner-root-size",rootColour:"--fds-internal-componentLoadingSpinner-root-colour"};
+//# sourceMappingURL=component-loading-spinner.styles.js.map

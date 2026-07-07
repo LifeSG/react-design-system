@@ -1,0 +1,2 @@
+import{useState as e,useEffect as t}from"react";import{useTheme as o}from"../theme-provider/hooks.js";import{parseCSSVariableValue as r}from"./css-variable.js";const m=({token:m,mode:s="light"})=>{const{theme:d,themeElement:n}=o(),[i,a]=e();return t((()=>{if(!n)return;const e=document.createElement("div");e.dataset.fdsTheme=d,e.dataset.fdsThemeMode=s,e.style.display="none",n.appendChild(e);const t=r(m,e);a(t||void 0),e.remove()}),[d,n,m,s]),i};export{m as useDesignTokenOverride};
+//# sourceMappingURL=use-design-token-override.js.map
