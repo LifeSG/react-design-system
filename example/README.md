@@ -55,13 +55,11 @@ Then open http://localhost:5173 in your browser.
 
 ```
 example/
-  web-components/
-    index.ts          # Custom element definitions wrapping React components
   vue-app/
     index.html        # Entry HTML with theme attributes
     vite.config.ts    # Vite config with Vue custom element support
     src/
-      main.ts         # Registers web components, mounts Vue
+      main.ts         # Imports @lifesg/react-design-system/web-components, mounts Vue
       App.vue         # Vue component using <lifesg-button> and <lifesg-modal>
       env.d.ts        # TypeScript declarations for custom elements
 ```

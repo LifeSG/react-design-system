@@ -9,10 +9,7 @@
         "skipLibCheck": true,
         "forceConsistentCasingInFileNames": true,
         "resolveJsonModule": true,
-        "isolatedModules": true,
-        "paths": {
-            "@lifesg/react-design-system/*": ["../../src/*"]
-        }
+        "isolatedModules": true
     },
-    "include": ["src/**/*", "../web-components/**/*"]
+    "include": ["src/**/*"]
 }
