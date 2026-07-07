@@ -46,4 +46,10 @@ const Component = (
     );
 };
 
+/**
+ * A button that displays an image alongside optional label content.
+ *
+ * Use `ImageButton` for selectable image-based choices such as theme pickers or avatar
+ * selectors, where each option is represented visually.
+ */
 export const ImageButton = React.forwardRef(Component);
