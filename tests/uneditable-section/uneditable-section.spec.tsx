@@ -1,4 +1,5 @@
 import { act, fireEvent, render, screen } from "@testing-library/react";
+import React from "react";
 import type { UneditableSectionItemProps } from "src/uneditable-section";
 import { UneditableSection } from "src/uneditable-section";
 
@@ -362,6 +363,31 @@ describe("UneditableSection", () => {
 
             render(<UneditableSection items={ITEMS} title="Test" />);
             expect(screen.getByText("This is an alert")).toBeInTheDocument();
+        });
+    });
+
+    describe("Ref forwarding", () => {
+        it("should forward ref to the wrapper element", () => {
+            const ref = React.createRef<HTMLDivElement>();
+            render(
+                <UneditableSection ref={ref} items={MOCK_ITEMS} title="Test" />
+            );
+
+            expect(ref.current).toBeInstanceOf(HTMLElement);
+        });
+
+        it("should forward ref when fullWidth is true", () => {
+            const ref = React.createRef<HTMLDivElement>();
+            render(
+                <UneditableSection
+                    ref={ref}
+                    items={MOCK_ITEMS}
+                    title="Test"
+                    fullWidth
+                />
+            );
+
+            expect(ref.current).toBeInstanceOf(HTMLDivElement);
         });
     });
 });

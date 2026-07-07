@@ -1,4 +1,6 @@
 import clsx from "clsx";
+import type { NamedExoticComponent } from "react";
+import React from "react";
 
 import { Layout } from "../layout";
 import { Typography } from "../typography";
@@ -9,22 +11,25 @@ import type {
 } from "./types";
 import * as styles from "./uneditable-section.styles";
 
-export const UneditableSectionBase = ({
-    items,
-    title,
-    description,
-    topSection,
-    bottomSection,
-    children,
-    background = true,
-    stretch,
-    fullWidth,
-    onMask,
-    onUnmask,
-    onTryAgain,
-    className,
-    ...otherProps
-}: UneditableSectionProps) => {
+const Component = (
+    {
+        items,
+        title,
+        description,
+        topSection,
+        bottomSection,
+        children,
+        background = true,
+        stretch,
+        fullWidth,
+        onMask,
+        onUnmask,
+        onTryAgain,
+        className,
+        ...otherProps
+    }: UneditableSectionProps,
+    ref: React.Ref<HTMLDivElement>
+) => {
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -133,6 +138,7 @@ export const UneditableSectionBase = ({
     if (fullWidth) {
         return (
             <div
+                ref={ref}
                 className={clsx(
                     background && styles.wrapperBackground,
                     className
@@ -145,6 +151,7 @@ export const UneditableSectionBase = ({
     }
     return (
         <Layout.Content
+            ref={ref}
             className={clsx(
                 styles.wrapper,
                 background && styles.wrapperBackground,
@@ -157,3 +164,8 @@ export const UneditableSectionBase = ({
         </Layout.Content>
     );
 };
+
+export const UneditableSectionBase = React.forwardRef(Component);
+
+(UneditableSectionBase as NamedExoticComponent).displayName =
+    "UneditableSection";
