@@ -8,6 +8,7 @@ import { PAFontSet } from "./specs/pa-font-set";
 import { A11yPlaygroundFontSet } from "./specs/a11yplayground-font-set";
 import { SupportGoWhereFontSet } from "./specs/supportgowhere-font-set";
 import { IMDAFontSet } from "./specs/imda-font-set";
+import { ToteBoardFontSet } from "./specs/toteboard-font-set";
 import { SPFFontSet } from "./specs/spf-font-set";
 import { FontCollectionMap, FontSet } from "./types";
 import { OneServiceFontSet } from "./specs/oneservice-font-set";
@@ -24,7 +25,7 @@ const FontSpec: ThemeCollectionSpec<FontCollectionMap, FontScheme> = {
         imda: IMDAFontSet,
         spf: SPFFontSet,
         oneservice: OneServiceFontSet,
-        toteboard: DefaultFontSet,
+        toteboard: ToteBoardFontSet,
     },
     defaultValue: "default",
 };

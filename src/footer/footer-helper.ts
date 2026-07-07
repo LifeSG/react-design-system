@@ -75,6 +75,12 @@ export namespace FooterHelper {
                     alt: "SupportGoWhere",
                     style: { width: "10rem" },
                 };
+            case "toteboard":
+                return {
+                    src: "https://assets.life.gov.sg/react-design-system/img/logo/tote-board-logo.svg",
+                    alt: "Tote Board",
+                    style: { width: "10rem" },
+                };
 
             default:
                 return {};

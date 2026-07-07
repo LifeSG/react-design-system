@@ -91,7 +91,8 @@ export type ResourceScheme =
     | "imda"
     | "spf"
     | "smgs"
-    | "careercompass";
+    | "careercompass"
+    | "toteboard";
 
 export type ColourMode = "light" | "dark";
 
