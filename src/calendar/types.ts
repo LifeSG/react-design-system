@@ -59,4 +59,5 @@ export interface CalendarMultiProps extends CalendarBaseProps {
     onChange?: ((values: string[]) => void) | undefined;
 }
 
+/** Props for the `Calendar` component */
 export type CalendarProps = CalendarSingleProps | CalendarMultiProps;
