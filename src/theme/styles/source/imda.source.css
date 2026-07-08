@@ -1,0 +1,151 @@
+@import url("../default.css");
+@import url("../presets/component-tokens-standard.css");
+@import url("../presets/font-scale-standard.css");
+@import url("../presets/semantic-colours-dark.css");
+@import url("../presets/semantic-colours-light-standard.css");
+@import url("../presets/shadow.css");
+
+[data-fds-theme="imda"] {
+    /*
+    ============================================================================
+    PRIMITIVE COLOURS
+    ============================================================================
+    */
+    --fds-colour-brand-10: #370009;
+    --fds-colour-brand-20: #4E000D;
+    --fds-colour-brand-30: #640011;
+    --fds-colour-brand-40: #850017;
+    --fds-colour-brand-50: #9B001A;
+    --fds-colour-brand-60: #EF2D4E;
+    --fds-colour-brand-70: #F692A3;
+    --fds-colour-brand-80: #FAB9C4;
+    --fds-colour-brand-90: #FCD7DD;
+    --fds-colour-brand-95: #FDEAED;
+    --fds-colour-brand-100: #FEF8F9;
+    --fds-colour-primary-10: #1F102A;
+    --fds-colour-primary-20: #2F193F;
+    --fds-colour-primary-30: #3E2053;
+    --fds-colour-primary-40: #562D71;
+    --fds-colour-primary-50: #663587;
+    --fds-colour-primary-60: #9370AA;
+    --fds-colour-primary-70: #BCA7CB;
+    --fds-colour-primary-80: #D3C5DC;
+    --fds-colour-primary-90: #E5DDEB;
+    --fds-colour-primary-95: #F2EEF5;
+    --fds-colour-primary-100: #FAF9FB;
+    --fds-colour-secondary-10: #201316;
+    --fds-colour-secondary-20: #311D22;
+    --fds-colour-secondary-30: #3F272C;
+    --fds-colour-secondary-40: #58363D;
+    --fds-colour-secondary-50: #684049;
+    --fds-colour-secondary-60: #AF6A7A;
+    --fds-colour-secondary-70: #F393A8;
+    --fds-colour-secondary-80: #FFB6C6;
+    --fds-colour-secondary-90: #FFD6DF;
+    --fds-colour-secondary-95: #FFE9EE;
+    --fds-colour-secondary-100: #FFF7F9;
+    --fds-colour-neutral-10: #161616;
+    --fds-colour-neutral-20: #222222;
+    --fds-colour-neutral-30: #2D2D2D;
+    --fds-colour-neutral-40: #3F3F3F;
+    --fds-colour-neutral-50: #4B4B4B;
+    --fds-colour-neutral-60: #7E7E7E;
+    --fds-colour-neutral-70: #AFAFB0;
+    --fds-colour-neutral-80: #C7CACA;
+    --fds-colour-neutral-90: #DDE1E2;
+    --fds-colour-neutral-95: #EDEFEF;
+    --fds-colour-neutral-100: #F9F9F9;
+    --fds-colour-success-10: #081917;
+    --fds-colour-success-20: #0D2724;
+    --fds-colour-success-30: #11332E;
+    --fds-colour-success-40: #174740;
+    --fds-colour-success-50: #1B554C;
+    --fds-colour-success-60: #2D8C7E;
+    --fds-colour-success-70: #46C2AF;
+    --fds-colour-success-80: #89D8CC;
+    --fds-colour-success-90: #BCE9E2;
+    --fds-colour-success-95: #DAF3EF;
+    --fds-colour-success-100: #F0FAF9;
+    --fds-colour-warning-10: #241200;
+    --fds-colour-warning-20: #371C00;
+    --fds-colour-warning-30: #482500;
+    --fds-colour-warning-40: #633300;
+    --fds-colour-warning-50: #763C00;
+    --fds-colour-warning-60: #C36400;
+    --fds-colour-warning-70: #FF9524;
+    --fds-colour-warning-80: #FFBD77;
+    --fds-colour-warning-90: #FFD9B2;
+    --fds-colour-warning-95: #FFEBD6;
+    --fds-colour-warning-100: #FFF7F0;
+    --fds-colour-error-10: #330505;
+    --fds-colour-error-20: #4B0707;
+    --fds-colour-error-30: #600909;
+    --fds-colour-error-40: #810D0D;
+    --fds-colour-error-50: #98110F;
+    --fds-colour-error-60: #D7504C;
+    --fds-colour-error-70: #E89B9B;
+    --fds-colour-error-80: #EFBEBE;
+    --fds-colour-error-90: #F5D9D9;
+    --fds-colour-error-95: #F9ECEC;
+    --fds-colour-error-100: #FCF7F7;
+    --fds-colour-info-10: #021824;
+    --fds-colour-info-20: #032537;
+    --fds-colour-info-30: #043148;
+    --fds-colour-info-40: #054462;
+    --fds-colour-info-50: #065175;
+    --fds-colour-info-60: #3985AF;
+    --fds-colour-info-70: #82B5DA;
+    --fds-colour-info-80: #ACCFE7;
+    --fds-colour-info-90: #CCE3F1;
+    --fds-colour-info-95: #E3F1F8;
+    --fds-colour-info-100: #F4FAFD;
+    --fds-colour-white: #FFFFFF;
+    --fds-colour-black: #000000;
+    --fds-colour-primary-inverse: #FEAB10;
+
+    @mixin semantic-colours-light-standard;
+
+    /* 
+    ========================================================================
+    COMPONENT TOKENS
+    ========================================================================
+    */
+
+    /* Button */
+
+    @mixin component-tokens-standard;
+
+    /* 
+    ========================================================================
+    SHADOW
+    ========================================================================
+    */
+
+    @mixin shadow;
+
+    /*
+    ============================================================================
+    FONT
+    ============================================================================
+    */
+    --fds-font-variant: no-common-ligatures;
+
+    @mixin font-scale-standard;
+    --fds-font-family-heading: "Montserrat";
+    --fds-font-family-body: "Montserrat";
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
+    --fds-font-form-label-lh: 1.5rem;
+    --fds-font-form-description-lh: 1.625rem;
+    --fds-font-form-label-ls: 0.009rem;
+    --fds-font-form-description-ls: 0.008rem;
+}
+
+/*
+============================================================================
+SEMANTIC COLOURS - DARK MODE
+============================================================================
+*/
+[data-fds-theme="imda"][data-fds-theme-mode="dark"] {
+    @mixin semantic-colours-dark;
+}

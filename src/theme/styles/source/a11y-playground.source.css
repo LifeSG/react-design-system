@@ -1,0 +1,184 @@
+@import url("../default.css");
+@import url("../presets/font-scale-standard.css");
+@import url("../presets/semantic-colours-dark.css");
+@import url("../presets/semantic-colours-light-standard.css");
+@import url("../presets/shadow.css");
+
+[data-fds-theme="a11y-playground"] {
+    /* 
+    ============================================================================
+    PRIMITIVE COLOURS
+    ============================================================================
+    */
+    --fds-colour-brand-10: #170F39;
+    --fds-colour-brand-20: #281C62;
+    --fds-colour-brand-30: #38268B;
+    --fds-colour-brand-40: #4D34BF;
+    --fds-colour-brand-50: #5735DF;
+    --fds-colour-brand-60: #9986F9;
+    --fds-colour-brand-70: #B2A5F8;
+    --fds-colour-brand-80: #CDC2FA;
+    --fds-colour-brand-90: #E2DCFC;
+    --fds-colour-brand-95: #EFEDFE;
+    --fds-colour-brand-100: #FAF8FD;
+    --fds-colour-primary-10: #170F39;
+    --fds-colour-primary-20: #281C62;
+    --fds-colour-primary-30: #38268B;
+    --fds-colour-primary-40: #4D34BF;
+    --fds-colour-primary-50: #5735DF;
+    --fds-colour-primary-60: #9986F9;
+    --fds-colour-primary-70: #B2A5F8;
+    --fds-colour-primary-80: #CDC2FA;
+    --fds-colour-primary-90: #E2DCFC;
+    --fds-colour-primary-95: #EFEDFE;
+    --fds-colour-primary-100: #FAF8FD;
+    --fds-colour-secondary-10: #251204;
+    --fds-colour-secondary-20: #401F08;
+    --fds-colour-secondary-30: #5B2C0B;
+    --fds-colour-secondary-40: #7E3D0F;
+    --fds-colour-secondary-50: #B04900;
+    --fds-colour-secondary-60: #E26E1C;
+    --fds-colour-secondary-70: #FF9445;
+    --fds-colour-secondary-80: #FFBB8E;
+    --fds-colour-secondary-90: #FFD9BF;
+    --fds-colour-secondary-95: #FFECDF;
+    --fds-colour-secondary-100: #FFF8F3;
+    --fds-colour-neutral-10: #161616;
+    --fds-colour-neutral-20: #282828;
+    --fds-colour-neutral-30: #393939;
+    --fds-colour-neutral-40: #4E4E4E;
+    --fds-colour-neutral-50: #686868;
+    --fds-colour-neutral-60: #8E8E8E;
+    --fds-colour-neutral-70: #AFAFB0;
+    --fds-colour-neutral-80: #C7CACA;
+    --fds-colour-neutral-90: #DDE1E2;
+    --fds-colour-neutral-95: #EDEFEF;
+    --fds-colour-neutral-100: #F9F9F9;
+    --fds-colour-success-10: #031B15;
+    --fds-colour-success-20: #082D24;
+    --fds-colour-success-30: #094134;
+    --fds-colour-success-40: #0D5947;
+    --fds-colour-success-50: #10755E;
+    --fds-colour-success-60: #16A181;
+    --fds-colour-success-70: #1EC59D;
+    --fds-colour-success-80: #6FDDC2;
+    --fds-colour-success-90: #AFECDE;
+    --fds-colour-success-95: #D5F5ED;
+    --fds-colour-success-100: #F1FCF9;
+    --fds-colour-warning-10: #1F1500;
+    --fds-colour-warning-20: #362500;
+    --fds-colour-warning-30: #4D3501;
+    --fds-colour-warning-40: #6A4801;
+    --fds-colour-warning-50: #8B6001;
+    --fds-colour-warning-60: #BF8301;
+    --fds-colour-warning-70: #EAA102;
+    --fds-colour-warning-80: #FFBF34;
+    --fds-colour-warning-90: #FFDC8F;
+    --fds-colour-warning-95: #FFEDC7;
+    --fds-colour-warning-100: #FFF8EA;
+    --fds-colour-error-10: #270F10;
+    --fds-colour-error-20: #441B1B;
+    --fds-colour-error-30: #612627;
+    --fds-colour-error-40: #853535;
+    --fds-colour-error-50: #AF4546;
+    --fds-colour-error-60: #EC6162;
+    --fds-colour-error-70: #F29696;
+    --fds-colour-error-80: #F7BBBC;
+    --fds-colour-error-90: #FAD8D8;
+    --fds-colour-error-95: #FCEAEA;
+    --fds-colour-error-100: #FEF7F7;
+    --fds-colour-info-10: #0F1627;
+    --fds-colour-info-20: #1B2745;
+    --fds-colour-info-30: #273763;
+    --fds-colour-info-40: #354D88;
+    --fds-colour-info-50: #4665B3;
+    --fds-colour-info-60: #618AF6;
+    --fds-colour-info-70: #8DADFF;
+    --fds-colour-info-80: #B4C9FF;
+    --fds-colour-info-90: #D3DFFF;
+    --fds-colour-info-95: #E9EFFF;
+    --fds-colour-info-100: #F5F8FF;
+    --fds-colour-white: #FFFFFF;
+    --fds-colour-black: #000000;
+    --fds-colour-primary-inverse: #FEAB10;
+
+    @mixin semantic-colours-light-standard;
+
+    /* 
+    ========================================================================
+    COMPONENT TOKENS
+    ========================================================================
+    */
+
+    /* Button */
+    --fds-button-radius: var(--fds-radius-md);
+    --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
+    --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
+    --fds-button-default-colour-text: var(--fds-colour-text-inverse);
+    --fds-button-secondary-colour-border: var(--fds-colour-border-primary);
+    --fds-button-secondary-colour-text: var(--fds-colour-text-primary);
+    --fds-button-light-colour-text: var(--fds-colour-text-primary);
+    --fds-button-link-colour-text: var(--fds-colour-text-primary);
+
+    /* Navbar */
+    --fds-navbar-full-height: 6rem;
+    --fds-navbar-full-logo-height: 2rem;
+    --fds-navbar-compressed-height: 4rem;
+    --fds-navbar-compressed-logo-height: 1.5rem;
+    --fds-navbar-mobile-height: 3.5rem;
+    --fds-navbar-mobile-logo-height: 1.5rem;
+    --fds-navbar-colour-bg: var(--fds-colour-bg);
+    --fds-navbar-colour-icon: var(--fds-colour-icon);
+    --fds-navbar-link-colour-text: var(--fds-colour-text);
+    --fds-navbar-link-colour-text-hover: var(--fds-colour-text-hover);
+    --fds-navbar-link-colour-text-selected-hover: var(
+        --fds-colour-text-selected-hover
+    );
+
+    /* Footer */
+    --fds-footer-colour-bg: var(--fds-colour-bg-strong);
+    --fds-footer-colour-text: var(--fds-colour-text);
+    --fds-footer-link-colour-text: var(--fds-colour-text);
+    --fds-footer-link-colour-text-hover: var(--fds-colour-text-hover);
+    --fds-footer-disclaimer-link-colour-text: var(--fds-colour-text);
+    --fds-footer-disclaimer-link-colour-text-hover: var(
+        --fds-colour-text-subtler
+    );
+
+    /* Animation */
+    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
+
+    /* 
+    ========================================================================
+    SHADOW
+    ========================================================================
+    */
+
+    @mixin shadow;
+
+    /* 
+    ============================================================================
+    FONT
+    ============================================================================
+    */
+    --fds-font-variant: no-common-ligatures;
+
+    @mixin font-scale-standard;
+    --fds-font-family-heading: "Atkinson Hyperlegible Next";
+    --fds-font-family-body: "Atkinson Hyperlegible Next";
+    --fds-font-form-label-size: 1.125rem;
+    --fds-font-form-description-size: 1rem;
+    --fds-font-form-label-lh: 1.5rem;
+    --fds-font-form-description-lh: 1.625rem;
+    --fds-font-form-label-ls: 0rem;
+    --fds-font-form-description-ls: 0.009rem;
+}
+
+/*
+============================================================================
+SEMANTIC COLOURS - DARK MODE
+============================================================================
+*/
+[data-fds-theme="a11y-playground"][data-fds-theme-mode="dark"] {
+    @mixin semantic-colours-dark;
+}

@@ -99,10 +99,10 @@
     --fds-colour-primary-inverse: #FEAB10;
 
     /*
-    ============================================================================
-    SEMANTIC COLOURS - LIGHT MODE
-    ============================================================================
-    */
+        ============================================================================
+        SEMANTIC COLOURS - LIGHT MODE
+        ============================================================================
+        */
 
     /* text */
     --fds-colour-text: var(--fds-colour-neutral-20);
@@ -344,8 +344,6 @@
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
-    --fds-font-family-heading: "Open Sans";
-    --fds-font-family-body: "Open Sans";
     --fds-font-body-size-baseline: 1.125rem;
     --fds-font-body-size-md: 1rem;
     --fds-font-body-size-sm: 0.875rem;
@@ -358,6 +356,8 @@
     --fds-font-body-ls-md: 0.009rem;
     --fds-font-body-ls-sm: 0.008rem;
     --fds-font-body-ls-xs: 0.008rem;
+    --fds-font-family-heading: "Open Sans";
+    --fds-font-family-body: "Open Sans";
     --fds-font-form-label-size: 1.125rem;
     --fds-font-form-description-size: 1rem;
     --fds-font-form-label-lh: 1.5rem;
@@ -366,7 +366,7 @@
     --fds-font-form-description-ls: 0.009rem;
 }
 
-/* 
+/*
 ============================================================================
 SEMANTIC COLOURS - DARK MODE
 ============================================================================

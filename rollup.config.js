@@ -7,7 +7,9 @@ import json from "@rollup/plugin-json";
 import { nodeResolve } from "@rollup/plugin-node-resolve";
 import terser from "@rollup/plugin-terser";
 import wyw from "@wyw-in-js/rollup";
+import postcss from "postcss";
 import postcssImports from "postcss-import";
+import postcssMixins from "postcss-mixins";
 import copy from "rollup-plugin-copy";
 import excludeDependenciesFromBundle from "rollup-plugin-exclude-dependencies-from-bundle";
 import generatePackageJson from "rollup-plugin-generate-package-json";
@@ -179,16 +181,29 @@ const plugins = [
             return "/masthead/sgds-night.css";
         },
     }),
-    // Copies static assets to the build output
+    // Copies theme CSS files to dist, resolving @import and @mixin directives.
     copy({
         targets: [
             {
-                src: "src/theme/styles/*",
+                src: "src/theme/styles/source/*.css",
                 dest: "dist/theme/styles",
-                transform: (contents) => {
-                    // Inject `@layer fds` into the copied CSS files, ensuring
+                transform: async (contents, filename) => {
+                    const from = path.resolve(
+                        "src/theme/styles/source",
+                        filename
+                    );
+                    const result = await postcss([
+                        postcssImports(),
+                        postcssMixins({
+                            mixinsFiles: path.join(
+                                path.resolve("src/theme/styles/presets"),
+                                "**/*.css"
+                            ),
+                        }),
+                    ]).process(contents, { from });
+                    // Inject `@layer fds` into the output CSS, ensuring
                     // that imports are hoisted to the top
-                    const lines = contents.toString().split("\n");
+                    const lines = result.css.split("\n");
                     const lastImportLineIndex = lines.findLastIndex((line) =>
                         line.trim().startsWith("@import")
                     );
@@ -198,11 +213,11 @@ const plugins = [
                     const cssLines = lines
                         .slice(lastImportLineIndex + 1)
                         .join("\n");
-
                     return `${importLines}\n@layer fds {\n${cssLines}\n}`;
                 },
             },
         ],
+        hook: "writeBundle",
     }),
     fixCssImportPathsPlugin,
 ];

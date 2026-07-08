@@ -1,10 +1,5 @@
 @import url("./default.css");
 
-/*
-============================================================================
-PRIMITIVE COLOURS
-============================================================================
-*/
 [data-fds-theme="smgs"] {
     --fds-colour-brand-10: #0B181F;
     --fds-colour-brand-20: #132B35;
@@ -99,10 +94,10 @@ PRIMITIVE COLOURS
     --fds-colour-primary-inverse: #FEAB10;
 
     /*
-    ============================================================================
-    SEMANTIC COLOURS - LIGHT MODE
-    ============================================================================
-    */
+        ============================================================================
+        SEMANTIC COLOURS - LIGHT MODE
+        ============================================================================
+        */
 
     /* text */
     --fds-colour-text: var(--fds-colour-neutral-20);
@@ -420,7 +415,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-icon-inverse: var(--fds-colour-black);
     --fds-colour-icon-primary-inverse: var(--fds-colour-primary-inverse);
 
-    /* border */
+    /* border - adjusted for dark mode */
     --fds-colour-border: var(--fds-colour-neutral-20);
     --fds-colour-border-strong: var(--fds-colour-neutral-40);
     --fds-colour-border-stronger: var(--fds-colour-neutral-60);
@@ -445,7 +440,7 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-border-error-strong: var(--fds-colour-error-70);
     --fds-colour-border-info: var(--fds-colour-info-50);
 
-    /* background */
+    /* background - dark backgrounds */
     --fds-colour-bg: var(--fds-colour-black);
     --fds-colour-bg-strong: var(--fds-colour-neutral-10);
     --fds-colour-bg-stronger: var(--fds-colour-neutral-20);
@@ -500,17 +495,17 @@ SEMANTIC COLOURS - DARK MODE
     --fds-colour-bg-primary-subtlest-hover: var(--fds-colour-primary-20);
     --fds-colour-bg-primary-subtlest-selected: var(--fds-colour-primary-20);
 
-    /* overlay */
+    /* overlay - lighter overlays for dark backgrounds */
     --fds-colour-overlay-strong: rgb(78 78 78 / 80%);
     --fds-colour-overlay-subtle: rgb(78 78 78 / 50%);
 
-    /* hyperlink */
+    /* hyperlink - adjusted for dark mode */
     --fds-colour-hyperlink: var(--fds-colour-primary-60);
     --fds-colour-hyperlink-hover: var(--fds-colour-primary-70);
     --fds-colour-hyperlink-visited: var(--fds-colour-primary-70);
     --fds-colour-hyperlink-inverse: var(--fds-colour-primary-inverse);
 
-    /* focus ring */
+    /* focus ring - adjusted for dark mode */
     --fds-colour-focus-ring: var(--fds-colour-primary-60);
     --fds-colour-focus-ring-inverse: var(--fds-colour-black);
 }
