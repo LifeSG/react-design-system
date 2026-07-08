@@ -1,20 +1,27 @@
 // =============================================================================
 // SHARED PROPS
 // =============================================================================
+/** How overflowing option text is truncated. */
 export type TruncateType = "middle" | "end";
+/** Async load state for dropdown items. */
 export type ItemsLoadStateType = "loading" | "fail" | "success";
+/** Controls whether secondary labels render inline or on a new line. */
 export type LabelDisplayType = "inline" | "next-line";
+/** Visual size variant for the dropdown. */
 export type DropdownVariantType = "small" | "default";
 
+/** Runtime context passed to a custom `renderListItem` callback. */
 export interface ListItemRenderArgs {
     selected: boolean;
 }
 
+/** Display model for a list item with an optional secondary label. */
 export interface ListItemDisplayProps {
     title: string;
     secondaryLabel?: string | undefined;
 }
 
+/** Overrides for built-in text labels rendered inside a dropdown. */
 export interface DropdownCustomLabelProps {
     searchPlaceholder?: string | undefined;
     noResultsLabel?: string | undefined;
@@ -25,54 +32,55 @@ export interface DropdownCustomLabelProps {
     multiSelectedLabel?: string | undefined;
 }
 
+/** Props controlling how dropdown items are displayed and rendered. */
 export interface DropdownDisplayProps<T, V> {
-    /** Function to derive value from an item */
+    /** Extracts the comparable value from an option item. */
     valueExtractor?: ((item: T) => V) | undefined;
-    /** Function to derive options display value from an item */
+    /** Extracts the display text for a list item. */
     listExtractor?: ((item: T) => string | ListItemDisplayProps) | undefined;
-    /** Function to render custom component */
+    /** Renders a fully custom element for each list item. */
     renderListItem?:
         | ((item: T, args: ListItemRenderArgs) => JSX.Element)
         | undefined;
     /**
-     * Function to render a custom call-to-action component at the bottom of the dropdown list.
-     * @param hideOptions - A function that can be called to hide the dropdown list.
-     * @param options - The currently displayed list items in the dropdown list.
-     * @returns A JSX.Element representing the custom call-to-action component.
+     * Renders a custom call-to-action at the bottom of the dropdown list.
+     *
+     * @param hideOptions Callback to programmatically close the dropdown.
+     * @param options The currently displayed list items.
      */
     renderCustomCallToAction?:
         | ((hideOptions: () => void, options: T[]) => JSX.Element)
         | undefined;
 }
 
+/** Props controlling the search functionality within a dropdown. */
 export interface DropdownSearchProps<T> {
-    /** Specifying will render a search bar in the dropdown */
+    /** Renders a search bar inside the dropdown when `true`. */
     enableSearch?: boolean | undefined;
-    /** If specified, the default no results display will not be rendered */
+    /** Suppresses the built-in "no results" message when `true`. */
     hideNoResultsDisplay?: boolean | undefined;
-    /** @deprecated use `noResultsDescription` inside `customLabels` */
+    /** @deprecated Use `noResultsDescription` inside `customLabels`. */
     noResultsDescription?: React.ReactNode | undefined;
-    /** @deprecated use `searchPlaceholder` inside `customLabels` */
+    /** @deprecated Use `searchPlaceholder` inside `customLabels`. */
     searchPlaceholder?: string | undefined;
-    /** Custom function to perform search when a user keys in a value in the search input */
+    /** Custom filter function invoked on each keystroke in the search input. */
     searchFunction?: ((searchValue: string) => T[]) | undefined;
+    /** Called when the user types in the search input. */
     onSearch?: (() => void) | undefined;
 }
 
+/** Internal configuration props for the dropdown list behaviour. */
 export interface DropdownConfigProps {
     multiSelect?: boolean | undefined;
     maxSelectable?: number | undefined;
     customLabels?: DropdownCustomLabelProps | undefined;
-    /**
-     * Used when items are loaded from an api call.
-     * Values: "loading" | "fail" | "success"
-     */
+    /** Async load state driving the loading spinner, error retry, or list render. */
     itemsLoadState?: ItemsLoadStateType | undefined;
-    /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
+    /** How overflowing item text is truncated. */
     itemTruncationType?: TruncateType | undefined;
-    /** Specifies the maximum number of lines visible before the label is truncated for "end" type */
+    /** Maximum visible lines before the label is truncated (applies to `"end"` truncation). */
     itemMaxLines?: number | undefined;
-    /** Specifies the variant type. Small type will have shorter height. Values: "default" | "small" */
+    /** Visual size variant for the dropdown items. */
     variant?: DropdownVariantType | undefined;
 }
 
