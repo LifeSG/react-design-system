@@ -119,6 +119,7 @@ export interface DropdownListApi {
 // NESTED DROPDOWN PROPS
 // =============================================================================
 
+/** A leaf node in a nested dropdown tree (has no children). */
 export interface NestedDropdownListLeafItem<T> {
     key: string;
     label: string;
@@ -126,6 +127,7 @@ export interface NestedDropdownListLeafItem<T> {
     subItems?: never | undefined;
 }
 
+/** A parent node in a nested dropdown tree (has child `subItems`). */
 export interface NestedDropdownListParentItem<T> {
     key: string;
     label: string;
@@ -133,11 +135,16 @@ export interface NestedDropdownListParentItem<T> {
     subItems: NestedDropdownListItemProps<T>[];
 }
 
+/**
+ * A single node in a nested dropdown tree.
+ *
+ * Presence of `subItems` discriminates parent nodes from leaf nodes.
+ */
 export type NestedDropdownListItemProps<T> =
     | NestedDropdownListLeafItem<T>
     | NestedDropdownListParentItem<T>;
 
-// internal representation of a list item
+/** Internal enriched representation of a nested dropdown item with computed tree state. */
 export interface NestedDropdownListLocalItem<T> {
     item: NestedDropdownListItemProps<T>;
     index: number;
@@ -157,6 +164,7 @@ export interface NestedDropdownListLocalItem<T> {
     hasMatchedSubItems: boolean;
 }
 
+/** Initial expand/collapse state for nested dropdown items when the list opens. */
 export type ExpandMode = "default" | "expand" | "collapse";
 
 export interface NestedDropdownListProps<T>

@@ -23,8 +23,20 @@ import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper, useId } from "../util";
 import type { SelectedItem } from "./helpers";
 import { getSelectedItems, getSelectedSubItems } from "./helpers";
-import type { InputNestedMultiSelectProps } from "./types";
+import type {
+    InputNestedMultiSelectProps,
+    InputNestedMultiSelectValue,
+    InputNestedMultiSelectValues,
+} from "./types";
 
+/**
+ * A multi-select input that presents options in a nested hierarchy, up to three levels deep.
+ *
+ * Use `InputNestedMultiSelect` when users need to choose multiple values from a
+ * hierarchical option tree. Selecting a parent item automatically selects all its
+ * leaf descendants; deselecting a parent removes all its descendants from the
+ * selection.
+ */
 export const InputNestedMultiSelect = <V1, V2, V3>({
     placeholder = "Select",
     options: _options,
@@ -62,15 +74,17 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // =========================================================================
     // CONST, STATE
     // =========================================================================
+    type NestedValue = InputNestedMultiSelectValue<V1, V2, V3>;
+
     const { multiSelectedLabel } = customLabels || {};
-    const options = _options as NestedDropdownListItemProps<V1 | V2 | V3>[];
+    const options = _options as NestedDropdownListItemProps<NestedValue>[];
     const [selectedKeyPaths, setSelectedKeyPaths] = useState<Set<string>>(
         _selectedKeyPaths
             ? buildKeyPathToSet(_selectedKeyPaths)
             : new Set<string>()
     );
     const [selectedItems, setSelectedItems] = useState<
-        SelectedItem<V1 | V2 | V3>[]
+        SelectedItem<NestedValue>[]
     >([]);
 
     const [showOptions, setShowOptions] = useState<boolean>(false);
@@ -97,22 +111,24 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
     // =========================================================================
     const handleSelectAll = (
         keyPaths: string[][],
-        items: NestedDropdownListLocalItem<V1 | V2 | V3>[]
+        items: NestedDropdownListLocalItem<NestedValue>[]
     ) => {
-        const selectedItems = items.map((item) => ({
-            keyPath: item.keyPath,
-            label: item.item.label,
-            value: item.item.value,
-        }));
+        const selectedItems: SelectedItem<NestedValue>[] = items.map(
+            (item) => ({
+                keyPath: item.keyPath,
+                label: item.item.label,
+                value: item.item.value,
+            })
+        );
         setSelectedKeyPaths(buildKeyPathToSet(keyPaths));
         setSelectedItems(selectedItems);
         performOnSelectOptions(keyPaths, selectedItems);
     };
 
     const handleListItemClick = (
-        listItem: NestedDropdownListLocalItem<V1 | V2 | V3>
+        listItem: NestedDropdownListLocalItem<NestedValue>
     ) => {
-        const newSelectedItems: SelectedItem<V1 | V2 | V3>[] =
+        const newSelectedItems: SelectedItem<NestedValue>[] =
             getNewSelection(listItem);
         const newKeyPaths = newSelectedItems.map((item) => item.keyPath);
         setSelectedItems(newSelectedItems);
@@ -202,17 +218,18 @@ export const InputNestedMultiSelect = <V1, V2, V3>({
 
     const performOnSelectOptions = (
         keyPaths: string[][],
-        items: SelectedItem<V1 | V2 | V3>[]
+        items: SelectedItem<NestedValue>[]
     ) => {
         if (onSelectOptions) {
-            const returnValue = items.map((item) => item.value);
+            const returnValue: InputNestedMultiSelectValues<V1, V2, V3> =
+                items.map((item) => item.value);
             onSelectOptions(keyPaths, returnValue);
         }
     };
 
     const getNewSelection = (
-        item: NestedDropdownListLocalItem<V1 | V2 | V3>
-    ): SelectedItem<V1 | V2 | V3>[] => {
+        item: NestedDropdownListLocalItem<NestedValue>
+    ): SelectedItem<NestedValue>[] => {
         if (item.checked === true) {
             // remove item or subitems
             return selectedItems.filter((selectedItem) => {
