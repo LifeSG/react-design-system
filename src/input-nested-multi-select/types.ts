@@ -19,10 +19,7 @@ export type InputNestedMultiSelectValues<V1, V2, V3> = Array<
 /**
  * Props for `InputNestedMultiSelect` component.
  *
- * The three type parameters describe the value types at each nesting level:
- * - `V1` for level-1 options
- * - `V2` for level-2 sub-items
- * - `V3` for level-3 leaf items.
+ * The three type parameters describe the value types at each nesting level.
  */
 export interface InputNestedMultiSelectProps<V1, V2, V3>
     extends React.HTMLAttributes<HTMLElement>,
