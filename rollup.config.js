@@ -19,6 +19,8 @@ import { createFixCssImportPathsPlugin } from "./rollup/fix-css-import-paths-plu
 const fixCssImportPathsPlugin = createFixCssImportPathsPlugin({
     outputDirs: ["dist", "dist/cjs"],
 });
+const includeWebComponents = process.env.BUILD_WEB_COMPONENTS === "true";
+const includeVueComponents = process.env.BUILD_VUE_COMPONENTS === "true";
 const dirsToIgnore = new Set(["custom-types", "shared", "util", "__mocks__"]);
 
 const srcDir = "src";
@@ -39,8 +41,17 @@ const subEntries = subDirs.reduce((acc, name) => {
 
 const input = {
     index: "src/index.ts",
-    "web-components": "src/web-components.ts",
     ...subEntries,
+    ...(includeWebComponents
+        ? {
+              "web-components": "src/web-components.ts",
+          }
+        : {}),
+    ...(includeVueComponents
+        ? {
+              "vue-components": "src/vue-components.ts",
+          }
+        : {}),
 };
 
 const subExports = subDirs.reduce((acc, name) => {
@@ -55,12 +66,26 @@ const subExports = subDirs.reduce((acc, name) => {
 }, {});
 
 const additionalExports = {
-    "./web-components": {
-        types: "./web-components.d.ts",
-        import: "./web-components.js",
-        require: "./cjs/web-components.js",
-        default: "./web-components.js",
-    },
+    ...(includeWebComponents
+        ? {
+              "./web-components": {
+                  types: "./web-components.d.ts",
+                  import: "./web-components.js",
+                  require: "./cjs/web-components.js",
+                  default: "./web-components.js",
+              },
+          }
+        : {}),
+    ...(includeVueComponents
+        ? {
+              "./vue": {
+                  types: "./vue-components.d.ts",
+                  import: "./vue-components.js",
+                  require: "./cjs/vue-components.js",
+                  default: "./vue-components.js",
+              },
+          }
+        : {}),
 };
 
 const basePlugins = [

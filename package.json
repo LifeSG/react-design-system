@@ -17,6 +17,12 @@
             "import": "./dist/web-components.js",
             "require": "./dist/cjs/web-components.js",
             "default": "./dist/web-components.js"
+        },
+        "./vue": {
+            "types": "./dist/vue-components.d.ts",
+            "import": "./dist/vue-components.js",
+            "require": "./dist/cjs/vue-components.js",
+            "default": "./dist/vue-components.js"
         }
     },
     "bin": {
@@ -25,6 +31,8 @@
     "scripts": {
         "build": "npm run rollup",
         "rollup": "rm -rf dist && rollup -c",
+        "build:web-components-lib": "node scripts/generate-wc-entries.mjs && BUILD_WEB_COMPONENTS=true npm run rollup && rm -f src/web-components.ts",
+        "build:vue-components-lib": "node scripts/vue-components.mjs generate && BUILD_VUE_COMPONENTS=true npm run rollup && node scripts/vue-components.mjs clean",
         "build-lib": "./scripts/build.sh",
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
@@ -68,7 +76,8 @@
         "react-to-webcomponent": "^2.0.1",
         "react-slider": "^2.0.6",
         "react-virtuoso": "^4.12.5",
-        "react-zoom-pan-pinch": "^3.3.0"
+        "react-zoom-pan-pinch": "^3.3.0",
+        "veaury": "^2.6.3"
     },
     "devDependencies": {
         "@babel/core": "^7.25.2",
@@ -157,13 +166,20 @@
         "stylelint": "^17.4.0",
         "stylelint-config-recess-order": "^7.6.1",
         "stylelint-config-standard": "^40.0.0",
-        "typescript": "^5.7.3"
+        "typescript": "^5.7.3",
+        "vue": "^3.5.39"
     },
     "peerDependencies": {
         "@floating-ui/react": ">=0.26.23 <1.0.0",
         "@lifesg/react-icons": "^1.5.0",
         "react": "^17.0.2 || ^18.0.0 || ^19.0.0",
-        "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0"
+        "react-dom": "^17.0.2 || ^18.0.0 || ^19.0.0",
+        "vue": "^3.4.0"
+    },
+    "peerDependenciesMeta": {
+        "vue": {
+            "optional": true
+        }
     },
     "optionalDependencies": {
         "@rollup/rollup-linux-x64-gnu": "^4.54.0",
