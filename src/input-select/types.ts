@@ -13,28 +13,46 @@ import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 // =============================================================================
 // SHARED PROPS
 // =============================================================================
+/**
+ * Options configuration for `InputSelect`.
+ */
 export interface InputSelectOptionsProps<T> {
+    /** The list of selectable options rendered in the dropdown. */
     options: T[];
     /**
-     * Used when options are loaded from an api call.
-     * Values: "loading" | "fail" | "success"
+     * Indicates the load state of options fetched asynchronously.
+     * Renders a loading spinner, error retry, or the list depending on the state.
+     *
+     * @default "success"
      */
     optionsLoadState?: ItemsLoadStateType | undefined;
-    /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
+    /**
+     * Controls how long option labels are truncated when they overflow.
+     * - `"middle"` trims the centre of the text
+     * - `"end"` trims from the right.
+     *
+     * @default "end"
+     */
     optionTruncationType?: TruncateType | undefined;
 
+    /** Called when the dropdown list becomes visible. */
     onShowOptions?: (() => void) | undefined;
+    /** Called when the dropdown list is hidden. */
     onHideOptions?: (() => void) | undefined;
+    /** Called when the user activates the retry action after a load failure. */
     onRetry?: (() => void) | undefined;
 }
 
+/** Common presentation and state props shared across select components. */
 export interface InputSelectSharedProps<T> {
-    /** HTML button props */
+    /** Name attribute forwarded to the underlying button element. */
     name?: string | undefined;
-    /** Component specific props */
+    /** The list of selectable options. */
     options: T[];
+    /** Placeholder text shown when no option is selected. */
     placeholder?: string | undefined;
     disabled?: boolean | undefined;
+    /** Renders the trigger in an error state. */
     error?: boolean | undefined;
     "data-testid"?: string | undefined;
 }
@@ -42,6 +60,12 @@ export interface InputSelectSharedProps<T> {
 // =============================================================================
 // INPUT SELECT PROPS
 // =============================================================================
+/**
+ * Props for `InputSelect`, a single-selection dropdown input.
+ *
+ * `T` is the option item type; `V` is the extracted value type returned by
+ * `valueExtractor`.
+ */
 export interface InputSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
         InputSelectOptionsProps<T>,
@@ -50,34 +74,72 @@ export interface InputSelectProps<T, V>
         DropdownSearchProps<T> {
     // TODO: should be a common state once all variants implement this
     readOnly?: boolean | undefined;
+    /** The currently selected option. The component syncs to this value on each render. */
     selectedOption?: T | undefined;
+    /**
+     * Called when the user picks an item from the dropdown.
+     *
+     * @param option The full option object that was selected.
+     * @param extractedValue The value derived from the option via `valueExtractor`.
+     */
     onSelectOption?: ((option: T, extractedValue: V) => void) | undefined;
-    /** Function to derive display value for selected option */
+    /**
+     * Derives the display string shown in the trigger for the selected option.
+     * Takes precedence over `valueExtractor` + `valueToStringFunction`.
+     */
     displayValueExtractor?: ((option: T) => string) | undefined;
-    /** Function to convert value into a string */
+    /** Function to convert selected value into a display string */
     valueToStringFunction?: ((value: V) => string) | undefined;
-    /** Function to render selected custom component */
+    /**
+     * Renders a custom element for the currently selected option.
+     */
     renderCustomSelectedOption?: ((option: T) => JSX.Element) | undefined;
+    /**
+     * Called when focus leaves both the trigger and dropdown.
+     */
     onBlur?: (() => void) | undefined;
+    /**
+     * Visual size variant of the trigger and dropdown.
+     *
+     * @default "default"
+     */
     variant?: DropdownVariantType | undefined;
+    /**
+     * Aligns the dropdown relative to the trigger element.
+     * - `"left"` — dropdown left-aligns with the trigger
+     * - `"right"` — dropdown right-aligns with the trigger
+     */
     alignment?: DropdownAlignmentType | undefined;
+    /** CSS `z-index` applied to the dropdown overlay. */
     dropdownZIndex?: number | undefined;
     /**
-     * The root element that contains the dropdown element. Defaults to the document body.
+     * The root element that contains the dropdown element.
      *
-     * If the parent that contains the trigger element has a higher z-index than the dropdown,
-     * the dropdown may not be visible. Specify the parent element here instead
+     * @remarks Specify this if you need to change the parent of the
+     * dropdown in the HTML DOM.
+     * Possible use case: sharing a stacking context.
+     *
+     * Note: if a parent of the trigger has a higher `z-index` than the dropdown,
+     * the dropdown may be obscured.
+     *
+     * @default `document.body`
      */
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /**
-     * Custom width for the dropdown. When specified, the dropdown will use this
-     * width instead of matching the input element width.
+     * Custom width for the dropdown. When specified, the dropdown uses this
+     * width instead of matching the trigger element width.
      */
     dropdownWidth?: string | undefined;
+    /**
+     * Overrides the default labels shown inside the dropdown and on the trigger.
+     */
     customLabels?: DropdownCustomLabelProps | undefined;
 }
 
-/** To be exposed for Form component inheritance */
+/**
+ * A subset of `InputSelectProps` used by form components that manage
+ * the `error` state themselves.
+ */
 export type InputSelectPartialProps<T, V> = Omit<
     InputSelectProps<T, V>,
     "error"
