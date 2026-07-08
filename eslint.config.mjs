@@ -16,6 +16,7 @@ const sourceFileGlobs = ["**/*.{js,jsx,mjs,cjs,ts,tsx}"];
 const reactSourceFileGlobs = ["**/*.{js,jsx,ts,tsx}"];
 const tsFileGlobs = ["**/*.{ts,tsx}"];
 const vueExampleTsFileGlobs = ["example/vue-app/**/*.{ts,tsx}"];
+const vueVeauryExampleTsFileGlobs = ["example/vue-app-veaury/**/*.{ts,tsx}"];
 const testFileGlobs = [
     "**/*.spec.{js,jsx,ts,tsx}",
     "**/*.test.{js,jsx,ts,tsx}",
@@ -176,6 +177,14 @@ export default defineConfig([
         languageOptions: {
             parserOptions: {
                 project: "./example/vue-app/tsconfig.json",
+            },
+        },
+    },
+    {
+        files: vueVeauryExampleTsFileGlobs,
+        languageOptions: {
+            parserOptions: {
+                project: "./example/vue-app-veaury/tsconfig.json",
             },
         },
     },
