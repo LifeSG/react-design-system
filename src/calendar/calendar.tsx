@@ -5,6 +5,9 @@ import { InternalCalendar } from "../shared/internal-calendar";
 import * as styles from "./calendar.styles";
 import type { CalendarProps } from "./types";
 
+/**
+ * Date picker calendar for single-date or multi-date selection.
+ */
 export const Calendar = (props: CalendarProps) => {
     // =============================================================================
     // CONST, STATE, REF

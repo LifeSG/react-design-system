@@ -4,26 +4,59 @@ export type ButtonStyleType = "default" | "secondary" | "light" | "link";
 export type ButtonSizeType = "large" | "default" | "small";
 export type ButtonIconPosition = "left" | "right";
 
+/**
+ * Props for the `Button` component, extending standard HTML button attributes
+ * with style variants, loading state, icon support, and accessible disabled
+ * behavior.
+ */
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
     "data-testid"?: string | undefined;
-    /** The style type of the button. Values: "default" | "secondary" | "light" | "link" */
+    /**
+     * Visual style variant of the button.
+     *
+     * @default "default"
+     */
     styleType?: ButtonStyleType | undefined;
-    /** The size of the button. Values: "large" | "default" | "small" */
+    /**
+     * Controls the button's size.
+     *
+     * @default "default"
+     */
     sizeType?: ButtonSizeType | undefined;
-    /** If specified, the component will have a red color scheme being applied */
+    /**
+     * Applies a red color scheme for destructive actions.
+     *
+     * @default false
+     */
     danger?: boolean | undefined;
-    /** Indicates if a loading spinner is to be displayed */
+    /**
+     * Displays a loading spinner and sets `aria-busy` on the button.
+     * The spinner replaces the icon (if present); children continue to render.
+     *
+     * @default false
+     */
     loading?: boolean | undefined;
-    /** If true, the button remains focusable when disabled. Defaults to false. */
+    /**
+     * Keeps the button keyboard-focusable when disabled. When true, the HTML
+     * `disabled` attribute is not set, but `aria-disabled` remains true and the
+     * click handler is suppressed.
+     *
+     * @default false
+     */
     focusableWhenDisabled?: boolean | undefined;
     /**
-     * The icon to be rendered in the button. When provided without children, the
-     * button renders in icon-only mode (square). Requires aria-label on the button
-     * for accessibility in icon-only mode.
+     * Icon element rendered inside the button. The icon receives `aria-hidden`
+     * automatically. When provided without children, the button renders in
+     * icon-only mode (square layout) — provide `aria-label` on the button for
+     * accessibility in that case.
      */
     icon?: JSX.Element | undefined;
-    /** Specifies where the icon will be positioned relative to the label. */
+    /**
+     * Position of the icon relative to the button label.
+     *
+     * @default "left"
+     */
     iconPosition?: ButtonIconPosition | undefined;
 }
 

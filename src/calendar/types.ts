@@ -9,27 +9,44 @@ interface CalendarBaseProps extends CommonCalendarProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
     id?: string | undefined;
-    /** Specifies if the component should have a border around it. Values `no-border` | `bordered` */
+    /**
+     * Border style of the calendar container.
+     *
+     * @default "bordered"
+     */
     styleType?: "no-border" | "bordered" | undefined;
-    /** Called when day cell is hovered, returns value in `YYYY-MM-DD` */
+    /** Called when a day cell is hovered. Receives the date in `YYYY-MM-DD` format. */
     onHover?: ((value: string) => void) | undefined;
-    /** Called when there is a change in the current visible month and year */
+    /** Called when the visible month or year changes. */
     onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
 }
 
+/**
+ * Props for the `Calendar` component in single-date selection mode.
+ *
+ * Pass `variant="single"` or omit `variant` to activate this mode.
+ */
 export interface CalendarSingleProps extends CalendarBaseProps {
+    /**
+     * @default "single"
+     */
     variant?: "single" | undefined;
     /** Selected date in `YYYY-MM-DD` format */
     value?: string | undefined;
-    /** Called when the selected date changes. Returns the selected date in `YYYY-MM-DD` format */
+    /** Called when the selected date changes. Receives the date in `YYYY-MM-DD` format. */
     onChange?: ((value: string) => void) | undefined;
     /**
-     * Called when the selected date changes. Returns the selected date in `YYYY-MM-DD` format
-     * @deprecated Use `onChange` instead
+     * Called when a date is selected. Receives the date in `YYYY-MM-DD` format.
+     * @deprecated Use `onChange` instead.
      */
     onSelect?: ((value: string) => void) | undefined;
 }
 
+/**
+ * Props for the `Calendar` component in multi-date selection mode.
+ *
+ * Requires `variant="multi"`.
+ */
 export interface CalendarMultiProps extends CalendarBaseProps {
     variant: "multi";
     /** Selected dates in `YYYY-MM-DD` format */
@@ -38,8 +55,9 @@ export interface CalendarMultiProps extends CalendarBaseProps {
     minSelectable?: number | undefined;
     /** Maximum number of dates that can be selected */
     maxSelectable?: number | undefined;
-    /** Called when the selection changes. Returns all selected dates in `YYYY-MM-DD` format */
+    /** Called when the selection changes. Receives all selected dates in `YYYY-MM-DD` format. */
     onChange?: ((values: string[]) => void) | undefined;
 }
 
+/** Props for the `Calendar` component */
 export type CalendarProps = CalendarSingleProps | CalendarMultiProps;

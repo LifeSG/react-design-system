@@ -14,6 +14,13 @@ import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
 import * as styles from "./breadcrumb.styles";
 import type { BreadcrumbProps, FadeColorSet } from "./types";
 
+/**
+ * Horizontal breadcrumb navigation trail.
+ *
+ * Use `Breadcrumb` to show the user's position within a page hierarchy and
+ * allow navigation to parent pages. On tablet and below, the trail scrolls
+ * horizontally with optional edge fade overlays to indicate clipped content.
+ */
 export const Breadcrumb = ({
     links,
     fadeColor,
