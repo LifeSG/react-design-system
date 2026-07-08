@@ -603,6 +603,13 @@ export const Component = (
     );
 };
 
+/**
+ * A fullscreen modal carousel for browsing images and custom media items.
+ *
+ * Use to present a collection of images or custom content in an overlay with
+ * navigation controls, zoom support, and an optional thumbnail strip.
+ * The top info bar is rendered only when at least one item provides some file metadata.
+ */
 export const FullscreenImageCarousel = forwardRef<
     FullscreenImageCarouselRef,
     FullscreenImageCarouselProps

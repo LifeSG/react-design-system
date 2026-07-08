@@ -12,6 +12,12 @@ import type { HistogramBinProps, HistogramSliderProps } from "./types";
 
 const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
+/**
+ * A histogram with an overlaid two-thumb range slider for numeric filtering.
+ *
+ * Use `HistogramSlider` to let users narrow a dataset by selecting a numeric
+ * range while seeing how values are distributed across bins.
+ */
 export const HistogramSlider = ({
     bins = [],
     interval,

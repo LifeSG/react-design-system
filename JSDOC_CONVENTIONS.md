@@ -250,7 +250,12 @@ Avoid:
 
 ### Defaults
 
-Use `@default` only when the default value is stable and enforced by the component.
+Use `@default` for:
+
+-   A default value assigned in the destructuring or function body
+-   A direct/simple fallback: a literal value (`200`, `"border"`), a named
+    token (`Colour["border"]`), or a simple computation (`50% of container
+height`)
 
 ```tsx
 export interface ExampleProps {
@@ -260,8 +265,18 @@ export interface ExampleProps {
      * @default false
      */
     fixed?: boolean | undefined;
+
+    /**
+     * Stroke colour for the border.
+     *
+     * @default Colour["border"]
+     */
+    colour?: string | undefined;
 }
 ```
+
+For complex fallback logic (conditional, multi-step, or computed), use
+`@remarks` instead of `@default`.
 
 Do not document a default when the value is only assumed by convention.
 
