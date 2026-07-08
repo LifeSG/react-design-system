@@ -14,9 +14,10 @@ import { useApplyStyle } from "../theme";
 import { useEvent } from "../util";
 import { ModalContext } from "./modal-context";
 import * as styles from "./modal-v2.styles";
+import { Card, CloseButton, Content, Footer } from "./slots";
 import type { ModalV2Props } from "./types";
 
-export const ModalV2 = ({
+const Base = ({
     id,
     show,
     onClose,
@@ -128,3 +129,26 @@ export const ModalV2 = ({
         </Overlay>
     );
 };
+
+/**
+ * A composable modal dialog with slot-based content layout.
+ *
+ * Use `ModalV2` when you need a controlled overlay dialog with structured
+ * content slots.
+ *
+ * Sub-components:
+ * - `ModalV2.Card` — wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout.
+ * - `ModalV2.CloseButton` — renders an accessible close button that invokes the modal's `onClose` callback.
+ * - `ModalV2.Content` — container for the body content of the modal card.
+ * - `ModalV2.Footer` — footer area for primary and secondary action buttons.
+ */
+export const ModalV2 = Object.assign(Base, {
+    /** Wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout. */
+    Card,
+    /** Renders an accessible close button that invokes the modal's `onClose` callback. */
+    CloseButton,
+    /** Container for the body content of the modal card. */
+    Content,
+    /** Footer area for primary and secondary action buttons. */
+    Footer,
+});
