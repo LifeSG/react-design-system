@@ -5,6 +5,12 @@ import { DropdownVariant } from "./dropdown-variant";
 import { LinkContainerVariant } from "./link-container-variant";
 import type { LanguageSwitcherCode, LanguageSwitcherProps } from "./types";
 
+/**
+ * A locale-switching control that lets users change the active display language.
+ *
+ * Use `LanguageSwitcher` to surface supported languages as either
+ * a compact dropdown or a set of inline links.
+ */
 export const LanguageSwitcher = ({
     variant = "dropdown",
     selectedLanguage = "en",
