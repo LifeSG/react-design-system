@@ -45,8 +45,7 @@ export interface CalendarSingleProps extends CalendarBaseProps {
 /**
  * Props for Calendar in multi-date selection mode.
  *
- * Requires `variant="multi"`. Use `minSelectable` and `maxSelectable` to
- * constrain how many dates can be chosen.
+ * Requires `variant="multi"`.
  */
 export interface CalendarMultiProps extends CalendarBaseProps {
     variant: "multi";
@@ -60,10 +59,4 @@ export interface CalendarMultiProps extends CalendarBaseProps {
     onChange?: ((values: string[]) => void) | undefined;
 }
 
-/**
- * Props for the Calendar component.
- *
- * `variant` discriminates between `CalendarSingleProps` (`"single"`) and
- * `CalendarMultiProps` (`"multi"`). Omitting `variant` defaults to `"single"`.
- */
 export type CalendarProps = CalendarSingleProps | CalendarMultiProps;

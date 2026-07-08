@@ -12,8 +12,7 @@ export interface FadeColorSet {
 }
 
 /**
- * Props for configuring the Breadcrumb navigation trail, including separator
- * style, scroll fade, and link items.
+ * Props for configuring the Breadcrumb navigation trail.
  */
 export interface BreadcrumbProps {
     /**

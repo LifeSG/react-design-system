@@ -15,8 +15,6 @@ export interface CheckboxProps
     /**
      * Puts the checkbox into an indeterminate visual and accessibility state.
      *
-     * Sets the underlying `<input>` element's `indeterminate` DOM property and
-     * `aria-checked="mixed"`.
      */
     indeterminate?: boolean | undefined;
     /**

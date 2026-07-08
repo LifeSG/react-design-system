@@ -31,7 +31,7 @@ export interface ButtonProps
     danger?: boolean | undefined;
     /**
      * Displays a loading spinner and sets `aria-busy` on the button.
-     * Children continue to render while loading.
+     * The spinner replaces the icon (if present); children continue to render.
      *
      * @default false
      */

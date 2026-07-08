@@ -1,5 +1,5 @@
 /**
- * Props for a themed container surface that adapts to light and dark modes.
+ * Props for a themed container surface.
  */
 export interface CardProps extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
