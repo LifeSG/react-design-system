@@ -12,11 +12,6 @@ import type { CheckboxProps } from "./types";
 
 /**
  * A styled checkbox input with indeterminate state support.
- *
- * Built on a native `<input type="checkbox">` with a custom visual icon layer.
- * Supports checked, unchecked, and indeterminate visual states. Use
- * `focusableWhenDisabled` to keep the input keyboard-reachable while
- * logically disabled.
  */
 export const Checkbox = ({
     className,

@@ -9,9 +9,8 @@ import type { CardProps } from "./types";
 /**
  * A themed container surface for grouping related content.
  *
- * Adapts its visual treatment (shadow vs. border) based on the active theme.
- * When `children` is a plain string, it is automatically wrapped in a body
- * text element.
+ * Use `Card` to visually group related content. Shadow or border treatment is
+ * determined by the active theme set via `ThemeProvider`.
  */
 export const Card = ({
     children,

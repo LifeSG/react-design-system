@@ -17,11 +17,9 @@ import type { BreadcrumbProps, FadeColorSet } from "./types";
 /**
  * Horizontal breadcrumb navigation trail.
  *
- * Links are separated by a configurable separator. The last item always
- * renders as a non-clickable label with `aria-current="page"`, regardless of
- * whether it has an `href`. Other items without an `href` also render as
- * non-clickable labels. On tablet and below the trail scrolls horizontally,
- * with optional fade overlays to indicate hidden content.
+ * Use `Breadcrumb` to show the user's position within a page hierarchy and
+ * allow navigation to parent pages. On tablet and below, the trail scrolls
+ * horizontally with optional edge fade overlays to indicate clipped content.
  */
 export const Breadcrumb = ({
     links,

@@ -122,10 +122,6 @@ const LargeButtonComponent = (props: ButtonProps, ref: ButtonRef) => (
 );
 LargeButtonComponent.displayName = "Button.Large";
 
-/**
- * Interactive button with support for style variants, sizes, icons, loading
- * state, and accessible disabled behavior.
- */
 export const Button = Object.assign(BaseButton, {
     /** @deprecated Use the `sizeType` prop instead: `<Button>` or `<Button sizeType="default">` */
     Default: React.forwardRef(DefaultButtonComponent),
