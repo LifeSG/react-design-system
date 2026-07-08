@@ -22,7 +22,7 @@ interface CalendarBaseProps extends CommonCalendarProps {
 }
 
 /**
- * Props for Calendar in single-date selection mode.
+ * Props for the `Calendar` component in single-date selection mode.
  *
  * Pass `variant="single"` or omit `variant` to activate this mode.
  */
@@ -43,7 +43,7 @@ export interface CalendarSingleProps extends CalendarBaseProps {
 }
 
 /**
- * Props for Calendar in multi-date selection mode.
+ * Props for the `Calendar` component in multi-date selection mode.
  *
  * Requires `variant="multi"`.
  */

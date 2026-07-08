@@ -11,9 +11,7 @@ export interface FadeColorSet {
     right?: string[] | undefined;
 }
 
-/**
- * Props for configuring the Breadcrumb navigation trail.
- */
+/** Props for the `Breadcrumb` component */
 export interface BreadcrumbProps {
     /**
      * Navigation items rendered as the breadcrumb trail. The last item is

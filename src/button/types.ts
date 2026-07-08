@@ -5,8 +5,9 @@ export type ButtonSizeType = "large" | "default" | "small";
 export type ButtonIconPosition = "left" | "right";
 
 /**
- * Props for Button, extending standard HTML button attributes with style
- * variants, loading state, icon support, and accessible disabled behavior.
+ * Props for the `Button` component, extending standard HTML button attributes
+ * with style variants, loading state, icon support, and accessible disabled
+ * behavior.
  */
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
