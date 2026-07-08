@@ -6,12 +6,7 @@ import { Typography } from "../typography";
 import * as styles from "./card.styles";
 import type { CardProps } from "./types";
 
-/**
- * A themed container surface for grouping related content.
- *
- * Use `Card` to visually group related content. Shadow or border treatment is
- * determined by the active theme set via `ThemeProvider`.
- */
+/** A themed container surface for grouping related content. */
 export const Card = ({
     children,
     className,
