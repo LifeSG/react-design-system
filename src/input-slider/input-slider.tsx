@@ -3,6 +3,12 @@ import { useEffect, useState } from "react";
 import { InputRangeSlider } from "../input-range-slider";
 import type { InputSliderProps } from "./types";
 
+/**
+ * A single-thumb slider for selecting one numeric value within a range.
+ *
+ * Use `InputSlider` when a user needs to pick a single point on a continuous
+ * scale without a precise value. For selecting a range between two values, use `InputRangeSlider` instead.
+ */
 export const InputSlider = ({
     value,
     ariaLabel,
