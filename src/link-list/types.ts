@@ -6,5 +6,8 @@ import type {
 
 export type { LinkListItemProps, LinkListStyle } from "./internal-types";
 
+/**
+ * Props for `LinkList`.
+ */
 export type LinkListProps<T> = BaseProps<T> &
     (LinkListEagerProps | LinkListLazyProps);
