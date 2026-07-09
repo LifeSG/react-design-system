@@ -429,6 +429,11 @@ const Component = (
         </nav>
     );
 };
+/**
+ * A navigation control for moving through paged content.
+ *
+ * Use `Pagination` to let users navigate between pages of a data set.
+ */
 export const Pagination = React.forwardRef(Component);
 
 const DEFAULT_OPTIONS: PageSizeItemProps[] = [
