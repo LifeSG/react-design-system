@@ -25,6 +25,12 @@ import { Popover } from "./popover";
 import * as styles from "./popover-trigger.styles";
 import type { PopoverTriggerProps, PopoverTriggerType } from "./types";
 
+/**
+ * Wraps an element to make it a popover trigger.
+ *
+ * Use `PopoverTrigger` when you need to attach a popover to any arbitrary
+ * child element.
+ */
 export const PopoverTrigger = ({
     children,
     popoverContent,

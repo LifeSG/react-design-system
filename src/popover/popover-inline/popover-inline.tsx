@@ -4,6 +4,11 @@ import { PopoverTrigger } from "../popover-trigger";
 import type { PopoverInlineProps } from "../types";
 import * as styles from "./popover-inline.styles";
 
+/**
+ * An inline text or icon element that opens a popover on interaction.
+ *
+ * Use `PopoverInline` to embed a labelled trigger directly within a body of content.
+ */
 export const PopoverInline = ({
     ariaLabel,
     content,
