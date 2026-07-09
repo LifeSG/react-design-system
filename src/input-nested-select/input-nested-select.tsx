@@ -21,23 +21,21 @@ import {
 } from "../shared/dropdown-wrapper/dropdown-wrapper";
 import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { StringHelper, useId } from "../util";
-import type {
-    InputNestedSelectProps,
-    L1OptionProps,
-    L2OptionProps,
-    L3OptionProps,
-} from "./types";
-
-export type CombinedOptionProps<V1, V2, V3> =
-    | L1OptionProps<V1, V2, V3>
-    | L2OptionProps<V2, V3>
-    | L3OptionProps<V3>;
+import type { InputNestedSelectProps } from "./types";
 
 interface SelectedItemType<V1, V2, V3> {
     label: string;
     value: V1 | V2 | V3;
 }
 
+/**
+ * A single-select input that presents options in a hierarchy, up to three levels deep.
+ *
+ * Use `InputNestedSelect` when users need to choose a value from a
+ * hierarchical option tree. The dropdown renders as an expandable tree.
+ * Parent nodes collapse or expand their children, and only one leaf or category
+ * value can be selected at a time.
+ */
 export const InputNestedSelect = <V1, V2, V3>({
     placeholder = "Select",
     options: _options,

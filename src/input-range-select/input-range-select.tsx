@@ -20,6 +20,12 @@ import type { InputRangeSelectProps } from "./types";
 
 type RangeType = "from" | "to";
 
+/**
+ * A paired combobox input for selecting a start and end value from dropdown lists.
+ *
+ * Use `InputRangeSelect` when a consumer must choose a range by picking two
+ * values — one for "from" and one for "to" — each from their own option list.
+ */
 export const InputRangeSelect = <T, V>({
     selectedOptions,
     placeholders = { from: "Select", to: "Select" },

@@ -160,4 +160,11 @@ const Component = <T, V>(
     }
 };
 
+/**
+ * A single-line text input optionally paired with a static label, a custom element, or a
+ * dropdown list selector.
+ *
+ * Use `InputGroup` when the input needs contextual decoration such as a unit label,
+ * a country-code dropdown, or a fully custom slot.
+ */
 export const InputGroup = React.forwardRef(Component);
