@@ -11,6 +11,12 @@ import { InputWrapper } from "../shared/input-wrapper";
 import { useId } from "../util";
 import type { PredictiveTextInputProps } from "./types";
 
+/**
+ * A text input that fetches and displays matching suggestions as the user types.
+ *
+ * Use `PredictiveTextInput` for search-as-you-type or autocomplete scenarios
+ * where options are loaded asynchronously based on the current input.
+ */
 export const PredictiveTextInput = <T, V>({
     className,
     "data-testid": testId,
