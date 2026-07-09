@@ -6,6 +6,13 @@ import { useNextInputState } from "../util";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import type { CountryValue, PhoneNumberInputProps } from "./types";
 
+/**
+ * A phone number field composed of a country code selector and a number input.
+ *
+ * Use `PhoneNumberInput` when collecting an internationalised phone number.
+ * The country code can be selected from a searchable dropdown or locked to a
+ * fixed value via `fixedCountry`.
+ */
 export const PhoneNumberInput = ({
     id,
     onChange,
