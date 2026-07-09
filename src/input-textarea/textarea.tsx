@@ -209,4 +209,7 @@ const TextareaComponent = (
     );
 };
 
+/**
+ * A multi-line text input with an optional character counter and prefix.
+ */
 export const Textarea = React.forwardRef(TextareaComponent);

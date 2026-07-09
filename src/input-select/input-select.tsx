@@ -18,6 +18,11 @@ import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
 import type { InputSelectProps } from "./types";
 
+/**
+ * A single-selection dropdown input.
+ *
+ * Use `InputSelect` when the user must pick exactly one item from a list.
+ */
 export const InputSelect = <T, V>({
     selectedOption,
     placeholder = "Select",
