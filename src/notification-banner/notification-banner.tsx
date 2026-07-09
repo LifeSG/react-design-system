@@ -203,6 +203,14 @@ const formatId = (componentName: string, id = "wrapper"): string => {
 // =============================================================================
 const Base = React.forwardRef(NBWithRef);
 (Base as NamedExoticComponent).displayName = "NotificationBanner";
+
+/**
+ * A full-width informational banner that sits at the top of the page.
+ *
+ * Use `NotificationBanner` to surface important or persistent messages that
+ * should remain visible until the user dismisses them.
+ */
 export const NotificationBanner = Object.assign(Base, {
+    /** Renders an inline link styled for use inside a `NotificationBanner`. */
     Link: NBLink,
 });
