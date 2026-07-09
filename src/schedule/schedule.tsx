@@ -4,12 +4,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 
 import { ErrorDisplay } from "../error-display";
 import { useMaxWidthMediaQuery } from "../theme";
+import type { CommonScheduleViewProps } from "./internal-types";
 import * as styles from "./schedule.styles";
 import { ScheduleDayView } from "./schedule-day-view/schedule-day-view";
 import { ScheduleHeader } from "./schedule-header/schedule-header";
 import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
-import type { CommonScheduleViewProps, ScheduleProps } from "./types";
+import type { ScheduleProps } from "./types";
 
+/**
+ * A grid visualisation of slot-based time availability for services across day and week views.
+ */
 export const Schedule = ({
     id,
     className,
