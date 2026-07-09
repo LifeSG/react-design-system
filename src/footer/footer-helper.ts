@@ -79,7 +79,7 @@ export namespace FooterHelper {
                 return {
                     src: "https://assets.life.gov.sg/react-design-system/img/logo/tote-board-logo.svg",
                     alt: "Tote Board",
-                    style: { width: "10rem" },
+                    style: { width: "4rem" },
                 };
 
             default:
