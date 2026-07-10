@@ -8,12 +8,9 @@ import { Colour } from "../theme";
 export const inputSelectorElement = css`
     height: calc(3rem - 2px); /* exclude top and bottom borders */
     cursor: inherit;
+`;
 
-    &:disabled {
-        color: ${Colour["text-subtler"]};
-
-        &:hover {
-            cursor: not-allowed;
-        }
-    }
+export const inputSelectorElementDisabled = css`
+    color: ${Colour["text-subtler"]};
+    cursor: not-allowed;
 `;

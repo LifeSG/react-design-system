@@ -117,7 +117,6 @@ export const Timepicker = ({
             <BasicInput
                 ref={selectorRef}
                 readOnly
-                disabled={disabled || undefined}
                 placeholder={placeholder || getPlaceholderValue()}
                 value={TimeHelper.formatDisplayValue(value, format)}
                 role="combobox"
@@ -130,7 +129,9 @@ export const Timepicker = ({
                 data-testid={
                     id ? `${id}-timepicker-selector` : "timepicker-selector"
                 }
-                className={styles.inputSelectorElement}
+                className={`${styles.inputSelectorElement}${
+                    disabled ? ` ${styles.inputSelectorElementDisabled}` : ""
+                }`}
                 onFocus={handleFocus}
                 onClick={handleOpen}
                 onKeyDown={handleKeyDown}

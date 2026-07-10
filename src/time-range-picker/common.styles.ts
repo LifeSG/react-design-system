@@ -18,12 +18,9 @@ export const selectorInput = css`
     display: block;
     width: 100%;
     flex: 1;
+`;
 
-    &:disabled {
-        color: ${Colour["text-subtler"]};
-
-        &:hover {
-            cursor: not-allowed;
-        }
-    }
+export const selectorInputDisabled = css`
+    color: ${Colour["text-subtler"]};
+    cursor: not-allowed;
 `;
