@@ -167,6 +167,7 @@ export const DialPicker = ({
                     onFocus={() => handleOpen("start")}
                     onClick={() => handleOpen("start")}
                     readOnly
+                    disabled={disabled}
                     placeholder="From"
                     value={TimeHelper.formatDisplayValue(startTimeVal, format)}
                     data-testid={
@@ -186,6 +187,7 @@ export const DialPicker = ({
                 <BasicInput
                     onClick={() => handleOpen("end")}
                     readOnly
+                    disabled={disabled || undefined}
                     placeholder="To"
                     value={TimeHelper.formatDisplayValue(endTimeVal, format)}
                     data-testid={
