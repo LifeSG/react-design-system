@@ -346,4 +346,11 @@ const Component = (
     );
 };
 
+/**
+ * A field composed of individual inputs for a numeric one-time password
+ * with an in-built countdown mechanism.
+ *
+ * Use `OtpInput` when users must enter the one-time password (OTP)
+ * for multi-factored authentication methods.
+ */
 export const OtpInput = forwardRef(Component);

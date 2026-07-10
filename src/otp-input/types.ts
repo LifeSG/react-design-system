@@ -1,38 +1,81 @@
 import type { ButtonProps } from "../button";
 
+/**
+ * Props for the `OtpInput` component.
+ */
 export interface OtpInputProps extends React.AriaAttributes {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
-    /** The array of input values */
+    /**
+     * Controlled array of digit strings, one entry per input cell.
+     * Only applied when the array length equals `numOfInput`.
+     */
     value?: string[] | undefined;
+    /**
+     * Error text displayed below the input cells.
+     */
     errorMessage?: string | React.ReactNode | undefined;
-    /** The duration (in seconds) to disable the submit button after a click is made */
+    /**
+     * Duration in seconds to disable the action button after it is clicked.
+     * Pass `0` to skip the cooldown entirely.
+     */
     cooldownDuration: number;
-    /** The props for the submit button */
+    /**
+     * Props forwarded to the action button. When `children` is not provided,
+     * the button label defaults to `"Resend OTP"`, or `"Resend OTP in X seconds"`
+     * while a cooldown is active.
+     *
+     * @default styleType: "secondary"
+     */
     actionButtonProps?: ButtonProps | undefined;
-    /** Flag to indicate if only OTP inputs should be rendered without the action button */
+    /**
+     * When `true`, renders only the OTP input cells without the action button.
+     */
     otpOnly?: boolean | undefined;
-    /** The number of characters for the Otp */
+    /**
+     * Number of single-digit input cells to render.
+     */
     numOfInput: number;
+    /**
+     * Optional prefix label rendered before the input cells.
+     */
     prefix?:
         | {
-              /** Optional OTP prefix, usually consisting of a few alphabetic characters */
+              /** Prefix text, usually a few alphabetic characters. */
               value: string;
-              /** separator between prefix and otp digits. Only "-" supported for now */
+              /**
+               * Separator between the prefix and the OTP input.
+               * Only `"-"` is supported.
+               */
               separator: "-";
           }
         | undefined;
-    /** Called when one of the input is changed. Returns an array of all the input values */
+    /**
+     * Called when any input cell changes.
+     *
+     * @param value Array of all input cell values, one string per cell.
+     */
     onChange?: ((value: string[]) => void) | undefined;
-    /** Called when the countdown changes. Returns the remaining time in seconds */
+    /**
+     * Called each second while a cooldown countdown is active.
+     *
+     * @param remaining Seconds remaining in the current cooldown.
+     */
     onCountdownChange?: ((remaining: number) => void) | undefined;
-    /** Called when the cooldown begins */
+    /** Called when a cooldown period begins. */
     onCooldownStart?: (() => void) | undefined;
-    /** Called when the cooldown ends */
+    /** Called when a cooldown period ends. */
     onCooldownEnd?: (() => void) | undefined;
 }
 
+/**
+ * Imperative handle returned by `OtpInput` via `ref`.
+ */
 export type OtpInputRef = {
+    /**
+     * Starts a new cooldown countdown without clearing the input cells.
+     * Fires `onCooldownStart` and begins the countdown timer.
+     */
     startCooldown: () => void;
 };
