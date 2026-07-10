@@ -5,7 +5,6 @@ import clsx from "clsx";
 import { memo, useEffect } from "react";
 
 import { useTheme } from "../theme";
-
 import * as styles from "./masthead.styles";
 import type { MastheadProps } from "./types";
 
@@ -74,6 +73,12 @@ const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
     );
 };
 
+/**
+ * Displays the Singapore Government Design System (SGDS) masthead banner.
+ *
+ * Use `Masthead` at the top of government digital services to meet the SGDS
+ * masthead requirement.
+ */
 export const Masthead = memo(MastheadComponent);
 
 // =============================================================================

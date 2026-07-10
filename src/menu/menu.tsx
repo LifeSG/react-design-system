@@ -8,6 +8,13 @@ import { MenuLink } from "./menu-link";
 import { MenuSection } from "./menu-section";
 import type { MenuContentProps, MenuProps } from "./types";
 
+/**
+ * Trigger wrapper that anchors a `Menu.Content` panel to its child element.
+ *
+ * Prefer the `Menu` composite export when building a full menu — it bundles
+ * `Menu.Content`, `Menu.Section`, `Menu.Item`, and `Menu.Link` as named
+ * sub-components alongside the trigger.
+ */
 export const MenuTrigger = ({
     children,
     position = "bottom-start",
@@ -35,9 +42,25 @@ export const MenuTrigger = ({
     );
 };
 
+/**
+ * A popover-anchored menu composed of sections and interactive items.
+ *
+ * Use `Menu` when a trigger element should open a floating panel of actions or
+ * navigation links.
+ *
+ * Sub-components:
+ * - `Menu.Content` — the floating panel that contains menu sections.
+ * - `Menu.Item` — a non-anchor interactive list item with a primary label and optional sub-label.
+ * - `Menu.Link` — an anchor (`<a>`) list item styled as a menu entry.
+ * - `Menu.Section` — a grouping container for `Menu.Item` and `Menu.Link` entries.
+ */
 export const Menu = Object.assign(MenuTrigger, {
+    /** Renders the floating panel that contains menu sections. */
     Content: MenuContent,
-    Section: MenuSection,
+    /** Renders a non-anchor interactive list item with a primary label and optional sub-label. */
     Item: MenuItem,
+    /** Renders an anchor (`<a>`) list item styled as a menu entry. */
     Link: MenuLink,
+    /** Groups related menu entries. */
+    Section: MenuSection,
 });

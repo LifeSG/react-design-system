@@ -380,4 +380,11 @@ const Component = <T,>(
     );
 };
 
+/**
+ * The main site navigation bar with desktop and mobile drawer views.
+ *
+ * Use `Navbar` to render the primary navigation header. It displays brand
+ * logos, navigation items, and action buttons in a desktop bar, and
+ * automatically collapses items into a slide-in drawer for mobile viewports.
+ */
 export const Navbar = forwardRef(Component);
