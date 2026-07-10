@@ -1,29 +1,63 @@
 import type { HTMLAttributes } from "react";
 import type React from "react";
 
+/**
+ * Visual variant of the `Toast`, controlling the icon and color treatment.
+ */
 export type ToastType = "success" | "warning" | "error" | "info";
 
+/**
+ * Configuration for the optional action button rendered inside a `Toast`.
+ */
 export interface ToastActionButtonProps {
     label: string;
     onClick: () => void;
 }
 
+/**
+ * Props for the `Toast` notification component.
+ */
 export interface ToastProps
     extends Omit<HTMLAttributes<HTMLDivElement>, "title"> {
-    /** The type of Toast. Control the display */
+    /**
+     * Visual variant controlling the icon and color treatment.
+     *
+     * @default "success"
+     */
     type: ToastType;
-    /** The content of the Toast. If a `title` is provided, this will act as a description label  */
+    /**
+     * Main text content of the toast. When `title` is also provided, rendered
+     * as a supporting description using a smaller typography style.
+     */
     label: string | React.ReactNode;
-    /** The title of the Toast  */
+    /**
+     * Optional heading displayed above `label`.
+     */
     title?: string | React.ReactNode | undefined;
-    /** If specified, the Toast will be automatically dismissed after 4 seconds */
+    /**
+     * When `true`, the toast dismisses itself automatically after
+     * `autoDismissTime` milliseconds.
+     */
     autoDismiss?: boolean | undefined;
-    /** Time until auto dismissal in milliseconds. Requires `autoDismiss` to be `true` */
+    /**
+     * Duration in milliseconds before the toast auto-dismisses.
+     * Only takes effect when `autoDismiss` is `true`.
+     *
+     * @default 4000
+     */
     autoDismissTime?: number | undefined;
-    /** If given, the function will be called when the Toast is dismissed */
+    /**
+     * Called after the dismissal animation completes.
+     */
     onDismiss?: (() => void) | undefined;
-    /** Specifies if Toast should be fixed to top. Defaults to true */
+    /**
+     * Pins the toast in a fixed position at the top of the viewport.
+     *
+     * @default true
+     */
     fixed?: boolean | undefined;
-    /** If given, will display an actionButton with the given title and run the given function upon clicking of the button */
+    /**
+     * Optional action button rendered alongside the toast content.
+     */
     actionButton?: ToastActionButtonProps | undefined;
 }

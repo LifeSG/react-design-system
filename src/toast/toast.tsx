@@ -27,6 +27,12 @@ const TOAST_ICON_MAP = {
     info: ICircleFillIcon,
 };
 
+/**
+ * A brief notification that appears on screen to provide feedback about an
+ * operation or event.
+ *
+ * Use `Toast` to surface status messages without interrupting the user's workflow.
+ */
 export const Toast = ({
     type = "success",
     title,
