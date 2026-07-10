@@ -10,6 +10,12 @@ import { Typography } from "../typography";
 import * as styles from "./timeline.styles";
 import type { TimelineItemProps, TimelineProps, Variant } from "./types";
 
+/**
+ * A vertically ordered list of steps with visual state indicators.
+ *
+ * Use `Timeline` to communicate multi-step progress such as application stages
+ * or process flows.
+ */
 export const Timeline = ({
     items,
     className,
