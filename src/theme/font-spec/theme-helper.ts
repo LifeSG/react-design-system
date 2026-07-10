@@ -12,6 +12,7 @@ import { SGWDigitalLobbyFontSpecSet } from "./specs/sgw-digital-lobby-font-spec-
 import { SPFFontSpecSet } from "./specs/spf-font-spec-set";
 import { SupportGoWhereFontSpecSet } from "./specs/supportgowhere-font-spec-set";
 import { FontSpecCollectionMap, FontSpecSet } from "./types";
+import { ToteBoardFontSpecSet } from "./specs/toteboard-font-spec-set";
 
 const FontSpec: ThemeCollectionSpec<FontSpecCollectionMap, FontScheme> = {
     collections: {
@@ -25,6 +26,7 @@ const FontSpec: ThemeCollectionSpec<FontSpecCollectionMap, FontScheme> = {
         imda: IMDAFontSpecSet,
         spf: SPFFontSpecSet,
         oneservice: OneServiceFontSpecSet,
+        toteboard: ToteBoardFontSpecSet,
     },
     defaultValue: "default",
 };

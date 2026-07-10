@@ -266,6 +266,19 @@ const SMGSThemeBase: ThemeSpec = {
     componentScheme: "smgs",
 };
 
+const ToteBoardThemeBase: ThemeSpec = {
+    colourScheme: "toteboard",
+    fontScheme: "toteboard",
+    motionScheme: "default",
+    borderScheme: "default",
+    spacingScheme: "default",
+    radiusScheme: "default",
+    shadowScheme: "default",
+    breakpointScheme: "default",
+    resourceScheme: "toteboard",
+    componentScheme: "default",
+};
+
 // =============================================================================
 // THEME COLLECTIONS
 // =============================================================================
@@ -353,4 +366,10 @@ export const SMGSTheme = {
     ...SMGSThemeBase,
     light: createThemeWithColourMode(SMGSThemeBase, "light"),
     dark: createThemeWithColourMode(SMGSThemeBase, "dark"),
+};
+
+export const ToteBoardTheme = {
+    ...ToteBoardThemeBase,
+    light: createThemeWithColourMode(ToteBoardThemeBase, "light"),
+    dark: createThemeWithColourMode(ToteBoardThemeBase, "dark"),
 };

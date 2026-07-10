@@ -14,6 +14,7 @@ import { IMDAColourSet } from "./specs/imda-colour-set";
 import { SPFColourSet } from "./specs/spf-colour-set";
 import { SMGSColourSet } from "./specs/smgs-colour-set";
 import { CareerCompassColourSet } from "./specs/careercompass-colour-set";
+import { ToteBoardColourSet } from "./specs/toteboard-colour-set";
 import { ColourCollectionsMap } from "./types";
 
 export const ColourSpec: ThemeCollectionSpec<
@@ -35,6 +36,7 @@ export const ColourSpec: ThemeCollectionSpec<
         spf: SPFColourSet,
         careercompass: CareerCompassColourSet,
         smgs: SMGSColourSet,
+        toteboard: ToteBoardColourSet,
     },
     defaultValue: "lifesg",
 };
@@ -62,6 +64,7 @@ export const DarkColourSpec: ThemeCollectionSpec<
         spf: SPFColourSet,
         careercompass: CareerCompassColourSet,
         smgs: SMGSColourSet,
+        toteboard: ToteBoardColourSet,
     },
     defaultValue: "lifesg",
 };

@@ -53,6 +53,14 @@ const SUPPORTGOWHERE_RESOURCE_LOGO: NavbarResourcesProps = {
     },
 };
 
+const TOTEBOARD_RESOURCE_LOGO: NavbarResourcesProps = {
+    primary: {
+        brandName: "ToteBoard",
+        logoSrc:
+            "https://assets.life.gov.sg/react-design-system/img/logo/tote-board-logo.svg",
+    },
+};
+
 export const getDefaultResourceLogo = (resourceScheme?: ResourceScheme) => {
     switch (resourceScheme) {
         case "bookingsg":
@@ -67,6 +75,8 @@ export const getDefaultResourceLogo = (resourceScheme?: ResourceScheme) => {
             return SUPPORTGOWHERE_RESOURCE_LOGO;
         case "imda":
             return IMDA_RESOURCE_LOGO;
+        case "toteboard":
+            return TOTEBOARD_RESOURCE_LOGO;
         default:
             return DEFAULT_RESOURCES_LOGO;
     }
