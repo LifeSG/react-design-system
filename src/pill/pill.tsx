@@ -25,6 +25,12 @@ const WRAPPER_CLASS: Record<PillType, Record<PillColorType, string>> = {
     },
 };
 
+/**
+ * A compact label used to display status, category, or metadata.
+ *
+ * Use `Pill` to surface short, read-only information — such as a tag or status
+ * badge — inline with other content.
+ */
 export const Pill = ({
     type,
     colorType = "black",

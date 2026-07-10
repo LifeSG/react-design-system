@@ -9,6 +9,12 @@ import { Typography } from "../typography";
 import * as styles from "./popover.styles";
 import type { PopoverProps } from "./types";
 
+/**
+ * The presentational overlay for a popover panel. Renders as a floating card
+ * on desktop and modal on mobile.
+ *
+ * Use with `PopoverTrigger`, which manages visibility state and positioning.
+ */
 export const Popover = ({
     children,
     visible = false,
