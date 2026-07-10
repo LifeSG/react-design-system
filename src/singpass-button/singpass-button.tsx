@@ -81,6 +81,12 @@ const LargeSingpassButtonComponent = (
 ) => <BaseSingpassButton {...props} sizeType="large" ref={ref} />;
 LargeSingpassButtonComponent.displayName = "SingpassButton.Large";
 
+/**
+ * Call-to-action for Singpass authentication,
+ * following the brand [guidelines](https://docs.developer.singpass.gov.sg/docs/products/login/singpass-button-guidelines-for-developers-and-designers).
+ *
+ * Use `SingpassButton` to let users log in with their Singpass account.
+ */
 export const SingpassButton = Object.assign(BaseSingpassButton, {
     /** @deprecated Use the `sizeType` prop instead: `<SingpassButton>` or `<SingpassButton sizeType="default">` */
     Default: forwardRef(DefaultSingpassButtonComponent),

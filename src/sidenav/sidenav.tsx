@@ -82,9 +82,19 @@ const SidenavBase = ({
     );
 };
 
+/**
+ * A fixed sidebar navigation component for multi-level page navigation.
+ *
+ * Use `Sidenav` to present a persistent icon-based navigation rail with
+ * optional menu drawers.
+ */
 export const Sidenav = Object.assign(SidenavBase, {
+    /** Renders a group of navigation items, optionally separated by a divider. */
     Group: SidenavGroup,
+    /** Renders a single icon-and-label navigation entry that can open a menu drawer. */
     Item: SidenavItem,
+    /** Renders a menu item inside an item's drawer, with optional collapsible sub-items. */
     DrawerItem: SidenavDrawerItem,
+    /** Renders a leaf-level navigation entry inside a `Sidenav.DrawerItem`. */
     DrawerSubitem: SidenavDrawerSubitem,
 });

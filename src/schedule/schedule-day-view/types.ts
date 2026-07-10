@@ -1,5 +1,5 @@
+import type { CommonScheduleViewProps } from "../internal-types";
 import type {
-    CommonScheduleViewProps,
     ScheduleEmptySlotProps,
     ScheduleEntityProps,
     SchedulePopoverProps,

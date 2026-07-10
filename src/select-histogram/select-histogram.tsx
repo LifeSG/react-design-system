@@ -12,6 +12,11 @@ import { useId } from "../util";
 import * as styles from "./select-histogram.styles";
 import type { SelectHistogramProps } from "./types";
 
+/**
+ * A form input that displays the selected range and reveals a histogram slider in a dropdown.
+ *
+ * Use `SelectHistogram` when users need to select a numeric range against a data distribution.
+ */
 export const SelectHistogram = ({
     alignment = "left",
     className,

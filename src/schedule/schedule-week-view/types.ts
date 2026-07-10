@@ -1,8 +1,5 @@
-import type {
-    CommonScheduleViewProps,
-    ScheduleEntityProps,
-    ScheduleSlotProps,
-} from "../types";
+import type { CommonScheduleViewProps } from "../internal-types";
+import type { ScheduleEntityProps, ScheduleSlotProps } from "../types";
 
 export interface ScheduleWeekViewProps extends CommonScheduleViewProps {
     serviceData: ScheduleEntityProps[];

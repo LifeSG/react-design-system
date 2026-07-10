@@ -5,6 +5,11 @@ import type { ChangeEvent } from "react";
 import * as styles from "./radio-button.styles";
 import type { RadioButtonProps } from "./types";
 
+/**
+ * A single radio button input.
+ *
+ * Use `RadioButton` as an input within a radio group.
+ */
 export const RadioButton = ({
     className,
     checked,
