@@ -14,6 +14,12 @@ import type { ToggleIconType } from "./toggle-icon";
 import { ToggleIcon } from "./toggle-icon";
 import type { ToggleProps } from "./types";
 
+/**
+ * A selectable control for checkbox and radio interaction patterns.
+ *
+ * Use `Toggle` to present a labeled option that the user can select or
+ * deselect.
+ */
 export const Toggle = ({
     type = "checkbox",
     indicator,
