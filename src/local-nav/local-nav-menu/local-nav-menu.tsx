@@ -6,12 +6,6 @@ import type { LocalNavMenuItemComponentProps } from "../internal-types";
 import type { LocalNavMenuProps } from "../types";
 import * as styles from "./local-nav-menu.styles";
 
-/**
- * A sidebar navigation element. The currently visible section will be highlighted.
- *
- * This component should be placed inside a container that aligns it to the side.
- * The container can also have `position: sticky` in order to make it a sticky sidebar.
- */
 const Component = (
     {
         onNavItemSelect,
@@ -116,4 +110,10 @@ const Component = (
     );
 };
 
+/**
+ * A sidebar navigation list that highlights the currently selected section.
+ *
+ * Use `LocalNavMenu` for desktop in-page navigation where the list is always
+ * visible.
+ */
 export const LocalNavMenu = React.forwardRef(Component);

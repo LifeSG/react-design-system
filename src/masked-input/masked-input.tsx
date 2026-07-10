@@ -322,4 +322,10 @@ const Component = (
     return <div aria-busy={loadState === "loading"}>{renderElement()}</div>;
 };
 
+/**
+ * A text input that masks sensitive values and allows toggling visibility.
+ *
+ * Use `MaskedInput` when collecting or displaying sensitive data such as
+ * identity numbers or passwords.
+ */
 export const MaskedInput = React.forwardRef(Component);

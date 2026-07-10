@@ -53,4 +53,10 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
     );
 };
 
+/**
+ * A container for rendering rich HTML markup.
+ *
+ * Use `Markup` to wrap CMS-generated or sanitised HTML content while applying
+ * a consistent base font size and colour.
+ */
 export const Markup = forwardRef(Component);

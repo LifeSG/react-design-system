@@ -5,6 +5,12 @@ import { LazyLinkList } from "./components/link-list-lazy";
 import * as styles from "./link-list.styles";
 import type { LinkListProps } from "./types";
 
+/**
+ * A list of anchor links with optional truncation or lazy loading.
+ *
+ * Use `LinkList` to display a set of navigable links with titles and optional
+ * descriptions.
+ */
 export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
     if (!props.loadMode || props.loadMode === "eager") {
         const {
