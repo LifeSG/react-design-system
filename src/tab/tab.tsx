@@ -104,6 +104,13 @@ TabBase.displayName = "Tab";
 // =============================================================================
 // EXPORTS
 // =============================================================================
+/**
+ * A tabbed-panel layout that switches visible content by selecting a tab link.
+ *
+ * Use `Tab` to organise content into labelled panels where only one panel is
+ * visible at a time. Compose with `Tab.Item` to define each panel.
+ */
 export const Tab = Object.assign(TabBase, {
+    /** Renders an individual content panel within a `Tab`. */
     Item: TabItem,
 });

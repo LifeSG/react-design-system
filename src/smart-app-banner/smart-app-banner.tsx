@@ -194,4 +194,9 @@ function SmartAppBannerComponent(
     );
 }
 
+/**
+ * A fixed top banner that promotes a mobile app and links to its store listing.
+ *
+ * Use `SmartAppBanner` to invite users to install or open the native app.
+ */
 export const SmartAppBanner = React.forwardRef(SmartAppBannerComponent);
