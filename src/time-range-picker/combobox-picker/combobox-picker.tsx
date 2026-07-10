@@ -425,6 +425,7 @@ export const ComboboxPicker = ({
                     onChange={(e) => setStartTimeVal(e.target.value)}
                     value={startTimeVal}
                     readOnly={readOnly}
+                    disabled={disabled}
                     data-testid={
                         otherProps["data-testid"]
                             ? `${otherProps["data-testid"]}-timepicker-selector-start`
@@ -455,6 +456,7 @@ export const ComboboxPicker = ({
                     onChange={(e) => setEndTimeVal(e.target.value)}
                     value={endTimeVal}
                     readOnly={readOnly}
+                    disabled={disabled || undefined}
                     data-testid={
                         otherProps["data-testid"]
                             ? `${otherProps["data-testid"]}-timepicker-selector-end`

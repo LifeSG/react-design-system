@@ -117,6 +117,7 @@ export const Timepicker = ({
             <BasicInput
                 ref={selectorRef}
                 readOnly
+                disabled={disabled || undefined}
                 placeholder={placeholder || getPlaceholderValue()}
                 value={TimeHelper.formatDisplayValue(value, format)}
                 role="combobox"
