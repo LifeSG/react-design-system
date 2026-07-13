@@ -179,6 +179,7 @@ export const DialPicker = ({
                     aria-readonly={readOnly}
                     aria-labelledby={getInputLabelledBy("start")}
                     aria-describedby={getInputDescribedBy()}
+                    $disabled={disabled}
                 />
                 <SelectorInput
                     onClick={() => handleOpen("end")}
@@ -197,6 +198,7 @@ export const DialPicker = ({
                     aria-readonly={readOnly || undefined}
                     aria-labelledby={getInputLabelledBy("end")}
                     aria-describedby={getInputDescribedBy()}
+                    $disabled={disabled}
                 />
             </RangeInputInnerContainer>
         </TimeContainer>
