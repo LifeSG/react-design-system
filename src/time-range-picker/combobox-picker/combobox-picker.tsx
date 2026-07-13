@@ -445,9 +445,10 @@ export const ComboboxPicker = ({
                     aria-invalid={error || ariaInvalid || !!validationError}
                     aria-disabled={disabled}
                     aria-readonly={readOnly}
-                    className={`${commonStyles.selectorInput}${
-                        disabled ? ` ${commonStyles.selectorInputDisabled}` : ""
-                    }`}
+                    className={clsx(
+                        commonStyles.selectorInput,
+                        disabled && commonStyles.selectorInputDisabled
+                    )}
                 />
                 {/* To */}
                 <BasicInput
@@ -477,9 +478,10 @@ export const ComboboxPicker = ({
                     }
                     aria-disabled={disabled || undefined}
                     aria-readonly={readOnly || undefined}
-                    className={`${commonStyles.selectorInput}${
-                        disabled ? ` ${commonStyles.selectorInputDisabled}` : ""
-                    }`}
+                    className={clsx(
+                        commonStyles.selectorInput,
+                        disabled && commonStyles.selectorInputDisabled
+                    )}
                 />
             </RangeInputInnerContainer>
             {renderClearButton()}

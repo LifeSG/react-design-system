@@ -877,6 +877,8 @@ describe("TimeRangePicker", () => {
 
                 expect(start).toHaveAttribute("aria-disabled", "true");
                 expect(end).toHaveAttribute("aria-disabled", "true");
+                expect(start).not.toHaveAttribute("disabled");
+                expect(end).not.toHaveAttribute("disabled");
                 expect(start).toHaveAttribute("readonly");
                 expect(end).toHaveAttribute("readonly");
 
