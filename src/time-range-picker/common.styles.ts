@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Spacing } from "../theme";
+import { Colour, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
@@ -18,4 +18,9 @@ export const selectorInput = css`
     display: block;
     width: 100%;
     flex: 1;
+`;
+
+export const selectorInputDisabled = css`
+    color: ${Colour["text-subtler"]};
+    cursor: not-allowed;
 `;

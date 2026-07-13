@@ -1,3 +1,4 @@
+import clsx from "clsx";
 import { useCallback, useRef, useState } from "react";
 
 import type { DropdownRenderProps } from "../shared/dropdown-wrapper";
@@ -129,7 +130,10 @@ export const Timepicker = ({
                 data-testid={
                     id ? `${id}-timepicker-selector` : "timepicker-selector"
                 }
-                className={styles.inputSelectorElement}
+                className={clsx(
+                    styles.inputSelectorElement,
+                    disabled && styles.inputSelectorElementDisabled
+                )}
                 onFocus={handleFocus}
                 onClick={handleOpen}
                 onKeyDown={handleKeyDown}

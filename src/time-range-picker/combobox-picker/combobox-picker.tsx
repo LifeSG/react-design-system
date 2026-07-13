@@ -424,7 +424,7 @@ export const ComboboxPicker = ({
                     }
                     onChange={(e) => setStartTimeVal(e.target.value)}
                     value={startTimeVal}
-                    readOnly={readOnly}
+                    readOnly={readOnly || disabled}
                     data-testid={
                         otherProps["data-testid"]
                             ? `${otherProps["data-testid"]}-timepicker-selector-start`
@@ -445,7 +445,10 @@ export const ComboboxPicker = ({
                     aria-invalid={error || ariaInvalid || !!validationError}
                     aria-disabled={disabled}
                     aria-readonly={readOnly}
-                    className={commonStyles.selectorInput}
+                    className={clsx(
+                        commonStyles.selectorInput,
+                        disabled && commonStyles.selectorInputDisabled
+                    )}
                 />
                 {/* To */}
                 <BasicInput
@@ -454,7 +457,7 @@ export const ComboboxPicker = ({
                     placeholder={activeTimeSelector === "end" ? "hh:mm" : "To"}
                     onChange={(e) => setEndTimeVal(e.target.value)}
                     value={endTimeVal}
-                    readOnly={readOnly}
+                    readOnly={readOnly || disabled}
                     data-testid={
                         otherProps["data-testid"]
                             ? `${otherProps["data-testid"]}-timepicker-selector-end`
@@ -475,7 +478,10 @@ export const ComboboxPicker = ({
                     }
                     aria-disabled={disabled || undefined}
                     aria-readonly={readOnly || undefined}
-                    className={commonStyles.selectorInput}
+                    className={clsx(
+                        commonStyles.selectorInput,
+                        disabled && commonStyles.selectorInputDisabled
+                    )}
                 />
             </RangeInputInnerContainer>
             {renderClearButton()}

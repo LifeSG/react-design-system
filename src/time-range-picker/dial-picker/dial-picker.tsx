@@ -181,7 +181,10 @@ export const DialPicker = ({
                     aria-readonly={readOnly}
                     aria-labelledby={getInputLabelledBy("start")}
                     aria-describedby={getInputDescribedBy()}
-                    className={styles.selectorInput}
+                    className={clsx(
+                        styles.selectorInput,
+                        disabled && styles.selectorInputDisabled
+                    )}
                 />
                 <BasicInput
                     onClick={() => handleOpen("end")}
@@ -200,7 +203,10 @@ export const DialPicker = ({
                     aria-readonly={readOnly || undefined}
                     aria-labelledby={getInputLabelledBy("end")}
                     aria-describedby={getInputDescribedBy()}
-                    className={styles.selectorInput}
+                    className={clsx(
+                        styles.selectorInput,
+                        disabled && styles.selectorInputDisabled
+                    )}
                 />
             </RangeInputInnerContainer>
         </InputWrapper>
