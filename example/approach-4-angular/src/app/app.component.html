@@ -1,0 +1,91 @@
+<div class="app">
+    <h1>Approach 4 — Angular 19</h1>
+    <p class="subtitle">Shared logic core (design-core + thin UI)</p>
+
+    <h2>DateRangeInput</h2>
+
+    <section>
+        <h3>Default</h3>
+        <app-date-range-input (dateChange)="handleChange($event)" />
+    </section>
+
+    <section>
+        <h3>With Initial Values</h3>
+        <app-date-range-input
+            value="2025-01-15"
+            valueEnd="2025-01-25"
+            (dateChange)="handleChange($event)"
+        />
+    </section>
+
+    <section>
+        <h3>Disabled</h3>
+        <app-date-range-input
+            value="2025-03-01"
+            valueEnd="2025-03-10"
+            [disabled]="true"
+        />
+    </section>
+
+    <section>
+        <h3>Error</h3>
+        <app-date-range-input [error]="true" />
+    </section>
+
+    <h2>Button</h2>
+
+    <section>
+        <h3>Style Types</h3>
+        <div class="button-row">
+            <app-button styleType="default">Default</app-button>
+            <app-button styleType="secondary">Secondary</app-button>
+            <app-button styleType="light">Light</app-button>
+            <app-button styleType="link">Link</app-button>
+        </div>
+    </section>
+
+    <section>
+        <h3>Danger Variants</h3>
+        <div class="button-row">
+            <app-button styleType="default" [danger]="true">Default</app-button>
+            <app-button styleType="secondary" [danger]="true"
+                >Secondary</app-button
+            >
+            <app-button styleType="light" [danger]="true">Light</app-button>
+            <app-button styleType="link" [danger]="true">Link</app-button>
+        </div>
+    </section>
+
+    <section>
+        <h3>Sizes</h3>
+        <div class="button-row">
+            <app-button sizeType="large">Large</app-button>
+            <app-button sizeType="default">Default</app-button>
+            <app-button sizeType="small">Small</app-button>
+        </div>
+    </section>
+
+    <section>
+        <h3>Disabled</h3>
+        <div class="button-row">
+            <app-button [disabled]="true">Disabled</app-button>
+            <app-button [disabled]="true" styleType="secondary"
+                >Disabled Secondary</app-button
+            >
+        </div>
+    </section>
+
+    <section>
+        <h3>Loading</h3>
+        <div class="button-row">
+            <app-button [loading]="true">Loading</app-button>
+            <app-button [loading]="true" styleType="secondary"
+                >Loading</app-button
+            >
+        </div>
+    </section>
+
+    @if (output()) {
+    <pre class="output">{{ output() }}</pre>
+    }
+</div>

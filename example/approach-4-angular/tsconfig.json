@@ -1,0 +1,39 @@
+{
+    "compileOnSave": false,
+    "compilerOptions": {
+        "outDir": "./dist/out-tsc",
+        "strict": true,
+        "noImplicitOverride": true,
+        "noPropertyAccessFromIndexSignature": true,
+        "noImplicitReturns": true,
+        "noFallthroughCasesInSwitch": true,
+        "sourceMap": true,
+        "declaration": false,
+        "experimentalDecorators": true,
+        "moduleResolution": "bundler",
+        "importHelpers": true,
+        "target": "ES2022",
+        "module": "ES2022",
+        "lib": ["ES2022", "dom"],
+        "skipLibCheck": true,
+        "paths": {
+            "@angular/core": ["./node_modules/@angular/core"],
+            "@angular/common": ["./node_modules/@angular/common"],
+            "zustand/vanilla": ["./node_modules/zustand/vanilla"],
+            "dayjs": ["./node_modules/dayjs"],
+            "dayjs/*": ["./node_modules/dayjs/*"]
+        }
+    },
+    "angularCompilerOptions": {
+        "enableI18nLegacyMessageIdFormat": false,
+        "strictInjectionParameters": true,
+        "strictInputAccessModifiers": true,
+        "strictTemplates": true
+    },
+    "include": [
+        "src/**/*.ts",
+        "../../dist/native/core/angular/**/*.ts",
+        "../../dist/native/core/design-core/**/*.ts",
+        "../../dist/native/styles/**/*.ts"
+    ]
+}
