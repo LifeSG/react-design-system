@@ -14,7 +14,7 @@ export interface HistogramBinProps {
     minValue: number;
 }
 
-/** Props for `HistogramSlider`. */
+/** Props for the `HistogramSlider` component. */
 export interface HistogramSliderProps {
     className?: string | undefined;
     id?: string | undefined;

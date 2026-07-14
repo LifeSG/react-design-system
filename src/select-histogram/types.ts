@@ -14,7 +14,7 @@ export type SelectHistogramSliderProps = Pick<
 >;
 
 /**
- * Props for `SelectHistogram`.
+ * Props for the `SelectHistogram` component.
  */
 export interface SelectHistogramProps
     extends Pick<

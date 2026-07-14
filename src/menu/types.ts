@@ -11,7 +11,7 @@ import type { MenuLink } from "./menu-link";
 import type { MenuSection } from "./menu-section";
 
 /**
- * Props for the `Menu` trigger.
+ * Props for the `Menu` component.
  */
 export interface MenuProps extends Omit<PopoverTriggerProps, "popoverContent"> {
     /**
@@ -21,7 +21,7 @@ export interface MenuProps extends Omit<PopoverTriggerProps, "popoverContent"> {
 }
 
 /**
- * Props for the `Menu.Content` floating panel.
+ * Props for the `Menu.Content` sub-component.
  */
 export interface MenuContentProps
     extends HTMLAttributes<HTMLDivElement>,
@@ -38,7 +38,7 @@ type MenuSectionItem =
     | ReactElement<typeof MenuLink>;
 
 /**
- * Props for `Menu.Section`.
+ * Props for the `Menu.Section` sub-component.
  */
 export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
     /** One or more `Menu.Item` or `Menu.Link` elements within this section. */
@@ -57,7 +57,7 @@ export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
 }
 
 /**
- * Props for `Menu.Item`, a non-anchor interactive list entry.
+ * Props for the `Menu.Item` sub-component.
  */
 export interface MenuItemProps extends HTMLAttributes<HTMLLIElement> {
     /** Primary text label. */
@@ -70,7 +70,7 @@ export interface MenuItemProps extends HTMLAttributes<HTMLLIElement> {
 }
 
 /**
- * Props for `Menu.Link`, an anchor-based list entry styled as a menu item.
+ * Props for the `Menu.Link` sub-component.
  */
 export interface MenuLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
     "data-testid"?: string | undefined;

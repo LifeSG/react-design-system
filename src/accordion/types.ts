@@ -1,4 +1,4 @@
-/** Props for the `Accordion` container component. */
+/** Props for the `Accordion` component. */
 export interface AccordionProps {
     children: JSX.Element | JSX.Element[];
     /** Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true. */

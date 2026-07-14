@@ -25,7 +25,7 @@ export interface TimeRangePickerValue {
 }
 
 /**
- * Props for `TimeRangePicker` component.
+ * Props for the `TimeRangePicker` component.
  */
 export interface TimeRangePickerProps {
     // Standard HTML Attributes

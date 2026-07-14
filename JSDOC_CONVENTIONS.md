@@ -123,6 +123,23 @@ export interface NavbarProps {
 }
 ```
 
+### Type-level title scope
+
+Standardise the opening sentence format only for primary consumer-facing props
+interfaces:
+
+-   Main component props interfaces (for example `NavbarProps`, `FilterProps`)
+-   Public sub-component props interfaces (for example `FilterModalProps` for
+    `Filter.Modal`)
+
+Recommended opening sentences:
+
+-   `Props for the \`Component\` component.`
+-   `Props for the \`Parent.Child\` sub-component.`
+
+Do **not** enforce this exact title format for every exported interface. Shared
+helper/support types can keep descriptive titles that better match their role.
+
 ## Prop-level comments
 
 Add prop-level JSDoc only when the prop has behavior, fallback rules, accessibility meaning, or relationships with other props.

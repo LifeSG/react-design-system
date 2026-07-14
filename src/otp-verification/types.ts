@@ -170,7 +170,7 @@ export type PhoneOtpVerificationProps = BaseOtpVerificationProps &
     OtpVerificationInputProps;
 
 /**
- * Props for `OtpVerification` component.
+ * Props for the `OtpVerification` component.
  */
 export type OtpVerificationProps =
     | EmailOtpVerificationProps

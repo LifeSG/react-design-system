@@ -61,7 +61,7 @@ export interface InputSelectSharedProps<T> {
 // INPUT SELECT PROPS
 // =============================================================================
 /**
- * Props for `InputSelect`, a single-selection dropdown input.
+ * Props for the `InputSelect` component.
  *
  * `T` is the option item type; `V` is the extracted value type returned by
  * `valueExtractor`.

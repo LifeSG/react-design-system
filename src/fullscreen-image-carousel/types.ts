@@ -20,7 +20,7 @@ export interface FullscreenImageCarouselRef {
 }
 
 /**
- * Props for `FullscreenImageCarousel`.
+ * Props for the `FullscreenImageCarousel`component.
  */
 export interface FullscreenImageCarouselProps
     extends Pick<

@@ -16,7 +16,7 @@ interface CommonLayoutProps extends React.HTMLAttributes<HTMLDivElement> {
 export type ContainerType = "flex" | "flex-column" | "grid";
 
 /**
- * Props for `Layout.Container`.
+ * Props for the `Layout.Container` sub-component.
  */
 export interface ContainerProps extends CommonLayoutProps {
     /**
@@ -28,12 +28,12 @@ export interface ContainerProps extends CommonLayoutProps {
 }
 
 /**
- * Props for `Layout.Section`.
+ * Props for the `Layout.Section` sub-component.
  */
 export interface SectionProps extends CommonLayoutProps {}
 
 /**
- * Props for `Layout.Content`.
+ * Props for the `Layout.Content` sub-component.
  */
 export interface ContentProps extends ContainerProps {}
 
@@ -87,7 +87,7 @@ export interface ColProps {
 }
 
 /**
- * Props for `Layout.ColDiv`.
+ * Props for the `Layout.ColDiv` sub-component.
  */
 export interface ColDivProps
     extends React.HTMLAttributes<HTMLDivElement>,

@@ -13,7 +13,7 @@ import type {
 import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 /**
- * Props for `InputMultiSelect`.
+ * Props for the `InputMultiSelect` component.
  *
  * `T` is the option item type. `V` is the extracted value type used for
  * equality comparisons when a `valueExtractor` is provided.

@@ -37,7 +37,7 @@ export interface InputRangeProp<T> {
 }
 
 /**
- * Props for `InputRangeSelect`.
+ * Props for the `InputRangeSelect`component.
  *
  * `T` is the option item type; `V` is the extracted value type returned by
  * `valueExtractor`.

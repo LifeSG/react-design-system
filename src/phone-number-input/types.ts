@@ -37,7 +37,7 @@ export interface PhoneNumberInputValue {
 }
 
 /**
- * Props for `PhoneNumberInput`.
+ * Props for the `PhoneNumberInput` component.
  */
 export interface PhoneNumberInputProps extends React.AriaAttributes {
     /**

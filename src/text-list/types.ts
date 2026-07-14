@@ -21,7 +21,7 @@ interface BaseListProps {
 export type CounterType = "lower-alpha" | "decimal" | "lower-roman";
 
 /**
- * Props for `TextList.Ol` component.
+ * Props for the `TextList.Ol` component.
  */
 export interface OrderedListProps extends BaseListProps {
     /**
@@ -47,7 +47,7 @@ export type BulletType = "disc" | "circle" | "square" | "none";
 type CustomBulletIcon = Exclude<React.ReactNode, string>;
 
 /**
- * Props for `TextList.Ul` component.
+ * Props for the `TextList.Ul` component.
  */
 export interface UnorderedListProps extends BaseListProps {
     /**

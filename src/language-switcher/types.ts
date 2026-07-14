@@ -6,7 +6,7 @@ export type LanguageSwitcherCode = "en" | "zh" | "ms" | "ta";
 /** Presentation mode for the language switcher control. */
 export type LanguageSwitcherVariant = "dropdown" | "link-container";
 
-/** Props for `LanguageSwitcher` component. */
+/** Props for the `LanguageSwitcher` component. */
 export interface LanguageSwitcherProps
     extends React.HTMLAttributes<HTMLDivElement> {
     /**

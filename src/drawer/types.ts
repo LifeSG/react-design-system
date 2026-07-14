@@ -1,4 +1,4 @@
-/** Props for the `Drawer` slide-in panel component. */
+/** Props for the `Drawer` component. */
 export interface DrawerProps {
     children?: React.ReactNode | undefined;
     className?: string | undefined;

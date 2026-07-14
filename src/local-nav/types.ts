@@ -46,7 +46,7 @@ export interface LocalNavMenuItemRenderProps {
 }
 
 /**
- * Props for the `LocalNavMenu` sidebar navigation component.
+ * Props for the `LocalNavMenu` component.
  */
 export interface LocalNavMenuProps extends BaseLocalNavProps {
     /**
@@ -78,7 +78,7 @@ export interface LocalNavDropdownItemRenderProps {
 }
 
 /**
- * Props for the `LocalNavDropdown` collapsible navigation component.
+ * Props for the `LocalNavDropdown` component.
  */
 export interface LocalNavDropdownProps extends BaseLocalNavProps {
     /**

@@ -1,7 +1,7 @@
 import type { BaseSliderProps } from "../input-range-slider/types";
 
 /**
- * Props for `InputSlider` component.
+ * Props for the `InputSlider` component.
  */
 export interface InputSliderProps extends BaseSliderProps {
     /**

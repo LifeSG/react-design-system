@@ -6,7 +6,7 @@ import type React from "react";
 export type InputStyleType = "no-border" | "bordered";
 
 /**
- * Props for the `Input` text field component.
+ * Props for the `Input` component.
  */
 export interface InputProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
