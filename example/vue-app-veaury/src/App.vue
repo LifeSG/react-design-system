@@ -7,7 +7,7 @@ import {
     LsModalCloseButton,
     LsModalContent,
     LsModalFooter,
-} from "@lifesg/react-design-system/vue";
+} from "@lifesg/react-design-system/vue-veaury";
 
 const showModal = ref(false);
 const clickCount = ref(0);
