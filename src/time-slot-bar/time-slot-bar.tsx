@@ -18,11 +18,11 @@ import { TimeSlot } from "../shared/time-slot";
 import { Typography } from "../typography";
 import { TimeHelper } from "../util/time-helper";
 import { getCellWidth, TimeSlotBarHelper } from "./helper";
+import type { Direction } from "./internal-types";
 import * as styles from "./time-slot-bar.styles";
 import TimeSlotDivider from "./time-slot-divider";
 import TimeSlotItem from "./time-slot-item";
 import type {
-    Direction,
     TimeSlot as TTimeSlot,
     TimeSlotBarProps,
     TimeSlotBarRef,
@@ -486,6 +486,13 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     );
 };
 
+/**
+ * A horizontally scrollable timeline bar that visualises time slots across a
+ * defined time range.
+ *
+ * Use `TimeSlotBar` to display availability, bookings, or schedule occupancy
+ * as coloured cells on a shared time axis.
+ */
 export const TimeSlotBar = forwardRef<TimeSlotBarRef, TimeSlotBarProps>(
     Component
 );
