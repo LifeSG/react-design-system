@@ -13,7 +13,7 @@
         "use-published": "npm i @lifesg/react-design-system@latest && rm -rf .next"
     },
     "dependencies": {
-        "@lifesg/react-design-system": "^4.0.0-alpha.3",
+        "@lifesg/react-design-system": "file:../../dist/lifesg-react-design-system-4.0.0-alpha.4.tgz",
         "@lifesg/react-icons": "^1.18.0",
         "clsx": "^2.1.1",
         "next": "16.1.6",
