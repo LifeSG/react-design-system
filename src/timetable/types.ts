@@ -1,5 +1,14 @@
 import type { PopoverTriggerType } from "../popover";
 
+/**
+ * Visual and interaction state of a timetable cell.
+ *
+ * - `"filled"` — cell represents an occupied or confirmed entry
+ * - `"blocked"` — cell is unavailable and cannot be selected
+ * - `"default"` — cell is available with no special state
+ * - `"disabled"` — cell is inactive and non-interactive
+ * - `"pending"` — cell represents a provisional or in-progress entry
+ */
 export type TimeTableCellType =
     | "filled"
     | "blocked"
@@ -7,123 +16,234 @@ export type TimeTableCellType =
     | "disabled"
     | "pending";
 
+/**
+ * Custom visual styling overrides for an individual timetable cell.
+ */
 export interface TimeTableCellStyleAttributes {
-    /** Main background color for the cell */
+    /** Main background color for the cell. */
     backgroundColor?: string | undefined;
-    /** Alternate background color (used for striped patterns in blocked/pending status) */
+    /**
+     * Alternate background color used for the second stripe in striped patterns.
+     */
     altBackgroundColor?: string | undefined;
-    /** Hover background color for the cell */
+    /** Background color applied on hover. */
     hoverBackgroundColor?: string | undefined;
-    /** Alternate hover background color for the cell */
+    /** Alternate background color applied on hover for striped patterns. */
     altHoverBackgroundColor?: string | undefined;
-    /** Display style for the cell. If not set, defaults based on cell type (blocked/pending = striped, others = solid) */
+    /**
+     * Cell background pattern.
+     * - `"solid"` — flat fill
+     * - `"stripes"` — diagonal stripe pattern
+     * - `"default"` — uses `"stripes"` for `"blocked"`/`"pending"` statuses,
+     *   `"solid"` for all others
+     *
+     * @default "default"
+     */
     styleType?: "default" | "solid" | "stripes" | undefined;
 }
 
+/**
+ * Imperative handle returned by `TimeTable` via `ref`.
+ */
 export interface TimeTableRef {
-    /** Resets the scroll position to the initialScrollTime if provided */
+    /**
+     * Scrolls the timetable back to `initialScrollTime`.
+     * No-op when `initialScrollTime` is not set.
+     */
     resetScroll: () => void;
 }
 
+/**
+ * Represents a single row in the timetable.
+ */
 export interface TimeTableRowData {
-    /** Unique identifier for the row */
+    /** Unique identifier for the row. */
     id?: string | undefined;
-    /** Display name of the row */
+    /** Display name shown in the row header. */
     name: string;
-    /** Array of cell data for this row */
+    /** Cells occupying time slots within this row. */
     rowCells: TimeTableRowCellData[];
-    /** Optional subtitle text or element displayed below the row name */
+    /** Secondary text or element rendered beneath the row name in the header. */
     subtitle?: string | JSX.Element | undefined;
-    /** Popover configuration for the row header */
+    /** Popover attached to the row header label. */
     rowHeaderPopover?: TimeTablePopoverProps | undefined;
-    /** Popover configuration for cells outside the time range */
+    /**
+     * Popover shown when the user interacts with cells outside the active time range.
+     */
     outOfRangeCellPopover?: TimeTablePopoverProps | undefined;
-    /** The minimum time for this row. Format in HH:mm. Defaults to minTime */
+    /**
+     * Earliest time this row is active, in `HH:mm` format.
+     * Time slots before this value are rendered as out-of-range.
+     *
+     * @remarks Falls back to the timetable-level `minTime` when omitted.
+     */
     rowMinTime?: string | undefined;
-    /** The maximum time for this row. Format in HH:mm. Defaults to maxTime */
+    /**
+     * Latest time this row is active, in `HH:mm` format.
+     * Time slots after this value are rendered as out-of-range.
+     *
+     * @remarks Falls back to the timetable-level `maxTime` when omitted.
+     */
     rowMaxTime?: string | undefined;
-    /** Callback function when the row name is clicked */
+    /**
+     * Called when the row header name is clicked.
+     *
+     * @param rowData The full row data object for this row.
+     * @param e The originating mouse event.
+     */
     onRowNameClick?:
         | ((rowData: TimeTableRowData, e: React.MouseEvent) => void)
         | undefined;
 }
 
+/**
+ * Configuration for a popover attached to a timetable row header or cell.
+ */
 export interface TimeTablePopoverProps {
-    /** The trigger type for showing the popover */
+    /** Interaction that opens the popover */
     trigger: PopoverTriggerType;
-    /** The content to display in the popover */
+    /** Content rendered inside the popover. */
     content: string | JSX.Element | (() => React.ReactNode);
-    /** Delay in milliseconds before opening/closing the popover */
+    /**
+     * Open and close delays in milliseconds.
+     * Useful for hover popovers to avoid flickering on quick mouse movements.
+     */
     delay?:
         | { open?: number | undefined; close?: number | undefined }
         | undefined;
-    /** Offset distance of the popover from the trigger element */
+    /** Distance in pixels between the popover and its trigger element. */
     offset?: number | undefined;
 }
 
+/**
+ * Props for the `TimeTable` component.
+ */
 export interface TimeTableProps {
-    /** Unique identifier for the timetable */
     id?: string | undefined;
-    /** Additional CSS class name */
     className?: string | undefined;
-    /** Test identifier for testing purposes */
     "data-testid"?: string | undefined;
-    /** The date to display in the timetable */
+    /**
+     * The date currently displayed.
+     */
     date: string;
-    /** Message to display when there is no content */
+    /**
+     * Text shown in the empty state when `rowData` is empty or
+     * `totalRecords` is `0`.
+     */
     emptyContentMessage?: string;
-    /** Array of row data to display in the timetable */
+    /** Rows to render in the timetable grid. */
     rowData: TimeTableRowData[];
-    /** Whether the timetable is in a loading state */
+    /**
+     * When `true`, replaces row content with a loading spinner.
+     */
     loading?: boolean | undefined;
-    /** The minimum time of the timetable. Format in HH:mm */
+    /**
+     * Earliest hour column displayed, in `HH:mm` format.
+     * Rounded to the nearest full hour internally.
+     *
+     * @default "00:00"
+     */
     minTime?: string | undefined;
-    /** The maximum time of the timetable. Format in HH:mm */
+    /**
+     * Latest hour column displayed, in `HH:mm` format.
+     * Rounded up to the nearest full hour internally.
+     *
+     * @default "23:00"
+     */
     maxTime?: string | undefined;
-    /** Initial scroll position in HH:mm format (e.g., "09:00" will scroll to 9am on mount) */
+    /**
+     * Time to scroll to on mount in `HH:mm` format (e.g. `"09:00"`).
+     */
     initialScrollTime?: string | undefined;
-    /** The minimum selectable date */
+    /**
+     * Earliest date the user can navigate to in the date picker.
+     */
     minDate?: string | undefined;
-    /** The maximum selectable date */
+    /**
+     * Latest date the user can navigate to in the date picker
+     */
     maxDate?: string | undefined;
-    /** Total number of records for pagination */
+    /**
+     * Total number of records across all pages.
+     *
+     * When `0`, the empty state is shown regardless of `rowData`.
+     */
     totalRecords?: number | undefined;
-    /** Whether to display the current date as "Today" */
+    /**
+     * When `true`, the date header displays `"Today"` instead of the
+     * formatted date string when `date` matches the current calendar day.
+     */
     showCurrentDateAsToday?: boolean | undefined;
-    /** Whether to display the date in short form */
+    /** When `true`, the date header uses an abbreviated date format. */
     showDateAsShortForm?: boolean | undefined;
-    /** Rounds initial scroll time to the nearest interval, e.g 6:30 will be clamped to 6:00 when interval = 60. Default is true */
+    /**
+     * When `true`, `initialScrollTime` is snapped to the nearest time
+     * interval (e.g. `"06:30"` snaps to `"06:00"` with a 60-minute
+     * interval).
+     *
+     * @default true
+     */
     roundInitialScrollTime?: boolean | undefined;
-    /** Callback function when the refresh button is clicked */
+    /** Called when the user clicks the refresh button in the header. */
     onRefresh?: (() => void) | undefined;
-    /** Callback function for pagination */
+    /**
+     * Called when the timetable needs to load the next page of rows.
+     *
+     * @remarks Triggered automatically when the user scrolls to the bottom
+     * and `rowData.length` is less than `totalRecords`. Providing this
+     * prop enables lazy loading.
+     */
     onPage?: (() => void) | undefined;
-    /** Callback function when the previous day button is clicked */
+    /**
+     * Called when the user navigates to the previous day.
+     *
+     * @param currentDate The date currently displayed before navigation.
+     */
     onPreviousDayClick: (currentDate: string) => void;
-    /** Callback function when the next day button is clicked */
+    /**
+     * Called when the user navigates to the next day.
+     *
+     * @param currentDate The date currently displayed before navigation.
+     */
     onNextDayClick: (currentDate: string) => void;
-    /** Callback function when a date is selected from the calendar */
+    /**
+     * Called when the user selects a date from the calendar picker.
+     *
+     * @param currentDate The date the user selected.
+     */
     onCalendarDateSelect?: ((currentDate: string) => void) | undefined;
 }
 
+/**
+ * Represents a single time-slot cell within a timetable row.
+ */
 export interface TimeTableRowCellData {
-    /** Unique identifier for the cell */
+    /** Unique identifier for the cell. */
     id?: string | undefined;
-    /** The start time of the cell. Format in HH:mm */
+    /** Start time of the cell in `HH:mm` format. */
     startTime: string;
-    /** The end time of the cell. Format in HH:mm */
+    /** End time of the cell in `HH:mm` format. */
     endTime: string;
-    /** The status/type of the cell. Values: "filled" | "blocked" | "default" | "disabled" | "pending" */
+    /**
+     * Visual and interaction state of the cell.
+     */
     status: TimeTableCellType;
-    /** Title text displayed in the cell */
+    /** Primary label rendered inside the cell. */
     title?: string | undefined;
-    /** Subtitle text displayed in the cell */
+    /** Secondary label rendered below `title` inside the cell. */
     subtitle?: string | undefined;
-    /** Custom popover configuration for this cell */
+    /** Popover shown when the user interacts with this cell. */
     customPopover?: TimeTablePopoverProps | undefined;
-    /** Custom style attributes for the cell. If not specified, falls back to default row bar colors. */
+    /**
+     * Color and pattern overrides for this cell.
+     */
     cellStyleAttributes?: TimeTableCellStyleAttributes | undefined;
-    /** Callback function when the cell is clicked */
+    /**
+     * Called when the user clicks this cell.
+     *
+     * @param data The cell data for this cell.
+     * @param e The originating mouse event.
+     */
     onClick?:
         | ((data: TimeTableRowCellData, e: React.MouseEvent) => void)
         | undefined;

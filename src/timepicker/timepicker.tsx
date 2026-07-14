@@ -9,6 +9,11 @@ import { TimeHelper } from "../util/time-helper";
 import * as styles from "./timepicker.styles";
 import type { TimepickerProps } from "./types";
 
+/**
+ * A form input for selecting a time value through a dropdown interface.
+ *
+ * Use `Timepicker` when a user needs to choose a specific time.
+ */
 export const Timepicker = ({
     id,
     disabled = false,

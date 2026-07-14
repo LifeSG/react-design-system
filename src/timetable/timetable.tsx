@@ -534,4 +534,10 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     );
 };
 
+/**
+ * A scrollable grid that visualises time slot availability across a day.
+ *
+ * Use `TimeTable` to display one day's schedule for multiple resources side by
+ * side.
+ */
 export const TimeTable = forwardRef<TimeTableRef, TimeTableProps>(Component);
