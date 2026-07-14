@@ -1,0 +1,128 @@
+.fds-calendar-manager {
+    display: flex;
+    flex-direction: column;
+}
+
+.fds-calendar-manager__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 12px 8px 8px;
+}
+
+.fds-calendar-manager__nav-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--fds-colour-border);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    color: var(--fds-colour-text);
+    font-size: 16px;
+}
+
+.fds-calendar-manager__nav-btn:hover:not(:disabled) {
+    background: var(--fds-colour-bg-hover);
+}
+
+.fds-calendar-manager__nav-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.fds-calendar-manager__header-labels {
+    display: flex;
+    gap: 4px;
+}
+
+.fds-calendar-manager__header-label {
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    font-size: 14px;
+    font-weight: 600;
+    color: var(--fds-colour-text);
+    padding: 4px 8px;
+    border-radius: 4px;
+}
+
+.fds-calendar-manager__header-label:hover {
+    background: var(--fds-colour-bg-hover);
+}
+
+.fds-calendar-manager__header-label.fds-calendar-manager__header-label--active {
+    color: var(--fds-colour-text-primary);
+}
+
+.fds-calendar-manager__month-grid,
+.fds-calendar-manager__year-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 8px;
+    padding: 16px 8px;
+}
+
+.fds-calendar-manager__grid-btn {
+    padding: 10px 4px;
+    border: 1px solid var(--fds-colour-border);
+    border-radius: 4px;
+    background: transparent;
+    cursor: pointer;
+    font-size: 13px;
+    color: var(--fds-colour-text);
+}
+
+.fds-calendar-manager__grid-btn:hover:not(:disabled) {
+    background: var(--fds-colour-bg-hover);
+}
+
+.fds-calendar-manager__grid-btn:disabled {
+    opacity: 0.3;
+    cursor: not-allowed;
+}
+
+.fds-calendar-manager__grid-btn.fds-calendar-manager__grid-btn--selected {
+    background: var(--fds-colour-bg-selected-strongest);
+    color: var(--fds-colour-text-inverse);
+    border-color: var(--fds-colour-bg-selected-strongest);
+}
+
+.fds-calendar-manager__footer {
+    display: flex;
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 8px;
+    border-top: 1px solid var(--fds-colour-border);
+}
+
+.fds-calendar-manager__footer-btn {
+    padding: 8px 16px;
+    border-radius: 4px;
+    font-size: 14px;
+    cursor: pointer;
+    border: 1px solid var(--fds-colour-border);
+    background: transparent;
+    color: var(--fds-colour-text);
+}
+
+.fds-calendar-manager__footer-btn:hover {
+    background: var(--fds-colour-bg-hover);
+}
+
+.fds-calendar-manager__footer-btn.fds-calendar-manager__footer-btn--primary {
+    background: var(--fds-colour-bg-selected-strongest);
+    color: var(--fds-colour-text-inverse);
+    border-color: var(--fds-colour-bg-selected-strongest);
+}
+
+.fds-calendar-manager__footer-btn.fds-calendar-manager__footer-btn--primary:hover {
+    opacity: 0.9;
+}
+
+.fds-calendar-manager__footer-btn.fds-calendar-manager__footer-btn--primary:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}

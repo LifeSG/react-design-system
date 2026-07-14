@@ -1,0 +1,43 @@
+@keyframes fds-loading-spinner-rotate {
+    0% {
+        transform: rotate(0deg);
+    }
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.fds-loading-spinner {
+    display: inline-block;
+    position: relative;
+    width: var(--fds-internal-loading-spinner-size, 1em);
+    height: var(--fds-internal-loading-spinner-size, 1em);
+    color: var(--fds-internal-loading-spinner-colour, currentColor);
+}
+
+.fds-loading-spinner__ring {
+    box-sizing: border-box;
+    display: block;
+    position: absolute;
+    top: 1px;
+    width: calc(100% - 2px);
+    height: calc(100% - 2px);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 100%;
+    border-color: currentColor transparent transparent transparent;
+    animation: fds-loading-spinner-rotate 1.2s cubic-bezier(0.5, 0, 0.5, 1)
+        infinite;
+}
+
+.fds-loading-spinner__ring.fds-loading-spinner__ring--2 {
+    animation-delay: -0.45s;
+}
+
+.fds-loading-spinner__ring.fds-loading-spinner__ring--3 {
+    animation-delay: -0.3s;
+}
+
+.fds-loading-spinner__ring.fds-loading-spinner__ring--4 {
+    animation-delay: -0.15s;
+}

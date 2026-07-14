@@ -1,0 +1,26 @@
+<div [class]="cls.root">
+    <div [class]="cls.grid">
+        <div [class]="cls.weekdayHeader">
+            @for (day of weekdays; track day) {
+            <span>{{ day }}</span>
+            }
+        </div>
+        @for (week of weeks(); track $index) {
+        <div [class]="cls.weekRow">
+            @for (day of week; track getDayDateStr(day)) {
+            <app-day-cell
+                [date]="getDayDateStr(day)"
+                [day]="getDayNumber(day)"
+                [currentMonth]="isCurrentMonth(day)"
+                [today]="isToday(day)"
+                [disabled]="isDayDisabled(day)"
+                [selectedStart]="isSelectedStart(day)"
+                [selectedEnd]="isSelectedEnd(day)"
+                [inRange]="isInRange(day)"
+                (daySelect)="onDaySelect($event)"
+            />
+            }
+        </div>
+        }
+    </div>
+</div>

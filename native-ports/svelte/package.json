@@ -1,0 +1,41 @@
+{
+    "name": "@lifesg/components-svelte",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "svelte": "src/index.ts",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "svelte": "./src/index.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist",
+        "src"
+    ],
+    "scripts": {
+        "dev": "vite --port 5183",
+        "build": "svelte-package -i src -o dist",
+        "typecheck": "svelte-check --tsconfig tsconfig.json"
+    },
+    "dependencies": {
+        "dayjs": "^1.11.13"
+    },
+    "peerDependencies": {
+        "svelte": "^5.0.0"
+    },
+    "devDependencies": {
+        "@lifesg/flagship-styles": "file:../shared",
+        "@sveltejs/package": "^2.0.0",
+        "@sveltejs/vite-plugin-svelte": "^5.0.0",
+        "svelte": "^5.0.0",
+        "svelte-check": "^4.0.0",
+        "typescript": "~5.7.0",
+        "vite": "^6.0.0"
+    }
+}

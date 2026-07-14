@@ -1,0 +1,56 @@
+.fds-date-range-input {
+    display: block;
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+        sans-serif;
+}
+
+.fds-date-range-input__container {
+    display: flex;
+    align-items: center;
+    border: 1px solid var(--fds-colour-border);
+    border-radius: 4px;
+    padding: 10px 12px;
+    gap: 8px;
+    background: var(--fds-colour-bg);
+    cursor: text;
+    position: relative;
+}
+
+.fds-date-range-input__container.fds-date-range-input__container--focused {
+    border-color: var(--fds-colour-border-selected);
+    box-shadow: var(--fds-shadow-xs-focus-strong);
+}
+
+.fds-date-range-input__container.fds-date-range-input__container--disabled {
+    opacity: 0.5;
+    pointer-events: none;
+    background: var(--fds-colour-bg-disabled);
+}
+
+.fds-date-range-input__container.fds-date-range-input__container--error {
+    border-color: var(--fds-colour-border-error);
+}
+
+.fds-date-range-input__container.fds-date-range-input__container--error.fds-date-range-input__container--focused {
+    box-shadow: var(--fds-shadow-xs-error-strong);
+}
+
+.fds-date-range-input__separator {
+    color: var(--fds-colour-text-disabled);
+    font-size: 14px;
+    user-select: none;
+}
+
+.fds-date-range-input__dropdown {
+    position: absolute;
+    top: 100%;
+    left: 0;
+    margin-top: 4px;
+    background: var(--fds-colour-bg);
+    border: 1px solid var(--fds-colour-border);
+    border-radius: 8px;
+    box-shadow: var(--fds-shadow-md-subtle);
+    z-index: 100;
+    min-width: 320px;
+    overflow: hidden;
+}

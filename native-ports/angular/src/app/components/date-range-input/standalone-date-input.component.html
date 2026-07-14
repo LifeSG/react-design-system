@@ -1,0 +1,55 @@
+<div [class]="cls.root">
+    <div
+        [class]="cls.section"
+        role="group"
+        [attr.aria-label]="label() || 'Date input'"
+        (click)="handleSectionClick()"
+    >
+        <div [class]="cls.container">
+            <input
+                #dayInput
+                [class]="cls.input + ' ' + cls.inputDay"
+                maxlength="2"
+                [value]="dayValue()"
+                placeholder="DD"
+                inputmode="numeric"
+                [disabled]="disabled()"
+                aria-label="Day"
+                (input)="handleDayInput($event)"
+                (focus)="handleInputFocus($event)"
+                (blur)="handleInputBlur($event)"
+                (keydown)="handleKeyDown($event)"
+            />
+            <span [class]="dayDividerClass">/</span>
+            <input
+                #monthInput
+                [class]="cls.input + ' ' + cls.inputMonth"
+                maxlength="2"
+                [value]="monthValue()"
+                placeholder="MM"
+                inputmode="numeric"
+                [disabled]="disabled()"
+                aria-label="Month"
+                (input)="handleMonthInput($event)"
+                (focus)="handleInputFocus($event)"
+                (blur)="handleInputBlur($event)"
+                (keydown)="handleKeyDown($event)"
+            />
+            <span [class]="monthDividerClass">/</span>
+            <input
+                #yearInput
+                [class]="cls.input + ' ' + cls.inputYear"
+                maxlength="4"
+                [value]="yearValue()"
+                placeholder="YYYY"
+                inputmode="numeric"
+                [disabled]="disabled()"
+                aria-label="Year"
+                (input)="handleYearInput($event)"
+                (focus)="handleInputFocus($event)"
+                (blur)="handleInputBlur($event)"
+                (keydown)="handleKeyDown($event)"
+            />
+        </div>
+    </div>
+</div>

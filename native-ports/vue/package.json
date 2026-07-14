@@ -1,0 +1,38 @@
+{
+    "name": "@lifesg/date-range-input-vue",
+    "version": "0.1.0",
+    "private": true,
+    "type": "module",
+    "main": "dist/index.js",
+    "module": "dist/index.js",
+    "types": "dist/index.d.ts",
+    "exports": {
+        ".": {
+            "types": "./dist/index.d.ts",
+            "import": "./dist/index.js"
+        }
+    },
+    "files": [
+        "dist"
+    ],
+    "scripts": {
+        "dev": "vite",
+        "build": "vue-tsc --noEmit && vite build --mode lib",
+        "build:demo": "vue-tsc --noEmit && vite build",
+        "prepublishOnly": "npm run build"
+    },
+    "dependencies": {
+        "@lifesg/flagship-styles": "file:../shared",
+        "dayjs": "^1.11.13"
+    },
+    "peerDependencies": {
+        "vue": "^3.4.0"
+    },
+    "devDependencies": {
+        "@vitejs/plugin-vue": "^5.2.3",
+        "typescript": "~5.7.3",
+        "vite": "^6.3.5",
+        "vue": "^3.5.13",
+        "vue-tsc": "^2.2.8"
+    }
+}

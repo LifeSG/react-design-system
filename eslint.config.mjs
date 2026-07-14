@@ -100,6 +100,7 @@ export default defineConfig([
             "**/e2e/**",
             "**/playwright-report/**",
             "**/storybook-static/**",
+            "**/native-ports/**",
             "playwright.config.ts",
         ],
     },

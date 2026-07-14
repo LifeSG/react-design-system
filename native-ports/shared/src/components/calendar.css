@@ -1,0 +1,27 @@
+.fds-calendar {
+    display: block;
+}
+
+.fds-calendar__grid {
+    padding: 8px;
+}
+
+.fds-calendar__weekday-header {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    text-align: center;
+    margin-bottom: 4px;
+}
+
+.fds-calendar__weekday-header span {
+    font-size: 12px;
+    font-weight: 600;
+    color: var(--fds-colour-text-subtler);
+    padding: 4px 0;
+}
+
+.fds-calendar__week-row {
+    display: grid;
+    grid-template-columns: repeat(7, 1fr);
+    justify-items: center;
+}

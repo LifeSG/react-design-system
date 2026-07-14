@@ -1,0 +1,40 @@
+<div [class]="cls.root">
+    <div [class]="containerClasses()" (click)="handleContainerClick()">
+        <app-standalone-date-input
+            [value]="selectedStart()"
+            label="Start date"
+            [disabled]="disabled()"
+            [focused]="currentFocus() === 'start'"
+            (valueChange)="handleStartChange($event)"
+            (inputFocus)="handleFocus('start')"
+        />
+
+        <span [class]="cls.separator">&ndash;</span>
+
+        <app-standalone-date-input
+            [value]="selectedEnd()"
+            label="End date"
+            [disabled]="disabled()"
+            [focused]="currentFocus() === 'end'"
+            (valueChange)="handleEndChange($event)"
+            (inputFocus)="handleFocus('end')"
+        />
+    </div>
+
+    @if (calendarOpen()) {
+    <div [class]="cls.dropdown" (click)="stopPropagation($event)">
+        <app-calendar-manager
+            [calendarDate]="calendarDateForManager()"
+            [selectedStart]="selectedStart()"
+            [selectedEnd]="selectedEnd()"
+            [minDate]="minDate()"
+            [maxDate]="maxDate()"
+            [disabledDates]="disabledDates()"
+            [withButton]="withButton()"
+            [doneDisabled]="doneDisabled()"
+            (daySelect)="handleDaySelect($event)"
+            (calendarDismiss)="handleCalendarDismiss($event)"
+        />
+    </div>
+    }
+</div>

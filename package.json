@@ -198,7 +198,7 @@
         "e2e/nextjs-app/src/**/*.{ts,tsx,js,jsx}": [
             "npm --prefix e2e/nextjs-app run lint:staged:fix --"
         ],
-        "*.{css,module.css}": [
+        "!(native-ports)/**/*.{css,module.css}": [
             "stylelint --fix"
         ]
     }
