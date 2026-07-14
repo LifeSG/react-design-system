@@ -32,8 +32,15 @@ export interface TimeRangePickerProps {
     className?: string | undefined;
     id?: string | undefined;
     style?: React.CSSProperties | undefined;
+
     // Accessibility
+    /**
+     * ID of an element that labels both start and end time inputs.
+     */
     "aria-labelledby"?: string | undefined;
+    /**
+     * ID of an element that describes both start and end time inputs.
+     */
     "aria-describedby"?: string | undefined;
     "aria-invalid"?: boolean | undefined;
 
