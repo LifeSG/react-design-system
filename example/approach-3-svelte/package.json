@@ -1,0 +1,21 @@
+{
+    "name": "example-approach-3-svelte",
+    "version": "0.0.1",
+    "private": true,
+    "type": "module",
+    "scripts": {
+        "dev": "vite",
+        "build": "vite build",
+        "preview": "vite preview"
+    },
+    "dependencies": {
+        "@lifesg/react-design-system": "file:../../",
+        "dayjs": "^1.11.13"
+    },
+    "devDependencies": {
+        "@sveltejs/vite-plugin-svelte": "^5.0.0",
+        "svelte": "^5.0.0",
+        "typescript": "~5.7.0",
+        "vite": "^6.0.0"
+    }
+}
