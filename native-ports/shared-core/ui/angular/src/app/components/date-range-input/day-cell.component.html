@@ -1,0 +1,10 @@
+<div [class]="cls.root">
+    <button
+        [class]="cellClasses"
+        [disabled]="disabled()"
+        [attr.aria-label]="'' + day()"
+        (click)="handleClick()"
+    >
+        {{ day() }}
+    </button>
+</div>

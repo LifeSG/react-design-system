@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Flagship Lit Web Components</title>
+        <!-- Theme CSS: sets --fds-* custom properties on [data-fds-theme] -->
+        <link rel="stylesheet" href="../../shared/src/theme/lifesg.css" />
+        <!-- Component CSS: consumed globally so light-DOM elements pick it up -->
+        <link rel="stylesheet" href="../../shared/dist/index.css" />
+        <style>
+            body {
+                font-family: "Open Sans", -apple-system, BlinkMacSystemFont,
+                    "Segoe UI", Roboto, sans-serif;
+                max-width: 700px;
+                margin: 40px auto;
+                padding: 0 20px;
+                background: var(--fds-colour-bg-strong);
+                color: var(--fds-colour-text);
+            }
+
+            h1 {
+                font-size: 20px;
+                margin-bottom: 8px;
+            }
+
+            p.subtitle {
+                color: var(--fds-colour-text-subtler);
+                margin-bottom: 24px;
+            }
+
+            .demo-section {
+                background: var(--fds-colour-bg);
+                border: 1px solid var(--fds-colour-border);
+                border-radius: 8px;
+                padding: 24px;
+                margin-bottom: 24px;
+            }
+
+            .demo-section h2 {
+                font-size: 14px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+                color: var(--fds-colour-text-subtlest);
+                margin: 0 0 16px;
+            }
+
+            .output {
+                margin-top: 16px;
+                padding: 12px;
+                background: var(--fds-colour-bg-strong);
+                border-radius: 4px;
+                font-size: 13px;
+                font-family: monospace;
+                color: var(--fds-colour-text-subtle);
+                min-height: 20px;
+            }
+
+            .button-grid {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 12px;
+                align-items: center;
+            }
+
+            .button-row {
+                display: flex;
+                flex-wrap: wrap;
+                gap: 8px;
+                align-items: center;
+                margin-bottom: 12px;
+            }
+
+            .button-row:last-child {
+                margin-bottom: 0;
+            }
+
+            .button-row-label {
+                font-size: 12px;
+                color: var(--fds-colour-text-subtlest);
+                min-width: 80px;
+                text-transform: uppercase;
+                letter-spacing: 0.5px;
+            }
+        </style>
+    </head>
+    <body data-fds-theme="lifesg">
+        <h1>Flagship Lit Web Components</h1>
+        <p class="subtitle">
+            Native Lit/web component implementation of the Flagship design
+            system. Approach 3 pilot.
+        </p>
+
+        <!-- ============================================================ -->
+        <!-- DATE RANGE INPUT                                              -->
+        <!-- ============================================================ -->
+        <div class="demo-section">
+            <h2>DateRangeInput &mdash; Default (with Done/Cancel buttons)</h2>
+            <lifesg-date-range-input
+                id="demo1"
+                min-date="2024-01-01"
+                max-date="2026-12-31"
+            ></lifesg-date-range-input>
+            <div class="output" id="output1">No selection yet</div>
+        </div>
+
+        <div class="demo-section">
+            <h2>DateRangeInput &mdash; Auto-confirm (no buttons)</h2>
+            <lifesg-date-range-input
+                id="demo2"
+                with-button="false"
+            ></lifesg-date-range-input>
+            <div class="output" id="output2">No selection yet</div>
+        </div>
+
+        <div class="demo-section">
+            <h2>DateRangeInput &mdash; With initial values</h2>
+            <lifesg-date-range-input
+                id="demo3"
+                value="2026-07-01"
+                value-end="2026-07-15"
+            ></lifesg-date-range-input>
+            <div class="output" id="output3">
+                Start: 2026-07-01 | End: 2026-07-15
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>DateRangeInput &mdash; Disabled</h2>
+            <lifesg-date-range-input disabled></lifesg-date-range-input>
+        </div>
+
+        <div class="demo-section">
+            <h2>DateRangeInput &mdash; Error state</h2>
+            <lifesg-date-range-input error></lifesg-date-range-input>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- BUTTON                                                        -->
+        <!-- ============================================================ -->
+        <div class="demo-section">
+            <h2>Button &mdash; Style variants</h2>
+            <div class="button-row">
+                <span class="button-row-label">Default</span>
+                <lifesg-button>Default</lifesg-button>
+                <lifesg-button danger>Danger</lifesg-button>
+            </div>
+            <div class="button-row">
+                <span class="button-row-label">Secondary</span>
+                <lifesg-button style-type="secondary">Secondary</lifesg-button>
+                <lifesg-button style-type="secondary" danger
+                    >Danger</lifesg-button
+                >
+            </div>
+            <div class="button-row">
+                <span class="button-row-label">Light</span>
+                <lifesg-button style-type="light">Light</lifesg-button>
+                <lifesg-button style-type="light" danger>Danger</lifesg-button>
+            </div>
+            <div class="button-row">
+                <span class="button-row-label">Link</span>
+                <lifesg-button style-type="link">Link</lifesg-button>
+                <lifesg-button style-type="link" danger>Danger</lifesg-button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Button &mdash; Sizes</h2>
+            <div class="button-grid">
+                <lifesg-button size-type="large">Large</lifesg-button>
+                <lifesg-button size-type="default">Default</lifesg-button>
+                <lifesg-button size-type="small">Small</lifesg-button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Button &mdash; With icon</h2>
+            <div class="button-grid">
+                <lifesg-button>
+                    <svg
+                        slot="icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                    Add item
+                </lifesg-button>
+                <lifesg-button icon-position="right">
+                    <svg
+                        slot="icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M5 12h14M12 5l7 7-7 7" />
+                    </svg>
+                    Continue
+                </lifesg-button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Button &mdash; Icon only</h2>
+            <div class="button-grid">
+                <lifesg-button aria-label="Add">
+                    <svg
+                        slot="icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                </lifesg-button>
+                <lifesg-button style-type="secondary" aria-label="Close">
+                    <svg
+                        slot="icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M18 6L6 18M6 6l12 12" />
+                    </svg>
+                </lifesg-button>
+                <lifesg-button style-type="light" aria-label="Settings">
+                    <svg
+                        slot="icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <circle cx="12" cy="12" r="3" />
+                        <path
+                            d="M12 1v4M12 19v4M4.22 4.22l2.83 2.83M16.95 16.95l2.83 2.83M1 12h4M19 12h4M4.22 19.78l2.83-2.83M16.95 7.05l2.83-2.83"
+                        />
+                    </svg>
+                </lifesg-button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Button &mdash; Loading</h2>
+            <div class="button-grid">
+                <lifesg-button loading>Saving...</lifesg-button>
+                <lifesg-button style-type="secondary" loading
+                    >Loading</lifesg-button
+                >
+                <lifesg-button loading aria-label="Loading">
+                    <svg
+                        slot="icon"
+                        viewBox="0 0 24 24"
+                        fill="none"
+                        stroke="currentColor"
+                        stroke-width="2"
+                    >
+                        <path d="M12 5v14M5 12h14" />
+                    </svg>
+                </lifesg-button>
+            </div>
+        </div>
+
+        <div class="demo-section">
+            <h2>Button &mdash; Disabled</h2>
+            <div class="button-grid">
+                <lifesg-button disabled>Disabled</lifesg-button>
+                <lifesg-button disabled focusable-when-disabled
+                    >Focusable when disabled</lifesg-button
+                >
+            </div>
+        </div>
+
+        <!-- ============================================================ -->
+        <!-- LOADING SPINNER (standalone)                                  -->
+        <!-- ============================================================ -->
+        <div class="demo-section">
+            <h2>LoadingSpinner &mdash; Standalone</h2>
+            <div class="button-grid">
+                <lifesg-loading-spinner size="1rem"></lifesg-loading-spinner>
+                <lifesg-loading-spinner size="1.5rem"></lifesg-loading-spinner>
+                <lifesg-loading-spinner size="2rem"></lifesg-loading-spinner>
+                <lifesg-loading-spinner
+                    size="2rem"
+                    colour="var(--fds-colour-text-error)"
+                ></lifesg-loading-spinner>
+            </div>
+        </div>
+
+        <script type="module" src="../src/index.ts"></script>
+        <script>
+            document.getElementById("demo1").addEventListener("change", (e) => {
+                document.getElementById(
+                    "output1"
+                ).textContent = `Start: ${e.detail.start} | End: ${e.detail.end}`;
+            });
+            document.getElementById("demo2").addEventListener("change", (e) => {
+                document.getElementById(
+                    "output2"
+                ).textContent = `Start: ${e.detail.start} | End: ${e.detail.end}`;
+            });
+            document.getElementById("demo3").addEventListener("change", (e) => {
+                document.getElementById(
+                    "output3"
+                ).textContent = `Start: ${e.detail.start} | End: ${e.detail.end}`;
+            });
+        </script>
+    </body>
+</html>

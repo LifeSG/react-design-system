@@ -1,0 +1,81 @@
+<div [class]="cls.root">
+    <!-- Header -->
+    <div [class]="cls.header">
+        <button
+            [class]="cls.navBtn"
+            [disabled]="prevDisabled()"
+            (click)="handlePrev()"
+            aria-label="Previous"
+        >
+            &#8249;
+        </button>
+        <div [class]="cls.headerLabels">
+            <button [class]="monthHeaderClass()" (click)="toggleMonthView()">
+                {{ monthLabel() }}
+            </button>
+            <button [class]="yearHeaderClass()" (click)="toggleYearView()">
+                {{ yearLabel() }}
+            </button>
+        </div>
+        <button
+            [class]="cls.navBtn"
+            [disabled]="nextDisabled()"
+            (click)="handleNext()"
+            aria-label="Next"
+        >
+            &#8250;
+        </button>
+    </div>
+
+    <!-- Content -->
+    @if (currentView() === 'default') {
+    <app-calendar
+        [calendarDate]="viewDate()"
+        [selectedStart]="selectedStart()"
+        [selectedEnd]="selectedEnd()"
+        [minDate]="minDate()"
+        [maxDate]="maxDate()"
+        [disabledDates]="disabledDates()"
+        (daySelect)="onDaySelect($event)"
+    />
+    } @else if (currentView() === 'month-options') {
+    <div [class]="cls.monthGrid">
+        @for (month of months(); track $index) {
+        <button
+            [class]="getGridBtnClass(isMonthSelected(month))"
+            [disabled]="isMonthDisabled(month)"
+            (click)="selectMonth(month)"
+        >
+            {{ getMonthLabel(month) }}
+        </button>
+        }
+    </div>
+    } @else {
+    <div [class]="cls.yearGrid">
+        @for (year of years(); track $index) {
+        <button
+            [class]="getGridBtnClass(isYearSelected(year))"
+            [disabled]="isYearDisabled(year)"
+            [style.opacity]="isYearOutOfDecade(year) ? '0.4' : '1'"
+            (click)="selectYear(year)"
+        >
+            {{ getYearNumber(year) }}
+        </button>
+        }
+    </div>
+    }
+
+    <!-- Footer -->
+    @if (withButton()) {
+    <div [class]="cls.footer">
+        <button [class]="cls.footerBtn" (click)="handleCancel()">Cancel</button>
+        <button
+            [class]="cls.footerBtn + ' ' + cls.footerBtnPrimary"
+            [disabled]="doneDisabled()"
+            (click)="handleDone()"
+        >
+            Done
+        </button>
+    </div>
+    }
+</div>
