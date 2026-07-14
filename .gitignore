@@ -5,6 +5,10 @@ node_modules
 dist
 *.tgz
 
+# Generated web-component wrappers (created by scripts/generate-wc-entries.mjs during build)
+src/web-components.ts
+src/**/web-component.ts
+
 # testing
 coverage
 
@@ -27,3 +31,8 @@ junit.xml
 /blob-report/
 /playwright/.cache/
 /playwright/.auth/
+
+# native ports (Approach 3)
+native-ports/*/node_modules
+native-ports/react-native/.expo
+native-ports/angular/.angular
