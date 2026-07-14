@@ -14,7 +14,7 @@ export type SelectHistogramSliderProps = Pick<
 >;
 
 /**
- * Props for `SelectHistogram`.
+ * Props for the `SelectHistogram` component.
  */
 export interface SelectHistogramProps
     extends Pick<
@@ -39,8 +39,6 @@ export interface SelectHistogramProps
     histogramSlider: SelectHistogramSliderProps;
     /**
      * Controls how long option labels are truncated when they overflow.
-     * - `"middle"` trims the centre of the text
-     * - `"end"` trims from the right.
      *
      * @default "end"
      */

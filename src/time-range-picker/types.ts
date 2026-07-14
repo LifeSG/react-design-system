@@ -5,7 +5,12 @@ import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 /** Time display format: 12-hour clock or 24-hour clock. */
 export type TimeRangePickerFormat = "12hr" | "24hr";
 
-/** Picker interaction style: dial spinner input or scrollable combobox dropdowns. */
+/**
+ * Picker interaction style.
+ *
+ * - `"dial"` renders a dial spinner input picker.
+ * - `"combobox"` renders scrollable dropdowns with configurable intervals.
+ */
 export type TimeRangePickerVariant = "dial" | "combobox";
 
 /**
@@ -25,15 +30,22 @@ export interface TimeRangePickerValue {
 }
 
 /**
- * Props for `TimeRangePicker` component.
+ * Props for the `TimeRangePicker` component.
  */
 export interface TimeRangePickerProps {
     // Standard HTML Attributes
     className?: string | undefined;
     id?: string | undefined;
     style?: React.CSSProperties | undefined;
+
     // Accessibility
+    /**
+     * ID of an element that labels both start and end time inputs.
+     */
     "aria-labelledby"?: string | undefined;
+    /**
+     * ID of an element that describes both start and end time inputs.
+     */
     "aria-describedby"?: string | undefined;
     "aria-invalid"?: boolean | undefined;
 
@@ -55,9 +67,6 @@ export interface TimeRangePickerProps {
     error?: boolean | undefined;
     /**
      * The picker interaction style.
-     *
-     * - `"dial"` renders a dial spinner input picker.
-     * - `"combobox"` renders scrollable dropdowns with configurable intervals.
      *
      * @default "dial"
      */
@@ -97,8 +106,6 @@ export interface TimeRangePickerProps {
     initialScrollEndTime?: string | undefined;
     /**
      * Aligns the dropdown relative to the trigger element.
-     * - `"left"` — dropdown left-aligns with the trigger
-     * - `"right"` — dropdown right-aligns with the trigger
      *
      * @remarks Only applies when `variant` is `"combobox"`.
      */
@@ -126,8 +133,10 @@ export interface TimeRangePickerProps {
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
 
     /**
-     * Called when a selection is made. Returns an object with `start` and
-     * `end` values as an empty string or a string based format.
+     * Called when the selected time range changes.
+     *
+     * @param value The current `start` and `end` time strings. Each field is
+     * either an empty string or a formatted time string based on `format`.
      */
     onChange?: ((value: TimeRangePickerValue) => void) | undefined;
     /**

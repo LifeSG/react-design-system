@@ -35,17 +35,11 @@ export interface InputNestedSelectSharedProps<V1, V2, V3>
     mode?: ExpandMode | undefined;
     /**
      * Controls the height of the trigger and dropdown items.
-     * - `"default"` — standard height
-     * - `"small"` — reduced height
      *
      * @default "default"
      */
     variant?: DropdownVariantType | undefined;
-    /**
-     * Aligns the dropdown relative to the trigger element.
-     * - `"left"` — dropdown left-aligns with the trigger
-     * - `"right"` — dropdown right-aligns with the trigger
-     */
+    /** Aligns the dropdown relative to the trigger element. */
     alignment?: DropdownAlignmentType | undefined;
     /** CSS `z-index` applied to the dropdown overlay. */
     dropdownZIndex?: number | undefined;

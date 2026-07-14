@@ -1,5 +1,5 @@
 /**
- * Props for `ImageButton`.
+ * Props for the `ImageButton` component.
  */
 export interface ImageButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {

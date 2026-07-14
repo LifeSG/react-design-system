@@ -56,11 +56,7 @@ export interface TimepickerProps {
      * Renders the input in an error state when `true`.
      */
     error?: boolean | undefined;
-    /**
-     * Aligns the dropdown relative to the trigger element.
-     * - `"left"` — dropdown left-aligns with the trigger
-     * - `"right"` — dropdown right-aligns with the trigger
-     */
+    /** Aligns the dropdown relative to the trigger element. */
     alignment?: DropdownAlignmentType | undefined;
     /** CSS `z-index` applied to the dropdown overlay. */
     dropdownZIndex?: number | undefined;

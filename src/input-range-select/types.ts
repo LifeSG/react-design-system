@@ -37,7 +37,7 @@ export interface InputRangeProp<T> {
 }
 
 /**
- * Props for `InputRangeSelect`.
+ * Props for the `InputRangeSelect`component.
  *
  * `T` is the option item type; `V` is the extracted value type returned by
  * `valueExtractor`.
@@ -60,11 +60,7 @@ export interface InputRangeSelectProps<T, V>
      * Controls the displayed value for both selectors.
      */
     selectedOptions?: InputRangeProp<T> | undefined;
-    /**
-     * Aligns the dropdown relative to the trigger element.
-     * - `"left"` — dropdown left-aligns with the trigger
-     * - `"right"` — dropdown right-aligns with the trigger
-     */
+    /** Aligns the dropdown relative to the trigger element. */
     alignment?: DropdownAlignmentType | undefined;
     /** CSS `z-index` applied to the dropdown overlay. */
     dropdownZIndex?: number | undefined;

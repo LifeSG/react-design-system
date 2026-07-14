@@ -49,7 +49,7 @@ export interface TabProps {
 }
 
 /**
- * Props for `Tab.Item`, which defines a single tab panel within a `Tab`.
+ * Props for the `Tab.Item` sub-component.
  */
 export interface TabItemProps {
     /**

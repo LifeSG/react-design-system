@@ -1,4 +1,4 @@
-/** Props for the `ESignature` signature-capture field. */
+/** Props for the `ESignature` component. */
 export interface EsignatureProps {
     className?: string | undefined;
     id?: string | undefined;

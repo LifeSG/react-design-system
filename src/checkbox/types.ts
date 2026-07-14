@@ -1,8 +1,7 @@
 export type CheckboxSize = "small" | "default";
 
 /**
- * Props for the `Checkbox` component, with indeterminate state and accessible
- * disabled behavior.
+ * Props for the `Checkbox` component.
  */
 export interface CheckboxProps
     extends React.InputHTMLAttributes<HTMLInputElement> {

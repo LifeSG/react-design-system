@@ -4,7 +4,7 @@ import type { ListItemDisplayProps } from "../shared/dropdown-list/types";
 import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 /**
- * Props for `PredictiveTextInput`.
+ * Props for the `PredictiveTextInput` component.
  *
  * `T` is the shape of each option item returned by `fetchOptions`.
  * `V` is the extracted value type produced by `valueExtractor`.

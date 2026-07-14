@@ -17,6 +17,16 @@ export type TimeTableCellType =
     | "pending";
 
 /**
+ * Background pattern for a timetable cell.
+ *
+ * - `"solid"` renders a flat fill.
+ * - `"stripes"` renders a diagonal stripe pattern.
+ * - `"default"` uses `"stripes"` for `"blocked"` and `"pending"` cells,
+ *   and `"solid"` for all other statuses.
+ */
+export type TimeTableCellStyleType = "default" | "solid" | "stripes";
+
+/**
  * Custom visual styling overrides for an individual timetable cell.
  */
 export interface TimeTableCellStyleAttributes {
@@ -32,14 +42,10 @@ export interface TimeTableCellStyleAttributes {
     altHoverBackgroundColor?: string | undefined;
     /**
      * Cell background pattern.
-     * - `"solid"` — flat fill
-     * - `"stripes"` — diagonal stripe pattern
-     * - `"default"` — uses `"stripes"` for `"blocked"`/`"pending"` statuses,
-     *   `"solid"` for all others
      *
      * @default "default"
      */
-    styleType?: "default" | "solid" | "stripes" | undefined;
+    styleType?: TimeTableCellStyleType | undefined;
 }
 
 /**

@@ -28,8 +28,6 @@ export interface InputSelectOptionsProps<T> {
     optionsLoadState?: ItemsLoadStateType | undefined;
     /**
      * Controls how long option labels are truncated when they overflow.
-     * - `"middle"` trims the centre of the text
-     * - `"end"` trims from the right.
      *
      * @default "end"
      */
@@ -61,7 +59,7 @@ export interface InputSelectSharedProps<T> {
 // INPUT SELECT PROPS
 // =============================================================================
 /**
- * Props for `InputSelect`, a single-selection dropdown input.
+ * Props for the `InputSelect` component.
  *
  * `T` is the option item type; `V` is the extracted value type returned by
  * `valueExtractor`.
@@ -104,11 +102,7 @@ export interface InputSelectProps<T, V>
      * @default "default"
      */
     variant?: DropdownVariantType | undefined;
-    /**
-     * Aligns the dropdown relative to the trigger element.
-     * - `"left"` — dropdown left-aligns with the trigger
-     * - `"right"` — dropdown right-aligns with the trigger
-     */
+    /** Aligns the dropdown relative to the trigger element. */
     alignment?: DropdownAlignmentType | undefined;
     /** CSS `z-index` applied to the dropdown overlay. */
     dropdownZIndex?: number | undefined;

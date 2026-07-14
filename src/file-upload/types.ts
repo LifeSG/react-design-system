@@ -140,7 +140,6 @@ export interface FileUploadProps extends FileInputProps {
     readOnly?: boolean | undefined;
     /**
      * Overrides default label text for elements within the component.
-     * Currently supports `uploadButtonLabel` to replace the "Upload files" button text.
      */
     customLabels?: { uploadButtonLabel?: string | undefined } | undefined;
     /**

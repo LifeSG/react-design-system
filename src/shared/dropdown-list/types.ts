@@ -1,13 +1,29 @@
 // =============================================================================
 // SHARED PROPS
 // =============================================================================
-/** How overflowing option text is truncated. */
+/**
+ * How overflowing option text is truncated.
+ *
+ * - `"middle"` trims the centre of the text.
+ * - `"end"` trims from the right.
+ */
 export type TruncateType = "middle" | "end";
-/** Async load state for dropdown items. */
+/**
+ * Async load state for dropdown items.
+ *
+ * - `"loading"` while fetching.
+ * - `"fail"` on error (shows a call-to-action to retry).
+ * - `"success"` when ready.
+ */
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 /** Controls whether secondary labels render inline or on a new line. */
 export type LabelDisplayType = "inline" | "next-line";
-/** Visual size variant for the dropdown. */
+/**
+ * Visual size variant for the dropdown.
+ *
+ * - `"default"` renders standard height.
+ * - `"small"` renders reduced height.
+ */
 export type DropdownVariantType = "small" | "default";
 
 /** Runtime context passed to a custom `renderListItem` callback. */

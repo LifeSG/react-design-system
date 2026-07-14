@@ -6,7 +6,7 @@ import type {
     YearMonthDisplay,
 } from "../shared/internal-calendar/types";
 
-/** Props for `DateRangeInput`. */
+/** Props for `DateRangeInput` component. */
 export interface DateRangeInputProps extends CommonCalendarProps {
     // Standard HTML Attributes
     className?: string | undefined;

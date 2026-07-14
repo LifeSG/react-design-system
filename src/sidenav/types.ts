@@ -5,7 +5,7 @@ interface SidenavBaseProps {
 }
 
 /**
- * Props for the `Sidenav` root navigation shell.
+ * Props for the `Sidenav` component.
  */
 export interface SidenavProps extends SidenavBaseProps {
     /**
@@ -27,7 +27,7 @@ export interface SidenavProps extends SidenavBaseProps {
 }
 
 /**
- * Props for `Sidenav.Group` component.
+ * Props for the `Sidenav.Group` sub-component.
  */
 export interface SidenavGroupProps extends SidenavBaseProps {
     /**
@@ -45,7 +45,7 @@ export interface SidenavGroupProps extends SidenavBaseProps {
 }
 
 /**
- * Props for `Sidenav.Item` component.
+ * Props for the `Sidenav.Item` sub-component.
  */
 export interface SidenavItemProps extends SidenavBaseProps {
     /**
@@ -76,7 +76,7 @@ export interface SidenavItemProps extends SidenavBaseProps {
 }
 
 /**
- * Props for `Sidenav.DrawerItem`component.
+ * Props for the `Sidenav.DrawerItem` sub-component.
  */
 export interface SidenavDrawerItemProps extends SidenavBaseProps {
     /**
@@ -98,7 +98,7 @@ export interface SidenavDrawerItemProps extends SidenavBaseProps {
 }
 
 /**
- * Props for `Sidenav.DrawerSubitem` component.
+ * Props for the `Sidenav.DrawerSubitem` sub-component.
  */
 export interface SidenavDrawerSubitemProps extends SidenavBaseProps {
     /**

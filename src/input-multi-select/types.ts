@@ -13,7 +13,7 @@ import type {
 import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 
 /**
- * Props for `InputMultiSelect`.
+ * Props for the `InputMultiSelect` component.
  *
  * `T` is the option item type. `V` is the extracted value type used for
  * equality comparisons when a `valueExtractor` is provided.
@@ -40,17 +40,11 @@ export interface InputMultiSelectProps<T, V>
     onBlur?: (() => void) | undefined;
     /**
      * Controls the height of the trigger and dropdown items.
-     * - `"default"` — standard height
-     * - `"small"` — reduced height
      *
      * @default "default"
      */
     variant?: DropdownVariantType | undefined;
-    /**
-     * Aligns the dropdown relative to the trigger element.
-     * - `"left"` — dropdown left-aligns with the trigger
-     * - `"right"` — dropdown right-aligns with the trigger
-     */
+    /** Aligns the dropdown relative to the trigger element. */
     alignment?: DropdownAlignmentType | undefined;
     /** CSS `z-index` applied to the dropdown overlay. */
     dropdownZIndex?: number | undefined;

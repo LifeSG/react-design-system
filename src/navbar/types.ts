@@ -86,7 +86,7 @@ export interface NavbarActionButtonCtaProps {
 }
 
 /** Props for the internal `"component"` type action button wrapper. */
-export interface NavbarButtonComponentProps {
+interface NavbarButtonComponentProps {
     render: JSX.Element;
 }
 
@@ -253,7 +253,7 @@ export type NavbarDrawerApi = {
 export type NavbarDrawerHandle = HTMLDivElement & NavbarDrawerApi;
 
 /**
- * Props for rendering the main navigation bar in desktop and mobile layouts.
+ * Props for the `Navbar` component.
  */
 export interface NavbarProps<T = void> extends NavbarSharedProps {
     items: NavItemsProps<T>;

@@ -123,6 +123,36 @@ export interface NavbarProps {
 }
 ```
 
+### Type-level title scope
+
+Standardise the opening sentence format only for primary consumer-facing props
+interfaces:
+
+-   Main component props interfaces (for example `NavbarProps`, `FilterProps`)
+-   Public sub-component props interfaces (for example `FilterModalProps` for
+    `Filter.Modal`)
+
+Recommended opening sentences:
+
+-   `Props for the \`Component\` component.`
+-   `Props for the \`Parent.Child\` sub-component.`
+
+Do **not** enforce this exact title format for every exported interface. Shared
+helper/support types can keep descriptive titles that better match their role.
+
+### Type vs prop ownership
+
+When a prop is typed with a reusable local union/type alias (for example a
+variant or style type), document value-by-value semantics on the **type**
+alias, not on every prop that uses it.
+
+-   Type alias: own the option details (for example bullets for each literal)
+-   Prop comment: stay concise and add only local behavior (defaults,
+    constraints, interactions)
+
+Use prop-level value bullets only when the behavior is specific to that prop
+and is not generally true for all usages of the underlying type.
+
 ## Prop-level comments
 
 Add prop-level JSDoc only when the prop has behavior, fallback rules, accessibility meaning, or relationships with other props.
@@ -295,7 +325,12 @@ export interface ExampleProps {
 
 ### Params
 
-@param for public function-like APIs when the parameter needs explanation beyond its TypeScript type.
+Use `@param` for public function-like APIs when the parameter needs
+explanation beyond its TypeScript type.
+
+For callback props with meaningful payloads, prefer a dedicated `@param` entry
+instead of embedding payload details in a single sentence (for example,
+"Receives ...").
 
 ```tsx
 /**

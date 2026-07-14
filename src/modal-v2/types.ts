@@ -4,7 +4,7 @@
 export type ModalAnimationDirection = "top" | "bottom" | "left" | "right";
 
 /**
- * Props for the `ModalV2.Card` slot.
+ * Props for the `ModalV2.Card` sub-component.
  */
 export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
@@ -44,7 +44,7 @@ export interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /**
- * Props for `ModalV2`, the accessible dialog overlay component.
+ * Props for the `ModalV2` component.
  */
 export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;

@@ -1,5 +1,5 @@
 /**
- * Props for `SmartAppBanner`.
+ * Props for the `SmartAppBanner` component.
  */
 export interface SmartAppBannerProps {
     /**

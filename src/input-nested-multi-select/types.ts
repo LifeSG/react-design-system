@@ -17,7 +17,7 @@ export type InputNestedMultiSelectValues<V1, V2, V3> = Array<
 >;
 
 /**
- * Props for `InputNestedMultiSelect` component.
+ * Props for the `InputNestedMultiSelect` component.
  *
  * The three type parameters describe the value types at each nesting level.
  */

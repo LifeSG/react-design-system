@@ -1,5 +1,5 @@
 /**
- * Props for `ProgressIndicator` component.
+ * Props for the `ProgressIndicator` component.
  *
  * The type parameter `T` represents the shape of each step item in the
  * `steps` array.

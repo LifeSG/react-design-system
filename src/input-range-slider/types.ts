@@ -65,7 +65,7 @@ export interface BaseSliderProps {
 }
 
 /**
- * Props for `InputRangeSlider` component.
+ * Props for the `InputRangeSlider` component.
  */
 export interface InputRangeSliderProps extends BaseSliderProps {
     /**

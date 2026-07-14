@@ -23,4 +23,10 @@ export interface LabelContainerProps {
     children: React.ReactNode;
 }
 
+/**
+ * Horizontal alignment of the dropdown relative to its trigger.
+ *
+ * - `"left"` left-aligns the dropdown with the trigger.
+ * - `"right"` right-aligns the dropdown with the trigger.
+ */
 export type DropdownAlignmentType = "left" | "right";

@@ -48,7 +48,7 @@ export interface MaskAttributeProps {
 }
 
 /**
- * Props for `MaskedInput`.
+ * Props for the `MaskedInput` component.
  */
 export interface MaskedInputProps extends InputProps, MaskAttributeProps {
     value?: string | undefined;

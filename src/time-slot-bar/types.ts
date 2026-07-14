@@ -53,7 +53,7 @@ interface TimeSlotBarStyleAttributes {
 }
 
 /**
- * Props for `TimeSlotBar` component.
+ * Props for the `TimeSlotBar` component.
  */
 export interface TimeSlotBarProps {
     "data-testid"?: string | undefined;

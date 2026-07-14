@@ -68,18 +68,9 @@ export interface ListAddon<T, V>
      * @param extractedValue The value derived by `valueExtractor`, or the item itself when no extractor is provided.
      */
     onSelectOption?: ((option: T, extractedValue: T | V) => void) | undefined;
-    /**
-     * Indicates the async load state of the options list.
-     * - `"loading"` while fetching
-     * - `"fail"` on error (shows a call-to-action to retry)
-     * - `"success"` when ready.
-     */
+    /** Indicates the async load state of the options list. */
     optionsLoadState?: ItemsLoadStateType | undefined;
-    /**
-     * Controls how long option labels are truncated when they overflow.
-     * - `"middle"` trims the centre of the text
-     * - `"end"` trims from the right.
-     */
+    /** Controls how long option labels are truncated when they overflow. */
     optionTruncationType?: TruncateType | undefined;
     /** Called when the user activates the retry action while `optionsLoadState` is `"fail"`. */
     onRetry?: (() => void) | undefined;

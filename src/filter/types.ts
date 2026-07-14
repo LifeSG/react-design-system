@@ -65,7 +65,7 @@ export interface FilterBaseProps {
 }
 
 /**
- * Props for the desktop sidebar variant of the filter panel.
+ * Props for the `Filter.Sidebar` sub-component.
  */
 export interface FilterSidebarProps extends FilterBaseProps {
     /** Overrides default labels used by the sidebar variant. */
@@ -73,7 +73,7 @@ export interface FilterSidebarProps extends FilterBaseProps {
 }
 
 /**
- * Props for the mobile modal variant of the filter panel.
+ * Props for the `Filter.Modal` sub-component.
  */
 export interface FilterModalProps extends FilterBaseProps {
     /** Called when the dismiss (close) button is pressed in the modal overlay. */
@@ -98,7 +98,7 @@ export interface FilterModalProps extends FilterBaseProps {
 }
 
 /**
- * Props for the `Filter` component, combining both sidebar and modal variants.
+ * Props for the `Filter` component.
  */
 export interface FilterProps
     extends Omit<FilterSidebarProps, "customLabels">,
@@ -115,7 +115,7 @@ export interface FilterProps
 }
 
 /**
- * Props for a single collapsible filter section within a filter panel.
+ * Props for the `Filter.Item` sub-component.
  */
 export interface FilterItemProps {
     /**
@@ -185,10 +185,7 @@ export interface FilterItemProps {
 }
 
 /**
- * Props for a full-screen sub-page overlay within the mobile filter modal.
- *
- * `Filter.Page` provides a back-navigation header and a done button,
- * intended for drill-down selection flows inside a filter item.
+ * Props for the `Filter.Page` sub-component.
  */
 export interface FilterPageProps {
     "data-testid"?: string | undefined;
@@ -213,8 +210,7 @@ export interface FilterItemCheckboxOptionProps {
 }
 
 /**
- * Props for `Filter.Checkbox`, a filter item that renders a list of selectable
- * checkboxes (desktop) or toggle chips (mobile).
+ * Props for the `Filter.Checkbox` sub-component.
  *
  * Supply a generic type `T` to use a custom option shape together with
  * `labelExtractor` and `valueExtractor`.

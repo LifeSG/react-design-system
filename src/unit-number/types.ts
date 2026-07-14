@@ -39,8 +39,7 @@ export interface UnitNumberInputProps extends React.AriaAttributes {
     /**
      * Called when either sub-input changes.
      *
-     * @param value The raw individual field
-     * values as `[floor, unit]`.
+     * @param value The raw individual field values as `[floor, unit]`.
      */
     onChangeRaw?: ((value: string[]) => void) | undefined;
     /**
