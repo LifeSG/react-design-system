@@ -15,9 +15,17 @@ interface CalendarBaseProps extends CommonCalendarProps {
      * @default "bordered"
      */
     styleType?: "no-border" | "bordered" | undefined;
-    /** Called when a day cell is hovered. Receives the date in `YYYY-MM-DD` format. */
+    /**
+     * Called when a day cell is hovered.
+     *
+     * @param value The hovered date in `YYYY-MM-DD` format.
+     */
     onHover?: ((value: string) => void) | undefined;
-    /** Called when the visible month or year changes. */
+    /**
+     * Called when the visible month or year changes.
+     *
+     * @param value The updated visible year-month pair.
+     */
     onYearMonthDisplayChange?: ((value: YearMonthDisplay) => void) | undefined;
 }
 
@@ -33,10 +41,16 @@ export interface CalendarSingleProps extends CalendarBaseProps {
     variant?: "single" | undefined;
     /** Selected date in `YYYY-MM-DD` format */
     value?: string | undefined;
-    /** Called when the selected date changes. Receives the date in `YYYY-MM-DD` format. */
+    /**
+     * Called when the selected date changes.
+     *
+     * @param value The selected date in `YYYY-MM-DD` format.
+     */
     onChange?: ((value: string) => void) | undefined;
     /**
-     * Called when a date is selected. Receives the date in `YYYY-MM-DD` format.
+     * Called when a date is selected.
+     *
+     * @param value The selected date in `YYYY-MM-DD` format.
      * @deprecated Use `onChange` instead.
      */
     onSelect?: ((value: string) => void) | undefined;
@@ -55,7 +69,11 @@ export interface CalendarMultiProps extends CalendarBaseProps {
     minSelectable?: number | undefined;
     /** Maximum number of dates that can be selected */
     maxSelectable?: number | undefined;
-    /** Called when the selection changes. Receives all selected dates in `YYYY-MM-DD` format. */
+    /**
+     * Called when the selection changes.
+     *
+     * @param values The selected dates in `YYYY-MM-DD` format.
+     */
     onChange?: ((values: string[]) => void) | undefined;
 }
 

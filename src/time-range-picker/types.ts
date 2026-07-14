@@ -126,8 +126,10 @@ export interface TimeRangePickerProps {
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
 
     /**
-     * Called when a selection is made. Returns an object with `start` and
-     * `end` values as an empty string or a string based format.
+     * Called when the selected time range changes.
+     *
+     * @param value The current `start` and `end` time strings. Each field is
+     * either an empty string or a formatted time string based on `format`.
      */
     onChange?: ((value: TimeRangePickerValue) => void) | undefined;
     /**

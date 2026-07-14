@@ -68,9 +68,17 @@ export interface HistogramSliderProps {
      * `rangeLabelPrefix` and `rangeLabelSuffix` combination.
      */
     renderRangeLabel?: ((value: number) => React.ReactNode) | undefined;
-    /** Called on every selection change. Returns the value in the format `[start, end]` */
+    /**
+     * Called on every selection change.
+     *
+     * @param value The current selection as `[start, end]`.
+     */
     onChange?: ((value: [number, number]) => void) | undefined;
-    /** Called when a thumb is released after selection is complete. Returns the value in the format `[start, end]` */
+    /**
+     * Called when a thumb is released after selection is complete.
+     *
+     * @param value The settled selection as `[start, end]`.
+     */
     onChangeEnd?: ((value: [number, number]) => void) | undefined;
     /**
      * Rendered in place of the histogram and slider when all bins have a count

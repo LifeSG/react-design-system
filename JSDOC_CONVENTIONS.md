@@ -312,7 +312,12 @@ export interface ExampleProps {
 
 ### Params
 
-@param for public function-like APIs when the parameter needs explanation beyond its TypeScript type.
+Use `@param` for public function-like APIs when the parameter needs
+explanation beyond its TypeScript type.
+
+For callback props with meaningful payloads, prefer a dedicated `@param` entry
+instead of embedding payload details in a single sentence (for example,
+"Receives ...").
 
 ```tsx
 /**
