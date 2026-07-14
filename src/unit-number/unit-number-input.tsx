@@ -14,6 +14,12 @@ import * as styles from "./unit-number-input.styles";
 type FieldType = "floor" | "unit" | "none";
 type ValueFieldTypes = Exclude<FieldType, "none">;
 
+/**
+ * A two-field input for entering Singapore-style unit numbers in `floor-unit` format.
+ *
+ * Use `UnitNumberInput` when you need a structured unit number entry that splits
+ * floor and unit into separate fields.
+ */
 export const UnitNumberInput = ({
     disabled,
     error,
