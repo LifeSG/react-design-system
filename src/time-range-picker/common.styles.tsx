@@ -1,9 +1,9 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 import {
     BasicInput,
     InputWrapper,
 } from "../shared/input-wrapper/input-wrapper";
-import { Spacing } from "../theme";
+import { Colour, Spacing } from "../theme";
 
 // =============================================================================
 // STYLING
@@ -17,8 +17,16 @@ export const TimeContainer = styled(InputWrapper)`
     gap: ${Spacing["spacing-8"]};
 `;
 
-export const SelectorInput = styled(BasicInput)`
+export const SelectorInput = styled(BasicInput)<{
+    $disabled?: boolean | undefined;
+}>`
     display: block;
     width: 100%;
     flex: 1;
+    ${(props) =>
+        props.$disabled &&
+        css`
+            color: ${Colour["text-subtler"]};
+            cursor: not-allowed;
+        `}
 `;
