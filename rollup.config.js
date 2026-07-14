@@ -21,6 +21,7 @@ const fixCssImportPathsPlugin = createFixCssImportPathsPlugin({
 });
 const includeWebComponents = process.env.BUILD_WEB_COMPONENTS === "true";
 const includeVueComponents = process.env.BUILD_VUE_COMPONENTS === "true";
+const includeNativePorts = process.env.BUILD_NATIVE_PORTS === "true";
 const dirsToIgnore = new Set(["custom-types", "shared", "util", "__mocks__"]);
 
 const srcDir = "src";
@@ -78,12 +79,50 @@ const additionalExports = {
         : {}),
     ...(includeVueComponents
         ? {
-              "./vue": {
+              "./vue-veaury": {
                   types: "./vue-components.d.ts",
                   import: "./vue-components.js",
                   require: "./cjs/vue-components.js",
                   default: "./vue-components.js",
               },
+          }
+        : {}),
+    ...(includeNativePorts
+        ? {
+              "./svelte": {
+                  svelte: "./native/svelte/index.ts",
+                  import: "./native/svelte/index.ts",
+              },
+              "./vue": {
+                  import: "./native/vue/index.ts",
+              },
+              "./angular": {
+                  import: "./native/angular/index.ts",
+              },
+              "./react-native": {
+                  import: "./native/react-native/index.ts",
+              },
+              "./core/svelte": {
+                  svelte: "./native/core/svelte/index.ts",
+                  import: "./native/core/svelte/index.ts",
+              },
+              "./core/vue": {
+                  import: "./native/core/vue/index.ts",
+              },
+              "./core/angular": {
+                  import: "./native/core/angular/index.ts",
+              },
+              "./core/react-native": {
+                  import: "./native/core/react-native/index.ts",
+              },
+              "./core": {
+                  import: "./native/core/design-core/index.ts",
+              },
+              "./styles": {
+                  import: "./native/styles/index.ts",
+              },
+              "./styles/theme/*": "./native/styles/theme/*",
+              "./styles/styles.css": "./native/styles/styles.css",
           }
         : {}),
 };

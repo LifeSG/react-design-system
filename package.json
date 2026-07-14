@@ -18,12 +18,46 @@
             "require": "./dist/cjs/web-components.js",
             "default": "./dist/web-components.js"
         },
-        "./vue": {
+        "./vue-veaury": {
             "types": "./dist/vue-components.d.ts",
             "import": "./dist/vue-components.js",
             "require": "./dist/cjs/vue-components.js",
             "default": "./dist/vue-components.js"
-        }
+        },
+        "./svelte": {
+            "svelte": "./dist/native/svelte/index.ts",
+            "import": "./dist/native/svelte/index.ts"
+        },
+        "./vue": {
+            "import": "./dist/native/vue/index.ts"
+        },
+        "./angular": {
+            "import": "./dist/native/angular/index.ts"
+        },
+        "./react-native": {
+            "import": "./dist/native/react-native/index.ts"
+        },
+        "./core/svelte": {
+            "svelte": "./dist/native/core/svelte/index.ts",
+            "import": "./dist/native/core/svelte/index.ts"
+        },
+        "./core/vue": {
+            "import": "./dist/native/core/vue/index.ts"
+        },
+        "./core/angular": {
+            "import": "./dist/native/core/angular/index.ts"
+        },
+        "./core/react-native": {
+            "import": "./dist/native/core/react-native/index.ts"
+        },
+        "./core": {
+            "import": "./dist/native/core/design-core/index.ts"
+        },
+        "./styles": {
+            "import": "./dist/native/styles/index.ts"
+        },
+        "./styles/theme/*": "./dist/native/styles/theme/*",
+        "./styles/styles.css": "./dist/native/styles/styles.css"
     },
     "bin": {
         "lifesg-react-design-system": "./codemods/run-codemod.js"
@@ -33,6 +67,7 @@
         "rollup": "rm -rf dist && rollup -c",
         "build:web-components-lib": "node scripts/generate-wc-entries.mjs && BUILD_WEB_COMPONENTS=true npm run rollup && rm -f src/web-components.ts",
         "build:vue-components-lib": "node scripts/vue-components.mjs generate && BUILD_VUE_COMPONENTS=true npm run rollup && node scripts/vue-components.mjs clean",
+        "build:native-ports": "node scripts/build-native-ports.mjs && BUILD_NATIVE_PORTS=true npm run rollup",
         "build-lib": "./scripts/build.sh",
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
@@ -47,6 +82,7 @@
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
         "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
+        "examples": "node scripts/run-examples.mjs",
         "lint": "npm run lint:js && npm run lint:css",
         "lint:js": "eslint '**/*.{ts,tsx,js,jsx}' && npm --prefix e2e/nextjs-app run lint:src",
         "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix && npm --prefix e2e/nextjs-app run lint:src:fix",
