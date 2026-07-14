@@ -43,7 +43,7 @@ export interface FormLabelAddonProps {
     /**
      * Custom icon element.
      *
-     * @default `i-circle-fill` icon.
+     * @default <ICircleFillIcon />
      */
     icon?: JSX.Element | undefined;
     id?: string | undefined;
