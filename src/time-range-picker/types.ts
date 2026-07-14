@@ -5,7 +5,12 @@ import type { DropdownAlignmentType } from "../shared/dropdown-wrapper";
 /** Time display format: 12-hour clock or 24-hour clock. */
 export type TimeRangePickerFormat = "12hr" | "24hr";
 
-/** Picker interaction style: dial spinner input or scrollable combobox dropdowns. */
+/**
+ * Picker interaction style.
+ *
+ * - `"dial"` renders a dial spinner input picker.
+ * - `"combobox"` renders scrollable dropdowns with configurable intervals.
+ */
 export type TimeRangePickerVariant = "dial" | "combobox";
 
 /**
@@ -63,9 +68,6 @@ export interface TimeRangePickerProps {
     /**
      * The picker interaction style.
      *
-     * - `"dial"` renders a dial spinner input picker.
-     * - `"combobox"` renders scrollable dropdowns with configurable intervals.
-     *
      * @default "dial"
      */
     variant?: TimeRangePickerVariant | undefined;
@@ -104,8 +106,6 @@ export interface TimeRangePickerProps {
     initialScrollEndTime?: string | undefined;
     /**
      * Aligns the dropdown relative to the trigger element.
-     * - `"left"` — dropdown left-aligns with the trigger
-     * - `"right"` — dropdown right-aligns with the trigger
      *
      * @remarks Only applies when `variant` is `"combobox"`.
      */

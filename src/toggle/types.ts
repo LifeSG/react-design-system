@@ -1,7 +1,19 @@
-/** Controls selection behavior and the indicator icon rendered inside the toggle. */
+/**
+ * Controls selection behavior and the indicator icon rendered inside the
+ * toggle.
+ *
+ * - `"checkbox"` allows the user to deselect.
+ * - `"radio"`, `"yes"`, and `"no"` only allow selection; once selected,
+ *   they cannot be deselected.
+ */
 export type ToggleType = "checkbox" | "radio" | "yes" | "no";
 
-/** Visual border style applied to the toggle container. */
+/**
+ * Visual border style applied to the toggle container.
+ *
+ * - `"default"` renders the container with a visible border.
+ * - `"no-border"` renders without a border.
+ */
 export type ToggleStyleType = "default" | "no-border";
 
 /**
@@ -12,9 +24,6 @@ export interface ToggleProps
         React.DOMAttributes<HTMLInputElement> {
     /**
      * Determines selection behavior and the indicator icon style.
-     *
-     * - `"checkbox"` allows the user to deselect.
-     * - `"radio"`, `"yes"`, and `"no"` only allow selection, once selected they cannot be deselected
      *
      * @default "checkbox"
      */
@@ -35,9 +44,6 @@ export interface ToggleProps
     checked?: boolean | undefined;
     /**
      * Visual presentation of the toggle container.
-     *
-     * - `"default"` renders the container with a visible border.
-     * - `"no-border"` renders without a border.
      *
      * @default "default"
      */

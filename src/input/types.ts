@@ -2,6 +2,9 @@ import type React from "react";
 
 /**
  * Visual style variant for the `Input` component.
+ *
+ * - `"bordered"` wraps the input in a styled border container.
+ * - `"no-border"` omits the border wrapper.
  */
 export type InputStyleType = "no-border" | "bordered";
 
@@ -34,8 +37,6 @@ export interface InputProps
     "data-testid"?: string | undefined;
     /**
      * Visual style variant.
-     * - `"bordered"` wraps the input in a styled border container
-     * - `"no-border"` omits the border wrapper.
      *
      * @default "bordered"
      */

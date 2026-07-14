@@ -61,7 +61,12 @@ export interface NotificationBannerWithForwardedRefProps
     forwardedRef?: React.Ref<HTMLDivElement> | undefined;
 }
 
-/** Discriminant for `NotificationContentAttributes` content items. */
+/**
+ * Discriminant for `NotificationContentAttributes` content items.
+ *
+ * - `"text"` items are sanitized and injected as HTML paragraphs.
+ * - `"link"` items are rendered as `NotificationBanner.Link` elements.
+ */
 export type ContentType = "text" | "link";
 
 /** Props for a `"link"` content item inside a notification banner. */
@@ -73,11 +78,7 @@ export interface ContentTextAttributes extends TypographyProps {}
  * A single content item for use with `withNotificationBanner`.
  */
 export interface NotificationContentAttributes {
-    /**
-     * Determines how `content` is rendered inside the banner.
-     * - `"text"` items are sanitized and injected as HTML paragraphs
-     * - `"link"` items are rendered as `NotificationBanner.Link` elements
-     */
+    /** Determines how `content` is rendered inside the banner. */
     type: ContentType;
     /** The text string or link label to display. */
     content: string;

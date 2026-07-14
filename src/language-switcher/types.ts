@@ -3,16 +3,19 @@ import type React from "react";
 /** Code identifying a supported display language. */
 export type LanguageSwitcherCode = "en" | "zh" | "ms" | "ta";
 
-/** Presentation mode for the language switcher control. */
+/**
+ * Presentation mode for the language switcher control.
+ *
+ * - `"dropdown"` renders a compact select control.
+ * - `"link-container"` renders languages as inline links.
+ */
 export type LanguageSwitcherVariant = "dropdown" | "link-container";
 
 /** Props for the `LanguageSwitcher` component. */
 export interface LanguageSwitcherProps
     extends React.HTMLAttributes<HTMLDivElement> {
     /**
-     * Presentation mode
-     * - `"dropdown"` renders a compact select control
-     * - `"link-container"` renders languages as inline links
+     * Presentation mode.
      *
      * @default "dropdown"
      */

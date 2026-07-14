@@ -140,6 +140,19 @@ Recommended opening sentences:
 Do **not** enforce this exact title format for every exported interface. Shared
 helper/support types can keep descriptive titles that better match their role.
 
+### Type vs prop ownership
+
+When a prop is typed with a reusable local union/type alias (for example a
+variant or style type), document value-by-value semantics on the **type**
+alias, not on every prop that uses it.
+
+-   Type alias: own the option details (for example bullets for each literal)
+-   Prop comment: stay concise and add only local behavior (defaults,
+    constraints, interactions)
+
+Use prop-level value bullets only when the behavior is specific to that prop
+and is not generally true for all usages of the underlying type.
+
 ## Prop-level comments
 
 Add prop-level JSDoc only when the prop has behavior, fallback rules, accessibility meaning, or relationships with other props.

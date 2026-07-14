@@ -22,7 +22,10 @@ import type { TimepickerProps } from "../timepicker/types";
 import type { UnitNumberInputProps } from "../unit-number/types";
 
 /**
- * Determines whether a label addon renders as a tooltip or a popover overlay.
+ * Display mechanism for the form label addon.
+ *
+ * - `"popover"` renders an icon that triggers a popover.
+ * - `"tooltip"` is currently unsupported.
  */
 export type FormLabelAddonType = "tooltip" | "popover";
 
@@ -34,10 +37,7 @@ export interface FormLabelAddonProps {
     content: string | JSX.Element;
     /**
      * Display mechanism for the addon.
-     *
-     * - `"popover"` - renders an icon that triggers a popover
-     * - `"tooltip"` - currently unsupported
-     * - omitted - renders nothing
+     * Omit to render no addon icon.
      */
     type?: FormLabelAddonType | undefined;
     /**

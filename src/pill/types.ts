@@ -1,6 +1,11 @@
 import type React from "react";
 
-/** Visual style variant for `Pill`. */
+/**
+ * Visual style variant for `Pill`.
+ *
+ * - `"solid"` renders a filled background.
+ * - `"outline"` renders a border-only style.
+ */
 export type PillType = "outline" | "solid";
 
 /** Color theme for `Pill`. */
@@ -17,11 +22,7 @@ export type PillColorType =
  * Props for the `Pill` component.
  */
 export interface PillProps extends React.HTMLAttributes<HTMLDivElement> {
-    /**
-     * Controls the visual style
-     * - `solid` — filled background
-     * - `outline` — border-only.
-     */
+    /** Visual style variant for the pill. */
     type: PillType;
     /**
      * Color theme applied to the pill.
