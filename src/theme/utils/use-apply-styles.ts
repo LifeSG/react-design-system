@@ -1,9 +1,13 @@
 import type { CSSProperties, RefObject } from "react";
 
 import { useIsomorphicLayoutEffect } from "../../util";
-import type { CSSVariableKey } from "../types";
+import type { CSSVariableString } from "../types";
 
 type StyleValue = string | number | null | undefined;
+
+type ExtractCleanCSSVariableName<T extends string> =
+    T extends `var(${infer Name})` ? Name : never;
+type CSSVariableKey = ExtractCleanCSSVariableName<CSSVariableString>;
 
 /**
  * Style map accepted by `useApplyStyle`. Supports camelCase CSS properties,

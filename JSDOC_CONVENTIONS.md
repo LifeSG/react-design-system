@@ -2,7 +2,8 @@
 
 ## Purpose
 
-JSDoc should explain the public behavior of component APIs that TypeScript types alone cannot describe. We're using it for:
+JSDoc should explain the public behavior of component APIs that TypeScript types
+alone cannot describe. We're using it for:
 
 -   IntelliSense hover information
 -   Generated props documentation
@@ -99,7 +100,12 @@ export const Accordion = Object.assign(AccordionBase, {
 
 ## Type-level comments
 
-The first sentence should be understandable on its own, because it may be the only text shown in IntelliSense or generated documentation.
+The first sentence should be understandable on its own, because it may be the
+only text shown in IntelliSense or generated documentation.
+
+Write from the consumer's perspective. Describe what the type represents or
+what the consumer can do with it. Do not reference internal constant names,
+helper functions, or implementation details that are not part of the public API.
 
 ```tsx
 /**
@@ -155,7 +161,8 @@ and is not generally true for all usages of the underlying type.
 
 ## Prop-level comments
 
-Add prop-level JSDoc only when the prop has behavior, fallback rules, accessibility meaning, or relationships with other props.
+Add prop-level JSDoc only when the prop has behavior, fallback rules,
+accessibility meaning, or relationships with other props.
 
 ```tsx
 export interface NavbarProps<T = void> {

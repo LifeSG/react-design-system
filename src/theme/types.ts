@@ -12,6 +12,7 @@ import type {
     Spacing,
 } from "./tokens";
 
+/** All available theme names. */
 export const THEME_TYPES = [
     "a11y-playground",
     "bookingsg",
@@ -29,11 +30,20 @@ export const THEME_TYPES = [
     "supportgowhere",
 ] as const;
 
+/** Union of all supported theme names. */
 export type ThemeType = (typeof THEME_TYPES)[number];
+/**
+ * Colour mode accepted by `ThemeProvider`.
+ * — `"auto"` follows OS preference.
+ * - `"light"` light mode.
+ * - `"dark"` dark mode.
+ */
 export type ThemeMode = "light" | "dark" | "auto";
 
+/** Resolved colour mode. */
 export type ResolvedThemeMode = "light" | "dark";
 
+/** Available typography size presets. */
 export type FontSize =
     | "heading-xxl"
     | "heading-xl"
@@ -48,26 +58,39 @@ export type FontSize =
     | "form-label"
     | "form-description";
 
+/** Available typography weight presets. */
 export type FontWeight = "light" | "regular" | "semibold" | "bold";
 
+/** Accepted breakpoint CSS variable strings. */
 export type BreakpointCSSVariableString = ValueOf<typeof Breakpoint>;
+/** Accepted border CSS variable strings. */
 export type BorderCSSVariableString = ValueOf<typeof Border>;
+/** Accepted component-scoped CSS variable strings. */
 export type ComponentTokenCSSVariableString =
     | ValueOf<typeof ComponentToken.Animation>
     | ValueOf<typeof ComponentToken.Button>
     | ValueOf<typeof ComponentToken.Footer>
     | ValueOf<typeof ComponentToken.Navbar>;
+/** Accepted font CSS variable strings. */
 export type FontSpecCSSVariableString = ValueOf<typeof FontSpec>;
+/** Accepted motion CSS variable strings. */
 export type MotionCSSVariableString = ValueOf<typeof Motion>;
+/** Accepted primitive colour CSS variable strings. */
 export type PrimitiveColourCSSVariableString = ValueOf<typeof PrimitiveColours>;
+/** Accepted radius CSS variable strings. */
 export type RadiusCSSVariableString = ValueOf<typeof Radius>;
+/** Accepted semantic colour CSS variable strings. */
 export type SemanticColourCSSVariableString = ValueOf<typeof SemanticColours>;
+/** Accepted colour CSS variable strings. */
 export type ColourCSSVariableString =
     | PrimitiveColourCSSVariableString
     | SemanticColourCSSVariableString;
+/** Accepted shadow CSS variable strings. */
 export type ShadowCSSVariableString = ValueOf<typeof Shadow>;
+/** Accepted spacing and layout CSS variable strings. */
 export type SpacingCSSVariableString = ValueOf<typeof Spacing>;
 
+/** Union of all design-token CSS variable string literals. */
 export type CSSVariableString =
     | BreakpointCSSVariableString
     | BorderCSSVariableString
@@ -78,7 +101,3 @@ export type CSSVariableString =
     | RadiusCSSVariableString
     | ShadowCSSVariableString
     | SpacingCSSVariableString;
-
-type ExtractCleanCSSVariableName<T extends string> =
-    T extends `var(${infer Name})` ? Name : never;
-export type CSSVariableKey = ExtractCleanCSSVariableName<CSSVariableString>;
