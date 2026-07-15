@@ -11,7 +11,15 @@ interface UseDesignTokenOverrideOptions {
 
 /**
  * Resolves a design token's value in a specific theme mode,
- * defaulting to light mode regardless of the current theme mode.
+ * regardless of the current active mode.
+ *
+ * @param options.token The CSS variable token to resolve.
+ * @param options.mode The mode to resolve in.
+ *
+ * @returns The computed CSS value, or `undefined` when the theme element has
+ * not yet mounted.
+ *
+ * @default options.mode "light"
  */
 export const useDesignTokenOverride = ({
     token,

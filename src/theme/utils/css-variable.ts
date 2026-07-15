@@ -9,7 +9,10 @@ const CSS_PX_OR_REM_CAPTURE_PATTERN = /^(-?\d*\.?\d+)(px|rem)$/i;
 
 /**
  * Extracts an fds CSS variable name from raw token input.
- * Supports values like "var(--fds-breakpoint-sm-max)" and "--fds-breakpoint-sm-max".
+ * Supports values like `"var(--fds-breakpoint-sm-max)"` and `"--fds-breakpoint-sm-max"`.
+ *
+ * @returns The extracted `--fds-*` variable name, or `undefined` if the input
+ * does not contain a valid fds token.
  */
 export const extractFdsCssVariableName = (
     value: string | undefined
@@ -103,6 +106,9 @@ const mergeInlineCssVariables = (
 
 /**
  * Extracts inline token CSS custom properties from the theme element.
+ *
+ * @returns An object of `--fds-*` properties, or `{}` when the element is
+ * `null` or has no inline styles.
  */
 export const getInheritedInlineCssVariables = (
     themeElement: HTMLElement | null
@@ -116,7 +122,9 @@ export const getInheritedInlineCssVariables = (
 };
 
 /**
- * Convert a numeric value to a CSS unit string (e.g., 12 → "12px"). Returns null for non-numeric values.
+ * Convert a numeric value to a CSS unit string (e.g., `12` → `"12px"`).
+ *
+ * @returns The formatted string, or `null` for non-numeric values.
  */
 export const formatUnitValue = (
     value: unknown,

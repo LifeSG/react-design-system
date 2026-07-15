@@ -5,6 +5,10 @@ import type { CSSVariableKey } from "../types";
 
 type StyleValue = string | number | null | undefined;
 
+/**
+ * Style map accepted by `useApplyStyle`. Supports camelCase CSS properties,
+ * theme CSS variable keys, and arbitrary `--custom-property` names.
+ */
 export type ApplyStyleMap =
     | ({
           [K in keyof CSSStyleDeclaration]?: StyleValue;
@@ -15,8 +19,11 @@ export type ApplyStyleMap =
       })
     | CSSProperties;
 
-/** list of properties that expect units but can be provided as numbers through React style prop */
-const numericCssStyleProperties: (keyof CSSStyleDeclaration)[] = [
+/**
+ * List of properties that expect units but can be provided as
+ * numbers through React style prop
+ */
+const numericCssStyleProperties: Set<keyof CSSStyleDeclaration> = new Set([
     "width",
     "height",
     "top",
@@ -33,7 +40,7 @@ const numericCssStyleProperties: (keyof CSSStyleDeclaration)[] = [
     "paddingLeft",
     "paddingRight",
     "paddingBottom",
-];
+]);
 
 /**
  * Normalises standard CSS property names from camelCase to kebab-case
@@ -59,7 +66,7 @@ function normaliseCssProperty(key: string): string {
 function normaliseCssValue(key: string, value: string | number): string {
     if (
         typeof value === "number" &&
-        numericCssStyleProperties.includes(key as keyof CSSStyleDeclaration)
+        numericCssStyleProperties.has(key as keyof CSSStyleDeclaration)
     ) {
         return `${value}px`;
     }
@@ -69,7 +76,7 @@ function normaliseCssValue(key: string, value: string | number): string {
 
 /**
  * Hook to apply styles to a HTML DOM element. Use when you need to apply inline
- * styles but cannot use the inline React `style` prop due to strict CSP rules
+ * styles but cannot use the inline React `style` prop due to strict CSP rules.
  *
  * @param ref The HTML element to receive the styles
  * @param styles The styles to apply, in the same format as the React `style`

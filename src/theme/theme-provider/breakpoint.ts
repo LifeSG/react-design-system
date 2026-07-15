@@ -55,7 +55,7 @@ function getBreakpointRanges(sourceElement: HTMLElement) {
 
 const BREAKPOINT_CLASS_PREFIX = "fds-breakpoint-";
 
-export function applyBreakpointClasses(sourceElement: HTMLElement) {
+function applyBreakpointClasses(sourceElement: HTMLElement) {
     const body = document.body;
     const width = window.innerWidth;
 
