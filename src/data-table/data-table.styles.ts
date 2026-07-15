@@ -20,7 +20,12 @@ export const tokens = {
 // Layout
 // =============================================================================
 export const tableWrapper = css`
-    overflow: auto;
+    /* we separate the overflow styles so that sticky elements can still work
+       with horizontal scrolling on supported browsers
+       see: https://github.com/w3c/csswg-drafts/issues/12289 */
+    overflow-y: clip;
+    overflow-x: auto;
+
     display: flex;
     flex-direction: column;
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
@@ -34,6 +39,10 @@ export const tableWrapper = css`
         -ms-overflow-style: none; /* IE and Edge */
         scrollbar-width: none; /* Firefox */
     }
+`;
+
+export const tableWrapperScrollable = css`
+    overflow-y: auto;
 `;
 
 export const tableContainer = css`
