@@ -23,6 +23,7 @@ const getPseudoMediaQuerySpec = <T extends readonly string[]>(
     return spec;
 };
 
+/** CSS class-based pseudo media-query selectors keyed by breakpoint name. */
 export const MediaQuery = {
     MaxWidth: getPseudoMediaQuerySpec(MAX_WIDTH_BREAKPOINTS, "max"),
     MinWidth: getPseudoMediaQuerySpec(MIN_WIDTH_BREAKPOINTS, "min"),

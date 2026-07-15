@@ -2,7 +2,8 @@
 
 ## Purpose
 
-JSDoc should explain the public behavior of component APIs that TypeScript types alone cannot describe. We're using it for:
+JSDoc should explain the public behavior of component APIs that TypeScript types
+alone cannot describe. We're using it for:
 
 -   IntelliSense hover information
 -   Generated props documentation
@@ -99,7 +100,12 @@ export const Accordion = Object.assign(AccordionBase, {
 
 ## Type-level comments
 
-The first sentence should be understandable on its own, because it may be the only text shown in IntelliSense or generated documentation.
+The first sentence should be understandable on its own, because it may be the
+only text shown in IntelliSense or generated documentation.
+
+Write from the consumer's perspective. Describe what the type represents or
+what the consumer can do with it. Do not reference internal constant names,
+helper functions, or implementation details that are not part of the public API.
 
 ```tsx
 /**
@@ -155,7 +161,8 @@ and is not generally true for all usages of the underlying type.
 
 ## Prop-level comments
 
-Add prop-level JSDoc only when the prop has behavior, fallback rules, accessibility meaning, or relationships with other props.
+Add prop-level JSDoc only when the prop has behavior, fallback rules,
+accessibility meaning, or relationships with other props.
 
 ```tsx
 export interface NavbarProps<T = void> {
@@ -271,12 +278,44 @@ Recommended:
 -   `@default` when the default is enforced by code
 -   `@deprecated` with a migration path
 -   `@remarks` for important caveats or relationships
+-   `@returns` on hooks and utility functions when the return value needs
+    explanation beyond what the TypeScript signature conveys (e.g. `undefined`
+    edge cases, fallback behaviour).
 
 Avoid:
 
 -   `@returns` on interface properties
--   Tags that only repeat the type
+-   Tags that only restate the type or name
 -   Long explanations of internal implementation details
+
+### Returns
+
+Use `@returns` on hooks and utility functions when the return value needs
+explanation beyond what the TypeScript signature conveys.
+
+Good use cases:
+
+-   `undefined` or `null` edge cases (e.g. "returns `undefined` until the
+    provider mounts")
+-   Fallback behaviour (e.g. "defaults to `"lifesg"` when outside a provider")
+-   Non-obvious return shape (e.g. describing object properties returned by a
+    hook)
+
+Do not use `@returns` on interface properties or when it would only restate the
+return type.
+
+```tsx
+/**
+ * Resolves a design-token CSS variable to its computed string value.
+ *
+ * @param tokenName A `CSSVariableString` token, or `undefined` to skip.
+ * @returns The computed CSS value, or `undefined` when the provider has not
+ * yet mounted or `tokenName` is `undefined`.
+ */
+export const useDesignToken = (
+    tokenName: CSSVariableString | undefined
+): string | undefined => { ... };
+```
 
 ### Defaults
 

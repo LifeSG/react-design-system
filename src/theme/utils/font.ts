@@ -1,6 +1,6 @@
 import type { FontSize, FontWeight } from "../types";
 
-export interface FontDeclarationProperties {
+interface FontDeclarationProperties {
     "font-family": string;
     "font-variant": string;
     "font-size": string;

@@ -8,6 +8,15 @@ const isEmptyValue = (value: unknown) => {
     return value == null || value === "";
 };
 
+/**
+ * Resolves a design-token CSS variable to its computed string value within the
+ * nearest `ThemeProvider` scope.
+ *
+ * @param tokenName A `CSSVariableString` token (e.g. `Colour["text"]`), or
+ * `undefined` to skip resolution.
+ * @returns The computed CSS value, or `undefined` when the provider has not yet
+ * mounted or `tokenName` is `undefined`.
+ */
 export const useDesignToken = (
     tokenName: CSSVariableString | undefined
 ): string | undefined => {

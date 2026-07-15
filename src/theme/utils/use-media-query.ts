@@ -4,8 +4,9 @@ import { Breakpoint } from "../tokens/breakpoint";
 import { isTokenFromSet } from "./token-resolver";
 import { useResolvedTokenValue } from "./use-design-token";
 
-export type BreakpointName = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
-export type MaxWidthBreakpointName = Exclude<BreakpointName, "xxl">;
+/** Named width breakpoint identifier used for responsive width comparisons. */
+type BreakpointName = "xxs" | "xs" | "sm" | "md" | "lg" | "xl" | "xxl";
+type MaxWidthBreakpointName = Exclude<BreakpointName, "xxl">;
 type MinWidthBreakpointTokenKey = `${BreakpointName}-min`;
 type MaxWidthBreakpointTokenKey = `${MaxWidthBreakpointName}-max`;
 type WidthBreakpointTokenKey =
@@ -34,16 +35,28 @@ type MediaQueryFeature =
     | "scan"
     | "width";
 
-export type MediaQueryClauseValue = string | number | boolean;
+type MediaQueryClauseValue = string | number | boolean;
 
+/** A single media-query feature condition. */
 export interface MediaQueryClause {
     feature: MediaQueryFeature;
+    /**
+     * Value for the media-query feature.
+     *
+     * - A string or number emits `(feature: value)`.
+     * - `true` emits a bare feature clause (e.g. `(hover)`).
+     * - `false` or `undefined` omits the clause entirely.
+     */
     value: MediaQueryClauseValue | undefined;
 }
 
+/** Options for `useMediaQuery`. */
 export interface MediaQueryOptions {
+    /** Lower-bound breakpoint token. Viewport must be >= this width. */
     minWidth?: WidthBreakpointCSSVariableString;
+    /** Upper-bound breakpoint token. Viewport must be <= this width. */
     maxWidth?: WidthBreakpointCSSVariableString;
+    /** Extra feature conditions (e.g. `hover`, `orientation`) combined with `and`. */
     clauses?: MediaQueryClause[];
 }
 
@@ -103,11 +116,21 @@ const getMaxWidthBreakpointToken = (breakpoint: MaxWidthBreakpointName) => {
     return Breakpoint[`${breakpoint}-max`];
 };
 
+/**
+ * Returns `true` when the viewport width is at or above the named breakpoint.
+ *
+ * @param breakpoint Named breakpoint to compare against.
+ */
 export const useMinWidthMediaQuery = (breakpoint: BreakpointName) =>
     useMediaQuery({
         minWidth: getMinWidthBreakpointToken(breakpoint),
     });
 
+/**
+ * Returns `true` when the viewport width is at or below the named breakpoint.
+ *
+ * @param breakpoint Named breakpoint to compare against.
+ */
 export const useMaxWidthMediaQuery = (breakpoint: MaxWidthBreakpointName) =>
     useMediaQuery({
         maxWidth: getMaxWidthBreakpointToken(breakpoint),
@@ -172,6 +195,13 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
     return globalThis.window.matchMedia(queryString).matches;
 };
 
+/**
+ * Resolves a width breakpoint CSS variable token to its computed pixel string.
+ *
+ * @returns The resolved pixel value, falling back to default LifeSG breakpoint
+ * values when the theme element is not yet mounted, or `""` for unrecognised
+ * tokens.
+ */
 export const useResolvedBreakpointToken = (
     breakpointToken: WidthBreakpointCSSVariableString | undefined
 ): string => {
@@ -219,6 +249,14 @@ const useMatchMediaQuery = (
     return matches;
 };
 
+/**
+ * Reactive boolean hook that evaluates a media query built from width
+ * breakpoint tokens and optional custom feature clauses.
+ *
+ * @returns `true` when the query matches. When `window.matchMedia` is
+ * unavailable (SSR), defaults to `true` for min-width-only queries and
+ * `false` for max-width-only.
+ */
 export const useMediaQuery = (options: MediaQueryOptions): boolean => {
     const { minWidth, maxWidth, clauses = [] } = options;
     const normalizedMinWidth = useResolvedBreakpointToken(minWidth);
