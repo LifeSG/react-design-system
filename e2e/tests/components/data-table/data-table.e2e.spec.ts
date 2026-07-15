@@ -10,6 +10,7 @@ class StoryPage extends AbstractStoryPage {
             selectedCountLabel: Locator;
             clearSelectionButton: Locator;
             emptyView: Locator;
+            actionBar: Locator;
         };
         dataTable: Locator;
     };
@@ -27,6 +28,7 @@ class StoryPage extends AbstractStoryPage {
                 clearSelectionButton: page.getByRole("button", {
                     name: /Clear selection of/,
                 }),
+                actionBar: page.getByTestId("data-table-action-bar"),
             },
             dataTable: page.getByTestId("data-table"),
         };
@@ -46,6 +48,28 @@ class StoryPage extends AbstractStoryPage {
         return this.page.getByTestId(
             `data-table-header-${fieldKey}-arrow${direction}`
         );
+    }
+
+    public async scrollToTableEnd() {
+        await this.scrollWithWheelUntil({
+            scrollTarget: this.locators.dataTable,
+            maxAttempts: 10,
+            until: async () =>
+                this.page.evaluate(() => {
+                    const dataTable = document.querySelector(
+                        '[data-testid="data-table"]'
+                    );
+                    if (!dataTable) return false;
+
+                    const rect = dataTable.getBoundingClientRect();
+                    return (
+                        dataTable.scrollTop + rect.height >=
+                        dataTable.scrollHeight
+                    );
+                }),
+        });
+        // Move mouse away from the table to avoid hover effects
+        await this.page.mouse.move(0, 0);
     }
 }
 
@@ -268,71 +292,38 @@ test.describe("DataTable", () => {
     });
 
     test.describe("Action Bar", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("action-bar");
-        });
-
-        test("Default", async ({ story }) => {
-            const firstRowCheckbox = story.getRowCheckbox("1");
-            const secondRowCheckbox = story.getRowCheckbox("2");
-            const thirdRowCheckbox = story.getRowCheckbox("3");
-
-            await firstRowCheckbox.click();
-            await expect(
-                story.locators.internal.selectedCountLabel
-            ).toContainText("1 item selected");
-
-            await story.locators.internal.selectAllCheckbox.click();
-            await expect(
-                story.locators.internal.selectedCountLabel
-            ).toContainText("3 items selected");
-
-            await story.locators.internal.selectAllCheckbox.blur();
-
-            await compareScreenshot(story, "state");
-
-            await story.locators.internal.clearSelectionButton.click();
-
-            await expect(firstRowCheckbox).not.toBeChecked();
-            await expect(secondRowCheckbox).not.toBeChecked();
-            await expect(thirdRowCheckbox).not.toBeChecked();
-            await expect(
-                story.locators.internal.selectedCountLabel
-            ).not.toBeVisible();
-        });
-
-        test.describe("Overflow with Long Items", () => {
+        test.describe(() => {
             test.beforeEach(async ({ story }) => {
-                await story.init("action-bar-overflow-with-long-items");
+                await story.init("action-bar");
             });
 
-            test("Floating", async ({ story }) => {
+            test("Default", async ({ story }) => {
                 const firstRowCheckbox = story.getRowCheckbox("1");
+                const secondRowCheckbox = story.getRowCheckbox("2");
+                const thirdRowCheckbox = story.getRowCheckbox("3");
 
                 await firstRowCheckbox.click();
+                await expect(
+                    story.locators.internal.selectedCountLabel
+                ).toContainText("1 item selected");
 
-                // force scrolling to trigger the floating action bar
-                await story.page.mouse.wheel(0, 100);
-                await story.page.mouse.wheel(0, -100);
+                await story.locators.internal.selectAllCheckbox.click();
+                await expect(
+                    story.locators.internal.selectedCountLabel
+                ).toContainText("3 items selected");
 
-                await compareScreenshot(story, "state", {
-                    locator: story.locators.dataTable,
-                });
-            });
+                await story.locators.internal.selectAllCheckbox.blur();
 
-            test("Docking", async ({ story }) => {
-                const firstRowCheckbox = story.getRowCheckbox("1");
+                await compareScreenshot(story, "state");
 
-                await firstRowCheckbox.click();
+                await story.locators.internal.clearSelectionButton.click();
 
-                await story.scrollToEnd({
-                    scrollTarget: story.layout,
-                    maxAttempts: 30,
-                });
-
-                await compareScreenshot(story, "state", {
-                    locator: story.locators.dataTable,
-                });
+                await expect(firstRowCheckbox).not.toBeChecked();
+                await expect(secondRowCheckbox).not.toBeChecked();
+                await expect(thirdRowCheckbox).not.toBeChecked();
+                await expect(
+                    story.locators.internal.selectedCountLabel
+                ).not.toBeVisible();
             });
         });
 
@@ -371,6 +362,34 @@ test.describe("DataTable", () => {
             });
         });
 
+        test.describe("Overflow with Long Items", () => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("action-bar-overflow-with-long-items");
+            });
+
+            test("Floating", async ({ story }) => {
+                const firstRowCheckbox = story.getRowCheckbox("1");
+                await firstRowCheckbox.click();
+                await story.page.mouse.move(0, 0);
+
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.dataTable,
+                });
+            });
+
+            test("Docking", async ({ story }) => {
+                const firstRowCheckbox = story.getRowCheckbox("1");
+                await firstRowCheckbox.click();
+
+                await story.scrollToEnd({ scrollTarget: story.layout });
+                await story.page.mouse.move(0, 0);
+
+                await compareScreenshot(story, "state", {
+                    locator: story.locators.dataTable,
+                });
+            });
+        });
+
         test.describe("Overflow with Max Height", () => {
             test.beforeEach(async ({ story }) => {
                 await story.init("action-bar-overflow-with-max-height");
@@ -378,24 +397,103 @@ test.describe("DataTable", () => {
 
             test("Floating", async ({ story }) => {
                 const firstRowCheckbox = story.getRowCheckbox("1");
-
                 await firstRowCheckbox.click();
+                await story.page.mouse.move(0, 0);
 
-                // force scrolling to trigger the floating action bar
-                await story.page.mouse.wheel(0, 100);
-                await story.page.mouse.wheel(0, -100);
-
+                await expect(
+                    story.locators.internal.actionBar
+                ).toBeInViewport();
                 await compareScreenshot(story, "state");
             });
 
             test("Docking", async ({ story }) => {
                 const firstRowCheckbox = story.getRowCheckbox("1");
-
                 await firstRowCheckbox.click();
 
                 await story.page.keyboard.press("End");
+                await story.page.mouse.move(0, 0);
 
                 await compareScreenshot(story, "state");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("action-bar-partial-offscreen-at-top");
+            });
+
+            test("Partial offscreen at top", async ({ story }) => {
+                await story.scrollToEnd({ scrollTarget: { x: 0, y: 0 } });
+
+                await expect(
+                    story.locators.internal.actionBar
+                ).toBeInViewport();
+                await compareScreenshot(story, "floating", {
+                    fullscreen: true,
+                });
+
+                await story.scrollToTableEnd();
+
+                await expect(
+                    story.locators.internal.actionBar
+                ).toBeInViewport();
+                await compareScreenshot(story, "docking", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("action-bar-partial-offscreen-at-bottom");
+            });
+
+            test("Partial offscreen at bottom", async ({ story }) => {
+                await expect(
+                    story.locators.internal.actionBar
+                ).toBeInViewport();
+                await compareScreenshot(story, "floating", {
+                    fullscreen: true,
+                });
+
+                await story.scrollToTableEnd();
+
+                await expect(
+                    story.locators.internal.actionBar
+                ).toBeInViewport();
+                await compareScreenshot(story, "docking", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("action-bar-offscreen-top");
+            });
+
+            test("Fully offscreen at top", async ({ story }) => {
+                await story.scrollToEnd({ scrollTarget: { x: 0, y: 0 } });
+
+                await expect(story.locators.dataTable).not.toBeInViewport();
+                await expect(story.locators.internal.actionBar).toBeVisible();
+                await expect(
+                    story.locators.internal.actionBar
+                ).not.toBeInViewport();
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("action-bar-offscreen-bottom");
+            });
+
+            test("Fully offscreen at bottom", async ({ story }) => {
+                await expect(story.locators.dataTable).not.toBeInViewport();
+                await expect(story.locators.internal.actionBar).toBeVisible();
+                await expect(
+                    story.locators.internal.actionBar
+                ).not.toBeInViewport();
             });
         });
     });

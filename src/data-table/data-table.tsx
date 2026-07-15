@@ -549,6 +549,7 @@ export const DataTable = ({
                     data-strategy={actionBarStrategy}
                 >
                     <div
+                        data-testid="data-table-action-bar"
                         className={clsx(
                             styles.actionBar,
                             isFloatingActionBar && styles.actionBarFloating
