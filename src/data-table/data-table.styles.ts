@@ -25,6 +25,7 @@ export const tableWrapper = css`
        see: https://github.com/w3c/csswg-drafts/issues/12289 */
     overflow-y: clip;
     overflow-x: auto;
+    position: relative;
 
     display: flex;
     flex-direction: column;
@@ -206,6 +207,10 @@ export const actionBarButton = css`
     }
 `;
 
+export const actionBarSpacer = css`
+    height: 3.5rem;
+`;
+
 export const actionBar = css`
     overflow: hidden;
     display: flex;
@@ -228,18 +233,27 @@ export const actionBarFloating = css`
 `;
 
 export const actionBarWrapper = css`
-    bottom: 0;
-    position: sticky;
-    left: 0;
-`;
-
-export const actionBarWrapperFloating = css`
     ${tokens.actionBarWrapperLeft}: initial;
     ${tokens.actionBarWrapperWidth}: initial;
 
-    position: fixed;
-    left: var(${tokens.actionBarWrapperLeft}, 0px);
-    width: var(${tokens.actionBarWrapperWidth}, 100%);
+    &[data-strategy="inline"] {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: var(${tokens.actionBarWrapperWidth}, 100%);
+    }
+
+    &[data-strategy="fixed"] {
+        position: fixed;
+        bottom: 0;
+        left: var(${tokens.actionBarWrapperLeft}, 0px);
+        width: var(${tokens.actionBarWrapperWidth}, 100%);
+    }
+
+    &[data-strategy="sticky"] {
+        position: sticky;
+        bottom: 0;
+    }
 `;
 
 // =============================================================================
