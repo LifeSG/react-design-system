@@ -31,13 +31,11 @@ export const tableWrapper = css`
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["md"]};
 
-    // Hide scrollbar
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
     &::-webkit-scrollbar {
-        display: none;
-    }
-    * {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        display: none; /* Chrome/Safari/Webkit */
     }
 `;
 
@@ -216,7 +214,7 @@ export const actionBar = css`
     padding: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     background-color: ${Colour["bg-selected"]};
-    transition: all 300ms ease;
+    transition: transform ${Motion["duration-350"]} ${Motion["ease-default"]};
     border-radius: ${Radius["none"]} ${Radius["none"]} ${Radius["sm"]}
         ${Radius["sm"]};
 `;
