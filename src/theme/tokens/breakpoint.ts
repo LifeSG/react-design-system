@@ -1,3 +1,6 @@
+/**
+ * Responsive breakpoint tokens for each named breakpoint.
+ */
 export const Breakpoint = {
     "xxs-min": "var(--fds-breakpoint-xxs-min)",
     "xxs-max": "var(--fds-breakpoint-xxs-max)",
