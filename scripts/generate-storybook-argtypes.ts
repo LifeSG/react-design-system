@@ -17,10 +17,12 @@ import path from "node:path";
 import chokidar from "chokidar";
 import {
     type InterfaceDeclaration,
+    type Node,
     Project,
     type PropertySignature,
     type SourceFile,
     type Symbol as TsMorphSymbol,
+    type Type,
     type TypeAliasDeclaration,
     TypeFormatFlags,
 } from "ts-morph";
@@ -225,12 +227,68 @@ function cleanType(type: string) {
         .trim();
 }
 
+/**
+ * Expand literal unions when TypeScript can fully resolve the type.
+ *
+ * Example: `Exclude<FontSize, "form-label">` -> `"heading-xxl" | ...`.
+ */
+function getExpandedLiteralUnionText(type: Type, contextNode: Node) {
+    const nonNullableType = type.getNonNullableType();
+
+    if (!nonNullableType.isUnion()) {
+        return undefined;
+    }
+
+    const unionTypes = nonNullableType.getUnionTypes();
+    const hasOnlyLiterals = unionTypes.every(
+        (unionType) =>
+            unionType.isStringLiteral() ||
+            unionType.isNumberLiteral() ||
+            unionType.isBooleanLiteral()
+    );
+
+    if (!hasOnlyLiterals) {
+        return undefined;
+    }
+
+    return cleanType(
+        unionTypes
+            .map((unionType) => unionType.getText(contextNode, typeFormatFlags))
+            .join(" | ")
+    );
+}
+
+/** Resolve readable type text for generated argTypes summaries. */
+function getSummaryTypeText(
+    type: Type,
+    contextNode: Node,
+    fallbackText?: string
+) {
+    return (
+        getExpandedLiteralUnionText(type, contextNode) ||
+        cleanType(fallbackText ?? type.getText(contextNode, typeFormatFlags))
+    );
+}
+
 /** Resolve a property type to display in Storybook tables. */
 function getPropertyTypeText(property: PropertySignature) {
-    return cleanType(
-        property.getTypeNode()?.getText() ??
-            property.getType().getText(property, typeFormatFlags)
-    );
+    const typeNodeText = property.getTypeNode()?.getText();
+
+    // For props, keep declared aliases (e.g. `TextListSize`) so the table
+    // stays aligned with the public API surface seen by component consumers.
+    if (typeNodeText) {
+        return cleanType(typeNodeText);
+    }
+
+    // Fallback for declarations without an explicit type node (for example
+    // legacy/generated declarations like `foo?;`): rely on checker-resolved type.
+    const resolvedType = property.getType();
+
+    if (resolvedType.isAny() || resolvedType.isUnknown()) {
+        return "-";
+    }
+
+    return getSummaryTypeText(resolvedType, property);
 }
 
 /** List interface and type-alias section names from a source file. */
@@ -351,6 +409,37 @@ function getTypesFileForComponentDirectory(componentDirectory: string) {
     return existsSync(typesFilePath) ? typesFilePath : undefined;
 }
 
+/**
+ * Fallback: infer a component types.ts from the story file directory.
+ *
+ * Example: stories/text-list/*.stories.tsx -> src/text-list/types.ts.
+ */
+function getTypesFileFromStoryDirectory(storyFilePath: string) {
+    const storiesRoot = path.resolve("stories");
+    const relativeStoryDirectory = path.relative(
+        storiesRoot,
+        path.dirname(storyFilePath)
+    );
+
+    if (
+        !relativeStoryDirectory ||
+        relativeStoryDirectory.startsWith("..") ||
+        path.isAbsolute(relativeStoryDirectory)
+    ) {
+        return undefined;
+    }
+
+    const topLevelStoryDirectory = relativeStoryDirectory.split(path.sep)[0];
+
+    if (!topLevelStoryDirectory) {
+        return undefined;
+    }
+
+    return getTypesFileForComponentDirectory(
+        path.resolve("src", topLevelStoryDirectory)
+    );
+}
+
 /** Check whether a file path looks like a Storybook story file. */
 function isStoryFile(filePath: string) {
     return /(^|[\\/])stories[\\/].*\.stories\.(ts|tsx)$/.test(filePath);
@@ -380,31 +469,36 @@ async function generateStorybookArgTypesRegistry() {
         const title = getStoryTitle(fileText);
         const componentRootIdentifier = getComponentRootIdentifier(fileText);
 
-        if (!title || !componentRootIdentifier) {
+        if (!title) {
             continue;
         }
 
-        const importPath = getImportPathForIdentifier(
-            fileText,
-            componentRootIdentifier
-        );
+        let typesFilePath: string | undefined;
 
-        if (!importPath) {
-            continue;
+        if (componentRootIdentifier) {
+            const importPath = getImportPathForIdentifier(
+                fileText,
+                componentRootIdentifier
+            );
+
+            if (importPath) {
+                const componentSourcePath = resolveImportPath(
+                    storyFilePath,
+                    importPath
+                );
+
+                if (componentSourcePath) {
+                    const componentDirectory =
+                        getComponentDirectory(componentSourcePath);
+                    typesFilePath =
+                        getTypesFileForComponentDirectory(componentDirectory);
+                }
+            }
         }
 
-        const componentSourcePath = resolveImportPath(
-            storyFilePath,
-            importPath
-        );
-
-        if (!componentSourcePath) {
-            continue;
+        if (!typesFilePath) {
+            typesFilePath = getTypesFileFromStoryDirectory(storyFilePath);
         }
-
-        const componentDirectory = getComponentDirectory(componentSourcePath);
-        const typesFilePath =
-            getTypesFileForComponentDirectory(componentDirectory);
 
         if (!typesFilePath) {
             continue;
@@ -566,7 +660,11 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                         : undefined,
                     tabGroup: jsDocMeta.tabGroup,
                     type: {
-                        summary: cleanType(
+                        // For alias definitions, prefer expanded literal unions
+                        // when TypeScript can resolve them (e.g. `Exclude<...>`).
+                        summary: getSummaryTypeText(
+                            typeAlias.getType(),
+                            typeAlias,
                             typeAlias.getTypeNodeOrThrow().getText()
                         ),
                     },
