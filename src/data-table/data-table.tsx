@@ -10,8 +10,7 @@ import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { BasicButton } from "../shared/input-wrapper";
 import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
-import { useEvent, useId } from "../util";
-import { useEventListener } from "../util/use-event-listener";
+import { useEvent, useEventListener, useId, useThrottle } from "../util";
 import * as styles from "./data-table.styles";
 import type { DataTableProps, HeaderProps, RowProps } from "./types";
 
@@ -87,19 +86,22 @@ export const DataTable = ({
         useUpdateActionBarBehaviour();
     }, [useUpdateActionBarBehaviour]);
 
+    const updateActionBarBehaviourThrottled = useThrottle(
+        () => updateActionBarBehaviour(),
+        100
+    );
+
     useResizeDetector({
         targetRef: wrapperRef,
-        onResize: () => {
-            updateActionBarBehaviour();
-        },
+        onResize: () => updateActionBarBehaviourThrottled(),
     });
 
-    const scrollHandler = () => {
-        updateActionBarBehaviour();
-    };
-
-    useEventListener("scroll", scrollHandler);
-    useEventListener("scroll", scrollHandler, wrapperRef.current);
+    useEventListener("scroll", updateActionBarBehaviourThrottled);
+    useEventListener(
+        "scroll",
+        updateActionBarBehaviourThrottled,
+        wrapperRef.current
+    );
 
     // ===========================================================================
     // HELPER FUNCTIONS
