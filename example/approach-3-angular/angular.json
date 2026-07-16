@@ -19,7 +19,7 @@
                         "tsConfig": "tsconfig.json",
                         "styles": [
                             "node_modules/@lifesg/react-design-system/dist/native/styles/theme/lifesg.css",
-                            "node_modules/@lifesg/react-design-system/dist/native/styles/styles.css",
+                            "node_modules/@lifesg/react-design-system/dist/native/styles/linaria/styles.css",
                             "src/styles.css"
                         ]
                     }

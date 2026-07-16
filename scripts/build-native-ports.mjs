@@ -1,91 +1,41 @@
 /**
  * build-native-ports.mjs
  *
- * Copies native framework port source files into dist/native/ and rewrites
- * bare package imports (@lifesg/flagship-styles, @lifesg/design-core) to
- * relative paths so the dist tree is self-contained.
+ * Copies native framework port source files from src/native/ into dist/native/.
+ * Pre-compiles Linaria styles.ts files (hashed class strings + extracted CSS +
+ * .d.ts declarations). Injects theme CSS imports into web entry points.
  *
  * Usage:
  *   node scripts/build-native-ports.mjs
- *
- * Output structure:
- *   dist/native/
- *     styles/          ← @lifesg/flagship-styles source + CSS
- *     svelte/          ← approach-3 svelte port
- *     vue/             ← approach-3 vue port
- *     angular/         ← approach-3 angular port
- *     react-native/    ← approach-3 react-native port
- *     core/
- *       design-core/   ← shared logic layer
- *       svelte/        ← approach-4 svelte port
- *       vue/           ← approach-4 vue port
- *       angular/       ← approach-4 angular port
- *       react-native/  ← approach-4 react-native port
  */
 import fs from "node:fs";
 import path from "node:path";
+import { rollup } from "rollup";
+import wyw from "@wyw-in-js/rollup";
+import resolve from "@rollup/plugin-node-resolve";
+import { libStylePlugin } from "rollup-plugin-lib-style";
 
 const rootDir = process.cwd();
+const srcNative = path.join(rootDir, "src", "native");
 const distNative = path.join(rootDir, "dist", "native");
 
-// Source → dest mapping
 const COPY_MAP = [
-    // Shared styles (flagship-styles)
-    {
-        src: "native-ports/shared/src",
-        dest: "styles",
-    },
-    // Approach 3 ports
-    {
-        src: "native-ports/svelte/src",
-        dest: "svelte",
-    },
-    {
-        src: "native-ports/vue/src/components",
-        dest: "vue",
-    },
-    {
-        src: "native-ports/angular/src/app/components",
-        dest: "angular",
-    },
-    {
-        src: "native-ports/react-native/src",
-        dest: "react-native",
-    },
-    // Approach 4 design-core
-    {
-        src: "native-ports/shared-core/design-core/src",
-        dest: "core/design-core",
-    },
-    // Approach 4 ports
-    {
-        src: "native-ports/shared-core/ui/svelte/src",
-        dest: "core/svelte",
-    },
-    {
-        src: "native-ports/shared-core/ui/vue/src/components",
-        dest: "core/vue",
-    },
-    {
-        src: "native-ports/shared-core/ui/angular/src/app/components",
-        dest: "core/angular",
-    },
-    {
-        src: "native-ports/shared-core/ui/react-native/src",
-        dest: "core/react-native",
-    },
+    { src: "styles", dest: "styles" },
+    { src: "svelte", dest: "svelte" },
+    { src: "vue", dest: "vue" },
+    { src: "angular", dest: "angular" },
+    { src: "react-native", dest: "react-native" },
+    { src: "lit", dest: "lit" },
+    { src: "core", dest: "core" },
 ];
 
-// Also copy the flagship-styles dist CSS (for ./styles/theme/*.css consumption)
-const EXTRA_COPIES = [
-    {
-        src: "native-ports/shared/src/theme",
-        dest: "styles/theme",
-    },
-    {
-        src: "native-ports/shared/dist/index.css",
-        dest: "styles/styles.css",
-    },
+const THEME_IMPORT_ENTRIES = [
+    { path: "svelte/index.ts", import: "../styles/theme/lifesg.css" },
+    { path: "vue/index.ts", import: "../styles/theme/lifesg.css" },
+    { path: "lit/index.ts", import: "../styles/theme/lifesg.css" },
+    { path: "core/svelte/index.ts", import: "../../styles/theme/lifesg.css" },
+    { path: "core/vue/index.ts", import: "../../styles/theme/lifesg.css" },
+    { path: "core/lit/index.ts", import: "../../styles/theme/lifesg.css" },
 ];
 
 // =============================================================================
@@ -105,108 +55,155 @@ function copyDirRecursive(srcDir, destDir) {
     }
 }
 
-function copyFile(src, dest) {
-    fs.mkdirSync(path.dirname(dest), { recursive: true });
-    fs.copyFileSync(src, dest);
-}
-
-/**
- * Rewrite @lifesg/flagship-styles and @lifesg/design-core imports to relative paths.
- * The relative path depends on where the file sits within dist/native/.
- */
-function rewriteImports(filePath, relativeToNative) {
-    const ext = path.extname(filePath);
-    if (![".ts", ".tsx", ".js", ".svelte", ".vue"].includes(ext)) return;
-
-    let content = fs.readFileSync(filePath, "utf-8");
-    let changed = false;
-
-    // Calculate relative path from this file's directory to dist/native/styles/
-    const fileDir = path.dirname(relativeToNative);
-    const toStyles = path.relative(fileDir, "styles") || ".";
-    const toDesignCore = path.relative(fileDir, "core/design-core") || ".";
-
-    // Rewrite @lifesg/flagship-styles → relative to styles/
-    const stylesRegex = /from\s+["']@lifesg\/flagship-styles["']/g;
-    if (stylesRegex.test(content)) {
-        content = content.replace(
-            /from\s+["']@lifesg\/flagship-styles["']/g,
-            `from "${toStyles.startsWith(".") ? toStyles : "./" + toStyles}"`
-        );
-        changed = true;
-    }
-
-    // Rewrite @lifesg/design-core → relative to core/design-core/
-    const coreRegex = /from\s+["']@lifesg\/design-core["']/g;
-    if (coreRegex.test(content)) {
-        content = content.replace(
-            /from\s+["']@lifesg\/design-core["']/g,
-            `from "${
-                toDesignCore.startsWith(".")
-                    ? toDesignCore
-                    : "./" + toDesignCore
-            }"`
-        );
-        changed = true;
-    }
-
-    if (changed) {
-        fs.writeFileSync(filePath, content, "utf-8");
-    }
-}
-
-function rewriteDir(dirPath, baseRelative) {
-    for (const entry of fs.readdirSync(dirPath, { withFileTypes: true })) {
-        const fullPath = path.join(dirPath, entry.name);
-        const relative = path.join(baseRelative, entry.name);
+function findFiles(dir, ext) {
+    const results = [];
+    for (const entry of fs.readdirSync(dir, { withFileTypes: true })) {
+        const fullPath = path.join(dir, entry.name);
         if (entry.isDirectory()) {
-            rewriteDir(fullPath, relative);
-        } else {
-            rewriteImports(fullPath, relative);
+            results.push(...findFiles(fullPath, ext));
+        } else if (entry.name.endsWith(ext)) {
+            results.push(fullPath);
         }
     }
+    return results;
+}
+
+// =============================================================================
+// Pre-compile Linaria styles.ts → hashed class strings + extracted CSS
+// =============================================================================
+
+async function precompileLinaria() {
+    const linariaDir = path.join(distNative, "styles", "linaria");
+    if (!fs.existsSync(linariaDir)) return;
+
+    const styleFiles = findFiles(linariaDir, ".styles.ts");
+    if (styleFiles.length === 0) return;
+
+    console.log("  Pre-compiling Linaria styles...");
+
+    const bundle = await rollup({
+        input: styleFiles,
+        plugins: [
+            resolve({ extensions: [".ts", ".js"] }),
+            wyw({ sourceMap: false, preprocessor: "none" }),
+            libStylePlugin({ scopedName: "[local]" }),
+        ],
+        external: (id) =>
+            !id.startsWith(".") &&
+            !id.startsWith("/") &&
+            id !== "@linaria/core",
+    });
+
+    const { output } = await bundle.generate({
+        dir: linariaDir,
+        format: "es",
+        preserveModules: true,
+        preserveModulesRoot: linariaDir,
+    });
+
+    let collectedCSS = "";
+
+    for (const chunk of output) {
+        if (chunk.type === "asset" && chunk.fileName.endsWith(".css")) {
+            collectedCSS += chunk.source + "\n";
+        } else if (chunk.type === "chunk") {
+            const outPath = path.join(linariaDir, chunk.fileName);
+            fs.mkdirSync(path.dirname(outPath), { recursive: true });
+            const code = chunk.code.replace(
+                /^import ['"].*\.css['"];\n?/gm,
+                ""
+            );
+            fs.writeFileSync(outPath, code, "utf-8");
+
+            const tsPath = outPath.replace(/\.js$/, ".ts");
+            if (tsPath !== outPath && fs.existsSync(tsPath)) {
+                fs.unlinkSync(tsPath);
+            }
+        }
+    }
+
+    if (collectedCSS) {
+        fs.writeFileSync(
+            path.join(linariaDir, "styles.css"),
+            collectedCSS,
+            "utf-8"
+        );
+        console.log(`    Extracted CSS → styles/linaria/styles.css`);
+    }
+
+    // Update barrel index: .styles.ts → .styles.js (keep as .ts for TypeScript resolution)
+    const indexPath = path.join(linariaDir, "index.ts");
+    if (fs.existsSync(indexPath)) {
+        let content = fs.readFileSync(indexPath, "utf-8");
+        content = content.replace(/\.styles(\.ts)?"/g, '.styles.js"');
+        fs.writeFileSync(indexPath, content, "utf-8");
+    }
+
+    // Generate .d.ts files for each compiled .styles.js
+    const jsFiles = findFiles(linariaDir, ".styles.js");
+    for (const jsFile of jsFiles) {
+        const code = fs.readFileSync(jsFile, "utf-8");
+        const exports = [...code.matchAll(/(?:export \{ (.+?) \}|const (\w+) )/g)];
+        const names = new Set();
+        for (const m of exports) {
+            if (m[1]) {
+                m[1].split(",").forEach((n) => names.add(n.trim()));
+            } else if (m[2]) {
+                names.add(m[2]);
+            }
+        }
+        const dts = [...names]
+            .map((name) => `export declare const ${name}: string;`)
+            .join("\n") + "\n";
+        fs.writeFileSync(jsFile.replace(/\.js$/, ".d.ts"), dts, "utf-8");
+    }
+
+    await bundle.close();
+    console.log(`    Compiled ${styleFiles.length} style files`);
 }
 
 // =============================================================================
 // Main
 // =============================================================================
 
-console.log("Building native ports into dist/native/...");
-
-// Clean previous output
-if (fs.existsSync(distNative)) {
-    fs.rmSync(distNative, { recursive: true });
-}
+console.log("Building native ports from src/native/ into dist/native/...");
 
 // Copy all port sources
 for (const { src, dest } of COPY_MAP) {
-    const srcPath = path.join(rootDir, src);
+    const srcPath = path.join(srcNative, src);
     const destPath = path.join(distNative, dest);
     if (!fs.existsSync(srcPath)) {
-        console.warn(`  SKIP (not found): ${src}`);
+        console.warn(`  SKIP (not found): src/native/${src}`);
         continue;
     }
-    console.log(`  ${src} → dist/native/${dest}`);
+    console.log(`  src/native/${src} → dist/native/${dest}`);
     copyDirRecursive(srcPath, destPath);
 }
 
-// Extra copies (theme CSS, built CSS)
-for (const { src, dest } of EXTRA_COPIES) {
-    const srcPath = path.join(rootDir, src);
-    const destPath = path.join(distNative, dest);
-    if (!fs.existsSync(srcPath)) {
-        console.warn(`  SKIP (not found): ${src}`);
-        continue;
-    }
-    if (fs.statSync(srcPath).isDirectory()) {
-        copyDirRecursive(srcPath, destPath);
-    } else {
-        copyFile(srcPath, destPath);
-    }
+// Pre-compile Linaria styles
+await precompileLinaria();
+
+// Inject linaria CSS import into styles/index.ts
+const stylesIndex = path.join(distNative, "styles", "index.ts");
+if (fs.existsSync(stylesIndex)) {
+    const content = fs.readFileSync(stylesIndex, "utf-8");
+    fs.writeFileSync(
+        stylesIndex,
+        `import "./linaria/styles.css";\n${content}`,
+        "utf-8"
+    );
 }
 
-// Rewrite bare package imports to relative paths
-console.log("  Rewriting imports...");
-rewriteDir(distNative, "");
+// Prepend theme CSS import to web entry points
+console.log("  Injecting theme CSS imports...");
+for (const { path: entryPath, import: cssImport } of THEME_IMPORT_ENTRIES) {
+    const fullPath = path.join(distNative, entryPath);
+    if (!fs.existsSync(fullPath)) {
+        console.warn(`    SKIP (not found): ${entryPath}`);
+        continue;
+    }
+    const content = fs.readFileSync(fullPath, "utf-8");
+    fs.writeFileSync(fullPath, `import "${cssImport}";\n${content}`, "utf-8");
+}
 
 console.log("Done. Output: dist/native/");

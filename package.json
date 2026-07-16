@@ -56,8 +56,7 @@
         "./styles": {
             "import": "./dist/native/styles/index.ts"
         },
-        "./styles/theme/*": "./dist/native/styles/theme/*",
-        "./styles/styles.css": "./dist/native/styles/styles.css"
+        "./styles/theme/*": "./dist/native/styles/theme/*"
     },
     "bin": {
         "lifesg-react-design-system": "./codemods/run-codemod.js"
@@ -67,7 +66,7 @@
         "rollup": "rm -rf dist && rollup -c",
         "build:web-components-lib": "node scripts/generate-wc-entries.mjs && BUILD_WEB_COMPONENTS=true npm run rollup && rm -f src/web-components.ts",
         "build:vue-components-lib": "node scripts/vue-components.mjs generate && BUILD_VUE_COMPONENTS=true npm run rollup && node scripts/vue-components.mjs clean",
-        "build:native-ports": "node scripts/build-native-ports.mjs && BUILD_NATIVE_PORTS=true npm run rollup",
+        "build:native-ports": "rm -rf dist && node scripts/build-native-ports.mjs && BUILD_NATIVE_PORTS=true rollup -c",
         "build-lib": "./scripts/build.sh",
         "publish-lib": "npm publish ./dist",
         "start": "rollup -c -w",
@@ -234,8 +233,8 @@
         "e2e/nextjs-app/src/**/*.{ts,tsx,js,jsx}": [
             "npm --prefix e2e/nextjs-app run lint:staged:fix --"
         ],
-        "!(native-ports)/**/*.{css,module.css}": [
-            "stylelint --fix"
+        "*.{css,module.css}": [
+            "stylelint --fix --allow-empty-input"
         ]
     }
 }

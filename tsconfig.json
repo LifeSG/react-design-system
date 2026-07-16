@@ -35,5 +35,5 @@
         "stories",
         "codemods"
     ],
-    "exclude": ["node_modules", "rollup.config.js"]
+    "exclude": ["node_modules", "rollup.config.js", "src/native"]
 }
