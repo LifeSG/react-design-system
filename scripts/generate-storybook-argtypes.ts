@@ -78,9 +78,56 @@ function getTagCommentText(tag: { getCommentText: () => string | undefined }) {
     return typeof comment === "string" ? comment.trim() : undefined;
 }
 
+/** Collect normalized leading non-JSDoc comment texts for a node. */
+function getLeadingNonJsDocComments(
+    node: InterfaceDeclaration | TypeAliasDeclaration
+) {
+    return node
+        .getLeadingCommentRanges()
+        .map((commentRange) => commentRange.getText())
+        .filter((rawText) => !rawText.startsWith("/**"))
+        .map((rawText) =>
+            rawText
+                .replace(/^\/\//gm, "")
+                .replace(/^\/\*|\*\/$/g, "")
+                .trim()
+        )
+        .filter(Boolean);
+}
+
+/** Parse `@storybookSection ...` from leading non-JSDoc comments. */
+function getStorybookSectionFromLeadingComment(
+    node: InterfaceDeclaration | TypeAliasDeclaration
+) {
+    const marker = "@storybookSection";
+
+    for (const comment of getLeadingNonJsDocComments(node)) {
+        const markerIndex = comment.indexOf(marker);
+
+        if (markerIndex >= 0) {
+            const section = comment.slice(markerIndex + marker.length).trim();
+
+            return section || undefined;
+        }
+    }
+
+    return undefined;
+}
+
+/** Return `true` when a leading non-JSDoc comment includes skip marker text. */
+function hasSkipTag(node: InterfaceDeclaration | TypeAliasDeclaration) {
+    for (const comment of getLeadingNonJsDocComments(node)) {
+        if (/@?storybookSkipProps\b/.test(comment)) {
+            return true;
+        }
+    }
+
+    return false;
+}
+
 /**
  * Collect supported JSDoc metadata tags for Storybook mapping.
- * Supported tags: "@deprecated, @default, @remarks, @example, @storybookSection".
+ * Supported tags: "@deprecated, @default, @remarks, @example".
  */
 function getJsDocMeta(
     node: InterfaceDeclaration | PropertySignature | TypeAliasDeclaration
@@ -103,7 +150,6 @@ function getJsDocMeta(
     let defaultValue: string | undefined;
     const remarks: string[] = [];
     const examples: string[] = [];
-    let tabGroup: string | undefined;
 
     for (const tag of tags) {
         const tagName = tag.getTagName();
@@ -130,11 +176,15 @@ function getJsDocMeta(
             examples.push(comment);
             continue;
         }
-
-        if (tagName === "storybookSection" && comment) {
-            tabGroup = comment;
-        }
     }
+
+    const tabGroup =
+        node.getKindName() === "InterfaceDeclaration" ||
+        node.getKindName() === "TypeAliasDeclaration"
+            ? getStorybookSectionFromLeadingComment(
+                  node as InterfaceDeclaration | TypeAliasDeclaration
+              )
+            : undefined;
 
     return {
         description,
@@ -144,16 +194,6 @@ function getJsDocMeta(
         examples: examples.length > 0 ? examples : undefined,
         tabGroup,
     };
-}
-
-/** Return `true` if the node is tagged with `@storybookSkipProps`. */
-function hasSkipTag(
-    node: InterfaceDeclaration | TypeAliasDeclaration
-): boolean {
-    return node
-        .getJsDocs()
-        .flatMap((doc) => doc.getTags())
-        .some((tag) => tag.getTagName() === "storybookSkipProps");
 }
 
 /** Build a Storybook-friendly description string from parsed JSDoc metadata. */
