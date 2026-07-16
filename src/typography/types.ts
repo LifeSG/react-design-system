@@ -1,3 +1,5 @@
+// @storybookSkipFile
+
 import type { FontSize } from "../theme";
 
 /** Font weight variant applied to a typography element. */
