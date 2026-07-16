@@ -146,6 +146,16 @@ function getJsDocMeta(
     };
 }
 
+/** Return `true` if the node is tagged with `@storybookSkipProps`. */
+function hasSkipTag(
+    node: InterfaceDeclaration | TypeAliasDeclaration
+): boolean {
+    return node
+        .getJsDocs()
+        .flatMap((doc) => doc.getTags())
+        .some((tag) => tag.getTagName() === "storybookSkipProps");
+}
+
 /** Build a Storybook-friendly description string from parsed JSDoc metadata. */
 function toStorybookDescription(meta: JsDocMeta) {
     const blocks: string[] = [];
@@ -526,11 +536,23 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
     }
 
     const rows = typeSections.flatMap((typeName) => {
-        if (sourceFile.getInterface(typeName)) {
+        const interfaceDeclaration = sourceFile.getInterface(typeName);
+
+        if (interfaceDeclaration) {
+            if (hasSkipTag(interfaceDeclaration)) {
+                return [];
+            }
+
             return getInterfaceArgTypes(typeName);
         }
 
-        if (sourceFile.getTypeAlias(typeName)) {
+        const typeAlias = sourceFile.getTypeAlias(typeName);
+
+        if (typeAlias) {
+            if (hasSkipTag(typeAlias)) {
+                return [];
+            }
+
             return [getTypeAliasArgType(typeName)];
         }
 
