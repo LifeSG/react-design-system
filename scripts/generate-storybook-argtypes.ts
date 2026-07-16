@@ -450,8 +450,22 @@ function isTypesFile(filePath: string) {
     return /(^|[\\/])types\.ts$/.test(filePath);
 }
 
-/**
- * Generate the global Storybook registry mapping story titles to argTypes.
+/** * Return `true` when the source file has a `@storybookSkipFile` marker comment.
+ *
+ * Place `// @storybookSkipFile` anywhere near the top of a `types.ts` file to
+ * exclude the entire file from argTypes generation.
+ */
+function isSkippedFile(sourceFile: SourceFile) {
+    const fullText = sourceFile.getFullText();
+    const firstStatement = sourceFile.getStatements()[0];
+    const textBeforeFirstStatement = firstStatement
+        ? fullText.slice(0, firstStatement.getStart())
+        : fullText;
+
+    return /^\s*\/\/[^\n]*@storybookSkipFile\b/m.test(textBeforeFirstStatement);
+}
+
+/** * Generate the global Storybook registry mapping story titles to argTypes.
  *
  * Scans all story files to extract story titles and their associated component
  * types, then emits `.storybook/generated/storybook-argtypes.generated.ts`
@@ -504,6 +518,12 @@ async function generateStorybookArgTypesRegistry() {
             continue;
         }
 
+        const typesSourceFile = getSourceFile(project, typesFilePath);
+
+        if (isSkippedFile(typesSourceFile)) {
+            continue;
+        }
+
         const outputFile = getOutputFile(typesFilePath);
         const exportName = getExportName(typesFilePath);
         const importAlias = exportName.replace(
@@ -553,6 +573,11 @@ ${mapRows.sort().join("\n")}
  */
 async function generateForSourceFile(project: Project, sourceFilePath: string) {
     const sourceFile = getSourceFile(project, sourceFilePath);
+
+    if (isSkippedFile(sourceFile)) {
+        return;
+    }
+
     const outputFile = getOutputFile(sourceFilePath);
     const exportName = getExportName(sourceFilePath);
     const typeSections = getTypeSections(sourceFile);
