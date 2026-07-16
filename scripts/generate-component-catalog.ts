@@ -4,25 +4,40 @@ import path from "node:path";
 
 import { Project, type SourceFile } from "ts-morph";
 
+// =============================================================================
+// Types
+// =============================================================================
+
+type Component = {
+    name: string;
+    importPath: string;
+    description: string;
+    keywords: string[];
+};
+
+// =============================================================================
+// Constants
+// =============================================================================
+
 const ROOT_DIR = path.resolve(__dirname, "..");
 const SRC_DIR = path.join(ROOT_DIR, "src");
-const OUTPUT_PATH = path.join(ROOT_DIR, "component-catalog.json");
+const OUTPUT_PATH = path.join(ROOT_DIR, "docs", "component-catalog.json");
 
-/** Create a ts-morph project using the repo tsconfig. */
-function createProject() {
-    return new Project({
-        tsConfigFilePath: path.resolve(ROOT_DIR, "tsconfig.json"),
-    });
-}
+// =============================================================================
+// Helpers
+// =============================================================================
 
-/** Parse src/index.ts to discover all re-exported module names.
- *  - Read export declarations like `export * from "./accordion"`
- *  - Extract the module folder name from the specifier (strip leading "./")
- *  - Deduplicate and sort alphabetically
- */
-function parseExportedModules(_sourceFile: SourceFile): string[] {
-    // TODO: implement
-    return [];
+function getExportedModules(sourceFile: SourceFile): string[] {
+    const modules = new Set<string>();
+
+    for (const exportDeclaration of sourceFile.getExportDeclarations()) {
+        const moduleSpecifier = exportDeclaration.getModuleSpecifierValue();
+        // e.g. of moduleSpecifier: "./accordion", "./alert", etc.
+        if (moduleSpecifier && moduleSpecifier.startsWith("./")) {
+            modules.add(moduleSpecifier.slice(2));
+        }
+    }
+    return [...modules].sort((a, b) => a.localeCompare(b));
 }
 
 /** Parse a module's index.ts to collect all named exported symbols.
@@ -50,16 +65,19 @@ function inferMainName(
 /** Extract metadata from source files (description + searchKeys).
  *  - Look in candidate files: <moduleName>.tsx, <moduleName>.ts, types.ts
  *  - Description: first JSDoc block's main comment text (stop at first @tag)
- *  - searchKeys: @keywords tag value split by comma, trimmed, sorted
- *  - Return { description, searchKeys } from the first file that has either
+ *  - keywords: @keywords tag value split by comma, trimmed, sorted
+ *  - Return { description, keywords } from the first file that has either
  */
 function extractSourceMetadata(
     _moduleDir: string,
     _moduleName: string
-): { description: string; searchKeys: string[] } {
+): { description: string; keywords: string[] } {
     // TODO: implement
-    return { description: "", searchKeys: [] };
+    return { description: "", keywords: [] };
 }
+// =============================================================================
+// Main
+// =============================================================================
 
 /** Assemble the catalog and write the output JSON file.
  *  - Shape: { meta: { packageName, totalModules }, components: [...] }
@@ -74,8 +92,8 @@ async function buildAndWriteCatalog(project: Project) {
         throw new Error(`Could not find source file: ${srcIndexPath}`);
     }
 
-    const modules = parseExportedModules(srcIndexFile);
-    const components = [];
+    const modules = getExportedModules(srcIndexFile);
+    const components: Component[] = [];
 
     for (const moduleName of modules) {
         const moduleDir = path.join(SRC_DIR, moduleName);
@@ -94,7 +112,7 @@ async function buildAndWriteCatalog(project: Project) {
 
         const exportedSymbols = parseNamedExports(moduleIndexFile);
         const name = inferMainName(moduleName, exportedSymbols);
-        const { description, searchKeys } = extractSourceMetadata(
+        const { description, keywords } = extractSourceMetadata(
             moduleDir,
             moduleName
         );
@@ -103,7 +121,7 @@ async function buildAndWriteCatalog(project: Project) {
             name,
             importPath: `@lifesg/react-design-system/${moduleName}`,
             description,
-            searchKeys,
+            keywords,
         });
     }
 
@@ -124,9 +142,10 @@ async function buildAndWriteCatalog(project: Project) {
     );
 }
 
-/** Entry point: generate the full component catalog. */
 async function main() {
-    const project = createProject();
+    const project = new Project({
+        tsConfigFilePath: path.resolve(ROOT_DIR, "tsconfig.json"),
+    });
     await buildAndWriteCatalog(project);
 }
 
