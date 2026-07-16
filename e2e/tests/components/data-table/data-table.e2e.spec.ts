@@ -410,7 +410,7 @@ test.describe("DataTable", () => {
                 const firstRowCheckbox = story.getRowCheckbox("1");
                 await firstRowCheckbox.click();
 
-                await story.page.keyboard.press("End");
+                await story.scrollToTableEnd();
                 await story.page.mouse.move(0, 0);
 
                 await compareScreenshot(story, "state");
