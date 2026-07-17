@@ -40,14 +40,15 @@ function getExportedModules(sourceFile: SourceFile): string[] {
     return [...modules].sort((a, b) => a.localeCompare(b));
 }
 
-/** Parse a module's index.ts to collect all named exported symbols.
- *  - Handle named export declarations: `export { Foo, Bar } from "./foo"`
- *  - Handle directly exported declarations (class, function, interface, type, enum, variable)
- *  - Return a sorted, deduplicated list of exported symbol names
- */
-function parseNamedExports(_sourceFile: SourceFile): string[] {
-    // TODO: implement
-    return [];
+/** Get all named export symbols from a module's index.ts file. */
+function getAllNamedExports(sourceFile: SourceFile): string[] {
+    const symbols = new Set<string>();
+
+    for (const [name] of sourceFile.getExportedDeclarations()) {
+        symbols.add(name);
+    }
+
+    return [...symbols].sort((a, b) => a.localeCompare(b));
 }
 
 /** Infer the component's display name from its exported symbols.
@@ -110,8 +111,8 @@ async function buildAndWriteCatalog(project: Project) {
             continue;
         }
 
-        const exportedSymbols = parseNamedExports(moduleIndexFile);
-        const name = inferMainName(moduleName, exportedSymbols);
+        const namedExports = getAllNamedExports(moduleIndexFile);
+        const name = inferMainName(moduleName, namedExports);
         const { description, keywords } = extractSourceMetadata(
             moduleDir,
             moduleName
