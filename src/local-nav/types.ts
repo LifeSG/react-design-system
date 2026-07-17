@@ -1,3 +1,4 @@
+// @storybookSection LocalNavMenu, LocalNavDropdown
 /**
  * Data for a single local navigation item.
  */
@@ -6,6 +7,7 @@ export interface LocalNavItemProps {
     id?: string | undefined;
 }
 
+// @storybookSkipProps
 /**
  * Base props for local navigation components.
  */
@@ -37,6 +39,7 @@ interface BaseLocalNavProps {
 // NAV MENU
 // =============================================================================
 
+// @storybookSection LocalNavMenu
 /**
  * Render props supplied to the `renderItem` callback of `LocalNavMenu`.
  */
@@ -45,6 +48,7 @@ export interface LocalNavMenuItemRenderProps {
     selected: boolean;
 }
 
+// @storybookSection LocalNavMenu
 /**
  * Props for the `LocalNavMenu` component.
  */
@@ -64,6 +68,7 @@ export interface LocalNavMenuProps extends BaseLocalNavProps {
 // NAV DROPDOWN
 // =============================================================================
 
+// @storybookSection LocalNavDropdown
 /**
  * Render props supplied to the `renderItem` callback of `LocalNavDropdown`.
  */
@@ -77,6 +82,7 @@ export interface LocalNavDropdownItemRenderProps {
     stickied: boolean;
 }
 
+// @storybookSection LocalNavDropdown
 /**
  * Props for the `LocalNavDropdown` component.
  */
