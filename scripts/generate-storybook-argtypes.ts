@@ -16,6 +16,7 @@ import path from "node:path";
 
 import chokidar from "chokidar";
 import {
+    type IndexSignatureDeclaration,
     type InterfaceDeclaration,
     type Node,
     Project,
@@ -25,6 +26,7 @@ import {
     type Type,
     type TypeAliasDeclaration,
     TypeFormatFlags,
+    type VariableStatement,
 } from "ts-morph";
 
 import type { GeneratedArgType } from "../stories/storybook-common/arg-types";
@@ -41,6 +43,11 @@ type JsDocMeta = {
     remarks?: string | undefined;
     tabGroup?: string | undefined;
 };
+
+type StorybookTaggedDeclarationNode =
+    | InterfaceDeclaration
+    | TypeAliasDeclaration
+    | VariableStatement;
 
 const sourceFileGlob = "src/**/types.ts";
 const watchRoots = ["src", "stories"];
@@ -81,9 +88,7 @@ function getTagCommentText(tag: { getCommentText: () => string | undefined }) {
 }
 
 /** Collect normalized leading non-JSDoc comment texts for a node. */
-function getLeadingNonJsDocComments(
-    node: InterfaceDeclaration | TypeAliasDeclaration
-) {
+function getLeadingNonJsDocComments(node: StorybookTaggedDeclarationNode) {
     return node
         .getLeadingCommentRanges()
         .map((commentRange) => commentRange.getText())
@@ -99,7 +104,7 @@ function getLeadingNonJsDocComments(
 
 /** Parse `@storybookSection ...` from leading non-JSDoc comments. */
 function getStorybookSectionFromLeadingComment(
-    node: InterfaceDeclaration | TypeAliasDeclaration
+    node: StorybookTaggedDeclarationNode
 ) {
     const marker = "@storybookSection";
 
@@ -117,7 +122,7 @@ function getStorybookSectionFromLeadingComment(
 }
 
 /** Return `true` when a leading non-JSDoc comment includes skip marker text. */
-function hasSkipTag(node: InterfaceDeclaration | TypeAliasDeclaration) {
+function hasSkipTag(node: StorybookTaggedDeclarationNode) {
     for (const comment of getLeadingNonJsDocComments(node)) {
         if (/@?storybookSkipProps\b/.test(comment)) {
             return true;
@@ -132,7 +137,12 @@ function hasSkipTag(node: InterfaceDeclaration | TypeAliasDeclaration) {
  * Supported tags: "@deprecated, @default, @remarks, @example".
  */
 function getJsDocMeta(
-    node: InterfaceDeclaration | PropertySignature | TypeAliasDeclaration
+    node:
+        | IndexSignatureDeclaration
+        | InterfaceDeclaration
+        | PropertySignature
+        | VariableStatement
+        | TypeAliasDeclaration
 ): JsDocMeta {
     const docs = node.getJsDocs();
 
@@ -182,9 +192,10 @@ function getJsDocMeta(
 
     const tabGroup =
         node.getKindName() === "InterfaceDeclaration" ||
-        node.getKindName() === "TypeAliasDeclaration"
+        node.getKindName() === "TypeAliasDeclaration" ||
+        node.getKindName() === "VariableStatement"
             ? getStorybookSectionFromLeadingComment(
-                  node as InterfaceDeclaration | TypeAliasDeclaration
+                  node as StorybookTaggedDeclarationNode
               )
             : undefined;
 
@@ -225,6 +236,60 @@ function cleanType(type: string) {
         .replace(/\s*\|\s*undefined/g, "")
         .replace(/\s+/g, " ")
         .trim();
+}
+
+/** Split top-level union members without breaking nested function/generic syntax. */
+function splitTopLevelUnionMembers(typeText: string) {
+    const members: string[] = [];
+    let current = "";
+    let parenDepth = 0;
+    let bracketDepth = 0;
+    let braceDepth = 0;
+    let angleDepth = 0;
+
+    for (let index = 0; index < typeText.length; index++) {
+        const char = typeText[index];
+
+        if (char === "(") parenDepth++;
+        if (char === ")") parenDepth = Math.max(0, parenDepth - 1);
+        if (char === "[") bracketDepth++;
+        if (char === "]") bracketDepth = Math.max(0, bracketDepth - 1);
+        if (char === "{") braceDepth++;
+        if (char === "}") braceDepth = Math.max(0, braceDepth - 1);
+        if (char === "<") angleDepth++;
+        if (char === ">") angleDepth = Math.max(0, angleDepth - 1);
+
+        const isTopLevel =
+            parenDepth === 0 &&
+            bracketDepth === 0 &&
+            braceDepth === 0 &&
+            angleDepth === 0;
+
+        if (char === "|" && isTopLevel) {
+            members.push(current.trim());
+            current = "";
+            continue;
+        }
+
+        current += char;
+    }
+
+    if (current.trim()) {
+        members.push(current.trim());
+    }
+
+    return members;
+}
+
+/** Format verbose unions as multiline summaries for better table readability. */
+function formatUnionSummary(typeText: string) {
+    const members = splitTopLevelUnionMembers(typeText);
+
+    if (members.length <= 1) {
+        return typeText;
+    }
+
+    return members.join("\n| ");
 }
 
 /**
@@ -289,6 +354,17 @@ function getPropertyTypeText(property: PropertySignature) {
     }
 
     return getSummaryTypeText(resolvedType, property);
+}
+
+/** Resolve an index signature type to display in Storybook tables. */
+function getIndexSignatureTypeText(indexSignature: IndexSignatureDeclaration) {
+    const summary = getSummaryTypeText(
+        indexSignature.getReturnType(),
+        indexSignature,
+        indexSignature.getReturnTypeNode()?.getText()
+    );
+
+    return formatUnionSummary(summary);
 }
 
 /** List interface and type-alias section names from a source file. */
@@ -606,6 +682,31 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
             .includes("node_modules");
     }
 
+    function buildTableMeta({
+        category,
+        defaultValue,
+        tabGroup,
+        summary,
+    }: {
+        category: string;
+        defaultValue?: string;
+        tabGroup?: string;
+        summary: string | undefined;
+    }) {
+        return {
+            category,
+            defaultValue: defaultValue
+                ? {
+                      summary: defaultValue,
+                  }
+                : undefined,
+            tabGroup,
+            type: {
+                summary,
+            },
+        };
+    }
+
     /** Build argTypes rows for interface properties (including inherited). */
     function getInterfaceArgTypes(interfaceName: string): GeneratedArgType[] {
         const interfaceDeclaration =
@@ -617,46 +718,99 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                 ? `${interfaceName}<T>`
                 : interfaceName;
 
+        // An interface with no own members (empty body, only extends) is treated
+        // as a pass-through alias: emit a single descriptive row instead of
+        // expanding all the inherited HTML/React props.
+        const ownMembers = interfaceDeclaration.getMembers();
+
+        if (ownMembers.length === 0) {
+            const description = toStorybookDescription(interfaceJsDocMeta);
+
+            return [
+                {
+                    key: interfaceName,
+                    value: {
+                        control: false,
+                        deprecated: interfaceJsDocMeta.deprecated,
+                        description: description || undefined,
+                        name: "",
+                        table: buildTableMeta({
+                            category,
+                            defaultValue: undefined,
+                            tabGroup: interfaceJsDocMeta.tabGroup,
+                            summary: undefined,
+                        }),
+                    },
+                } satisfies GeneratedArgType,
+            ];
+        }
+
         const resolvedProperties = interfaceDeclaration
             .getType()
             .getProperties()
             .filter((symbol) => !isFromNodeModules(symbol))
             .sort((a, b) => a.getName().localeCompare(b.getName()));
 
-        return resolvedProperties.flatMap((symbol) => {
-            const property = getPropertyDeclaration(symbol);
+        const indexSignatureRows = interfaceDeclaration
+            .getIndexSignatures()
+            .map((indexSignature) => {
+                const jsDocMeta = getJsDocMeta(indexSignature);
+                const keyName = indexSignature.getKeyName();
+                const keyType = cleanType(
+                    indexSignature.getKeyTypeNode().getText()
+                );
+                const displayName = `[${keyName}: ${keyType}]`;
 
-            if (!property) {
-                return [];
-            }
-
-            const propertyName = property.getName().replace(/^["']|["']$/g, "");
-            const jsDocMeta = getJsDocMeta(property);
-
-            return [
-                {
-                    key: `${interfaceName}.${propertyName}`,
+                return {
+                    key: `${interfaceName}.${displayName}`,
                     value: {
                         control: false,
                         deprecated: jsDocMeta.deprecated,
                         description: toStorybookDescription(jsDocMeta),
-                        name: propertyName,
-                        table: {
+                        name: displayName,
+                        table: buildTableMeta({
                             category,
-                            defaultValue: jsDocMeta.defaultValue
-                                ? {
-                                      summary: jsDocMeta.defaultValue,
-                                  }
-                                : undefined,
+                            defaultValue: jsDocMeta.defaultValue,
                             tabGroup: interfaceJsDocMeta.tabGroup,
-                            type: {
-                                summary: getPropertyTypeText(property),
-                            },
-                        },
+                            summary: getIndexSignatureTypeText(indexSignature),
+                        }),
                     },
-                },
-            ];
-        });
+                } satisfies GeneratedArgType;
+            });
+
+        return [
+            ...resolvedProperties.flatMap((symbol) => {
+                const property = getPropertyDeclaration(symbol);
+
+                if (!property) {
+                    return [];
+                }
+
+                const propertyName = property
+                    .getName()
+                    .replace(/^['"]|['"]$/g, "");
+                const jsDocMeta = getJsDocMeta(property);
+
+                return [
+                    {
+                        key: `${interfaceName}.${propertyName}`,
+                        value: {
+                            control: false,
+                            deprecated: jsDocMeta.deprecated,
+                            description: toStorybookDescription(jsDocMeta),
+                            name: propertyName,
+                            table: buildTableMeta({
+                                category,
+                                defaultValue: jsDocMeta.defaultValue,
+                                tabGroup: interfaceJsDocMeta.tabGroup,
+                                summary: getPropertyTypeText(property),
+                            }),
+                        },
+                    } satisfies GeneratedArgType,
+                ];
+            }),
+            ...indexSignatureRows,
+        ];
     }
 
     /** Build an argTypes row for a type alias declaration. */
@@ -676,54 +830,105 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                 description: toStorybookDescription(jsDocMeta),
                 deprecated: jsDocMeta.deprecated,
                 control: false,
-                table: {
+                table: buildTableMeta({
                     category,
-                    defaultValue: jsDocMeta.defaultValue
-                        ? {
-                              summary: jsDocMeta.defaultValue,
-                          }
-                        : undefined,
+                    defaultValue: jsDocMeta.defaultValue,
                     tabGroup: jsDocMeta.tabGroup,
-                    type: {
-                        // For alias definitions, prefer expanded literal unions
-                        // when TypeScript can resolve them (e.g. `Exclude<...>`).
-                        summary: getSummaryTypeText(
-                            typeAlias.getType(),
-                            typeAlias,
-                            typeAlias.getTypeNodeOrThrow().getText()
-                        ),
-                    },
-                },
+                    // For alias definitions, prefer expanded literal unions
+                    // when TypeScript can resolve them (e.g. `Exclude<...>`).
+                    summary: getSummaryTypeText(
+                        typeAlias.getType(),
+                        typeAlias,
+                        typeAlias.getTypeNodeOrThrow().getText()
+                    ),
+                }),
             },
         };
     }
 
-    const rows = typeSections.flatMap((typeName) => {
-        const interfaceDeclaration = sourceFile.getInterface(typeName);
+    /**
+     * Build a single descriptive row for `export const FooProps = Component<...>`
+     * declarations that exist only to document inherited DOM props.
+     */
+    function getInheritedComponentArgTypes(): GeneratedArgType[] {
+        return sourceFile
+            .getVariableStatements()
+            .filter((statement) => statement.isExported())
+            .filter((statement) => {
+                const declaration = statement.getDeclarations()[0];
 
-        if (interfaceDeclaration) {
-            if (hasSkipTag(interfaceDeclaration)) {
-                return [];
+                return declaration
+                    ?.getInitializer()
+                    ?.getText()
+                    .includes("Component<");
+            })
+            .flatMap((statement) => {
+                if (hasSkipTag(statement)) {
+                    return [];
+                }
+
+                const declaration = statement.getDeclarations()[0];
+
+                if (!declaration) {
+                    return [];
+                }
+
+                const name = declaration.getName();
+                const jsDocMeta = getJsDocMeta(statement);
+
+                return [
+                    {
+                        key: name,
+                        value: {
+                            control: false,
+                            deprecated: jsDocMeta.deprecated,
+                            description: toStorybookDescription(jsDocMeta),
+                            name: "",
+                            table: buildTableMeta({
+                                category: name,
+                                defaultValue: jsDocMeta.defaultValue,
+                                tabGroup: jsDocMeta.tabGroup,
+                                summary: "",
+                            }),
+                        },
+                    } satisfies GeneratedArgType,
+                ];
+            });
+    }
+
+    const rows = [
+        ...typeSections.flatMap((typeName) => {
+            const interfaceDeclaration = sourceFile.getInterface(typeName);
+
+            if (interfaceDeclaration) {
+                if (hasSkipTag(interfaceDeclaration)) {
+                    return [];
+                }
+
+                return getInterfaceArgTypes(typeName);
             }
 
-            return getInterfaceArgTypes(typeName);
-        }
+            const typeAlias = sourceFile.getTypeAlias(typeName);
 
-        const typeAlias = sourceFile.getTypeAlias(typeName);
+            if (typeAlias) {
+                if (hasSkipTag(typeAlias)) {
+                    return [];
+                }
 
-        if (typeAlias) {
-            if (hasSkipTag(typeAlias)) {
-                return [];
+                return [getTypeAliasArgType(typeName)];
             }
 
-            return [getTypeAliasArgType(typeName)];
-        }
+            throw new Error(
+                `Unable to find interface or type alias: ${typeName}`
+            );
+        }),
+        ...getInheritedComponentArgTypes(),
+    ];
 
-        throw new Error(`Unable to find interface or type alias: ${typeName}`);
-    });
+    const sortedRows = rows.sort((a, b) => a.key.localeCompare(b.key));
 
     const generatedArgTypes = Object.fromEntries(
-        rows.map((row) => [row.key, row.value])
+        sortedRows.map((row) => [row.key, row.value])
     );
 
     const generated = `// This file is generated. Do not edit manually.
