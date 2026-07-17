@@ -37,8 +37,10 @@ export type GeneratedArgType = {
             tabGroup: string | undefined;
             /** Type information. */
             type: {
+                /** Detailed type information for the props table. */
+                detail?: string | undefined;
                 /** Type text summary for the props table. */
-                summary: string;
+                summary?: string | undefined;
             };
             /** Default value from `@default` JSDoc tag, if present. */
             defaultValue:
@@ -55,6 +57,49 @@ type PureArgsTableRows = Extract<
     React.ComponentProps<typeof PureArgsTable>,
     { rows: unknown }
 >["rows"];
+
+function normalizeUnionTypeDisplay(argType: GeneratedArgType["value"]) {
+    const summary = argType.table?.type?.summary;
+
+    if (!summary) {
+        return argType;
+    }
+
+    const unionMembers = summary.includes("\n|")
+        ? summary
+              .split("\n|")
+              .map((member) => member.trim())
+              .filter(Boolean)
+        : summary
+              .split(" | ")
+              .map((member) => member.trim())
+              .filter(Boolean);
+
+    if (unionMembers.length <= 1) {
+        return argType;
+    }
+
+    const hasFunctionUnionMember = unionMembers.some((member) =>
+        member.includes("=>")
+    );
+
+    if (!hasFunctionUnionMember) {
+        return argType;
+    }
+
+    const finalArgType: GeneratedArgType["value"] = {
+        ...argType,
+        table: {
+            ...argType.table,
+            type: {
+                summary: `${unionMembers[0]} | ...`,
+                detail: unionMembers.join("\n"),
+            },
+        },
+    };
+
+    return finalArgType;
+}
 
 interface AutoArgTypesTabsProps {
     of: ArgTypesProps["of"];
@@ -93,7 +138,9 @@ function buildTabRowsFromGeneratedArgTypes(
     const rowsBySubcategory = new Map<string, PureArgsTableRows>();
 
     Object.entries(generatedArgTypes).forEach(([key, rawArgType]) => {
-        const argType = rawArgType as GeneratedArgType["value"];
+        const argType = normalizeUnionTypeDisplay(
+            rawArgType as GeneratedArgType["value"]
+        );
         const tabTitle = argType.table?.tabGroup ?? defaultTabTitle;
 
         if (!rowsBySubcategory.has(tabTitle)) {
@@ -103,14 +150,20 @@ function buildTabRowsFromGeneratedArgTypes(
         const rows = rowsBySubcategory.get(tabTitle);
 
         if (rows) {
-            rows[key] = rawArgType;
+            rows[key] = argType;
         }
     });
 
-    return Array.from(rowsBySubcategory.entries()).map(([title, rows]) => ({
-        title,
-        rows,
-    }));
+    return Array.from(rowsBySubcategory.entries())
+        .map(([title, rows]) => ({
+            title,
+            rows,
+        }))
+        .sort((a, b) => {
+            if (a.title === defaultTabTitle) return -1;
+            if (b.title === defaultTabTitle) return 1;
+            return a.title.localeCompare(b.title);
+        });
 }
 
 /** Resolve a story title from a Storybook stories module passed via `of`. */
