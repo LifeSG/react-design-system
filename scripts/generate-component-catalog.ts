@@ -76,7 +76,10 @@ function extractSourceMetadata(
 
             for (const jsDoc of jsDocs) {
                 if (!description) {
-                    const comment = jsDoc.getCommentText()?.trim();
+                    const comment = jsDoc
+                        .getCommentText()
+                        ?.trim()
+                        .replace(/\n/g, " ");
                     if (comment) {
                         description = comment;
                     }
