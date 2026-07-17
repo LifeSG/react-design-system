@@ -20,20 +20,28 @@ export const tokens = {
 // Layout
 // =============================================================================
 export const tableWrapper = css`
-    overflow: auto;
+    /* we separate the overflow styles so that sticky elements can still work
+       with horizontal scrolling on supported browsers
+       see: https://github.com/w3c/csswg-drafts/issues/12289 */
+    overflow-y: clip;
+    overflow-x: auto;
+    position: relative;
+
     display: flex;
     flex-direction: column;
     border: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     border-radius: ${Radius["md"]};
 
-    // Hide scrollbar
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
     &::-webkit-scrollbar {
-        display: none;
+        display: none; /* Chrome/Safari/Webkit */
     }
-    * {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
-    }
+`;
+
+export const tableWrapperScrollable = css`
+    overflow-y: auto;
 `;
 
 export const tableContainer = css`
@@ -199,6 +207,10 @@ export const actionBarButton = css`
     }
 `;
 
+export const actionBarSpacer = css`
+    height: 3.5rem;
+`;
+
 export const actionBar = css`
     overflow: hidden;
     display: flex;
@@ -207,7 +219,7 @@ export const actionBar = css`
     padding: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
     background-color: ${Colour["bg-selected"]};
-    transition: all 300ms ease;
+    transition: transform ${Motion["duration-350"]} ${Motion["ease-default"]};
     border-radius: ${Radius["none"]} ${Radius["none"]} ${Radius["sm"]}
         ${Radius["sm"]};
 `;
@@ -221,18 +233,27 @@ export const actionBarFloating = css`
 `;
 
 export const actionBarWrapper = css`
-    bottom: 0;
-    position: sticky;
-    left: 0;
-`;
-
-export const actionBarWrapperFloating = css`
     ${tokens.actionBarWrapperLeft}: initial;
     ${tokens.actionBarWrapperWidth}: initial;
 
-    position: fixed;
-    left: var(${tokens.actionBarWrapperLeft}, 0px);
-    width: var(${tokens.actionBarWrapperWidth}, 100%);
+    &[data-strategy="inline"] {
+        position: absolute;
+        bottom: 0;
+        left: 0;
+        width: var(${tokens.actionBarWrapperWidth}, 100%);
+    }
+
+    &[data-strategy="fixed"] {
+        position: fixed;
+        bottom: 0;
+        left: var(${tokens.actionBarWrapperLeft}, 0px);
+        width: var(${tokens.actionBarWrapperWidth}, 100%);
+    }
+
+    &[data-strategy="sticky"] {
+        position: sticky;
+        bottom: 0;
+    }
 `;
 
 // =============================================================================
