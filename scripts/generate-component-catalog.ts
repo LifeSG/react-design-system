@@ -2,7 +2,7 @@ import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { Project, type SourceFile } from "ts-morph";
+import { Node, Project, type SourceFile } from "ts-morph";
 
 // =============================================================================
 // Types
@@ -53,17 +53,76 @@ function getSortedNamedExports(sourceFile: SourceFile): string[] {
     return [...symbols].sort((a, b) => a.localeCompare(b));
 }
 
-/** Extract metadata from source files (description + searchKeys).
+/** Extract metadata from source files using ts-morph JSDoc APIs.
  *  - Look in candidate files: <moduleName>.tsx, <moduleName>.ts, types.ts
- *  - Description: first JSDoc block's main comment text (stop at first @tag)
- *  - keywords: @keywords tag value split by comma, trimmed, sorted
+ *  - Description: first JSDoc block's comment text (via getCommentText())
+ *  - keywords: first @keywords tag value split by comma, trimmed, sorted
  *  - Return { description, keywords } from the first file that has either
  */
 function extractSourceMetadata(
-    _moduleDir: string,
-    _moduleName: string
+    project: Project,
+    moduleDir: string,
+    moduleName: string
 ): { description: string; keywords: string[] } {
-    // TODO: implement
+    const possibleFilePaths = [
+        path.join(moduleDir, moduleName + ".tsx"),
+        path.join(moduleDir, moduleName + ".ts"),
+        path.join(moduleDir, "types.ts"),
+    ];
+
+    for (const filePath of possibleFilePaths) {
+        const sourceFile = project.addSourceFileAtPathIfExists(filePath);
+        if (!sourceFile) continue;
+
+        const statements = sourceFile.getStatements();
+
+        let description = "";
+        let keywords: string[] = [];
+
+        for (const statement of statements) {
+            // Check if the statement can have JSDoc comments
+            if (!Node.isJSDocable(statement)) continue;
+
+            const jsDocs = statement.getJsDocs();
+
+            for (const jsDoc of jsDocs) {
+                if (!description) {
+                    const comment = jsDoc.getCommentText()?.trim();
+                    if (comment) {
+                        description = comment;
+                    }
+                }
+
+                // TODO: check actual how will @keywords tag appear in jsdocs
+                if (keywords.length === 0) {
+                    for (const tag of jsDoc.getTags()) {
+                        if (tag.getTagName() === "keywords") {
+                            const tagComment = tag.getCommentText()?.trim();
+                            if (tagComment) {
+                                keywords = tagComment
+                                    .split(",")
+                                    .map((k: string) => k.trim())
+                                    .filter(Boolean)
+                                    .sort((a: string, b: string) =>
+                                        a.localeCompare(b)
+                                    );
+                            }
+                            break;
+                        }
+                    }
+                }
+
+                if (description && keywords.length > 0) break;
+            }
+
+            if (description && keywords.length > 0) break;
+        }
+
+        if (description || keywords.length > 0) {
+            return { description, keywords };
+        }
+    }
+
     return { description: "", keywords: [] };
 }
 // =============================================================================
@@ -102,15 +161,16 @@ async function buildAndWriteCatalog(project: Project) {
         }
 
         const sortedNamedExports = getSortedNamedExports(moduleIndexFile);
-        const name = sortedNamedExports[0];
+        const componentName = sortedNamedExports[0];
 
         const { description, keywords } = extractSourceMetadata(
+            project,
             moduleDir,
             moduleName
         );
 
         components.push({
-            name,
+            name: componentName,
             importPath: `@lifesg/react-design-system/${moduleName}`,
             description,
             keywords,
