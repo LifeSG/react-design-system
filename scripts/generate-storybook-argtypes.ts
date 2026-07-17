@@ -813,8 +813,8 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
         ];
     }
 
-    /** Build an argTypes row for a type alias declaration. */
-    function getTypeAliasArgType(typeName: string): GeneratedArgType {
+    /** Build argTypes rows for a type alias declaration. */
+    function getTypeAliasArgTypes(typeName: string): GeneratedArgType[] {
         const typeAlias = sourceFile.getTypeAliasOrThrow(typeName);
         const jsDocMeta = getJsDocMeta(typeAlias);
 
@@ -823,27 +823,77 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                 ? `${typeName}<T>`
                 : typeName;
 
-        return {
-            key: typeName,
-            value: {
-                name: category,
-                description: toStorybookDescription(jsDocMeta),
-                deprecated: jsDocMeta.deprecated,
-                control: false,
-                table: buildTableMeta({
-                    category,
-                    defaultValue: jsDocMeta.defaultValue,
-                    tabGroup: jsDocMeta.tabGroup,
-                    // For alias definitions, prefer expanded literal unions
-                    // when TypeScript can resolve them (e.g. `Exclude<...>`).
-                    summary: getSummaryTypeText(
-                        typeAlias.getType(),
-                        typeAlias,
-                        typeAlias.getTypeNodeOrThrow().getText()
-                    ),
-                }),
+        const normalizedTypeText = typeAlias
+            .getTypeNodeOrThrow()
+            .getText()
+            .replace(/\s+/g, " ")
+            .trim();
+
+        const isOmitAlias = /^Omit<.+>$/.test(normalizedTypeText);
+
+        if (isOmitAlias) {
+            const resolvedProperties = typeAlias
+                .getType()
+                .getProperties()
+                .filter((symbol) => !isFromNodeModules(symbol))
+                .sort((a, b) => a.getName().localeCompare(b.getName()));
+
+            return resolvedProperties.flatMap((symbol) => {
+                const property = getPropertyDeclaration(symbol);
+
+                if (!property) {
+                    return [];
+                }
+
+                const propertyName = property
+                    .getName()
+                    .replace(/^['"]|['"]$/g, "");
+                const propertyJsDocMeta = getJsDocMeta(property);
+
+                return [
+                    {
+                        key: `${typeName}.${propertyName}`,
+                        value: {
+                            control: false,
+                            deprecated: propertyJsDocMeta.deprecated,
+                            description:
+                                toStorybookDescription(propertyJsDocMeta),
+                            name: propertyName,
+                            table: buildTableMeta({
+                                category,
+                                defaultValue: propertyJsDocMeta.defaultValue,
+                                tabGroup: jsDocMeta.tabGroup,
+                                summary: getPropertyTypeText(property),
+                            }),
+                        },
+                    } satisfies GeneratedArgType,
+                ];
+            });
+        }
+
+        return [
+            {
+                key: typeName,
+                value: {
+                    name: category,
+                    description: toStorybookDescription(jsDocMeta),
+                    deprecated: jsDocMeta.deprecated,
+                    control: false,
+                    table: buildTableMeta({
+                        category,
+                        defaultValue: jsDocMeta.defaultValue,
+                        tabGroup: jsDocMeta.tabGroup,
+                        // For alias definitions, prefer expanded literal unions
+                        // when TypeScript can resolve them (e.g. `Exclude<...>`).
+                        summary: getSummaryTypeText(
+                            typeAlias.getType(),
+                            typeAlias,
+                            typeAlias.getTypeNodeOrThrow().getText()
+                        ),
+                    }),
+                },
             },
-        };
+        ];
     }
 
     /**
@@ -915,7 +965,7 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                     return [];
                 }
 
-                return [getTypeAliasArgType(typeName)];
+                return getTypeAliasArgTypes(typeName);
             }
 
             throw new Error(
