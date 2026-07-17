@@ -10,7 +10,7 @@
  * - `npm run storybook:argtypes -- --watch` — watch for changes and regenerate
  */
 
-import { existsSync, statSync } from "node:fs";
+import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -31,19 +31,17 @@ import {
 
 import type { GeneratedArgType } from "../stories/storybook-common/arg-types";
 
-/**
- * Parsed JSDoc metadata from component type declarations.
- * Extracted from JSDoc tags and comments, used to enrich generated argTypes.
- */
+// =============================================================================
+// Configuration & Types
+// =============================================================================
+
 type JsDocMeta = {
     defaultValue?: string | undefined;
     deprecated?: string | boolean | undefined;
     description?: string | undefined;
     examples?: string[] | undefined;
     remarks?: string | undefined;
-    /** Single resolved tab group (first entry of tabGroups). Used by downstream callers that only need one. */
     tabGroup?: string | undefined;
-    /** All declared tab groups — multiple when `@storybookSection` lists comma-separated sections. */
     tabGroups?: string[] | undefined;
 };
 
@@ -63,14 +61,16 @@ const typeFormatFlags =
     TypeFormatFlags.NoTruncation |
     TypeFormatFlags.UseSingleQuotesForStringLiteralType;
 
-/** Create a ts-morph project using the repo tsconfig. */
+// =============================================================================
+// Project & Source File Setup
+// =============================================================================
+
 function createProject() {
     return new Project({
         tsConfigFilePath: path.resolve("tsconfig.json"),
     });
 }
 
-/** Resolve a source file from the project or throw when not found. */
 function getSourceFile(project: Project, filePath: string) {
     const sourceFile =
         project.getSourceFile(filePath) ??
@@ -83,14 +83,16 @@ function getSourceFile(project: Project, filePath: string) {
     return sourceFile;
 }
 
-/** Read and trim the textual value of a JSDoc tag. */
+// =============================================================================
+// JSDoc / Comment Parsing
+// =============================================================================
+
 function getTagCommentText(tag: { getCommentText: () => string | undefined }) {
     const comment = tag.getCommentText();
 
     return typeof comment === "string" ? comment.trim() : undefined;
 }
 
-/** Collect normalized leading non-JSDoc comment texts for a node. */
 function getLeadingNonJsDocComments(node: StorybookTaggedDeclarationNode) {
     return node
         .getLeadingCommentRanges()
@@ -105,7 +107,7 @@ function getLeadingNonJsDocComments(node: StorybookTaggedDeclarationNode) {
         .filter(Boolean);
 }
 
-/** Parse `@storybookSection ...` from leading non-JSDoc comments. Returns all comma-separated sections. */
+/** Parse `@storybookSection` from leading non-JSDoc comments. Returns comma-separated sections. */
 function getStorybookSectionsFromLeadingComment(
     node: StorybookTaggedDeclarationNode
 ): string[] {
@@ -131,7 +133,6 @@ function getStorybookSectionsFromLeadingComment(
     return [];
 }
 
-/** Return `true` when a leading non-JSDoc comment includes skip marker text. */
 function hasSkipTag(node: StorybookTaggedDeclarationNode) {
     for (const comment of getLeadingNonJsDocComments(node)) {
         if (/@?storybookSkipProps\b/.test(comment)) {
@@ -143,8 +144,8 @@ function hasSkipTag(node: StorybookTaggedDeclarationNode) {
 }
 
 /**
- * Collect supported JSDoc metadata tags for Storybook mapping.
- * Supported tags: "@deprecated, @default, @remarks, @example".
+ * Collect JSDoc metadata from a node. Supported tags: @deprecated, @default, @remarks, @example.
+ * Also reads @storybookSection from leading non-JSDoc comments on interface/type/variable nodes.
  */
 function getJsDocMeta(
     node:
@@ -220,6 +221,37 @@ function getJsDocMeta(
     };
 }
 
+/** Merge JSDoc metadata from multiple declarations of the same symbol (e.g. declaration merging). */
+function mergeJsDocMeta(metas: JsDocMeta[]): JsDocMeta {
+    const descriptions = metas
+        .map((meta) => meta.description)
+        .filter((value): value is string => Boolean(value));
+    const remarks = metas
+        .map((meta) => meta.remarks)
+        .filter((value): value is string => Boolean(value));
+    const examples = metas
+        .flatMap((meta) => meta.examples ?? [])
+        .filter(Boolean);
+
+    return {
+        description:
+            descriptions.length > 0
+                ? Array.from(new Set(descriptions)).join("\n\n")
+                : undefined,
+        remarks:
+            remarks.length > 0
+                ? Array.from(new Set(remarks)).join("\n\n")
+                : undefined,
+        examples:
+            examples.length > 0 ? Array.from(new Set(examples)) : undefined,
+        deprecated: metas.find((meta) => meta.deprecated !== undefined)
+            ?.deprecated,
+        defaultValue: metas.find((meta) => meta.defaultValue !== undefined)
+            ?.defaultValue,
+        tabGroup: metas.find((meta) => meta.tabGroup !== undefined)?.tabGroup,
+    };
+}
+
 /** Build a Storybook-friendly description string from parsed JSDoc metadata. */
 function toStorybookDescription(meta: JsDocMeta) {
     const blocks: string[] = [];
@@ -241,7 +273,10 @@ function toStorybookDescription(meta: JsDocMeta) {
     return blocks.length > 0 ? blocks.join("\n\n") : undefined;
 }
 
-/** Normalize type text to improve readability in generated summaries. */
+// =============================================================================
+// Type Text Formatting
+// =============================================================================
+
 function cleanType(type: string) {
     return type
         .replace(/\s*\|\s*undefined/g, "")
@@ -249,7 +284,7 @@ function cleanType(type: string) {
         .trim();
 }
 
-/** Split top-level union members without breaking nested function/generic syntax. */
+/** Split top-level union members without breaking nested generics or function types. */
 function splitTopLevelUnionMembers(typeText: string) {
     const members: string[] = [];
     let current = "";
@@ -292,7 +327,6 @@ function splitTopLevelUnionMembers(typeText: string) {
     return members;
 }
 
-/** Format verbose unions as multiline summaries for better table readability. */
 function formatUnionSummary(typeText: string) {
     const members = splitTopLevelUnionMembers(typeText);
 
@@ -304,9 +338,8 @@ function formatUnionSummary(typeText: string) {
 }
 
 /**
- * Expand literal unions when TypeScript can fully resolve the type.
- *
- * Example: `Exclude<FontSize, "form-label">` -> `"heading-xxl" | ...`.
+ * Expand a type to its literal union members when fully resolvable.
+ * e.g. `Exclude<FontSize, "form-label">` -> `"heading-xxl" | "heading-xl" | ...`
  */
 function getExpandedLiteralUnionText(type: Type, contextNode: Node) {
     const nonNullableType = type.getNonNullableType();
@@ -334,7 +367,6 @@ function getExpandedLiteralUnionText(type: Type, contextNode: Node) {
     );
 }
 
-/** Resolve readable type text for generated argTypes summaries. */
 function getSummaryTypeText(
     type: Type,
     contextNode: Node,
@@ -346,7 +378,6 @@ function getSummaryTypeText(
     );
 }
 
-/** Resolve a property type to display in Storybook tables. */
 function getPropertyTypeText(property: PropertySignature) {
     const typeNodeText = property.getTypeNode()?.getText();
 
@@ -367,7 +398,6 @@ function getPropertyTypeText(property: PropertySignature) {
     return getSummaryTypeText(resolvedType, property);
 }
 
-/** Resolve an index signature type to display in Storybook tables. */
 function getIndexSignatureTypeText(indexSignature: IndexSignatureDeclaration) {
     const summary = getSummaryTypeText(
         indexSignature.getReturnType(),
@@ -378,22 +408,10 @@ function getIndexSignatureTypeText(indexSignature: IndexSignatureDeclaration) {
     return formatUnionSummary(summary);
 }
 
-/** List interface and type-alias section names from a source file. */
-function getTypeSections(sourceFile: SourceFile) {
-    return [
-        ...sourceFile
-            .getInterfaces()
-            .map((declaration) => declaration.getName()),
-        ...sourceFile
-            .getTypeAliases()
-            .map((declaration) => declaration.getName()),
-    ];
-}
+// =============================================================================
+// Path & File Resolution
+// =============================================================================
 
-/** Compute the generated argTypes output path for a component types file.
- *  All per-component generated files are co-located with the registry in
- *  .storybook/generated/ to keep generated artifacts out of the source tree.
- */
 function getOutputFile(sourceFilePath: string) {
     const componentName = path.basename(path.dirname(sourceFilePath));
 
@@ -403,7 +421,6 @@ function getOutputFile(sourceFilePath: string) {
     );
 }
 
-/** Compute the exported argTypes variable name for a component. */
 function getExportName(sourceFilePath: string) {
     const componentName = path.basename(path.dirname(sourceFilePath));
 
@@ -415,30 +432,26 @@ function getExportName(sourceFilePath: string) {
     return `${camelCaseName}ExtraArgTypes`;
 }
 
-/** Build a normalized import path from the registry file to a generated file. */
 function getArgTypesImportPath(outputFile: string) {
     return path
         .relative(path.dirname(storybookArgTypesFile), outputFile)
-        .replace(/\\/g, "/")
+        .replaceAll("\\", "/")
         .replace(/\.ts$/, "")
         .replace(/^([^./])/, "./$1");
 }
 
-/** Parse the Storybook title from a story file source string. */
 function getStoryTitle(fileText: string) {
-    const match = fileText.match(/title:\s*["'`]([^"'`]+)["'`]/);
+    const match = new RegExp(/title:\s*["'`]([^"'`]+)["'`]/).exec(fileText);
 
     return match?.[1];
 }
 
-/** Parse the root component identifier from story meta. */
 function getComponentRootIdentifier(fileText: string) {
-    const match = fileText.match(/component:\s*([A-Za-z0-9_]+)/);
+    const match = new RegExp(/component:\s*([A-Za-z0-9_]+)/).exec(fileText);
 
     return match?.[1];
 }
 
-/** Find the import path of a given identifier in a story file. */
 function getImportPathForIdentifier(fileText: string, identifier: string) {
     const importRegex = new RegExp(
         `import\\s+(?:\\{[^}]*\\b${identifier}\\b[^}]*\\}|${identifier})\\s+from\\s+["']([^"']+)["']`
@@ -447,41 +460,34 @@ function getImportPathForIdentifier(fileText: string, identifier: string) {
     return fileText.match(importRegex)?.[1];
 }
 
-/** Resolve an import path from a story file to an absolute source file path. */
-function resolveImportPath(storyFilePath: string, importPath: string) {
-    const candidates = importPath.startsWith("src/")
-        ? [
-              path.resolve(importPath),
-              path.resolve(`${importPath}.ts`),
-              path.resolve(`${importPath}.tsx`),
-              path.resolve(importPath, "index.ts"),
-              path.resolve(importPath, "index.tsx"),
-          ]
-        : importPath.startsWith(".")
-        ? [
-              path.resolve(path.dirname(storyFilePath), importPath),
-              path.resolve(path.dirname(storyFilePath), `${importPath}.ts`),
-              path.resolve(path.dirname(storyFilePath), `${importPath}.tsx`),
-              path.resolve(path.dirname(storyFilePath), importPath, "index.ts"),
-              path.resolve(
-                  path.dirname(storyFilePath),
-                  importPath,
-                  "index.tsx"
-              ),
-          ]
-        : [];
-
-    return candidates.find((candidate) => existsSync(candidate));
+/** Build file resolution candidates: [exact, .ts, .tsx, /index.ts, /index.tsx]. */
+function buildResolutionCandidates(basePath: string) {
+    return [
+        basePath,
+        `${basePath}.ts`,
+        `${basePath}.tsx`,
+        path.join(basePath, "index.ts"),
+        path.join(basePath, "index.tsx"),
+    ];
 }
 
-/** Resolve a component directory from a component source path. */
-function getComponentDirectory(componentSourcePath: string) {
-    const stats = statSync(componentSourcePath);
+function resolveImportPath(storyFilePath: string, importPath: string) {
+    let basePath: string;
 
-    if (stats.isDirectory()) {
-        return componentSourcePath;
+    if (importPath.startsWith("src/")) {
+        basePath = path.resolve(importPath);
+    } else if (importPath.startsWith(".")) {
+        basePath = path.resolve(path.dirname(storyFilePath), importPath);
+    } else {
+        return undefined;
     }
 
+    return buildResolutionCandidates(basePath).find((candidate) =>
+        existsSync(candidate)
+    );
+}
+
+function getComponentDirectory(componentSourcePath: string) {
     if (path.basename(componentSourcePath).startsWith("index.")) {
         return path.dirname(componentSourcePath);
     }
@@ -489,18 +495,13 @@ function getComponentDirectory(componentSourcePath: string) {
     return path.dirname(componentSourcePath);
 }
 
-/** Resolve the canonical types.ts path for a component directory. */
 function getTypesFileForComponentDirectory(componentDirectory: string) {
     const typesFilePath = path.join(componentDirectory, "types.ts");
 
     return existsSync(typesFilePath) ? typesFilePath : undefined;
 }
 
-/**
- * Fallback: infer a component types.ts from the story file directory.
- *
- * Example: stories/text-list/*.stories.tsx -> src/text-list/types.ts.
- */
+/** Fallback: infer types.ts from the story's directory name matching a src/ folder. */
 function getTypesFileFromStoryDirectory(storyFilePath: string) {
     const storiesRoot = path.resolve("stories");
     const relativeStoryDirectory = path.relative(
@@ -527,21 +528,15 @@ function getTypesFileFromStoryDirectory(storyFilePath: string) {
     );
 }
 
-/** Check whether a file path looks like a Storybook story file. */
 function isStoryFile(filePath: string) {
     return /(^|[\\/])stories[\\/].*\.stories\.(ts|tsx)$/.test(filePath);
 }
 
-/** Check whether a file path points to a component types.ts file. */
 function isTypesFile(filePath: string) {
     return /(^|[\\/])types\.ts$/.test(filePath);
 }
 
-/** * Return `true` when the source file has a `@storybookSkipFile` marker comment.
- *
- * Place `// @storybookSkipFile` anywhere near the top of a `types.ts` file to
- * exclude the entire file from argTypes generation.
- */
+/** Check for `// @storybookSkipFile` marker in file-leading comments. */
 function isSkippedFile(sourceFile: SourceFile) {
     const fullText = sourceFile.getFullText();
     const firstStatement = sourceFile.getStatements()[0];
@@ -552,11 +547,469 @@ function isSkippedFile(sourceFile: SourceFile) {
     return /^\s*\/\/[^\n]*@storybookSkipFile\b/m.test(textBeforeFirstStatement);
 }
 
-/** * Generate the global Storybook registry mapping story titles to argTypes.
- *
- * Scans all story files to extract story titles and their associated component
- * types, then emits `.storybook/generated/storybook-argtypes.generated.ts`
- * which maps each story title to its generated argTypes for use in Storybook.
+// =============================================================================
+// ArgType Row Construction
+// =============================================================================
+
+/** Single factory for building a GeneratedArgType row. All 7 construction sites funnel through here. */
+function buildArgTypeRow(opts: {
+    key: string;
+    name: string;
+    category: string;
+    tabGroup?: string;
+    typeSummary?: string;
+    defaultValue?: string;
+    deprecated?: string | boolean;
+    description?: string;
+}): GeneratedArgType {
+    return {
+        key: opts.key,
+        value: {
+            control: false,
+            deprecated: opts.deprecated,
+            description: opts.description,
+            name: opts.name,
+            table: {
+                category: opts.category,
+                defaultValue: opts.defaultValue
+                    ? { summary: opts.defaultValue }
+                    : undefined,
+                tabGroup: opts.tabGroup,
+                type: {
+                    summary: opts.typeSummary,
+                },
+            },
+        },
+    };
+}
+
+/** Strip surrounding quotes from property names (handles `"foo"` or `'foo'`). */
+function getPropertyName(property: PropertySignature) {
+    return property.getName().replace(/^['"]|['"]$/g, "");
+}
+
+/** Build category label, appending `<T>` when the declaration has type parameters. */
+function getCategoryName(
+    name: string,
+    declaration: InterfaceDeclaration | TypeAliasDeclaration
+) {
+    return declaration.getTypeParameters().length > 0 ? `${name}<T>` : name;
+}
+
+/** Check whether a symbol's declaration originates from node_modules. */
+function isFromNodeModules(symbol: TsMorphSymbol) {
+    const declaration = symbol.getDeclarations()[0];
+
+    if (!declaration) {
+        return true;
+    }
+
+    return declaration.getSourceFile().getFilePath().includes("node_modules");
+}
+
+/** Get own (non-node_modules) properties from a type, sorted alphabetically. */
+function getResolvedProperties(
+    declaration: InterfaceDeclaration | TypeAliasDeclaration
+) {
+    return declaration
+        .getType()
+        .getProperties()
+        .filter((symbol) => !isFromNodeModules(symbol))
+        .sort((a, b) => a.getName().localeCompare(b.getName()));
+}
+
+/** Resolve a Symbol to its first PropertySignature declaration. */
+function getPropertyDeclaration(symbol: TsMorphSymbol) {
+    return symbol
+        .getDeclarations()
+        .find(
+            (d): d is PropertySignature =>
+                d.getKindName() === "PropertySignature"
+        );
+}
+
+// =============================================================================
+// Per-Component Generation
+// =============================================================================
+
+function getInheritedHtmlAttributesRow(
+    interfaceName: string,
+    interfaceDeclaration: InterfaceDeclaration,
+    interfaceJsDocMeta: JsDocMeta,
+    category: string
+): GeneratedArgType | undefined {
+    const inheritedElementTypes = interfaceDeclaration
+        .getExtends()
+        .filter((extendNode) => {
+            const expressionText = extendNode.getExpression().getText();
+
+            return /(?:React\.)?\w*HTMLAttributes?$/.test(expressionText);
+        })
+        .map((extendNode) => extendNode.getTypeArguments()[0]?.getText())
+        .filter((typeText): typeText is string => Boolean(typeText))
+        .map((typeText) => cleanType(typeText));
+
+    if (inheritedElementTypes.length === 0) {
+        return undefined;
+    }
+
+    const uniqueElementTypes = Array.from(new Set(inheritedElementTypes));
+    const inheritedDescription =
+        uniqueElementTypes.length === 1
+            ? `Inherits props from \`${uniqueElementTypes[0]}\`.`
+            : `Inherits props from ${uniqueElementTypes
+                  .map((t) => `\`${t}\``)
+                  .join(", ")}.`;
+
+    return buildArgTypeRow({
+        key: `${interfaceName}.__inheritedHtmlProps`,
+        name: "",
+        category,
+        tabGroup: interfaceJsDocMeta.tabGroup,
+        description: inheritedDescription,
+    });
+}
+
+function getInterfaceArgTypes(
+    sourceFile: SourceFile,
+    interfaceName: string
+): GeneratedArgType[] {
+    const interfaceDeclaration = sourceFile.getInterfaceOrThrow(interfaceName);
+    const interfaceJsDocMeta = getJsDocMeta(interfaceDeclaration);
+    const declaredTabGroups = interfaceJsDocMeta.tabGroups ?? [
+        interfaceJsDocMeta.tabGroup,
+    ];
+    const hasMultipleTabs = declaredTabGroups.filter(Boolean).length > 1;
+
+    const category = getCategoryName(interfaceName, interfaceDeclaration);
+    const inheritedHtmlAttributesRow = getInheritedHtmlAttributesRow(
+        interfaceName,
+        interfaceDeclaration,
+        interfaceJsDocMeta,
+        category
+    );
+
+    // An interface with no own members is treated as a pass-through alias:
+    // emit a single descriptive row instead of expanding all inherited HTML/React props.
+    const ownMembers = interfaceDeclaration.getMembers();
+
+    if (ownMembers.length === 0) {
+        return [
+            buildArgTypeRow({
+                key: interfaceName,
+                name: "",
+                category,
+                tabGroup: interfaceJsDocMeta.tabGroup,
+                deprecated: interfaceJsDocMeta.deprecated,
+                description: toStorybookDescription(interfaceJsDocMeta),
+            }),
+            ...(inheritedHtmlAttributesRow ? [inheritedHtmlAttributesRow] : []),
+        ];
+    }
+
+    const resolvedProperties = getResolvedProperties(interfaceDeclaration);
+
+    const indexSignatureRows = interfaceDeclaration
+        .getIndexSignatures()
+        .map((indexSignature) => {
+            const jsDocMeta = getJsDocMeta(indexSignature);
+            const keyName = indexSignature.getKeyName();
+            const keyType = cleanType(
+                indexSignature.getKeyTypeNode().getText()
+            );
+            const displayName = `[${keyName}: ${keyType}]`;
+
+            return buildArgTypeRow({
+                category,
+                defaultValue: jsDocMeta.defaultValue,
+                deprecated: jsDocMeta.deprecated,
+                description: toStorybookDescription(jsDocMeta),
+                key: `${interfaceName}.${displayName}`,
+                name: displayName,
+                tabGroup: interfaceJsDocMeta.tabGroup,
+                typeSummary: getIndexSignatureTypeText(indexSignature),
+            });
+        });
+
+    const propertyRows = resolvedProperties.flatMap((symbol) => {
+        const property = getPropertyDeclaration(symbol);
+
+        if (!property) {
+            return [];
+        }
+
+        const propertyName = getPropertyName(property);
+        const jsDocMeta = getJsDocMeta(property);
+
+        return [
+            buildArgTypeRow({
+                category,
+                defaultValue: jsDocMeta.defaultValue,
+                deprecated: jsDocMeta.deprecated,
+                description: toStorybookDescription(jsDocMeta),
+                key: `${interfaceName}.${propertyName}`,
+                name: propertyName,
+                tabGroup: interfaceJsDocMeta.tabGroup,
+                typeSummary: getPropertyTypeText(property),
+            }),
+        ];
+    });
+
+    const baseRows: GeneratedArgType[] = [
+        ...(inheritedHtmlAttributesRow ? [inheritedHtmlAttributesRow] : []),
+        ...propertyRows,
+        ...indexSignatureRows,
+    ];
+
+    if (!hasMultipleTabs) {
+        return baseRows;
+    }
+
+    // When an interface declares multiple @storybookSection tabs, duplicate rows
+    // into each tab so the props table renders one complete copy per tab.
+    return (declaredTabGroups.filter(Boolean) as string[]).flatMap((tab) =>
+        baseRows.map((row) => ({
+            ...row,
+            key: `${tab}__${row.key}`,
+            value: {
+                ...row.value,
+                table: {
+                    ...row.value.table,
+                    tabGroup: tab,
+                },
+            },
+        }))
+    );
+}
+
+function getTypeAliasArgTypes(
+    sourceFile: SourceFile,
+    typeName: string
+): GeneratedArgType[] {
+    const typeAlias = sourceFile.getTypeAliasOrThrow(typeName);
+    const jsDocMeta = getJsDocMeta(typeAlias);
+    const category = getCategoryName(typeName, typeAlias);
+
+    const typeNodeKind = typeAlias.getTypeNodeOrThrow().getKindName();
+    const isOmitAlias = /^Omit<.+>$/.test(
+        typeAlias.getTypeNodeOrThrow().getText().replace(/\s+/g, " ").trim()
+    );
+    const isTypeLiteralAlias = typeNodeKind === "TypeLiteral";
+    const isCompositeAlias =
+        typeNodeKind === "IntersectionType" || typeNodeKind === "UnionType";
+
+    // Expandable type aliases: resolve individual properties
+    if (isOmitAlias || isTypeLiteralAlias || isCompositeAlias) {
+        const resolvedProperties = getResolvedProperties(typeAlias);
+
+        const propertyRows = resolvedProperties.flatMap((symbol) => {
+            const declarations = symbol
+                .getDeclarations()
+                .filter(
+                    (d): d is PropertySignature =>
+                        d.getKindName() === "PropertySignature"
+                );
+            const property = declarations[0];
+
+            if (!property) {
+                return [];
+            }
+
+            const propertyName = getPropertyName(property);
+            const propertyJsDocMeta = mergeJsDocMeta(
+                declarations.map((declaration) => getJsDocMeta(declaration))
+            );
+            const resolvedSymbolType = symbol.getTypeAtLocation(typeAlias);
+
+            const propertySummary =
+                resolvedSymbolType.isAny() || resolvedSymbolType.isUnknown()
+                    ? getPropertyTypeText(property)
+                    : getSummaryTypeText(resolvedSymbolType, typeAlias);
+
+            return [
+                buildArgTypeRow({
+                    category,
+                    defaultValue: propertyJsDocMeta.defaultValue,
+                    deprecated: propertyJsDocMeta.deprecated,
+                    description: toStorybookDescription(propertyJsDocMeta),
+                    key: `${typeName}.${propertyName}`,
+                    name: propertyName,
+                    tabGroup: jsDocMeta.tabGroup,
+                    typeSummary: propertySummary,
+                }),
+            ];
+        });
+
+        if (!isCompositeAlias) {
+            return propertyRows;
+        }
+
+        // Composite types get a header row showing the full union/intersection shape
+        return [
+            buildArgTypeRow({
+                category,
+                defaultValue: jsDocMeta.defaultValue,
+                deprecated: jsDocMeta.deprecated,
+                description: toStorybookDescription(jsDocMeta),
+                key: typeName,
+                name: category,
+                tabGroup: jsDocMeta.tabGroup,
+                typeSummary: getSummaryTypeText(
+                    typeAlias.getType(),
+                    typeAlias,
+                    typeAlias.getTypeNodeOrThrow().getText()
+                ),
+            }),
+            ...propertyRows,
+        ];
+    }
+
+    // Simple type aliases (e.g. string unions, mapped types): single summary row
+    return [
+        buildArgTypeRow({
+            category,
+            defaultValue: jsDocMeta.defaultValue,
+            deprecated: jsDocMeta.deprecated,
+            description: toStorybookDescription(jsDocMeta),
+            key: typeName,
+            name: category,
+            tabGroup: jsDocMeta.tabGroup,
+            typeSummary: getSummaryTypeText(
+                typeAlias.getType(),
+                typeAlias,
+                typeAlias.getTypeNodeOrThrow().getText()
+            ),
+        }),
+    ];
+}
+
+/** Build rows for `export const FooProps = Component<...>` declarations (inherited DOM props). */
+function getInheritedComponentArgTypes(
+    sourceFile: SourceFile
+): GeneratedArgType[] {
+    return sourceFile
+        .getVariableStatements()
+        .filter((statement) => statement.isExported())
+        .filter((statement) => {
+            const declaration = statement.getDeclarations()[0];
+
+            return declaration
+                ?.getInitializer()
+                ?.getText()
+                .includes("Component<");
+        })
+        .flatMap((statement) => {
+            if (hasSkipTag(statement)) {
+                return [];
+            }
+
+            const declaration = statement.getDeclarations()[0];
+
+            if (!declaration) {
+                return [];
+            }
+
+            const name = declaration.getName();
+            const jsDocMeta = getJsDocMeta(statement);
+
+            return [
+                buildArgTypeRow({
+                    category: name,
+                    defaultValue: jsDocMeta.defaultValue,
+                    deprecated: jsDocMeta.deprecated,
+                    description: toStorybookDescription(jsDocMeta),
+                    key: name,
+                    name: "",
+                    tabGroup: jsDocMeta.tabGroup,
+                    typeSummary: "",
+                }),
+            ];
+        });
+}
+
+/** Generate argTypes for a single component's types.ts file. */
+async function generateForSourceFile(project: Project, sourceFilePath: string) {
+    const sourceFile = getSourceFile(project, sourceFilePath);
+
+    if (isSkippedFile(sourceFile)) {
+        return;
+    }
+
+    const outputFile = getOutputFile(sourceFilePath);
+    const exportName = getExportName(sourceFilePath);
+
+    const typeSections = [
+        ...sourceFile
+            .getInterfaces()
+            .map((declaration) => declaration.getName()),
+        ...sourceFile
+            .getTypeAliases()
+            .map((declaration) => declaration.getName()),
+    ];
+
+    const rows = [
+        ...typeSections.flatMap((typeName) => {
+            const interfaceDeclaration = sourceFile.getInterface(typeName);
+
+            if (interfaceDeclaration) {
+                if (hasSkipTag(interfaceDeclaration)) {
+                    return [];
+                }
+
+                return getInterfaceArgTypes(sourceFile, typeName);
+            }
+
+            const typeAlias = sourceFile.getTypeAlias(typeName);
+
+            if (typeAlias) {
+                if (hasSkipTag(typeAlias)) {
+                    return [];
+                }
+
+                return getTypeAliasArgTypes(sourceFile, typeName);
+            }
+
+            throw new Error(
+                `Unable to find interface or type alias: ${typeName}`
+            );
+        }),
+        ...getInheritedComponentArgTypes(sourceFile),
+    ];
+
+    const sortedRows = rows.toSorted((a, b) => a.key.localeCompare(b.key));
+
+    const generatedArgTypes = Object.fromEntries(
+        sortedRows.map((row) => [row.key, row.value])
+    );
+
+    const generated = `// This file is generated. Do not edit manually.
+// Run: npm run storybook:argtypes
+
+export const ${exportName} = ${JSON.stringify(
+        generatedArgTypes,
+        null,
+        4
+    )} satisfies Record<string, unknown>;
+`;
+
+    await fs.mkdir(path.dirname(outputFile), { recursive: true });
+    await fs.writeFile(outputFile, generated);
+
+    console.log(
+        `[storybook:argtypes] generated ${path.relative(
+            process.cwd(),
+            outputFile
+        )}`
+    );
+}
+
+// =============================================================================
+// Registry Generation
+// =============================================================================
+
+/**
+ * Generate the global registry mapping story titles to their argTypes imports.
+ * Scans all story files to discover which component types.ts each story uses.
  */
 async function generateStorybookArgTypesRegistry() {
     const project = createProject();
@@ -647,534 +1100,10 @@ ${mapRows.sort().join("\n")}
     );
 }
 
-/**
- * Generate component-level argTypes from a single `types.ts` source file.
- *
- * Extracts all exported interfaces and type aliases, parses their JSDoc
- * metadata, and emits `.storybook/generated/[component].argtypes.generated.ts`.
- * Each generated file contains a single export mapping prop names to their
- * Storybook control metadata (type, description, deprecation, etc.).
- *
- * @param project ts-morph Project configured with tsconfig
- * @param sourceFilePath Absolute path to `src/[component]/types.ts`
- */
-async function generateForSourceFile(project: Project, sourceFilePath: string) {
-    const sourceFile = getSourceFile(project, sourceFilePath);
+// =============================================================================
+// CLI Entrypoint
+// =============================================================================
 
-    if (isSkippedFile(sourceFile)) {
-        return;
-    }
-
-    const outputFile = getOutputFile(sourceFilePath);
-    const exportName = getExportName(sourceFilePath);
-    const typeSections = getTypeSections(sourceFile);
-
-    /** Resolve PropertySignature declarations from a Symbol. */
-    function getPropertyDeclarations(symbol: TsMorphSymbol) {
-        const declarations = symbol.getDeclarations();
-
-        return declarations.filter(
-            (d): d is PropertySignature =>
-                d.getKindName() === "PropertySignature"
-        ) as PropertySignature[];
-    }
-
-    /** Resolve a Symbol to its first PropertySignature declaration, if available. */
-    function getPropertyDeclaration(symbol: TsMorphSymbol) {
-        return getPropertyDeclarations(symbol)[0];
-    }
-
-    /** Check whether a symbol's declaration originates from node_modules. */
-    function isFromNodeModules(symbol: TsMorphSymbol) {
-        const declaration = symbol.getDeclarations()[0];
-
-        if (!declaration) {
-            return true;
-        }
-
-        return declaration
-            .getSourceFile()
-            .getFilePath()
-            .includes("node_modules");
-    }
-
-    function buildTableMeta({
-        category,
-        defaultValue,
-        tabGroup,
-        summary,
-    }: {
-        category: string;
-        defaultValue?: string;
-        tabGroup?: string;
-        summary: string | undefined;
-    }) {
-        return {
-            category,
-            defaultValue: defaultValue
-                ? {
-                      summary: defaultValue,
-                  }
-                : undefined,
-            tabGroup,
-            type: {
-                summary,
-            },
-        };
-    }
-
-    function getInheritedHtmlAttributesRow(
-        interfaceName: string,
-        interfaceDeclaration: InterfaceDeclaration,
-        interfaceJsDocMeta: JsDocMeta,
-        category: string
-    ): GeneratedArgType | undefined {
-        const inheritedElementTypes = interfaceDeclaration
-            .getExtends()
-            .filter((extendNode) => {
-                const expressionText = extendNode.getExpression().getText();
-
-                return /(?:React\.)?\w*HTMLAttributes?$/.test(expressionText);
-            })
-            .map((extendNode) => extendNode.getTypeArguments()[0]?.getText())
-            .filter((typeText): typeText is string => Boolean(typeText))
-            .map((typeText) => cleanType(typeText));
-
-        if (inheritedElementTypes.length === 0) {
-            return undefined;
-        }
-
-        const uniqueElementTypes = Array.from(new Set(inheritedElementTypes));
-        const inheritedDescription =
-            uniqueElementTypes.length === 1
-                ? `Inherits props from \`${uniqueElementTypes[0]}\`.`
-                : `Inherits props from ${uniqueElementTypes
-                      .map((t) => `\`${t}\``)
-                      .join(", ")}.`;
-
-        return {
-            key: `${interfaceName}.__inheritedHtmlProps`,
-            value: {
-                control: false,
-                deprecated: undefined,
-                description: inheritedDescription,
-                name: "",
-                table: buildTableMeta({
-                    category,
-                    defaultValue: undefined,
-                    tabGroup: interfaceJsDocMeta.tabGroup,
-                    summary: undefined,
-                }),
-            },
-        };
-    }
-
-    function mergeJsDocMeta(metas: JsDocMeta[]): JsDocMeta {
-        const descriptions = metas
-            .map((meta) => meta.description)
-            .filter((value): value is string => Boolean(value));
-        const remarks = metas
-            .map((meta) => meta.remarks)
-            .filter((value): value is string => Boolean(value));
-        const examples = metas
-            .flatMap((meta) => meta.examples ?? [])
-            .filter(Boolean);
-
-        return {
-            description:
-                descriptions.length > 0
-                    ? Array.from(new Set(descriptions)).join("\n\n")
-                    : undefined,
-            remarks:
-                remarks.length > 0
-                    ? Array.from(new Set(remarks)).join("\n\n")
-                    : undefined,
-            examples:
-                examples.length > 0 ? Array.from(new Set(examples)) : undefined,
-            deprecated: metas.find((meta) => meta.deprecated !== undefined)
-                ?.deprecated,
-            defaultValue: metas.find((meta) => meta.defaultValue !== undefined)
-                ?.defaultValue,
-            tabGroup: metas.find((meta) => meta.tabGroup !== undefined)
-                ?.tabGroup,
-        };
-    }
-
-    /** Build argTypes rows for interface properties (including inherited). */
-    function getInterfaceArgTypes(interfaceName: string): GeneratedArgType[] {
-        const interfaceDeclaration =
-            sourceFile.getInterfaceOrThrow(interfaceName);
-        const interfaceJsDocMeta = getJsDocMeta(interfaceDeclaration);
-        const declaredTabGroups = interfaceJsDocMeta.tabGroups ?? [
-            interfaceJsDocMeta.tabGroup,
-        ];
-        const hasMultipleTabs = declaredTabGroups.filter(Boolean).length > 1;
-
-        const category =
-            interfaceDeclaration.getTypeParameters().length > 0
-                ? `${interfaceName}<T>`
-                : interfaceName;
-        const inheritedHtmlAttributesRow = getInheritedHtmlAttributesRow(
-            interfaceName,
-            interfaceDeclaration,
-            interfaceJsDocMeta,
-            category
-        );
-
-        // An interface with no own members (empty body, only extends) is treated
-        // as a pass-through alias: emit a single descriptive row instead of
-        // expanding all the inherited HTML/React props.
-        const ownMembers = interfaceDeclaration.getMembers();
-
-        if (ownMembers.length === 0) {
-            const description = toStorybookDescription(interfaceJsDocMeta);
-
-            return [
-                {
-                    key: interfaceName,
-                    value: {
-                        control: false,
-                        deprecated: interfaceJsDocMeta.deprecated,
-                        description: description || undefined,
-                        name: "",
-                        table: buildTableMeta({
-                            category,
-                            defaultValue: undefined,
-                            tabGroup: interfaceJsDocMeta.tabGroup,
-                            summary: undefined,
-                        }),
-                    },
-                } satisfies GeneratedArgType,
-                ...(inheritedHtmlAttributesRow
-                    ? [inheritedHtmlAttributesRow]
-                    : []),
-            ];
-        }
-
-        const resolvedProperties = interfaceDeclaration
-            .getType()
-            .getProperties()
-            .filter((symbol) => !isFromNodeModules(symbol))
-            .sort((a, b) => a.getName().localeCompare(b.getName()));
-
-        const indexSignatureRows = interfaceDeclaration
-            .getIndexSignatures()
-            .map((indexSignature) => {
-                const jsDocMeta = getJsDocMeta(indexSignature);
-                const keyName = indexSignature.getKeyName();
-                const keyType = cleanType(
-                    indexSignature.getKeyTypeNode().getText()
-                );
-                const displayName = `[${keyName}: ${keyType}]`;
-
-                return {
-                    key: `${interfaceName}.${displayName}`,
-                    value: {
-                        control: false,
-                        deprecated: jsDocMeta.deprecated,
-                        description: toStorybookDescription(jsDocMeta),
-                        name: displayName,
-                        table: buildTableMeta({
-                            category,
-                            defaultValue: jsDocMeta.defaultValue,
-                            tabGroup: interfaceJsDocMeta.tabGroup,
-                            summary: getIndexSignatureTypeText(indexSignature),
-                        }),
-                    },
-                } satisfies GeneratedArgType;
-            });
-
-        const baseRows: GeneratedArgType[] = [
-            ...(inheritedHtmlAttributesRow ? [inheritedHtmlAttributesRow] : []),
-            ...resolvedProperties.flatMap((symbol) => {
-                const property = getPropertyDeclaration(symbol);
-
-                if (!property) {
-                    return [];
-                }
-
-                const propertyName = property
-                    .getName()
-                    .replace(/^['"]|['"]$/g, "");
-                const jsDocMeta = getJsDocMeta(property);
-
-                return [
-                    {
-                        key: `${interfaceName}.${propertyName}`,
-                        value: {
-                            control: false,
-                            deprecated: jsDocMeta.deprecated,
-                            description: toStorybookDescription(jsDocMeta),
-                            name: propertyName,
-                            table: buildTableMeta({
-                                category,
-                                defaultValue: jsDocMeta.defaultValue,
-                                tabGroup: interfaceJsDocMeta.tabGroup,
-                                summary: getPropertyTypeText(property),
-                            }),
-                        },
-                    } satisfies GeneratedArgType,
-                ];
-            }),
-            ...indexSignatureRows,
-        ];
-
-        if (!hasMultipleTabs) {
-            return baseRows;
-        }
-
-        // Emit one copy of each row per declared tab, with unique keys.
-        return (declaredTabGroups.filter(Boolean) as string[]).flatMap((tab) =>
-            baseRows.map((row) => ({
-                ...row,
-                key: `${tab}__${row.key}`,
-                value: {
-                    ...row.value,
-                    table: {
-                        ...row.value.table,
-                        tabGroup: tab,
-                    },
-                },
-            }))
-        );
-    }
-
-    /** Build argTypes rows for a type alias declaration. */
-    function getTypeAliasArgTypes(typeName: string): GeneratedArgType[] {
-        const typeAlias = sourceFile.getTypeAliasOrThrow(typeName);
-        const jsDocMeta = getJsDocMeta(typeAlias);
-
-        const category =
-            typeAlias.getTypeParameters().length > 0
-                ? `${typeName}<T>`
-                : typeName;
-
-        const normalizedTypeText = typeAlias
-            .getTypeNodeOrThrow()
-            .getText()
-            .replace(/\s+/g, " ")
-            .trim();
-        const typeNodeKind = typeAlias.getTypeNodeOrThrow().getKindName();
-
-        const isOmitAlias = /^Omit<.+>$/.test(normalizedTypeText);
-        const isTypeLiteralAlias = typeNodeKind === "TypeLiteral";
-        const isCompositeAlias =
-            typeNodeKind === "IntersectionType" || typeNodeKind === "UnionType";
-
-        if (isOmitAlias || isTypeLiteralAlias || isCompositeAlias) {
-            const resolvedProperties = typeAlias
-                .getType()
-                .getProperties()
-                .filter((symbol) => !isFromNodeModules(symbol))
-                .sort((a, b) => a.getName().localeCompare(b.getName()));
-
-            const propertyRows = resolvedProperties.flatMap((symbol) => {
-                const declarations = getPropertyDeclarations(symbol);
-                const property = declarations[0];
-
-                if (!property) {
-                    return [];
-                }
-
-                const propertyName = property
-                    .getName()
-                    .replace(/^['"]|['"]$/g, "");
-                const propertyJsDocMeta = mergeJsDocMeta(
-                    declarations.map((declaration) => getJsDocMeta(declaration))
-                );
-                const resolvedSymbolType = symbol.getTypeAtLocation(typeAlias);
-
-                const propertySummary =
-                    resolvedSymbolType.isAny() || resolvedSymbolType.isUnknown()
-                        ? getPropertyTypeText(property)
-                        : getSummaryTypeText(resolvedSymbolType, typeAlias);
-
-                return [
-                    {
-                        key: `${typeName}.${propertyName}`,
-                        value: {
-                            control: false,
-                            deprecated: propertyJsDocMeta.deprecated,
-                            description:
-                                toStorybookDescription(propertyJsDocMeta),
-                            name: propertyName,
-                            table: buildTableMeta({
-                                category,
-                                defaultValue: propertyJsDocMeta.defaultValue,
-                                tabGroup: jsDocMeta.tabGroup,
-                                summary: propertySummary,
-                            }),
-                        },
-                    } satisfies GeneratedArgType,
-                ];
-            });
-
-            if (!isCompositeAlias) {
-                return propertyRows;
-            }
-
-            return [
-                {
-                    key: typeName,
-                    value: {
-                        name: category,
-                        description: toStorybookDescription(jsDocMeta),
-                        deprecated: jsDocMeta.deprecated,
-                        control: false,
-                        table: buildTableMeta({
-                            category,
-                            defaultValue: jsDocMeta.defaultValue,
-                            tabGroup: jsDocMeta.tabGroup,
-                            summary: getSummaryTypeText(
-                                typeAlias.getType(),
-                                typeAlias,
-                                typeAlias.getTypeNodeOrThrow().getText()
-                            ),
-                        }),
-                    },
-                },
-                ...propertyRows,
-            ];
-        }
-
-        return [
-            {
-                key: typeName,
-                value: {
-                    name: category,
-                    description: toStorybookDescription(jsDocMeta),
-                    deprecated: jsDocMeta.deprecated,
-                    control: false,
-                    table: buildTableMeta({
-                        category,
-                        defaultValue: jsDocMeta.defaultValue,
-                        tabGroup: jsDocMeta.tabGroup,
-                        // For alias definitions, prefer expanded literal unions
-                        // when TypeScript can resolve them (e.g. `Exclude<...>`).
-                        summary: getSummaryTypeText(
-                            typeAlias.getType(),
-                            typeAlias,
-                            typeAlias.getTypeNodeOrThrow().getText()
-                        ),
-                    }),
-                },
-            },
-        ];
-    }
-
-    /**
-     * Build a single descriptive row for `export const FooProps = Component<...>`
-     * declarations that exist only to document inherited DOM props.
-     */
-    function getInheritedComponentArgTypes(): GeneratedArgType[] {
-        return sourceFile
-            .getVariableStatements()
-            .filter((statement) => statement.isExported())
-            .filter((statement) => {
-                const declaration = statement.getDeclarations()[0];
-
-                return declaration
-                    ?.getInitializer()
-                    ?.getText()
-                    .includes("Component<");
-            })
-            .flatMap((statement) => {
-                if (hasSkipTag(statement)) {
-                    return [];
-                }
-
-                const declaration = statement.getDeclarations()[0];
-
-                if (!declaration) {
-                    return [];
-                }
-
-                const name = declaration.getName();
-                const jsDocMeta = getJsDocMeta(statement);
-
-                return [
-                    {
-                        key: name,
-                        value: {
-                            control: false,
-                            deprecated: jsDocMeta.deprecated,
-                            description: toStorybookDescription(jsDocMeta),
-                            name: "",
-                            table: buildTableMeta({
-                                category: name,
-                                defaultValue: jsDocMeta.defaultValue,
-                                tabGroup: jsDocMeta.tabGroup,
-                                summary: "",
-                            }),
-                        },
-                    } satisfies GeneratedArgType,
-                ];
-            });
-    }
-
-    const rows = [
-        ...typeSections.flatMap((typeName) => {
-            const interfaceDeclaration = sourceFile.getInterface(typeName);
-
-            if (interfaceDeclaration) {
-                if (hasSkipTag(interfaceDeclaration)) {
-                    return [];
-                }
-
-                return getInterfaceArgTypes(typeName);
-            }
-
-            const typeAlias = sourceFile.getTypeAlias(typeName);
-
-            if (typeAlias) {
-                if (hasSkipTag(typeAlias)) {
-                    return [];
-                }
-
-                return getTypeAliasArgTypes(typeName);
-            }
-
-            throw new Error(
-                `Unable to find interface or type alias: ${typeName}`
-            );
-        }),
-        ...getInheritedComponentArgTypes(),
-    ];
-
-    const sortedRows = rows.sort((a, b) => a.key.localeCompare(b.key));
-
-    const generatedArgTypes = Object.fromEntries(
-        sortedRows.map((row) => [row.key, row.value])
-    );
-
-    const generated = `// This file is generated. Do not edit manually.
-// Run: npm run storybook:argtypes
-
-export const ${exportName} = ${JSON.stringify(
-        generatedArgTypes,
-        null,
-        4
-    )} satisfies Record<string, unknown>;
-`;
-
-    await fs.mkdir(path.dirname(outputFile), { recursive: true });
-    await fs.writeFile(outputFile, generated);
-
-    console.log(
-        `[storybook:argtypes] generated ${path.relative(
-            process.cwd(),
-            outputFile
-        )}`
-    );
-}
-
-/**
- * Generate all component argTypes files and update the global registry.
- *
- * Orchestrates the full generation pipeline: generates per-component files
- * from all `src/*\/types.ts` files, then emits the global registry that
- * Storybook uses to populate props documentation.
- */
 async function generateAll() {
     const project = createProject();
     const sourceFiles = project.getSourceFiles(sourceFileGlob);
@@ -1188,14 +1117,6 @@ async function generateAll() {
     console.log(`[storybook:argtypes] generated ${sourceFiles.length} files`);
 }
 
-/**
- * Runs a full generation pass immediately. If `--watch` is provided,
- * watches `src/` and `stories/` for changes and regenerates affected files.
- *
- * @remarks
- * Watch mode only regenerates when `types.ts` or `.stories.ts` files change,
- * ignoring generated files and other file types to avoid circular triggers.
- */
 async function main() {
     const isWatchMode = process.argv.includes("--watch");
 
@@ -1211,7 +1132,6 @@ async function main() {
         ignoreInitial: true,
         persistent: true,
         ignored: (filePath, stats) => {
-            // Do not ignore directories, otherwise chokidar cannot enter src.
             if (!stats?.isFile()) {
                 return false;
             }
@@ -1245,10 +1165,6 @@ async function main() {
                 return;
             }
 
-            /**
-             * Recreate project on every watched generate.
-             * This makes watch mode read the latest file content.
-             */
             await generateForSourceFile(createProject(), resolvedFilePath);
             await generateStorybookArgTypesRegistry();
         } catch (error) {
