@@ -40,8 +40,10 @@ function getExportedModules(sourceFile: SourceFile): string[] {
     return [...modules].sort((a, b) => a.localeCompare(b));
 }
 
-/** Get all named export symbols from a module's index.ts file. */
-function getAllNamedExports(sourceFile: SourceFile): string[] {
+/** Get all named export symbols from a module's index.ts file.
+ *  Returns sorted alphabetically so inferMainName picks a deterministic first PascalCase name.
+ */
+function getSortedNamedExports(sourceFile: SourceFile): string[] {
     const symbols = new Set<string>();
 
     for (const [name] of sourceFile.getExportedDeclarations()) {
@@ -49,18 +51,6 @@ function getAllNamedExports(sourceFile: SourceFile): string[] {
     }
 
     return [...symbols].sort((a, b) => a.localeCompare(b));
-}
-
-/** Infer the component's display name from its exported symbols.
- *  - From the exported symbols, pick the first PascalCase name
- *  - Fallback: convert the kebab-case module folder name to PascalCase
- */
-function inferMainName(
-    _moduleName: string,
-    _exportedSymbols: string[]
-): string {
-    // TODO: implement
-    return "";
 }
 
 /** Extract metadata from source files (description + searchKeys).
@@ -111,8 +101,9 @@ async function buildAndWriteCatalog(project: Project) {
             continue;
         }
 
-        const namedExports = getAllNamedExports(moduleIndexFile);
-        const name = inferMainName(moduleName, namedExports);
+        const sortedNamedExports = getSortedNamedExports(moduleIndexFile);
+        const name = sortedNamedExports[0];
+
         const { description, keywords } = extractSourceMetadata(
             moduleDir,
             moduleName
