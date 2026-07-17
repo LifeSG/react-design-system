@@ -1,64 +1,50 @@
 import clsx from "clsx";
 
 import * as styles from "./table.styles";
+import type {
+    BodyProps,
+    CellProps,
+    ContainerProps,
+    HeaderProps,
+    HeadProps,
+    RowProps,
+    TableProps,
+} from "./types";
 
-const Head = ({
-    children,
-    ...props
-}: React.HTMLAttributes<HTMLTableSectionElement>) => (
+const Head = ({ children, ...props }: HeadProps) => (
     <thead {...props}>{children}</thead>
 );
 Head.displayName = "Table.Head";
 
-const Body = ({
-    children,
-    className,
-    ...props
-}: React.HTMLAttributes<HTMLTableSectionElement>) => (
+const Body = ({ children, className, ...props }: BodyProps) => (
     <tbody className={clsx(styles.tableBody, className)} {...props}>
         {children}
     </tbody>
 );
 Body.displayName = "Table.Body";
 
-const Row = ({
-    children,
-    className,
-    ...props
-}: React.HTMLAttributes<HTMLTableRowElement>) => (
+const Row = ({ children, className, ...props }: RowProps) => (
     <tr className={clsx(styles.bodyRow, className)} {...props}>
         {children}
     </tr>
 );
 Row.displayName = "Table.Row";
 
-const Cell = ({
-    children,
-    className,
-    ...props
-}: React.TdHTMLAttributes<HTMLTableCellElement>) => (
+const Cell = ({ children, className, ...props }: CellProps) => (
     <td className={clsx(styles.bodyCell, className)} {...props}>
         {children}
     </td>
 );
 Cell.displayName = "Table.Cell";
 
-const Header = ({
-    children,
-    className,
-    ...props
-}: React.ThHTMLAttributes<HTMLTableCellElement>) => (
+const Header = ({ children, className, ...props }: HeaderProps) => (
     <th className={clsx(styles.headerCell, className)} {...props}>
         {children}
     </th>
 );
 Header.displayName = "Table.HeaderCell";
 
-const Container = ({
-    children,
-    className,
-    ...props
-}: React.HTMLAttributes<HTMLDivElement>) => (
+const Container = ({ children, className, ...props }: ContainerProps) => (
     <div
         className={clsx(styles.tableWrapper, className)}
         data-testid="table-wrapper"
@@ -69,11 +55,7 @@ const Container = ({
 );
 Container.displayName = "Table.Container";
 
-const TableEl = ({
-    children,
-    className,
-    ...props
-}: React.TableHTMLAttributes<HTMLTableElement>) => (
+const TableEl = ({ children, className, ...props }: TableProps) => (
     <table className={clsx(styles.tableComponent, className)} {...props}>
         {children}
     </table>

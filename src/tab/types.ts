@@ -1,5 +1,6 @@
 import type { FadeColorSet } from "../shared/fade-wrapper";
 
+// @storybookSection Tab
 /**
  * Props for the `Tab` component.
  */
@@ -48,6 +49,7 @@ export interface TabProps {
     fadeColor?: string[] | FadeColorSet | undefined;
 }
 
+// @storybookSection Tab.Item
 /**
  * Props for the `Tab.Item` sub-component.
  */
@@ -70,6 +72,7 @@ export interface TabItemProps {
     width?: string | undefined;
 }
 
+// @storybookSection Tab.Item
 /**
  * Configuration for the optional addon element displayed next to a tab title.
  */

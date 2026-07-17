@@ -5,6 +5,8 @@ export type ModalAnimationDirection = "top" | "bottom" | "left" | "right";
 
 /**
  * Props for the `ModalV2.Card` sub-component.
+ *
+ * @storybookSection Sub Components
  */
 export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
@@ -13,6 +15,8 @@ export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
 
 /**
  * Props for the `ModalV2.CloseButton` slot.
+ *
+ * @storybookSection Sub Components
  */
 export interface ModalCloseButtonProps
     extends React.HTMLAttributes<HTMLDivElement> {
@@ -21,6 +25,8 @@ export interface ModalCloseButtonProps
 
 /**
  * Props for the `ModalV2.Content` slot.
+ *
+ * @storybookSection Sub Components
  */
 export interface ModalContentProps
     extends React.HTMLAttributes<HTMLDivElement> {
@@ -30,6 +36,8 @@ export interface ModalContentProps
 
 /**
  * Props for the `ModalV2.Footer` slot.
+ *
+ * @storybookSection Sub Components
  */
 export interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
@@ -45,11 +53,15 @@ export interface ModalFooterProps extends React.HTMLAttributes<HTMLDivElement> {
 
 /**
  * Props for the `ModalV2` component.
+ *
+ * @storybookSection Main
  */
 export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
     /**
      * Controls whether the modal is visible.
+     *
+     * @default false
      */
     show: boolean;
     /**
