@@ -41,7 +41,10 @@ type JsDocMeta = {
     description?: string | undefined;
     examples?: string[] | undefined;
     remarks?: string | undefined;
+    /** Single resolved tab group (first entry of tabGroups). Used by downstream callers that only need one. */
     tabGroup?: string | undefined;
+    /** All declared tab groups — multiple when `@storybookSection` lists comma-separated sections. */
+    tabGroups?: string[] | undefined;
 };
 
 type StorybookTaggedDeclarationNode =
@@ -102,23 +105,30 @@ function getLeadingNonJsDocComments(node: StorybookTaggedDeclarationNode) {
         .filter(Boolean);
 }
 
-/** Parse `@storybookSection ...` from leading non-JSDoc comments. */
-function getStorybookSectionFromLeadingComment(
+/** Parse `@storybookSection ...` from leading non-JSDoc comments. Returns all comma-separated sections. */
+function getStorybookSectionsFromLeadingComment(
     node: StorybookTaggedDeclarationNode
-) {
+): string[] {
     const marker = "@storybookSection";
 
     for (const comment of getLeadingNonJsDocComments(node)) {
         const markerIndex = comment.indexOf(marker);
 
         if (markerIndex >= 0) {
-            const section = comment.slice(markerIndex + marker.length).trim();
+            const raw = comment.slice(markerIndex + marker.length).trim();
 
-            return section || undefined;
+            if (!raw) {
+                return [];
+            }
+
+            return raw
+                .split(",")
+                .map((s) => s.trim())
+                .filter(Boolean);
         }
     }
 
-    return undefined;
+    return [];
 }
 
 /** Return `true` when a leading non-JSDoc comment includes skip marker text. */
@@ -190,14 +200,14 @@ function getJsDocMeta(
         }
     }
 
-    const tabGroup =
+    const tabGroups =
         node.getKindName() === "InterfaceDeclaration" ||
         node.getKindName() === "TypeAliasDeclaration" ||
         node.getKindName() === "VariableStatement"
-            ? getStorybookSectionFromLeadingComment(
+            ? getStorybookSectionsFromLeadingComment(
                   node as StorybookTaggedDeclarationNode
               )
-            : undefined;
+            : [];
 
     return {
         description,
@@ -205,7 +215,8 @@ function getJsDocMeta(
         defaultValue,
         remarks: remarks.length > 0 ? remarks.join("\n\n") : undefined,
         examples: examples.length > 0 ? examples : undefined,
-        tabGroup,
+        tabGroup: tabGroups[0],
+        tabGroups: tabGroups.length > 0 ? tabGroups : undefined,
     };
 }
 
@@ -794,6 +805,10 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
         const interfaceDeclaration =
             sourceFile.getInterfaceOrThrow(interfaceName);
         const interfaceJsDocMeta = getJsDocMeta(interfaceDeclaration);
+        const declaredTabGroups = interfaceJsDocMeta.tabGroups ?? [
+            interfaceJsDocMeta.tabGroup,
+        ];
+        const hasMultipleTabs = declaredTabGroups.filter(Boolean).length > 1;
 
         const category =
             interfaceDeclaration.getTypeParameters().length > 0
@@ -869,7 +884,7 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                 } satisfies GeneratedArgType;
             });
 
-        return [
+        const baseRows: GeneratedArgType[] = [
             ...(inheritedHtmlAttributesRow ? [inheritedHtmlAttributesRow] : []),
             ...resolvedProperties.flatMap((symbol) => {
                 const property = getPropertyDeclaration(symbol);
@@ -903,6 +918,25 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
             }),
             ...indexSignatureRows,
         ];
+
+        if (!hasMultipleTabs) {
+            return baseRows;
+        }
+
+        // Emit one copy of each row per declared tab, with unique keys.
+        return (declaredTabGroups.filter(Boolean) as string[]).flatMap((tab) =>
+            baseRows.map((row) => ({
+                ...row,
+                key: `${tab}__${row.key}`,
+                value: {
+                    ...row.value,
+                    table: {
+                        ...row.value.table,
+                        tabGroup: tab,
+                    },
+                },
+            }))
+        );
     }
 
     /** Build argTypes rows for a type alias declaration. */
