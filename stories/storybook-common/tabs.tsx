@@ -1,7 +1,7 @@
 import { css } from "@linaria/core";
 import clsx from "clsx";
 import { useState } from "react";
-import { Border, Colour, Font, ThemeProvider } from "src/theme";
+import { Border, Colour, Font } from "src/theme";
 import { Typography } from "src/typography";
 
 export interface TabAttribute {
@@ -43,12 +43,10 @@ export const Tabs = ({ tabs }: TabsProps): JSX.Element => {
     };
 
     return (
-        <ThemeProvider>
-            <div className={wrapper}>
-                <div className={buttonRow}>{renderTabs()}</div>
-                <div className={content}>{renderContent()}</div>
-            </div>
-        </ThemeProvider>
+        <div className={wrapper}>
+            <div className={buttonRow}>{renderTabs()}</div>
+            <div className={content}>{renderContent()}</div>
+        </div>
     );
 };
 
@@ -73,6 +71,7 @@ const buttonRow = css`
 
 const buttonBase = css`
     ${Font["body-md-regular"]}
+    color: ${Colour["text-primary"]};
     border: none;
     background: none;
     cursor: pointer;
