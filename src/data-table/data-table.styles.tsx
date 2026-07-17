@@ -72,13 +72,11 @@ export const TableWrapper = styled.div<TableWrapperProps>`
     border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
     border-radius: ${Radius["md"]};
 
-    // Hide scrollbar
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
     &::-webkit-scrollbar {
-        display: none;
-    }
-    * {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        display: none; /* Chrome/Safari/Webkit */
     }
 `;
 
@@ -165,7 +163,7 @@ export const ActionBar = styled.div<ActionBarProps>`
     padding: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
     background-color: ${Colour["bg-selected"]};
-    transition: all 300ms ease;
+    transition: transform ${Motion["duration-350"]} ${Motion["ease-default"]};
     ${(props) => {
         if (props.$float) {
             return css`
