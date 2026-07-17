@@ -2,6 +2,8 @@ import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 
+import camelCase from "lodash/camelCase";
+import upperFirst from "lodash/upperFirst";
 import { Node, Project, type SourceFile } from "ts-morph";
 
 // =============================================================================
@@ -38,19 +40,6 @@ function getExportedModules(sourceFile: SourceFile): string[] {
         }
     }
     return [...modules].sort((a, b) => a.localeCompare(b));
-}
-
-/** Get all named export symbols from a module's index.ts file.
- *  Returns sorted alphabetically so inferMainName picks a deterministic first PascalCase name.
- */
-function getSortedNamedExports(sourceFile: SourceFile): string[] {
-    const symbols = new Set<string>();
-
-    for (const [name] of sourceFile.getExportedDeclarations()) {
-        symbols.add(name);
-    }
-
-    return [...symbols].sort((a, b) => a.localeCompare(b));
 }
 
 /** Extract metadata from source files using ts-morph JSDoc APIs.
@@ -160,8 +149,7 @@ async function buildAndWriteCatalog(project: Project) {
             continue;
         }
 
-        const sortedNamedExports = getSortedNamedExports(moduleIndexFile);
-        const componentName = sortedNamedExports[0];
+        const componentName = upperFirst(camelCase(moduleName));
 
         const { description, keywords } = extractSourceMetadata(
             project,
