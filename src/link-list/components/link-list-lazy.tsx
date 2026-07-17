@@ -8,12 +8,8 @@ import { useResizeDetector } from "react-resize-detector";
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import { Colour } from "../../theme";
 import { Typography } from "../../typography";
-import type {
-    BaseProps,
-    LinkListItemProps,
-    LinkListLazyProps,
-} from "../internal-types";
 import * as styles from "../link-list.styles";
+import type { BaseProps, LinkListItemProps, LinkListLazyProps } from "../types";
 import { LinkListItems } from "./common";
 
 type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
