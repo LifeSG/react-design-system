@@ -658,14 +658,19 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
     const exportName = getExportName(sourceFilePath);
     const typeSections = getTypeSections(sourceFile);
 
-    /** Resolve a Symbol to its PropertySignature declaration, if available. */
-    function getPropertyDeclaration(symbol: TsMorphSymbol) {
+    /** Resolve PropertySignature declarations from a Symbol. */
+    function getPropertyDeclarations(symbol: TsMorphSymbol) {
         const declarations = symbol.getDeclarations();
 
-        return declarations.find(
+        return declarations.filter(
             (d): d is PropertySignature =>
                 d.getKindName() === "PropertySignature"
-        ) as PropertySignature | undefined;
+        ) as PropertySignature[];
+    }
+
+    /** Resolve a Symbol to its first PropertySignature declaration, if available. */
+    function getPropertyDeclaration(symbol: TsMorphSymbol) {
+        return getPropertyDeclarations(symbol)[0];
     }
 
     /** Check whether a symbol's declaration originates from node_modules. */
@@ -707,6 +712,83 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
         };
     }
 
+    function getInheritedHtmlAttributesRow(
+        interfaceName: string,
+        interfaceDeclaration: InterfaceDeclaration,
+        interfaceJsDocMeta: JsDocMeta,
+        category: string
+    ): GeneratedArgType | undefined {
+        const inheritedElementTypes = interfaceDeclaration
+            .getExtends()
+            .filter((extendNode) => {
+                const expressionText = extendNode.getExpression().getText();
+
+                return /(?:React\.)?\w*HTMLAttributes?$/.test(expressionText);
+            })
+            .map((extendNode) => extendNode.getTypeArguments()[0]?.getText())
+            .filter((typeText): typeText is string => Boolean(typeText))
+            .map((typeText) => cleanType(typeText));
+
+        if (inheritedElementTypes.length === 0) {
+            return undefined;
+        }
+
+        const uniqueElementTypes = Array.from(new Set(inheritedElementTypes));
+        const inheritedDescription =
+            uniqueElementTypes.length === 1
+                ? `Inherits props from \`${uniqueElementTypes[0]}\`.`
+                : `Inherits props from ${uniqueElementTypes
+                      .map((t) => `\`${t}\``)
+                      .join(", ")}.`;
+
+        return {
+            key: `${interfaceName}.__inheritedHtmlProps`,
+            value: {
+                control: false,
+                deprecated: undefined,
+                description: inheritedDescription,
+                name: "",
+                table: buildTableMeta({
+                    category,
+                    defaultValue: undefined,
+                    tabGroup: interfaceJsDocMeta.tabGroup,
+                    summary: undefined,
+                }),
+            },
+        };
+    }
+
+    function mergeJsDocMeta(metas: JsDocMeta[]): JsDocMeta {
+        const descriptions = metas
+            .map((meta) => meta.description)
+            .filter((value): value is string => Boolean(value));
+        const remarks = metas
+            .map((meta) => meta.remarks)
+            .filter((value): value is string => Boolean(value));
+        const examples = metas
+            .flatMap((meta) => meta.examples ?? [])
+            .filter(Boolean);
+
+        return {
+            description:
+                descriptions.length > 0
+                    ? Array.from(new Set(descriptions)).join("\n\n")
+                    : undefined,
+            remarks:
+                remarks.length > 0
+                    ? Array.from(new Set(remarks)).join("\n\n")
+                    : undefined,
+            examples:
+                examples.length > 0 ? Array.from(new Set(examples)) : undefined,
+            deprecated: metas.find((meta) => meta.deprecated !== undefined)
+                ?.deprecated,
+            defaultValue: metas.find((meta) => meta.defaultValue !== undefined)
+                ?.defaultValue,
+            tabGroup: metas.find((meta) => meta.tabGroup !== undefined)
+                ?.tabGroup,
+        };
+    }
+
     /** Build argTypes rows for interface properties (including inherited). */
     function getInterfaceArgTypes(interfaceName: string): GeneratedArgType[] {
         const interfaceDeclaration =
@@ -717,6 +799,12 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
             interfaceDeclaration.getTypeParameters().length > 0
                 ? `${interfaceName}<T>`
                 : interfaceName;
+        const inheritedHtmlAttributesRow = getInheritedHtmlAttributesRow(
+            interfaceName,
+            interfaceDeclaration,
+            interfaceJsDocMeta,
+            category
+        );
 
         // An interface with no own members (empty body, only extends) is treated
         // as a pass-through alias: emit a single descriptive row instead of
@@ -742,6 +830,9 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                         }),
                     },
                 } satisfies GeneratedArgType,
+                ...(inheritedHtmlAttributesRow
+                    ? [inheritedHtmlAttributesRow]
+                    : []),
             ];
         }
 
@@ -779,6 +870,7 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
             });
 
         return [
+            ...(inheritedHtmlAttributesRow ? [inheritedHtmlAttributesRow] : []),
             ...resolvedProperties.flatMap((symbol) => {
                 const property = getPropertyDeclaration(symbol);
 
@@ -828,18 +920,23 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
             .getText()
             .replace(/\s+/g, " ")
             .trim();
+        const typeNodeKind = typeAlias.getTypeNodeOrThrow().getKindName();
 
         const isOmitAlias = /^Omit<.+>$/.test(normalizedTypeText);
+        const isTypeLiteralAlias = typeNodeKind === "TypeLiteral";
+        const isCompositeAlias =
+            typeNodeKind === "IntersectionType" || typeNodeKind === "UnionType";
 
-        if (isOmitAlias) {
+        if (isOmitAlias || isTypeLiteralAlias || isCompositeAlias) {
             const resolvedProperties = typeAlias
                 .getType()
                 .getProperties()
                 .filter((symbol) => !isFromNodeModules(symbol))
                 .sort((a, b) => a.getName().localeCompare(b.getName()));
 
-            return resolvedProperties.flatMap((symbol) => {
-                const property = getPropertyDeclaration(symbol);
+            const propertyRows = resolvedProperties.flatMap((symbol) => {
+                const declarations = getPropertyDeclarations(symbol);
+                const property = declarations[0];
 
                 if (!property) {
                     return [];
@@ -848,7 +945,15 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                 const propertyName = property
                     .getName()
                     .replace(/^['"]|['"]$/g, "");
-                const propertyJsDocMeta = getJsDocMeta(property);
+                const propertyJsDocMeta = mergeJsDocMeta(
+                    declarations.map((declaration) => getJsDocMeta(declaration))
+                );
+                const resolvedSymbolType = symbol.getTypeAtLocation(typeAlias);
+
+                const propertySummary =
+                    resolvedSymbolType.isAny() || resolvedSymbolType.isUnknown()
+                        ? getPropertyTypeText(property)
+                        : getSummaryTypeText(resolvedSymbolType, typeAlias);
 
                 return [
                     {
@@ -863,12 +968,39 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                                 category,
                                 defaultValue: propertyJsDocMeta.defaultValue,
                                 tabGroup: jsDocMeta.tabGroup,
-                                summary: getPropertyTypeText(property),
+                                summary: propertySummary,
                             }),
                         },
                     } satisfies GeneratedArgType,
                 ];
             });
+
+            if (!isCompositeAlias) {
+                return propertyRows;
+            }
+
+            return [
+                {
+                    key: typeName,
+                    value: {
+                        name: category,
+                        description: toStorybookDescription(jsDocMeta),
+                        deprecated: jsDocMeta.deprecated,
+                        control: false,
+                        table: buildTableMeta({
+                            category,
+                            defaultValue: jsDocMeta.defaultValue,
+                            tabGroup: jsDocMeta.tabGroup,
+                            summary: getSummaryTypeText(
+                                typeAlias.getType(),
+                                typeAlias,
+                                typeAlias.getTypeNodeOrThrow().getText()
+                            ),
+                        }),
+                    },
+                },
+                ...propertyRows,
+            ];
         }
 
         return [
