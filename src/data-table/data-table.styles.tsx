@@ -16,6 +16,9 @@ import { Typography } from "../typography";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
+interface TableWrapperProps {
+    $scrollable: boolean;
+}
 interface TableProps {
     $end: boolean;
     $scrollable: boolean;
@@ -58,8 +61,12 @@ const fontColor = Colour["text"];
 // =============================================================================
 // STYLES
 // =============================================================================
-export const TableWrapper = styled.div`
-    overflow: auto;
+export const TableWrapper = styled.div<TableWrapperProps>`
+    /* we separate the overflow styles so that sticky elements can still work
+       with horizontal scrolling on supported browsers
+       see: https://github.com/w3c/csswg-drafts/issues/12289 */
+    overflow-y: ${(props) => (props.$scrollable ? "auto" : "clip")};
+    overflow-x: auto;
     display: flex;
     flex-direction: column;
     border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};

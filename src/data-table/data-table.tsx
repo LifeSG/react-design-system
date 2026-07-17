@@ -562,6 +562,7 @@ export const DataTable = ({
                 }
             }}
             tabIndex={0} // scrollable container must be focusable to support keyboard users
+            $scrollable={scrollable}
         >
             <TableContainer>
                 <Table
