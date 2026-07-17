@@ -56,6 +56,7 @@ const preview: Preview = {
         },
         docs: {
             codePanel: true,
+            // https://storybook.js.org/docs/writing-docs/autodocs#customize-the-docs-container
             container: ThemeDocsContainer,
         },
     },

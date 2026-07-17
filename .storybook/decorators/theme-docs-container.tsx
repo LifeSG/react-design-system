@@ -13,6 +13,7 @@ import { THEME_KEY_TO_TYPE_MAPPING, type ThemeMapKey } from "./theme-mapping";
  * Story decorators wrap canvases, but standalone MDX content such as
  * AutoArgTypesTabs renders outside that tree. DocsContainer is the closest
  * shared boundary for those custom docs blocks.
+ * @see https://storybook.js.org/docs/writing-docs/autodocs#customize-the-docs-container
  */
 export function ThemeDocsContainer({
     children,
