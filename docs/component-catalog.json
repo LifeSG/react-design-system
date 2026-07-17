@@ -1,0 +1,494 @@
+{
+  "meta": {
+    "packageName": "@lifesg/react-design-system",
+    "totalModules": 81
+  },
+  "components": [
+    {
+      "name": "Accordion",
+      "importPath": "@lifesg/react-design-system/accordion",
+      "description": "A vertically stacked set of collapsible content panels.\n\nUse `Accordion` to organise related content into independently expandable\nsections with shared expand/collapse state. The container synchronises item\nstates and maintains correct heading-level hierarchy.\n\nSub-components:\n- `Accordion.Item` — a single collapsible panel with an imperative ref handle.",
+      "keywords": []
+    },
+    {
+      "name": "AddonProps",
+      "importPath": "@lifesg/react-design-system/input-group",
+      "description": "A single-line text input optionally paired with a static label, a custom element, or a\ndropdown list selector.\n\nUse `InputGroup` when the input needs contextual decoration such as a unit label,\na country-code dropdown, or a fully custom slot.",
+      "keywords": []
+    },
+    {
+      "name": "Alert",
+      "importPath": "@lifesg/react-design-system/alert",
+      "description": "Displays an inline contextual banner with a severity-coded message.\n\nUse `Alert` to surface feedback, status, or supplementary information without\ninterrupting the user's workflow. Supports five severity tones, an optional\nicon, a call-to-action link, and a collapsible content area for lengthy\nmessages.",
+      "keywords": []
+    },
+    {
+      "name": "Avatar",
+      "importPath": "@lifesg/react-design-system/avatar",
+      "description": "Displays a circular avatar representing a user or entity.\n\nUse when you need a compact visual identity marker in lists, headers, or\ncards. Accepts a string (rendered as an initial) or a JSX element such as an\nimage or icon.",
+      "keywords": []
+    },
+    {
+      "name": "Badge",
+      "importPath": "@lifesg/react-design-system/badge",
+      "description": "Displays a small indicator badge for notifications or status.\n\nUse `Badge` to surface counts or status dots on icons, avatars, and\nnavigation items. Renders as an overlay on a child element or as a standalone\ninline indicator when no child is provided.",
+      "keywords": []
+    },
+    {
+      "name": "BaseAnimationProps",
+      "importPath": "@lifesg/react-design-system/animations",
+      "description": "",
+      "keywords": []
+    },
+    {
+      "name": "BaseFormElementProps",
+      "importPath": "@lifesg/react-design-system/form",
+      "description": "Display mechanism for the form label addon.\n\n- `\"popover\"` renders an icon that triggers a popover.\n- `\"tooltip\"` is currently unsupported.",
+      "keywords": []
+    },
+    {
+      "name": "BaseSliderProps",
+      "importPath": "@lifesg/react-design-system/input-range-slider",
+      "description": "A draggable track slider for selecting one or more numeric values within a\nbounded range.\n\nUse `InputRangeSlider` when the selection does not need to be precise;\nthe user picks a value or a range by dragging thumb controls along a track.",
+      "keywords": []
+    },
+    {
+      "name": "Border",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "All available theme names.",
+      "keywords": []
+    },
+    {
+      "name": "BoxContainer",
+      "importPath": "@lifesg/react-design-system/box-container",
+      "description": "A titled, collapsible section container that groups related content behind a\nlabelled header.\n\nUse `BoxContainer` when you need to visually separate a block of content\nunder a heading and optionally allow users to collapse it. The header supports\na call-to-action slot and a visual status indicator.",
+      "keywords": []
+    },
+    {
+      "name": "BrandType",
+      "importPath": "@lifesg/react-design-system/navbar",
+      "description": "The main site navigation bar with desktop and mobile drawer views.\n\nUse `Navbar` to render the primary navigation header. It displays brand\nlogos, navigation items, and action buttons in a desktop bar, and\nautomatically collapses items into a slide-in drawer for mobile viewports.",
+      "keywords": []
+    },
+    {
+      "name": "Breadcrumb",
+      "importPath": "@lifesg/react-design-system/breadcrumb",
+      "description": "Horizontal breadcrumb navigation trail.\n\nUse `Breadcrumb` to show the user's position within a page hierarchy and\nallow navigation to parent pages. On tablet and below, the trail scrolls\nhorizontally with optional edge fade overlays to indicate clipped content.",
+      "keywords": []
+    },
+    {
+      "name": "BulletType",
+      "importPath": "@lifesg/react-design-system/text-list",
+      "description": "Text size tokens available for list content.",
+      "keywords": []
+    },
+    {
+      "name": "Button",
+      "importPath": "@lifesg/react-design-system/button",
+      "description": "A call-to-action that triggers an action when activated by the user",
+      "keywords": []
+    },
+    {
+      "name": "Calendar",
+      "importPath": "@lifesg/react-design-system/calendar",
+      "description": "Date picker calendar for single-date or multi-date selection.",
+      "keywords": []
+    },
+    {
+      "name": "Card",
+      "importPath": "@lifesg/react-design-system/card",
+      "description": "A themed container surface for grouping related content.",
+      "keywords": []
+    },
+    {
+      "name": "Checkbox",
+      "importPath": "@lifesg/react-design-system/checkbox",
+      "description": "A styled checkbox input with indeterminate state support.",
+      "keywords": []
+    },
+    {
+      "name": "ColDivProps",
+      "importPath": "@lifesg/react-design-system/layout",
+      "description": "Common props shared by all layout components.",
+      "keywords": []
+    },
+    {
+      "name": "Component",
+      "importPath": "@lifesg/react-design-system/fullscreen-image-carousel",
+      "description": "A fullscreen modal carousel for browsing images and custom media items.\n\nUse to present a collection of images or custom content in an overlay with\nnavigation controls, zoom support, and an optional thumbnail strip.\nThe top info bar is rendered only when at least one item provides some file metadata.",
+      "keywords": []
+    },
+    {
+      "name": "ContentLinkAttributes",
+      "importPath": "@lifesg/react-design-system/notification-banner",
+      "description": "Intermediate component to handle passing the ref as a prop",
+      "keywords": []
+    },
+    {
+      "name": "CountdownTimer",
+      "importPath": "@lifesg/react-design-system/countdown-timer",
+      "description": "Displays a live countdown of time remaining until a deadline.\n\nUse when a time-limited interaction — such as a session timeout or a timed\nform — needs a persistent visual reminder.",
+      "keywords": []
+    },
+    {
+      "name": "CountryValue",
+      "importPath": "@lifesg/react-design-system/phone-number-input",
+      "description": "A phone number field composed of a country code selector and a number input.\n\nUse `PhoneNumberInput` when collecting an internationalised phone number.\nThe country code can be selected from a searchable dropdown or locked to a\nfixed value via `fixedCountry`.",
+      "keywords": []
+    },
+    {
+      "name": "DashedBorder",
+      "importPath": "@lifesg/react-design-system/dashed-border",
+      "description": "A container that renders a dashed border using an SVG overlay.\n\nUse when you need a dashed visual boundary around content — for example, drop zones,\nplaceholder regions, or empty-state containers.",
+      "keywords": []
+    },
+    {
+      "name": "DataTable",
+      "importPath": "@lifesg/react-design-system/data-table",
+      "description": "Renders a sortable, selectable data table with scroll-aware action bar and loading state support.\n\nUse `DataTable` when presenting structured multi-column data that users may need to sort by\ncolumn or select rows for bulk actions. Row selection, sort indicators, and the action bar\ncontent are all externally controlled; the component manages scroll detection, sticky-header\npositioning, and floating action bar behaviour internally.",
+      "keywords": []
+    },
+    {
+      "name": "DateInput",
+      "importPath": "@lifesg/react-design-system/date-input",
+      "description": "A single-date input field with an attached calendar dropdown.\n\nUse this to enter or pick a single date.",
+      "keywords": []
+    },
+    {
+      "name": "DateNavigator",
+      "importPath": "@lifesg/react-design-system/date-navigator",
+      "description": "Displays a date with left/right navigation arrows for stepping through dates or weeks.\n\nUse when users need to browse content organised by day or week — such as schedules,\ncalendars, or time-based feeds.",
+      "keywords": []
+    },
+    {
+      "name": "DateRangeInput",
+      "importPath": "@lifesg/react-design-system/date-range-input",
+      "description": "A paired date input with an attached calendar dropdown that lets users\nselect a contiguous date range.",
+      "keywords": []
+    },
+    {
+      "name": "DisclaimerLinks",
+      "importPath": "@lifesg/react-design-system/footer",
+      "description": "Site-wide footer with navigation links, branding, and legal copy.\n\nUse `Footer` at the bottom of a page to surface navigation links grouped\ninto columns, a theme-appropriate logo, download-app or resource add-ons,\nand disclaimer links with auto-generated copyright text.",
+      "keywords": []
+    },
+    {
+      "name": "Divider",
+      "importPath": "@lifesg/react-design-system/divider",
+      "description": "A horizontal line that visually separates sections of content.\n\nUse `Divider` to draw a clear boundary between distinct groups of content on\na page or within a layout.",
+      "keywords": []
+    },
+    {
+      "name": "Drawer",
+      "importPath": "@lifesg/react-design-system/drawer",
+      "description": "A slide-in panel that overlays the page content.\n\nUse `Drawer` to surface supplementary content or navigation options without\nnavigating away from the current page. Focus is trapped inside the dialog\nwhile it is open and returns to the triggering element on close.",
+      "keywords": []
+    },
+    {
+      "name": "ErrorDisplay",
+      "importPath": "@lifesg/react-design-system/error-display",
+      "description": "Displays a predefined error or status state with an illustration, title,\ndescription, and optional action button.\n\nUse `ErrorDisplay` to communicate HTTP error codes, session lifecycle states,\nmaintenance windows, and other system-level statuses to users.",
+      "keywords": []
+    },
+    {
+      "name": "ESignature",
+      "importPath": "@lifesg/react-design-system/e-signature",
+      "description": "A field that lets users draw and save a signature.\n\nUse in forms that require a handwritten signature.",
+      "keywords": []
+    },
+    {
+      "name": "FeedbackRating",
+      "importPath": "@lifesg/react-design-system/feedback-rating",
+      "description": "A star-rating widget for collecting user feedback.\n\nUse `FeedbackRating` to prompt users for a 1–5 star rating.\nThe submit button remains disabled until a star is selected.",
+      "keywords": []
+    },
+    {
+      "name": "FileDownload",
+      "importPath": "@lifesg/react-design-system/file-download",
+      "description": "Displays a list of downloadable files, optionally grouped under a title and description.\n\nUse `FileDownload` to present one or more files that users can download individually.\nEach file item renders as a card with file metadata and a download trigger.",
+      "keywords": []
+    },
+    {
+      "name": "FileInputProps",
+      "importPath": "@lifesg/react-design-system/file-upload",
+      "description": "Allows user to upload images via drag-and-drop or a native file dialog.",
+      "keywords": []
+    },
+    {
+      "name": "Filter",
+      "importPath": "@lifesg/react-design-system/filter",
+      "description": "A responsive filter panel that switches between a persistent sidebar on\ndesktop and a modal overlay on mobile.\n\nUse `Filter` to let users narrow a result set by one or more criteria.\nOn mobile (below lg breakpoint) the panel is hidden behind a toggle button and\nrendered in a full-screen modal; otherwise it is displayed as a\nfixed sidebar.\n\nSub-components:\n- `Filter.Sidebar` — standalone desktop sidebar, used by `Filter` internally.\n- `Filter.Modal` — standalone mobile modal, used by `Filter` internally.\n- `Filter.Item` — a collapsible section within the panel.\n- `Filter.Page` — a drill-down sub-page inside the mobile modal.\n- `Filter.Checkbox` — a filter item with selectable checkbox or toggle options.",
+      "keywords": []
+    },
+    {
+      "name": "HistogramBinProps",
+      "importPath": "@lifesg/react-design-system/histogram-slider",
+      "description": "A histogram with an overlaid two-thumb range slider for numeric filtering.\n\nUse `HistogramSlider` to let users narrow a dataset by selecting a numeric\nrange while seeing how values are distributed across bins.",
+      "keywords": []
+    },
+    {
+      "name": "ImageButton",
+      "importPath": "@lifesg/react-design-system/image-button",
+      "description": "A button that displays an image alongside optional label content.\n\nUse `ImageButton` for selectable image-based choices such as theme pickers or avatar\nselectors, where each option is represented visually.",
+      "keywords": []
+    },
+    {
+      "name": "Input",
+      "importPath": "@lifesg/react-design-system/input",
+      "description": "A single-line text input field.\n\nUse `Input` for free-form text entry. It supports controlled and uncontrolled\nusage.",
+      "keywords": []
+    },
+    {
+      "name": "InputMultiSelect",
+      "importPath": "@lifesg/react-design-system/input-multi-select",
+      "description": "A dropdown field that lets users select multiple options from a list.\n\nUse `InputMultiSelect` when users need to pick one or more items from a\npredefined list.",
+      "keywords": []
+    },
+    {
+      "name": "InputNestedMultiSelect",
+      "importPath": "@lifesg/react-design-system/input-nested-multi-select",
+      "description": "A multi-select input that presents options in a nested hierarchy, up to three levels deep.\n\nUse `InputNestedMultiSelect` when users need to choose multiple values from a\nhierarchical option tree. Selecting a parent item automatically selects all its\nleaf descendants; deselecting a parent removes all its descendants from the\nselection.",
+      "keywords": []
+    },
+    {
+      "name": "InputNestedSelect",
+      "importPath": "@lifesg/react-design-system/input-nested-select",
+      "description": "A single-select input that presents options in a hierarchy, up to three levels deep.\n\nUse `InputNestedSelect` when users need to choose a value from a\nhierarchical option tree. The dropdown renders as an expandable tree.\nParent nodes collapse or expand their children, and only one leaf or category\nvalue can be selected at a time.",
+      "keywords": []
+    },
+    {
+      "name": "InputRangeProp",
+      "importPath": "@lifesg/react-design-system/input-range-select",
+      "description": "A paired combobox input for selecting a start and end value from dropdown lists.\n\nUse `InputRangeSelect` when a consumer must choose a range by picking two\nvalues — one for \"from\" and one for \"to\" — each from their own option list.",
+      "keywords": []
+    },
+    {
+      "name": "InputSelect",
+      "importPath": "@lifesg/react-design-system/input-select",
+      "description": "A single-selection dropdown input.\n\nUse `InputSelect` when the user must pick exactly one item from a list.",
+      "keywords": []
+    },
+    {
+      "name": "InputSlider",
+      "importPath": "@lifesg/react-design-system/input-slider",
+      "description": "A single-thumb slider for selecting one numeric value within a range.\n\nUse `InputSlider` when a user needs to pick a single point on a continuous\nscale without a precise value. For selecting a range between two values, use `InputRangeSlider` instead.",
+      "keywords": []
+    },
+    {
+      "name": "LanguageSwitcher",
+      "importPath": "@lifesg/react-design-system/language-switcher",
+      "description": "A locale-switching control that lets users change the active display language.\n\nUse `LanguageSwitcher` to surface supported languages as either\na compact dropdown or a set of inline links.",
+      "keywords": []
+    },
+    {
+      "name": "LinkList",
+      "importPath": "@lifesg/react-design-system/link-list",
+      "description": "A list of anchor links with optional truncation or lazy loading.\n\nUse `LinkList` to display a set of navigable links with titles and optional\ndescriptions.",
+      "keywords": []
+    },
+    {
+      "name": "Markup",
+      "importPath": "@lifesg/react-design-system/markup",
+      "description": "A container for rendering rich HTML markup.\n\nUse `Markup` to wrap CMS-generated or sanitised HTML content while applying\na consistent base font size and colour.",
+      "keywords": []
+    },
+    {
+      "name": "MaskAttributeProps",
+      "importPath": "@lifesg/react-design-system/masked-input",
+      "description": "A text input that masks sensitive values and allows toggling visibility.\n\nUse `MaskedInput` when collecting or displaying sensitive data such as\nidentity numbers or passwords.",
+      "keywords": []
+    },
+    {
+      "name": "Masthead",
+      "importPath": "@lifesg/react-design-system/masthead",
+      "description": "Displays the Singapore Government Design System (SGDS) masthead banner.\n\nUse `Masthead` at the top of government digital services to meet the SGDS\nmasthead requirement.",
+      "keywords": []
+    },
+    {
+      "name": "Menu",
+      "importPath": "@lifesg/react-design-system/menu",
+      "description": "Trigger wrapper that anchors a `Menu.Content` panel to its child element.\n\nPrefer the `Menu` composite export when building a full menu — it bundles\n`Menu.Content`, `Menu.Section`, `Menu.Item`, and `Menu.Link` as named\nsub-components alongside the trigger.",
+      "keywords": []
+    },
+    {
+      "name": "Modal",
+      "importPath": "@lifesg/react-design-system/modal",
+      "description": "Props for the `Modal` component.",
+      "keywords": []
+    },
+    {
+      "name": "ModalAnimationDirection",
+      "importPath": "@lifesg/react-design-system/modal-v2",
+      "description": "A composable modal dialog with slot-based content layout.\n\nUse `ModalV2` when you need a controlled overlay dialog with structured\ncontent slots.\n\nSub-components:\n- `ModalV2.Card` — wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout.\n- `ModalV2.CloseButton` — renders an accessible close button that invokes the modal's `onClose` callback.\n- `ModalV2.Content` — container for the body content of the modal card.\n- `ModalV2.Footer` — footer area for primary and secondary action buttons.",
+      "keywords": []
+    },
+    {
+      "name": "OtpInput",
+      "importPath": "@lifesg/react-design-system/otp-input",
+      "description": "A field composed of individual inputs for a numeric one-time password\nwith an in-built countdown mechanism.\n\nUse `OtpInput` when users must enter the one-time password (OTP)\nfor multi-factored authentication methods.",
+      "keywords": []
+    },
+    {
+      "name": "Overlay",
+      "importPath": "@lifesg/react-design-system/overlay",
+      "description": "A full-screen dimmed overlay backdrop.\n\nUse `Overlay` as the backdrop for modal dialogs, drawers, and similar\nblocking UI patterns. It manages body scroll-lock automatically and stacks\ncorrectly when multiple overlays are open at once.",
+      "keywords": []
+    },
+    {
+      "name": "PageSizeItemProps",
+      "importPath": "@lifesg/react-design-system/pagination",
+      "description": "A navigation control for moving through paged content.\n\nUse `Pagination` to let users navigate between pages of a data set.",
+      "keywords": []
+    },
+    {
+      "name": "Pill",
+      "importPath": "@lifesg/react-design-system/pill",
+      "description": "A compact label used to display status, category, or metadata.\n\nUse `Pill` to surface short, read-only information — such as a tag or status\nbadge — inline with other content.",
+      "keywords": []
+    },
+    {
+      "name": "Popover",
+      "importPath": "@lifesg/react-design-system/popover",
+      "description": "The presentational overlay for a popover panel. Renders as a floating card\non desktop and modal on mobile.\n\nUse with `PopoverTrigger`, which manages visibility state and positioning.",
+      "keywords": []
+    },
+    {
+      "name": "PredictiveTextInput",
+      "importPath": "@lifesg/react-design-system/predictive-text-input",
+      "description": "A text input that fetches and displays matching suggestions as the user types.\n\nUse `PredictiveTextInput` for search-as-you-type or autocomplete scenarios\nwhere options are loaded asynchronously based on the current input.",
+      "keywords": []
+    },
+    {
+      "name": "ProgressIndicator",
+      "importPath": "@lifesg/react-design-system/progress-indicator",
+      "description": "A horizontal step-progress bar that tracks a user's position through a\nmulti-step flow.\n\nUse `ProgressIndicator` when you need to communicate progress through an\nordered sequence of steps.",
+      "keywords": []
+    },
+    {
+      "name": "RadioButton",
+      "importPath": "@lifesg/react-design-system/radio-button",
+      "description": "A single radio button input.\n\nUse `RadioButton` as an input within a radio group.",
+      "keywords": []
+    },
+    {
+      "name": "SelectHistogram",
+      "importPath": "@lifesg/react-design-system/select-histogram",
+      "description": "A form input that displays the selected range and reveals a histogram slider in a dropdown.\n\nUse `SelectHistogram` when users need to select a numeric range against a data distribution.",
+      "keywords": []
+    },
+    {
+      "name": "Sidenav",
+      "importPath": "@lifesg/react-design-system/sidenav",
+      "description": "A fixed sidebar navigation component for multi-level page navigation.\n\nUse `Sidenav` to present a persistent icon-based navigation rail with\noptional menu drawers.",
+      "keywords": []
+    },
+    {
+      "name": "SingpassButton",
+      "importPath": "@lifesg/react-design-system/singpass-button",
+      "description": "Call-to-action for Singpass authentication,\nfollowing the brand [guidelines](https://docs.developer.singpass.gov.sg/docs/products/login/singpass-button-guidelines-for-developers-and-designers).\n\nUse `SingpassButton` to let users log in with their Singpass account.",
+      "keywords": []
+    },
+    {
+      "name": "SlotStyle",
+      "importPath": "@lifesg/react-design-system/time-slot-bar",
+      "description": "A horizontally scrollable timeline bar that visualises time slots across a\ndefined time range.\n\nUse `TimeSlotBar` to display availability, bookings, or schedule occupancy\nas coloured cells on a shared time axis.",
+      "keywords": []
+    },
+    {
+      "name": "SmartAppBanner",
+      "importPath": "@lifesg/react-design-system/smart-app-banner",
+      "description": "A fixed top banner that promotes a mobile app and links to its store listing.\n\nUse `SmartAppBanner` to invite users to install or open the native app.",
+      "keywords": []
+    },
+    {
+      "name": "Tab",
+      "importPath": "@lifesg/react-design-system/tab",
+      "description": "A tabbed-panel layout that switches visible content by selecting a tab link.\n\nUse `Tab` to organise content into labelled panels where only one panel is\nvisible at a time. Compose with `Tab.Item` to define each panel.",
+      "keywords": []
+    },
+    {
+      "name": "Table",
+      "importPath": "@lifesg/react-design-system/table",
+      "description": "A styled HTML table with a scrollable container wrapper.\n\nUse `Table` when displaying structured tabular data. The default export\nwraps content in `Table.Container` and `Table.Table` automatically. For\nfull layout control, compose the sub-components directly:\n- `Table.Container` — scrollable wrapper div\n- `Table.Table` — the bare `<table>` element\n- `Table.Head` — the `<thead>` section\n- `Table.Body` — the `<tbody>` section\n- `Table.Row` — a `<tr>` row within the body\n- `Table.Cell` — a `<td>` data cell\n- `Table.HeaderCell` — a `<th>` column header cell",
+      "keywords": []
+    },
+    {
+      "name": "Tag",
+      "importPath": "@lifesg/react-design-system/tag",
+      "description": "A compact label used to categorise or highlight content.\n\nUse `Tag` to display metadata such as status, category, or keyword.",
+      "keywords": []
+    },
+    {
+      "name": "Textarea",
+      "importPath": "@lifesg/react-design-system/input-textarea",
+      "description": "Props for the `Textarea` component.",
+      "keywords": []
+    },
+    {
+      "name": "Timeline",
+      "importPath": "@lifesg/react-design-system/timeline",
+      "description": "A vertically ordered list of steps with visual state indicators.\n\nUse `Timeline` to communicate multi-step progress such as application stages\nor process flows.",
+      "keywords": []
+    },
+    {
+      "name": "Timepicker",
+      "importPath": "@lifesg/react-design-system/timepicker",
+      "description": "A form input for selecting a time value through a dropdown interface.\n\nUse `Timepicker` when a user needs to choose a specific time.",
+      "keywords": []
+    },
+    {
+      "name": "TimeRangePicker",
+      "importPath": "@lifesg/react-design-system/time-range-picker",
+      "description": "A two-field time picker for selecting a start and end time.\n\nUse `TimeRangePicker` when users need to define a time range.",
+      "keywords": []
+    },
+    {
+      "name": "TimeSlotBarWeek",
+      "importPath": "@lifesg/react-design-system/time-slot-bar-week",
+      "description": "A week calendar grid with a time axis, rendering detailed slot bars within\neach day column.\n\nUse `TimeSlotBarWeek` for detailed time-of-day scheduling where each cell\nrepresents a configurable time interval. For a simpler day-level overview\nwithout a time axis, use `TimeSlotWeekView` instead.",
+      "keywords": []
+    },
+    {
+      "name": "TimeSlotWeekView",
+      "importPath": "@lifesg/react-design-system/time-slot-week-view",
+      "description": "A week calendar grid that displays slot availability within each day column.\n\nUse `TimeSlotWeekView` for a day-level overview of slot availability across\na week. For detailed time-of-day scheduling with a time axis, use\n`TimeSlotBarWeek` instead.",
+      "keywords": []
+    },
+    {
+      "name": "TimeTable",
+      "importPath": "@lifesg/react-design-system/timetable",
+      "description": "A scrollable grid that visualises time slot availability across a day.\n\nUse `TimeTable` to display one day's schedule for multiple resources side by\nside.",
+      "keywords": []
+    },
+    {
+      "name": "Toast",
+      "importPath": "@lifesg/react-design-system/toast",
+      "description": "A brief notification that appears on screen to provide feedback about an\noperation or event.\n\nUse `Toast` to surface status messages without interrupting the user's workflow.",
+      "keywords": []
+    },
+    {
+      "name": "Toggle",
+      "importPath": "@lifesg/react-design-system/toggle",
+      "description": "A selectable control for checkbox and radio interaction patterns.\n\nUse `Toggle` to present a labeled option that the user can select or\ndeselect.",
+      "keywords": []
+    },
+    {
+      "name": "Typography",
+      "importPath": "@lifesg/react-design-system/typography",
+      "description": "Font weight variant applied to a typography element.",
+      "keywords": []
+    },
+    {
+      "name": "UneditableSection",
+      "importPath": "@lifesg/react-design-system/uneditable-section",
+      "description": "Grid column span for an item within the section layout.",
+      "keywords": []
+    },
+    {
+      "name": "UnitNumberInput",
+      "importPath": "@lifesg/react-design-system/unit-number",
+      "description": "Props for `UnitNumberInput`.",
+      "keywords": []
+    }
+  ]
+}

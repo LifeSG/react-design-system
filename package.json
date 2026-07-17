@@ -32,6 +32,7 @@
         "postinstall": "patch-package",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
+        "generate:catalog": "npx tsx scripts/generate-component-catalog.ts",
         "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
         "lint": "npm run lint:js && npm run lint:css",
         "lint:js": "eslint '**/*.{ts,tsx,js,jsx}' && npm --prefix e2e/nextjs-app run lint:src",
