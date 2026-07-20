@@ -345,7 +345,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
         "table": {
             "category": "FullscreenImageCarouselProps",
             "defaultValue": {
-                "summary": "`document.body`"
+                "summary": "document.body"
             },
             "type": {
                 "summary": "string"

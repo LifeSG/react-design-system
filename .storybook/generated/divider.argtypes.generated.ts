@@ -30,7 +30,7 @@ export const dividerExtraArgTypes = {
         "table": {
             "category": "DividerProps",
             "defaultValue": {
-                "summary": "`Colour[\"border\"]`"
+                "summary": "Colour[\"border\"]"
             },
             "type": {
                 "summary": "string"

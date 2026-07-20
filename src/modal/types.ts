@@ -30,7 +30,7 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * The `id` of the DOM element to portal the modal into.
      *
-     * @default `document.body`
+     * @default document.body
      */
     rootComponentId?: string | undefined;
     /**
