@@ -3,6 +3,7 @@ import {
     DocsContainer,
     type DocsContainerProps,
 } from "@storybook/addon-docs/blocks";
+import { DARK_MODE_EVENT_NAME } from "@storybook-community/storybook-dark-mode";
 import { themes } from "storybook/theming";
 import { ThemeProvider } from "../../src/theme";
 import { THEME_KEY_TO_TYPE_MAPPING, type ThemeMapKey } from "./theme-mapping";
@@ -46,10 +47,13 @@ export function ThemeDocsContainer({
             setIsDark(value);
         };
 
-        context.channel.on("DARK_MODE", handleDarkMode);
+        context.channel.on(DARK_MODE_EVENT_NAME, handleDarkMode);
 
         return () => {
-            context.channel.removeListener("DARK_MODE", handleDarkMode);
+            context.channel.removeListener(
+                DARK_MODE_EVENT_NAME,
+                handleDarkMode
+            );
         };
     }, [context.channel]);
 
