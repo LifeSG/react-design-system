@@ -2,49 +2,49 @@ import clsx from "clsx";
 
 import * as styles from "./table.styles";
 import type {
-    BodyProps,
-    CellProps,
-    ContainerProps,
-    HeaderProps,
-    HeadProps,
-    RowProps,
-    TableProps,
+    TableBodyProps,
+    TableCellProps,
+    TableContainerProps,
+    TableHeaderProps,
+    TableHeadProps,
+    TableRowProps,
+    TableTableProps,
 } from "./types";
 
-const Head = ({ children, ...props }: HeadProps) => (
+const Head = ({ children, ...props }: TableHeadProps) => (
     <thead {...props}>{children}</thead>
 );
 Head.displayName = "Table.Head";
 
-const Body = ({ children, className, ...props }: BodyProps) => (
+const Body = ({ children, className, ...props }: TableBodyProps) => (
     <tbody className={clsx(styles.tableBody, className)} {...props}>
         {children}
     </tbody>
 );
 Body.displayName = "Table.Body";
 
-const Row = ({ children, className, ...props }: RowProps) => (
+const Row = ({ children, className, ...props }: TableRowProps) => (
     <tr className={clsx(styles.bodyRow, className)} {...props}>
         {children}
     </tr>
 );
 Row.displayName = "Table.Row";
 
-const Cell = ({ children, className, ...props }: CellProps) => (
+const Cell = ({ children, className, ...props }: TableCellProps) => (
     <td className={clsx(styles.bodyCell, className)} {...props}>
         {children}
     </td>
 );
 Cell.displayName = "Table.Cell";
 
-const Header = ({ children, className, ...props }: HeaderProps) => (
+const Header = ({ children, className, ...props }: TableHeaderProps) => (
     <th className={clsx(styles.headerCell, className)} {...props}>
         {children}
     </th>
 );
 Header.displayName = "Table.HeaderCell";
 
-const Container = ({ children, className, ...props }: ContainerProps) => (
+const Container = ({ children, className, ...props }: TableContainerProps) => (
     <div
         className={clsx(styles.tableWrapper, className)}
         data-testid="table-wrapper"
@@ -55,7 +55,7 @@ const Container = ({ children, className, ...props }: ContainerProps) => (
 );
 Container.displayName = "Table.Container";
 
-const TableEl = ({ children, className, ...props }: TableProps) => (
+const TableEl = ({ children, className, ...props }: TableTableProps) => (
     <table className={clsx(styles.tableComponent, className)} {...props}>
         {children}
     </table>
@@ -77,7 +77,7 @@ TableEl.displayName = "Table.Table";
  * - `Table.HeaderCell` — a `<th>` column header cell
  */
 export const Table = Object.assign(
-    ({ children, ...props }: React.TableHTMLAttributes<HTMLTableElement>) => (
+    ({ children, ...props }: TableTableProps) => (
         <Container>
             <TableEl {...props}>{children}</TableEl>
         </Container>
