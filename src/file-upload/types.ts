@@ -30,7 +30,11 @@ export interface FileItemProps {
      * other file types show no default icon.
      */
     thumbnailImageDataUrl?: string | undefined;
-    /** Truncates long file names with an ellipsis when `true`. */
+    /**
+     * Truncates long file names with an ellipsis when `true`.
+     *
+     * @default true
+     */
     truncateText?: boolean | undefined;
 }
 
@@ -42,6 +46,7 @@ export interface FileItemProps {
  */
 export type FileUploadStyle = "bordered" | "no-border";
 
+// @storybookSkipProps
 /**
  * Native file-input props forwarded to the underlying `<input type="file">` element.
  */
