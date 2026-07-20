@@ -10,6 +10,7 @@
  * - `npm run storybook:argtypes -- --watch` — watch for changes and regenerate
  */
 
+import { spawnSync } from "node:child_process";
 import { existsSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
@@ -1055,6 +1056,14 @@ ${mapRows.sort().join("\n")}
 // CLI Entrypoint
 // =============================================================================
 
+function formatGenerated() {
+    spawnSync("npx", [
+        "pretty-quick",
+        "--pattern",
+        ".storybook/generated/**/*",
+    ]);
+}
+
 async function generateAll() {
     const project = createProject();
     const sourceFiles = project.getSourceFiles(sourceFileGlob);
@@ -1072,6 +1081,7 @@ async function main() {
     const isWatchMode = process.argv.includes("--watch");
 
     await generateAll();
+    formatGenerated();
 
     if (!isWatchMode) {
         return;
@@ -1103,17 +1113,20 @@ async function main() {
 
             if (isStoryFile(filePath)) {
                 await generateStorybookArgTypesRegistry();
+                formatGenerated();
                 return;
             }
 
             if (eventName === "unlink") {
                 await fs.rm(getOutputFile(resolvedFilePath), { force: true });
                 await generateStorybookArgTypesRegistry();
+                formatGenerated();
                 return;
             }
 
             await generateForSourceFile(createProject(), resolvedFilePath);
             await generateStorybookArgTypesRegistry();
+            formatGenerated();
         } catch (error) {
             console.error("[storybook:argtypes] failed to regenerate");
             console.error(error);
