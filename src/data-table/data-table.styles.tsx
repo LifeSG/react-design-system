@@ -16,13 +16,11 @@ import { Typography } from "../typography";
 // STYLE INTERFACE, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface TableProps {
-    $end: boolean;
+interface TableWrapperProps {
     $scrollable: boolean;
-    $stickyHeader: boolean | undefined;
 }
-interface TableBodyProps {
-    $showLastRowBottomBorder: boolean;
+interface TableHeadProps {
+    $stickyHeader: boolean | undefined;
 }
 interface HeaderCellProps {
     $clickable: boolean;
@@ -32,6 +30,7 @@ interface BodyRowProps {
     $alternating: boolean;
     $isSelected?: boolean;
     $isSelectable?: boolean;
+    $showLastRowBottomBorder?: boolean;
 }
 
 interface BodyCellProps {
@@ -39,14 +38,13 @@ interface BodyCellProps {
 }
 
 interface ActionBarWrapperProps {
-    $fixed: boolean;
+    $strategy: "fixed" | "sticky" | "inline";
     $left?: number | undefined;
     $width?: number | undefined;
 }
 
 interface ActionBarProps {
     $float: boolean;
-    $scrollable: boolean;
 }
 
 // =============================================================================
@@ -58,20 +56,23 @@ const fontColor = Colour["text"];
 // =============================================================================
 // STYLES
 // =============================================================================
-export const TableWrapper = styled.div`
-    overflow: auto;
+export const TableWrapper = styled.div<TableWrapperProps>`
+    /* we separate the overflow styles so that sticky elements can still work
+       with horizontal scrolling on supported browsers
+       see: https://github.com/w3c/csswg-drafts/issues/12289 */
+    overflow-y: ${(props) => (props.$scrollable ? "auto" : "clip")};
+    overflow-x: auto;
+    position: relative;
     display: flex;
     flex-direction: column;
     border: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
     border-radius: ${Radius["md"]};
 
-    // Hide scrollbar
+    /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
     &::-webkit-scrollbar {
-        display: none;
-    }
-    * {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        display: none; /* Chrome/Safari/Webkit */
     }
 `;
 
@@ -79,7 +80,7 @@ export const TableContainer = styled.div`
     flex: 1;
 `;
 
-export const Table = styled.table<TableProps>`
+export const Table = styled.table`
     th:last-child,
     td:last-child {
         padding-right: 1.5rem;
@@ -92,49 +93,50 @@ export const Table = styled.table<TableProps>`
     border-collapse: separate;
     border-spacing: 0;
     width: 100%;
+`;
 
+export const TableHead = styled.thead<TableHeadProps>`
     ${(props) => {
         if (props.$stickyHeader) {
             return css`
-                thead {
-                    position: sticky;
-                    top: 0;
-                    z-index: 20;
-                }
+                position: sticky;
+                top: 0;
+                z-index: 20;
             `;
         }
     }};
 `;
 
-export const TableBody = styled.tbody<TableBodyProps>`
-    tr:last-child {
-        td {
-            border-bottom: ${(props) =>
-                props.$showLastRowBottomBorder
-                    ? `${Border["width-010"]} ${Border["solid"]} ${borderColor}`
-                    : "none"};
-        }
-    }
-`;
+export const TableBody = styled.tbody``;
 
 export const ActionBarWrapper = styled.div<ActionBarWrapperProps>`
-    bottom: 0;
     ${(props) => {
-        if (props.$fixed) {
-            const left = props.$left ? `${props.$left}px` : "0";
-            const width = props.$width ? `${props.$width}px` : "100%";
-            return css`
-                position: fixed;
-                left: ${left};
-                width: ${width};
-            `;
-        } else {
-            return css`
-                position: sticky;
-                left: 0;
-            `;
+        const left = props.$left ? `${props.$left}px` : "0";
+        const width = props.$width ? `${props.$width}px` : "100%";
+
+        switch (props.$strategy) {
+            case "inline":
+                return css`
+                    position: absolute;
+                    bottom: 0;
+                    left: 0;
+                    width: ${width};
+                `;
+            case "fixed":
+                return css`
+                    position: fixed;
+                    bottom: 0;
+                    left: ${left};
+                    width: ${width};
+                `;
+            case "sticky":
+                return css`
+                    position: sticky;
+                    bottom: 0;
+                    width: ${width};
+                `;
         }
-    }};
+    }}
 `;
 
 export const TextButton = styled(BasicButton)`
@@ -158,7 +160,7 @@ export const ActionBar = styled.div<ActionBarProps>`
     padding: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]};
     border-top: ${Border["width-010"]} ${Border["solid"]} ${borderColor};
     background-color: ${Colour["bg-selected"]};
-    transition: all 300ms ease;
+    transition: transform ${Motion["duration-350"]} ${Motion["ease-default"]};
     ${(props) => {
         if (props.$float) {
             return css`
@@ -175,6 +177,10 @@ export const ActionBar = styled.div<ActionBarProps>`
             `;
         }
     }}
+`;
+
+export const ActionBarSpacer = styled.div`
+    height: 3.5rem;
 `;
 
 export const HeaderRow = styled.tr`
@@ -240,6 +246,15 @@ export const BodyRow = styled.tr<BodyRowProps>`
                 `;
             }
         }};
+    }
+
+    &:last-child {
+        td {
+            border-bottom: ${(props) =>
+                props.$showLastRowBottomBorder
+                    ? `${Border["width-010"]} ${Border["solid"]} ${borderColor}`
+                    : "none"};
+        }
     }
 `;
 

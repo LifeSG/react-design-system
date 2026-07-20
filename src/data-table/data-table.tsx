@@ -1,16 +1,15 @@
 import { ArrowDownIcon, ArrowUpIcon } from "@lifesg/react-icons";
-import { useCallback, useEffect, useRef, useState } from "react";
-import { useInView } from "react-intersection-observer";
+import { useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { LoadingDotsSpinner } from "../animations";
 import { Checkbox } from "../checkbox";
 import { ErrorDisplay } from "../error-display";
 import { VisuallyHidden, concatIds } from "../shared/accessibility";
 import { Typography } from "../typography";
-import { useId } from "../util";
-import { useEventListener } from "../util/use-event-listener";
+import { useEvent, useEventListener, useId, useThrottle } from "../util";
 import {
     ActionBar,
+    ActionBarSpacer,
     ActionBarWrapper,
     BodyCell,
     BodyCellContent,
@@ -25,6 +24,7 @@ import {
     Table,
     TableBody,
     TableContainer,
+    TableHead,
     TableWrapper,
     TextButton,
 } from "./data-table.styles";
@@ -57,9 +57,8 @@ export const DataTable = ({
     // CONST, STATE, REF
     // =============================================================================
     const tableRef = useRef<HTMLTableElement>(null);
-    const tableEndRef = useRef<HTMLDivElement | null>(null);
     const headerRef = useRef<HTMLTableSectionElement>(null);
-    const actionBarRef = useRef<HTMLDivElement>(null);
+    const actionBarWrapperRef = useRef<HTMLDivElement>(null);
     const wrapperRef = useRef<HTMLDivElement>(null);
     const internalId = useId();
     const keyColumns = headers.filter(
@@ -68,60 +67,39 @@ export const DataTable = ({
         }
     );
 
+    const [actionBarStrategy, setActionBarStrategy] = useState<
+        "sticky" | "fixed" | "inline"
+    >("inline");
     const [scrollable, setScrollable] = useState(false);
-    const [scrollEnd, setScrollEnd] = useState(false);
-    const [tableEnd, setTableEnd] = useState(false);
     const [isFloatingActionBar, setIsFloatingActionBar] = useState(false);
-    const [showLastBorder, setShowLastBorder] = useState(false);
-
-    const { ref: endRef, inView: end } = useInView();
 
     // =============================================================================
     // EFFECTS, EVENT LISTENERS
     // ============================================================================
-    const onResize = useCallback(() => {
-        if (!wrapperRef.current || !actionBarRef.current) {
-            return;
-        }
-        const scrollable =
-            wrapperRef.current.scrollHeight > wrapperRef.current.clientHeight;
-        setScrollable(scrollable);
-
-        if (scrollable) {
-            actionBarRef.current.style.transform = `translateY(0)`;
-        } else {
-            calculateStickyInViewport();
-        }
-    }, []);
+    const useUpdateActionBarBehaviour = useEvent(() => {
+        updateActionBarBehaviour();
+    });
 
     useEffect(() => {
-        onResize();
-    }, []);
+        useUpdateActionBarBehaviour();
+    }, [useUpdateActionBarBehaviour]);
 
-    useResizeDetector({ onResize });
+    const updateActionBarBehaviourThrottled = useThrottle(
+        () => updateActionBarBehaviour(),
+        100
+    );
 
-    const scrollHandler = () => {
-        requestAnimationFrame(() => {
-            if (scrollable) {
-                calculateFixedInViewport();
-            } else {
-                calculateStickyInViewport();
-            }
-        });
+    useResizeDetector({
+        targetRef: wrapperRef,
+        onResize: () => updateActionBarBehaviourThrottled(),
+    });
 
-        if (wrapperRef.current) {
-            setTableEnd(
-                wrapperRef.current.getBoundingClientRect().bottom <=
-                    window.innerHeight
-            );
-        }
-    };
-
-    useEventListener("scroll", scrollHandler, "window");
-
-    useEffect(() => {
-        checkLastBorder();
-    }, [rows]);
+    useEventListener("scroll", updateActionBarBehaviourThrottled);
+    useEventListener(
+        "scroll",
+        updateActionBarBehaviourThrottled,
+        wrapperRef.current
+    );
 
     // ===========================================================================
     // HELPER FUNCTIONS
@@ -203,56 +181,75 @@ export const DataTable = ({
         return concatIds(...keyColumnIds);
     };
 
-    const calculateFixedInViewport = () => {
-        if (!wrapperRef.current) {
-            return;
-        }
-        const wrapperBounds = wrapperRef.current.getBoundingClientRect();
-        setIsFloatingActionBar(
-            wrapperBounds.bottom > window.innerHeight + 30 &&
-                wrapperBounds.top < window.innerHeight - 200
-        );
-    };
-
-    const calculateStickyInViewport = () => {
+    const updateActionBarBehaviour = () => {
         if (
-            !tableRef.current ||
-            !tableEndRef.current ||
             !wrapperRef.current ||
-            !actionBarRef.current ||
-            !headerRef.current
+            !headerRef.current ||
+            !actionBarWrapperRef.current
         ) {
             return;
         }
 
-        const endBounds = tableEndRef.current.getBoundingClientRect();
+        const wrapperBounds = wrapperRef.current.getBoundingClientRect();
+        const headerBounds = headerRef.current.getBoundingClientRect();
 
-        if (endBounds.top > window.innerHeight) {
-            const bottomOffset = endBounds.bottom - window.innerHeight;
-            const bottomToHeaderOffset =
-                tableRef.current.getBoundingClientRect().height -
-                headerRef.current.clientHeight -
-                32;
-            const maxBottomOffset = Math.min(
-                bottomOffset,
-                bottomToHeaderOffset
-            );
+        let strategy: typeof actionBarStrategy = "inline";
 
-            actionBarRef.current.style.transform = `translateY(-${maxBottomOffset}px)`;
+        const scrollable =
+            wrapperRef.current.scrollHeight > wrapperRef.current.clientHeight;
+
+        if (
+            wrapperBounds.top > window.innerHeight ||
+            wrapperBounds.bottom < 0
+        ) {
+            // if fully out of the viewport, disable floating
+            strategy = "inline";
+        } else if (scrollable) {
+            if (
+                wrapperBounds.top > 0 &&
+                wrapperBounds.top < window.innerHeight &&
+                wrapperBounds.bottom > 0 &&
+                wrapperBounds.bottom < window.innerHeight
+            ) {
+                // if fully in the viewport, use the native sticky behaviour
+                strategy = "sticky";
+            } else if (
+                wrapperBounds.top < 0 &&
+                wrapperBounds.bottom > 0 &&
+                wrapperBounds.bottom < window.innerHeight
+            ) {
+                // if partially offscreen at the top, use the native sticky behaviour
+                strategy = "sticky";
+            } else if (
+                wrapperBounds.bottom > window.innerHeight &&
+                Math.max(wrapperBounds.top, headerBounds.bottom) +
+                    headerBounds.height <
+                    window.innerHeight
+            ) {
+                // if offscreen at the bottom, pin to the viewport, up until the table/header
+                strategy = "fixed";
+            }
+        } else if (
+            wrapperBounds.bottom > window.innerHeight &&
+            headerBounds.bottom + headerBounds.height < window.innerHeight
+        ) {
+            // if offscreen at the bottom, pin to the viewport, up until the header
+            strategy = "fixed";
+        }
+
+        setScrollable(scrollable);
+        setActionBarStrategy(strategy);
+
+        if (strategy === "fixed") {
+            setIsFloatingActionBar(true);
+        } else if (strategy === "sticky") {
+            const beforeScrollEnd =
+                wrapperRef.current.scrollTop + wrapperRef.current.clientHeight <
+                wrapperRef.current.scrollHeight;
+            setIsFloatingActionBar(beforeScrollEnd);
         } else {
-            actionBarRef.current.style.transform = `translateY(0)`;
+            setIsFloatingActionBar(false);
         }
-    };
-
-    const checkLastBorder = () => {
-        if (!tableRef.current || !wrapperRef.current) {
-            return;
-        }
-        // 56 pixels added due to the behavior of action bar
-        setShowLastBorder(
-            tableRef.current.clientHeight + (enableActionBar ? 56 : 0) <
-                wrapperRef.current.clientHeight
-        );
     };
 
     // =============================================================================
@@ -274,12 +271,12 @@ export const DataTable = ({
     // RENDER FUNCTIONS
     // =============================================================================
     const renderHeaders = () => (
-        <thead ref={headerRef}>
+        <TableHead ref={headerRef} $stickyHeader={enableStickyHeader}>
             <HeaderRow>
                 {enableMultiSelect && renderHeaderCheckBox()}
                 {headers.map(renderHeaderCell)}
             </HeaderRow>
-        </thead>
+        </TableHead>
     );
 
     const renderHeaderCell = (header: HeaderProps) => {
@@ -402,6 +399,7 @@ export const DataTable = ({
                     <BodyRow
                         data-testid={getDataTestId(`row-${row.id.toString()}`)}
                         key={row.id.toString()}
+                        $showLastRowBottomBorder={isFloatingActionBar}
                         $alternating={isAlternatingRow(index)}
                         $isSelectable={enableMultiSelect}
                         $isSelected={isRowSelected(row.id.toString())}
@@ -514,35 +512,35 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         const count = selectedIds?.length ?? 0;
+        const counter = `item${count > 1 ? "s" : ""}`;
 
         return (
-            <ActionBarWrapper
-                ref={actionBarRef}
-                $fixed={isFloatingActionBar}
-                $left={tableRef?.current?.getBoundingClientRect()?.left}
-                $width={tableRef?.current?.clientWidth}
-            >
-                <ActionBar
-                    $float={
-                        (scrollable ? !scrollEnd : !end) || isFloatingActionBar
+            <>
+                <ActionBarWrapper
+                    ref={actionBarWrapperRef}
+                    $strategy={actionBarStrategy}
+                    $left={
+                        isFloatingActionBar
+                            ? tableRef?.current?.getBoundingClientRect()?.left
+                            : 0
                     }
-                    $scrollable={scrollable}
+                    $width={tableRef?.current?.clientWidth}
                 >
-                    <Typography.BodyMD weight="semibold">{`${count} item${
-                        count > 1 ? "s" : ""
-                    } selected`}</Typography.BodyMD>
-                    <TextButton
-                        type="button"
-                        aria-label={`Clear selection of ${count} item${
-                            count === 1 ? "" : "s"
-                        }`}
-                        onClick={onClearSelectionClick}
-                    >
-                        Clear selection
-                    </TextButton>
-                    {actionBarContent}
-                </ActionBar>
-            </ActionBarWrapper>
+                    <ActionBar $float={isFloatingActionBar}>
+                        <Typography.BodyMD weight="semibold">{`${count} ${counter} selected`}</Typography.BodyMD>
+                        <TextButton
+                            type="button"
+                            aria-label={`Clear selection of ${count} ${counter}`}
+                            onClick={onClearSelectionClick}
+                        >
+                            Clear selection
+                        </TextButton>
+                        {actionBarContent}
+                    </ActionBar>
+                </ActionBarWrapper>
+                {/* leave a fixed space when action bar floats to avoid layout shift */}
+                {actionBarStrategy !== "sticky" && <ActionBarSpacer />}
+            </>
         );
     };
 
@@ -552,26 +550,13 @@ export const DataTable = ({
             data-testid={otherProps["data-testid"] || "table"}
             className={className}
             ref={wrapperRef}
-            onScroll={() => {
-                if (scrollable && wrapperRef.current) {
-                    setScrollEnd(
-                        wrapperRef.current.scrollTop +
-                            wrapperRef.current.clientHeight >=
-                            wrapperRef.current.scrollHeight
-                    );
-                }
-            }}
             tabIndex={0} // scrollable container must be focusable to support keyboard users
+            $scrollable={scrollable}
         >
             <TableContainer>
-                <Table
-                    $end={tableEnd}
-                    $scrollable={scrollable}
-                    ref={tableRef}
-                    $stickyHeader={enableStickyHeader}
-                >
+                <Table ref={tableRef}>
                     {renderHeaders()}
-                    <TableBody $showLastRowBottomBorder={showLastBorder}>
+                    <TableBody>
                         {loadState === "success"
                             ? renderRows()
                             : renderLoader()}
@@ -582,12 +567,6 @@ export const DataTable = ({
                 selectedIds &&
                 selectedIds.length > 0 &&
                 renderSelectionBar()}
-            <div
-                ref={(r) => {
-                    tableEndRef.current = r;
-                    endRef(r);
-                }}
-            />
         </TableWrapper>
     );
 };
