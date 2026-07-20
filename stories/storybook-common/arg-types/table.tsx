@@ -103,7 +103,6 @@ function normalizeUnionTypeDisplay(argType: GeneratedArgType["value"]) {
 
 interface AutoArgTypesTabsProps {
     of: ArgTypesProps["of"];
-    storyTitle?: keyof typeof storybookArgTypesByTitle;
     sort?: Exclude<ArgTypesProps["sort"], undefined>;
     defaultTabTitle?: string;
 }
@@ -193,11 +192,10 @@ function getStoryTitleFromOf(
  */
 export const AutoArgTypesTabs = ({
     of,
-    storyTitle,
     sort = "alpha",
     defaultTabTitle = "Component",
 }: AutoArgTypesTabsProps): JSX.Element => {
-    const resolvedStoryTitle = storyTitle ?? getStoryTitleFromOf(of);
+    const resolvedStoryTitle = getStoryTitleFromOf(of);
 
     if (!resolvedStoryTitle) {
         return renderFallbackArgTypes(of, sort);

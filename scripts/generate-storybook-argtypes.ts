@@ -1136,10 +1136,6 @@ async function main() {
                 return false;
             }
 
-            if (filePath.endsWith(".argtypes.generated.ts")) {
-                return true;
-            }
-
             return !isTypesFile(filePath) && !isStoryFile(filePath);
         },
     });

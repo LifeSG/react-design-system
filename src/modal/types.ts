@@ -2,8 +2,6 @@ import type { ModalAnimationDirection } from "../modal-v2/types";
 
 /**
  * Props for the `Modal` component.
- *
- * @storybookSection Main
  */
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
@@ -56,8 +54,6 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
 
 /**
  * Props for the `Modal.Box` sub-component.
- *
- * @storybookSection Sub Components
  */
 export interface ModalBoxProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;
