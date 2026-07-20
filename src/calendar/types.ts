@@ -5,6 +5,7 @@ import type {
 
 export type { Variant as CalendarVariant } from "../shared/internal-calendar/types";
 
+// @storybookSkipProps
 interface CalendarBaseProps extends CommonCalendarProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
@@ -77,5 +78,6 @@ export interface CalendarMultiProps extends CalendarBaseProps {
     onChange?: ((values: string[]) => void) | undefined;
 }
 
+// @storybookSkipProps
 /** Props for the `Calendar` component */
 export type CalendarProps = CalendarSingleProps | CalendarMultiProps;
