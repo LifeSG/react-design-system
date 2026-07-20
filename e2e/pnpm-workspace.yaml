@@ -1,0 +1,8 @@
+packages:
+    - a3-svelte-app
+    - a3-vue-app
+    - a3-angular-app
+    - a4-svelte-app
+    - a4-vue-app
+    - a4-angular-app
+    - proxy

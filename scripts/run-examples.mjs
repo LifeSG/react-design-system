@@ -7,12 +7,11 @@
  * Usage:
  *   node scripts/run-examples.mjs
  */
-import { spawn, execSync } from "node:child_process";
+import { execSync, spawn } from "node:child_process";
 import fs from "node:fs";
 import path from "node:path";
 
 const rootDir = process.cwd();
-const exampleDir = path.join(rootDir, "example");
 const BASE_PORT = 4200;
 
 const COLORS = [
@@ -29,27 +28,41 @@ const COLORS = [
 const RESET = "\x1b[0m";
 const DIM = "\x1b[2m";
 
-const entries = fs
-    .readdirSync(exampleDir, { withFileTypes: true })
-    .filter((d) => d.isDirectory())
-    .filter((d) => fs.existsSync(path.join(exampleDir, d.name, "package.json")))
-    .map((d) => d.name)
-    .sort();
+/** Directories to scan for runnable apps */
+const APP_DIRS = [path.join(rootDir, "example"), path.join(rootDir, "e2e")];
+
+/** Apps to exclude (not standalone dev servers) */
+const EXCLUDE = new Set(["proxy", "shared", "tests"]);
+
+const entries = APP_DIRS.flatMap((dir) => {
+    if (!fs.existsSync(dir)) return [];
+    return fs
+        .readdirSync(dir, { withFileTypes: true })
+        .filter((d) => d.isDirectory())
+        .filter((d) => !EXCLUDE.has(d.name))
+        .filter((d) => fs.existsSync(path.join(dir, d.name, "package.json")))
+        .map((d) => ({ name: d.name, dir: path.join(dir, d.name) }));
+}).sort((a, b) => a.name.localeCompare(b.name));
 
 if (entries.length === 0) {
     console.log("No example apps found.");
     process.exit(0);
 }
 
-const apps = entries.map((name, i) => {
-    const dir = path.join(exampleDir, name);
+const apps = entries.map((entry, i) => {
     const pkg = JSON.parse(
-        fs.readFileSync(path.join(dir, "package.json"), "utf8")
+        fs.readFileSync(path.join(entry.dir, "package.json"), "utf8")
     );
     const scripts = pkg.scripts || {};
     const cmd = scripts.dev ? "dev" : scripts.start ? "start" : null;
     const isAngular = !!scripts["ng"] || !!pkg.dependencies?.["@angular/core"];
-    return { name, dir, cmd, isAngular, port: BASE_PORT + i };
+    return {
+        name: entry.name,
+        dir: entry.dir,
+        cmd,
+        isAngular,
+        port: BASE_PORT + i,
+    };
 });
 
 const maxName = Math.max(...apps.map((a) => a.name.length));

@@ -37,7 +37,10 @@ export abstract class AbstractStoryPage {
             .route(/^https:\/\/assets\.life\.gov\.sg/, async (route) => {
                 const url = route.request().url();
                 const path = new URL(url).pathname;
-                const cdn = `http://host.docker.internal:3000/cdn${path}`;
+                const baseHost = process.env.DOCKER
+                    ? "host.docker.internal"
+                    : "localhost";
+                const cdn = `http://${baseHost}:3000/cdn${path}`;
 
                 const res = await this.page.request.get(cdn);
                 await route.fulfill({ response: res });
@@ -57,7 +60,7 @@ export abstract class AbstractStoryPage {
         const queryString = query.toString();
 
         await this.page.goto(
-            `/components/${this.component}/${story}?${queryString}`
+            `components/${this.component}/${story}?${queryString}`
         );
 
         await expect(this.layout).toBeVisible();

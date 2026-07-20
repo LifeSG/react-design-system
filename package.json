@@ -56,6 +56,7 @@
         "./styles": {
             "import": "./dist/native/styles/index.ts"
         },
+        "./styles/styles.css": "./dist/native/styles/linaria/styles.css",
         "./styles/theme/*": "./dist/native/styles/theme/*"
     },
     "bin": {
