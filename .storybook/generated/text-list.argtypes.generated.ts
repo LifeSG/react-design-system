@@ -2,6 +2,38 @@
 // Run: npm run storybook:argtypes
 
 export const textListExtraArgTypes = {
+    "BulletType": {
+        "control": false,
+        "description": "Predefined bullet marker style for an unordered list.",
+        "name": "BulletType",
+        "table": {
+            "category": "BulletType",
+            "type": {
+                "summary": "'none' | 'disc' | 'circle' | 'square'"
+            }
+        }
+    },
+    "CounterType": {
+        "control": false,
+        "description": "Counter style applied to each item in an ordered list.",
+        "name": "CounterType",
+        "table": {
+            "category": "CounterType",
+            "type": {
+                "summary": "'decimal' | 'lower-alpha' | 'lower-roman'"
+            }
+        }
+    },
+    "CustomBulletIcon": {
+        "control": false,
+        "name": "CustomBulletIcon",
+        "table": {
+            "category": "CustomBulletIcon",
+            "type": {
+                "summary": "Exclude<React.ReactNode, string>"
+            }
+        }
+    },
     "OrderedListProps.bottomMargin": {
         "control": false,
         "description": "Bottom margin in pixels applied to each list item except the last.",
@@ -114,6 +146,17 @@ export const textListExtraArgTypes = {
             }
         }
     },
+    "TextListSize": {
+        "control": false,
+        "description": "Text size tokens available for list content.",
+        "name": "TextListSize",
+        "table": {
+            "category": "TextListSize",
+            "type": {
+                "summary": "'heading-xxl' | 'heading-xl' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xs' | 'body-baseline' | 'body-md' | 'body-sm' | 'body-xs'"
+            }
+        }
+    },
     "UnorderedListProps.bottomMargin": {
         "control": false,
         "description": "Bottom margin in pixels applied to each list item except the last.",
@@ -187,49 +230,6 @@ export const textListExtraArgTypes = {
             "category": "UnorderedListProps",
             "type": {
                 "summary": "TextListSize"
-            }
-        }
-    },
-    "TextListSize": {
-        "name": "TextListSize",
-        "description": "Text size tokens available for list content.",
-        "control": false,
-        "table": {
-            "category": "TextListSize",
-            "type": {
-                "summary": "'heading-xxl' | 'heading-xl' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xs' | 'body-baseline' | 'body-md' | 'body-sm' | 'body-xs'"
-            }
-        }
-    },
-    "CounterType": {
-        "name": "CounterType",
-        "description": "Counter style applied to each item in an ordered list.",
-        "control": false,
-        "table": {
-            "category": "CounterType",
-            "type": {
-                "summary": "'lower-alpha' | 'decimal' | 'lower-roman'"
-            }
-        }
-    },
-    "BulletType": {
-        "name": "BulletType",
-        "description": "Predefined bullet marker style for an unordered list.",
-        "control": false,
-        "table": {
-            "category": "BulletType",
-            "type": {
-                "summary": "'circle' | 'disc' | 'square' | 'none'"
-            }
-        }
-    },
-    "CustomBulletIcon": {
-        "name": "CustomBulletIcon",
-        "control": false,
-        "table": {
-            "category": "CustomBulletIcon",
-            "type": {
-                "summary": "Exclude<React.ReactNode, string>"
             }
         }
     }

@@ -47,6 +47,7 @@ import { sidenavExtraArgTypes as sidenavStoryArgTypes } from "./sidenav.argtypes
 import { singpassButtonExtraArgTypes as singpassButtonStoryArgTypes } from "./singpass-button.argtypes.generated";
 import { smartAppBannerExtraArgTypes as smartAppBannerStoryArgTypes } from "./smart-app-banner.argtypes.generated";
 import { tabExtraArgTypes as tabStoryArgTypes } from "./tab.argtypes.generated";
+import { tableExtraArgTypes as tableStoryArgTypes } from "./table.argtypes.generated";
 import { tagExtraArgTypes as tagStoryArgTypes } from "./tag.argtypes.generated";
 import { textListExtraArgTypes as textListStoryArgTypes } from "./text-list.argtypes.generated";
 import { themeExtraArgTypes as themeStoryArgTypes } from "./theme.argtypes.generated";
@@ -57,6 +58,7 @@ import { timelineExtraArgTypes as timelineStoryArgTypes } from "./timeline.argty
 import { timetableExtraArgTypes as timetableStoryArgTypes } from "./timetable.argtypes.generated";
 import { toastExtraArgTypes as toastStoryArgTypes } from "./toast.argtypes.generated";
 import { toggleExtraArgTypes as toggleStoryArgTypes } from "./toggle.argtypes.generated";
+import { typographyExtraArgTypes as typographyStoryArgTypes } from "./typography.argtypes.generated";
 import { uneditableSectionExtraArgTypes as uneditableSectionStoryArgTypes } from "./uneditable-section.argtypes.generated";
 
 export const storybookArgTypesByTitle: Record<string, unknown> = {
@@ -66,11 +68,13 @@ export const storybookArgTypesByTitle: Record<string, unknown> = {
     "Content/DataTable": dataTableStoryArgTypes,
     "Content/FullscreenImageCarousel": fullscreenImageCarouselStoryArgTypes,
     "Content/Tab": tabStoryArgTypes,
+    "Content/Table": tableStoryArgTypes,
     "Content/UneditableSection": uneditableSectionStoryArgTypes,
     "Core/Divider": dividerStoryArgTypes,
     "Core/ErrorDisplay": errorDisplayStoryArgTypes,
     "Core/Markup": markupStoryArgTypes,
     "Core/TextList": textListStoryArgTypes,
+    "Core/Typography": typographyStoryArgTypes,
     "Feedback indicators/Alert": alertStoryArgTypes,
     "Feedback indicators/Badge": badgeStoryArgTypes,
     "Feedback indicators/CountdownTimer": countdownTimerStoryArgTypes,

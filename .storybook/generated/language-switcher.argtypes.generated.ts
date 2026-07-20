@@ -3,9 +3,9 @@
 
 export const languageSwitcherExtraArgTypes = {
     "LanguageSwitcherCode": {
-        "name": "LanguageSwitcherCode",
-        "description": "Code identifying a supported display language.",
         "control": false,
+        "description": "Code identifying a supported display language.",
+        "name": "LanguageSwitcherCode",
         "table": {
             "category": "LanguageSwitcherCode",
             "type": {
@@ -82,9 +82,9 @@ export const languageSwitcherExtraArgTypes = {
         }
     },
     "LanguageSwitcherVariant": {
-        "name": "LanguageSwitcherVariant",
-        "description": "Presentation mode for the language switcher control.\n\n- `\"dropdown\"` renders a compact select control.\n- `\"link-container\"` renders languages as inline links.",
         "control": false,
+        "description": "Presentation mode for the language switcher control.\n\n- `\"dropdown\"` renders a compact select control.\n- `\"link-container\"` renders languages as inline links.",
+        "name": "LanguageSwitcherVariant",
         "table": {
             "category": "LanguageSwitcherVariant",
             "type": {

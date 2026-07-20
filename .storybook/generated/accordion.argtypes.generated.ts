@@ -2,6 +2,145 @@
 // Run: npm run storybook:argtypes
 
 export const accordionExtraArgTypes = {
+    "AccordionItemApi.collapse": {
+        "control": false,
+        "name": "collapse",
+        "table": {
+            "category": "AccordionItemApi",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "() => void"
+            }
+        }
+    },
+    "AccordionItemApi.expand": {
+        "control": false,
+        "name": "expand",
+        "table": {
+            "category": "AccordionItemApi",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "() => void"
+            }
+        }
+    },
+    "AccordionItemApi.isExpanded": {
+        "control": false,
+        "name": "isExpanded",
+        "table": {
+            "category": "AccordionItemApi",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "() => boolean"
+            }
+        }
+    },
+    "AccordionItemProps.children": {
+        "control": false,
+        "name": "children",
+        "table": {
+            "category": "AccordionItemProps",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "JSX.Element | JSX.Element[]"
+            }
+        }
+    },
+    "AccordionItemProps.className": {
+        "control": false,
+        "name": "className",
+        "table": {
+            "category": "AccordionItemProps",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "string"
+            }
+        }
+    },
+    "AccordionItemProps.collapsible": {
+        "control": false,
+        "description": "When `false`, the item header is non-interactive and the content panel is\nalways visible.",
+        "name": "collapsible",
+        "table": {
+            "category": "AccordionItemProps",
+            "defaultValue": {
+                "summary": "true"
+            },
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "boolean"
+            }
+        }
+    },
+    "AccordionItemProps.data-testid": {
+        "control": false,
+        "name": "data-testid",
+        "table": {
+            "category": "AccordionItemProps",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "string"
+            }
+        }
+    },
+    "AccordionItemProps.expanded": {
+        "control": false,
+        "description": "Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent\n\"Show all\" / \"Hide all\" button manage the state. Pass an explicit boolean to take\nindividual control of this item.",
+        "name": "expanded",
+        "table": {
+            "category": "AccordionItemProps",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "boolean"
+            }
+        }
+    },
+    "AccordionItemProps.id": {
+        "control": false,
+        "name": "id",
+        "table": {
+            "category": "AccordionItemProps",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "string"
+            }
+        }
+    },
+    "AccordionItemProps.title": {
+        "control": false,
+        "name": "title",
+        "table": {
+            "category": "AccordionItemProps",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "string | JSX.Element"
+            }
+        }
+    },
+    "AccordionItemProps.type": {
+        "control": false,
+        "description": "Visual size variant for the accordion item.",
+        "name": "type",
+        "table": {
+            "category": "AccordionItemProps",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "AccordionItemType"
+            }
+        }
+    },
+    "AccordionItemType": {
+        "control": false,
+        "description": "Visual size variant for an `Accordion.Item`.",
+        "name": "AccordionItemType",
+        "table": {
+            "category": "AccordionItemType",
+            "tabGroup": "Accordion.Item",
+            "type": {
+                "summary": "'default' | 'small'"
+            }
+        }
+    },
     "AccordionProps.children": {
         "control": false,
         "name": "children",
@@ -127,145 +266,6 @@ export const accordionExtraArgTypes = {
             "tabGroup": "Accordion",
             "type": {
                 "summary": "string"
-            }
-        }
-    },
-    "AccordionItemProps.children": {
-        "control": false,
-        "name": "children",
-        "table": {
-            "category": "AccordionItemProps",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "JSX.Element | JSX.Element[]"
-            }
-        }
-    },
-    "AccordionItemProps.className": {
-        "control": false,
-        "name": "className",
-        "table": {
-            "category": "AccordionItemProps",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "string"
-            }
-        }
-    },
-    "AccordionItemProps.collapsible": {
-        "control": false,
-        "description": "When `false`, the item header is non-interactive and the content panel is\nalways visible.",
-        "name": "collapsible",
-        "table": {
-            "category": "AccordionItemProps",
-            "defaultValue": {
-                "summary": "true"
-            },
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "boolean"
-            }
-        }
-    },
-    "AccordionItemProps.data-testid": {
-        "control": false,
-        "name": "data-testid",
-        "table": {
-            "category": "AccordionItemProps",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "string"
-            }
-        }
-    },
-    "AccordionItemProps.expanded": {
-        "control": false,
-        "description": "Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent\n\"Show all\" / \"Hide all\" button manage the state. Pass an explicit boolean to take\nindividual control of this item.",
-        "name": "expanded",
-        "table": {
-            "category": "AccordionItemProps",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "boolean"
-            }
-        }
-    },
-    "AccordionItemProps.id": {
-        "control": false,
-        "name": "id",
-        "table": {
-            "category": "AccordionItemProps",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "string"
-            }
-        }
-    },
-    "AccordionItemProps.title": {
-        "control": false,
-        "name": "title",
-        "table": {
-            "category": "AccordionItemProps",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "string | JSX.Element"
-            }
-        }
-    },
-    "AccordionItemProps.type": {
-        "control": false,
-        "description": "Visual size variant for the accordion item.",
-        "name": "type",
-        "table": {
-            "category": "AccordionItemProps",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "AccordionItemType"
-            }
-        }
-    },
-    "AccordionItemApi.collapse": {
-        "control": false,
-        "name": "collapse",
-        "table": {
-            "category": "AccordionItemApi",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "() => void"
-            }
-        }
-    },
-    "AccordionItemApi.expand": {
-        "control": false,
-        "name": "expand",
-        "table": {
-            "category": "AccordionItemApi",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "() => void"
-            }
-        }
-    },
-    "AccordionItemApi.isExpanded": {
-        "control": false,
-        "name": "isExpanded",
-        "table": {
-            "category": "AccordionItemApi",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "() => boolean"
-            }
-        }
-    },
-    "AccordionItemType": {
-        "name": "AccordionItemType",
-        "description": "Visual size variant for an `Accordion.Item`.",
-        "control": false,
-        "table": {
-            "category": "AccordionItemType",
-            "tabGroup": "Accordion.Item",
-            "type": {
-                "summary": "'default' | 'small'"
             }
         }
     }

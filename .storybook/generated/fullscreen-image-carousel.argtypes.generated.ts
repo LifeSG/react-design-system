@@ -146,13 +146,67 @@ export const fullscreenImageCarouselExtraArgTypes = {
         }
     },
     "FullscreenImageCarouselItemProps": {
-        "name": "FullscreenImageCarouselItemProps",
-        "description": "A single item in the carousel.\n\n`type` discriminates between a standard image item (`\"image\"`)\nand a custom-content item (`\"custom\"`).",
         "control": false,
+        "description": "A single item in the carousel.\n\n`type` discriminates between a standard image item (`\"image\"`)\nand a custom-content item (`\"custom\"`).",
+        "name": "FullscreenImageCarouselItemProps",
         "table": {
             "category": "FullscreenImageCarouselItemProps",
             "type": {
                 "summary": "| FullscreenImageCarouselImageItemProps | FullscreenImageCarouselCustomItemProps"
+            }
+        }
+    },
+    "FullscreenImageCarouselItemProps.fileName": {
+        "control": false,
+        "description": "Display name of the file shown in the top info bar.",
+        "name": "fileName",
+        "table": {
+            "category": "FullscreenImageCarouselItemProps",
+            "type": {
+                "summary": "string"
+            }
+        }
+    },
+    "FullscreenImageCarouselItemProps.fileSize": {
+        "control": false,
+        "description": "Human-readable file size shown alongside `fileName` in the top\ninfo bar (e.g. \"2.4 MB\").",
+        "name": "fileSize",
+        "table": {
+            "category": "FullscreenImageCarouselItemProps",
+            "type": {
+                "summary": "string"
+            }
+        }
+    },
+    "FullscreenImageCarouselItemProps.renderContent": {
+        "control": false,
+        "description": "Render prop for the full slide area. Consumer is responsible\nfor the entire slide content (e.g. an iframe, embed, or custom viewer).",
+        "name": "renderContent",
+        "table": {
+            "category": "FullscreenImageCarouselItemProps",
+            "type": {
+                "summary": "(() => React.ReactNode)"
+            }
+        }
+    },
+    "FullscreenImageCarouselItemProps.thumbnailSrc": {
+        "control": false,
+        "description": "URL of the image shown in the thumbnail strip.\nFalls back to `src` when omitted.\n\nThe thumbnail image src. If omitted, a placeholder is shown in the thumbnail strip.",
+        "name": "thumbnailSrc",
+        "table": {
+            "category": "FullscreenImageCarouselItemProps",
+            "type": {
+                "summary": "string"
+            }
+        }
+    },
+    "FullscreenImageCarouselItemProps.type": {
+        "control": false,
+        "name": "type",
+        "table": {
+            "category": "FullscreenImageCarouselItemProps",
+            "type": {
+                "summary": "'image' | 'custom'"
             }
         }
     },

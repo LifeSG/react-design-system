@@ -694,6 +694,12 @@ function getInterfaceArgTypes(
     const ownMembers = interfaceDeclaration.getMembers();
 
     if (ownMembers.length === 0) {
+        // If the interface only extends HTML attributes, return just the inherited row
+        if (inheritedHtmlAttributesRow) {
+            return [inheritedHtmlAttributesRow];
+        }
+
+        // Otherwise return a generic descriptive row
         return [
             buildArgTypeRow({
                 key: interfaceName,
@@ -703,7 +709,6 @@ function getInterfaceArgTypes(
                 deprecated: interfaceJsDocMeta.deprecated,
                 description: toStorybookDescription(interfaceJsDocMeta),
             }),
-            ...(inheritedHtmlAttributesRow ? [inheritedHtmlAttributesRow] : []),
         ];
     }
 

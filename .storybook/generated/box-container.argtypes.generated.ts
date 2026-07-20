@@ -2,33 +2,14 @@
 // Run: npm run storybook:argtypes
 
 export const boxContainerExtraArgTypes = {
-    "BoxContainerSubComponentTestIds.displayStateIcon": {
+    "BoxContainerDisplayState": {
         "control": false,
-        "name": "displayStateIcon",
+        "description": "Visual status applied to the box container header, reflected via an icon and accessible label.",
+        "name": "BoxContainerDisplayState",
         "table": {
-            "category": "BoxContainerSubComponentTestIds",
+            "category": "BoxContainerDisplayState",
             "type": {
-                "summary": "string"
-            }
-        }
-    },
-    "BoxContainerSubComponentTestIds.handle": {
-        "control": false,
-        "name": "handle",
-        "table": {
-            "category": "BoxContainerSubComponentTestIds",
-            "type": {
-                "summary": "string"
-            }
-        }
-    },
-    "BoxContainerSubComponentTestIds.title": {
-        "control": false,
-        "name": "title",
-        "table": {
-            "category": "BoxContainerSubComponentTestIds",
-            "type": {
-                "summary": "string"
+                "summary": "'default' | 'warning' | 'error'"
             }
         }
     },
@@ -156,14 +137,33 @@ export const boxContainerExtraArgTypes = {
             }
         }
     },
-    "BoxContainerDisplayState": {
-        "name": "BoxContainerDisplayState",
-        "description": "Visual status applied to the box container header, reflected via an icon and accessible label.",
+    "BoxContainerSubComponentTestIds.displayStateIcon": {
         "control": false,
+        "name": "displayStateIcon",
         "table": {
-            "category": "BoxContainerDisplayState",
+            "category": "BoxContainerSubComponentTestIds",
             "type": {
-                "summary": "'default' | 'error' | 'warning'"
+                "summary": "string"
+            }
+        }
+    },
+    "BoxContainerSubComponentTestIds.handle": {
+        "control": false,
+        "name": "handle",
+        "table": {
+            "category": "BoxContainerSubComponentTestIds",
+            "type": {
+                "summary": "string"
+            }
+        }
+    },
+    "BoxContainerSubComponentTestIds.title": {
+        "control": false,
+        "name": "title",
+        "table": {
+            "category": "BoxContainerSubComponentTestIds",
+            "type": {
+                "summary": "string"
             }
         }
     }

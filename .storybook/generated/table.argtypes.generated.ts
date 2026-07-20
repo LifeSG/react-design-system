@@ -2,72 +2,72 @@
 // Run: npm run storybook:argtypes
 
 export const tableExtraArgTypes = {
-    "BodyProps": {
+    "TableBodyProps.__inheritedHtmlProps": {
         "control": false,
-        "description": "Inherits props from [HTMLTableSectionElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableSectionElement)",
+        "description": "Inherits props from `HTMLTableSectionElement`.",
         "name": "",
         "table": {
-            "category": "BodyProps",
+            "category": "TableBodyProps",
             "tabGroup": "Table.Body",
             "type": {}
         }
     },
-    "CellProps": {
+    "TableCellProps.__inheritedHtmlProps": {
         "control": false,
-        "description": "Inherits props from [HTMLTableCellElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableCellElement)",
+        "description": "Inherits props from `HTMLTableCellElement`.",
         "name": "",
         "table": {
-            "category": "CellProps",
+            "category": "TableCellProps",
             "tabGroup": "Table.Cell",
             "type": {}
         }
     },
-    "ContainerProps": {
+    "TableContainerProps.__inheritedHtmlProps": {
         "control": false,
-        "description": "Inherits props from [HTMLDivElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement)",
+        "description": "Inherits props from `HTMLDivElement`.",
         "name": "",
         "table": {
-            "category": "ContainerProps",
+            "category": "TableContainerProps",
             "tabGroup": "Table.Container",
             "type": {}
         }
     },
-    "HeaderProps": {
+    "TableHeaderProps.__inheritedHtmlProps": {
         "control": false,
-        "description": "Inherits props from [HTMLTableCellElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableCellElement)",
+        "description": "Inherits props from `HTMLTableCellElement`.",
         "name": "",
         "table": {
-            "category": "HeaderProps",
+            "category": "TableHeaderProps",
             "tabGroup": "Table.HeaderCell",
             "type": {}
         }
     },
-    "HeadProps": {
+    "TableHeadProps.__inheritedHtmlProps": {
         "control": false,
-        "description": "Inherits props from [HTMLTableSectionElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableSectionElement)",
+        "description": "Inherits props from `HTMLTableSectionElement`.",
         "name": "",
         "table": {
-            "category": "HeadProps",
+            "category": "TableHeadProps",
             "tabGroup": "Table.Head",
             "type": {}
         }
     },
-    "RowProps": {
+    "TableRowProps.__inheritedHtmlProps": {
         "control": false,
-        "description": "Inherits props from [HTMLTableRowElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableRowElement)",
+        "description": "Inherits props from `HTMLTableRowElement`.",
         "name": "",
         "table": {
-            "category": "RowProps",
+            "category": "TableRowProps",
             "tabGroup": "Table.Row",
             "type": {}
         }
     },
-    "TableProps": {
+    "TableTableProps.__inheritedHtmlProps": {
         "control": false,
-        "description": "Inherits props from [HTMLTableElement](https://developer.mozilla.org/en-US/docs/Web/API/HTMLTableElement)",
+        "description": "Inherits props from `HTMLTableElement`.",
         "name": "",
         "table": {
-            "category": "TableProps",
+            "category": "TableTableProps",
             "tabGroup": "Table",
             "type": {}
         }

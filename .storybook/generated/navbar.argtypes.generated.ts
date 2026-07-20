@@ -3,9 +3,9 @@
 
 export const navbarExtraArgTypes = {
     "BrandType": {
-        "name": "BrandType",
-        "description": "Identifies which brand slot was interacted with in brand-related callbacks.",
         "control": false,
+        "description": "Identifies which brand slot was interacted with in brand-related callbacks.",
+        "name": "BrandType",
         "table": {
             "category": "BrandType",
             "type": {
@@ -14,9 +14,9 @@ export const navbarExtraArgTypes = {
         }
     },
     "DrawerDismissalMethod": {
-        "name": "DrawerDismissalMethod",
-        "description": "Identifies the user action that can dismiss the mobile navigation drawer.\n\nPass one or more values to `drawerDismissalExclusions` on `NavbarProps` to\nprevent those actions from closing the drawer.\n\n- `\"close-button-click\"` — the drawer's close button or overlay click\n- `\"item-click\"` — clicking a nav item or action button\n- `\"brand-click\"` — clicking a brand logo",
         "control": false,
+        "description": "Identifies the user action that can dismiss the mobile navigation drawer.\n\nPass one or more values to `drawerDismissalExclusions` on `NavbarProps` to\nprevent those actions from closing the drawer.\n\n- `\"close-button-click\"` — the drawer's close button or overlay click\n- `\"item-click\"` — clicking a nav item or action button\n- `\"brand-click\"` — clicking a brand logo",
+        "name": "DrawerDismissalMethod",
         "table": {
             "category": "DrawerDismissalMethod",
             "type": {
@@ -182,9 +182,9 @@ export const navbarExtraArgTypes = {
         }
     },
     "NavbarButtonProps": {
-        "name": "NavbarButtonProps",
-        "description": "Props for a single action button in the navbar.\n\n`type` discriminates between `\"button\"`, `\"download\"`, and `\"component\"`.",
         "control": false,
+        "description": "Props for a single action button in the navbar.\n\n`type` discriminates between `\"button\"`, `\"download\"`, and `\"component\"`.",
+        "name": "NavbarButtonProps",
         "table": {
             "category": "NavbarButtonProps",
             "type": {
@@ -739,9 +739,9 @@ export const navbarExtraArgTypes = {
         }
     },
     "NavItemProps": {
-        "name": "NavItemProps<T>",
-        "description": "A single navigation item rendered by the navbar.",
         "control": false,
+        "description": "A single navigation item rendered by the navbar.",
+        "name": "NavItemProps<T>",
         "table": {
             "category": "NavItemProps<T>",
             "type": {

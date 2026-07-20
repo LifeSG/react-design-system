@@ -2,6 +2,27 @@
 // Run: npm run storybook:argtypes
 
 export const dividerExtraArgTypes = {
+    "DividerLayoutType": {
+        "control": false,
+        "name": "DividerLayoutType",
+        "table": {
+            "category": "DividerLayoutType",
+            "type": {
+                "summary": "'grid' | 'flex'"
+            }
+        }
+    },
+    "DividerLineStyleType": {
+        "control": false,
+        "description": "Visual style of the line.",
+        "name": "DividerLineStyleType",
+        "table": {
+            "category": "DividerLineStyleType",
+            "type": {
+                "summary": "'solid' | 'dashed'"
+            }
+        }
+    },
     "DividerProps.color": {
         "control": false,
         "description": "Color of the line. Accepts a design-system colour token or any valid CSS\ncolor value.",
@@ -142,27 +163,6 @@ export const dividerExtraArgTypes = {
             "category": "DividerProps",
             "type": {
                 "summary": "ColSpan"
-            }
-        }
-    },
-    "DividerLineStyleType": {
-        "name": "DividerLineStyleType",
-        "description": "Visual style of the line.",
-        "control": false,
-        "table": {
-            "category": "DividerLineStyleType",
-            "type": {
-                "summary": "'solid' | 'dashed'"
-            }
-        }
-    },
-    "DividerLayoutType": {
-        "name": "DividerLayoutType",
-        "control": false,
-        "table": {
-            "category": "DividerLayoutType",
-            "type": {
-                "summary": "'flex' | 'grid'"
             }
         }
     }

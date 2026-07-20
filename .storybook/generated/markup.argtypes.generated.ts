@@ -2,6 +2,15 @@
 // Run: npm run storybook:argtypes
 
 export const markupExtraArgTypes = {
+    "MarkupProps.__inheritedHtmlProps": {
+        "control": false,
+        "description": "Inherits props from `HTMLDivElement`.",
+        "name": "",
+        "table": {
+            "category": "MarkupProps",
+            "type": {}
+        }
+    },
     "MarkupProps.baseTextColor": {
         "control": false,
         "description": "The default font color. If not specified, inherited from the parent",
@@ -49,8 +58,8 @@ export const markupExtraArgTypes = {
         }
     },
     "MarkupTextSize": {
-        "name": "MarkupTextSize",
         "control": false,
+        "name": "MarkupTextSize",
         "table": {
             "category": "MarkupTextSize",
             "type": {

@@ -3,21 +3,21 @@
 
 export const uneditableSectionExtraArgTypes = {
     "UneditableSectionItemDisplayWidth": {
-        "name": "UneditableSectionItemDisplayWidth",
-        "description": "Grid column span for an item within the section layout.",
         "control": false,
+        "description": "Grid column span for an item within the section layout.",
+        "name": "UneditableSectionItemDisplayWidth",
         "table": {
             "category": "UneditableSectionItemDisplayWidth",
             "tabGroup": "UneditableSection.Item",
             "type": {
-                "summary": "'half' | 'full'"
+                "summary": "'full' | 'half'"
             }
         }
     },
     "UneditableSectionItemMaskLoadingState": {
-        "name": "UneditableSectionItemMaskLoadingState",
-        "description": "Async loading state during a mask or unmask action.",
         "control": false,
+        "description": "Async loading state during a mask or unmask action.",
+        "name": "UneditableSectionItemMaskLoadingState",
         "table": {
             "category": "UneditableSectionItemMaskLoadingState",
             "tabGroup": "UneditableSection.Item",
@@ -27,9 +27,9 @@ export const uneditableSectionExtraArgTypes = {
         }
     },
     "UneditableSectionItemMaskState": {
-        "name": "UneditableSectionItemMaskState",
-        "description": "Whether the item value is currently masked or unmasked.",
         "control": false,
+        "description": "Whether the item value is currently masked or unmasked.",
+        "name": "UneditableSectionItemMaskState",
         "table": {
             "category": "UneditableSectionItemMaskState",
             "tabGroup": "UneditableSection.Item",
@@ -199,6 +199,16 @@ export const uneditableSectionExtraArgTypes = {
             }
         }
     },
+    "UneditableSectionItemSectionProps.__inheritedHtmlProps": {
+        "control": false,
+        "description": "Inherits props from `HTMLUListElement`.",
+        "name": "",
+        "table": {
+            "category": "UneditableSectionItemSectionProps",
+            "tabGroup": "UneditableSection.ItemSection",
+            "type": {}
+        }
+    },
     "UneditableSectionItemSectionProps.inert": {
         "control": false,
         "name": "inert",
@@ -338,7 +348,7 @@ export const uneditableSectionExtraArgTypes = {
             "category": "UneditableSectionProps",
             "tabGroup": "UneditableSection",
             "type": {
-                "summary": "(item: UneditableSectionItemProps) => void"
+                "summary": "((item: UneditableSectionItemProps) => void)"
             }
         }
     },
@@ -350,7 +360,7 @@ export const uneditableSectionExtraArgTypes = {
             "category": "UneditableSectionProps",
             "tabGroup": "UneditableSection",
             "type": {
-                "summary": "(item: UneditableSectionItemProps) => void"
+                "summary": "((item: UneditableSectionItemProps) => void)"
             }
         }
     },
@@ -362,7 +372,7 @@ export const uneditableSectionExtraArgTypes = {
             "category": "UneditableSectionProps",
             "tabGroup": "UneditableSection",
             "type": {
-                "summary": "(item: UneditableSectionItemProps) => void"
+                "summary": "((item: UneditableSectionItemProps) => void)"
             }
         }
     },

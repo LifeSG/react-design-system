@@ -2,6 +2,15 @@
 // Run: npm run storybook:argtypes
 
 export const avatarExtraArgTypes = {
+    "AvatarProps.__inheritedHtmlProps": {
+        "control": false,
+        "description": "Inherits props from `HTMLDivElement`.",
+        "name": "",
+        "table": {
+            "category": "AvatarProps",
+            "type": {}
+        }
+    },
     "AvatarProps.children": {
         "control": false,
         "description": "A string or JSX element to display inside the avatar. When a string is\nprovided, only the first Unicode code point is rendered as an uppercase\ninitial. Pass a JSX element (e.g. an `<img>`) to render custom content.",
@@ -45,9 +54,9 @@ export const avatarExtraArgTypes = {
         }
     },
     "AvatarSize": {
-        "name": "AvatarSize",
-        "description": "Visual size options for the `Avatar` component.",
         "control": false,
+        "description": "Visual size options for the `Avatar` component.",
+        "name": "AvatarSize",
         "table": {
             "category": "AvatarSize",
             "type": {

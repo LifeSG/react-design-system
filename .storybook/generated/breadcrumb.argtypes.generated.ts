@@ -109,8 +109,8 @@ export const breadcrumbExtraArgTypes = {
         }
     },
     "FadePosition": {
-        "name": "FadePosition",
         "control": false,
+        "name": "FadePosition",
         "table": {
             "category": "FadePosition",
             "type": {
@@ -119,8 +119,8 @@ export const breadcrumbExtraArgTypes = {
         }
     },
     "SeparatorStyle": {
-        "name": "SeparatorStyle",
         "control": false,
+        "name": "SeparatorStyle",
         "table": {
             "category": "SeparatorStyle",
             "type": {

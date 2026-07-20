@@ -2,39 +2,6 @@
 // Run: npm run storybook:argtypes
 
 export const errorDisplayExtraArgTypes = {
-    "MaintenanceAdditionalAttributes.dateString": {
-        "control": false,
-        "description": "Date string rendered inside the default maintenance description.",
-        "name": "dateString",
-        "table": {
-            "category": "MaintenanceAdditionalAttributes",
-            "type": {
-                "summary": "string"
-            }
-        }
-    },
-    "InactivityAdditionalAttributes.reminderInterval": {
-        "control": false,
-        "description": "Interval (in seconds) for announcing remaining time via screen readers.",
-        "name": "reminderInterval",
-        "table": {
-            "category": "InactivityAdditionalAttributes",
-            "type": {
-                "summary": "number"
-            }
-        }
-    },
-    "InactivityAdditionalAttributes.secondsLeft": {
-        "control": false,
-        "description": "Remaining seconds before the session expires, used to render the countdown timer.",
-        "name": "secondsLeft",
-        "table": {
-            "category": "InactivityAdditionalAttributes",
-            "type": {
-                "summary": "number"
-            }
-        }
-    },
     "ErrorDisplayProps.actionButton": {
         "control": false,
         "description": "Action button rendered below the description.\nDefaults to a \"Proceed\" label when `children` is omitted.",
@@ -147,13 +114,46 @@ export const errorDisplayExtraArgTypes = {
         }
     },
     "ErrorDisplayType": {
-        "name": "ErrorDisplayType",
-        "description": "Union of all supported error and status variants.",
         "control": false,
+        "description": "Union of all supported error and status variants.",
+        "name": "ErrorDisplayType",
         "table": {
             "category": "ErrorDisplayType",
             "type": {
                 "summary": "'warning' | '400' | '403' | '404' | '408' | '500' | '502' | '503' | '504' | 'confirmation' | 'inactivity' | 'insufficient-credits' | 'link-error' | 'logout' | 'maintenance' | 'no-item-found' | 'payment-unsuccessful' | 'transfer-unsuccessful' | 'unsupported-browser' | 'partially-supported-browser'"
+            }
+        }
+    },
+    "InactivityAdditionalAttributes.reminderInterval": {
+        "control": false,
+        "description": "Interval (in seconds) for announcing remaining time via screen readers.",
+        "name": "reminderInterval",
+        "table": {
+            "category": "InactivityAdditionalAttributes",
+            "type": {
+                "summary": "number"
+            }
+        }
+    },
+    "InactivityAdditionalAttributes.secondsLeft": {
+        "control": false,
+        "description": "Remaining seconds before the session expires, used to render the countdown timer.",
+        "name": "secondsLeft",
+        "table": {
+            "category": "InactivityAdditionalAttributes",
+            "type": {
+                "summary": "number"
+            }
+        }
+    },
+    "MaintenanceAdditionalAttributes.dateString": {
+        "control": false,
+        "description": "Date string rendered inside the default maintenance description.",
+        "name": "dateString",
+        "table": {
+            "category": "MaintenanceAdditionalAttributes",
+            "type": {
+                "summary": "string"
             }
         }
     }

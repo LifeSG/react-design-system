@@ -71,7 +71,7 @@ export const linkListExtraArgTypes = {
         "table": {
             "category": "LinkListItemProps<T>",
             "type": {
-                "summary": "(event: React.MouseEvent<HTMLAnchorElement>) => void"
+                "summary": "| ((event: React.MouseEvent<HTMLAnchorElement>) => void)"
             }
         }
     },
@@ -142,9 +142,9 @@ export const linkListExtraArgTypes = {
         }
     },
     "LinkListProps": {
-        "name": "LinkListProps<T>",
-        "description": "Props for the `LinkList` component.",
         "control": false,
+        "description": "Props for the `LinkList` component.",
+        "name": "LinkListProps<T>",
         "table": {
             "category": "LinkListProps<T>",
             "type": {
@@ -231,9 +231,9 @@ export const linkListExtraArgTypes = {
         }
     },
     "LinkListStyle": {
-        "name": "LinkListStyle",
-        "description": "Visual size variant for `LinkList` items.\n\n- `\"default\"` renders standard body text\n- `\"small\"` renders reduced text for compact layouts.",
         "control": false,
+        "description": "Visual size variant for `LinkList` items.\n\n- `\"default\"` renders standard body text\n- `\"small\"` renders reduced text for compact layouts.",
+        "name": "LinkListStyle",
         "table": {
             "category": "LinkListStyle",
             "defaultValue": {

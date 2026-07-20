@@ -102,17 +102,17 @@ export interface UneditableSectionProps {
      *
      * @param item The item whose mask control was activated.
      */
-    onMask?: (item: UneditableSectionItemProps) => void | undefined;
+    onMask?: ((item: UneditableSectionItemProps) => void) | undefined;
     /**
      * Called when an unmask control is activated on an item.
      *
      * @param item The item whose unmask control was activated.
      */
-    onUnmask?: (item: UneditableSectionItemProps) => void | undefined;
+    onUnmask?: ((item: UneditableSectionItemProps) => void) | undefined;
     /**
      * Called when the retry button is clicked on an item in error state.
      *
      * @param item The item that encountered the mask/unmask error.
      */
-    onTryAgain?: (item: UneditableSectionItemProps) => void | undefined;
+    onTryAgain?: ((item: UneditableSectionItemProps) => void) | undefined;
 }

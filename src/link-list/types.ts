@@ -26,14 +26,16 @@ export interface LinkListItemProps<T>
     /** Arbitrary custom data passed through to the `onItemClick` callback. */
     options?: T | undefined;
     /** Called when an item is clicked. This overrides the `onItemClick` event handler. */
-    onClick: (event: React.MouseEvent<HTMLAnchorElement>) => void;
+    onClick?:
+        | ((event: React.MouseEvent<HTMLAnchorElement>) => void)
+        | undefined;
 }
 
 // @storybookSkipProps
 /**
  * Base props for `LinkList`.
  */
-export type BaseProps<T> = {
+type BaseProps<T> = {
     /** The list of link items to render. */
     items: LinkListItemProps<T>[];
     /**
