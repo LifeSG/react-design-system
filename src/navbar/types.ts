@@ -155,6 +155,7 @@ export interface NavbarResourcesProps {
     secondary?: NavbarBrandingProps | undefined;
 }
 
+// @storybookSkipProps
 /**
  * Props shared between `NavbarProps` and `NavbarDrawerProps`.
  */

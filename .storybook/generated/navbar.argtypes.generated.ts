@@ -488,56 +488,6 @@ export const navbarExtraArgTypes = {
             }
         }
     },
-    "NavbarSharedProps.actionButtons": {
-        "control": false,
-        "description": "Action buttons rendered in the navbar and mobile drawer.",
-        "name": "actionButtons",
-        "table": {
-            "category": "NavbarSharedProps",
-            "type": {
-                "summary": "NavbarActionButtonsProps"
-            }
-        }
-    },
-    "NavbarSharedProps.hideLinkIndicator": {
-        "control": false,
-        "description": "Hides the active-item underline indicator across desktop and drawer views.",
-        "name": "hideLinkIndicator",
-        "table": {
-            "category": "NavbarSharedProps",
-            "defaultValue": {
-                "summary": "false"
-            },
-            "type": {
-                "summary": "boolean"
-            }
-        }
-    },
-    "NavbarSharedProps.hideNavBranding": {
-        "control": false,
-        "description": "Hides all brand logos from the navbar and drawer.",
-        "name": "hideNavBranding",
-        "table": {
-            "category": "NavbarSharedProps",
-            "defaultValue": {
-                "summary": "false"
-            },
-            "type": {
-                "summary": "boolean"
-            }
-        }
-    },
-    "NavbarSharedProps.resources": {
-        "control": false,
-        "description": "Branding and logo resources for the navbar.",
-        "name": "resources",
-        "table": {
-            "category": "NavbarSharedProps",
-            "type": {
-                "summary": "NavbarResourcesProps"
-            }
-        }
-    },
     "NavItemCommonProps.data-testid": {
         "control": false,
         "name": "data-testid",
