@@ -1,6 +1,5 @@
 /**
  * Border width tokens.
- * @catalog
  */
 export const BorderThickness = {
     "width-005": "var(--fds-border-width-005)",
@@ -11,15 +10,14 @@ export const BorderThickness = {
 
 /**
  * Border style tokens.
- * @catalog
  */
 export const BorderStyle = {
     solid: "var(--fds-border-style-solid)",
 } as const;
 
+// @catalog
 /**
  * Border tokens consisting of border width and border style.
- * @catalog
  */
 export const Border = {
     ...BorderThickness,

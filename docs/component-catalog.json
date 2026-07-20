@@ -1,7 +1,7 @@
 {
   "meta": {
     "packageName": "@lifesg/react-design-system",
-    "totalComponents": 96
+    "totalComponents": 91
   },
   "components": [
     {
@@ -163,7 +163,7 @@
     {
       "name": "Form",
       "importPath": "@lifesg/react-design-system/form",
-      "description": "Display mechanism for the form label addon.  - `\"popover\"` renders an icon that triggers a popover. - `\"tooltip\"` is currently unsupported.",
+      "description": "",
       "keywords": []
     },
     {
@@ -241,7 +241,7 @@
     {
       "name": "InputTextarea",
       "importPath": "@lifesg/react-design-system/input-textarea",
-      "description": "Props for the `Textarea` component.",
+      "description": "",
       "keywords": []
     },
     {
@@ -253,7 +253,7 @@
     {
       "name": "Layout",
       "importPath": "@lifesg/react-design-system/layout",
-      "description": "Common props shared by all layout components.",
+      "description": "",
       "keywords": []
     },
     {
@@ -283,13 +283,13 @@
     {
       "name": "Menu",
       "importPath": "@lifesg/react-design-system/menu",
-      "description": "Trigger wrapper that anchors a `Menu.Content` panel to its child element.  Prefer the `Menu` composite export when building a full menu — it bundles `Menu.Content`, `Menu.Section`, `Menu.Item`, and `Menu.Link` as named sub-components alongside the trigger.",
+      "description": "A popover-anchored menu composed of sections and interactive items.  Use `Menu` when a trigger element should open a floating panel of actions or navigation links.  Sub-components: - `Menu.Content` — the floating panel that contains menu sections. - `Menu.Item` — a non-anchor interactive list item with a primary label and optional sub-label. - `Menu.Link` — an anchor (`<a>`) list item styled as a menu entry. - `Menu.Section` — a grouping container for `Menu.Item` and `Menu.Link` entries.",
       "keywords": []
     },
     {
       "name": "Modal",
       "importPath": "@lifesg/react-design-system/modal",
-      "description": "Props for the `Modal` component.",
+      "description": "",
       "keywords": []
     },
     {
@@ -307,7 +307,7 @@
     {
       "name": "NotificationBanner",
       "importPath": "@lifesg/react-design-system/notification-banner",
-      "description": "Intermediate component to handle passing the ref as a prop",
+      "description": "A full-width informational banner that sits at the top of the page.  Use `NotificationBanner` to surface important or persistent messages that should remain visible until the user dismisses them.",
       "keywords": []
     },
     {
@@ -409,7 +409,7 @@
     {
       "name": "TextList",
       "importPath": "@lifesg/react-design-system/text-list",
-      "description": "Text size tokens available for list content.",
+      "description": "",
       "keywords": []
     },
     {
@@ -469,43 +469,31 @@
     {
       "name": "Typography",
       "importPath": "@lifesg/react-design-system/typography",
-      "description": "Font weight variant applied to a typography element.",
+      "description": "",
       "keywords": []
     },
     {
       "name": "UneditableSection",
       "importPath": "@lifesg/react-design-system/uneditable-section",
-      "description": "Grid column span for an item within the section layout.",
+      "description": "",
       "keywords": []
     },
     {
       "name": "UnitNumber",
       "importPath": "@lifesg/react-design-system/unit-number",
-      "description": "Props for `UnitNumberInput`.",
+      "description": "",
       "keywords": []
     },
     {
       "name": "Theme",
       "importPath": "@lifesg/react-design-system/theme",
-      "description": "All available theme names.",
+      "description": "",
       "keywords": []
     },
     {
       "name": "Border",
       "importPath": "@lifesg/react-design-system/theme",
       "description": "Border tokens consisting of border width and border style.",
-      "keywords": []
-    },
-    {
-      "name": "BorderStyle",
-      "importPath": "@lifesg/react-design-system/theme",
-      "description": "Border style tokens.",
-      "keywords": []
-    },
-    {
-      "name": "BorderThickness",
-      "importPath": "@lifesg/react-design-system/theme",
-      "description": "Border width tokens.",
       "keywords": []
     },
     {
@@ -533,12 +521,6 @@
       "keywords": []
     },
     {
-      "name": "FontSpec",
-      "importPath": "@lifesg/react-design-system/theme",
-      "description": "Raw font CSS variable tokens.",
-      "keywords": []
-    },
-    {
       "name": "MediaQuery",
       "importPath": "@lifesg/react-design-system/theme",
       "description": "CSS class-based pseudo media-query selectors keyed by breakpoint name.",
@@ -551,21 +533,9 @@
       "keywords": []
     },
     {
-      "name": "PrimitiveColours",
-      "importPath": "@lifesg/react-design-system/theme",
-      "description": "Base colour palette.",
-      "keywords": []
-    },
-    {
       "name": "Radius",
       "importPath": "@lifesg/react-design-system/theme",
       "description": "Border radius tokens.",
-      "keywords": []
-    },
-    {
-      "name": "SemanticColours",
-      "importPath": "@lifesg/react-design-system/theme",
-      "description": "Purpose-driven colour tokens.",
       "keywords": []
     },
     {

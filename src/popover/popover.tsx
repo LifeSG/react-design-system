@@ -9,6 +9,7 @@ import { Typography } from "../typography";
 import * as styles from "./popover.styles";
 import type { PopoverProps } from "./types";
 
+// @catalog
 /**
  * The presentational overlay for a popover panel. Renders as a floating card
  * on desktop and modal on mobile.

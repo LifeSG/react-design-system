@@ -1,6 +1,5 @@
 /**
  * Base colour palette.
- * @catalog
  */
 export const PrimitiveColours = {
     "brand-10": "var(--fds-colour-brand-10)",
@@ -106,7 +105,6 @@ export const PrimitiveColours = {
 
 /**
  * Purpose-driven colour tokens.
- * @catalog
  */
 export const SemanticColours = {
     text: "var(--fds-colour-text)",
@@ -248,9 +246,9 @@ export const SemanticColours = {
     "focus-ring-inverse": "var(--fds-colour-focus-ring-inverse)",
 } as const;
 
+// @catalog
 /**
  * Combined colour token set.
- * @catalog
  */
 export const Colour = {
     Primitive: PrimitiveColours,

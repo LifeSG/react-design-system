@@ -11,6 +11,7 @@ import { ScheduleHeader } from "./schedule-header/schedule-header";
 import { ScheduleWeekView } from "./schedule-week-view/schedule-week-view";
 import type { ScheduleProps } from "./types";
 
+// @catalog
 /**
  * A grid visualisation of slot-based time availability for services across day and week views.
  */

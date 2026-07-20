@@ -334,6 +334,7 @@ const OverlayComponent = ({
         : null;
 };
 
+// @catalog
 /**
  * A full-screen dimmed overlay backdrop.
  *

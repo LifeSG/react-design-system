@@ -69,6 +69,7 @@ const InnerThemeProvider = (
     );
 };
 
+// @catalog
 /**
  * Establishes a themed scope for its subtree.
  *

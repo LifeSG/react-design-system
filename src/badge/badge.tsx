@@ -16,6 +16,7 @@ const variantsToShowCount: Set<BadgeVariant> = new Set([
     "square-number",
 ]);
 
+// @catalog
 /**
  * Displays a small indicator badge for notifications or status.
  *

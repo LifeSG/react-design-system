@@ -6,6 +6,7 @@ import { Typography } from "../typography";
 import * as styles from "./card.styles";
 import type { CardProps } from "./types";
 
+// @catalog
 /** A themed container surface for grouping related content. */
 export const Card = ({
     children,

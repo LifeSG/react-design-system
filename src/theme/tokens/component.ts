@@ -40,9 +40,9 @@ const Footer = {
         "var(--fds-footer-disclaimer-link-colour-text-hover)",
 } as const;
 
+// @catalog
 /**
  * Component-scoped design tokens grouped by component.
- * @catalog
  */
 export const ComponentToken = {
     Animation,

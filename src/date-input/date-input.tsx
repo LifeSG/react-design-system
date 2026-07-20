@@ -16,6 +16,7 @@ import { DateInputHelper } from "../util";
 import * as styles from "./date-input.styles";
 import type { DateInputProps } from "./types";
 
+// @catalog
 /**
  * A single-date input field with an attached calendar dropdown.
  *

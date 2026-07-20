@@ -10,6 +10,7 @@ import { Typography } from "../typography";
 import * as styles from "./timeline.styles";
 import type { TimelineItemProps, TimelineProps, Variant } from "./types";
 
+// @catalog
 /**
  * A vertically ordered list of steps with visual state indicators.
  *

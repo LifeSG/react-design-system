@@ -13,6 +13,7 @@ import { CalendarHelper, DateHelper } from "../util";
 import * as styles from "./date-navigator.styles";
 import type { DateNavigatorProps } from "./types";
 
+// @catalog
 /**
  * Displays a date with left/right navigation arrows for stepping through dates or weeks.
  *

@@ -2,7 +2,6 @@ import { generateFont } from "../utils/font";
 
 /**
  * Raw font CSS variable tokens.
- * @catalog
  */
 export const FontSpec = {
     "font-family-heading": "var(--fds-font-family-heading)",
@@ -59,9 +58,9 @@ export const FontSpec = {
     "form-description-ls": "var(--fds-font-form-description-ls)",
 } as const;
 
+// @catalog
 /**
  * Pre-composed font declaration strings for all size & weight combinations.
- * @catalog
  */
 export const Font = {
     "heading-xxl-light": generateFont("heading-xxl", "light"),

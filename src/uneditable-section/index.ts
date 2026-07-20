@@ -4,6 +4,7 @@ import { UneditableSectionBase } from "./uneditable-section";
 
 export * from "./types";
 
+// @catalog
 /**
  * A read-only summary section for displaying labeled field values.
  *

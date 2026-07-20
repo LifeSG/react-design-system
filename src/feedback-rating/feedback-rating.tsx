@@ -10,6 +10,7 @@ import { FeedbackRatingData } from "./feedback-rating-data";
 import { FeedbackRatingStarsContainer } from "./feedback-rating-stars-container";
 import type { FeedbackRatingProps } from "./types";
 
+// @catalog
 /**
  * A star-rating widget for collecting user feedback.
  *

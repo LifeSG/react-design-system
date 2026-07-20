@@ -28,6 +28,7 @@ interface SelectedItemType<V1, V2, V3> {
     value: V1 | V2 | V3;
 }
 
+// @catalog
 /**
  * A single-select input that presents options in a hierarchy, up to three levels deep.
  *

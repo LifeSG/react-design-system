@@ -30,7 +30,7 @@ const OUTPUT_PATH = path.join(ROOT_DIR, "docs", "component-catalog.json");
 
 const MODULES_WITH_CATALOG_TAGS = ["theme"];
 
-const CATALOG_TAG = "catalog";
+const CATALOG_MARKER = "// @catalog";
 const KEYWORDS_TAG = "keywords";
 
 // =============================================================================
@@ -70,7 +70,8 @@ function getExportedModules(sourceFile: SourceFile): string[] {
 
 /** Extract metadata from source files using ts-morph JSDoc APIs.
  *  - Look in candidate files: <moduleName>.tsx, <moduleName>.ts, types.ts
- *  - Description: first JSDoc block's comment text (via getCommentText())
+ *  - Only considers statements preceded by `// @catalog`
+ *  - Description: JSDoc block's comment text (via getCommentText())
  *  - keywords: first @keywords tag value split by comma, trimmed, sorted
  *  - Return { description, keywords } from the first file that has either
  */
@@ -95,8 +96,8 @@ function extractSourceMetadata(
         let keywords: string[] = [];
 
         for (const statement of statements) {
-            // Check if the statement can have JSDoc comments
             if (!Node.isJSDocable(statement)) continue;
+            if (!hasCatalogMarker(sourceFile, statement)) continue;
 
             const jsDocs = statement.getJsDocs();
 
@@ -133,27 +134,46 @@ function extractSourceMetadata(
     return { description: "", keywords: [] };
 }
 
+function hasCatalogMarker(sourceFile: SourceFile, statement: Node): boolean {
+    const fullText = sourceFile.getFullText();
+    const start = statement.getFullStart();
+    const textBefore = fullText.slice(0, start);
+    const lines = textBefore.split("\n");
+
+    for (let i = lines.length - 1; i >= 0; i--) {
+        const trimmed = lines[i].trim();
+        if (trimmed === "") continue;
+        if (trimmed === CATALOG_MARKER) return true;
+        break;
+    }
+
+    const leadingTrivia = fullText.slice(start, statement.getStart());
+    return leadingTrivia.includes(CATALOG_MARKER);
+}
+
 function extractCatalogTaggedEntries(project: Project): Component[] {
     const entries: Component[] = [];
     const sourceFiles = project.getSourceFiles(THEME_TOKENS_FILES);
 
     for (const sourceFile of sourceFiles) {
-        // Skip index.ts files as they should not have catalog tags, just barrel exports
         if (sourceFile.getBaseName() === "index.ts") continue;
 
         for (const statement of sourceFile.getStatements()) {
             if (!Node.isJSDocable(statement)) continue;
+            if (!hasCatalogMarker(sourceFile, statement)) continue;
 
             const jsDocs = statement.getJsDocs();
-            let hasCatalogTag = false;
             let description = "";
             let keywords: string[] = [];
 
             for (const jsDoc of jsDocs) {
+                if (!description) {
+                    const comment = trimAndReplaceNewLines(
+                        jsDoc.getCommentText()
+                    );
+                    if (comment) description = comment;
+                }
                 for (const tag of jsDoc.getTags()) {
-                    if (tag.getTagName() === CATALOG_TAG) {
-                        hasCatalogTag = true;
-                    }
                     if (
                         tag.getTagName() === KEYWORDS_TAG &&
                         keywords.length === 0
@@ -161,15 +181,7 @@ function extractCatalogTaggedEntries(project: Project): Component[] {
                         keywords = trimAndSortComment(tag.getCommentText());
                     }
                 }
-                if (!description) {
-                    const comment = trimAndReplaceNewLines(
-                        jsDoc.getCommentText()
-                    );
-                    if (comment) description = comment;
-                }
             }
-
-            if (!hasCatalogTag) continue;
 
             if (Node.isVariableStatement(statement)) {
                 for (const decl of statement.getDeclarations()) {

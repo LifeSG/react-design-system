@@ -1,6 +1,6 @@
+// @catalog
 /**
  * Box-shadow tokens.
- * @catalog
  */
 export const Shadow = {
     "xs-subtle": "var(--fds-shadow-xs-subtle)",

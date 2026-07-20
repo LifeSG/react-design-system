@@ -98,6 +98,7 @@ const Component = (
     );
 };
 
+// @catalog
 /**
  * A container that renders a dashed border using an SVG overlay.
  *

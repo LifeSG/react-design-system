@@ -23,9 +23,9 @@ const getPseudoMediaQuerySpec = <T extends readonly string[]>(
     return spec;
 };
 
+// @catalog
 /**
  * CSS class-based pseudo media-query selectors keyed by breakpoint name.
- * @catalog
  */
 export const MediaQuery = {
     MaxWidth: getPseudoMediaQuerySpec(MAX_WIDTH_BREAKPOINTS, "max"),

@@ -130,6 +130,7 @@ const Base = ({
     );
 };
 
+// @catalog
 /**
  * A composable modal dialog with slot-based content layout.
  *

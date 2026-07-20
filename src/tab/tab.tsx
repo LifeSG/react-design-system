@@ -104,6 +104,7 @@ TabBase.displayName = "Tab";
 // =============================================================================
 // EXPORTS
 // =============================================================================
+// @catalog
 /**
  * A tabbed-panel layout that switches visible content by selecting a tab link.
  *
