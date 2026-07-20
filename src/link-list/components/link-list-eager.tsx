@@ -10,13 +10,13 @@ import { Typography } from "../../typography";
 import { useId } from "../../util";
 import * as styles from "../link-list.styles";
 import type {
-    BaseProps,
+    LinkListBaseProps,
     LinkListEagerProps,
     LinkListItemProps,
 } from "../types";
 import { LinkListItems } from "./common";
 
-type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
+type Props<T> = Omit<LinkListBaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListEagerProps, "loadMode">;
 export const EagerLinkList = <T,>({
     items,

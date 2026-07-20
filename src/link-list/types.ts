@@ -35,7 +35,7 @@ export interface LinkListItemProps<T>
 /**
  * Base props for `LinkList`.
  */
-export type BaseProps<T> = {
+export type LinkListBaseProps<T> = {
     /** The list of link items to render. */
     items: LinkListItemProps<T>[];
     /**
@@ -104,5 +104,5 @@ export type LinkListLazyProps = {
 /**
  * Props for the `LinkList` component.
  */
-export type LinkListProps<T> = BaseProps<T> &
+export type LinkListProps<T> = LinkListBaseProps<T> &
     (LinkListEagerProps | LinkListLazyProps);
