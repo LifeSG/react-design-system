@@ -171,7 +171,7 @@ export const uneditableSectionExtraArgTypes = {
             "category": "UneditableSectionItemProps",
             "tabGroup": "UneditableSection.Item",
             "type": {
-                "summary": "((value: string) => string)"
+                "summary": "(value: string) => string"
             }
         }
     },
@@ -348,7 +348,7 @@ export const uneditableSectionExtraArgTypes = {
             "category": "UneditableSectionProps",
             "tabGroup": "UneditableSection",
             "type": {
-                "summary": "((item: UneditableSectionItemProps) => void)"
+                "summary": "(item: UneditableSectionItemProps) => void"
             }
         }
     },
@@ -360,7 +360,7 @@ export const uneditableSectionExtraArgTypes = {
             "category": "UneditableSectionProps",
             "tabGroup": "UneditableSection",
             "type": {
-                "summary": "((item: UneditableSectionItemProps) => void)"
+                "summary": "(item: UneditableSectionItemProps) => void"
             }
         }
     },
@@ -372,7 +372,7 @@ export const uneditableSectionExtraArgTypes = {
             "category": "UneditableSectionProps",
             "tabGroup": "UneditableSection",
             "type": {
-                "summary": "((item: UneditableSectionItemProps) => void)"
+                "summary": "(item: UneditableSectionItemProps) => void"
             }
         }
     },

@@ -152,7 +152,7 @@ export const dataTableExtraArgTypes = {
         "table": {
             "category": "DataTableProps",
             "type": {
-                "summary": "(() => void)"
+                "summary": "() => void"
             }
         }
     },
@@ -163,7 +163,7 @@ export const dataTableExtraArgTypes = {
         "table": {
             "category": "DataTableProps",
             "type": {
-                "summary": "((fieldKey: string) => void)"
+                "summary": "(fieldKey: string) => void"
             }
         }
     },
@@ -174,7 +174,7 @@ export const dataTableExtraArgTypes = {
         "table": {
             "category": "DataTableProps",
             "type": {
-                "summary": "((rowId: string, isSelected: boolean) => void)"
+                "summary": "(rowId: string, isSelected: boolean) => void"
             }
         }
     },
@@ -185,7 +185,7 @@ export const dataTableExtraArgTypes = {
         "table": {
             "category": "DataTableProps",
             "type": {
-                "summary": "((isAllSelected: boolean) => void)"
+                "summary": "(isAllSelected: boolean) => void"
             }
         }
     },
@@ -196,7 +196,7 @@ export const dataTableExtraArgTypes = {
         "table": {
             "category": "DataTableProps",
             "type": {
-                "summary": "(() => ReactNode)"
+                "summary": "() => ReactNode"
             }
         }
     },
@@ -316,7 +316,7 @@ export const dataTableExtraArgTypes = {
         "table": {
             "category": "RowProps",
             "type": {
-                "summary": "\n| string\n| number\n| ReactNode\n| ((row: RowProps, renderProps: RowRenderProps) => ReactNode)"
+                "summary": "string\n| number\n| ReactNode\n| ((row: RowProps, renderProps: RowRenderProps) => ReactNode)"
             }
         }
     },

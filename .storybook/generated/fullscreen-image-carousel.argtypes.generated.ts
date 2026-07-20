@@ -152,7 +152,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
         "table": {
             "category": "FullscreenImageCarouselItemProps",
             "type": {
-                "summary": "| FullscreenImageCarouselImageItemProps | FullscreenImageCarouselCustomItemProps"
+                "summary": "FullscreenImageCarouselImageItemProps | FullscreenImageCarouselCustomItemProps"
             }
         }
     },
@@ -185,7 +185,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
         "table": {
             "category": "FullscreenImageCarouselItemProps",
             "type": {
-                "summary": "(() => React.ReactNode)"
+                "summary": "() => React.ReactNode"
             }
         }
     },
@@ -323,7 +323,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
         "table": {
             "category": "FullscreenImageCarouselProps",
             "type": {
-                "summary": "(() => void)"
+                "summary": "() => void"
             }
         }
     },
@@ -334,7 +334,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
         "table": {
             "category": "FullscreenImageCarouselProps",
             "type": {
-                "summary": "| ((item: FullscreenImageCarouselItemProps, index: number) => void)"
+                "summary": "(item: FullscreenImageCarouselItemProps, index: number) => void"
             }
         }
     },

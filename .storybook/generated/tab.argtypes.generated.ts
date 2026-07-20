@@ -188,7 +188,7 @@ export const tabExtraArgTypes = {
             "category": "TabProps",
             "tabGroup": "Tab",
             "type": {
-                "summary": "((title: string, index: number) => void)"
+                "summary": "(title: string, index: number) => void"
             }
         }
     },

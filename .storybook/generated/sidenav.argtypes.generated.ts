@@ -55,7 +55,7 @@ export const sidenavExtraArgTypes = {
             "category": "SidenavDrawerItemProps",
             "tabGroup": "Sidenav.DrawerItem",
             "type": {
-                "summary": "((id: string) => void)"
+                "summary": "(id: string) => void"
             }
         }
     },
@@ -112,7 +112,7 @@ export const sidenavExtraArgTypes = {
             "category": "SidenavDrawerSubitemProps",
             "tabGroup": "Sidenav.DrawerSubitem",
             "type": {
-                "summary": "((id: string) => void)"
+                "summary": "(id: string) => void"
             }
         }
     },
@@ -262,7 +262,7 @@ export const sidenavExtraArgTypes = {
             "category": "SidenavItemProps",
             "tabGroup": "Sidenav.Item",
             "type": {
-                "summary": "((id: string) => void)"
+                "summary": "(id: string) => void"
             }
         }
     },

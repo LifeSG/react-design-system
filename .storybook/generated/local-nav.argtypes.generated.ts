@@ -125,7 +125,7 @@ export const localNavExtraArgTypes = {
             "category": "LocalNavDropdownProps",
             "tabGroup": "LocalNavDropdown",
             "type": {
-                "summary": "| (( item: LocalNavItemProps, renderProps: LocalNavDropdownItemRenderProps ) => React.ReactNode)"
+                "summary": "( item: LocalNavItemProps, renderProps: LocalNavDropdownItemRenderProps ) => React.ReactNode"
             }
         }
     },
@@ -255,7 +255,7 @@ export const localNavExtraArgTypes = {
             "category": "LocalNavMenuProps",
             "tabGroup": "LocalNavMenu",
             "type": {
-                "summary": "| (( item: LocalNavItemProps, renderProps: LocalNavMenuItemRenderProps ) => React.ReactNode)"
+                "summary": "( item: LocalNavItemProps, renderProps: LocalNavMenuItemRenderProps ) => React.ReactNode"
             }
         }
     },

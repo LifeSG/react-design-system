@@ -49,7 +49,7 @@ export const languageSwitcherExtraArgTypes = {
         "table": {
             "category": "LanguageSwitcherProps",
             "type": {
-                "summary": "((language: LanguageSwitcherCode) => void)"
+                "summary": "(language: LanguageSwitcherCode) => void"
             }
         }
     },

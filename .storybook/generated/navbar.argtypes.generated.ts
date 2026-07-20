@@ -188,7 +188,7 @@ export const navbarExtraArgTypes = {
         "table": {
             "category": "NavbarButtonProps",
             "type": {
-                "summary": "| NavbarActionButtonDownloadProps | NavbarActionButtonCtaProps | NavbarActionButtonComponentProps"
+                "summary": "NavbarActionButtonDownloadProps | NavbarActionButtonCtaProps | NavbarActionButtonComponentProps"
             }
         }
     },
@@ -418,7 +418,7 @@ export const navbarExtraArgTypes = {
         "table": {
             "category": "NavbarProps<T>",
             "type": {
-                "summary": "| ((actionButton: NavbarButtonProps) => void)"
+                "summary": "(actionButton: NavbarButtonProps) => void"
             }
         }
     },
@@ -429,7 +429,7 @@ export const navbarExtraArgTypes = {
         "table": {
             "category": "NavbarProps<T>",
             "type": {
-                "summary": "((type: BrandType) => void)"
+                "summary": "(type: BrandType) => void"
             }
         }
     },
@@ -440,7 +440,7 @@ export const navbarExtraArgTypes = {
         "table": {
             "category": "NavbarProps<T>",
             "type": {
-                "summary": "| ((item: NavItemProps<T> | NavItemCommonProps<T>) => void)"
+                "summary": "(item: NavItemProps<T> | NavItemCommonProps<T>) => void"
             }
         }
     },

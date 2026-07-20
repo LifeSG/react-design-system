@@ -278,10 +278,26 @@ function toStorybookDescription(meta: JsDocMeta) {
 // =============================================================================
 
 function cleanType(type: string) {
-    return type
+    let cleaned = type
         .replace(/\s*\|\s*undefined/g, "")
+        .replace(/^\s*\|\s*/, "") // Remove leading pipe
         .replace(/\s+/g, " ")
         .trim();
+
+    // Strip unnecessary outer parens from function types: ((args) => Type) -> (args) => Type
+    if (
+        cleaned.startsWith("((") &&
+        cleaned.endsWith(")") &&
+        cleaned.includes("=>")
+    ) {
+        const inner = cleaned.slice(1, -1);
+        // Verify the inner content is balanced and is a valid function type
+        if (inner.startsWith("(") && inner.includes("=>")) {
+            cleaned = inner;
+        }
+    }
+
+    return cleaned;
 }
 
 /** Split top-level union members without breaking nested generics or function types. */
@@ -334,7 +350,7 @@ function formatUnionSummary(typeText: string) {
         return typeText;
     }
 
-    return members.join("\n| ");
+    return members.filter(Boolean).join("\n| ");
 }
 
 /**

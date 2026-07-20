@@ -70,7 +70,7 @@ export const paginationExtraArgTypes = {
         "table": {
             "category": "PaginationProps",
             "type": {
-                "summary": "((page: number) => void)"
+                "summary": "(page: number) => void"
             }
         }
     },
@@ -81,7 +81,7 @@ export const paginationExtraArgTypes = {
         "table": {
             "category": "PaginationProps",
             "type": {
-                "summary": "((page: number, pageSize: number) => void)"
+                "summary": "(page: number, pageSize: number) => void"
             }
         }
     },

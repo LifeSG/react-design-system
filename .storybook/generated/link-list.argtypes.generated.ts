@@ -71,7 +71,7 @@ export const linkListExtraArgTypes = {
         "table": {
             "category": "LinkListItemProps<T>",
             "type": {
-                "summary": "| ((event: React.MouseEvent<HTMLAnchorElement>) => void)"
+                "summary": "(event: React.MouseEvent<HTMLAnchorElement>) => void"
             }
         }
     },
@@ -212,7 +212,7 @@ export const linkListExtraArgTypes = {
         "table": {
             "category": "LinkListProps<T>",
             "type": {
-                "summary": "((item: LinkListItemProps<T>, event: React.MouseEvent<HTMLAnchorElement>) => void)"
+                "summary": "(item: LinkListItemProps<T>, event: React.MouseEvent<HTMLAnchorElement>) => void"
             }
         }
     },

@@ -238,7 +238,7 @@ export const accordionExtraArgTypes = {
             "category": "AccordionProps",
             "tabGroup": "Accordion",
             "type": {
-                "summary": "((expanded: boolean) => void)"
+                "summary": "(expanded: boolean) => void"
             }
         }
     },

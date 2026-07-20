@@ -290,7 +290,7 @@ export const footerExtraArgTypes = {
         "table": {
             "category": "FooterProps<T>",
             "type": {
-                "summary": "((link: FooterLinkProps<T>) => void)"
+                "summary": "(link: FooterLinkProps<T>) => void"
             }
         }
     },

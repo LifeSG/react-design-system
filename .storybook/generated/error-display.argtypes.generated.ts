@@ -20,7 +20,7 @@ export const errorDisplayExtraArgTypes = {
         "table": {
             "category": "ErrorDisplayProps",
             "type": {
-                "summary": "| MaintenanceAdditionalAttributes | InactivityAdditionalAttributes"
+                "summary": "MaintenanceAdditionalAttributes | InactivityAdditionalAttributes"
             }
         }
     },
