@@ -91,6 +91,17 @@ export const linkListExtraArgTypes = {
             },
         },
     },
+    "LinkListItemProps.title": {
+        control: false,
+        description: "Primary label displayed as the link text.",
+        name: "title",
+        table: {
+            category: "LinkListItemProps<T>",
+            type: {
+                summary: "string",
+            },
+        },
+    },
     "LinkListLazyProps.loadMode": {
         control: false,
         description: 'When `"lazy"`, items are loaded on demand.',
@@ -133,7 +144,7 @@ export const linkListExtraArgTypes = {
             category: "LinkListProps<T>",
             type: {
                 summary:
-                    "BaseProps<T> & (LinkListEagerProps | LinkListLazyProps)",
+                    "LinkListBaseProps<T> & (LinkListEagerProps | LinkListLazyProps)",
             },
         },
     },

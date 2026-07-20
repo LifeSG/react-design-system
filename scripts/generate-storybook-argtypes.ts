@@ -277,20 +277,27 @@ function toStorybookDescription(meta: JsDocMeta) {
 function cleanType(type: string) {
     let cleaned = type
         .replace(/\s*\|\s*undefined/g, "")
-        .replace(/^\s*\|\s*/, "") // Remove leading pipe
+        .replace(/^\s*\|\s*/, "")
         .replace(/\s+/g, " ")
         .trim();
 
-    // Strip unnecessary outer parens from function types: ((args) => Type) -> (args) => Type
-    if (
-        cleaned.startsWith("((") &&
-        cleaned.endsWith(")") &&
-        cleaned.includes("=>")
-    ) {
-        const inner = cleaned.slice(1, -1);
-        // Verify the inner content is balanced and is a valid function type
-        if (inner.startsWith("(") && inner.includes("=>")) {
-            cleaned = inner;
+    // Strip redundant outer parens: ((args) => Type) -> (args) => Type
+    // Only strip when the entire string is wrapped in one balanced pair of parens.
+    if (cleaned.startsWith("(") && cleaned.endsWith(")")) {
+        let depth = 0;
+        let outerWraps = true;
+
+        for (let i = 0; i < cleaned.length - 1; i++) {
+            if (cleaned[i] === "(") depth++;
+            if (cleaned[i] === ")") depth--;
+            if (depth === 0) {
+                outerWraps = false;
+                break;
+            }
+        }
+
+        if (outerWraps) {
+            cleaned = cleaned.slice(1, -1);
         }
     }
 
@@ -306,9 +313,7 @@ function splitTopLevelUnionMembers(typeText: string) {
     let braceDepth = 0;
     let angleDepth = 0;
 
-    for (const element of typeText) {
-        const char = element;
-
+    for (const char of typeText) {
         if (char === "(") parenDepth++;
         if (char === ")") parenDepth = Math.max(0, parenDepth - 1);
         if (char === "[") bracketDepth++;
@@ -498,7 +503,7 @@ function getImportPathForIdentifier(fileText: string, identifier: string) {
         `import\\s+(?:\\{[^}]*\\b${identifier}\\b[^}]*\\}|${identifier})\\s+from\\s+["']([^"']+)["']`
     );
 
-    return fileText.match(importRegex)?.[1];
+    return importRegex.exec(fileText)?.[1];
 }
 
 /** Build file resolution candidates: [exact, .ts, .tsx, /index.ts, /index.tsx]. */
@@ -592,7 +597,14 @@ function isSkippedFile(sourceFile: SourceFile) {
 // ArgType Row Construction
 // =============================================================================
 
-/** Common HTMLElement attributes that should be excluded when filtering inherited HTML props. */
+/** Matches React HTML attribute interfaces (e.g. HTMLAttributes, ButtonHTMLAttributes, React.HTMLAttributes). */
+const HTML_ATTRIBUTES_REGEX = /(?:React\.)?\w*HTMLAttributes?$/;
+
+/**
+ * HTML element props that leak through `isFromNodeModules` because they are
+ * declared in lib.dom.d.ts rather than @types/react. These are already
+ * covered by the synthetic __inheritedHtmlProps row.
+ */
 const HTML_ELEMENT_PROPS = new Set(["inert"]);
 
 /** Single factory for building a GeneratedArgType row. All 7 construction sites funnel through here. */
@@ -687,110 +699,55 @@ function getPropertyDeclaration(symbol: TsMorphSymbol) {
 }
 
 /**
- * Collect all type names used in "wrapped" contexts (arrays, generics, complex unions, function signatures).
- * Simple optionality (TypeName?) or union with undefined (TypeName | undefined) don't count as wrapped.
- * This helps us identify simple literal unions that can't be inlined and need
- * category entries for documentation.
+ * Collect type names that appear in "wrapped" contexts — arrays, generics,
+ * complex unions, or function signatures. These types need their own category
+ * rows even if they're simple literal unions, because their values can't be
+ * inlined at the usage site.
+ *
+ * A property like `size: ButtonSize` is NOT wrapped (the union can be inlined).
+ * A property like `sizes: ButtonSize[]` IS wrapped (ButtonSize needs its own row).
  */
 function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
     const wrappedNames = new Set<string>();
 
-    // Collect all interface and type alias properties
-    const allDeclarations = [
+    // Collect all type names visible in this file: local definitions + named imports
+    const knownTypeNames = new Set([
+        ...sourceFile.getInterfaces().map((i) => i.getName()),
+        ...sourceFile.getTypeAliases().map((t) => t.getName()),
+        ...sourceFile
+            .getImportDeclarations()
+            .flatMap((decl) =>
+                decl.getNamedImports().map((ni) => ni.getName())
+            ),
+    ]);
+
+    for (const declaration of [
         ...sourceFile.getInterfaces(),
         ...sourceFile.getTypeAliases(),
-    ];
-
-    for (const declaration of allDeclarations) {
-        const properties = declaration.getType().getProperties();
-
-        for (const prop of properties) {
-            const propDeclMembers = prop
+    ]) {
+        for (const prop of declaration.getType().getProperties()) {
+            const propDecl = prop
                 .getDeclarations()
-                .filter(
+                .find(
                     (d): d is PropertySignature =>
                         d.getKindName() === "PropertySignature"
                 );
 
-            for (const propDecl of propDeclMembers) {
-                const typeText = propDecl.getTypeNode()?.getText() || "";
+            if (!propDecl) continue;
 
-                // Skip simple cases: just a type name, optional, or with undefined union
-                // Wrapped = arrays, other unions, or generics
+            const propType = propDecl.getType();
 
-                // Check for array: TypeName[]
-                if (typeText.includes("[]")) {
-                    // Extract the type name before []
-                    const match = new RegExp(/\b([A-Z][a-zA-Z0-9]*)\[\]/).exec(
-                        typeText
-                    );
-                    if (match) {
-                        wrappedNames.add(match[1]);
-                    }
-                }
+            // If the property's resolved type is itself a simple literal union,
+            // the type name is NOT wrapped — it can be inlined at this usage site.
+            if (isSimpleLiteralUnion(propType)) continue;
 
-                // Check for generics: Generic<TypeName> or similar
-                if (typeText.includes("<") && typeText.includes(">")) {
-                    const matches =
-                        typeText.match(
-                            /\b([A-Z][a-zA-Z0-9]*)<[^>]*\b([A-Z][a-zA-Z0-9]*)/g
-                        ) || [];
-                    for (const match of matches) {
-                        const typeNames =
-                            match.match(/\b([A-Z][a-zA-Z0-9]*)\b/g) || [];
-                        // Add all but the generic function name itself
-                        for (let i = 1; i < typeNames.length; i++) {
-                            if (
-                                !/^(React|Record|Omit|Pick|Exclude|Extract|Partial|Required|Readonly|Promise|Map|Set)$/.test(
-                                    typeNames[i]
-                                )
-                            ) {
-                                wrappedNames.add(typeNames[i]);
-                            }
-                        }
-                    }
-                }
+            // Otherwise, any known type name referenced in this property's type
+            // text is considered "wrapped" and needs its own category row.
+            const typeText = propDecl.getTypeNode()?.getText() ?? "";
 
-                // Check for complex unions: TypeName | OtherType
-                // Exception: skip simple `TypeName | undefined` (single type with optional)
-                if (typeText.includes("|")) {
-                    const parts = typeText.split("|").map((p) => p.trim());
-                    // Filter out keywords like undefined, true, false, null
-                    const nonKeywordParts = parts.filter(
-                        (p) =>
-                            !/^(undefined|null|never|any|unknown|true|false)$/.test(
-                                p
-                            )
-                    );
-
-                    // If more than one non-keyword type, it's a true union (not just optional)
-                    if (nonKeywordParts.length > 1) {
-                        for (const part of nonKeywordParts) {
-                            const match = new RegExp(
-                                /^([A-Z][a-zA-Z0-9]*)/
-                            ).exec(part);
-                            if (match) {
-                                wrappedNames.add(match[1]);
-                            }
-                        }
-                    }
-                }
-
-                // Check for function signatures: (param: TypeName) => ..., etc.
-                if (typeText.includes("=>")) {
-                    // Extract all type names from function signature (parameters and return type)
-                    const typeNames =
-                        typeText.match(/\b([A-Z][a-zA-Z0-9]*)\b/g) || [];
-                    for (const name of typeNames) {
-                        // Filter out keywords and React types
-                        if (
-                            !/^(React|JSX|Record|Omit|Pick|Exclude|Extract|Partial|Required|Readonly|Promise|Map|Set|Array|Object|String|Number|Boolean|Symbol|BigInt|void|never|any|unknown|null|undefined)$/.test(
-                                name
-                            )
-                        ) {
-                            wrappedNames.add(name);
-                        }
-                    }
+            for (const name of knownTypeNames) {
+                if (new RegExp(`\\b${name}\\b`).test(typeText)) {
+                    wrappedNames.add(name);
                 }
             }
         }
@@ -803,13 +760,11 @@ function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
 // Per-Component Generation
 // =============================================================================
 
-/** Check whether an interface extends React HTMLAttributes and has an inherited row. */
 function hasInheritedHtmlAttributes(
     interfaceDeclaration: InterfaceDeclaration
 ): boolean {
     return interfaceDeclaration.getExtends().some((extendNode) => {
-        const expressionText = extendNode.getExpression().getText();
-        return /HTMLAttributes?$/.test(expressionText);
+        return HTML_ATTRIBUTES_REGEX.test(extendNode.getExpression().getText());
     });
 }
 
@@ -822,9 +777,9 @@ function getInheritedHtmlAttributesRow(
     const inheritedElementTypes = interfaceDeclaration
         .getExtends()
         .filter((extendNode) => {
-            const expressionText = extendNode.getExpression().getText();
-
-            return /(?:React\.)?\w*HTMLAttributes?$/.test(expressionText);
+            return HTML_ATTRIBUTES_REGEX.test(
+                extendNode.getExpression().getText()
+            );
         })
         .map((extendNode) => extendNode.getTypeArguments()[0]?.getText())
         .filter((typeText): typeText is string => Boolean(typeText))
@@ -1353,19 +1308,14 @@ async function main() {
 
             if (isStoryFile(filePath)) {
                 await generateStorybookArgTypesRegistry();
-                formatGenerated();
-                return;
-            }
-
-            if (eventName === "unlink") {
+            } else if (eventName === "unlink") {
                 await fs.rm(getOutputFile(resolvedFilePath), { force: true });
                 await generateStorybookArgTypesRegistry();
-                formatGenerated();
-                return;
+            } else {
+                await generateForSourceFile(createProject(), resolvedFilePath);
+                await generateStorybookArgTypesRegistry();
             }
 
-            await generateForSourceFile(createProject(), resolvedFilePath);
-            await generateStorybookArgTypesRegistry();
             formatGenerated();
         } catch (error) {
             console.error("[storybook:argtypes] failed to regenerate");

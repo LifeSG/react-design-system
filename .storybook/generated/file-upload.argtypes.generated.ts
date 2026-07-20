@@ -393,7 +393,7 @@ export const fileUploadExtraArgTypes = {
                 summary: '"bordered"',
             },
             type: {
-                summary: "'bordered' | 'no-border'",
+                summary: "'no-border' | 'bordered'",
             },
         },
     },
@@ -416,6 +416,48 @@ export const fileUploadExtraArgTypes = {
         name: "warning",
         table: {
             category: "FileUploadProps",
+            type: {
+                summary: "string | JSX.Element",
+            },
+        },
+    },
+    "FormLabelProps.__inheritedHtmlProps": {
+        control: false,
+        description: "Inherits props from `HTMLLabelElement`.",
+        name: "",
+        table: {
+            category: "FormLabelProps",
+            type: {},
+        },
+    },
+    "FormLabelProps.addon": {
+        control: false,
+        description:
+            "Informational icon and popover rendered inline with the label text.",
+        name: "addon",
+        table: {
+            category: "FormLabelProps",
+            type: {
+                summary: "FormLabelAddonProps",
+            },
+        },
+    },
+    "FormLabelProps.data-testid": {
+        control: false,
+        name: "data-testid",
+        table: {
+            category: "FormLabelProps",
+            type: {
+                summary: "string",
+            },
+        },
+    },
+    "FormLabelProps.subtitle": {
+        control: false,
+        description: "Supporting description rendered below the label.",
+        name: "subtitle",
+        table: {
+            category: "FormLabelProps",
             type: {
                 summary: "string | JSX.Element",
             },

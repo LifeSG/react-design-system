@@ -394,4 +394,44 @@ export const fullscreenImageCarouselExtraArgTypes = {
             },
         },
     },
+    "Insets.bottom": {
+        control: false,
+        name: "bottom",
+        table: {
+            category: "Insets",
+            type: {
+                summary: "number",
+            },
+        },
+    },
+    "Insets.left": {
+        control: false,
+        name: "left",
+        table: {
+            category: "Insets",
+            type: {
+                summary: "number",
+            },
+        },
+    },
+    "Insets.right": {
+        control: false,
+        name: "right",
+        table: {
+            category: "Insets",
+            type: {
+                summary: "number",
+            },
+        },
+    },
+    "Insets.top": {
+        control: false,
+        name: "top",
+        table: {
+            category: "Insets",
+            type: {
+                summary: "number",
+            },
+        },
+    },
 } satisfies Record<string, unknown>;
