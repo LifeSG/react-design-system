@@ -18,7 +18,11 @@ export interface FileItemDownloadProps {
     errorMessage?: string | React.ReactNode | undefined;
     /** URL or data URL for a thumbnail image shown alongside the file entry. */
     thumbnailImageDataUrl?: string | undefined;
-    /** Truncates long file names with an ellipsis when `true`. */
+    /**
+     * Truncates long file names with an ellipsis when `true`.
+     *
+     * @default true
+     */
     truncateText?: boolean | undefined;
     /**
      * Indicates the file is available and ready to be downloaded.
