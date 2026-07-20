@@ -1,10 +1,10 @@
-// @storybookSkipFile
-
 import type { FontSize } from "../theme";
 
+// @storybookSection Heading/Body, Link
 /** Font weight variant applied to a typography element. */
 export type TypographyWeight = "regular" | "semibold" | "bold" | "light";
 
+// @storybookSkipProps
 /**
  * Text size token for a typography element.
  */
@@ -13,6 +13,7 @@ export type TypographySize = Exclude<
     "form-label" | "form-description"
 >;
 
+// @storybookSection Heading/Body
 /**
  * Props shared by all non-link typography variants.
  *
@@ -51,9 +52,11 @@ export type TypographyProps<T extends React.ElementType = React.ElementType> =
         as?: T | undefined;
     };
 
+// @storybookSection Link
 /** Text-decoration style applied to a link typography element. */
 export type TypographyUnderlineStyle = "none" | "underline";
 
+// @storybookSection Link
 /**
  * Props for all link typography variants.
  */
