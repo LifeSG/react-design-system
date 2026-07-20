@@ -143,8 +143,8 @@ function hasSkipTag(node: StorybookTaggedDeclarationNode) {
 }
 
 /**
- * Collect JSDoc metadata from a node. Supported tags: @deprecated, @default, @remarks, @example.
- * Also reads @storybookSection from leading non-JSDoc comments on interface/type/variable nodes.
+ * Collect JSDoc metadata from a node. Supported tags: "@deprecated", "@default", "@remarks", "@example".
+ * Also reads "@storybookSection" from leading non-JSDoc comments on interface/type/variable nodes.
  */
 function getJsDocMeta(
     node:
