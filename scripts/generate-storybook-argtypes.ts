@@ -41,7 +41,6 @@ type JsDocMeta = {
     description?: string | undefined;
     examples?: string[] | undefined;
     remarks?: string | undefined;
-    tabGroup?: string | undefined;
     tabGroups?: string[] | undefined;
 };
 
@@ -216,7 +215,6 @@ function getJsDocMeta(
         defaultValue,
         remarks: remarks.length > 0 ? remarks.join("\n\n") : undefined,
         examples: examples.length > 0 ? examples : undefined,
-        tabGroup: tabGroups[0],
         tabGroups: tabGroups.length > 0 ? tabGroups : undefined,
     };
 }
@@ -248,7 +246,6 @@ function mergeJsDocMeta(metas: JsDocMeta[]): JsDocMeta {
             ?.deprecated,
         defaultValue: metas.find((meta) => meta.defaultValue !== undefined)
             ?.defaultValue,
-        tabGroup: metas.find((meta) => meta.tabGroup !== undefined)?.tabGroup,
     };
 }
 
@@ -681,7 +678,7 @@ function getInheritedHtmlAttributesRow(
         key: `${interfaceName}.__inheritedHtmlProps`,
         name: "",
         category,
-        tabGroup: interfaceJsDocMeta.tabGroup,
+        tabGroup: interfaceJsDocMeta.tabGroups?.[0],
         description: inheritedDescription,
     });
 }
@@ -692,10 +689,8 @@ function getInterfaceArgTypes(
 ): GeneratedArgType[] {
     const interfaceDeclaration = sourceFile.getInterfaceOrThrow(interfaceName);
     const interfaceJsDocMeta = getJsDocMeta(interfaceDeclaration);
-    const declaredTabGroups = interfaceJsDocMeta.tabGroups ?? [
-        interfaceJsDocMeta.tabGroup,
-    ];
-    const hasMultipleTabs = declaredTabGroups.filter(Boolean).length > 1;
+    const declaredTabGroups = interfaceJsDocMeta.tabGroups ?? [];
+    const hasMultipleTabs = declaredTabGroups.length > 1;
 
     const category = getCategoryName(interfaceName, interfaceDeclaration);
     const inheritedHtmlAttributesRow = getInheritedHtmlAttributesRow(
@@ -721,7 +716,7 @@ function getInterfaceArgTypes(
                 key: interfaceName,
                 name: "",
                 category,
-                tabGroup: interfaceJsDocMeta.tabGroup,
+                tabGroup: interfaceJsDocMeta.tabGroups?.[0],
                 deprecated: interfaceJsDocMeta.deprecated,
                 description: toStorybookDescription(interfaceJsDocMeta),
             }),
@@ -747,7 +742,7 @@ function getInterfaceArgTypes(
                 description: toStorybookDescription(jsDocMeta),
                 key: `${interfaceName}.${displayName}`,
                 name: displayName,
-                tabGroup: interfaceJsDocMeta.tabGroup,
+                tabGroup: interfaceJsDocMeta.tabGroups?.[0],
                 typeSummary: getIndexSignatureTypeText(indexSignature),
             });
         });
@@ -770,7 +765,7 @@ function getInterfaceArgTypes(
                 description: toStorybookDescription(jsDocMeta),
                 key: `${interfaceName}.${propertyName}`,
                 name: propertyName,
-                tabGroup: interfaceJsDocMeta.tabGroup,
+                tabGroup: interfaceJsDocMeta.tabGroups?.[0],
                 typeSummary: getPropertyTypeText(property),
             }),
         ];
@@ -788,7 +783,7 @@ function getInterfaceArgTypes(
 
     // When an interface declares multiple @storybookSection tabs, duplicate rows
     // into each tab so the props table renders one complete copy per tab.
-    return (declaredTabGroups.filter(Boolean) as string[]).flatMap((tab) =>
+    return declaredTabGroups.flatMap((tab) =>
         baseRows.map((row) => ({
             ...row,
             key: `${tab}__${row.key}`,
@@ -855,7 +850,7 @@ function getTypeAliasArgTypes(
                     description: toStorybookDescription(propertyJsDocMeta),
                     key: `${typeName}.${propertyName}`,
                     name: propertyName,
-                    tabGroup: jsDocMeta.tabGroup,
+                    tabGroup: jsDocMeta.tabGroups?.[0],
                     typeSummary: propertySummary,
                 }),
             ];
@@ -874,7 +869,7 @@ function getTypeAliasArgTypes(
                 description: toStorybookDescription(jsDocMeta),
                 key: typeName,
                 name: category,
-                tabGroup: jsDocMeta.tabGroup,
+                tabGroup: jsDocMeta.tabGroups?.[0],
                 typeSummary: getSummaryTypeText(
                     typeAlias.getType(),
                     typeAlias,
@@ -894,7 +889,7 @@ function getTypeAliasArgTypes(
             description: toStorybookDescription(jsDocMeta),
             key: typeName,
             name: category,
-            tabGroup: jsDocMeta.tabGroup,
+            tabGroup: jsDocMeta.tabGroups?.[0],
             typeSummary: getSummaryTypeText(
                 typeAlias.getType(),
                 typeAlias,
