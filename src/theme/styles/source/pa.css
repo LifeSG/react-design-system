@@ -1,6 +1,4 @@
 @import url("../default.css");
-@import url("../presets/semantic-colours-dark.css");
-@import url("../presets/shadow.css");
 
 [data-fds-theme="pa"] {
     --fds-colour-brand-10: #881317;

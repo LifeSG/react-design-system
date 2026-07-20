@@ -1,0 +1,5 @@
+@define-mixin font-open-sans {
+    --fds-font-variant: normal;
+    --fds-font-family-heading: "Open Sans";
+    --fds-font-family-body: "Open Sans";
+}

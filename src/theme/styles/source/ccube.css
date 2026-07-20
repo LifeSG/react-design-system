@@ -1,43 +1,39 @@
 @import url("../default.css");
-@import url("../presets/component-tokens-standard.css");
-@import url("../presets/semantic-colours-dark.css");
-@import url("../presets/semantic-colours-light-standard.css");
-@import url("../presets/shadow.css");
 
-[data-fds-theme="rbs"] {
-    --fds-colour-brand-10: #0E123A;
-    --fds-colour-brand-20: #191E65;
-    --fds-colour-brand-30: #232B90;
-    --fds-colour-brand-40: #303BC5;
-    --fds-colour-brand-50: #494CFF;
-    --fds-colour-brand-60: #AD6EFF;
-    --fds-colour-brand-70: #AEA4FF;
-    --fds-colour-brand-80: #C5C4FF;
-    --fds-colour-brand-90: #DDDCFF;
-    --fds-colour-brand-95: #EDECFF;
-    --fds-colour-brand-100: #F8F8FF;
-    --fds-colour-primary-10: #10152B;
-    --fds-colour-primary-20: #1C254B;
-    --fds-colour-primary-30: #28356C;
-    --fds-colour-primary-40: #38489A;
-    --fds-colour-primary-50: #4D5AD7;
-    --fds-colour-primary-60: #7487F2;
-    --fds-colour-primary-70: #9AAAFC;
-    --fds-colour-primary-80: #BDC7FD;
-    --fds-colour-primary-90: #DADFFB;
-    --fds-colour-primary-95: #ECEEFE;
-    --fds-colour-primary-100: #F7F8FF;
-    --fds-colour-secondary-10: #19151D;
-    --fds-colour-secondary-20: #2B2533;
-    --fds-colour-secondary-30: #3E3649;
-    --fds-colour-secondary-40: #564A64;
-    --fds-colour-secondary-50: #6F637D;
-    --fds-colour-secondary-60: #948B9F;
-    --fds-colour-secondary-70: #B3ACBB;
-    --fds-colour-secondary-80: #CCC8D2;
-    --fds-colour-secondary-90: #E1DEE4;
-    --fds-colour-secondary-95: #EFEEF1;
-    --fds-colour-secondary-100: #F9F8F9;
+[data-fds-theme="ccube"] {
+    --fds-colour-brand-10: #1F1221;
+    --fds-colour-brand-20: #371F3B;
+    --fds-colour-brand-30: #4E2C53;
+    --fds-colour-brand-40: #6B3E73;
+    --fds-colour-brand-50: #8D5197;
+    --fds-colour-brand-60: #FF3399;
+    --fds-colour-brand-70: #FF88C4;
+    --fds-colour-brand-80: #FFB3D9;
+    --fds-colour-brand-90: #FFD4E9;
+    --fds-colour-brand-95: #FFE8F3;
+    --fds-colour-brand-100: #FFF8FC;
+    --fds-colour-primary-10: #1F1221;
+    --fds-colour-primary-20: #371F3B;
+    --fds-colour-primary-30: #4E2C53;
+    --fds-colour-primary-40: #6B3E73;
+    --fds-colour-primary-50: #8D5197;
+    --fds-colour-primary-60: #B07DB7;
+    --fds-colour-primary-70: #C7A3CC;
+    --fds-colour-primary-80: #D9C2DD;
+    --fds-colour-primary-90: #E9DBEB;
+    --fds-colour-primary-95: #F3ECF4;
+    --fds-colour-primary-100: #FAF7FA;
+    --fds-colour-secondary-10: #2D091B;
+    --fds-colour-secondary-20: #4D0F2E;
+    --fds-colour-secondary-30: #6B1540;
+    --fds-colour-secondary-40: #931D58;
+    --fds-colour-secondary-50: #C02673;
+    --fds-colour-secondary-60: #FF409F;
+    --fds-colour-secondary-70: #FF88C4;
+    --fds-colour-secondary-80: #FFB3D9;
+    --fds-colour-secondary-90: #FFD4E9;
+    --fds-colour-secondary-95: #FFE8F3;
+    --fds-colour-secondary-100: #FFF8FC;
     --fds-colour-neutral-10: #161616;
     --fds-colour-neutral-20: #282828;
     --fds-colour-neutral-30: #393939;
@@ -116,6 +112,14 @@
     */
 
     @mixin shadow;
+
+    /*
+    ========================================================================
+    FONT
+    ========================================================================
+    */
+
+    @mixin font-open-sans;
 }
 
 /*
@@ -123,6 +127,6 @@
 SEMANTIC COLOURS - DARK MODE
 ============================================================================
 */
-[data-fds-theme="rbs"][data-fds-theme-mode="dark"] {
+[data-fds-theme="ccube"][data-fds-theme-mode="dark"] {
     @mixin semantic-colours-dark;
 }

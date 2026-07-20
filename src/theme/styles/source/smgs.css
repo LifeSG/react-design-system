@@ -1,9 +1,4 @@
 @import url("../default.css");
-@import url("../presets/component-tokens-standard.css");
-@import url("../presets/font-plus-jakarta-sans.css");
-@import url("../presets/semantic-colours-dark.css");
-@import url("../presets/semantic-colours-light-standard.css");
-@import url("../presets/shadow.css");
 
 [data-fds-theme="smgs"] {
     --fds-colour-brand-10: #0B181F;
