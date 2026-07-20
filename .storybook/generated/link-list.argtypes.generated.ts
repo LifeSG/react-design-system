@@ -55,16 +55,6 @@ export const linkListExtraArgTypes = {
             },
         },
     },
-    "LinkListItemProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "LinkListItemProps<T>",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "LinkListItemProps.onClick": {
         control: false,
         description:
@@ -98,17 +88,6 @@ export const linkListExtraArgTypes = {
             category: "LinkListItemProps<T>",
             type: {
                 summary: "JSX.Element",
-            },
-        },
-    },
-    "LinkListItemProps.title": {
-        control: false,
-        description: "Primary label displayed as the link text.",
-        name: "title",
-        table: {
-            category: "LinkListItemProps<T>",
-            type: {
-                summary: "string",
             },
         },
     },

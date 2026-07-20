@@ -25,17 +25,6 @@ export const typographyExtraArgTypes = {
             },
         },
     },
-    "TypographyLinkProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "TypographyLinkProps",
-            tabGroup: "Link",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "TypographyLinkProps.underlineStyle": {
         control: false,
         description: "Text-decoration style for the link.",

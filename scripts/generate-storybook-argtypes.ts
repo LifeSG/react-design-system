@@ -592,6 +592,9 @@ function isSkippedFile(sourceFile: SourceFile) {
 // ArgType Row Construction
 // =============================================================================
 
+/** Common HTMLElement attributes that should be excluded when filtering inherited HTML props. */
+const HTML_ELEMENT_PROPS = new Set(["inert"]);
+
 /** Single factory for building a GeneratedArgType row. All 7 construction sites funnel through here. */
 function buildArgTypeRow(opts: {
     key: string;
@@ -650,13 +653,27 @@ function isFromNodeModules(symbol: TsMorphSymbol) {
 
 /** Get own (non-node_modules) properties from a type, sorted alphabetically. */
 function getResolvedProperties(
-    declaration: InterfaceDeclaration | TypeAliasDeclaration
+    declaration: InterfaceDeclaration | TypeAliasDeclaration,
+    excludeHtmlAttributes: boolean = false
 ) {
-    return declaration
+    let properties = declaration
         .getType()
         .getProperties()
         .filter((symbol) => !isFromNodeModules(symbol))
         .sort((a, b) => a.getName().localeCompare(b.getName()));
+
+    // When interface extends HTMLAttributes, exclude inherited HTML element properties
+    // since they're documented via the synthetic __inheritedHtmlProps row
+    if (
+        excludeHtmlAttributes &&
+        declaration.getKindName() === "InterfaceDeclaration"
+    ) {
+        properties = properties.filter(
+            (p) => !HTML_ELEMENT_PROPS.has(p.getName())
+        );
+    }
+
+    return properties;
 }
 
 /** Resolve a Symbol to its first PropertySignature declaration. */
@@ -786,6 +803,16 @@ function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
 // Per-Component Generation
 // =============================================================================
 
+/** Check whether an interface extends React HTMLAttributes and has an inherited row. */
+function hasInheritedHtmlAttributes(
+    interfaceDeclaration: InterfaceDeclaration
+): boolean {
+    return interfaceDeclaration.getExtends().some((extendNode) => {
+        const expressionText = extendNode.getExpression().getText();
+        return /HTMLAttributes?$/.test(expressionText);
+    });
+}
+
 function getInheritedHtmlAttributesRow(
     interfaceName: string,
     interfaceDeclaration: InterfaceDeclaration,
@@ -864,7 +891,11 @@ function getInterfaceArgTypes(
         ];
     }
 
-    const resolvedProperties = getResolvedProperties(interfaceDeclaration);
+    const hasHtmlAttrs = hasInheritedHtmlAttributes(interfaceDeclaration);
+    const resolvedProperties = getResolvedProperties(
+        interfaceDeclaration,
+        hasHtmlAttrs
+    );
 
     const indexSignatureRows = interfaceDeclaration
         .getIndexSignatures()

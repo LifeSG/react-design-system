@@ -33,16 +33,6 @@ export const avatarExtraArgTypes = {
             },
         },
     },
-    "AvatarProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "AvatarProps",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "AvatarProps.sizeType": {
         control: false,
         description:

@@ -182,17 +182,6 @@ export const uneditableSectionExtraArgTypes = {
             type: {},
         },
     },
-    "UneditableSectionItemSectionProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "UneditableSectionItemSectionProps",
-            tabGroup: "UneditableSection.ItemSection",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "UneditableSectionItemSectionProps.stretch": {
         control: false,
         description:

@@ -36,16 +36,6 @@ export const markupExtraArgTypes = {
             },
         },
     },
-    "MarkupProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "MarkupProps",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "MarkupProps.inline": {
         control: false,
         description: "Renders as an inline `span` instead of a block `div`.",

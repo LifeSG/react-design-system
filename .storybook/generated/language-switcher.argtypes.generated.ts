@@ -32,16 +32,6 @@ export const languageSwitcherExtraArgTypes = {
             },
         },
     },
-    "LanguageSwitcherProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "LanguageSwitcherProps",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "LanguageSwitcherProps.onSelectLanguage": {
         control: false,
         description:
