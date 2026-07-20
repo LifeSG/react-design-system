@@ -239,19 +239,4 @@ export const linkListExtraArgTypes = {
             },
         },
     },
-    LinkListStyle: {
-        control: false,
-        description:
-            'Visual size variant for `LinkList` items.\n\n- `"default"` renders standard body text\n- `"small"` renders reduced text for compact layouts.',
-        name: "LinkListStyle",
-        table: {
-            category: "LinkListStyle",
-            defaultValue: {
-                summary: '"default"',
-            },
-            type: {
-                summary: "'default' | 'small'",
-            },
-        },
-    },
 } satisfies Record<string, unknown>;

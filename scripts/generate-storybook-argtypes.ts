@@ -37,12 +37,12 @@ import type { GeneratedArgType } from "../stories/storybook-common/arg-types";
 // =============================================================================
 
 type JsDocMeta = {
-    defaultValue?: string | undefined;
-    deprecated?: string | boolean | undefined;
-    description?: string | undefined;
-    examples?: string[] | undefined;
-    remarks?: string | undefined;
-    tabGroups?: string[] | undefined;
+    defaultValue?: string;
+    deprecated?: string | boolean;
+    description?: string;
+    examples?: string[];
+    remarks?: string;
+    tabGroups?: string[];
 };
 
 type StorybookTaggedDeclarationNode =
@@ -197,7 +197,6 @@ function getJsDocMeta(
 
         if (tagName === "example" && comment) {
             examples.push(comment);
-            continue;
         }
     }
 
@@ -307,8 +306,8 @@ function splitTopLevelUnionMembers(typeText: string) {
     let braceDepth = 0;
     let angleDepth = 0;
 
-    for (let index = 0; index < typeText.length; index++) {
-        const char = typeText[index];
+    for (const element of typeText) {
+        const char = element;
 
         if (char === "(") parenDepth++;
         if (char === ")") parenDepth = Math.max(0, parenDepth - 1);
@@ -349,6 +348,34 @@ function formatUnionSummary(typeText: string) {
     }
 
     return members.filter(Boolean).join("\n| ");
+}
+
+/**
+ * Check if a union type contains only literal types (strings, numbers, booleans).
+ * Returns true for "simple" unions that should be inlined in properties.
+ */
+function isSimpleLiteralUnion(type: Type): boolean {
+    const nonNullableType = type.getNonNullableType();
+
+    if (!nonNullableType.isUnion()) {
+        return false;
+    }
+
+    const unionTypes = nonNullableType.getUnionTypes();
+
+    // Exclude boolean unions (true | false) — keep them as "boolean" instead
+    const hasBooleanLiterals = unionTypes.some((t) => t.isBooleanLiteral());
+    const hasOnlyBooleanLiterals =
+        hasBooleanLiterals && unionTypes.every((t) => t.isBooleanLiteral());
+
+    if (hasOnlyBooleanLiterals) {
+        return false;
+    }
+
+    return unionTypes.every(
+        (t) =>
+            t.isStringLiteral() || t.isNumberLiteral() || t.isBooleanLiteral()
+    );
 }
 
 /**
@@ -642,6 +669,119 @@ function getPropertyDeclaration(symbol: TsMorphSymbol) {
         );
 }
 
+/**
+ * Collect all type names used in "wrapped" contexts (arrays, generics, complex unions, function signatures).
+ * Simple optionality (TypeName?) or union with undefined (TypeName | undefined) don't count as wrapped.
+ * This helps us identify simple literal unions that can't be inlined and need
+ * category entries for documentation.
+ */
+function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
+    const wrappedNames = new Set<string>();
+
+    // Collect all interface and type alias properties
+    const allDeclarations = [
+        ...sourceFile.getInterfaces(),
+        ...sourceFile.getTypeAliases(),
+    ];
+
+    for (const declaration of allDeclarations) {
+        const properties = declaration.getType().getProperties();
+
+        for (const prop of properties) {
+            const propDeclMembers = prop
+                .getDeclarations()
+                .filter(
+                    (d): d is PropertySignature =>
+                        d.getKindName() === "PropertySignature"
+                );
+
+            for (const propDecl of propDeclMembers) {
+                const typeText = propDecl.getTypeNode()?.getText() || "";
+
+                // Skip simple cases: just a type name, optional, or with undefined union
+                // Wrapped = arrays, other unions, or generics
+
+                // Check for array: TypeName[]
+                if (typeText.includes("[]")) {
+                    // Extract the type name before []
+                    const match = new RegExp(/\b([A-Z][a-zA-Z0-9]*)\[\]/).exec(
+                        typeText
+                    );
+                    if (match) {
+                        wrappedNames.add(match[1]);
+                    }
+                }
+
+                // Check for generics: Generic<TypeName> or similar
+                if (typeText.includes("<") && typeText.includes(">")) {
+                    const matches =
+                        typeText.match(
+                            /\b([A-Z][a-zA-Z0-9]*)<[^>]*\b([A-Z][a-zA-Z0-9]*)/g
+                        ) || [];
+                    for (const match of matches) {
+                        const typeNames =
+                            match.match(/\b([A-Z][a-zA-Z0-9]*)\b/g) || [];
+                        // Add all but the generic function name itself
+                        for (let i = 1; i < typeNames.length; i++) {
+                            if (
+                                !/^(React|Record|Omit|Pick|Exclude|Extract|Partial|Required|Readonly|Promise|Map|Set)$/.test(
+                                    typeNames[i]
+                                )
+                            ) {
+                                wrappedNames.add(typeNames[i]);
+                            }
+                        }
+                    }
+                }
+
+                // Check for complex unions: TypeName | OtherType
+                // Exception: skip simple `TypeName | undefined` (single type with optional)
+                if (typeText.includes("|")) {
+                    const parts = typeText.split("|").map((p) => p.trim());
+                    // Filter out keywords like undefined, true, false, null
+                    const nonKeywordParts = parts.filter(
+                        (p) =>
+                            !/^(undefined|null|never|any|unknown|true|false)$/.test(
+                                p
+                            )
+                    );
+
+                    // If more than one non-keyword type, it's a true union (not just optional)
+                    if (nonKeywordParts.length > 1) {
+                        for (const part of nonKeywordParts) {
+                            const match = new RegExp(
+                                /^([A-Z][a-zA-Z0-9]*)/
+                            ).exec(part);
+                            if (match) {
+                                wrappedNames.add(match[1]);
+                            }
+                        }
+                    }
+                }
+
+                // Check for function signatures: (param: TypeName) => ..., etc.
+                if (typeText.includes("=>")) {
+                    // Extract all type names from function signature (parameters and return type)
+                    const typeNames =
+                        typeText.match(/\b([A-Z][a-zA-Z0-9]*)\b/g) || [];
+                    for (const name of typeNames) {
+                        // Filter out keywords and React types
+                        if (
+                            !/^(React|JSX|Record|Omit|Pick|Exclude|Extract|Partial|Required|Readonly|Promise|Map|Set|Array|Object|String|Number|Boolean|Symbol|BigInt|void|never|any|unknown|null|undefined)$/.test(
+                                name
+                            )
+                        ) {
+                            wrappedNames.add(name);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    return wrappedNames;
+}
+
 // =============================================================================
 // Per-Component Generation
 // =============================================================================
@@ -758,6 +898,15 @@ function getInterfaceArgTypes(
         const propertyName = getPropertyName(property);
         const jsDocMeta = getJsDocMeta(property);
 
+        // Resolve the property type to check for simple literal unions to inline
+        const resolvedType = symbol.getTypeAtLocation(interfaceDeclaration);
+        let typeSummary = getPropertyTypeText(property);
+
+        // If the resolved type is a simple literal union, use the expanded version
+        if (isSimpleLiteralUnion(resolvedType)) {
+            typeSummary = getSummaryTypeText(resolvedType, property);
+        }
+
         return [
             buildArgTypeRow({
                 category,
@@ -767,7 +916,7 @@ function getInterfaceArgTypes(
                 key: `${interfaceName}.${propertyName}`,
                 name: propertyName,
                 tabGroup: interfaceJsDocMeta.tabGroups?.[0],
-                typeSummary: getPropertyTypeText(property),
+                typeSummary,
             }),
         ];
     });
@@ -801,11 +950,19 @@ function getInterfaceArgTypes(
 
 function getTypeAliasArgTypes(
     sourceFile: SourceFile,
-    typeName: string
+    typeName: string,
+    wrappedTypeNames?: Set<string>
 ): GeneratedArgType[] {
     const typeAlias = sourceFile.getTypeAliasOrThrow(typeName);
     const jsDocMeta = getJsDocMeta(typeAlias);
     const category = getCategoryName(typeName, typeAlias);
+
+    // Skip simple literal unions only if they're NOT used in wrapped contexts.
+    // If wrapped (e.g., TypeName[]), we need the category entry for documentation.
+    const isWrapped = wrappedTypeNames?.has(typeName);
+    if (isSimpleLiteralUnion(typeAlias.getType()) && !isWrapped) {
+        return [];
+    }
 
     const typeNodeKind = typeAlias.getTypeNodeOrThrow().getKindName();
     const isOmitAlias = /^Omit<.+>$/.test(
@@ -881,7 +1038,8 @@ function getTypeAliasArgTypes(
         ];
     }
 
-    // Simple type aliases (e.g. string unions, mapped types): single summary row
+    // Non-expandable type aliases (mapped types, generics, etc.): single summary row
+    // (Simple literal unions are already skipped earlier and inlined in properties)
     return [
         buildArgTypeRow({
             category,
@@ -924,7 +1082,15 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                 return [];
             }
 
-            return getTypeAliasArgTypes(sourceFile, declaration.getName());
+            // Collect type names used in wrapped contexts (arrays, optionals, etc.)
+            // so we can decide whether to skip simple literal unions
+            const wrappedTypeNames = getWrappedTypeNames(sourceFile);
+
+            return getTypeAliasArgTypes(
+                sourceFile,
+                declaration.getName(),
+                wrappedTypeNames
+            );
         }),
     ];
 

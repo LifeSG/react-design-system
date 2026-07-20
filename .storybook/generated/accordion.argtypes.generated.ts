@@ -127,18 +127,6 @@ export const accordionExtraArgTypes = {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
             type: {
-                summary: "AccordionItemType",
-            },
-        },
-    },
-    AccordionItemType: {
-        control: false,
-        description: "Visual size variant for an `Accordion.Item`.",
-        name: "AccordionItemType",
-        table: {
-            category: "AccordionItemType",
-            tabGroup: "Accordion.Item",
-            type: {
                 summary: "'default' | 'small'",
             },
         },
@@ -229,7 +217,7 @@ export const accordionExtraArgTypes = {
             },
             tabGroup: "Accordion",
             type: {
-                summary: '"collapse-all" | "expand-all"',
+                summary: "'collapse-all' | 'expand-all'",
             },
         },
     },

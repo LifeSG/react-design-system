@@ -221,7 +221,7 @@ export const tabExtraArgTypes = {
             },
             tabGroup: "Tab.Item",
             type: {
-                summary: '"left" | "right"',
+                summary: "'left' | 'right'",
             },
         },
     },

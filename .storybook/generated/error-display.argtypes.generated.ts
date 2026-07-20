@@ -57,7 +57,8 @@ export const errorDisplayExtraArgTypes = {
         table: {
             category: "ErrorDisplayProps",
             type: {
-                summary: "ThemeType",
+                summary:
+                    "'a11y-playground' | 'bookingsg' | 'careercompass' | 'ccube' | 'imda' | 'lifesg' | 'mylegacy' | 'oneservice' | 'pa' | 'rbs' | 'sgw-digital-lobby' | 'smgs' | 'spf' | 'supportgowhere'",
             },
         },
     },
@@ -116,17 +117,6 @@ export const errorDisplayExtraArgTypes = {
         name: "type",
         table: {
             category: "ErrorDisplayProps",
-            type: {
-                summary: "ErrorDisplayType",
-            },
-        },
-    },
-    ErrorDisplayType: {
-        control: false,
-        description: "Union of all supported error and status variants.",
-        name: "ErrorDisplayType",
-        table: {
-            category: "ErrorDisplayType",
             type: {
                 summary:
                     "'warning' | '400' | '403' | '404' | '408' | '500' | '502' | '503' | '504' | 'confirmation' | 'inactivity' | 'insufficient-credits' | 'link-error' | 'logout' | 'maintenance' | 'no-item-found' | 'payment-unsuccessful' | 'transfer-unsuccessful' | 'unsupported-browser' | 'partially-supported-browser'",

@@ -2,42 +2,6 @@
 // Run: npm run storybook:argtypes
 
 export const uneditableSectionExtraArgTypes = {
-    UneditableSectionItemDisplayWidth: {
-        control: false,
-        description: "Grid column span for an item within the section layout.",
-        name: "UneditableSectionItemDisplayWidth",
-        table: {
-            category: "UneditableSectionItemDisplayWidth",
-            tabGroup: "UneditableSection.Item",
-            type: {
-                summary: "'full' | 'half'",
-            },
-        },
-    },
-    UneditableSectionItemMaskLoadingState: {
-        control: false,
-        description: "Async loading state during a mask or unmask action.",
-        name: "UneditableSectionItemMaskLoadingState",
-        table: {
-            category: "UneditableSectionItemMaskLoadingState",
-            tabGroup: "UneditableSection.Item",
-            type: {
-                summary: "'loading' | 'fail'",
-            },
-        },
-    },
-    UneditableSectionItemMaskState: {
-        control: false,
-        description: "Whether the item value is currently masked or unmasked.",
-        name: "UneditableSectionItemMaskState",
-        table: {
-            category: "UneditableSectionItemMaskState",
-            tabGroup: "UneditableSection.Item",
-            type: {
-                summary: "'masked' | 'unmasked'",
-            },
-        },
-    },
     "UneditableSectionItemProps.alert": {
         control: false,
         description: "Alert rendered below the item value.",
@@ -74,7 +38,7 @@ export const uneditableSectionExtraArgTypes = {
             },
             tabGroup: "UneditableSection.Item",
             type: {
-                summary: "UneditableSectionItemDisplayWidth",
+                summary: "'full' | 'half'",
             },
         },
     },
@@ -126,7 +90,7 @@ export const uneditableSectionExtraArgTypes = {
             category: "UneditableSectionItemProps",
             tabGroup: "UneditableSection.Item",
             type: {
-                summary: "UneditableSectionItemMaskLoadingState",
+                summary: "'loading' | 'fail'",
             },
         },
     },
@@ -165,7 +129,7 @@ export const uneditableSectionExtraArgTypes = {
             category: "UneditableSectionItemProps",
             tabGroup: "UneditableSection.Item",
             type: {
-                summary: "UneditableSectionItemMaskState",
+                summary: "'masked' | 'unmasked'",
             },
         },
     },

@@ -31,7 +31,8 @@ export const markupExtraArgTypes = {
         table: {
             category: "MarkupProps",
             type: {
-                summary: "MarkupTextSize",
+                summary:
+                    "'heading-xxl' | 'heading-xl' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xs' | 'body-baseline' | 'body-md' | 'body-sm' | 'body-xs'",
             },
         },
     },
@@ -56,17 +57,6 @@ export const markupExtraArgTypes = {
             },
             type: {
                 summary: "boolean",
-            },
-        },
-    },
-    MarkupTextSize: {
-        control: false,
-        name: "MarkupTextSize",
-        table: {
-            category: "MarkupTextSize",
-            type: {
-                summary:
-                    "'heading-xxl' | 'heading-xl' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xs' | 'body-baseline' | 'body-md' | 'body-sm' | 'body-xs'",
             },
         },
     },

@@ -410,7 +410,7 @@ export const navbarExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: '"default" | "stretch"',
+                summary: "'default' | 'stretch'",
             },
         },
     },
@@ -576,7 +576,7 @@ export const navbarExtraArgTypes = {
                 summary: '"underline"',
             },
             type: {
-                summary: "TypographyUnderlineStyle",
+                summary: "'none' | 'underline'",
             },
         },
     },
@@ -590,7 +590,7 @@ export const navbarExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "TypographyWeight",
+                summary: "'light' | 'bold' | 'regular' | 'semibold'",
             },
         },
     },
@@ -698,7 +698,7 @@ export const navbarExtraArgTypes = {
                 summary: '"underline"',
             },
             type: {
-                summary: "TypographyUnderlineStyle",
+                summary: "'none' | 'underline'",
             },
         },
     },
@@ -712,7 +712,7 @@ export const navbarExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "TypographyWeight",
+                summary: "'light' | 'bold' | 'regular' | 'semibold'",
             },
         },
     },
@@ -733,7 +733,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavItemProps<T>",
             type: {
-                summary: 'import("react").ReactNode | JSX.Element',
+                summary: 'JSX.Element | import("react").ReactNode',
             },
         },
     },

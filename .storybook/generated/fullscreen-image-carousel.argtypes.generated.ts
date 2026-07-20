@@ -230,7 +230,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
                 summary: '"bottom"',
             },
             type: {
-                summary: "ModalAnimationDirection",
+                summary: "'left' | 'right' | 'top' | 'bottom'",
             },
         },
     },

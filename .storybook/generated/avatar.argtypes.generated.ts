@@ -51,17 +51,6 @@ export const avatarExtraArgTypes = {
         table: {
             category: "AvatarProps",
             type: {
-                summary: "AvatarSize",
-            },
-        },
-    },
-    AvatarSize: {
-        control: false,
-        description: "Visual size options for the `Avatar` component.",
-        name: "AvatarSize",
-        table: {
-            category: "AvatarSize",
-            type: {
                 summary: "'default' | 'small'",
             },
         },

@@ -2,18 +2,6 @@
 // Run: npm run storybook:argtypes
 
 export const boxContainerExtraArgTypes = {
-    BoxContainerDisplayState: {
-        control: false,
-        description:
-            "Visual status applied to the box container header, reflected via an icon and accessible label.",
-        name: "BoxContainerDisplayState",
-        table: {
-            category: "BoxContainerDisplayState",
-            type: {
-                summary: "'default' | 'warning' | 'error'",
-            },
-        },
-    },
     "BoxContainerProps.callToActionComponent": {
         control: false,
         description:
@@ -94,7 +82,7 @@ export const boxContainerExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "BoxContainerDisplayState",
+                summary: "'default' | 'warning' | 'error'",
             },
         },
     },

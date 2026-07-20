@@ -150,7 +150,7 @@ export const dataTableExtraArgTypes = {
                 summary: '"success"',
             },
             type: {
-                summary: "LoadStateType",
+                summary: "'success' | 'loading'",
             },
         },
     },
@@ -319,18 +319,6 @@ export const dataTableExtraArgTypes = {
             },
         },
     },
-    LoadStateType: {
-        control: false,
-        description:
-            "Whether the table body is in a loading or data-ready state.",
-        name: "LoadStateType",
-        table: {
-            category: "LoadStateType",
-            type: {
-                summary: "'success' | 'loading'",
-            },
-        },
-    },
     "RowProps.[fieldKey: string]": {
         control: false,
         description:
@@ -374,17 +362,6 @@ export const dataTableExtraArgTypes = {
             category: "SortIndicatorsProps",
             type: {
                 summary: "'asc'\n| 'desc'",
-            },
-        },
-    },
-    SortIndicatorType: {
-        control: false,
-        description: "Direction of a column sort indicator.",
-        name: "SortIndicatorType",
-        table: {
-            category: "SortIndicatorType",
-            type: {
-                summary: "'asc' | 'desc'",
             },
         },
     },

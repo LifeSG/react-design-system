@@ -135,7 +135,7 @@ export const footerExtraArgTypes = {
                 summary: '"underline"',
             },
             type: {
-                summary: "TypographyUnderlineStyle",
+                summary: "'none' | 'underline'",
             },
         },
     },
@@ -149,7 +149,7 @@ export const footerExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "TypographyWeight",
+                summary: "'light' | 'bold' | 'regular' | 'semibold'",
             },
         },
     },
@@ -253,7 +253,7 @@ export const footerExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: '"default" | "stretch"',
+                summary: "'default' | 'stretch'",
             },
         },
     },

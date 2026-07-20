@@ -47,7 +47,7 @@ export const typographyExtraArgTypes = {
             },
             tabGroup: "Link",
             type: {
-                summary: "TypographyUnderlineStyle",
+                summary: "'none' | 'underline'",
             },
         },
     },
@@ -62,7 +62,7 @@ export const typographyExtraArgTypes = {
             },
             tabGroup: "Link",
             type: {
-                summary: "TypographyWeight",
+                summary: "'light' | 'bold' | 'regular' | 'semibold'",
             },
         },
     },
@@ -141,31 +141,6 @@ export const typographyExtraArgTypes = {
             defaultValue: {
                 summary: '"regular"',
             },
-            tabGroup: "Heading/Body",
-            type: {
-                summary: "'light' | 'bold' | 'regular' | 'semibold'",
-            },
-        },
-    },
-    TypographyUnderlineStyle: {
-        control: false,
-        description:
-            "Text-decoration style applied to a link typography element.",
-        name: "TypographyUnderlineStyle",
-        table: {
-            category: "TypographyUnderlineStyle",
-            tabGroup: "Link",
-            type: {
-                summary: "'none' | 'underline'",
-            },
-        },
-    },
-    TypographyWeight: {
-        control: false,
-        description: "Font weight variant applied to a typography element.",
-        name: "TypographyWeight",
-        table: {
-            category: "TypographyWeight",
             tabGroup: "Heading/Body",
             type: {
                 summary: "'light' | 'bold' | 'regular' | 'semibold'",
