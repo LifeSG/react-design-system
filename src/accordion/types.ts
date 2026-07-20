@@ -1,3 +1,4 @@
+// @storybookSection Accordion
 /** Props for the `Accordion` component. */
 export interface AccordionProps {
     children: JSX.Element | JSX.Element[];
@@ -39,9 +40,11 @@ export interface AccordionProps {
     onExpandCollapseChange?: ((expanded: boolean) => void) | undefined;
 }
 
+// @storybookSection Accordion.Item
 /** Visual size variant for an `Accordion.Item`. */
 export type AccordionItemType = "default" | "small";
 
+// @storybookSection Accordion.Item
 /** Props for the `Accordion.Item` sub-component. */
 export interface AccordionItemProps {
     title: string | JSX.Element;
@@ -66,6 +69,7 @@ export interface AccordionItemProps {
     collapsible?: boolean | undefined;
 }
 
+// @storybookSection Accordion.Item
 /** Imperative API available on the `Accordion.Item` ref. */
 export interface AccordionItemApi {
     expand: () => void;
@@ -73,5 +77,6 @@ export interface AccordionItemApi {
     isExpanded: () => boolean;
 }
 
+// @storybookSkipProps
 /** Ref handle for `Accordion.Item`. */
 export type AccordionItemHandle = HTMLDivElement & AccordionItemApi;

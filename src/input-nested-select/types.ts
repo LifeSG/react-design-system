@@ -53,7 +53,7 @@ export interface InputNestedSelectSharedProps<V1, V2, V3>
      * Note: if a parent of the trigger has a higher `z-index` than the dropdown,
      * the dropdown may be obscured.
      *
-     * @default `document.body`
+     * @default document.body
      */
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /** Function to convert selected value into a string */

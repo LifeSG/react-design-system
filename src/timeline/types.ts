@@ -36,7 +36,7 @@ export interface TimelineItemProps {
     /**
      * Visual state of this step.
      *
-     * @default `"current"` for the first item and `"upcoming-active"` for all subsequent items.
+     * @default "current" for the first item and "upcoming-active" for all subsequent items.
      */
     variant?: Variant | undefined;
 }

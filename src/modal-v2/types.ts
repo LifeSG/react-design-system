@@ -50,6 +50,8 @@ export interface ModalV2Props extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
     /**
      * Controls whether the modal is visible.
+     *
+     * @default false
      */
     show: boolean;
     /**

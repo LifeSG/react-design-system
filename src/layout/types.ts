@@ -1,3 +1,5 @@
+// @storybookSkipFile
+
 /**
  * Common props shared by all layout components.
  */

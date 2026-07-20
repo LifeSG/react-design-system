@@ -1,6 +1,7 @@
 import type { ModalProps } from "../modal";
 import type { Insets } from "../shared/types";
 
+// @storybookSkipProps
 /**
  * Imperative handle to read or change the active item programmatically.
  */
@@ -78,6 +79,7 @@ export interface FullscreenImageCarouselProps
     insets?: Insets | undefined;
 }
 
+// @storybookSkipProps
 interface FullscreenImageCarouselBaseItemProps {
     /**
      * Display name of the file shown in the top info bar.
@@ -108,6 +110,7 @@ export interface FullscreenImageCarouselImageItemProps
     renderContent?: never;
 }
 
+// @storybookSkipProps
 /** @deprecated Use FullscreenImageCarouselImageItemProps instead */
 export type FullscreenCarouselItemProps = FullscreenImageCarouselImageItemProps;
 
@@ -146,6 +149,7 @@ export type FullscreenImageCarouselItemProps =
     | FullscreenImageCarouselImageItemProps
     | FullscreenImageCarouselCustomItemProps;
 
+// @storybookSkipProps
 /** Natural pixel dimensions of a carousel image, used for zoom calculations. */
 export interface ImageDimension {
     width: number;

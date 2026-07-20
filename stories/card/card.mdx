@@ -1,6 +1,6 @@
 import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as CardStories from "./card.stories";
-import { PropsTable } from "./props-table";
+import { AutoArgTypesTabs } from "../storybook-common";
 
 <Meta of={CardStories} />
 
@@ -40,6 +40,4 @@ export const Example = () => <Card className={customCard} />;
 
 ## Component API
 
-This component also inherits the [HTMLDivAttributes](https://developer.mozilla.org/en-US/docs/Web/API/HTMLDivElement)
-
-<PropsTable />
+<AutoArgTypesTabs of={CardStories} />

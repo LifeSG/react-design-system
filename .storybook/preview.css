@@ -12,3 +12,7 @@
 @import url("src/theme/styles/smgs.css");
 @import url("src/theme/styles/spf.css");
 @import url("src/theme/styles/supportgowhere.css");
+
+.docblock-argstable-body tr[title] span {
+    text-transform: none;
+}

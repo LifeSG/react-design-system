@@ -8,15 +8,15 @@ import { useResizeDetector } from "react-resize-detector";
 import { ComponentLoadingSpinner } from "../../shared/component-loading-spinner";
 import { Colour } from "../../theme";
 import { Typography } from "../../typography";
+import * as styles from "../link-list.styles";
 import type {
-    BaseProps,
+    LinkListBaseProps,
     LinkListItemProps,
     LinkListLazyProps,
-} from "../internal-types";
-import * as styles from "../link-list.styles";
+} from "../types";
 import { LinkListItems } from "./common";
 
-type Props<T> = Omit<BaseProps<T>, "className" | "data-testid"> &
+type Props<T> = Omit<LinkListBaseProps<T>, "className" | "data-testid"> &
     Omit<LinkListLazyProps, "loadMode">;
 export const LazyLinkList = <T,>({
     items,

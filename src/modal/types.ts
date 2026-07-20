@@ -6,6 +6,8 @@ import type { ModalAnimationDirection } from "../modal-v2/types";
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * Controls whether the modal is visible.
+     *
+     * @default false
      */
     show: boolean;
     /**
@@ -28,7 +30,7 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * The `id` of the DOM element to portal the modal into.
      *
-     * @default `document.body`
+     * @default document.body
      */
     rootComponentId?: string | undefined;
     /**
