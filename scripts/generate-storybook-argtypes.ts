@@ -1100,6 +1100,14 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
     const outputFile = getOutputFile(sourceFilePath);
     const exportName = getExportName(sourceFilePath);
 
+    // Compute once and reuse across all local type processing
+    const wrappedTypeNames = getWrappedTypeNames(sourceFile);
+
+    const localTypeNames = new Set([
+        ...sourceFile.getInterfaces().map((i) => i.getName()),
+        ...sourceFile.getTypeAliases().map((t) => t.getName()),
+    ]);
+
     const rows = [
         ...sourceFile.getInterfaces().flatMap((declaration) => {
             if (hasSkipTag(declaration)) {
@@ -1113,16 +1121,51 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                 return [];
             }
 
-            // Collect type names used in wrapped contexts (arrays, optionals, etc.)
-            // so we can decide whether to skip simple literal unions
-            const wrappedTypeNames = getWrappedTypeNames(sourceFile);
-
             return getTypeAliasArgTypes(
                 sourceFile,
                 declaration.getName(),
                 wrappedTypeNames
             );
         }),
+        // For wrapped types that are imported from non-node_modules source files,
+        // generate rows by resolving them from their origin file.
+        ...[...wrappedTypeNames]
+            .filter((name) => !localTypeNames.has(name))
+            .flatMap((name) => {
+                for (const importDecl of sourceFile.getImportDeclarations()) {
+                    const hasName = importDecl
+                        .getNamedImports()
+                        .some((ni) => ni.getName() === name);
+
+                    if (!hasName) {
+                        continue;
+                    }
+
+                    const importedFile =
+                        importDecl.getModuleSpecifierSourceFile();
+
+                    if (
+                        !importedFile ||
+                        importedFile.getFilePath().includes("node_modules")
+                    ) {
+                        continue;
+                    }
+
+                    if (importedFile.getInterface(name)) {
+                        return getInterfaceArgTypes(importedFile, name);
+                    }
+
+                    if (importedFile.getTypeAlias(name)) {
+                        return getTypeAliasArgTypes(
+                            importedFile,
+                            name,
+                            getWrappedTypeNames(importedFile)
+                        );
+                    }
+                }
+
+                return [];
+            }),
     ];
 
     const sortedRows = rows.toSorted((a, b) => a.key.localeCompare(b.key));
