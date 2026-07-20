@@ -904,50 +904,6 @@ function getTypeAliasArgTypes(
     ];
 }
 
-/** Build rows for `export const FooProps = Component<...>` declarations (inherited DOM props). */
-function getInheritedComponentArgTypes(
-    sourceFile: SourceFile
-): GeneratedArgType[] {
-    return sourceFile
-        .getVariableStatements()
-        .filter((statement) => statement.isExported())
-        .filter((statement) => {
-            const declaration = statement.getDeclarations()[0];
-
-            return declaration
-                ?.getInitializer()
-                ?.getText()
-                .includes("Component<");
-        })
-        .flatMap((statement) => {
-            if (hasSkipTag(statement)) {
-                return [];
-            }
-
-            const declaration = statement.getDeclarations()[0];
-
-            if (!declaration) {
-                return [];
-            }
-
-            const name = declaration.getName();
-            const jsDocMeta = getJsDocMeta(statement);
-
-            return [
-                buildArgTypeRow({
-                    category: name,
-                    defaultValue: jsDocMeta.defaultValue,
-                    deprecated: jsDocMeta.deprecated,
-                    description: toStorybookDescription(jsDocMeta),
-                    key: name,
-                    name: "",
-                    tabGroup: jsDocMeta.tabGroup,
-                    typeSummary: "",
-                }),
-            ];
-        });
-}
-
 /** Generate argTypes for a single component's types.ts file. */
 async function generateForSourceFile(project: Project, sourceFilePath: string) {
     const sourceFile = getSourceFile(project, sourceFilePath);
@@ -959,42 +915,21 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
     const outputFile = getOutputFile(sourceFilePath);
     const exportName = getExportName(sourceFilePath);
 
-    const typeSections = [
-        ...sourceFile
-            .getInterfaces()
-            .map((declaration) => declaration.getName()),
-        ...sourceFile
-            .getTypeAliases()
-            .map((declaration) => declaration.getName()),
-    ];
-
     const rows = [
-        ...typeSections.flatMap((typeName) => {
-            const interfaceDeclaration = sourceFile.getInterface(typeName);
-
-            if (interfaceDeclaration) {
-                if (hasSkipTag(interfaceDeclaration)) {
-                    return [];
-                }
-
-                return getInterfaceArgTypes(sourceFile, typeName);
+        ...sourceFile.getInterfaces().flatMap((declaration) => {
+            if (hasSkipTag(declaration)) {
+                return [];
             }
 
-            const typeAlias = sourceFile.getTypeAlias(typeName);
-
-            if (typeAlias) {
-                if (hasSkipTag(typeAlias)) {
-                    return [];
-                }
-
-                return getTypeAliasArgTypes(sourceFile, typeName);
-            }
-
-            throw new Error(
-                `Unable to find interface or type alias: ${typeName}`
-            );
+            return getInterfaceArgTypes(sourceFile, declaration.getName());
         }),
-        ...getInheritedComponentArgTypes(sourceFile),
+        ...sourceFile.getTypeAliases().flatMap((declaration) => {
+            if (hasSkipTag(declaration)) {
+                return [];
+            }
+
+            return getTypeAliasArgTypes(sourceFile, declaration.getName());
+        }),
     ];
 
     const sortedRows = rows.toSorted((a, b) => a.key.localeCompare(b.key));
