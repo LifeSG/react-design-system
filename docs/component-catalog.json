@@ -1,20 +1,14 @@
 {
   "meta": {
     "packageName": "@lifesg/react-design-system",
-    "totalModules": 81
+    "totalComponents": 96
   },
   "components": [
     {
       "name": "Accordion",
       "importPath": "@lifesg/react-design-system/accordion",
-      "description": "A vertically stacked set of collapsible content panels.  Use `Accordion` to organise related content into independently expandable sections with shared expand/collapse state. The container synchronises item states and maintains correct heading-level hierarchy.  Sub-components: - `Accordion.Item` — a single collapsible panel with an imperative ref handle.  // TODO: is this example correct",
-      "keywords": [
-        "collapsible",
-        "expandable",
-        "panel",
-        "section",
-        "toggle"
-      ]
+      "description": "A vertically stacked set of collapsible content panels.  Use `Accordion` to organise related content into independently expandable sections with shared expand/collapse state. The container synchronises item states and maintains correct heading-level hierarchy.  Sub-components: - `Accordion.Item` — a single collapsible panel with an imperative ref handle.",
+      "keywords": []
     },
     {
       "name": "Alert",
@@ -419,12 +413,6 @@
       "keywords": []
     },
     {
-      "name": "Theme",
-      "importPath": "@lifesg/react-design-system/theme",
-      "description": "All available theme names.",
-      "keywords": []
-    },
-    {
       "name": "Timeline",
       "importPath": "@lifesg/react-design-system/timeline",
       "description": "A vertically ordered list of steps with visual state indicators.  Use `Timeline` to communicate multi-step progress such as application stages or process flows.",
@@ -494,6 +482,102 @@
       "name": "UnitNumber",
       "importPath": "@lifesg/react-design-system/unit-number",
       "description": "Props for `UnitNumberInput`.",
+      "keywords": []
+    },
+    {
+      "name": "Theme",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "All available theme names.",
+      "keywords": []
+    },
+    {
+      "name": "Border",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Border tokens consisting of border width and border style.",
+      "keywords": []
+    },
+    {
+      "name": "BorderStyle",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Border style tokens.",
+      "keywords": []
+    },
+    {
+      "name": "BorderThickness",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Border width tokens.",
+      "keywords": []
+    },
+    {
+      "name": "Breakpoint",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Responsive breakpoint tokens for each named breakpoint.",
+      "keywords": []
+    },
+    {
+      "name": "Colour",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Combined colour token set.",
+      "keywords": []
+    },
+    {
+      "name": "ComponentToken",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Component-scoped design tokens grouped by component.",
+      "keywords": []
+    },
+    {
+      "name": "Font",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Pre-composed font declaration strings for all size & weight combinations.",
+      "keywords": []
+    },
+    {
+      "name": "FontSpec",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Raw font CSS variable tokens.",
+      "keywords": []
+    },
+    {
+      "name": "MediaQuery",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "CSS class-based pseudo media-query selectors keyed by breakpoint name.",
+      "keywords": []
+    },
+    {
+      "name": "Motion",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Animation tokens consisting of durations and easing functions.",
+      "keywords": []
+    },
+    {
+      "name": "PrimitiveColours",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Base colour palette.",
+      "keywords": []
+    },
+    {
+      "name": "Radius",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Border radius tokens.",
+      "keywords": []
+    },
+    {
+      "name": "SemanticColours",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Purpose-driven colour tokens.",
+      "keywords": []
+    },
+    {
+      "name": "Shadow",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Box-shadow tokens.",
+      "keywords": []
+    },
+    {
+      "name": "Spacing",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Spacing tokens consisting of component spacing and layout spacing.",
       "keywords": []
     }
   ]

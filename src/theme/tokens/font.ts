@@ -1,6 +1,9 @@
 import { generateFont } from "../utils/font";
 
-/** Raw font CSS variable tokens. */
+/**
+ * Raw font CSS variable tokens.
+ * @catalog
+ */
 export const FontSpec = {
     "font-family-heading": "var(--fds-font-family-heading)",
     "font-family-body": "var(--fds-font-family-body)",
@@ -56,7 +59,10 @@ export const FontSpec = {
     "form-description-ls": "var(--fds-font-form-description-ls)",
 } as const;
 
-/** Pre-composed font declaration strings for all size & weight combinations. */
+/**
+ * Pre-composed font declaration strings for all size & weight combinations.
+ * @catalog
+ */
 export const Font = {
     "heading-xxl-light": generateFont("heading-xxl", "light"),
     "heading-xxl-regular": generateFont("heading-xxl", "regular"),

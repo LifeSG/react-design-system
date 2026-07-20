@@ -23,11 +23,37 @@ type Component = {
 
 const ROOT_DIR = path.resolve(__dirname, "..");
 const SRC_DIR = path.join(ROOT_DIR, "src");
+const SRC_INDEX_PATH = path.join(SRC_DIR, "index.ts");
+const THEME_TOKENS_DIR = path.join(SRC_DIR, "theme", "tokens");
+const THEME_TOKENS_FILES = path.join(THEME_TOKENS_DIR, "*.ts");
 const OUTPUT_PATH = path.join(ROOT_DIR, "docs", "component-catalog.json");
+
+const MODULES_WITH_CATALOG_TAGS = ["theme"];
+
+const CATALOG_TAG = "catalog";
+const KEYWORDS_TAG = "keywords";
 
 // =============================================================================
 // Helpers
 // =============================================================================
+
+function hasCatalogTagHandling(moduleName: string): boolean {
+    return MODULES_WITH_CATALOG_TAGS.includes(moduleName);
+}
+
+function trimAndReplaceNewLines(text: string | undefined): string {
+    return text?.trim().replace(/\n/g, " ") ?? "";
+}
+
+function trimAndSortComment(tagComment: string | undefined): string[] {
+    if (!tagComment) return [];
+    return tagComment
+        .trim()
+        .split(",")
+        .map((k: string) => k.trim())
+        .filter(Boolean)
+        .sort((a: string, b: string) => a.localeCompare(b));
+}
 
 function getExportedModules(sourceFile: SourceFile): string[] {
     const modules = new Set<string>();
@@ -76,29 +102,18 @@ function extractSourceMetadata(
 
             for (const jsDoc of jsDocs) {
                 if (!description) {
-                    const comment = jsDoc
-                        .getCommentText()
-                        ?.trim()
-                        .replace(/\n/g, " ");
+                    const comment = trimAndReplaceNewLines(
+                        jsDoc.getCommentText()
+                    );
                     if (comment) {
                         description = comment;
                     }
                 }
 
-                // TODO: check actual how will @keywords tag appear in jsdocs
                 if (keywords.length === 0) {
                     for (const tag of jsDoc.getTags()) {
-                        if (tag.getTagName() === "keywords") {
-                            const tagComment = tag.getCommentText()?.trim();
-                            if (tagComment) {
-                                keywords = tagComment
-                                    .split(",")
-                                    .map((k: string) => k.trim())
-                                    .filter(Boolean)
-                                    .sort((a: string, b: string) =>
-                                        a.localeCompare(b)
-                                    );
-                            }
+                        if (tag.getTagName() === KEYWORDS_TAG) {
+                            keywords = trimAndSortComment(tag.getCommentText());
                             break;
                         }
                     }
@@ -117,6 +132,77 @@ function extractSourceMetadata(
 
     return { description: "", keywords: [] };
 }
+
+function extractCatalogTaggedEntries(project: Project): Component[] {
+    const entries: Component[] = [];
+    const sourceFiles = project.getSourceFiles(THEME_TOKENS_FILES);
+
+    for (const sourceFile of sourceFiles) {
+        // Skip index.ts files as they should not have catalog tags, just barrel exports
+        if (sourceFile.getBaseName() === "index.ts") continue;
+
+        for (const statement of sourceFile.getStatements()) {
+            if (!Node.isJSDocable(statement)) continue;
+
+            const jsDocs = statement.getJsDocs();
+            let hasCatalogTag = false;
+            let description = "";
+            let keywords: string[] = [];
+
+            for (const jsDoc of jsDocs) {
+                for (const tag of jsDoc.getTags()) {
+                    if (tag.getTagName() === CATALOG_TAG) {
+                        hasCatalogTag = true;
+                    }
+                    if (
+                        tag.getTagName() === KEYWORDS_TAG &&
+                        keywords.length === 0
+                    ) {
+                        keywords = trimAndSortComment(tag.getCommentText());
+                    }
+                }
+                if (!description) {
+                    const comment = trimAndReplaceNewLines(
+                        jsDoc.getCommentText()
+                    );
+                    if (comment) description = comment;
+                }
+            }
+
+            if (!hasCatalogTag) continue;
+
+            if (Node.isVariableStatement(statement)) {
+                for (const decl of statement.getDeclarations()) {
+                    entries.push({
+                        name: decl.getName(),
+                        importPath: "@lifesg/react-design-system/theme",
+                        description,
+                        keywords,
+                    });
+                }
+            } else if (Node.isFunctionDeclaration(statement)) {
+                const name = statement.getName();
+                if (name) {
+                    entries.push({
+                        name,
+                        importPath: "@lifesg/react-design-system/theme",
+                        description,
+                        keywords,
+                    });
+                }
+            }
+        }
+    }
+
+    return entries;
+}
+
+function getCatalogTaggedEntries(project: Project): Component[] {
+    const entries = extractCatalogTaggedEntries(project);
+    entries.sort((a, b) => a.name.localeCompare(b.name));
+    return entries;
+}
+
 // =============================================================================
 // Main
 // =============================================================================
@@ -127,17 +213,23 @@ function extractSourceMetadata(
  *  - Write to component-catalog.json at repo root with stable JSON formatting
  */
 async function buildAndWriteCatalog(project: Project) {
-    const srcIndexPath = path.join(SRC_DIR, "index.ts");
-    const srcIndexFile = project.getSourceFile(srcIndexPath);
+    const srcIndexFile = project.getSourceFile(SRC_INDEX_PATH);
 
     if (!srcIndexFile) {
-        throw new Error(`Could not find source file: ${srcIndexPath}`);
+        throw new Error(`Could not find source file: ${SRC_INDEX_PATH}`);
     }
 
     const modules = getExportedModules(srcIndexFile);
     const components: Component[] = [];
 
+    project.addSourceFilesAtPaths(THEME_TOKENS_FILES);
+    const catalogTaggedEntries = getCatalogTaggedEntries(project);
+
     for (const moduleName of modules) {
+        if (hasCatalogTagHandling(moduleName)) {
+            continue;
+        }
+
         const moduleDir = path.join(SRC_DIR, moduleName);
         const moduleIndexPath = path.join(moduleDir, "index.ts");
 
@@ -152,7 +244,7 @@ async function buildAndWriteCatalog(project: Project) {
             continue;
         }
 
-        const componentName = upperFirst(camelCase(moduleName));
+        const componentNamePascalCase = upperFirst(camelCase(moduleName));
 
         const { description, keywords } = extractSourceMetadata(
             project,
@@ -161,21 +253,46 @@ async function buildAndWriteCatalog(project: Project) {
         );
 
         components.push({
-            name: componentName,
+            name: componentNamePascalCase,
             importPath: `@lifesg/react-design-system/${moduleName}`,
             description,
             keywords,
         });
     }
 
+    components.sort((a, b) => a.name.localeCompare(b.name));
+
+    for (const moduleName of modules) {
+        if (!hasCatalogTagHandling(moduleName)) {
+            continue;
+        }
+
+        const moduleDir = path.join(SRC_DIR, moduleName);
+        const componentNamePascalCase = upperFirst(camelCase(moduleName));
+        const { description, keywords } = extractSourceMetadata(
+            project,
+            moduleDir,
+            moduleName
+        );
+
+        components.push({
+            name: componentNamePascalCase,
+            importPath: `@lifesg/react-design-system/${moduleName}`,
+            description,
+            keywords,
+        });
+        components.push(...catalogTaggedEntries);
+    }
+
     const catalog = {
         meta: {
             packageName: "@lifesg/react-design-system",
-            totalModules: components.length,
+            totalComponents: components.length,
         },
-        components: components.sort((a, b) => a.name.localeCompare(b.name)),
+        components,
     };
 
+    await fs.mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
     await fs.writeFile(OUTPUT_PATH, JSON.stringify(catalog, null, 2) + "\n");
 
     console.log(
