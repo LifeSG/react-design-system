@@ -50,7 +50,7 @@ type StorybookTaggedDeclarationNode =
     | TypeAliasDeclaration
     | VariableStatement;
 
-const sourceFileGlob = "src/**/types.ts";
+const sourceFileGlob = "src/*/types.ts";
 const watchRoots = ["src", "stories"];
 const storyFileGlob = "stories/**/*.stories.@(ts|tsx)";
 const storybookArgTypesFile = path.resolve(
