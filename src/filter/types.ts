@@ -4,6 +4,7 @@ import type { ButtonStyleType } from "../button/types";
 import type { FormLabelAddonProps } from "../form/types";
 import type { Insets } from "../shared/types";
 
+// @storybookSection Filter, Filter.Item
 /**
  * Rendering context for the filter panel.
  *
@@ -11,17 +12,50 @@ import type { Insets } from "../shared/types";
  */
 export type Mode = "default" | "mobile";
 
+// @storybookSection Filter, Filter.Sidebar
 interface FilterSidebarCustomLabelProps {
+    /**
+     * The title of the filter header
+     *
+     * @default "Filters"
+     */
     headerTitle?: string | undefined;
+    /**
+     * The display label of the `Clear` button
+     *
+     * @default "Clear"
+     */
     clearButtonLabel?: string | undefined;
 }
+// @storybookSection Filter, Filter.Modal
 interface FilterModalCustomLabelProps {
+    /**
+     * The title of the filter header
+     *
+     * @default "Filters"
+     */
     headerTitle?: string | undefined;
+    /**
+     * The display label of the filter toggle button (in mobile)
+     *
+     * @default "Filters"
+     */
     toggleFilterButtonLabel?: string | undefined;
+    /**
+     * The display label of the `Done` button (in mobile)
+     *
+     * @default "Done"
+     */
     doneButtonLabel?: string | undefined;
+    /**
+     * The display label of the `Clear` button
+     *
+     * @default "Clear"
+     */
     clearButtonLabel?: string | undefined;
 }
 
+// @storybookSkipProps
 /**
  * Shared props for the sidebar and modal variants of the filter panel.
  */
@@ -64,6 +98,7 @@ export interface FilterBaseProps {
     doneButtonLabel?: string | undefined;
 }
 
+// @storybookSection Filter.Sidebar
 /**
  * Props for the `Filter.Sidebar` sub-component.
  */
@@ -72,6 +107,7 @@ export interface FilterSidebarProps extends FilterBaseProps {
     customLabels?: FilterSidebarCustomLabelProps | undefined;
 }
 
+// @storybookSection Filter.Modal
 /**
  * Props for the `Filter.Modal` sub-component.
  */
@@ -97,6 +133,7 @@ export interface FilterModalProps extends FilterBaseProps {
     insets?: Insets | undefined;
 }
 
+// @storybookSection Filter
 /**
  * Props for the `Filter` component.
  */
@@ -114,6 +151,7 @@ export interface FilterProps
         | undefined;
 }
 
+// @storybookSection Filter.Item
 /**
  * Props for the `Filter.Item` sub-component.
  */
@@ -184,6 +222,7 @@ export interface FilterItemProps {
     style?: React.CSSProperties | undefined;
 }
 
+// @storybookSection Filter.Page
 /**
  * Props for the `Filter.Page` sub-component.
  */
@@ -194,69 +233,4 @@ export interface FilterPageProps {
     onDismiss?: (() => void) | undefined;
     /** Called when the done button is pressed. */
     onDone?: (() => void) | undefined;
-}
-
-/**
- * Default shape for a checkbox option in `Filter.Checkbox`.
- *
- * Nest `options` to create hierarchical groups with parent-level
- * select/deselect all behavior.
- */
-export interface FilterItemCheckboxOptionProps {
-    value: any;
-    label: string;
-    /** Nested child options. Providing children makes this item a parent node. */
-    options?: FilterItemCheckboxOptionProps[] | undefined;
-}
-
-/**
- * Props for the `Filter.Checkbox` sub-component.
- *
- * Supply a generic type `T` to use a custom option shape together with
- * `labelExtractor` and `valueExtractor`.
- */
-export interface FilterItemCheckboxProps<T = FilterItemCheckboxOptionProps>
-    extends Omit<FilterItemProps, "children"> {
-    /** The full list of selectable options. */
-    options: T[];
-    /**
-     * The currently selected options. When provided, the component syncs its
-     * internal selection state to this value.
-     */
-    selectedOptions?: T[] | undefined;
-    /**
-     * Called when the selection changes.
-     *
-     * @param options The updated array of selected options.
-     */
-    onSelect?: ((options: T[]) => void) | undefined;
-    /**
-     * Derives the display label from an option item.
-     * Falls back to `item.label` when not provided.
-     */
-    labelExtractor?: ((item: T) => React.ReactNode) | undefined;
-    /**
-     * Derives the unique value key from an option item.
-     * Falls back to `item.value` when not provided.
-     */
-    valueExtractor?: ((item: T) => string) | undefined;
-    /**
-     * When `true`, toggle chips in mobile mode grow to fit their content width
-     * instead of stretching to a fixed minimum width.
-     */
-    useToggleContentWidth?: boolean | undefined;
-    /**
-     * When `true`, renders checkboxes instead of toggle chips in mobile mode.
-     * Has no effect for nested option trees, which always use checkboxes.
-     *
-     * @default false
-     */
-    showAsCheckboxInMobile?: boolean | undefined;
-    /**
-     * When `true`, shows a "View more / View less" button when there are more
-     * options than the minimised threshold.
-     *
-     * @default true
-     */
-    minimisableOptions?: boolean | undefined;
 }
