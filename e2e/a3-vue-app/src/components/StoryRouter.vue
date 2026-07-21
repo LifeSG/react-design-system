@@ -22,7 +22,8 @@ const StoryComponent = ref<Component | null>(null);
 const error = ref<string | null>(null);
 
 onMounted(async () => {
-    const path = window.location.pathname;
+    const base = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+    const path = window.location.pathname.replace(new RegExp(`^${base}`), "");
     const match = path.match(/^\/components\/([^/]+)\/([^/]+)\/?$/);
 
     if (!match) return;

@@ -31,7 +31,8 @@
     }
 
     async function loadStory() {
-        const path = window.location.pathname;
+        const base = import.meta.env.BASE_URL || "/";
+        const path = window.location.pathname.replace(new RegExp(`^${base.replace(/\/$/, "")}`), "");
         const match = path.match(/^\/components\/([^/]+)\/([^/]+)\/?$/);
 
         if (!match) {

@@ -7,7 +7,8 @@
         console.log("DateRange changed:", value);
     }
 
-    const isStoryRoute = window.location.pathname.startsWith("/components/");
+    const base = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+    const isStoryRoute = window.location.pathname.startsWith(`${base}/components/`);
 </script>
 
 {#if isStoryRoute}

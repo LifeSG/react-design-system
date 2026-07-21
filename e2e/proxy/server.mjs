@@ -15,17 +15,25 @@ const routes = {
     "/a4-angular": "http://localhost:3006",
 };
 
+// Create proxy middlewares (one per target)
+const proxies = {};
 for (const [prefix, target] of Object.entries(routes)) {
-    app.use(
-        prefix,
-        createProxyMiddleware({
-            target,
-            changeOrigin: true,
-            pathRewrite: { [`^${prefix}`]: "" },
-            ws: true,
-        })
-    );
+    proxies[prefix] = createProxyMiddleware({
+        target,
+        changeOrigin: true,
+        ws: true,
+    });
 }
+
+// Single handler that routes based on prefix but preserves the full path
+app.use((req, res, next) => {
+    for (const [prefix, proxy] of Object.entries(proxies)) {
+        if (req.url.startsWith(prefix + "/") || req.url === prefix) {
+            return proxy(req, res, next);
+        }
+    }
+    next();
+});
 
 // Health check
 app.get("/health", (_req, res) => {

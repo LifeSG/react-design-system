@@ -5,7 +5,8 @@ import type { DateRangeValue } from "@lifesg/react-design-system/core/vue";
 import StoryRouter from "./components/StoryRouter.vue";
 
 const output = ref<DateRangeValue | null>(null);
-const isStoryRoute = window.location.pathname.startsWith("/components/");
+const base = (import.meta.env.BASE_URL || "/").replace(/\/$/, "");
+const isStoryRoute = window.location.pathname.startsWith(`${base}/components/`);
 
 function handleChange(value: DateRangeValue) {
     output.value = value;
