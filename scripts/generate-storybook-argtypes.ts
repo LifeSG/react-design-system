@@ -650,6 +650,7 @@ function buildArgTypeRow(opts: {
     defaultValue?: string;
     deprecated?: string | boolean;
     description?: string;
+    required?: boolean;
 }): GeneratedArgType {
     return {
         key: opts.key,
@@ -658,11 +659,20 @@ function buildArgTypeRow(opts: {
             deprecated: opts.deprecated,
             description: opts.description,
             name: opts.name,
+            type: {
+                required: opts.required,
+            },
             table: {
                 category: opts.category,
                 defaultValue: opts.defaultValue
                     ? { summary: opts.defaultValue }
                     : undefined,
+                jsDocTags:
+                    typeof opts.deprecated === "string"
+                        ? {
+                              deprecated: opts.deprecated,
+                          }
+                        : undefined,
                 tabGroup: opts.tabGroup,
                 type:
                     opts.typeSummaryParts && opts.typeSummaryParts.length > 1
@@ -914,6 +924,7 @@ function getInterfaceArgTypes(
                 key: `${interfaceName}.${propertyName}`,
                 name: propertyName,
                 typeSummaryParts: getUnionMemberTexts(resolvedType, property),
+                required: !property.hasQuestionToken(),
                 tabGroup: interfaceJsDocMeta.tabGroups?.[0],
                 typeSummary,
             }),
@@ -1007,6 +1018,7 @@ function getTypeAliasArgTypes(
                     description: toStorybookDescription(propertyJsDocMeta),
                     key: `${typeName}.${propertyName}`,
                     name: propertyName,
+                    required: !property.hasQuestionToken(),
                     tabGroup: jsDocMeta.tabGroups?.[0],
                     typeSummary: propertySummary,
                     typeSummaryParts: getUnionMemberTexts(

@@ -7,6 +7,9 @@ export const mastheadExtraArgTypes = {
         description:
             "Allows the masthead to span the full width of its container rather than\nconstraining to the default layout width.",
         name: "stretch",
+        type: {
+            required: false,
+        },
         table: {
             category: "MastheadProps",
             defaultValue: {

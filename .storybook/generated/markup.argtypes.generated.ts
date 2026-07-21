@@ -6,6 +6,7 @@ export const markupExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLDivElement`.",
         name: "",
+        type: {},
         table: {
             category: "MarkupProps",
             type: {},
@@ -16,6 +17,9 @@ export const markupExtraArgTypes = {
         description:
             "The default font color. If not specified, inherited from the parent",
         name: "baseTextColor",
+        type: {
+            required: false,
+        },
         table: {
             category: "MarkupProps",
             type: {
@@ -28,6 +32,9 @@ export const markupExtraArgTypes = {
         description:
             "The default font size. If not specified, inherited from the parent",
         name: "baseTextSize",
+        type: {
+            required: false,
+        },
         table: {
             category: "MarkupProps",
             type: {
@@ -40,6 +47,9 @@ export const markupExtraArgTypes = {
         control: false,
         description: "Renders as an inline `span` instead of a block `div`.",
         name: "inline",
+        type: {
+            required: false,
+        },
         table: {
             category: "MarkupProps",
             defaultValue: {

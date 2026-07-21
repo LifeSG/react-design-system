@@ -5,6 +5,9 @@ export const paginationExtraArgTypes = {
     "PageSizeItemProps.label": {
         control: false,
         name: "label",
+        type: {
+            required: true,
+        },
         table: {
             category: "PageSizeItemProps",
             type: {
@@ -15,6 +18,9 @@ export const paginationExtraArgTypes = {
     "PageSizeItemProps.value": {
         control: false,
         name: "value",
+        type: {
+            required: true,
+        },
         table: {
             category: "PageSizeItemProps",
             type: {
@@ -27,6 +33,9 @@ export const paginationExtraArgTypes = {
         description:
             "The currently active 1-based page number. This is a controlled prop;\nupdate it in response to `onPageChange`.",
         name: "activePage",
+        type: {
+            required: true,
+        },
         table: {
             category: "PaginationProps",
             type: {
@@ -37,6 +46,9 @@ export const paginationExtraArgTypes = {
     "PaginationProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "PaginationProps",
             type: {
@@ -47,6 +59,9 @@ export const paginationExtraArgTypes = {
     "PaginationProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "PaginationProps",
             type: {
@@ -57,6 +72,9 @@ export const paginationExtraArgTypes = {
     "PaginationProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "PaginationProps",
             type: {
@@ -68,6 +86,9 @@ export const paginationExtraArgTypes = {
         control: false,
         description: "Called when the user navigates to a different page.",
         name: "onPageChange",
+        type: {
+            required: false,
+        },
         table: {
             category: "PaginationProps",
             type: {
@@ -80,6 +101,9 @@ export const paginationExtraArgTypes = {
         description:
             "Called when the user selects a different page size from\nthe dropdown  and `showPageSizeChanger` is `true`.",
         name: "onPageSizeChange",
+        type: {
+            required: false,
+        },
         table: {
             category: "PaginationProps",
             type: {
@@ -91,6 +115,9 @@ export const paginationExtraArgTypes = {
         control: false,
         description: "Number of items displayed per page.",
         name: "pageSize",
+        type: {
+            required: false,
+        },
         table: {
             category: "PaginationProps",
             defaultValue: {
@@ -106,6 +133,9 @@ export const paginationExtraArgTypes = {
         description:
             "Options listed in the page-size changer dropdown.\n\nOnly relevant when `showPageSizeChanger` is `true`.",
         name: "pageSizeOptions",
+        type: {
+            required: false,
+        },
         table: {
             category: "PaginationProps",
             defaultValue: {
@@ -121,6 +151,9 @@ export const paginationExtraArgTypes = {
         description:
             "When `true`, renders first-page and last-page navigation buttons\nalongside the previous/next buttons.",
         name: "showFirstAndLastNav",
+        type: {
+            required: false,
+        },
         table: {
             category: "PaginationProps",
             type: {
@@ -133,6 +166,9 @@ export const paginationExtraArgTypes = {
         description:
             "When `true`, renders a dropdown on desktop viewports to change the `pageSize`.",
         name: "showPageSizeChanger",
+        type: {
+            required: false,
+        },
         table: {
             category: "PaginationProps",
             defaultValue: {
@@ -148,6 +184,9 @@ export const paginationExtraArgTypes = {
         description:
             "Total number of items across all pages. Used to compute the total page count.",
         name: "totalItems",
+        type: {
+            required: true,
+        },
         table: {
             category: "PaginationProps",
             type: {

@@ -5,6 +5,9 @@ export const accordionExtraArgTypes = {
     "AccordionItemApi.collapse": {
         control: false,
         name: "collapse",
+        type: {
+            required: true,
+        },
         table: {
             category: "AccordionItemApi",
             tabGroup: "Accordion.Item",
@@ -16,6 +19,9 @@ export const accordionExtraArgTypes = {
     "AccordionItemApi.expand": {
         control: false,
         name: "expand",
+        type: {
+            required: true,
+        },
         table: {
             category: "AccordionItemApi",
             tabGroup: "Accordion.Item",
@@ -27,6 +33,9 @@ export const accordionExtraArgTypes = {
     "AccordionItemApi.isExpanded": {
         control: false,
         name: "isExpanded",
+        type: {
+            required: true,
+        },
         table: {
             category: "AccordionItemApi",
             tabGroup: "Accordion.Item",
@@ -38,6 +47,9 @@ export const accordionExtraArgTypes = {
     "AccordionItemProps.children": {
         control: false,
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
@@ -49,6 +61,9 @@ export const accordionExtraArgTypes = {
     "AccordionItemProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
@@ -62,6 +77,9 @@ export const accordionExtraArgTypes = {
         description:
             "When `false`, the item header is non-interactive and the content panel is\nalways visible.",
         name: "collapsible",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionItemProps",
             defaultValue: {
@@ -76,6 +94,9 @@ export const accordionExtraArgTypes = {
     "AccordionItemProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
@@ -89,6 +110,9 @@ export const accordionExtraArgTypes = {
         description:
             'Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent\n"Show all" / "Hide all" button manage the state. Pass an explicit boolean to take\nindividual control of this item.',
         name: "expanded",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
@@ -100,6 +124,9 @@ export const accordionExtraArgTypes = {
     "AccordionItemProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
@@ -111,6 +138,9 @@ export const accordionExtraArgTypes = {
     "AccordionItemProps.title": {
         control: false,
         name: "title",
+        type: {
+            required: true,
+        },
         table: {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
@@ -123,6 +153,9 @@ export const accordionExtraArgTypes = {
         control: false,
         description: "Visual size variant for the accordion item.",
         name: "type",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
@@ -134,6 +167,9 @@ export const accordionExtraArgTypes = {
     "AccordionProps.children": {
         control: false,
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "AccordionProps",
             tabGroup: "Accordion",
@@ -145,6 +181,9 @@ export const accordionExtraArgTypes = {
     "AccordionProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionProps",
             tabGroup: "Accordion",
@@ -156,6 +195,9 @@ export const accordionExtraArgTypes = {
     "AccordionProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionProps",
             tabGroup: "Accordion",
@@ -168,6 +210,9 @@ export const accordionExtraArgTypes = {
         control: false,
         description: 'Renders the "Show all" / "Hide all" toggle button.',
         name: "enableExpandAll",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionProps",
             defaultValue: {
@@ -184,6 +229,9 @@ export const accordionExtraArgTypes = {
         description:
             "The ARIA heading level for the accordion and item titles.\nSpecify a custom value to reflect the component's hierarchy within a page.\nWhen a title is provided, the title level = n and the item title level = n + 1.\nOtherwise, the item title level = n.",
         name: "headingLevel",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionProps",
             defaultValue: {
@@ -198,6 +246,9 @@ export const accordionExtraArgTypes = {
     "AccordionProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionProps",
             tabGroup: "Accordion",
@@ -210,6 +261,9 @@ export const accordionExtraArgTypes = {
         control: false,
         description: "Controls whether all items start expanded or collapsed.",
         name: "initialDisplay",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionProps",
             defaultValue: {
@@ -225,6 +279,9 @@ export const accordionExtraArgTypes = {
         control: false,
         description: "Called after the expand/collapse state changes.",
         name: "onExpandCollapseChange",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionProps",
             tabGroup: "Accordion",
@@ -238,6 +295,9 @@ export const accordionExtraArgTypes = {
         description:
             "When `true`, the `title` remains visible on mobile viewports.",
         name: "showTitleInMobile",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionProps",
             defaultValue: {
@@ -254,6 +314,9 @@ export const accordionExtraArgTypes = {
         description:
             "Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true.",
         name: "title",
+        type: {
+            required: false,
+        },
         table: {
             category: "AccordionProps",
             tabGroup: "Accordion",

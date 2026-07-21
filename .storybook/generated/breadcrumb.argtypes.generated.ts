@@ -5,6 +5,9 @@ export const breadcrumbExtraArgTypes = {
     "BreadcrumbProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "BreadcrumbProps",
             type: {
@@ -15,6 +18,9 @@ export const breadcrumbExtraArgTypes = {
     "BreadcrumbProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "BreadcrumbProps",
             type: {
@@ -27,6 +33,9 @@ export const breadcrumbExtraArgTypes = {
         description:
             "Gradient color stops for the fade overlays shown on horizontal scroll.\nPass a `string[]` to apply the same gradient to both edges, or a\n`FadeColorSet` to configure each edge independently.",
         name: "fadeColor",
+        type: {
+            required: false,
+        },
         table: {
             category: "BreadcrumbProps",
             type: {
@@ -39,6 +48,9 @@ export const breadcrumbExtraArgTypes = {
         description:
             "Which edges display fade overlays when content overflows.",
         name: "fadePosition",
+        type: {
+            required: false,
+        },
         table: {
             category: "BreadcrumbProps",
             defaultValue: {
@@ -53,6 +65,9 @@ export const breadcrumbExtraArgTypes = {
         control: false,
         description: "HTML `id` for the wrapper element.",
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "BreadcrumbProps",
             defaultValue: {
@@ -68,6 +83,9 @@ export const breadcrumbExtraArgTypes = {
         description:
             'Navigation items rendered as the breadcrumb trail. The last item is\ntreated as the current page (`aria-current="page"`) and is not clickable.\nItems without `href` render as non-clickable labels. Items without\n`children` are skipped.',
         name: "links",
+        type: {
+            required: true,
+        },
         table: {
             category: "BreadcrumbProps",
             type: {
@@ -79,6 +97,9 @@ export const breadcrumbExtraArgTypes = {
         control: false,
         description: "Visual separator between breadcrumb items.",
         name: "separatorStyle",
+        type: {
+            required: false,
+        },
         table: {
             category: "BreadcrumbProps",
             defaultValue: {
@@ -93,6 +114,9 @@ export const breadcrumbExtraArgTypes = {
         control: false,
         description: "Gradient color stops for the left fade overlay.",
         name: "left",
+        type: {
+            required: false,
+        },
         table: {
             category: "FadeColorSet",
             type: {
@@ -104,6 +128,9 @@ export const breadcrumbExtraArgTypes = {
         control: false,
         description: "Gradient color stops for the right fade overlay.",
         name: "right",
+        type: {
+            required: false,
+        },
         table: {
             category: "FadeColorSet",
             type: {

@@ -6,6 +6,7 @@ export const avatarExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLDivElement`.",
         name: "",
+        type: {},
         table: {
             category: "AvatarProps",
             type: {},
@@ -16,6 +17,9 @@ export const avatarExtraArgTypes = {
         description:
             "A string or JSX element to display inside the avatar. When a string is\nprovided, only the first Unicode code point is rendered as an uppercase\ninitial. Pass a JSX element (e.g. an `<img>`) to render custom content.",
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "AvatarProps",
             type: {
@@ -26,6 +30,9 @@ export const avatarExtraArgTypes = {
     "AvatarProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "AvatarProps",
             type: {
@@ -38,6 +45,9 @@ export const avatarExtraArgTypes = {
         description:
             'Controls the visual size of the avatar. `"small"` renders a compact variant\nwith reduced typography; `"default"` uses the standard size.',
         name: "sizeType",
+        type: {
+            required: false,
+        },
         table: {
             category: "AvatarProps",
             type: {

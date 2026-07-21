@@ -6,6 +6,9 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Maximum number of dates that can be selected",
         name: "maxSelectable",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarMultiProps",
             type: {
@@ -17,6 +20,9 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Minimum number of dates that must be selected",
         name: "minSelectable",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarMultiProps",
             type: {
@@ -28,6 +34,9 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Called when the selection changes.",
         name: "onChange",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarMultiProps",
             type: {
@@ -39,6 +48,9 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Selected dates in `YYYY-MM-DD` format",
         name: "values",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarMultiProps",
             type: {
@@ -49,6 +61,9 @@ export const calendarExtraArgTypes = {
     "CalendarMultiProps.variant": {
         control: false,
         name: "variant",
+        type: {
+            required: true,
+        },
         table: {
             category: "CalendarMultiProps",
             type: {
@@ -60,6 +75,7 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Props for the `Calendar` component",
         name: "CalendarProps",
+        type: {},
         table: {
             category: "CalendarProps",
             type: {
@@ -73,6 +89,9 @@ export const calendarExtraArgTypes = {
         description:
             "Specifies if dates normally disabled by `minDate`, `maxDate` and `disabledDates` are still selectable",
         name: "allowDisabledSelection",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -83,6 +102,9 @@ export const calendarExtraArgTypes = {
     "CalendarProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -93,6 +115,9 @@ export const calendarExtraArgTypes = {
     "CalendarProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -105,6 +130,9 @@ export const calendarExtraArgTypes = {
         description:
             'Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]`',
         name: "disabledDates",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -115,6 +143,9 @@ export const calendarExtraArgTypes = {
     "CalendarProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -127,6 +158,9 @@ export const calendarExtraArgTypes = {
         description:
             "The maximum date that can be selected (inclusive) in 'YYYY-MM-DD' format.",
         name: "maxDate",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -139,6 +173,9 @@ export const calendarExtraArgTypes = {
         description:
             "The minimum date that can be selected (inclusive) in 'YYYY-MM-DD' format.",
         name: "minDate",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -151,6 +188,9 @@ export const calendarExtraArgTypes = {
         description:
             "Called when the selected date changes.\n\nCalled when the selection changes.",
         name: "onChange",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -165,6 +205,9 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Called when a day cell is hovered.",
         name: "onHover",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -176,6 +219,9 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Called when the visible month or year changes.",
         name: "onYearMonthDisplayChange",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -188,6 +234,9 @@ export const calendarExtraArgTypes = {
         description:
             "Specifies if the calendar should display only dates for the selected month",
         name: "showActiveMonthDaysOnly",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             type: {
@@ -199,6 +248,9 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Border style of the calendar container.",
         name: "styleType",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             defaultValue: {
@@ -212,6 +264,9 @@ export const calendarExtraArgTypes = {
     "CalendarProps.variant": {
         control: false,
         name: "variant",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarProps",
             defaultValue: {
@@ -226,6 +281,9 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Called when the selected date changes.",
         name: "onChange",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarSingleProps",
             type: {
@@ -238,8 +296,14 @@ export const calendarExtraArgTypes = {
         deprecated: "Use `onChange` instead.",
         description: "Called when a date is selected.",
         name: "onSelect",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarSingleProps",
+            jsDocTags: {
+                deprecated: "Use `onChange` instead.",
+            },
             type: {
                 summary: "(value: string) => void",
             },
@@ -249,6 +313,9 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Selected date in `YYYY-MM-DD` format",
         name: "value",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarSingleProps",
             type: {
@@ -259,6 +326,9 @@ export const calendarExtraArgTypes = {
     "CalendarSingleProps.variant": {
         control: false,
         name: "variant",
+        type: {
+            required: false,
+        },
         table: {
             category: "CalendarSingleProps",
             defaultValue: {
@@ -272,6 +342,9 @@ export const calendarExtraArgTypes = {
     "YearMonthDisplay.month": {
         control: false,
         name: "month",
+        type: {
+            required: true,
+        },
         table: {
             category: "YearMonthDisplay",
             type: {
@@ -282,6 +355,9 @@ export const calendarExtraArgTypes = {
     "YearMonthDisplay.year": {
         control: false,
         name: "year",
+        type: {
+            required: true,
+        },
         table: {
             category: "YearMonthDisplay",
             type: {

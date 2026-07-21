@@ -6,6 +6,7 @@ export const buttonExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLButtonElement`.",
         name: "",
+        type: {},
         table: {
             category: "ButtonProps",
             type: {},
@@ -15,6 +16,9 @@ export const buttonExtraArgTypes = {
         control: false,
         description: "Applies a red color scheme for destructive actions.",
         name: "danger",
+        type: {
+            required: false,
+        },
         table: {
             category: "ButtonProps",
             defaultValue: {
@@ -29,6 +33,9 @@ export const buttonExtraArgTypes = {
         control: false,
         description: "Test ID for the button element.",
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "ButtonProps",
             defaultValue: {
@@ -44,6 +51,9 @@ export const buttonExtraArgTypes = {
         description:
             "Keeps the button keyboard-focusable when disabled. When true, the HTML\n`disabled` attribute is not set, but `aria-disabled` remains true and the\nclick handler is suppressed.",
         name: "focusableWhenDisabled",
+        type: {
+            required: false,
+        },
         table: {
             category: "ButtonProps",
             defaultValue: {
@@ -59,6 +69,9 @@ export const buttonExtraArgTypes = {
         description:
             "Icon element rendered inside the button. The icon receives `aria-hidden`\nautomatically. When provided without children, the button renders in\nicon-only mode (square layout) — provide `aria-label` on the button for\naccessibility in that case.",
         name: "icon",
+        type: {
+            required: false,
+        },
         table: {
             category: "ButtonProps",
             type: {
@@ -70,6 +83,9 @@ export const buttonExtraArgTypes = {
         control: false,
         description: "Position of the icon relative to the button label.",
         name: "iconPosition",
+        type: {
+            required: false,
+        },
         table: {
             category: "ButtonProps",
             defaultValue: {
@@ -85,6 +101,9 @@ export const buttonExtraArgTypes = {
         description:
             "Displays a loading spinner and sets `aria-busy` on the button.\nThe spinner replaces the icon (if present); children continue to render.",
         name: "loading",
+        type: {
+            required: false,
+        },
         table: {
             category: "ButtonProps",
             defaultValue: {
@@ -99,6 +118,9 @@ export const buttonExtraArgTypes = {
         control: false,
         description: "Controls the button's size.",
         name: "sizeType",
+        type: {
+            required: false,
+        },
         table: {
             category: "ButtonProps",
             defaultValue: {
@@ -113,6 +135,9 @@ export const buttonExtraArgTypes = {
         control: false,
         description: "Visual style variant of the button.",
         name: "styleType",
+        type: {
+            required: false,
+        },
         table: {
             category: "ButtonProps",
             defaultValue: {

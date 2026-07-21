@@ -6,6 +6,7 @@ export const cardExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLDivElement`.",
         name: "",
+        type: {},
         table: {
             category: "CardProps",
             type: {},
@@ -14,6 +15,9 @@ export const cardExtraArgTypes = {
     "CardProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "CardProps",
             type: {

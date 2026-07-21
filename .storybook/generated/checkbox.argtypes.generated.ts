@@ -6,6 +6,7 @@ export const checkboxExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLInputElement`.",
         name: "",
+        type: {},
         table: {
             category: "CheckboxProps",
             type: {},
@@ -16,6 +17,9 @@ export const checkboxExtraArgTypes = {
         description:
             "Controls the checked state of the checkbox. When omitted, the checkbox is uncontrolled.",
         name: "checked",
+        type: {
+            required: false,
+        },
         table: {
             category: "CheckboxProps",
             type: {
@@ -27,6 +31,9 @@ export const checkboxExtraArgTypes = {
         control: false,
         description: "Controls the visual size of the checkbox.",
         name: "displaySize",
+        type: {
+            required: false,
+        },
         table: {
             category: "CheckboxProps",
             defaultValue: {
@@ -42,6 +49,9 @@ export const checkboxExtraArgTypes = {
         description:
             'Allows the checkbox to receive focus when `disabled` is true.\n\nWhen set alongside `disabled`, the native `disabled` attribute is omitted\nin favor of `aria-disabled="true"` and `tabIndex={0}`, keeping the element\nkeyboard-reachable. `onChange` is still suppressed.',
         name: "focusableWhenDisabled",
+        type: {
+            required: false,
+        },
         table: {
             category: "CheckboxProps",
             type: {
@@ -54,6 +64,9 @@ export const checkboxExtraArgTypes = {
         description:
             "Puts the checkbox into an indeterminate visual and accessibility state.",
         name: "indeterminate",
+        type: {
+            required: false,
+        },
         table: {
             category: "CheckboxProps",
             type: {

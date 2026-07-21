@@ -5,6 +5,9 @@ export const tabExtraArgTypes = {
     "TabItemProps.children": {
         control: false,
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "TabItemProps",
             tabGroup: "Tab.Item",
@@ -16,6 +19,9 @@ export const tabExtraArgTypes = {
     "TabItemProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabItemProps",
             tabGroup: "Tab.Item",
@@ -27,6 +33,9 @@ export const tabExtraArgTypes = {
     "TabItemProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabItemProps",
             tabGroup: "Tab.Item",
@@ -38,6 +47,9 @@ export const tabExtraArgTypes = {
     "TabItemProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabItemProps",
             tabGroup: "Tab.Item",
@@ -50,6 +62,9 @@ export const tabExtraArgTypes = {
         control: false,
         description: "Text label rendered in the tab link bar for this panel.",
         name: "title",
+        type: {
+            required: true,
+        },
         table: {
             category: "TabItemProps",
             tabGroup: "Tab.Item",
@@ -63,6 +78,9 @@ export const tabExtraArgTypes = {
         description:
             "Optional addon element rendered alongside the tab title in the link bar.",
         name: "titleAddon",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabItemProps",
             tabGroup: "Tab.Item",
@@ -76,6 +94,9 @@ export const tabExtraArgTypes = {
         description:
             "Explicit width for this tab link in the tab bar. Accepts any valid CSS width value.",
         name: "width",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabItemProps",
             tabGroup: "Tab.Item",
@@ -87,6 +108,9 @@ export const tabExtraArgTypes = {
     "TabProps.children": {
         control: false,
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "TabProps",
             tabGroup: "Tab",
@@ -98,6 +122,9 @@ export const tabExtraArgTypes = {
     "TabProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabProps",
             tabGroup: "Tab",
@@ -111,6 +138,9 @@ export const tabExtraArgTypes = {
         description:
             "Zero-based index of the currently active tab panel.\n\nWhen provided, the component operates in controlled mode — the caller is\nresponsible for updating this value in response to `onTabClick` to\nreflect tab changes.",
         name: "currentActive",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabProps",
             tabGroup: "Tab",
@@ -122,6 +152,9 @@ export const tabExtraArgTypes = {
     "TabProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabProps",
             tabGroup: "Tab",
@@ -135,6 +168,9 @@ export const tabExtraArgTypes = {
         description:
             "Background color(s) used for the fade overlays at the edges of the\nscrollable tab link bar.\n\nPass a `string[]` to apply the same gradient stop colors on both edges,\nor a `FadeColorSet` to specify left and right edges independently.",
         name: "fadeColor",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabProps",
             tabGroup: "Tab",
@@ -148,6 +184,9 @@ export const tabExtraArgTypes = {
         description:
             "Extends all tab indicator lines to the full width\nof the tab bar instead of matching only the tab link width.",
         name: "fullWidthIndicatorLine",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabProps",
             defaultValue: {
@@ -162,6 +201,9 @@ export const tabExtraArgTypes = {
     "TabProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabProps",
             tabGroup: "Tab",
@@ -175,6 +217,9 @@ export const tabExtraArgTypes = {
         description:
             "Zero-based index of the tab panel displayed on first render.\n\nIgnored when `currentActive` is provided.",
         name: "initialActive",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabProps",
             defaultValue: {
@@ -190,6 +235,9 @@ export const tabExtraArgTypes = {
         control: false,
         description: "Called when the user clicks a tab link.",
         name: "onTabClick",
+        type: {
+            required: false,
+        },
         table: {
             category: "TabProps",
             tabGroup: "Tab",
@@ -202,6 +250,9 @@ export const tabExtraArgTypes = {
         control: false,
         description: "The element rendered as the addon.",
         name: "content",
+        type: {
+            required: true,
+        },
         table: {
             category: "TitleAddonProps",
             tabGroup: "Tab.Item",
@@ -214,6 +265,9 @@ export const tabExtraArgTypes = {
         control: false,
         description: "Which side of the tab title the addon appears on.",
         name: "position",
+        type: {
+            required: false,
+        },
         table: {
             category: "TitleAddonProps",
             defaultValue: {

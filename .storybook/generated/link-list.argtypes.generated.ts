@@ -6,6 +6,9 @@ export const linkListExtraArgTypes = {
         control: false,
         description: 'When `"eager"`, all items are rendered immediately.',
         name: "loadMode",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListEagerProps",
             type: {
@@ -18,6 +21,9 @@ export const linkListExtraArgTypes = {
         description:
             "Maximum number of items shown before the list is truncated.\nItems beyond this count are hidden until the user activates the toggle.\nWhen omitted, all items are shown without truncation.",
         name: "maxShown",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListEagerProps",
             type: {
@@ -29,6 +35,7 @@ export const linkListExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLAnchorElement`.",
         name: "",
+        type: {},
         table: {
             category: "LinkListItemProps<T>",
             type: {},
@@ -37,6 +44,9 @@ export const linkListExtraArgTypes = {
     "LinkListItemProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListItemProps<T>",
             type: {
@@ -48,6 +58,9 @@ export const linkListExtraArgTypes = {
         control: false,
         description: "Secondary text shown below the title.",
         name: "description",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListItemProps<T>",
             type: {
@@ -60,6 +73,9 @@ export const linkListExtraArgTypes = {
         description:
             "Called when an item is clicked. This overrides the `onItemClick` event handler.",
         name: "onClick",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListItemProps<T>",
             type: {
@@ -72,6 +88,9 @@ export const linkListExtraArgTypes = {
         description:
             "Arbitrary custom data passed through to the `onItemClick` callback.",
         name: "options",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListItemProps<T>",
             type: {
@@ -84,6 +103,9 @@ export const linkListExtraArgTypes = {
         description:
             "Additional content rendered below the description.\nAccepts a JSX element for rich secondary content.",
         name: "secondaryDescription",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListItemProps<T>",
             type: {
@@ -95,6 +117,9 @@ export const linkListExtraArgTypes = {
         control: false,
         description: "Primary label displayed as the link text.",
         name: "title",
+        type: {
+            required: true,
+        },
         table: {
             category: "LinkListItemProps<T>",
             type: {
@@ -106,6 +131,9 @@ export const linkListExtraArgTypes = {
         control: false,
         description: 'When `"lazy"`, items are loaded on demand.',
         name: "loadMode",
+        type: {
+            required: true,
+        },
         table: {
             category: "LinkListLazyProps",
             type: {
@@ -118,6 +146,9 @@ export const linkListExtraArgTypes = {
         description:
             'Whether more items are available to load.\nWhen `false`, the "View more" button is hidden.',
         name: "loadMore",
+        type: {
+            required: true,
+        },
         table: {
             category: "LinkListLazyProps",
             type: {
@@ -129,6 +160,9 @@ export const linkListExtraArgTypes = {
         control: false,
         description: 'Called when the user activates the "View more" button.',
         name: "onLoadMore",
+        type: {
+            required: true,
+        },
         table: {
             category: "LinkListLazyProps",
             type: {
@@ -140,6 +174,7 @@ export const linkListExtraArgTypes = {
         control: false,
         description: "Props for the `LinkList` component.",
         name: "LinkListProps<T>",
+        type: {},
         table: {
             category: "LinkListProps<T>",
             type: {
@@ -151,6 +186,9 @@ export const linkListExtraArgTypes = {
     "LinkListProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListProps<T>",
             type: {
@@ -162,6 +200,9 @@ export const linkListExtraArgTypes = {
         control: false,
         description: "Overrides the default toggle button labels.",
         name: "customLabels",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListProps<T>",
             type: {
@@ -172,6 +213,9 @@ export const linkListExtraArgTypes = {
     "LinkListProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListProps<T>",
             type: {
@@ -183,6 +227,9 @@ export const linkListExtraArgTypes = {
         control: false,
         description: "The list of link items to render.",
         name: "items",
+        type: {
+            required: true,
+        },
         table: {
             category: "LinkListProps<T>",
             type: {
@@ -195,6 +242,9 @@ export const linkListExtraArgTypes = {
         description:
             'When `"eager"`, all items are rendered immediately.\n\nWhen `"lazy"`, items are loaded on demand.',
         name: "loadMode",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListProps<T>",
             type: {
@@ -207,6 +257,9 @@ export const linkListExtraArgTypes = {
         description:
             "Component-level click handler called for every item click, unless the\nitem defines its own `onClick`.",
         name: "onItemClick",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListProps<T>",
             type: {
@@ -219,6 +272,9 @@ export const linkListExtraArgTypes = {
         control: false,
         description: "Visual size variant applied to all items.",
         name: "style",
+        type: {
+            required: false,
+        },
         table: {
             category: "LinkListProps<T>",
             defaultValue: {

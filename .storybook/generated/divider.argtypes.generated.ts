@@ -7,6 +7,9 @@ export const dividerExtraArgTypes = {
         description:
             "Color of the line. Accepts a design-system colour token or any valid CSS\ncolor value.",
         name: "color",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             defaultValue: {
@@ -22,6 +25,9 @@ export const dividerExtraArgTypes = {
         description:
             'Controls how the divider is rendered relative to its parent layout.\n\nUse `"flex"` when the divider is a direct child of a flex container.\nUse `"grid"` to wrap the line in a `ColDiv`, enabling responsive\ncolumn-span control via the `xxsCols`–`xxlCols` props.',
         name: "layoutType",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             defaultValue: {
@@ -36,6 +42,9 @@ export const dividerExtraArgTypes = {
         control: false,
         description: "Column span at the `lg` breakpoint.",
         name: "lgCols",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             type: {
@@ -47,6 +56,9 @@ export const dividerExtraArgTypes = {
         control: false,
         description: "Visual style of the line.",
         name: "lineStyle",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             defaultValue: {
@@ -61,6 +73,9 @@ export const dividerExtraArgTypes = {
         control: false,
         description: "Column span at the `md` breakpoint.",
         name: "mdCols",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             type: {
@@ -72,6 +87,9 @@ export const dividerExtraArgTypes = {
         control: false,
         description: "Column span at the `sm` breakpoint.",
         name: "smCols",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             type: {
@@ -83,6 +101,9 @@ export const dividerExtraArgTypes = {
         control: false,
         description: "Thickness of the line in pixels.",
         name: "thickness",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             defaultValue: {
@@ -97,6 +118,9 @@ export const dividerExtraArgTypes = {
         control: false,
         description: "Column span at the `xl` breakpoint.",
         name: "xlCols",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             type: {
@@ -108,6 +132,9 @@ export const dividerExtraArgTypes = {
         control: false,
         description: "Column span at the `xs` breakpoint.",
         name: "xsCols",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             type: {
@@ -119,6 +146,9 @@ export const dividerExtraArgTypes = {
         control: false,
         description: "Column span at the `xxl` breakpoint.",
         name: "xxlCols",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             type: {
@@ -131,6 +161,9 @@ export const dividerExtraArgTypes = {
         description:
             "Column span at the `xxs` (smallest) breakpoint.\nActs as the base value. All larger breakpoints fall back to this when\ntheir own prop is not set.",
         name: "xxsCols",
+        type: {
+            required: false,
+        },
         table: {
             category: "DividerProps",
             type: {

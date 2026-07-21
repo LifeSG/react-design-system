@@ -6,6 +6,7 @@ export const tableExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLTableSectionElement`.",
         name: "",
+        type: {},
         table: {
             category: "TableBodyProps",
             tabGroup: "Table.Body",
@@ -16,6 +17,7 @@ export const tableExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLTableCellElement`.",
         name: "",
+        type: {},
         table: {
             category: "TableCellProps",
             tabGroup: "Table.Cell",
@@ -26,6 +28,7 @@ export const tableExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLDivElement`.",
         name: "",
+        type: {},
         table: {
             category: "TableContainerProps",
             tabGroup: "Table.Container",
@@ -36,6 +39,7 @@ export const tableExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLTableCellElement`.",
         name: "",
+        type: {},
         table: {
             category: "TableHeaderProps",
             tabGroup: "Table.HeaderCell",
@@ -46,6 +50,7 @@ export const tableExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLTableSectionElement`.",
         name: "",
+        type: {},
         table: {
             category: "TableHeadProps",
             tabGroup: "Table.Head",
@@ -56,6 +61,7 @@ export const tableExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLTableRowElement`.",
         name: "",
+        type: {},
         table: {
             category: "TableRowProps",
             tabGroup: "Table.Row",
@@ -66,6 +72,7 @@ export const tableExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLTableElement`.",
         name: "",
+        type: {},
         table: {
             category: "TableTableProps",
             tabGroup: "Table",

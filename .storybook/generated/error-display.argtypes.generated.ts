@@ -7,6 +7,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             'Action button rendered below the description.\nDefaults to a "Proceed" label when `children` is omitted.',
         name: "actionButton",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayProps",
             type: {
@@ -19,6 +22,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             'Type-specific attributes that inject dynamic content into the default description.\n\nRemarks:\nPass `MaintenanceAdditionalAttributes` when `type` is `"maintenance"` and\n`InactivityAdditionalAttributes` when `type` is `"inactivity"`. Ignored for all other types.',
         name: "additionalProps",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayProps",
             type: {
@@ -32,6 +38,9 @@ export const errorDisplayExtraArgTypes = {
     "ErrorDisplayProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayProps",
             type: {
@@ -44,6 +53,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             'Overrides the default description for the selected `type`.\nWhen `additionalProps` is also provided for `"maintenance"` or\n`"inactivity"` types, `additionalProps` takes precedence.',
         name: "description",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayProps",
             type: {
@@ -56,6 +68,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             "Selects the illustration resource scheme to use.\n\nRemarks:\nFalls back to the active theme scheme from `ThemeProvider` when omitted.",
         name: "illustrationScheme",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayProps",
             type: {
@@ -69,6 +84,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             "Renders only the illustration, hiding the title, description, and action button.",
         name: "imageOnly",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayProps",
             defaultValue: {
@@ -84,6 +102,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             "Overrides the default illustration for the selected `type`.",
         name: "img",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayProps",
             type: {
@@ -95,6 +116,9 @@ export const errorDisplayExtraArgTypes = {
         control: false,
         description: "Overrides the default title for the selected `type`.",
         name: "title",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayProps",
             type: {
@@ -107,6 +131,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             "Determines the default illustration assets and copy to display.",
         name: "type",
+        type: {
+            required: true,
+        },
         table: {
             category: "ErrorDisplayProps",
             type: {
@@ -120,6 +147,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             "Interval (in seconds) for announcing remaining time via screen readers.",
         name: "reminderInterval",
+        type: {
+            required: false,
+        },
         table: {
             category: "InactivityAdditionalAttributes",
             type: {
@@ -132,6 +162,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             "Remaining seconds before the session expires, used to render the countdown timer.",
         name: "secondsLeft",
+        type: {
+            required: true,
+        },
         table: {
             category: "InactivityAdditionalAttributes",
             type: {
@@ -144,6 +177,9 @@ export const errorDisplayExtraArgTypes = {
         description:
             "Date string rendered inside the default maintenance description.",
         name: "dateString",
+        type: {
+            required: true,
+        },
         table: {
             category: "MaintenanceAdditionalAttributes",
             type: {

@@ -5,6 +5,9 @@ export const fileDownloadExtraArgTypes = {
     "FileDownloadProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileDownloadProps",
             type: {
@@ -15,6 +18,9 @@ export const fileDownloadExtraArgTypes = {
     "FileDownloadProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileDownloadProps",
             type: {
@@ -27,6 +33,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "Optional text rendered beneath the title.\nAccepts a plain string or a JSX element for rich content.",
         name: "description",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileDownloadProps",
             type: {
@@ -39,6 +48,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "The list of file items to display. When empty, no file cards are rendered.",
         name: "fileItems",
+        type: {
+            required: true,
+        },
         table: {
             category: "FileDownloadProps",
             type: {
@@ -49,6 +61,9 @@ export const fileDownloadExtraArgTypes = {
     "FileDownloadProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileDownloadProps",
             type: {
@@ -61,6 +76,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "Called when the user triggers a download for an individual file item.\nMay return a `Promise` to handle async download logic; the component awaits resolution.\nIf the callback throws or the promise rejects, the item is marked as failed\nand the error UI is shown for that file card.",
         name: "onDownload",
+        type: {
+            required: true,
+        },
         table: {
             category: "FileDownloadProps",
             type: {
@@ -74,6 +92,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "Controls whether the component is wrapped in a dashed border.",
         name: "styleType",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileDownloadProps",
             defaultValue: {
@@ -89,6 +110,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "Optional heading rendered above the file list.\nAccepts a plain string or a JSX element for rich content.",
         name: "title",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileDownloadProps",
             type: {
@@ -101,6 +125,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "Error message shown on the file item to indicate a download failure.\nAccepts a plain string or a React node for richer error display.",
         name: "errorMessage",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileItemDownloadProps",
             type: {
@@ -113,6 +140,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "The remote path or URL used to fetch the file for download.",
         name: "filePath",
+        type: {
+            required: true,
+        },
         table: {
             category: "FileItemDownloadProps",
             type: {
@@ -123,6 +153,9 @@ export const fileDownloadExtraArgTypes = {
     "FileItemDownloadProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: true,
+        },
         table: {
             category: "FileItemDownloadProps",
             type: {
@@ -134,6 +167,9 @@ export const fileDownloadExtraArgTypes = {
         control: false,
         description: 'The MIME type of the file (e.g. `"application/pdf"`).',
         name: "mimeType",
+        type: {
+            required: true,
+        },
         table: {
             category: "FileItemDownloadProps",
             type: {
@@ -145,6 +181,9 @@ export const fileDownloadExtraArgTypes = {
         control: false,
         description: "The display name of the file.",
         name: "name",
+        type: {
+            required: true,
+        },
         table: {
             category: "FileItemDownloadProps",
             type: {
@@ -157,6 +196,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "Indicates the file is available and ready to be downloaded.",
         name: "ready",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileItemDownloadProps",
             defaultValue: {
@@ -172,6 +214,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "The size of the file in bytes. Displayed as formatted text when provided.",
         name: "size",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileItemDownloadProps",
             type: {
@@ -184,6 +229,9 @@ export const fileDownloadExtraArgTypes = {
         description:
             "URL or data URL for a thumbnail image shown alongside the file entry.",
         name: "thumbnailImageDataUrl",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileItemDownloadProps",
             type: {
@@ -195,6 +243,9 @@ export const fileDownloadExtraArgTypes = {
         control: false,
         description: "Truncates long file names with an ellipsis when `true`.",
         name: "truncateText",
+        type: {
+            required: false,
+        },
         table: {
             category: "FileItemDownloadProps",
             defaultValue: {

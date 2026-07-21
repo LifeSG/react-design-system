@@ -6,6 +6,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "Display name of the file shown in the top info bar.",
         name: "fileName",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselCustomItemProps",
             type: {
@@ -18,6 +21,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             'Human-readable file size shown alongside `fileName` in the top\ninfo bar (e.g. "2.4 MB").',
         name: "fileSize",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselCustomItemProps",
             type: {
@@ -29,6 +35,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: 'Label for this item used in aria-labels (e.g. "PDF").',
         name: "itemLabel",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselCustomItemProps",
             defaultValue: {
@@ -44,6 +53,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "Render prop for the full slide area. Consumer is responsible\nfor the entire slide content (e.g. an iframe, embed, or custom viewer).",
         name: "renderContent",
+        type: {
+            required: true,
+        },
         table: {
             category: "FullscreenImageCarouselCustomItemProps",
             type: {
@@ -56,6 +68,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "The thumbnail image src. If omitted, a placeholder is shown in the thumbnail strip.",
         name: "thumbnailSrc",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselCustomItemProps",
             type: {
@@ -66,6 +81,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
     "FullscreenImageCarouselCustomItemProps.type": {
         control: false,
         name: "type",
+        type: {
+            required: true,
+        },
         table: {
             category: "FullscreenImageCarouselCustomItemProps",
             type: {
@@ -77,6 +95,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "Accessible label for the image.",
         name: "alt",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselImageItemProps",
             type: {
@@ -88,6 +109,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "Display name of the file shown in the top info bar.",
         name: "fileName",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselImageItemProps",
             type: {
@@ -100,6 +124,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             'Human-readable file size shown alongside `fileName` in the top\ninfo bar (e.g. "2.4 MB").',
         name: "fileSize",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselImageItemProps",
             type: {
@@ -110,6 +137,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
     "FullscreenImageCarouselImageItemProps.renderContent": {
         control: false,
         name: "renderContent",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselImageItemProps",
             type: {
@@ -121,6 +151,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "URL of the full-resolution image shown in the slide.",
         name: "src",
+        type: {
+            required: true,
+        },
         table: {
             category: "FullscreenImageCarouselImageItemProps",
             type: {
@@ -133,6 +166,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "URL of the image shown in the thumbnail strip.\nFalls back to `src` when omitted.",
         name: "thumbnailSrc",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselImageItemProps",
             type: {
@@ -143,6 +179,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
     "FullscreenImageCarouselImageItemProps.type": {
         control: false,
         name: "type",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselImageItemProps",
             type: {
@@ -155,6 +194,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             'A single item in the carousel.\n\n`type` discriminates between a standard image item (`"image"`)\nand a custom-content item (`"custom"`).',
         name: "FullscreenImageCarouselItemProps",
+        type: {},
         table: {
             category: "FullscreenImageCarouselItemProps",
             type: {
@@ -167,6 +207,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "Display name of the file shown in the top info bar.",
         name: "fileName",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselItemProps",
             type: {
@@ -179,6 +222,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             'Human-readable file size shown alongside `fileName` in the top\ninfo bar (e.g. "2.4 MB").',
         name: "fileSize",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselItemProps",
             type: {
@@ -191,6 +237,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "Render prop for the full slide area. Consumer is responsible\nfor the entire slide content (e.g. an iframe, embed, or custom viewer).",
         name: "renderContent",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselItemProps",
             type: {
@@ -203,6 +252,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "URL of the image shown in the thumbnail strip.\nFalls back to `src` when omitted.\n\nThe thumbnail image src. If omitted, a placeholder is shown in the thumbnail strip.",
         name: "thumbnailSrc",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselItemProps",
             type: {
@@ -213,6 +265,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
     "FullscreenImageCarouselItemProps.type": {
         control: false,
         name: "type",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselItemProps",
             type: {
@@ -224,6 +279,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "Direction from which the modal slides in and out.",
         name: "animationFrom",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             defaultValue: {
@@ -238,6 +296,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: 'Hides the slide position counter chip (e.g. "2/5").',
         name: "hideCounter",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             defaultValue: {
@@ -253,6 +314,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "Hides the zoom in/out magnifier button. Has no effect on custom items, which\nnever show the magnifier regardless of this prop.",
         name: "hideMagnifier",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             defaultValue: {
@@ -267,6 +331,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "Hides the previous and next arrow navigation buttons.",
         name: "hideNavigation",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             defaultValue: {
@@ -281,6 +348,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "Hides the thumbnail strip below the main slide.",
         name: "hideThumbnail",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             defaultValue: {
@@ -296,6 +366,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "Zero-based index of the item that is active when the carousel first opens.",
         name: "initialActiveItemIndex",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             defaultValue: {
@@ -311,6 +384,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "Additional pixel insets applied to keep content within a safe area\nof the viewport and avoid overlap with device UI elements.",
         name: "insets",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             type: {
@@ -323,6 +399,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "The list of items to display. Each item is either an image or a custom content item.",
         name: "items",
+        type: {
+            required: true,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             type: {
@@ -335,6 +414,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "Called when the close button is activated or the Escape key is pressed.",
         name: "onClose",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             type: {
@@ -347,6 +429,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         description:
             "Called when the delete button is activated for the current item.",
         name: "onDelete",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             type: {
@@ -359,6 +444,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "The `id` of the DOM element to portal the modal into.",
         name: "rootComponentId",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             defaultValue: {
@@ -373,6 +461,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "Controls whether the modal is visible.",
         name: "show",
+        type: {
+            required: true,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             defaultValue: {
@@ -387,6 +478,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
         control: false,
         description: "The z-index applied to the overlay stack.",
         name: "zIndex",
+        type: {
+            required: false,
+        },
         table: {
             category: "FullscreenImageCarouselProps",
             type: {
@@ -397,6 +491,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
     "Insets.bottom": {
         control: false,
         name: "bottom",
+        type: {
+            required: false,
+        },
         table: {
             category: "Insets",
             type: {
@@ -407,6 +504,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
     "Insets.left": {
         control: false,
         name: "left",
+        type: {
+            required: false,
+        },
         table: {
             category: "Insets",
             type: {
@@ -417,6 +517,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
     "Insets.right": {
         control: false,
         name: "right",
+        type: {
+            required: false,
+        },
         table: {
             category: "Insets",
             type: {
@@ -427,6 +530,9 @@ export const fullscreenImageCarouselExtraArgTypes = {
     "Insets.top": {
         control: false,
         name: "top",
+        type: {
+            required: false,
+        },
         table: {
             category: "Insets",
             type: {

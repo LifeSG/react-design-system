@@ -7,6 +7,9 @@ export const sidenavExtraArgTypes = {
         description:
             "Sub-level entries for this section. Accepts `Sidenav.DrawerSubitem`\nelements. When provided, clicking toggles the collapsed/expanded state\ninstead of invoking `onClick`.",
         name: "children",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavDrawerItemProps",
             tabGroup: "Sidenav.DrawerItem",
@@ -18,6 +21,9 @@ export const sidenavExtraArgTypes = {
     "SidenavDrawerItemProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavDrawerItemProps",
             tabGroup: "Sidenav.DrawerItem",
@@ -29,6 +35,9 @@ export const sidenavExtraArgTypes = {
     "SidenavDrawerItemProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavDrawerItemProps",
             tabGroup: "Sidenav.DrawerItem",
@@ -40,6 +49,9 @@ export const sidenavExtraArgTypes = {
     "SidenavDrawerItemProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavDrawerItemProps",
             tabGroup: "Sidenav.DrawerItem",
@@ -53,6 +65,9 @@ export const sidenavExtraArgTypes = {
         description:
             "Called when the item is activated and it has no sub-item children.",
         name: "onClick",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavDrawerItemProps",
             tabGroup: "Sidenav.DrawerItem",
@@ -65,6 +80,9 @@ export const sidenavExtraArgTypes = {
         control: false,
         description: "The displayed label.",
         name: "title",
+        type: {
+            required: true,
+        },
         table: {
             category: "SidenavDrawerItemProps",
             tabGroup: "Sidenav.DrawerItem",
@@ -76,6 +94,9 @@ export const sidenavExtraArgTypes = {
     "SidenavDrawerSubitemProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavDrawerSubitemProps",
             tabGroup: "Sidenav.DrawerSubitem",
@@ -87,6 +108,9 @@ export const sidenavExtraArgTypes = {
     "SidenavDrawerSubitemProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavDrawerSubitemProps",
             tabGroup: "Sidenav.DrawerSubitem",
@@ -98,6 +122,9 @@ export const sidenavExtraArgTypes = {
     "SidenavDrawerSubitemProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavDrawerSubitemProps",
             tabGroup: "Sidenav.DrawerSubitem",
@@ -110,6 +137,9 @@ export const sidenavExtraArgTypes = {
         control: false,
         description: "Called when the sub-item is activated.",
         name: "onClick",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavDrawerSubitemProps",
             tabGroup: "Sidenav.DrawerSubitem",
@@ -122,6 +152,9 @@ export const sidenavExtraArgTypes = {
         control: false,
         description: "The displayed label.",
         name: "title",
+        type: {
+            required: true,
+        },
         table: {
             category: "SidenavDrawerSubitemProps",
             tabGroup: "Sidenav.DrawerSubitem",
@@ -134,6 +167,9 @@ export const sidenavExtraArgTypes = {
         control: false,
         description: "Accessible label for this navigation group.",
         name: "aria-label",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavGroupProps",
             tabGroup: "Sidenav.Group",
@@ -147,6 +183,9 @@ export const sidenavExtraArgTypes = {
         description:
             "Navigation items within the group. Accepts `Sidenav.Item` elements.",
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "SidenavGroupProps",
             tabGroup: "Sidenav.Group",
@@ -158,6 +197,9 @@ export const sidenavExtraArgTypes = {
     "SidenavGroupProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavGroupProps",
             tabGroup: "Sidenav.Group",
@@ -169,6 +211,9 @@ export const sidenavExtraArgTypes = {
     "SidenavGroupProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavGroupProps",
             tabGroup: "Sidenav.Group",
@@ -180,6 +225,9 @@ export const sidenavExtraArgTypes = {
     "SidenavGroupProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavGroupProps",
             tabGroup: "Sidenav.Group",
@@ -193,6 +241,9 @@ export const sidenavExtraArgTypes = {
         description:
             "Renders a horizontal divider after the last item in the group.",
         name: "separator",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavGroupProps",
             tabGroup: "Sidenav.Group",
@@ -206,6 +257,9 @@ export const sidenavExtraArgTypes = {
         description:
             "Drawer content displayed to the right of the sidebar when the item is\nactive. Accepts `Sidenav.DrawerItem` elements.",
         name: "children",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavItemProps",
             tabGroup: "Sidenav.Item",
@@ -217,6 +271,9 @@ export const sidenavExtraArgTypes = {
     "SidenavItemProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavItemProps",
             tabGroup: "Sidenav.Item",
@@ -228,6 +285,9 @@ export const sidenavExtraArgTypes = {
     "SidenavItemProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavItemProps",
             tabGroup: "Sidenav.Item",
@@ -240,6 +300,9 @@ export const sidenavExtraArgTypes = {
         control: false,
         description: "Icon displayed above the title.",
         name: "icon",
+        type: {
+            required: true,
+        },
         table: {
             category: "SidenavItemProps",
             tabGroup: "Sidenav.Item",
@@ -251,6 +314,9 @@ export const sidenavExtraArgTypes = {
     "SidenavItemProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavItemProps",
             tabGroup: "Sidenav.Item",
@@ -264,6 +330,9 @@ export const sidenavExtraArgTypes = {
         description:
             "Called when the item is activated and it has no drawer children. When\n`children` are provided, clicking opens the drawer without invoking this\ncallback.",
         name: "onClick",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavItemProps",
             tabGroup: "Sidenav.Item",
@@ -276,6 +345,9 @@ export const sidenavExtraArgTypes = {
         control: false,
         description: "Sets the item as initially selected on mount.",
         name: "selected",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavItemProps",
             tabGroup: "Sidenav.Item",
@@ -288,6 +360,9 @@ export const sidenavExtraArgTypes = {
         control: false,
         description: "Label displayed below the icon.",
         name: "title",
+        type: {
+            required: true,
+        },
         table: {
             category: "SidenavItemProps",
             tabGroup: "Sidenav.Item",
@@ -301,6 +376,9 @@ export const sidenavExtraArgTypes = {
         description:
             "Accessible label announced for the sidebar navigation landmark.",
         name: "aria-label",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavProps",
             defaultValue: {
@@ -317,6 +395,9 @@ export const sidenavExtraArgTypes = {
         description:
             "Navigation groups and items. Accepts `Sidenav.Group` elements.",
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "SidenavProps",
             tabGroup: "Sidenav",
@@ -328,6 +409,9 @@ export const sidenavExtraArgTypes = {
     "SidenavProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavProps",
             tabGroup: "Sidenav",
@@ -339,6 +423,9 @@ export const sidenavExtraArgTypes = {
     "SidenavProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavProps",
             tabGroup: "Sidenav",
@@ -352,6 +439,9 @@ export const sidenavExtraArgTypes = {
         description:
             "Pins the sidebar to the left edge of the viewport while the page scrolls.",
         name: "fixed",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavProps",
             defaultValue: {
@@ -366,6 +456,9 @@ export const sidenavExtraArgTypes = {
     "SidenavProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "SidenavProps",
             tabGroup: "Sidenav",

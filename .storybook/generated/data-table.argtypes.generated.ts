@@ -6,6 +6,9 @@ export const dataTableExtraArgTypes = {
         control: false,
         description: "Additional content rendered inside the action bar.",
         name: "actionBarContent",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -18,6 +21,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Applies an alternate background colour to every odd-indexed row.",
         name: "alternatingRows",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -28,6 +34,9 @@ export const dataTableExtraArgTypes = {
     "DataTableProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -38,6 +47,9 @@ export const dataTableExtraArgTypes = {
     "DataTableProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -50,6 +62,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Row IDs whose checkboxes are rendered in a disabled state; the rows remain visible.",
         name: "disabledIds",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -62,6 +77,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Overrides the title and description shown in the built-in empty state. Ignored when\n`renderCustomEmptyView` is provided.",
         name: "emptyView",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -74,6 +92,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Shows the action bar whenever one or more rows are selected.",
         name: "enableActionBar",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -86,6 +107,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Renders a checkbox column as the first column of each row to support row selection.",
         name: "enableMultiSelect",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -98,6 +122,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Renders a select-all checkbox in the header checkbox column. Requires `enableMultiSelect`.",
         name: "enableSelectAll",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -110,6 +137,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Keeps the header row visible as the user scrolls down through the table.",
         name: "enableStickyHeader",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -122,6 +152,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Column definitions that determine the rendered headers and the `fieldKey` used to read values from each `RowProps` entry.",
         name: "headers",
+        type: {
+            required: true,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -132,6 +165,9 @@ export const dataTableExtraArgTypes = {
     "DataTableProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -144,6 +180,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Controls whether the table body renders data rows or a loading indicator.",
         name: "loadState",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             defaultValue: {
@@ -159,6 +198,9 @@ export const dataTableExtraArgTypes = {
         description:
             'Called when the "Clear selection" button inside the action bar is clicked.',
         name: "onClearSelectionClick",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -171,6 +213,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Called when a header cell is clicked; receives the `fieldKey` of the clicked column.",
         name: "onHeaderClick",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -183,6 +228,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Called when a row's checkbox is toggled; receives the row ID and the new selected state.",
         name: "onSelect",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -194,6 +242,9 @@ export const dataTableExtraArgTypes = {
         control: false,
         description: "Called when the select-all checkbox is toggled.",
         name: "onSelectAll",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -206,6 +257,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Renders a fully custom empty state in place of the default `ErrorDisplay`.",
         name: "renderCustomEmptyView",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -218,6 +272,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Row data to render. When omitted or empty the empty state is shown.",
         name: "rows",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -230,6 +287,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Controlled set of row IDs that are currently selected.\n\nRemarks:\nMust be provided alongside `enableMultiSelect` for selection to work. Pass an\nempty array (not `undefined`) to enable the select-all checkbox while having no rows\nselected.",
         name: "selectedIds",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -242,6 +302,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Maps each `fieldKey` to its current sort direction. A key present in this map causes the\ncorresponding header to render a directional arrow and expose sort controls to assistive\ntechnology.",
         name: "sortIndicators",
+        type: {
+            required: false,
+        },
         table: {
             category: "DataTableProps",
             type: {
@@ -254,6 +317,9 @@ export const dataTableExtraArgTypes = {
         description:
             'Action button rendered below the description.\nDefaults to a "Proceed" label when `children` is omitted.',
         name: "actionButton",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayAttributes",
             type: {
@@ -266,6 +332,9 @@ export const dataTableExtraArgTypes = {
         description:
             'Type-specific attributes that inject dynamic content into the default description.\n\nRemarks:\nPass `MaintenanceAdditionalAttributes` when `type` is `"maintenance"` and\n`InactivityAdditionalAttributes` when `type` is `"inactivity"`. Ignored for all other types.',
         name: "additionalProps",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayAttributes",
             type: {
@@ -281,6 +350,9 @@ export const dataTableExtraArgTypes = {
         description:
             'Overrides the default description for the selected `type`.\nWhen `additionalProps` is also provided for `"maintenance"` or\n`"inactivity"` types, `additionalProps` takes precedence.',
         name: "description",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayAttributes",
             type: {
@@ -293,6 +365,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Selects the illustration resource scheme to use.\n\nRemarks:\nFalls back to the active theme scheme from `ThemeProvider` when omitted.",
         name: "illustrationScheme",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayAttributes",
             type: {
@@ -306,6 +381,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Renders only the illustration, hiding the title, description, and action button.",
         name: "imageOnly",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayAttributes",
             defaultValue: {
@@ -321,6 +399,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Overrides the default illustration for the selected `type`.",
         name: "img",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayAttributes",
             type: {
@@ -332,6 +413,9 @@ export const dataTableExtraArgTypes = {
         control: false,
         description: "Overrides the default title for the selected `type`.",
         name: "title",
+        type: {
+            required: false,
+        },
         table: {
             category: "ErrorDisplayAttributes",
             type: {
@@ -344,6 +428,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Makes the header cell interactive, firing `onHeaderClick` when clicked.",
         name: "clickable",
+        type: {
+            required: false,
+        },
         table: {
             category: "HeaderItemProps",
             type: {
@@ -356,6 +443,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Key used to read the corresponding cell value from each `RowProps` entry.",
         name: "fieldKey",
+        type: {
+            required: true,
+        },
         table: {
             category: "HeaderItemProps",
             type: {
@@ -368,6 +458,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Used with `enableMultiSelect`. Marks this column as descriptive of the row\n(e.g. a name or unique ID). Its value is used to label the row's checkbox\nfor screen readers.",
         name: "keyColumn",
+        type: {
+            required: false,
+        },
         table: {
             category: "HeaderItemProps",
             type: {
@@ -380,6 +473,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Column heading content. Pass a string for plain text or a `ReactNode` for custom markup.",
         name: "label",
+        type: {
+            required: true,
+        },
         table: {
             category: "HeaderItemProps",
             type: {
@@ -390,6 +486,9 @@ export const dataTableExtraArgTypes = {
     "HeaderItemProps.style": {
         control: false,
         name: "style",
+        type: {
+            required: false,
+        },
         table: {
             category: "HeaderItemProps",
             type: {
@@ -402,6 +501,7 @@ export const dataTableExtraArgTypes = {
         description:
             "When a string is specified, it will be used as the header label and\nthe key of the value in the row item object.\n\nFor additional customisation, pass a `HeaderItemProps` object",
         name: "HeaderProps",
+        type: {},
         table: {
             category: "HeaderProps",
             type: {
@@ -414,6 +514,7 @@ export const dataTableExtraArgTypes = {
         description:
             "Cell values keyed by the `fieldKey` of the matching `HeaderProps`. Values can be a\nprimitive (rendered inside a `Typography.BodyBL`), a `ReactNode`, or a render function\nthat receives the full row and `RowRenderProps`.",
         name: "[fieldKey: string]",
+        type: {},
         table: {
             category: "RowProps",
             type: {
@@ -427,6 +528,9 @@ export const dataTableExtraArgTypes = {
         description:
             "Unique identifier for the row; used as the key and referenced by `selectedIds`/`disabledIds`.",
         name: "id",
+        type: {
+            required: true,
+        },
         table: {
             category: "RowProps",
             type: {
@@ -438,6 +542,9 @@ export const dataTableExtraArgTypes = {
         control: false,
         description: "Whether the row is currently in the `selectedIds` set.",
         name: "isSelected",
+        type: {
+            required: true,
+        },
         table: {
             category: "RowRenderProps",
             type: {
@@ -448,6 +555,7 @@ export const dataTableExtraArgTypes = {
     "SortIndicatorsProps.[fieldKey: string]": {
         control: false,
         name: "[fieldKey: string]",
+        type: {},
         table: {
             category: "SortIndicatorsProps",
             type: {

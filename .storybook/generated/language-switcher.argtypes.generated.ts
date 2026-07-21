@@ -6,6 +6,7 @@ export const languageSwitcherExtraArgTypes = {
         control: false,
         description: "Code identifying a supported display language.",
         name: "LanguageSwitcherCode",
+        type: {},
         table: {
             category: "LanguageSwitcherCode",
             type: {
@@ -17,6 +18,7 @@ export const languageSwitcherExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLDivElement`.",
         name: "",
+        type: {},
         table: {
             category: "LanguageSwitcherProps",
             type: {},
@@ -25,6 +27,9 @@ export const languageSwitcherExtraArgTypes = {
     "LanguageSwitcherProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "LanguageSwitcherProps",
             type: {
@@ -37,6 +42,9 @@ export const languageSwitcherExtraArgTypes = {
         description:
             "Called when the user selects a language different from `selectedLanguage`.",
         name: "onSelectLanguage",
+        type: {
+            required: false,
+        },
         table: {
             category: "LanguageSwitcherProps",
             type: {
@@ -48,6 +56,9 @@ export const languageSwitcherExtraArgTypes = {
         control: false,
         description: "The currently active language code.",
         name: "selectedLanguage",
+        type: {
+            required: false,
+        },
         table: {
             category: "LanguageSwitcherProps",
             defaultValue: {
@@ -62,6 +73,9 @@ export const languageSwitcherExtraArgTypes = {
         control: false,
         description: "Presentation mode.",
         name: "variant",
+        type: {
+            required: false,
+        },
         table: {
             category: "LanguageSwitcherProps",
             defaultValue: {

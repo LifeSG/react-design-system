@@ -6,6 +6,7 @@ export const textListExtraArgTypes = {
         control: false,
         description: "Predefined bullet marker style for an unordered list.",
         name: "BulletType",
+        type: {},
         table: {
             category: "BulletType",
             type: {
@@ -16,6 +17,7 @@ export const textListExtraArgTypes = {
     CustomBulletIcon: {
         control: false,
         name: "CustomBulletIcon",
+        type: {},
         table: {
             category: "CustomBulletIcon",
             type: {
@@ -28,6 +30,9 @@ export const textListExtraArgTypes = {
         description:
             "Bottom margin in pixels applied to each list item except the last.",
         name: "bottomMargin",
+        type: {
+            required: false,
+        },
         table: {
             category: "OrderedListProps",
             type: {
@@ -38,6 +43,9 @@ export const textListExtraArgTypes = {
     "OrderedListProps.children": {
         control: false,
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "OrderedListProps",
             type: {
@@ -48,6 +56,9 @@ export const textListExtraArgTypes = {
     "OrderedListProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "OrderedListProps",
             type: {
@@ -59,6 +70,9 @@ export const textListExtraArgTypes = {
         control: false,
         description: "Character or string rendered after each counter value.",
         name: "counterSeparator",
+        type: {
+            required: false,
+        },
         table: {
             category: "OrderedListProps",
             defaultValue: {
@@ -73,6 +87,9 @@ export const textListExtraArgTypes = {
         control: false,
         description: "Counter style applied to each list item.",
         name: "counterType",
+        type: {
+            required: false,
+        },
         table: {
             category: "OrderedListProps",
             defaultValue: {
@@ -86,6 +103,9 @@ export const textListExtraArgTypes = {
     "OrderedListProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "OrderedListProps",
             type: {
@@ -96,6 +116,9 @@ export const textListExtraArgTypes = {
     "OrderedListProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "OrderedListProps",
             type: {
@@ -108,6 +131,9 @@ export const textListExtraArgTypes = {
         description:
             "The counter is decremented from the start value instead of incremented.",
         name: "reversed",
+        type: {
+            required: false,
+        },
         table: {
             category: "OrderedListProps",
             type: {
@@ -119,6 +145,9 @@ export const textListExtraArgTypes = {
         control: false,
         description: "Text size applied to the list content.",
         name: "size",
+        type: {
+            required: false,
+        },
         table: {
             category: "OrderedListProps",
             type: {
@@ -131,6 +160,9 @@ export const textListExtraArgTypes = {
         control: false,
         description: "The value to start the list count from.",
         name: "start",
+        type: {
+            required: false,
+        },
         table: {
             category: "OrderedListProps",
             type: {
@@ -143,6 +175,9 @@ export const textListExtraArgTypes = {
         description:
             "Bottom margin in pixels applied to each list item except the last.",
         name: "bottomMargin",
+        type: {
+            required: false,
+        },
         table: {
             category: "UnorderedListProps",
             type: {
@@ -155,6 +190,9 @@ export const textListExtraArgTypes = {
         description:
             "Marker style for list items. Pass a `BulletType` token for a predefined\nmarker, or any React node to render a custom decorative icon before each\nitem's content.",
         name: "bulletType",
+        type: {
+            required: false,
+        },
         table: {
             category: "UnorderedListProps",
             defaultValue: {
@@ -168,6 +206,9 @@ export const textListExtraArgTypes = {
     "UnorderedListProps.children": {
         control: false,
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "UnorderedListProps",
             type: {
@@ -178,6 +219,9 @@ export const textListExtraArgTypes = {
     "UnorderedListProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "UnorderedListProps",
             type: {
@@ -188,6 +232,9 @@ export const textListExtraArgTypes = {
     "UnorderedListProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "UnorderedListProps",
             type: {
@@ -198,6 +245,9 @@ export const textListExtraArgTypes = {
     "UnorderedListProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "UnorderedListProps",
             type: {
@@ -209,6 +259,9 @@ export const textListExtraArgTypes = {
         control: false,
         description: "Text size applied to the list content.",
         name: "size",
+        type: {
+            required: false,
+        },
         table: {
             category: "UnorderedListProps",
             type: {

@@ -7,6 +7,9 @@ export const boxContainerExtraArgTypes = {
         description:
             "Optional element rendered in the header alongside the title, e.g. a link or button.",
         name: "callToActionComponent",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerProps",
             type: {
@@ -17,6 +20,9 @@ export const boxContainerExtraArgTypes = {
     "BoxContainerProps.children": {
         control: false,
         name: "children",
+        type: {
+            required: true,
+        },
         table: {
             category: "BoxContainerProps",
             type: {
@@ -27,6 +33,9 @@ export const boxContainerExtraArgTypes = {
     "BoxContainerProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerProps",
             type: {
@@ -39,6 +48,9 @@ export const boxContainerExtraArgTypes = {
         description:
             "When `true` (and `collapsible` is also `true`), the entire header row\nbecomes a click target for toggling expand/collapse, not just the chevron\nbutton.",
         name: "clickableHeader",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerProps",
             type: {
@@ -51,6 +63,9 @@ export const boxContainerExtraArgTypes = {
         description:
             "When `false`, the container is always expanded and the collapse handle is\nhidden.",
         name: "collapsible",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerProps",
             defaultValue: {
@@ -64,6 +79,9 @@ export const boxContainerExtraArgTypes = {
     "BoxContainerProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerProps",
             type: {
@@ -76,6 +94,9 @@ export const boxContainerExtraArgTypes = {
         description:
             'Renders an inline alert icon next to the title and announces the state to\nscreen readers. Has no effect when set to `"default"`.',
         name: "displayState",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerProps",
             defaultValue: {
@@ -90,6 +111,9 @@ export const boxContainerExtraArgTypes = {
         control: false,
         description: "Initial expanded state when `collapsible` is `true`.",
         name: "expanded",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerProps",
             defaultValue: {
@@ -103,6 +127,9 @@ export const boxContainerExtraArgTypes = {
     "BoxContainerProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerProps",
             type: {
@@ -113,6 +140,9 @@ export const boxContainerExtraArgTypes = {
     "BoxContainerProps.subComponentTestIds": {
         control: false,
         name: "subComponentTestIds",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerProps",
             type: {
@@ -123,6 +153,9 @@ export const boxContainerExtraArgTypes = {
     "BoxContainerProps.title": {
         control: false,
         name: "title",
+        type: {
+            required: true,
+        },
         table: {
             category: "BoxContainerProps",
             type: {
@@ -133,6 +166,9 @@ export const boxContainerExtraArgTypes = {
     "BoxContainerSubComponentTestIds.displayStateIcon": {
         control: false,
         name: "displayStateIcon",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerSubComponentTestIds",
             type: {
@@ -143,6 +179,9 @@ export const boxContainerExtraArgTypes = {
     "BoxContainerSubComponentTestIds.handle": {
         control: false,
         name: "handle",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerSubComponentTestIds",
             type: {
@@ -153,6 +192,9 @@ export const boxContainerExtraArgTypes = {
     "BoxContainerSubComponentTestIds.title": {
         control: false,
         name: "title",
+        type: {
+            required: false,
+        },
         table: {
             category: "BoxContainerSubComponentTestIds",
             type: {

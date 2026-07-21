@@ -6,6 +6,7 @@ export const typographyExtraArgTypes = {
         control: false,
         description: "Inherits props from `HTMLAnchorElement`.",
         name: "",
+        type: {},
         table: {
             category: "TypographyLinkProps",
             tabGroup: "Link",
@@ -17,6 +18,9 @@ export const typographyExtraArgTypes = {
         description:
             "Appends an external-link icon after the link text to signal that the\ndestination is outside the current site.",
         name: "external",
+        type: {
+            required: false,
+        },
         table: {
             category: "TypographyLinkProps",
             tabGroup: "Link",
@@ -29,6 +33,9 @@ export const typographyExtraArgTypes = {
         control: false,
         description: "Text-decoration style for the link.",
         name: "underlineStyle",
+        type: {
+            required: false,
+        },
         table: {
             category: "TypographyLinkProps",
             defaultValue: {
@@ -44,6 +51,9 @@ export const typographyExtraArgTypes = {
         control: false,
         description: "Font weight of the link text.",
         name: "weight",
+        type: {
+            required: false,
+        },
         table: {
             category: "TypographyLinkProps",
             defaultValue: {
@@ -60,6 +70,9 @@ export const typographyExtraArgTypes = {
         description:
             'Overrides the rendered HTML element, e.g. `"h2"`.\n\nRemarks:\nHas no effect when `inline` is `true`.',
         name: "as",
+        type: {
+            required: false,
+        },
         table: {
             category: "TypographyProps<T>",
             tabGroup: "Heading/Body",
@@ -73,6 +86,9 @@ export const typographyExtraArgTypes = {
         description:
             "Renders the element as an inline `span`. When `true`, the `as` prop\nis ignored and `maxLines` clamping is disabled.",
         name: "inline",
+        type: {
+            required: false,
+        },
         table: {
             category: "TypographyProps<T>",
             tabGroup: "Heading/Body",
@@ -86,6 +102,9 @@ export const typographyExtraArgTypes = {
         description:
             "Clamps visible text to the given number of lines, truncating the\nremainder.\n\nRemarks:\nHas no effect when `inline` is `true`.",
         name: "maxLines",
+        type: {
+            required: false,
+        },
         table: {
             category: "TypographyProps<T>",
             tabGroup: "Heading/Body",
@@ -99,6 +118,9 @@ export const typographyExtraArgTypes = {
         description:
             "Adds a bottom margin to separate the element from following content.",
         name: "paragraph",
+        type: {
+            required: false,
+        },
         table: {
             category: "TypographyProps<T>",
             tabGroup: "Heading/Body",
@@ -111,6 +133,9 @@ export const typographyExtraArgTypes = {
         control: false,
         description: "Font weight of the rendered text.",
         name: "weight",
+        type: {
+            required: false,
+        },
         table: {
             category: "TypographyProps<T>",
             defaultValue: {

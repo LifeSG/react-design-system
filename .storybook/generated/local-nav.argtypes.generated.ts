@@ -5,6 +5,9 @@ export const localNavExtraArgTypes = {
     "LocalNavDropdown__LocalNavItemProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavItemProps",
             tabGroup: "LocalNavDropdown",
@@ -16,6 +19,9 @@ export const localNavExtraArgTypes = {
     "LocalNavDropdown__LocalNavItemProps.title": {
         control: false,
         name: "title",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavItemProps",
             tabGroup: "LocalNavDropdown",
@@ -29,6 +35,9 @@ export const localNavExtraArgTypes = {
         description:
             "Whether this item is the currently selected navigation item.",
         name: "selected",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavDropdownItemRenderProps",
             tabGroup: "LocalNavDropdown",
@@ -42,6 +51,9 @@ export const localNavExtraArgTypes = {
         description:
             "Whether the dropdown is currently in its stickied (fixed) state.\nUse this to conditionally style items differently when the nav is pinned.",
         name: "stickied",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavDropdownItemRenderProps",
             tabGroup: "LocalNavDropdown",
@@ -53,6 +65,9 @@ export const localNavExtraArgTypes = {
     "LocalNavDropdownProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavDropdownProps",
             tabGroup: "LocalNavDropdown",
@@ -64,6 +79,9 @@ export const localNavExtraArgTypes = {
     "LocalNavDropdownProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavDropdownProps",
             tabGroup: "LocalNavDropdown",
@@ -77,6 +95,9 @@ export const localNavExtraArgTypes = {
         description:
             "Label shown in the collapsed trigger when no item is selected or when the\ndropdown is not stickied. Once the dropdown is stickied and an item is\nselected, the trigger displays the selected item's title instead.",
         name: "defaultLabel",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavDropdownProps",
             tabGroup: "LocalNavDropdown",
@@ -88,6 +109,9 @@ export const localNavExtraArgTypes = {
     "LocalNavDropdownProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavDropdownProps",
             tabGroup: "LocalNavDropdown",
@@ -100,6 +124,9 @@ export const localNavExtraArgTypes = {
         control: false,
         description: "The list of navigation items to render.",
         name: "items",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavDropdownProps",
             tabGroup: "LocalNavDropdown",
@@ -112,6 +139,9 @@ export const localNavExtraArgTypes = {
         control: false,
         description: "Called when a navigation item is activated.",
         name: "onNavItemSelect",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavDropdownProps",
             tabGroup: "LocalNavDropdown",
@@ -125,6 +155,9 @@ export const localNavExtraArgTypes = {
         control: false,
         description: "Custom renderer for each item in the dropdown list.",
         name: "renderItem",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavDropdownProps",
             tabGroup: "LocalNavDropdown",
@@ -138,6 +171,9 @@ export const localNavExtraArgTypes = {
         control: false,
         description: "Zero-based index of the currently selected item.",
         name: "selectedItemIndex",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavDropdownProps",
             tabGroup: "LocalNavDropdown",
@@ -151,6 +187,9 @@ export const localNavExtraArgTypes = {
         description:
             "Distance in pixels from the top of the viewport while the dropdown is stickied.",
         name: "stickyOffset",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavDropdownProps",
             defaultValue: {
@@ -165,6 +204,9 @@ export const localNavExtraArgTypes = {
     "LocalNavMenu__LocalNavItemProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavItemProps",
             tabGroup: "LocalNavMenu",
@@ -176,6 +218,9 @@ export const localNavExtraArgTypes = {
     "LocalNavMenu__LocalNavItemProps.title": {
         control: false,
         name: "title",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavItemProps",
             tabGroup: "LocalNavMenu",
@@ -189,6 +234,9 @@ export const localNavExtraArgTypes = {
         description:
             "Whether this item is the currently selected navigation item.",
         name: "selected",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavMenuItemRenderProps",
             tabGroup: "LocalNavMenu",
@@ -200,6 +248,9 @@ export const localNavExtraArgTypes = {
     "LocalNavMenuProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavMenuProps",
             tabGroup: "LocalNavMenu",
@@ -211,6 +262,9 @@ export const localNavExtraArgTypes = {
     "LocalNavMenuProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavMenuProps",
             tabGroup: "LocalNavMenu",
@@ -222,6 +276,9 @@ export const localNavExtraArgTypes = {
     "LocalNavMenuProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavMenuProps",
             tabGroup: "LocalNavMenu",
@@ -234,6 +291,9 @@ export const localNavExtraArgTypes = {
         control: false,
         description: "The list of navigation items to render.",
         name: "items",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavMenuProps",
             tabGroup: "LocalNavMenu",
@@ -246,6 +306,9 @@ export const localNavExtraArgTypes = {
         control: false,
         description: "Called when a navigation item is activated.",
         name: "onNavItemSelect",
+        type: {
+            required: true,
+        },
         table: {
             category: "LocalNavMenuProps",
             tabGroup: "LocalNavMenu",
@@ -259,6 +322,9 @@ export const localNavExtraArgTypes = {
         control: false,
         description: "Custom renderer for each navigation item.",
         name: "renderItem",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavMenuProps",
             tabGroup: "LocalNavMenu",
@@ -272,6 +338,9 @@ export const localNavExtraArgTypes = {
         control: false,
         description: "Zero-based index of the currently selected item.",
         name: "selectedItemIndex",
+        type: {
+            required: false,
+        },
         table: {
             category: "LocalNavMenuProps",
             tabGroup: "LocalNavMenu",

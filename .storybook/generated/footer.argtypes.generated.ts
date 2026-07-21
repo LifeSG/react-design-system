@@ -5,6 +5,9 @@ export const footerExtraArgTypes = {
     "DisclaimerLinks.privacy": {
         control: false,
         name: "privacy",
+        type: {
+            required: false,
+        },
         table: {
             category: "DisclaimerLinks",
             type: {
@@ -15,6 +18,9 @@ export const footerExtraArgTypes = {
     "DisclaimerLinks.reportVulnerability": {
         control: false,
         name: "reportVulnerability",
+        type: {
+            required: false,
+        },
         table: {
             category: "DisclaimerLinks",
             type: {
@@ -25,6 +31,9 @@ export const footerExtraArgTypes = {
     "DisclaimerLinks.termsOfUse": {
         control: false,
         name: "termsOfUse",
+        type: {
+            required: false,
+        },
         table: {
             category: "DisclaimerLinks",
             type: {
@@ -37,6 +46,9 @@ export const footerExtraArgTypes = {
         description:
             "Appends an external-link icon after the link text to signal that the\ndestination is outside the current site.",
         name: "external",
+        type: {
+            required: false,
+        },
         table: {
             category: "DisclaimerTextLinkProps",
             type: {
@@ -48,6 +60,9 @@ export const footerExtraArgTypes = {
         control: false,
         description: "Text-decoration style for the link.",
         name: "underlineStyle",
+        type: {
+            required: false,
+        },
         table: {
             category: "DisclaimerTextLinkProps",
             defaultValue: {
@@ -62,6 +77,9 @@ export const footerExtraArgTypes = {
         control: false,
         description: "Font weight of the link text.",
         name: "weight",
+        type: {
+            required: false,
+        },
         table: {
             category: "DisclaimerTextLinkProps",
             defaultValue: {
@@ -76,6 +94,9 @@ export const footerExtraArgTypes = {
         control: false,
         description: "Any custom attributes you would like to pass to the link",
         name: "data-options",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterLinkProps<T>",
             type: {
@@ -86,6 +107,9 @@ export const footerExtraArgTypes = {
     "FooterLinkProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterLinkProps<T>",
             type: {
@@ -98,6 +122,9 @@ export const footerExtraArgTypes = {
         description:
             "Appends an external-link icon after the link text to signal that the\ndestination is outside the current site.",
         name: "external",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterLinkProps<T>",
             type: {
@@ -109,6 +136,9 @@ export const footerExtraArgTypes = {
         control: false,
         description: "Text-decoration style for the link.",
         name: "underlineStyle",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterLinkProps<T>",
             defaultValue: {
@@ -123,6 +153,9 @@ export const footerExtraArgTypes = {
         control: false,
         description: "Font weight of the link text.",
         name: "weight",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterLinkProps<T>",
             defaultValue: {
@@ -138,6 +171,9 @@ export const footerExtraArgTypes = {
         description:
             "Custom component. This overrides the logo, links and download section",
         name: "children",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -148,6 +184,9 @@ export const footerExtraArgTypes = {
     "FooterProps.className": {
         control: false,
         name: "className",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -159,6 +198,9 @@ export const footerExtraArgTypes = {
         control: false,
         description: "A custom copyright text",
         name: "copyrightInfo",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -169,6 +211,9 @@ export const footerExtraArgTypes = {
     "FooterProps.data-testid": {
         control: false,
         name: "data-testid",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -181,6 +226,9 @@ export const footerExtraArgTypes = {
         description:
             "Override attributes for the built-in disclaimer links.\n\nEach supplied key is merged with the theme defaults. Omitted keys fall\nback to the default URLs for the active theme.",
         name: "disclaimerLinks",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -193,6 +241,9 @@ export const footerExtraArgTypes = {
         description:
             "Suppresses the logo even when a `logoSrc` or a theme-based logo URL is available.",
         name: "hideLogo",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -203,6 +254,9 @@ export const footerExtraArgTypes = {
     "FooterProps.id": {
         control: false,
         name: "id",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -215,6 +269,9 @@ export const footerExtraArgTypes = {
         description:
             'Date displayed in the copyright line as "Last updated D MMMM YYYY".\n\nRemarks:\nFalls back to the current date when omitted.',
         name: "lastUpdated",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -227,6 +284,9 @@ export const footerExtraArgTypes = {
         description:
             "Controls whether the footer content is constrained to a maximum width or\nstretches to fill the full viewport width.",
         name: "layout",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             defaultValue: {
@@ -242,6 +302,9 @@ export const footerExtraArgTypes = {
         description:
             "The footer links. Multi array to present in different columns",
         name: "links",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -253,6 +316,9 @@ export const footerExtraArgTypes = {
         control: false,
         description: "Custom logo alt text",
         name: "logoAlt",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -264,6 +330,9 @@ export const footerExtraArgTypes = {
         control: false,
         description: "Custom logo source",
         name: "logoSrc",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -276,6 +345,9 @@ export const footerExtraArgTypes = {
         description:
             "Called when a footer navigation link is clicked.\n\nReceives the full `FooterLinkProps` for the clicked link. If the link\ndefines its own `onClick` handler, that handler takes priority and\n`onFooterLinkClick` is not called.",
         name: "onFooterLinkClick",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -287,6 +359,9 @@ export const footerExtraArgTypes = {
         control: false,
         description: "Indicates if the download app icons are to be present",
         name: "showDownloadAddon",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
@@ -299,6 +374,9 @@ export const footerExtraArgTypes = {
         description:
             "Indicates if additional app resources should be displayed.\n\nWhen both `showDownloadAddon` and `showResourceAddon` are `true`,\n`showDownloadAddon` takes priority and the resource add-on is not rendered.",
         name: "showResourceAddon",
+        type: {
+            required: false,
+        },
         table: {
             category: "FooterProps<T>",
             type: {
