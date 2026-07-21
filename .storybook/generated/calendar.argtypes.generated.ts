@@ -2,72 +2,6 @@
 // Run: npm run storybook:argtypes
 
 export const calendarExtraArgTypes = {
-    "CalendarMultiProps.allowDisabledSelection": {
-        control: false,
-        description:
-            "Specifies if dates normally disabled by `minDate`, `maxDate` and `disabledDates` are still selectable",
-        name: "allowDisabledSelection",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "boolean",
-            },
-        },
-    },
-    "CalendarMultiProps.className": {
-        control: false,
-        name: "className",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "string",
-            },
-        },
-    },
-    "CalendarMultiProps.data-testid": {
-        control: false,
-        name: "data-testid",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "string",
-            },
-        },
-    },
-    "CalendarMultiProps.disabledDates": {
-        control: false,
-        description:
-            'Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]`',
-        name: "disabledDates",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "string[]",
-            },
-        },
-    },
-    "CalendarMultiProps.id": {
-        control: false,
-        name: "id",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "string",
-            },
-        },
-    },
-    "CalendarMultiProps.maxDate": {
-        control: false,
-        description:
-            "The maximum date that can be selected (inclusive) in 'YYYY-MM-DD' format.",
-        name: "maxDate",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "string",
-            },
-        },
-    },
     "CalendarMultiProps.maxSelectable": {
         control: false,
         description: "Maximum number of dates that can be selected",
@@ -76,18 +10,6 @@ export const calendarExtraArgTypes = {
             category: "CalendarMultiProps",
             type: {
                 summary: "number",
-            },
-        },
-    },
-    "CalendarMultiProps.minDate": {
-        control: false,
-        description:
-            "The minimum date that can be selected (inclusive) in 'YYYY-MM-DD' format.",
-        name: "minDate",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "string",
             },
         },
     },
@@ -113,54 +35,6 @@ export const calendarExtraArgTypes = {
             },
         },
     },
-    "CalendarMultiProps.onHover": {
-        control: false,
-        description: "Called when a day cell is hovered.",
-        name: "onHover",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "(value: string) => void",
-            },
-        },
-    },
-    "CalendarMultiProps.onYearMonthDisplayChange": {
-        control: false,
-        description: "Called when the visible month or year changes.",
-        name: "onYearMonthDisplayChange",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "(value: YearMonthDisplay) => void",
-            },
-        },
-    },
-    "CalendarMultiProps.showActiveMonthDaysOnly": {
-        control: false,
-        description:
-            "Specifies if the calendar should display only dates for the selected month",
-        name: "showActiveMonthDaysOnly",
-        table: {
-            category: "CalendarMultiProps",
-            type: {
-                summary: "boolean",
-            },
-        },
-    },
-    "CalendarMultiProps.styleType": {
-        control: false,
-        description: "Border style of the calendar container.",
-        name: "styleType",
-        table: {
-            category: "CalendarMultiProps",
-            defaultValue: {
-                summary: '"bordered"',
-            },
-            type: {
-                summary: "'no-border' | 'bordered'",
-            },
-        },
-    },
     "CalendarMultiProps.values": {
         control: false,
         description: "Selected dates in `YYYY-MM-DD` format",
@@ -182,81 +56,167 @@ export const calendarExtraArgTypes = {
             },
         },
     },
-    "CalendarSingleProps.allowDisabledSelection": {
+    CalendarProps: {
+        control: false,
+        description: "Props for the `Calendar` component",
+        name: "CalendarProps",
+        table: {
+            category: "CalendarProps",
+            type: {
+                summary:
+                    "CalendarBaseProps & (CalendarSingleProps | CalendarMultiProps)",
+            },
+        },
+    },
+    "CalendarProps.allowDisabledSelection": {
         control: false,
         description:
             "Specifies if dates normally disabled by `minDate`, `maxDate` and `disabledDates` are still selectable",
         name: "allowDisabledSelection",
         table: {
-            category: "CalendarSingleProps",
+            category: "CalendarProps",
             type: {
-                summary: "boolean",
+                summary: "false | true",
             },
         },
     },
-    "CalendarSingleProps.className": {
+    "CalendarProps.className": {
         control: false,
         name: "className",
         table: {
-            category: "CalendarSingleProps",
+            category: "CalendarProps",
             type: {
                 summary: "string",
             },
         },
     },
-    "CalendarSingleProps.data-testid": {
+    "CalendarProps.data-testid": {
         control: false,
         name: "data-testid",
         table: {
-            category: "CalendarSingleProps",
+            category: "CalendarProps",
             type: {
                 summary: "string",
             },
         },
     },
-    "CalendarSingleProps.disabledDates": {
+    "CalendarProps.disabledDates": {
         control: false,
         description:
             'Dates to disable in `YYYY-MM-DD` format. Example: `["2023-04-30"]`',
         name: "disabledDates",
         table: {
-            category: "CalendarSingleProps",
+            category: "CalendarProps",
             type: {
                 summary: "string[]",
             },
         },
     },
-    "CalendarSingleProps.id": {
+    "CalendarProps.id": {
         control: false,
         name: "id",
         table: {
-            category: "CalendarSingleProps",
+            category: "CalendarProps",
             type: {
                 summary: "string",
             },
         },
     },
-    "CalendarSingleProps.maxDate": {
+    "CalendarProps.maxDate": {
         control: false,
         description:
             "The maximum date that can be selected (inclusive) in 'YYYY-MM-DD' format.",
         name: "maxDate",
         table: {
-            category: "CalendarSingleProps",
+            category: "CalendarProps",
             type: {
                 summary: "string",
             },
         },
     },
-    "CalendarSingleProps.minDate": {
+    "CalendarProps.minDate": {
         control: false,
         description:
             "The minimum date that can be selected (inclusive) in 'YYYY-MM-DD' format.",
         name: "minDate",
         table: {
-            category: "CalendarSingleProps",
+            category: "CalendarProps",
             type: {
                 summary: "string",
+            },
+        },
+    },
+    "CalendarProps.onChange": {
+        control: false,
+        description:
+            "Called when the selected date changes.\n\nCalled when the selection changes.",
+        name: "onChange",
+        table: {
+            category: "CalendarProps",
+            type: {
+                summary:
+                    "((value: string) => void) | ((values: string[]) => void)",
+            },
+        },
+    },
+    "CalendarProps.onHover": {
+        control: false,
+        description: "Called when a day cell is hovered.",
+        name: "onHover",
+        table: {
+            category: "CalendarProps",
+            type: {
+                summary: "(value: string) => void",
+            },
+        },
+    },
+    "CalendarProps.onYearMonthDisplayChange": {
+        control: false,
+        description: "Called when the visible month or year changes.",
+        name: "onYearMonthDisplayChange",
+        table: {
+            category: "CalendarProps",
+            type: {
+                summary: "(value: YearMonthDisplay) => void",
+            },
+        },
+    },
+    "CalendarProps.showActiveMonthDaysOnly": {
+        control: false,
+        description:
+            "Specifies if the calendar should display only dates for the selected month",
+        name: "showActiveMonthDaysOnly",
+        table: {
+            category: "CalendarProps",
+            type: {
+                summary: "false | true",
+            },
+        },
+    },
+    "CalendarProps.styleType": {
+        control: false,
+        description: "Border style of the calendar container.",
+        name: "styleType",
+        table: {
+            category: "CalendarProps",
+            defaultValue: {
+                summary: '"bordered"',
+            },
+            type: {
+                summary: "'no-border' | 'bordered'",
+            },
+        },
+    },
+    "CalendarProps.variant": {
+        control: false,
+        name: "variant",
+        table: {
+            category: "CalendarProps",
+            defaultValue: {
+                summary: '"single"',
+            },
+            type: {
+                summary: "'single' | 'multi'",
             },
         },
     },
@@ -264,17 +224,6 @@ export const calendarExtraArgTypes = {
         control: false,
         description: "Called when the selected date changes.",
         name: "onChange",
-        table: {
-            category: "CalendarSingleProps",
-            type: {
-                summary: "(value: string) => void",
-            },
-        },
-    },
-    "CalendarSingleProps.onHover": {
-        control: false,
-        description: "Called when a day cell is hovered.",
-        name: "onHover",
         table: {
             category: "CalendarSingleProps",
             type: {
@@ -291,43 +240,6 @@ export const calendarExtraArgTypes = {
             category: "CalendarSingleProps",
             type: {
                 summary: "(value: string) => void",
-            },
-        },
-    },
-    "CalendarSingleProps.onYearMonthDisplayChange": {
-        control: false,
-        description: "Called when the visible month or year changes.",
-        name: "onYearMonthDisplayChange",
-        table: {
-            category: "CalendarSingleProps",
-            type: {
-                summary: "(value: YearMonthDisplay) => void",
-            },
-        },
-    },
-    "CalendarSingleProps.showActiveMonthDaysOnly": {
-        control: false,
-        description:
-            "Specifies if the calendar should display only dates for the selected month",
-        name: "showActiveMonthDaysOnly",
-        table: {
-            category: "CalendarSingleProps",
-            type: {
-                summary: "boolean",
-            },
-        },
-    },
-    "CalendarSingleProps.styleType": {
-        control: false,
-        description: "Border style of the calendar container.",
-        name: "styleType",
-        table: {
-            category: "CalendarSingleProps",
-            defaultValue: {
-                summary: '"bordered"',
-            },
-            type: {
-                summary: "'no-border' | 'bordered'",
             },
         },
     },

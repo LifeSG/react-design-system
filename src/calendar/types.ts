@@ -35,7 +35,7 @@ interface CalendarBaseProps extends CommonCalendarProps {
  *
  * Pass `variant="single"` or omit `variant` to activate this mode.
  */
-export interface CalendarSingleProps extends CalendarBaseProps {
+export interface CalendarSingleProps {
     /**
      * @default "single"
      */
@@ -62,7 +62,7 @@ export interface CalendarSingleProps extends CalendarBaseProps {
  *
  * Requires `variant="multi"`.
  */
-export interface CalendarMultiProps extends CalendarBaseProps {
+export interface CalendarMultiProps {
     variant: "multi";
     /** Selected dates in `YYYY-MM-DD` format */
     values?: string[] | undefined;
@@ -78,6 +78,6 @@ export interface CalendarMultiProps extends CalendarBaseProps {
     onChange?: ((values: string[]) => void) | undefined;
 }
 
-// @storybookSkipProps
 /** Props for the `Calendar` component */
-export type CalendarProps = CalendarSingleProps | CalendarMultiProps;
+export type CalendarProps = CalendarBaseProps &
+    (CalendarSingleProps | CalendarMultiProps);
