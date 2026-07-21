@@ -32,11 +32,38 @@ const KEYWORDS_TAG = "@keywords";
 // Helpers
 // =============================================================================
 
-function trimAndReplaceNewLines(text: string | undefined): string {
+function getExportedModules(sourceFile: SourceFile): string[] {
+    const modules = new Set<string>();
+
+    for (const exportDeclaration of sourceFile.getExportDeclarations()) {
+        const moduleSpecifier = exportDeclaration.getModuleSpecifierValue();
+        // e.g. of moduleSpecifier: "./accordion", "./alert", etc.
+        if (moduleSpecifier && moduleSpecifier.startsWith("./")) {
+            modules.add(moduleSpecifier.slice(2));
+        }
+    }
+    return [...modules].sort((a, b) => a.localeCompare(b));
+}
+
+function getModuleDir(
+    project: Project,
+    moduleName: string
+): string | undefined {
+    const moduleDir = path.join(SRC_DIR, moduleName);
+    const moduleIndexPath = path.join(moduleDir, "index.ts");
+
+    if (!project.addSourceFileAtPathIfExists(moduleIndexPath)) {
+        return undefined;
+    }
+
+    return moduleDir;
+}
+
+function formatDescription(text: string | undefined): string {
     return text?.trim().replace(/\n/g, " ") ?? "";
 }
 
-function trimAndSortComment(tagComment: string | undefined): string[] {
+function formatKeywords(tagComment: string | undefined): string[] {
     if (!tagComment) return [];
     return tagComment
         .trim()
@@ -52,41 +79,33 @@ function extractDocFromStatement(statement: Node): {
 } {
     if (!Node.isJSDocable(statement)) return { description: "", keywords: [] };
 
-    let description = "";
-    let keywords: string[] = [];
-
     for (const jsDoc of statement.getJsDocs()) {
-        if (!description) {
-            const comment = trimAndReplaceNewLines(jsDoc.getCommentText());
-            if (comment) description = comment;
+        const description = formatDescription(jsDoc.getCommentText());
+        const tag = jsDoc
+            .getTags()
+            .find((t) => t.getTagName() === KEYWORDS_TAG);
+        const keywords = formatKeywords(tag?.getCommentText());
+
+        if (description || keywords.length > 0) {
+            return { description, keywords };
         }
-        if (keywords.length === 0) {
-            const tag = jsDoc
-                .getTags()
-                .find((t) => t.getTagName() === KEYWORDS_TAG);
-            if (tag) keywords = trimAndSortComment(tag.getCommentText());
-        }
-        if (description && keywords.length > 0) break;
     }
 
-    return { description, keywords };
+    return { description: "", keywords: [] };
 }
 
-function getExportedModules(sourceFile: SourceFile): string[] {
-    const modules = new Set<string>();
+function hasCatalogTag(sourceFile: SourceFile, statement: Node): boolean {
+    const fullText = sourceFile.getFullText();
+    const commentRanges = statement.getLeadingCommentRanges();
 
-    for (const exportDeclaration of sourceFile.getExportDeclarations()) {
-        const moduleSpecifier = exportDeclaration.getModuleSpecifierValue();
-        // e.g. of moduleSpecifier: "./accordion", "./alert", etc.
-        if (moduleSpecifier && moduleSpecifier.startsWith("./")) {
-            modules.add(moduleSpecifier.slice(2));
-        }
-    }
-    return [...modules].sort((a, b) => a.localeCompare(b));
+    return commentRanges.some((range) => {
+        const text = fullText.slice(range.getPos(), range.getEnd()).trim();
+        return text === CATALOG_TAG;
+    });
 }
 
 /** Extract metadata from source files using ts-morph JSDoc APIs.
- *  - Look in candidate files: <moduleName>.tsx, <moduleName>.ts, types.ts
+ *  - Look in candidate files (first match wins): <moduleName>.tsx, <moduleName>.ts, index.ts
  *  - Only considers statements preceded by `// @catalog`
  *  - Description: JSDoc block's comment text (via getCommentText())
  *  - keywords: first @keywords tag value split by comma, trimmed, sorted
@@ -107,35 +126,17 @@ function extractSourceDocumentation(
         const sourceFile = project.addSourceFileAtPathIfExists(filePath);
         if (!sourceFile) continue;
 
-        let description = "";
-        let keywords: string[] = [];
-
         for (const statement of sourceFile.getStatements()) {
             if (!hasCatalogTag(sourceFile, statement)) continue;
 
             const doc = extractDocFromStatement(statement);
-            if (!description && doc.description) description = doc.description;
-            if (keywords.length === 0 && doc.keywords.length > 0)
-                keywords = doc.keywords;
-            if (description && keywords.length > 0) break;
-        }
-
-        if (description || keywords.length > 0) {
-            return { description, keywords };
+            if (doc.description || doc.keywords.length > 0) {
+                return doc;
+            }
         }
     }
 
     return { description: "", keywords: [] };
-}
-
-function hasCatalogTag(sourceFile: SourceFile, statement: Node): boolean {
-    const fullText = sourceFile.getFullText();
-    const commentRanges = statement.getLeadingCommentRanges();
-
-    return commentRanges.some((range) => {
-        const text = fullText.slice(range.getPos(), range.getEnd()).trim();
-        return text === CATALOG_TAG;
-    });
 }
 
 function extractSubComponentEntries(
@@ -195,31 +196,14 @@ function extractSubComponentEntries(
     return entries;
 }
 
-function getModuleSourceFile(
-    project: Project,
-    moduleName: string
-): { moduleDir: string; moduleIndexFile: SourceFile } | undefined {
-    const moduleDir = path.join(SRC_DIR, moduleName);
-    const moduleIndexPath = path.join(moduleDir, "index.ts");
-
-    const moduleIndexFile =
-        project.addSourceFileAtPathIfExists(moduleIndexPath);
-
-    if (!moduleIndexFile) {
-        return undefined;
-    }
-
-    return { moduleDir, moduleIndexFile };
-}
-
 // =============================================================================
 // Main
 // =============================================================================
 
 /** Assemble the catalog and write the output JSON file.
- *  - Shape: { meta: { packageName, totalModules }, components: [...] }
- *  - Components sorted alphabetically by name
- *  - Write to component-catalog.json at repo root with stable JSON formatting
+ *  - Shape: { meta: { packageName, totalComponents }, components: [...] }
+ *  - Components ordered by module (alphabetical), with sub-entries per module
+ *  - Write to docs/component-catalog.json with stable JSON formatting
  */
 
 async function main() {
@@ -236,9 +220,8 @@ async function main() {
     const components: Component[] = [];
 
     for (const moduleName of modules) {
-        const result = getModuleSourceFile(project, moduleName);
-        if (!result) continue;
-        const { moduleDir } = result;
+        const moduleDir = getModuleDir(project, moduleName);
+        if (!moduleDir) continue;
 
         const importPath = `@lifesg/react-design-system/${moduleName}`;
         const componentNamePascalCase = upperFirst(camelCase(moduleName));
