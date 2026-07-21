@@ -1,7 +1,7 @@
 {
   "meta": {
     "packageName": "@lifesg/react-design-system",
-    "totalComponents": 91
+    "totalComponents": 86
   },
   "components": [
     {
@@ -14,12 +14,6 @@
       "name": "Alert",
       "importPath": "@lifesg/react-design-system/alert",
       "description": "Displays an inline contextual banner with a severity-coded message.  Use `Alert` to surface feedback, status, or supplementary information without interrupting the user's workflow. Supports five severity tones, an optional icon, a call-to-action link, and a collapsible content area for lengthy messages.",
-      "keywords": []
-    },
-    {
-      "name": "Animations",
-      "importPath": "@lifesg/react-design-system/animations",
-      "description": "",
       "keywords": []
     },
     {
@@ -119,15 +113,15 @@
       "keywords": []
     },
     {
-      "name": "ErrorDisplay",
-      "importPath": "@lifesg/react-design-system/error-display",
-      "description": "Displays a predefined error or status state with an illustration, title, description, and optional action button.  Use `ErrorDisplay` to communicate HTTP error codes, session lifecycle states, maintenance windows, and other system-level statuses to users.",
-      "keywords": []
-    },
-    {
       "name": "ESignature",
       "importPath": "@lifesg/react-design-system/e-signature",
       "description": "A field that lets users draw and save a signature.  Use in forms that require a handwritten signature.",
+      "keywords": []
+    },
+    {
+      "name": "ErrorDisplay",
+      "importPath": "@lifesg/react-design-system/error-display",
+      "description": "Displays a predefined error or status state with an illustration, title, description, and optional action button.  Use `ErrorDisplay` to communicate HTTP error codes, session lifecycle states, maintenance windows, and other system-level statuses to users.",
       "keywords": []
     },
     {
@@ -158,12 +152,6 @@
       "name": "Footer",
       "importPath": "@lifesg/react-design-system/footer",
       "description": "Site-wide footer with navigation links, branding, and legal copy.  Use `Footer` at the bottom of a page to surface navigation links grouped into columns, a theme-appropriate logo, download-app or resource add-ons, and disclaimer links with auto-generated copyright text.",
-      "keywords": []
-    },
-    {
-      "name": "Form",
-      "importPath": "@lifesg/react-design-system/form",
-      "description": "",
       "keywords": []
     },
     {
@@ -239,21 +227,9 @@
       "keywords": []
     },
     {
-      "name": "InputTextarea",
-      "importPath": "@lifesg/react-design-system/input-textarea",
-      "description": "",
-      "keywords": []
-    },
-    {
       "name": "LanguageSwitcher",
       "importPath": "@lifesg/react-design-system/language-switcher",
       "description": "A locale-switching control that lets users change the active display language.  Use `LanguageSwitcher` to surface supported languages as either a compact dropdown or a set of inline links.",
-      "keywords": []
-    },
-    {
-      "name": "Layout",
-      "importPath": "@lifesg/react-design-system/layout",
-      "description": "",
       "keywords": []
     },
     {
@@ -284,12 +260,6 @@
       "name": "Menu",
       "importPath": "@lifesg/react-design-system/menu",
       "description": "A popover-anchored menu composed of sections and interactive items.  Use `Menu` when a trigger element should open a floating panel of actions or navigation links.  Sub-components: - `Menu.Content` — the floating panel that contains menu sections. - `Menu.Item` — a non-anchor interactive list item with a primary label and optional sub-label. - `Menu.Link` — an anchor (`<a>`) list item styled as a menu entry. - `Menu.Section` — a grouping container for `Menu.Item` and `Menu.Link` entries.",
-      "keywords": []
-    },
-    {
-      "name": "Modal",
-      "importPath": "@lifesg/react-design-system/modal",
-      "description": "",
       "keywords": []
     },
     {
@@ -409,85 +379,7 @@
     {
       "name": "TextList",
       "importPath": "@lifesg/react-design-system/text-list",
-      "description": "",
-      "keywords": []
-    },
-    {
-      "name": "Timeline",
-      "importPath": "@lifesg/react-design-system/timeline",
-      "description": "A vertically ordered list of steps with visual state indicators.  Use `Timeline` to communicate multi-step progress such as application stages or process flows.",
-      "keywords": []
-    },
-    {
-      "name": "Timepicker",
-      "importPath": "@lifesg/react-design-system/timepicker",
-      "description": "A form input for selecting a time value through a dropdown interface.  Use `Timepicker` when a user needs to choose a specific time.",
-      "keywords": []
-    },
-    {
-      "name": "TimeRangePicker",
-      "importPath": "@lifesg/react-design-system/time-range-picker",
-      "description": "A two-field time picker for selecting a start and end time.  Use `TimeRangePicker` when users need to define a time range.",
-      "keywords": []
-    },
-    {
-      "name": "TimeSlotBar",
-      "importPath": "@lifesg/react-design-system/time-slot-bar",
-      "description": "A horizontally scrollable timeline bar that visualises time slots across a defined time range.  Use `TimeSlotBar` to display availability, bookings, or schedule occupancy as coloured cells on a shared time axis.",
-      "keywords": []
-    },
-    {
-      "name": "TimeSlotBarWeek",
-      "importPath": "@lifesg/react-design-system/time-slot-bar-week",
-      "description": "A week calendar grid with a time axis, rendering detailed slot bars within each day column.  Use `TimeSlotBarWeek` for detailed time-of-day scheduling where each cell represents a configurable time interval. For a simpler day-level overview without a time axis, use `TimeSlotWeekView` instead.",
-      "keywords": []
-    },
-    {
-      "name": "TimeSlotWeekView",
-      "importPath": "@lifesg/react-design-system/time-slot-week-view",
-      "description": "A week calendar grid that displays slot availability within each day column.  Use `TimeSlotWeekView` for a day-level overview of slot availability across a week. For detailed time-of-day scheduling with a time axis, use `TimeSlotBarWeek` instead.",
-      "keywords": []
-    },
-    {
-      "name": "Timetable",
-      "importPath": "@lifesg/react-design-system/timetable",
-      "description": "A scrollable grid that visualises time slot availability across a day.  Use `TimeTable` to display one day's schedule for multiple resources side by side.",
-      "keywords": []
-    },
-    {
-      "name": "Toast",
-      "importPath": "@lifesg/react-design-system/toast",
-      "description": "A brief notification that appears on screen to provide feedback about an operation or event.  Use `Toast` to surface status messages without interrupting the user's workflow.",
-      "keywords": []
-    },
-    {
-      "name": "Toggle",
-      "importPath": "@lifesg/react-design-system/toggle",
-      "description": "A selectable control for checkbox and radio interaction patterns.  Use `Toggle` to present a labeled option that the user can select or deselect.",
-      "keywords": []
-    },
-    {
-      "name": "Typography",
-      "importPath": "@lifesg/react-design-system/typography",
-      "description": "",
-      "keywords": []
-    },
-    {
-      "name": "UneditableSection",
-      "importPath": "@lifesg/react-design-system/uneditable-section",
-      "description": "",
-      "keywords": []
-    },
-    {
-      "name": "UnitNumber",
-      "importPath": "@lifesg/react-design-system/unit-number",
-      "description": "",
-      "keywords": []
-    },
-    {
-      "name": "Theme",
-      "importPath": "@lifesg/react-design-system/theme",
-      "description": "",
+      "description": "Renders styled ordered and unordered lists for body copy and structured content.  Use `TextList` to present sequential or non-sequential items with consistent typography and spacing.  Sub-components: - `TextList.Ol` — a numbered list with configurable counter style and direction. - `TextList.Ul` — a bulleted list supporting predefined marker types or a custom icon.",
       "keywords": []
     },
     {
@@ -548,6 +440,84 @@
       "name": "Spacing",
       "importPath": "@lifesg/react-design-system/theme",
       "description": "Spacing tokens consisting of component spacing and layout spacing.",
+      "keywords": []
+    },
+    {
+      "name": "ThemeProvider",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Establishes a themed scope for its subtree.  Wrap a section of the tree in `ThemeProvider` to activate a design-token set and colour mode. Components below it read tokens via CSS variables or the `useTheme` hook. Providers can be nested to override a subtree's theme.",
+      "keywords": []
+    },
+    {
+      "name": "TimeRangePicker",
+      "importPath": "@lifesg/react-design-system/time-range-picker",
+      "description": "A two-field time picker for selecting a start and end time.  Use `TimeRangePicker` when users need to define a time range.",
+      "keywords": []
+    },
+    {
+      "name": "TimeSlotBar",
+      "importPath": "@lifesg/react-design-system/time-slot-bar",
+      "description": "A horizontally scrollable timeline bar that visualises time slots across a defined time range.  Use `TimeSlotBar` to display availability, bookings, or schedule occupancy as coloured cells on a shared time axis.",
+      "keywords": []
+    },
+    {
+      "name": "TimeSlotBarWeek",
+      "importPath": "@lifesg/react-design-system/time-slot-bar-week",
+      "description": "A week calendar grid with a time axis, rendering detailed slot bars within each day column.  Use `TimeSlotBarWeek` for detailed time-of-day scheduling where each cell represents a configurable time interval. For a simpler day-level overview without a time axis, use `TimeSlotWeekView` instead.",
+      "keywords": []
+    },
+    {
+      "name": "TimeSlotWeekView",
+      "importPath": "@lifesg/react-design-system/time-slot-week-view",
+      "description": "A week calendar grid that displays slot availability within each day column.  Use `TimeSlotWeekView` for a day-level overview of slot availability across a week. For detailed time-of-day scheduling with a time axis, use `TimeSlotBarWeek` instead.",
+      "keywords": []
+    },
+    {
+      "name": "Timeline",
+      "importPath": "@lifesg/react-design-system/timeline",
+      "description": "A vertically ordered list of steps with visual state indicators.  Use `Timeline` to communicate multi-step progress such as application stages or process flows.",
+      "keywords": []
+    },
+    {
+      "name": "Timepicker",
+      "importPath": "@lifesg/react-design-system/timepicker",
+      "description": "A form input for selecting a time value through a dropdown interface.  Use `Timepicker` when a user needs to choose a specific time.",
+      "keywords": []
+    },
+    {
+      "name": "Timetable",
+      "importPath": "@lifesg/react-design-system/timetable",
+      "description": "A scrollable grid that visualises time slot availability across a day.  Use `TimeTable` to display one day's schedule for multiple resources side by side.",
+      "keywords": []
+    },
+    {
+      "name": "Toast",
+      "importPath": "@lifesg/react-design-system/toast",
+      "description": "A brief notification that appears on screen to provide feedback about an operation or event.  Use `Toast` to surface status messages without interrupting the user's workflow.",
+      "keywords": []
+    },
+    {
+      "name": "Toggle",
+      "importPath": "@lifesg/react-design-system/toggle",
+      "description": "A selectable control for checkbox and radio interaction patterns.  Use `Toggle` to present a labeled option that the user can select or deselect.",
+      "keywords": []
+    },
+    {
+      "name": "Typography",
+      "importPath": "@lifesg/react-design-system/typography",
+      "description": "A collection of pre-styled text components covering headings, body copy, and hyperlinks.  Use `Typography` sub-components to render consistently sized and weighted text.  Sub-components: - Heading variants (`HeadingXXL` through `HeadingXS`) render semantic heading elements by default. - Body variants (`BodyBL`, `BodyMD`, `BodySM`, `BodyXS`) render `p` elements. - Link variants (`LinkBL`, `LinkMD`, `LinkSM`, `LinkXS`) render `a` elements .",
+      "keywords": []
+    },
+    {
+      "name": "UneditableSection",
+      "importPath": "@lifesg/react-design-system/uneditable-section",
+      "description": "A read-only summary section for displaying labeled field values.  Use `UneditableSection` to present a group of non-editable field–value pairs in a responsive grid layout  Sub-components: - `UneditableSection.Item` — a standalone labeled read-only field with optional masking. - `UneditableSection.ItemSection` — a standalone grid list for composing items.",
+      "keywords": []
+    },
+    {
+      "name": "UnitNumberInput",
+      "importPath": "@lifesg/react-design-system/unit-number",
+      "description": "A two-field input for entering Singapore-style unit numbers in `floor-unit` format.  Use `UnitNumberInput` when you need a structured unit number entry that splits floor and unit into separate fields.",
       "keywords": []
     }
   ]
