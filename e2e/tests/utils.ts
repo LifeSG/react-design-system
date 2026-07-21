@@ -1,4 +1,10 @@
-import { expect, Locator, Page } from "@playwright/test";
+import {
+    expect,
+    Locator,
+    Page,
+    PageAssertionsToHaveScreenshotOptions,
+    test,
+} from "@playwright/test";
 import { viewport } from "./consts";
 
 export abstract class AbstractStoryPage {
@@ -142,13 +148,21 @@ export const compareScreenshot = async (
     name: string,
     options?: { fullscreen?: boolean; locator?: Locator; mask?: Locator[] }
 ) => {
+    let screenshotOptions: PageAssertionsToHaveScreenshotOptions = {
+        fullPage: false,
+        threshold: 0.01, // Strict colour matching
+        maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
+        maxDiffPixels: 50,
+        mask: options?.mask,
+    };
+    let target: Page | Locator = storyPage.page;
+
     if (options?.locator) {
         const box = await options.locator.boundingBox();
         if (!box) {
             throw new Error("Could not get bounding box for locator");
         }
-
-        await expect.soft(storyPage.page).toHaveScreenshot(`${name}.png`, {
+        screenshotOptions = {
             // Adding a 10px boundary around the element to capture any shadows or outlines
             clip: {
                 x: Math.max(0, box.x - 10),
@@ -160,20 +174,20 @@ export const compareScreenshot = async (
             maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
             maxDiffPixels: 50,
             mask: options.mask,
-        });
-        return;
+        };
     }
 
-    const target = options?.fullscreen
-        ? storyPage.page
-        : storyPage.page.locator("body");
+    if (!options?.locator && !options?.fullscreen) {
+        target = storyPage.page.locator("body");
+    }
 
-    await expect.soft(target).toHaveScreenshot(`${name}.png`, {
-        fullPage: false,
-        threshold: 0.01, // Strict colour matching
-        maxDiffPixelRatio: 0.01, // Allow a small percentage of pixels to differ
-        maxDiffPixels: 50,
-        mask: options?.mask,
+    await expect
+        .soft(target)
+        .toHaveScreenshot(`${name}.png`, screenshotOptions);
+
+    test.info().annotations.push({
+        type: "screenshot-used",
+        description: `${name}.png`,
     });
 };
 
