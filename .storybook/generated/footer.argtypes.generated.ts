@@ -44,16 +44,6 @@ export const footerExtraArgTypes = {
             },
         },
     },
-    "DisclaimerTextLinkProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "DisclaimerTextLinkProps",
-            type: {
-                summary: "string | boolean",
-            },
-        },
-    },
     "DisclaimerTextLinkProps.underlineStyle": {
         control: false,
         description: "Text-decoration style for the link.",
@@ -64,7 +54,7 @@ export const footerExtraArgTypes = {
                 summary: '"underline"',
             },
             type: {
-                summary: "'none' | 'underline'",
+                summaryParts: ["'none'", "'underline'"],
             },
         },
     },
@@ -78,7 +68,7 @@ export const footerExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "'light' | 'bold' | 'regular' | 'semibold'",
+                summaryParts: ["'bold'", "'light'", "'regular'", "'semibold'"],
             },
         },
     },
@@ -115,16 +105,6 @@ export const footerExtraArgTypes = {
             },
         },
     },
-    "FooterLinkProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "FooterLinkProps<T>",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "FooterLinkProps.underlineStyle": {
         control: false,
         description: "Text-decoration style for the link.",
@@ -135,7 +115,7 @@ export const footerExtraArgTypes = {
                 summary: '"underline"',
             },
             type: {
-                summary: "TypographyUnderlineStyle",
+                summaryParts: ["'none'", "'underline'"],
             },
         },
     },
@@ -149,7 +129,7 @@ export const footerExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "TypographyWeight",
+                summaryParts: ["'bold'", "'light'", "'regular'", "'semibold'"],
             },
         },
     },
@@ -161,7 +141,7 @@ export const footerExtraArgTypes = {
         table: {
             category: "FooterProps<T>",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },
@@ -253,7 +233,7 @@ export const footerExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: '"default" | "stretch"',
+                summaryParts: ["'default'", "'stretch'"],
             },
         },
     },

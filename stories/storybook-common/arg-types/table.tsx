@@ -41,6 +41,8 @@ export type GeneratedArgType = {
                 detail?: string | undefined;
                 /** Type text summary for the props table. */
                 summary?: string | undefined;
+                /** Pre-split union members from the generator (avoids re-parsing pipes in render). */
+                summaryParts?: string[] | undefined;
             };
             /** Default value from `@default` JSDoc tag, if present. */
             defaultValue:
@@ -58,48 +60,44 @@ type PureArgsTableRows = Extract<
     { rows: unknown }
 >["rows"];
 
+// =============================================================================
+// Union type display normalization
+// =============================================================================
+
+/**
+ * Normalize type display for PureArgsTable.
+ *
+ * - When `summaryParts` is present (union type), joins them into a `summary` string.
+ * - If the union contains function members, collapses to `firstMember | ...`
+ *   with the full list in `detail` (shown on hover).
+ * - When only `summary` is present (non-union), passes through unchanged.
+ */
 function normalizeUnionTypeDisplay(argType: GeneratedArgType["value"]) {
-    const summary = argType.table?.type?.summary;
+    const { summaryParts } = argType.table?.type ?? {};
 
-    if (!summary) {
+    if (!summaryParts || summaryParts.length <= 1) {
         return argType;
     }
 
-    const unionMembers = summary.includes("\n|")
-        ? summary
-              .split("\n|")
-              .map((member) => member.trim())
-              .filter(Boolean)
-        : summary
-              .split(" | ")
-              .map((member) => member.trim())
-              .filter(Boolean);
+    const hasFunctionMember = summaryParts.some((m) => m.includes("=>"));
 
-    if (unionMembers.length <= 1) {
-        return argType;
-    }
-
-    const hasFunctionUnionMember = unionMembers.some((member) =>
-        member.includes("=>")
-    );
-
-    if (!hasFunctionUnionMember) {
-        return argType;
-    }
-
-    const finalArgType: GeneratedArgType["value"] = {
+    return {
         ...argType,
         table: {
             ...argType.table,
-            type: {
-                summary: `${unionMembers[0]} | ...`,
-                detail: unionMembers.join("\n"),
-            },
+            type: hasFunctionMember
+                ? {
+                      summary: `${summaryParts[0]} | ...`,
+                      detail: summaryParts.join("\n"),
+                  }
+                : { summary: summaryParts.join(" | ") },
         },
     };
-
-    return finalArgType;
 }
+
+// =============================================================================
+// Tab rendering
+// =============================================================================
 
 interface AutoArgTypesTabsProps {
     of: ArgTypesProps["of"];
@@ -116,48 +114,28 @@ type StoriesModuleLike = {
     [key: string]: unknown;
 };
 
-/** Render plain ArgTypes as a safe fallback when grouping cannot be resolved. */
-function renderFallbackArgTypes(
-    of: ArgTypesProps["of"],
-    sort: ArgTypesProps["sort"]
-) {
-    return <ArgTypes of={of} sort={sort} />;
-}
-
-/**
- * Build per-tab ArgTypes row objects keyed exactly as generated.
- *
- * This avoids relying on include/exclude name matching behavior and ensures
- * each tab only renders rows that belong to its own tab group.
- */
-function buildTabRowsFromGeneratedArgTypes(
+/** Group generated argTypes rows by their tabGroup, applying union normalization. */
+function buildTabRows(
     generatedArgTypes: PureArgsTableRows,
     defaultTabTitle: string
 ): Array<{ title: string; rows: PureArgsTableRows }> {
-    const rowsBySubcategory = new Map<string, PureArgsTableRows>();
+    const rowsByTab = new Map<string, PureArgsTableRows>();
 
-    Object.entries(generatedArgTypes).forEach(([key, rawArgType]) => {
+    for (const [key, rawArgType] of Object.entries(generatedArgTypes)) {
         const argType = normalizeUnionTypeDisplay(
             rawArgType as GeneratedArgType["value"]
         );
-        const tabTitle = argType.table?.tabGroup ?? defaultTabTitle;
+        const tab = argType.table?.tabGroup ?? defaultTabTitle;
 
-        if (!rowsBySubcategory.has(tabTitle)) {
-            rowsBySubcategory.set(tabTitle, {});
+        if (!rowsByTab.has(tab)) {
+            rowsByTab.set(tab, {});
         }
 
-        const rows = rowsBySubcategory.get(tabTitle);
+        rowsByTab.get(tab)![key] = argType;
+    }
 
-        if (rows) {
-            rows[key] = argType;
-        }
-    });
-
-    return Array.from(rowsBySubcategory.entries())
-        .map(([title, rows]) => ({
-            title,
-            rows,
-        }))
+    return Array.from(rowsByTab.entries())
+        .map(([title, rows]) => ({ title, rows }))
         .sort((a, b) => {
             if (a.title === defaultTabTitle) return -1;
             if (b.title === defaultTabTitle) return 1;
@@ -165,16 +143,15 @@ function buildTabRowsFromGeneratedArgTypes(
         });
 }
 
-/** Resolve a story title from a Storybook stories module passed via `of`. */
-function getStoryTitleFromOf(
+/** Resolve the story title from a stories module passed via `of`. */
+function getStoryTitle(
     of: ArgTypesProps["of"]
 ): keyof typeof storybookArgTypesByTitle | undefined {
     if (!of || typeof of !== "object") {
         return undefined;
     }
 
-    const storiesModule = of as StoriesModuleLike;
-    const title = storiesModule.default?.title;
+    const title = (of as StoriesModuleLike).default?.title;
 
     if (!title || !(title in storybookArgTypesByTitle)) {
         return undefined;
@@ -185,39 +162,34 @@ function getStoryTitleFromOf(
 
 /**
  * Auto-render ArgTypes tabs from the global generated registry.
- *
- * This mode bypasses ArgTypes include/exclude matching and uses generated rows
- * directly (via `PureArgsTable`) so each tab reliably renders only its own
- * tab-group entries.
+ * Falls back to standard ArgTypes when the story can't be resolved.
  */
 export const AutoArgTypesTabs = ({
     of,
     sort = "alpha",
     defaultTabTitle = "Component",
 }: AutoArgTypesTabsProps): JSX.Element => {
-    const resolvedStoryTitle = getStoryTitleFromOf(of);
-
-    if (!resolvedStoryTitle) {
-        return renderFallbackArgTypes(of, sort);
-    }
-
-    const generatedArgTypes = storybookArgTypesByTitle[resolvedStoryTitle];
+    const storyTitle = getStoryTitle(of);
+    const generatedArgTypes = storyTitle
+        ? storybookArgTypesByTitle[storyTitle]
+        : undefined;
 
     if (!generatedArgTypes) {
-        return renderFallbackArgTypes(of, sort);
+        return <ArgTypes of={of} sort={sort} />;
     }
 
-    const tabRows = buildTabRowsFromGeneratedArgTypes(
+    const tabRows = buildTabRows(
         generatedArgTypes as PureArgsTableRows,
         defaultTabTitle
     );
 
-    if (tabRows.length === 0) {
-        return renderFallbackArgTypes(of, sort);
-    }
-
-    if (tabRows.length === 1) {
-        return <PureArgsTable rows={tabRows[0].rows} sort={sort} />;
+    if (tabRows.length <= 1) {
+        return (
+            <PureArgsTable
+                rows={tabRows[0]?.rows ?? {}}
+                sort={sort}
+            />
+        );
     }
 
     return (

@@ -42,7 +42,7 @@ export const accordionExtraArgTypes = {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },
@@ -115,7 +115,7 @@ export const accordionExtraArgTypes = {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -127,19 +127,7 @@ export const accordionExtraArgTypes = {
             category: "AccordionItemProps",
             tabGroup: "Accordion.Item",
             type: {
-                summary: "AccordionItemType",
-            },
-        },
-    },
-    AccordionItemType: {
-        control: false,
-        description: "Visual size variant for an `Accordion.Item`.",
-        name: "AccordionItemType",
-        table: {
-            category: "AccordionItemType",
-            tabGroup: "Accordion.Item",
-            type: {
-                summary: "'default' | 'small'",
+                summaryParts: ["'default'", "'small'"],
             },
         },
     },
@@ -150,7 +138,7 @@ export const accordionExtraArgTypes = {
             category: "AccordionProps",
             tabGroup: "Accordion",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },
@@ -229,7 +217,7 @@ export const accordionExtraArgTypes = {
             },
             tabGroup: "Accordion",
             type: {
-                summary: '"collapse-all" | "expand-all"',
+                summaryParts: ["'collapse-all'", "'expand-all'"],
             },
         },
     },

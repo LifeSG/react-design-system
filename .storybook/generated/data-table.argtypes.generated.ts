@@ -150,7 +150,7 @@ export const dataTableExtraArgTypes = {
                 summary: '"success"',
             },
             type: {
-                summary: "LoadStateType",
+                summaryParts: ["'loading'", "'success'"],
             },
         },
     },
@@ -249,6 +249,96 @@ export const dataTableExtraArgTypes = {
             },
         },
     },
+    "ErrorDisplayAttributes.actionButton": {
+        control: false,
+        description:
+            'Action button rendered below the description.\nDefaults to a "Proceed" label when `children` is omitted.',
+        name: "actionButton",
+        table: {
+            category: "ErrorDisplayAttributes",
+            type: {
+                summary: "ButtonProps",
+            },
+        },
+    },
+    "ErrorDisplayAttributes.additionalProps": {
+        control: false,
+        description:
+            'Type-specific attributes that inject dynamic content into the default description.\n\nRemarks:\nPass `MaintenanceAdditionalAttributes` when `type` is `"maintenance"` and\n`InactivityAdditionalAttributes` when `type` is `"inactivity"`. Ignored for all other types.',
+        name: "additionalProps",
+        table: {
+            category: "ErrorDisplayAttributes",
+            type: {
+                summaryParts: [
+                    "InactivityAdditionalAttributes",
+                    "MaintenanceAdditionalAttributes",
+                ],
+            },
+        },
+    },
+    "ErrorDisplayAttributes.description": {
+        control: false,
+        description:
+            'Overrides the default description for the selected `type`.\nWhen `additionalProps` is also provided for `"maintenance"` or\n`"inactivity"` types, `additionalProps` takes precedence.',
+        name: "description",
+        table: {
+            category: "ErrorDisplayAttributes",
+            type: {
+                summaryParts: ["JSX.Element", "string"],
+            },
+        },
+    },
+    "ErrorDisplayAttributes.illustrationScheme": {
+        control: false,
+        description:
+            "Selects the illustration resource scheme to use.\n\nRemarks:\nFalls back to the active theme scheme from `ThemeProvider` when omitted.",
+        name: "illustrationScheme",
+        table: {
+            category: "ErrorDisplayAttributes",
+            type: {
+                summary:
+                    "'a11y-playground' | 'bookingsg' | 'careercompass' | 'ccube' | 'imda' | 'lifesg' | 'mylegacy' | 'oneservice' | 'pa' | 'rbs' | 'sgw-digital-lobby' | 'smgs' | 'spf' | 'supportgowhere'",
+            },
+        },
+    },
+    "ErrorDisplayAttributes.imageOnly": {
+        control: false,
+        description:
+            "Renders only the illustration, hiding the title, description, and action button.",
+        name: "imageOnly",
+        table: {
+            category: "ErrorDisplayAttributes",
+            defaultValue: {
+                summary: "false",
+            },
+            type: {
+                summary: "boolean",
+            },
+        },
+    },
+    "ErrorDisplayAttributes.img": {
+        control: false,
+        description:
+            "Overrides the default illustration for the selected `type`.",
+        name: "img",
+        table: {
+            category: "ErrorDisplayAttributes",
+            type: {
+                summary: "React.ImgHTMLAttributes<HTMLImageElement>",
+            },
+        },
+    },
+    "ErrorDisplayAttributes.title": {
+        control: false,
+        description: "Overrides the default title for the selected `type`.",
+        name: "title",
+        table: {
+            category: "ErrorDisplayAttributes",
+            type: {
+                summaryParts: ["JSX.Element", "string"],
+            },
+        },
+    },
     "HeaderItemProps.clickable": {
         control: false,
         description:
@@ -319,18 +409,6 @@ export const dataTableExtraArgTypes = {
             },
         },
     },
-    LoadStateType: {
-        control: false,
-        description:
-            "Whether the table body is in a loading or data-ready state.",
-        name: "LoadStateType",
-        table: {
-            category: "LoadStateType",
-            type: {
-                summary: "'success' | 'loading'",
-            },
-        },
-    },
     "RowProps.[fieldKey: string]": {
         control: false,
         description:
@@ -352,7 +430,7 @@ export const dataTableExtraArgTypes = {
         table: {
             category: "RowProps",
             type: {
-                summary: "string | number",
+                summaryParts: ["number", "string"],
             },
         },
     },
@@ -374,17 +452,6 @@ export const dataTableExtraArgTypes = {
             category: "SortIndicatorsProps",
             type: {
                 summary: "'asc'\n| 'desc'",
-            },
-        },
-    },
-    SortIndicatorType: {
-        control: false,
-        description: "Direction of a column sort indicator.",
-        name: "SortIndicatorType",
-        table: {
-            category: "SortIndicatorType",
-            type: {
-                summary: "'asc' | 'desc'",
             },
         },
     },

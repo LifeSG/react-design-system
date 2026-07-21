@@ -9,18 +9,7 @@ export const textListExtraArgTypes = {
         table: {
             category: "BulletType",
             type: {
-                summary: "'none' | 'disc' | 'circle' | 'square'",
-            },
-        },
-    },
-    CounterType: {
-        control: false,
-        description: "Counter style applied to each item in an ordered list.",
-        name: "CounterType",
-        table: {
-            category: "CounterType",
-            type: {
-                summary: "'decimal' | 'lower-alpha' | 'lower-roman'",
+                summary: "'circle' | 'disc' | 'none' | 'square'",
             },
         },
     },
@@ -52,7 +41,7 @@ export const textListExtraArgTypes = {
         table: {
             category: "OrderedListProps",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },
@@ -90,7 +79,7 @@ export const textListExtraArgTypes = {
                 summary: '"decimal"',
             },
             type: {
-                summary: "CounterType",
+                summaryParts: ["'decimal'", "'lower-alpha'", "'lower-roman'"],
             },
         },
     },
@@ -133,7 +122,8 @@ export const textListExtraArgTypes = {
         table: {
             category: "OrderedListProps",
             type: {
-                summary: "TextListSize",
+                summary:
+                    "'body-baseline' | 'body-md' | 'body-sm' | 'body-xs' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xl' | 'heading-xs' | 'heading-xxl'",
             },
         },
     },
@@ -145,18 +135,6 @@ export const textListExtraArgTypes = {
             category: "OrderedListProps",
             type: {
                 summary: "number",
-            },
-        },
-    },
-    TextListSize: {
-        control: false,
-        description: "Text size tokens available for list content.",
-        name: "TextListSize",
-        table: {
-            category: "TextListSize",
-            type: {
-                summary:
-                    "'heading-xxl' | 'heading-xl' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xs' | 'body-baseline' | 'body-md' | 'body-sm' | 'body-xs'",
             },
         },
     },
@@ -193,7 +171,7 @@ export const textListExtraArgTypes = {
         table: {
             category: "UnorderedListProps",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },
@@ -234,7 +212,8 @@ export const textListExtraArgTypes = {
         table: {
             category: "UnorderedListProps",
             type: {
-                summary: "TextListSize",
+                summary:
+                    "'body-baseline' | 'body-md' | 'body-sm' | 'body-xs' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xl' | 'heading-xs' | 'heading-xxl'",
             },
         },
     },

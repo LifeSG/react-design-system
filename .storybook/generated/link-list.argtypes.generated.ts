@@ -55,16 +55,6 @@ export const linkListExtraArgTypes = {
             },
         },
     },
-    "LinkListItemProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "LinkListItemProps<T>",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "LinkListItemProps.onClick": {
         control: false,
         description:
@@ -154,7 +144,7 @@ export const linkListExtraArgTypes = {
             category: "LinkListProps<T>",
             type: {
                 summary:
-                    "BaseProps<T> & (LinkListEagerProps | LinkListLazyProps)",
+                    "LinkListBaseProps<T> & (LinkListEagerProps | LinkListLazyProps)",
             },
         },
     },
@@ -208,7 +198,7 @@ export const linkListExtraArgTypes = {
         table: {
             category: "LinkListProps<T>",
             type: {
-                summary: "'eager' | 'lazy'",
+                summaryParts: ["'eager'", "'lazy'"],
             },
         },
     },
@@ -235,22 +225,7 @@ export const linkListExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'default' | 'small'",
-            },
-        },
-    },
-    LinkListStyle: {
-        control: false,
-        description:
-            'Visual size variant for `LinkList` items.\n\n- `"default"` renders standard body text\n- `"small"` renders reduced text for compact layouts.',
-        name: "LinkListStyle",
-        table: {
-            category: "LinkListStyle",
-            defaultValue: {
-                summary: '"default"',
-            },
-            type: {
-                summary: "'default' | 'small'",
+                summaryParts: ["'default'", "'small'"],
             },
         },
     },

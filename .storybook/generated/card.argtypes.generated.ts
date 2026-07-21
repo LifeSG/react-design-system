@@ -21,14 +21,4 @@ export const cardExtraArgTypes = {
             },
         },
     },
-    "CardProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "CardProps",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
 } satisfies Record<string, unknown>;

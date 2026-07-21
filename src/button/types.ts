@@ -11,6 +11,11 @@ export type ButtonIconPosition = "left" | "right";
  */
 export interface ButtonProps
     extends React.ButtonHTMLAttributes<HTMLButtonElement> {
+    /**
+     * Test ID for the button element.
+     *
+     * @default "button"
+     */
     "data-testid"?: string | undefined;
     /**
      * Visual style variant of the button.
@@ -60,4 +65,5 @@ export interface ButtonProps
     iconPosition?: ButtonIconPosition | undefined;
 }
 
+// @storybookSkipProps
 export type ButtonRef = React.Ref<HTMLButtonElement>;

@@ -22,8 +22,10 @@ export const errorDisplayExtraArgTypes = {
         table: {
             category: "ErrorDisplayProps",
             type: {
-                summary:
-                    "MaintenanceAdditionalAttributes | InactivityAdditionalAttributes",
+                summaryParts: [
+                    "InactivityAdditionalAttributes",
+                    "MaintenanceAdditionalAttributes",
+                ],
             },
         },
     },
@@ -45,7 +47,7 @@ export const errorDisplayExtraArgTypes = {
         table: {
             category: "ErrorDisplayProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -57,7 +59,8 @@ export const errorDisplayExtraArgTypes = {
         table: {
             category: "ErrorDisplayProps",
             type: {
-                summary: "ThemeType",
+                summary:
+                    "'a11y-playground' | 'bookingsg' | 'careercompass' | 'ccube' | 'imda' | 'lifesg' | 'mylegacy' | 'oneservice' | 'pa' | 'rbs' | 'sgw-digital-lobby' | 'smgs' | 'spf' | 'supportgowhere'",
             },
         },
     },
@@ -88,16 +91,6 @@ export const errorDisplayExtraArgTypes = {
             },
         },
     },
-    "ErrorDisplayProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "ErrorDisplayProps",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "ErrorDisplayProps.title": {
         control: false,
         description: "Overrides the default title for the selected `type`.",
@@ -105,7 +98,7 @@ export const errorDisplayExtraArgTypes = {
         table: {
             category: "ErrorDisplayProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -117,19 +110,8 @@ export const errorDisplayExtraArgTypes = {
         table: {
             category: "ErrorDisplayProps",
             type: {
-                summary: "ErrorDisplayType",
-            },
-        },
-    },
-    ErrorDisplayType: {
-        control: false,
-        description: "Union of all supported error and status variants.",
-        name: "ErrorDisplayType",
-        table: {
-            category: "ErrorDisplayType",
-            type: {
                 summary:
-                    "'warning' | '400' | '403' | '404' | '408' | '500' | '502' | '503' | '504' | 'confirmation' | 'inactivity' | 'insufficient-credits' | 'link-error' | 'logout' | 'maintenance' | 'no-item-found' | 'payment-unsuccessful' | 'transfer-unsuccessful' | 'unsupported-browser' | 'partially-supported-browser'",
+                    "'400' | '403' | '404' | '408' | '500' | '502' | '503' | '504' | 'confirmation' | 'inactivity' | 'insufficient-credits' | 'link-error' | 'logout' | 'maintenance' | 'no-item-found' | 'partially-supported-browser' | 'payment-unsuccessful' | 'transfer-unsuccessful' | 'unsupported-browser' | 'warning'",
             },
         },
     },

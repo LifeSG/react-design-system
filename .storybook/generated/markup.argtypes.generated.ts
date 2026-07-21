@@ -31,17 +31,8 @@ export const markupExtraArgTypes = {
         table: {
             category: "MarkupProps",
             type: {
-                summary: "MarkupTextSize",
-            },
-        },
-    },
-    "MarkupProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "MarkupProps",
-            type: {
-                summary: "boolean | string",
+                summary:
+                    "'body-baseline' | 'body-md' | 'body-sm' | 'body-xs' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xl' | 'heading-xs' | 'heading-xxl'",
             },
         },
     },
@@ -56,17 +47,6 @@ export const markupExtraArgTypes = {
             },
             type: {
                 summary: "boolean",
-            },
-        },
-    },
-    MarkupTextSize: {
-        control: false,
-        name: "MarkupTextSize",
-        table: {
-            category: "MarkupTextSize",
-            type: {
-                summary:
-                    "'heading-xxl' | 'heading-xl' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xs' | 'body-baseline' | 'body-md' | 'body-sm' | 'body-xs'",
             },
         },
     },

@@ -9,7 +9,7 @@ export const tabExtraArgTypes = {
             category: "TabItemProps",
             tabGroup: "Tab.Item",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },
@@ -91,7 +91,7 @@ export const tabExtraArgTypes = {
             category: "TabProps",
             tabGroup: "Tab",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },
@@ -139,7 +139,7 @@ export const tabExtraArgTypes = {
             category: "TabProps",
             tabGroup: "Tab",
             type: {
-                summary: "string[] | FadeColorSet",
+                summaryParts: ["FadeColorSet", "string[]"],
             },
         },
     },
@@ -221,7 +221,7 @@ export const tabExtraArgTypes = {
             },
             tabGroup: "Tab.Item",
             type: {
-                summary: '"left" | "right"',
+                summaryParts: ["'left'", "'right'"],
             },
         },
     },

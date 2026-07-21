@@ -9,7 +9,7 @@ export const languageSwitcherExtraArgTypes = {
         table: {
             category: "LanguageSwitcherCode",
             type: {
-                summary: "'en' | 'zh' | 'ms' | 'ta'",
+                summary: "'en' | 'ms' | 'ta' | 'zh'",
             },
         },
     },
@@ -29,16 +29,6 @@ export const languageSwitcherExtraArgTypes = {
             category: "LanguageSwitcherProps",
             type: {
                 summary: "string",
-            },
-        },
-    },
-    "LanguageSwitcherProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "LanguageSwitcherProps",
-            type: {
-                summary: "boolean | string",
             },
         },
     },
@@ -64,7 +54,7 @@ export const languageSwitcherExtraArgTypes = {
                 summary: '"en"',
             },
             type: {
-                summary: "LanguageSwitcherCode",
+                summaryParts: ["'en'", "'ms'", "'ta'", "'zh'"],
             },
         },
     },
@@ -78,19 +68,7 @@ export const languageSwitcherExtraArgTypes = {
                 summary: '"dropdown"',
             },
             type: {
-                summary: "LanguageSwitcherVariant",
-            },
-        },
-    },
-    LanguageSwitcherVariant: {
-        control: false,
-        description:
-            'Presentation mode for the language switcher control.\n\n- `"dropdown"` renders a compact select control.\n- `"link-container"` renders languages as inline links.',
-        name: "LanguageSwitcherVariant",
-        table: {
-            category: "LanguageSwitcherVariant",
-            type: {
-                summary: "'dropdown' | 'link-container'",
+                summaryParts: ["'dropdown'", "'link-container'"],
             },
         },
     },

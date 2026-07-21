@@ -30,7 +30,7 @@ export const breadcrumbExtraArgTypes = {
         table: {
             category: "BreadcrumbProps",
             type: {
-                summary: "string[] | FadeColorSet",
+                summaryParts: ["FadeColorSet", "string[]"],
             },
         },
     },
@@ -45,7 +45,7 @@ export const breadcrumbExtraArgTypes = {
                 summary: '"both"',
             },
             type: {
-                summary: "FadePosition",
+                summaryParts: ["'both'", "'left'", "'right'"],
             },
         },
     },
@@ -85,7 +85,7 @@ export const breadcrumbExtraArgTypes = {
                 summary: '"chevron"',
             },
             type: {
-                summary: "SeparatorStyle",
+                summaryParts: ["'chevron'", "'slash'"],
             },
         },
     },
@@ -108,26 +108,6 @@ export const breadcrumbExtraArgTypes = {
             category: "FadeColorSet",
             type: {
                 summary: "string[]",
-            },
-        },
-    },
-    FadePosition: {
-        control: false,
-        name: "FadePosition",
-        table: {
-            category: "FadePosition",
-            type: {
-                summary: "'left' | 'right' | 'both'",
-            },
-        },
-    },
-    SeparatorStyle: {
-        control: false,
-        name: "SeparatorStyle",
-        table: {
-            category: "SeparatorStyle",
-            type: {
-                summary: "'chevron' | 'slash'",
             },
         },
     },

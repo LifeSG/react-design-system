@@ -216,7 +216,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
         table: {
             category: "FullscreenImageCarouselItemProps",
             type: {
-                summary: "'image' | 'custom'",
+                summaryParts: ["'custom'", "'image'"],
             },
         },
     },
@@ -230,7 +230,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
                 summary: '"bottom"',
             },
             type: {
-                summary: "ModalAnimationDirection",
+                summaryParts: ["'bottom'", "'left'", "'right'", "'top'"],
             },
         },
     },
@@ -389,6 +389,46 @@ export const fullscreenImageCarouselExtraArgTypes = {
         name: "zIndex",
         table: {
             category: "FullscreenImageCarouselProps",
+            type: {
+                summary: "number",
+            },
+        },
+    },
+    "Insets.bottom": {
+        control: false,
+        name: "bottom",
+        table: {
+            category: "Insets",
+            type: {
+                summary: "number",
+            },
+        },
+    },
+    "Insets.left": {
+        control: false,
+        name: "left",
+        table: {
+            category: "Insets",
+            type: {
+                summary: "number",
+            },
+        },
+    },
+    "Insets.right": {
+        control: false,
+        name: "right",
+        table: {
+            category: "Insets",
+            type: {
+                summary: "number",
+            },
+        },
+    },
+    "Insets.top": {
+        control: false,
+        name: "top",
+        table: {
+            category: "Insets",
             type: {
                 summary: "number",
             },

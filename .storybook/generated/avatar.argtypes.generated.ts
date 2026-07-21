@@ -19,7 +19,7 @@ export const avatarExtraArgTypes = {
         table: {
             category: "AvatarProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -33,16 +33,6 @@ export const avatarExtraArgTypes = {
             },
         },
     },
-    "AvatarProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "AvatarProps",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "AvatarProps.sizeType": {
         control: false,
         description:
@@ -51,18 +41,7 @@ export const avatarExtraArgTypes = {
         table: {
             category: "AvatarProps",
             type: {
-                summary: "AvatarSize",
-            },
-        },
-    },
-    AvatarSize: {
-        control: false,
-        description: "Visual size options for the `Avatar` component.",
-        name: "AvatarSize",
-        table: {
-            category: "AvatarSize",
-            type: {
-                summary: "'default' | 'small'",
+                summaryParts: ["'default'", "'small'"],
             },
         },
     },

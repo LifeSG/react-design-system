@@ -37,12 +37,12 @@ import type { GeneratedArgType } from "../stories/storybook-common/arg-types";
 // =============================================================================
 
 type JsDocMeta = {
-    defaultValue?: string | undefined;
-    deprecated?: string | boolean | undefined;
-    description?: string | undefined;
-    examples?: string[] | undefined;
-    remarks?: string | undefined;
-    tabGroups?: string[] | undefined;
+    defaultValue?: string;
+    deprecated?: string | boolean;
+    description?: string;
+    examples?: string[];
+    remarks?: string;
+    tabGroups?: string[];
 };
 
 type StorybookTaggedDeclarationNode =
@@ -50,7 +50,7 @@ type StorybookTaggedDeclarationNode =
     | TypeAliasDeclaration
     | VariableStatement;
 
-const sourceFileGlob = "src/**/types.ts";
+const sourceFileGlob = "src/*/types.ts";
 const watchRoots = ["src", "stories"];
 const storyFileGlob = "stories/**/*.stories.@(ts|tsx)";
 const storybookArgTypesFile = path.resolve(
@@ -282,16 +282,23 @@ function cleanType(type: string) {
         .replace(/\s+/g, " ")
         .trim();
 
-    // Strip unnecessary outer parens from function types: ((args) => Type) -> (args) => Type
-    if (
-        cleaned.startsWith("((") &&
-        cleaned.endsWith(")") &&
-        cleaned.includes("=>")
-    ) {
-        const inner = cleaned.slice(1, -1);
-        // Verify the inner content is balanced and is a valid function type
-        if (inner.startsWith("(") && inner.includes("=>")) {
-            cleaned = inner;
+    // Strip redundant outer parens: ((args) => Type) -> (args) => Type
+    // Only strip when the entire string is wrapped in one balanced pair of parens.
+    if (cleaned.startsWith("(") && cleaned.endsWith(")")) {
+        let depth = 0;
+        let outerWraps = true;
+
+        for (let i = 0; i < cleaned.length - 1; i++) {
+            if (cleaned[i] === "(") depth++;
+            if (cleaned[i] === ")") depth--;
+            if (depth === 0) {
+                outerWraps = false;
+                break;
+            }
+        }
+
+        if (outerWraps) {
+            cleaned = cleaned.slice(1, -1);
         }
     }
 
@@ -307,9 +314,7 @@ function splitTopLevelUnionMembers(typeText: string) {
     let braceDepth = 0;
     let angleDepth = 0;
 
-    for (let index = 0; index < typeText.length; index++) {
-        const char = typeText[index];
-
+    for (const char of typeText) {
         if (char === "(") parenDepth++;
         if (char === ")") parenDepth = Math.max(0, parenDepth - 1);
         if (char === "[") bracketDepth++;
@@ -352,6 +357,34 @@ function formatUnionSummary(typeText: string) {
 }
 
 /**
+ * Check if a union type contains only literal types (strings, numbers, booleans).
+ * Returns true for "simple" unions that should be inlined in properties.
+ */
+function isSimpleLiteralUnion(type: Type): boolean {
+    const nonNullableType = type.getNonNullableType();
+
+    if (!nonNullableType.isUnion()) {
+        return false;
+    }
+
+    const unionTypes = nonNullableType.getUnionTypes();
+
+    // Exclude boolean unions (true | false) — keep them as "boolean" instead
+    const hasBooleanLiterals = unionTypes.some((t) => t.isBooleanLiteral());
+    const hasOnlyBooleanLiterals =
+        hasBooleanLiterals && unionTypes.every((t) => t.isBooleanLiteral());
+
+    if (hasOnlyBooleanLiterals) {
+        return false;
+    }
+
+    return unionTypes.every(
+        (t) =>
+            t.isStringLiteral() || t.isNumberLiteral() || t.isBooleanLiteral()
+    );
+}
+
+/**
  * Expand a type to its literal union members when fully resolvable.
  * e.g. `Exclude<FontSize, "form-label">` -> `"heading-xxl" | "heading-xl" | ...`
  */
@@ -377,6 +410,7 @@ function getExpandedLiteralUnionText(type: Type, contextNode: Node) {
     return cleanType(
         unionTypes
             .map((unionType) => unionType.getText(contextNode, typeFormatFlags))
+            .sort((a, b) => a.localeCompare(b))
             .join(" | ")
     );
 }
@@ -390,6 +424,43 @@ function getSummaryTypeText(
         getExpandedLiteralUnionText(type, contextNode) ||
         cleanType(fallbackText ?? type.getText(contextNode, typeFormatFlags))
     );
+}
+
+/**
+ * Get union member texts from a type using ts-morph's type resolution.
+ */
+function getUnionMemberTexts(
+    type: Type,
+    contextNode: Node
+): string[] | undefined {
+    const nonNullableType = type.getNonNullableType();
+
+    if (!nonNullableType.isUnion()) {
+        return undefined;
+    }
+
+    // Skip boolean (TypeScript resolves it to `true | false` internally)
+    if (nonNullableType.isBoolean()) {
+        return undefined;
+    }
+
+    const unionTypes = nonNullableType.getUnionTypes();
+
+    // Skip overly complex unions (e.g. React.ReactNode expands to many internal types)
+    if (unionTypes.length > 6) {
+        return undefined;
+    }
+
+    // Skip if any member contains import() expressions (internal React types)
+    const parts = unionTypes
+        .map((t) => cleanType(t.getText(contextNode, typeFormatFlags)))
+        .sort((a, b) => a.localeCompare(b));
+
+    if (parts.some((p) => p.includes("import("))) {
+        return undefined;
+    }
+
+    return parts;
 }
 
 function getPropertyTypeText(property: PropertySignature) {
@@ -471,7 +542,7 @@ function getImportPathForIdentifier(fileText: string, identifier: string) {
         `import\\s+(?:\\{[^}]*\\b${identifier}\\b[^}]*\\}|${identifier})\\s+from\\s+["']([^"']+)["']`
     );
 
-    return fileText.match(importRegex)?.[1];
+    return importRegex.exec(fileText)?.[1];
 }
 
 /** Build file resolution candidates: [exact, .ts, .tsx, /index.ts, /index.tsx]. */
@@ -565,13 +636,17 @@ function isSkippedFile(sourceFile: SourceFile) {
 // ArgType Row Construction
 // =============================================================================
 
-/** Single factory for building a GeneratedArgType row. All 7 construction sites funnel through here. */
+/** Matches React HTML attribute interfaces (e.g. HTMLAttributes, ButtonHTMLAttributes, React.HTMLAttributes). */
+const HTML_ATTRIBUTES_REGEX = /(?:React\.)?\w*HTMLAttributes?$/;
+
+/** Single factory for building a GeneratedArgType row. All construction sites funnel through here. */
 function buildArgTypeRow(opts: {
     key: string;
     name: string;
     category: string;
     tabGroup?: string;
     typeSummary?: string;
+    typeSummaryParts?: string[];
     defaultValue?: string;
     deprecated?: string | boolean;
     description?: string;
@@ -589,9 +664,10 @@ function buildArgTypeRow(opts: {
                     ? { summary: opts.defaultValue }
                     : undefined,
                 tabGroup: opts.tabGroup,
-                type: {
-                    summary: opts.typeSummary,
-                },
+                type:
+                    opts.typeSummaryParts && opts.typeSummaryParts.length > 1
+                        ? { summaryParts: opts.typeSummaryParts }
+                        : { summary: opts.typeSummary },
             },
         },
     };
@@ -610,25 +686,29 @@ function getCategoryName(
     return declaration.getTypeParameters().length > 0 ? `${name}<T>` : name;
 }
 
-/** Check whether a symbol's declaration originates from node_modules. */
-function isFromNodeModules(symbol: TsMorphSymbol) {
+/** Check whether a symbol's declaration originates from outside component source (node_modules or type augmentation files). */
+function isExternalDeclaration(symbol: TsMorphSymbol) {
     const declaration = symbol.getDeclarations()[0];
 
     if (!declaration) {
         return true;
     }
 
-    return declaration.getSourceFile().getFilePath().includes("node_modules");
+    const filePath = declaration.getSourceFile().getFilePath();
+
+    return (
+        filePath.includes("node_modules") || filePath.includes("custom-types/")
+    );
 }
 
-/** Get own (non-node_modules) properties from a type, sorted alphabetically. */
+/** Get own (non-external) properties from a type, sorted alphabetically. */
 function getResolvedProperties(
     declaration: InterfaceDeclaration | TypeAliasDeclaration
 ) {
     return declaration
         .getType()
         .getProperties()
-        .filter((symbol) => !isFromNodeModules(symbol))
+        .filter((symbol) => !isExternalDeclaration(symbol))
         .sort((a, b) => a.getName().localeCompare(b.getName()));
 }
 
@@ -640,6 +720,64 @@ function getPropertyDeclaration(symbol: TsMorphSymbol) {
             (d): d is PropertySignature =>
                 d.getKindName() === "PropertySignature"
         );
+}
+
+/**
+ * Collect type names that appear in "wrapped" contexts — arrays, generics,
+ * complex unions, or function signatures. These types need their own category
+ * rows even if they're simple literal unions, because their values can't be
+ * inlined at the usage site.
+ *
+ * A property like `size: ButtonSize` is NOT wrapped (the union can be inlined).
+ * A property like `sizes: ButtonSize[]` IS wrapped (ButtonSize needs its own row).
+ */
+function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
+    const wrappedNames = new Set<string>();
+
+    // Collect all type names visible in this file: local definitions + named imports
+    const knownTypeNames = new Set([
+        ...sourceFile.getInterfaces().map((i) => i.getName()),
+        ...sourceFile.getTypeAliases().map((t) => t.getName()),
+        ...sourceFile
+            .getImportDeclarations()
+            .flatMap((decl) =>
+                decl.getNamedImports().map((ni) => ni.getName())
+            ),
+    ]);
+
+    for (const declaration of [
+        ...sourceFile.getInterfaces(),
+        ...sourceFile.getTypeAliases(),
+    ]) {
+        for (const prop of declaration.getType().getProperties()) {
+            const propDecl = prop
+                .getDeclarations()
+                .find(
+                    (d): d is PropertySignature =>
+                        d.getKindName() === "PropertySignature"
+                );
+
+            if (!propDecl) continue;
+
+            const propType = propDecl.getType();
+
+            // If the property's resolved type is itself a simple literal union,
+            // the type name is NOT wrapped — it can be inlined at this usage site.
+            if (isSimpleLiteralUnion(propType)) continue;
+
+            // Otherwise, any known type name referenced in this property's type
+            // text is considered "wrapped" and needs its own category row.
+            const typeText = propDecl.getTypeNode()?.getText() ?? "";
+
+            for (const name of knownTypeNames) {
+                if (new RegExp(`\\b${name}\\b`).test(typeText)) {
+                    wrappedNames.add(name);
+                }
+            }
+        }
+    }
+
+    return wrappedNames;
 }
 
 // =============================================================================
@@ -655,9 +793,9 @@ function getInheritedHtmlAttributesRow(
     const inheritedElementTypes = interfaceDeclaration
         .getExtends()
         .filter((extendNode) => {
-            const expressionText = extendNode.getExpression().getText();
-
-            return /(?:React\.)?\w*HTMLAttributes?$/.test(expressionText);
+            return HTML_ATTRIBUTES_REGEX.test(
+                extendNode.getExpression().getText()
+            );
         })
         .map((extendNode) => extendNode.getTypeArguments()[0]?.getText())
         .filter((typeText): typeText is string => Boolean(typeText))
@@ -758,6 +896,15 @@ function getInterfaceArgTypes(
         const propertyName = getPropertyName(property);
         const jsDocMeta = getJsDocMeta(property);
 
+        // Resolve the property type to check for simple literal unions to inline
+        const resolvedType = symbol.getTypeAtLocation(interfaceDeclaration);
+        let typeSummary = getPropertyTypeText(property);
+
+        // If the resolved type is a simple literal union, use the expanded version
+        if (isSimpleLiteralUnion(resolvedType)) {
+            typeSummary = getSummaryTypeText(resolvedType, property);
+        }
+
         return [
             buildArgTypeRow({
                 category,
@@ -766,8 +913,9 @@ function getInterfaceArgTypes(
                 description: toStorybookDescription(jsDocMeta),
                 key: `${interfaceName}.${propertyName}`,
                 name: propertyName,
+                typeSummaryParts: getUnionMemberTexts(resolvedType, property),
                 tabGroup: interfaceJsDocMeta.tabGroups?.[0],
-                typeSummary: getPropertyTypeText(property),
+                typeSummary,
             }),
         ];
     });
@@ -801,11 +949,19 @@ function getInterfaceArgTypes(
 
 function getTypeAliasArgTypes(
     sourceFile: SourceFile,
-    typeName: string
+    typeName: string,
+    wrappedTypeNames?: Set<string>
 ): GeneratedArgType[] {
     const typeAlias = sourceFile.getTypeAliasOrThrow(typeName);
     const jsDocMeta = getJsDocMeta(typeAlias);
     const category = getCategoryName(typeName, typeAlias);
+
+    // Skip simple literal unions only if they're NOT used in wrapped contexts.
+    // If wrapped (e.g., TypeName[]), we need the category entry for documentation.
+    const isWrapped = wrappedTypeNames?.has(typeName);
+    if (isSimpleLiteralUnion(typeAlias.getType()) && !isWrapped) {
+        return [];
+    }
 
     const typeNodeKind = typeAlias.getTypeNodeOrThrow().getKindName();
     const isOmitAlias = /^Omit<.+>$/.test(
@@ -853,11 +1009,27 @@ function getTypeAliasArgTypes(
                     name: propertyName,
                     tabGroup: jsDocMeta.tabGroups?.[0],
                     typeSummary: propertySummary,
+                    typeSummaryParts: getUnionMemberTexts(
+                        resolvedSymbolType,
+                        typeAlias
+                    ),
                 }),
             ];
         });
 
         if (!isCompositeAlias) {
+            return propertyRows;
+        }
+
+        // Skip when the intersection includes unresolvable generic
+        // utility types (e.g. React.ComponentPropsWithoutRef<T>).
+        const typeNodeText = typeAlias.getTypeNodeOrThrow().getText();
+        const hasUnresolvableGeneric =
+            /ComponentPropsWithoutRef|ComponentPropsWithRef|HTMLAttributes/.test(
+                typeNodeText
+            );
+
+        if (hasUnresolvableGeneric) {
             return propertyRows;
         }
 
@@ -874,14 +1046,15 @@ function getTypeAliasArgTypes(
                 typeSummary: getSummaryTypeText(
                     typeAlias.getType(),
                     typeAlias,
-                    typeAlias.getTypeNodeOrThrow().getText()
+                    typeNodeText
                 ),
             }),
             ...propertyRows,
         ];
     }
 
-    // Simple type aliases (e.g. string unions, mapped types): single summary row
+    // Non-expandable type aliases (mapped types, generics, etc.): single summary row
+    // (Simple literal unions are already skipped earlier and inlined in properties)
     return [
         buildArgTypeRow({
             category,
@@ -911,6 +1084,14 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
     const outputFile = getOutputFile(sourceFilePath);
     const exportName = getExportName(sourceFilePath);
 
+    // Compute once and reuse across all local type processing
+    const wrappedTypeNames = getWrappedTypeNames(sourceFile);
+
+    const localTypeNames = new Set([
+        ...sourceFile.getInterfaces().map((i) => i.getName()),
+        ...sourceFile.getTypeAliases().map((t) => t.getName()),
+    ]);
+
     const rows = [
         ...sourceFile.getInterfaces().flatMap((declaration) => {
             if (hasSkipTag(declaration)) {
@@ -924,8 +1105,51 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                 return [];
             }
 
-            return getTypeAliasArgTypes(sourceFile, declaration.getName());
+            return getTypeAliasArgTypes(
+                sourceFile,
+                declaration.getName(),
+                wrappedTypeNames
+            );
         }),
+        // For wrapped types that are imported from non-node_modules source files,
+        // generate rows by resolving them from their origin file.
+        ...[...wrappedTypeNames]
+            .filter((name) => !localTypeNames.has(name))
+            .flatMap((name) => {
+                for (const importDecl of sourceFile.getImportDeclarations()) {
+                    const hasName = importDecl
+                        .getNamedImports()
+                        .some((ni) => ni.getName() === name);
+
+                    if (!hasName) {
+                        continue;
+                    }
+
+                    const importedFile =
+                        importDecl.getModuleSpecifierSourceFile();
+
+                    if (
+                        !importedFile ||
+                        importedFile.getFilePath().includes("node_modules")
+                    ) {
+                        continue;
+                    }
+
+                    if (importedFile.getInterface(name)) {
+                        return getInterfaceArgTypes(importedFile, name);
+                    }
+
+                    if (importedFile.getTypeAlias(name)) {
+                        return getTypeAliasArgTypes(
+                            importedFile,
+                            name,
+                            getWrappedTypeNames(importedFile)
+                        );
+                    }
+                }
+
+                return [];
+            }),
     ];
 
     const sortedRows = rows.toSorted((a, b) => a.key.localeCompare(b.key));
@@ -1113,19 +1337,14 @@ async function main() {
 
             if (isStoryFile(filePath)) {
                 await generateStorybookArgTypesRegistry();
-                formatGenerated();
-                return;
-            }
-
-            if (eventName === "unlink") {
+            } else if (eventName === "unlink") {
                 await fs.rm(getOutputFile(resolvedFilePath), { force: true });
                 await generateStorybookArgTypesRegistry();
-                formatGenerated();
-                return;
+            } else {
+                await generateForSourceFile(createProject(), resolvedFilePath);
+                await generateStorybookArgTypesRegistry();
             }
 
-            await generateForSourceFile(createProject(), resolvedFilePath);
-            await generateStorybookArgTypesRegistry();
             formatGenerated();
         } catch (error) {
             console.error("[storybook:argtypes] failed to regenerate");

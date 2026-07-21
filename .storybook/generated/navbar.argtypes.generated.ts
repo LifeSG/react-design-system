@@ -10,7 +10,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "BrandType",
             type: {
-                summary: "'secondary' | 'primary'",
+                summary: "'primary' | 'secondary'",
             },
         },
     },
@@ -22,7 +22,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "DrawerDismissalMethod",
             type: {
-                summary: "'close-button-click' | 'item-click' | 'brand-click'",
+                summary: "'brand-click' | 'close-button-click' | 'item-click'",
             },
         },
     },
@@ -207,7 +207,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavbarButtonProps",
             type: {
-                summary: "ButtonProps | NavbarButtonComponentProps",
+                summaryParts: ["ButtonProps", "NavbarButtonComponentProps"],
             },
         },
     },
@@ -217,7 +217,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavbarButtonProps",
             type: {
-                summary: "'button' | 'download' | 'component'",
+                summaryParts: ["'button'", "'component'", "'download'"],
             },
         },
     },
@@ -410,7 +410,7 @@ export const navbarExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: '"default" | "stretch"',
+                summaryParts: ["'default'", "'stretch'"],
             },
         },
     },
@@ -544,16 +544,6 @@ export const navbarExtraArgTypes = {
             },
         },
     },
-    "NavItemCommonProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "NavItemCommonProps<T>",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "NavItemCommonProps.options": {
         control: false,
         description:
@@ -576,7 +566,7 @@ export const navbarExtraArgTypes = {
                 summary: '"underline"',
             },
             type: {
-                summary: "TypographyUnderlineStyle",
+                summaryParts: ["'none'", "'underline'"],
             },
         },
     },
@@ -590,7 +580,7 @@ export const navbarExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "TypographyWeight",
+                summaryParts: ["'bold'", "'light'", "'regular'", "'semibold'"],
             },
         },
     },
@@ -646,16 +636,6 @@ export const navbarExtraArgTypes = {
             },
         },
     },
-    "NavItemLinkProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "NavItemLinkProps<T>",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "NavItemLinkProps.itemType": {
         control: false,
         name: "itemType",
@@ -698,7 +678,7 @@ export const navbarExtraArgTypes = {
                 summary: '"underline"',
             },
             type: {
-                summary: "TypographyUnderlineStyle",
+                summaryParts: ["'none'", "'underline'"],
             },
         },
     },
@@ -712,7 +692,7 @@ export const navbarExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "TypographyWeight",
+                summaryParts: ["'bold'", "'light'", "'regular'", "'semibold'"],
             },
         },
     },
@@ -733,7 +713,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavItemProps<T>",
             type: {
-                summary: 'import("react").ReactNode | JSX.Element',
+                summary: 'JSX.Element | import("react").ReactNode',
             },
         },
     },
@@ -743,7 +723,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavItemProps<T>",
             type: {
-                summary: "'link' | 'component'",
+                summaryParts: ["'component'", "'link'"],
             },
         },
     },
