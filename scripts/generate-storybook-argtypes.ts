@@ -155,10 +155,21 @@ function getJsDocMeta(
         | VariableStatement
         | TypeAliasDeclaration
 ): JsDocMeta {
+    const tabGroups =
+        node.getKindName() === "InterfaceDeclaration" ||
+        node.getKindName() === "TypeAliasDeclaration" ||
+        node.getKindName() === "VariableStatement"
+            ? getStorybookSectionsFromLeadingComment(
+                  node as StorybookTaggedDeclarationNode
+              )
+            : [];
+
     const docs = node.getJsDocs();
 
     if (!docs.length) {
-        return {};
+        return {
+            tabGroups: tabGroups.length > 0 ? tabGroups : undefined,
+        };
     }
 
     const description =
@@ -200,15 +211,6 @@ function getJsDocMeta(
             continue;
         }
     }
-
-    const tabGroups =
-        node.getKindName() === "InterfaceDeclaration" ||
-        node.getKindName() === "TypeAliasDeclaration" ||
-        node.getKindName() === "VariableStatement"
-            ? getStorybookSectionsFromLeadingComment(
-                  node as StorybookTaggedDeclarationNode
-              )
-            : [];
 
     return {
         description,
@@ -738,11 +740,13 @@ function getPropertyDeclaration(symbol: TsMorphSymbol) {
  * rows even if they're simple literal unions, because their values can't be
  * inlined at the usage site.
  *
- * A property like `size: ButtonSize` is NOT wrapped (the union can be inlined).
- * A property like `sizes: ButtonSize[]` IS wrapped (ButtonSize needs its own row).
+ * Returns a Map of type name → tabGroup (inherited from the declaring interface/type).
+ * This allows imported types to be placed in the same tab as the property that uses them.
  */
-function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
-    const wrappedNames = new Set<string>();
+function getWrappedTypeNames(
+    sourceFile: SourceFile
+): Map<string, string | undefined> {
+    const wrappedNames = new Map<string, string | undefined>();
 
     // Collect all type names visible in this file: local definitions + named imports
     const knownTypeNames = new Set([
@@ -759,6 +763,8 @@ function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
         ...sourceFile.getInterfaces(),
         ...sourceFile.getTypeAliases(),
     ]) {
+        const declarationTabGroup = getJsDocMeta(declaration).tabGroups?.[0];
+
         for (const prop of declaration.getType().getProperties()) {
             const propDecl = prop
                 .getDeclarations()
@@ -781,7 +787,10 @@ function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
 
             for (const name of knownTypeNames) {
                 if (new RegExp(`\\b${name}\\b`).test(typeText)) {
-                    wrappedNames.add(name);
+                    // First reference wins for tabGroup assignment
+                    if (!wrappedNames.has(name)) {
+                        wrappedNames.set(name, declarationTabGroup);
+                    }
                 }
             }
         }
@@ -797,8 +806,8 @@ function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
 function getInheritedHtmlAttributesRow(
     interfaceName: string,
     interfaceDeclaration: InterfaceDeclaration,
-    interfaceJsDocMeta: JsDocMeta,
-    category: string
+    category: string,
+    tabGroup: string | undefined
 ): GeneratedArgType | undefined {
     const inheritedElementTypes = interfaceDeclaration
         .getExtends()
@@ -827,26 +836,29 @@ function getInheritedHtmlAttributesRow(
         key: `${interfaceName}.__inheritedHtmlProps`,
         name: "",
         category,
-        tabGroup: interfaceJsDocMeta.tabGroups?.[0],
+        tabGroup,
         description: inheritedDescription,
     });
 }
 
 function getInterfaceArgTypes(
     sourceFile: SourceFile,
-    interfaceName: string
+    interfaceName: string,
+    tabGroupOverride?: string
 ): GeneratedArgType[] {
     const interfaceDeclaration = sourceFile.getInterfaceOrThrow(interfaceName);
     const interfaceJsDocMeta = getJsDocMeta(interfaceDeclaration);
-    const declaredTabGroups = interfaceJsDocMeta.tabGroups ?? [];
+    const declaredTabGroups = tabGroupOverride
+        ? [tabGroupOverride]
+        : (interfaceJsDocMeta.tabGroups ?? []);
     const hasMultipleTabs = declaredTabGroups.length > 1;
 
     const category = getCategoryName(interfaceName, interfaceDeclaration);
     const inheritedHtmlAttributesRow = getInheritedHtmlAttributesRow(
         interfaceName,
         interfaceDeclaration,
-        interfaceJsDocMeta,
-        category
+        category,
+        declaredTabGroups[0]
     );
 
     // An interface with no own members is treated as a pass-through alias:
@@ -865,7 +877,7 @@ function getInterfaceArgTypes(
                 key: interfaceName,
                 name: "",
                 category,
-                tabGroup: interfaceJsDocMeta.tabGroups?.[0],
+                tabGroup: declaredTabGroups[0],
                 deprecated: interfaceJsDocMeta.deprecated,
                 description: toStorybookDescription(interfaceJsDocMeta),
             }),
@@ -891,7 +903,7 @@ function getInterfaceArgTypes(
                 description: toStorybookDescription(jsDocMeta),
                 key: `${interfaceName}.${displayName}`,
                 name: displayName,
-                tabGroup: interfaceJsDocMeta.tabGroups?.[0],
+                tabGroup: declaredTabGroups[0],
                 typeSummary: getIndexSignatureTypeText(indexSignature),
             });
         });
@@ -925,7 +937,7 @@ function getInterfaceArgTypes(
                 name: propertyName,
                 typeSummaryParts: getUnionMemberTexts(resolvedType, property),
                 required: !property.hasQuestionToken(),
-                tabGroup: interfaceJsDocMeta.tabGroups?.[0],
+                tabGroup: declaredTabGroups[0],
                 typeSummary,
             }),
         ];
@@ -961,10 +973,14 @@ function getInterfaceArgTypes(
 function getTypeAliasArgTypes(
     sourceFile: SourceFile,
     typeName: string,
-    wrappedTypeNames?: Set<string>
+    wrappedTypeNames?: Map<string, string | undefined>,
+    tabGroupOverride?: string
 ): GeneratedArgType[] {
     const typeAlias = sourceFile.getTypeAliasOrThrow(typeName);
     const jsDocMeta = getJsDocMeta(typeAlias);
+    if (tabGroupOverride) {
+        jsDocMeta.tabGroups = [tabGroupOverride];
+    }
     const category = getCategoryName(typeName, typeAlias);
 
     // Skip simple literal unions only if they're NOT used in wrapped contexts.
@@ -1125,9 +1141,10 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
         }),
         // For wrapped types that are imported from non-node_modules source files,
         // generate rows by resolving them from their origin file.
-        ...[...wrappedTypeNames]
-            .filter((name) => !localTypeNames.has(name))
-            .flatMap((name) => {
+        // Each imported type inherits the tabGroup of the property that references it.
+        ...[...wrappedTypeNames.entries()]
+            .filter(([name]) => !localTypeNames.has(name))
+            .flatMap(([name, tabGroup]) => {
                 for (const importDecl of sourceFile.getImportDeclarations()) {
                     const hasName = importDecl
                         .getNamedImports()
@@ -1148,14 +1165,19 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                     }
 
                     if (importedFile.getInterface(name)) {
-                        return getInterfaceArgTypes(importedFile, name);
+                        return getInterfaceArgTypes(
+                            importedFile,
+                            name,
+                            tabGroup
+                        );
                     }
 
                     if (importedFile.getTypeAlias(name)) {
                         return getTypeAliasArgTypes(
                             importedFile,
                             name,
-                            getWrappedTypeNames(importedFile)
+                            getWrappedTypeNames(importedFile),
+                            tabGroup
                         );
                     }
                 }

@@ -232,6 +232,20 @@ export const navbarExtraArgTypes = {
             },
         },
     },
+    NavbarButtonProps: {
+        control: false,
+        description:
+            'Props for a single action button in the navbar.\n\n`type` discriminates between `"button"`, `"download"`, and `"component"`.',
+        name: "NavbarButtonProps",
+        type: {},
+        table: {
+            category: "NavbarButtonProps",
+            type: {
+                summary:
+                    "NavbarActionButtonDownloadProps | NavbarActionButtonCtaProps | NavbarActionButtonComponentProps",
+            },
+        },
+    },
     "NavbarButtonProps.args": {
         control: false,
         name: "args",
@@ -847,6 +861,18 @@ export const navbarExtraArgTypes = {
             },
             type: {
                 summaryParts: ["'bold'", "'light'", "'regular'", "'semibold'"],
+            },
+        },
+    },
+    NavItemProps: {
+        control: false,
+        description: "A single navigation item rendered by the navbar.",
+        name: "NavItemProps<T>",
+        type: {},
+        table: {
+            category: "NavItemProps<T>",
+            type: {
+                summary: "NavItemLinkProps<T> | NavItemComponentProps",
             },
         },
     },
