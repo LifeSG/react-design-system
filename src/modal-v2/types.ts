@@ -9,6 +9,10 @@ export type ModalAnimationDirection = "top" | "bottom" | "left" | "right";
 export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
     children: React.ReactNode;
+    /**
+     * Ref to the DOM element of the modal box.
+     */
+    elementRef?: React.Ref<HTMLDivElement> | undefined;
 }
 
 /**

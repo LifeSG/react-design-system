@@ -5,6 +5,7 @@ import type { NamedExoticComponent } from "react";
 import { forwardRef } from "react";
 
 import { ClickableIcon } from "../shared/clickable-icon";
+import { mergeRefs } from "../util";
 import * as styles from "./modal-box.styles";
 import type { ModalBoxProps } from "./types";
 
@@ -15,10 +16,13 @@ function ModalBoxInner(
         onClose,
         showCloseButton = true,
         className,
+        elementRef,
         ...otherProps
     }: ModalBoxProps,
     ref: React.ForwardedRef<HTMLDivElement>
 ) {
+    const mergedRef = elementRef ? mergeRefs(ref, elementRef) : ref;
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -45,7 +49,7 @@ function ModalBoxInner(
 
     return (
         <div
-            ref={ref}
+            ref={mergedRef}
             data-testid={id}
             {...otherProps}
             onClick={handleOnClick}
