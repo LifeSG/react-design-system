@@ -165,7 +165,7 @@ export const dateNavigatorExtraArgTypes = {
                 summary: '"day"',
             },
             type: {
-                summary: "'day' | 'week'",
+                summaryParts: ["'day'", "'week'"],
             },
         },
     },

@@ -54,7 +54,7 @@ export const languageSwitcherExtraArgTypes = {
                 summary: '"en"',
             },
             type: {
-                summary: "'en' | 'ms' | 'ta' | 'zh'",
+                summaryParts: ["'en'", "'ms'", "'ta'", "'zh'"],
             },
         },
     },
@@ -68,7 +68,7 @@ export const languageSwitcherExtraArgTypes = {
                 summary: '"dropdown"',
             },
             type: {
-                summary: "'dropdown' | 'link-container'",
+                summaryParts: ["'dropdown'", "'link-container'"],
             },
         },
     },

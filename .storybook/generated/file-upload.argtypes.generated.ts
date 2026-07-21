@@ -128,7 +128,7 @@ export const fileUploadExtraArgTypes = {
         table: {
             category: "FileUploadProps",
             type: {
-                summary: "'environment' | 'user' | false | true",
+                summaryParts: ["'environment'", "'user'", "false", "true"],
             },
         },
     },
@@ -172,7 +172,7 @@ export const fileUploadExtraArgTypes = {
         table: {
             category: "FileUploadProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -236,7 +236,7 @@ export const fileUploadExtraArgTypes = {
         table: {
             category: "FileUploadProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -393,7 +393,7 @@ export const fileUploadExtraArgTypes = {
                 summary: '"bordered"',
             },
             type: {
-                summary: "'bordered' | 'no-border'",
+                summaryParts: ["'bordered'", "'no-border'"],
             },
         },
     },
@@ -405,7 +405,7 @@ export const fileUploadExtraArgTypes = {
         table: {
             category: "FileUploadProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -417,7 +417,7 @@ export const fileUploadExtraArgTypes = {
         table: {
             category: "FileUploadProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -459,7 +459,7 @@ export const fileUploadExtraArgTypes = {
         table: {
             category: "FormLabelProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },

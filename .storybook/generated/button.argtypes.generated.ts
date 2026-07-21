@@ -76,7 +76,7 @@ export const buttonExtraArgTypes = {
                 summary: '"left"',
             },
             type: {
-                summary: "'left' | 'right'",
+                summaryParts: ["'left'", "'right'"],
             },
         },
     },
@@ -105,7 +105,7 @@ export const buttonExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'default' | 'large' | 'small'",
+                summaryParts: ["'default'", "'large'", "'small'"],
             },
         },
     },
@@ -119,7 +119,7 @@ export const buttonExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'default' | 'light' | 'link' | 'secondary'",
+                summaryParts: ["'default'", "'light'", "'link'", "'secondary'"],
             },
         },
     },

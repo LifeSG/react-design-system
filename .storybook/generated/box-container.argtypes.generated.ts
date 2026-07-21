@@ -20,7 +20,7 @@ export const boxContainerExtraArgTypes = {
         table: {
             category: "BoxContainerProps",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },
@@ -82,7 +82,7 @@ export const boxContainerExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'default' | 'error' | 'warning'",
+                summaryParts: ["'default'", "'error'", "'warning'"],
             },
         },
     },
@@ -126,7 +126,7 @@ export const boxContainerExtraArgTypes = {
         table: {
             category: "BoxContainerProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },

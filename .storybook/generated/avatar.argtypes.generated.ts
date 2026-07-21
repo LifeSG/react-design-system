@@ -19,7 +19,7 @@ export const avatarExtraArgTypes = {
         table: {
             category: "AvatarProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -41,7 +41,7 @@ export const avatarExtraArgTypes = {
         table: {
             category: "AvatarProps",
             type: {
-                summary: "'default' | 'small'",
+                summaryParts: ["'default'", "'small'"],
             },
         },
     },

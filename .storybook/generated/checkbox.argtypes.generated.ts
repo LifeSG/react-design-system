@@ -33,7 +33,7 @@ export const checkboxExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'default' | 'small'",
+                summaryParts: ["'default'", "'small'"],
             },
         },
     },

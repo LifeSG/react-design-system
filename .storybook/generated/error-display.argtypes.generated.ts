@@ -22,8 +22,10 @@ export const errorDisplayExtraArgTypes = {
         table: {
             category: "ErrorDisplayProps",
             type: {
-                summary:
-                    "MaintenanceAdditionalAttributes | InactivityAdditionalAttributes",
+                summaryParts: [
+                    "InactivityAdditionalAttributes",
+                    "MaintenanceAdditionalAttributes",
+                ],
             },
         },
     },
@@ -45,7 +47,7 @@ export const errorDisplayExtraArgTypes = {
         table: {
             category: "ErrorDisplayProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -96,7 +98,7 @@ export const errorDisplayExtraArgTypes = {
         table: {
             category: "ErrorDisplayProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },

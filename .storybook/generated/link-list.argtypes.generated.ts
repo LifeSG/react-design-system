@@ -198,7 +198,7 @@ export const linkListExtraArgTypes = {
         table: {
             category: "LinkListProps<T>",
             type: {
-                summary: "'eager' | 'lazy'",
+                summaryParts: ["'eager'", "'lazy'"],
             },
         },
     },
@@ -225,7 +225,7 @@ export const linkListExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'default' | 'small'",
+                summaryParts: ["'default'", "'small'"],
             },
         },
     },

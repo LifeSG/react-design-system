@@ -30,7 +30,7 @@ export const breadcrumbExtraArgTypes = {
         table: {
             category: "BreadcrumbProps",
             type: {
-                summary: "string[] | FadeColorSet",
+                summaryParts: ["FadeColorSet", "string[]"],
             },
         },
     },
@@ -45,7 +45,7 @@ export const breadcrumbExtraArgTypes = {
                 summary: '"both"',
             },
             type: {
-                summary: "'both' | 'left' | 'right'",
+                summaryParts: ["'both'", "'left'", "'right'"],
             },
         },
     },
@@ -85,7 +85,7 @@ export const breadcrumbExtraArgTypes = {
                 summary: '"chevron"',
             },
             type: {
-                summary: "'chevron' | 'slash'",
+                summaryParts: ["'chevron'", "'slash'"],
             },
         },
     },

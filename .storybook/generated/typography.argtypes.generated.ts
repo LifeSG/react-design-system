@@ -36,7 +36,7 @@ export const typographyExtraArgTypes = {
             },
             tabGroup: "Link",
             type: {
-                summary: "'none' | 'underline'",
+                summaryParts: ["'none'", "'underline'"],
             },
         },
     },
@@ -51,7 +51,7 @@ export const typographyExtraArgTypes = {
             },
             tabGroup: "Link",
             type: {
-                summary: "'bold' | 'light' | 'regular' | 'semibold'",
+                summaryParts: ["'bold'", "'light'", "'regular'", "'semibold'"],
             },
         },
     },
@@ -118,7 +118,7 @@ export const typographyExtraArgTypes = {
             },
             tabGroup: "Heading/Body",
             type: {
-                summary: "'bold' | 'light' | 'regular' | 'semibold'",
+                summaryParts: ["'bold'", "'light'", "'regular'", "'semibold'"],
             },
         },
     },

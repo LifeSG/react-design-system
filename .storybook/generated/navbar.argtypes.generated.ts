@@ -207,7 +207,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavbarButtonProps",
             type: {
-                summary: "ButtonProps | NavbarButtonComponentProps",
+                summaryParts: ["ButtonProps", "NavbarButtonComponentProps"],
             },
         },
     },
@@ -217,7 +217,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavbarButtonProps",
             type: {
-                summary: "'button' | 'component' | 'download'",
+                summaryParts: ["'button'", "'component'", "'download'"],
             },
         },
     },
@@ -410,7 +410,7 @@ export const navbarExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'default' | 'stretch'",
+                summaryParts: ["'default'", "'stretch'"],
             },
         },
     },
@@ -566,7 +566,7 @@ export const navbarExtraArgTypes = {
                 summary: '"underline"',
             },
             type: {
-                summary: "'none' | 'underline'",
+                summaryParts: ["'none'", "'underline'"],
             },
         },
     },
@@ -580,7 +580,7 @@ export const navbarExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "'bold' | 'light' | 'regular' | 'semibold'",
+                summaryParts: ["'bold'", "'light'", "'regular'", "'semibold'"],
             },
         },
     },
@@ -678,7 +678,7 @@ export const navbarExtraArgTypes = {
                 summary: '"underline"',
             },
             type: {
-                summary: "'none' | 'underline'",
+                summaryParts: ["'none'", "'underline'"],
             },
         },
     },
@@ -692,7 +692,7 @@ export const navbarExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "'bold' | 'light' | 'regular' | 'semibold'",
+                summaryParts: ["'bold'", "'light'", "'regular'", "'semibold'"],
             },
         },
     },
@@ -723,7 +723,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavItemProps<T>",
             type: {
-                summary: "'component' | 'link'",
+                summaryParts: ["'component'", "'link'"],
             },
         },
     },

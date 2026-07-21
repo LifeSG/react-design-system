@@ -426,6 +426,43 @@ function getSummaryTypeText(
     );
 }
 
+/**
+ * Get union member texts from a type using ts-morph's type resolution.
+ */
+function getUnionMemberTexts(
+    type: Type,
+    contextNode: Node
+): string[] | undefined {
+    const nonNullableType = type.getNonNullableType();
+
+    if (!nonNullableType.isUnion()) {
+        return undefined;
+    }
+
+    // Skip boolean (TypeScript resolves it to `true | false` internally)
+    if (nonNullableType.isBoolean()) {
+        return undefined;
+    }
+
+    const unionTypes = nonNullableType.getUnionTypes();
+
+    // Skip overly complex unions (e.g. React.ReactNode expands to many internal types)
+    if (unionTypes.length > 6) {
+        return undefined;
+    }
+
+    // Skip if any member contains import() expressions (internal React types)
+    const parts = unionTypes
+        .map((t) => cleanType(t.getText(contextNode, typeFormatFlags)))
+        .sort((a, b) => a.localeCompare(b));
+
+    if (parts.some((p) => p.includes("import("))) {
+        return undefined;
+    }
+
+    return parts;
+}
+
 function getPropertyTypeText(property: PropertySignature) {
     const typeNodeText = property.getTypeNode()?.getText();
 
@@ -602,13 +639,14 @@ function isSkippedFile(sourceFile: SourceFile) {
 /** Matches React HTML attribute interfaces (e.g. HTMLAttributes, ButtonHTMLAttributes, React.HTMLAttributes). */
 const HTML_ATTRIBUTES_REGEX = /(?:React\.)?\w*HTMLAttributes?$/;
 
-/** Single factory for building a GeneratedArgType row. All 7 construction sites funnel through here. */
+/** Single factory for building a GeneratedArgType row. All construction sites funnel through here. */
 function buildArgTypeRow(opts: {
     key: string;
     name: string;
     category: string;
     tabGroup?: string;
     typeSummary?: string;
+    typeSummaryParts?: string[];
     defaultValue?: string;
     deprecated?: string | boolean;
     description?: string;
@@ -626,9 +664,10 @@ function buildArgTypeRow(opts: {
                     ? { summary: opts.defaultValue }
                     : undefined,
                 tabGroup: opts.tabGroup,
-                type: {
-                    summary: opts.typeSummary,
-                },
+                type:
+                    opts.typeSummaryParts && opts.typeSummaryParts.length > 1
+                        ? { summaryParts: opts.typeSummaryParts }
+                        : { summary: opts.typeSummary },
             },
         },
     };
@@ -874,6 +913,7 @@ function getInterfaceArgTypes(
                 description: toStorybookDescription(jsDocMeta),
                 key: `${interfaceName}.${propertyName}`,
                 name: propertyName,
+                typeSummaryParts: getUnionMemberTexts(resolvedType, property),
                 tabGroup: interfaceJsDocMeta.tabGroups?.[0],
                 typeSummary,
             }),
@@ -969,6 +1009,10 @@ function getTypeAliasArgTypes(
                     name: propertyName,
                     tabGroup: jsDocMeta.tabGroups?.[0],
                     typeSummary: propertySummary,
+                    typeSummaryParts: getUnionMemberTexts(
+                        resolvedSymbolType,
+                        typeAlias
+                    ),
                 }),
             ];
         });
@@ -980,9 +1024,10 @@ function getTypeAliasArgTypes(
         // Skip when the intersection includes unresolvable generic
         // utility types (e.g. React.ComponentPropsWithoutRef<T>).
         const typeNodeText = typeAlias.getTypeNodeOrThrow().getText();
-        const hasUnresolvableGeneric = /ComponentProps|HTMLAttributes/.test(
-            typeNodeText
-        );
+        const hasUnresolvableGeneric =
+            /ComponentPropsWithoutRef|ComponentPropsWithRef|HTMLAttributes/.test(
+                typeNodeText
+            );
 
         if (hasUnresolvableGeneric) {
             return propertyRows;

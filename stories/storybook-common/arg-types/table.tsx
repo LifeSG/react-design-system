@@ -41,6 +41,8 @@ export type GeneratedArgType = {
                 detail?: string | undefined;
                 /** Type text summary for the props table. */
                 summary?: string | undefined;
+                /** Pre-split union members from the generator (avoids re-parsing pipes in render). */
+                summaryParts?: string[] | undefined;
             };
             /** Default value from `@default` JSDoc tag, if present. */
             defaultValue:
@@ -63,98 +65,32 @@ type PureArgsTableRows = Extract<
 // =============================================================================
 
 /**
- * Check if `char` at position `i` is at the top level (not inside any brackets).
- * Mutates the depth counters passed in.
- */
-function updateDepth(char: string, prevChar: string, depth: number[]) {
-    if (char === "(") depth[0] += 1;
-    if (char === ")") depth[0] = Math.max(0, depth[0] - 1);
-    if (char === "[") depth[1] += 1;
-    if (char === "]") depth[1] = Math.max(0, depth[1] - 1);
-    if (char === "{") depth[2] += 1;
-    if (char === "}") depth[2] = Math.max(0, depth[2] - 1);
-    if (char === "<") depth[3] += 1;
-    // Skip ">" when it's part of "=>"
-    if (char === ">" && prevChar !== "=") depth[3] = Math.max(0, depth[3] - 1);
-}
-
-function isTopLevel(depth: number[]) {
-    return depth[0] === 0 && depth[1] === 0 && depth[2] === 0 && depth[3] === 0;
-}
-
-/**
- * Returns true when the type text is a single function signature.
+ * Normalize type display for PureArgsTable.
  *
- * Distinguishes `(file: Props) => void | Promise<void>` (single function, union return)
- * from `((a: string) => void) | ((b: number) => void)` (union of functions).
- */
-function isSingleFunctionType(typeText: string) {
-    const trimmed = typeText.trim();
-
-    if (!trimmed.startsWith("(")) {
-        return false;
-    }
-
-    let arrowCount = 0;
-    const depth = [0, 0, 0, 0]; // paren, bracket, brace, angle
-
-    for (let i = 0; i < trimmed.length; i += 1) {
-        updateDepth(trimmed[i], trimmed[i - 1] ?? "", depth);
-
-        if (
-            isTopLevel(depth) &&
-            trimmed[i] === "=" &&
-            trimmed[i + 1] === ">"
-        ) {
-            arrowCount += 1;
-            i += 1;
-        }
-    }
-
-    return arrowCount === 1;
-}
-
-/** Split a type summary into union members (handles both `\n|` and ` | ` formats). */
-function splitUnionMembers(summary: string) {
-    const members = summary.includes("\n|")
-        ? summary.split("\n|")
-        : summary.split(" | ");
-
-    return members.map((m) => m.trim()).filter(Boolean);
-}
-
-/**
- * When a type summary is a union containing function members, collapse it to
- * `firstMember | ...` with the full list in `detail` (shown on hover).
- * Single function types with union return types are left intact.
+ * - When `summaryParts` is present (union type), joins them into a `summary` string.
+ * - If the union contains function members, collapses to `firstMember | ...`
+ *   with the full list in `detail` (shown on hover).
+ * - When only `summary` is present (non-union), passes through unchanged.
  */
 function normalizeUnionTypeDisplay(argType: GeneratedArgType["value"]) {
-    const summary = argType.table?.type?.summary;
+    const { summaryParts } = argType.table?.type ?? {};
 
-    if (!summary || isSingleFunctionType(summary)) {
+    if (!summaryParts || summaryParts.length <= 1) {
         return argType;
     }
 
-    const members = splitUnionMembers(summary);
-
-    if (members.length <= 1) {
-        return argType;
-    }
-
-    const hasFunctionMember = members.some((m) => m.includes("=>"));
-
-    if (!hasFunctionMember) {
-        return argType;
-    }
+    const hasFunctionMember = summaryParts.some((m) => m.includes("=>"));
 
     return {
         ...argType,
         table: {
             ...argType.table,
-            type: {
-                summary: `${members[0]} | ...`,
-                detail: members.join("\n"),
-            },
+            type: hasFunctionMember
+                ? {
+                      summary: `${summaryParts[0]} | ...`,
+                      detail: summaryParts.join("\n"),
+                  }
+                : { summary: summaryParts.join(" | ") },
         },
     };
 }

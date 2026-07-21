@@ -41,7 +41,7 @@ export const textListExtraArgTypes = {
         table: {
             category: "OrderedListProps",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },
@@ -79,7 +79,7 @@ export const textListExtraArgTypes = {
                 summary: '"decimal"',
             },
             type: {
-                summary: "'decimal' | 'lower-alpha' | 'lower-roman'",
+                summaryParts: ["'decimal'", "'lower-alpha'", "'lower-roman'"],
             },
         },
     },
@@ -171,7 +171,7 @@ export const textListExtraArgTypes = {
         table: {
             category: "UnorderedListProps",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },

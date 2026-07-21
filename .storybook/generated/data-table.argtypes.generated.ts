@@ -150,7 +150,7 @@ export const dataTableExtraArgTypes = {
                 summary: '"success"',
             },
             type: {
-                summary: "'loading' | 'success'",
+                summaryParts: ["'loading'", "'success'"],
             },
         },
     },
@@ -269,8 +269,10 @@ export const dataTableExtraArgTypes = {
         table: {
             category: "ErrorDisplayAttributes",
             type: {
-                summary:
-                    "MaintenanceAdditionalAttributes | InactivityAdditionalAttributes",
+                summaryParts: [
+                    "InactivityAdditionalAttributes",
+                    "MaintenanceAdditionalAttributes",
+                ],
             },
         },
     },
@@ -282,7 +284,7 @@ export const dataTableExtraArgTypes = {
         table: {
             category: "ErrorDisplayAttributes",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -333,7 +335,7 @@ export const dataTableExtraArgTypes = {
         table: {
             category: "ErrorDisplayAttributes",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -428,7 +430,7 @@ export const dataTableExtraArgTypes = {
         table: {
             category: "RowProps",
             type: {
-                summary: "string | number",
+                summaryParts: ["number", "string"],
             },
         },
     },

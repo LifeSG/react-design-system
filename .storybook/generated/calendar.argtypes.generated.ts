@@ -154,8 +154,10 @@ export const calendarExtraArgTypes = {
         table: {
             category: "CalendarProps",
             type: {
-                summary:
-                    "((value: string) => void) | ((values: string[]) => void)",
+                summaryParts: [
+                    "(value: string) => void",
+                    "(values: string[]) => void",
+                ],
             },
         },
     },
@@ -203,7 +205,7 @@ export const calendarExtraArgTypes = {
                 summary: '"bordered"',
             },
             type: {
-                summary: "'bordered' | 'no-border'",
+                summaryParts: ["'bordered'", "'no-border'"],
             },
         },
     },
@@ -216,7 +218,7 @@ export const calendarExtraArgTypes = {
                 summary: '"single"',
             },
             type: {
-                summary: "'multi' | 'single'",
+                summaryParts: ["'multi'", "'single'"],
             },
         },
     },

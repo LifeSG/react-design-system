@@ -38,7 +38,7 @@ export const uneditableSectionExtraArgTypes = {
             },
             tabGroup: "UneditableSection.Item",
             type: {
-                summary: "'full' | 'half'",
+                summaryParts: ["'full'", "'half'"],
             },
         },
     },
@@ -90,7 +90,7 @@ export const uneditableSectionExtraArgTypes = {
             category: "UneditableSectionItemProps",
             tabGroup: "UneditableSection.Item",
             type: {
-                summary: "'fail' | 'loading'",
+                summaryParts: ["'fail'", "'loading'"],
             },
         },
     },
@@ -129,7 +129,7 @@ export const uneditableSectionExtraArgTypes = {
             category: "UneditableSectionItemProps",
             tabGroup: "UneditableSection.Item",
             type: {
-                summary: "'masked' | 'unmasked'",
+                summaryParts: ["'masked'", "'unmasked'"],
             },
         },
     },
@@ -232,7 +232,7 @@ export const uneditableSectionExtraArgTypes = {
             category: "UneditableSectionProps",
             tabGroup: "UneditableSection",
             type: {
-                summary: "JSX.Element | JSX.Element[]",
+                summaryParts: ["JSX.Element", "JSX.Element[]"],
             },
         },
     },

@@ -28,7 +28,7 @@ export const dividerExtraArgTypes = {
                 summary: '"flex"',
             },
             type: {
-                summary: "'flex' | 'grid'",
+                summaryParts: ["'flex'", "'grid'"],
             },
         },
     },
@@ -39,7 +39,7 @@ export const dividerExtraArgTypes = {
         table: {
             category: "DividerProps",
             type: {
-                summary: "ColSpan",
+                summaryParts: ["[number, number]", "number"],
             },
         },
     },
@@ -53,7 +53,7 @@ export const dividerExtraArgTypes = {
                 summary: '"solid"',
             },
             type: {
-                summary: "'dashed' | 'solid'",
+                summaryParts: ["'dashed'", "'solid'"],
             },
         },
     },
@@ -64,7 +64,7 @@ export const dividerExtraArgTypes = {
         table: {
             category: "DividerProps",
             type: {
-                summary: "ColSpan",
+                summaryParts: ["[number, number]", "number"],
             },
         },
     },
@@ -75,7 +75,7 @@ export const dividerExtraArgTypes = {
         table: {
             category: "DividerProps",
             type: {
-                summary: "ColSpan",
+                summaryParts: ["[number, number]", "number"],
             },
         },
     },
@@ -100,7 +100,7 @@ export const dividerExtraArgTypes = {
         table: {
             category: "DividerProps",
             type: {
-                summary: "ColSpan",
+                summaryParts: ["[number, number]", "number"],
             },
         },
     },
@@ -111,7 +111,7 @@ export const dividerExtraArgTypes = {
         table: {
             category: "DividerProps",
             type: {
-                summary: "ColSpan",
+                summaryParts: ["[number, number]", "number"],
             },
         },
     },
@@ -122,7 +122,7 @@ export const dividerExtraArgTypes = {
         table: {
             category: "DividerProps",
             type: {
-                summary: "ColSpan",
+                summaryParts: ["[number, number]", "number"],
             },
         },
     },
@@ -134,7 +134,7 @@ export const dividerExtraArgTypes = {
         table: {
             category: "DividerProps",
             type: {
-                summary: "ColSpan",
+                summaryParts: ["[number, number]", "number"],
             },
         },
     },

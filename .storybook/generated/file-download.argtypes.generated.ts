@@ -30,7 +30,7 @@ export const fileDownloadExtraArgTypes = {
         table: {
             category: "FileDownloadProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
@@ -80,7 +80,7 @@ export const fileDownloadExtraArgTypes = {
                 summary: '"bordered"',
             },
             type: {
-                summary: "'bordered' | 'no-border'",
+                summaryParts: ["'bordered'", "'no-border'"],
             },
         },
     },
@@ -92,7 +92,7 @@ export const fileDownloadExtraArgTypes = {
         table: {
             category: "FileDownloadProps",
             type: {
-                summary: "string | JSX.Element",
+                summaryParts: ["JSX.Element", "string"],
             },
         },
     },
