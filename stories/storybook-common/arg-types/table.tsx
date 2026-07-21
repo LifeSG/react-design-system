@@ -58,48 +58,110 @@ type PureArgsTableRows = Extract<
     { rows: unknown }
 >["rows"];
 
+// =============================================================================
+// Union type display normalization
+// =============================================================================
+
+/**
+ * Check if `char` at position `i` is at the top level (not inside any brackets).
+ * Mutates the depth counters passed in.
+ */
+function updateDepth(char: string, prevChar: string, depth: number[]) {
+    if (char === "(") depth[0] += 1;
+    if (char === ")") depth[0] = Math.max(0, depth[0] - 1);
+    if (char === "[") depth[1] += 1;
+    if (char === "]") depth[1] = Math.max(0, depth[1] - 1);
+    if (char === "{") depth[2] += 1;
+    if (char === "}") depth[2] = Math.max(0, depth[2] - 1);
+    if (char === "<") depth[3] += 1;
+    // Skip ">" when it's part of "=>"
+    if (char === ">" && prevChar !== "=") depth[3] = Math.max(0, depth[3] - 1);
+}
+
+function isTopLevel(depth: number[]) {
+    return depth[0] === 0 && depth[1] === 0 && depth[2] === 0 && depth[3] === 0;
+}
+
+/**
+ * Returns true when the type text is a single function signature.
+ *
+ * Distinguishes `(file: Props) => void | Promise<void>` (single function, union return)
+ * from `((a: string) => void) | ((b: number) => void)` (union of functions).
+ */
+function isSingleFunctionType(typeText: string) {
+    const trimmed = typeText.trim();
+
+    if (!trimmed.startsWith("(")) {
+        return false;
+    }
+
+    let arrowCount = 0;
+    const depth = [0, 0, 0, 0]; // paren, bracket, brace, angle
+
+    for (let i = 0; i < trimmed.length; i += 1) {
+        updateDepth(trimmed[i], trimmed[i - 1] ?? "", depth);
+
+        if (
+            isTopLevel(depth) &&
+            trimmed[i] === "=" &&
+            trimmed[i + 1] === ">"
+        ) {
+            arrowCount += 1;
+            i += 1;
+        }
+    }
+
+    return arrowCount === 1;
+}
+
+/** Split a type summary into union members (handles both `\n|` and ` | ` formats). */
+function splitUnionMembers(summary: string) {
+    const members = summary.includes("\n|")
+        ? summary.split("\n|")
+        : summary.split(" | ");
+
+    return members.map((m) => m.trim()).filter(Boolean);
+}
+
+/**
+ * When a type summary is a union containing function members, collapse it to
+ * `firstMember | ...` with the full list in `detail` (shown on hover).
+ * Single function types with union return types are left intact.
+ */
 function normalizeUnionTypeDisplay(argType: GeneratedArgType["value"]) {
     const summary = argType.table?.type?.summary;
 
-    if (!summary) {
+    if (!summary || isSingleFunctionType(summary)) {
         return argType;
     }
 
-    const unionMembers = summary.includes("\n|")
-        ? summary
-              .split("\n|")
-              .map((member) => member.trim())
-              .filter(Boolean)
-        : summary
-              .split(" | ")
-              .map((member) => member.trim())
-              .filter(Boolean);
+    const members = splitUnionMembers(summary);
 
-    if (unionMembers.length <= 1) {
+    if (members.length <= 1) {
         return argType;
     }
 
-    const hasFunctionUnionMember = unionMembers.some((member) =>
-        member.includes("=>")
-    );
+    const hasFunctionMember = members.some((m) => m.includes("=>"));
 
-    if (!hasFunctionUnionMember) {
+    if (!hasFunctionMember) {
         return argType;
     }
 
-    const finalArgType: GeneratedArgType["value"] = {
+    return {
         ...argType,
         table: {
             ...argType.table,
             type: {
-                summary: `${unionMembers[0]} | ...`,
-                detail: unionMembers.join("\n"),
+                summary: `${members[0]} | ...`,
+                detail: members.join("\n"),
             },
         },
     };
-
-    return finalArgType;
 }
+
+// =============================================================================
+// Tab rendering
+// =============================================================================
 
 interface AutoArgTypesTabsProps {
     of: ArgTypesProps["of"];
@@ -116,48 +178,28 @@ type StoriesModuleLike = {
     [key: string]: unknown;
 };
 
-/** Render plain ArgTypes as a safe fallback when grouping cannot be resolved. */
-function renderFallbackArgTypes(
-    of: ArgTypesProps["of"],
-    sort: ArgTypesProps["sort"]
-) {
-    return <ArgTypes of={of} sort={sort} />;
-}
-
-/**
- * Build per-tab ArgTypes row objects keyed exactly as generated.
- *
- * This avoids relying on include/exclude name matching behavior and ensures
- * each tab only renders rows that belong to its own tab group.
- */
-function buildTabRowsFromGeneratedArgTypes(
+/** Group generated argTypes rows by their tabGroup, applying union normalization. */
+function buildTabRows(
     generatedArgTypes: PureArgsTableRows,
     defaultTabTitle: string
 ): Array<{ title: string; rows: PureArgsTableRows }> {
-    const rowsBySubcategory = new Map<string, PureArgsTableRows>();
+    const rowsByTab = new Map<string, PureArgsTableRows>();
 
-    Object.entries(generatedArgTypes).forEach(([key, rawArgType]) => {
+    for (const [key, rawArgType] of Object.entries(generatedArgTypes)) {
         const argType = normalizeUnionTypeDisplay(
             rawArgType as GeneratedArgType["value"]
         );
-        const tabTitle = argType.table?.tabGroup ?? defaultTabTitle;
+        const tab = argType.table?.tabGroup ?? defaultTabTitle;
 
-        if (!rowsBySubcategory.has(tabTitle)) {
-            rowsBySubcategory.set(tabTitle, {});
+        if (!rowsByTab.has(tab)) {
+            rowsByTab.set(tab, {});
         }
 
-        const rows = rowsBySubcategory.get(tabTitle);
+        rowsByTab.get(tab)![key] = argType;
+    }
 
-        if (rows) {
-            rows[key] = argType;
-        }
-    });
-
-    return Array.from(rowsBySubcategory.entries())
-        .map(([title, rows]) => ({
-            title,
-            rows,
-        }))
+    return Array.from(rowsByTab.entries())
+        .map(([title, rows]) => ({ title, rows }))
         .sort((a, b) => {
             if (a.title === defaultTabTitle) return -1;
             if (b.title === defaultTabTitle) return 1;
@@ -165,16 +207,15 @@ function buildTabRowsFromGeneratedArgTypes(
         });
 }
 
-/** Resolve a story title from a Storybook stories module passed via `of`. */
-function getStoryTitleFromOf(
+/** Resolve the story title from a stories module passed via `of`. */
+function getStoryTitle(
     of: ArgTypesProps["of"]
 ): keyof typeof storybookArgTypesByTitle | undefined {
     if (!of || typeof of !== "object") {
         return undefined;
     }
 
-    const storiesModule = of as StoriesModuleLike;
-    const title = storiesModule.default?.title;
+    const title = (of as StoriesModuleLike).default?.title;
 
     if (!title || !(title in storybookArgTypesByTitle)) {
         return undefined;
@@ -185,39 +226,34 @@ function getStoryTitleFromOf(
 
 /**
  * Auto-render ArgTypes tabs from the global generated registry.
- *
- * This mode bypasses ArgTypes include/exclude matching and uses generated rows
- * directly (via `PureArgsTable`) so each tab reliably renders only its own
- * tab-group entries.
+ * Falls back to standard ArgTypes when the story can't be resolved.
  */
 export const AutoArgTypesTabs = ({
     of,
     sort = "alpha",
     defaultTabTitle = "Component",
 }: AutoArgTypesTabsProps): JSX.Element => {
-    const resolvedStoryTitle = getStoryTitleFromOf(of);
-
-    if (!resolvedStoryTitle) {
-        return renderFallbackArgTypes(of, sort);
-    }
-
-    const generatedArgTypes = storybookArgTypesByTitle[resolvedStoryTitle];
+    const storyTitle = getStoryTitle(of);
+    const generatedArgTypes = storyTitle
+        ? storybookArgTypesByTitle[storyTitle]
+        : undefined;
 
     if (!generatedArgTypes) {
-        return renderFallbackArgTypes(of, sort);
+        return <ArgTypes of={of} sort={sort} />;
     }
 
-    const tabRows = buildTabRowsFromGeneratedArgTypes(
+    const tabRows = buildTabRows(
         generatedArgTypes as PureArgsTableRows,
         defaultTabTitle
     );
 
-    if (tabRows.length === 0) {
-        return renderFallbackArgTypes(of, sort);
-    }
-
-    if (tabRows.length === 1) {
-        return <PureArgsTable rows={tabRows[0].rows} sort={sort} />;
+    if (tabRows.length <= 1) {
+        return (
+            <PureArgsTable
+                rows={tabRows[0]?.rows ?? {}}
+                sort={sort}
+            />
+        );
     }
 
     return (

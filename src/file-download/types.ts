@@ -67,6 +67,7 @@ export interface FileDownloadProps {
      * and the error UI is shown for that file card.
      *
      * @param file The file item that was activated for download.
+     * @returns A `Promise` that resolves when the download is complete, or `void` for synchronous handling.
      */
     onDownload: (file: FileItemDownloadProps) => void | Promise<void>;
 }
