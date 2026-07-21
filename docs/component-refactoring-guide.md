@@ -379,32 +379,39 @@ export function useStore<S>(store: Store<S>): ShallowRef<S> {
 
 ### Angular (OnPush + markForCheck)
 
+Angular 19 with standalone components and signal-based inputs:
+
 ```ts
 import {
     Component,
     ChangeDetectionStrategy,
     ChangeDetectorRef,
+    ViewEncapsulation,
     OnInit,
     OnDestroy,
-    Input,
+    input,
+    inject,
 } from "@angular/core";
-import { AccordionStore } from "@lifesg/design-core";
+import { AccordionStore } from "@lifesg/design-core"; // → relative path after build
 
 @Component({
     selector: "fds-accordion",
+    standalone: true,
     changeDetection: ChangeDetectionStrategy.OnPush,
+    encapsulation: ViewEncapsulation.None,
     // ...
 })
 export class AccordionComponent implements OnInit, OnDestroy {
-    @Input() initialDisplay: "expand-all" | "collapse-all" = "expand-all";
+    readonly initialDisplay = input<"expand-all" | "collapse-all">(
+        "expand-all"
+    );
 
     store!: AccordionStore;
     private unsub?: () => void;
-
-    constructor(private cdr: ChangeDetectorRef) {}
+    private cdr = inject(ChangeDetectorRef);
 
     ngOnInit() {
-        this.store = new AccordionStore(this.initialDisplay);
+        this.store = new AccordionStore(this.initialDisplay());
         this.unsub = this.store.subscribe(() => this.cdr.markForCheck());
     }
 
@@ -413,6 +420,8 @@ export class AccordionComponent implements OnInit, OnDestroy {
     }
 }
 ```
+
+**Note:** `ViewEncapsulation.None` is required so global BEM classes apply. CSS is loaded via `angular.json` `styles` array — NOT via TS side-effect imports (see `ai-translation-guide.md` Section 9).
 
 ---
 
@@ -747,6 +756,8 @@ export * as accordion from "./accordion";
 export * as accordionItem from "./accordion-item";
 ```
 
+**Angular note:** The CSS side-effect imports in this barrel are loaded automatically by Vite (Svelte/Vue), but Angular's esbuild builder extracts them to an orphaned `main.css` that nothing links. Angular consumers must add the combined component CSS (`dist/native/styles/styles.css`) to their `angular.json` `styles` array instead. After adding new CSS files, rebuild the combined CSS (`native-ports/shared/dist/index.css`) so Angular consumers get the new component styles.
+
 ### 5.4 Linaria-to-CSS Custom Property Reference
 
 Use this when converting other components:
@@ -771,7 +782,7 @@ Use this when converting other components:
 
 ## Step 6: Translate the UI Layer
 
-With design-core providing the state store and `@lifesg/flagship-styles` providing shared CSS, the translator only writes **rendering + reactivity binding**.
+With design-core providing the state store and shared styles providing the CSS, the translator only writes **rendering + reactivity binding**. Components import from the relative `../../styles` path (build script rewrites `@lifesg/flagship-styles` → relative path in `dist/native/`).
 
 ### 6.1 Scope Reduction
 
@@ -888,13 +899,24 @@ export class FdsAccordion extends LitElement {
 }
 ```
 
-### 6.4 Cross-Reference
+### 6.4 Angular-Specific Considerations
+
+Angular ports have unique requirements due to how Angular CLI handles CSS:
+
+1. **CSS must be in `angular.json` styles array** — TS side-effect imports are extracted but never linked. Component CSS and theme CSS must all go in the `styles` array for render-blocking behavior.
+2. **`ViewEncapsulation.None`** — required for all components that use shared BEM classes.
+3. **`ChangeDetectionStrategy.OnPush`** — recommended for performance; pair with `markForCheck()` in store subscriber.
+4. **`"polyfills": ["zone.js"]`** — must be explicit in `angular.json` for Angular 19's esbuild builder.
+5. **Font loading** — add Google Fonts link for "Open Sans" (weights 300, 400, 600, 700) to `src/index.html`.
+
+### 6.5 Cross-Reference
 
 For the complete mapping of React patterns to target frameworks (state hooks, props, events, templates, styling), see:
 
 -   `ai-translation-guide.md` **Section 3**: Translation Mapping Reference
 -   `ai-translation-guide.md` **Section 8**: Platform-Specific Notes
--   `ai-translation-guide.md` **Section 9**: Common Pitfalls
+-   `ai-translation-guide.md` **Section 9**: Consuming Styles Per Framework (critical for Angular)
+-   `ai-translation-guide.md` **Section 12**: Common Pitfalls
 
 ---
 

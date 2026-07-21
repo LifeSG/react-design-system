@@ -26,6 +26,46 @@ The `@lifesg/flagship-styles` package provides framework-agnostic styles and tok
 
 Web framework ports should import the shared CSS and apply the BEM class names. No build-time CSS tooling is required — the styles are plain CSS.
 
+### Distribution Model
+
+Native ports are distributed as **TypeScript source files** within the main `@lifesg/react-design-system` package — consumers compile them with their own tooling. The build script (`scripts/build-native-ports.mjs`) copies sources into `dist/native/`, rewrites bare package imports (`@lifesg/flagship-styles` → relative `../../styles`, `@lifesg/design-core` → relative `../../core/design-core`), and injects theme CSS imports into Svelte/Vue entry points.
+
+```
+dist/native/
+├── styles/                    # Shared CSS + tokens + class name constants
+│   ├── index.ts               # Barrel (re-exports tokens + components)
+│   ├── components/            # BEM class name constants + CSS files
+│   ├── styles.css             # Combined component CSS (for Angular)
+│   └── theme/
+│       ├── default.css        # Baseline tokens on :root
+│       └── lifesg.css         # Theme-specific, scoped to [data-fds-theme="lifesg"]
+├── svelte/index.ts            # Entry (has injected `import "../styles/theme/lifesg.css"`)
+├── vue/index.ts               # Entry (has injected CSS import)
+├── angular/index.ts           # Entry (NO injected CSS — Angular uses angular.json)
+├── react-native/index.ts      # Entry (NO injected CSS — RN doesn't use CSS)
+└── core/
+    ├── design-core/           # Shared state/logic (approach 4)
+    ├── svelte/index.ts        # Entry (has injected CSS import)
+    ├── vue/index.ts           # Entry (has injected CSS import)
+    ├── angular/index.ts       # Entry (NO injected CSS)
+    └── react-native/index.ts  # Entry (NO injected CSS)
+```
+
+Package exports from `@lifesg/react-design-system`:
+
+```json
+"./svelte":        { "types": "./native/svelte/index.ts", "svelte": "...", "import": "..." },
+"./vue":           { "types": "./native/vue/index.ts", "import": "..." },
+"./angular":       { "types": "./native/angular/index.ts", "import": "..." },
+"./react-native":  { "types": "./native/react-native/index.ts", "import": "..." },
+"./core/svelte":   { "types": "./native/core/svelte/index.ts", ... },
+"./core/vue":      { "types": "./native/core/vue/index.ts", ... },
+"./core/angular":  { "types": "./native/core/angular/index.ts", ... },
+"./core/react-native": { "types": "./native/core/react-native/index.ts", ... }
+```
+
+Consumers import directly: `import { ButtonComponent } from "@lifesg/react-design-system/angular"`.
+
 ### Shared Logic Package (`native-ports/shared-core/design-core/`)
 
 The `@lifesg/design-core` package provides **framework-agnostic state management and utilities** that all framework ports consume. Ports must NOT duplicate this logic — they import it from design-core and wire it to their framework's reactivity system.
@@ -543,27 +583,54 @@ See section 9 of the translation guide for per-framework CSS consumption pattern
 
 ---
 
-## 9. Consuming `@lifesg/flagship-styles` Per Framework
+## 9. Consuming Styles Per Framework
 
-The shared style package provides plain CSS with BEM class names and TypeScript class name constants. Each framework consumes it differently:
+The shared style package (`dist/native/styles/`) provides plain CSS with BEM class names and TypeScript class name constants. Each framework consumes CSS differently due to their build tools.
 
-### Vue 3
+### Critical: Angular vs Vite CSS Handling
 
-```ts
-// main.ts — import globally
-import "@lifesg/flagship-styles/theme/lifesg.css";
-import "@lifesg/flagship-styles/styles.css";
+Angular's esbuild-based builder and Vite (used by Svelte/Vue) handle CSS side-effect imports (`import "./foo.css"`) fundamentally differently:
+
+| Behaviour                           | Vite (Svelte/Vue)                    | Angular CLI (esbuild)                                       |
+| ----------------------------------- | ------------------------------------ | ----------------------------------------------------------- |
+| CSS from `import "./foo.css"` in TS | Bundled inline, loaded synchronously | Extracted to orphaned `main.css` — **never linked in HTML** |
+| Result                              | Styles applied immediately           | Styles never load                                           |
+| Correct approach                    | TS side-effect imports work fine     | Must use `angular.json` `styles` array                      |
+
+This is why the build script only injects CSS imports into Svelte/Vue entry points, and explicitly skips Angular.
+
+### Svelte 5
+
+CSS is handled automatically by the build script — it prepends `import "../styles/theme/lifesg.css"` to the Svelte entry point. Vite bundles this into the final output. No manual CSS import needed in the consuming app's `main.ts`.
+
+```svelte
+<script lang="ts">
+  import { dayCell as cls } from "@lifesg/react-design-system/svelte";
+</script>
+
+<div class={cls.root}>...</div>
 ```
 
 ```html
 <!-- index.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+/>
 <body data-fds-theme="lifesg"></body>
 ```
 
+No `<style>` block needed for shared classes. BEM naming provides namespace isolation without scoping.
+
+### Vue 3
+
+Same as Svelte — CSS is injected by the build script. Vite handles bundling.
+
 ```vue
-<!-- Component.vue — import class name constants, NO <style scoped> for shared classes -->
 <script setup lang="ts">
-import { dayCell as cls } from "@lifesg/flagship-styles";
+import { dayCell as cls } from "@lifesg/react-design-system/vue";
 </script>
 <template>
     <div :class="cls.root">...</div>
@@ -571,15 +638,68 @@ import { dayCell as cls } from "@lifesg/flagship-styles";
 <!-- No <style scoped> — BEM provides namespace isolation -->
 ```
 
-**Pitfall:** `<style scoped>` adds attribute selectors that won't match globally-imported BEM classes. Remove scoped styles from components that use shared BEM classes. BEM naming already prevents class collisions.
+**Pitfall:** `<style scoped>` adds attribute selectors that won't match globally-imported BEM classes.
+
+### Angular
+
+Angular **cannot** rely on CSS side-effect imports from TS — they produce an orphaned `main.css` that nothing loads. All CSS must go in `angular.json` `styles` array for render-blocking behaviour.
+
+```json
+// angular.json
+{
+    "architect": {
+        "build": {
+            "options": {
+                "polyfills": ["zone.js"],
+                "styles": [
+                    "node_modules/@lifesg/react-design-system/dist/native/styles/theme/default.css",
+                    "node_modules/@lifesg/react-design-system/dist/native/styles/theme/lifesg.css",
+                    "node_modules/@lifesg/react-design-system/dist/native/styles/styles.css",
+                    "src/styles.css"
+                ]
+            }
+        }
+    }
+}
+```
+
+```typescript
+@Component({
+    standalone: true,
+    encapsulation: ViewEncapsulation.None,
+    changeDetection: ChangeDetectionStrategy.OnPush,
+    template: `<div [class]="cls.root">...</div>`,
+})
+export class MyComponent {
+    cls = dayCell; // imported from ../../styles
+}
+```
+
+```html
+<!-- src/index.html -->
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+/>
+<body data-fds-theme="lifesg">
+    <app-root></app-root>
+</body>
+```
+
+**Important Angular notes:**
+
+1. `"polyfills": ["zone.js"]` is required — without it Angular 19's esbuild builder renders a blank page with no console error.
+2. `ViewEncapsulation.None` is required — Angular's default `Emulated` encapsulation prevents BEM classes from matching.
+3. The orphaned `main.css` from TS-side CSS imports is harmless but unused.
 
 ### Lit (Shadow DOM)
 
-CSS custom properties (`var(--fds-*)`) **do** inherit through Shadow DOM boundaries. Theme CSS goes on the document, component CSS gets adopted into each Shadow DOM:
+CSS custom properties (`var(--fds-*)`) inherit through Shadow DOM boundaries. Theme CSS goes on the document, component CSS gets adopted into each Shadow DOM:
 
 ```ts
-// Import component CSS as a string via Vite's ?inline suffix
-import componentCSS from "@lifesg/flagship-styles/styles.css?inline";
+import componentCSS from "@lifesg/react-design-system/dist/native/styles/styles.css?inline";
 
 const sharedSheet = new CSSStyleSheet();
 sharedSheet.replaceSync(componentCSS);
@@ -589,71 +709,13 @@ export class MyComponent extends LitElement {
     static styles = [
         sharedSheet,
         css`
-            /* any local overrides */
+            /* local overrides */
         `,
     ];
-    // ...
 }
 ```
 
-```html
-<!-- index.html — theme CSS on document level -->
-<link
-    rel="stylesheet"
-    href="node_modules/@lifesg/flagship-styles/src/theme/lifesg.css"
-/>
-<body data-fds-theme="lifesg"></body>
-```
-
-**Pitfall:** Theme CSS uses `[data-fds-theme="lifesg"]` selectors — these match elements in the light DOM, not inside Shadow DOM. Since CSS custom properties inherit, the theme tokens are still available. But class-based selectors from the theme CSS will not apply inside Shadow DOM.
-
-### Angular
-
-```json
-// angular.json — add to styles array
-{
-    "styles": [
-        "node_modules/@lifesg/flagship-styles/src/theme/lifesg.css",
-        "node_modules/@lifesg/flagship-styles/dist/index.css"
-    ]
-}
-```
-
-```typescript
-// Component — use ViewEncapsulation.None so global BEM classes apply
-@Component({
-    encapsulation: ViewEncapsulation.None,
-    template: `<div [class]="cls.root">...</div>`,
-})
-export class MyComponent {
-    cls = dayCell; // imported from @lifesg/flagship-styles
-}
-```
-
-```html
-<!-- index.html -->
-<body data-fds-theme="lifesg"></body>
-```
-
-**Pitfall:** Angular's default `ViewEncapsulation.Emulated` adds attribute selectors to CSS, preventing globally-imported BEM classes from matching. Use `ViewEncapsulation.None` for components that reference shared BEM classes.
-
-### Svelte 5
-
-```ts
-// demo/main.ts — import globally
-import "@lifesg/flagship-styles/theme/lifesg.css";
-import "@lifesg/flagship-styles/styles.css";
-```
-
-```svelte
-<script lang="ts">
-  import { dayCell as cls } from "@lifesg/flagship-styles";
-</script>
-
-<div class={cls.root}>...</div>
-```
-
-No `<style>` block needed for shared classes. Add a `<style>` block only for layout/demo-specific styles. Like Vue, BEM provides namespace isolation without scoping.
+**Pitfall:** Theme CSS uses `[data-fds-theme="lifesg"]` selectors in the light DOM. CSS custom properties still inherit into Shadow DOM, but class-based selectors won't match inside it.
 
 ### React Native
 
@@ -661,14 +723,26 @@ RN cannot use CSS files. Extract hex values from the theme CSS into a `theme-con
 
 ```typescript
 export const ThemeColours = {
-    text: "#1c1b1f",
-    primary: "#6750a4",
-    bg: "#fffbfe",
-    // ... extract from lifesg.css
+    text: "#282828",
+    primary: "#1768be",
+    bg: "#ffffff",
 } as const;
 ```
 
-Use these constants in `StyleSheet.create()` calls. The class name constants from the shared package can still be imported for documentation/consistency but aren't used at runtime.
+Use these constants in `StyleSheet.create()` calls.
+
+### Font Loading
+
+All web framework apps must load "Open Sans" (weights 300, 400, 600, 700) — the library's `--fds-font-family-heading` and `--fds-font-family-body` tokens reference it but do not bundle the font. Add to `<head>`:
+
+```html
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link
+    href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;600;700&display=swap"
+    rel="stylesheet"
+/>
+```
 
 ---
 
@@ -902,3 +976,9 @@ The spinner is 4 concentric ring `<div>`s with a shared `@keyframes` rotation an
 16. **Store constructor captures initial values.** `new DateRangeInputStore({ disabled, ... })` captures the prop values at construction time. To react to prop changes, pass static defaults to the constructor and use the framework's effect/watcher to call `store.updateConfig()` on each change.
 
 17. **Types belong per-component, not in a shared `types.ts`.** Each component subfolder (`button/`, `date-range-input/`) has its own `types.ts`. Components import from `./types` (same folder), and the barrel re-exports from each subfolder. Do not create a shared root-level `types.ts`.
+
+18. **Angular zone.js polyfill required.** Angular 19's `@angular-devkit/build-angular:application` builder requires explicit `"polyfills": ["zone.js"]` in `angular.json`. Without it, the app builds successfully but renders a blank page with no console errors.
+
+19. **Angular CSS side-effect imports produce orphaned files.** When Angular components import from a barrel that has `import "./foo.css"` side-effect imports, esbuild extracts the CSS to a `main.css` file but never links it in the HTML. Always use `angular.json` `styles` array for Angular CSS loading.
+
+20. **Font loading is the consuming app's responsibility.** The design tokens reference `"Open Sans"` but the library does not bundle the font. Consuming apps must include Google Fonts links for Open Sans (weights 300, 400, 600, 700) in their HTML `<head>`.
