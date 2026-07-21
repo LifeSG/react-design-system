@@ -658,8 +658,7 @@ function isExternalDeclaration(symbol: TsMorphSymbol) {
     const filePath = declaration.getSourceFile().getFilePath();
 
     return (
-        filePath.includes("node_modules") ||
-        filePath.includes("custom-types/")
+        filePath.includes("node_modules") || filePath.includes("custom-types/")
     );
 }
 
@@ -978,6 +977,17 @@ function getTypeAliasArgTypes(
             return propertyRows;
         }
 
+        // Skip when the intersection includes unresolvable generic
+        // utility types (e.g. React.ComponentPropsWithoutRef<T>).
+        const typeNodeText = typeAlias.getTypeNodeOrThrow().getText();
+        const hasUnresolvableGeneric = /ComponentProps|HTMLAttributes/.test(
+            typeNodeText
+        );
+
+        if (hasUnresolvableGeneric) {
+            return propertyRows;
+        }
+
         // Composite types get a header row showing the full union/intersection shape
         return [
             buildArgTypeRow({
@@ -991,7 +1001,7 @@ function getTypeAliasArgTypes(
                 typeSummary: getSummaryTypeText(
                     typeAlias.getType(),
                     typeAlias,
-                    typeAlias.getTypeNodeOrThrow().getText()
+                    typeNodeText
                 ),
             }),
             ...propertyRows,

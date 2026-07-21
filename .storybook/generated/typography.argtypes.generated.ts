@@ -55,20 +55,6 @@ export const typographyExtraArgTypes = {
             },
         },
     },
-    TypographyProps: {
-        control: false,
-        description:
-            "Props shared by all non-link typography variants.\n\nThe generic `T` narrows the element type for the `as` prop and ensures\nforwarded HTML attributes match the rendered element.",
-        name: "TypographyProps<T>",
-        table: {
-            category: "TypographyProps<T>",
-            tabGroup: "Heading/Body",
-            type: {
-                summary:
-                    'React.ComponentPropsWithoutRef<T> & { /** * Font weight of the rendered text. * * @default "regular" */ weight?: TypographyWeight; /** * Renders the element as an inline `span`. When `true`, the `as` prop * is ignored and `maxLines` clamping is disabled. */ inline?: boolean; /** * Adds a bottom margin to separate the element from following content. */ paragraph?: boolean; /** * Clamps visible text to the given number of lines, truncating the * remainder. * * @remarks Has no effect when `inline` is `true`. */ maxLines?: number; /** * Overrides the rendered HTML element, e.g. `"h2"`. * * @remarks Has no effect when `inline` is `true`. */ as?: T; }',
-            },
-        },
-    },
     "TypographyProps.as": {
         control: false,
         description:
