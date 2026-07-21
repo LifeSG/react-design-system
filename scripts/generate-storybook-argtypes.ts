@@ -197,6 +197,7 @@ function getJsDocMeta(
 
         if (tagName === "example" && comment) {
             examples.push(comment);
+            continue;
         }
     }
 
@@ -277,7 +278,7 @@ function toStorybookDescription(meta: JsDocMeta) {
 function cleanType(type: string) {
     let cleaned = type
         .replace(/\s*\|\s*undefined/g, "")
-        .replace(/^\s*\|\s*/, "")
+        .replace(/^\s*\|\s*/, "") // Remove leading pipe
         .replace(/\s+/g, " ")
         .trim();
 
