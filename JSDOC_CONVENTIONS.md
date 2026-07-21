@@ -26,6 +26,51 @@ Not required for:
 -   Style-only types
 -   Obvious passthrough props such as `id`, `className`, `style`, and `data-testid`
 
+## Component catalog (`@catalog` tag)
+
+The `generate-component-catalog` script scans source files for the `// @catalog`
+marker comment and extracts a catalog entry from the JSDoc block immediately
+following it. This powers the `docs/component-catalog.json` output.
+
+### How it works
+
+1. Place `// @catalog` on the line directly above the JSDoc block.
+2. The script reads the **first JSDoc block** after the marker. Both the
+   description and `@keywords` must live in that single block.
+3. Candidate files are checked in priority order (first match wins):
+   `<moduleName>.tsx`, `<moduleName>.ts`, `index.ts`.
+
+### Required structure
+
+```tsx
+// @catalog
+/**
+ * Displays an inline contextual banner with a severity-coded message.
+ *
+ * Use `Alert` to surface feedback, status, or supplementary information without
+ * interrupting the user's workflow.
+ * @keywords alert, banner, message, notification, status, feedback
+ */
+```
+
+-   **Description**: The full JSDoc comment text (all lines before the first
+    tag). Newlines are collapsed to a single space in the output.
+-   **`@keywords`**: A comma-separated list of search terms. Values are trimmed
+    and sorted alphabetically in the output.
+
+### Sub-component entries
+
+Files other than the main module file (e.g. helper components, theme tokens)
+can also be tagged with `// @catalog`. The script picks up the exported
+variable or function name as the catalog entry name.
+
+### What not to do
+
+-   Do not split `@keywords` and the description across different JSDoc blocks
+    or different `// @catalog` markers — both must be in the same block.
+-   Do not place `// @catalog` on files named `types.ts` — those are skipped
+    for sub-component scanning.
+
 ## Component function comments
 
 Add a JSDoc block on the consumer-facing exported component constant (not a
