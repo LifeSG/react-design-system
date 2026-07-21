@@ -14,5 +14,7 @@
 @import url("src/theme/styles/supportgowhere.css");
 
 .docblock-argstable-body tr[title] span {
+    font-size: 0.875rem;
     text-transform: none;
+    letter-spacing: 0;
 }
