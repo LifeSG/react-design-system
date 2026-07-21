@@ -90,7 +90,7 @@ export const uneditableSectionExtraArgTypes = {
             category: "UneditableSectionItemProps",
             tabGroup: "UneditableSection.Item",
             type: {
-                summary: "'loading' | 'fail'",
+                summary: "'fail' | 'loading'",
             },
         },
     },

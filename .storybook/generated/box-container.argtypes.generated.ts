@@ -82,7 +82,7 @@ export const boxContainerExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'default' | 'warning' | 'error'",
+                summary: "'default' | 'error' | 'warning'",
             },
         },
     },

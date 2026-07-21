@@ -17,16 +17,6 @@ export const dividerExtraArgTypes = {
             },
         },
     },
-    "DividerProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "DividerProps",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "DividerProps.layoutType": {
         control: false,
         description:
@@ -38,7 +28,7 @@ export const dividerExtraArgTypes = {
                 summary: '"flex"',
             },
             type: {
-                summary: "'grid' | 'flex'",
+                summary: "'flex' | 'grid'",
             },
         },
     },
@@ -63,7 +53,7 @@ export const dividerExtraArgTypes = {
                 summary: '"solid"',
             },
             type: {
-                summary: "'solid' | 'dashed'",
+                summary: "'dashed' | 'solid'",
             },
         },
     },

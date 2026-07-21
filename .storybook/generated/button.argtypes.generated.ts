@@ -105,7 +105,7 @@ export const buttonExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'large' | 'default' | 'small'",
+                summary: "'default' | 'large' | 'small'",
             },
         },
     },
@@ -119,7 +119,7 @@ export const buttonExtraArgTypes = {
                 summary: '"default"',
             },
             type: {
-                summary: "'default' | 'secondary' | 'light' | 'link'",
+                summary: "'default' | 'light' | 'link' | 'secondary'",
             },
         },
     },

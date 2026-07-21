@@ -45,7 +45,7 @@ export const breadcrumbExtraArgTypes = {
                 summary: '"both"',
             },
             type: {
-                summary: "'left' | 'right' | 'both'",
+                summary: "'both' | 'left' | 'right'",
             },
         },
     },

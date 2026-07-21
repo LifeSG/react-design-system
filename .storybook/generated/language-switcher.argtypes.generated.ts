@@ -9,7 +9,7 @@ export const languageSwitcherExtraArgTypes = {
         table: {
             category: "LanguageSwitcherCode",
             type: {
-                summary: "'en' | 'zh' | 'ms' | 'ta'",
+                summary: "'en' | 'ms' | 'ta' | 'zh'",
             },
         },
     },
@@ -54,7 +54,7 @@ export const languageSwitcherExtraArgTypes = {
                 summary: '"en"',
             },
             type: {
-                summary: "'en' | 'zh' | 'ms' | 'ta'",
+                summary: "'en' | 'ms' | 'ta' | 'zh'",
             },
         },
     },

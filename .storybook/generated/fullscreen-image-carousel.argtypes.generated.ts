@@ -216,7 +216,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
         table: {
             category: "FullscreenImageCarouselItemProps",
             type: {
-                summary: "'image' | 'custom'",
+                summary: "'custom' | 'image'",
             },
         },
     },
@@ -230,7 +230,7 @@ export const fullscreenImageCarouselExtraArgTypes = {
                 summary: '"bottom"',
             },
             type: {
-                summary: "'left' | 'right' | 'top' | 'bottom'",
+                summary: "'bottom' | 'left' | 'right' | 'top'",
             },
         },
     },

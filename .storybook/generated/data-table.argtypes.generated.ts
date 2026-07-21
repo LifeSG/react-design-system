@@ -150,7 +150,7 @@ export const dataTableExtraArgTypes = {
                 summary: '"success"',
             },
             type: {
-                summary: "'success' | 'loading'",
+                summary: "'loading' | 'success'",
             },
         },
     },

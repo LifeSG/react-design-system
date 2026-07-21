@@ -51,7 +51,7 @@ export const typographyExtraArgTypes = {
             },
             tabGroup: "Link",
             type: {
-                summary: "'light' | 'bold' | 'regular' | 'semibold'",
+                summary: "'bold' | 'light' | 'regular' | 'semibold'",
             },
         },
     },
@@ -132,7 +132,7 @@ export const typographyExtraArgTypes = {
             },
             tabGroup: "Heading/Body",
             type: {
-                summary: "'light' | 'bold' | 'regular' | 'semibold'",
+                summary: "'bold' | 'light' | 'regular' | 'semibold'",
             },
         },
     },

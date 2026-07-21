@@ -410,6 +410,7 @@ function getExpandedLiteralUnionText(type: Type, contextNode: Node) {
     return cleanType(
         unionTypes
             .map((unionType) => unionType.getText(contextNode, typeFormatFlags))
+            .sort((a, b) => a.localeCompare(b))
             .join(" | ")
     );
 }
@@ -601,13 +602,6 @@ function isSkippedFile(sourceFile: SourceFile) {
 /** Matches React HTML attribute interfaces (e.g. HTMLAttributes, ButtonHTMLAttributes, React.HTMLAttributes). */
 const HTML_ATTRIBUTES_REGEX = /(?:React\.)?\w*HTMLAttributes?$/;
 
-/**
- * HTML element props that leak through `isFromNodeModules` because they are
- * declared in lib.dom.d.ts rather than @types/react. These are already
- * covered by the synthetic __inheritedHtmlProps row.
- */
-const HTML_ELEMENT_PROPS = new Set(["inert"]);
-
 /** Single factory for building a GeneratedArgType row. All 7 construction sites funnel through here. */
 function buildArgTypeRow(opts: {
     key: string;
@@ -653,40 +647,31 @@ function getCategoryName(
     return declaration.getTypeParameters().length > 0 ? `${name}<T>` : name;
 }
 
-/** Check whether a symbol's declaration originates from node_modules. */
-function isFromNodeModules(symbol: TsMorphSymbol) {
+/** Check whether a symbol's declaration originates from outside component source (node_modules or type augmentation files). */
+function isExternalDeclaration(symbol: TsMorphSymbol) {
     const declaration = symbol.getDeclarations()[0];
 
     if (!declaration) {
         return true;
     }
 
-    return declaration.getSourceFile().getFilePath().includes("node_modules");
+    const filePath = declaration.getSourceFile().getFilePath();
+
+    return (
+        filePath.includes("node_modules") ||
+        filePath.includes("custom-types/")
+    );
 }
 
-/** Get own (non-node_modules) properties from a type, sorted alphabetically. */
+/** Get own (non-external) properties from a type, sorted alphabetically. */
 function getResolvedProperties(
-    declaration: InterfaceDeclaration | TypeAliasDeclaration,
-    excludeHtmlAttributes: boolean = false
+    declaration: InterfaceDeclaration | TypeAliasDeclaration
 ) {
-    let properties = declaration
+    return declaration
         .getType()
         .getProperties()
-        .filter((symbol) => !isFromNodeModules(symbol))
+        .filter((symbol) => !isExternalDeclaration(symbol))
         .sort((a, b) => a.getName().localeCompare(b.getName()));
-
-    // When interface extends HTMLAttributes, exclude inherited HTML element properties
-    // since they're documented via the synthetic __inheritedHtmlProps row
-    if (
-        excludeHtmlAttributes &&
-        declaration.getKindName() === "InterfaceDeclaration"
-    ) {
-        properties = properties.filter(
-            (p) => !HTML_ELEMENT_PROPS.has(p.getName())
-        );
-    }
-
-    return properties;
 }
 
 /** Resolve a Symbol to its first PropertySignature declaration. */
@@ -760,14 +745,6 @@ function getWrappedTypeNames(sourceFile: SourceFile): Set<string> {
 // =============================================================================
 // Per-Component Generation
 // =============================================================================
-
-function hasInheritedHtmlAttributes(
-    interfaceDeclaration: InterfaceDeclaration
-): boolean {
-    return interfaceDeclaration.getExtends().some((extendNode) => {
-        return HTML_ATTRIBUTES_REGEX.test(extendNode.getExpression().getText());
-    });
-}
 
 function getInheritedHtmlAttributesRow(
     interfaceName: string,
@@ -847,11 +824,7 @@ function getInterfaceArgTypes(
         ];
     }
 
-    const hasHtmlAttrs = hasInheritedHtmlAttributes(interfaceDeclaration);
-    const resolvedProperties = getResolvedProperties(
-        interfaceDeclaration,
-        hasHtmlAttrs
-    );
+    const resolvedProperties = getResolvedProperties(interfaceDeclaration);
 
     const indexSignatureRows = interfaceDeclaration
         .getIndexSignatures()

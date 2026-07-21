@@ -10,7 +10,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "BrandType",
             type: {
-                summary: "'secondary' | 'primary'",
+                summary: "'primary' | 'secondary'",
             },
         },
     },
@@ -22,7 +22,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "DrawerDismissalMethod",
             type: {
-                summary: "'close-button-click' | 'item-click' | 'brand-click'",
+                summary: "'brand-click' | 'close-button-click' | 'item-click'",
             },
         },
     },
@@ -217,7 +217,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavbarButtonProps",
             type: {
-                summary: "'button' | 'download' | 'component'",
+                summary: "'button' | 'component' | 'download'",
             },
         },
     },
@@ -544,16 +544,6 @@ export const navbarExtraArgTypes = {
             },
         },
     },
-    "NavItemCommonProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "NavItemCommonProps<T>",
-            type: {
-                summary: "boolean | string",
-            },
-        },
-    },
     "NavItemCommonProps.options": {
         control: false,
         description:
@@ -590,7 +580,7 @@ export const navbarExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "'light' | 'bold' | 'regular' | 'semibold'",
+                summary: "'bold' | 'light' | 'regular' | 'semibold'",
             },
         },
     },
@@ -643,16 +633,6 @@ export const navbarExtraArgTypes = {
             category: "NavItemLinkProps<T>",
             type: {
                 summary: "string",
-            },
-        },
-    },
-    "NavItemLinkProps.inert": {
-        control: false,
-        name: "inert",
-        table: {
-            category: "NavItemLinkProps<T>",
-            type: {
-                summary: "boolean | string",
             },
         },
     },
@@ -712,7 +692,7 @@ export const navbarExtraArgTypes = {
                 summary: '"regular"',
             },
             type: {
-                summary: "'light' | 'bold' | 'regular' | 'semibold'",
+                summary: "'bold' | 'light' | 'regular' | 'semibold'",
             },
         },
     },
@@ -743,7 +723,7 @@ export const navbarExtraArgTypes = {
         table: {
             category: "NavItemProps<T>",
             type: {
-                summary: "'link' | 'component'",
+                summary: "'component' | 'link'",
             },
         },
     },

@@ -9,7 +9,7 @@ export const textListExtraArgTypes = {
         table: {
             category: "BulletType",
             type: {
-                summary: "'none' | 'circle' | 'disc' | 'square'",
+                summary: "'circle' | 'disc' | 'none' | 'square'",
             },
         },
     },
@@ -123,7 +123,7 @@ export const textListExtraArgTypes = {
             category: "OrderedListProps",
             type: {
                 summary:
-                    "'heading-xxl' | 'heading-xl' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xs' | 'body-baseline' | 'body-md' | 'body-sm' | 'body-xs'",
+                    "'body-baseline' | 'body-md' | 'body-sm' | 'body-xs' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xl' | 'heading-xs' | 'heading-xxl'",
             },
         },
     },
@@ -213,7 +213,7 @@ export const textListExtraArgTypes = {
             category: "UnorderedListProps",
             type: {
                 summary:
-                    "'heading-xxl' | 'heading-xl' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xs' | 'body-baseline' | 'body-md' | 'body-sm' | 'body-xs'",
+                    "'body-baseline' | 'body-md' | 'body-sm' | 'body-xs' | 'heading-lg' | 'heading-md' | 'heading-sm' | 'heading-xl' | 'heading-xs' | 'heading-xxl'",
             },
         },
     },

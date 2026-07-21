@@ -128,7 +128,7 @@ export const fileUploadExtraArgTypes = {
         table: {
             category: "FileUploadProps",
             type: {
-                summary: "false | true | 'user' | 'environment'",
+                summary: "'environment' | 'user' | false | true",
             },
         },
     },
@@ -393,7 +393,7 @@ export const fileUploadExtraArgTypes = {
                 summary: '"bordered"',
             },
             type: {
-                summary: "'no-border' | 'bordered'",
+                summary: "'bordered' | 'no-border'",
             },
         },
     },

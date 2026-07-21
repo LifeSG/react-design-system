@@ -203,7 +203,7 @@ export const calendarExtraArgTypes = {
                 summary: '"bordered"',
             },
             type: {
-                summary: "'no-border' | 'bordered'",
+                summary: "'bordered' | 'no-border'",
             },
         },
     },
@@ -216,7 +216,7 @@ export const calendarExtraArgTypes = {
                 summary: '"single"',
             },
             type: {
-                summary: "'single' | 'multi'",
+                summary: "'multi' | 'single'",
             },
         },
     },
