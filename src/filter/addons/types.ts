@@ -1,5 +1,6 @@
 import type { FilterItemProps } from "../types";
 
+// @storybookSkipProps
 export interface FlattenedFilterOption<T = FilterItemCheckboxOptionProps> {
     originalItem: T;
     value: any;

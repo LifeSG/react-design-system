@@ -50,7 +50,7 @@ type StorybookTaggedDeclarationNode =
     | TypeAliasDeclaration
     | VariableStatement;
 
-const sourceFileGlob = "src/*/types.ts";
+const sourceFileGlobs = ["src/*/types.ts", "src/*/addons/types.ts"];
 const watchRoots = ["src", "stories"];
 const storyFileGlob = "stories/**/*.stories.@(ts|tsx)";
 const storybookArgTypesFile = path.resolve(
@@ -610,6 +610,33 @@ function getTypesFileFromStoryDirectory(storyFilePath: string) {
         return undefined;
     }
 
+    // Try matching the story filename as a subdirectory of the component.
+    // Convention: a story named `{component}-{sub}.stories.tsx` maps to
+    // `src/{component}/{sub}/types.ts` when it exists.
+    //
+    // Example: stories/filter/filter-addons.stories.tsx
+    //   storyBaseName = "filter-addons"
+    //   topLevelStoryDirectory = "filter"
+    //   subDir = "addons" (strip the "filter-" prefix)
+    //   -> checks src/filter/addons/types.ts
+    const storyBaseName = path
+        .basename(storyFilePath)
+        .replace(/\.stories\.(ts|tsx)$/, "");
+    const subDir = storyBaseName.replace(
+        new RegExp(`^${topLevelStoryDirectory}-`),
+        ""
+    );
+
+    if (subDir !== storyBaseName) {
+        const subDirTypesFile = getTypesFileForComponentDirectory(
+            path.resolve("src", topLevelStoryDirectory, subDir)
+        );
+
+        if (subDirTypesFile) {
+            return subDirTypesFile;
+        }
+    }
+
     return getTypesFileForComponentDirectory(
         path.resolve("src", topLevelStoryDirectory)
     );
@@ -850,7 +877,7 @@ function getInterfaceArgTypes(
     const interfaceJsDocMeta = getJsDocMeta(interfaceDeclaration);
     const declaredTabGroups = tabGroupOverride
         ? [tabGroupOverride]
-        : (interfaceJsDocMeta.tabGroups ?? []);
+        : interfaceJsDocMeta.tabGroups ?? [];
     const hasMultipleTabs = declaredTabGroups.length > 1;
 
     const category = getCategoryName(interfaceName, interfaceDeclaration);
@@ -1324,7 +1351,9 @@ function formatGenerated() {
 
 async function generateAll() {
     const project = createProject();
-    const sourceFiles = project.getSourceFiles(sourceFileGlob);
+    const sourceFiles = sourceFileGlobs.flatMap((glob) =>
+        project.getSourceFiles(glob)
+    );
 
     for (const sourceFile of sourceFiles) {
         await generateForSourceFile(project, sourceFile.getFilePath());
