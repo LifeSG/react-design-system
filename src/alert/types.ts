@@ -20,6 +20,8 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
      * Anchor attributes for an optional call-to-action link rendered below the
      * alert content. The link is styled with a trailing arrow icon by default;
      * supply `actionLinkIcon` to replace that icon.
+     *
+     * @default <ArrowRightIcon />
      */
     actionLink?: React.AnchorHTMLAttributes<HTMLAnchorElement> | undefined;
     /**
