@@ -17,6 +17,7 @@ coverage
 # storybook artifacts
 storybook-static
 *storybook.log
+.storybook/generated/
 
 # test artifacts
 junit.xml
