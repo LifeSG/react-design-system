@@ -260,6 +260,16 @@ function toStorybookDescription(meta: JsDocMeta) {
         blocks.push(meta.description);
     }
 
+    if (meta.deprecated) {
+        blocks.push(
+            `==Deprecated:\n${
+                typeof meta.deprecated === "string"
+                    ? meta.deprecated
+                    : "This API is deprecated."
+            }==`
+        );
+    }
+
     if (meta.remarks) {
         blocks.push(`Remarks:\n${meta.remarks}`);
     }
@@ -696,12 +706,6 @@ function buildArgTypeRow(opts: {
                 defaultValue: opts.defaultValue
                     ? { summary: opts.defaultValue }
                     : undefined,
-                jsDocTags:
-                    typeof opts.deprecated === "string"
-                        ? {
-                              deprecated: opts.deprecated,
-                          }
-                        : undefined,
                 tabGroup: opts.tabGroup,
                 type:
                     opts.typeSummaryParts && opts.typeSummaryParts.length > 1

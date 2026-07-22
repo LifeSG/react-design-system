@@ -39,8 +39,6 @@ export type GeneratedArgType = {
             category: string;
             /** Optional tab group from `@storybookSection` JSDoc tag. */
             tabGroup: string | undefined;
-            /** Deprecation info for Storybook's built-in deprecation badge. */
-            jsDocTags?: { deprecated: string } | undefined;
             /** Type information. */
             type: {
                 /** Detailed type information for the props table. */
