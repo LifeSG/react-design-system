@@ -22,6 +22,8 @@ export interface SmartAppBannerProps {
     offset?: number | undefined;
     /**
      * URL of the app icon image displayed in the banner.
+     *
+     * @default "https://assets.life.gov.sg/react-design-system/img/app-icon/app-icon.png"
      */
     icon?: string | undefined;
     /**
