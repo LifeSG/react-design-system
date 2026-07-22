@@ -809,7 +809,10 @@ function findReferencedTypeNames(
  * Returns a Map of type name → tabGroup (inherited from the declaring interface/type).
  * This allows imported types to be placed in the same tab as the property that uses them.
  */
-const wrappedTypeNamesCache = new Map<string, Map<string, string | undefined>>();
+const wrappedTypeNamesCache = new Map<
+    string,
+    Map<string, string | undefined>
+>();
 
 function getWrappedTypeNames(
     sourceFile: SourceFile
@@ -837,7 +840,10 @@ function getWrappedTypeNames(
     ]) {
         const tabGroup = getJsDocMeta(declaration).tabGroups?.[0];
 
-        for (const name of findReferencedTypeNames(declaration, knownTypeNames)) {
+        for (const name of findReferencedTypeNames(
+            declaration,
+            knownTypeNames
+        )) {
             if (!wrappedNames.has(name)) {
                 wrappedNames.set(name, tabGroup);
             }
@@ -1096,6 +1102,12 @@ function getTypeAliasArgTypes(
         });
 
         if (!isCompositeAlias) {
+            return propertyRows;
+        }
+
+        // For intersections, expanded property rows already convey the API shape.
+        // A synthetic header row (e.g. `A & B`) is usually redundant noise.
+        if (typeNodeKind === "IntersectionType") {
             return propertyRows;
         }
 
