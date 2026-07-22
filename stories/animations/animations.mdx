@@ -1,4 +1,4 @@
-import { Canvas, Meta } from "@storybook/addon-docs/blocks";
+import { Canvas, Meta, Story } from "@storybook/addon-docs/blocks";
 import {
     LoadingDots,
     LoadingDotsSpinner,
@@ -10,8 +10,10 @@ import {
     AnimationPane,
     Content,
 } from "./doc-elements";
-import { PropsTable } from "./props-table";
-import * as AnimationStories from "./1-animations-overview.stories";
+import { AutoArgTypesTabs } from "../storybook-common";
+import * as AnimationStories from "./animations.stories";
+import { DocNote } from "stories/storybook-common";
+import { CustomisedPropsTable } from "./props-table";
 
 <Meta title="Feedback indicators/Animations/Overview" />
 
@@ -74,10 +76,33 @@ standalone component.
         An animation that can be shown in between page transitions or
         while waiting for fetching of data.
       </p>
-      <p>This is a customisable animation. [See here](/docs/feedback-indicators-animations-customisable-animations--docs) to find out more.</p>
+      <p>This is a customisable animation. See the Customisable animations section below.</p>
     </Content>
   </AnimationItem>
 </AnimationDisplay>
+
+## Customisable animations
+
+<DocNote>
+    Customisation is only supported by the animations in this section.
+</DocNote>
+
+### LoadingDotsSpinner
+
+```tsx
+import { LoadingDotsSpinner } from "@lifesg/react-design-system/animations";
+```
+
+If no color is specified, this component uses the
+`Animation["loading-dots-spinner-colour"]` token.
+
+<Canvas of={AnimationStories.CustomLoadingDotsSpinner} />
+
+### Component tokens
+
+This component can be customised via the `Animation` tokens.
+
+<Story of={AnimationStories.TokenCustomisation} />
 
 ## Usage
 
@@ -95,4 +120,8 @@ export const SomeComponent = () => {
 
 ## Component API
 
-<PropsTable />
+<AutoArgTypesTabs of={AnimationStories} />
+
+### LoadingDotsSpinner API
+
+<CustomisedPropsTable />
