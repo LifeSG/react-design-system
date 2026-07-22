@@ -10,7 +10,9 @@ export type ToastType = "success" | "warning" | "error" | "info";
  * Configuration for the optional action button rendered inside a `Toast`.
  */
 export interface ToastActionButtonProps {
+    /** The label of the action button */
     label: string;
+    /** Called when the action button is clicked */
     onClick: () => void;
 }
 
