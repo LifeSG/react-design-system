@@ -1,44 +1,39 @@
-@import url("../default.css");
+@import url("./default.css");
 
-[data-fds-theme="bookingsg"] {
-    /*
-    ============================================================================
-    PRIMITIVE COLOURS
-    ============================================================================
-    */
-    --fds-colour-brand-10: #2C0C0B;
-    --fds-colour-brand-20: #4C1513;
-    --fds-colour-brand-30: #6C1D1B;
-    --fds-colour-brand-40: #922825;
-    --fds-colour-brand-50: #BF3431;
-    --fds-colour-brand-60: #F15D5A;
-    --fds-colour-brand-70: #F69491;
-    --fds-colour-brand-80: #FABAB7;
-    --fds-colour-brand-90: #FCD7D2;
-    --fds-colour-brand-95: #FFEBE7;
-    --fds-colour-brand-100: #FFF6F4;
-    --fds-colour-primary-10: #1A122C;
-    --fds-colour-primary-20: #2F1F4D;
-    --fds-colour-primary-30: #422D6E;
-    --fds-colour-primary-40: #5B3D97;
-    --fds-colour-primary-50: #7654BC;
-    --fds-colour-primary-60: #9A82CD;
-    --fds-colour-primary-70: #B7A7D8;
-    --fds-colour-primary-80: #CFC5E5;
-    --fds-colour-primary-90: #E3DDF0;
-    --fds-colour-primary-95: #F0EDF7;
-    --fds-colour-primary-100: #F9F8FC;
-    --fds-colour-secondary-10: #0E1723;
-    --fds-colour-secondary-20: #18293D;
-    --fds-colour-secondary-30: #233A57;
-    --fds-colour-secondary-40: #305078;
-    --fds-colour-secondary-50: #4B6A8F;
-    --fds-colour-secondary-60: #7B91A9;
-    --fds-colour-secondary-70: #A1B1C3;
-    --fds-colour-secondary-80: #C1CBD7;
-    --fds-colour-secondary-90: #DBE1E8;
-    --fds-colour-secondary-95: #EBEFF2;
-    --fds-colour-secondary-100: #F7F8FA;
+[data-fds-theme="ccube"] {
+    --fds-colour-brand-10: #1F1221;
+    --fds-colour-brand-20: #371F3B;
+    --fds-colour-brand-30: #4E2C53;
+    --fds-colour-brand-40: #6B3E73;
+    --fds-colour-brand-50: #8D5197;
+    --fds-colour-brand-60: #FF3399;
+    --fds-colour-brand-70: #FF88C4;
+    --fds-colour-brand-80: #FFB3D9;
+    --fds-colour-brand-90: #FFD4E9;
+    --fds-colour-brand-95: #FFE8F3;
+    --fds-colour-brand-100: #FFF8FC;
+    --fds-colour-primary-10: #1F1221;
+    --fds-colour-primary-20: #371F3B;
+    --fds-colour-primary-30: #4E2C53;
+    --fds-colour-primary-40: #6B3E73;
+    --fds-colour-primary-50: #8D5197;
+    --fds-colour-primary-60: #B07DB7;
+    --fds-colour-primary-70: #C7A3CC;
+    --fds-colour-primary-80: #D9C2DD;
+    --fds-colour-primary-90: #E9DBEB;
+    --fds-colour-primary-95: #F3ECF4;
+    --fds-colour-primary-100: #FAF7FA;
+    --fds-colour-secondary-10: #2D091B;
+    --fds-colour-secondary-20: #4D0F2E;
+    --fds-colour-secondary-30: #6B1540;
+    --fds-colour-secondary-40: #931D58;
+    --fds-colour-secondary-50: #C02673;
+    --fds-colour-secondary-60: #FF409F;
+    --fds-colour-secondary-70: #FF88C4;
+    --fds-colour-secondary-80: #FFB3D9;
+    --fds-colour-secondary-90: #FFD4E9;
+    --fds-colour-secondary-95: #FFE8F3;
+    --fds-colour-secondary-100: #FFF8FC;
     --fds-colour-neutral-10: #161616;
     --fds-colour-neutral-20: #282828;
     --fds-colour-neutral-30: #393939;
@@ -106,8 +101,6 @@
     ========================================================================
     */
 
-    /* Button */
-
     @mixin component-tokens-standard;
 
     /* 
@@ -119,12 +112,12 @@
     @mixin shadow;
 
     /*
-    ============================================================================
+    ========================================================================
     FONT
-    ============================================================================
+    ========================================================================
     */
 
-    @mixin font-plus-jakarta-sans;
+    @mixin font-open-sans;
 }
 
 /*
@@ -132,6 +125,6 @@
 SEMANTIC COLOURS - DARK MODE
 ============================================================================
 */
-[data-fds-theme="bookingsg"][data-fds-theme-mode="dark"] {
+[data-fds-theme="ccube"][data-fds-theme-mode="dark"] {
     @mixin semantic-colours-dark;
 }

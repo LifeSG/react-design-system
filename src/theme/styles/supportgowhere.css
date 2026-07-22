@@ -1,39 +1,39 @@
-@import url("../default.css");
+@import url("./default.css");
 
-[data-fds-theme="rbs"] {
-    --fds-colour-brand-10: #0E123A;
-    --fds-colour-brand-20: #191E65;
-    --fds-colour-brand-30: #232B90;
-    --fds-colour-brand-40: #303BC5;
-    --fds-colour-brand-50: #494CFF;
-    --fds-colour-brand-60: #AD6EFF;
-    --fds-colour-brand-70: #AEA4FF;
-    --fds-colour-brand-80: #C5C4FF;
-    --fds-colour-brand-90: #DDDCFF;
-    --fds-colour-brand-95: #EDECFF;
-    --fds-colour-brand-100: #F8F8FF;
-    --fds-colour-primary-10: #10152B;
-    --fds-colour-primary-20: #1C254B;
-    --fds-colour-primary-30: #28356C;
-    --fds-colour-primary-40: #38489A;
-    --fds-colour-primary-50: #4D5AD7;
-    --fds-colour-primary-60: #7487F2;
-    --fds-colour-primary-70: #9AAAFC;
-    --fds-colour-primary-80: #BDC7FD;
-    --fds-colour-primary-90: #DADFFB;
-    --fds-colour-primary-95: #ECEEFE;
-    --fds-colour-primary-100: #F7F8FF;
-    --fds-colour-secondary-10: #19151D;
-    --fds-colour-secondary-20: #2B2533;
-    --fds-colour-secondary-30: #3E3649;
-    --fds-colour-secondary-40: #564A64;
-    --fds-colour-secondary-50: #6F637D;
-    --fds-colour-secondary-60: #948B9F;
-    --fds-colour-secondary-70: #B3ACBB;
-    --fds-colour-secondary-80: #CCC8D2;
-    --fds-colour-secondary-90: #E1DEE4;
-    --fds-colour-secondary-95: #EFEEF1;
-    --fds-colour-secondary-100: #F9F8F9;
+[data-fds-theme="supportgowhere"] {
+    --fds-colour-brand-10: #0E113C;
+    --fds-colour-brand-20: #191E67;
+    --fds-colour-brand-30: #232A92;
+    --fds-colour-brand-40: #233FC2;
+    --fds-colour-brand-50: #135CEA;
+    --fds-colour-brand-60: #378FFB;
+    --fds-colour-brand-70: #71B3FD;
+    --fds-colour-brand-80: #9DCFFE;
+    --fds-colour-brand-90: #C1E5FF;
+    --fds-colour-brand-95: #DCF1FF;
+    --fds-colour-brand-100: #F3FAFF;
+    --fds-colour-primary-10: #0E113C;
+    --fds-colour-primary-20: #191E67;
+    --fds-colour-primary-30: #232A92;
+    --fds-colour-primary-40: #233FC2;
+    --fds-colour-primary-50: #135CEA;
+    --fds-colour-primary-60: #378FFB;
+    --fds-colour-primary-70: #71B3FD;
+    --fds-colour-primary-80: #9DCFFE;
+    --fds-colour-primary-90: #C1E5FF;
+    --fds-colour-primary-95: #DCF1FF;
+    --fds-colour-primary-100: #F3FAFF;
+    --fds-colour-secondary-10: #34001F;
+    --fds-colour-secondary-20: #540033;
+    --fds-colour-secondary-30: #730045;
+    --fds-colour-secondary-40: #9D0054;
+    --fds-colour-secondary-50: #C61C64;
+    --fds-colour-secondary-60: #DE6792;
+    --fds-colour-secondary-70: #EB96B6;
+    --fds-colour-secondary-80: #F5BAD2;
+    --fds-colour-secondary-90: #FCD5E3;
+    --fds-colour-secondary-95: #FDEBF1;
+    --fds-colour-secondary-100: #FDF6F9;
     --fds-colour-neutral-10: #161616;
     --fds-colour-neutral-20: #282828;
     --fds-colour-neutral-30: #393939;
@@ -103,8 +103,6 @@
 
     /* Button */
 
-    @mixin component-tokens-standard;
-
     /* 
     ========================================================================
     SHADOW
@@ -114,12 +112,21 @@
     @mixin shadow;
 
     /*
-    ========================================================================
+    ============================================================================
     FONT
-    ========================================================================
+    ============================================================================
     */
+    --fds-font-variant: no-common-ligatures;
 
-    @mixin font-open-sans;
+    @mixin font-scale-standard;
+    --fds-font-family-heading: "Libre Franklin";
+    --fds-font-family-body: "Libre Franklin";
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
+    --fds-font-form-label-lh: 1.5rem;
+    --fds-font-form-description-lh: 1.625rem;
+    --fds-font-form-label-ls: 0.009rem;
+    --fds-font-form-description-ls: 0.008rem;
 }
 
 /*
@@ -127,6 +134,6 @@
 SEMANTIC COLOURS - DARK MODE
 ============================================================================
 */
-[data-fds-theme="rbs"][data-fds-theme-mode="dark"] {
+[data-fds-theme="supportgowhere"][data-fds-theme-mode="dark"] {
     @mixin semantic-colours-dark;
 }

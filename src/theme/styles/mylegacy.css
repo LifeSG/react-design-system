@@ -1,4 +1,4 @@
-@import url("../default.css");
+@import url("./default.css");
 
 [data-fds-theme="mylegacy"] {
     /*
@@ -105,8 +105,6 @@
     COMPONENT TOKENS
     ========================================================================
     */
-
-    /* Button */
 
     @mixin component-tokens-standard;
 

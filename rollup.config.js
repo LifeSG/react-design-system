@@ -185,13 +185,10 @@ const plugins = [
     copy({
         targets: [
             {
-                src: "src/theme/styles/source/*.css",
+                src: "src/theme/styles/*.css",
                 dest: "dist/theme/styles",
                 transform: async (contents, filename) => {
-                    const from = path.resolve(
-                        "src/theme/styles/source",
-                        filename
-                    );
+                    const from = path.resolve("src/theme/styles", filename);
                     const result = await postcss([
                         postcssImports(),
                         postcssMixins({

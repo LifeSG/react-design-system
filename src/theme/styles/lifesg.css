@@ -1,22 +1,17 @@
-@import url("../default.css");
+@import url("./default.css");
 
-[data-fds-theme="careercompass"] {
-    /*
-    ============================================================================
-    PRIMITIVE COLOURS
-    ============================================================================
-    */
-    --fds-colour-brand-10: #001731;
-    --fds-colour-brand-20: #002752;
-    --fds-colour-brand-30: #003874;
-    --fds-colour-brand-40: #004D9F;
-    --fds-colour-brand-50: #1768BE;
-    --fds-colour-brand-60: #3C91EC;
-    --fds-colour-brand-70: #6CB4FF;
-    --fds-colour-brand-80: #A5CDFF;
-    --fds-colour-brand-90: #CFE1FE;
-    --fds-colour-brand-95: #E8F0FE;
-    --fds-colour-brand-100: #F7F9FF;
+[data-fds-theme="lifesg"] {
+    --fds-colour-brand-10: #2C0C0B;
+    --fds-colour-brand-20: #4C1513;
+    --fds-colour-brand-30: #6C1D1B;
+    --fds-colour-brand-40: #922825;
+    --fds-colour-brand-50: #BF3431;
+    --fds-colour-brand-60: #F15D5A;
+    --fds-colour-brand-70: #F69491;
+    --fds-colour-brand-80: #FABAB7;
+    --fds-colour-brand-90: #FCD7D2;
+    --fds-colour-brand-95: #FFEBE7;
+    --fds-colour-brand-100: #FFF6F4;
     --fds-colour-primary-10: #001731;
     --fds-colour-primary-20: #002752;
     --fds-colour-primary-30: #003874;
@@ -28,17 +23,17 @@
     --fds-colour-primary-90: #CFE1FE;
     --fds-colour-primary-95: #E8F0FE;
     --fds-colour-primary-100: #F7F9FF;
-    --fds-colour-secondary-10: #001A19;
-    --fds-colour-secondary-20: #002D2B;
-    --fds-colour-secondary-30: #00413D;
-    --fds-colour-secondary-40: #005954;
-    --fds-colour-secondary-50: #00756F;
-    --fds-colour-secondary-60: #03A098;
-    --fds-colour-secondary-70: #55BFBA;
-    --fds-colour-secondary-80: #92D6D2;
-    --fds-colour-secondary-90: #BFE7E5;
-    --fds-colour-secondary-95: #DDF2F1;
-    --fds-colour-secondary-100: #F4FBFA;
+    --fds-colour-secondary-10: #131529;
+    --fds-colour-secondary-20: #222547;
+    --fds-colour-secondary-30: #2F3565;
+    --fds-colour-secondary-40: #42498B;
+    --fds-colour-secondary-50: #5B62A7;
+    --fds-colour-secondary-60: #858CBD;
+    --fds-colour-secondary-70: #A8ADCF;
+    --fds-colour-secondary-80: #C6C9E0;
+    --fds-colour-secondary-90: #DDDFEC;
+    --fds-colour-secondary-95: #EDEEF5;
+    --fds-colour-secondary-100: #F8F8FB;
     --fds-colour-neutral-10: #161616;
     --fds-colour-neutral-20: #282828;
     --fds-colour-neutral-30: #393939;
@@ -107,8 +102,42 @@
     */
 
     /* Button */
+    --fds-button-radius: var(--fds-radius-sm);
+    --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
+    --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
+    --fds-button-default-colour-text: var(--fds-colour-text-inverse);
+    --fds-button-secondary-colour-border: var(--fds-colour-border-primary);
+    --fds-button-secondary-colour-text: var(--fds-colour-text-primary);
+    --fds-button-light-colour-text: var(--fds-colour-text-primary);
+    --fds-button-link-colour-text: var(--fds-colour-text-primary);
 
-    @mixin component-tokens-standard;
+    /* Navbar */
+    --fds-navbar-full-height: 6rem;
+    --fds-navbar-full-logo-height: 2rem;
+    --fds-navbar-compressed-height: 4rem;
+    --fds-navbar-compressed-logo-height: 1.5rem;
+    --fds-navbar-mobile-height: 3.5rem;
+    --fds-navbar-mobile-logo-height: 1.5rem;
+    --fds-navbar-colour-bg: var(--fds-colour-bg);
+    --fds-navbar-colour-icon: var(--fds-colour-icon);
+    --fds-navbar-link-colour-text: var(--fds-colour-text);
+    --fds-navbar-link-colour-text-hover: var(--fds-colour-text-hover);
+    --fds-navbar-link-colour-text-selected-hover: var(
+        --fds-colour-text-selected-hover
+    );
+
+    /* Footer */
+    --fds-footer-colour-bg: var(--fds-colour-bg-strong);
+    --fds-footer-colour-text: var(--fds-colour-text);
+    --fds-footer-link-colour-text: var(--fds-colour-text);
+    --fds-footer-link-colour-text-hover: var(--fds-colour-text-hover);
+    --fds-footer-disclaimer-link-colour-text: var(--fds-colour-text);
+    --fds-footer-disclaimer-link-colour-text-hover: var(
+        --fds-colour-text-subtler
+    );
+
+    /* Animation: */
+    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-brand-50);
 
     /* 
     ========================================================================
@@ -119,12 +148,12 @@
     @mixin shadow;
 
     /*
-    ============================================================================
+    ========================================================================
     FONT
-    ============================================================================
+    ========================================================================
     */
 
-    @mixin font-plus-jakarta-sans;
+    @mixin font-open-sans;
 }
 
 /*
@@ -132,6 +161,6 @@
 SEMANTIC COLOURS - DARK MODE
 ============================================================================
 */
-[data-fds-theme="careercompass"][data-fds-theme-mode="dark"] {
+[data-fds-theme="lifesg"][data-fds-theme-mode="dark"] {
     @mixin semantic-colours-dark;
 }

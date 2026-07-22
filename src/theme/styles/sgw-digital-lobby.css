@@ -1,44 +1,44 @@
-@import url("../default.css");
+@import url("./default.css");
 
-[data-fds-theme="oneservice"] {
-    /*
+[data-fds-theme="sgw-digital-lobby"] {
+    /* 
     ============================================================================
-    PRIMITIVE COLORS
+    PRIMITIVES COLORS
     ============================================================================
     */
-    --fds-colour-brand-10: #001A19;
-    --fds-colour-brand-20: #002D2B;
-    --fds-colour-brand-30: #00413D;
-    --fds-colour-brand-40: #005954;
-    --fds-colour-brand-50: #00756F;
-    --fds-colour-brand-60: #03A098;
-    --fds-colour-brand-70: #55BFBA;
-    --fds-colour-brand-80: #92D6D2;
-    --fds-colour-brand-90: #BFE7E5;
-    --fds-colour-brand-95: #DDF2F1;
-    --fds-colour-brand-100: #F4FBFA;
-    --fds-colour-primary-10: #09191D;
-    --fds-colour-primary-20: #102B34;
-    --fds-colour-primary-30: #173D49;
-    --fds-colour-primary-40: #205666;
-    --fds-colour-primary-50: #2A7086;
-    --fds-colour-primary-60: #5D97A9;
-    --fds-colour-primary-70: #8CB6C2;
-    --fds-colour-primary-80: #B2CED6;
-    --fds-colour-primary-90: #D1E2E7;
-    --fds-colour-primary-95: #E8F0F3;
-    --fds-colour-primary-100: #F7FAFB;
-    --fds-colour-secondary-10: #001731;
-    --fds-colour-secondary-20: #002752;
-    --fds-colour-secondary-30: #003874;
-    --fds-colour-secondary-40: #004D9F;
-    --fds-colour-secondary-50: #5B62A7;
-    --fds-colour-secondary-60: #858CBD;
-    --fds-colour-secondary-70: #A8ADCF;
-    --fds-colour-secondary-80: #C6C9E0;
-    --fds-colour-secondary-90: #DDDFEC;
-    --fds-colour-secondary-95: #EDEEF5;
-    --fds-colour-secondary-100: #F8F8FB;
+    --fds-colour-brand-10: #0E113C;
+    --fds-colour-brand-20: #191E67;
+    --fds-colour-brand-30: #232A92;
+    --fds-colour-brand-40: #233FC2;
+    --fds-colour-brand-50: #135CEA;
+    --fds-colour-brand-60: #378FFB;
+    --fds-colour-brand-70: #71B3FD;
+    --fds-colour-brand-80: #9DCFFE;
+    --fds-colour-brand-90: #C1E5FF;
+    --fds-colour-brand-95: #DCF1FF;
+    --fds-colour-brand-100: #F3FAFF;
+    --fds-colour-primary-10: #0E113C;
+    --fds-colour-primary-20: #191E67;
+    --fds-colour-primary-30: #232A92;
+    --fds-colour-primary-40: #233FC2;
+    --fds-colour-primary-50: #135CEA;
+    --fds-colour-primary-60: #378FFB;
+    --fds-colour-primary-70: #71B3FD;
+    --fds-colour-primary-80: #9DCFFE;
+    --fds-colour-primary-90: #C1E5FF;
+    --fds-colour-primary-95: #DCF1FF;
+    --fds-colour-primary-100: #F3FAFF;
+    --fds-colour-secondary-10: #34001F;
+    --fds-colour-secondary-20: #540033;
+    --fds-colour-secondary-30: #730045;
+    --fds-colour-secondary-40: #9D0054;
+    --fds-colour-secondary-50: #C61C64;
+    --fds-colour-secondary-60: #DE6792;
+    --fds-colour-secondary-70: #EB96B6;
+    --fds-colour-secondary-80: #F5BAD2;
+    --fds-colour-secondary-90: #FCD5E3;
+    --fds-colour-secondary-95: #FDEBF1;
+    --fds-colour-secondary-100: #FDF6F9;
     --fds-colour-neutral-10: #161616;
     --fds-colour-neutral-20: #282828;
     --fds-colour-neutral-30: #393939;
@@ -106,8 +106,6 @@
     ========================================================================
     */
 
-    /* Button */
-
     @mixin component-tokens-standard;
 
     /* 
@@ -119,51 +117,51 @@
     @mixin shadow;
 
     /*
-    ========================================================================
+    ============================================================================
     FONT
-    ========================================================================
+    ============================================================================
     */
-    --fds-font-variant: normal;
-    --fds-font-heading-size-xxl: 2.5rem;
-    --fds-font-heading-size-xl: 2rem;
-    --fds-font-heading-size-lg: 1.75rem;
-    --fds-font-heading-size-md: 1.375rem;
-    --fds-font-heading-size-sm: 1.125rem;
-    --fds-font-heading-size-xs: 1rem;
-    --fds-font-heading-lh-xxl: 3.5rem;
-    --fds-font-heading-lh-xl: 3rem;
-    --fds-font-heading-lh-lg: 2.625rem;
-    --fds-font-heading-lh-md: 2rem;
-    --fds-font-heading-lh-sm: 1.625rem;
-    --fds-font-heading-lh-xs: 1.5rem;
-    --fds-font-heading-ls-xxl: 0rem;
-    --fds-font-heading-ls-xl: 0rem;
-    --fds-font-heading-ls-lg: 0rem;
-    --fds-font-heading-ls-md: 0rem;
+    --fds-font-variant: no-common-ligatures;
+    --fds-font-heading-size-xxl: 3.75rem;
+    --fds-font-heading-size-xl: 3rem;
+    --fds-font-heading-size-lg: 2.5rem;
+    --fds-font-heading-size-md: 2rem;
+    --fds-font-heading-size-sm: 1.625rem;
+    --fds-font-heading-size-xs: 1.375rem;
+    --fds-font-heading-lh-xxl: 4.5rem;
+    --fds-font-heading-lh-xl: 3.5rem;
+    --fds-font-heading-lh-lg: 3rem;
+    --fds-font-heading-lh-md: 2.5rem;
+    --fds-font-heading-lh-sm: 2.25rem;
+    --fds-font-heading-lh-xs: 1.75rem;
+    --fds-font-heading-ls-xxl: -0.035rem;
+    --fds-font-heading-ls-xl: -0.035rem;
+    --fds-font-heading-ls-lg: -0.02rem;
+    --fds-font-heading-ls-md: -0.02rem;
     --fds-font-heading-ls-sm: 0rem;
     --fds-font-heading-ls-xs: 0rem;
     --fds-font-weight-light: 300;
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
-    --fds-font-family-heading: "Open Sans";
-    --fds-font-family-body: "Open Sans";
-    --fds-font-body-size-baseline: 1rem;
-    --fds-font-body-size-md: 0.875rem;
-    --fds-font-body-size-sm: 0.75rem;
-    --fds-font-body-size-xs: 0.75rem;
-    --fds-font-body-lh-baseline: 1.5rem;
-    --fds-font-body-lh-md: 1.313rem;
-    --fds-font-body-lh-sm: 1.125rem;
-    --fds-font-body-lh-xs: 1.125rem;
+    --fds-font-family-heading: "Libre Franklin";
+    --fds-font-family-body: "Libre Franklin";
+    --fds-font-body-size-baseline: 1.375rem;
+    --fds-font-body-size-md: 1.25rem;
+    --fds-font-body-size-sm: 1.125rem;
+    --fds-font-body-size-xs: 1rem;
+    --fds-font-body-lh-baseline: 1.75rem;
+    --fds-font-body-lh-md: 1.625rem;
+    --fds-font-body-lh-sm: 1.625rem;
+    --fds-font-body-lh-xs: 1.5rem;
     --fds-font-body-ls-baseline: 0rem;
     --fds-font-body-ls-md: 0rem;
     --fds-font-body-ls-sm: 0rem;
-    --fds-font-body-ls-xs: 0rem;
-    --fds-font-form-label-size: 0.875rem;
-    --fds-font-form-description-size: 0.875rem;
-    --fds-font-form-label-lh: 1.313rem;
-    --fds-font-form-description-lh: 1.313rem;
+    --fds-font-body-ls-xs: 0.009rem;
+    --fds-font-form-label-size: 1.25rem;
+    --fds-font-form-description-size: 1.125rem;
+    --fds-font-form-label-lh: 1.625rem;
+    --fds-font-form-description-lh: 1.625rem;
     --fds-font-form-label-ls: 0rem;
     --fds-font-form-description-ls: 0rem;
 }
@@ -173,6 +171,6 @@
 SEMANTIC COLOURS - DARK MODE
 ============================================================================
 */
-[data-fds-theme="oneservice"][data-fds-theme-mode="dark"] {
+[data-fds-theme="sgw-digital-lobby"][data-fds-theme-mode="dark"] {
     @mixin semantic-colours-dark;
 }

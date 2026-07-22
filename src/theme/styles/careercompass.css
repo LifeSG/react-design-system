@@ -1,39 +1,44 @@
-@import url("../default.css");
+@import url("./default.css");
 
-[data-fds-theme="supportgowhere"] {
-    --fds-colour-brand-10: #0E113C;
-    --fds-colour-brand-20: #191E67;
-    --fds-colour-brand-30: #232A92;
-    --fds-colour-brand-40: #233FC2;
-    --fds-colour-brand-50: #135CEA;
-    --fds-colour-brand-60: #378FFB;
-    --fds-colour-brand-70: #71B3FD;
-    --fds-colour-brand-80: #9DCFFE;
-    --fds-colour-brand-90: #C1E5FF;
-    --fds-colour-brand-95: #DCF1FF;
-    --fds-colour-brand-100: #F3FAFF;
-    --fds-colour-primary-10: #0E113C;
-    --fds-colour-primary-20: #191E67;
-    --fds-colour-primary-30: #232A92;
-    --fds-colour-primary-40: #233FC2;
-    --fds-colour-primary-50: #135CEA;
-    --fds-colour-primary-60: #378FFB;
-    --fds-colour-primary-70: #71B3FD;
-    --fds-colour-primary-80: #9DCFFE;
-    --fds-colour-primary-90: #C1E5FF;
-    --fds-colour-primary-95: #DCF1FF;
-    --fds-colour-primary-100: #F3FAFF;
-    --fds-colour-secondary-10: #34001F;
-    --fds-colour-secondary-20: #540033;
-    --fds-colour-secondary-30: #730045;
-    --fds-colour-secondary-40: #9D0054;
-    --fds-colour-secondary-50: #C61C64;
-    --fds-colour-secondary-60: #DE6792;
-    --fds-colour-secondary-70: #EB96B6;
-    --fds-colour-secondary-80: #F5BAD2;
-    --fds-colour-secondary-90: #FCD5E3;
-    --fds-colour-secondary-95: #FDEBF1;
-    --fds-colour-secondary-100: #FDF6F9;
+[data-fds-theme="careercompass"] {
+    /*
+    ============================================================================
+    PRIMITIVE COLOURS
+    ============================================================================
+    */
+    --fds-colour-brand-10: #001731;
+    --fds-colour-brand-20: #002752;
+    --fds-colour-brand-30: #003874;
+    --fds-colour-brand-40: #004D9F;
+    --fds-colour-brand-50: #1768BE;
+    --fds-colour-brand-60: #3C91EC;
+    --fds-colour-brand-70: #6CB4FF;
+    --fds-colour-brand-80: #A5CDFF;
+    --fds-colour-brand-90: #CFE1FE;
+    --fds-colour-brand-95: #E8F0FE;
+    --fds-colour-brand-100: #F7F9FF;
+    --fds-colour-primary-10: #001731;
+    --fds-colour-primary-20: #002752;
+    --fds-colour-primary-30: #003874;
+    --fds-colour-primary-40: #004D9F;
+    --fds-colour-primary-50: #1768BE;
+    --fds-colour-primary-60: #3C91EC;
+    --fds-colour-primary-70: #6CB4FF;
+    --fds-colour-primary-80: #A5CDFF;
+    --fds-colour-primary-90: #CFE1FE;
+    --fds-colour-primary-95: #E8F0FE;
+    --fds-colour-primary-100: #F7F9FF;
+    --fds-colour-secondary-10: #001A19;
+    --fds-colour-secondary-20: #002D2B;
+    --fds-colour-secondary-30: #00413D;
+    --fds-colour-secondary-40: #005954;
+    --fds-colour-secondary-50: #00756F;
+    --fds-colour-secondary-60: #03A098;
+    --fds-colour-secondary-70: #55BFBA;
+    --fds-colour-secondary-80: #92D6D2;
+    --fds-colour-secondary-90: #BFE7E5;
+    --fds-colour-secondary-95: #DDF2F1;
+    --fds-colour-secondary-100: #F4FBFA;
     --fds-colour-neutral-10: #161616;
     --fds-colour-neutral-20: #282828;
     --fds-colour-neutral-30: #393939;
@@ -101,7 +106,7 @@
     ========================================================================
     */
 
-    /* Button */
+    @mixin component-tokens-standard;
 
     /* 
     ========================================================================
@@ -116,17 +121,8 @@
     FONT
     ============================================================================
     */
-    --fds-font-variant: no-common-ligatures;
 
-    @mixin font-scale-standard;
-    --fds-font-family-heading: "Libre Franklin";
-    --fds-font-family-body: "Libre Franklin";
-    --fds-font-form-label-size: 1rem;
-    --fds-font-form-description-size: 0.875rem;
-    --fds-font-form-label-lh: 1.5rem;
-    --fds-font-form-description-lh: 1.625rem;
-    --fds-font-form-label-ls: 0.009rem;
-    --fds-font-form-description-ls: 0.008rem;
+    @mixin font-plus-jakarta-sans;
 }
 
 /*
@@ -134,6 +130,6 @@
 SEMANTIC COLOURS - DARK MODE
 ============================================================================
 */
-[data-fds-theme="supportgowhere"][data-fds-theme-mode="dark"] {
+[data-fds-theme="careercompass"][data-fds-theme-mode="dark"] {
     @mixin semantic-colours-dark;
 }

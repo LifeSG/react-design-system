@@ -1,4 +1,4 @@
-@import url("../default.css");
+@import url("./default.css");
 
 [data-fds-theme="smgs"] {
     --fds-colour-brand-10: #0B181F;
@@ -100,8 +100,6 @@
     COMPONENT TOKENS
     ========================================================================
     */
-
-    /* Button */
 
     @mixin component-tokens-standard;
 
