@@ -1,6 +1,18 @@
 import type { ButtonProps } from "../button";
 
 /**
+ * Props for the prefix label rendered before the OTP input cells.
+ */
+type OtpInputPrefix = {
+    /** Prefix text, usually a few alphabetic characters. */
+    value: string;
+    /**
+     * Separator between the prefix and the OTP input.
+     * Only `"-"` is supported.
+     */
+    separator: "-";
+};
+/**
  * Props for the `OtpInput` component.
  */
 export interface OtpInputProps extends React.AriaAttributes {
@@ -40,17 +52,7 @@ export interface OtpInputProps extends React.AriaAttributes {
     /**
      * Optional prefix label rendered before the input cells.
      */
-    prefix?:
-        | {
-              /** Prefix text, usually a few alphabetic characters. */
-              value: string;
-              /**
-               * Separator between the prefix and the OTP input.
-               * Only `"-"` is supported.
-               */
-              separator: "-";
-          }
-        | undefined;
+    prefix?: OtpInputPrefix | undefined;
     /**
      * Called when any input cell changes.
      *
