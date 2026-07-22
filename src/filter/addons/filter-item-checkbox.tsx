@@ -23,10 +23,10 @@ import {
     getAllDescendantKeyPaths,
     hasNestedOptions,
 } from "./filter-item-checkbox-helpers";
+import type { FlattenedFilterOption } from "./internal-types";
 import type {
     FilterItemCheckboxOptionProps,
     FilterItemCheckboxProps,
-    FlattenedFilterOption,
 } from "./types";
 
 export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({

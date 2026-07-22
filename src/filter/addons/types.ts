@@ -1,18 +1,5 @@
 import type { FilterItemProps } from "../types";
 
-// @storybookSkipProps
-export interface FlattenedFilterOption<T = FilterItemCheckboxOptionProps> {
-    originalItem: T;
-    value: any;
-    label: string;
-    keyPath: string[];
-    level: number;
-    hasChildren: boolean;
-    parentKeyPath?: string[] | undefined;
-    indexInParent: number;
-    parentSetSize: number;
-}
-
 /**
  * Default shape for a checkbox option in `Filter.Checkbox`.
  *
