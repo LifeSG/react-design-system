@@ -48,6 +48,7 @@ export interface TimeTableCellStyleAttributes {
     styleType?: TimeTableCellStyleType | undefined;
 }
 
+//@ storybookSkipProps
 /**
  * Imperative handle returned by `TimeTable` via `ref`.
  */
