@@ -1,8 +1,8 @@
 import clsx from "clsx";
 
 import { PopoverTrigger } from "../popover-trigger";
-import type { PopoverInlineProps } from "../types";
 import * as styles from "./popover-inline.styles";
+import type { PopoverInlineProps } from "./types";
 
 /**
  * An inline text or icon element that opens a popover on interaction.
