@@ -78,18 +78,18 @@ interface CountdownTimerBaseProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** Props for the duration-based variant. */
-type TimerProps = {
+interface TimerProps {
     /** Duration of the countdown in seconds. */
     timer: number;
     timestamp?: number | undefined;
-};
+}
 
 /** Props for the deadline-based variant. */
-type TimestampProps = {
+interface TimestampProps {
     /** Unix timestamp (milliseconds since Jan 1, 1970) at which the countdown ends. */
     timestamp: number;
     timer?: number | undefined;
-};
+}
 
 /** Props for `CountdownTimer` component. */
 export type CountdownTimerProps = CountdownTimerBaseProps &
