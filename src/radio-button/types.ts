@@ -6,7 +6,6 @@ export interface RadioButtonProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
     /** The selected state of the component */
     checked?: boolean | undefined;
-    /** The state in which an action is allowed to be executed */
     disabled?: boolean | undefined;
     /**
      * Visual size of the radio button icon.
