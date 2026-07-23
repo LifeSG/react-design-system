@@ -317,8 +317,8 @@ function cleanType(type: string) {
     return cleaned;
 }
 
-/** Split top-level union members without breaking nested generics or function types. */
-function splitTopLevelUnionMembers(typeText: string) {
+/** Format a union type as multiline `\n| ` separated members for index signature display. */
+function formatUnionSummary(typeText: string) {
     const members: string[] = [];
     let current = "";
     let parenDepth = 0;
@@ -355,17 +355,9 @@ function splitTopLevelUnionMembers(typeText: string) {
         members.push(current.trim());
     }
 
-    return members;
-}
-
-function formatUnionSummary(typeText: string) {
-    const members = splitTopLevelUnionMembers(typeText);
-
-    if (members.length <= 1) {
-        return typeText;
-    }
-
-    return members.filter(Boolean).join("\n| ");
+    return members.length <= 1
+        ? typeText
+        : members.filter(Boolean).join("\n| ");
 }
 
 /**
@@ -755,6 +747,14 @@ function getResolvedProperties(
         .sort((a, b) => a.getName().localeCompare(b.getName()));
 }
 
+/** Get all interface and type alias names defined in a source file. */
+function getLocalTypeNames(sourceFile: SourceFile) {
+    return new Set([
+        ...sourceFile.getInterfaces().map((i) => i.getName()),
+        ...sourceFile.getTypeAliases().map((t) => t.getName()),
+    ]);
+}
+
 /** Resolve a Symbol to its first PropertySignature declaration. */
 function getPropertyDeclaration(symbol: TsMorphSymbol) {
     return symbol
@@ -766,23 +766,64 @@ function getPropertyDeclaration(symbol: TsMorphSymbol) {
 }
 
 /**
- * Collect type names that appear in "wrapped" contexts — arrays, generics,
- * complex unions, or function signatures. These types need their own category
- * rows even if they're simple literal unions, because their values can't be
- * inlined at the usage site.
+ * Scan a declaration's properties for references to known type names that appear
+ * in non-inlinable positions (arrays, generics, complex unions, function signatures).
+ * Returns the set of referenced type names found in property type text.
+ */
+function findReferencedTypeNames(
+    declaration: InterfaceDeclaration | TypeAliasDeclaration,
+    knownTypeNames: Set<string>,
+    excludeSelf = false
+): Set<string> {
+    const found = new Set<string>();
+
+    for (const prop of declaration.getType().getProperties()) {
+        const propDecl = prop
+            .getDeclarations()
+            .find(
+                (d): d is PropertySignature =>
+                    d.getKindName() === "PropertySignature"
+            );
+
+        if (!propDecl) continue;
+
+        if (isSimpleLiteralUnion(propDecl.getType())) continue;
+
+        const typeText = propDecl.getTypeNode()?.getText() ?? "";
+
+        for (const name of knownTypeNames) {
+            if (excludeSelf && name === declaration.getName()) continue;
+
+            if (new RegExp(`\\b${name}\\b`).test(typeText)) {
+                found.add(name);
+            }
+        }
+    }
+
+    return found;
+}
+
+/**
+ * Collect type names that appear in "wrapped" contexts across all declarations in a file.
  *
  * Returns a Map of type name → tabGroup (inherited from the declaring interface/type).
  * This allows imported types to be placed in the same tab as the property that uses them.
  */
+const wrappedTypeNamesCache = new Map<string, Map<string, string | undefined>>();
+
 function getWrappedTypeNames(
     sourceFile: SourceFile
 ): Map<string, string | undefined> {
+    const filePath = sourceFile.getFilePath();
+
+    if (wrappedTypeNamesCache.has(filePath)) {
+        return wrappedTypeNamesCache.get(filePath)!;
+    }
+
     const wrappedNames = new Map<string, string | undefined>();
 
-    // Collect all type names visible in this file: local definitions + named imports
     const knownTypeNames = new Set([
-        ...sourceFile.getInterfaces().map((i) => i.getName()),
-        ...sourceFile.getTypeAliases().map((t) => t.getName()),
+        ...getLocalTypeNames(sourceFile),
         ...sourceFile
             .getImportDeclarations()
             .flatMap((decl) =>
@@ -794,38 +835,16 @@ function getWrappedTypeNames(
         ...sourceFile.getInterfaces(),
         ...sourceFile.getTypeAliases(),
     ]) {
-        const declarationTabGroup = getJsDocMeta(declaration).tabGroups?.[0];
+        const tabGroup = getJsDocMeta(declaration).tabGroups?.[0];
 
-        for (const prop of declaration.getType().getProperties()) {
-            const propDecl = prop
-                .getDeclarations()
-                .find(
-                    (d): d is PropertySignature =>
-                        d.getKindName() === "PropertySignature"
-                );
-
-            if (!propDecl) continue;
-
-            const propType = propDecl.getType();
-
-            // If the property's resolved type is itself a simple literal union,
-            // the type name is NOT wrapped — it can be inlined at this usage site.
-            if (isSimpleLiteralUnion(propType)) continue;
-
-            // Otherwise, any known type name referenced in this property's type
-            // text is considered "wrapped" and needs its own category row.
-            const typeText = propDecl.getTypeNode()?.getText() ?? "";
-
-            for (const name of knownTypeNames) {
-                if (new RegExp(`\\b${name}\\b`).test(typeText)) {
-                    // First reference wins for tabGroup assignment
-                    if (!wrappedNames.has(name)) {
-                        wrappedNames.set(name, declarationTabGroup);
-                    }
-                }
+        for (const name of findReferencedTypeNames(declaration, knownTypeNames)) {
+            if (!wrappedNames.has(name)) {
+                wrappedNames.set(name, tabGroup);
             }
         }
     }
+
+    wrappedTypeNamesCache.set(filePath, wrappedNames);
 
     return wrappedNames;
 }
@@ -1132,6 +1151,53 @@ function getTypeAliasArgTypes(
     ];
 }
 
+/**
+ * Generate argType rows for an imported type and its local dependencies.
+ * Recursively resolves types referenced within the imported declaration.
+ */
+function generateImportedTypeRows(
+    importedFile: SourceFile,
+    name: string,
+    tabGroup: string | undefined,
+    visited = new Set<string>()
+): GeneratedArgType[] {
+    if (visited.has(name)) return [];
+    visited.add(name);
+
+    const isInterface = !!importedFile.getInterface(name);
+    const isTypeAlias = !!importedFile.getTypeAlias(name);
+
+    if (!isInterface && !isTypeAlias) return [];
+
+    const declaration = isInterface
+        ? importedFile.getInterfaceOrThrow(name)
+        : importedFile.getTypeAliasOrThrow(name);
+
+    const rows = isInterface
+        ? getInterfaceArgTypes(importedFile, name, tabGroup)
+        : getTypeAliasArgTypes(
+              importedFile,
+              name,
+              getWrappedTypeNames(importedFile),
+              tabGroup
+          );
+
+    // Recursively generate rows for local types this declaration depends on
+    const localTypeNames = getLocalTypeNames(importedFile);
+
+    const dependencies = findReferencedTypeNames(
+        declaration,
+        localTypeNames,
+        true
+    );
+
+    const dependencyRows = [...dependencies].flatMap((depName) =>
+        generateImportedTypeRows(importedFile, depName, tabGroup, visited)
+    );
+
+    return [...rows, ...dependencyRows];
+}
+
 /** Generate argTypes for a single component's types.ts file. */
 async function generateForSourceFile(project: Project, sourceFilePath: string) {
     const sourceFile = getSourceFile(project, sourceFilePath);
@@ -1146,10 +1212,7 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
     // Compute once and reuse across all local type processing
     const wrappedTypeNames = getWrappedTypeNames(sourceFile);
 
-    const localTypeNames = new Set([
-        ...sourceFile.getInterfaces().map((i) => i.getName()),
-        ...sourceFile.getTypeAliases().map((t) => t.getName()),
-    ]);
+    const localTypeNames = getLocalTypeNames(sourceFile);
 
     const rows = [
         ...sourceFile.getInterfaces().flatMap((declaration) => {
@@ -1195,22 +1258,11 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
                         continue;
                     }
 
-                    if (importedFile.getInterface(name)) {
-                        return getInterfaceArgTypes(
-                            importedFile,
-                            name,
-                            tabGroup
-                        );
-                    }
-
-                    if (importedFile.getTypeAlias(name)) {
-                        return getTypeAliasArgTypes(
-                            importedFile,
-                            name,
-                            getWrappedTypeNames(importedFile),
-                            tabGroup
-                        );
-                    }
+                    return generateImportedTypeRows(
+                        importedFile,
+                        name,
+                        tabGroup
+                    );
                 }
 
                 return [];
