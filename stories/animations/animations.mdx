@@ -29,8 +29,7 @@ import { <Component_name> } from "@lifesg/react-design-system/animations";
 
 ## Themed loading spinner
 
-The `ThemedLoadingSpinner` automatically adapts to your theme's
-`resourceScheme`.
+The `ThemedLoadingSpinner` automatically adapts to your theme.
 
 <Canvas of={AnimationStories.ThemedAnimation} />
 
@@ -76,10 +75,24 @@ standalone component.
         An animation that can be shown in between page transitions or
         while waiting for fetching of data.
       </p>
-      <p>This is a customisable animation. See the Customisable animations section below.</p>
+      <p>This is a customisable animation. See the "Customisable animations" section below.</p>
     </Content>
   </AnimationItem>
 </AnimationDisplay>
+
+## Usage
+
+```tsx
+import { LoadingSpinner } from "@lifesg/react-design-system/animations";
+
+export const SomeComponent = () => {
+    return (
+        <div>
+            <LoadingSpinner />
+        </div>
+    );
+};
+```
 
 ## Customisable animations
 
@@ -98,30 +111,12 @@ If no color is specified, this component uses the
 
 <Canvas of={AnimationStories.CustomLoadingDotsSpinner} />
 
-### Component tokens
+## Component tokens
 
-This component can be customised via the `Animation` tokens.
+The `Animation` tokens allow you to customise certain aspects of specific animations.
 
 <Story of={AnimationStories.TokenCustomisation} />
-
-## Usage
-
-```tsx
-import { LoadingSpinner } from "@lifesg/react-design-system/animations";
-
-export const SomeComponent = () => {
-    return (
-        <div>
-            <LoadingSpinner />
-        </div>
-    );
-};
-```
 
 ## Component API
 
 <AutoArgTypesTabs of={AnimationStories} />
-
-### LoadingDotsSpinner API
-
-<CustomisedPropsTable />
