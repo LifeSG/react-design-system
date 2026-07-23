@@ -1,5 +1,6 @@
 import type { RefObject } from "react";
 
+// @storybookSection Popover
 /**
  * Props for the `Popover` component.
  */
@@ -31,6 +32,7 @@ export interface PopoverProps extends PopoverRenderProps {
     ariaLabel?: string | undefined;
 }
 
+// @storybookSection PopoverTrigger
 /**
  * Style constraints that control the popover card's height and overflow.
  */
@@ -71,6 +73,7 @@ export type PopoverOverflowType =
  */
 export type PopoverPosition = Position | AlignedPosition;
 
+// @storybookSection PopoverTrigger
 /**
  * Props for the `PopoverTrigger` component.
  */
@@ -157,6 +160,8 @@ export interface PopoverTriggerProps {
     overflow?: PopoverOverflowType | undefined;
     /**
      * Accessible label for the popover dialog element.
+     *
+     * @default "More information"
      */
     popoverAriaLabel?: string | undefined;
     /**
