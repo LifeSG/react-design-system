@@ -3,22 +3,19 @@ import type {
     ComponentTokenCSSVariableString,
 } from "../theme";
 
-// @storybookSkipProps
-type BaseAnimationProps = {
+/**
+ * Props for the animations component.
+ */
+export type AnimationProps = {
     id?: string;
     "data-testid"?: string | undefined;
     className?: string;
 };
 
 /**
- * Props for the animations component.
- */
-export type AnimationProps = BaseAnimationProps & {};
-
-/**
  * Props for any customisable animations component.
  */
-export type CustomisableAnimationProps = BaseAnimationProps & {
+export type CustomisableAnimationProps = AnimationProps & {
     /**
      * The color that is to be applied on the animated elements
      */
