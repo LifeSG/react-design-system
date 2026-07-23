@@ -3,4 +3,11 @@
     --fds-font-family-heading: "Open Sans";
     --fds-font-family-body: "Open Sans";
     --fds-font-variant: normal;
+    --fds-font-body-lh-sm: 1.25rem;
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
+    --fds-font-form-label-lh: 1.375rem;
+    --fds-font-form-description-lh: 1.25rem;
+    --fds-font-form-label-ls: 0rem;
+    --fds-font-form-description-ls: 0rem;
 }

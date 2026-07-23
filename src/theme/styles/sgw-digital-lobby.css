@@ -164,8 +164,10 @@
     */
 
     @mixin component-tokens-default;
+    --fds-colour-border: var(--fds-colour-neutral-50);
 }
 
 [data-fds-theme="sgw-digital-lobby"][data-fds-theme-mode="dark"] {
     @mixin semantic-colours-dark-default;
+    --fds-colour-border: var(--fds-colour-neutral-50);
 }
