@@ -1560,8 +1560,14 @@ async function generateStorybookArgTypesRegistry() {
             }
         }
 
-        if (!typesFilePath) {
-            typesFilePath = getTypesFileFromStoryDirectory(storyFilePath);
+        const storyDirectoryTypesFile =
+            getTypesFileFromStoryDirectory(storyFilePath);
+
+        // Prefer story-directory inferred `types.ts` when available because
+        // nested stories (e.g. Filter/Addons, PopoverInline) can intentionally
+        // document a submodule while `component` points at the root namespace.
+        if (storyDirectoryTypesFile) {
+            typesFilePath = storyDirectoryTypesFile;
         }
 
         if (!typesFilePath) {
