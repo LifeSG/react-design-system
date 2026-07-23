@@ -1,5 +1,5 @@
-import type { FilterItemCheckboxOptionProps } from "../types";
-import type { FlattenedFilterOption } from "./types";
+import type { FlattenedFilterOption } from "./internal-types";
+import type { FilterItemCheckboxOptionProps } from "./types";
 
 // =============================================================================
 // HELPER FUNCTIONS FOR NESTED OPTIONS

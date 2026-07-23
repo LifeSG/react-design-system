@@ -15,10 +15,6 @@ import { Checkbox } from "../../checkbox";
 import { Toggle } from "../../toggle";
 import { FilterContext } from "../filter-context";
 import { FilterItem } from "../filter-item";
-import type {
-    FilterItemCheckboxOptionProps,
-    FilterItemCheckboxProps,
-} from "../types";
 import * as styles from "./filter-item-checkbox.styles";
 import {
     buildKeyPath,
@@ -27,7 +23,11 @@ import {
     getAllDescendantKeyPaths,
     hasNestedOptions,
 } from "./filter-item-checkbox-helpers";
-import type { FlattenedFilterOption } from "./types";
+import type { FlattenedFilterOption } from "./internal-types";
+import type {
+    FilterItemCheckboxOptionProps,
+    FilterItemCheckboxProps,
+} from "./types";
 
 export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
     selectedOptions,

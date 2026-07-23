@@ -29,6 +29,10 @@ export type GeneratedArgType = {
         deprecated: string | boolean | undefined;
         /** Always `false` — disables manual control input in Storybook. */
         control: false;
+        type: {
+            /** Whether the prop is required (non-optional). */
+            required?: boolean | undefined;
+        };
         /** Metadata for Storybook's addon-docs table layout and categorization. */
         table: {
             /** Interface or type alias name for row grouping. */
@@ -184,12 +188,7 @@ export const AutoArgTypesTabs = ({
     );
 
     if (tabRows.length <= 1) {
-        return (
-            <PureArgsTable
-                rows={tabRows[0]?.rows ?? {}}
-                sort={sort}
-            />
-        );
+        return <PureArgsTable rows={tabRows[0]?.rows ?? {}} sort={sort} />;
     }
 
     return (
