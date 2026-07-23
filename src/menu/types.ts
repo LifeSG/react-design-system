@@ -5,7 +5,11 @@ import type {
     ReactElement,
 } from "react";
 
-import type { PopoverRenderProps, PopoverTriggerProps } from "../popover";
+import type {
+    PopoverPosition,
+    PopoverRenderProps,
+    PopoverTriggerProps,
+} from "../popover";
 import type { MenuItem } from "./menu-item";
 import type { MenuLink } from "./menu-link";
 import type { MenuSection } from "./menu-section";
@@ -20,6 +24,13 @@ export interface MenuProps extends Omit<PopoverTriggerProps, "popoverContent"> {
      * The `Menu.Content` element to display inside the popover panel.
      */
     menuContent: FunctionComponentElement<MenuContentProps>;
+
+    /**
+     * Preferred placement of the popover relative to the trigger.
+     *
+     * @default "bottom-start"
+     */
+    position?: PopoverPosition | undefined;
 }
 
 // @storybookSection Menu.Content
