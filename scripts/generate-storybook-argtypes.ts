@@ -50,7 +50,11 @@ type StorybookTaggedDeclarationNode =
     | TypeAliasDeclaration
     | VariableStatement;
 
-const sourceFileGlobs = ["src/*/types.ts", "src/*/addons/types.ts"];
+const sourceFileGlobs = [
+    "src/*/types.ts",
+    "src/filter/addons/types.ts",
+    "src/popover/inline/types.ts",
+];
 const watchRoots = ["src", "stories"];
 const storyFileGlob = "stories/**/*.stories.@(ts|tsx)";
 const storybookArgTypesFile = path.resolve(
