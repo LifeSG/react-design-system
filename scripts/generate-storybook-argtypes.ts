@@ -978,6 +978,31 @@ function getInheritedHtmlAttributesRow(
     });
 }
 
+function getInheritedInterfacesDescription(
+    interfaceDeclaration: InterfaceDeclaration
+) {
+    const inheritedTypes = interfaceDeclaration
+        .getExtends()
+        .map((extendNode) => cleanType(extendNode.getExpression().getText()))
+        .filter((name) => !HTML_ATTRIBUTES_REGEX.test(name));
+
+    if (inheritedTypes.length === 0) {
+        return undefined;
+    }
+
+    const uniqueTypes = Array.from(new Set(inheritedTypes)).sort((a, b) =>
+        a.localeCompare(b)
+    );
+
+    if (uniqueTypes.length === 1) {
+        return `Inherits props from \`${uniqueTypes[0]}\`.`;
+    }
+
+    return `Inherits props from ${uniqueTypes
+        .map((name) => `\`${name}\``)
+        .join(", ")}.`;
+}
+
 function getInterfaceArgTypes(
     sourceFile: SourceFile,
     interfaceName: string,
@@ -1008,6 +1033,16 @@ function getInterfaceArgTypes(
             return [inheritedHtmlAttributesRow];
         }
 
+        const inheritedInterfacesDescription =
+            getInheritedInterfacesDescription(interfaceDeclaration);
+        const interfaceDescription = toStorybookDescription(interfaceJsDocMeta);
+        const combinedDescription = [
+            interfaceDescription,
+            inheritedInterfacesDescription,
+        ]
+            .filter((text): text is string => Boolean(text))
+            .join("\n\n");
+
         // Otherwise return a generic descriptive row
         return [
             buildArgTypeRow({
@@ -1016,7 +1051,7 @@ function getInterfaceArgTypes(
                 category,
                 tabGroup: declaredTabGroups[0],
                 deprecated: interfaceJsDocMeta.deprecated,
-                description: toStorybookDescription(interfaceJsDocMeta),
+                description: combinedDescription || undefined,
             }),
         ];
     }
