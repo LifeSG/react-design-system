@@ -1,4 +1,4 @@
-import type { FormLabelProps } from "../form/types";
+import type { FormLabelProps } from "../form/form-label/types";
 
 /**
  * Represents a single file entry managed by `FileUpload`.
