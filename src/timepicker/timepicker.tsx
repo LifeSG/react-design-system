@@ -9,6 +9,7 @@ import { TimeHelper } from "../util/time-helper";
 import * as styles from "./timepicker.styles";
 import type { TimepickerProps } from "./types";
 
+// @catalog
 /**
  * A form input for selecting a time value through a dropdown interface.
  *

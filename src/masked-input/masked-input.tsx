@@ -322,6 +322,7 @@ const Component = (
     return <div aria-busy={loadState === "loading"}>{renderElement()}</div>;
 };
 
+// @catalog
 /**
  * A text input that masks sensitive values and allows toggling visibility.
  *

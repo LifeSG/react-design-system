@@ -7,6 +7,7 @@ import { Typography } from "../typography";
 import * as styles from "./progress-indicator.styles";
 import type { ProgressIndicatorProps } from "./types";
 
+// @catalog
 /**
  * A horizontal step-progress bar that tracks a user's position through a
  * multi-step flow.

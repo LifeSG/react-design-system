@@ -14,6 +14,7 @@ import { useEvent, useEventListener, useId, useThrottle } from "../util";
 import * as styles from "./data-table.styles";
 import type { DataTableProps, HeaderProps, RowProps } from "./types";
 
+// @catalog
 /**
  * Renders a sortable, selectable data table with scroll-aware action bar and loading state support.
  *

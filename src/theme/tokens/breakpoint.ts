@@ -1,3 +1,4 @@
+// @catalog
 /**
  * Responsive breakpoint tokens for each named breakpoint.
  */

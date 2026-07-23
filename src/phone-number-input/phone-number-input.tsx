@@ -6,6 +6,7 @@ import { useNextInputState } from "../util";
 import { PhoneNumberInputHelper } from "./phone-number-input-helper";
 import type { CountryValue, PhoneNumberInputProps } from "./types";
 
+// @catalog
 /**
  * A phone number field composed of a country code selector and a number input.
  *

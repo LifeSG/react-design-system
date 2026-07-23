@@ -15,6 +15,7 @@ import {
     LinkXS,
 } from "./typography";
 
+// @catalog
 /**
  * A collection of pre-styled text components covering headings, body copy, and
  * hyperlinks.

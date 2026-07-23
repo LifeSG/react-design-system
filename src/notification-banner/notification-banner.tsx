@@ -204,6 +204,7 @@ const formatId = (componentName: string, id = "wrapper"): string => {
 const Base = React.forwardRef(NBWithRef);
 (Base as NamedExoticComponent).displayName = "NotificationBanner";
 
+// @catalog
 /**
  * A full-width informational banner that sits at the top of the page.
  *

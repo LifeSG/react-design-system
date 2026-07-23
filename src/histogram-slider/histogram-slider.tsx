@@ -12,6 +12,7 @@ import type { HistogramBinProps, HistogramSliderProps } from "./types";
 
 const ANNOUNCEMENT_DEBOUNCE_MS = 500;
 
+// @catalog
 /**
  * A histogram with an overlaid two-thumb range slider for numeric filtering.
  *

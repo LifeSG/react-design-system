@@ -18,6 +18,7 @@ import { InputBox } from "../shared/input-wrapper/input-wrapper";
 import { useId } from "../util";
 import type { InputMultiSelectProps } from "./types";
 
+// @catalog
 /**
  * A dropdown field that lets users select multiple options from a list.
  *

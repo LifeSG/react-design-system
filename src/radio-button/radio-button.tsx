@@ -5,6 +5,7 @@ import type { ChangeEvent } from "react";
 import * as styles from "./radio-button.styles";
 import type { RadioButtonProps } from "./types";
 
+// @catalog
 /**
  * A single radio button input.
  *

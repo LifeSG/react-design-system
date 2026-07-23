@@ -25,6 +25,7 @@ const WRAPPER_CLASS: Record<PillType, Record<PillColorType, string>> = {
     },
 };
 
+// @catalog
 /**
  * A compact label used to display status, category, or metadata.
  *

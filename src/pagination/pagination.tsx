@@ -429,6 +429,7 @@ const Component = (
         </nav>
     );
 };
+// @catalog
 /**
  * A navigation control for moving through paged content.
  *

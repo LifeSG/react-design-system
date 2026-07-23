@@ -2,3 +2,5 @@
 . "$(dirname "$0")/_/husky.sh"
 
 npx tsc --noEmit true && npx pretty-quick --staged --pattern "**/*" --pattern "!**/*.css" --pattern "!**/*.module.css" && npx lint-staged
+
+npm run generate:catalog && git add docs/component-catalog.json

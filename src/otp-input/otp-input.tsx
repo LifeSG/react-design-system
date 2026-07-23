@@ -346,6 +346,7 @@ const Component = (
     );
 };
 
+// @catalog
 /**
  * A field composed of individual inputs for a numeric one-time password
  * with an in-built countdown mechanism.

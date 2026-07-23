@@ -122,6 +122,7 @@ const LargeButtonComponent = (props: ButtonProps, ref: ButtonRef) => (
 );
 LargeButtonComponent.displayName = "Button.Large";
 
+// @catalog
 /** A call-to-action that triggers an action when activated by the user */
 export const Button = Object.assign(BaseButton, {
     /** @deprecated Use the `sizeType` prop instead: `<Button>` or `<Button sizeType="default">` */

@@ -1,4 +1,7 @@
-/** Spacing tokens consisting of component spacing and layout spacing. */
+// @catalog
+/**
+ * Spacing tokens consisting of component spacing and layout spacing.
+ */
 export const Spacing = {
     "spacing-0": "var(--fds-spacing-0)",
     "spacing-4": "var(--fds-spacing-4)",

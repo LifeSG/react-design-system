@@ -29,6 +29,7 @@ import type {
     InputNestedMultiSelectValues,
 } from "./types";
 
+// @catalog
 /**
  * A multi-select input that presents options in a nested hierarchy, up to three levels deep.
  *

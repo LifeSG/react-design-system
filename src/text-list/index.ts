@@ -1,6 +1,7 @@
 import { OrderedList } from "./ordered-list";
 import { UnorderedList } from "./unordered-list";
 
+// @catalog
 /**
  * Renders styled ordered and unordered lists for body copy and structured content.
  *

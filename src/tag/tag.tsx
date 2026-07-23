@@ -25,6 +25,7 @@ const colorClassMap: Record<TagType, Record<TagColorType, string>> = {
     },
 };
 
+// @catalog
 /**
  * A compact label used to categorise or highlight content.
  *

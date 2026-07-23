@@ -13,6 +13,7 @@ const lineStyleMap: Record<DividerLineStyleType, string> = {
     dashed: styles.dashedLine,
 };
 
+// @catalog
 /**
  * A horizontal line that visually separates sections of content.
  *

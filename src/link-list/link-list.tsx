@@ -5,6 +5,7 @@ import { LazyLinkList } from "./components/link-list-lazy";
 import * as styles from "./link-list.styles";
 import type { LinkListProps } from "./types";
 
+// @catalog
 /**
  * A list of anchor links with optional truncation or lazy loading.
  *

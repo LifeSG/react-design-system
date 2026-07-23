@@ -42,6 +42,7 @@ export const MenuTrigger = ({
     );
 };
 
+// @catalog
 /**
  * A popover-anchored menu composed of sections and interactive items.
  *

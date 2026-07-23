@@ -177,6 +177,7 @@ const Component = (
     );
 };
 
+// @catalog
 /**
  * A single-line text input field.
  *
