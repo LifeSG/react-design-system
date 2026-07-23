@@ -3,12 +3,12 @@
 import { Modal } from "@lifesg/react-design-system/modal";
 import styles from "./modal.module.css";
 import { Typography } from "@lifesg/react-design-system";
-import { useEffect, useRef } from "react";
+import { useLayoutEffect, useRef } from "react";
 
 export default function Story() {
     const elementRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const id = requestAnimationFrame(() => {
             if (elementRef.current) {
                 elementRef.current.style.cssText =

@@ -1,14 +1,14 @@
 "use client";
 
 import { Button, ModalV2, Typography } from "@lifesg/react-design-system";
-import { useRef, useState, useEffect } from "react";
+import { useRef, useState, useLayoutEffect } from "react";
 import styles from "./modal-v2.module.css";
 
 export default function Story() {
     const [show, setShow] = useState(true);
     const elementRef = useRef<HTMLDivElement>(null);
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         const id = requestAnimationFrame(() => {
             if (elementRef.current) {
                 elementRef.current.style.cssText =
