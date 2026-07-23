@@ -1,6 +1,11 @@
 @import url("./default.css");
 
 [data-fds-theme="spf"] {
+    /* 
+    ============================================================================
+    PRIMITIVE COLOURS
+    ============================================================================
+    */
     --fds-colour-brand-10: #00205B;
     --fds-colour-brand-20: #143168;
     --fds-colour-brand-30: #274374;
@@ -92,18 +97,6 @@
     --fds-colour-white: #FFFFFF;
     --fds-colour-black: #000000;
     --fds-colour-primary-inverse: #6FC7EC;
-
-    /*
-    ============================================================================
-    RADIUS
-    ============================================================================
-    */
-    --fds-radius-none: 0;
-    --fds-radius-xs: 2px;
-    --fds-radius-sm: 8px;
-    --fds-radius-md: 8px;
-    --fds-radius-lg: 12px;
-    --fds-radius-full: 9999px;
 
     /*
     ============================================================================
@@ -253,58 +246,6 @@
     --fds-colour-focus-ring: var(--fds-colour-primary-50);
     --fds-colour-focus-ring-inverse: var(--fds-colour-white);
 
-    /* 
-    ========================================================================
-    COMPONENT TOKENS
-    ========================================================================
-    */
-
-    /* Button */
-    --fds-button-radius: var(--fds-radius-sm);
-    --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
-    --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
-    --fds-button-default-colour-text: var(--fds-colour-text-inverse);
-    --fds-button-secondary-colour-border: var(--fds-colour-border-primary);
-    --fds-button-secondary-colour-text: var(--fds-colour-text-primary);
-    --fds-button-light-colour-text: var(--fds-colour-text-primary);
-    --fds-button-link-colour-text: var(--fds-colour-text-primary);
-
-    /* Navbar */
-    --fds-navbar-full-height: 6rem;
-    --fds-navbar-full-logo-height: 3rem;
-    --fds-navbar-compressed-height: 5rem;
-    --fds-navbar-compressed-logo-height: 2rem;
-    --fds-navbar-mobile-height: 4rem;
-    --fds-navbar-mobile-logo-height: 2rem;
-    --fds-navbar-colour-bg: var(--fds-colour-bg);
-    --fds-navbar-colour-icon: var(--fds-colour-icon);
-    --fds-navbar-link-colour-text: var(--fds-colour-text-primary-strongest);
-    --fds-navbar-link-colour-text-hover: var(--fds-colour-text-subtler);
-    --fds-navbar-link-colour-text-selected-hover: var(
-        --fds-colour-text-subtler
-    );
-
-    /* Footer */
-    --fds-footer-colour-bg: var(--fds-colour-bg-inverse);
-    --fds-footer-colour-text: var(--fds-colour-text-inverse);
-    --fds-footer-link-colour-text: var(--fds-colour-text-inverse);
-    --fds-footer-link-colour-text-hover: var(--fds-colour-text-inverse);
-    --fds-footer-disclaimer-link-colour-text: var(--fds-colour-text-inverse);
-    --fds-footer-disclaimer-link-colour-text-hover: var(
-        --fds-colour-text-inverse
-    );
-
-    /* Animation */
-    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
-
-    /* 
-    ========================================================================
-    SHADOW
-    ========================================================================
-    */
-
-    @mixin shadow;
-
     /*
     ============================================================================
     FONT
@@ -353,13 +294,72 @@
     --fds-font-form-description-lh: 1.625rem;
     --fds-font-form-label-ls: 0.009rem;
     --fds-font-form-description-ls: 0.008rem;
+
+    /*
+    ============================================================================
+    RADIUS
+    ============================================================================
+    */
+    --fds-radius-none: 0;
+    --fds-radius-xs: 2px;
+    --fds-radius-sm: 8px;
+    --fds-radius-md: 8px;
+    --fds-radius-lg: 12px;
+    --fds-radius-full: 9999px;
+
+    /* 
+    ============================================================================
+    SHADOW
+    ============================================================================
+    */
+
+    @mixin shadow-default;
+
+    /* 
+    ============================================================================
+    COMPONENT TOKENS
+    ============================================================================
+    */
+
+    /* Button */
+    --fds-button-radius: var(--fds-radius-sm);
+    --fds-button-default-colour-bg: var(--fds-colour-bg-primary);
+    --fds-button-default-colour-bg-hover: var(--fds-colour-bg-primary-hover);
+    --fds-button-default-colour-text: var(--fds-colour-text-inverse);
+    --fds-button-secondary-colour-border: var(--fds-colour-border-primary);
+    --fds-button-secondary-colour-text: var(--fds-colour-text-primary);
+    --fds-button-light-colour-text: var(--fds-colour-text-primary);
+    --fds-button-link-colour-text: var(--fds-colour-text-primary);
+
+    /* Navbar */
+    --fds-navbar-full-height: 6rem;
+    --fds-navbar-full-logo-height: 3rem;
+    --fds-navbar-compressed-height: 5rem;
+    --fds-navbar-compressed-logo-height: 2rem;
+    --fds-navbar-mobile-height: 4rem;
+    --fds-navbar-mobile-logo-height: 2rem;
+    --fds-navbar-colour-bg: var(--fds-colour-bg);
+    --fds-navbar-colour-icon: var(--fds-colour-icon);
+    --fds-navbar-link-colour-text: var(--fds-colour-text-primary-strongest);
+    --fds-navbar-link-colour-text-hover: var(--fds-colour-text-subtler);
+    --fds-navbar-link-colour-text-selected-hover: var(
+        --fds-colour-text-subtler
+    );
+
+    /* Footer */
+    --fds-footer-colour-bg: var(--fds-colour-bg-inverse);
+    --fds-footer-colour-text: var(--fds-colour-text-inverse);
+    --fds-footer-link-colour-text: var(--fds-colour-text-inverse);
+    --fds-footer-link-colour-text-hover: var(--fds-colour-text-inverse);
+    --fds-footer-disclaimer-link-colour-text: var(--fds-colour-text-inverse);
+    --fds-footer-disclaimer-link-colour-text-hover: var(
+        --fds-colour-text-inverse
+    );
+
+    /* Animation */
+    --fds-animation-loading-dots-spinner-colour: var(--fds-colour-icon-primary);
 }
 
-/*
-============================================================================
-SEMANTIC COLOURS - DARK MODE
-============================================================================
-*/
 [data-fds-theme="spf"][data-fds-theme-mode="dark"] {
-    @mixin semantic-colours-dark;
+    @mixin semantic-colours-dark-default;
 }

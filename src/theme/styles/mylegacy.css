@@ -98,47 +98,42 @@
     --fds-colour-black: #000000;
     --fds-colour-primary-inverse: #FEAB10;
 
-    @mixin semantic-colours-light-standard;
-
-    /* 
-    ========================================================================
-    COMPONENT TOKENS
-    ========================================================================
-    */
-
-    @mixin component-tokens-standard;
-
-    /* 
-    ========================================================================
-    SHADOW
-    ========================================================================
-    */
-
-    @mixin shadow;
+    @mixin semantic-colours-light-default;
 
     /*
     ============================================================================
     FONT
     ============================================================================
     */
-    --fds-font-variant: normal;
 
-    @mixin font-scale-standard;
+    @mixin font-scale-default;
     --fds-font-family-heading: "Open Sans";
     --fds-font-family-body: "Open Sans";
+    --fds-font-variant: normal;
     --fds-font-form-label-size: 1.125rem;
     --fds-font-form-description-size: 1rem;
     --fds-font-form-label-lh: 1.5rem;
     --fds-font-form-description-lh: 1.625rem;
     --fds-font-form-label-ls: 0rem;
     --fds-font-form-description-ls: 0.009rem;
+
+    /* 
+    ============================================================================
+    SHADOW
+    ============================================================================
+    */
+
+    @mixin shadow-default;
+
+    /* 
+    ============================================================================
+    COMPONENT TOKENS
+    ============================================================================
+    */
+
+    @mixin component-tokens-default;
 }
 
-/*
-============================================================================
-SEMANTIC COLOURS - DARK MODE
-============================================================================
-*/
 [data-fds-theme="mylegacy"][data-fds-theme-mode="dark"] {
-    @mixin semantic-colours-dark;
+    @mixin semantic-colours-dark-default;
 }

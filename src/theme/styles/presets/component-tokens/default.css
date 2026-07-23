@@ -1,4 +1,4 @@
-@define-mixin component-tokens-standard {
+@define-mixin component-tokens-default {
     /* Button */
     --fds-button-radius: var(--fds-radius-sm);
     --fds-button-default-colour-bg: var(--fds-colour-bg-primary);

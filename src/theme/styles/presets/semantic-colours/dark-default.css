@@ -1,4 +1,10 @@
-@define-mixin semantic-colours-dark {
+@define-mixin semantic-colours-dark-default {
+    /*
+    ============================================================================
+    SEMANTIC COLOURS - DARK MODE
+    ============================================================================
+    */
+
     /* text */
     --fds-colour-text: var(--fds-colour-neutral-100);
     --fds-colour-text-subtle: var(--fds-colour-neutral-80);

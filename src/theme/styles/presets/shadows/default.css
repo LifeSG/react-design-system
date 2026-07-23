@@ -1,4 +1,4 @@
-@define-mixin shadow {
+@define-mixin shadow-default {
     --fds-shadow-xs-subtle: 0 0 4px 1px
         rgb(from var(--fds-colour-neutral-50) r g b / 24%);
     --fds-shadow-xs-strong: 0 0 4px 1px
