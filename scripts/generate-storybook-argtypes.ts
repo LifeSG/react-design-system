@@ -804,23 +804,87 @@ function findReferencedTypeNames(
 }
 
 /**
+ * Resolve the source file that actually declares a named imported type.
+ * Handles barrel re-exports by following the aliased symbol declaration.
+ */
+function resolveImportedTypeSourceFile(
+    sourceFile: SourceFile,
+    typeName: string
+): SourceFile | undefined {
+    for (const importDecl of sourceFile.getImportDeclarations()) {
+        const namedImport = importDecl
+            .getNamedImports()
+            .find((ni) => ni.getName() === typeName);
+
+        if (!namedImport) {
+            continue;
+        }
+
+        const symbol = namedImport.getNameNode().getSymbol();
+        const aliasedSymbol = symbol?.getAliasedSymbol() ?? symbol;
+        const declaration = aliasedSymbol?.getDeclarations().find((decl) => {
+            const kind = decl.getKindName();
+            return (
+                kind === "InterfaceDeclaration" ||
+                kind === "TypeAliasDeclaration"
+            );
+        });
+
+        const resolvedSourceFile = declaration?.getSourceFile();
+
+        if (
+            resolvedSourceFile &&
+            !resolvedSourceFile.getFilePath().includes("node_modules")
+        ) {
+            return resolvedSourceFile;
+        }
+
+        const moduleSpecifierSourceFile =
+            importDecl.getModuleSpecifierSourceFile();
+
+        if (
+            moduleSpecifierSourceFile &&
+            !moduleSpecifierSourceFile.getFilePath().includes("node_modules")
+        ) {
+            return moduleSpecifierSourceFile;
+        }
+    }
+
+    return undefined;
+}
+
+/**
  * Collect type names that appear in "wrapped" contexts across all declarations in a file.
  *
  * Returns a Map of type name → tabGroup (inherited from the declaring interface/type).
  * This allows imported types to be placed in the same tab as the property that uses them.
  */
-const wrappedTypeNamesCache = new Map<string, Map<string, string | undefined>>();
+const wrappedTypeNamesCache = new Map<
+    string,
+    Map<string, Set<string | undefined>>
+>();
 
 function getWrappedTypeNames(
     sourceFile: SourceFile
-): Map<string, string | undefined> {
+): Map<string, Set<string | undefined>> {
     const filePath = sourceFile.getFilePath();
 
     if (wrappedTypeNamesCache.has(filePath)) {
         return wrappedTypeNamesCache.get(filePath)!;
     }
 
-    const wrappedNames = new Map<string, string | undefined>();
+    const wrappedNames = new Map<string, Set<string | undefined>>();
+
+    const addWrappedName = (name: string, tabGroup: string | undefined) => {
+        const existing = wrappedNames.get(name);
+
+        if (existing) {
+            existing.add(tabGroup);
+            return;
+        }
+
+        wrappedNames.set(name, new Set([tabGroup]));
+    };
 
     const knownTypeNames = new Set([
         ...getLocalTypeNames(sourceFile),
@@ -835,12 +899,31 @@ function getWrappedTypeNames(
         ...sourceFile.getInterfaces(),
         ...sourceFile.getTypeAliases(),
     ]) {
+        if (hasSkipTag(declaration)) {
+            continue;
+        }
+
         const tabGroup = getJsDocMeta(declaration).tabGroups?.[0];
 
-        for (const name of findReferencedTypeNames(declaration, knownTypeNames)) {
-            if (!wrappedNames.has(name)) {
-                wrappedNames.set(name, tabGroup);
+        // Track types referenced in `extends` clauses (e.g. `extends Omit<ImportedType, ...>`)
+        if (declaration.getKindName() === "InterfaceDeclaration") {
+            const extendsText = (declaration as InterfaceDeclaration)
+                .getExtends()
+                .map((e) => e.getText())
+                .join(" ");
+
+            for (const name of knownTypeNames) {
+                if (new RegExp(`\\b${name}\\b`).test(extendsText)) {
+                    addWrappedName(name, tabGroup);
+                }
             }
+        }
+
+        for (const name of findReferencedTypeNames(
+            declaration,
+            knownTypeNames
+        )) {
+            addWrappedName(name, tabGroup);
         }
     }
 
@@ -1023,7 +1106,7 @@ function getInterfaceArgTypes(
 function getTypeAliasArgTypes(
     sourceFile: SourceFile,
     typeName: string,
-    wrappedTypeNames?: Map<string, string | undefined>,
+    wrappedTypeNames?: Map<string, Set<string | undefined>>,
     tabGroupOverride?: string
 ): GeneratedArgType[] {
     const typeAlias = sourceFile.getTypeAliasOrThrow(typeName);
@@ -1096,6 +1179,12 @@ function getTypeAliasArgTypes(
         });
 
         if (!isCompositeAlias) {
+            return propertyRows;
+        }
+
+        // For intersections, expanded property rows already convey the API shape.
+        // A synthetic header row (e.g. `A & B`) is usually redundant noise.
+        if (typeNodeKind === "IntersectionType") {
             return propertyRows;
         }
 
@@ -1198,6 +1287,33 @@ function generateImportedTypeRows(
     return [...rows, ...dependencyRows];
 }
 
+/**
+ * If a local interface extends an imported type and also declares its own
+ * members, inherited props are already surfaced on the local interface rows.
+ * In that case, skip generating a separate imported category to avoid duplicates.
+ */
+function shouldSkipImportedTypeRows(
+    sourceFile: SourceFile,
+    importedTypeName: string
+): boolean {
+    return sourceFile.getInterfaces().some((interfaceDeclaration) => {
+        if (hasSkipTag(interfaceDeclaration)) {
+            return false;
+        }
+
+        const extendsImportedType = interfaceDeclaration
+            .getExtends()
+            .some((extendNode) => {
+                const extendText = extendNode.getExpression().getText();
+                return new RegExp(`\\b${importedTypeName}\\b`).test(extendText);
+            });
+
+        return (
+            extendsImportedType && interfaceDeclaration.getMembers().length > 0
+        );
+    });
+}
+
 /** Generate argTypes for a single component's types.ts file. */
 async function generateForSourceFile(project: Project, sourceFilePath: string) {
     const sourceFile = getSourceFile(project, sourceFilePath);
@@ -1238,34 +1354,41 @@ async function generateForSourceFile(project: Project, sourceFilePath: string) {
         // Each imported type inherits the tabGroup of the property that references it.
         ...[...wrappedTypeNames.entries()]
             .filter(([name]) => !localTypeNames.has(name))
-            .flatMap(([name, tabGroup]) => {
-                for (const importDecl of sourceFile.getImportDeclarations()) {
-                    const hasName = importDecl
-                        .getNamedImports()
-                        .some((ni) => ni.getName() === name);
+            .flatMap(([name, tabGroups]) => {
+                if (shouldSkipImportedTypeRows(sourceFile, name)) {
+                    return [];
+                }
 
-                    if (!hasName) {
-                        continue;
-                    }
+                const importedFile = resolveImportedTypeSourceFile(
+                    sourceFile,
+                    name
+                );
 
-                    const importedFile =
-                        importDecl.getModuleSpecifierSourceFile();
+                if (!importedFile) {
+                    return [];
+                }
 
-                    if (
-                        !importedFile ||
-                        importedFile.getFilePath().includes("node_modules")
-                    ) {
-                        continue;
-                    }
+                const groups = [...tabGroups];
+                const needsKeyPrefix = groups.length > 1;
 
-                    return generateImportedTypeRows(
+                return groups.flatMap((tabGroup) => {
+                    const rows = generateImportedTypeRows(
                         importedFile,
                         name,
                         tabGroup
                     );
-                }
 
-                return [];
+                    if (!needsKeyPrefix || !tabGroup) {
+                        return rows;
+                    }
+
+                    // Prefix keys to avoid collisions when the same type
+                    // appears in multiple tab groups
+                    return rows.map((row) => ({
+                        ...row,
+                        key: `${tabGroup}__${row.key}`,
+                    }));
+                });
             }),
     ];
 

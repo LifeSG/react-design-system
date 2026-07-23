@@ -12,6 +12,7 @@ interface MobileOffset {
     top?: number | undefined;
 }
 
+// @storybookSkipProps
 /** Base props shared by both the `timer`-based and `timestamp`-based variants. */
 interface CountdownTimerBaseProps extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
@@ -77,18 +78,19 @@ interface CountdownTimerBaseProps extends React.HTMLAttributes<HTMLDivElement> {
 }
 
 /** Props for the duration-based variant. */
-interface TimerProps extends CountdownTimerBaseProps {
+interface TimerProps {
     /** Duration of the countdown in seconds. */
     timer: number;
     timestamp?: number | undefined;
 }
 
 /** Props for the deadline-based variant. */
-interface TimestampProps extends CountdownTimerBaseProps {
+interface TimestampProps {
     /** Unix timestamp (milliseconds since Jan 1, 1970) at which the countdown ends. */
     timestamp: number;
     timer?: number | undefined;
 }
 
 /** Props for `CountdownTimer` component. */
-export type CountdownTimerProps = TimerProps | TimestampProps;
+export type CountdownTimerProps = CountdownTimerBaseProps &
+    (TimerProps | TimestampProps);

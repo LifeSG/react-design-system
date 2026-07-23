@@ -1,15 +1,22 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
-import { LoadingDotsSpinner } from "src/animations";
+import { LoadingDotsSpinner, ThemedLoadingSpinner } from "src/animations";
 import { Colour } from "src/theme";
 
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
 import { TokensTable } from "./tokens-table";
 
 const meta: Meta = {
-    title: "Feedback indicators/Animations/Customisable Animations",
+    title: "Feedback indicators/Animations",
 };
 
 export default meta;
+
+export const ThemedAnimation: StoryObj<typeof ThemedLoadingSpinner> = {
+    name: "ThemedLoadingSpinner",
+    render: (_args) => {
+        return <ThemedLoadingSpinner />;
+    },
+};
 
 export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
     name: "LoadingDotsSpinner",

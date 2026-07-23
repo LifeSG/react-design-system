@@ -31,6 +31,8 @@ export interface AlertProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * Replaces the default trailing arrow on the action link. Only visible when
      * `actionLink` is also provided.
+     *
+     * @default <ArrowRightIcon />
      */
     actionLinkIcon?: JSX.Element | undefined;
     /** Controls the overall size of the alert, affecting typography and icon dimensions. */
