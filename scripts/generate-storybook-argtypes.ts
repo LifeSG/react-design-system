@@ -1304,7 +1304,7 @@ function shouldSkipImportedTypeRows(
         const extendsImportedType = interfaceDeclaration
             .getExtends()
             .some((extendNode) => {
-                const extendText = extendNode.getExpression().getText();
+                const extendText = extendNode.getText();
                 return new RegExp(`\\b${importedTypeName}\\b`).test(extendText);
             });
 
