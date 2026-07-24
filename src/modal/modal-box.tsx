@@ -21,8 +21,6 @@ function ModalBoxInner(
     }: ModalBoxProps,
     ref: React.ForwardedRef<HTMLDivElement>
 ) {
-    const mergedRef = mergeRefs(ref, elementRef);
-
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -49,7 +47,7 @@ function ModalBoxInner(
 
     return (
         <div
-            ref={mergedRef}
+            ref={mergeRefs(ref, elementRef)}
             data-testid={id}
             {...otherProps}
             onClick={handleOnClick}
