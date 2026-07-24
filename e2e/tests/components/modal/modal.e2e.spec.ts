@@ -86,4 +86,16 @@ test.describe("Modal", () => {
             await compareScreenshot(story, "mount", { fullscreen: true });
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-styling");
+        });
+
+        test("Custom styling", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
 });

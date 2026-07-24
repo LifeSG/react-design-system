@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type { NamedExoticComponent } from "react";
 import React from "react";
 
+import { mergeRefs } from "../../util";
 import isStyledComponent from "../../util/is-styled-components";
 import type { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
@@ -15,6 +16,7 @@ function CardInner(
         "data-testid": testId = "modal-card",
         children,
         className,
+        elementRef,
         ...otherProps
     }: ModalCardProps,
     ref: React.ForwardedRef<HTMLDivElement>
@@ -51,7 +53,7 @@ function CardInner(
 
     return (
         <div
-            ref={ref}
+            ref={mergeRefs(ref, elementRef)}
             id={id}
             data-testid={testId}
             {...otherProps}
