@@ -94,6 +94,7 @@ export default defineConfig([
         ignores: [
             "**/node_modules/**",
             "**/dist/**",
+            "**/scripts/**",
             "**/.storybook/**",
             "**/e2e/**",
             "**/playwright-report/**",
