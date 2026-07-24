@@ -3,7 +3,7 @@ import { useCallback, useEffect, useRef, useState } from "react";
 
 import { Button } from "../button";
 import { Form } from "../form";
-import type { FormLabelProps } from "../form/types";
+import type { FormLabelProps } from "../form/form-label/types";
 import { Typography } from "../typography";
 import { StringHelper } from "../util";
 import * as styles from "./file-item-edit.styles";

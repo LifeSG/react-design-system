@@ -24,7 +24,7 @@ import {
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
-import type { FormLabelProps } from "../../form/types";
+import type { FormLabelProps } from "../../form/form-label/types";
 import { VisuallyHidden } from "../../shared/accessibility";
 import { FileUploadContext } from "../context";
 import { MouseSensor } from "../custom-sensors";

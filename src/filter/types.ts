@@ -1,7 +1,7 @@
 import type { CSSProperties, ReactNode } from "react";
 
 import type { ButtonStyleType } from "../button/types";
-import type { FormLabelAddonProps } from "../form/types";
+import type { FormLabelAddonProps } from "../form/form-label/types";
 import type { Insets } from "../shared/types";
 
 // @storybookSection Filter, Filter.Item

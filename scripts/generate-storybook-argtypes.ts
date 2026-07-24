@@ -11,7 +11,7 @@
  */
 
 import { spawnSync } from "node:child_process";
-import { existsSync } from "node:fs";
+import { existsSync, statSync } from "node:fs";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -53,7 +53,8 @@ type StorybookTaggedDeclarationNode =
 const sourceFileGlobs = [
     "src/*/types.ts",
     "src/filter/addons/types.ts",
-    "src/popover/inline/types.ts",
+    "src/popover/popover-inline/types.ts",
+    "src/form/form-*/types.ts",
 ];
 const watchRoots = ["src", "stories"];
 const storyFileGlob = "stories/**/*.stories.@(ts|tsx)";
@@ -539,10 +540,55 @@ function getStoryTitle(fileText: string) {
     return match?.[1];
 }
 
-function getComponentRootIdentifier(fileText: string) {
-    const match = new RegExp(/component:\s*([A-Za-z0-9_]+)/).exec(fileText);
+function getComponentReference(fileText: string) {
+    const match = new RegExp(/component:\s*([A-Za-z0-9_.]+)/).exec(fileText);
 
-    return match?.[1];
+    if (!match?.[1]) {
+        return undefined;
+    }
+
+    const [rootIdentifier, ...memberPath] = match[1].split(".");
+
+    if (!rootIdentifier) {
+        return undefined;
+    }
+
+    return {
+        rootIdentifier,
+        memberPath,
+    };
+}
+
+function toKebabCase(name: string) {
+    return name
+        .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
+        .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
+        .toLowerCase();
+}
+
+function getNestedFormTypesFile(
+    componentDirectory: string,
+    memberPath: string[]
+) {
+    if (
+        path.basename(componentDirectory) !== "form" ||
+        memberPath.length === 0
+    ) {
+        return undefined;
+    }
+
+    const leafMember = memberPath.at(-1);
+
+    if (!leafMember) {
+        return undefined;
+    }
+
+    const nestedDirectory = path.join(
+        componentDirectory,
+        `form-${toKebabCase(leafMember)}`
+    );
+
+    return getTypesFileForComponentDirectory(nestedDirectory);
 }
 
 function getImportPathForIdentifier(fileText: string, identifier: string) {
@@ -575,9 +621,13 @@ function resolveImportPath(storyFilePath: string, importPath: string) {
         return undefined;
     }
 
-    return buildResolutionCandidates(basePath).find((candidate) =>
-        existsSync(candidate)
-    );
+    return buildResolutionCandidates(basePath).find((candidate) => {
+        if (!existsSync(candidate)) {
+            return false;
+        }
+
+        return statSync(candidate).isFile();
+    });
 }
 
 function getComponentDirectory(componentSourcePath: string) {
@@ -628,19 +678,30 @@ function getTypesFileFromStoryDirectory(storyFilePath: string) {
     const storyBaseName = path
         .basename(storyFilePath)
         .replace(/\.stories\.(ts|tsx)$/, "");
-    const subDir = storyBaseName.replace(
+
+    // Try with the stripped suffix first (e.g., "filter-addons" → "addons")
+    const strippedSubDir = storyBaseName.replace(
         new RegExp(`^${topLevelStoryDirectory}-`),
         ""
     );
 
-    if (subDir !== storyBaseName) {
+    if (strippedSubDir !== storyBaseName) {
         const subDirTypesFile = getTypesFileForComponentDirectory(
-            path.resolve("src", topLevelStoryDirectory, subDir)
+            path.resolve("src", topLevelStoryDirectory, strippedSubDir)
         );
 
         if (subDirTypesFile) {
             return subDirTypesFile;
         }
+    }
+
+    // Fallback: try the full story base name as a directory (e.g., "popover-inline" in src/popover/)
+    const fullNameTypesFile = getTypesFileForComponentDirectory(
+        path.resolve("src", topLevelStoryDirectory, storyBaseName)
+    );
+
+    if (fullNameTypesFile) {
+        return fullNameTypesFile;
     }
 
     return getTypesFileForComponentDirectory(
@@ -978,6 +1039,31 @@ function getInheritedHtmlAttributesRow(
     });
 }
 
+function getInheritedInterfacesDescription(
+    interfaceDeclaration: InterfaceDeclaration
+) {
+    const inheritedTypes = interfaceDeclaration
+        .getExtends()
+        .map((extendNode) => cleanType(extendNode.getExpression().getText()))
+        .filter((name) => !HTML_ATTRIBUTES_REGEX.test(name));
+
+    if (inheritedTypes.length === 0) {
+        return undefined;
+    }
+
+    const uniqueTypes = Array.from(new Set(inheritedTypes)).sort((a, b) =>
+        a.localeCompare(b)
+    );
+
+    if (uniqueTypes.length === 1) {
+        return `Inherits props from \`${uniqueTypes[0]}\`.`;
+    }
+
+    return `Inherits props from ${uniqueTypes
+        .map((name) => `\`${name}\``)
+        .join(", ")}.`;
+}
+
 function getInterfaceArgTypes(
     sourceFile: SourceFile,
     interfaceName: string,
@@ -1008,6 +1094,16 @@ function getInterfaceArgTypes(
             return [inheritedHtmlAttributesRow];
         }
 
+        const inheritedInterfacesDescription =
+            getInheritedInterfacesDescription(interfaceDeclaration);
+        const interfaceDescription = toStorybookDescription(interfaceJsDocMeta);
+        const combinedDescription = [
+            interfaceDescription,
+            inheritedInterfacesDescription,
+        ]
+            .filter((text): text is string => Boolean(text))
+            .join("\n\n");
+
         // Otherwise return a generic descriptive row
         return [
             buildArgTypeRow({
@@ -1016,7 +1112,7 @@ function getInterfaceArgTypes(
                 category,
                 tabGroup: declaredTabGroups[0],
                 deprecated: interfaceJsDocMeta.deprecated,
-                description: toStorybookDescription(interfaceJsDocMeta),
+                description: combinedDescription || undefined,
             }),
         ];
     }
@@ -1441,13 +1537,15 @@ async function generateStorybookArgTypesRegistry() {
         const storyFilePath = storyFile.getFilePath();
         const fileText = storyFile.getFullText();
         const title = getStoryTitle(fileText);
-        const componentRootIdentifier = getComponentRootIdentifier(fileText);
+        const componentReference = getComponentReference(fileText);
+        const componentRootIdentifier = componentReference?.rootIdentifier;
 
         if (!title) {
             continue;
         }
 
         let typesFilePath: string | undefined;
+        let hasNestedComponentReference = false;
 
         if (componentRootIdentifier) {
             const importPath = getImportPathForIdentifier(
@@ -1464,14 +1562,36 @@ async function generateStorybookArgTypesRegistry() {
                 if (componentSourcePath) {
                     const componentDirectory =
                         getComponentDirectory(componentSourcePath);
-                    typesFilePath =
-                        getTypesFileForComponentDirectory(componentDirectory);
+                    const nestedTypesFile = getNestedFormTypesFile(
+                        componentDirectory,
+                        componentReference?.memberPath ?? []
+                    );
+
+                    if (nestedTypesFile) {
+                        typesFilePath = nestedTypesFile;
+                        hasNestedComponentReference = true;
+                    } else {
+                        typesFilePath =
+                            getTypesFileForComponentDirectory(
+                                componentDirectory
+                            );
+                    }
                 }
             }
         }
 
-        if (!typesFilePath) {
-            typesFilePath = getTypesFileFromStoryDirectory(storyFilePath);
+        const storyDirectoryTypesFile =
+            getTypesFileFromStoryDirectory(storyFilePath);
+
+        // Prefer story-directory inferred `types.ts` only if:
+        // 1. We don't have any component-reference resolution, OR
+        // 2. We have a root component type (not a nested one), since nested types
+        //    from explicit member paths (Form.CustomField) must not be overridden.
+        if (
+            storyDirectoryTypesFile &&
+            (!typesFilePath || !hasNestedComponentReference)
+        ) {
+            typesFilePath = storyDirectoryTypesFile;
         }
 
         if (!typesFilePath) {

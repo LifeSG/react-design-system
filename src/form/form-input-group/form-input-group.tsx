@@ -1,0 +1,60 @@
+import React from "react";
+
+import { InputGroup } from "../../input-group";
+import { useId } from "../../util";
+import { FormWrapper } from "../form-wrapper";
+import type { FormInputGroupProps } from "./types";
+
+const Component = <T, V>(
+    props: FormInputGroupProps<T, V>,
+    ref: React.Ref<HTMLInputElement>
+): JSX.Element => {
+    const {
+        label,
+        errorMessage,
+        id,
+        "data-error-testid": errorTestId,
+        "data-testid": testId,
+        layoutType,
+        xxsCols,
+        xsCols,
+        smCols,
+        mdCols,
+        lgCols,
+        xlCols,
+        xxlCols,
+        ...otherProps
+    } = props;
+
+    const internalId = useId();
+    const inputId = id ?? `form-field-${internalId}`;
+
+    return (
+        <FormWrapper
+            id={inputId}
+            data-testid={testId}
+            label={label}
+            errorMessage={errorMessage}
+            data-error-testid={errorTestId}
+            layoutType={layoutType}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
+        >
+            <InputGroup
+                ref={ref}
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
+                aria-labelledby={`${inputId}-label`}
+                error={!!errorMessage}
+                {...otherProps}
+            />
+        </FormWrapper>
+    );
+};
+
+export const FormInputGroup = React.forwardRef(Component);

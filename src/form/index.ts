@@ -2,7 +2,7 @@ import { FormCustomField } from "./form-custom-field";
 import { FormDateInput } from "./form-date-input";
 import { FormDateRangeInput } from "./form-date-range-input";
 import { FormESignature } from "./form-e-signature";
-import { FormHistogramSlider } from "./form-histogram";
+import { FormHistogramSlider } from "./form-histogram-slider";
 import { FormInput } from "./form-input";
 import { FormInputGroup } from "./form-input-group";
 import { FormLabel } from "./form-label";
@@ -23,6 +23,29 @@ import { FormTimeRangePicker } from "./form-time-range-picker";
 import { FormTimepicker } from "./form-timepicker";
 import { FormUnitNumberInput } from "./form-unit-number-input";
 
+export type { FormCustomFieldProps } from "./form-custom-field/types";
+export type { FormDateInputProps } from "./form-date-input/types";
+export type { FormDateRangeInputProps } from "./form-date-range-input/types";
+export type { FormESignatureProps } from "./form-e-signature/types";
+export type { FormHistogramSliderProps } from "./form-histogram-slider/types";
+export type { FormInputProps } from "./form-input/types";
+export type { FormInputGroupProps } from "./form-input-group/types";
+export * from "./form-label/types";
+export type { FormMaskedInputProps } from "./form-masked-input/types";
+export type { FormMultiSelectProps } from "./form-multi-select/types";
+export type { FormNestedMultiSelectProps } from "./form-nested-multi-select/types";
+export type { FormNestedSelectProps } from "./form-nested-select/types";
+export type { FormPhoneNumberInputProps } from "./form-phone-number-input/types";
+export type { FormPredictiveTextInputProps } from "./form-predictive-text-input/types";
+export type { FormInputRangeSelectProps } from "./form-range-select/types";
+export type { FormRangeSliderProps } from "./form-range-slider/types";
+export type { FormInputSelectProps } from "./form-select/types";
+export type { FormSelectHistogramProps } from "./form-select-histogram/types";
+export type { FormSliderProps } from "./form-slider/types";
+export type { FormTextareaProps } from "./form-textarea/types";
+export type { FormTimeRangePickerProps } from "./form-time-range-picker/types";
+export type { FormTimepickerProps } from "./form-timepicker/types";
+export type { FormUnitNumberInputProps } from "./form-unit-number-input/types";
 export * from "./types";
 
 /**
