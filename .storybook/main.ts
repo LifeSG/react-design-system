@@ -46,10 +46,21 @@ const config: StorybookConfig = {
                             "dayjs/*": {
                                 unknown: "allow",
                             },
+                            // Relative specifiers used by style files at varying depths
+                            "../theme": { unknown: "allow" },
+                            "../../theme": { unknown: "allow" },
+                            "../../../theme": { unknown: "allow" },
+                            "../theme/**": { unknown: "allow" },
+                            "../../theme/**": { unknown: "allow" },
+                            "../../../theme/**": { unknown: "allow" },
+                            // Canonical-path patterns (used when resolved path is available)
                             "./src/theme/**": {
                                 unknown: "allow",
                             },
                             "./src/util/*": {
+                                unknown: "allow",
+                            },
+                            "../util/*": {
                                 unknown: "allow",
                             },
                         },
