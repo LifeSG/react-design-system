@@ -21,7 +21,7 @@ function CardInner(
     }: ModalCardProps,
     ref: React.ForwardedRef<HTMLDivElement>
 ) {
-    const mergedRef = elementRef ? mergeRefs(ref, elementRef) : ref;
+    const mergedRef = mergeRefs(ref, elementRef);
 
     // =============================================================================
     // EVENT HANDLERS
