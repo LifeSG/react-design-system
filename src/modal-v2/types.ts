@@ -10,7 +10,7 @@ export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
     "data-testid"?: string | undefined;
     children: React.ReactNode;
     /**
-     * Ref to the modal card DOM element, used to apply styles directly to it.
+     * Ref to the modal card DOM element. When used within `Modal`, the default `ref` is not available and you can specify this instead.
      */
     elementRef?: React.Ref<HTMLDivElement> | undefined;
 }

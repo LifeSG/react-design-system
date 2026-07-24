@@ -66,7 +66,7 @@ export interface ModalBoxProps extends React.HTMLAttributes<HTMLDivElement> {
      */
     onClose?: (() => void) | undefined;
     /**
-     * Ref to the modal box DOM element, used to apply styles directly to it.
+     * Ref to the modal box DOM element. When used within `Modal`, the default `ref` is not available and you can specify this instead.
      */
     elementRef?: React.Ref<HTMLDivElement> | undefined;
 }
