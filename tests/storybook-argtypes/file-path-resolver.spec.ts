@@ -318,8 +318,10 @@ describe("FilePathResolver", () => {
         });
 
         it("resolves via the full story base name when the stripped name has no match", () => {
-            // "popover-inline" under "stories/popover/" — stripping "popover-" gives "inline"
-            // which doesn't exist; fall through to full name "popover-inline"
+            // "popover-inline" story lives under stories/popover/popover-inline/.
+            // topLevelDir="popover", storyBaseName="popover-inline".
+            // Stripping "popover-" gives "inline" which doesn't exist;
+            // falls through to the full name "popover-inline".
             const candidate = path.resolve(
                 "src/popover/popover-inline/types.ts"
             );
@@ -327,7 +329,7 @@ describe("FilePathResolver", () => {
             const resolver = new FilePathResolver(mockFs);
             expect(
                 resolver.getTypesFileFromStoryDirectory(
-                    "stories/popover/popover-inline.stories.ts"
+                    "stories/popover/popover-inline/popover-inline.stories.tsx"
                 )
             ).toBe(candidate);
         });
