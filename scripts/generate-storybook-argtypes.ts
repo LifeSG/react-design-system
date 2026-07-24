@@ -50,7 +50,11 @@ type StorybookTaggedDeclarationNode =
     | TypeAliasDeclaration
     | VariableStatement;
 
-const sourceFileGlobs = ["src/*/types.ts", "src/*/addons/types.ts"];
+const sourceFileGlobs = [
+    "src/*/types.ts",
+    "src/filter/addons/types.ts",
+    "src/popover/inline/types.ts",
+];
 const watchRoots = ["src", "stories"];
 const storyFileGlob = "stories/**/*.stories.@(ts|tsx)";
 const storybookArgTypesFile = path.resolve(
@@ -1304,7 +1308,7 @@ function shouldSkipImportedTypeRows(
         const extendsImportedType = interfaceDeclaration
             .getExtends()
             .some((extendNode) => {
-                const extendText = extendNode.getExpression().getText();
+                const extendText = extendNode.getText();
                 return new RegExp(`\\b${importedTypeName}\\b`).test(extendText);
             });
 

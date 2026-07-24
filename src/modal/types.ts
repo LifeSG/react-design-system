@@ -1,5 +1,6 @@
 import type { ModalAnimationDirection } from "../modal-v2/types";
 
+// @storybookSection Modal
 /**
  * Props for the `Modal` component.
  */
@@ -52,6 +53,7 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     dismissKeyboardOnShow?: boolean | undefined;
 }
 
+// @storybookSection Modal.Box
 /**
  * Props for the `Modal.Box` sub-component.
  */
