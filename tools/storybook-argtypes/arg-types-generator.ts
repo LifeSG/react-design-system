@@ -648,15 +648,21 @@ ${mapRows.sort().join("\n")}
     private getInterfaceArgTypes(
         sourceFile: SourceFile,
         interfaceName: string,
-        tabGroupOverride?: string
+        tabGroupOverride?: string | null
     ): GeneratedArgType[] {
         const interfaceDeclaration =
             sourceFile.getInterfaceOrThrow(interfaceName);
         const interfaceJsDocMeta =
             this.jsDocExtractor.getJsDocMeta(interfaceDeclaration);
-        const declaredTabGroups = tabGroupOverride
-            ? [tabGroupOverride]
-            : interfaceJsDocMeta.tabGroups ?? [];
+        // undefined = local type, inherit JSDoc sections
+        // null      = imported with no section, suppress inherited sections
+        // string    = imported with an explicit section
+        const declaredTabGroups =
+            tabGroupOverride === undefined
+                ? interfaceJsDocMeta.tabGroups ?? []
+                : tabGroupOverride
+                ? [tabGroupOverride]
+                : [];
         const hasMultipleTabs = declaredTabGroups.length > 1;
 
         const category = this.getCategoryName(
@@ -799,12 +805,15 @@ ${mapRows.sort().join("\n")}
         sourceFile: SourceFile,
         typeName: string,
         wrappedTypeNames?: Map<string, Set<string | undefined>>,
-        tabGroupOverride?: string
+        tabGroupOverride?: string | null
     ): GeneratedArgType[] {
         const typeAlias = sourceFile.getTypeAliasOrThrow(typeName);
         const jsDocMeta = this.jsDocExtractor.getJsDocMeta(typeAlias);
-        if (tabGroupOverride) {
-            jsDocMeta.tabGroups = [tabGroupOverride];
+        // undefined = local type, keep JSDoc sections as-is
+        // null      = imported with no section, suppress inherited sections
+        // string    = imported with an explicit section
+        if (tabGroupOverride !== undefined) {
+            jsDocMeta.tabGroups = tabGroupOverride ? [tabGroupOverride] : [];
         }
         const category = this.getCategoryName(typeName, typeAlias);
 
@@ -958,13 +967,17 @@ ${mapRows.sort().join("\n")}
             ? importedFile.getInterfaceOrThrow(name)
             : importedFile.getTypeAliasOrThrow(name);
 
+        // Convert undefined (no explicit tab override) → null so that
+        // getInterfaceArgTypes/getTypeAliasArgTypes suppress the imported
+        // type's own @storybookSection tags rather than inheriting them.
+        const effectiveTabGroup = tabGroup ?? null;
         const rows = isInterface
-            ? this.getInterfaceArgTypes(importedFile, name, tabGroup)
+            ? this.getInterfaceArgTypes(importedFile, name, effectiveTabGroup)
             : this.getTypeAliasArgTypes(
                   importedFile,
                   name,
                   this.getWrappedTypeNames(importedFile),
-                  tabGroup
+                  effectiveTabGroup
               );
 
         const localTypeNames = this.getLocalTypeNames(importedFile);
