@@ -1,26 +1,24 @@
 "use client";
 
 import { Modal } from "@lifesg/react-design-system/modal";
-import styles from "./modal.module.css";
 import { Typography } from "@lifesg/react-design-system";
-import { useLayoutEffect, useRef } from "react";
+import { useLayoutEffect, useState } from "react";
+import styles from "./modal.module.css";
 
 export default function Story() {
-    const elementRef = useRef<HTMLDivElement>(null);
+    const [elementRef, setElementRef] = useState<HTMLDivElement | null>(null);
 
     useLayoutEffect(() => {
-        const id = requestAnimationFrame(() => {
-            if (elementRef.current) {
-                elementRef.current.style.cssText =
-                    "background-color: red; border-radius: 8px; padding: 68px;";
-            }
-        });
-        return () => cancelAnimationFrame(id);
-    }, []);
+        if (elementRef) {
+            // eslint-disable-next-line react-hooks/immutability
+            elementRef.style.cssText =
+                "background-color: red; border-radius: 8px; padding: 68px;";
+        }
+    }, [elementRef]);
 
     return (
         <Modal show>
-            <Modal.Box elementRef={elementRef}>
+            <Modal.Box elementRef={setElementRef}>
                 <div
                     data-testid="visual-default-content"
                     className={`${styles["modal-box-recommended-spacing"]}`}

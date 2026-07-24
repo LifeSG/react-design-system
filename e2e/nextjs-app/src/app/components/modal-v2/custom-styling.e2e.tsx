@@ -1,31 +1,23 @@
 "use client";
 
 import { Button, ModalV2, Typography } from "@lifesg/react-design-system";
-import { useRef, useState, useLayoutEffect } from "react";
+import { useLayoutEffect, useState } from "react";
 import styles from "./modal-v2.module.css";
 
 export default function Story() {
-    const [show, setShow] = useState(true);
-    const elementRef = useRef<HTMLDivElement>(null);
+    const [elementRef, setElementRef] = useState<HTMLDivElement | null>(null);
 
     useLayoutEffect(() => {
-        const id = requestAnimationFrame(() => {
-            if (elementRef.current) {
-                elementRef.current.style.cssText =
-                    "background-color: red; border-radius: 8px; padding: 68px;";
-            }
-        });
-        return () => cancelAnimationFrame(id);
-    }, []);
+        if (elementRef) {
+            // eslint-disable-next-line react-hooks/immutability
+            elementRef.style.cssText =
+                "background-color: red; border-radius: 8px; padding: 68px;";
+        }
+    }, [elementRef]);
 
     return (
-        <ModalV2
-            show={show}
-            data-testid="modal"
-            onClose={() => setShow(false)}
-            onOverlayClick={() => setShow(false)}
-        >
-            <ModalV2.Card className={styles.card} elementRef={elementRef}>
+        <ModalV2 show data-testid="modal">
+            <ModalV2.Card className={styles.card} elementRef={setElementRef}>
                 <ModalV2.CloseButton />
                 <ModalV2.Content>
                     <Typography.BodyBL data-testid="default-content">
