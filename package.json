@@ -32,7 +32,7 @@
         "postinstall": "patch-package",
         "storybook": "concurrently -k -n types,storybook \"npm run storybook:argtypes -- --watch\" \"storybook dev -p 6006\"",
         "storybook:argtypes": "tsx ./scripts/generate-storybook-argtypes.ts",
-        "build-storybook": "storybook build",
+        "build-storybook": "npm run storybook:argtypes && storybook build",
         "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
         "lint": "npm run lint:js && npm run lint:css",
         "lint:js": "eslint '**/*.{ts,tsx,js,jsx}' && npm --prefix e2e/nextjs-app run lint:src",
