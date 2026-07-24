@@ -53,7 +53,7 @@ type StorybookTaggedDeclarationNode =
 const sourceFileGlobs = [
     "src/*/types.ts",
     "src/filter/addons/types.ts",
-    "src/popover/inline/types.ts",
+    "src/popover/popover-inline/types.ts",
     "src/form/form-*/types.ts",
 ];
 const watchRoots = ["src", "stories"];
@@ -678,19 +678,30 @@ function getTypesFileFromStoryDirectory(storyFilePath: string) {
     const storyBaseName = path
         .basename(storyFilePath)
         .replace(/\.stories\.(ts|tsx)$/, "");
-    const subDir = storyBaseName.replace(
+
+    // Try with the stripped suffix first (e.g., "filter-addons" → "addons")
+    const strippedSubDir = storyBaseName.replace(
         new RegExp(`^${topLevelStoryDirectory}-`),
         ""
     );
 
-    if (subDir !== storyBaseName) {
+    if (strippedSubDir !== storyBaseName) {
         const subDirTypesFile = getTypesFileForComponentDirectory(
-            path.resolve("src", topLevelStoryDirectory, subDir)
+            path.resolve("src", topLevelStoryDirectory, strippedSubDir)
         );
 
         if (subDirTypesFile) {
             return subDirTypesFile;
         }
+    }
+
+    // Fallback: try the full story base name as a directory (e.g., "popover-inline" in src/popover/)
+    const fullNameTypesFile = getTypesFileForComponentDirectory(
+        path.resolve("src", topLevelStoryDirectory, storyBaseName)
+    );
+
+    if (fullNameTypesFile) {
+        return fullNameTypesFile;
     }
 
     return getTypesFileForComponentDirectory(
@@ -1534,6 +1545,7 @@ async function generateStorybookArgTypesRegistry() {
         }
 
         let typesFilePath: string | undefined;
+        let hasNestedComponentReference = false;
 
         if (componentRootIdentifier) {
             const importPath = getImportPathForIdentifier(
@@ -1550,12 +1562,20 @@ async function generateStorybookArgTypesRegistry() {
                 if (componentSourcePath) {
                     const componentDirectory =
                         getComponentDirectory(componentSourcePath);
-                    typesFilePath =
-                        getNestedFormTypesFile(
-                            componentDirectory,
-                            componentReference?.memberPath ?? []
-                        ) ??
-                        getTypesFileForComponentDirectory(componentDirectory);
+                    const nestedTypesFile = getNestedFormTypesFile(
+                        componentDirectory,
+                        componentReference?.memberPath ?? []
+                    );
+
+                    if (nestedTypesFile) {
+                        typesFilePath = nestedTypesFile;
+                        hasNestedComponentReference = true;
+                    } else {
+                        typesFilePath =
+                            getTypesFileForComponentDirectory(
+                                componentDirectory
+                            );
+                    }
                 }
             }
         }
@@ -1563,10 +1583,14 @@ async function generateStorybookArgTypesRegistry() {
         const storyDirectoryTypesFile =
             getTypesFileFromStoryDirectory(storyFilePath);
 
-        // Prefer story-directory inferred `types.ts` when available because
-        // nested stories (e.g. Filter/Addons, PopoverInline) can intentionally
-        // document a submodule while `component` points at the root namespace.
-        if (storyDirectoryTypesFile) {
+        // Prefer story-directory inferred `types.ts` only if:
+        // 1. We don't have any component-reference resolution, OR
+        // 2. We have a root component type (not a nested one), since nested types
+        //    from explicit member paths (Form.CustomField) must not be overridden.
+        if (
+            storyDirectoryTypesFile &&
+            (!typesFilePath || !hasNestedComponentReference)
+        ) {
             typesFilePath = storyDirectoryTypesFile;
         }
 
