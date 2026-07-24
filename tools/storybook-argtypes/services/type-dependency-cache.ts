@@ -125,7 +125,7 @@ export class TypeDependencyCache {
 
     /**
      * Resolve the source file for an imported type.
-     * Traces import statements to find the original type definition.
+     * Follows aliased symbols to find the true declaration source file.
      *
      * @param sourceFile Source file containing the import
      * @param importedTypeName Name of the imported type
@@ -135,31 +135,46 @@ export class TypeDependencyCache {
         sourceFile: SourceFile,
         importedTypeName: string
     ): SourceFile | undefined {
-        const importDecls = sourceFile.getImportDeclarations();
+        for (const importDecl of sourceFile.getImportDeclarations()) {
+            const namedImport = importDecl
+                .getNamedImports()
+                .find((ni) => ni.getName() === importedTypeName);
 
-        for (const importDecl of importDecls) {
-            const namedImports = importDecl.getNamedImports();
-            for (const namedImport of namedImports) {
-                if (namedImport.getName() === importedTypeName) {
-                    // Get the module specifier (path)
-                    const moduleSpecifier =
-                        importDecl.getModuleSpecifierValue();
-                    if (!moduleSpecifier) {
-                        continue;
-                    }
+            if (!namedImport) {
+                continue;
+            }
 
-                    // Try to resolve the import
-                    try {
-                        const sourceFileOfModule =
-                            importDecl.getModuleSpecifierSourceFile();
-                        if (sourceFileOfModule) {
-                            return sourceFileOfModule;
-                        }
-                    } catch {
-                        // Import could not be resolved
-                        continue;
-                    }
-                }
+            const symbol = namedImport.getNameNode().getSymbol();
+            const aliasedSymbol = symbol?.getAliasedSymbol() ?? symbol;
+            const declaration = aliasedSymbol
+                ?.getDeclarations()
+                .find((decl) => {
+                    const kind = decl.getKindName();
+                    return (
+                        kind === "InterfaceDeclaration" ||
+                        kind === "TypeAliasDeclaration"
+                    );
+                });
+
+            const resolvedSourceFile = declaration?.getSourceFile();
+
+            if (
+                resolvedSourceFile &&
+                !resolvedSourceFile.getFilePath().includes("node_modules")
+            ) {
+                return resolvedSourceFile;
+            }
+
+            const moduleSpecifierSourceFile =
+                importDecl.getModuleSpecifierSourceFile();
+
+            if (
+                moduleSpecifierSourceFile &&
+                !moduleSpecifierSourceFile
+                    .getFilePath()
+                    .includes("node_modules")
+            ) {
+                return moduleSpecifierSourceFile;
             }
         }
 
@@ -212,28 +227,24 @@ export class TypeDependencyCache {
 
     /**
      * Check if a symbol comes from an external/imported module.
-     * Returns true for symbols not defined in the current file.
+     * Returns true for symbols from node_modules or custom-types/.
      *
      * @param symbol ts-morph Symbol to check
      * @returns true if symbol is external, false if local
      */
     public isExternalDeclaration(symbol: TsMorphSymbol): boolean {
-        const declarations = symbol.getDeclarations();
-        if (declarations.length === 0) {
-            return true; // Unknown symbols are considered external
+        const declaration = symbol.getDeclarations()[0];
+
+        if (!declaration) {
+            return true;
         }
 
-        // Check if any declaration is in node_modules
-        for (const decl of declarations) {
-            const sourceFile = decl.getSourceFile();
-            const filePath = sourceFile.getFilePath();
+        const filePath = declaration.getSourceFile().getFilePath();
 
-            if (filePath.includes("node_modules")) {
-                return true;
-            }
-        }
-
-        return false;
+        return (
+            filePath.includes("node_modules") ||
+            filePath.includes("custom-types/")
+        );
     }
 
     /**

@@ -53,23 +53,21 @@ export class TypeScriptSourceAnalyzer {
 
     /**
      * Check if a source file should be skipped from analysis.
-     * Files with "@storybook-skip" JSDoc tag are skipped.
+     * Files with a `// @storybookSkipFile` line comment before the first
+     * statement are skipped.
      *
      * @param sourceFile Source file to check
      * @returns true if file should be skipped, false otherwise
      */
     public isSkippedFile(sourceFile: SourceFile): boolean {
-        const statements = sourceFile.getStatements();
-        if (statements.length === 0) {
-            return false;
-        }
+        const fullText = sourceFile.getFullText();
+        const firstStatement = sourceFile.getStatements()[0];
+        const textBeforeFirstStatement = firstStatement
+            ? fullText.slice(0, firstStatement.getStart())
+            : fullText;
 
-        const leadingComments = statements[0].getLeadingCommentRanges();
-        for (const comment of leadingComments) {
-            if (/@storybook-skip|@ignore/.test(comment.getText())) {
-                return true;
-            }
-        }
-        return false;
+        return /^\s*\/\/[^\n]*@storybookSkipFile\b/m.test(
+            textBeforeFirstStatement
+        );
     }
 }

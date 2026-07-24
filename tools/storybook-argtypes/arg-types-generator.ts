@@ -28,6 +28,7 @@ import {
     STORYBOOK_ARGTYPES_FILE,
 } from "./config/arg-types-config";
 import { ArgTypesRowBuilder } from "./services/arg-types-row-builder";
+import { FilePathResolver } from "./services/file-path-resolver";
 import { JsDocMetadataExtractor } from "./services/jsdoc-metadata-extractor";
 import { TypeFormattingService } from "./services/type-formatting-service";
 import { TypeScriptSourceAnalyzer } from "./services/typescript-source-analyzer";
@@ -51,6 +52,7 @@ export class ArgTypesGenerator {
     private readonly jsDocExtractor: JsDocMetadataExtractor;
     private readonly typeFormatter: TypeFormattingService;
     private readonly rowBuilder: ArgTypesRowBuilder;
+    private readonly resolver: FilePathResolver;
     private readonly fsAdapter: IFileSystemAdapter;
 
     /** Cache for wrapped type names, keyed by source file path. */
@@ -70,6 +72,7 @@ export class ArgTypesGenerator {
         this.jsDocExtractor = new JsDocMetadataExtractor();
         this.typeFormatter = new TypeFormattingService();
         this.rowBuilder = new ArgTypesRowBuilder();
+        this.resolver = new FilePathResolver(this.fsAdapter);
     }
 
     // =========================================================================
@@ -105,7 +108,7 @@ export class ArgTypesGenerator {
     public async generateForSourceFile(sourceFilePath: string): Promise<void> {
         const sourceFile = this.analyzer.getSourceFile(sourceFilePath);
 
-        if (this.isSkippedFile(sourceFile)) {
+        if (this.analyzer.isSkippedFile(sourceFile)) {
             return;
         }
 
@@ -215,8 +218,9 @@ export const ${exportName} = ${JSON.stringify(
         for (const storyFile of storyFiles) {
             const storyFilePath = storyFile.getFilePath();
             const fileText = storyFile.getFullText();
-            const title = this.getStoryTitle(fileText);
-            const componentReference = this.getComponentReference(fileText);
+            const title = this.resolver.getStoryTitle(fileText);
+            const componentReference =
+                this.resolver.getComponentReference(fileText);
             const componentRootIdentifier = componentReference?.rootIdentifier;
 
             if (!title) {
@@ -227,31 +231,34 @@ export const ${exportName} = ${JSON.stringify(
             let hasNestedComponentReference = false;
 
             if (componentRootIdentifier) {
-                const importPath = this.getImportPathForIdentifier(
+                const importPath = this.resolver.getImportPathForIdentifier(
                     fileText,
                     componentRootIdentifier
                 );
 
                 if (importPath) {
-                    const componentSourcePath = this.resolveImportPath(
+                    const componentSourcePath = this.resolver.resolveImportPath(
                         storyFilePath,
                         importPath
                     );
 
                     if (componentSourcePath) {
                         const componentDirectory =
-                            this.getComponentDirectory(componentSourcePath);
-                        const nestedTypesFile = this.getNestedFormTypesFile(
-                            componentDirectory,
-                            componentReference?.memberPath ?? []
-                        );
+                            this.resolver.getComponentDirectory(
+                                componentSourcePath
+                            );
+                        const nestedTypesFile =
+                            this.resolver.getNestedFormTypesFile(
+                                componentDirectory,
+                                componentReference?.memberPath ?? []
+                            );
 
                         if (nestedTypesFile) {
                             typesFilePath = nestedTypesFile;
                             hasNestedComponentReference = true;
                         } else {
                             typesFilePath =
-                                this.getTypesFileForComponentDirectory(
+                                this.resolver.getTypesFileForComponentDirectory(
                                     componentDirectory
                                 );
                         }
@@ -260,7 +267,7 @@ export const ${exportName} = ${JSON.stringify(
             }
 
             const storyDirectoryTypesFile =
-                this.getTypesFileFromStoryDirectory(storyFilePath);
+                this.resolver.getTypesFileFromStoryDirectory(storyFilePath);
 
             if (
                 storyDirectoryTypesFile &&
@@ -275,7 +282,7 @@ export const ${exportName} = ${JSON.stringify(
 
             const typesSourceFile = this.analyzer.getSourceFile(typesFilePath);
 
-            if (this.isSkippedFile(typesSourceFile)) {
+            if (this.analyzer.isSkippedFile(typesSourceFile)) {
                 continue;
             }
 
@@ -365,197 +372,6 @@ ${mapRows.sort().join("\n")}
             .replaceAll("\\", "/")
             .replace(/\.ts$/, "")
             .replace(/^([^./])/, "./$1");
-    }
-
-    // =========================================================================
-    // Story file parsing
-    // =========================================================================
-
-    private getStoryTitle(fileText: string): string | undefined {
-        const match = /title:\s*["'`]([^"'`]+)["'`]/.exec(fileText);
-        return match?.[1];
-    }
-
-    private getComponentReference(
-        fileText: string
-    ): { rootIdentifier: string; memberPath: string[] } | undefined {
-        const match = /component:\s*([A-Za-z0-9_.]+)/.exec(fileText);
-
-        if (!match?.[1]) {
-            return undefined;
-        }
-
-        const [rootIdentifier, ...memberPath] = match[1].split(".");
-
-        if (!rootIdentifier) {
-            return undefined;
-        }
-
-        return { rootIdentifier, memberPath };
-    }
-
-    private getImportPathForIdentifier(
-        fileText: string,
-        identifier: string
-    ): string | undefined {
-        const importRegex = new RegExp(
-            `import\\s+(?:\\{[^}]*\\b${identifier}\\b[^}]*\\}|${identifier})\\s+from\\s+["']([^"']+)["']`
-        );
-        return importRegex.exec(fileText)?.[1];
-    }
-
-    // =========================================================================
-    // Path resolution
-    // =========================================================================
-
-    private toKebabCase(name: string): string {
-        return name
-            .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
-            .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
-            .toLowerCase();
-    }
-
-    private buildResolutionCandidates(basePath: string): string[] {
-        return [
-            basePath,
-            `${basePath}.ts`,
-            `${basePath}.tsx`,
-            path.join(basePath, "index.ts"),
-            path.join(basePath, "index.tsx"),
-        ];
-    }
-
-    private resolveImportPath(
-        storyFilePath: string,
-        importPath: string
-    ): string | undefined {
-        let basePath: string;
-
-        if (importPath.startsWith("src/")) {
-            basePath = path.resolve(importPath);
-        } else if (importPath.startsWith(".")) {
-            basePath = path.resolve(path.dirname(storyFilePath), importPath);
-        } else {
-            return undefined;
-        }
-
-        return this.buildResolutionCandidates(basePath).find((candidate) => {
-            if (!this.fsAdapter.existsSync(candidate)) {
-                return false;
-            }
-            return this.fsAdapter.statSync(candidate).isFile();
-        });
-    }
-
-    private getComponentDirectory(componentSourcePath: string): string {
-        return path.dirname(componentSourcePath);
-    }
-
-    private getTypesFileForComponentDirectory(
-        componentDirectory: string
-    ): string | undefined {
-        const typesFilePath = path.join(componentDirectory, "types.ts");
-        return this.fsAdapter.existsSync(typesFilePath)
-            ? typesFilePath
-            : undefined;
-    }
-
-    private getNestedFormTypesFile(
-        componentDirectory: string,
-        memberPath: string[]
-    ): string | undefined {
-        if (
-            path.basename(componentDirectory) !== "form" ||
-            memberPath.length === 0
-        ) {
-            return undefined;
-        }
-
-        const leafMember = memberPath.at(-1);
-
-        if (!leafMember) {
-            return undefined;
-        }
-
-        const nestedDirectory = path.join(
-            componentDirectory,
-            `form-${this.toKebabCase(leafMember)}`
-        );
-
-        return this.getTypesFileForComponentDirectory(nestedDirectory);
-    }
-
-    private getTypesFileFromStoryDirectory(
-        storyFilePath: string
-    ): string | undefined {
-        const storiesRoot = path.resolve("stories");
-        const relativeStoryDirectory = path.relative(
-            storiesRoot,
-            path.dirname(storyFilePath)
-        );
-
-        if (
-            !relativeStoryDirectory ||
-            relativeStoryDirectory.startsWith("..") ||
-            path.isAbsolute(relativeStoryDirectory)
-        ) {
-            return undefined;
-        }
-
-        const topLevelStoryDirectory = relativeStoryDirectory.split(
-            path.sep
-        )[0];
-
-        if (!topLevelStoryDirectory) {
-            return undefined;
-        }
-
-        const storyBaseName = path
-            .basename(storyFilePath)
-            .replace(/\.stories\.(ts|tsx)$/, "");
-
-        const strippedSubDir = storyBaseName.replace(
-            new RegExp(`^${topLevelStoryDirectory}-`),
-            ""
-        );
-
-        if (strippedSubDir !== storyBaseName) {
-            const subDirTypesFile = this.getTypesFileForComponentDirectory(
-                path.resolve("src", topLevelStoryDirectory, strippedSubDir)
-            );
-
-            if (subDirTypesFile) {
-                return subDirTypesFile;
-            }
-        }
-
-        const fullNameTypesFile = this.getTypesFileForComponentDirectory(
-            path.resolve("src", topLevelStoryDirectory, storyBaseName)
-        );
-
-        if (fullNameTypesFile) {
-            return fullNameTypesFile;
-        }
-
-        return this.getTypesFileForComponentDirectory(
-            path.resolve("src", topLevelStoryDirectory)
-        );
-    }
-
-    // =========================================================================
-    // Skip / file analysis
-    // =========================================================================
-
-    private isSkippedFile(sourceFile: SourceFile): boolean {
-        const fullText = sourceFile.getFullText();
-        const firstStatement = sourceFile.getStatements()[0];
-        const textBeforeFirstStatement = firstStatement
-            ? fullText.slice(0, firstStatement.getStart())
-            : fullText;
-
-        return /^\s*\/\/[^\n]*@storybookSkipFile\b/m.test(
-            textBeforeFirstStatement
-        );
     }
 
     // =========================================================================
