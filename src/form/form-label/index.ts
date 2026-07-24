@@ -1,4 +1,4 @@
-export { FormErrorMessage,FormLabel } from "./form-label";
+export { FormErrorMessage, FormLabel } from "./form-label";
 export type {
     FormLabelAddonProps,
     FormLabelAddonType,
