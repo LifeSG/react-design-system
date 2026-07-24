@@ -57,7 +57,7 @@ export interface GeneratedArgType {
         deprecated?: string | boolean;
         description?: string;
         name: string;
-        type: {
+        type?: {
             required?: boolean;
         };
         table: {
