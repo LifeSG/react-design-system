@@ -69,28 +69,36 @@ describe("TypeScriptSourceAnalyzer", () => {
             expect(analyzer.isSkippedFile(sf)).toBe(false);
         });
 
-        it("returns true for a file with a /* @storybook-skip */ block comment", () => {
+        it("returns true for a file with a // @storybookSkipFile line comment", () => {
             const sf = project.createSourceFile(
                 "skipped.ts",
-                `/* @storybook-skip */\nexport type Foo = string;`
+                `// @storybookSkipFile\nexport type Foo = string;`
             );
             expect(analyzer.isSkippedFile(sf)).toBe(true);
         });
 
-        it("returns true for a file with a // @storybook-skip line comment", () => {
+        it("returns true when @storybookSkipFile appears after other text on the line", () => {
             const sf = project.createSourceFile(
-                "skippedline.ts",
-                `// @storybook-skip\nexport type Foo = string;`
+                "skippedmid.ts",
+                `// Generated file @storybookSkipFile\nexport type Foo = string;`
             );
             expect(analyzer.isSkippedFile(sf)).toBe(true);
         });
 
-        it("returns true for a file with a /* @ignore */ block comment", () => {
+        it("returns false for a block comment containing @storybookSkipFile (only line comments count)", () => {
             const sf = project.createSourceFile(
-                "ignored.ts",
-                `/* @ignore */\nexport type Foo = string;`
+                "blockskip.ts",
+                `/* @storybookSkipFile */\nexport type Foo = string;`
             );
-            expect(analyzer.isSkippedFile(sf)).toBe(true);
+            expect(analyzer.isSkippedFile(sf)).toBe(false);
+        });
+
+        it("returns false when @storybookSkipFile appears after the first statement", () => {
+            const sf = project.createSourceFile(
+                "afterstatement.ts",
+                `export type Foo = string; // @storybookSkipFile`
+            );
+            expect(analyzer.isSkippedFile(sf)).toBe(false);
         });
 
         it("returns false for an empty file (no statements)", () => {

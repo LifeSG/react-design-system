@@ -9,6 +9,7 @@ import * as path from "node:path";
 
 import type { IFileSystemAdapter } from "../adapters/file-system-adapter";
 import { FileSystemAdapter } from "../adapters/file-system-adapter";
+import { STORYBOOK_ARGTYPES_FILE } from "../config/arg-types-config";
 
 /**
  * Resolves file paths for type definitions and story imports.
@@ -95,7 +96,7 @@ export class FilePathResolver {
     // Path resolution
     // =========================================================================
 
-    private toKebabCase(name: string): string {
+    public toKebabCase(name: string): string {
         return name
             .replace(/([a-z0-9])([A-Z])/g, "$1-$2")
             .replace(/([A-Z]+)([A-Z][a-z])/g, "$1-$2")
@@ -263,5 +264,54 @@ export class FilePathResolver {
         return this.getTypesFileForComponentDirectory(
             path.resolve("src", topLevelStoryDirectory)
         );
+    }
+
+    // =========================================================================
+    // Output file path helpers
+    // =========================================================================
+
+    /**
+     * Get the output file path for a types source file.
+     * e.g. `src/button/types.ts` → `.storybook/generated/button.argtypes.generated.ts`
+     *
+     * @param sourceFilePath Absolute path to the types source file
+     * @returns Absolute path to the generated output file
+     */
+    public getOutputFile(sourceFilePath: string): string {
+        const componentName = path.basename(path.dirname(sourceFilePath));
+        return path.resolve(
+            path.dirname(STORYBOOK_ARGTYPES_FILE),
+            `${componentName}.argtypes.generated.ts`
+        );
+    }
+
+    /**
+     * Get the export name for the component's argTypes object.
+     * e.g. "form-custom-field" → "formCustomFieldExtraArgTypes"
+     *
+     * @param sourceFilePath Absolute path to the types source file
+     * @returns Export identifier name
+     */
+    public getExportName(sourceFilePath: string): string {
+        const componentName = path.basename(path.dirname(sourceFilePath));
+        const camelCaseName = componentName.replace(
+            /-([a-z])/g,
+            (_match: string, letter: string) => letter.toUpperCase()
+        );
+        return `${camelCaseName}ExtraArgTypes`;
+    }
+
+    /**
+     * Get the relative import path for a generated argTypes file.
+     *
+     * @param outputFile Absolute path to the generated output file
+     * @returns Relative import path (suitable for use in import statements)
+     */
+    public getArgTypesImportPath(outputFile: string): string {
+        return path
+            .relative(path.dirname(STORYBOOK_ARGTYPES_FILE), outputFile)
+            .replaceAll("\\", "/")
+            .replace(/\.ts$/, "")
+            .replace(/^([^./])/, "./$1");
     }
 }
