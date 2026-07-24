@@ -5,6 +5,9 @@
  * Exports all public interfaces, classes, and utilities.
  */
 
+// Orchestrator
+export { ArgTypesGenerator } from "./arg-types-generator";
+
 // Configuration
 export {
     GENERATED_FILE_HEADER,

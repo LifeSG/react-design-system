@@ -10,11 +10,9 @@ import {
     type Node,
     type PropertySignature,
     type Type,
-    TypeFormatFlags,
 } from "ts-morph";
 
 import { TYPE_FORMAT_FLAGS } from "../config/arg-types-config";
-import type { JsDocMeta } from "../types/arg-types-types";
 
 /**
  * Formats TypeScript type text for Storybook argTypes.
@@ -23,203 +21,207 @@ import type { JsDocMeta } from "../types/arg-types-types";
  * Usage:
  * ```typescript
  * const formatter = new TypeFormattingService();
- * const cleaned = formatter.cleanType('string | number | undefined');
+ * const cleaned = formatter.cleanType('string | undefined');
  * ```
  */
 export class TypeFormattingService {
-    /**
-     * Clean type text by removing long namespace prefixes and unions.
-     * Simplifies verbose type representations.
-     *
-     * @param type Raw type text
-     * @returns Cleaned type text
-     */
     public cleanType(type: string): string {
-        // Split namespace paths and keep only last 2 segments to reduce verbosity
-        const parts = type.split(".");
-        if (parts.length > 2) {
-            // Check if we have a long namespace (A.B.C.D -> keep only C.D)
-            const lastTwo = parts.slice(-2).join(".");
-            const firstPart = parts.slice(0, -2).join(".");
-            return type.replace(firstPart + ".", lastTwo);
+        let cleaned = type
+            .replace(/\s*\|\s*undefined/g, "")
+            .replace(/^\s*\|\s*/, "")
+            .replace(/\s+/g, " ")
+            .trim();
+
+        if (cleaned.startsWith("(") && cleaned.endsWith(")")) {
+            let depth = 0;
+            let outerWraps = true;
+
+            for (let i = 0; i < cleaned.length - 1; i++) {
+                if (cleaned[i] === "(") depth++;
+                if (cleaned[i] === ")") depth--;
+                if (depth === 0) {
+                    outerWraps = false;
+                    break;
+                }
+            }
+
+            if (outerWraps) {
+                cleaned = cleaned.slice(1, -1);
+            }
         }
-        return type;
+
+        return cleaned;
     }
 
-    /**
-     * Format a union type into a brief summary.
-     * Handles both simple unions and complex union expressions.
-     *
-     * @param typeText Union type text
-     * @returns Formatted union summary
-     */
     public formatUnionSummary(typeText: string): string {
-        // Handle function types in unions (keep first 50 chars)
-        const hasFunctionType = /\(\s*\w+\s*:\s*\w+\s*\)\s*=>/.test(typeText);
-        if (hasFunctionType) {
-            const match = typeText.match(/\(\s*\w+\s*:\s*\w+\s*\)\s*=>\s*\w+/);
-            if (match) {
-                return match[0].substring(0, 50) + "...";
+        const members: string[] = [];
+        let current = "";
+        let parenDepth = 0;
+        let bracketDepth = 0;
+        let braceDepth = 0;
+        let angleDepth = 0;
+
+        for (const char of typeText) {
+            if (char === "(") parenDepth++;
+            if (char === ")") parenDepth = Math.max(0, parenDepth - 1);
+            if (char === "[") bracketDepth++;
+            if (char === "]") bracketDepth = Math.max(0, bracketDepth - 1);
+            if (char === "{") braceDepth++;
+            if (char === "}") braceDepth = Math.max(0, braceDepth - 1);
+            if (char === "<") angleDepth++;
+            if (char === ">") angleDepth = Math.max(0, angleDepth - 1);
+
+            const isTopLevel =
+                parenDepth === 0 &&
+                bracketDepth === 0 &&
+                braceDepth === 0 &&
+                angleDepth === 0;
+
+            if (char === "|" && isTopLevel) {
+                members.push(current.trim());
+                current = "";
+                continue;
             }
+
+            current += char;
         }
 
-        // For standard unions, simplify if too long
-        if (typeText.length > 80) {
-            const parts = typeText.split("|").map((p) => p.trim());
-            if (parts.length > 3) {
-                return `${parts.slice(0, 2).join(" | ")} | ...`;
-            }
+        if (current.trim()) {
+            members.push(current.trim());
         }
 
-        return typeText;
+        return members.length <= 1
+            ? typeText
+            : members.filter(Boolean).join("\n| ");
     }
 
-    /**
-     * Check if a type is a simple literal union (like 'a' | 'b' | 'c').
-     *
-     * @param type ts-morph Type object
-     * @returns true if type is a simple literal union, false otherwise
-     */
     public isSimpleLiteralUnion(type: Type): boolean {
-        if (!type.isUnion()) {
+        const nonNullableType = type.getNonNullableType();
+
+        if (!nonNullableType.isUnion()) {
             return false;
         }
 
-        const types = type.getUnionTypes();
-        return types.every((t) => {
-            const text = t.getText(undefined, TypeFormatFlags.NoTruncation);
-            // Check for literal types: 'string', 123, true, etc.
-            return /^(['"].*['"]|true|false|\d+)$/.test(text);
-        });
-    }
+        const unionTypes = nonNullableType.getUnionTypes();
+        const hasBooleanLiterals = unionTypes.some((t) => t.isBooleanLiteral());
+        const hasOnlyBooleanLiterals =
+            hasBooleanLiterals && unionTypes.every((t) => t.isBooleanLiteral());
 
-    /**
-     * Get expanded text for a literal union type.
-     * Extracts individual literal values.
-     *
-     * @param type ts-morph Type object
-     * @param contextNode Node for type resolution context
-     * @returns Formatted union text
-     */
-    public getExpandedLiteralUnionText(type: Type, contextNode: Node): string {
-        if (!type.isUnion()) {
-            return type.getText(contextNode, TYPE_FORMAT_FLAGS);
+        if (hasOnlyBooleanLiterals) {
+            return false;
         }
 
-        const types = type.getUnionTypes();
-        const literals = types.map((t) =>
-            t.getText(contextNode, TypeFormatFlags.NoTruncation)
+        return unionTypes.every(
+            (t) =>
+                t.isStringLiteral() ||
+                t.isNumberLiteral() ||
+                t.isBooleanLiteral()
+        );
+    }
+
+    public getExpandedLiteralUnionText(
+        type: Type,
+        contextNode: Node
+    ): string | undefined {
+        const nonNullableType = type.getNonNullableType();
+
+        if (!nonNullableType.isUnion()) {
+            return undefined;
+        }
+
+        const unionTypes = nonNullableType.getUnionTypes();
+        const hasOnlyLiterals = unionTypes.every(
+            (unionType) =>
+                unionType.isStringLiteral() ||
+                unionType.isNumberLiteral() ||
+                unionType.isBooleanLiteral()
         );
 
-        return literals.join(" | ");
-    }
-
-    /**
-     * Get summary type text for display in Storybook.
-     * Chooses between expanded and truncated formats based on length.
-     *
-     * @param type ts-morph Type object
-     * @param contextNode Node for type resolution context
-     * @returns Summary type text
-     */
-    public getSummaryTypeText(type: Type, contextNode: Node): string {
-        const fullText = type.getText(contextNode, TYPE_FORMAT_FLAGS);
-
-        if (this.isSimpleLiteralUnion(type)) {
-            const expanded = this.getExpandedLiteralUnionText(
-                type,
-                contextNode
-            );
-            return expanded.length < 100 ? expanded : fullText;
+        if (!hasOnlyLiterals) {
+            return undefined;
         }
 
-        return fullText;
+        return this.cleanType(
+            unionTypes
+                .map((unionType) =>
+                    unionType.getText(contextNode, TYPE_FORMAT_FLAGS)
+                )
+                .sort((a, b) => a.localeCompare(b))
+                .join(" | ")
+        );
     }
 
-    /**
-     * Get individual member texts from a union type.
-     * Flattens nested unions.
-     *
-     * @param type ts-morph Type object
-     * @param contextNode Node for type resolution context
-     * @returns Array of member type texts
-     */
-    public getUnionMemberTexts(type: Type, contextNode: Node): string[] {
-        if (!type.isUnion()) {
-            return [type.getText(contextNode, TYPE_FORMAT_FLAGS)];
-        }
-
-        const members: string[] = [];
-        const types = type.getUnionTypes();
-
-        for (const t of types) {
-            if (t.isUnion()) {
-                // Recursively flatten nested unions
-                members.push(...this.getUnionMemberTexts(t, contextNode));
-            } else {
-                members.push(t.getText(contextNode, TYPE_FORMAT_FLAGS));
-            }
-        }
-
-        return members;
+    public getSummaryTypeText(
+        type: Type,
+        contextNode: Node,
+        fallbackText?: string
+    ): string {
+        return (
+            this.getExpandedLiteralUnionText(type, contextNode) ??
+            this.cleanType(
+                fallbackText ?? type.getText(contextNode, TYPE_FORMAT_FLAGS)
+            )
+        );
     }
 
-    /**
-     * Get type text for a property signature.
-     *
-     * @param property Property signature to format
-     * @returns Type text
-     */
+    public getUnionMemberTexts(
+        type: Type,
+        contextNode: Node
+    ): string[] | undefined {
+        const nonNullableType = type.getNonNullableType();
+
+        if (!nonNullableType.isUnion()) {
+            return undefined;
+        }
+
+        if (nonNullableType.isBoolean()) {
+            return undefined;
+        }
+
+        const unionTypes = nonNullableType.getUnionTypes();
+
+        if (unionTypes.length > 6) {
+            return undefined;
+        }
+
+        const parts = unionTypes
+            .map((t) =>
+                this.cleanType(t.getText(contextNode, TYPE_FORMAT_FLAGS))
+            )
+            .sort((a, b) => a.localeCompare(b));
+
+        if (parts.some((p) => p.includes("import("))) {
+            return undefined;
+        }
+
+        return parts;
+    }
+
     public getPropertyTypeText(property: PropertySignature): string {
-        const type = property.getType();
-        const contextNode = property;
-        return this.getSummaryTypeText(type, contextNode);
+        const typeNodeText = property.getTypeNode()?.getText();
+
+        if (typeNodeText) {
+            return this.cleanType(typeNodeText);
+        }
+
+        const resolvedType = property.getType();
+
+        if (resolvedType.isAny() || resolvedType.isUnknown()) {
+            return "-";
+        }
+
+        return this.getSummaryTypeText(resolvedType, property);
     }
 
-    /**
-     * Get type text for an index signature (e.g., [key: string]: any).
-     *
-     * @param indexSignature Index signature to format
-     * @returns Type text
-     */
     public getIndexSignatureTypeText(
         indexSignature: IndexSignatureDeclaration
     ): string {
-        const type = indexSignature.getReturnType();
-        const contextNode = indexSignature;
-        return this.getSummaryTypeText(type, contextNode);
-    }
+        const summary = this.getSummaryTypeText(
+            indexSignature.getReturnType(),
+            indexSignature,
+            indexSignature.getReturnTypeNode()?.getText()
+        );
 
-    /**
-     * Convert JSDoc metadata to a Storybook description string.
-     * Combines description, remarks, and examples.
-     *
-     * @param meta JSDoc metadata
-     * @returns Formatted description string or undefined
-     */
-    public toStorybookDescription(meta: JsDocMeta): string | undefined {
-        const parts: string[] = [];
-
-        if (meta.description) {
-            parts.push(meta.description);
-        }
-
-        if (meta.remarks) {
-            parts.push(`\n**Remarks:** ${meta.remarks}`);
-        }
-
-        if (meta.examples && meta.examples.length > 0) {
-            parts.push(`\n**Examples:**\n${meta.examples.join("\n")}`);
-        }
-
-        if (meta.deprecated) {
-            const deprecationMsg =
-                typeof meta.deprecated === "string"
-                    ? meta.deprecated
-                    : "This property is deprecated.";
-            parts.push(`\n**Deprecated:** ${deprecationMsg}`);
-        }
-
-        return parts.length > 0 ? parts.join("\n") : undefined;
+        return this.formatUnionSummary(summary);
     }
 }

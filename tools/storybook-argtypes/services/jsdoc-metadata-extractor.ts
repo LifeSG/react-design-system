@@ -5,14 +5,25 @@
  * like descriptions, examples, deprecation notices, and custom fields.
  */
 
+import {
+    type IndexSignatureDeclaration,
+    type PropertySignature,
+} from "ts-morph";
+
 import type {
     JsDocMeta,
     StorybookTaggedDeclarationNode,
 } from "../types/arg-types-types";
 
+/** Nodes that can carry JSDoc in storybook generation. */
+type JsDocNode =
+    | IndexSignatureDeclaration
+    | PropertySignature
+    | StorybookTaggedDeclarationNode;
+
 /**
  * Extracts JSDoc metadata from TypeScript declarations.
- * Parses @description, @example, @deprecated, @remarks, @default, @tabGroup tags.
+ * Parses "@deprecated", "@default", "@remarks", "@example", and "@storybookSection" tags.
  *
  * Usage:
  * ```typescript
@@ -21,12 +32,6 @@ import type {
  * ```
  */
 export class JsDocMetadataExtractor {
-    /**
-     * Get text content from a JSDoc tag.
-     *
-     * @param tag JSDoc tag with getCommentText method
-     * @returns Trimmed comment text or undefined
-     */
     public getTagCommentText(tag: {
         getCommentText: () => string | undefined;
     }): string | undefined {
@@ -34,192 +39,184 @@ export class JsDocMetadataExtractor {
         return typeof comment === "string" ? comment.trim() : undefined;
     }
 
-    /**
-     * Get leading comments that are not JSDoc blocks.
-     * Includes single-line and multi-line comments before a declaration.
-     *
-     * @param node TypeScript declaration node
-     * @returns Array of comment texts
-     */
     public getLeadingNonJsDocComments(
         node: StorybookTaggedDeclarationNode
     ): string[] {
-        const comments: string[] = [];
-        const leadingComments = node.getLeadingCommentRanges();
-
-        for (const comment of leadingComments) {
-            const text = comment.getText();
-            // Skip JSDoc blocks (/** ... */)
-            if (!text.startsWith("/**")) {
-                // Remove comment markers and normalize
-                const cleaned = text
-                    .replace(/^\/\/\s?/, "") // Single-line: // comment
-                    .replace(/^\/\*\s?/, "") // Multi-line: /* comment
-                    .replace(/\s?\*\/$/, "") // Multi-line end: */
-                    .trim();
-                if (cleaned) {
-                    comments.push(cleaned);
-                }
-            }
-        }
-
-        return comments;
+        return node
+            .getLeadingCommentRanges()
+            .map((commentRange) => commentRange.getText())
+            .filter((rawText) => !rawText.startsWith("/**"))
+            .map((rawText) =>
+                rawText
+                    .replace(/^\/\//gm, "")
+                    .replace(/^\/\*|\*\/$/g, "")
+                    .trim()
+            )
+            .filter(Boolean);
     }
 
-    /**
-     * Extract Storybook sections from leading comments.
-     * Looks for sections like "---" or custom markers.
-     *
-     * @param node TypeScript declaration node
-     * @returns Array of section texts
-     */
     public getStorybookSectionsFromLeadingComment(
         node: StorybookTaggedDeclarationNode
     ): string[] {
-        const leadingComments = node.getLeadingCommentRanges();
-        const sections: string[] = [];
+        const marker = "@storybookSection";
 
-        for (const comment of leadingComments) {
-            const text = comment.getText();
-            if (text.includes("---")) {
-                const parts = text.split("---");
-                sections.push(...parts.map((p) => p.trim()).filter(Boolean));
+        for (const comment of this.getLeadingNonJsDocComments(node)) {
+            const markerIndex = comment.indexOf(marker);
+
+            if (markerIndex >= 0) {
+                const raw = comment.slice(markerIndex + marker.length).trim();
+
+                if (!raw) {
+                    return [];
+                }
+
+                return raw
+                    .split(",")
+                    .map((s) => s.trim())
+                    .filter(Boolean);
             }
         }
 
-        return sections;
+        return [];
     }
 
-    /**
-     * Check if a declaration has a @skip or @storybook-skip tag in JSDoc.
-     *
-     * @param node TypeScript declaration node
-     * @returns true if skip tag is present, false otherwise
-     */
     public hasSkipTag(node: StorybookTaggedDeclarationNode): boolean {
-        const jsDocs = node.getJsDocs();
-        for (const jsDoc of jsDocs) {
-            const tags = jsDoc.getTags();
-            for (const tag of tags) {
-                const tagName = tag.getTagName();
-                if (tagName === "skip" || tagName === "storybook-skip") {
-                    return true;
-                }
+        for (const comment of this.getLeadingNonJsDocComments(node)) {
+            if (/@?storybookSkipProps\b/.test(comment)) {
+                return true;
             }
         }
         return false;
     }
 
-    /**
-     * Extract all JSDoc metadata from a declaration.
-     * Parses @description, @example, @deprecated, @remarks, @default, @tabGroup tags.
-     *
-     * @param node TypeScript declaration node
-     * @returns JSDoc metadata object
-     */
-    public getJsDocMeta(node: StorybookTaggedDeclarationNode): JsDocMeta {
-        const meta: JsDocMeta = {};
-        const jsDocs = node.getJsDocs();
+    public getJsDocMeta(node: JsDocNode): JsDocMeta {
+        const isTaggableNode =
+            node.getKindName() === "InterfaceDeclaration" ||
+            node.getKindName() === "TypeAliasDeclaration" ||
+            node.getKindName() === "VariableStatement";
 
-        if (jsDocs.length === 0) {
-            return meta;
+        const tabGroups = isTaggableNode
+            ? this.getStorybookSectionsFromLeadingComment(
+                  node as StorybookTaggedDeclarationNode
+              )
+            : [];
+
+        const docs = node.getJsDocs();
+
+        if (!docs.length) {
+            return {
+                tabGroups: tabGroups.length > 0 ? tabGroups : undefined,
+            };
         }
 
-        for (const jsDoc of jsDocs) {
-            // Get main description (text before any tags)
-            const description = jsDoc.getDescription();
-            if (description && !meta.description) {
-                meta.description = description.trim().replace(/\n\s+/g, "\n");
+        const description =
+            docs
+                .map((doc) => doc.getCommentText()?.trim())
+                .filter((comment): comment is string => Boolean(comment))
+                .join("\n\n") || undefined;
+
+        const tags = docs.flatMap((doc) => doc.getTags());
+
+        let deprecated: string | boolean | undefined;
+        let defaultValue: string | undefined;
+        const remarks: string[] = [];
+        const examples: string[] = [];
+
+        for (const tag of tags) {
+            const tagName = tag.getTagName();
+            const comment = this.getTagCommentText(tag);
+
+            if (tagName === "deprecated") {
+                deprecated = comment || true;
+                continue;
             }
 
-            // Process tags
-            const tags = jsDoc.getTags();
-            for (const tag of tags) {
-                const tagName = tag.getTagName();
-                const tagComment = this.getTagCommentText(tag);
-
-                switch (tagName) {
-                    case "description":
-                        if (tagComment) {
-                            meta.description = tagComment;
-                        }
-                        break;
-                    case "example":
-                        if (tagComment) {
-                            if (!meta.examples) {
-                                meta.examples = [];
-                            }
-                            meta.examples.push(tagComment);
-                        }
-                        break;
-                    case "deprecated":
-                        meta.deprecated = tagComment || true;
-                        break;
-                    case "remarks":
-                        if (tagComment) {
-                            meta.remarks = tagComment;
-                        }
-                        break;
-                    case "default":
-                        if (tagComment) {
-                            meta.defaultValue = tagComment;
-                        }
-                        break;
-                    case "tabGroup":
-                        if (tagComment) {
-                            if (!meta.tabGroups) {
-                                meta.tabGroups = [];
-                            }
-                            meta.tabGroups.push(tagComment);
-                        }
-                        break;
+            if (tagName === "default") {
+                if (!defaultValue && comment) {
+                    defaultValue = comment;
                 }
+                continue;
+            }
+
+            if (tagName === "remarks" && comment) {
+                remarks.push(comment);
+                continue;
+            }
+
+            if (tagName === "example" && comment) {
+                examples.push(comment);
+                continue;
             }
         }
 
-        return meta;
+        return {
+            description,
+            deprecated,
+            defaultValue,
+            remarks: remarks.length > 0 ? remarks.join("\n\n") : undefined,
+            examples: examples.length > 0 ? examples : undefined,
+            tabGroups: tabGroups.length > 0 ? tabGroups : undefined,
+        };
     }
 
-    /**
-     * Merge multiple JSDoc metadata objects into one.
-     * Later objects override earlier ones for conflicting keys.
-     *
-     * @param metas Array of JSDoc metadata objects
-     * @returns Merged metadata object
-     */
     public mergeJsDocMeta(metas: JsDocMeta[]): JsDocMeta {
-        const result: JsDocMeta = {};
+        const descriptions = metas
+            .map((meta) => meta.description)
+            .filter((value): value is string => Boolean(value));
+        const remarks = metas
+            .map((meta) => meta.remarks)
+            .filter((value): value is string => Boolean(value));
+        const examples = metas
+            .flatMap((meta) => meta.examples ?? [])
+            .filter(Boolean);
 
-        for (const meta of metas) {
-            // Scalar values: later overrides earlier
-            if (meta.description) {
-                result.description = meta.description;
-            }
-            if (meta.deprecated) {
-                result.deprecated = meta.deprecated;
-            }
-            if (meta.remarks) {
-                result.remarks = meta.remarks;
-            }
-            if (meta.defaultValue) {
-                result.defaultValue = meta.defaultValue;
-            }
+        return {
+            description:
+                descriptions.length > 0
+                    ? Array.from(new Set(descriptions)).join("\n\n")
+                    : undefined,
+            remarks:
+                remarks.length > 0
+                    ? Array.from(new Set(remarks)).join("\n\n")
+                    : undefined,
+            examples:
+                examples.length > 0 ? Array.from(new Set(examples)) : undefined,
+            deprecated: metas.find((meta) => meta.deprecated !== undefined)
+                ?.deprecated,
+            defaultValue: metas.find((meta) => meta.defaultValue !== undefined)
+                ?.defaultValue,
+        };
+    }
 
-            // Arrays: merge
-            if (meta.examples) {
-                result.examples = [
-                    ...(result.examples ?? []),
-                    ...meta.examples,
-                ];
-            }
-            if (meta.tabGroups) {
-                result.tabGroups = [
-                    ...(result.tabGroups ?? []),
-                    ...meta.tabGroups,
-                ];
-            }
+    public toStorybookDescription(meta: JsDocMeta): string | undefined {
+        const blocks: string[] = [];
+
+        if (meta.description) {
+            blocks.push(meta.description);
         }
 
-        return result;
+        if (meta.deprecated) {
+            blocks.push(
+                `==Deprecated:\n${
+                    typeof meta.deprecated === "string"
+                        ? meta.deprecated
+                        : "This API is deprecated."
+                }==`
+            );
+        }
+
+        if (meta.remarks) {
+            blocks.push(`Remarks:\n${meta.remarks}`);
+        }
+
+        if (meta.examples && meta.examples.length > 0) {
+            blocks.push(
+                meta.examples
+                    .map((example) => `Example:\n${example}`)
+                    .join("\n\n")
+            );
+        }
+
+        return blocks.length > 0 ? blocks.join("\n\n") : undefined;
     }
 }
