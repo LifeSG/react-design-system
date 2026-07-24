@@ -343,11 +343,7 @@ ${mapRows.sort().join("\n")}
      * Get the output file path for generated argTypes.
      */
     public getOutputFile(sourceFilePath: string): string {
-        const componentName = path.basename(path.dirname(sourceFilePath));
-        return path.resolve(
-            path.dirname(STORYBOOK_ARGTYPES_FILE),
-            `${componentName}.argtypes.generated.ts`
-        );
+        return this.resolver.getOutputFile(sourceFilePath);
     }
 
     /**
@@ -355,23 +351,14 @@ ${mapRows.sort().join("\n")}
      * e.g. "form-custom-field" → "formCustomFieldExtraArgTypes"
      */
     public getExportName(sourceFilePath: string): string {
-        const componentName = path.basename(path.dirname(sourceFilePath));
-        const camelCaseName = componentName.replace(
-            /-([a-z])/g,
-            (_match: string, letter: string) => letter.toUpperCase()
-        );
-        return `${camelCaseName}ExtraArgTypes`;
+        return this.resolver.getExportName(sourceFilePath);
     }
 
     /**
      * Get the relative import path for a generated argTypes file.
      */
     public getArgTypesImportPath(outputFile: string): string {
-        return path
-            .relative(path.dirname(STORYBOOK_ARGTYPES_FILE), outputFile)
-            .replaceAll("\\", "/")
-            .replace(/\.ts$/, "")
-            .replace(/^([^./])/, "./$1");
+        return this.resolver.getArgTypesImportPath(outputFile);
     }
 
     // =========================================================================

@@ -176,6 +176,22 @@ describe("TypeDependencyCache", () => {
             expect(cache.isExternalDeclaration(fakeSymbol)).toBe(true);
         });
 
+        it("returns true for a symbol from custom-types/", () => {
+            const fakeSymbol = {
+                getDeclarations: () => [
+                    {
+                        getSourceFile: () => ({
+                            getFilePath: () => "/project/custom-types/svg.d.ts",
+                        }),
+                    },
+                ],
+            } as unknown as Parameters<
+                TypeDependencyCache["isExternalDeclaration"]
+            >[0];
+
+            expect(cache.isExternalDeclaration(fakeSymbol)).toBe(true);
+        });
+
         it("returns false for a symbol from local source", () => {
             const sf = project.createSourceFile(
                 "localcheck.ts",
@@ -286,6 +302,78 @@ describe("TypeDependencyCache", () => {
             expect(
                 cache.resolveImportedTypeSourceFile(sf, "Local")
             ).toBeUndefined();
+        });
+
+        it("returns undefined when the named import exists but the module is not in the project", () => {
+            // The named import IS found, but the module specifier can't be resolved
+            // (external package not in the in-memory project), so both the
+            // declaration path and the moduleSpecifierSourceFile path are null.
+            const sf = project.createSourceFile(
+                "extern-import.ts",
+                `import { SomeExternalType } from "external-package";`,
+                { overwrite: true }
+            );
+
+            expect(
+                cache.resolveImportedTypeSourceFile(sf, "SomeExternalType")
+            ).toBeUndefined();
+        });
+
+        it("falls back to module specifier source file when import has no type declaration", () => {
+            // The imported name is a value export (not Interface/TypeAlias),
+            // so aliased-symbol resolution finds no matching declaration.
+            // The fallback returns the module's source file itself.
+            project.createSourceFile(
+                "value-module.ts",
+                `export const someValue = 42;`,
+                { overwrite: true }
+            );
+            const importer = project.createSourceFile(
+                "value-importer.ts",
+                `import { someValue } from "./value-module";`,
+                { overwrite: true }
+            );
+
+            const resolved = cache.resolveImportedTypeSourceFile(
+                importer,
+                "someValue"
+            );
+            expect(resolved?.getFilePath()).toContain("value-module.ts");
+        });
+    });
+
+    describe("getResolvedProperties", () => {
+        it("returns member names from a class symbol (skipping __-prefixed names)", () => {
+            const sf = project.createSourceFile(
+                "cls.ts",
+                `
+                export class MyClass {
+                    myProp: string = "";
+                    __hidden: number = 0;
+                    anotherProp: boolean = false;
+                }
+                `,
+                { overwrite: true }
+            );
+            const symbol = sf.getClassOrThrow("MyClass").getSymbolOrThrow();
+
+            const props = cache.getResolvedProperties(symbol);
+            expect(props).toContain("myProp");
+            expect(props).toContain("anotherProp");
+            expect(props).not.toContain("__hidden");
+        });
+
+        it("returns empty array when the symbol throws during resolution", () => {
+            const badSymbol = {
+                getValueDeclaration: () => ({}), // non-null so we don't early-return
+                getMembers: () => {
+                    throw new Error("resolution failed");
+                },
+            } as unknown as Parameters<
+                TypeDependencyCache["getResolvedProperties"]
+            >[0];
+
+            expect(cache.getResolvedProperties(badSymbol)).toEqual([]);
         });
     });
 });

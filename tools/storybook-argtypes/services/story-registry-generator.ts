@@ -108,13 +108,11 @@ export class StoryRegistryGenerator {
                         storyFile
                     );
 
-                // Fallback: check src/{component}/types.ts
+                // Fallback: check src/{story-base-name}/types.ts
                 if (!typesFile) {
-                    const kebabName =
-                        this.filePathResolver.toCamelCase(storyBaseName);
                     const candidate = path.resolve(
                         "src",
-                        kebabName,
+                        storyBaseName,
                         "types.ts"
                     );
                     if (

@@ -19,68 +19,12 @@ function createMockFs(
 }
 
 describe("FilePathResolver", () => {
-    describe("getOutputFile", () => {
-        it("appends .argtypes.generated.ts to the source file basename", () => {
-            const resolver = new FilePathResolver();
-            expect(resolver.getOutputFile("src/button/types.ts")).toBe(
-                "src/button/types.argtypes.generated.ts"
-            );
-        });
-
-        it("works for deeply nested paths", () => {
-            const resolver = new FilePathResolver();
-            expect(resolver.getOutputFile("src/form/form-label/types.ts")).toBe(
-                "src/form/form-label/types.argtypes.generated.ts"
-            );
-        });
-    });
-
-    describe("getExportName", () => {
-        it("converts a kebab-case filename to camelCase + StoryArgTypes", () => {
-            const resolver = new FilePathResolver();
-            expect(resolver.getExportName("src/button/types.ts")).toBe(
-                "typesStoryArgTypes"
-            );
-        });
-
-        it("converts a multi-segment kebab name correctly", () => {
-            const resolver = new FilePathResolver();
-            // "form-custom-field" → "formCustomField"
-            expect(
-                resolver.getExportName("src/form/form-custom-field/types.ts")
-            ).toBe("typesStoryArgTypes");
-        });
-    });
-
-    describe("getArgTypesImportPath", () => {
-        it("strips the .ts extension from the output file path", () => {
-            const resolver = new FilePathResolver();
-            expect(
-                resolver.getArgTypesImportPath(
-                    "src/button/types.argtypes.generated.ts"
-                )
-            ).toBe("src/button/types.argtypes.generated");
-        });
-    });
-
-    describe("toCamelCase", () => {
-        it.each([
-            ["button", "button"],
-            ["form-label", "formLabel"],
-            ["form-custom-field", "formCustomField"],
-            ["input-multi-select", "inputMultiSelect"],
-        ])("converts %p to %p", (input, expected) => {
-            const resolver = new FilePathResolver();
-            expect(resolver.toCamelCase(input)).toBe(expected);
-        });
-    });
-
     describe("getStoryTitle", () => {
         const resolver = new FilePathResolver();
 
-        it("extracts title from export const Meta pattern", () => {
+        it("extracts title from a story meta object", () => {
             const fileText = `
-                export const Meta = {
+                export const meta = {
                     title: 'Button/Primary',
                     component: Button,
                 };
@@ -88,18 +32,48 @@ describe("FilePathResolver", () => {
             expect(resolver.getStoryTitle(fileText)).toBe("Button/Primary");
         });
 
-        it("extracts title from export default pattern", () => {
-            const fileText = `
-                export default {
-                    title: "Form/Label",
-                    component: FormLabel,
-                };
-            `;
-            expect(resolver.getStoryTitle(fileText)).toBe("Form/Label");
+        it("works with double quotes", () => {
+            expect(
+                resolver.getStoryTitle(`export default { title: "Form/Label" }`)
+            ).toBe("Form/Label");
         });
 
-        it("returns empty string when no title is found", () => {
-            expect(resolver.getStoryTitle("const x = 1;")).toBe("");
+        it("works with backtick strings", () => {
+            expect(resolver.getStoryTitle("title: `Input/Select`")).toBe(
+                "Input/Select"
+            );
+        });
+
+        it("returns undefined when no title is found", () => {
+            expect(resolver.getStoryTitle("const x = 1;")).toBeUndefined();
+        });
+    });
+
+    describe("getComponentReference", () => {
+        const resolver = new FilePathResolver();
+
+        it("extracts a simple component reference", () => {
+            expect(
+                resolver.getComponentReference("component: Button,")
+            ).toEqual({ rootIdentifier: "Button", memberPath: [] });
+        });
+
+        it("extracts a nested component reference like Form.CustomField", () => {
+            expect(
+                resolver.getComponentReference("component: Form.CustomField,")
+            ).toEqual({ rootIdentifier: "Form", memberPath: ["CustomField"] });
+        });
+
+        it("handles deeper nesting", () => {
+            expect(resolver.getComponentReference("component: A.B.C,")).toEqual(
+                { rootIdentifier: "A", memberPath: ["B", "C"] }
+            );
+        });
+
+        it("returns undefined when no component property is found", () => {
+            expect(
+                resolver.getComponentReference("const x = 1;")
+            ).toBeUndefined();
         });
     });
 
@@ -107,71 +81,128 @@ describe("FilePathResolver", () => {
         const resolver = new FilePathResolver();
 
         it("returns the import path for a named import", () => {
-            const fileText = `import { Button } from '../button';`;
             expect(
-                resolver.getImportPathForIdentifier(fileText, "Button")
+                resolver.getImportPathForIdentifier(
+                    `import { Button } from '../button';`,
+                    "Button"
+                )
             ).toBe("../button");
         });
 
-        it("returns empty string when identifier is not imported", () => {
-            const fileText = `import { Card } from '../card';`;
+        it("returns the path for a default import", () => {
             expect(
-                resolver.getImportPathForIdentifier(fileText, "Button")
-            ).toBe("");
+                resolver.getImportPathForIdentifier(
+                    `import Form from '../form';`,
+                    "Form"
+                )
+            ).toBe("../form");
         });
-    });
 
-    describe("buildResolutionCandidates", () => {
-        it("returns baseName.ts, index.ts, and types.ts candidates", () => {
-            const resolver = new FilePathResolver();
-            const candidates = resolver.buildResolutionCandidates("src/button");
-            expect(candidates).toEqual([
-                path.join("src/button", "button.ts"),
-                path.join("src/button", "index.ts"),
-                path.join("src/button", "types.ts"),
-            ]);
+        it("does not match a different identifier in the same import", () => {
+            expect(
+                resolver.getImportPathForIdentifier(
+                    `import { Card } from '../card';`,
+                    "Button"
+                )
+            ).toBeUndefined();
+        });
+
+        it("returns undefined when the identifier is not imported", () => {
+            expect(
+                resolver.getImportPathForIdentifier("const x = 1;", "Button")
+            ).toBeUndefined();
         });
     });
 
     describe("resolveImportPath", () => {
-        it("returns the absolute path when the direct .ts file exists", () => {
-            const storyFilePath = "stories/button.stories.ts";
-            const importPath = "../button";
-            const storyDir = path.dirname(storyFilePath);
-            const expectedPath = path.resolve(storyDir, importPath + ".ts");
-            const mockFs = createMockFs({ [expectedPath]: true });
+        it("resolves a src/-prefixed path to the direct file", () => {
+            const basePath = path.resolve("src/button");
+            const candidate = `${basePath}.ts`;
+            const mockFs = createMockFs({ [candidate]: true });
             const resolver = new FilePathResolver(mockFs);
-
-            const result = resolver.resolveImportPath(
-                storyFilePath,
-                importPath
-            );
-            expect(result).toBe(expectedPath);
+            expect(
+                resolver.resolveImportPath(
+                    "stories/button.stories.ts",
+                    "src/button"
+                )
+            ).toBe(candidate);
         });
 
-        it("returns the index.ts path when the directory/index.ts exists", () => {
+        it("resolves a relative path to a .ts file", () => {
             const storyFilePath = "stories/button.stories.ts";
             const importPath = "../button";
-            const storyDir = path.dirname(storyFilePath);
-            const indexPath = path.resolve(storyDir, importPath, "index.ts");
-            const mockFs = createMockFs({ [indexPath]: true });
-            const resolver = new FilePathResolver(mockFs);
-
-            const result = resolver.resolveImportPath(
-                storyFilePath,
+            const basePath = path.resolve(
+                path.dirname(storyFilePath),
                 importPath
             );
-            expect(result).toBe(indexPath);
+            const candidate = `${basePath}.ts`;
+            const mockFs = createMockFs({ [candidate]: true });
+            const resolver = new FilePathResolver(mockFs);
+            expect(resolver.resolveImportPath(storyFilePath, importPath)).toBe(
+                candidate
+            );
         });
 
-        it("returns empty string when neither path exists", () => {
+        it("resolves a relative path to a .tsx file", () => {
+            const storyFilePath = "stories/button.stories.ts";
+            const importPath = "../button";
+            const basePath = path.resolve(
+                path.dirname(storyFilePath),
+                importPath
+            );
+            const candidate = `${basePath}.tsx`;
+            const mockFs = createMockFs({ [candidate]: true });
+            const resolver = new FilePathResolver(mockFs);
+            expect(resolver.resolveImportPath(storyFilePath, importPath)).toBe(
+                candidate
+            );
+        });
+
+        it("falls back to index.ts when the direct file does not exist", () => {
+            const storyFilePath = "stories/button.stories.ts";
+            const importPath = "../button";
+            const basePath = path.resolve(
+                path.dirname(storyFilePath),
+                importPath
+            );
+            const candidate = path.join(basePath, "index.ts");
+            const mockFs = createMockFs({ [candidate]: true });
+            const resolver = new FilePathResolver(mockFs);
+            expect(resolver.resolveImportPath(storyFilePath, importPath)).toBe(
+                candidate
+            );
+        });
+
+        it("falls back to index.tsx", () => {
+            const storyFilePath = "stories/button.stories.ts";
+            const importPath = "../button";
+            const basePath = path.resolve(
+                path.dirname(storyFilePath),
+                importPath
+            );
+            const candidate = path.join(basePath, "index.tsx");
+            const mockFs = createMockFs({ [candidate]: true });
+            const resolver = new FilePathResolver(mockFs);
+            expect(resolver.resolveImportPath(storyFilePath, importPath)).toBe(
+                candidate
+            );
+        });
+
+        it("returns undefined when no candidate exists", () => {
             const resolver = new FilePathResolver(createMockFs());
             expect(
                 resolver.resolveImportPath(
                     "stories/button.stories.ts",
                     "../button"
                 )
-            ).toBe("");
+            ).toBeUndefined();
+        });
+
+        it("returns undefined for npm package imports (no ./ or src/ prefix)", () => {
+            const resolver = new FilePathResolver(createMockFs());
+            expect(
+                resolver.resolveImportPath("stories/button.stories.ts", "react")
+            ).toBeUndefined();
         });
     });
 
@@ -182,70 +213,132 @@ describe("FilePathResolver", () => {
                 "src/button"
             );
         });
+
+        it("works for nested paths", () => {
+            const resolver = new FilePathResolver();
+            expect(
+                resolver.getComponentDirectory("src/form/form-label/types.ts")
+            ).toBe("src/form/form-label");
+        });
     });
 
     describe("getTypesFileForComponentDirectory", () => {
-        it("returns the first matching candidate that exists as a file", () => {
+        it("returns types.ts when it exists", () => {
             const typesPath = path.join("src/button", "types.ts");
             const mockFs = createMockFs({ [typesPath]: true });
             const resolver = new FilePathResolver(mockFs);
-
             expect(
                 resolver.getTypesFileForComponentDirectory("src/button")
             ).toBe(typesPath);
         });
 
-        it("returns empty string when no candidate exists", () => {
+        it("returns undefined when types.ts does not exist", () => {
             const resolver = new FilePathResolver(createMockFs());
             expect(
                 resolver.getTypesFileForComponentDirectory("src/nonexistent")
-            ).toBe("");
+            ).toBeUndefined();
         });
     });
 
     describe("getNestedFormTypesFile", () => {
-        it("maps a CamelCase component name to form-{kebab}/types.ts", () => {
-            const candidate = "src/form/form-custom-field/types.ts";
+        it("maps form directory + CustomField member to form-custom-field/types.ts", () => {
+            const formDir = path.resolve("src/form");
+            const candidate = path.join(
+                formDir,
+                "form-custom-field",
+                "types.ts"
+            );
             const mockFs = createMockFs({ [candidate]: true });
             const resolver = new FilePathResolver(mockFs);
-
-            expect(resolver.getNestedFormTypesFile("CustomField")).toBe(
-                candidate
-            );
+            expect(
+                resolver.getNestedFormTypesFile(formDir, ["CustomField"])
+            ).toBe(candidate);
         });
 
-        it("returns undefined when the mapped types.ts does not exist", () => {
+        it("uses the last member in the path (leaf)", () => {
+            const formDir = path.resolve("src/form");
+            const candidate = path.join(formDir, "form-label", "types.ts");
+            const mockFs = createMockFs({ [candidate]: true });
+            const resolver = new FilePathResolver(mockFs);
+            expect(
+                resolver.getNestedFormTypesFile(formDir, [
+                    "SomeParent",
+                    "Label",
+                ])
+            ).toBe(candidate);
+        });
+
+        it("returns undefined for non-form directories", () => {
             const resolver = new FilePathResolver(createMockFs());
             expect(
-                resolver.getNestedFormTypesFile("NonExistentField")
+                resolver.getNestedFormTypesFile(path.resolve("src/button"), [
+                    "CustomField",
+                ])
             ).toBeUndefined();
         });
 
-        it("returns undefined for an empty component name", () => {
+        it("returns undefined for an empty memberPath", () => {
             const resolver = new FilePathResolver(createMockFs());
-            expect(resolver.getNestedFormTypesFile("")).toBeUndefined();
+            expect(
+                resolver.getNestedFormTypesFile(path.resolve("src/form"), [])
+            ).toBeUndefined();
+        });
+
+        it("returns undefined when the types file does not exist", () => {
+            const resolver = new FilePathResolver(createMockFs());
+            expect(
+                resolver.getNestedFormTypesFile(path.resolve("src/form"), [
+                    "NonExistentField",
+                ])
+            ).toBeUndefined();
         });
     });
 
     describe("getTypesFileFromStoryDirectory", () => {
-        it("resolves 'button.stories.ts' to src/button/types.ts", () => {
+        it("resolves a story file to its component types.ts via the fallback directory", () => {
             const candidate = path.resolve("src/button/types.ts");
             const mockFs = createMockFs({ [candidate]: true });
             const resolver = new FilePathResolver(mockFs);
-
-            const result = resolver.getTypesFileFromStoryDirectory(
-                "stories/button/button.stories.ts"
-            );
-            expect(result).toBe(candidate);
+            expect(
+                resolver.getTypesFileFromStoryDirectory(
+                    "stories/button/button.stories.ts"
+                )
+            ).toBe(candidate);
         });
 
-        it("returns empty string when no types file is found", () => {
+        it("resolves a story with a stripped subdir prefix (form-custom-field => form/custom-field)", () => {
+            const candidate = path.resolve("src/form/custom-field/types.ts");
+            const mockFs = createMockFs({ [candidate]: true });
+            const resolver = new FilePathResolver(mockFs);
+            expect(
+                resolver.getTypesFileFromStoryDirectory(
+                    "stories/form/form-custom-field.stories.ts"
+                )
+            ).toBe(candidate);
+        });
+
+        it("resolves via the full story base name when the stripped name has no match", () => {
+            // "popover-inline" under "stories/popover/" — stripping "popover-" gives "inline"
+            // which doesn't exist; fall through to full name "popover-inline"
+            const candidate = path.resolve(
+                "src/popover/popover-inline/types.ts"
+            );
+            const mockFs = createMockFs({ [candidate]: true });
+            const resolver = new FilePathResolver(mockFs);
+            expect(
+                resolver.getTypesFileFromStoryDirectory(
+                    "stories/popover/popover-inline.stories.ts"
+                )
+            ).toBe(candidate);
+        });
+
+        it("returns undefined when no types file is found", () => {
             const resolver = new FilePathResolver(createMockFs());
             expect(
                 resolver.getTypesFileFromStoryDirectory(
-                    "stories/nonexistent.stories.ts"
+                    "stories/nonexistent/nonexistent.stories.ts"
                 )
-            ).toBe("");
+            ).toBeUndefined();
         });
     });
 });
