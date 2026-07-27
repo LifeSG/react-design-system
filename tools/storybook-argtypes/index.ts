@@ -46,4 +46,4 @@ export { JsDocMetadataExtractor } from "./services/jsdoc-metadata-extractor";
 export { StoryRegistryGenerator } from "./services/story-registry-generator";
 export { TypeDependencyResolver } from "./services/type-dependency-resolver";
 export { TypeFormattingService } from "./services/type-formatting-service";
-export { TypeScriptSourceAnalyzer } from "./services/typescript-source-analyzer";
+export { TypeScriptSourceProvider } from "./services/typescript-source-provider";

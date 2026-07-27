@@ -329,6 +329,75 @@ interface NoCommentIface {}
         });
     });
 
+    describe("isSkippedSourceFile", () => {
+        let project: Project;
+
+        beforeEach(() => {
+            project = createProject();
+        });
+
+        it("returns false for a normal source file with no special comments", () => {
+            const sf = project.createSourceFile(
+                "normal.ts",
+                `export type Foo = string;`
+            );
+            expect(extractor.isSkippedSourceFile(sf)).toBe(false);
+        });
+
+        it("returns false for a file with a standard JSDoc comment", () => {
+            const sf = project.createSourceFile(
+                "jsdoc.ts",
+                `/** Standard JSDoc */\nexport type Foo = string;`
+            );
+            expect(extractor.isSkippedSourceFile(sf)).toBe(false);
+        });
+
+        it("returns false for a file with a line comment that has no skip marker", () => {
+            const sf = project.createSourceFile(
+                "linecomment.ts",
+                `// Just a regular comment\nexport type Foo = string;`
+            );
+            expect(extractor.isSkippedSourceFile(sf)).toBe(false);
+        });
+
+        it("returns true for a file with a // @storybookSkipFile line comment", () => {
+            const sf = project.createSourceFile(
+                "skipped.ts",
+                `// @storybookSkipFile\nexport type Foo = string;`
+            );
+            expect(extractor.isSkippedSourceFile(sf)).toBe(true);
+        });
+
+        it("returns true when @storybookSkipFile appears after other text on the line", () => {
+            const sf = project.createSourceFile(
+                "skippedmid.ts",
+                `// Generated file @storybookSkipFile\nexport type Foo = string;`
+            );
+            expect(extractor.isSkippedSourceFile(sf)).toBe(true);
+        });
+
+        it("returns false for a block comment containing @storybookSkipFile", () => {
+            const sf = project.createSourceFile(
+                "blockskip.ts",
+                `/* @storybookSkipFile */\nexport type Foo = string;`
+            );
+            expect(extractor.isSkippedSourceFile(sf)).toBe(false);
+        });
+
+        it("returns false when @storybookSkipFile appears after the first statement", () => {
+            const sf = project.createSourceFile(
+                "afterstatement.ts",
+                `export type Foo = string; // @storybookSkipFile`
+            );
+            expect(extractor.isSkippedSourceFile(sf)).toBe(false);
+        });
+
+        it("returns false for an empty file", () => {
+            const sf = project.createSourceFile("emptyfile.ts", ``);
+            expect(extractor.isSkippedSourceFile(sf)).toBe(false);
+        });
+    });
+
     describe("getJsDocMeta", () => {
         let project: Project;
 

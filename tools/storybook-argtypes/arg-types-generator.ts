@@ -31,7 +31,7 @@ import { FilePathResolver } from "./services/file-path-resolver";
 import { JsDocMetadataExtractor } from "./services/jsdoc-metadata-extractor";
 import { TypeDependencyResolver } from "./services/type-dependency-resolver";
 import { TypeFormattingService } from "./services/type-formatting-service";
-import { TypeScriptSourceAnalyzer } from "./services/typescript-source-analyzer";
+import { TypeScriptSourceProvider } from "./services/typescript-source-provider";
 import type { GeneratedArgType } from "./types/arg-types-types";
 
 /** Matches React HTML attribute interfaces (e.g. HTMLAttributes, ButtonHTMLAttributes, React.HTMLAttributes). */
@@ -48,7 +48,7 @@ const HTML_ATTRIBUTES_REGEX = /(?:React\.)?\w*HTMLAttributes?$/;
  * ```
  */
 export class ArgTypesGenerator {
-    private readonly analyzer: TypeScriptSourceAnalyzer;
+    private readonly sourceProvider: TypeScriptSourceProvider;
     private readonly jsDocExtractor: JsDocMetadataExtractor;
     private readonly typeDependencyResolver: TypeDependencyResolver;
     private readonly typeFormatter: TypeFormattingService;
@@ -63,7 +63,7 @@ export class ArgTypesGenerator {
      */
     public constructor(fsAdapter?: IFileSystemAdapter) {
         this.fsAdapter = fsAdapter ?? new FileSystemAdapter();
-        this.analyzer = new TypeScriptSourceAnalyzer();
+        this.sourceProvider = new TypeScriptSourceProvider();
         this.jsDocExtractor = new JsDocMetadataExtractor();
         this.typeDependencyResolver = new TypeDependencyResolver();
         this.typeFormatter = new TypeFormattingService();
@@ -80,7 +80,7 @@ export class ArgTypesGenerator {
      * This is the main entry point for full generation.
      */
     public async generateAll(): Promise<void> {
-        const project = this.analyzer.getProject();
+        const project = this.sourceProvider.getProject();
         const sourceFiles = SOURCE_FILE_GLOBS.flatMap((glob) =>
             project.getSourceFiles(glob)
         );
@@ -102,9 +102,9 @@ export class ArgTypesGenerator {
      * @param sourceFilePath Path to the source types.ts file
      */
     public async generateForSourceFile(sourceFilePath: string): Promise<void> {
-        const sourceFile = this.analyzer.getSourceFile(sourceFilePath);
+        const sourceFile = this.sourceProvider.getSourceFile(sourceFilePath);
 
-        if (this.analyzer.isSkippedFile(sourceFile)) {
+        if (this.jsDocExtractor.isSkippedSourceFile(sourceFile)) {
             return;
         }
 
@@ -206,7 +206,7 @@ export const ${exportName} = ${JSON.stringify(
      * Scans all story files to discover which component types.ts each story uses.
      */
     public async generateStorybookArgTypesRegistry(): Promise<void> {
-        const project = this.analyzer.getProject();
+        const project = this.sourceProvider.getProject();
         const storyFiles = project.getSourceFiles(
             "stories/**/*.stories.@(ts|tsx)"
         );
@@ -278,9 +278,10 @@ export const ${exportName} = ${JSON.stringify(
                 continue;
             }
 
-            const typesSourceFile = this.analyzer.getSourceFile(typesFilePath);
+            const typesSourceFile =
+                this.sourceProvider.getSourceFile(typesFilePath);
 
-            if (this.analyzer.isSkippedFile(typesSourceFile)) {
+            if (this.jsDocExtractor.isSkippedSourceFile(typesSourceFile)) {
                 continue;
             }
 

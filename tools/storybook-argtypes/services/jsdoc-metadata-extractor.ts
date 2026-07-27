@@ -8,6 +8,7 @@
 import {
     type IndexSignatureDeclaration,
     type PropertySignature,
+    type SourceFile,
 } from "ts-morph";
 
 import type {
@@ -32,6 +33,22 @@ type JsDocNode =
  * ```
  */
 export class JsDocMetadataExtractor {
+    /**
+     * Check if a source file should be skipped from argTypes generation.
+     * Only top-of-file line comments are considered.
+     */
+    public isSkippedSourceFile(sourceFile: SourceFile): boolean {
+        const fullText = sourceFile.getFullText();
+        const firstStatement = sourceFile.getStatements()[0];
+        const textBeforeFirstStatement = firstStatement
+            ? fullText.slice(0, firstStatement.getStart())
+            : fullText;
+
+        return /^\s*\/\/[^\n]*@storybookSkipFile\b/m.test(
+            textBeforeFirstStatement
+        );
+    }
+
     public getTagCommentText(tag: {
         getCommentText: () => string | undefined;
     }): string | undefined {

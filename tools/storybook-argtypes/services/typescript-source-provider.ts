@@ -1,8 +1,7 @@
 /**
- * TypeScriptSourceAnalyzer - Analyze TypeScript source files using ts-morph.
+ * TypeScriptSourceProvider - Provide TypeScript source files via ts-morph.
  *
- * Handles project creation and source file operations.
- * Responsible for reading and parsing TypeScript files.
+ * Handles ts-morph project access and source-file lookup.
  */
 
 import { type Project, type SourceFile } from "ts-morph";
@@ -10,16 +9,16 @@ import { type Project, type SourceFile } from "ts-morph";
 import { TsMorphProjectFactory } from "../adapters/ts-morph-project-factory";
 
 /**
- * Analyzes TypeScript source files.
+ * Provides TypeScript source files.
  * Provides access to the ts-morph Project and source file operations.
  *
  * Usage:
  * ```typescript
- * const analyzer = new TypeScriptSourceAnalyzer();
- * const sourceFile = analyzer.getSourceFile('src/button/types.ts');
+ * const provider = new TypeScriptSourceProvider();
+ * const sourceFile = provider.getSourceFile('src/button/types.ts');
  * ```
  */
-export class TypeScriptSourceAnalyzer {
+export class TypeScriptSourceProvider {
     /**
      * Get the singleton ts-morph Project instance.
      * Used to perform TypeScript AST analysis.
@@ -49,25 +48,5 @@ export class TypeScriptSourceAnalyzer {
         }
 
         return sourceFile;
-    }
-
-    /**
-     * Check if a source file should be skipped from analysis.
-     * Files with a `// @storybookSkipFile` line comment before the first
-     * statement are skipped.
-     *
-     * @param sourceFile Source file to check
-     * @returns true if file should be skipped, false otherwise
-     */
-    public isSkippedFile(sourceFile: SourceFile): boolean {
-        const fullText = sourceFile.getFullText();
-        const firstStatement = sourceFile.getStatements()[0];
-        const textBeforeFirstStatement = firstStatement
-            ? fullText.slice(0, firstStatement.getStart())
-            : fullText;
-
-        return /^\s*\/\/[^\n]*@storybookSkipFile\b/m.test(
-            textBeforeFirstStatement
-        );
     }
 }
