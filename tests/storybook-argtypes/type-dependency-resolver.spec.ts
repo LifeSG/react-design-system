@@ -75,7 +75,9 @@ describe("TypeDependencyResolver", () => {
                 TypeDependencyResolver["getPropertyDeclaration"]
             >[0];
 
-            expect(resolver.getPropertyDeclaration(fakeSymbol)).toBeUndefined();
+            expect(
+                resolver.getPropertyDeclaration(fakeSymbol)
+            ).toBeUndefined();
         });
     });
 
@@ -221,7 +223,10 @@ describe("TypeDependencyResolver", () => {
             );
 
             expect(
-                resolver.resolveImportedTypeSourceFile(sf, "SomeExternalType")
+                resolver.resolveImportedTypeSourceFile(
+                    sf,
+                    "SomeExternalType"
+                )
             ).toBeUndefined();
         });
 
@@ -259,7 +264,7 @@ describe("TypeDependencyResolver", () => {
                 ["Wrapped", new Set([undefined])],
             ]);
             const secondMap = new Map<string, Set<string | undefined>>([
-                ["Other", new Set(["Tab"])],
+                ["Other", new Set(["Tab"])]
             ]);
 
             const first = resolver.getOrCreateWrappedTypeNames(
@@ -307,7 +312,7 @@ describe("TypeDependencyResolver", () => {
 
             const after = resolver.getOrCreateWrappedTypeNames(
                 sf,
-                () => new Map([["Wrapped", new Set(["A"])]])
+                () => new Map([["Wrapped", new Set(["A"])]] )
             );
 
             expect(before).not.toBe(after);

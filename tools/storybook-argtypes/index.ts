@@ -44,6 +44,6 @@ export { ArgTypesRowBuilder } from "./services/arg-types-row-builder";
 export { FilePathResolver } from "./services/file-path-resolver";
 export { JsDocMetadataExtractor } from "./services/jsdoc-metadata-extractor";
 export { StoryRegistryGenerator } from "./services/story-registry-generator";
-export { TypeDependencyCache } from "./services/type-dependency-cache";
+export { TypeDependencyResolver } from "./services/type-dependency-resolver";
 export { TypeFormattingService } from "./services/type-formatting-service";
 export { TypeScriptSourceAnalyzer } from "./services/typescript-source-analyzer";

@@ -17,7 +17,6 @@ import {
     type InterfaceDeclaration,
     type PropertySignature,
     type SourceFile,
-    type Symbol as TsMorphSymbol,
     type TypeAliasDeclaration,
 } from "ts-morph";
 
@@ -30,6 +29,7 @@ import {
 import { ArgTypesRowBuilder } from "./services/arg-types-row-builder";
 import { FilePathResolver } from "./services/file-path-resolver";
 import { JsDocMetadataExtractor } from "./services/jsdoc-metadata-extractor";
+import { TypeDependencyResolver } from "./services/type-dependency-resolver";
 import { TypeFormattingService } from "./services/type-formatting-service";
 import { TypeScriptSourceAnalyzer } from "./services/typescript-source-analyzer";
 import type { GeneratedArgType } from "./types/arg-types-types";
@@ -50,16 +50,11 @@ const HTML_ATTRIBUTES_REGEX = /(?:React\.)?\w*HTMLAttributes?$/;
 export class ArgTypesGenerator {
     private readonly analyzer: TypeScriptSourceAnalyzer;
     private readonly jsDocExtractor: JsDocMetadataExtractor;
+    private readonly typeDependencyResolver: TypeDependencyResolver;
     private readonly typeFormatter: TypeFormattingService;
     private readonly rowBuilder: ArgTypesRowBuilder;
     private readonly resolver: FilePathResolver;
     private readonly fsAdapter: IFileSystemAdapter;
-
-    /** Cache for wrapped type names, keyed by source file path. */
-    private readonly wrappedTypeNamesCache = new Map<
-        string,
-        Map<string, Set<string | undefined>>
-    >();
 
     /**
      * Create a new ArgTypesGenerator.
@@ -70,6 +65,7 @@ export class ArgTypesGenerator {
         this.fsAdapter = fsAdapter ?? new FileSystemAdapter();
         this.analyzer = new TypeScriptSourceAnalyzer();
         this.jsDocExtractor = new JsDocMetadataExtractor();
+        this.typeDependencyResolver = new TypeDependencyResolver();
         this.typeFormatter = new TypeFormattingService();
         this.rowBuilder = new ArgTypesRowBuilder();
         this.resolver = new FilePathResolver(this.fsAdapter);
@@ -116,7 +112,8 @@ export class ArgTypesGenerator {
         const exportName = this.getExportName(sourceFilePath);
 
         const wrappedTypeNames = this.getWrappedTypeNames(sourceFile);
-        const localTypeNames = this.getLocalTypeNames(sourceFile);
+        const localTypeNames =
+            this.typeDependencyResolver.getLocalTypeNames(sourceFile);
 
         const rows: GeneratedArgType[] = [
             ...sourceFile.getInterfaces().flatMap((declaration) => {
@@ -145,10 +142,11 @@ export class ArgTypesGenerator {
                         return [];
                     }
 
-                    const importedFile = this.resolveImportedTypeSourceFile(
-                        sourceFile,
-                        name
-                    );
+                    const importedFile =
+                        this.typeDependencyResolver.resolveImportedTypeSourceFile(
+                            sourceFile,
+                            name
+                        );
 
                     if (!importedFile) {
                         return [];
@@ -375,49 +373,6 @@ ${mapRows.sort().join("\n")}
     // Type name helpers
     // =========================================================================
 
-    private getLocalTypeNames(sourceFile: SourceFile): Set<string> {
-        return new Set([
-            ...sourceFile.getInterfaces().map((i) => i.getName()),
-            ...sourceFile.getTypeAliases().map((t) => t.getName()),
-        ]);
-    }
-
-    private getPropertyDeclaration(
-        symbol: TsMorphSymbol
-    ): PropertySignature | undefined {
-        return symbol
-            .getDeclarations()
-            .find(
-                (d): d is PropertySignature =>
-                    d.getKindName() === "PropertySignature"
-            );
-    }
-
-    private isExternalDeclaration(symbol: TsMorphSymbol): boolean {
-        const declaration = symbol.getDeclarations()[0];
-
-        if (!declaration) {
-            return true;
-        }
-
-        const filePath = declaration.getSourceFile().getFilePath();
-
-        return (
-            filePath.includes("node_modules") ||
-            filePath.includes("custom-types/")
-        );
-    }
-
-    private getResolvedProperties(
-        declaration: InterfaceDeclaration | TypeAliasDeclaration
-    ): TsMorphSymbol[] {
-        return declaration
-            .getType()
-            .getProperties()
-            .filter((symbol) => !this.isExternalDeclaration(symbol))
-            .sort((a, b) => a.getName().localeCompare(b.getName()));
-    }
-
     private getPropertyName(property: PropertySignature): string {
         return property.getName().replace(/^['"]|['"]$/g, "");
     }
@@ -468,122 +423,77 @@ ${mapRows.sort().join("\n")}
         return found;
     }
 
-    private resolveImportedTypeSourceFile(
-        sourceFile: SourceFile,
-        typeName: string
-    ): SourceFile | undefined {
-        for (const importDecl of sourceFile.getImportDeclarations()) {
-            const namedImport = importDecl
-                .getNamedImports()
-                .find((ni) => ni.getName() === typeName);
-
-            if (!namedImport) {
-                continue;
-            }
-
-            const symbol = namedImport.getNameNode().getSymbol();
-            const aliasedSymbol = symbol?.getAliasedSymbol() ?? symbol;
-            const declaration = aliasedSymbol
-                ?.getDeclarations()
-                .find((decl) => {
-                    const kind = decl.getKindName();
-                    return (
-                        kind === "InterfaceDeclaration" ||
-                        kind === "TypeAliasDeclaration"
-                    );
-                });
-
-            const resolvedSourceFile = declaration?.getSourceFile();
-
-            if (
-                resolvedSourceFile &&
-                !resolvedSourceFile.getFilePath().includes("node_modules")
-            ) {
-                return resolvedSourceFile;
-            }
-
-            const moduleSpecifierSourceFile =
-                importDecl.getModuleSpecifierSourceFile();
-
-            if (
-                moduleSpecifierSourceFile &&
-                !moduleSpecifierSourceFile
-                    .getFilePath()
-                    .includes("node_modules")
-            ) {
-                return moduleSpecifierSourceFile;
-            }
-        }
-
-        return undefined;
-    }
-
     private getWrappedTypeNames(
         sourceFile: SourceFile
     ): Map<string, Set<string | undefined>> {
-        const filePath = sourceFile.getFilePath();
+        return this.typeDependencyResolver.getOrCreateWrappedTypeNames(
+            sourceFile,
+            () => {
+                const wrappedNames = new Map<string, Set<string | undefined>>();
 
-        if (this.wrappedTypeNamesCache.has(filePath)) {
-            return this.wrappedTypeNamesCache.get(filePath)!;
-        }
+                const addWrappedName = (
+                    name: string,
+                    tabGroup: string | undefined
+                ) => {
+                    const existing = wrappedNames.get(name);
 
-        const wrappedNames = new Map<string, Set<string | undefined>>();
+                    if (existing) {
+                        existing.add(tabGroup);
+                        return;
+                    }
 
-        const addWrappedName = (name: string, tabGroup: string | undefined) => {
-            const existing = wrappedNames.get(name);
+                    wrappedNames.set(name, new Set([tabGroup]));
+                };
 
-            if (existing) {
-                existing.add(tabGroup);
-                return;
-            }
+                const knownTypeNames = new Set([
+                    ...this.typeDependencyResolver.getLocalTypeNames(
+                        sourceFile
+                    ),
+                    ...sourceFile
+                        .getImportDeclarations()
+                        .flatMap((decl) =>
+                            decl.getNamedImports().map((ni) => ni.getName())
+                        ),
+                ]);
 
-            wrappedNames.set(name, new Set([tabGroup]));
-        };
+                for (const declaration of [
+                    ...sourceFile.getInterfaces(),
+                    ...sourceFile.getTypeAliases(),
+                ]) {
+                    if (this.jsDocExtractor.hasSkipTag(declaration)) {
+                        continue;
+                    }
 
-        const knownTypeNames = new Set([
-            ...this.getLocalTypeNames(sourceFile),
-            ...sourceFile
-                .getImportDeclarations()
-                .flatMap((decl) =>
-                    decl.getNamedImports().map((ni) => ni.getName())
-                ),
-        ]);
+                    const tabGroup =
+                        this.jsDocExtractor.getJsDocMeta(declaration)
+                            .tabGroups?.[0];
 
-        for (const declaration of [
-            ...sourceFile.getInterfaces(),
-            ...sourceFile.getTypeAliases(),
-        ]) {
-            if (this.jsDocExtractor.hasSkipTag(declaration)) {
-                continue;
-            }
+                    if (declaration.getKindName() === "InterfaceDeclaration") {
+                        const extendsText = (
+                            declaration as InterfaceDeclaration
+                        )
+                            .getExtends()
+                            .map((e) => e.getText())
+                            .join(" ");
 
-            const tabGroup =
-                this.jsDocExtractor.getJsDocMeta(declaration).tabGroups?.[0];
+                        for (const name of knownTypeNames) {
+                            if (new RegExp(`\\b${name}\\b`).test(extendsText)) {
+                                addWrappedName(name, tabGroup);
+                            }
+                        }
+                    }
 
-            if (declaration.getKindName() === "InterfaceDeclaration") {
-                const extendsText = (declaration as InterfaceDeclaration)
-                    .getExtends()
-                    .map((e) => e.getText())
-                    .join(" ");
-
-                for (const name of knownTypeNames) {
-                    if (new RegExp(`\\b${name}\\b`).test(extendsText)) {
+                    for (const name of this.findReferencedTypeNames(
+                        declaration,
+                        knownTypeNames
+                    )) {
                         addWrappedName(name, tabGroup);
                     }
                 }
+
+                return wrappedNames;
             }
-
-            for (const name of this.findReferencedTypeNames(
-                declaration,
-                knownTypeNames
-            )) {
-                addWrappedName(name, tabGroup);
-            }
-        }
-
-        this.wrappedTypeNamesCache.set(filePath, wrappedNames);
-
-        return wrappedNames;
+        );
     }
 
     // =========================================================================
@@ -717,7 +627,9 @@ ${mapRows.sort().join("\n")}
         }
 
         const resolvedProperties =
-            this.getResolvedProperties(interfaceDeclaration);
+            this.typeDependencyResolver.getResolvedProperties(
+                interfaceDeclaration
+            );
 
         const indexSignatureRows = interfaceDeclaration
             .getIndexSignatures()
@@ -747,7 +659,8 @@ ${mapRows.sort().join("\n")}
             });
 
         const propertyRows = resolvedProperties.flatMap((symbol) => {
-            const property = this.getPropertyDeclaration(symbol);
+            const property =
+                this.typeDependencyResolver.getPropertyDeclaration(symbol);
 
             if (!property) {
                 return [];
@@ -844,7 +757,8 @@ ${mapRows.sort().join("\n")}
             typeNodeKind === "IntersectionType" || typeNodeKind === "UnionType";
 
         if (isOmitAlias || isTypeLiteralAlias || isCompositeAlias) {
-            const resolvedProperties = this.getResolvedProperties(typeAlias);
+            const resolvedProperties =
+                this.typeDependencyResolver.getResolvedProperties(typeAlias);
 
             const propertyRows = resolvedProperties.flatMap((symbol) => {
                 const declarations = symbol
@@ -990,7 +904,8 @@ ${mapRows.sort().join("\n")}
                   effectiveTabGroup
               );
 
-        const localTypeNames = this.getLocalTypeNames(importedFile);
+        const localTypeNames =
+            this.typeDependencyResolver.getLocalTypeNames(importedFile);
 
         const dependencies = this.findReferencedTypeNames(
             declaration,
