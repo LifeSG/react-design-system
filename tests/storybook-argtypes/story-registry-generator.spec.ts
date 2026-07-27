@@ -22,24 +22,59 @@ function createMockFs(
 /** Build a partially-mocked FilePathResolver with all the methods StoryRegistryGenerator uses. */
 function createMockResolver(
     overrides: Partial<{
-        getTypesFileFromStoryDirectory: (p: string) => string | undefined;
-        getExportName: (p: string) => string;
-        getOutputFile: (p: string) => string;
         getArgTypesImportPath: (p: string) => string;
+        getComponentDirectory: (p: string) => string;
+        getComponentReference: (
+            fileText: string
+        ) => { rootIdentifier: string; memberPath: string[] } | undefined;
+        getExportName: (p: string) => string;
+        getImportPathForIdentifier: (
+            fileText: string,
+            identifier: string
+        ) => string | undefined;
+        getNestedFormTypesFile: (
+            componentDirectory: string,
+            memberPath: string[]
+        ) => string | undefined;
+        getOutputFile: (p: string) => string;
+        getStoryTitle: (fileText: string) => string | undefined;
+        getTypesFileForComponentDirectory: (
+            componentDirectory: string
+        ) => string | undefined;
+        getTypesFileFromStoryDirectory: (p: string) => string | undefined;
+        resolveImportPath: (
+            storyFilePath: string,
+            importPath: string
+        ) => string | undefined;
         toKebabCase: (s: string) => string;
     }> = {}
 ): FilePathResolver {
     return {
+        getArgTypesImportPath: jest
+            .fn()
+            .mockReturnValue("./button.argtypes.generated"),
+        getComponentDirectory: jest.fn().mockReturnValue("/abs/src/button"),
+        getComponentReference: jest
+            .fn()
+            .mockReturnValue({ rootIdentifier: "Button", memberPath: [] }),
         getTypesFileFromStoryDirectory: jest.fn().mockReturnValue(undefined),
         getExportName: jest.fn().mockReturnValue("buttonExtraArgTypes"),
+        getImportPathForIdentifier: jest
+            .fn()
+            .mockReturnValue("src/button/index.tsx"),
+        getNestedFormTypesFile: jest.fn().mockReturnValue(undefined),
         getOutputFile: jest
             .fn()
             .mockReturnValue(
                 "/abs/.storybook/generated/button.argtypes.generated.ts"
             ),
-        getArgTypesImportPath: jest
+        getStoryTitle: jest.fn().mockReturnValue("button"),
+        getTypesFileForComponentDirectory: jest
             .fn()
-            .mockReturnValue("./button.argtypes.generated"),
+            .mockReturnValue("/abs/src/button/types.ts"),
+        resolveImportPath: jest
+            .fn()
+            .mockReturnValue("/abs/src/button/index.tsx"),
         toKebabCase: jest.fn().mockImplementation((s: string) => s),
         ...overrides,
     } as unknown as FilePathResolver;
@@ -412,6 +447,73 @@ describe("StoryRegistryGenerator", () => {
             const appleIdx = content.indexOf('"apple"');
             const zebraIdx = content.indexOf('"zebra"');
             expect(appleIdx).toBeLessThan(zebraIdx);
+        });
+
+        it("builds content from provided story source files with alias exports and satisfies clause", () => {
+            const resolver = createMockResolver({
+                getArgTypesImportPath: jest
+                    .fn()
+                    .mockReturnValue("./button.argtypes.generated"),
+                getExportName: jest.fn().mockReturnValue("buttonExtraArgTypes"),
+                getStoryTitle: jest.fn().mockReturnValue("Button"),
+                getTypesFileForComponentDirectory: jest
+                    .fn()
+                    .mockReturnValue("/abs/src/button/types.ts"),
+            });
+            const generator = new StoryRegistryGenerator(
+                resolver,
+                createMockFs()
+            );
+
+            const storyFile = {
+                getFilePath: () => "/abs/stories/button/button.stories.ts",
+                getFullText: () => "export default { title: 'Button' };",
+            } as unknown as import("ts-morph").SourceFile;
+
+            const content = generator.generateRegistryFileContent({
+                aliasExports: true,
+                storyFiles: [storyFile],
+                withSatisfiesClause: true,
+            });
+
+            expect(content).toContain(
+                'import { buttonExtraArgTypes as buttonStoryArgTypes } from "./button.argtypes.generated";'
+            );
+            expect(content).toContain('"Button": buttonStoryArgTypes');
+            expect(content).toContain(
+                "satisfies Record<string, Record<string, unknown>>;"
+            );
+        });
+
+        it("applies shouldIncludeTypesFile filter when storyFiles are provided", () => {
+            const resolver = createMockResolver({
+                getArgTypesImportPath: jest
+                    .fn()
+                    .mockReturnValue("./button.argtypes.generated"),
+                getExportName: jest.fn().mockReturnValue("buttonExtraArgTypes"),
+                getStoryTitle: jest.fn().mockReturnValue("Button"),
+                getTypesFileForComponentDirectory: jest
+                    .fn()
+                    .mockReturnValue("/abs/src/button/types.ts"),
+            });
+            const generator = new StoryRegistryGenerator(
+                resolver,
+                createMockFs()
+            );
+
+            const storyFile = {
+                getFilePath: () => "/abs/stories/button/button.stories.ts",
+                getFullText: () => "export default { title: 'Button' };",
+            } as unknown as import("ts-morph").SourceFile;
+
+            const content = generator.generateRegistryFileContent({
+                shouldIncludeTypesFile: () => false,
+                storyFiles: [storyFile],
+            });
+
+            expect(content).toContain("storybookArgTypesByTitle");
+            expect(content).not.toContain("import {");
+            expect(content).not.toContain('"Button":');
         });
     });
 });

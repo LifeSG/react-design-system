@@ -168,59 +168,27 @@ export class StoryRegistryGenerator {
      * Generate complete registry file content.
      * Returns the full content for the storybook-argtypes.generated.ts file.
      *
+     * When storyFiles are provided, this method resolves registry entries from
+     * those ts-morph source files and applies optional filtering.
+     *
      * @returns Complete file content
      */
-    public generateRegistryFileContent(): string {
-        const registry = this.generateRegistry();
-        const header = this.getRegistryFileHeader();
-
-        // Group imports by source
-        const importsBySource = new Map<string, Set<string>>();
-
-        for (const [, { source, export: exportName }] of Object.entries(
-            registry
-        )) {
-            if (!importsBySource.has(source)) {
-                importsBySource.set(source, new Set());
-            }
-            importsBySource.get(source)!.add(exportName);
+    public generateRegistryFileContent(options?: {
+        storyFiles?: SourceFile[];
+        shouldIncludeTypesFile?: (typesFilePath: string) => boolean;
+        aliasExports?: boolean;
+        header?: string;
+        withSatisfiesClause?: boolean;
+    }): string {
+        if (!options?.storyFiles) {
+            return this.renderRegistryFileContent(this.generateRegistry(), {
+                header: this.getRegistryFileHeader(),
+            });
         }
 
-        // Build import statements
-        let content = header;
-        for (const [source, exports] of importsBySource) {
-            const exportList = Array.from(exports).sort().join(", ");
-            content += `import { ${exportList} } from "${source}";\n`;
-        }
+        const registry: Record<string, { source: string; export: string }> = {};
 
-        // Build registry export
-        content +=
-            "\nexport const storybookArgTypesByTitle: Record<string, unknown> = {\n";
-
-        for (const [title, { source: _, export: exportName }] of Object.entries(
-            registry
-        ).sort()) {
-            content += `  "${title}": ${exportName},\n`;
-        }
-
-        content += "};\n";
-
-        return content;
-    }
-
-    /**
-     * Generate registry file content from already-loaded ts-morph story source files.
-     * This is used by ArgTypesGenerator to avoid duplicating story-to-types
-     * resolution logic while still allowing caller-specific filtering.
-     */
-    public generateRegistryFileContentFromStoryFiles(
-        storyFiles: SourceFile[],
-        shouldIncludeTypesFile?: (typesFilePath: string) => boolean
-    ): string {
-        const importRows: string[] = [];
-        const mapRows: string[] = [];
-
-        for (const storyFile of storyFiles) {
+        for (const storyFile of options.storyFiles) {
             const storyFilePath = storyFile.getFilePath();
             const fileText = storyFile.getFullText();
             const title = this.filePathResolver.getStoryTitle(fileText);
@@ -290,37 +258,83 @@ export class StoryRegistryGenerator {
             }
 
             if (
-                shouldIncludeTypesFile &&
-                !shouldIncludeTypesFile(typesFilePath)
+                options.shouldIncludeTypesFile &&
+                !options.shouldIncludeTypesFile(typesFilePath)
             ) {
                 continue;
             }
 
             const outputFile =
                 this.filePathResolver.getOutputFile(typesFilePath);
-            const exportName =
-                this.filePathResolver.getExportName(typesFilePath);
-            const importAlias = exportName.replace(
-                /ExtraArgTypes$/,
-                "StoryArgTypes"
-            );
-
-            importRows.push(
-                `import { ${exportName} as ${importAlias} } from ${JSON.stringify(
-                    this.filePathResolver.getArgTypesImportPath(outputFile)
-                )};`
-            );
-            mapRows.push(`    ${JSON.stringify(title)}: ${importAlias},`);
+            registry[title] = {
+                source: this.filePathResolver.getArgTypesImportPath(outputFile),
+                export: this.filePathResolver.getExportName(typesFilePath),
+            };
         }
 
-        return `// This file is generated. Do not edit manually.
-// Run: npm run storybook:argtypes
+        return this.renderRegistryFileContent(registry, {
+            aliasExports: options.aliasExports,
+            header:
+                options.header ||
+                "// This file is generated. Do not edit manually.\n// Run: npm run storybook:argtypes\n\n",
+            withSatisfiesClause: options.withSatisfiesClause,
+        });
+    }
 
-${Array.from(new Set(importRows)).sort().join("\n")}
+    private renderRegistryFileContent(
+        registry: Record<string, { source: string; export: string }>,
+        options: {
+            header: string;
+            aliasExports?: boolean;
+            withSatisfiesClause?: boolean;
+        }
+    ): string {
+        const importsBySource = new Map<string, Set<string>>();
 
-export const storybookArgTypesByTitle: Record<string, unknown> = {
-${mapRows.sort().join("\n")}
-} satisfies Record<string, Record<string, unknown>>;
-`;
+        for (const [, { source, export: exportName }] of Object.entries(
+            registry
+        )) {
+            if (!importsBySource.has(source)) {
+                importsBySource.set(source, new Set());
+            }
+            importsBySource.get(source)!.add(exportName);
+        }
+
+        let content = options.header;
+
+        for (const [source, exports] of importsBySource) {
+            const sortedExports = Array.from(exports).sort();
+            const exportList = options.aliasExports
+                ? sortedExports
+                      .map(
+                          (exportName) =>
+                              `${exportName} as ${exportName.replace(
+                                  /ExtraArgTypes$/,
+                                  "StoryArgTypes"
+                              )}`
+                      )
+                      .join(", ")
+                : sortedExports.join(", ");
+
+            content += `import { ${exportList} } from "${source}";\n`;
+        }
+
+        content +=
+            "\nexport const storybookArgTypesByTitle: Record<string, unknown> = {\n";
+
+        for (const [title, { export: exportName }] of Object.entries(
+            registry
+        ).sort()) {
+            const mapValue = options.aliasExports
+                ? exportName.replace(/ExtraArgTypes$/, "StoryArgTypes")
+                : exportName;
+            content += `  "${title}": ${mapValue},\n`;
+        }
+
+        content += options.withSatisfiesClause
+            ? "} satisfies Record<string, Record<string, unknown>>;\n"
+            : "};\n";
+
+        return content;
     }
 }
