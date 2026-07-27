@@ -21,7 +21,7 @@ export const SOURCE_FILE_GLOBS = [
 /**
  * Root directories to watch for file changes (when in watch mode).
  */
-export const WATCH_ROOTS = ["src", "stories"] as const;
+export const WATCH_ROOTS = ["src", "stories"];
 
 /**
  * Glob pattern for story files to scan for component references.
