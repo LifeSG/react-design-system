@@ -21,12 +21,14 @@ import {
     RefObject,
     createContext,
     useContext,
+    useEffect,
     useRef,
 } from "react";
 import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 import { useFloatingChild } from "../../overlay/use-floating-context";
 import { Breakpoint } from "../../theme";
+import { useEvent, usePrevious } from "../../util";
 import { DropdownAlignmentType } from "./types";
 
 export interface DropdownRenderProps {
@@ -41,9 +43,10 @@ export interface DropdownRenderProps {
 interface ElementWithDropdownProps {
     enabled: boolean;
     isOpen: boolean;
-    onOpen?: () => void | undefined;
-    onClose?: (reason: OpenChangeReason | undefined) => void | undefined;
-    onDismiss?: () => void | undefined;
+    onOpen?: (() => void) | undefined;
+    onClose?: ((reason: OpenChangeReason | undefined) => void) | undefined;
+    onDismiss?: (() => void) | undefined;
+    onHide?: (() => void) | undefined;
     renderElement: () => React.ReactNode;
     renderDropdown: (props: DropdownRenderProps) => React.ReactNode;
     customZIndex?: number | undefined;
@@ -125,6 +128,7 @@ export const ElementWithDropdown = ({
     onOpen,
     onClose,
     onDismiss,
+    onHide,
     renderElement,
     renderDropdown,
     customZIndex,
@@ -222,9 +226,21 @@ export const ElementWithDropdown = ({
         dismiss,
     ]);
 
-    // =============================================================================
+    // =========================================================================
+    // ON HIDE EFFECT
+    // =========================================================================
+    const prevIsMounted = usePrevious(isMounted);
+    const onHideEvent = useEvent(() => onHide?.());
+
+    useEffect(() => {
+        if (prevIsMounted && !isMounted) {
+            onHideEvent();
+        }
+    }, [prevIsMounted, isMounted, onHideEvent]);
+
+    // =========================================================================
     // RENDER FUNCTIONS
-    // =============================================================================
+    // =========================================================================
     const dropdownRenderProps = {
         elementWidth: referenceWidth,
         styles: {
