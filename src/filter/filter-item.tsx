@@ -6,7 +6,7 @@ import { useContext, useEffect, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { Button } from "../button";
-import { PopoverAddon } from "../form/form-label-addon";
+import { PopoverAddon } from "../form/form-label/form-label-addon";
 import { inertValue, VisuallyHidden } from "../shared/accessibility";
 import { ClickableIcon } from "../shared/clickable-icon";
 import { useApplyStyle } from "../theme";
