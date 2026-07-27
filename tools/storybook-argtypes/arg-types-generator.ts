@@ -9,7 +9,6 @@
  */
 
 import { spawnSync } from "node:child_process";
-import fs from "node:fs/promises";
 import * as path from "node:path";
 
 import {
@@ -197,8 +196,10 @@ export class ArgTypesGenerator {
         )} satisfies Record<string, unknown>;
         `;
 
-        await fs.mkdir(path.dirname(outputFile), { recursive: true });
-        await fs.writeFile(outputFile, generated);
+        await this.fsAdapter.mkdir(path.dirname(outputFile), {
+            recursive: true,
+        });
+        await this.fsAdapter.writeFile(outputFile, generated);
 
         console.log(
             `[storybook:argtypes] generated ${path.relative(
@@ -231,10 +232,10 @@ export class ArgTypesGenerator {
                 withSatisfiesClause: true,
             });
 
-        await fs.mkdir(path.dirname(STORYBOOK_ARGTYPES_FILE), {
+        await this.fsAdapter.mkdir(path.dirname(STORYBOOK_ARGTYPES_FILE), {
             recursive: true,
         });
-        await fs.writeFile(STORYBOOK_ARGTYPES_FILE, generated);
+        await this.fsAdapter.writeFile(STORYBOOK_ARGTYPES_FILE, generated);
 
         console.log(
             `[storybook:argtypes] generated ${path.relative(

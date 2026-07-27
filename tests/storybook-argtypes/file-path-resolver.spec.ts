@@ -10,11 +10,14 @@ function createMockFs(
 ): IFileSystemAdapter {
     return {
         existsSync: (p: string) => existMap[p] ?? false,
+        mkdir: async () => {},
+        rm: async () => {},
         statSync: (p: string): FileStat => ({
             isFile: () => existMap[p] === true,
             isDirectory: () => false,
         }),
         resolvePath: (...segments: string[]) => path.resolve(...segments),
+        writeFile: async () => {},
     };
 }
 

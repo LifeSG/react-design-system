@@ -9,6 +9,8 @@ function createMockFs(
 ): IFileSystemAdapter {
     return {
         existsSync: (p: string) => existMap[p] ?? false,
+        mkdir: async () => {},
+        rm: async () => {},
         statSync: (p: string): FileStat => ({
             isFile: () => existMap[p] === true,
             isDirectory: () => false,
@@ -16,6 +18,7 @@ function createMockFs(
         resolvePath: (...segments: string[]) =>
             // eslint-disable-next-line @typescript-eslint/no-require-imports
             require("node:path").resolve(...segments),
+        writeFile: async () => {},
     };
 }
 
