@@ -10,7 +10,6 @@
  * - `npm run storybook:argtypes -- --watch` — watch for changes and regenerate
  */
 
-import fs from "node:fs/promises";
 import path from "node:path";
 
 import chokidar from "chokidar";
@@ -72,9 +71,7 @@ async function main() {
             if (isStoryFile(filePath)) {
                 await freshGenerator.generateStorybookArgTypesRegistry();
             } else if (eventName === "unlink") {
-                await fs.rm(freshGenerator.getOutputFile(resolvedFilePath), {
-                    force: true,
-                });
+                await freshGenerator.deleteOutputFile(resolvedFilePath);
                 await freshGenerator.generateStorybookArgTypesRegistry();
             } else {
                 await freshGenerator.generateForSourceFile(resolvedFilePath);

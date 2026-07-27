@@ -347,6 +347,16 @@ ${mapRows.sort().join("\n")}
     }
 
     /**
+     * Delete the generated argTypes output file for a given source file path.
+     * Used when the source file is removed during watch mode.
+     */
+    public async deleteOutputFile(sourceFilePath: string): Promise<void> {
+        await this.fsAdapter.rm(this.getOutputFile(sourceFilePath), {
+            force: true,
+        });
+    }
+
+    /**
      * Get the export name for the component's argTypes object.
      * e.g. "form-custom-field" → "formCustomFieldExtraArgTypes"
      */

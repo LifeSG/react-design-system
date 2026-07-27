@@ -6,6 +6,7 @@
  */
 
 import { existsSync, statSync } from "node:fs";
+import fs from "node:fs/promises";
 import { resolve } from "node:path";
 
 import type { FileStat } from "../types/arg-types-types";
@@ -36,6 +37,13 @@ export interface IFileSystemAdapter {
      * @returns Absolute resolved path
      */
     resolvePath(...segments: string[]): string;
+
+    /**
+     * Remove a file or directory.
+     * @param path The path to remove
+     * @param options.force If true, suppress errors if path doesn't exist
+     */
+    rm(path: string, options?: { force?: boolean }): Promise<void>;
 }
 
 /**
@@ -52,5 +60,12 @@ export class FileSystemAdapter implements IFileSystemAdapter {
 
     public resolvePath(...segments: string[]): string {
         return resolve(...segments);
+    }
+
+    public async rm(
+        path: string,
+        options?: { force?: boolean }
+    ): Promise<void> {
+        await fs.rm(path, options);
     }
 }
