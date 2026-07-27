@@ -166,16 +166,16 @@ describe("JsDocMetadataExtractor", () => {
             project.createSourceFile(
                 "leading.ts",
                 `
-// A plain line comment
-interface LineCommentedIface {}
+                // A plain line comment
+                interface LineCommentedIface {}
 
-/* A block comment */
-interface BlockCommentedIface {}
+                /* A block comment */
+                interface BlockCommentedIface {}
 
-/** A JSDoc comment */
-interface JsDocIface {}
+                /** A JSDoc comment */
+                interface JsDocIface {}
 
-interface NoCommentIface {}
+                interface NoCommentIface {}
                 `,
                 { overwrite: true }
             );
@@ -227,16 +227,16 @@ interface NoCommentIface {}
             project.createSourceFile(
                 "sections.ts",
                 `
-// @storybookSection Tab1, Tab2
-interface MultiSectionIface {}
+                // @storybookSection Tab1, Tab2
+                interface MultiSectionIface {}
 
-// @storybookSection OnlyOne
-interface SingleSectionIface {}
+                // @storybookSection OnlyOne
+                interface SingleSectionIface {}
 
-// @storybookSection
-interface EmptySectionIface {}
+                // @storybookSection
+                interface EmptySectionIface {}
 
-interface NoSectionIface {}
+                interface NoSectionIface {}
                 `,
                 { overwrite: true }
             );
@@ -285,16 +285,16 @@ interface NoSectionIface {}
             project.createSourceFile(
                 "skip.ts",
                 `
-// @storybookSkipProps
-interface SkippedIface {}
+                // @storybookSkipProps
+                interface SkippedIface {}
 
-// @storybookSkipProps
-interface AlsoSkippedIface {}
+                // @storybookSkipProps
+                interface AlsoSkippedIface {}
 
-// @storybookSomethingElse
-interface NotSkippedIface {}
+                // @storybookSomethingElse
+                interface NotSkippedIface {}
 
-interface NoCommentIface {}
+                interface NoCommentIface {}
                 `,
                 { overwrite: true }
             );
@@ -406,30 +406,30 @@ interface NoCommentIface {}
             project.createSourceFile(
                 "jsdoc.ts",
                 `
-/**
- * My component description
- * @deprecated Use NewComponent instead
- * @default "primary"
- * @remarks This is an important remark
- * @example \`<Component />\`
- */
-interface FullyDocumentedIface {}
+                /**
+                 * My component description
+                 * @deprecated Use NewComponent instead
+                 * @default "primary"
+                 * @remarks This is an important remark
+                 * @example \`<Component />\`
+                 */
+                interface FullyDocumentedIface {}
 
-/** Only a description */
-interface DescriptionOnlyIface {}
+                /** Only a description */
+                interface DescriptionOnlyIface {}
 
-/**
- * @deprecated
- */
-interface BooleanDeprecatedIface {}
+                /**
+                 * @deprecated
+                 */
+                interface BooleanDeprecatedIface {}
 
-interface UndocumentedIface {
-    /** Prop description */
-    name: string;
-}
+                interface UndocumentedIface {
+                    /** Prop description */
+                    name: string;
+                }
 
-// @storybookSection Tab1, Tab2
-interface SectionedIface {}
+                // @storybookSection Tab1, Tab2
+                interface SectionedIface {}
                 `,
                 { overwrite: true }
             );

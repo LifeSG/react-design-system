@@ -198,13 +198,15 @@ describe("ArgTypesGenerator", () => {
             // bleed into child-comp's generated output.
             const cleanupParent = addSourceFile(
                 "tabgroup-parent/types.ts",
-                `// @storybookSection ParentSection
-export interface ParentSectionProps { size: string; }`
+                `
+                // @storybookSection ParentSection
+                export interface ParentSectionProps { size: string; }`
             );
             const cleanupChild = addSourceFile(
                 "tabgroup-child/types.ts",
-                `import type { ParentSectionProps } from "../tabgroup-parent/types";
-export interface ChildProps extends ParentSectionProps { label: string; }`
+                `
+                import type { ParentSectionProps } from "../tabgroup-parent/types";
+                export interface ChildProps extends ParentSectionProps { label: string; }`
             );
             try {
                 await generator.generateForSourceFile(
@@ -225,8 +227,9 @@ export interface ChildProps extends ParentSectionProps { label: string; }`
         it("includes the tabGroup when the local interface declares @storybookSection", async () => {
             const cleanup = addSourceFile(
                 "tabgroup-own/types.ts",
-                `// @storybookSection MySection
-export interface OwnSectionProps { color: string; }`
+                `
+                // @storybookSection MySection
+                export interface OwnSectionProps { color: string; }`
             );
             try {
                 await generator.generateForSourceFile(
@@ -268,11 +271,11 @@ export interface OwnSectionProps { color: string; }`
             const cleanup = addSourceFile(
                 "omit-alias/types.ts",
                 `export interface BaseProps {
-    label: string;
-    disabled?: boolean;
-    internal: string;
-}
-export type PublicProps = Omit<BaseProps, "internal">;`
+                    label: string;
+                    disabled?: boolean;
+                    internal: string;
+                }
+                export type PublicProps = Omit<BaseProps, "internal">;`
             );
             try {
                 await generator.generateForSourceFile(
@@ -344,8 +347,8 @@ export type PublicProps = Omit<BaseProps, "internal">;`
             const cleanup = addSourceFile(
                 "object-union/types.ts",
                 `export type Shape =
-    | { kind: "circle"; radius: number }
-    | { kind: "rect"; width: number };`
+                    | { kind: "circle"; radius: number }
+                    | { kind: "rect"; width: number };`
             );
             try {
                 await generator.generateForSourceFile(
@@ -393,13 +396,15 @@ export type PublicProps = Omit<BaseProps, "internal">;`
         it("suppresses tabGroup from an imported type-alias @storybookSection", async () => {
             const cleanupParent = addSourceFile(
                 "tabgroup-alias-parent/types.ts",
-                `// @storybookSection AliasSection
-export type BaseConfig = { width: number; };`
+                `
+                // @storybookSection AliasSection
+                export type BaseConfig = { width: number; };`
             );
             const cleanupChild = addSourceFile(
                 "tabgroup-alias-child/types.ts",
-                `import type { BaseConfig } from "../tabgroup-alias-parent/types";
-export type ExtendedConfig = BaseConfig & { height: number };`
+                `
+                import type { BaseConfig } from "../tabgroup-alias-parent/types";
+                export type ExtendedConfig = BaseConfig & { height: number };`
             );
             try {
                 await generator.generateForSourceFile(

@@ -186,15 +186,16 @@ export class ArgTypesGenerator {
             sortedRows.map((row) => [row.key, row.value])
         );
 
-        const generated = `// This file is generated. Do not edit manually.
-// Run: npm run storybook:argtypes
+        const generated = `
+        // This file is generated. Do not edit manually.
+        // Run: npm run storybook:argtypes
 
-export const ${exportName} = ${JSON.stringify(
+        export const ${exportName} = ${JSON.stringify(
             generatedArgTypes,
             null,
             4
         )} satisfies Record<string, unknown>;
-`;
+        `;
 
         await fs.mkdir(path.dirname(outputFile), { recursive: true });
         await fs.writeFile(outputFile, generated);
