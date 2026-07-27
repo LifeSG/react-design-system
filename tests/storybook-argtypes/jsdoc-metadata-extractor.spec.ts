@@ -288,7 +288,7 @@ interface NoSectionIface {}
 // @storybookSkipProps
 interface SkippedIface {}
 
-// storybookSkipProps
+// @storybookSkipProps
 interface AlsoSkippedIface {}
 
 // @storybookSomethingElse

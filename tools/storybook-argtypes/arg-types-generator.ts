@@ -29,6 +29,7 @@ import {
 import { ArgTypesRowBuilder } from "./services/arg-types-row-builder";
 import { FilePathResolver } from "./services/file-path-resolver";
 import { JsDocMetadataExtractor } from "./services/jsdoc-metadata-extractor";
+import { StoryRegistryGenerator } from "./services/story-registry-generator";
 import { TypeDependencyResolver } from "./services/type-dependency-resolver";
 import { TypeFormattingService } from "./services/type-formatting-service";
 import { TypeScriptSourceProvider } from "./services/typescript-source-provider";
@@ -54,6 +55,7 @@ export class ArgTypesGenerator {
     private readonly typeFormatter: TypeFormattingService;
     private readonly rowBuilder: ArgTypesRowBuilder;
     private readonly resolver: FilePathResolver;
+    private readonly storyRegistryGenerator: StoryRegistryGenerator;
     private readonly fsAdapter: IFileSystemAdapter;
 
     /**
@@ -69,6 +71,10 @@ export class ArgTypesGenerator {
         this.typeFormatter = new TypeFormattingService();
         this.rowBuilder = new ArgTypesRowBuilder();
         this.resolver = new FilePathResolver(this.fsAdapter);
+        this.storyRegistryGenerator = new StoryRegistryGenerator(
+            this.resolver,
+            this.fsAdapter
+        );
     }
 
     // =========================================================================
@@ -210,105 +216,17 @@ export const ${exportName} = ${JSON.stringify(
         const storyFiles = project.getSourceFiles(
             "stories/**/*.stories.@(ts|tsx)"
         );
-        const importRows: string[] = [];
-        const mapRows: string[] = [];
-
-        for (const storyFile of storyFiles) {
-            const storyFilePath = storyFile.getFilePath();
-            const fileText = storyFile.getFullText();
-            const title = this.resolver.getStoryTitle(fileText);
-            const componentReference =
-                this.resolver.getComponentReference(fileText);
-            const componentRootIdentifier = componentReference?.rootIdentifier;
-
-            if (!title) {
-                continue;
-            }
-
-            let typesFilePath: string | undefined;
-            let hasNestedComponentReference = false;
-
-            if (componentRootIdentifier) {
-                const importPath = this.resolver.getImportPathForIdentifier(
-                    fileText,
-                    componentRootIdentifier
-                );
-
-                if (importPath) {
-                    const componentSourcePath = this.resolver.resolveImportPath(
-                        storyFilePath,
-                        importPath
+        const generated =
+            this.storyRegistryGenerator.generateRegistryFileContentFromStoryFiles(
+                storyFiles,
+                (typesFilePath) => {
+                    const typesSourceFile =
+                        this.sourceProvider.getSourceFile(typesFilePath);
+                    return !this.jsDocExtractor.isSkippedSourceFile(
+                        typesSourceFile
                     );
-
-                    if (componentSourcePath) {
-                        const componentDirectory =
-                            this.resolver.getComponentDirectory(
-                                componentSourcePath
-                            );
-                        const nestedTypesFile =
-                            this.resolver.getNestedFormTypesFile(
-                                componentDirectory,
-                                componentReference?.memberPath ?? []
-                            );
-
-                        if (nestedTypesFile) {
-                            typesFilePath = nestedTypesFile;
-                            hasNestedComponentReference = true;
-                        } else {
-                            typesFilePath =
-                                this.resolver.getTypesFileForComponentDirectory(
-                                    componentDirectory
-                                );
-                        }
-                    }
                 }
-            }
-
-            const storyDirectoryTypesFile =
-                this.resolver.getTypesFileFromStoryDirectory(storyFilePath);
-
-            if (
-                storyDirectoryTypesFile &&
-                (!typesFilePath || !hasNestedComponentReference)
-            ) {
-                typesFilePath = storyDirectoryTypesFile;
-            }
-
-            if (!typesFilePath) {
-                continue;
-            }
-
-            const typesSourceFile =
-                this.sourceProvider.getSourceFile(typesFilePath);
-
-            if (this.jsDocExtractor.isSkippedSourceFile(typesSourceFile)) {
-                continue;
-            }
-
-            const outputFile = this.getOutputFile(typesFilePath);
-            const exportName = this.getExportName(typesFilePath);
-            const importAlias = exportName.replace(
-                /ExtraArgTypes$/,
-                "StoryArgTypes"
             );
-
-            importRows.push(
-                `import { ${exportName} as ${importAlias} } from ${JSON.stringify(
-                    this.getArgTypesImportPath(outputFile)
-                )};`
-            );
-            mapRows.push(`    ${JSON.stringify(title)}: ${importAlias},`);
-        }
-
-        const generated = `// This file is generated. Do not edit manually.
-// Run: npm run storybook:argtypes
-
-${Array.from(new Set(importRows)).sort().join("\n")}
-
-export const storybookArgTypesByTitle: Record<string, unknown> = {
-${mapRows.sort().join("\n")}
-} satisfies Record<string, Record<string, unknown>>;
-`;
 
         await fs.mkdir(path.dirname(STORYBOOK_ARGTYPES_FILE), {
             recursive: true,

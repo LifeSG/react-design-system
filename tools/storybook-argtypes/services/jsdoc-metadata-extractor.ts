@@ -99,7 +99,7 @@ export class JsDocMetadataExtractor {
 
     public hasSkipTag(node: StorybookTaggedDeclarationNode): boolean {
         for (const comment of this.getLeadingNonJsDocComments(node)) {
-            if (/@?storybookSkipProps\b/.test(comment)) {
+            if (/@storybookSkipProps\b/.test(comment)) {
                 return true;
             }
         }

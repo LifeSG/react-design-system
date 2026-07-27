@@ -8,6 +8,7 @@
 import * as path from "node:path";
 
 import { GlobSync } from "glob";
+import { type SourceFile } from "ts-morph";
 
 import type { IFileSystemAdapter } from "../adapters/file-system-adapter";
 import { FileSystemAdapter } from "../adapters/file-system-adapter";
@@ -205,5 +206,121 @@ export class StoryRegistryGenerator {
         content += "};\n";
 
         return content;
+    }
+
+    /**
+     * Generate registry file content from already-loaded ts-morph story source files.
+     * This is used by ArgTypesGenerator to avoid duplicating story-to-types
+     * resolution logic while still allowing caller-specific filtering.
+     */
+    public generateRegistryFileContentFromStoryFiles(
+        storyFiles: SourceFile[],
+        shouldIncludeTypesFile?: (typesFilePath: string) => boolean
+    ): string {
+        const importRows: string[] = [];
+        const mapRows: string[] = [];
+
+        for (const storyFile of storyFiles) {
+            const storyFilePath = storyFile.getFilePath();
+            const fileText = storyFile.getFullText();
+            const title = this.filePathResolver.getStoryTitle(fileText);
+            const componentReference =
+                this.filePathResolver.getComponentReference(fileText);
+            const componentRootIdentifier = componentReference?.rootIdentifier;
+
+            if (!title) {
+                continue;
+            }
+
+            let typesFilePath: string | undefined;
+            let hasNestedComponentReference = false;
+
+            if (componentRootIdentifier) {
+                const importPath =
+                    this.filePathResolver.getImportPathForIdentifier(
+                        fileText,
+                        componentRootIdentifier
+                    );
+
+                if (importPath) {
+                    const componentSourcePath =
+                        this.filePathResolver.resolveImportPath(
+                            storyFilePath,
+                            importPath
+                        );
+
+                    if (componentSourcePath) {
+                        const componentDirectory =
+                            this.filePathResolver.getComponentDirectory(
+                                componentSourcePath
+                            );
+                        const nestedTypesFile =
+                            this.filePathResolver.getNestedFormTypesFile(
+                                componentDirectory,
+                                componentReference?.memberPath ?? []
+                            );
+
+                        if (nestedTypesFile) {
+                            typesFilePath = nestedTypesFile;
+                            hasNestedComponentReference = true;
+                        } else {
+                            typesFilePath =
+                                this.filePathResolver.getTypesFileForComponentDirectory(
+                                    componentDirectory
+                                );
+                        }
+                    }
+                }
+            }
+
+            const storyDirectoryTypesFile =
+                this.filePathResolver.getTypesFileFromStoryDirectory(
+                    storyFilePath
+                );
+
+            if (
+                storyDirectoryTypesFile &&
+                (!typesFilePath || !hasNestedComponentReference)
+            ) {
+                typesFilePath = storyDirectoryTypesFile;
+            }
+
+            if (!typesFilePath) {
+                continue;
+            }
+
+            if (
+                shouldIncludeTypesFile &&
+                !shouldIncludeTypesFile(typesFilePath)
+            ) {
+                continue;
+            }
+
+            const outputFile =
+                this.filePathResolver.getOutputFile(typesFilePath);
+            const exportName =
+                this.filePathResolver.getExportName(typesFilePath);
+            const importAlias = exportName.replace(
+                /ExtraArgTypes$/,
+                "StoryArgTypes"
+            );
+
+            importRows.push(
+                `import { ${exportName} as ${importAlias} } from ${JSON.stringify(
+                    this.filePathResolver.getArgTypesImportPath(outputFile)
+                )};`
+            );
+            mapRows.push(`    ${JSON.stringify(title)}: ${importAlias},`);
+        }
+
+        return `// This file is generated. Do not edit manually.
+// Run: npm run storybook:argtypes
+
+${Array.from(new Set(importRows)).sort().join("\n")}
+
+export const storybookArgTypesByTitle: Record<string, unknown> = {
+${mapRows.sort().join("\n")}
+} satisfies Record<string, Record<string, unknown>>;
+`;
     }
 }
