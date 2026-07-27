@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("../../_virtual/_commonjsHelpers.js"),r=require("./_baseExtremum.js"),t=require("./_baseGt.js"),s=require("./_baseIteratee.js"),a=r._baseExtremum,u=t._baseGt,o=s._baseIteratee;var _=function(e,r){return e&&e.length?a(e,o(r),u):void 0},i=e.getDefaultExportFromCjs(_);exports.default=i;
+//# sourceMappingURL=maxBy.js.map

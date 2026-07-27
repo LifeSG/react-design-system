@@ -1,0 +1,2 @@
+import{__rest as t}from"../../_virtual/_tslib.js";import{jsx as i}from"react/jsx-runtime";import r from"react";import{Main as e}from"./clickable-icon.style.js";const o=r.forwardRef(((r,o)=>{var{children:c,focusHighlight:l=!0,focusOutline:n="none",type:s="button"}=r,f=t(r,["children","focusHighlight","focusOutline","type"]);return i(e,Object.assign({ref:o,$outline:n,$highlight:l,type:s},f,{children:c}))}));export{o as ClickableIcon};
+//# sourceMappingURL=clickable-icon.js.map

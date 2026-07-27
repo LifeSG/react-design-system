@@ -1,0 +1,35 @@
+import{jsxs as t,jsx as e}from"react/jsx-runtime";import r from"styled-components";import{ImageWithFallback as i}from"../../shared/image-with-fallback/image-with-fallback.js";import{Spacing as o,Radius as a,Border as d,Colour as n,MediaQuery as c,Font as m}from"../../theme/index.js";import{FileUploadHelper as s}from"../helper.js";const l=({thumbnailImageDataUrl:r,fileType:i,"data-testid":o,renderReplaceButton:a,onReplaceClick:d})=>{const n=i===s.PDF_MIME_TYPE,c=n?r||s.PDF_ICON_URL:r||"";return t(p,{"data-testid":o,children:[e(h,{"data-testid":o?`${o}-image`:void 0,src:c,$isPdf:n}),a&&e(f,{type:"button",onClick:()=>{d&&d()},children:"Replace"})]})},p=r.div`
+    width: auto;
+    margin-right: ${o["spacing-32"]};
+    display: flex;
+    flex-shrink: 0;
+    flex-direction: column;
+    justify-content: center;
+`,h=r(i)`
+    width: 96px;
+    height: 96px;
+    aspect-ratio: 1;
+    border-radius: ${a.sm};
+    border: ${t=>t.$isPdf?"none":`${d["width-010"]} ${d.solid} ${n.border}`};
+    object-fit: cover;
+
+    ${c.MaxWidth.md} {
+        width: 64px;
+        height: 64px;
+    }
+`,f=r.button`
+    width: 100%;
+    height: 1.625rem;
+    margin-top: ${o["spacing-8"]};
+    border: none;
+    background: transparent;
+    cursor: pointer;
+
+    ${m["body-md-semibold"]}
+    color: ${n["text-primary"]};
+
+    &:hover {
+        color: ${n["text-hover"]};
+    }
+`;export{p as Container,l as FileListItemThumbnail,f as ReplaceButton,h as Thumbnail};
+//# sourceMappingURL=file-list-item-thumbnail.js.map
