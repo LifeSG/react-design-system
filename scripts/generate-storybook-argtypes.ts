@@ -1282,12 +1282,6 @@ function getTypeAliasArgTypes(
             return propertyRows;
         }
 
-        // For intersections, expanded property rows already convey the API shape.
-        // A synthetic header row (e.g. `A & B`) is usually redundant noise.
-        if (typeNodeKind === "IntersectionType") {
-            return propertyRows;
-        }
-
         // Skip when the intersection includes unresolvable generic
         // utility types (e.g. React.ComponentPropsWithoutRef<T>).
         const typeNodeText = typeAlias.getTypeNodeOrThrow().getText();
@@ -1308,7 +1302,7 @@ function getTypeAliasArgTypes(
                 deprecated: jsDocMeta.deprecated,
                 description: toStorybookDescription(jsDocMeta),
                 key: typeName,
-                name: category,
+                name: "",
                 tabGroup: jsDocMeta.tabGroups?.[0],
                 typeSummary: getSummaryTypeText(
                     typeAlias.getType(),
