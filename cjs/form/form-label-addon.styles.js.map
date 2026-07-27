@@ -1,0 +1,1 @@
+{"version":3,"file":"form-label-addon.styles.js","sources":["../../../src/form/form-label-addon.styles.ts"],"sourcesContent":["import { css } from \"@linaria/core\";\n\nimport { Spacing } from \"../theme\";\n\nexport const addonWrapper = css`\n    padding-left: ${Spacing[\"spacing-4\"]};\n    display: inline;\n`;\n"],"names":[],"mappings":"sGAIyB"}

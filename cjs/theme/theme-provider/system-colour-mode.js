@@ -1,0 +1,2 @@
+"use strict";exports.listenToSystemColourMode=function(e){if("undefined"==typeof window||!window.matchMedia)return;const t=window.matchMedia("(prefers-color-scheme: dark)");e(t.matches?"dark":"light");const n=t=>{e(t.matches?"dark":"light")};return t.addEventListener?(t.addEventListener("change",n),()=>t.removeEventListener("change",n)):(t.addListener(n),()=>t.removeListener(n))};
+//# sourceMappingURL=system-colour-mode.js.map

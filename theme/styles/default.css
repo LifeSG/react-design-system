@@ -1,0 +1,158 @@
+
+@layer fds {
+:root {
+    /* 
+    ========================================================================
+    BORDER
+    ========================================================================
+    */
+    --fds-border-width-005: 0.5px;
+    --fds-border-width-010: 1px;
+    --fds-border-width-020: 2px;
+    --fds-border-width-040: 4px;
+    --fds-border-style-solid: solid;
+
+    /* 
+    ========================================================================
+    BREAKPOINT
+    ========================================================================
+    */
+    --fds-breakpoint-xxs-min: 0;
+    --fds-breakpoint-xxs-max: 320px;
+    --fds-breakpoint-xs-min: 321px;
+    --fds-breakpoint-xs-max: 375px;
+    --fds-breakpoint-sm-min: 376px;
+    --fds-breakpoint-sm-max: 480px;
+    --fds-breakpoint-md-min: 481px;
+    --fds-breakpoint-md-max: 768px;
+    --fds-breakpoint-lg-min: 769px;
+    --fds-breakpoint-lg-max: 1200px;
+    --fds-breakpoint-xl-min: 1201px;
+    --fds-breakpoint-xl-max: 1440px;
+    --fds-breakpoint-xxl-min: 1441px;
+    --fds-breakpoint-column-xxs: 8;
+    --fds-breakpoint-column-xs: 8;
+    --fds-breakpoint-column-sm: 8;
+    --fds-breakpoint-column-md: 8;
+    --fds-breakpoint-column-lg: 12;
+    --fds-breakpoint-column-xl: 12;
+    --fds-breakpoint-column-xxl: 12;
+    --fds-breakpoint-gutter-xxs: 16px;
+    --fds-breakpoint-gutter-xs: 16px;
+    --fds-breakpoint-gutter-sm: 16px;
+    --fds-breakpoint-gutter-md: 16px;
+    --fds-breakpoint-gutter-lg: 32px;
+    --fds-breakpoint-gutter-xl: 32px;
+    --fds-breakpoint-gutter-xxl: 32px;
+    --fds-breakpoint-margin-xxs: 24px;
+    --fds-breakpoint-margin-xs: 24px;
+    --fds-breakpoint-margin-sm: 24px;
+    --fds-breakpoint-margin-md: 24px;
+    --fds-breakpoint-margin-lg: 48px;
+    --fds-breakpoint-margin-xl: 48px;
+    --fds-breakpoint-margin-xxl: 48px;
+
+    /*
+    ========================================================================
+    FONT
+    ========================================================================
+    */
+    --fds-font-variant: normal;
+    --fds-font-heading-size-xxl: 3rem;
+    --fds-font-heading-size-xl: 2.5rem;
+    --fds-font-heading-size-lg: 2rem;
+    --fds-font-heading-size-md: 1.625rem;
+    --fds-font-heading-size-sm: 1.375rem;
+    --fds-font-heading-size-xs: 1.125rem;
+    --fds-font-heading-lh-xxl: 3.5rem;
+    --fds-font-heading-lh-xl: 3rem;
+    --fds-font-heading-lh-lg: 2.5rem;
+    --fds-font-heading-lh-md: 2.25rem;
+    --fds-font-heading-lh-sm: 1.75rem;
+    --fds-font-heading-lh-xs: 1.625rem;
+    --fds-font-heading-ls-xxl: -0.035rem;
+    --fds-font-heading-ls-xl: -0.02rem;
+    --fds-font-heading-ls-lg: -0.02rem;
+    --fds-font-heading-ls-md: 0rem;
+    --fds-font-heading-ls-sm: 0rem;
+    --fds-font-heading-ls-xs: 0rem;
+    --fds-font-weight-light: 300;
+    --fds-font-weight-regular: 400;
+    --fds-font-weight-semibold: 600;
+    --fds-font-weight-bold: 700;
+    --fds-font-family-heading: "Open Sans";
+    --fds-font-family-body: "Open Sans";
+    --fds-font-body-size-baseline: 1.125rem;
+    --fds-font-body-size-md: 1rem;
+    --fds-font-body-size-sm: 0.875rem;
+    --fds-font-body-size-xs: 0.75rem;
+    --fds-font-body-lh-baseline: 1.625rem;
+    --fds-font-body-lh-md: 1.5rem;
+    --fds-font-body-lh-sm: 1.25rem;
+    --fds-font-body-lh-xs: 1.25rem;
+    --fds-font-body-ls-baseline: 0rem;
+    --fds-font-body-ls-md: 0.009rem;
+    --fds-font-body-ls-sm: 0.008rem;
+    --fds-font-body-ls-xs: 0.008rem;
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
+    --fds-font-form-label-lh: 1.375rem;
+    --fds-font-form-description-lh: 1.25rem;
+    --fds-font-form-label-ls: 0rem;
+    --fds-font-form-description-ls: 0rem;
+
+    /* 
+    ========================================================================
+    SPACING
+    ========================================================================
+    */
+    --fds-spacing-0: 0;
+    --fds-spacing-4: 4px;
+    --fds-spacing-8: 8px;
+    --fds-spacing-12: 12px;
+    --fds-spacing-16: 16px;
+    --fds-spacing-20: 20px;
+    --fds-spacing-24: 24px;
+    --fds-spacing-32: 32px;
+    --fds-spacing-40: 40px;
+    --fds-spacing-48: 48px;
+    --fds-spacing-64: 64px;
+    --fds-spacing-72: 72px;
+    --fds-layout-xs: 8px;
+    --fds-layout-sm: 16px;
+    --fds-layout-md: 24px;
+    --fds-layout-lg: 32px;
+    --fds-layout-xl: 48px;
+    --fds-layout-xxl: 64px;
+    --fds-layout-xxxl: 128px;
+
+    /* 
+    ========================================================================
+    MOTION
+    ========================================================================
+    */
+    --fds-motion-duration-150: 150ms;
+    --fds-motion-duration-250: 250ms;
+    --fds-motion-duration-350: 350ms;
+    --fds-motion-duration-500: 500ms;
+    --fds-motion-duration-800: 800ms;
+    --fds-motion-duration-1000: 1000ms;
+    --fds-motion-timing-ease-default: cubic-bezier(0.45, 0.05, 0.55, 0.95);
+    --fds-motion-timing-ease-standard: cubic-bezier(0.86, 0, 0.07, 1);
+    --fds-motion-timing-ease-entrance: cubic-bezier(0.18, 0.13, 0, 1);
+    --fds-motion-timing-ease-exit: cubic-bezier(1, 0, 0.8, 0.85);
+
+    /* 
+    ========================================================================
+    RADIUS
+    ========================================================================
+    */
+    --fds-radius-none: 0;
+    --fds-radius-xs: 2px;
+    --fds-radius-sm: 4px;
+    --fds-radius-md: 8px;
+    --fds-radius-lg: 12px;
+    --fds-radius-full: 9999px;
+}
+
+}
