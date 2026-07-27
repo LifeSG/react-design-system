@@ -30,7 +30,11 @@ export type { FormESignatureProps } from "./form-e-signature/types";
 export type { FormHistogramSliderProps } from "./form-histogram-slider/types";
 export type { FormInputProps } from "./form-input/types";
 export type { FormInputGroupProps } from "./form-input-group/types";
-export * from "./form-label/types";
+export type {
+    FormLabelAddonProps,
+    FormLabelAddonType,
+    FormLabelProps,
+} from "./form-label/types";
 export type { FormMaskedInputProps } from "./form-masked-input/types";
 export type { FormMultiSelectProps } from "./form-multi-select/types";
 export type { FormNestedMultiSelectProps } from "./form-nested-multi-select/types";
