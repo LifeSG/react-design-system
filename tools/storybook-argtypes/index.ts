@@ -19,18 +19,7 @@ export {
 } from "./config/arg-types-config";
 
 // Types
-export type {
-    ArgTypesGenerationConfig,
-    ComponentReference,
-    FileStat,
-    GeneratedArgType,
-    JsDocMeta,
-    JsDocSupportedNode,
-    ResolvedSymbol,
-    ResolvedTypesFile,
-    StorybookTaggedDeclarationNode,
-    StoryMetadata,
-} from "./types/arg-types-types";
+export type * as StorybookArgtypesTypes from "./types";
 
 // Adapters
 export {
@@ -40,10 +29,4 @@ export {
 export { TsMorphProjectFactory } from "./adapters/ts-morph-project-factory";
 
 // Services
-export { ArgTypesRowBuilder } from "./services/arg-types-row-builder";
-export { FilePathResolver } from "./services/file-path-resolver";
-export { JsDocMetadataExtractor } from "./services/jsdoc-metadata-extractor";
-export { StoryRegistryGenerator } from "./services/story-registry-generator";
-export { TypeDependencyResolver } from "./services/type-dependency-resolver";
-export { TypeFormattingService } from "./services/type-formatting-service";
-export { TypeScriptSourceProvider } from "./services/typescript-source-provider";
+export * from "./services";

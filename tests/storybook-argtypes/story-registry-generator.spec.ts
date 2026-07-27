@@ -1,7 +1,7 @@
 import type { IFileSystemAdapter } from "tools/storybook-argtypes/adapters/file-system-adapter";
 import type { FilePathResolver } from "tools/storybook-argtypes/services/file-path-resolver";
 import { StoryRegistryGenerator } from "tools/storybook-argtypes/services/story-registry-generator";
-import type { FileStat } from "tools/storybook-argtypes/types/arg-types-types";
+import type { FileStat } from "tools/storybook-argtypes/types";
 
 /** Minimal IFileSystemAdapter mock — every path is treated as non-existent by default. */
 function createMockFs(
@@ -215,7 +215,7 @@ describe("StoryRegistryGenerator", () => {
 
         it("falls back to src/{name}/types.ts when story-dir resolution fails", () => {
             const storyPath = "stories/button/button.stories.ts";
-            // eslint-disable-next-line @typescript-eslint/no-require-imports
+            // eslint-disable-next-line @typescript-eslint/no-require-imports, @typescript-eslint/consistent-type-imports
             const nodePath = require("node:path") as typeof import("node:path");
             const fallbackCandidate = nodePath.resolve(
                 "src",

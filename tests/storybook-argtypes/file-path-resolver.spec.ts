@@ -2,7 +2,7 @@ import * as path from "node:path";
 
 import type { IFileSystemAdapter } from "tools/storybook-argtypes/adapters/file-system-adapter";
 import { FilePathResolver } from "tools/storybook-argtypes/services/file-path-resolver";
-import type { FileStat } from "tools/storybook-argtypes/types/arg-types-types";
+import type { FileStat } from "tools/storybook-argtypes/types";
 
 /** Creates a mock IFileSystemAdapter where each key in existMap is a real file. */
 function createMockFs(

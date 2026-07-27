@@ -1,5 +1,5 @@
 import { JsDocMetadataExtractor } from "tools/storybook-argtypes/services/jsdoc-metadata-extractor";
-import type { JsDocMeta } from "tools/storybook-argtypes/types/arg-types-types";
+import type { JsDocMeta } from "tools/storybook-argtypes/types";
 import { Project, ScriptTarget } from "ts-morph";
 
 function createProject(): Project {

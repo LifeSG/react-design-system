@@ -9,7 +9,7 @@ import { existsSync, statSync } from "node:fs";
 import fs from "node:fs/promises";
 import { resolve } from "node:path";
 
-import type { FileStat } from "../types/arg-types-types";
+import type { FileStat } from "../types";
 
 /**
  * Interface for filesystem operations used by path resolution services.

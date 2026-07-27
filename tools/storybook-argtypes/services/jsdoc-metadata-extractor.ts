@@ -11,10 +11,7 @@ import {
     type SourceFile,
 } from "ts-morph";
 
-import type {
-    JsDocMeta,
-    StorybookTaggedDeclarationNode,
-} from "../types/arg-types-types";
+import type { JsDocMeta, StorybookTaggedDeclarationNode } from "../types";
 
 /** Nodes that can carry JSDoc in storybook generation. */
 type JsDocNode =

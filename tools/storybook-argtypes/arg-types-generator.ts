@@ -33,7 +33,7 @@ import { StoryRegistryGenerator } from "./services/story-registry-generator";
 import { TypeDependencyResolver } from "./services/type-dependency-resolver";
 import { TypeFormattingService } from "./services/type-formatting-service";
 import { TypeScriptSourceProvider } from "./services/typescript-source-provider";
-import type { GeneratedArgType } from "./types/arg-types-types";
+import type { GeneratedArgType } from "./types";
 
 /** Matches React HTML attribute interfaces (e.g. HTMLAttributes, ButtonHTMLAttributes, React.HTMLAttributes). */
 const HTML_ATTRIBUTES_REGEX = /(?:React\.)?\w*HTMLAttributes?$/;

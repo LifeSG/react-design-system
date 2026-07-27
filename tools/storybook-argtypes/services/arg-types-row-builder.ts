@@ -5,7 +5,7 @@
  * and control metadata from TypeScript properties and type declarations.
  */
 
-import type { GeneratedArgType } from "../types/arg-types-types";
+import type { GeneratedArgType } from "../types";
 
 /**
  * Builds Storybook argType rows.
