@@ -185,6 +185,10 @@ const plugins = [
     copy({
         targets: [
             {
+                src: "docs/*",
+                dest: "dist/docs",
+            },
+            {
                 src: "src/theme/styles/*",
                 dest: "dist/theme/styles",
                 transform: (contents) => {
