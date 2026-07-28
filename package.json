@@ -32,8 +32,8 @@
         "postinstall": "patch-package",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
-        "generate:catalog": "npx tsx scripts/generate-component-catalog.ts",
-        "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
+        "generate:catalog": "tsx scripts/generate-component-catalog.ts",
+        "codemod": "ENV=dev tsx codemods/run-codemod.ts",
         "lint": "npm run lint:js && npm run lint:css",
         "lint:js": "eslint '**/*.{ts,tsx,js,jsx}' && npm --prefix e2e/nextjs-app run lint:src",
         "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix && npm --prefix e2e/nextjs-app run lint:src:fix",
@@ -152,6 +152,7 @@
         "stylelint-config-recess-order": "^7.6.1",
         "stylelint-config-standard": "^40.0.0",
         "ts-morph": "^28.0.0",
+        "tsx": "^4.23.1",
         "typescript": "^5.7.3"
     },
     "peerDependencies": {
