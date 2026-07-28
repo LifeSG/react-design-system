@@ -1,3 +1,4 @@
+import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 
@@ -196,6 +197,14 @@ function extractSubComponentEntries(
     return entries;
 }
 
+function formatGenerated() {
+    spawnSync("npx", [
+        "pretty-quick",
+        "--pattern",
+        "docs/component-catalog.json",
+    ]);
+}
+
 // =============================================================================
 // Main
 // =============================================================================
@@ -260,6 +269,7 @@ async function main() {
 
     await fs.mkdir(path.dirname(OUTPUT_PATH), { recursive: true });
     await fs.writeFile(OUTPUT_PATH, JSON.stringify(catalog, null, 2) + "\n");
+    formatGenerated();
 
     console.log(
         `Generated ${path.relative(ROOT_DIR, OUTPUT_PATH)} (${
