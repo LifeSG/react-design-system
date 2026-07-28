@@ -76,6 +76,8 @@ const plugins = [
                 "**/custom-types/mdx.d.ts",
                 "**/custom-types/svg.d.ts",
                 "codemods",
+                "scripts",
+                "tools",
             ],
         },
     }),
