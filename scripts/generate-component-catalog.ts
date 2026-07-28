@@ -27,7 +27,7 @@ const SRC_INDEX_PATH = path.join(SRC_DIR, "index.ts");
 const OUTPUT_PATH = path.join(ROOT_DIR, "docs", "component-catalog.json");
 
 const CATALOG_TAG = "// @catalog";
-const KEYWORDS_TAG = "@keywords";
+const KEYWORDS_TAG = "keywords";
 
 // =============================================================================
 // Helpers
