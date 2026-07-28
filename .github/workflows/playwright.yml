@@ -44,6 +44,7 @@ jobs:
           path: e2e/nextjs-app/.next/
           retention-days: 1
           if-no-files-found: error
+          include-hidden-files: true
 
   test:
     needs: build
