@@ -1,7 +1,7 @@
 {
   "meta": {
     "packageName": "@lifesg/react-design-system",
-    "totalComponents": 86
+    "totalComponents": 98
   },
   "components": [
     {
@@ -155,6 +155,12 @@
       "keywords": []
     },
     {
+      "name": "Form",
+      "importPath": "@lifesg/react-design-system/form",
+      "description": "A collection of form field components that each combine a label, input control, and inline error message with consistent ARIA wiring.  Use `Form.*` sub-components to build accessible forms. Use `Form.CustomField` to wrap any bespoke input element in the same layout.  Sub-components: - `Form.CustomField` — layout shell for wrapping custom input elements. - `Form.DateInput` — single date picker. - `Form.DateRangeInput` — date range picker. - `Form.ESignature` — e-signature capture field. - `Form.HistogramSlider` — range slider with histogram overlay. - `Form.Input` — single-line text input field. - `Form.InputGroup` — grouped inputs with shared label and error state. - `Form.Label` — standalone label for use outside a `Form.*` field. - `Form.MaskedInput` — text input with a character-level input mask. - `Form.MultiSelect` — multi-value dropdown select. - `Form.NestedMultiSelect` — hierarchical multi-value select. - `Form.NestedSelect` — hierarchical single-value select. - `Form.OtpVerification` — OTP send-and-verify flow. - `Form.PhoneNumberInput` — phone number input with country code selection. - `Form.PredictiveTextInput` — text input with predictive suggestions. - `Form.RangeSelect` — dual-value range dropdown select. - `Form.RangeSlider` — dual-handle range slider. - `Form.Select` — single-value dropdown select. - `Form.SelectHistogram` — select control with histogram. - `Form.Slider` — single-value range slider. - `Form.Textarea` — multi-line text area. - `Form.Timepicker` — time picker. - `Form.TimeRangePicker` — time range picker. - `Form.UnitNumberInput` — structured unit number input.",
+      "keywords": []
+    },
+    {
       "name": "FullscreenImageCarousel",
       "importPath": "@lifesg/react-design-system/fullscreen-image-carousel",
       "description": "A fullscreen modal carousel for browsing images and custom media items.  Use to present a collection of images or custom content in an overlay with navigation controls, zoom support, and an optional thumbnail strip. The top info bar is rendered only when at least one item provides some file metadata.",
@@ -227,9 +233,21 @@
       "keywords": []
     },
     {
+      "name": "Textarea",
+      "importPath": "@lifesg/react-design-system/input-textarea",
+      "description": "A multi-line text input with an optional character counter and prefix.",
+      "keywords": []
+    },
+    {
       "name": "LanguageSwitcher",
       "importPath": "@lifesg/react-design-system/language-switcher",
       "description": "A locale-switching control that lets users change the active display language.  Use `LanguageSwitcher` to surface supported languages as either a compact dropdown or a set of inline links.",
+      "keywords": []
+    },
+    {
+      "name": "Layout",
+      "importPath": "@lifesg/react-design-system/layout",
+      "description": "A set of structural layout primitives for composing page regions.  Use `Layout` sub-components to establish full-width page sections, centred content areas, and responsive grid columns. Sub-components: - `Layout.ColDiv` — a `<div>` that occupies a responsive column span within a grid `Container`. - `Layout.Container` — a flex or grid layout wrapper constrained to the content width. - `Layout.Content` — the primary content block, composes of `Section` + `Container`. Use `Section` and `Container` directly for more granular control. - `Layout.Section` — a full-width semantic `<section>` page region.",
       "keywords": []
     },
     {
@@ -260,6 +278,12 @@
       "name": "Menu",
       "importPath": "@lifesg/react-design-system/menu",
       "description": "A popover-anchored menu composed of sections and interactive items.  Use `Menu` when a trigger element should open a floating panel of actions or navigation links.  Sub-components: - `Menu.Content` — the floating panel that contains menu sections. - `Menu.Item` — a non-anchor interactive list item with a primary label and optional sub-label. - `Menu.Link` — an anchor (`<a>`) list item styled as a menu entry. - `Menu.Section` — a grouping container for `Menu.Item` and `Menu.Link` entries.",
+      "keywords": []
+    },
+    {
+      "name": "Modal",
+      "importPath": "@lifesg/react-design-system/modal",
+      "description": "A full-screen overlay modal with a slide animation.  Use `Modal` to present content that requires the user's immediate attention or a focused interaction. Use `ModalV2` for built-in scroll handling and improved accessibility.  Sub-components: - `Modal.Box` — a styled content box with an optional close button.",
       "keywords": []
     },
     {
@@ -446,6 +470,54 @@
       "name": "ThemeProvider",
       "importPath": "@lifesg/react-design-system/theme",
       "description": "Establishes a themed scope for its subtree.  Wrap a section of the tree in `ThemeProvider` to activate a design-token set and colour mode. Components below it read tokens via CSS variables or the `useTheme` hook. Providers can be nested to override a subtree's theme.",
+      "keywords": []
+    },
+    {
+      "name": "useApplyStyle",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Hook to apply styles to a HTML DOM element. Use when you need to apply inline styles but cannot use the inline React `style` prop due to strict CSP rules.",
+      "keywords": []
+    },
+    {
+      "name": "useDesignToken",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Resolves a design-token CSS variable to its computed string value within the nearest `ThemeProvider` scope.",
+      "keywords": []
+    },
+    {
+      "name": "useInheritedThemeScope",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Builds `data-fds-theme*` attributes and inline CSS variables for re-stamping the current theme onto a detached DOM element (e.g. a portal or floating overlay).",
+      "keywords": []
+    },
+    {
+      "name": "useMaxWidthMediaQuery",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Returns `true` when the viewport width is at or below the named breakpoint.",
+      "keywords": []
+    },
+    {
+      "name": "useMediaQuery",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Reactive boolean hook that evaluates a media query built from width breakpoint tokens and optional custom feature clauses.",
+      "keywords": []
+    },
+    {
+      "name": "useMinWidthMediaQuery",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Returns `true` when the viewport width is at or above the named breakpoint.",
+      "keywords": []
+    },
+    {
+      "name": "useResolvedBreakpointToken",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Resolves a width breakpoint CSS variable token to its computed pixel string.",
+      "keywords": []
+    },
+    {
+      "name": "useTheme",
+      "importPath": "@lifesg/react-design-system/theme",
+      "description": "Returns the theme context from the nearest `ThemeProvider`.",
       "keywords": []
     },
     {

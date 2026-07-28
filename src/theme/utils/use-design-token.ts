@@ -8,6 +8,7 @@ const isEmptyValue = (value: unknown) => {
     return value == null || value === "";
 };
 
+// @catalog
 /**
  * Resolves a design-token CSS variable to its computed string value within the
  * nearest `ThemeProvider` scope.

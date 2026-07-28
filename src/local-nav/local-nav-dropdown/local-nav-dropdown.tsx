@@ -406,7 +406,7 @@ const Component = (
         </>
     );
 };
-
+// @catalog
 /**
  * A collapsible dropdown used for in-page navigation on mobile viewports.
  *

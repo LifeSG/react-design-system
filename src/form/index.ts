@@ -25,6 +25,7 @@ import { FormUnitNumberInput } from "./form-unit-number-input";
 
 export * from "./types";
 
+// @catalog
 /**
  * A collection of form field components that each combine a label, input
  * control, and inline error message with consistent ARIA wiring.

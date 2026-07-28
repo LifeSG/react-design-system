@@ -110,6 +110,7 @@ const Component = (
     );
 };
 
+// @catalog
 /**
  * A sidebar navigation list that highlights the currently selected section.
  *

@@ -3,6 +3,7 @@ import { Container } from "./container";
 import { Content } from "./content";
 import { Section } from "./section";
 
+// @catalog
 /**
  * A set of structural layout primitives for composing page regions.
  *

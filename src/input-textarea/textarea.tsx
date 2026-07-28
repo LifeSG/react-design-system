@@ -209,6 +209,7 @@ const TextareaComponent = (
     );
 };
 
+// @catalog
 /**
  * A multi-line text input with an optional character counter and prefix.
  */
