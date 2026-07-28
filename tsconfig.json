@@ -29,7 +29,6 @@
         "noFallthroughCasesInSwitch": true // report error for fallthrough cases
     },
     "include": [
-        ".storybook/**/*",
         "src/**/*",
         "tests/**/*",
         "custom-types/*",
