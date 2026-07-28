@@ -1,29 +1,32 @@
 import * as nodePath from "node:path";
 
+import type { IFileSystemAdapter } from "tools/storybook-argtypes/adapters/file-system-adapter";
 import { ArgTypesGenerator } from "tools/storybook-argtypes/arg-types-generator";
 import { TsMorphProjectFactory } from "tools/storybook-argtypes/index";
-
-// ---------------------------------------------------------------------------
-// Mock node:fs/promises so generateForSourceFile never touches the real disk.
-// ---------------------------------------------------------------------------
-jest.mock("node:fs/promises", () => ({
-    __esModule: true,
-    default: {
-        mkdir: jest.fn().mockResolvedValue(undefined),
-        writeFile: jest.fn().mockResolvedValue(undefined),
-    },
-}));
+import type { FileStat } from "tools/storybook-argtypes/types";
 
 jest.mock("node:child_process", () => ({
     spawnSync: jest.fn().mockReturnValue({ status: 0 }),
 }));
 
-// Import AFTER the mock so we get the mocked version.
-// eslint-disable-next-line @typescript-eslint/no-require-imports
-const fsMock = require("node:fs/promises").default as {
-    mkdir: jest.Mock;
-    writeFile: jest.Mock;
-};
+function createMockFsAdapter(): jest.Mocked<IFileSystemAdapter> {
+    return {
+        existsSync: jest.fn().mockReturnValue(false),
+        mkdir: jest.fn().mockResolvedValue(undefined),
+        resolvePath: jest.fn((...segments: string[]) =>
+            nodePath.resolve(...segments)
+        ),
+        rm: jest.fn().mockResolvedValue(undefined),
+        statSync: jest.fn(
+            (_path: string) =>
+                ({
+                    isDirectory: () => false,
+                    isFile: () => false,
+                } as FileStat)
+        ),
+        writeFile: jest.fn().mockResolvedValue(undefined),
+    };
+}
 
 // ---------------------------------------------------------------------------
 // Helpers
@@ -53,11 +56,13 @@ function addSourceFile(relPath: string, content: string) {
 
 describe("ArgTypesGenerator", () => {
     let generator: ArgTypesGenerator;
+    let fsAdapterMock: jest.Mocked<IFileSystemAdapter>;
 
     beforeEach(() => {
-        generator = new ArgTypesGenerator();
-        fsMock.mkdir.mockClear();
-        fsMock.writeFile.mockClear();
+        fsAdapterMock = createMockFsAdapter();
+        generator = new ArgTypesGenerator(fsAdapterMock);
+        fsAdapterMock.mkdir.mockClear();
+        fsAdapterMock.writeFile.mockClear();
     });
 
     // -------------------------------------------------------------------------
@@ -124,7 +129,7 @@ describe("ArgTypesGenerator", () => {
                 await generator.generateForSourceFile(
                     testPath("skipped/types.ts")
                 );
-                expect(fsMock.writeFile).not.toHaveBeenCalled();
+                expect(fsAdapterMock.writeFile).not.toHaveBeenCalled();
             } finally {
                 cleanup();
             }
@@ -143,8 +148,8 @@ describe("ArgTypesGenerator", () => {
                     testPath("simple-comp/types.ts")
                 );
 
-                expect(fsMock.writeFile).toHaveBeenCalledTimes(1);
-                const [writtenPath, content] = fsMock.writeFile.mock
+                expect(fsAdapterMock.writeFile).toHaveBeenCalledTimes(1);
+                const [writtenPath, content] = fsAdapterMock.writeFile.mock
                     .calls[0] as [string, string];
 
                 expect(writtenPath).toContain(
@@ -171,7 +176,7 @@ describe("ArgTypesGenerator", () => {
                     testPath("required-comp/types.ts")
                 );
 
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
@@ -213,7 +218,7 @@ describe("ArgTypesGenerator", () => {
                     testPath("tabgroup-child/types.ts")
                 );
 
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
@@ -236,7 +241,7 @@ describe("ArgTypesGenerator", () => {
                     testPath("tabgroup-own/types.ts")
                 );
 
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
@@ -256,7 +261,7 @@ describe("ArgTypesGenerator", () => {
                 await generator.generateForSourceFile(
                     testPath("standalone-union/types.ts")
                 );
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
@@ -281,7 +286,7 @@ describe("ArgTypesGenerator", () => {
                 await generator.generateForSourceFile(
                     testPath("omit-alias/types.ts")
                 );
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
@@ -308,7 +313,7 @@ describe("ArgTypesGenerator", () => {
                 await generator.generateForSourceFile(
                     testPath("type-literal/types.ts")
                 );
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
@@ -329,7 +334,7 @@ describe("ArgTypesGenerator", () => {
                 await generator.generateForSourceFile(
                     testPath("intersection/types.ts")
                 );
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
@@ -354,7 +359,7 @@ describe("ArgTypesGenerator", () => {
                 await generator.generateForSourceFile(
                     testPath("object-union/types.ts")
                 );
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
@@ -377,7 +382,7 @@ describe("ArgTypesGenerator", () => {
                 await generator.generateForSourceFile(
                     testPath("fn-alias/types.ts")
                 );
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
@@ -410,7 +415,7 @@ describe("ArgTypesGenerator", () => {
                 await generator.generateForSourceFile(
                     testPath("tabgroup-alias-child/types.ts")
                 );
-                const [, content] = fsMock.writeFile.mock.calls[0] as [
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
                     string,
                     string
                 ];
