@@ -4,9 +4,9 @@ import path from "node:path";
 
 const ciConfig: NextConfig = {
     // FIXME: BOOKINGSG-9316: Turbopack is currently disabled due to an issue with CSS load order. Re-enable once the issue is resolved.
-    // turbopack: {
-    //     root: path.join(__dirname),
-    // },
+    turbopack: {
+        root: path.join(__dirname),
+    },
     outputFileTracingRoot: path.join(__dirname),
     typescript: {
         tsconfigPath: "tsconfig.ci.json",
@@ -19,12 +19,12 @@ const devConfig: LinariaConfig = withLinaria({
     // Allow this dev origin so HMR websocket upgrades are not rejected.
     allowedDevOrigins: ["host.docker.internal"],
     // FIXME: BOOKINGSG-9316: Turbopack is currently disabled due to an issue with CSS load order. Re-enable once the issue is resolved.
-    // turbopack: {
-    //     root: path.join(__dirname, "../../"),
-    //     resolveAlias: {
-    //         "@lifesg/react-design-system": "../../src",
-    //     },
-    // },
+    turbopack: {
+        root: path.join(__dirname, "../../"),
+        resolveAlias: {
+            "@lifesg/react-design-system": "../../src",
+        },
+    },
     outputFileTracingRoot: path.join(__dirname, "../../"),
     typescript: {
         tsconfigPath: "tsconfig.json",
