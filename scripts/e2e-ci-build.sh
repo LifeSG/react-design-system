@@ -11,7 +11,6 @@ echo "[CI] Building v$LIB_VERSION"
 # Install built library into E2E Next.js app and pre-build it
 echo "[CI] Installing in NextJS"
 pushd e2e/nextjs-app
-npm ci
 npm i ../../dist/lifesg-react-design-system-$LIB_VERSION.tgz
 npm run build
 popd
