@@ -1,7 +1,7 @@
 {
     "meta": {
         "packageName": "@lifesg/react-design-system",
-        "totalComponents": 98
+        "totalComponents": 102
     },
     "components": [
         {
@@ -14,6 +14,30 @@
             "name": "Alert",
             "importPath": "@lifesg/react-design-system/alert",
             "description": "Displays an inline contextual banner with a severity-coded message.  Use `Alert` to surface feedback, status, or supplementary information without interrupting the user's workflow. Supports five severity tones, an optional icon, a call-to-action link, and a collapsible content area for lengthy messages.",
+            "keywords": []
+        },
+        {
+            "name": "LoadingDots",
+            "importPath": "@lifesg/react-design-system/animations",
+            "description": "An animated loading indicator with bouncing dots.",
+            "keywords": []
+        },
+        {
+            "name": "LoadingDotsSpinner",
+            "importPath": "@lifesg/react-design-system/animations",
+            "description": "An animated loading indicator combining dots with a spinning motion.",
+            "keywords": []
+        },
+        {
+            "name": "LoadingSpinner",
+            "importPath": "@lifesg/react-design-system/animations",
+            "description": "An animated circular loading spinner.",
+            "keywords": []
+        },
+        {
+            "name": "ThemedLoadingSpinner",
+            "importPath": "@lifesg/react-design-system/animations",
+            "description": "A loading spinner that automatically adapts to the theme's resourceScheme.",
             "keywords": []
         },
         {
