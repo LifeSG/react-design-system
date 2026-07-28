@@ -168,27 +168,15 @@ export class StoryRegistryGenerator {
      * Generate complete registry file content.
      * Returns the full content for the storybook-argtypes.generated.ts file.
      *
-     * When storyFiles are provided, this method resolves registry entries from
-     * those ts-morph source files and applies optional filtering.
-     *
      * @returns Complete file content
      */
-    public generateRegistryFileContent(options?: {
-        storyFiles?: SourceFile[];
-        shouldIncludeTypesFile?: (typesFilePath: string) => boolean;
-        aliasExports?: boolean;
-        header?: string;
-        withSatisfiesClause?: boolean;
-    }): string {
-        if (!options?.storyFiles) {
-            return this.renderRegistryFileContent(this.generateRegistry(), {
-                header: this.getRegistryFileHeader(),
-            });
-        }
-
+    public generateRegistryFileContent(
+        storyFiles: SourceFile[],
+        shouldIncludeTypesFile: (typesFilePath: string) => boolean
+    ): string {
         const registry: Record<string, { source: string; export: string }> = {};
 
-        for (const storyFile of options.storyFiles) {
+        for (const storyFile of storyFiles) {
             const storyFilePath = storyFile.getFilePath();
             const fileText = storyFile.getFullText();
             const title = this.filePathResolver.getStoryTitle(fileText);
@@ -257,10 +245,7 @@ export class StoryRegistryGenerator {
                 continue;
             }
 
-            if (
-                options.shouldIncludeTypesFile &&
-                !options.shouldIncludeTypesFile(typesFilePath)
-            ) {
+            if (!shouldIncludeTypesFile(typesFilePath)) {
                 continue;
             }
 
@@ -272,22 +257,11 @@ export class StoryRegistryGenerator {
             };
         }
 
-        return this.renderRegistryFileContent(registry, {
-            aliasExports: options.aliasExports,
-            header:
-                options.header ||
-                "// This file is generated. Do not edit manually.\n// Run: npm run storybook:argtypes\n\n",
-            withSatisfiesClause: options.withSatisfiesClause,
-        });
+        return this.renderRegistryFileContent(registry);
     }
 
     private renderRegistryFileContent(
-        registry: Record<string, { source: string; export: string }>,
-        options: {
-            header: string;
-            aliasExports?: boolean;
-            withSatisfiesClause?: boolean;
-        }
+        registry: Record<string, { source: string; export: string }>
     ): string {
         const importsBySource = new Map<string, Set<string>>();
 
@@ -300,21 +274,20 @@ export class StoryRegistryGenerator {
             importsBySource.get(source)!.add(exportName);
         }
 
-        let content = options.header;
+        let content =
+            "// This file is generated. Do not edit manually.\n// Run: npm run storybook:argtypes\n\n";
 
         for (const [source, exports] of importsBySource) {
             const sortedExports = Array.from(exports).sort();
-            const exportList = options.aliasExports
-                ? sortedExports
-                      .map(
-                          (exportName) =>
-                              `${exportName} as ${exportName.replace(
-                                  /ExtraArgTypes$/,
-                                  "StoryArgTypes"
-                              )}`
-                      )
-                      .join(", ")
-                : sortedExports.join(", ");
+            const exportList = sortedExports
+                .map(
+                    (exportName) =>
+                        `${exportName} as ${exportName.replace(
+                            /ExtraArgTypes$/,
+                            "StoryArgTypes"
+                        )}`
+                )
+                .join(", ");
 
             content += `import { ${exportList} } from "${source}";\n`;
         }
@@ -325,15 +298,14 @@ export class StoryRegistryGenerator {
         for (const [title, { export: exportName }] of Object.entries(
             registry
         ).sort()) {
-            const mapValue = options.aliasExports
-                ? exportName.replace(/ExtraArgTypes$/, "StoryArgTypes")
-                : exportName;
+            const mapValue = exportName.replace(
+                /ExtraArgTypes$/,
+                "StoryArgTypes"
+            );
             content += `  "${title}": ${mapValue},\n`;
         }
 
-        content += options.withSatisfiesClause
-            ? "} satisfies Record<string, Record<string, unknown>>;\n"
-            : "};\n";
+        content += "} satisfies Record<string, Record<string, unknown>>;\n";
 
         return content;
     }

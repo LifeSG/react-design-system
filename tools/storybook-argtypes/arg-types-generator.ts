@@ -219,18 +219,16 @@ export class ArgTypesGenerator {
             "stories/**/*.stories.@(ts|tsx)"
         );
         const generated =
-            this.storyRegistryGenerator.generateRegistryFileContent({
-                aliasExports: true,
-                shouldIncludeTypesFile: (typesFilePath) => {
+            this.storyRegistryGenerator.generateRegistryFileContent(
+                storyFiles,
+                (typesFilePath) => {
                     const typesSourceFile =
                         this.sourceProvider.getSourceFile(typesFilePath);
                     return !this.jsDocExtractor.isSkippedSourceFile(
                         typesSourceFile
                     );
-                },
-                storyFiles,
-                withSatisfiesClause: true,
-            });
+                }
+            );
 
         await this.fsAdapter.mkdir(path.dirname(STORYBOOK_ARGTYPES_FILE), {
             recursive: true,
