@@ -1,0 +1,50 @@
+import { PhoneNumberInput } from "../../phone-number-input/phone-number-input";
+import { useId } from "../../util";
+import { FormWrapper } from "../form-wrapper";
+import type { FormPhoneNumberInputProps } from "./types";
+
+export const FormPhoneNumberInput = ({
+    label,
+    errorMessage,
+    id,
+    "data-error-testid": errorTestId,
+    "data-testid": testId,
+    layoutType,
+    xxsCols,
+    xsCols,
+    smCols,
+    mdCols,
+    lgCols,
+    xlCols,
+    xxlCols,
+    ...otherProps
+}: FormPhoneNumberInputProps): JSX.Element => {
+    const internalId = useId();
+    const inputId = id ?? `form-phone-number-input-${internalId}`;
+
+    return (
+        <FormWrapper
+            id={inputId}
+            data-testid={testId}
+            label={label}
+            errorMessage={errorMessage}
+            data-error-testid={errorTestId}
+            layoutType={layoutType}
+            xxsCols={xxsCols}
+            xsCols={xsCols}
+            smCols={smCols}
+            mdCols={mdCols}
+            lgCols={lgCols}
+            xlCols={xlCols}
+            xxlCols={xxlCols}
+        >
+            <PhoneNumberInput
+                id={`${inputId}-base`}
+                data-testid={testId ? `${testId}-base` : undefined}
+                aria-labelledby={`${inputId}-label`}
+                error={!!errorMessage}
+                {...otherProps}
+            />
+        </FormWrapper>
+    );
+};

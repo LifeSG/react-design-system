@@ -3,6 +3,10 @@ module.exports = {
     rootDir: ".",
     moduleFileExtensions: ["tsx", "ts", "js"],
     coverageDirectory: "<rootDir>/tests/coverage",
+    coveragePathIgnorePatterns: [
+        "node_modules",
+        "tools/storybook-argtypes/adapters",
+    ],
     testEnvironment: "jsdom",
     testMatch: ["<rootDir>/tests/**/*.spec.[jt]s?(x)"],
     moduleNameMapper: {

@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { lazy, Suspense } from "react";
 
-import type { BaseAnimationProps } from "../types";
+import type { AnimationProps } from "../types";
 import * as styles from "./loading-spinner.styles";
 
 // lazy load to fix next.js SSR errors
@@ -12,7 +12,7 @@ const LottieSpinner = lazy(async () => ({
 export const LoadingSpinner = ({
     className,
     ...otherProps
-}: BaseAnimationProps) => {
+}: AnimationProps) => {
     return (
         <div {...otherProps} className={clsx(styles.container, className)}>
             <Suspense fallback={<Placeholder />}>

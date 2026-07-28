@@ -1,5 +1,6 @@
 import type { Preview } from "@storybook/react-webpack5";
 import { INITIAL_VIEWPORTS } from "storybook/viewport";
+import { ThemeDocsContainer } from "./decorators/theme-docs-container";
 import { withThemeFromJSXProvider } from "./decorators/theme-decorator";
 
 import "./preview.css";
@@ -55,6 +56,8 @@ const preview: Preview = {
         },
         docs: {
             codePanel: true,
+            // https://storybook.js.org/docs/writing-docs/autodocs#customize-the-docs-container
+            container: ThemeDocsContainer,
         },
     },
 };

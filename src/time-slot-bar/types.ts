@@ -10,9 +10,9 @@ export type TimeSlotBarVariant = "minified" | "default";
 
 export type { SlotStyle } from "../shared/time-slot/types";
 
+// @storybookSkipProps
 /**
  * Imperative handle returned by `TimeSlotBar` via `ref`.
- *
  */
 export interface TimeSlotBarRef {
     /**
@@ -26,8 +26,8 @@ export interface TimeSlotBarRef {
  * Visual styling attributes applied to an individual time slot or the bar background.
  */
 interface TimeSlotBarStyleAttributes {
-    /*
-     * Visual style for the slot fill.*
+    /**
+     * Visual style for the slot fill.
      *
      * @default "default"
      */

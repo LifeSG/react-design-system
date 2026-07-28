@@ -1,11 +1,14 @@
+// @storybookSkipProps
 interface SidenavBaseProps {
     id?: string | undefined;
     "data-testid"?: string | undefined;
     className?: string | undefined;
 }
 
+// @storybookSection Sidenav
 /**
  * Props for the `Sidenav` component.
+ *
  */
 export interface SidenavProps extends SidenavBaseProps {
     /**
@@ -26,6 +29,7 @@ export interface SidenavProps extends SidenavBaseProps {
     "aria-label"?: string | undefined;
 }
 
+// @storybookSection Sidenav.Group
 /**
  * Props for the `Sidenav.Group` sub-component.
  */
@@ -44,6 +48,7 @@ export interface SidenavGroupProps extends SidenavBaseProps {
     "aria-label"?: string | undefined;
 }
 
+// @storybookSection Sidenav.Item
 /**
  * Props for the `Sidenav.Item` sub-component.
  */
@@ -75,6 +80,7 @@ export interface SidenavItemProps extends SidenavBaseProps {
     children?: React.ReactNode | undefined;
 }
 
+// @storybookSection Sidenav.DrawerItem
 /**
  * Props for the `Sidenav.DrawerItem` sub-component.
  */
@@ -97,6 +103,7 @@ export interface SidenavDrawerItemProps extends SidenavBaseProps {
     onClick?: ((id: string | undefined) => void) | undefined;
 }
 
+// @storybookSection Sidenav.DrawerSubitem
 /**
  * Props for the `Sidenav.DrawerSubitem` sub-component.
  */

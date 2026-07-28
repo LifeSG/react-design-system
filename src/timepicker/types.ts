@@ -41,7 +41,7 @@ export interface TimepickerProps {
     /**
      * Placeholder text shown when no value is selected.
      *
-     * @default `"hh:mm"` for 24-hour format or `"hh:mmA"` for 12-hour format.
+     * @default "hh:mm" for 24-hour format or "hh:mmA" for 12-hour format.
      */
     placeholder?: string | undefined;
     /**
@@ -70,7 +70,7 @@ export interface TimepickerProps {
      * Note: if a parent of the trigger has a higher `z-index` than the dropdown,
      * the dropdown may be obscured.
      *
-     * @default `document.body`
+     * @default document.body
      */
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /**

@@ -18,7 +18,11 @@ export interface FileItemDownloadProps {
     errorMessage?: string | React.ReactNode | undefined;
     /** URL or data URL for a thumbnail image shown alongside the file entry. */
     thumbnailImageDataUrl?: string | undefined;
-    /** Truncates long file names with an ellipsis when `true`. */
+    /**
+     * Truncates long file names with an ellipsis when `true`.
+     *
+     * @default true
+     */
     truncateText?: boolean | undefined;
     /**
      * Indicates the file is available and ready to be downloaded.
@@ -63,6 +67,7 @@ export interface FileDownloadProps {
      * and the error UI is shown for that file card.
      *
      * @param file The file item that was activated for download.
+     * @returns A `Promise` that resolves when the download is complete, or `void` for synchronous handling.
      */
     onDownload: (file: FileItemDownloadProps) => void | Promise<void>;
 }

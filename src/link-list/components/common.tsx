@@ -3,8 +3,8 @@ import clsx from "clsx";
 import type React from "react";
 
 import { Typography } from "../../typography";
-import type { LinkListItemProps, LinkListStyle } from "../internal-types";
 import * as styles from "../link-list.styles";
+import type { LinkListItemProps, LinkListStyle } from "../types";
 
 type LinkListItemsProps<T> = {
     "data-testid"?: string | undefined;

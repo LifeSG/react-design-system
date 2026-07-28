@@ -1,5 +1,6 @@
 import type { TypographyLinkProps, TypographyProps } from "../typography";
 
+// @storybookSection NotificationBanner
 /**
  * Props for the `NotificationBanner` component.
  *
@@ -52,6 +53,7 @@ export interface NotificationBannerProps
     actionButton?: React.ButtonHTMLAttributes<HTMLButtonElement> | undefined;
 }
 
+// @storybookSkipProps
 /**
  * Props for the `withNotificationBanner` HOC wrapper,
  * extending `NotificationBannerProps` with a forwarded ref.
@@ -61,6 +63,7 @@ export interface NotificationBannerWithForwardedRefProps
     forwardedRef?: React.Ref<HTMLDivElement> | undefined;
 }
 
+// @storybookSection withNotificationBanner
 /**
  * Discriminant for `NotificationContentAttributes` content items.
  *
@@ -69,11 +72,14 @@ export interface NotificationBannerWithForwardedRefProps
  */
 export type ContentType = "text" | "link";
 
+// @storybookSection NotificationBanner.Link
 /** Props for a `"link"` content item inside a notification banner. */
 export interface ContentLinkAttributes extends TypographyLinkProps {}
+// @storybookSkipProps
 /** Props for a `"text"` content item inside a notification banner. */
 export interface ContentTextAttributes extends TypographyProps {}
 
+// @storybookSection withNotificationBanner
 /**
  * A single content item for use with `withNotificationBanner`.
  */

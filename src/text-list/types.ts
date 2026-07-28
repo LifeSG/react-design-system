@@ -5,6 +5,7 @@ import type { FontSize } from "../theme";
  */
 export type TextListSize = Exclude<FontSize, "form-label" | "form-description">;
 
+// @storybookSkipProps
 /** Shared props for both ordered and unordered text list variants. */
 interface BaseListProps {
     children: JSX.Element | JSX.Element[];

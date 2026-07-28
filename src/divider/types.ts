@@ -34,7 +34,7 @@ export interface DividerProps
      * Color of the line. Accepts a design-system colour token or any valid CSS
      * color value.
      *
-     * @default `Colour["border"]`
+     * @default Colour["border"]
      */
     color?: string | undefined;
 }

@@ -3,15 +3,19 @@ import type React from "react";
 import type { AlertProps } from "../alert";
 import type { MaskAttributeProps } from "../masked-input";
 
+// @storybookSection UneditableSection.Item
 /** Grid column span for an item within the section layout. */
 export type UneditableSectionItemDisplayWidth = "half" | "full";
 /** Whether the item value is currently masked or unmasked. */
+// @storybookSection UneditableSection.Item
 export type UneditableSectionItemMaskState = "masked" | "unmasked";
+// @storybookSection UneditableSection.Item
 /** Async loading state during a mask or unmask action. */
 export type UneditableSectionItemMaskLoadingState = "loading" | "fail";
 
+// @storybookSection UneditableSection.Item
 /**
- * Props for `UneditableSection` component.
+ * Props for the `UneditableSection.Item` sub-component.
  */
 export interface UneditableSectionItemProps extends MaskAttributeProps {
     id?: string | undefined;
@@ -45,8 +49,9 @@ export interface UneditableSectionItemProps extends MaskAttributeProps {
     alert?: AlertProps | undefined;
 }
 
+// @storybookSection UneditableSection.ItemSection
 /**
- * Props for `UneditableSection.ItemSection`.
+ * Props for the `UneditableSection.ItemSection` sub-component.
  */
 export interface UneditableSectionItemSectionProps
     extends React.HTMLAttributes<HTMLUListElement> {
@@ -54,6 +59,7 @@ export interface UneditableSectionItemSectionProps
     stretch?: boolean | undefined;
 }
 
+// @storybookSection UneditableSection
 /**
  * Props for the `UneditableSection` component.
  */

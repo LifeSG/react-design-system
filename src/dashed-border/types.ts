@@ -1,3 +1,5 @@
+// @storybookSkipFile
+
 import type {
     BorderThickness,
     ColourCSSVariableString,

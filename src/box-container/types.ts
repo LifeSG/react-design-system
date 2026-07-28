@@ -30,6 +30,8 @@ export interface BoxContainerProps {
     /**
      * Renders an inline alert icon next to the title and announces the state to
      * screen readers. Has no effect when set to `"default"`.
+     *
+     * @default "default"
      */
     displayState?: BoxContainerDisplayState | undefined;
     className?: string | undefined;

@@ -1,5 +1,6 @@
 import type { ColourCSSVariableString, FontSize } from "../theme";
 
+// @storybookSkipProps
 type CustomCssString = string & {};
 type MarkupTextSize = Exclude<FontSize, "form-label" | "form-description">;
 

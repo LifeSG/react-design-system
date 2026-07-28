@@ -37,6 +37,7 @@ export interface SingpassButtonProps
     sizeType?: SingpassButtonSizeType | undefined;
 }
 
+// @storybookSkipProps
 /**
  * Ref type for the underlying `<button>` element rendered by `SingpassButton`.
  */

@@ -87,6 +87,7 @@ export interface NavbarActionButtonCtaProps {
 
 /** Props for the internal `"component"` type action button wrapper. */
 interface NavbarButtonComponentProps {
+    /** The custom component to be rendered */
     render: JSX.Element;
 }
 
@@ -154,6 +155,7 @@ export interface NavbarResourcesProps {
     secondary?: NavbarBrandingProps | undefined;
 }
 
+// @storybookSkipProps
 /**
  * Props shared between `NavbarProps` and `NavbarDrawerProps`.
  */
@@ -194,6 +196,7 @@ export type DrawerDismissalMethod =
     | "brand-click";
 
 // TODO: Make this to be an internal type
+// @storybookSkipProps
 /**
  * Props for the internal mobile navigation drawer panel.
  */
@@ -232,6 +235,7 @@ export interface NavbarDrawerProps extends NavbarSharedProps {
  */
 export type BrandType = "primary" | "secondary";
 
+// @storybookSkipProps
 /**
  * Imperative methods exposed by the `Navbar` component via `ref`.
  */
@@ -243,6 +247,7 @@ export type NavbarDrawerApi = {
     dismissDrawer: () => void;
 };
 
+// @storybookSkipProps
 /**
  * Imperative handle returned by `Navbar` via `ref`.
  *
