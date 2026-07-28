@@ -1,4 +1,4 @@
 #!/bin/sh
 . "$(dirname "$0")/_/husky.sh"
 
-npm run test && npm run build
+npm run generate:catalog && git add docs/component-catalog.json && npm run test && npm run build
