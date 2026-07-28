@@ -11,8 +11,8 @@ export default defineConfig({
     forbidOnly: !!process.env.CI,
     /* Disable retries */
     retries: 0,
-    /* Run tests in parallel. Undefined resolves to half of the CPU cores. */
-    workers: process.env.CI ? "50%" : undefined,
+    /* Run tests in parallel. Use 2 workers on CI (ubuntu-latest has 2 vCPUs). */
+    workers: process.env.CI ? 2 : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: process.env.CI
         ? [["github"], ["html"], ["blob"]]
@@ -60,7 +60,7 @@ export default defineConfig({
         },
         {
             command: process.env.CI
-                ? "cd e2e/nextjs-app && npm run build && npm run start"
+                ? "cd e2e/nextjs-app && npm run start"
                 : "cd e2e/nextjs-app && npm run dev",
             url: "http://localhost:3000",
             reuseExistingServer: !process.env.CI,

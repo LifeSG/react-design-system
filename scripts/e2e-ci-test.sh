@@ -7,12 +7,11 @@ set -e
 # Accepts an optional shard argument, e.g. ./scripts/e2e-ci-test.sh 1/4
 SHARD=${1:-""}
 
-# Set up E2E test environment
-LIB_VERSION=$(npm pkg get version --workspaces=false | tr -d \")
-echo "[CI] Installing in NextJS"
+# Restore built library into the E2E Next.js app (node_modules already has base deps)
+LIB_VERSION=$(npm pkg get version --workspaces=false | tr -d ")
+echo "[CI] Restoring library in NextJS"
 pushd e2e/nextjs-app
 npm i ../../dist/lifesg-react-design-system-$LIB_VERSION.tgz
-rm -rf .next
 popd
 
 echo "[CI] Running Playwright${SHARD:+ (shard $SHARD)}"

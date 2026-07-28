@@ -7,3 +7,11 @@ set -e
 LIB_VERSION=$(npm pkg get version --workspaces=false | tr -d \")
 echo "[CI] Building v$LIB_VERSION"
 ./scripts/build.sh
+
+# Install built library into E2E Next.js app and pre-build it
+echo "[CI] Installing in NextJS"
+pushd e2e/nextjs-app
+npm ci
+npm i ../../dist/lifesg-react-design-system-$LIB_VERSION.tgz
+npm run build
+popd

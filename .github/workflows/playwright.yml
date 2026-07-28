@@ -21,6 +21,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+          cache: "npm"
       - name: Install dependencies
         run: npm ci
       - name: Build library
@@ -30,6 +31,12 @@ jobs:
         with:
           name: build-dist
           path: dist/
+          retention-days: 1
+      - name: Upload Next.js build artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: nextjs-build
+          path: e2e/nextjs-app/.next/
           retention-days: 1
 
   test:
@@ -45,6 +52,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+          cache: "npm"
       - name: Install dependencies
         run: npm ci
       - name: Install E2E Next.js app dependencies
@@ -54,6 +62,11 @@ jobs:
         with:
           name: build-dist
           path: dist/
+      - name: Download Next.js build artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: nextjs-build
+          path: e2e/nextjs-app/.next/
       - name: Set up E2E test environment
         run: npm run test-e2e:setup
       - name: Run Playwright tests (shard ${{ matrix.shard }}/4)
@@ -76,6 +89,7 @@ jobs:
       - uses: actions/setup-node@v6
         with:
           node-version: 22
+          cache: "npm"
       - name: Install dependencies
         run: npm ci
       - name: Download all blob reports
