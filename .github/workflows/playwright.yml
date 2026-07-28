@@ -22,6 +22,9 @@ jobs:
         with:
           node-version: 22
           cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            e2e/nextjs-app/package-lock.json
       - name: Install dependencies
         run: npm ci
       - name: Build library
@@ -38,6 +41,7 @@ jobs:
           name: nextjs-build
           path: e2e/nextjs-app/.next/
           retention-days: 1
+          if-no-files-found: error
 
   test:
     needs: build
@@ -53,6 +57,9 @@ jobs:
         with:
           node-version: 22
           cache: "npm"
+          cache-dependency-path: |
+            package-lock.json
+            e2e/nextjs-app/package-lock.json
       - name: Install dependencies
         run: npm ci
       - name: Install E2E Next.js app dependencies
