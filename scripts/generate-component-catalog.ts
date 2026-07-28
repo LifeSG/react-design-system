@@ -161,7 +161,6 @@ function extractSubComponentEntries(
 
     for (const sourceFile of sourceFiles) {
         const baseName = sourceFile.getBaseName();
-        if (baseName === "index.ts") continue;
         if (mainFileBases.has(baseName)) continue;
 
         for (const statement of sourceFile.getStatements()) {
