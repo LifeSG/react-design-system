@@ -27,6 +27,8 @@ jobs:
             e2e/nextjs-app/package-lock.json
       - name: Install dependencies
         run: npm ci
+      - name: Install E2E Next.js app dependencies
+        run: npm --prefix e2e/nextjs-app ci
       - name: Build library
         run: ./scripts/e2e-ci-build.sh
       - name: Upload build artifact
