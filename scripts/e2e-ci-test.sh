@@ -19,7 +19,7 @@ echo "[CI] Running Playwright${SHARD:+ (shard $SHARD)}"
 export CI=true
 
 if [ -n "$SHARD" ]; then
-    npx playwright test --shard="$SHARD" components/navbar/navbar.e2e.spec.ts components/filter-checkbox/filter-checkbox.e2e.spec.ts components/phone-number-input/phone-number-input.e2e.spec.ts components/e-signature/e-signature.e2e.spec.ts components/error-display/error-display.e2e.spec.ts
+    npx playwright test --shard="$SHARD"
 else
-    npx playwright test components/navbar/navbar.e2e.spec.ts components/filter-checkbox/filter-checkbox.e2e.spec.ts components/phone-number-input/phone-number-input.e2e.spec.ts components/e-signature/e-signature.e2e.spec.ts components/error-display/error-display.e2e.spec.ts
+    npx playwright test
 fi
