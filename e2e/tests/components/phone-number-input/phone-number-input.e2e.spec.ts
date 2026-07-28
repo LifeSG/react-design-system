@@ -367,6 +367,7 @@ test.describe("PhoneNumberInput", () => {
             await story.openDropdown(story.locators.form.searchable);
 
             await story.locators.internal.searchInput.fill("Singapore");
+            await expect(story.getOption("Singapore")).toBeVisible();
             await story.page.keyboard.press("ArrowDown");
             await expect(story.getActiveOption()).toContainText("Singapore");
 

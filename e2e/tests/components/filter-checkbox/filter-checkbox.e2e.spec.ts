@@ -67,6 +67,7 @@ class StoryPage extends AbstractStoryPage {
         const filterItems = this.locators.internal.modal.getByTestId(
             "expandable-container"
         );
+        await expect(filterItems.first()).toBeVisible();
         const count = await filterItems.count();
 
         for (let i = 0; i < count; i += 1) {
