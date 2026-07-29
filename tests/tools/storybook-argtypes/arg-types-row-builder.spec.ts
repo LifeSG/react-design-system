@@ -17,7 +17,7 @@ describe("ArgTypesRowBuilder", () => {
 
             expect(row.key).toBe("Button.color");
             expect(row.value.name).toBe("color");
-            expect(row.value.control).toBe(false);
+            expect(row.value.control).toBe("color");
             expect(row.value.table.category).toBe("Styling");
         });
 
@@ -143,6 +143,112 @@ describe("ArgTypesRowBuilder", () => {
 
             expect(row.value.deprecated).toBeUndefined();
             expect(row.value.description).toBeUndefined();
+        });
+
+        describe("inferControl behavior", () => {
+            it("infers boolean control", () => {
+                const row = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "enabled",
+                    category: "Props",
+                    typeSummary: "boolean",
+                });
+
+                expect(row.value.control).toBe("boolean");
+            });
+
+            it("infers text control", () => {
+                const row = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "label",
+                    category: "Props",
+                    typeSummary: "string",
+                });
+
+                expect(row.value.control).toBe("text");
+            });
+
+            it("infers number control", () => {
+                const row = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "maxItems",
+                    category: "Props",
+                    typeSummary: "number",
+                });
+
+                expect(row.value.control).toBe("number");
+            });
+
+            it("infers select control from string-literal summaryParts", () => {
+                const row = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "status",
+                    category: "Props",
+                    typeSummaryParts: ["'draft'", "'published'"],
+                });
+
+                expect(row.value.control).toBe("select");
+                expect(row.value.options).toEqual(["draft", "published"]);
+            });
+
+            it("infers select control from number-literal summaryParts", () => {
+                const row = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "size",
+                    category: "Props",
+                    typeSummaryParts: ["1", "2", "3"],
+                });
+
+                expect(row.value.control).toBe("select");
+                expect(row.value.options).toEqual([1, 2, 3]);
+            });
+
+            it("infers select control from literal-union summary when summaryParts is unavailable", () => {
+                const row = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "type",
+                    category: "Props",
+                    typeSummary: "'a' | 'b' | 'c'",
+                });
+
+                expect(row.value.control).toBe("select");
+                expect(row.value.options).toEqual(["a", "b", "c"]);
+            });
+
+            it("does not infer select for mixed unions", () => {
+                const row = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "content",
+                    category: "Props",
+                    typeSummary: "string | ReactNode",
+                });
+
+                expect(row.value.control).toBe(false);
+                expect(row.value.options).toBeUndefined();
+            });
+
+            it("only infers color control when prop name ends with color or colour", () => {
+                const colorRow = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "bgColor",
+                    category: "Props",
+                });
+                const colourRow = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "bgColour",
+                    category: "Props",
+                });
+                const nonColorRow = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "colorScheme",
+                    category: "Props",
+                    typeSummary: "string",
+                });
+
+                expect(colorRow.value.control).toBe("color");
+                expect(colourRow.value.control).toBe("color");
+                expect(nonColorRow.value.control).toBe("text");
+            });
         });
     });
 });
