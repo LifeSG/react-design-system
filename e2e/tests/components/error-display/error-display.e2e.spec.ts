@@ -6,16 +6,6 @@ class StoryPage extends AbstractStoryPage {
     constructor(page: Page) {
         super(page);
     }
-
-    async waitForImageLoad() {
-        const img = this.page.locator('img[data-id="error-display-image"]');
-        await img.waitFor({ state: "visible" });
-        await img.evaluate(
-            (el) =>
-                (el as HTMLImageElement).complete ||
-                new Promise((resolve) => el.addEventListener("load", resolve))
-        );
-    }
 }
 
 const test = base.extend<{ story: StoryPage }>({

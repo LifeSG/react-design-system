@@ -128,6 +128,17 @@ export abstract class AbstractStoryPage {
             maxAttempts,
         });
     }
+
+    public async waitForImageLoad() {
+        await this.page.waitForFunction(
+            () => {
+                return Array.from(document.querySelectorAll("img")).every(
+                    (img) => img.complete && img.naturalWidth > 0
+                );
+            },
+            { polling: 100, timeout: 10000 }
+        );
+    }
 }
 
 /**
