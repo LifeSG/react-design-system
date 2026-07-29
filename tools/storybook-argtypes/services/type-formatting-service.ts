@@ -14,6 +14,8 @@ import {
 
 import { TYPE_FORMAT_FLAGS } from "../config/arg-types-config";
 
+const MAX_UNION_MEMBERS_FOR_SUMMARY_PARTS = 6;
+
 /**
  * Formats TypeScript type text for Storybook argTypes.
  * Provides type cleaning, union handling, and description generation.
@@ -180,7 +182,7 @@ export class TypeFormattingService {
 
         const unionTypes = nonNullableType.getUnionTypes();
 
-        if (unionTypes.length > 6) {
+        if (unionTypes.length > MAX_UNION_MEMBERS_FOR_SUMMARY_PARTS) {
             return undefined;
         }
 
