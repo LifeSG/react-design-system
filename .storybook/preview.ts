@@ -44,7 +44,11 @@ const preview: Preview = {
             },
         },
         actions: { disable: true },
-        controls: { disable: true },
+        controls: {
+            disable: true,
+            disableSaveFromUI: true,
+            sort: "alpha",
+        },
         layout: "centered",
         viewport: {
             options: INITIAL_VIEWPORTS,
