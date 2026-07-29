@@ -27,8 +27,12 @@ export type GeneratedArgType = {
         description: string | undefined;
         /** Deprecation notice from `@deprecated` tag, or `true` if deprecated without message. */
         deprecated: string | boolean | undefined;
-        /** Always `false` — disables manual control input in Storybook. */
-        control: false;
+        /**
+         * Storybook control type.
+         */
+        control: false | "boolean" | "text" | "select" | "color";
+        /** Select options — present only when `control` is `"select"`. */
+        options?: (string | number)[];
         type: {
             /** Whether the prop is required (non-optional). */
             required?: boolean | undefined;
