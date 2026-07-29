@@ -1,7 +1,17 @@
 import type { GeneratedArgType } from "./table";
 
+type GeneratedArgTypeValue = GeneratedArgType["value"];
+type StoryControlsArgType = Pick<
+    GeneratedArgTypeValue,
+    "name" | "description" | "deprecated" | "control" | "options"
+>;
+
 /** Extracts the interface-name prefix from a generated key like `"InterfaceName.propName"`. */
-type KeyPrefix<K extends string> = K extends `${infer P}.${string}` ? P : never;
+type KeyPrefix<K extends string> = string extends K
+    ? string
+    : K extends `${infer P}.${string}`
+    ? P
+    : never;
 
 export const STORYBOOK_PLAYGROUND_EXCLUDE_PROPS = [
     "className",
@@ -15,15 +25,14 @@ export const STORYBOOK_PLAYGROUND_EXCLUDE_PROPS = [
 function eachGeneratedArgType<T extends Record<string, unknown>>(
     generatedArgTypes: T,
     interfaceName: KeyPrefix<string & keyof T> | undefined,
-    callback: (argType: GeneratedArgType["value"]) => void
+    callback: (argType: GeneratedArgTypeValue) => void
 ): void {
     const prefix = interfaceName ? `${interfaceName}.` : undefined;
 
     for (const [key, rawValue] of Object.entries(generatedArgTypes)) {
-        console.log({ prefix, key });
         if (prefix && !key.startsWith(prefix)) continue;
 
-        callback(rawValue as GeneratedArgType["value"]);
+        callback(rawValue as GeneratedArgTypeValue);
     }
 }
 
@@ -46,23 +55,20 @@ function eachGeneratedArgType<T extends Record<string, unknown>>(
 export function toStoryArgTypes<T extends Record<string, unknown>>(
     generatedArgTypes: T,
     interfaceName?: KeyPrefix<string & keyof T>
-): Record<string, unknown> {
-    const result: Record<string, unknown> = {};
+): Record<string, StoryControlsArgType> {
+    const result: Record<string, StoryControlsArgType> = {};
     eachGeneratedArgType(generatedArgTypes, interfaceName, (argType) => {
         // Skip inherited-HTML-props placeholder rows (name is empty string)
         if (!argType.name) return;
 
         // First-seen wins — avoid clobbering a prop from an earlier interface
         if (argType.name in result) return;
-        console.log({ argTypeName: argType.name, argType });
-
         result[argType.name] = {
             name: argType.name,
             description: argType.description,
             deprecated: argType.deprecated,
             control: argType.control,
             ...(argType.options && { options: argType.options }),
-            type: argType.type,
         };
     });
 

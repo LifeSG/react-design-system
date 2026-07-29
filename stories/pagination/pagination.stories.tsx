@@ -1,7 +1,9 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Pagination } from "src/pagination";
+import { toStoryArgTypes } from "stories/storybook-common";
 
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 import { CurrentPage } from "./doc-elements";
 
 type Component = typeof Pagination;
@@ -9,6 +11,10 @@ type Component = typeof Pagination;
 const meta: Meta<Component> = {
     title: "Navigation/Pagination",
     component: Pagination,
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Navigation/Pagination"],
+        "PaginationProps"
+    ),
 };
 
 export default meta;
@@ -101,5 +107,23 @@ export const WithCustomPageSizeOptions: StoryObj<Component> = {
                 />
             </>
         );
+    },
+};
+
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disable: true,
+        },
+    },
+    args: {
+        activePage: 5,
+        pageSize: 10,
+        totalItems: 500,
+        showFirstAndLastNav: true,
+        showPageSizeChanger: true,
+    },
+    render: (args) => {
+        return <Pagination {...args} />;
     },
 };

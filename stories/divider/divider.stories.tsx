@@ -5,8 +5,10 @@ import {
     FullWidthStoryDecorator,
     GridDecorator,
     StoryDecorator,
+    toStoryArgTypes,
 } from "stories/storybook-common";
 
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 import { LayoutGrid } from "./doc-elements";
 
 type Component = typeof Divider;
@@ -14,6 +16,7 @@ type Component = typeof Divider;
 const meta: Meta<Component> = {
     title: "Core/Divider",
     component: Divider,
+    argTypes: toStoryArgTypes(storybookArgTypesByTitle["Core/Divider"]),
 };
 
 export default meta;
@@ -98,4 +101,12 @@ export const Customisations: StoryObj<Component> = {
         }),
         StoryDecorator(),
     ],
+};
+
+export const Playground: StoryObj<Component> = {
+    parameters: { controls: { disable: false } },
+    render: (args) => {
+        return <Divider {...args} />;
+    },
+    decorators: [FullWidthStoryDecorator()],
 };

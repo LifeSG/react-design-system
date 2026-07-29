@@ -1,6 +1,8 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Typography } from "src/typography";
-import { GridDecorator } from "stories/storybook-common";
+import { GridDecorator, toStoryArgTypes } from "stories/storybook-common";
+
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 const meta: Meta = {
     title: "Core/Typography",
@@ -18,10 +20,10 @@ export const InlineText: StoryObj = {
 };
 
 export const InlineLink: StoryObj = {
-    render: (_args) => (
+    render: (args) => (
         <Typography.BodyBL>
             The quick brown fox{" "}
-            <Typography.LinkBL href="https://www.google.com">
+            <Typography.LinkBL {...args} href="https://www.google.com">
                 jumps over
             </Typography.LinkBL>{" "}
             the lazy dog
@@ -126,5 +128,42 @@ export const TypographySet: StoryObj = {
             <Typography.LinkMD>LinkMD: Lorem ipsum</Typography.LinkMD>
             <Typography.LinkSM>LinkSM: Lorem ipsum</Typography.LinkSM>
         </>
+    ),
+};
+
+export const PlaygroundText: StoryObj = {
+    parameters: {
+        controls: {
+            disabled: false,
+        },
+    },
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Core/Typography"],
+        "TypographyProps"
+    ),
+    render: (args) => (
+        <div>
+            The quick brown fox{" "}
+            <Typography.BodyBL {...args}>jumps</Typography.BodyBL> over the lazy
+            dog
+        </div>
+    ),
+};
+export const PlaygroundLink: StoryObj = {
+    parameters: {
+        controls: {
+            disabled: false,
+        },
+    },
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Core/Typography"],
+        "TypographyLinkProps"
+    ),
+    render: (args) => (
+        <div>
+            The quick brown fox{" "}
+            <Typography.LinkBL {...args}>jumps</Typography.LinkBL> over the lazy
+            dog
+        </div>
     ),
 };

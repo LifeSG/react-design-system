@@ -1,13 +1,22 @@
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Tag } from "src/tag";
-import { GridDecorator, RowDecorator } from "stories/storybook-common";
+import {
+    GridDecorator,
+    RowDecorator,
+    toStoryArgTypes,
+} from "stories/storybook-common";
+
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 type Component = typeof Tag;
 
 const meta: Meta<Component> = {
     title: "Feedback indicators/Tag",
     component: Tag,
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Feedback indicators/Tag"]
+    ),
 };
 
 export default meta;
@@ -137,4 +146,19 @@ export const Variations: StoryObj<Component> = {
             rowHeaders: ["Outline", "Solid"],
         }),
     ],
+};
+
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disabled: false,
+        },
+    },
+    render: (args) => {
+        return (
+            <Tag icon={<PlusCircleFillIcon />} {...args}>
+                Playground tag
+            </Tag>
+        );
+    },
 };

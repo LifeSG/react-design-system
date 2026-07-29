@@ -1,6 +1,7 @@
-import { Canvas, Meta } from "@storybook/addon-docs/blocks";
+import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
 import * as ImageButtonStories from "./image-button.stories";
-import { AutoArgTypesTabs } from "../storybook-common";
+import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 <Meta of={ImageButtonStories} />
 
@@ -13,6 +14,21 @@ A call to action component with an image and label.
 ```tsx
 import { ImageButton } from "@lifesg/react-design-system/image-button";
 ```
+
+## Playground
+
+<Canvas of={ImageButtonStories.Playground} />
+<div className="controls-only">
+    <Controls
+        of={ImageButtonStories.Playground}
+        sort="alpha"
+        exclude={toStoryExcludedProps(
+            storybookArgTypesByTitle["Selection and input/ImageButton"]
+        )}
+    />
+</div>
+
+## Variants
 
 <Canvas of={ImageButtonStories.Default} />
 

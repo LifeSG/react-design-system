@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story } from "@storybook/addon-docs/blocks";
+import { Canvas, Meta, Story, Controls } from "@storybook/addon-docs/blocks";
 import {
     LoadingDots,
     LoadingDotsSpinner,
@@ -10,10 +10,11 @@ import {
     AnimationPane,
     Content,
 } from "./doc-elements";
-import { AutoArgTypesTabs } from "../storybook-common";
+import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
 import * as AnimationStories from "./animations.stories";
 import { DocNote } from "stories/storybook-common";
 import { CustomisedPropsTable } from "./props-table";
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 <Meta title="Feedback indicators/Animations" />
 
@@ -26,6 +27,19 @@ A component that renders an animation on the UI.
 ```tsx
 import { <Component_name> } from "@lifesg/react-design-system/animations";
 ```
+
+## Playground
+
+<Canvas of={AnimationStories.Playground} />
+<div className="controls-only">
+    <Controls
+        of={AnimationStories.Playground}
+        sort="alpha"
+        exclude={toStoryExcludedProps(
+            storybookArgTypesByTitle["Feedback indicators/Animations"]
+        )}
+    />
+</div>
 
 ## Themed loading spinner
 

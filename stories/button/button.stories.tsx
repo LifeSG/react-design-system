@@ -3,8 +3,9 @@ import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import type { ButtonProps } from "src/button";
 import { Button } from "src/button";
-import { GridDecorator } from "stories/storybook-common";
+import { GridDecorator, toStoryArgTypes } from "stories/storybook-common";
 
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 import { TokensTable } from "./tokens-table";
 
 type Component = typeof Button;
@@ -12,6 +13,9 @@ type Component = typeof Button;
 const meta: Meta<Component> = {
     title: "Selection and input/Button",
     component: Button,
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Selection and input/Button"]
+    ),
 };
 
 export default meta;
@@ -242,4 +246,15 @@ export const FocusableWhenDisabled: StoryObj<Component> = {
 export const TokenCustomisation: StoryObj = {
     tags: ["!dev"],
     render: () => <TokensTable />,
+};
+
+export const Playground: StoryObj<Component> = {
+    parameters: { controls: { disable: false } },
+    render: (args) => {
+        return (
+            <Button icon={<PlaceholderIcon />} {...args}>
+                Label
+            </Button>
+        );
+    },
 };

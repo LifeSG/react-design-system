@@ -1,6 +1,7 @@
-import { Canvas, Meta } from "@storybook/addon-docs/blocks";
+import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
 import * as PillStories from "./pill.stories";
-import { AutoArgTypesTabs } from "../storybook-common";
+import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 <Meta of={PillStories} />
 
@@ -13,6 +14,21 @@ A static element that is used to communicate selections, statuses and categories
 ```tsx
 import { Pill } from "@lifesg/react-design-system/pill";
 ```
+
+## Playground
+
+<Canvas of={PillStories.Playground} />
+<div className="controls-only">
+    <Controls
+        of={PillStories.Playground}
+        sort="alpha"
+        exclude={toStoryExcludedProps(
+            storybookArgTypesByTitle["Feedback indicators/Pill"]
+        )}
+    />
+</div>
+
+## Variants
 
 <Canvas of={PillStories.Default} />
 

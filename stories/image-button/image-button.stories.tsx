@@ -1,12 +1,17 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { ImageButton } from "src/image-button";
-import { GridDecorator } from "stories/storybook-common";
+import { GridDecorator, toStoryArgTypes } from "stories/storybook-common";
+
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 type Component = typeof ImageButton;
 
 const meta: Meta<Component> = {
     title: "Selection and input/ImageButton",
     component: ImageButton,
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Selection and input/ImageButton"]
+    ),
 };
 
 export default meta;
@@ -76,4 +81,19 @@ export const FocusableWhenDisabled: StoryObj<Component> = {
             Office Equipment
         </ImageButton>
     ),
+};
+
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disable: false,
+        },
+    },
+
+    args: {
+        imgSrc: "https://cdn-icons-png.flaticon.com/512/4401/4401459.png",
+    },
+    render: (args) => {
+        return <ImageButton {...args}>Office Equipment</ImageButton>;
+    },
 };
