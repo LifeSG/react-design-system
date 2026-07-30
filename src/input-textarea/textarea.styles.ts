@@ -5,6 +5,7 @@ import { Border, Colour, Font, Radius, Spacing } from "../theme";
 export const wrapper = css`
     display: flex;
     flex-direction: column;
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const element = css`
