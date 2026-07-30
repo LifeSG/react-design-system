@@ -19,11 +19,6 @@ const meta: Meta<Component> = {
     ),
 };
 
-console.log(toStoryArgTypes(storybookArgTypesByTitle["Core/ErrorDisplay"]));
-console.log(
-    toStoryExcludedProps(storybookArgTypesByTitle["Core/ErrorDisplay"])
-);
-
 export default meta;
 
 export const Default: StoryObj<Component> = {
@@ -103,6 +98,10 @@ export const Playground: StoryObj<Component> = {
     parameters: {
         controls: {
             disable: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Core/ErrorDisplay"],
+                "ErrorDisplayProps"
+            ),
         },
     },
     args: {

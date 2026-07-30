@@ -1,12 +1,7 @@
-import {
-    AutoArgTypesTabs,
-    toStoryExcludedProps,
-    Tabs,
-} from "../storybook-common";
+import { AutoArgTypesTabs, Tabs } from "../storybook-common";
 import { Canvas, Controls, Meta } from "@storybook/addon-docs/blocks";
 import { DocInfo } from "stories/storybook-common";
 import { PropsTable } from "./props-table";
-import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 import * as TypographyStories from "./typography.stories";
 
 <Meta of={TypographyStories} />
@@ -31,12 +26,7 @@ import { Typography } from "@lifesg/react-design-system/typography";
                 <div>
                     <Canvas of={TypographyStories.PlaygroundText} />
                     <div className="controls-only">
-                        <Controls
-                            of={TypographyStories.PlaygroundText}
-                            exclude={toStoryExcludedProps(
-                                storybookArgTypesByTitle["Core/Typography"]
-                            )}
-                        />
+                        <Controls of={TypographyStories.PlaygroundText} />
                     </div>
                 </div>
             ),
@@ -47,12 +37,7 @@ import { Typography } from "@lifesg/react-design-system/typography";
                 <div>
                     <Canvas of={TypographyStories.PlaygroundLink} />
                     <div className="controls-only">
-                        <Controls
-                            of={TypographyStories.PlaygroundLink}
-                            exclude={toStoryExcludedProps(
-                                storybookArgTypesByTitle["Core/Typography"]
-                            )}
-                        />
+                        <Controls of={TypographyStories.PlaygroundLink} />
                     </div>
                 </div>
             ),

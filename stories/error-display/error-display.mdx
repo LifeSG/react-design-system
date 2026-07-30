@@ -1,7 +1,6 @@
 import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
 import * as ErrorDisplayStories from "./error-display.stories";
-import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
-import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
+import { AutoArgTypesTabs } from "../storybook-common";
 
 <Meta of={ErrorDisplayStories} />
 
@@ -19,12 +18,7 @@ import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
 
 <Canvas of={ErrorDisplayStories.Playground} />
 <div className="controls-only">
-    <Controls
-        of={ErrorDisplayStories.Playground}
-        exclude={toStoryExcludedProps(
-            storybookArgTypesByTitle["Core/ErrorDisplay"]
-        )}
-    />
+    <Controls of={ErrorDisplayStories.Playground} />
 </div>
 
 ## Default

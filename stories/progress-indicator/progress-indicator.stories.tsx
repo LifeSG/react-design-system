@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { ProgressIndicator } from "src/progress-indicator";
-import { StoryDecorator, toStoryArgTypes } from "stories/storybook-common";
+import {
+    StoryDecorator,
+    toStoryArgTypes,
+    toStoryExcludedProps,
+} from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
@@ -20,6 +24,11 @@ export const Playground: StoryObj<Component> = {
     parameters: {
         controls: {
             disabled: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle[
+                    "Feedback indicators/ProgressIndicator"
+                ]
+            ),
         },
     },
     args: {

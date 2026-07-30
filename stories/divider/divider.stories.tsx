@@ -6,6 +6,7 @@ import {
     GridDecorator,
     StoryDecorator,
     toStoryArgTypes,
+    toStoryExcludedProps,
 } from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
@@ -104,7 +105,14 @@ export const Customisations: StoryObj<Component> = {
 };
 
 export const Playground: StoryObj<Component> = {
-    parameters: { controls: { disable: false } },
+    parameters: {
+        controls: {
+            disable: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Core/Divider"]
+            ),
+        },
+    },
     render: (args) => {
         return <Divider {...args} />;
     },

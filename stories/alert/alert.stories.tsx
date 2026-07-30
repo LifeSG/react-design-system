@@ -5,6 +5,7 @@ import {
     StackDecorator,
     StoryDecorator,
     toStoryArgTypes,
+    toStoryExcludedProps,
 } from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
@@ -23,7 +24,14 @@ const meta: Meta<Component> = {
 export default meta;
 
 export const Playground: StoryObj<Component> = {
-    parameters: { controls: { disable: false } },
+    parameters: {
+        controls: {
+            disable: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Feedback indicators/Alert"]
+            ),
+        },
+    },
     render: (args) => (
         <Alert {...args}>
             This is an alert box. You can add <strong>bold text </strong> to

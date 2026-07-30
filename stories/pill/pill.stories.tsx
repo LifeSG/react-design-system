@@ -6,6 +6,7 @@ import {
     GridDecorator,
     RowDecorator,
     toStoryArgTypes,
+    toStoryExcludedProps,
 } from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
@@ -124,6 +125,9 @@ export const Playground: StoryObj<Component> = {
     parameters: {
         controls: {
             disabled: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Feedback indicators/Pill"]
+            ),
         },
     },
     args: {

@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Typography } from "src/typography";
-import { GridDecorator, toStoryArgTypes } from "stories/storybook-common";
+import {
+    GridDecorator,
+    toStoryArgTypes,
+    toStoryExcludedProps,
+} from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
@@ -135,6 +139,10 @@ export const PlaygroundText: StoryObj = {
     parameters: {
         controls: {
             disabled: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Core/Typography"],
+                "TypographyProps"
+            ),
         },
     },
     argTypes: toStoryArgTypes(
@@ -153,6 +161,10 @@ export const PlaygroundLink: StoryObj = {
     parameters: {
         controls: {
             disabled: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Core/Typography"],
+                "TypographyLinkProps"
+            ),
         },
     },
     argTypes: toStoryArgTypes(

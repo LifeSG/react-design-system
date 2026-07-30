@@ -1,7 +1,6 @@
 import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
 import * as ProgressIndicatorStories from "./progress-indicator.stories";
-import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
-import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
+import { AutoArgTypesTabs } from "../storybook-common";
 
 <Meta of={ProgressIndicatorStories} />
 
@@ -19,12 +18,7 @@ import { ProgressIndicator } from "@lifesg/react-design-system/progress-indicato
 
 <Canvas of={ProgressIndicatorStories.Playground} />
 <div className="controls-only">
-    <Controls
-        of={ProgressIndicatorStories.Playground}
-        exclude={toStoryExcludedProps(
-            storybookArgTypesByTitle["Feedback indicators/ProgressIndicator"]
-        )}
-    />
+    <Controls of={ProgressIndicatorStories.Playground} />
 </div>
 
 ## Component API

@@ -1,7 +1,6 @@
 import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
 import * as PillStories from "./pill.stories";
-import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
-import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
+import { AutoArgTypesTabs } from "../storybook-common";
 
 <Meta of={PillStories} />
 
@@ -19,12 +18,7 @@ import { Pill } from "@lifesg/react-design-system/pill";
 
 <Canvas of={PillStories.Playground} />
 <div className="controls-only">
-    <Controls
-        of={PillStories.Playground}
-        exclude={toStoryExcludedProps(
-            storybookArgTypesByTitle["Feedback indicators/Pill"]
-        )}
-    />
+    <Controls of={PillStories.Playground} />
 </div>
 
 ## Variants

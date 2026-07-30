@@ -10,11 +10,10 @@ import {
     AnimationPane,
     Content,
 } from "./doc-elements";
-import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
+import { AutoArgTypesTabs } from "../storybook-common";
 import * as AnimationStories from "./animations.stories";
 import { DocNote } from "stories/storybook-common";
 import { CustomisedPropsTable } from "./props-table";
-import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 <Meta title="Feedback indicators/Animations" />
 
@@ -32,12 +31,7 @@ import { <Component_name> } from "@lifesg/react-design-system/animations";
 
 <Canvas of={AnimationStories.Playground} />
 <div className="controls-only">
-    <Controls
-        of={AnimationStories.Playground}
-        exclude={toStoryExcludedProps(
-            storybookArgTypesByTitle["Feedback indicators/Animations"]
-        )}
-    />
+  <Controls of={AnimationStories.Playground} />
 </div>
 
 ## Themed loading spinner

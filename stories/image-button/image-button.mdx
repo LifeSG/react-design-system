@@ -1,7 +1,6 @@
 import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
 import * as ImageButtonStories from "./image-button.stories";
-import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
-import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
+import { AutoArgTypesTabs } from "../storybook-common";
 
 <Meta of={ImageButtonStories} />
 
@@ -19,12 +18,7 @@ import { ImageButton } from "@lifesg/react-design-system/image-button";
 
 <Canvas of={ImageButtonStories.Playground} />
 <div className="controls-only">
-    <Controls
-        of={ImageButtonStories.Playground}
-        exclude={toStoryExcludedProps(
-            storybookArgTypesByTitle["Selection and input/ImageButton"]
-        )}
-    />
+    <Controls of={ImageButtonStories.Playground} />
 </div>
 
 ## Variants

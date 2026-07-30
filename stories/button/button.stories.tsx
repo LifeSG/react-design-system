@@ -3,7 +3,11 @@ import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import type { ButtonProps } from "src/button";
 import { Button } from "src/button";
-import { GridDecorator, toStoryArgTypes } from "stories/storybook-common";
+import {
+    GridDecorator,
+    toStoryArgTypes,
+    toStoryExcludedProps,
+} from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 import { TokensTable } from "./tokens-table";
@@ -249,7 +253,14 @@ export const TokenCustomisation: StoryObj = {
 };
 
 export const Playground: StoryObj<Component> = {
-    parameters: { controls: { disable: false } },
+    parameters: {
+        controls: {
+            disable: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Selection and input/Button"]
+            ),
+        },
+    },
     render: (args) => {
         return (
             <Button icon={<PlaceholderIcon />} {...args}>

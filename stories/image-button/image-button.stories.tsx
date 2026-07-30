@@ -1,6 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { ImageButton } from "src/image-button";
-import { GridDecorator, toStoryArgTypes } from "stories/storybook-common";
+import {
+    GridDecorator,
+    toStoryArgTypes,
+    toStoryExcludedProps,
+} from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
@@ -87,6 +91,9 @@ export const Playground: StoryObj<Component> = {
     parameters: {
         controls: {
             disable: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Selection and input/ImageButton"]
+            ),
         },
     },
 

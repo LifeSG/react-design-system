@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Pagination } from "src/pagination";
-import { toStoryArgTypes } from "stories/storybook-common";
+import { toStoryArgTypes, toStoryExcludedProps } from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 import { CurrentPage } from "./doc-elements";
@@ -114,6 +114,10 @@ export const Playground: StoryObj<Component> = {
     parameters: {
         controls: {
             disable: true,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Navigation/Pagination"],
+                "PaginationProps"
+            ),
         },
     },
     args: {

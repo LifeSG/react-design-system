@@ -1,7 +1,6 @@
 import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
 import * as AlertStories from "./alert.stories";
-import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
-import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
+import { AutoArgTypesTabs } from "../storybook-common";
 
 <Meta of={AlertStories} />
 
@@ -19,12 +18,7 @@ import { Alert } from "@lifesg/react-design-system/alert";
 
 <Canvas of={AlertStories.Playground} />
 <div className="controls-only">
-    <Controls
-        of={AlertStories.Playground}
-        exclude={toStoryExcludedProps(
-            storybookArgTypesByTitle["Feedback indicators/Alert"]
-        )}
-    />
+    <Controls of={AlertStories.Playground} />
 </div>
 
 ## Variants

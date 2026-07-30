@@ -1,7 +1,6 @@
 import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
 import * as TagStories from "./tag.stories";
-import { AutoArgTypesTabs, toStoryExcludedProps } from "../storybook-common";
-import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
+import { AutoArgTypesTabs } from "../storybook-common";
 
 <Meta of={TagStories} />
 
@@ -19,12 +18,7 @@ import { Tag } from "@lifesg/react-design-system/tag";
 
 <Canvas of={TagStories.Playground} />
 <div className="controls-only">
-    <Controls
-        of={TagStories.Playground}
-        exclude={toStoryExcludedProps(
-            storybookArgTypesByTitle["Feedback indicators/Tag"]
-        )}
-    />
+    <Controls of={TagStories.Playground} />
 </div>
 
 ## Variants
