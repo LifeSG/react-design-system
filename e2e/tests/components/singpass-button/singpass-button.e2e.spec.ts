@@ -64,8 +64,12 @@ test.describe("SingpassButton", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("basic");
-            await story.page.addStyleTag({
-                content: "html { font-size: 200% !important; }",
+            await story.page.evaluate(() => {
+                document.documentElement.style.setProperty(
+                    "font-size",
+                    "200%",
+                    "important"
+                );
             });
         });
 

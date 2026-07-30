@@ -196,8 +196,12 @@ test.describe("Button", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("base-variants");
-            await story.page.addStyleTag({
-                content: "html { font-size: 200% !important; }",
+            await story.page.evaluate(() => {
+                document.documentElement.style.setProperty(
+                    "font-size",
+                    "200%",
+                    "important"
+                );
             });
         });
 
@@ -209,8 +213,12 @@ test.describe("Button", () => {
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("base-icon-button");
-            await story.page.addStyleTag({
-                content: "html { font-size: 200% !important; }",
+            await story.page.evaluate(() => {
+                document.documentElement.style.setProperty(
+                    "font-size",
+                    "200%",
+                    "important"
+                );
             });
         });
 
