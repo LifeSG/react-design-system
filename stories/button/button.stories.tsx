@@ -6,7 +6,7 @@ import { Button } from "src/button";
 import {
     GridDecorator,
     toStoryArgTypes,
-    toStoryExcludedProps,
+    toStoryIncludedProps,
 } from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
@@ -28,7 +28,7 @@ export const Playground: StoryObj<Component> = {
     parameters: {
         controls: {
             disable: false,
-            exclude: toStoryExcludedProps(
+            include: toStoryIncludedProps(
                 storybookArgTypesByTitle["Selection and input/Button"]
             ),
         },

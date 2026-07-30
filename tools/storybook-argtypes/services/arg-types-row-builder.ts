@@ -11,6 +11,7 @@ import type { GeneratedArgType, GeneratedArgTypeControl } from "../types";
 const QUOTED_STRING_LITERAL = /^'[^']*'$/;
 /** Bare number literal, including negative and decimal */
 const NUMBER_LITERAL = /^-?\d+(\.\d+)?$/;
+const NON_PLAYGROUND_PROP_NAMES = new Set(["className", "data-testid", "id"]);
 
 /**
  * Builds Storybook argType rows.
@@ -57,6 +58,10 @@ export class ArgTypesRowBuilder {
         typeSummary: string | undefined,
         typeSummaryParts: string[] | undefined
     ): { control: GeneratedArgTypeControl; options?: (string | number)[] } {
+        if (NON_PLAYGROUND_PROP_NAMES.has(name)) {
+            return { control: false };
+        }
+
         // Color picker — prop name contains "color" or "colour" (e.g. color, bgColor, colour)
         if (/colou?r$/i.test(name)) {
             return { control: "color" };

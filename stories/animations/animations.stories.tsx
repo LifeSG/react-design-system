@@ -3,7 +3,7 @@ import { LoadingDotsSpinner, ThemedLoadingSpinner } from "src/animations";
 import { Colour } from "src/theme";
 import {
     toStoryArgTypes,
-    toStoryExcludedProps,
+    toStoryIncludedProps,
 } from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
@@ -23,7 +23,7 @@ export const Playground: StoryObj<typeof LoadingDotsSpinner> = {
     parameters: {
         controls: {
             disable: false,
-            exclude: toStoryExcludedProps(
+            include: toStoryIncludedProps(
                 storybookArgTypesByTitle["Feedback indicators/Animations"]
             ),
         },

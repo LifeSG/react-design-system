@@ -249,6 +249,31 @@ describe("ArgTypesRowBuilder", () => {
                 expect(colourRow.value.control).toBe("color");
                 expect(nonColorRow.value.control).toBe("text");
             });
+
+            it("forces non-playground props to control false", () => {
+                const classNameRow = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "className",
+                    category: "Props",
+                    typeSummary: "string",
+                });
+                const dataTestIdRow = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "data-testid",
+                    category: "Props",
+                    typeSummary: "string",
+                });
+                const idRow = builder.buildArgTypeRow({
+                    key: "x",
+                    name: "id",
+                    category: "Props",
+                    typeSummary: "string",
+                });
+
+                expect(classNameRow.value.control).toBe(false);
+                expect(dataTestIdRow.value.control).toBe(false);
+                expect(idRow.value.control).toBe(false);
+            });
         });
     });
 });

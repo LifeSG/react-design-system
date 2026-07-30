@@ -3,7 +3,7 @@ import { ImageButton } from "src/image-button";
 import {
     GridDecorator,
     toStoryArgTypes,
-    toStoryExcludedProps,
+    toStoryIncludedProps,
 } from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
@@ -25,13 +25,10 @@ export const Playground: StoryObj<Component> = {
     parameters: {
         controls: {
             disable: false,
-            exclude: [
-                ...toStoryExcludedProps(
-                    storybookArgTypesByTitle["Selection and input/ImageButton"]
-                ),
-                "disabled",
-                "type",
-            ],
+            include: toStoryIncludedProps(
+                storybookArgTypesByTitle["Selection and input/ImageButton"],
+                "ImageButtonProps"
+            ).filter((propName) => !["disabled", "type"].includes(propName)),
         },
     },
 

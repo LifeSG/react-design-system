@@ -3,7 +3,7 @@ import { Typography } from "src/typography";
 import {
     GridDecorator,
     toStoryArgTypes,
-    toStoryExcludedProps,
+    toStoryIncludedProps,
 } from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
@@ -17,7 +17,7 @@ export const PlaygroundText: StoryObj = {
     parameters: {
         controls: {
             disabled: false,
-            exclude: toStoryExcludedProps(
+            include: toStoryIncludedProps(
                 storybookArgTypesByTitle["Core/Typography"],
                 "TypographyProps"
             ),
@@ -40,7 +40,7 @@ export const PlaygroundLink: StoryObj = {
     parameters: {
         controls: {
             disabled: false,
-            exclude: toStoryExcludedProps(
+            include: toStoryIncludedProps(
                 storybookArgTypesByTitle["Core/Typography"],
                 "TypographyLinkProps"
             ),

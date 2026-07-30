@@ -13,12 +13,6 @@ type KeyPrefix<K extends string> = string extends K
     ? P
     : never;
 
-export const STORYBOOK_PLAYGROUND_EXCLUDE_PROPS = [
-    "className",
-    "data-testid",
-    "id",
-] as const;
-
 /**
  * Shared iterator over generated argtypes with optional interface filtering.
  */
@@ -76,26 +70,49 @@ export function toStoryArgTypes<T extends Record<string, unknown>>(
 }
 
 /**
- * Extract an `exclude` list for Storybook Controls from generated argtypes.
+ * Extract an `include` list for Storybook Controls from generated argtypes.
  *
- * A prop is excluded when its generated argtype has `control: false`.
+ * A prop is included when its generated argtype has a usable control.
  *
  * @param generatedArgTypes - The value from `storybookArgTypesByTitle["Story/Title"]`
  * @param interfaceName - Optional interface name to include only props from that interface.
- * @returns Prop names suitable for `parameters.docs.controls.exclude` or `<Controls exclude={...} />`
+ * @returns Prop names suitable for `parameters.docs.controls.include` or `<Controls include={...} />`
  */
-export function toStoryExcludedProps<T extends Record<string, unknown>>(
+export function toStoryIncludedProps<T extends Record<string, unknown>>(
     generatedArgTypes: T,
     interfaceName?: KeyPrefix<string & keyof T>
 ): string[] {
-    const result: string[] = STORYBOOK_PLAYGROUND_EXCLUDE_PROPS.slice();
-    const seen = new Set<string>(STORYBOOK_PLAYGROUND_EXCLUDE_PROPS);
+    const result: string[] = [];
+    const seen = new Set<string>();
 
     eachGeneratedArgType(generatedArgTypes, interfaceName, (argType) => {
         // Skip inherited-HTML-props placeholder rows (name is empty string)
         if (!argType.name) return;
 
         // First-seen wins — keep ordering stable and avoid duplicates
+        if (seen.has(argType.name)) return;
+        seen.add(argType.name);
+
+        if (argType.control) {
+            result.push(argType.name);
+        }
+    });
+
+    return result;
+}
+
+/**
+ * Backward-compatible alias that derives an exclude list from generated argtypes.
+ */
+export function toStoryExcludedProps<T extends Record<string, unknown>>(
+    generatedArgTypes: T,
+    interfaceName?: KeyPrefix<string & keyof T>
+): string[] {
+    const result: string[] = [];
+    const seen = new Set<string>();
+
+    eachGeneratedArgType(generatedArgTypes, interfaceName, (argType) => {
+        if (!argType.name) return;
         if (seen.has(argType.name)) return;
         seen.add(argType.name);
 
