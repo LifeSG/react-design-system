@@ -23,20 +23,21 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const Default: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <>
-                <Pill type="outline" colorType="blue">
-                    Outline style pill
-                </Pill>
-                <Pill type="solid" colorType="red">
-                    Solid style pill
-                </Pill>
-            </>
-        );
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disabled: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Feedback indicators/Pill"]
+            ),
+        },
     },
-    decorators: [RowDecorator()],
+    args: {
+        type: "outline",
+    },
+    render: (args) => {
+        return <Pill {...args}>Label</Pill>;
+    },
 };
 
 export const WithIcon: StoryObj<Component> = {
@@ -119,21 +120,4 @@ export const Variations: StoryObj<Component> = {
             rowHeaders: ["Outline", "Solid"],
         }),
     ],
-};
-
-export const Playground: StoryObj<Component> = {
-    parameters: {
-        controls: {
-            disabled: false,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Feedback indicators/Pill"]
-            ),
-        },
-    },
-    args: {
-        type: "outline",
-    },
-    render: (args) => {
-        return <Pill {...args}>Label</Pill>;
-    },
 };

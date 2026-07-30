@@ -13,6 +13,52 @@ const meta: Meta = {
 };
 export default meta;
 
+export const PlaygroundText: StoryObj = {
+    parameters: {
+        controls: {
+            disabled: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Core/Typography"],
+                "TypographyProps"
+            ),
+        },
+    },
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Core/Typography"],
+        "TypographyProps"
+    ),
+    render: (args) => (
+        <div>
+            The quick brown fox{" "}
+            <Typography.BodyBL {...args}>jumps</Typography.BodyBL> over the lazy
+            dog
+        </div>
+    ),
+};
+
+export const PlaygroundLink: StoryObj = {
+    parameters: {
+        controls: {
+            disabled: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Core/Typography"],
+                "TypographyLinkProps"
+            ),
+        },
+    },
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Core/Typography"],
+        "TypographyLinkProps"
+    ),
+    render: (args) => (
+        <div>
+            The quick brown fox{" "}
+            <Typography.LinkBL {...args}>jumps</Typography.LinkBL> over the lazy
+            dog
+        </div>
+    ),
+};
+
 export const InlineText: StoryObj = {
     render: (_args) => (
         <Typography.BodySM>
@@ -132,50 +178,5 @@ export const TypographySet: StoryObj = {
             <Typography.LinkMD>LinkMD: Lorem ipsum</Typography.LinkMD>
             <Typography.LinkSM>LinkSM: Lorem ipsum</Typography.LinkSM>
         </>
-    ),
-};
-
-export const PlaygroundText: StoryObj = {
-    parameters: {
-        controls: {
-            disabled: false,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Core/Typography"],
-                "TypographyProps"
-            ),
-        },
-    },
-    argTypes: toStoryArgTypes(
-        storybookArgTypesByTitle["Core/Typography"],
-        "TypographyProps"
-    ),
-    render: (args) => (
-        <div>
-            The quick brown fox{" "}
-            <Typography.BodyBL {...args}>jumps</Typography.BodyBL> over the lazy
-            dog
-        </div>
-    ),
-};
-export const PlaygroundLink: StoryObj = {
-    parameters: {
-        controls: {
-            disabled: false,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Core/Typography"],
-                "TypographyLinkProps"
-            ),
-        },
-    },
-    argTypes: toStoryArgTypes(
-        storybookArgTypesByTitle["Core/Typography"],
-        "TypographyLinkProps"
-    ),
-    render: (args) => (
-        <div>
-            The quick brown fox{" "}
-            <Typography.LinkBL {...args}>jumps</Typography.LinkBL> over the lazy
-            dog
-        </div>
     ),
 };

@@ -21,6 +21,24 @@ const meta: Meta<Component> = {
 
 export default meta;
 
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disable: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Core/ErrorDisplay"],
+                "ErrorDisplayProps"
+            ),
+        },
+    },
+    args: {
+        type: "404",
+    },
+    render: (args) => {
+        return <ErrorDisplay {...args} />;
+    },
+};
+
 export const Default: StoryObj<Component> = {
     render: (_args) => {
         return <ErrorDisplay type="404" />;
@@ -91,23 +109,5 @@ export const CustomError: StoryObj<Component> = {
                 }
             />
         );
-    },
-};
-
-export const Playground: StoryObj<Component> = {
-    parameters: {
-        controls: {
-            disable: false,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Core/ErrorDisplay"],
-                "ErrorDisplayProps"
-            ),
-        },
-    },
-    args: {
-        type: "404",
-    },
-    render: (args) => {
-        return <ErrorDisplay {...args} />;
     },
 };

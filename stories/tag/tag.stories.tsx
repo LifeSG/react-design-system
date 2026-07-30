@@ -22,20 +22,25 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const Default: StoryObj<Component> = {
-    render: (_args) => {
+export const Playground: StoryObj<Component> = {
+    args: {
+        type: "outline",
+    },
+    parameters: {
+        controls: {
+            disabled: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Feedback indicators/Tag"]
+            ),
+        },
+    },
+    render: (args) => {
         return (
-            <>
-                <Tag type="outline" colorType="green">
-                    Outline style tag
-                </Tag>
-                <Tag type="solid" colorType="red">
-                    Solid style tag
-                </Tag>
-            </>
+            <Tag icon={<PlusCircleFillIcon />} {...args}>
+                Playground tag
+            </Tag>
         );
     },
-    decorators: [RowDecorator()],
 };
 
 export const Interactive: StoryObj<Component> = {
@@ -147,22 +152,4 @@ export const Variations: StoryObj<Component> = {
             rowHeaders: ["Outline", "Solid"],
         }),
     ],
-};
-
-export const Playground: StoryObj<Component> = {
-    parameters: {
-        controls: {
-            disabled: false,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Feedback indicators/Tag"]
-            ),
-        },
-    },
-    render: (args) => {
-        return (
-            <Tag icon={<PlusCircleFillIcon />} {...args}>
-                Playground tag
-            </Tag>
-        );
-    },
 };

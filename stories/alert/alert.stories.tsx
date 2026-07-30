@@ -43,7 +43,7 @@ export const Playground: StoryObj<Component> = {
         </Alert>
     ),
 };
-export const Default: StoryObj<Component> = {
+export const Variants: StoryObj<Component> = {
     render: (_args) => {
         return (
             <>

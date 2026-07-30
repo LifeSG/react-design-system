@@ -22,7 +22,26 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const Default: StoryObj<Component> = {
+export const Playground: StoryObj<Component> = {
+    args: {
+        thickness: 1,
+        lineStyle: "dashed",
+    },
+    parameters: {
+        controls: {
+            disable: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Core/Divider"]
+            ),
+        },
+    },
+    render: (args) => {
+        return <Divider {...args} />;
+    },
+    decorators: [FullWidthStoryDecorator()],
+};
+
+export const Variants: StoryObj<Component> = {
     render: (_args) => {
         return (
             <>
@@ -102,19 +121,4 @@ export const Customisations: StoryObj<Component> = {
         }),
         StoryDecorator(),
     ],
-};
-
-export const Playground: StoryObj<Component> = {
-    parameters: {
-        controls: {
-            disable: false,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Core/Divider"]
-            ),
-        },
-    },
-    render: (args) => {
-        return <Divider {...args} />;
-    },
-    decorators: [FullWidthStoryDecorator()],
 };

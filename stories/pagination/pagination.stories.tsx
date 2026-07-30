@@ -22,6 +22,28 @@ const meta: Meta<Component> = {
 
 export default meta;
 
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disable: true,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Navigation/Pagination"],
+                "PaginationProps"
+            ),
+        },
+    },
+    args: {
+        activePage: 5,
+        pageSize: 10,
+        totalItems: 500,
+        showFirstAndLastNav: true,
+        showPageSizeChanger: true,
+    },
+    render: (args) => {
+        return <Pagination {...args} />;
+    },
+};
+
 export const Default: StoryObj<Component> = {
     render: (_args) => {
         const [selectedPage, setSelected] = useState(1);
@@ -110,27 +132,5 @@ export const WithCustomPageSizeOptions: StoryObj<Component> = {
                 />
             </>
         );
-    },
-};
-
-export const Playground: StoryObj<Component> = {
-    parameters: {
-        controls: {
-            disable: true,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Navigation/Pagination"],
-                "PaginationProps"
-            ),
-        },
-    },
-    args: {
-        activePage: 5,
-        pageSize: 10,
-        totalItems: 500,
-        showFirstAndLastNav: true,
-        showPageSizeChanger: true,
-    },
-    render: (args) => {
-        return <Pagination {...args} />;
     },
 };

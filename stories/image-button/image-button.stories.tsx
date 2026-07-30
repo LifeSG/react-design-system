@@ -21,7 +21,29 @@ const meta: Meta<Component> = {
 
 export default meta;
 
-export const Default: StoryObj<Component> = {
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disable: false,
+            exclude: [
+                ...toStoryExcludedProps(
+                    storybookArgTypesByTitle["Selection and input/ImageButton"]
+                ),
+                "disabled",
+                "type",
+            ],
+        },
+    },
+
+    args: {
+        imgSrc: "https://cdn-icons-png.flaticon.com/512/4401/4401459.png",
+    },
+    render: (args) => {
+        return <ImageButton {...args}>Office Equipment</ImageButton>;
+    },
+};
+
+export const Variants: StoryObj<Component> = {
     args: {
         imgSrc: "https://cdn-icons-png.flaticon.com/512/4401/4401459.png",
         children: "Office Equipment",
@@ -86,25 +108,4 @@ export const FocusableWhenDisabled: StoryObj<Component> = {
             Office Equipment
         </ImageButton>
     ),
-};
-export const Playground: StoryObj<Component> = {
-    parameters: {
-        controls: {
-            disable: false,
-            exclude: [
-                ...toStoryExcludedProps(
-                    storybookArgTypesByTitle["Selection and input/ImageButton"]
-                ),
-                "disabled",
-                "type",
-            ],
-        },
-    },
-
-    args: {
-        imgSrc: "https://cdn-icons-png.flaticon.com/512/4401/4401459.png",
-    },
-    render: (args) => {
-        return <ImageButton {...args}>Office Equipment</ImageButton>;
-    },
 };

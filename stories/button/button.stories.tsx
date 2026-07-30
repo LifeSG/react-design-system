@@ -24,6 +24,24 @@ const meta: Meta<Component> = {
 
 export default meta;
 
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disable: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Selection and input/Button"]
+            ),
+        },
+    },
+    render: (args) => {
+        return (
+            <Button icon={<PlaceholderIcon />} {...args}>
+                Label
+            </Button>
+        );
+    },
+};
+
 const VariantGrid = (args: Partial<ButtonProps>) => {
     return (
         <>
@@ -88,7 +106,7 @@ const VariantGrid = (args: Partial<ButtonProps>) => {
     );
 };
 
-export const Default: StoryObj<Component> = {
+export const Variants: StoryObj<Component> = {
     render: VariantGrid,
     decorators: [
         GridDecorator({
@@ -250,22 +268,4 @@ export const FocusableWhenDisabled: StoryObj<Component> = {
 export const TokenCustomisation: StoryObj = {
     tags: ["!dev"],
     render: () => <TokensTable />,
-};
-
-export const Playground: StoryObj<Component> = {
-    parameters: {
-        controls: {
-            disable: false,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Selection and input/Button"]
-            ),
-        },
-    },
-    render: (args) => {
-        return (
-            <Button icon={<PlaceholderIcon />} {...args}>
-                Label
-            </Button>
-        );
-    },
 };

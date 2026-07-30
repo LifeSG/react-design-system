@@ -19,6 +19,20 @@ const meta: Meta = {
 
 export default meta;
 
+export const Playground: StoryObj<typeof LoadingDotsSpinner> = {
+    parameters: {
+        controls: {
+            disable: false,
+            exclude: toStoryExcludedProps(
+                storybookArgTypesByTitle["Feedback indicators/Animations"]
+            ),
+        },
+    },
+    render: (args) => {
+        return <LoadingDotsSpinner {...args} />;
+    },
+};
+
 export const ThemedAnimation: StoryObj<typeof ThemedLoadingSpinner> = {
     name: "ThemedLoadingSpinner",
     render: (_args) => {
@@ -45,20 +59,6 @@ export const CustomLoadingDotsSpinner: StoryObj<typeof LoadingDotsSpinner> = {
                 </AnimationItem>
             </AnimationDisplay>
         );
-    },
-};
-
-export const Playground: StoryObj<typeof LoadingDotsSpinner> = {
-    parameters: {
-        controls: {
-            disable: false,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Feedback indicators/Animations"]
-            ),
-        },
-    },
-    render: (args) => {
-        return <LoadingDotsSpinner {...args} />;
     },
 };
 
