@@ -30,6 +30,8 @@ export interface TimeSlotWeekViewProps extends CommonCalendarProps {
     /**
      * When `true`, the user can click a day column to select that date,
      * triggering `onChange`
+     *
+     * @default true
      */
     enableSelection?: boolean | undefined;
     /**

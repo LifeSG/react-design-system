@@ -13,4 +13,5 @@ export * from "./use-mount";
 export * from "./use-next-input-state";
 export * from "./use-previous";
 export * from "./use-state-ref";
+export * from "./use-throttle";
 export * from "./version";

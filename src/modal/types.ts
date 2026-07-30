@@ -1,11 +1,14 @@
 import type { ModalAnimationDirection } from "../modal-v2/types";
 
+// @storybookSection Modal
 /**
  * Props for the `Modal` component.
  */
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * Controls whether the modal is visible.
+     *
+     * @default false
      */
     show: boolean;
     /**
@@ -28,7 +31,7 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * The `id` of the DOM element to portal the modal into.
      *
-     * @default `document.body`
+     * @default document.body
      */
     rootComponentId?: string | undefined;
     /**
@@ -50,6 +53,7 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     dismissKeyboardOnShow?: boolean | undefined;
 }
 
+// @storybookSection Modal.Box
 /**
  * Props for the `Modal.Box` sub-component.
  */
@@ -65,4 +69,8 @@ export interface ModalBoxProps extends React.HTMLAttributes<HTMLDivElement> {
      * Called when the close button is clicked.
      */
     onClose?: (() => void) | undefined;
+    /**
+     * Ref to the modal box DOM element. When used within `Modal`, the default `ref` is not available and you can specify this instead.
+     */
+    elementRef?: React.Ref<HTMLDivElement> | undefined;
 }

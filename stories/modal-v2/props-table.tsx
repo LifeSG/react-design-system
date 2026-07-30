@@ -131,6 +131,11 @@ const MODAL_CARD_DATA: ApiTableSectionProps[] = [
                 description: "The test identifier for the component",
                 propTypes: ["string"],
             },
+            {
+                name: "elementRef",
+                description: "A ref to the DOM element of the modal box",
+                propTypes: ["React.Ref<HTMLDivElement>"],
+            },
         ],
     },
 ];

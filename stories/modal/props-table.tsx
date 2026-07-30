@@ -108,6 +108,11 @@ const MODAL_BOX_DATA: ApiTableSectionProps[] = [
                     "Callback when the close button is clicked. Will be triggered if the close button is visible",
                 propTypes: ["() => void"],
             },
+            {
+                name: "elementRef",
+                description: "A ref to the DOM element of the modal box",
+                propTypes: ["React.Ref<HTMLDivElement>"],
+            },
         ],
     },
 ];

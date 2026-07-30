@@ -1,3 +1,11 @@
 .action-bar-overflow-table {
     height: 24rem;
 }
+
+.action-bar-overflow-spacer {
+    height: 360px;
+}
+
+.action-bar-offscreen-spacer {
+    height: 800px;
+}

@@ -75,7 +75,7 @@ export abstract class AbstractStoryPage {
     }
 
     public async scrollWithWheelUntil(options: {
-        scrollTarget: Locator;
+        scrollTarget: Locator | { x: number; y: number };
         until: () => Promise<boolean>;
         deltaX?: number;
         deltaY?: number;
@@ -89,7 +89,11 @@ export abstract class AbstractStoryPage {
             maxAttempts = 12,
         } = options;
 
-        await scrollTarget.hover();
+        if ("x" in scrollTarget && "y" in scrollTarget) {
+            await this.page.mouse.move(scrollTarget.x, scrollTarget.y);
+        } else {
+            await scrollTarget.hover();
+        }
         await expect
             .poll(async () => {
                 for (let attempt = 0; attempt < maxAttempts; attempt += 1) {
@@ -107,7 +111,7 @@ export abstract class AbstractStoryPage {
     }
 
     public async scrollToEnd(options: {
-        scrollTarget: Locator;
+        scrollTarget: Locator | { x: number; y: number };
         maxAttempts?: number;
     }) {
         const { scrollTarget, maxAttempts = 12 } = options;

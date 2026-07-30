@@ -115,10 +115,10 @@ describe("Accordion", () => {
                     </Accordion>
                 );
 
-                expectItemExpanded(
+                await expectItemExpanded(
                     screen.getByTestId("item1-expandable-container")
                 );
-                expectItemExpanded(
+                await expectItemExpanded(
                     screen.getByTestId("item2-expandable-container")
                 );
 
@@ -136,14 +136,12 @@ describe("Accordion", () => {
                     })
                 ).toBeInTheDocument();
 
-                await waitFor(() => {
-                    expectItemCollapsed(
-                        screen.getByTestId("item1-expandable-container")
-                    );
-                    expectItemCollapsed(
-                        screen.getByTestId("item2-expandable-container")
-                    );
-                });
+                await expectItemCollapsed(
+                    screen.getByTestId("item1-expandable-container")
+                );
+                await expectItemCollapsed(
+                    screen.getByTestId("item2-expandable-container")
+                );
             });
         });
 
@@ -182,10 +180,10 @@ describe("Accordion", () => {
                     </Accordion>
                 );
 
-                expectItemCollapsed(
+                await expectItemCollapsed(
                     screen.getByTestId("item1-expandable-container")
                 );
-                expectItemCollapsed(
+                await expectItemCollapsed(
                     screen.getByTestId("item2-expandable-container")
                 );
 
@@ -203,19 +201,17 @@ describe("Accordion", () => {
                     })
                 ).toBeInTheDocument();
 
-                await waitFor(() => {
-                    expectItemExpanded(
-                        screen.getByTestId("item1-expandable-container")
-                    );
-                    expectItemExpanded(
-                        screen.getByTestId("item2-expandable-container")
-                    );
-                });
+                await expectItemExpanded(
+                    screen.getByTestId("item1-expandable-container")
+                );
+                await expectItemExpanded(
+                    screen.getByTestId("item2-expandable-container")
+                );
             });
         });
 
         describe("enableExpandAll", () => {
-            it("should not render the button if enableExpandAll=false", () => {
+            it("should not render the button if enableExpandAll=false", async () => {
                 render(
                     <Accordion enableExpandAll={false}>
                         <Accordion.Item data-testid="item1" title="Item title">
@@ -229,7 +225,7 @@ describe("Accordion", () => {
                 expect(
                     screen.queryByTestId(ACCORDION_BUTTON_ID)
                 ).not.toBeInTheDocument();
-                expectItemExpanded(
+                await expectItemExpanded(
                     screen.getByTestId("item1-expandable-container")
                 );
             });
@@ -301,7 +297,7 @@ describe("Accordion", () => {
                 "item1-expandable-container"
             );
 
-            expectItemExpanded(expandableContainer);
+            await expectItemExpanded(expandableContainer);
 
             act(() => {
                 fireEvent.click(
@@ -309,10 +305,10 @@ describe("Accordion", () => {
                 );
             });
 
-            await waitFor(() => expectItemCollapsed(expandableContainer));
+            await expectItemCollapsed(expandableContainer);
         });
 
-        it("should minimize the contents if expanded=false regardless of initialDisplay", () => {
+        it("should minimize the contents if expanded=false regardless of initialDisplay", async () => {
             render(
                 <Accordion initialDisplay="expand-all">
                     <Accordion.Item
@@ -327,12 +323,12 @@ describe("Accordion", () => {
                 </Accordion>
             );
 
-            expectItemCollapsed(
+            await expectItemCollapsed(
                 screen.getByTestId("item1-expandable-container")
             );
         });
 
-        it("should expand the contents if expanded=true regardless of initialDisplay", () => {
+        it("should expand the contents if expanded=true regardless of initialDisplay", async () => {
             render(
                 <Accordion initialDisplay="collapse-all">
                     <Accordion.Item
@@ -347,7 +343,7 @@ describe("Accordion", () => {
                 </Accordion>
             );
 
-            expectItemExpanded(
+            await expectItemExpanded(
                 screen.getByTestId("item1-expandable-container")
             );
         });
@@ -454,15 +450,19 @@ describe("Accordion", () => {
 // =============================================================================
 // HELPER FUNCTIONS
 // =============================================================================
-const expectItemExpanded = (element: HTMLElement) => {
-    expect(element).not.toHaveStyle({
-        height: 0,
+const expectItemExpanded = async (element: HTMLElement) => {
+    await waitFor(() => {
+        expect(element).not.toHaveStyle({
+            height: 0,
+        });
     });
 };
 
-const expectItemCollapsed = (element: HTMLElement) => {
-    expect(element).toHaveStyle({
-        height: 0,
+const expectItemCollapsed = async (element: HTMLElement) => {
+    await waitFor(() => {
+        expect(element).toHaveStyle({
+            height: 0,
+        });
     });
 };
 

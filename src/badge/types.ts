@@ -23,7 +23,11 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
      * badge as a standalone indicator.
      */
     children?: JSX.Element | undefined;
-    /** Color scheme applied to the badge. */
+    /**
+     * Color scheme applied to the badge.
+     *
+     * @default "default"
+     */
     color?: BadgeColor | undefined;
     /**
      * Numeric value displayed inside `number`, `number-with-border`, and
@@ -31,7 +35,14 @@ export interface BadgeProps extends React.HTMLAttributes<HTMLSpanElement> {
      * `"1K"` or `"1K+"`. Has no effect on dot variants.
      */
     count?: number | undefined;
+    /**
+     * @default "badge"
+     */
     "data-testid"?: string | undefined;
-    /** Visual style of the badge indicator. */
+    /**
+     * Visual style of the badge indicator.
+     *
+     * @default "number"
+     */
     variant?: BadgeVariant | undefined;
 }

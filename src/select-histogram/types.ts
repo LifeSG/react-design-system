@@ -69,7 +69,7 @@ export interface SelectHistogramProps
      * Note: if a parent of the trigger has a higher `z-index` than the dropdown,
      * the dropdown may be obscured.
      *
-     * @default `document.body`
+     * @default document.body
      */
     dropdownRootNode?: RefObject<HTMLElement> | undefined;
     /** Called when focus leaves both the input and the dropdown. */

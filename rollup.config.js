@@ -78,6 +78,7 @@ const plugins = [
                 "**/custom-types/svg.d.ts",
                 "codemods",
                 "scripts",
+                "tools",
             ],
         },
     }),

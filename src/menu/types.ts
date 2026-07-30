@@ -5,21 +5,35 @@ import type {
     ReactElement,
 } from "react";
 
-import type { PopoverRenderProps, PopoverTriggerProps } from "../popover";
+import type {
+    PopoverPosition,
+    PopoverRenderProps,
+    PopoverTriggerProps,
+} from "../popover";
 import type { MenuItem } from "./menu-item";
 import type { MenuLink } from "./menu-link";
 import type { MenuSection } from "./menu-section";
 
+// @storybookSection Menu
 /**
  * Props for the `Menu` component.
+ *
  */
 export interface MenuProps extends Omit<PopoverTriggerProps, "popoverContent"> {
     /**
      * The `Menu.Content` element to display inside the popover panel.
      */
     menuContent: FunctionComponentElement<MenuContentProps>;
+
+    /**
+     * Preferred placement of the popover relative to the trigger.
+     *
+     * @default "bottom-start"
+     */
+    position?: PopoverPosition | undefined;
 }
 
+// @storybookSection Menu.Content
 /**
  * Props for the `Menu.Content` sub-component.
  */
@@ -33,10 +47,12 @@ export interface MenuContentProps
     "data-testid"?: string | undefined;
 }
 
+// @storybookSkipProps
 type MenuSectionItem =
     | ReactElement<typeof MenuItem>
     | ReactElement<typeof MenuLink>;
 
+// @storybookSection Menu.Section
 /**
  * Props for the `Menu.Section` sub-component.
  */
@@ -53,9 +69,13 @@ export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
      * Accessible group label rendered above the section items.
      */
     label?: string | undefined;
+    /**
+     * @default "menu-section"
+     */
     "data-testid"?: string | undefined;
 }
 
+// @storybookSection Menu.Item
 /**
  * Props for the `Menu.Item` sub-component.
  */
@@ -66,12 +86,19 @@ export interface MenuItemProps extends HTMLAttributes<HTMLLIElement> {
      * Secondary descriptive text rendered below `label`.
      */
     subLabel?: string | undefined;
+    /**
+     * @default "menu-item"
+     */
     "data-testid"?: string | undefined;
 }
 
+// @storybookSection Menu.Link
 /**
  * Props for the `Menu.Link` sub-component.
  */
 export interface MenuLinkProps extends AnchorHTMLAttributes<HTMLAnchorElement> {
+    /**
+     * @default "menu-link"
+     */
     "data-testid"?: string | undefined;
 }

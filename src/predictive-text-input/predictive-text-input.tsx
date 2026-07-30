@@ -144,7 +144,6 @@ export const PredictiveTextInput = <T, V>({
         setInput(selectedOption ? getDisplayValue(selectedOption) : "");
         setSearchedInput(selectedOption ? getDisplayValue(selectedOption) : "");
         setPrevOptionSelected(selectedOption);
-        setOptions([]);
         setIsOptionSelected(!!selectedOption);
     }, [selectedOption]);
 
@@ -236,9 +235,15 @@ export const PredictiveTextInput = <T, V>({
         selectorRef.current?.focus();
     };
 
+    const handleHide = () => {
+        // reset dropdown state once it fully closes
+        setOptions([]);
+        setIsLoading(true);
+        setIsError(false);
+    };
+
     const handleOnClear = () => {
         setInput("");
-        setOptions([]);
         setIsOptionSelected(false);
         setIsOpen(false);
         onSelectOption?.(undefined, undefined);
@@ -264,7 +269,6 @@ export const PredictiveTextInput = <T, V>({
     const handleDropdownDismiss = (item?: T) => {
         setSearchedInput(item ? getDisplayValue(item) : "");
         setIsOptionSelected(!!item);
-        setOptions([]);
         setIsLoading(true);
     };
 
@@ -333,24 +337,22 @@ export const PredictiveTextInput = <T, V>({
 
     const renderDropdown = () => {
         return (
-            <>
-                <DropdownList
-                    listboxId={internalId}
-                    listItems={options}
-                    onSelectItem={handleListItemClick}
-                    onDismiss={handleListDismiss}
-                    valueExtractor={valueExtractor}
-                    listExtractor={listExtractor}
-                    itemsLoadState={getItemsLoadState()}
-                    itemTruncationType={"end"}
-                    itemMaxLines={1}
-                    labelDisplayType={"next-line"}
-                    disableItemFocus
-                    onRetry={() => handleFetchOptions(input)}
-                    width={dropdownWidth}
-                    matchElementWidth
-                />
-            </>
+            <DropdownList
+                listboxId={internalId}
+                listItems={options}
+                onSelectItem={handleListItemClick}
+                onDismiss={handleListDismiss}
+                valueExtractor={valueExtractor}
+                listExtractor={listExtractor}
+                itemsLoadState={getItemsLoadState()}
+                itemTruncationType={"end"}
+                itemMaxLines={1}
+                labelDisplayType={"next-line"}
+                disableItemFocus
+                onRetry={() => handleFetchOptions(input)}
+                width={dropdownWidth}
+                matchElementWidth
+            />
         );
     };
 
@@ -364,6 +366,7 @@ export const PredictiveTextInput = <T, V>({
                 onOpen={handleOpen}
                 onClose={handleClose}
                 onDismiss={handleDismiss}
+                onHide={handleHide}
                 clickToToggle={false}
                 offset={8}
                 alignment={alignment}

@@ -6,6 +6,10 @@ export type CheckboxSize = "small" | "default";
 export interface CheckboxProps
     extends React.InputHTMLAttributes<HTMLInputElement> {
     /**
+     * Controls the checked state of the checkbox. When omitted, the checkbox is uncontrolled.
+     */
+    checked?: boolean | undefined;
+    /**
      * Controls the visual size of the checkbox.
      *
      * @default "default"

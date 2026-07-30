@@ -38,10 +38,14 @@ export interface TimeSlotBarWeekProps extends CommonCalendarProps {
     value?: string | undefined;
     /**
      * Duration in minutes that each time slot cell represents.
+     *
+     * @default 30
      */
     interval?: number | undefined;
     /**
      * Controls how time slot cells are sized within each day column.
+     *
+     * @default "flexible"
      */
     variant?: TimeSlotCellsVariant | undefined;
     /**
@@ -59,6 +63,8 @@ export interface TimeSlotBarWeekProps extends CommonCalendarProps {
     /**
      * When `true`, the user can click a day column to select that date,
      * triggering `onChange`.
+     *
+     * @default true
      */
     enableSelection?: boolean | undefined;
     /**

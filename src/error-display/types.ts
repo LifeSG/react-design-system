@@ -38,6 +38,7 @@ export interface InactivityAdditionalAttributes {
     reminderInterval?: number | undefined;
 }
 
+// @storybookSkipProps
 /** Shared content and display attributes for `ErrorDisplayProps`. */
 export interface ErrorDisplayAttributes {
     /** Overrides the default illustration for the selected `type`. */

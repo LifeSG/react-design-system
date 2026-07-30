@@ -7,7 +7,7 @@ export interface InputSliderProps extends BaseSliderProps {
     /**
      * The controlled value of the thumb.
      *
-     * @default `0`
+     * @default 0
      */
     value?: number | undefined;
     /**

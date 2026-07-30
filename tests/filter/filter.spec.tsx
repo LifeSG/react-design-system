@@ -1,9 +1,9 @@
 import { act, fireEvent, render, screen, within } from "@testing-library/react";
 import { Filter } from "src";
+import type { FilterItemCheckboxOptionProps } from "src/filter/addons/types";
 import { FilterContext } from "src/filter/filter-context";
 import { FilterModal } from "src/filter/filter-modal";
 import { FilterSidebar } from "src/filter/filter-sidebar";
-import type { FilterItemCheckboxOptionProps } from "src/filter/types";
 import { useMaxWidthMediaQuery } from "src/theme";
 
 import { setupCommonDomMocks } from "../_common";

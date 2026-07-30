@@ -5,6 +5,7 @@ import type {
 
 export type { Variant as CalendarVariant } from "../shared/internal-calendar/types";
 
+// @storybookSkipProps
 interface CalendarBaseProps extends CommonCalendarProps {
     className?: string | undefined;
     "data-testid"?: string | undefined;
@@ -34,7 +35,7 @@ interface CalendarBaseProps extends CommonCalendarProps {
  *
  * Pass `variant="single"` or omit `variant` to activate this mode.
  */
-export interface CalendarSingleProps extends CalendarBaseProps {
+export interface CalendarSingleProps {
     /**
      * @default "single"
      */
@@ -61,7 +62,7 @@ export interface CalendarSingleProps extends CalendarBaseProps {
  *
  * Requires `variant="multi"`.
  */
-export interface CalendarMultiProps extends CalendarBaseProps {
+export interface CalendarMultiProps {
     variant: "multi";
     /** Selected dates in `YYYY-MM-DD` format */
     values?: string[] | undefined;
@@ -78,4 +79,5 @@ export interface CalendarMultiProps extends CalendarBaseProps {
 }
 
 /** Props for the `Calendar` component */
-export type CalendarProps = CalendarSingleProps | CalendarMultiProps;
+export type CalendarProps = CalendarBaseProps &
+    (CalendarSingleProps | CalendarMultiProps);

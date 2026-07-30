@@ -17,12 +17,10 @@ export const tableWrapper = css`
     border-radius: ${Radius["md"]};
 
     /* Hide scrollbar */
+    scrollbar-width: none; /* Firefox */
+    -ms-overflow-style: none; /* IE 10+ */
     &::-webkit-scrollbar {
-        display: none;
-    }
-    * {
-        -ms-overflow-style: none; /* IE and Edge */
-        scrollbar-width: none; /* Firefox */
+        display: none; /* Chrome/Safari/Webkit */
     }
 `;
 

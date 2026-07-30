@@ -14,7 +14,7 @@ import {
 } from "react";
 
 import { Button } from "../../button";
-import type { FormLabelProps } from "../../form/types";
+import type { FormLabelProps } from "../../form/form-label/types";
 import { ProgressBar } from "../../shared/progress-bar";
 import { Typography } from "../../typography";
 import { StringHelper } from "../../util";

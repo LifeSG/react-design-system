@@ -3,11 +3,16 @@ export type FadePosition = "left" | "right" | "both";
 export type SeparatorStyle = "chevron" | "slash";
 
 /**
- * Gradient color values for the left and right fade overlays in the
- * breadcrumb scroll container.
+ * Gradient color values for the fade overlays in the breadcrumb scroll container.
  */
 export interface FadeColorSet {
+    /**
+     * Gradient color stops for the left fade overlay.
+     */
     left?: string[] | undefined;
+    /**
+     * Gradient color stops for the right fade overlay.
+     */
     right?: string[] | undefined;
 }
 
