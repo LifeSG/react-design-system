@@ -174,12 +174,10 @@ test.describe("InputTextarea", () => {
                 locator: story.locators.readonlyTextarea,
             });
 
-            await story.locators.errorTextarea.evaluate((el) =>
-                el.scrollIntoView({ block: "center" })
-            );
             await story.locators.errorTextarea.focus();
             await compareScreenshot(story, "error", {
                 locator: story.locators.errorTextarea,
+                scrollIntoView: true,
             });
         });
     });
@@ -205,12 +203,10 @@ test.describe("InputTextarea", () => {
                 locator: story.locators.readonlyTextarea,
             });
 
-            await story.locators.errorTextarea.evaluate((el) =>
-                el.scrollIntoView({ block: "center" })
-            );
             await story.locators.errorTextarea.focus();
             await compareScreenshot(story, "error", {
                 locator: story.locators.errorTextarea,
+                scrollIntoView: true,
             });
         });
     });
