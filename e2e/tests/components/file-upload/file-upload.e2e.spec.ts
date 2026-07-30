@@ -464,6 +464,18 @@ test.describe("FileUpload", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("long-description", { size: "mobile" });
+        });
+
+        test("Long description text", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                locator: story.locators.fileUpload,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("file-thumbnail");
         });
 
