@@ -7,7 +7,7 @@ import type { BaseAnimationProps } from "../types";
 
 // @catalog
 /**
- * A loading spinner that automatically adapts to the theme's resourceScheme.
+ * A loading spinner that automatically adapts to the current theme.
  */
 export const ThemedLoadingSpinner = (props: BaseAnimationProps) => {
     const fdsThemeContext = useContext(ThemeContext);

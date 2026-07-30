@@ -295,7 +295,7 @@
         {
             "name": "LoadingSpinner",
             "importPath": "@lifesg/react-design-system/animations",
-            "description": "An animated circular loading spinner.",
+            "description": "An animation of a flying rocket.",
             "keywords": []
         },
         {
@@ -511,7 +511,7 @@
         {
             "name": "ThemedLoadingSpinner",
             "importPath": "@lifesg/react-design-system/animations",
-            "description": "A loading spinner that automatically adapts to the theme's resourceScheme.",
+            "description": "A loading spinner that automatically adapts to the current theme.",
             "keywords": []
         },
         {
