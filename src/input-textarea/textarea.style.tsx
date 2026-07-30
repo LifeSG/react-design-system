@@ -15,6 +15,7 @@ interface StyleProps {
 export const Wrapper = styled.div`
     display: flex;
     flex-direction: column;
+    gap: ${Spacing["spacing-8"]};
 `;
 
 export const Element = styled.textarea<StyleProps>`

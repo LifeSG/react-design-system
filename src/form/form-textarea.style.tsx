@@ -5,7 +5,7 @@ import { ErrorMessage } from "./form-label.style";
 export const LabelContainer = styled.div`
     display: flex;
     justify-content: flex-end;
-    margin-top: ${Spacing["spacing-4"]};
+    margin-top: ${Spacing["spacing-8"]};
 `;
 
 export const ErrorMessageContainer = styled.div`
