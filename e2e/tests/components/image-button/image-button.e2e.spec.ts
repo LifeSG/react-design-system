@@ -200,9 +200,6 @@ test.describe("ImageButton", () => {
         });
     });
 
-    // -------------------------------------------------------------------------
-    // Large font size (accessibility)
-    // -------------------------------------------------------------------------
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("variants");
