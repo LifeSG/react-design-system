@@ -1,6 +1,6 @@
-import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as TagStories from "./tag.stories";
-import { AutoArgTypesTabs } from "../storybook-common";
+import { AutoArgTypesTabs, Playground } from "../storybook-common";
 
 <Meta of={TagStories} />
 
@@ -14,10 +14,7 @@ A static or interactive element that is used to communicate selections, statuses
 import { Tag } from "@lifesg/react-design-system/tag";
 ```
 
-<Canvas of={TagStories.Playground} />
-<div className="controls-only">
-    <Controls of={TagStories.Playground} />
-</div>
+<Playground of={TagStories.Playground} />
 
 ## Interactive tag
 

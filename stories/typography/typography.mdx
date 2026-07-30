@@ -1,5 +1,5 @@
-import { AutoArgTypesTabs, Tabs } from "../storybook-common";
-import { Canvas, Controls, Meta } from "@storybook/addon-docs/blocks";
+import { AutoArgTypesTabs, Playground } from "../storybook-common";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import { DocInfo } from "stories/storybook-common";
 import { PropsTable } from "./props-table";
 import * as TypographyStories from "./typography.stories";
@@ -16,30 +16,10 @@ The component that is used for headings, body text, links and more.
 import { Typography } from "@lifesg/react-design-system/typography";
 ```
 
-<Tabs
+<Playground
     tabs={[
-        {
-            title: "Heading/Body",
-            component: (
-                <div>
-                    <Canvas of={TypographyStories.PlaygroundText} />
-                    <div className="controls-only">
-                        <Controls of={TypographyStories.PlaygroundText} />
-                    </div>
-                </div>
-            ),
-        },
-        {
-            title: "Link",
-            component: (
-                <div>
-                    <Canvas of={TypographyStories.PlaygroundLink} />
-                    <div className="controls-only">
-                        <Controls of={TypographyStories.PlaygroundLink} />
-                    </div>
-                </div>
-            ),
-        },
+        { title: "Heading/Body", of: TypographyStories.PlaygroundText },
+        { title: "Link", of: TypographyStories.PlaygroundLink },
     ]}
 />
 

@@ -1,4 +1,4 @@
-import { Canvas, Meta, Story, Controls } from "@storybook/addon-docs/blocks";
+import { Canvas, Meta, Story } from "@storybook/addon-docs/blocks";
 import {
     LoadingDots,
     LoadingDotsSpinner,
@@ -10,7 +10,7 @@ import {
     AnimationPane,
     Content,
 } from "./doc-elements";
-import { AutoArgTypesTabs } from "../storybook-common";
+import { AutoArgTypesTabs, Playground } from "../storybook-common";
 import * as AnimationStories from "./animations.stories";
 import { DocNote } from "stories/storybook-common";
 import { CustomisedPropsTable } from "./props-table";
@@ -27,10 +27,7 @@ A component that renders an animation on the UI.
 import { <Component_name> } from "@lifesg/react-design-system/animations";
 ```
 
-<Canvas of={AnimationStories.Playground} />
-<div className="controls-only">
-    <Controls of={AnimationStories.Playground} />
-</div>
+<Playground of={AnimationStories.Playground} />
 
 ## Themed loading spinner
 

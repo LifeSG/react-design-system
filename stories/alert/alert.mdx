@@ -1,6 +1,6 @@
-import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as AlertStories from "./alert.stories";
-import { AutoArgTypesTabs } from "../storybook-common";
+import { AutoArgTypesTabs, Playground } from "../storybook-common";
 
 <Meta of={AlertStories} />
 
@@ -14,10 +14,7 @@ The primary call to action component.
 import { Alert } from "@lifesg/react-design-system/alert";
 ```
 
-<Canvas of={AlertStories.Playground} />
-<div className="controls-only">
-    <Controls of={AlertStories.Playground} />
-</div>
+<Playground of={AlertStories.Playground} />
 
 ## Variants
 

@@ -1,6 +1,6 @@
-import { Canvas, Meta, Controls } from "@storybook/addon-docs/blocks";
+import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as ProgressIndicatorStories from "./progress-indicator.stories";
-import { AutoArgTypesTabs } from "../storybook-common";
+import { AutoArgTypesTabs, Playground } from "../storybook-common";
 
 <Meta of={ProgressIndicatorStories} />
 
@@ -14,10 +14,7 @@ A component that displays an indication of the current progress in a step proces
 import { ProgressIndicator } from "@lifesg/react-design-system/progress-indicator";
 ```
 
-<Canvas of={ProgressIndicatorStories.Playground} />
-<div className="controls-only">
-    <Controls of={ProgressIndicatorStories.Playground} />
-</div>
+<Playground of={ProgressIndicatorStories.Playground} />
 
 ## Component API
 
