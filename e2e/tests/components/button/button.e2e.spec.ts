@@ -189,4 +189,33 @@ test.describe("Button", () => {
             await compareScreenshot(story, "mount");
         });
     });
+
+    // -------------------------------------------------------------------------
+    // Large font size (accessibility)
+    // -------------------------------------------------------------------------
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("base-variants");
+            await story.page.addStyleTag({
+                content: "html { font-size: 200% !important; }",
+            });
+        });
+
+        test("Base variants (large font size)", async ({ story }) => {
+            await compareScreenshot(story, "large-font-size");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("base-icon-button");
+            await story.page.addStyleTag({
+                content: "html { font-size: 200% !important; }",
+            });
+        });
+
+        test("Icon-only variants (large font size)", async ({ story }) => {
+            await compareScreenshot(story, "large-font-size");
+        });
+    });
 });

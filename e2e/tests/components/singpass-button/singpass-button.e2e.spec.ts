@@ -57,4 +57,20 @@ test.describe("SingpassButton", () => {
             });
         });
     });
+
+    // -------------------------------------------------------------------------
+    // Large font size (accessibility)
+    // -------------------------------------------------------------------------
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("basic");
+            await story.page.addStyleTag({
+                content: "html { font-size: 200% !important; }",
+            });
+        });
+
+        test("All size variants (large font size)", async ({ story }) => {
+            await compareScreenshot(story, "large-font-size");
+        });
+    });
 });

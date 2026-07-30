@@ -199,4 +199,20 @@ test.describe("ImageButton", () => {
             });
         });
     });
+
+    // -------------------------------------------------------------------------
+    // Large font size (accessibility)
+    // -------------------------------------------------------------------------
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("variants");
+            await story.page.addStyleTag({
+                content: "html { font-size: 200% !important; }",
+            });
+        });
+
+        test("All variants (large font size)", async ({ story }) => {
+            await compareScreenshot(story, "large-font-size");
+        });
+    });
 });

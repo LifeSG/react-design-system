@@ -17,8 +17,7 @@ export const main = css`
 `;
 
 export const mainSizeSmall = css`
-    height: 2.5rem;
-    min-height: unset;
+    min-height: 2.5rem;
 `;
 
 export const mainSizeLarge = css`

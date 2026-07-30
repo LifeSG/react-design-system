@@ -5,7 +5,6 @@ import {
     Colour,
     ComponentToken,
     Font,
-    MediaQuery,
     Motion,
     Spacing,
 } from "../theme";
@@ -147,42 +146,33 @@ export const mainStyleDisabled = css`
 // BUTTON SIZE
 // -------------------------------------------------------------------------
 export const mainSizeDefault = css`
-    height: 3rem;
+    min-height: 3rem;
     ${Font["heading-xs-semibold"]}
-    ${MediaQuery.MaxWidth.xxs} {
-        height: auto;
-    }
 `;
 
 export const mainSizeDefaultIconOnly = css`
-    height: 3rem;
-    width: 3rem;
+    min-height: 3rem;
+    min-width: 3rem;
 `;
 
 export const mainSizeSmall = css`
-    height: 2.5rem;
+    min-height: 2.5rem;
     ${Font["body-md-semibold"]}
-    ${MediaQuery.MaxWidth.xxs} {
-        height: auto;
-    }
 `;
 
 export const mainSizeSmallIconOnly = css`
-    height: 2.5rem;
-    width: 2.5rem;
+    min-height: 2.5rem;
+    min-width: 2.5rem;
 `;
 
 export const mainSizeLarge = css`
-    height: 4rem;
+    min-height: 4rem;
     ${Font["heading-md-semibold"]}
-    ${MediaQuery.MaxWidth.xxs} {
-        height: auto;
-    }
 `;
 
 export const mainSizeLargeIconOnly = css`
-    height: 4rem;
-    width: 4rem;
+    min-height: 4rem;
+    min-width: 4rem;
 `;
 
 export const spinner = css`
