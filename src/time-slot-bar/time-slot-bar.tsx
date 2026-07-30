@@ -486,6 +486,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     );
 };
 
+// @catalog
 /**
  * A horizontally scrollable timeline bar that visualises time slots across a
  * defined time range.

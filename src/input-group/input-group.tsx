@@ -160,6 +160,7 @@ const Component = <T, V>(
     }
 };
 
+// @catalog
 /**
  * A single-line text input optionally paired with a static label, a custom element, or a
  * dropdown list selector.

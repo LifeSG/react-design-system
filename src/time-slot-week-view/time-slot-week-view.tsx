@@ -12,6 +12,7 @@ import type { TimeSlotWeekViewProps } from "./types";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 
+// @catalog
 /**
  * A week calendar grid that displays slot availability within each day column.
  *

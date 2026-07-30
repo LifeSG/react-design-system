@@ -14,6 +14,7 @@ import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
 import * as styles from "./breadcrumb.styles";
 import type { BreadcrumbProps, FadeColorSet } from "./types";
 
+// @catalog
 /**
  * Horizontal breadcrumb navigation trail.
  *

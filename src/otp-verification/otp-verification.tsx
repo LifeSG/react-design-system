@@ -8,6 +8,7 @@ import * as styles from "./otp-verification.styles";
 import type { OtpVerificationProps } from "./types";
 import { VerificationSection } from "./verification-section";
 
+// @catalog
 /**
  * A multi-step form component that guides users through OTP-based verification.
  *

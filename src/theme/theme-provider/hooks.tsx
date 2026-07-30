@@ -13,6 +13,7 @@ type InheritedThemeScope = {
     themeStyle: CSSProperties;
 };
 
+// @catalog
 /**
  * Returns the theme context from the nearest `ThemeProvider`.
  *
@@ -33,6 +34,7 @@ export const useTheme = (): ThemeContextValue => {
     return context;
 };
 
+// @catalog
 /**
  * Builds `data-fds-theme*` attributes and inline CSS variables for re-stamping
  * the current theme onto a detached DOM element (e.g. a portal or floating

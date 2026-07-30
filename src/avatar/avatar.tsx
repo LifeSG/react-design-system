@@ -4,6 +4,7 @@ import { Typography } from "../typography";
 import * as styles from "./avatar.styles";
 import type { AvatarProps } from "./types";
 
+// @catalog
 /**
  * Displays a circular avatar representing a user or entity.
  *

@@ -194,6 +194,7 @@ function SmartAppBannerComponent(
     );
 }
 
+// @catalog
 /**
  * A fixed top banner that promotes a mobile app and links to its store listing.
  *

@@ -82,6 +82,7 @@ const SidenavBase = ({
     );
 };
 
+// @catalog
 /**
  * A fixed sidebar navigation component for multi-level page navigation.
  *

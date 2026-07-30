@@ -12,6 +12,7 @@ import * as styles from "./input-range-slider.styles";
 import { Thumb, Track } from "./slider-components";
 import type { InputRangeSliderProps } from "./types";
 
+// @catalog
 /**
  * A draggable track slider for selecting one or more numeric values within a
  * bounded range.

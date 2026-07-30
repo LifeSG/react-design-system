@@ -18,6 +18,7 @@ import { useId } from "../util";
 import { StringHelper } from "../util/string-helper";
 import type { InputSelectProps } from "./types";
 
+// @catalog
 /**
  * A single-selection dropdown input.
  *

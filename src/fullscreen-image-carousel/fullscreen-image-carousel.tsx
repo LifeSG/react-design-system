@@ -603,6 +603,7 @@ export const Component = (
     );
 };
 
+// @catalog
 /**
  * A fullscreen modal carousel for browsing images and custom media items.
  *

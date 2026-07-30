@@ -12,6 +12,7 @@ import { useId } from "../util";
 import * as styles from "./select-histogram.styles";
 import type { SelectHistogramProps } from "./types";
 
+// @catalog
 /**
  * A form input that displays the selected range and reveals a histogram slider in a dropdown.
  *

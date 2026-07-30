@@ -5,6 +5,10 @@ import { LoadingDotsSpinner } from "../loading-dots-spinner/loading-dots-spinner
 import { LoadingSpinner } from "../loading-spinner/loading-spinner";
 import type { AnimationProps } from "../types";
 
+// @catalog
+/**
+ * A loading spinner that automatically adapts to the current theme.
+ */
 export const ThemedLoadingSpinner = (props: AnimationProps) => {
     const fdsThemeContext = useContext(ThemeContext);
 

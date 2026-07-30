@@ -20,6 +20,7 @@ import type { InputRangeSelectProps } from "./types";
 
 type RangeType = "from" | "to";
 
+// @catalog
 /**
  * A paired combobox input for selecting a start and end value from dropdown lists.
  *

@@ -46,6 +46,7 @@ const Component = (
     );
 };
 
+// @catalog
 /**
  * A button that displays an image alongside optional label content.
  *

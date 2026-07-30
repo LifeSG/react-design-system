@@ -39,6 +39,7 @@ const TYPE_CLASS_MAP = {
     },
 };
 
+// @catalog
 /**
  * Displays an inline contextual banner with a severity-coded message.
  *

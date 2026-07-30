@@ -15,6 +15,7 @@ import type {
     MaintenanceAdditionalAttributes,
 } from "./types";
 
+// @catalog
 /**
  * Displays a predefined error or status state with an illustration, title,
  * description, and optional action button.

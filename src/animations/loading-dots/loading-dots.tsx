@@ -9,6 +9,10 @@ const LottieLoadingDots = lazy(async () => ({
     default: (await import("./lottie-animation")).LottieLoadingDots,
 }));
 
+// @catalog
+/**
+ * An animated loading indicator with bouncing dots.
+ */
 export const LoadingDots = ({ className, ...otherProps }: AnimationProps) => {
     return (
         <div {...otherProps} className={clsx(styles.container, className)}>

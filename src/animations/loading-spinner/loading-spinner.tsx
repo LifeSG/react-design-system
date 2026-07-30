@@ -9,6 +9,10 @@ const LottieSpinner = lazy(async () => ({
     default: (await import("./lottie-animation")).LottieSpinner,
 }));
 
+// @catalog
+/**
+ * An animation of a flying rocket.
+ */
 export const LoadingSpinner = ({
     className,
     ...otherProps

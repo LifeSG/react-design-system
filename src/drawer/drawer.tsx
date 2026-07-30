@@ -16,6 +16,7 @@ import { useId } from "../util";
 import * as styles from "./drawer.styles";
 import type { DrawerProps } from "./types";
 
+// @catalog
 /**
  * A slide-in panel that overlays the page content.
  *

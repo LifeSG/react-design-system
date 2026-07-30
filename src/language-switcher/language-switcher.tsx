@@ -5,6 +5,7 @@ import { DropdownVariant } from "./dropdown-variant";
 import { LinkContainerVariant } from "./link-container-variant";
 import type { LanguageSwitcherCode, LanguageSwitcherProps } from "./types";
 
+// @catalog
 /**
  * A locale-switching control that lets users change the active display language.
  *

@@ -10,6 +10,7 @@ import { useEffect, useRef } from "react";
 import * as styles from "./checkbox.styles";
 import type { CheckboxProps } from "./types";
 
+// @catalog
 /**
  * A styled checkbox input with indeterminate state support.
  */

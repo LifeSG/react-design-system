@@ -13,6 +13,7 @@ import { FooterHelper } from "./footer-helper";
 import { ResourceAddon } from "./footer-resource-addon";
 import type { FooterLinkProps, FooterProps } from "./types";
 
+// @catalog
 /**
  * Site-wide footer with navigation links, branding, and legal copy.
  *

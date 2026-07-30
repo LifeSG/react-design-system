@@ -2,6 +2,7 @@ import { ComboboxPicker } from "./combobox-picker/combobox-picker";
 import { DialPicker } from "./dial-picker/dial-picker";
 import type { TimeRangePickerProps } from "./types";
 
+// @catalog
 /**
  * A two-field time picker for selecting a start and end time.
  *

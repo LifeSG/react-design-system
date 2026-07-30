@@ -27,6 +27,7 @@ const TOAST_ICON_MAP = {
     info: ICircleFillIcon,
 };
 
+// @catalog
 /**
  * A brief notification that appears on screen to provide feedback about an
  * operation or event.

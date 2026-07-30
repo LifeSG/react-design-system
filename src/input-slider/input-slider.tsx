@@ -3,6 +3,7 @@ import { useEffect, useState } from "react";
 import { InputRangeSlider } from "../input-range-slider";
 import type { InputSliderProps } from "./types";
 
+// @catalog
 /**
  * A single-thumb slider for selecting one numeric value within a range.
  *

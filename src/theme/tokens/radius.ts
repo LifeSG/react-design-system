@@ -1,4 +1,7 @@
-/** Border radius tokens. */
+// @catalog
+/**
+ * Border radius tokens.
+ */
 export const Radius = {
     none: "var(--fds-radius-none)",
     xs: "var(--fds-radius-xs)",

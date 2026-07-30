@@ -43,6 +43,7 @@ const INITIAL_STATE: DateRangeInputState = {
     focused: false,
 };
 
+// @catalog
 /**
  * A paired date input with an attached calendar dropdown that lets users
  * select a contiguous date range.

@@ -52,6 +52,7 @@ export type { FormTimepickerProps } from "./form-timepicker/types";
 export type { FormUnitNumberInputProps } from "./form-unit-number-input/types";
 export * from "./types";
 
+// @catalog
 /**
  * A collection of form field components that each combine a label, input
  * control, and inline error message with consistent ARIA wiring.

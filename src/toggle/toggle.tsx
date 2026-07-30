@@ -14,6 +14,7 @@ import type { ToggleIconType } from "./toggle-icon";
 import { ToggleIcon } from "./toggle-icon";
 import type { ToggleProps } from "./types";
 
+// @catalog
 /**
  * A selectable control for checkbox and radio interaction patterns.
  *

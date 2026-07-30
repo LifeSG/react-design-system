@@ -14,6 +14,7 @@ import * as styles from "./unit-number-input.styles";
 type FieldType = "floor" | "unit" | "none";
 type ValueFieldTypes = Exclude<FieldType, "none">;
 
+// @catalog
 /**
  * A two-field input for entering Singapore-style unit numbers in `floor-unit` format.
  *

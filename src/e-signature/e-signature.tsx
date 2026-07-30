@@ -24,6 +24,7 @@ const ESignatureCanvas = lazy(async () => ({
     default: (await import("./e-signature-canvas")).ESignatureCanvas,
 }));
 
+// @catalog
 /**
  * A field that lets users draw and save a signature.
  *

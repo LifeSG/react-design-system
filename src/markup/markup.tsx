@@ -53,6 +53,7 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
     );
 };
 
+// @catalog
 /**
  * A container for rendering rich HTML markup.
  *

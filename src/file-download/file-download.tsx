@@ -7,6 +7,7 @@ import * as styles from "./file-download.styles";
 import { FileListCard } from "./file-list-card";
 import type { FileDownloadProps, FileItemDownloadProps } from "./types";
 
+// @catalog
 /**
  * Displays a list of downloadable files, optionally grouped under a title and description.
  *

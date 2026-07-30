@@ -11,6 +11,7 @@ import { useId } from "../util";
 import * as styles from "./box-container.styles";
 import type { BoxContainerProps } from "./types";
 
+// @catalog
 /**
  * A titled, collapsible section container that groups related content behind a
  * labelled header.

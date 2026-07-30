@@ -34,6 +34,7 @@
         "custom-types/*",
         "stories",
         "codemods",
+        "scripts/**/*.ts",
         "tools/**/*"
     ],
     "exclude": ["node_modules", "rollup.config.js"]

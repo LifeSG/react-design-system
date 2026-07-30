@@ -116,6 +116,7 @@ const getMaxWidthBreakpointToken = (breakpoint: MaxWidthBreakpointName) => {
     return Breakpoint[`${breakpoint}-max`];
 };
 
+// @catalog
 /**
  * Returns `true` when the viewport width is at or above the named breakpoint.
  *
@@ -126,6 +127,7 @@ export const useMinWidthMediaQuery = (breakpoint: BreakpointName) =>
         minWidth: getMinWidthBreakpointToken(breakpoint),
     });
 
+// @catalog
 /**
  * Returns `true` when the viewport width is at or below the named breakpoint.
  *
@@ -195,6 +197,7 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
     return globalThis.window.matchMedia(queryString).matches;
 };
 
+// @catalog
 /**
  * Resolves a width breakpoint CSS variable token to its computed pixel string.
  *
@@ -249,6 +252,7 @@ const useMatchMediaQuery = (
     return matches;
 };
 
+// @catalog
 /**
  * Reactive boolean hook that evaluates a media query built from width
  * breakpoint tokens and optional custom feature clauses.

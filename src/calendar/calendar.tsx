@@ -5,6 +5,7 @@ import { InternalCalendar } from "../shared/internal-calendar";
 import * as styles from "./calendar.styles";
 import type { CalendarProps } from "./types";
 
+// @catalog
 /**
  * Date picker calendar for single-date or multi-date selection.
  */

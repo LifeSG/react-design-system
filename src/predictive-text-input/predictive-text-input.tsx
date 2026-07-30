@@ -11,6 +11,7 @@ import { InputWrapper } from "../shared/input-wrapper";
 import { useId } from "../util";
 import type { PredictiveTextInputProps } from "./types";
 
+// @catalog
 /**
  * A text input that fetches and displays matching suggestions as the user types.
  *

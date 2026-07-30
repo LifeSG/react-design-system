@@ -534,6 +534,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     );
 };
 
+// @catalog
 /**
  * A scrollable grid that visualises time slot availability across a day.
  *

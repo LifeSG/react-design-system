@@ -66,7 +66,8 @@ const plugins = [
         useTsconfigDeclarationDir: true,
         tsconfig: "tsconfig.json",
         tsconfigOverride: {
-            // Override base tsconfig.json during build
+            // Scope to src only so that rootDir is inferred as src/, not project root,
+            // which happened after tsconfig.json includes scripts/**/*.ts
             exclude: [
                 "tests",
                 "**/stories/**",
@@ -76,6 +77,7 @@ const plugins = [
                 "**/custom-types/mdx.d.ts",
                 "**/custom-types/svg.d.ts",
                 "codemods",
+                "scripts",
                 "tools",
             ],
         },
@@ -184,6 +186,10 @@ const plugins = [
     copy({
         targets: [
             {
+                src: "docs/*",
+                dest: "dist/docs",
+            },
+            {
                 src: "src/theme/styles/*",
                 dest: "dist/theme/styles",
                 transform: (contents) => {
@@ -268,12 +274,14 @@ const codemodBuildConfig = {
             useTsconfigDeclarationDir: true,
             tsconfig: "tsconfig.json",
             tsconfigOverride: {
+                include: ["codemods/**/*"],
                 exclude: [
                     "tests",
                     "**/stories/**",
                     "**/__mocks__/**",
                     "**/custom-types/**",
                     "src/**",
+                    "scripts",
                 ],
             },
         }),

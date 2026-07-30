@@ -8,6 +8,7 @@ import { FilterModal } from "./filter-modal";
 import { FilterSidebar } from "./filter-sidebar";
 import type { FilterProps } from "./types";
 
+// @catalog
 /**
  * A responsive filter panel that switches between a persistent sidebar on
  * desktop and a modal overlay on mobile.

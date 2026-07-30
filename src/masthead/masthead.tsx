@@ -73,6 +73,7 @@ const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
     );
 };
 
+// @catalog
 /**
  * Displays the Singapore Government Design System (SGDS) masthead banner.
  *

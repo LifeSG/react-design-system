@@ -380,6 +380,7 @@ const Component = <T,>(
     );
 };
 
+// @catalog
 /**
  * The main site navigation bar with desktop and mobile drawer views.
  *

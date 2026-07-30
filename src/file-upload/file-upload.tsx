@@ -12,6 +12,7 @@ import { FileList } from "./file-list";
 import * as styles from "./file-upload.styles";
 import type { FileItemProps, FileUploadProps } from "./types";
 
+// @catalog
 /** Allows user to upload images via drag-and-drop or a native file dialog. */
 export const FileUpload = ({
     styleType = "bordered",

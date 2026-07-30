@@ -16,6 +16,7 @@ import * as styles from "./countdown-timer.styles";
 import type { CountdownTimerProps } from "./types";
 import { useTimer } from "./use-timer";
 
+// @catalog
 /**
  * Displays a live countdown of time remaining until a deadline.
  *

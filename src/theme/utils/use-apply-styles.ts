@@ -78,6 +78,7 @@ function normaliseCssValue(key: string, value: string | number): string {
     return String(value);
 }
 
+// @catalog
 /**
  * Hook to apply styles to a HTML DOM element. Use when you need to apply inline
  * styles but cannot use the inline React `style` prop due to strict CSP rules.

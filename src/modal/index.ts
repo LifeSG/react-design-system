@@ -1,6 +1,7 @@
 import { Modal as Base } from "./modal";
 import { ModalBox as Box } from "./modal-box";
 
+// @catalog
 /**
  * A full-screen overlay modal with a slide animation.
  *

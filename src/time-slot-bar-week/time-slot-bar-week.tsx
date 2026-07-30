@@ -12,6 +12,7 @@ import type { TimeSlotBarWeekProps } from "./types";
 
 const DATE_FORMAT = "YYYY-MM-DD";
 
+// @catalog
 /**
  * A week calendar grid with a time axis, rendering detailed slot bars within
  * each day column.

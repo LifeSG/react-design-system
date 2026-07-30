@@ -62,6 +62,7 @@ const TableEl = ({ children, className, ...props }: TableTableProps) => (
 );
 TableEl.displayName = "Table.Table";
 
+// @catalog
 /**
  * A styled HTML table with a scrollable container wrapper.
  *

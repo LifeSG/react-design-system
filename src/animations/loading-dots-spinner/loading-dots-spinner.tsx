@@ -10,6 +10,10 @@ const LottieLoadingDotsSpinner = lazy(async () => ({
     default: (await import("./lottie-animation")).LottieLoadingDotsSpinner,
 }));
 
+// @catalog
+/**
+ * An animated loading indicator combining dots with a spinning motion.
+ */
 export const LoadingDotsSpinner = ({
     className,
     color,

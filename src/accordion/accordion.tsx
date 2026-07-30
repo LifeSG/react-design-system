@@ -156,6 +156,7 @@ const AccordionBase = ({
     );
 };
 
+// @catalog
 /**
  * A vertically stacked set of collapsible content panels.
  *
