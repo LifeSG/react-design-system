@@ -24,10 +24,10 @@ export const InlineText: StoryObj = {
 };
 
 export const InlineLink: StoryObj = {
-    render: (args) => (
+    render: (_args) => (
         <Typography.BodyBL>
             The quick brown fox{" "}
-            <Typography.LinkBL {...args} href="https://www.google.com">
+            <Typography.LinkBL href="https://www.google.com">
                 jumps over
             </Typography.LinkBL>{" "}
             the lazy dog
