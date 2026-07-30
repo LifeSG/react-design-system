@@ -14,7 +14,8 @@ const meta: Meta<Component> = {
     title: "Selection and input/ImageButton",
     component: ImageButton,
     argTypes: toStoryArgTypes(
-        storybookArgTypesByTitle["Selection and input/ImageButton"]
+        storybookArgTypesByTitle["Selection and input/ImageButton"],
+        "ImageButtonProps"
     ),
 };
 
@@ -86,14 +87,17 @@ export const FocusableWhenDisabled: StoryObj<Component> = {
         </ImageButton>
     ),
 };
-
 export const Playground: StoryObj<Component> = {
     parameters: {
         controls: {
             disable: false,
-            exclude: toStoryExcludedProps(
-                storybookArgTypesByTitle["Selection and input/ImageButton"]
-            ),
+            exclude: [
+                ...toStoryExcludedProps(
+                    storybookArgTypesByTitle["Selection and input/ImageButton"]
+                ),
+                "disabled",
+                "type",
+            ],
         },
     },
 

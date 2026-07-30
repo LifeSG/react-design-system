@@ -1,7 +1,10 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { LoadingDotsSpinner, ThemedLoadingSpinner } from "src/animations";
 import { Colour } from "src/theme";
-import { toStoryArgTypes, toStoryExcludedProps } from "stories/storybook-common";
+import {
+    toStoryArgTypes,
+    toStoryExcludedProps,
+} from "stories/storybook-common";
 
 import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
