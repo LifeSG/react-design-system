@@ -4,7 +4,7 @@ import type { IFileSystemAdapter } from "tools/storybook-argtypes/adapters/file-
 import { ArgTypesGenerator } from "tools/storybook-argtypes/arg-types-generator";
 import type { FileStat } from "tools/storybook-argtypes/types";
 
-import { TsMorphProjectFactory } from "../../tools/shared/ts-morph-project-factory";
+import { TsMorphProjectFactory } from "../../../tools/shared/ts-morph-project-factory";
 
 jest.mock("node:child_process", () => ({
     spawnSync: jest.fn().mockReturnValue({ status: 0 }),

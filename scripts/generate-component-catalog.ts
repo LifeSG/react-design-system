@@ -1,8 +1,10 @@
-import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { Node, Project, type SourceFile } from "ts-morph";
+import { Node, type SourceFile } from "ts-morph";
+
+import { GeneratedFileFormatter } from "../tools/shared/generated-file-formatter";
+import { TypeScriptSourceProvider } from "../tools/shared/typescript-source-provider";
 
 // =============================================================================
 // Types
@@ -36,7 +38,7 @@ function getModuleFromFilePath(filePath: string): string {
 }
 
 function formatDescription(text: string | undefined): string {
-    return text?.trim().replace(/\n/g, " ") ?? "";
+    return text?.trim().replaceAll("\n", " ") ?? "";
 }
 
 function formatKeywords(tagComment: string | undefined): string[] {
@@ -112,11 +114,7 @@ function extractCatalogEntries(
 }
 
 function formatGenerated() {
-    spawnSync("npx", [
-        "pretty-quick",
-        "--pattern",
-        "docs/component-catalog.json",
-    ]);
+    new GeneratedFileFormatter().format("docs/component-catalog.json");
 }
 
 // =============================================================================
@@ -124,13 +122,10 @@ function formatGenerated() {
 // =============================================================================
 
 async function main() {
-    const project = new Project({
-        tsConfigFilePath: path.resolve(ROOT_DIR, "tsconfig.json"),
-    });
-
-    const sourceFiles = project.addSourceFilesAtPaths([
-        path.join(SRC_DIR, "**", "*.ts"),
-        path.join(SRC_DIR, "**", "*.tsx"),
+    const sourceProvider = new TypeScriptSourceProvider();
+    const sourceFiles = sourceProvider.getSourceFilesByGlobs([
+        "src/**/*.ts",
+        "src/**/*.tsx",
     ]);
 
     const components: Component[] = [];
