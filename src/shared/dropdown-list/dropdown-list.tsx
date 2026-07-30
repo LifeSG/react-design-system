@@ -266,8 +266,10 @@ const DropdownListInner = <T, V>(
             case "Space":
             case "Enter":
                 if (
-                    document.activeElement ===
-                    listItemRefs.current[focusedIndex]
+                    focusedIndex >= 0 &&
+                    (document.activeElement ===
+                        listItemRefs.current[focusedIndex] ||
+                        document.activeElement === searchInputRef.current)
                 ) {
                     event.preventDefault();
                     if (displayListItems[focusedIndex]) {

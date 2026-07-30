@@ -302,6 +302,9 @@ test.describe("Navbar", () => {
             test("Submenu", async ({ story }) => {
                 await story.openMobileDrawer();
                 await story.locators.internal.servicesMobileTrigger.click();
+                await expect(
+                    story.locators.internal.menuMobileItem(1)
+                ).toBeVisible();
                 await compareScreenshot(story, "open", {
                     fullscreen: true,
                 });
@@ -319,6 +322,9 @@ test.describe("Navbar", () => {
             test("Submenu (dark mode)", async ({ story }) => {
                 await story.openMobileDrawer();
                 await story.locators.internal.servicesMobileTrigger.click();
+                await expect(
+                    story.locators.internal.menuMobileItem(1)
+                ).toBeVisible();
                 await compareScreenshot(story, "open", {
                     fullscreen: true,
                 });

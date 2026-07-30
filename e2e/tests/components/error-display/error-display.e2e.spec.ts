@@ -22,6 +22,7 @@ test.describe("ErrorDisplay", () => {
         });
 
         test("Default", async ({ story }) => {
+            await story.waitForImageLoad();
             await compareScreenshot(story, "default-mount");
         });
     });

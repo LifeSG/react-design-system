@@ -58,6 +58,7 @@ class StoryPage extends AbstractStoryPage {
     async drawOnCanvas(): Promise<void> {
         await this.locators.canvas.waitFor({ state: "visible" });
         await waitForAnimationEnd(this.locators.signatureModal);
+        await waitForAnimationEnd(this.locators.canvas);
 
         const box = await this.locators.canvas.boundingBox();
         if (!box) throw new Error("Canvas bounding box not found");
