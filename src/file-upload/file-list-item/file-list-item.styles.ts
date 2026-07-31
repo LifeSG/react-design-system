@@ -172,6 +172,7 @@ export const itemDescriptionLabel = css`
 
 export const itemDescriptionText = css`
     margin-top: ${Spacing["spacing-4"]};
+    overflow-wrap: anywhere;
 `;
 
 export const errorIcon = css`
