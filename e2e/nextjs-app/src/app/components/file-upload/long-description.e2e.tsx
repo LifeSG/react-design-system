@@ -2,7 +2,6 @@
 
 import type { FileItemProps } from "@lifesg/react-design-system/file-upload";
 import { FileUpload } from "@lifesg/react-design-system/file-upload";
-import { useState } from "react";
 
 const LONG_DESCRIPTION =
     "Thisisaverylongwordwithnospacesthatshouldbewrappedcorrectlywithinthecontainerwithoutverhangingorbreakinglayout";
@@ -30,32 +29,14 @@ const INITIAL_ITEMS: FileItemProps[] = [
 ];
 
 export default function Story() {
-    const [fileItems, setFileItems] = useState<FileItemProps[]>(INITIAL_ITEMS);
-
-    const handleEdit = (updatedItem: FileItemProps) => {
-        setFileItems((prevItems) =>
-            prevItems.map((item) =>
-                item.id === updatedItem.id ? updatedItem : item
-            )
-        );
-    };
-
-    const handleDelete = (deletedItem: FileItemProps) => {
-        setFileItems((prevItems) =>
-            prevItems.filter((item) => item.id !== deletedItem.id)
-        );
-    };
-
     return (
         <FileUpload
             data-testid="file-upload"
             title="Long description text"
             description="File item with a very long unbreakable description string."
-            fileItems={fileItems}
+            fileItems={INITIAL_ITEMS}
             editableFileItems
             fileDescriptionMaxLength={200}
-            onEdit={handleEdit}
-            onDelete={handleDelete}
         />
     );
 }
