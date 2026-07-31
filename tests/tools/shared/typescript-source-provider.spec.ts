@@ -50,7 +50,7 @@ describe("TypeScriptSourceProvider", () => {
             // Calling getProject() on a fresh provider hits the real factory.
             // We just verify it returns an object with the Project API shape.
             const proj = freshProvider.getProject();
-            expect(typeof proj.getSourceFiles).toBe("function");
+            expect(proj).toBeInstanceOf(Project);
         });
     });
 });
