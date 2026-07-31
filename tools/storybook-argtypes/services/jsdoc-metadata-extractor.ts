@@ -49,29 +49,8 @@ export class JsDocMetadataExtractor {
         );
     }
 
-    public getTagCommentText(tag: {
-        getCommentText: () => string | undefined;
-    }): string | undefined {
-        return this.parser.getTagCommentText(tag);
-    }
-
-    public getLeadingNonJsDocComments(
-        node: StorybookTaggedDeclarationNode
-    ): string[] {
-        return this.parser.getLeadingNonJsDocComments(node);
-    }
-
-    public getStorybookSectionsFromLeadingComment(
-        node: StorybookTaggedDeclarationNode
-    ): string[] {
-        return this.parser.getMarkerValuesFromLeadingComments(
-            node,
-            "@storybookSection"
-        );
-    }
-
     public hasSkipTag(node: StorybookTaggedDeclarationNode): boolean {
-        for (const comment of this.getLeadingNonJsDocComments(node)) {
+        for (const comment of this.parser.getLeadingNonJsDocComments(node)) {
             if (/@storybookSkipProps\b/.test(comment)) {
                 return true;
             }
@@ -86,8 +65,9 @@ export class JsDocMetadataExtractor {
             node.getKindName() === "VariableStatement";
 
         const tabGroups = isTaggableNode
-            ? this.getStorybookSectionsFromLeadingComment(
-                  node as StorybookTaggedDeclarationNode
+            ? this.parser.getMarkerValuesFromLeadingComments(
+                  node as StorybookTaggedDeclarationNode,
+                  "@storybookSection"
               )
             : [];
 
@@ -110,7 +90,7 @@ export class JsDocMetadataExtractor {
 
         for (const tag of tags) {
             const tagName = tag.getTagName();
-            const comment = this.getTagCommentText(tag);
+            const comment = this.parser.getTagCommentText(tag);
 
             if (tagName === "deprecated") {
                 deprecated = comment || true;
