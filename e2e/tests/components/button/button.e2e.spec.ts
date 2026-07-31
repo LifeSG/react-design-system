@@ -30,7 +30,7 @@ test.describe("Button", () => {
     // -------------------------------------------------------------------------
     // Base variants
     // -------------------------------------------------------------------------
-    test.describe.skip(() => {
+    test.describe(() => {
         test.beforeEach(async ({ story }) => {
             await story.init("base-variants");
         });
