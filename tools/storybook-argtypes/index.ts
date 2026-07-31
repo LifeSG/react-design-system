@@ -26,7 +26,6 @@ export {
     FileSystemAdapter,
     type IFileSystemAdapter,
 } from "./adapters/file-system-adapter";
-export { TsMorphProjectFactory } from "./adapters/ts-morph-project-factory";
 
 // Services
 export * from "./services";

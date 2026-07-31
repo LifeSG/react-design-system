@@ -8,7 +8,6 @@
  * clear method boundaries and injectable dependencies.
  */
 
-import { spawnSync } from "node:child_process";
 import * as path from "node:path";
 
 import {
@@ -19,19 +18,22 @@ import {
     type TypeAliasDeclaration,
 } from "ts-morph";
 
+import { GeneratedFileFormatter } from "../shared/generated-file-formatter";
+import { TypeScriptSourceProvider } from "../shared/typescript-source-provider";
 import type { IFileSystemAdapter } from "./adapters/file-system-adapter";
 import { FileSystemAdapter } from "./adapters/file-system-adapter";
 import {
     SOURCE_FILE_GLOBS,
     STORYBOOK_ARGTYPES_FILE,
 } from "./config/arg-types-config";
-import { ArgTypesRowBuilder } from "./services/arg-types-row-builder";
-import { FilePathResolver } from "./services/file-path-resolver";
-import { JsDocMetadataExtractor } from "./services/jsdoc-metadata-extractor";
-import { StoryRegistryGenerator } from "./services/story-registry-generator";
-import { TypeDependencyResolver } from "./services/type-dependency-resolver";
-import { TypeFormattingService } from "./services/type-formatting-service";
-import { TypeScriptSourceProvider } from "./services/typescript-source-provider";
+import {
+    ArgTypesRowBuilder,
+    FilePathResolver,
+    JsDocMetadataExtractor,
+    StoryRegistryGenerator,
+    TypeDependencyResolver,
+    TypeFormattingService,
+} from "./services";
 import type { GeneratedArgType } from "./types";
 
 /** Matches React HTML attribute interfaces (e.g. HTMLAttributes, ButtonHTMLAttributes, React.HTMLAttributes). */
@@ -55,6 +57,7 @@ export class ArgTypesGenerator {
     private readonly rowBuilder: ArgTypesRowBuilder;
     private readonly resolver: FilePathResolver;
     private readonly storyRegistryGenerator: StoryRegistryGenerator;
+    private readonly generatedFileFormatter: GeneratedFileFormatter;
     private readonly fsAdapter: IFileSystemAdapter;
 
     /**
@@ -74,6 +77,7 @@ export class ArgTypesGenerator {
             this.resolver,
             this.fsAdapter
         );
+        this.generatedFileFormatter = new GeneratedFileFormatter();
     }
 
     // =========================================================================
@@ -85,10 +89,8 @@ export class ArgTypesGenerator {
      * This is the main entry point for full generation.
      */
     public async generateAll(): Promise<void> {
-        const project = this.sourceProvider.getProject();
-        const sourceFiles = SOURCE_FILE_GLOBS.flatMap((glob) =>
-            project.getSourceFiles(glob)
-        );
+        const sourceFiles =
+            this.sourceProvider.getSourceFilesByGlobs(SOURCE_FILE_GLOBS);
 
         for (const sourceFile of sourceFiles) {
             await this.generateForSourceFile(sourceFile.getFilePath());
@@ -247,11 +249,7 @@ export class ArgTypesGenerator {
      * Format all generated files using prettier.
      */
     public formatGenerated(): void {
-        spawnSync("npx", [
-            "pretty-quick",
-            "--pattern",
-            ".storybook/generated/**/*",
-        ]);
+        this.generatedFileFormatter.format(".storybook/generated/**/*");
     }
 
     // =========================================================================

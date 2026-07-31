@@ -1,8 +1,11 @@
-import { spawnSync } from "node:child_process";
 import fs from "node:fs/promises";
 import path from "node:path";
 
-import { Node, Project, type SourceFile } from "ts-morph";
+import { Node, type SourceFile } from "ts-morph";
+
+import { GeneratedFileFormatter } from "../tools/shared/generated-file-formatter";
+import { JsDocParser } from "../tools/shared/jsdoc-parser";
+import { TypeScriptSourceProvider } from "../tools/shared/typescript-source-provider";
 
 // =============================================================================
 // Types
@@ -23,8 +26,9 @@ const ROOT_DIR = path.resolve(__dirname, "..");
 const SRC_DIR = path.join(ROOT_DIR, "src");
 const OUTPUT_PATH = path.join(ROOT_DIR, "docs", "component-catalog.json");
 
-const CATALOG_TAG = "// @catalog";
+const CATALOG_TAG = "@catalog";
 const KEYWORDS_TAG = "keywords";
+const jsDocParser = new JsDocParser();
 
 // =============================================================================
 // Helpers
@@ -36,15 +40,16 @@ function getModuleFromFilePath(filePath: string): string {
 }
 
 function formatDescription(text: string | undefined): string {
-    return text?.trim().replace(/\n/g, " ") ?? "";
+    return (
+        jsDocParser.normalizeCommentText(text, {
+            normalizeNewlinesToSpaces: true,
+        }) ?? ""
+    );
 }
 
 function formatKeywords(tagComment: string | undefined): string[] {
-    if (!tagComment) return [];
-    return tagComment
-        .trim()
-        .split(",")
-        .map((k: string) => k.trim())
+    return jsDocParser
+        .splitCommaSeparatedValues(tagComment)
         .filter(Boolean)
         .sort((a: string, b: string) => a.localeCompare(b));
 }
@@ -60,7 +65,9 @@ function extractDocFromStatement(statement: Node): {
         const tag = jsDoc
             .getTags()
             .find((t) => t.getTagName() === KEYWORDS_TAG);
-        const keywords = formatKeywords(tag?.getCommentText());
+        const keywords = formatKeywords(
+            tag ? jsDocParser.getTagCommentText(tag) : undefined
+        );
 
         if (description || keywords.length > 0) {
             return { description, keywords };
@@ -70,14 +77,10 @@ function extractDocFromStatement(statement: Node): {
     return { description: "", keywords: [] };
 }
 
-function hasCatalogTag(sourceFile: SourceFile, statement: Node): boolean {
-    const fullText = sourceFile.getFullText();
-    const commentRanges = statement.getLeadingCommentRanges();
-
-    return commentRanges.some((range) => {
-        const text = fullText.slice(range.getPos(), range.getEnd()).trim();
-        return text === CATALOG_TAG;
-    });
+function hasCatalogTag(statement: Node): boolean {
+    return jsDocParser
+        .getLeadingNonJsDocComments(statement)
+        .includes(CATALOG_TAG);
 }
 
 function extractCatalogEntries(
@@ -87,7 +90,7 @@ function extractCatalogEntries(
     const entries: Component[] = [];
 
     for (const statement of sourceFile.getStatements()) {
-        if (!hasCatalogTag(sourceFile, statement)) continue;
+        if (!hasCatalogTag(statement)) continue;
 
         const { description, keywords } = extractDocFromStatement(statement);
 
@@ -112,11 +115,7 @@ function extractCatalogEntries(
 }
 
 function formatGenerated() {
-    spawnSync("npx", [
-        "pretty-quick",
-        "--pattern",
-        "docs/component-catalog.json",
-    ]);
+    new GeneratedFileFormatter().format("docs/component-catalog.json");
 }
 
 // =============================================================================
@@ -124,13 +123,10 @@ function formatGenerated() {
 // =============================================================================
 
 async function main() {
-    const project = new Project({
-        tsConfigFilePath: path.resolve(ROOT_DIR, "tsconfig.json"),
-    });
-
-    const sourceFiles = project.addSourceFilesAtPaths([
-        path.join(SRC_DIR, "**", "*.ts"),
-        path.join(SRC_DIR, "**", "*.tsx"),
+    const sourceProvider = new TypeScriptSourceProvider();
+    const sourceFiles = sourceProvider.getSourceFilesByGlobs([
+        "src/**/*.ts",
+        "src/**/*.tsx",
     ]);
 
     const components: Component[] = [];

@@ -14,11 +14,8 @@ import path from "node:path";
 
 import chokidar from "chokidar";
 
-import {
-    ArgTypesGenerator,
-    TsMorphProjectFactory,
-    WATCH_ROOTS,
-} from "../tools/storybook-argtypes";
+import { ArgTypesGenerator, WATCH_ROOTS } from "../tools/storybook-argtypes";
+import { TsMorphProjectFactory } from "../tools/shared/ts-morph-project-factory";
 
 function isTypesFile(filePath: string): boolean {
     return /types\.(tsx?|jsx?)$/.test(filePath);
