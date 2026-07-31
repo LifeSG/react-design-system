@@ -2,6 +2,8 @@ import * as nodePath from "node:path";
 
 import type { IFileSystemAdapter } from "tools/storybook-argtypes/adapters/file-system-adapter";
 import { ArgTypesGenerator } from "tools/storybook-argtypes/arg-types-generator";
+import { STORYBOOK_ARGTYPES_FILE } from "tools/storybook-argtypes/config/arg-types-config";
+import { StoryRegistryGenerator } from "tools/storybook-argtypes/services";
 import type { FileStat } from "tools/storybook-argtypes/types";
 
 import { TsMorphProjectFactory } from "../../../tools/shared/ts-morph-project-factory";
@@ -426,6 +428,356 @@ describe("ArgTypesGenerator", () => {
                 cleanupChild();
             }
         });
+
+        // ---------------------------------------------------------------------
+        // HTML attribute inheritance rows
+        // ---------------------------------------------------------------------
+
+        it("emits a __inheritedHtmlProps row when an interface extends an HTML attributes type", async () => {
+            const cleanup = addSourceFile(
+                "html-attrs/types.ts",
+                `
+                import type { HTMLAttributes } from "react";
+                export interface DivProps extends HTMLAttributes<HTMLDivElement> {
+                    label: string;
+                }`
+            );
+            try {
+                await generator.generateForSourceFile(
+                    testPath("html-attrs/types.ts")
+                );
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
+                    string,
+                    string
+                ];
+                const parsed = parseGeneratedArgTypes(content);
+                const keys = Object.keys(parsed);
+
+                expect(keys).toContain("DivProps.__inheritedHtmlProps");
+                const row = parsed["DivProps.__inheritedHtmlProps"] as {
+                    description: string;
+                };
+                expect(row.description).toContain("HTMLDivElement");
+            } finally {
+                cleanup();
+            }
+        });
+
+        it("lists all element types in the __inheritedHtmlProps description when multiple HTML attributes are extended", async () => {
+            const cleanup = addSourceFile(
+                "html-attrs-multi/types.ts",
+                `
+                import type { HTMLAttributes, InputHTMLAttributes } from "react";
+                export interface MultiHtmlProps
+                    extends HTMLAttributes<HTMLDivElement>,
+                        InputHTMLAttributes<HTMLInputElement> {
+                    label: string;
+                }`
+            );
+            try {
+                await generator.generateForSourceFile(
+                    testPath("html-attrs-multi/types.ts")
+                );
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
+                    string,
+                    string
+                ];
+                const parsed = parseGeneratedArgTypes(content);
+                const row = parsed["MultiHtmlProps.__inheritedHtmlProps"] as {
+                    description: string;
+                };
+
+                expect(row.description).toContain("HTMLDivElement");
+                expect(row.description).toContain("HTMLInputElement");
+            } finally {
+                cleanup();
+            }
+        });
+
+        it("does not emit a __inheritedHtmlProps row when there are no HTML attribute extends", async () => {
+            const cleanup = addSourceFile(
+                "no-html-attrs/types.ts",
+                `export interface PlainProps { label: string; }`
+            );
+            try {
+                await generator.generateForSourceFile(
+                    testPath("no-html-attrs/types.ts")
+                );
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
+                    string,
+                    string
+                ];
+                expect(content).not.toContain("__inheritedHtmlProps");
+            } finally {
+                cleanup();
+            }
+        });
+
+        // ---------------------------------------------------------------------
+        // Inherited interface description (empty interface + non-HTML extends)
+        // ---------------------------------------------------------------------
+
+        it("emits a single stub row with 'Inherits props from' for an empty interface extending one non-HTML base", async () => {
+            const cleanup = addSourceFile(
+                "empty-extends/types.ts",
+                `
+                export interface BaseComp { size: string; }
+                export interface EmptyExtends extends BaseComp {}`
+            );
+            try {
+                await generator.generateForSourceFile(
+                    testPath("empty-extends/types.ts")
+                );
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
+                    string,
+                    string
+                ];
+                const parsed = parseGeneratedArgTypes(content);
+
+                expect(Object.keys(parsed)).toContain("EmptyExtends");
+                const row = parsed["EmptyExtends"] as { description: string };
+                expect(row.description).toContain(
+                    "Inherits props from `BaseComp`."
+                );
+            } finally {
+                cleanup();
+            }
+        });
+
+        it("lists all non-HTML bases alphabetically in the description for an empty interface with multiple extends", async () => {
+            const cleanup = addSourceFile(
+                "empty-extends-multi/types.ts",
+                `
+                export interface ZBase { size: string; }
+                export interface ABase { color: string; }
+                export interface EmptyMultiExtends extends ZBase, ABase {}`
+            );
+            try {
+                await generator.generateForSourceFile(
+                    testPath("empty-extends-multi/types.ts")
+                );
+                const [, content] = fsAdapterMock.writeFile.mock.calls[0] as [
+                    string,
+                    string
+                ];
+                const parsed = parseGeneratedArgTypes(content);
+
+                expect(Object.keys(parsed)).toContain("EmptyMultiExtends");
+                const row = parsed["EmptyMultiExtends"] as {
+                    description: string;
+                };
+                // Alphabetically sorted: ABase before ZBase
+                expect(row.description).toContain(
+                    "Inherits props from `ABase`, `ZBase`."
+                );
+            } finally {
+                cleanup();
+            }
+        });
+
+        // ---------------------------------------------------------------------
+        // Imported type key-prefix behaviour (the needsKeyPrefix branch)
+        // The imported type must appear as a *property type* (not in extends)
+        // so that shouldSkipImportedTypeRows does not suppress it.
+        // ---------------------------------------------------------------------
+
+        describe("imported type key prefixing across multiple @storybookSection groups", () => {
+            it("does not prefix keys when the imported type belongs to a single tab group", async () => {
+                const cleanupShared = addSourceFile(
+                    "keyprefix-shared/types.ts",
+                    `export interface SharedProps { size: string; }`
+                );
+                const cleanupLocal = addSourceFile(
+                    "keyprefix-single/types.ts",
+                    `
+                    import type { SharedProps } from "../keyprefix-shared/types";
+                    // @storybookSection Tab1
+                    export interface SingleTabProps {
+                        config: SharedProps;
+                        color: string;
+                    }`
+                );
+                try {
+                    await generator.generateForSourceFile(
+                        testPath("keyprefix-single/types.ts")
+                    );
+                    const [, content] = fsAdapterMock.writeFile.mock
+                        .calls[0] as [string, string];
+                    const parsed = parseGeneratedArgTypes(content);
+                    const keys = Object.keys(parsed);
+
+                    // SharedProps rows appear without any key prefix
+                    expect(keys).toContain("SharedProps.size");
+                    expect(keys.some((k) => k.startsWith("Tab1__"))).toBe(
+                        false
+                    );
+                } finally {
+                    cleanupShared();
+                    cleanupLocal();
+                }
+            });
+
+            it("prefixes keys with each tab group name when the same imported type is referenced in multiple @storybookSection groups", async () => {
+                const cleanupShared = addSourceFile(
+                    "keyprefix-multi-shared/types.ts",
+                    `export interface MultiSharedProps { size: string; }`
+                );
+                const cleanupLocal = addSourceFile(
+                    "keyprefix-multi/types.ts",
+                    `
+                    import type { MultiSharedProps } from "../keyprefix-multi-shared/types";
+
+                    // @storybookSection Tab1
+                    export interface Tab1Props {
+                        config: MultiSharedProps;
+                        color: string;
+                    }
+
+                    // @storybookSection Tab2
+                    export interface Tab2Props {
+                        data: MultiSharedProps;
+                        weight: number;
+                    }`
+                );
+                try {
+                    await generator.generateForSourceFile(
+                        testPath("keyprefix-multi/types.ts")
+                    );
+                    const [, content] = fsAdapterMock.writeFile.mock
+                        .calls[0] as [string, string];
+                    const parsed = parseGeneratedArgTypes(content);
+                    const keys = Object.keys(parsed);
+
+                    // Rows appear once per tab group, each prefixed
+                    expect(keys).toContain("Tab1__MultiSharedProps.size");
+                    expect(keys).toContain("Tab2__MultiSharedProps.size");
+                    // No un-prefixed variant
+                    expect(keys).not.toContain("MultiSharedProps.size");
+                } finally {
+                    cleanupShared();
+                    cleanupLocal();
+                }
+            });
+
+            it("emits un-prefixed rows for the undefined slot even when other named groups exist", async () => {
+                const cleanupShared = addSourceFile(
+                    "keyprefix-mixed-shared/types.ts",
+                    `export interface MixedSharedProps { size: string; }`
+                );
+                const cleanupLocal = addSourceFile(
+                    "keyprefix-mixed/types.ts",
+                    `
+                    import type { MixedSharedProps } from "../keyprefix-mixed-shared/types";
+
+                    // no section tag — adds undefined slot to the set
+                    export interface NoSectionProps {
+                        config: MixedSharedProps;
+                        color: string;
+                    }
+
+                    // @storybookSection Tab1
+                    export interface WithSectionProps {
+                        data: MixedSharedProps;
+                        weight: number;
+                    }`
+                );
+                try {
+                    await generator.generateForSourceFile(
+                        testPath("keyprefix-mixed/types.ts")
+                    );
+                    const [, content] = fsAdapterMock.writeFile.mock
+                        .calls[0] as [string, string];
+                    const parsed = parseGeneratedArgTypes(content);
+                    const keys = Object.keys(parsed);
+
+                    // undefined slot → rows without any prefix
+                    expect(keys).toContain("MixedSharedProps.size");
+                    // named slot → rows with prefix
+                    expect(keys).toContain("Tab1__MixedSharedProps.size");
+                } finally {
+                    cleanupShared();
+                    cleanupLocal();
+                }
+            });
+        });
+    });
+
+    // -------------------------------------------------------------------------
+    // generateStorybookArgTypesRegistry
+    // -------------------------------------------------------------------------
+
+    describe("generateStorybookArgTypesRegistry", () => {
+        it("writes the generated registry content to STORYBOOK_ARGTYPES_FILE", async () => {
+            jest.spyOn(
+                StoryRegistryGenerator.prototype,
+                "generateRegistryFileContent"
+            ).mockReturnValue("// generated registry");
+
+            await generator.generateStorybookArgTypesRegistry();
+
+            expect(fsAdapterMock.mkdir).toHaveBeenCalledWith(
+                nodePath.dirname(STORYBOOK_ARGTYPES_FILE),
+                { recursive: true }
+            );
+            expect(fsAdapterMock.writeFile).toHaveBeenCalledWith(
+                STORYBOOK_ARGTYPES_FILE,
+                "// generated registry"
+            );
+
+            jest.restoreAllMocks();
+        });
+
+        it("the types-file filter returns true for a normal source file", async () => {
+            let capturedFilter: ((path: string) => boolean) | undefined;
+            jest.spyOn(
+                StoryRegistryGenerator.prototype,
+                "generateRegistryFileContent"
+            ).mockImplementation((_files, filter) => {
+                capturedFilter = filter;
+                return "";
+            });
+
+            await generator.generateStorybookArgTypesRegistry();
+
+            const cleanup = addSourceFile(
+                "registry-normal/types.ts",
+                `export interface NormalProps { label: string; }`
+            );
+            try {
+                expect(
+                    capturedFilter!(testPath("registry-normal/types.ts"))
+                ).toBe(true);
+            } finally {
+                cleanup();
+                jest.restoreAllMocks();
+            }
+        });
+
+        it("the types-file filter returns false for a file marked @storybookSkipFile", async () => {
+            let capturedFilter: ((path: string) => boolean) | undefined;
+            jest.spyOn(
+                StoryRegistryGenerator.prototype,
+                "generateRegistryFileContent"
+            ).mockImplementation((_files, filter) => {
+                capturedFilter = filter;
+                return "";
+            });
+
+            await generator.generateStorybookArgTypesRegistry();
+
+            const cleanup = addSourceFile(
+                "registry-skipped/types.ts",
+                `// @storybookSkipFile\nexport interface SkippedProps { label: string; }`
+            );
+            try {
+                expect(
+                    capturedFilter!(testPath("registry-skipped/types.ts"))
+                ).toBe(false);
+            } finally {
+                cleanup();
+                jest.restoreAllMocks();
+            }
+        });
     });
 
     // -------------------------------------------------------------------------
@@ -456,26 +808,18 @@ describe("ArgTypesGenerator", () => {
     // -------------------------------------------------------------------------
 
     describe("formatGenerated", () => {
-        it("invokes pretty-quick on the generated output directory", () => {
-            const { spawnSync } = jest.requireMock("node:child_process") as {
-                spawnSync: jest.Mock;
-            };
-            const expectedBinary = nodePath.resolve(
-                "node_modules",
-                ".bin",
-                "pretty-quick"
+        it("delegates to GeneratedFileFormatter with the storybook output pattern", () => {
+            const { GeneratedFileFormatter } = jest.requireActual(
+                "tools/shared/generated-file-formatter"
             );
+            const formatSpy = jest
+                .spyOn(GeneratedFileFormatter.prototype, "format")
+                .mockImplementation(() => undefined);
 
             generator.formatGenerated();
 
-            expect(spawnSync).toHaveBeenCalledWith(
-                expectedBinary,
-                ["--pattern", ".storybook/generated/**/*"],
-                {
-                    shell: false,
-                    stdio: "inherit",
-                }
-            );
+            expect(formatSpy).toHaveBeenCalledWith(".storybook/generated/**/*");
+            formatSpy.mockRestore();
         });
     });
 });
