@@ -23,6 +23,14 @@ function trimLongString(s: string, length = 100): string {
     return s.substring(0, start) + middle + s.slice(-end);
 }
 
+function sanitizeFilePathBeforeExtension(
+    filePath: string,
+    ext: string
+): string {
+    const base = filePath.substring(0, filePath.length - ext.length);
+    return sanitizeForFilePath(base) + ext;
+}
+
 interface ReporterOptions {
     outputFile?: string;
 }
@@ -66,7 +74,10 @@ class ScreenshotManifestReporter implements Reporter {
             if (!screenshotFileName) continue;
 
             const ext = path.extname(screenshotFileName);
-            const arg = screenshotFileName.replace(ext, "");
+            const arg = sanitizeFilePathBeforeExtension(
+                screenshotFileName,
+                ext
+            ).replace(ext, "");
 
             const snapshotPath = path.join(
                 screenshotDir,
@@ -80,9 +91,11 @@ class ScreenshotManifestReporter implements Reporter {
     async onEnd(_result: FullResult): Promise<void> {
         const lines = [
             "# Directories covered by this test run",
-            ...[...this.coveredDirs].sort().map((d) => `dir:${d}`),
+            ...[...this.coveredDirs]
+                .sort((a, b) => a.localeCompare(b))
+                .map((d) => `dir:${d}`),
             "# Screenshots referenced by tests",
-            ...[...this.usedScreenshots].sort(),
+            ...[...this.usedScreenshots].sort((a, b) => a.localeCompare(b)),
         ];
         fs.writeFileSync(this.outputFile, lines.join("\n") + "\n", "utf-8");
         console.log(
