@@ -148,12 +148,12 @@ test.describe("Input Group Label", () => {
             });
 
             await test.step("Error state focus", async () => {
-                await story.locators.formLabelError.scrollIntoViewIfNeeded();
                 await story.locators.formLabelErrorInput
                     .getByTestId("input")
                     .focus();
                 await compareScreenshot(story, "error", {
                     locator: story.locators.formLabelErrorInput,
+                    scrollIntoView: true,
                 });
             });
         });
@@ -197,12 +197,12 @@ test.describe("Input Group Label", () => {
             });
 
             await test.step("Error state focus", async () => {
-                await story.locators.formLabelError.scrollIntoViewIfNeeded();
                 await story.locators.formLabelErrorInput
                     .getByTestId("input")
                     .focus();
                 await compareScreenshot(story, "error", {
                     locator: story.locators.formLabelErrorInput,
+                    scrollIntoView: true,
                 });
             });
         });

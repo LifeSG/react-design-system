@@ -173,12 +173,12 @@ test.describe("Input Group List", () => {
             });
 
             await test.step("Error state focus", async () => {
-                await story.locators.formListError.scrollIntoViewIfNeeded();
                 await story.locators.formListErrorInput
                     .getByTestId("input")
                     .focus();
                 await compareScreenshot(story, "error", {
                     locator: story.locators.formListErrorInput,
+                    scrollIntoView: true,
                 });
             });
         });
@@ -244,12 +244,12 @@ test.describe("Input Group List", () => {
             });
 
             await test.step("Error state focus", async () => {
-                await story.locators.formListError.scrollIntoViewIfNeeded();
                 await story.locators.formListErrorInput
                     .getByTestId("input")
                     .focus();
                 await compareScreenshot(story, "error", {
                     locator: story.locators.formListErrorInput,
+                    scrollIntoView: true,
                 });
             });
         });

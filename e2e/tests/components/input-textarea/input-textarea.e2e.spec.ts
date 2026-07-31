@@ -177,6 +177,7 @@ test.describe("InputTextarea", () => {
             await story.locators.errorTextarea.focus();
             await compareScreenshot(story, "error", {
                 locator: story.locators.errorTextarea,
+                scrollIntoView: true,
             });
         });
     });
@@ -205,6 +206,7 @@ test.describe("InputTextarea", () => {
             await story.locators.errorTextarea.focus();
             await compareScreenshot(story, "error", {
                 locator: story.locators.errorTextarea,
+                scrollIntoView: true,
             });
         });
     });

@@ -151,9 +151,20 @@ export abstract class AbstractStoryPage {
 export const compareScreenshot = async (
     storyPage: AbstractStoryPage,
     name: string,
-    options?: { fullscreen?: boolean; locator?: Locator; mask?: Locator[] }
+    options?: {
+        fullscreen?: boolean;
+        locator?: Locator;
+        mask?: Locator[];
+        scrollIntoView?: boolean;
+    }
 ) => {
     if (options?.locator) {
+        if (options.scrollIntoView) {
+            await options.locator.evaluate((el) => {
+                el.scrollIntoView({ block: "center" });
+            });
+        }
+
         const box = await options.locator.boundingBox();
         if (!box) {
             throw new Error("Could not get bounding box for locator");

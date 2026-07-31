@@ -8,21 +8,25 @@ export default function Story() {
             <Textarea
                 data-testid="textarea-default"
                 placeholder="Default textarea placeholder"
+                maxLength={100}
             />
             <Textarea
                 data-testid="textarea-readonly"
                 placeholder="Readonly textarea placeholder"
                 readOnly
+                maxLength={100}
             />
             <Textarea
                 data-testid="textarea-disabled"
                 placeholder="Disabled textarea placeholder"
                 disabled
+                maxLength={100}
             />
             <Textarea
                 data-testid="textarea-error"
                 placeholder="Error textarea placeholder"
                 error
+                maxLength={100}
             />
         </div>
     );
