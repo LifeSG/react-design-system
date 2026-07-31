@@ -251,6 +251,7 @@ export const ItemDescriptionLabel = styled.span`
 
 export const ItemDescriptionText = styled(ItemText)`
     margin-top: ${Spacing["spacing-4"]};
+    overflow-wrap: anywhere;
 `;
 
 export const ErrorIcon = styled(ExclamationCircleFillIcon)`
