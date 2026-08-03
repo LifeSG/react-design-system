@@ -208,7 +208,7 @@ export const compareScreenshot = async (
         .toHaveScreenshot(`${name}.png`, screenshotOptions);
 
     test.info().annotations.push({
-        type: "screenshot-used",
+        type: "_screenshot-used",
         description: `${name}.png`,
     });
 };

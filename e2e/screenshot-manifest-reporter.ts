@@ -137,7 +137,7 @@ class ScreenshotManifestReporter implements Reporter {
         this.coveredDirs.add(screenshotDir);
 
         for (const annotation of result.annotations) {
-            if (annotation.type !== "screenshot-used") continue;
+            if (annotation.type !== "_screenshot-used") continue;
             const screenshotFileName = annotation.description;
             if (!screenshotFileName) continue;
 
