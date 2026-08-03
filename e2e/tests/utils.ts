@@ -209,7 +209,7 @@ export const compareScreenshot = async (
 
     test.info().annotations.push({
         type: "_screenshot-used",
-        description: `${name}.png`,
+        description: test.info().snapshotPath(`${name}.png`),
     });
 };
 
