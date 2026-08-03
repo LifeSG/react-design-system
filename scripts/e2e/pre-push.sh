@@ -29,4 +29,4 @@ fi
 
 echo "[e2e] Running changed-file E2E between HEAD and $REMOTE_REF"
 npm run test-e2e:changed -- "$REMOTE_REF"
-npm run check-stale-screenshots
+npm run test-e2e:check-stale-screenshots

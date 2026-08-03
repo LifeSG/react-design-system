@@ -29,7 +29,7 @@
         "test-e2e:setup": "./scripts/e2e-setup.sh",
         "test-e2e-ci": "npm run test-e2e:setup && ./scripts/e2e-ci-build.sh && ./scripts/e2e-ci-test.sh",
         "test-e2e:changed": "npm run test-e2e:setup && playwright test --only-changed",
-        "check-stale-screenshots": "tsx scripts/check-stale-screenshots.ts",
+        "test-e2e:check-stale-screenshots": "tsx scripts/check-stale-screenshots.ts",
         "prepare": "(test -d ./.git && npx husky install) || true",
         "postinstall": "patch-package",
         "storybook": "concurrently -k -n types,storybook \"npm run storybook:argtypes -- --watch\" \"storybook dev -p 6006\"",
