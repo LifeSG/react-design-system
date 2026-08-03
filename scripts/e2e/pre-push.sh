@@ -1,4 +1,4 @@
-# scripts/e2e-prepush.sh
+#!/bin/bash
 
 # Pre-push e2e validation script.
 #
