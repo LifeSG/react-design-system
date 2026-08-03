@@ -1,0 +1,1 @@
+{"version":3,"file":"tab.style.js","sources":["../../../src/tab/tab.style.tsx"],"sourcesContent":["import styled from \"styled-components\";\n\nexport const Wrapper = styled.div`\n    display: flex;\n    flex-direction: column;\n    width: 100%;\n`;\n"],"names":["Wrapper","styled","div"],"mappings":"qFAEO,MAAMA,kCAAUC,QAAOC,GAAG;;;;"}

@@ -1,0 +1,1 @@
+{"version":3,"file":"row-bar.style.js","sources":["../../../src/timetable/timetable-row/row-bar.style.tsx"],"sourcesContent":["import styled from \"styled-components\";\n\nexport const RowCellContainer = styled.div`\n    display: flex;\n    width: 100%;\n`;\n"],"names":["RowCellContainer","styled","div"],"mappings":"iCAEO,MAAMA,EAAmBC,EAAOC,GAAG;;;"}
