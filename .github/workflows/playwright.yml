@@ -102,11 +102,11 @@ jobs:
           merge-multiple: true
       - name: Merge reports
         run: npx playwright merge-reports --reporter=github,html ./blob-reports
-      - name: Check for stale screenshots
-        if: ${{ needs.test.result == 'success' }}
-        run: npm run test-e2e:check-stale-screenshots -- --manifest='screenshot-manifests/.screenshot-manifest-*.txt'
       - uses: actions/upload-artifact@v7
         with:
           name: playwright-report
           path: playwright-report/
           retention-days: 14
+      - name: Check for stale screenshots
+        if: ${{ needs.test.result == 'success' }}
+        run: npm run test-e2e:check-stale-screenshots -- --manifest='screenshot-manifests/.screenshot-manifest-*.txt'
