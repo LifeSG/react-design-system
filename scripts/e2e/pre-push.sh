@@ -28,6 +28,5 @@ if ! REMOTE_REF=$(resolve_changed_ref); then
 fi
 
 echo "[e2e] Running changed-file E2E between HEAD and $REMOTE_REF"
-npm run test-e2e:setup
-CI=true npx playwright test --only-changed="$REMOTE_REF"
-npx tsx scripts/check-stale-screenshots.ts
+npm run test-e2e:changed -- "$REMOTE_REF"
+npm run check-stale-screenshots
