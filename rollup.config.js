@@ -19,6 +19,7 @@ import { createFixCssImportPathsPlugin } from "./rollup/fix-css-import-paths-plu
 const fixCssImportPathsPlugin = createFixCssImportPathsPlugin({
     outputDirs: ["dist", "dist/cjs"],
 });
+const isE2E = process.env.IS_E2E === "true";
 const dirsToIgnore = new Set(["custom-types", "shared", "util", "__mocks__"]);
 
 const srcDir = "src";
@@ -82,7 +83,8 @@ const plugins = [
             ],
         },
     }),
-    terser(), // Helps remove comments, whitespace or logging codes
+    // E2E CI does not require minified artifacts; skip terser to reduce build time.
+    ...(isE2E ? [] : [terser()]), // Helps remove comments, whitespace or logging codes
     generatePackageJson({
         outputFolder: "dist",
         baseContents: (pkg) => ({
@@ -220,7 +222,7 @@ const libraryBuildConfig = {
         {
             dir: "dist",
             format: "esm",
-            sourcemap: true,
+            sourcemap: !isE2E,
             exports: "named",
             interop: "compat",
             preserveModules: true,
@@ -239,7 +241,7 @@ const libraryBuildConfig = {
         {
             dir: "dist/cjs",
             format: "cjs",
-            sourcemap: true,
+            sourcemap: !isE2E,
             exports: "named",
             interop: "compat",
             chunkFileNames: "chunks/[name].[hash].js",
@@ -264,7 +266,7 @@ const codemodBuildConfig = {
     output: {
         banner: "#!/usr/bin/env node",
         file: `dist/codemods/run-codemod.js`,
-        sourcemap: true,
+        sourcemap: !isE2E,
         exports: "named",
         format: "cjs",
     },
@@ -291,4 +293,6 @@ const codemodBuildConfig = {
     ],
 };
 
-export default [libraryBuildConfig, codemodBuildConfig];
+export default isE2E
+    ? [libraryBuildConfig]
+    : [libraryBuildConfig, codemodBuildConfig];
