@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e,r=require("../../../_virtual/_commonjsHelpers.js"),t=require("../../../_virtual/isSameOrAfter.js");e=t.__module,r.commonjsGlobal,e.exports=function(e,r){r.prototype.isSameOrAfter=function(e,r){return this.isSame(e,r)||this.isAfter(e,r)}};var o=t.__module.exports,s=r.getDefaultExportFromCjs(o);exports.default=s;
+//# sourceMappingURL=isSameOrAfter.js.map

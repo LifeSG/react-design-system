@@ -1,0 +1,2 @@
+"use strict";require("./breadcrumb.styles_1nl4aua.css");exports.caret="co9wmrd",exports.content="c10gatr7",exports.currentLabel="c1mfqdvn",exports.fade="fbyhxo7",exports.fadeLeft="f1xa0lk7",exports.fadeRight="f1oxmxuo",exports.item="ikhkv84",exports.previousLink="pm022dc",exports.slash="spyv6ve",exports.tokens={fade:{backgroundColor:"--fds-internal-breadcrumb-fade-backgroundColor"}},exports.wrapper="wcpniaz";
+//# sourceMappingURL=breadcrumb.styles.js.map

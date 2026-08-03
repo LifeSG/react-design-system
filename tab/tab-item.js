@@ -1,0 +1,2 @@
+import{__rest as t}from"../_virtual/_tslib.js";import{jsx as e}from"react/jsx-runtime";import{useContext as r}from"react";import{TabContext as i}from"./tab-context.js";const n=n=>{var{index:o,children:d,titleAddon:a}=n,l=t(n,["index","children","titleAddon"]);const{currentActiveIndex:c}=r(i);return c===o?e("div",Object.assign({role:"tabpanel",tabIndex:0},l,{children:d})):null};n.displayName="Tab.Item";export{n as TabItem};
+//# sourceMappingURL=tab-item.js.map

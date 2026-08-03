@@ -1,0 +1,2 @@
+"use strict";var e=require("react/jsx-runtime"),t=require("../../external/lottie-react/build/index.umd.js"),i=require("./data.json.js"),r=require("./lottie-animation.styles.js");exports.LottieSpinner=()=>{const a={animationData:i.default,loop:!0,autoplay:!0,className:r.view},{View:s}=t.index_umdExports.useLottie(a);return e.jsx(e.Fragment,{children:s})};
+//# sourceMappingURL=lottie-animation.js.map
