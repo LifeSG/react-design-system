@@ -15,8 +15,27 @@ export default defineConfig({
     workers: process.env.CI ? "50%" : undefined,
     /* Reporter to use. See https://playwright.dev/docs/test-reporters */
     reporter: process.env.CI
-        ? [["github"], ["html"], ["blob"]]
-        : [["list"], ["html"]],
+        ? [
+              ["github"],
+              ["html"],
+              ["blob"],
+              [
+                  "./e2e/screenshot-manifest-reporter.ts",
+                  {
+                      outputFile: `.screenshot-manifest-${
+                          (process.env.SHARD || "full").split("/")[0]
+                      }.txt`,
+                  },
+              ],
+          ]
+        : [
+              ["list"],
+              ["html"],
+              [
+                  "./e2e/screenshot-manifest-reporter.ts",
+                  { outputFile: ".screenshot-manifest.txt" },
+              ],
+          ],
     /* Location of screenshots */
     snapshotPathTemplate:
         "{testDir}/{testFileDir}/__screenshots__/{projectName}/{testName}--{arg}{ext}",

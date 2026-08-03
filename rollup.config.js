@@ -70,6 +70,7 @@ const plugins = [
             // which happened after tsconfig.json includes scripts/**/*.ts
             exclude: [
                 "tests",
+                "scripts",
                 "**/stories/**",
                 "**/__mocks__/**",
                 "**/custom-types/css.d.ts",
