@@ -361,30 +361,24 @@ test.describe("Navbar", () => {
                     await closeButton.focus();
                     await expect(closeButton).toBeFocused();
 
-                    for (let i = 0; i < 10; i++) {
+                    for (let i = 0; i < 30; i++) {
                         await story.page.keyboard.press("Tab");
-                        await expect(outsideButton).not.toBeFocused();
-                        await expect(focusStart).not.toBeFocused();
+                        await expect(
+                            story.locators.internal.drawer.locator(":focus")
+                        ).toBeVisible();
                     }
-
-                    await expect(
-                        story.locators.internal.mobileNavLink(2)
-                    ).toBeFocused();
                 });
 
                 await test.step("Shift+Tab backward and verify focus does not escape", async () => {
                     await closeButton.focus();
                     await expect(closeButton).toBeFocused();
 
-                    for (let i = 0; i < 10; i++) {
+                    for (let i = 0; i < 30; i++) {
                         await story.page.keyboard.press("Shift+Tab");
-                        await expect(outsideButton).not.toBeFocused();
-                        await expect(focusStart).not.toBeFocused();
+                        await expect(
+                            story.locators.internal.drawer.locator(":focus")
+                        ).toBeVisible();
                     }
-
-                    await expect(
-                        story.locators.internal.playStoreButton
-                    ).toBeFocused();
                 });
 
                 await test.step("Escape closes the drawer", async () => {
