@@ -1,15 +1,37 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { LoadingDotsSpinner, ThemedLoadingSpinner } from "src/animations";
 import { Colour } from "src/theme";
+import {
+    toStoryArgTypes,
+    toStoryIncludedProps,
+} from "stories/storybook-common";
 
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 import { AnimationDisplay, AnimationItem } from "./doc-elements";
 import { TokensTable } from "./tokens-table";
 
 const meta: Meta = {
     title: "Feedback indicators/Animations",
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Feedback indicators/Animations"]
+    ),
 };
 
 export default meta;
+
+export const Playground: StoryObj<typeof LoadingDotsSpinner> = {
+    parameters: {
+        controls: {
+            disable: false,
+            include: toStoryIncludedProps(
+                storybookArgTypesByTitle["Feedback indicators/Animations"]
+            ),
+        },
+    },
+    render: (args) => {
+        return <LoadingDotsSpinner {...args} />;
+    },
+};
 
 export const ThemedAnimation: StoryObj<typeof ThemedLoadingSpinner> = {
     name: "ThemedLoadingSpinner",

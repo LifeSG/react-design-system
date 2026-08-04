@@ -2,31 +2,42 @@ import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { PlusCircleFillIcon } from "@lifesg/react-icons/plus-circle-fill";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Pill } from "src/pill";
-import { GridDecorator, RowDecorator } from "stories/storybook-common";
+import {
+    GridDecorator,
+    RowDecorator,
+    toStoryArgTypes,
+    toStoryIncludedProps,
+} from "stories/storybook-common";
+
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 type Component = typeof Pill;
 
 const meta: Meta<Component> = {
     title: "Feedback indicators/Pill",
     component: Pill,
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Feedback indicators/Pill"]
+    ),
 };
 
 export default meta;
 
-export const Default: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <>
-                <Pill type="outline" colorType="blue">
-                    Outline style pill
-                </Pill>
-                <Pill type="solid" colorType="red">
-                    Solid style pill
-                </Pill>
-            </>
-        );
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disabled: false,
+            include: toStoryIncludedProps(
+                storybookArgTypesByTitle["Feedback indicators/Pill"]
+            ),
+        },
     },
-    decorators: [RowDecorator()],
+    args: {
+        type: "outline",
+    },
+    render: (args) => {
+        return <Pill {...args}>Label</Pill>;
+    },
 };
 
 export const WithIcon: StoryObj<Component> = {

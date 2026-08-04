@@ -44,7 +44,10 @@ const preview: Preview = {
             },
         },
         actions: { disable: true },
-        controls: { disable: true },
+        controls: {
+            disable: true,
+            disableSaveFromUI: true,
+        },
         layout: "centered",
         viewport: {
             options: INITIAL_VIEWPORTS,
@@ -56,6 +59,9 @@ const preview: Preview = {
         },
         docs: {
             codePanel: true,
+            controls: {
+                sort: "alpha",
+            },
             // https://storybook.js.org/docs/writing-docs/autodocs#customize-the-docs-container
             container: ThemeDocsContainer,
         },

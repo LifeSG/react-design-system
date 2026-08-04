@@ -1,0 +1,125 @@
+import type { GeneratedArgType } from "./table";
+
+type GeneratedArgTypeValue = GeneratedArgType["value"];
+type StoryControlsArgType = Pick<
+    GeneratedArgTypeValue,
+    "name" | "description" | "deprecated" | "control" | "options"
+>;
+
+/** Extracts the interface-name prefix from a generated key like `"InterfaceName.propName"`. */
+type KeyPrefix<K extends string> = string extends K
+    ? string
+    : K extends `${infer P}.${string}`
+    ? P
+    : never;
+
+/**
+ * Shared iterator over generated argtypes with optional interface filtering.
+ */
+function eachGeneratedArgType<T extends Record<string, unknown>>(
+    generatedArgTypes: T,
+    interfaceName: KeyPrefix<string & keyof T> | undefined,
+    callback: (argType: GeneratedArgTypeValue) => void
+): void {
+    const prefix = interfaceName ? `${interfaceName}.` : undefined;
+
+    for (const [key, rawValue] of Object.entries(generatedArgTypes)) {
+        if (prefix && !key.startsWith(prefix)) continue;
+
+        callback(rawValue as GeneratedArgTypeValue);
+    }
+}
+
+/**
+ * Convert a generated argtypes map to flat Storybook Controls-panel argTypes.
+ *
+ * @param generatedArgTypes - The value from `storybookArgTypesByTitle["Story/Title"]`
+ * @param interfaceName - Optional interface name to include only props from that interface.
+ *   Type-checked against the actual interface names present in the generated argtypes.
+ * @returns Flat argTypes object suitable for `Meta.argTypes`
+ *
+ * @example
+ * // All interfaces merged (first-seen wins on name collision)
+ * toStoryArgTypes(storybookArgTypesByTitle["Core/Typography"])
+ *
+ * @example
+ * // Only TypographyProps — TypeScript autocompletes the valid values
+ * toStoryArgTypes(storybookArgTypesByTitle["Core/Typography"], "TypographyProps")
+ */
+export function toStoryArgTypes<T extends Record<string, unknown>>(
+    generatedArgTypes: T,
+    interfaceName?: KeyPrefix<string & keyof T>
+): Record<string, StoryControlsArgType> {
+    const result: Record<string, StoryControlsArgType> = {};
+    eachGeneratedArgType(generatedArgTypes, interfaceName, (argType) => {
+        // Skip inherited-HTML-props placeholder rows (name is empty string)
+        if (!argType.name) return;
+
+        // First-seen wins — avoid clobbering a prop from an earlier interface
+        if (argType.name in result) return;
+        result[argType.name] = {
+            name: argType.name,
+            description: argType.description,
+            deprecated: argType.deprecated,
+            control: argType.control,
+            ...(argType.options && { options: argType.options }),
+        };
+    });
+
+    return result;
+}
+
+/**
+ * Extract an `include` list for Storybook Controls from generated argtypes.
+ *
+ * A prop is included when its generated argtype has a usable control.
+ *
+ * @param generatedArgTypes - The value from `storybookArgTypesByTitle["Story/Title"]`
+ * @param interfaceName - Optional interface name to include only props from that interface.
+ * @returns Prop names suitable for `parameters.docs.controls.include` or `<Controls include={...} />`
+ */
+export function toStoryIncludedProps<T extends Record<string, unknown>>(
+    generatedArgTypes: T,
+    interfaceName?: KeyPrefix<string & keyof T>
+): string[] {
+    const result: string[] = [];
+    const seen = new Set<string>();
+
+    eachGeneratedArgType(generatedArgTypes, interfaceName, (argType) => {
+        // Skip inherited-HTML-props placeholder rows (name is empty string)
+        if (!argType.name) return;
+
+        // First-seen wins — keep ordering stable and avoid duplicates
+        if (seen.has(argType.name)) return;
+        seen.add(argType.name);
+
+        if (argType.control) {
+            result.push(argType.name);
+        }
+    });
+
+    return result;
+}
+
+/**
+ * Backward-compatible alias that derives an exclude list from generated argtypes.
+ */
+export function toStoryExcludedProps<T extends Record<string, unknown>>(
+    generatedArgTypes: T,
+    interfaceName?: KeyPrefix<string & keyof T>
+): string[] {
+    const result: string[] = [];
+    const seen = new Set<string>();
+
+    eachGeneratedArgType(generatedArgTypes, interfaceName, (argType) => {
+        if (!argType.name) return;
+        if (seen.has(argType.name)) return;
+        seen.add(argType.name);
+
+        if (argType.control === false) {
+            result.push(argType.name);
+        }
+    });
+
+    return result;
+}

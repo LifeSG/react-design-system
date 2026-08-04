@@ -3,8 +3,13 @@ import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import type { ButtonProps } from "src/button";
 import { Button } from "src/button";
-import { GridDecorator } from "stories/storybook-common";
+import {
+    GridDecorator,
+    toStoryArgTypes,
+    toStoryIncludedProps,
+} from "stories/storybook-common";
 
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 import { TokensTable } from "./tokens-table";
 
 type Component = typeof Button;
@@ -12,9 +17,30 @@ type Component = typeof Button;
 const meta: Meta<Component> = {
     title: "Selection and input/Button",
     component: Button,
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Selection and input/Button"]
+    ),
 };
 
 export default meta;
+
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disable: false,
+            include: toStoryIncludedProps(
+                storybookArgTypesByTitle["Selection and input/Button"]
+            ),
+        },
+    },
+    render: (args) => {
+        return (
+            <Button icon={<PlaceholderIcon />} {...args}>
+                Label
+            </Button>
+        );
+    },
+};
 
 const VariantGrid = (args: Partial<ButtonProps>) => {
     return (
@@ -80,7 +106,7 @@ const VariantGrid = (args: Partial<ButtonProps>) => {
     );
 };
 
-export const Default: StoryObj<Component> = {
+export const Variants: StoryObj<Component> = {
     render: VariantGrid,
     decorators: [
         GridDecorator({

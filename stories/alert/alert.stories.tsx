@@ -1,7 +1,14 @@
 import { CalendarEventIcon } from "@lifesg/react-icons/calendar-event";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { Alert } from "src/alert";
-import { StackDecorator, StoryDecorator } from "stories/storybook-common";
+import {
+    StackDecorator,
+    StoryDecorator,
+    toStoryArgTypes,
+    toStoryIncludedProps,
+} from "stories/storybook-common";
+
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 type Component = typeof Alert;
 
@@ -9,11 +16,34 @@ const meta: Meta<Component> = {
     title: "Feedback indicators/Alert",
     component: Alert,
     decorators: [StackDecorator(), StoryDecorator()],
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Feedback indicators/Alert"]
+    ),
 };
 
 export default meta;
 
-export const Default: StoryObj<Component> = {
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disable: false,
+            include: toStoryIncludedProps(
+                storybookArgTypesByTitle["Feedback indicators/Alert"]
+            ),
+        },
+    },
+    render: (args) => (
+        <Alert {...args}>
+            This is an alert box. You can add <strong>bold text </strong> to
+            signify or highlight certain information. Or perhaps even add
+            a&nbsp;
+            <a href="https://life.gov.sg" target="_blank" rel="noreferrer">
+                hyperlink
+            </a>
+        </Alert>
+    ),
+};
+export const Variants: StoryObj<Component> = {
     render: (_args) => {
         return (
             <>

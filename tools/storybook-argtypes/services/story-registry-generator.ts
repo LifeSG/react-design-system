@@ -158,7 +158,7 @@ export class StoryRegistryGenerator {
         }
 
         content +=
-            "\nexport const storybookArgTypesByTitle: Record<string, unknown> = {\n";
+            "\nexport const storybookArgTypesByTitle: Record<string, Record<string, unknown>> = {\n";
 
         for (const [title, { export: exportName }] of Object.entries(
             registry

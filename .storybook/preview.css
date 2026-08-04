@@ -18,3 +18,14 @@
     text-transform: none;
     letter-spacing: 0;
 }
+
+/**
+ * Shows only the "Name" and "Control" columns for Controls Storybook Block
+ * within .controls-only
+ */
+.controls-only .docblock-argstable th:nth-child(2),
+.controls-only .docblock-argstable th:nth-child(3),
+.controls-only .docblock-argstable td:nth-child(2),
+.controls-only .docblock-argstable td:nth-child(3) {
+    display: none;
+}

@@ -47,13 +47,32 @@ export interface ComponentReference {
 }
 
 /**
+ * Control configuration for a generated argType row.
+ * Only primitive types that map cleanly to Storybook controls are enabled:
+ * - `"boolean"` — toggle for `boolean` props
+ * - `"text"` — free-text input for `string` props
+ * - `"select"` — dropdown for string/number literal unions (requires `options`)
+ * - `"color"` — color picker for props whose name contains `color` or `colour`
+ * - `false` — control disabled (complex types, functions, objects, etc.)
+ */
+export type GeneratedArgTypeControl =
+    | false
+    | "boolean"
+    | "text"
+    | "number"
+    | "select"
+    | "color";
+
+/**
  * Single argType row for display in Storybook's props table.
  * Maps to Storybook's internal ArgType structure.
  */
 export interface GeneratedArgType {
     key: string;
     value: {
-        control: false;
+        control: GeneratedArgTypeControl;
+        /** Select options — present only when `control` is `"select"`. */
+        options?: (string | number)[];
         deprecated?: string | boolean;
         description?: string;
         name: string;

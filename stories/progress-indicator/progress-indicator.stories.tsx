@@ -1,29 +1,51 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { ProgressIndicator } from "src/progress-indicator";
-import { StoryDecorator } from "stories/storybook-common";
+import {
+    StoryDecorator,
+    toStoryArgTypes,
+    toStoryIncludedProps,
+} from "stories/storybook-common";
+
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 type Component = typeof ProgressIndicator;
 
 const meta: Meta<Component> = {
     title: "Feedback indicators/ProgressIndicator",
     component: ProgressIndicator,
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Feedback indicators/ProgressIndicator"]
+    ),
 };
 
 export default meta;
 
-export const Default: StoryObj<Component> = {
-    render: (_args) => {
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disabled: false,
+            include: toStoryIncludedProps(
+                storybookArgTypesByTitle[
+                    "Feedback indicators/ProgressIndicator"
+                ]
+            ),
+        },
+    },
+    args: {
+        currentIndex: 1,
+        steps: [
+            { title: "Step 1" },
+            { title: "Step 2" },
+            { title: "Step 3" },
+            { title: "Step 4" },
+            { title: "Step 5" },
+        ],
+    },
+    render: (args) => {
         return (
             <ProgressIndicator
-                steps={[
-                    { title: "Step 1" },
-                    { title: "Step 2" },
-                    { title: "Step 3" },
-                    { title: "Step 4" },
-                    { title: "Step 5" },
-                ]}
-                currentIndex={1}
-                displayExtractor={(item) => item.title}
+                displayExtractor={(item) => (item as { title: string }).title}
+                {...args}
             />
         );
     },

@@ -1,15 +1,43 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useEffect, useState } from "react";
 import { ErrorDisplay } from "src/error-display";
+import {
+    toStoryArgTypes,
+    toStoryIncludedProps,
+} from "stories/storybook-common";
+
+import { storybookArgTypesByTitle } from "../../.storybook/generated/storybook-argtypes.generated";
 
 type Component = typeof ErrorDisplay;
 
 const meta: Meta<Component> = {
     title: "Core/ErrorDisplay",
     component: ErrorDisplay,
+    argTypes: toStoryArgTypes(
+        storybookArgTypesByTitle["Core/ErrorDisplay"],
+        "ErrorDisplayProps"
+    ),
 };
 
 export default meta;
+
+export const Playground: StoryObj<Component> = {
+    parameters: {
+        controls: {
+            disable: false,
+            include: toStoryIncludedProps(
+                storybookArgTypesByTitle["Core/ErrorDisplay"],
+                "ErrorDisplayProps"
+            ),
+        },
+    },
+    args: {
+        type: "404",
+    },
+    render: (args) => {
+        return <ErrorDisplay {...args} />;
+    },
+};
 
 export const Default: StoryObj<Component> = {
     render: (_args) => {
@@ -81,31 +109,5 @@ export const CustomError: StoryObj<Component> = {
                 }
             />
         );
-    },
-};
-
-export const Variants: StoryObj<Component> = {
-    parameters: {
-        controls: {
-            disable: false,
-            include: ["type", "illustrationScheme"],
-        },
-    },
-    argTypes: {
-        illustrationScheme: {
-            control: "select",
-            options: [
-                undefined,
-                "base",
-                "bookingsg",
-                "ccube",
-                "rbs",
-                "mylegacy",
-            ],
-        },
-    },
-    args: {
-        type: "400",
-        illustrationScheme: undefined,
     },
 };
