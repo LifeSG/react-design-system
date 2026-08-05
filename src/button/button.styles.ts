@@ -152,7 +152,7 @@ export const mainSizeDefault = css`
 
 export const mainSizeDefaultIconOnly = css`
     min-height: 3rem;
-    min-width: 3rem;
+    width: 3rem;
 `;
 
 export const mainSizeSmall = css`
@@ -163,7 +163,7 @@ export const mainSizeSmall = css`
 
 export const mainSizeSmallIconOnly = css`
     min-height: 2.5rem;
-    min-width: 2.5rem;
+    width: 2.5rem;
 `;
 
 export const mainSizeLarge = css`
@@ -173,7 +173,7 @@ export const mainSizeLarge = css`
 
 export const mainSizeLargeIconOnly = css`
     min-height: 4rem;
-    min-width: 4rem;
+    width: 4rem;
 `;
 
 export const spinner = css`
