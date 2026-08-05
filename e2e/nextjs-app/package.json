@@ -27,6 +27,8 @@
         "@types/react-dom": "^19.2.3",
         "eslint": "^9",
         "eslint-config-next": "16.1.6",
+        "postcss-import": "^16.1.0",
+        "postcss-mixins": "^12.1.2",
         "typescript": "^5"
     }
 }
