@@ -3,10 +3,10 @@ import { css } from "@linaria/core";
 import {
     Border,
     Colour,
+    ComponentToken,
     Font,
     MediaQuery,
     Motion,
-    Radius,
     Spacing,
 } from "../theme";
 
@@ -19,7 +19,7 @@ export const main = css`
     justify-content: center;
     padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
     gap: 0.5rem;
-    border-radius: ${Radius.sm};
+    border-radius: ${ComponentToken.Button["radius"]};
 
     svg,
     img {
@@ -41,12 +41,14 @@ export const mainHasMinWidth = css`
 // BUTTON STYLE + TEXT COLOR
 // -------------------------------------------------------------------------
 export const mainStyleDefault = css`
-    background-color: ${Colour["bg-primary"]};
-    color: ${Colour["text-inverse"]};
+    background-color: ${ComponentToken.Button["default-colour-bg"]};
+    color: ${ComponentToken.Button["default-colour-text"]};
     &:hover,
     &:active {
         @media (pointer: fine) {
-            background-color: ${Colour["bg-primary-hover"]};
+            background-color: ${ComponentToken.Button[
+                "default-colour-bg-hover"
+            ]};
         }
     }
 `;
@@ -64,8 +66,8 @@ export const mainStyleDefaultDanger = css`
 
 export const mainStyleSecondary = css`
     background-color: ${Colour.bg};
-    border-color: ${Colour["border-primary"]};
-    color: ${Colour["text-primary"]};
+    border-color: ${ComponentToken.Button["secondary-colour-border"]};
+    color: ${ComponentToken.Button["secondary-colour-text"]};
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -89,7 +91,7 @@ export const mainStyleSecondaryDanger = css`
 export const mainStyleLight = css`
     background-color: ${Colour.bg};
     border-color: ${Colour.border};
-    color: ${Colour["text-primary"]};
+    color: ${ComponentToken.Button["light-colour-text"]};
     &:hover,
     &:active {
         @media (pointer: fine) {
@@ -112,7 +114,7 @@ export const mainStyleLightDanger = css`
 
 export const mainStyleLink = css`
     background-color: transparent;
-    color: ${Colour["text-primary"]};
+    color: ${ComponentToken.Button["link-colour-text"]};
     &:hover,
     &:active {
         @media (pointer: fine) {
