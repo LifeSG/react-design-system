@@ -1,6 +1,8 @@
 import type { StorybookConfig } from "@storybook/react-webpack5";
 import { fileURLToPath } from "node:url";
 import path, { dirname } from "path";
+import postcssImport from "postcss-import";
+import postcssMixins from "postcss-mixins";
 import remarkGfm from "remark-gfm";
 
 const __filename = fileURLToPath(import.meta.url);
@@ -67,6 +69,65 @@ const config: StorybookConfig = {
                     },
                 },
             ],
+        });
+
+        // Inject postcss-loader into existing CSS rules to process
+        // @import and @mixin directives in theme CSS files
+        config.module?.rules?.forEach((rule) => {
+            if (
+                !rule ||
+                typeof rule !== "object" ||
+                !(rule.test instanceof RegExp) ||
+                !rule.test.test(".css")
+            ) {
+                return;
+            }
+            const loaders = Array.isArray(rule.use) ? rule.use : [];
+            const cssLoaderIndex = loaders.findIndex((loader) => {
+                const name =
+                    typeof loader === "string"
+                        ? loader
+                        : (loader as { loader?: string })?.loader;
+                return name?.includes("css-loader");
+            });
+            if (cssLoaderIndex === -1) return;
+
+            // Set importLoaders so css-loader delegates to postcss-loader
+            const cssLoader = loaders[cssLoaderIndex];
+            if (typeof cssLoader === "object" && "options" in cssLoader) {
+                (
+                    cssLoader.options as Record<string, unknown>
+                ).importLoaders = 1;
+            } else {
+                loaders[cssLoaderIndex] = {
+                    loader: "css-loader",
+                    options: { importLoaders: 1 },
+                };
+            }
+
+            // Insert postcss-loader after css-loader (runs before it)
+            loaders.splice(cssLoaderIndex + 1, 0, {
+                loader: "postcss-loader",
+                options: {
+                    postcssOptions: {
+                        plugins: [
+                            postcssImport({
+                                path: [path.resolve(__dirname, "..")],
+                            }),
+                            postcssMixins({
+                                mixinsFiles: path.join(
+                                    path.resolve(
+                                        __dirname,
+                                        "../src/theme/styles/presets"
+                                    ),
+                                    "**/*.css"
+                                ),
+                            }),
+                        ],
+                    },
+                },
+            });
+            rule.use = loaders;
         });
 
         config.resolve!.modules = [
