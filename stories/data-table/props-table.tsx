@@ -32,7 +32,8 @@ const DATA: ApiTableSectionProps[] = [
             },
             {
                 name: "selectedIds",
-                description: "The ids of selected items",
+                description:
+                    "The ids of selected items. If undefined, the Select All checkbox remains enabled when rows are non-empty",
                 propTypes: ["string[]"],
             },
             {

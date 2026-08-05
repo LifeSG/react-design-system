@@ -382,7 +382,7 @@ describe("DataTable", () => {
             expect(selectAllCheckbox).toBeDisabled();
         });
 
-        it("should disable and uncheck select all checkbox when selectedIds is undefined", () => {
+        it("should keep select all checkbox enabled when rows are non-empty but selectedIds is undefined", () => {
             render(
                 <DataTable
                     headers={MOCK_HEADERS}
@@ -397,7 +397,7 @@ describe("DataTable", () => {
                 name: "Select all rows",
             });
             expect(selectAllCheckbox).not.toBeChecked();
-            expect(selectAllCheckbox).toBeDisabled();
+            expect(selectAllCheckbox).not.toBeDisabled();
         });
 
         it("should disable and uncheck select all checkbox when rows is empty array", () => {
