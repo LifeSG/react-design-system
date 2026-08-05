@@ -124,7 +124,7 @@ export const DataTable = ({
     };
 
     const isHeaderCheckboxDisabled = (): boolean => {
-        return !rows || !rows.length || !selectedIds;
+        return !rows || !rows.length;
     };
 
     const isRowSelected = (rowId: string): boolean => {
