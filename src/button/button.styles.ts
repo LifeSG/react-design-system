@@ -157,6 +157,7 @@ export const mainSizeDefaultIconOnly = css`
 
 export const mainSizeSmall = css`
     min-height: 2.5rem;
+    padding-block: calc(${Spacing["spacing-8"]} - ${Border["width-010"]});
     ${Font["body-md-semibold"]}
 `;
 

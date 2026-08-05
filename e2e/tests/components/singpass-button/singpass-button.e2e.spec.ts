@@ -70,7 +70,7 @@ test.describe("SingpassButton", () => {
             });
         });
 
-        test("All size variants (large font size)", async ({ story }) => {
+        test("Large font size", async ({ story }) => {
             await compareScreenshot(story, "large-font-size");
         });
     });
