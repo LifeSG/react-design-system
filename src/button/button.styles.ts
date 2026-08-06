@@ -163,7 +163,8 @@ export const mainSizeSmall = css`
 
 export const mainSizeSmallIconOnly = css`
     min-height: 2.5rem;
-    padding: calc(${Spacing["spacing-8"]} - ${Border["width-010"]});
+    padding: calc(${Spacing["spacing-8"]} - ${Border["width-010"]})
+        ${Spacing["spacing-16"]};
 `;
 
 export const mainSizeLarge = css`
