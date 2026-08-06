@@ -235,6 +235,7 @@ export const ActionBar: StoryObj<Component> = {
                     alternatingRows
                     enableMultiSelect
                     enableActionBar
+                    enableActionBarWithoutSelection
                     selectedIds={selected}
                     onSelect={handleOnClickSelect}
                     onClearSelectionClick={() => {

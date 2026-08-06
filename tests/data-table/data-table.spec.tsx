@@ -491,6 +491,58 @@ describe("DataTable", () => {
             expect(onClearSelectionClick).toHaveBeenCalledTimes(1);
         });
 
+        it("should display action bar when enableActionBarWithoutSelection is true and no rows are selected", () => {
+            render(
+                <DataTable
+                    headers={MOCK_HEADERS}
+                    rows={MOCK_ROWS}
+                    enableMultiSelect
+                    enableActionBar
+                    enableActionBarWithoutSelection
+                    selectedIds={[]}
+                    data-testid="data-table"
+                />
+            );
+
+            expect(screen.getByText("0 items selected")).toBeInTheDocument();
+        });
+
+        it("should not render clear selection button when no rows are selected with enableActionBarWithoutSelection", () => {
+            render(
+                <DataTable
+                    headers={MOCK_HEADERS}
+                    rows={MOCK_ROWS}
+                    enableMultiSelect
+                    enableActionBar
+                    enableActionBarWithoutSelection
+                    selectedIds={[]}
+                    data-testid="data-table"
+                />
+            );
+
+            expect(
+                screen.queryByRole("button", { name: /Clear selection/ })
+            ).not.toBeInTheDocument();
+        });
+
+        it("should render clear selection button when rows are selected with enableActionBarWithoutSelection", () => {
+            render(
+                <DataTable
+                    headers={MOCK_HEADERS}
+                    rows={MOCK_ROWS}
+                    enableMultiSelect
+                    enableActionBar
+                    enableActionBarWithoutSelection
+                    selectedIds={["1"]}
+                    data-testid="data-table"
+                />
+            );
+
+            expect(
+                screen.getByRole("button", { name: /Clear selection/ })
+            ).toBeInTheDocument();
+        });
+
         it("should render custom action bar content", () => {
             render(
                 <DataTable
