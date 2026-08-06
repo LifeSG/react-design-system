@@ -152,18 +152,18 @@ export const mainSizeDefault = css`
 
 export const mainSizeDefaultIconOnly = css`
     min-height: 3rem;
-    width: 3rem;
 `;
 
 export const mainSizeSmall = css`
     min-height: 2.5rem;
-    padding-block: calc(${Spacing["spacing-8"]} - ${Border["width-010"]});
+    padding: calc(${Spacing["spacing-8"]} - ${Border["width-010"]})
+        ${Spacing["spacing-16"]};
     ${Font["body-md-semibold"]}
 `;
 
 export const mainSizeSmallIconOnly = css`
     min-height: 2.5rem;
-    width: 2.5rem;
+    padding: calc(${Spacing["spacing-8"]} - ${Border["width-010"]});
 `;
 
 export const mainSizeLarge = css`
@@ -173,7 +173,12 @@ export const mainSizeLarge = css`
 
 export const mainSizeLargeIconOnly = css`
     min-height: 4rem;
-    width: 4rem;
+`;
+
+export const mainIconOnly = css`
+    width: auto;
+    aspect-ratio: 1 / 1;
+    padding: ${Spacing["spacing-8"]};
 `;
 
 export const spinner = css`
