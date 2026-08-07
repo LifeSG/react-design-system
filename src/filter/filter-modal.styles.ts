@@ -67,7 +67,7 @@ export const filterToggleContent = css`
 
 export const filterClearButton = css`
     background-color: transparent;
-    height: 100%;
+    min-height: unset;
     padding: ${Spacing["spacing-24"]} ${Spacing["spacing-20"]};
 `;
 

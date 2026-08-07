@@ -108,7 +108,7 @@ export const minimisableContentMinimisable = css`
 `;
 
 export const filterItemMinimiseButton = css`
-    height: fit-content;
+    min-height: unset;
     padding: 0;
     margin: ${Spacing["spacing-16"]} 0 0 0;
 `;
