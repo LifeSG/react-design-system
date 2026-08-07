@@ -35,6 +35,7 @@ export const DataTable = ({
     selectedIds,
     disabledIds,
     enableActionBar,
+    enableActionBarWithoutSelection,
     enableSelectAll,
     enableStickyHeader,
     emptyView,
@@ -542,7 +543,7 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         const count = selectedIds?.length ?? 0;
-        const counter = `item${count > 1 ? "s" : ""}`;
+        const counter = `item${count === 1 ? "" : "s"}`;
 
         return (
             <>
@@ -559,14 +560,18 @@ export const DataTable = ({
                         )}
                     >
                         <Typography.BodyMD weight="semibold">{`${count} ${counter} selected`}</Typography.BodyMD>
-                        <BasicButton
-                            className={styles.actionBarButton}
-                            type="button"
-                            aria-label={`Clear selection of ${count} ${counter}`}
-                            onClick={onClearSelectionClick}
-                        >
-                            Clear selection
-                        </BasicButton>
+                        {count > 0 ? (
+                            <BasicButton
+                                className={styles.actionBarButton}
+                                type="button"
+                                aria-label={`Clear selection of ${count} ${counter}`}
+                                onClick={onClearSelectionClick}
+                            >
+                                Clear selection
+                            </BasicButton>
+                        ) : (
+                            <div className={styles.actionBarGap} />
+                        )}
                         {actionBarContent}
                     </div>
                 </div>
@@ -601,8 +606,8 @@ export const DataTable = ({
                 </table>
             </div>
             {enableActionBar &&
-                selectedIds &&
-                selectedIds.length > 0 &&
+                ((selectedIds && selectedIds.length > 0) ||
+                    enableActionBarWithoutSelection) &&
                 renderSelectionBar()}
         </div>
     );

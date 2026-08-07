@@ -496,5 +496,35 @@ test.describe("DataTable", () => {
                 ).not.toBeInViewport();
             });
         });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("action-bar-without-selection");
+            });
+
+            test("Action bar visible without selection with actionBarContent", async ({
+                story,
+            }) => {
+                await expect(story.locators.internal.actionBar).toBeVisible();
+                await expect(
+                    story.locators.internal.selectedCountLabel
+                ).toContainText("0 items selected");
+                await expect(
+                    story.locators.internal.clearSelectionButton
+                ).not.toBeVisible();
+
+                await compareScreenshot(story, "no-selection");
+
+                await story.getRowCheckbox("1").click();
+                await expect(
+                    story.locators.internal.selectedCountLabel
+                ).toContainText("1 item selected");
+                await expect(
+                    story.locators.internal.clearSelectionButton
+                ).toBeVisible();
+
+                await compareScreenshot(story, "with-selection");
+            });
+        });
     });
 });

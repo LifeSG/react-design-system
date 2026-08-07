@@ -207,6 +207,10 @@ export const actionBarButton = css`
     }
 `;
 
+export const actionBarGap = css`
+    width: 0.75rem;
+`;
+
 export const actionBarSpacer = css`
     height: 3.5rem;
 `;
