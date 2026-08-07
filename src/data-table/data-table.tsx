@@ -560,7 +560,7 @@ export const DataTable = ({
                         )}
                     >
                         <Typography.BodyMD weight="semibold">{`${count} ${counter} selected`}</Typography.BodyMD>
-                        {count > 0 && (
+                        {count > 0 ? (
                             <BasicButton
                                 className={styles.actionBarButton}
                                 type="button"
@@ -569,6 +569,8 @@ export const DataTable = ({
                             >
                                 Clear selection
                             </BasicButton>
+                        ) : (
+                            <div className={styles.actionBarGap} />
                         )}
                         {actionBarContent}
                     </div>

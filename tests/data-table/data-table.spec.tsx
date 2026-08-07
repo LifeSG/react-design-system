@@ -491,7 +491,7 @@ describe("DataTable", () => {
             expect(onClearSelectionClick).toHaveBeenCalledTimes(1);
         });
 
-        it("should display action bar when enableActionBarWithoutSelection is true and no rows are selected", () => {
+        it("should display action bar without clear selection button when enableActionBarWithoutSelection is true and no rows are selected", () => {
             render(
                 <DataTable
                     headers={MOCK_HEADERS}
@@ -505,21 +505,6 @@ describe("DataTable", () => {
             );
 
             expect(screen.getByText("0 items selected")).toBeInTheDocument();
-        });
-
-        it("should not render clear selection button when no rows are selected with enableActionBarWithoutSelection", () => {
-            render(
-                <DataTable
-                    headers={MOCK_HEADERS}
-                    rows={MOCK_ROWS}
-                    enableMultiSelect
-                    enableActionBar
-                    enableActionBarWithoutSelection
-                    selectedIds={[]}
-                    data-testid="data-table"
-                />
-            );
-
             expect(
                 screen.queryByRole("button", { name: /Clear selection/ })
             ).not.toBeInTheDocument();
