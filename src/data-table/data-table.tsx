@@ -9,6 +9,7 @@ import { Typography } from "../typography";
 import { useEvent, useEventListener, useId, useThrottle } from "../util";
 import {
     ActionBar,
+    ActionBarGap,
     ActionBarSpacer,
     ActionBarWrapper,
     BodyCell,
@@ -42,6 +43,7 @@ export const DataTable = ({
     selectedIds,
     disabledIds,
     enableActionBar,
+    enableActionBarWithoutSelection,
     enableSelectAll,
     enableStickyHeader,
     emptyView,
@@ -512,7 +514,7 @@ export const DataTable = ({
 
     const renderSelectionBar = () => {
         const count = selectedIds?.length ?? 0;
-        const counter = `item${count > 1 ? "s" : ""}`;
+        const counter = `item${count === 1 ? "" : "s"}`;
 
         return (
             <>
@@ -528,13 +530,17 @@ export const DataTable = ({
                 >
                     <ActionBar $float={isFloatingActionBar}>
                         <Typography.BodyMD weight="semibold">{`${count} ${counter} selected`}</Typography.BodyMD>
-                        <TextButton
-                            type="button"
-                            aria-label={`Clear selection of ${count} ${counter}`}
-                            onClick={onClearSelectionClick}
-                        >
-                            Clear selection
-                        </TextButton>
+                        {count > 0 ? (
+                            <TextButton
+                                type="button"
+                                aria-label={`Clear selection of ${count} ${counter}`}
+                                onClick={onClearSelectionClick}
+                            >
+                                Clear selection
+                            </TextButton>
+                        ) : (
+                            <ActionBarGap />
+                        )}
                         {actionBarContent}
                     </ActionBar>
                 </ActionBarWrapper>
@@ -564,8 +570,8 @@ export const DataTable = ({
                 </Table>
             </TableContainer>
             {enableActionBar &&
-                selectedIds &&
-                selectedIds.length > 0 &&
+                ((selectedIds && selectedIds.length > 0) ||
+                    enableActionBarWithoutSelection) &&
                 renderSelectionBar()}
         </TableWrapper>
     );

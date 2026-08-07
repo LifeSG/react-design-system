@@ -179,6 +179,10 @@ export const ActionBar = styled.div<ActionBarProps>`
     }}
 `;
 
+export const ActionBarGap = styled.div`
+    width: 0.75rem;
+`;
+
 export const ActionBarSpacer = styled.div`
     height: 3.5rem;
 `;

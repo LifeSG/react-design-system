@@ -16,6 +16,8 @@ export interface DataTableProps {
     enableSelectAll?: boolean | undefined;
     /** Specifies if an action bar is visible when one or more rows are selected */
     enableActionBar?: boolean | undefined;
+    /** Shows the action bar even when no rows are selected. Requires `enableActionBar`. */
+    enableActionBarWithoutSelection?: boolean | undefined;
     /** Specifies if the header is fixed to the top */
     enableStickyHeader?: boolean | undefined;
     /** Custom content to be rendered within the action bar */
