@@ -100,6 +100,16 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "enableActionBarWithoutSelection",
+                description: (
+                    <>
+                        Shows the action bar even when no rows are selected.
+                        Requires <code>enableActionBar</code>
+                    </>
+                ),
+                propTypes: ["boolean"],
+            },
+            {
                 name: "actionBarContent",
                 description:
                     "Custom content to be rendered within the action bar",
