@@ -1,13 +1,14 @@
 import type { StorybookConfig } from "@storybook/react-webpack5";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
-import path, { dirname } from "path";
 import postcssImport from "postcss-import";
 import postcssMixins from "postcss-mixins";
 import remarkGfm from "remark-gfm";
 import webpack from "webpack";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
+
 const { ProgressPlugin } = webpack;
 let lastProgressBucket = -1;
 
@@ -40,9 +41,7 @@ const config: StorybookConfig = {
                             "style-loader",
                             {
                                 loader: "css-loader",
-                                options: {
-                                    importLoaders: 1,
-                                },
+                                options: { importLoaders: 1 },
                             },
                             {
                                 loader: "postcss-loader",
@@ -58,12 +57,9 @@ const config: StorybookConfig = {
                                                 ],
                                             }),
                                             postcssMixins({
-                                                mixinsFiles: path.join(
-                                                    path.resolve(
-                                                        __dirname,
-                                                        "../src/theme/styles/presets"
-                                                    ),
-                                                    "**/*.css"
+                                                mixinsFiles: path.resolve(
+                                                    __dirname,
+                                                    "../src/theme/styles/presets/**/*.css"
                                                 ),
                                             }),
                                         ],
