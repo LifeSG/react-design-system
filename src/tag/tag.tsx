@@ -30,6 +30,7 @@ const colorClassMap: Record<TagType, Record<TagColorType, string>> = {
  * A compact label used to categorise or highlight content.
  *
  * Use `Tag` to display metadata such as status, category, or keyword.
+ * @keywords badge, chip, filter, label, status
  */
 export const Tag = ({
     type,

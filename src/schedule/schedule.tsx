@@ -14,6 +14,7 @@ import type { ScheduleProps } from "./types";
 // @catalog
 /**
  * A grid visualisation of slot-based time availability for services across day and week views.
+ * @keywords availability, booking, calendar, grid, slots
  */
 export const Schedule = ({
     id,

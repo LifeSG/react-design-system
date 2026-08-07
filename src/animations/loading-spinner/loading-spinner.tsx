@@ -12,6 +12,7 @@ const LottieSpinner = lazy(async () => ({
 // @catalog
 /**
  * An animation of a flying rocket.
+ * @keywords animation, indicator, pending, progress, rocket
  */
 export const LoadingSpinner = ({
     className,

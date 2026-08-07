@@ -143,6 +143,7 @@ const Base = ({
  * - `ModalV2.Content` — container for the body content of the modal card.
  * - `ModalV2.Footer` — footer area for primary and secondary action buttons.
  * - `ModalV2.Header` — header bar with a close button and optional title. Use instead of `CloseButton` when a heading is needed.
+ * @keywords accessible, composable, dialog, focused, overlay, slots
  */
 export const ModalV2 = Object.assign(Base, {
     /** Wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout. */

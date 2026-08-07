@@ -21,6 +21,7 @@ import type { BreadcrumbProps, FadeColorSet } from "./types";
  * Use `Breadcrumb` to show the user's position within a page hierarchy and
  * allow navigation to parent pages. On tablet and below, the trail scrolls
  * horizontally with optional edge fade overlays to indicate clipped content.
+ * @keywords hierarchy, navigation, path, trail, wayfinding
  */
 export const Breadcrumb = ({
     links,

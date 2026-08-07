@@ -20,6 +20,7 @@ type ValueFieldTypes = Exclude<FieldType, "none">;
  *
  * Use `UnitNumberInput` when you need a structured unit number entry that splits
  * floor and unit into separate fields.
+ * @keywords address, floor, singapore, structured input, unit
  */
 export const UnitNumberInput = ({
     disabled,

@@ -24,6 +24,7 @@ import type { FilterProps } from "./types";
  * - `Filter.Item` — a collapsible section within the panel.
  * - `Filter.Page` — a drill-down sub-page inside the mobile modal.
  * - `Filter.Checkbox` — a filter item with selectable checkbox or toggle options.
+ * @keywords checkbox, criteria, facets, modal, refinement, search, sidebar
  */
 export const Filter = ({
     children,

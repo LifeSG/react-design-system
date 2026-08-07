@@ -37,6 +37,7 @@ import type {
  * hierarchical option tree. Selecting a parent item automatically selects all its
  * leaf descendants; deselecting a parent removes all its descendants from the
  * selection.
+ * @keywords checkbox, dropdown, hierarchical, multi-value, multiple, search, tree
  */
 export const InputNestedMultiSelect = <V1, V2, V3>({
     placeholder = "Select",
