@@ -32,6 +32,12 @@ export const mainIconPositionRight = css`
     flex-direction: row-reverse;
 `;
 
+export const mainIconOnly = css`
+    width: auto;
+    aspect-ratio: 1 / 1;
+    padding: ${Spacing["spacing-8"]};
+`;
+
 export const mainHasMinWidth = css`
     min-width: 4rem;
 `;
@@ -163,8 +169,7 @@ export const mainSizeSmall = css`
 
 export const mainSizeSmallIconOnly = css`
     min-height: 2.5rem;
-    padding: calc(${Spacing["spacing-8"]} - ${Border["width-010"]})
-        ${Spacing["spacing-16"]};
+    padding: calc(${Spacing["spacing-8"]} - ${Border["width-010"]});
 `;
 
 export const mainSizeLarge = css`
@@ -174,12 +179,6 @@ export const mainSizeLarge = css`
 
 export const mainSizeLargeIconOnly = css`
     min-height: 4rem;
-`;
-
-export const mainIconOnly = css`
-    width: auto;
-    aspect-ratio: 1 / 1;
-    padding: ${Spacing["spacing-8"]};
 `;
 
 export const spinner = css`

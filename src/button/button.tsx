@@ -46,9 +46,9 @@ const getStyleClass = (effectiveStyle: string, danger: boolean) =>
 const getSizeClass = (sizeType: string, iconOnly: boolean) =>
     iconOnly
         ? clsx(
+              styles.mainIconOnly,
               sizeClassMap[sizeType]?.base,
-              sizeClassMap[sizeType]?.iconOnly,
-              styles.mainIconOnly
+              sizeClassMap[sizeType]?.iconOnly
           )
         : sizeClassMap[sizeType]?.base;
 
