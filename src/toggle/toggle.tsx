@@ -155,69 +155,45 @@ export const Toggle = ({
     // HELPER FUNCTIONS
     // =============================================================================
 
-    const getContainerStateClass = () => {
-        if (styleType === "no-border") {
-            if (error) {
-                return clsx(
-                    styles.colorBorderError,
-                    !disabled && styles.toggleContainerError
-                );
-            }
+    const getContainerBorderClass = () => {
+        if (!selected && error) return styles.borderError;
+        if (styleType === "no-border") return styles.borderNone;
+        if (selected && disabled) return styles.borderSelectedDisabled;
+        if (disabled) return styles.borderDisabled;
+        if (error) return styles.borderError;
+        if (selected) return styles.borderSelected;
+        return styles.borderDefault;
+    };
 
-            if (disabled) {
-                return selected
-                    ? styles.toggleContainerNoBorderDisabledSelected
-                    : styles.toggleContainerNoBorderDisabled;
-            }
-
-            if (selected) {
-                return styles.toggleContainerNoBorderSelected;
-            }
-
-            return styles.toggleContainerNoBorder;
-        }
-
-        if (error) {
-            return disabled
-                ? styles.colorBorderError
-                : styles.toggleContainerError;
-        }
-
-        if (disabled) {
-            return selected
-                ? styles.toggleContainerDisabledSelected
-                : styles.toggleContainerDisabled;
-        }
-
+    const getContainerBgClass = () => {
         if (selected) {
-            return styles.toggleContainerSelected;
+            if (disabled) return styles.bgSelectedDisabled;
+            if (error) return styles.bgError;
+            return styles.bgSelected;
         }
 
-        return styles.toggleContainer;
+        if (disabled && styleType !== "no-border") return styles.bgDisabled;
+        return null;
     };
 
     const getContainerHoverClass = () => {
-        if (disabled) {
-            return undefined;
-        }
-
-        if (!error && selected) {
-            return styles.toggleContainerHoverSelected;
-        }
-
+        if (disabled) return null;
+        if (selected)
+            return error
+                ? styles.toggleContainerHoverError
+                : styles.toggleContainerHoverSelected;
         return styles.toggleContainerHoverDefault;
     };
 
-    const getTextContainerStateClass = () => {
-        if (disabled) {
-            return selected
-                ? styles.toggleTextContainerDisabledSelected
-                : styles.colorTextDisabled;
-        }
-
+    const getTextContainerClass = () => {
         if (selected) {
+            if (disabled) return styles.toggleTextContainerDisabledSelected;
+            if (error) return styles.colorTextError;
             return styles.toggleTextContainerSelected;
         }
+
+        if (disabled) return styles.colorTextDisabled;
+        return null;
     };
 
     // =============================================================================
@@ -244,6 +220,7 @@ export const Toggle = ({
                 type={toggleIconType}
                 active={selected}
                 disabled={disabled}
+                error={!disabled && selected && error}
             />
         );
     };
@@ -309,11 +286,16 @@ export const Toggle = ({
                     onClick={handleExpandCollapseClick}
                     data-testid={expanded ? "collapse-button" : "expand-button"}
                 >
-                    {expanded ? "Show less" : "Show more"}
                     {expanded ? (
-                        <ChevronUpIcon aria-hidden />
+                        <>
+                            Show less
+                            <ChevronUpIcon aria-hidden />
+                        </>
                     ) : (
-                        <ChevronDownIcon aria-hidden />
+                        <>
+                            Show more
+                            <ChevronDownIcon aria-hidden />
+                        </>
                     )}
                 </button>
             )
@@ -353,7 +335,7 @@ export const Toggle = ({
                             data-testid="toggle-input"
                             className={clsx(
                                 styles.input,
-                                disabled && styles.toggleInputDisabled
+                                disabled && styles.disabledColorCursor
                             )}
                             disabled={isNativeDisabled}
                             aria-disabled={isFocusableWhenDisabled}
@@ -368,7 +350,7 @@ export const Toggle = ({
                         <div
                             className={clsx(
                                 styles.textContainer,
-                                getTextContainerStateClass()
+                                getTextContainerClass()
                             )}
                         >
                             <label
@@ -407,23 +389,17 @@ export const Toggle = ({
     };
 
     const renderErrorList = (errors: string[]) => {
+        const className = clsx(
+            styles.colorTextError,
+            disabled && styles.colorTextDisabled
+        );
+
         return (
             <>
-                <Typography.BodyMD
-                    weight="semibold"
-                    className={clsx(
-                        styles.colorTextError,
-                        disabled && styles.colorTextDisabled
-                    )}
-                >
+                <Typography.BodyMD weight="semibold" className={className}>
                     Error
                 </Typography.BodyMD>
-                <TextList.Ul
-                    className={clsx(
-                        styles.colorTextError,
-                        disabled && styles.colorTextDisabled
-                    )}
-                >
+                <TextList.Ul className={className}>
                     {errors?.map((item, index) => {
                         return (
                             <li
@@ -432,10 +408,7 @@ export const Toggle = ({
                             >
                                 <Typography.BodyMD
                                     weight="semibold"
-                                    className={clsx(
-                                        styles.colorTextError,
-                                        disabled && styles.colorTextDisabled
-                                    )}
+                                    className={className}
                                 >
                                     {item}
                                 </Typography.BodyMD>
@@ -490,10 +463,11 @@ export const Toggle = ({
         <div
             className={clsx(
                 styles.container,
-                getContainerStateClass(),
+                getContainerBorderClass(),
+                getContainerBgClass(),
                 getContainerHoverClass(),
-                !indicator && styles.noIndicatorContainer,
-                useContentWidth && styles.useContentWidthContainer,
+                !indicator && styles.containerNoIndicator,
+                useContentWidth && styles.containerUseContentWidth,
                 className
             )}
             id={id}

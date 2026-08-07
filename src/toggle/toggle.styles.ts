@@ -56,53 +56,60 @@ export const container = css`
     }
 `;
 
-export const noIndicatorContainer = css`
+export const containerNoIndicator = css`
     justify-content: center;
 `;
 
-export const useContentWidthContainer = css`
+export const containerUseContentWidth = css`
     min-width: unset;
 `;
 
-export const colorBorderError = css`
+export const borderDefault = css`
+    border-color: ${Colour.border};
+`;
+
+export const borderError = css`
     border-color: ${Colour["border-error"]};
 `;
 
-export const toggleContainerNoBorderDisabledSelected = css`
-    border: none;
-    background: ${Colour["bg-selected-disabled"]};
-`;
-
-export const toggleContainerNoBorderDisabled = css`
+export const borderNone = css`
     border: none;
 `;
 
-export const toggleContainerNoBorderSelected = css`
-    border: none;
+export const borderSelected = css`
+    border-color: ${Colour["border-selected"]};
+`;
+
+export const borderDisabled = css`
+    border-color: ${Colour["border-disabled"]};
+`;
+
+export const borderSelectedDisabled = css`
+    border-color: ${Colour["border-selected-disabled"]};
+`;
+
+export const bgSelected = css`
     background: ${Colour["bg-selected"]};
 `;
 
-export const toggleContainerNoBorder = css`
-    border: none;
+export const bgError = css`
+    background: ${Colour["bg-error"]};
 `;
 
-export const toggleContainerError = css`
-    border-color: ${Colour["border-error"]};
-`;
-
-export const toggleContainerDisabledSelected = css`
-    border-color: ${Colour["border-selected-disabled"]};
-    background: ${Colour["bg-selected-disabled"]};
-`;
-
-export const toggleContainerDisabled = css`
-    border-color: ${Colour["border-disabled"]};
+export const bgDisabled = css`
     background: ${Colour["bg-disabled"]};
 `;
 
-export const toggleContainerSelected = css`
-    border-color: ${Colour["border-selected"]};
-    background: ${Colour["bg-selected"]};
+export const bgSelectedDisabled = css`
+    background: ${Colour["bg-selected-disabled"]};
+`;
+
+export const toggleContainerHoverError = css`
+    &:has(.${headerContainer}:hover) {
+        @media (pointer: fine) {
+            background: ${Colour["bg-error-hover"]};
+        }
+    }
 `;
 
 export const toggleContainerHoverSelected = css`
@@ -119,10 +126,6 @@ export const toggleContainerHoverSelected = css`
             }
         }
     }
-`;
-
-export const toggleContainer = css`
-    border-color: ${Colour.border};
 `;
 
 export const toggleContainerHoverDefault = css`
@@ -146,10 +149,6 @@ export const input = css`
     appearance: none;
     background: transparent;
     border: none;
-`;
-
-export const toggleInputDisabled = css`
-    cursor: not-allowed;
 `;
 
 export const inputContainer = css`
