@@ -166,9 +166,10 @@ export const Toggle = ({
     };
 
     const getContainerBgClass = () => {
-        if (error) return styles.bgError;
-        if (selected)
+        if (selected) {
+            if (error) return styles.bgError;
             return disabled ? styles.bgSelectedDisabled : styles.bgSelected;
+        }
 
         if (disabled && styleType !== "no-border") return styles.bgDisabled;
         return styles.bgDefault;
