@@ -1,11 +1,14 @@
 import type { StorybookConfig } from "@storybook/react-webpack5";
+import path from "node:path";
 import { fileURLToPath } from "node:url";
-import path, { dirname } from "path";
+import postcssImport from "postcss-import";
+import postcssMixins from "postcss-mixins";
 import remarkGfm from "remark-gfm";
 import webpack from "webpack";
 
 const __filename = fileURLToPath(import.meta.url);
-const __dirname = dirname(__filename);
+const __dirname = path.dirname(__filename);
+
 const { ProgressPlugin } = webpack;
 let lastProgressBucket = -1;
 
@@ -25,6 +28,47 @@ const config: StorybookConfig = {
                         remarkPlugins: [remarkGfm],
                     },
                 },
+            },
+        },
+        {
+            name: "@storybook/addon-styling-webpack",
+            options: {
+                rules: [
+                    {
+                        test: /\.css$/,
+                        sideEffects: true,
+                        use: [
+                            "style-loader",
+                            {
+                                loader: "css-loader",
+                                options: { importLoaders: 1 },
+                            },
+                            {
+                                loader: "postcss-loader",
+                                options: {
+                                    postcssOptions: {
+                                        plugins: [
+                                            postcssImport({
+                                                path: [
+                                                    path.resolve(
+                                                        __dirname,
+                                                        ".."
+                                                    ),
+                                                ],
+                                            }),
+                                            postcssMixins({
+                                                mixinsFiles: path.resolve(
+                                                    __dirname,
+                                                    "../src/theme/styles/presets/**/*.css"
+                                                ),
+                                            }),
+                                        ],
+                                    },
+                                },
+                            },
+                        ],
+                    },
+                ],
             },
         },
     ],
@@ -87,10 +131,21 @@ const config: StorybookConfig = {
                             "dayjs/*": {
                                 unknown: "allow",
                             },
+                            // Relative specifiers used by style files at varying depths
+                            "../theme": { unknown: "allow" },
+                            "../../theme": { unknown: "allow" },
+                            "../../../theme": { unknown: "allow" },
+                            "../theme/**": { unknown: "allow" },
+                            "../../theme/**": { unknown: "allow" },
+                            "../../../theme/**": { unknown: "allow" },
+                            // Canonical-path patterns (used when resolved path is available)
                             "./src/theme/**": {
                                 unknown: "allow",
                             },
                             "./src/util/*": {
+                                unknown: "allow",
+                            },
+                            "../util/*": {
                                 unknown: "allow",
                             },
                         },
