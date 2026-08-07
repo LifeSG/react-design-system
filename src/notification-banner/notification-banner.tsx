@@ -210,6 +210,7 @@ const Base = React.forwardRef(NBWithRef);
  *
  * Use `NotificationBanner` to surface important or persistent messages that
  * should remain visible until the user dismisses them.
+ * @keywords alert, announcement, banner, dismissable, info, message, persistent
  */
 export const NotificationBanner = Object.assign(Base, {
     /** Renders an inline link styled for use inside a `NotificationBanner`. */

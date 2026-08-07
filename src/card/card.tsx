@@ -7,7 +7,10 @@ import * as styles from "./card.styles";
 import type { CardProps } from "./types";
 
 // @catalog
-/** A themed container surface for grouping related content. */
+/**
+ * A themed container surface for grouping related content.
+ * @keywords container, panel, surface, tile
+ */
 export const Card = ({
     children,
     className,

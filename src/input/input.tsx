@@ -183,5 +183,6 @@ const Component = (
  *
  * Use `Input` for free-form text entry. It supports controlled and uncontrolled
  * usage.
+ * @keywords field, free-form, single-line, text, textfield
  */
 export const Input = React.forwardRef(Component);

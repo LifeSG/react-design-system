@@ -8,6 +8,7 @@ import type { CalendarProps } from "./types";
 // @catalog
 /**
  * Date picker calendar for single-date or multi-date selection.
+ * @keywords date, datepicker, month, multi-select, picker, schedule
  */
 export const Calendar = (props: CalendarProps) => {
     // =============================================================================

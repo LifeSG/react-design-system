@@ -79,6 +79,7 @@ const MastheadComponent = ({ stretch = false }: MastheadProps): JSX.Element => {
  *
  * Use `Masthead` at the top of government digital services to meet the SGDS
  * masthead requirement.
+ * @keywords banner, branding, compliance, government, SGDS, Singapore
  */
 export const Masthead = memo(MastheadComponent);
 

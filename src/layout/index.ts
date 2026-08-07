@@ -13,6 +13,7 @@ import { Section } from "./section";
  * - `Layout.Container` — a flex or grid layout wrapper constrained to the content width.
  * - `Layout.Content` — the primary content block, composes of `Section` + `Container`. Use `Section` and `Container` directly for more granular control.
  * - `Layout.Section` — a full-width semantic `<section>` page region.
+ * @keywords column, container, grid, page, region, responsive, section
  */
 export const Layout = {
     /** Renders a `<div>` that occupies a responsive column span within a grid `Container`. */

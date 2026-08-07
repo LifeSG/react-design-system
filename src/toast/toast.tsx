@@ -33,6 +33,7 @@ const TOAST_ICON_MAP = {
  * operation or event.
  *
  * Use `Toast` to surface status messages without interrupting the user's workflow.
+ * @keywords alert, feedback, notification, snackbar, status
  */
 export const Toast = ({
     type = "success",

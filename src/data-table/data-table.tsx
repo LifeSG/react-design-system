@@ -22,6 +22,7 @@ import type { DataTableProps, HeaderProps, RowProps } from "./types";
  * column or select rows for bulk actions. Row selection, sort indicators, and the action bar
  * content are all externally controlled; the component manages scroll detection, sticky-header
  * positioning, and floating action bar behaviour internally.
+ * @keywords columns, grid, rows, selectable, sortable, table
  */
 export const DataTable = ({
     id,

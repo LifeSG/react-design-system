@@ -26,6 +26,7 @@ type RangeType = "from" | "to";
  *
  * Use `InputRangeSelect` when a consumer must choose a range by picking two
  * values — one for "from" and one for "to" — each from their own option list.
+ * @keywords combobox, dual, from, pair, range, to
  */
 export const InputRangeSelect = <T, V>({
     selectedOptions,

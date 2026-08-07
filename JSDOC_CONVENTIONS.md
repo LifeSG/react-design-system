@@ -58,6 +58,27 @@ following it. This powers the `docs/component-catalog.json` output.
 -   **`@keywords`**: A comma-separated list of search terms. Values are trimmed
     and sorted alphabetically in the output.
 
+### Keyword guidelines
+
+Keywords help developers and AI tooling discover a component by search terms
+other than its exact name. Apply the following criteria when choosing keywords:
+
+-   **Synonyms** — alternative names the component is commonly known by
+    (e.g. `Modal` → `dialog`, `popup`).
+-   **Use cases** — what problem or scenario the component solves
+    (e.g. `Alert` → `feedback`, `status`).
+-   **Visual pattern** — the shape or UI pattern it represents
+    (e.g. `Badge` → `dot`, `chip`, `indicator`).
+-   **Domain vocabulary** — related UX/UI or domain terms a developer might
+    search for (e.g. `Breadcrumb` → `trail`, `hierarchy`).
+-   **Related components** — names of things users might confuse it with
+    (e.g. `Toast` → `snackbar`, `notification`).
+
+Aim for **3–5 terms** per component, up to **10 at most**. Avoid repeating the
+component name itself as a keyword — the name is already indexed separately.
+Prefer concrete, specific terms over overly generic ones like `component` or
+`element`.
+
 ### Sub-component entries
 
 Files other than the main module file (e.g. helper components, theme tokens)

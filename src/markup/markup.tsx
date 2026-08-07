@@ -59,5 +59,6 @@ const Component = (props: MarkupProps, ref: React.Ref<HTMLDivElement>) => {
  *
  * Use `Markup` to wrap CMS-generated or sanitised HTML content while applying
  * a consistent base font size and colour.
+ * @keywords CMS, content, HTML, rich-text, sanitised
  */
 export const Markup = forwardRef(Component);
