@@ -166,14 +166,12 @@ export const Toggle = ({
     };
 
     const getContainerBgClass = () => {
-        if (selected) {
-            if (disabled) return styles.bgSelectedDisabled;
-            if (error) return styles.bgError;
-            return styles.bgSelected;
-        }
+        if (error) return styles.bgError;
+        if (selected)
+            return disabled ? styles.bgSelectedDisabled : styles.bgSelected;
 
         if (disabled && styleType !== "no-border") return styles.bgDisabled;
-        return null;
+        return styles.bgDefault;
     };
 
     const getContainerHoverClass = () => {
@@ -187,13 +185,15 @@ export const Toggle = ({
 
     const getTextContainerClass = () => {
         if (selected) {
-            if (disabled) return styles.toggleTextContainerDisabledSelected;
             if (error) return styles.colorTextError;
+
+            if (disabled) return styles.toggleTextContainerDisabledSelected;
+
             return styles.toggleTextContainerSelected;
         }
 
         if (disabled) return styles.colorTextDisabled;
-        return null;
+        return styles.colorTextDefault;
     };
 
     // =============================================================================
