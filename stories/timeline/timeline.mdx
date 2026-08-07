@@ -1,6 +1,5 @@
 import { Canvas, Meta } from "@storybook/addon-docs/blocks";
 import * as TimelineStories from "./timeline.stories";
-import { PropsTable } from "./props-table";
 
 <Meta of={TimelineStories} />
 
@@ -35,7 +34,3 @@ The `numeric` variant displays a numbered index for each item, useful for showin
 The `counterOffset` prop allows you to start the numeric indicators at a specific number. For example, with `counterOffset={2}`, the numbering starts at 3 (following the formula: `index + 1 + offset`). This is useful when displaying a subset of steps from a larger process.
 
 <Canvas of={TimelineStories.NumericWithOffset} />
-
-## Component API
-
-<PropsTable />
