@@ -7,6 +7,7 @@ import type { TimeRangePickerProps } from "./types";
  * A two-field time picker for selecting a start and end time.
  *
  * Use `TimeRangePicker` when users need to define a time range.
+ * @keywords clock, duration, end time, interval, start time
  */
 export const TimeRangePicker = ({
     variant = "dial",

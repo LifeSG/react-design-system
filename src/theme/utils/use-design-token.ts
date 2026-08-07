@@ -17,6 +17,7 @@ const isEmptyValue = (value: unknown) => {
  * `undefined` to skip resolution.
  * @returns The computed CSS value, or `undefined` when the provider has not yet
  * mounted or `tokenName` is `undefined`.
+ * @keywords css variables, hook, resolve, theme, token
  */
 export const useDesignToken = (
     tokenName: CSSVariableString | undefined

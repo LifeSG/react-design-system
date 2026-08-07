@@ -23,6 +23,7 @@ import type { InputSelectProps } from "./types";
  * A single-selection dropdown input.
  *
  * Use `InputSelect` when the user must pick exactly one item from a list.
+ * @keywords combobox, dropdown, picker, search, single
  */
 export const InputSelect = <T, V>({
     selectedOption,

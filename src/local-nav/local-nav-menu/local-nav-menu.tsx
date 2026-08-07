@@ -116,5 +116,6 @@ const Component = (
  *
  * Use `LocalNavMenu` for desktop in-page navigation where the list is always
  * visible.
+ * @keywords anchor, desktop, in-page, navigation, sections, sidebar
  */
 export const LocalNavMenu = React.forwardRef(Component);

@@ -16,6 +16,7 @@ import type { FeedbackRatingProps } from "./types";
  *
  * Use `FeedbackRating` to prompt users for a 1–5 star rating.
  * The submit button remains disabled until a star is selected.
+ * @keywords rating, review, satisfaction, score, star, survey
  */
 export const FeedbackRating = (props: FeedbackRatingProps): JSX.Element => {
     // =========================================================================

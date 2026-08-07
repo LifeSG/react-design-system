@@ -1,6 +1,7 @@
 // @catalog
 /**
  * Animation tokens consisting of durations and easing functions.
+ * @keywords animation, duration, easing, timing, transition
  */
 export const Motion = {
     "duration-150": "var(--fds-motion-duration-150)",

@@ -10,6 +10,7 @@ import { ModalBox as Box } from "./modal-box";
  *
  * Sub-components:
  * - `Modal.Box` — a styled content box with an optional close button.
+ * @keywords dialog, focus, fullscreen, overlay, popup, slide
  */
 export const Modal = Object.assign(Base, {
     /**

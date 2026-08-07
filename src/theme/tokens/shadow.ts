@@ -1,6 +1,7 @@
 // @catalog
 /**
  * Box-shadow tokens.
+ * @keywords box-shadow, css variables, depth, elevation, focus
  */
 export const Shadow = {
     "xs-subtle": "var(--fds-shadow-xs-subtle)",
