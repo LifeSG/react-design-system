@@ -271,6 +271,118 @@ const BsgImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
     },
 };
 
+const CareerCompassImgPaths: Record<
+    string,
+    ErrorDisplayHelper.ImagePathAttributes
+> = {
+    ...ImgPaths,
+    "400": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/400.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/400@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/400@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "403": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/403.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/403@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/403@3x.png",
+        width: 400,
+        height: 284,
+    },
+    "404": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/404.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/404@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/404@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "408": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/408.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/408@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/408@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "500": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/generic-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/generic-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/generic-error@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "502": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/502.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/502@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/502@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "503": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/503.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/503@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/503@3x.png",
+        width: 400,
+        height: 220,
+    },
+    "504": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/504.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/504@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/504@3x.png",
+        width: 400,
+        height: 220,
+    },
+    confirmation: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/confirmation.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/confirmation@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/confirmation@3x.png",
+        width: 400,
+        height: 280,
+    },
+    inactivity: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/inactivity.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/inactivity@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/inactivity@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "link-error": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/link-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/link-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/link-error@3x.png",
+        width: 400,
+        height: 280,
+    },
+    logout: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/log-out.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/log-out@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/log-out@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "no-item-found": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/no-item-found.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/no-item-found@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/no-item-found@3x.png",
+        width: 400,
+        height: 280,
+    },
+    "unsupported-browser": {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/generic-error.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/generic-error@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/generic-error@3x.png",
+        width: 400,
+        height: 280,
+    },
+    warning: {
+        base: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/warning.png",
+        md: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/warning@2x.png",
+        lg: "https://assets.life.gov.sg/react-design-system/img/error/careercompass/warning@3x.png",
+        width: 400,
+        height: 280,
+    },
+};
+
 const CCubeImgPaths: Record<string, ErrorDisplayHelper.ImagePathAttributes> = {
     ...ImgPaths,
     "400": {
@@ -658,6 +770,10 @@ export const getErrorDisplayData = (
     switch (resourceScheme) {
         case "bookingsg":
             return generateErrorDisplayData(BsgImgPaths, theme).get(type);
+        case "careercompass":
+            return generateErrorDisplayData(CareerCompassImgPaths, theme).get(
+                type
+            );
         case "ccube":
             return generateErrorDisplayData(CCubeImgPaths, theme).get(type);
         case "mylegacy":

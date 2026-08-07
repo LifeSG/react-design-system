@@ -101,6 +101,7 @@ export const Variants: StoryObj<Component> = {
                 "ccube",
                 "rbs",
                 "mylegacy",
+                "careercompass",
             ],
         },
     },
