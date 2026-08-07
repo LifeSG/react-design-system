@@ -12,64 +12,15 @@ export const tokens = {
 } as const;
 
 // =============================================================================
-// STYLING
+// BASIC STYLING
 // =============================================================================
 
-export const headerContainer = css`
-    display: flex;
-    align-items: flex-start;
-    justify-content: space-between;
-`;
-
-export const textContainer = css`
-    display: flex;
-    flex-direction: column;
-    overflow-wrap: anywhere;
-    width: 100%;
-    overflow: hidden;
-    color: ${Colour.text};
-`;
-
-export const toggleTextContainerSelected = css`
-    color: ${Colour["text-selected"]};
-`;
-
-export const toggleTextContainerDisabledSelected = css`
-    color: ${Colour["text-selected-disabled"]};
-`;
-
-export const container = css`
-    position: relative;
-    display: inline-flex;
-    min-width: 10.375rem;
-    border-radius: ${Radius["sm"]};
-    border-width: 1px;
-    border-style: solid;
-    overflow: hidden;
-    flex-direction: column;
-    height: fit-content;
-    background: ${Colour.bg};
-
-    &:focus-within {
-        outline: 2px solid ${Colour["focus-ring"]};
-        outline-offset: 0;
-    }
-`;
-
-export const containerNoIndicator = css`
-    justify-content: center;
-`;
-
-export const containerUseContentWidth = css`
-    min-width: unset;
-`;
-
 export const borderDefault = css`
-    border-color: ${Colour.border};
+    border: solid 1px ${Colour.border};
 `;
 
 export const borderError = css`
-    border-color: ${Colour["border-error"]};
+    border: solid 1px ${Colour["border-error"]};
 `;
 
 export const borderNone = css`
@@ -77,15 +28,19 @@ export const borderNone = css`
 `;
 
 export const borderSelected = css`
-    border-color: ${Colour["border-selected"]};
+    border: solid 1px ${Colour["border-selected"]};
 `;
 
 export const borderDisabled = css`
-    border-color: ${Colour["border-disabled"]};
+    border: solid 1px ${Colour["border-disabled"]};
 `;
 
 export const borderSelectedDisabled = css`
-    border-color: ${Colour["border-selected-disabled"]};
+    border: solid 1px ${Colour["border-selected-disabled"]};
+`;
+
+export const bgDefault = css`
+    background: ${Colour.bg};
 `;
 
 export const bgSelected = css`
@@ -102,6 +57,73 @@ export const bgDisabled = css`
 
 export const bgSelectedDisabled = css`
     background: ${Colour["bg-selected-disabled"]};
+`;
+
+export const colorTextDefault = css`
+    color: ${Colour.text};
+`;
+
+export const colorTextDisabled = css`
+    color: ${Colour["text-disabled"]};
+`;
+
+export const colorTextError = css`
+    color: ${Colour["text-error"]};
+`;
+
+// =============================================================================
+// STYLING
+// =============================================================================
+
+export const headerContainer = css`
+    display: flex;
+    align-items: flex-start;
+    justify-content: space-between;
+`;
+
+export const textContainer = css`
+    display: flex;
+    flex-direction: column;
+    overflow-wrap: anywhere;
+    width: 100%;
+    overflow: hidden;
+`;
+
+export const toggleTextContainerSelected = css`
+    color: ${Colour["text-selected"]};
+`;
+
+export const toggleTextContainerDisabledSelected = css`
+    color: ${Colour["text-selected-disabled"]};
+`;
+
+export const container = css`
+    position: relative;
+    display: inline-flex;
+    min-width: 10.375rem;
+    border-radius: ${Radius["sm"]};
+    overflow: hidden;
+    flex-direction: column;
+    height: fit-content;
+
+    &:focus-within {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: 0;
+    }
+
+    &.${borderError}, &.${bgError} {
+        &:focus-within {
+            outline: 2px solid ${Colour["border-error-focus"]};
+        }
+    }
+`;
+
+export const containerNoIndicator = css`
+    justify-content: center;
+`;
+
+export const containerUseContentWidth = css`
+    min-width: unset;
 `;
 
 export const toggleContainerHoverError = css`
@@ -266,14 +288,6 @@ export const children = css`
 
 export const childrenIsFinalItem = css`
     padding-bottom: 0.6875rem;
-`;
-
-export const colorTextDisabled = css`
-    color: ${Colour["text-disabled"]};
-`;
-
-export const colorTextError = css`
-    color: ${Colour["text-error"]};
 `;
 
 export const alertContainer = css`
