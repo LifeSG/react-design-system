@@ -73,6 +73,22 @@ class StoryPage extends AbstractStoryPage {
         for (let i = 0; i < count; i += 1) {
             await waitForAnimationEnd(filterItems.nth(i));
         }
+
+        // After initial stability, useEffect + ResizeObserver cascades
+        // can trigger secondary spring animations. Re-check stability.
+        await this.page.evaluate(() =>
+            new Promise<void>((resolve) => {
+                let frame = 0;
+                const wait = () => {
+                    if (++frame >= 5) resolve();
+                    else requestAnimationFrame(wait);
+                };
+                requestAnimationFrame(wait);
+            })
+        );
+        for (let i = 0; i < count; i += 1) {
+            await waitForAnimationEnd(filterItems.nth(i));
+        }
     }
 }
 
