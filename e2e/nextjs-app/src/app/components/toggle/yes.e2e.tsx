@@ -74,7 +74,7 @@ export default function Story() {
                     indicator
                     styleType="no-border"
                     error
-                    disabled
+                    checked
                 >
                     No-border + indicator error checked
                 </Toggle>

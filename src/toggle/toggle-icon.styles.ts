@@ -22,6 +22,10 @@ export const wrapperDisabled = css`
     color: ${Colour["icon-disabled-subtle"]};
 `;
 
+export const wrapperError = css`
+    color: ${Colour["icon-error-strong"]};
+`;
+
 export const wrapperActive = css`
     color: ${Colour["icon-selected"]};
 `;
