@@ -199,4 +199,21 @@ test.describe("ImageButton", () => {
             });
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("long-text");
+            await story.page.evaluate(() => {
+                document.documentElement.style.setProperty(
+                    "font-size",
+                    "200%",
+                    "important"
+                );
+            });
+        });
+
+        test("Large font size and overflow", async ({ story }) => {
+            await compareScreenshot(story, "large-font-size");
+        });
+    });
 });

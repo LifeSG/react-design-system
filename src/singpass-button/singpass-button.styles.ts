@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { ComponentToken, Motion, Spacing } from "../theme";
+import { Border, ComponentToken, Motion, Spacing } from "../theme";
 
 // =============================================================================
 // MAIN BUTTON
@@ -17,8 +17,9 @@ export const main = css`
 `;
 
 export const mainSizeSmall = css`
-    height: 2.5rem;
-    min-height: unset;
+    min-height: 2.5rem;
+    padding: calc(${Spacing["spacing-8"]} - ${Border["width-010"]})
+        ${Spacing["spacing-16"]};
 `;
 
 export const mainSizeLarge = css`

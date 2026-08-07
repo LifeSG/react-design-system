@@ -5,7 +5,6 @@ import {
     Colour,
     ComponentToken,
     Font,
-    MediaQuery,
     Motion,
     Spacing,
 } from "../theme";
@@ -31,6 +30,12 @@ export const main = css`
 
 export const mainIconPositionRight = css`
     flex-direction: row-reverse;
+`;
+
+export const mainIconOnly = css`
+    width: auto;
+    aspect-ratio: 1 / 1;
+    padding: ${Spacing["spacing-8"]};
 `;
 
 export const mainHasMinWidth = css`
@@ -147,42 +152,33 @@ export const mainStyleDisabled = css`
 // BUTTON SIZE
 // -------------------------------------------------------------------------
 export const mainSizeDefault = css`
-    height: 3rem;
+    min-height: 3rem;
     ${Font["heading-xs-semibold"]}
-    ${MediaQuery.MaxWidth.xxs} {
-        height: auto;
-    }
 `;
 
 export const mainSizeDefaultIconOnly = css`
-    height: 3rem;
-    width: 3rem;
+    min-height: 3rem;
 `;
 
 export const mainSizeSmall = css`
-    height: 2.5rem;
+    min-height: 2.5rem;
+    padding: calc(${Spacing["spacing-8"]} - ${Border["width-010"]})
+        ${Spacing["spacing-16"]};
     ${Font["body-md-semibold"]}
-    ${MediaQuery.MaxWidth.xxs} {
-        height: auto;
-    }
 `;
 
 export const mainSizeSmallIconOnly = css`
-    height: 2.5rem;
-    width: 2.5rem;
+    min-height: 2.5rem;
+    padding: calc(${Spacing["spacing-8"]} - ${Border["width-010"]});
 `;
 
 export const mainSizeLarge = css`
-    height: 4rem;
+    min-height: 4rem;
     ${Font["heading-md-semibold"]}
-    ${MediaQuery.MaxWidth.xxs} {
-        height: auto;
-    }
 `;
 
 export const mainSizeLargeIconOnly = css`
-    height: 4rem;
-    width: 4rem;
+    min-height: 4rem;
 `;
 
 export const spinner = css`

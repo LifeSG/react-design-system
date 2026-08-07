@@ -94,6 +94,7 @@ export const toggleHidden = css`
 
 export const selectAllButton = css`
     height: fit-content;
+    min-height: unset;
     padding: 0;
     margin: ${Spacing["spacing-16"]} 0 ${Spacing["spacing-8"]}
         ${Spacing["spacing-12"]};

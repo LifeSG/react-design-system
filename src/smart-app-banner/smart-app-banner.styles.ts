@@ -93,7 +93,6 @@ export const buttonContainer = css`
 
 export const button = css`
     padding: 0.5rem;
-    height: auto;
     & > span {
         overflow-wrap: anywhere;
         ${Font["body-xs-semibold"]}
