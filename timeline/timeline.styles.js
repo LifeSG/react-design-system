@@ -1,0 +1,2 @@
+import"./timeline.styles_1jxzik4.css";const t={wrapper:{startCol:"--fds-internal-timeline-wrapper-startCol",colSpan:"--fds-internal-timeline-wrapper-colSpan"}},e="c1epf9wu",p="l1ff2pyq",l="t1qzwom7",a="tuaspcp",i="tfsmff8",r="t1qpo82v",n="t1d2q33u",s="tvlbvjk",f="t1afag3x";export{e as circleIndicator,p as lineIndicator,l as timelineIndicators,n as timelineItem,s as timelineItemContent,r as timelineItemTitle,f as timelinePills,i as timelineTitle,a as timelineWrapper,t as tokens};
+//# sourceMappingURL=timeline.styles.js.map
