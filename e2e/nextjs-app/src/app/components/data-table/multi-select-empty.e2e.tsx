@@ -41,7 +41,7 @@ const rows = [
 ];
 
 export default function Story() {
-    const [selectedIds, setSelectedIds] = useState<string[]>([]);
+    const [, setSelectedIds] = useState<string[]>([]);
 
     const allRowIds = useMemo(() => {
         return rows.map(({ id }) => id);
