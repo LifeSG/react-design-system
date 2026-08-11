@@ -3,6 +3,7 @@ import { css } from "@linaria/core";
 import {
     Breakpoint,
     Colour,
+    Font,
     MediaQuery,
     Radius,
     Shadow,
@@ -175,5 +176,33 @@ export const slotSpacer = css`
             ${slotSpacerTokens.firstChildMarginTopNoCloseButton},
             ${Spacing["spacing-64"]}
         );
+    }
+`;
+
+export const headerContainer = css`
+    display: flex;
+    align-items: center;
+    padding: ${Spacing["spacing-16"]};
+
+    &[data-close-button-position="right"] {
+        flex-direction: row-reverse;
+    }
+`;
+
+export const headerTitle = css`
+    ${Font["heading-xs-semibold"]}
+    color: ${Colour.text};
+    flex: 1;
+    text-align: center;
+`;
+
+export const headerCloseButton = css`
+    padding: 0;
+    color: ${Colour.icon};
+    flex-shrink: 0;
+
+    & svg {
+        height: 2rem;
+        width: 2rem;
     }
 `;

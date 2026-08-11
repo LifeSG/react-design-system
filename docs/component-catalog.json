@@ -349,7 +349,7 @@
         {
             "name": "ModalV2",
             "importPath": "@lifesg/react-design-system/modal-v2",
-            "description": "A composable modal dialog with slot-based content layout.  Use `ModalV2` when you need a controlled overlay dialog with structured content slots.  Sub-components: - `ModalV2.Card` — wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout. - `ModalV2.CloseButton` — renders an accessible close button that invokes the modal's `onClose` callback. - `ModalV2.Content` — container for the body content of the modal card. - `ModalV2.Footer` — footer area for primary and secondary action buttons.",
+            "description": "A composable modal dialog with slot-based content layout.  Use `ModalV2` when you need a controlled overlay dialog with structured content slots.  Sub-components: - `ModalV2.Card` — wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout. - `ModalV2.CloseButton` — renders an accessible close button that invokes the modal's `onClose` callback. - `ModalV2.Content` — container for the body content of the modal card. - `ModalV2.Footer` — footer area for primary and secondary action buttons. - `ModalV2.Header` — header bar with a close button and optional title. Use instead of `CloseButton` when a heading is needed.",
             "keywords": []
         },
         {

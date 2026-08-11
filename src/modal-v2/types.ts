@@ -31,6 +31,30 @@ export interface ModalCloseButtonProps
     "data-testid"?: string | undefined;
 }
 
+// @storybookSection ModalV2.Header
+/**
+ * Props for the `ModalV2.Header` slot.
+ */
+export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+    /**
+     * @default "modal-header"
+     */
+    "data-testid"?: string | undefined;
+    /**
+     * Heading text rendered in the header. Centered when `closeButtonPosition`
+     * is `"left"`; left-aligned when `"right"`. Omit for a close-button-only
+     * header.
+     */
+    title?: string | undefined;
+    /**
+     * Which side of the header the close button is placed on. The title
+     * alignment adjusts automatically.
+     *
+     * @default "left"
+     */
+    closeButtonPosition?: "left" | "right" | undefined;
+}
+
 // @storybookSection ModalV2.Content
 /**
  * Props for the `ModalV2.Content` slot.
