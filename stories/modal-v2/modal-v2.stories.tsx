@@ -7,7 +7,7 @@ import { ModalV2 } from "src/modal-v2";
 import { slotSpacerTokens } from "src/modal-v2/slots/slot-styles";
 import { Typography } from "src/typography";
 
-import { SlotPlayground } from "./doc-elements";
+import { HeaderPlayground, SlotPlayground } from "./doc-elements";
 
 type Component = typeof ModalV2;
 
@@ -338,5 +338,16 @@ export const ScrollHandling: StoryObj<Component> = {
                 </ModalV2>
             </>
         );
+    },
+};
+
+export const Header: StoryObj<Component> = {
+    render: () => <HeaderPlayground />,
+    parameters: {
+        docs: {
+            canvas: {
+                sourceState: "none",
+            },
+        },
     },
 };

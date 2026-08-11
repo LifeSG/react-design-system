@@ -58,6 +58,9 @@ export const SlotPlayground = () => {
     const openModal = () => setShow(true);
     const closeModal = () => setShow(false);
 
+    const [header, setHeader] = useState(false);
+    const toggleHeader = () => setHeader(!header);
+
     const [closeButton, setCloseButton] = useState(true);
     const toggleCloseButton = () => setCloseButton(!closeButton);
 
@@ -70,6 +73,9 @@ export const SlotPlayground = () => {
     return (
         <>
             <Options>
+                <Option checked={header} onToggle={toggleHeader}>
+                    Header
+                </Option>
                 <Option checked={closeButton} onToggle={toggleCloseButton}>
                     CloseButton
                 </Option>
@@ -89,7 +95,8 @@ export const SlotPlayground = () => {
                 onClose={closeModal}
             >
                 <ModalV2.Card>
-                    {closeButton && <ModalV2.CloseButton />}
+                    {header && <ModalV2.Header title="Modal title" />}
+                    {closeButton && !header && <ModalV2.CloseButton />}
                     {content && (
                         <ModalV2.Content>
                             <Typography.BodyBL>
@@ -113,6 +120,58 @@ export const SlotPlayground = () => {
                             }
                         />
                     )}
+                </ModalV2.Card>
+            </ModalV2>
+        </>
+    );
+};
+
+export const HeaderPlayground = () => {
+    const [show, setShow] = useState(false);
+    const openModal = () => setShow(true);
+    const closeModal = () => setShow(false);
+
+    const [title, setTitle] = useState(true);
+    const toggleTitle = () => setTitle(!title);
+
+    const [closeButtonRight, setCloseButtonRight] = useState(false);
+    const toggleCloseButtonRight = () => setCloseButtonRight(!closeButtonRight);
+
+    return (
+        <>
+            <Options>
+                <Option checked={title} onToggle={toggleTitle}>
+                    Title
+                </Option>
+                <Option
+                    checked={closeButtonRight}
+                    onToggle={toggleCloseButtonRight}
+                >
+                    Close button right
+                </Option>
+            </Options>
+
+            <Button.Default onClick={openModal}>Click to open</Button.Default>
+
+            <ModalV2
+                show={show}
+                onOverlayClick={closeModal}
+                onClose={closeModal}
+            >
+                <ModalV2.Card>
+                    <ModalV2.Header
+                        title={title ? "Modal title" : undefined}
+                        closeButtonPosition={
+                            closeButtonRight ? "right" : "left"
+                        }
+                    />
+                    <ModalV2.Content>
+                        <Typography.BodyBL>
+                            Lorem ipsum dolor sit amet consectetur adipisicing
+                            elit. Totam debitis explicabo rerum velit quod
+                            recusandae.
+                        </Typography.BodyBL>
+                    </ModalV2.Content>
                 </ModalV2.Card>
             </ModalV2>
         </>
