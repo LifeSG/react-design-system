@@ -123,13 +123,25 @@ Functional tests should be written for scenarios that are difficult to cover in 
 
 -   Visual tests e.g. colour variants, hover styling
 -   Interaction tests e.g. drag-and-drop, scrolling
+-   Capturing the accessibility tree
 -   Visual regression to ensure styles do not break unintentionally
+
+The project uses Playwright as the testing framework and NextJS to host the components.
+
+#### Prerequisites
+
+-   For consistent rendering across environments, the Playwright server runs in a Docker container. The Docker daemon must be installed and running
+-   Host networking must be enabled in Docker (Docker Desktop → Settings → Resources → Network → "Enable host networking")
+-   Port 3000 must be free on the host machine
+
+#### Project structure
 
 The tests are set up in this structure
 
 ```
 └── e2e
    ├── nextjs-app
+   │   ├── src/proxy.ts
    │   └── src/app/components
    │       ├── [component]/[story]
    |       │   ├── layout.tsx
@@ -146,26 +158,41 @@ The tests are set up in this structure
 
 Where
 
--   `nextjs-app` is a NextJS project configured with strict CSP
--   `[component]/[story]` dynamically renders a component example based on the route
--   `component-name.module.css` hosts any specific styles needed for the component story
--   `story-name.tsx` hosts a single component example
--   `__screenshots__` contains the Playwright snapshots for the component
--   `component-name.e2e.spec.ts` contains the Playwright test suite for the component
+-   `nextjs-app` is a NextJS project
+    -   `proxy.ts` is a middleware that configures strict CSP
+    -   `[component]/[story]` dynamically renders a component example based on the route
+    -   `component-name.module.css` hosts any specific styles needed for the component story
+    -   `story-name.tsx` hosts a single component example
+-   `tests` is the collection of functional tests and its utils
+    -   `__screenshots__` contains the Playwright snapshots for the component
+    -   `component-name.e2e.spec.ts` contains the Playwright test suite for the component
 
 When the NextJS app is running, components can be accessed at http://localhost:3000/components/component-name/story-name
 
-Dev mode has hot reload for faster feedback during test implementation. To run in dev mode:
+#### Dev mode
+
+Dev mode has hot reload for faster feedback during test implementation.
+Changes made in both the design system and in the NextJS app are picked up immediately.
+
+Run:
 
 ```bash
 npm run test-e2e
 ```
 
-CI mode uses actual builds to verify production behaviour. To run in CI mode:
+This opens the Playwright dashboard where you can individually run and debug tests, as well as update screenshots.
+
+#### CI mode
+
+CI mode uses actual builds to verify production behaviour.
+
+Run:
 
 ```bash
 npm run test-e2e-ci
 ```
+
+> **Tip:** If tests are passing locally but failing in the CI pipeline, it is likely a strict CSP issue. Check the Playwright console for errors.
 
 <a id="linting"></a>
 <br />
