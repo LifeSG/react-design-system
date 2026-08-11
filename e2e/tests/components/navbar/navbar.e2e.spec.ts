@@ -301,11 +301,18 @@ test.describe("Navbar", () => {
 
             test("Submenu", async ({ story }) => {
                 await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
+                await compareScreenshot(story, "drawer-open", {
+                    fullscreen: true,
+                });
+
                 await story.locators.internal.servicesMobileTrigger.click();
                 await expect(
                     story.locators.internal.menuMobileItem(1)
                 ).toBeVisible();
-                await compareScreenshot(story, "open", {
+
+                await compareScreenshot(story, "submenu-open", {
                     fullscreen: true,
                 });
             });
@@ -321,11 +328,18 @@ test.describe("Navbar", () => {
 
             test("Submenu (dark mode)", async ({ story }) => {
                 await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
+                await compareScreenshot(story, "drawer-open", {
+                    fullscreen: true,
+                });
+
                 await story.locators.internal.servicesMobileTrigger.click();
                 await expect(
                     story.locators.internal.menuMobileItem(1)
                 ).toBeVisible();
-                await compareScreenshot(story, "open", {
+
+                await compareScreenshot(story, "submenu-open", {
                     fullscreen: true,
                 });
             });
