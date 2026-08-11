@@ -1,5 +1,6 @@
 "use client";
 import { Table } from "@lifesg/react-design-system/table";
+
 import styles from "./table.module.css";
 
 export default function Story() {

@@ -1,7 +1,7 @@
 "use client";
 
-import { StarIcon } from "@lifesg/react-icons";
 import { TextList } from "@lifesg/react-design-system/text-list";
+import { StarIcon } from "@lifesg/react-icons";
 
 export default function Story() {
     return (

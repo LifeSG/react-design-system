@@ -1,8 +1,9 @@
 "use client";
 
-import { Modal } from "@lifesg/react-design-system/modal";
-import styles from "./modal.module.css";
 import { Typography } from "@lifesg/react-design-system";
+import { Modal } from "@lifesg/react-design-system/modal";
+
+import styles from "./modal.module.css";
 
 export default function Story() {
     return (

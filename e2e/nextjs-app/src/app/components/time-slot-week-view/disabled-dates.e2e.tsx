@@ -1,9 +1,9 @@
 "use client";
 
-import { useState } from "react";
 import { Colour } from "@lifesg/react-design-system";
-import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-view";
 import type { TimeSlot } from "@lifesg/react-design-system/time-slot-bar";
+import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-view";
+import { useState } from "react";
 
 const DISABLED_DATES = ["2026-04-07", "2026-04-09"];
 

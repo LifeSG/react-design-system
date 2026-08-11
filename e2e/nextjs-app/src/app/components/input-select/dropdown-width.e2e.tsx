@@ -1,6 +1,7 @@
 "use client";
 
 import { InputSelect } from "@lifesg/react-design-system";
+
 import styles from "./input-select.module.css";
 
 const OPTIONS = [

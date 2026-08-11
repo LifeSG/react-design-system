@@ -1,8 +1,8 @@
 "use client";
 
-import { UneditableSection } from "@lifesg/react-design-system/uneditable-section";
 import { Alert } from "@lifesg/react-design-system/alert";
 import { Button } from "@lifesg/react-design-system/button";
+import { UneditableSection } from "@lifesg/react-design-system/uneditable-section";
 
 export default function Story() {
     return (

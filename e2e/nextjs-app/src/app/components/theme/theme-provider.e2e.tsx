@@ -4,6 +4,7 @@ import {
     ThemeProvider,
     useTheme,
 } from "@lifesg/react-design-system/theme";
+
 import styles from "./theme-provider.module.css";
 
 const Swatch = () => {

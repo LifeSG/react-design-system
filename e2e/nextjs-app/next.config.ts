@@ -1,6 +1,8 @@
-import withLinaria, { LinariaConfig } from "next-with-linaria";
-import type { NextConfig } from "next";
 import path from "node:path";
+
+import type { NextConfig } from "next";
+import type { LinariaConfig } from "next-with-linaria";
+import withLinaria from "next-with-linaria";
 
 const ciConfig: NextConfig = {
     // FIXME: BOOKINGSG-9316: Turbopack is currently disabled due to an issue with CSS load order. Re-enable once the issue is resolved.

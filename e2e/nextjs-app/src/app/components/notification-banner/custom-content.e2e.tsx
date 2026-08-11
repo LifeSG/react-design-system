@@ -1,6 +1,7 @@
 "use client";
-import { GearFillIcon } from "@lifesg/react-icons/gear-fill";
 import { NotificationBanner } from "@lifesg/react-design-system/notification-banner";
+import { GearFillIcon } from "@lifesg/react-icons/gear-fill";
+
 import styles from "./notification-banner.module.css";
 
 export default function Story() {

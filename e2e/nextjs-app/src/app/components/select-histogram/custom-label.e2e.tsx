@@ -1,5 +1,6 @@
 "use client";
 import { SelectHistogram } from "@lifesg/react-design-system/select-histogram";
+
 import { MOCK_BINS } from "./select-histogram.shared";
 
 export default function Story() {

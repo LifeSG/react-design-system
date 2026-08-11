@@ -1,7 +1,7 @@
 "use client";
 
-import { useState } from "react";
 import { Input } from "@lifesg/react-design-system/input";
+import { useState } from "react";
 
 export default function Story() {
     const [value, setValue] = useState("");

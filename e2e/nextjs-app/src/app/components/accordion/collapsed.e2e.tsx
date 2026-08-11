@@ -1,6 +1,7 @@
 "use client";
 
 import { Accordion } from "@lifesg/react-design-system/accordion";
+
 import { StoryContent } from "./common";
 
 export default function Story() {

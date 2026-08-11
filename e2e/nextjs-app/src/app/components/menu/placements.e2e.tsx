@@ -3,6 +3,7 @@
 import { Button } from "@lifesg/react-design-system/button";
 import { Menu } from "@lifesg/react-design-system/menu";
 import type { PopoverPosition } from "@lifesg/react-design-system/popover";
+
 import styles from "./menu.module.css";
 
 type PlacementEntry = {

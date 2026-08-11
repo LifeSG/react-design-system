@@ -1,4 +1,4 @@
-import { UneditableSectionItemProps } from "@lifesg/react-design-system/uneditable-section";
+import type { UneditableSectionItemProps } from "@lifesg/react-design-system/uneditable-section";
 
 export const items: UneditableSectionItemProps[] = [
     {

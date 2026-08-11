@@ -1,11 +1,12 @@
 "use client";
 
 import { FileDownload } from "@lifesg/react-design-system/file-download";
+
 import {
+    generateFileItems,
     THUMBNAIL_BLUE,
     THUMBNAIL_GREEN,
     THUMBNAIL_RED,
-    generateFileItems,
 } from "./common";
 
 const FILE_ITEMS = generateFileItems([

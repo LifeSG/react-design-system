@@ -1,12 +1,4 @@
 "use client";
-import { useSearchParams } from "next/navigation";
-import {
-    ThemeProvider,
-    THEME_TYPES,
-    type ThemeType,
-} from "@lifesg/react-design-system/theme";
-import styles from "./layout.module.css";
-
 import "@lifesg/react-design-system/theme/styles/a11y-playground.css";
 import "@lifesg/react-design-system/theme/styles/bookingsg.css";
 import "@lifesg/react-design-system/theme/styles/careercompass.css";
@@ -21,6 +13,16 @@ import "@lifesg/react-design-system/theme/styles/sgw-digital-lobby.css";
 import "@lifesg/react-design-system/theme/styles/smgs.css";
 import "@lifesg/react-design-system/theme/styles/spf.css";
 import "@lifesg/react-design-system/theme/styles/supportgowhere.css";
+
+import {
+    THEME_TYPES,
+    ThemeProvider,
+    type ThemeType,
+} from "@lifesg/react-design-system/theme";
+import { useSearchParams } from "next/navigation";
+import type React from "react";
+
+import styles from "./layout.module.css";
 
 export default function Layout({
     children,

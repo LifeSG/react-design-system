@@ -1,10 +1,10 @@
 "use client";
 
 import {
+    Breakpoint,
     useMaxWidthMediaQuery,
     useMediaQuery,
     useMinWidthMediaQuery,
-    Breakpoint,
 } from "@lifesg/react-design-system/theme";
 import { useEffect, useState } from "react";
 

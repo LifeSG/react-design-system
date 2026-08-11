@@ -1,5 +1,5 @@
 "use client";
-import { Divider, Colour } from "@lifesg/react-design-system";
+import { Colour, Divider } from "@lifesg/react-design-system";
 
 export default function Story() {
     return (

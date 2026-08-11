@@ -1,7 +1,7 @@
 "use client";
 
-import { Timepicker } from "@lifesg/react-design-system/timepicker";
 import { Form } from "@lifesg/react-design-system/form";
+import { Timepicker } from "@lifesg/react-design-system/timepicker";
 
 export default function Story() {
     return (

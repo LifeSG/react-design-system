@@ -1,7 +1,7 @@
 "use client";
 
-import { Menu } from "@lifesg/react-design-system/menu";
 import { Button } from "@lifesg/react-design-system";
+import { Menu } from "@lifesg/react-design-system/menu";
 
 const menuContent = (
     <Menu.Content>

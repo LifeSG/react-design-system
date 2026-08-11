@@ -1,10 +1,8 @@
 "use client";
 
-import {
-    TimeSlot,
-    TimeSlotBar,
-} from "@lifesg/react-design-system/time-slot-bar";
 import { Colour } from "@lifesg/react-design-system";
+import type { TimeSlot } from "@lifesg/react-design-system/time-slot-bar";
+import { TimeSlotBar } from "@lifesg/react-design-system/time-slot-bar";
 
 const slots: TimeSlot[] = [
     {

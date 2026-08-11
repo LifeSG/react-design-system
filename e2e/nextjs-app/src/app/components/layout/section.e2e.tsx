@@ -1,7 +1,8 @@
 "use client";
 
-import styles from "./layout.module.css";
 import { Layout } from "@lifesg/react-design-system/layout";
+
+import styles from "./layout.module.css";
 
 export default function SectionStory() {
     return (

@@ -1,8 +1,10 @@
+import "./globals.css";
+
 import type { Metadata } from "next";
 import { headers } from "next/headers";
-import E2EDateSeedBootstrap from "./e2e-date-seed-bootstrap";
+import type React from "react";
 
-import "./globals.css";
+import E2EDateSeedBootstrap from "./e2e-date-seed-bootstrap";
 
 const CDN_STYLE_ASSETS = [
     "/cdn/react-design-system/v4/css/main.css",

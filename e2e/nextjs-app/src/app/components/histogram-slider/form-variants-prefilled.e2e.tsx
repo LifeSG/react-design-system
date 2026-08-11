@@ -1,5 +1,6 @@
 "use client";
 import { Form } from "@lifesg/react-design-system/form";
+
 import { MOCK_BINS } from "./histogram-slider-shared";
 
 export default function Story() {

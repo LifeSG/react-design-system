@@ -2,6 +2,7 @@
 
 import { Button, ModalV2, Typography } from "@lifesg/react-design-system";
 import { useState } from "react";
+
 import styles from "./modal-v2.module.css";
 
 export default function Story() {

@@ -1,6 +1,7 @@
 "use client";
 
 import { InputMultiSelect } from "@lifesg/react-design-system/input-multi-select";
+
 import { OPTIONS } from "./mock";
 
 export default function Story() {

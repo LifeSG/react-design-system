@@ -1,6 +1,7 @@
 "use client";
 import { Layout } from "@lifesg/react-design-system";
 import { Timeline } from "@lifesg/react-design-system/timeline";
+import type React from "react";
 
 const ITEMS: React.ComponentProps<typeof Timeline>["items"] = [
     {

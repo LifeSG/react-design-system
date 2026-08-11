@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
 import { Button } from "@lifesg/react-design-system/button";
 import { Drawer } from "@lifesg/react-design-system/drawer";
 import { Typography } from "@lifesg/react-design-system/typography";
+import { useState } from "react";
+
 import styles from "./drawer.module.css";
 
 export default function Story() {

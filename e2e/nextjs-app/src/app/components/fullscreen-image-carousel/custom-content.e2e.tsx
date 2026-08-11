@@ -1,5 +1,6 @@
 "use client";
 import { FullscreenImageCarousel } from "@lifesg/react-design-system/fullscreen-image-carousel";
+
 import styles from "./custom-content.module.css";
 
 export default function Story() {
