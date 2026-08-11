@@ -146,6 +146,7 @@ export const DownloadReadiness: StoryObj<Component> = {
 
                 setFileItems(readyFileItems);
             }, 5000);
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, []);
 
         return (
@@ -220,6 +221,7 @@ const handleDemoDownload = async (file: FileItemDownloadProps) => {
         const fileExtension = file.name.split(".").pop() || "";
         try {
             // Open the file picker
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             const fileHandle = await (window as any).showSaveFilePicker({
                 suggestedName: file.name,
                 types: [

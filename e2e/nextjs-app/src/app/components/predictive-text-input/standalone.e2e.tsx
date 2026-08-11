@@ -7,7 +7,7 @@ type Option = { value: string; label: string };
 
 const SELECTED_OPTION: Option = { value: "apple", label: "Apple" };
 
-const mockFetch = async (_input: string): Promise<Option[]> => [];
+const mockFetch = async (): Promise<Option[]> => [];
 
 export default function Story() {
     const [selectedOption, setSelectedOption] = useState<Option | undefined>();

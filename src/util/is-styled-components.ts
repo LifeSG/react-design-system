@@ -7,6 +7,7 @@
 type StyledComponentBrand = { readonly _sc: symbol };
 
 export default function isStyledComponent(
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     target: any
 ): target is StyledComponentBrand {
     return (

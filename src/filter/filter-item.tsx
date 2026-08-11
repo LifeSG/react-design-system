@@ -69,6 +69,7 @@ export const FilterItem = ({
     // =============================================================================
     useEffect(() => {
         setExpanded(getInitialExpandState());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [desktopCollapsible, controlledExpanded]);
 
     useEffect(() => {

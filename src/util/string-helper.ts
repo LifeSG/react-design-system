@@ -14,6 +14,7 @@ interface MaskValueOptions {
 // =============================================================================
 export class StringHelper {
     public static transformWithSpaces(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         value: string | any,
         groupLength: number
     ): string {
@@ -144,8 +145,10 @@ export class StringHelper {
 
         // create a reusable canvas object for better performance
         const canvas =
-            (StringHelper.getTextWidth as any).canvas ||
-            ((StringHelper.getTextWidth as any).canvas =
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            (this.getTextWidth as any).canvas ||
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
+            ((this.getTextWidth as any).canvas =
                 document.createElement("canvas"));
         const context = canvas.getContext("2d");
         context.font = font;
@@ -172,11 +175,10 @@ export class StringHelper {
         } else if (maskRegex) {
             return value.replace(maskRegex, maskChar);
         } else if (maskRange) {
-            const { startIndex, endIndex } =
-                StringHelper.determineStartAndEndIndex(
-                    maskRange[0],
-                    maskRange[1]
-                );
+            const { startIndex, endIndex } = this.determineStartAndEndIndex(
+                maskRange[0],
+                maskRange[1]
+            );
             return (
                 value.substring(0, startIndex) +
                 maskChar.repeat(
@@ -185,11 +187,10 @@ export class StringHelper {
                 value.substring(endIndex + 1)
             );
         } else if (unmaskRange) {
-            const { startIndex, endIndex } =
-                StringHelper.determineStartAndEndIndex(
-                    unmaskRange[0],
-                    unmaskRange[1]
-                );
+            const { startIndex, endIndex } = this.determineStartAndEndIndex(
+                unmaskRange[0],
+                unmaskRange[1]
+            );
             return (
                 maskChar.repeat(value.substring(0, startIndex).length) +
                 value.substring(startIndex, endIndex + 1) +
@@ -206,11 +207,11 @@ export class StringHelper {
             : { startIndex: index1, endIndex: index0 };
     }
 
-    private static ordinalPluralRules = new Intl.PluralRules("en", {
+    private static readonly ordinalPluralRules = new Intl.PluralRules("en", {
         type: "ordinal",
     });
 
-    private static suffixes = new Map([
+    private static readonly suffixes = new Map([
         ["one", "st"],
         ["two", "nd"],
         ["few", "rd"],
@@ -218,8 +219,8 @@ export class StringHelper {
     ]);
 
     public static formatOrdinal(n: number) {
-        const rule = StringHelper.ordinalPluralRules.select(n);
-        const suffix = StringHelper.suffixes.get(rule);
+        const rule = this.ordinalPluralRules.select(n);
+        const suffix = this.suffixes.get(rule);
         return `${n}${suffix}`;
     }
 

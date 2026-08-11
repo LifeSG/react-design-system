@@ -92,6 +92,7 @@ const Component = <T,>(
                     },
                 }
             ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [showDrawer]
     );
 
@@ -105,6 +106,7 @@ const Component = <T,>(
         return () => {
             window.removeEventListener("resize", handleResize);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     // =============================================================================

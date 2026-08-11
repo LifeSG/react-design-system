@@ -73,6 +73,7 @@ export const PhoneNumberInput = ({
         setInputValue(
             PhoneNumberInputHelper.formatNumber(value?.number, selectedOption)
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     // =============================================================================

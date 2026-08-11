@@ -122,10 +122,12 @@ export const UnitNumberInput = ({
         ) {
             unitInputRef.current.focus();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [floorValue]);
 
     useEffect(() => {
         updateValues(value);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     // =============================================================================

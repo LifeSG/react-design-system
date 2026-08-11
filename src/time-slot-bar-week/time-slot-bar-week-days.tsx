@@ -116,6 +116,7 @@ export const TimeSlotBarWeekDays = ({
             return transformedDaySlots;
         }
         return {};
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [daySlots]);
 
     const focusableSlotsByDate = useMemo(() => {
@@ -143,6 +144,7 @@ export const TimeSlotBarWeekDays = ({
             },
             {}
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentCalendarWeek, generatedDaySlots]);
 
     useApplyStyle(timeColumnRef, {
@@ -394,6 +396,7 @@ export const TimeSlotBarWeekDays = ({
         return cellsArray;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     function populateEmptyCells(cellsArray: any[]): TimeSlotCell[] {
         let i = 0;
         switch (variant) {

@@ -7,12 +7,17 @@ import { DataTable } from "src/data-table";
 // TEST SETUP
 // =============================================================================
 globalThis.IntersectionObserver = class IntersectionObserver {
+    // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
     constructor() {}
+    // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
     disconnect() {}
+    // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
     observe() {}
+    // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
     takeRecords() {
         return [];
     }
+    // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
     unobserve() {}
 } as unknown as typeof IntersectionObserver;
 

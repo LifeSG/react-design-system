@@ -69,6 +69,7 @@ const Component = (
         inputRefs?.current[0]?.focus();
         document.addEventListener("paste", handlePaste);
         return () => document.removeEventListener("paste", handlePaste);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -78,6 +79,7 @@ const Component = (
 
             return () => cleanup();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [lastCtaTimestamp]);
 
     useImperativeHandle(ref, () => ({
@@ -95,6 +97,7 @@ const Component = (
         if (value.length === numOfInput) {
             setOtpValues(value);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     // =============================================================================

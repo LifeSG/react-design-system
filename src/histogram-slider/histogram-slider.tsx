@@ -77,6 +77,7 @@ export const HistogramSlider = ({
             }
         }
         return items;
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [bins, interval]);
 
     // =========================================================================
@@ -86,6 +87,7 @@ export const HistogramSlider = ({
         if (value !== selection) {
             setSelection(initSelection());
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     useEffect(() => {

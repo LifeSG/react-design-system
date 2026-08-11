@@ -94,6 +94,7 @@ export const Component = (
             nodeRef.current.contains(document.activeElement)
         )
             dayInputRef.current?.focus();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     useEffect(() => {

@@ -31,11 +31,14 @@ function CardInner(
     // =========================================================================
     // HELPERS
     // =========================================================================
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const isComponentType = (child: React.ReactPortal, type: any) =>
         isStyledComponent(child.type)
-            ? (child.type as unknown as { target: any }).target === type
+            ? // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (child.type as unknown as { target: any }).target === type
             : child.type === type;
 
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const findComponentOfType = (type: any) => {
         return React.Children.toArray(children).find((child) =>
             isComponentType(child as React.ReactPortal, type)

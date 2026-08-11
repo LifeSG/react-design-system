@@ -3,6 +3,7 @@ import { useReducer } from "react";
 import type { RequiredKeys } from "./utility-types";
 
 type ReducerObj<State> = {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     [action: string]: (state: State, payload: any) => State;
 };
 
@@ -59,6 +60,7 @@ export const useStateActions = <State, Reducers extends ReducerObj<State>>({
     name,
     debug,
 }: StateActions<State, Reducers>): [State, Actions<State, Reducers>] => {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const reducer = (state: State, action: { type: string; payload: any }) => {
         if (reducers[action.type]) {
             return reducers[action.type](state, action.payload);

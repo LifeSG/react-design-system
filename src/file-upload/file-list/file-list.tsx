@@ -168,6 +168,7 @@ function Component(
             return;
         }
         setRenderModes(nextModes);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [fileItems, editableFileItems, readOnly]);
 
     // Progress announcements only at start and completion

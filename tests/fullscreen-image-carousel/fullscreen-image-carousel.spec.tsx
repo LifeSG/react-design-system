@@ -197,10 +197,15 @@ describe("Fullscreen Image Carousel", () => {
         it("should use src as fallback thumbnail when image item has no thumbnailSrc", async () => {
             const OriginalImage = global.Image;
             // Simulate image load completing in jsdom (onload never fires natively)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (global as any).Image = class {
+                // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
                 width = 100;
+                // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
                 height = 100;
+                // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
                 onload: (() => void) | null = null;
+                // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
                 set src(_: string) {
                     Promise.resolve().then(() => this.onload?.());
                 }

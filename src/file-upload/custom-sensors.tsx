@@ -4,6 +4,7 @@ import {
 } from "@dnd-kit/core";
 
 export class MouseSensor extends LibMouseSensor {
+    // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
     static activators = [
         {
             eventName: "onMouseDown" as const,
@@ -15,6 +16,7 @@ export class MouseSensor extends LibMouseSensor {
 }
 
 export class KeyboardSensor extends LibKeyboardSensor {
+    // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
     static activators = [
         {
             eventName: "onKeyDown" as const,

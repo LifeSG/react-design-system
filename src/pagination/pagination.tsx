@@ -95,6 +95,7 @@ const Component = (
         setSelectedOption(
             pageSizeOptions.find((option) => option.value === pageSize)
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [pageSize]);
 
     // =============================================================================

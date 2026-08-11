@@ -698,7 +698,10 @@ const DropdownListInner = <T, V>(
 
         return (
             <div data-testid="custom-cta">
-                {renderCustomCallToAction(onDismiss as any, displayListItems)}
+                {
+                    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+                    renderCustomCallToAction(onDismiss as any, displayListItems)
+                }
             </div>
         );
     };
