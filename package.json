@@ -183,10 +183,10 @@
     },
     "lint-staged": {
         "*.{tsx,ts}": [
-            "eslint --fix"
+            "eslint --fix --max-warnings 0"
         ],
         "e2e/nextjs-app/src/**/*.{ts,tsx,js,jsx}": [
-            "npm --prefix e2e/nextjs-app run lint:staged:fix --"
+            "npm --prefix e2e/nextjs-app run lint:staged:fix -- max-warnings 0"
         ],
         "*.{css,module.css}": [
             "stylelint --fix"
