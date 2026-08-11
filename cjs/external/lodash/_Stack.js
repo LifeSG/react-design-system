@@ -1,0 +1,2 @@
+"use strict";var e=require("./_ListCache.js"),t=require("./_stackClear.js"),s=require("./_stackDelete.js"),r=require("./_stackGet.js"),a=require("./_stackHas.js"),_=require("./_stackSet.js"),c=e._ListCache,i=t._stackClear,o=s._stackDelete,k=r._stackGet,p=a._stackHas,u=_._stackSet;function j(e){var t=this.__data__=new c(e);this.size=t.size}j.prototype.clear=i,j.prototype.delete=o,j.prototype.get=k,j.prototype.has=p,j.prototype.set=u;var l=j;exports._Stack=l;
+//# sourceMappingURL=_Stack.js.map

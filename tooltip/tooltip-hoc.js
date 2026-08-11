@@ -1,0 +1,2 @@
+import{__rest as t}from"../_virtual/_tslib.js";import{jsxs as i,jsx as o}from"react/jsx-runtime";import{Tooltip as s}from"./tooltip.js";import{HOCWrapper as r}from"./tooltip.styles.js";const e=(e,l)=>n=>{const{tooltipVisible:p,position:m}=n,c=t(n,["tooltipVisible","position"]);return i(r,{children:[o(e,Object.assign({},c)),o(s,{visible:p,position:m,children:l.content})]})};export{e as withTooltip};
+//# sourceMappingURL=tooltip-hoc.js.map
