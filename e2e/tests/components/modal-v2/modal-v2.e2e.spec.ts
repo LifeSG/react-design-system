@@ -244,4 +244,40 @@ test.describe("ModalV2", () => {
             });
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("header-icon-position");
+        });
+
+        test("Header icon position", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("header-with-heading");
+        });
+
+        test("Header with heading title", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("header-icon-right-with-heading");
+        });
+
+        test("Header icon right with heading", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
 });
