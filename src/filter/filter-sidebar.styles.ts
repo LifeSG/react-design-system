@@ -44,5 +44,5 @@ export const filterClearButton = css`
     background-color: transparent;
     padding-right: ${Spacing["spacing-20"]};
     padding-left: ${Spacing["spacing-20"]};
-    height: 100%;
+    min-height: unset;
 `;

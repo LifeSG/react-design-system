@@ -189,4 +189,38 @@ test.describe("Button", () => {
             await compareScreenshot(story, "mount");
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("base-variants");
+            await story.page.evaluate(() => {
+                document.documentElement.style.setProperty(
+                    "font-size",
+                    "200%",
+                    "important"
+                );
+            });
+        });
+
+        test("Base variants (large font size)", async ({ story }) => {
+            await compareScreenshot(story, "large-font-size");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("base-icon-button");
+            await story.page.evaluate(() => {
+                document.documentElement.style.setProperty(
+                    "font-size",
+                    "200%",
+                    "important"
+                );
+            });
+        });
+
+        test("Icon-only variants (large font size)", async ({ story }) => {
+            await compareScreenshot(story, "large-font-size");
+        });
+    });
 });

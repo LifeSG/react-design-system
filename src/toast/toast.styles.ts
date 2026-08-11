@@ -112,7 +112,6 @@ export const description = css`
 export const actionButton = css`
     align-self: center;
     margin-left: auto;
-    height: auto;
     width: fit-content;
     flex-shrink: 0;
 
