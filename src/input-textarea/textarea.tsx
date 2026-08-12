@@ -1,6 +1,7 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
+import { FormErrorMessage } from "../form/form-label";
 import * as styles from "./textarea.styles";
 import { TextareaCounter } from "./textarea-counter";
 import type { TextareaProps, TextareaRef } from "./types";
@@ -155,6 +156,8 @@ const TextareaComponent = (
         prefix,
         maxLength,
         renderCustomCounter,
+        errorMessage,
+        "data-error-testid": errorTestId,
         ...otherProps
     }: TextareaProps,
     ref: TextareaRef
@@ -185,6 +188,31 @@ const TextareaComponent = (
     // -------------------------------------------------------------------------
     // RENDER FUNCTIONS
     // -------------------------------------------------------------------------
+    const renderBottomLabels = () => {
+        if (!errorMessage && !maxLength) return null;
+        return (
+            <div className={styles.labelContainer}>
+                {errorMessage && (
+                    <div className={styles.errorMessageContainer}>
+                        <FormErrorMessage
+                            className={styles.errorMessageLabel}
+                            data-testid={errorTestId}
+                        >
+                            {errorMessage}
+                        </FormErrorMessage>
+                    </div>
+                )}
+                {maxLength && (
+                    <TextareaCounter
+                        value={stateValue}
+                        maxLength={maxLength}
+                        renderCustomCounter={renderCustomCounter}
+                    />
+                )}
+            </div>
+        );
+    };
+
     return (
         <div className={styles.wrapper}>
             <TextareaBase
@@ -196,15 +224,10 @@ const TextareaComponent = (
                 prefix={prefix}
                 transformValue={transformValue}
                 maxLength={maxLength}
+                error={!!errorMessage || otherProps.error}
                 {...otherProps}
             />
-            {maxLength && (
-                <TextareaCounter
-                    value={stateValue}
-                    maxLength={maxLength}
-                    renderCustomCounter={renderCustomCounter}
-                />
-            )}
+            {renderBottomLabels()}
         </div>
     );
 };

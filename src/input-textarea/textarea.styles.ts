@@ -79,3 +79,19 @@ export const elementError = css`
         outline-color: ${Colour["border-error-focus"]};
     }
 `;
+
+export const labelContainer = css`
+    display: flex;
+    justify-content: flex-end;
+`;
+
+export const errorMessageContainer = css`
+    display: flex;
+    flex: 1;
+    margin-right: ${Spacing["spacing-12"]};
+    gap: ${Spacing["spacing-4"]};
+`;
+
+export const errorMessageLabel = css`
+    margin-top: 0;
+`;
