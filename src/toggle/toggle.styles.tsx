@@ -12,6 +12,7 @@ import { ToggleStyleType } from "./types";
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
 interface StyleProps {
+    $error?: boolean;
     $selected?: boolean;
     $disabled?: boolean;
     $indicator?: boolean;
@@ -90,17 +91,30 @@ export const Container = styled.div<ContainerStyleProps>`
                         return css`
                             border-color: ${Colour["border-error"]};
                         `;
-                    } else {
+                    }
+
+                    if (props.$selected) {
                         return css`
-                            border-color: ${Colour["border-error"]};
+                            border-color: transparent;
+                            background: ${Colour["bg-error"]};
 
                             &:has(${HeaderContainer}:hover) {
                                 @media (pointer: fine) {
-                                    background: ${Colour["bg-hover-subtle"]};
+                                    background: ${Colour["bg-error-hover"]};
                                 }
                             }
                         `;
                     }
+
+                    return css`
+                        border-color: ${Colour["border-error"]};
+
+                        &:has(${HeaderContainer}:hover) {
+                            @media (pointer: fine) {
+                                background: ${Colour["bg-hover-subtle"]};
+                            }
+                        }
+                    `;
                 }
 
                 if (props.$disabled) {
@@ -154,17 +168,30 @@ export const Container = styled.div<ContainerStyleProps>`
                         return css`
                             border-color: ${Colour["border-error"]};
                         `;
-                    } else {
+                    }
+
+                    if (props.$selected) {
                         return css`
                             border-color: ${Colour["border-error"]};
+                            background: ${Colour["bg-error"]};
 
                             &:has(${HeaderContainer}:hover) {
                                 @media (pointer: fine) {
-                                    background: ${Colour["bg-hover-subtle"]};
+                                    background: ${Colour["bg-error-hover"]};
                                 }
                             }
                         `;
                     }
+
+                    return css`
+                        border-color: ${Colour["border-error"]};
+
+                        &:has(${HeaderContainer}:hover) {
+                            @media (pointer: fine) {
+                                background: ${Colour["bg-hover-subtle"]};
+                            }
+                        }
+                    `;
                 }
 
                 if (props.$disabled) {
@@ -244,21 +271,27 @@ export const TextContainer = styled.div<StyleProps>`
 
     // apply header container text color
     ${(props) => {
-        if (props.$disabled) {
-            if (props.$selected) {
+        if (props.$selected) {
+            if (props.$disabled) {
                 return css`
                     color: ${Colour["text-selected-disabled"]};
                 `;
-            } else {
+            }
+
+            if (props.$error) {
                 return css`
-                    color: ${Colour["text-disabled"]};
+                    color: ${Colour["text-error"]};
                 `;
             }
-        }
 
-        if (props.$selected) {
             return css`
                 color: ${Colour["text-selected"]};
+            `;
+        }
+
+        if (props.$disabled) {
+            return css`
+                color: ${Colour["text-disabled"]};
             `;
         }
 
@@ -377,15 +410,17 @@ export const Children = styled.div<ChildrenStyleProps>`
             return css`
                 color: ${Colour["text-disabled"]};
             `;
-        } else if (props.$selected) {
+        }
+
+        if (props.$selected) {
             return css`
                 color: ${Colour["text-selected"]};
             `;
-        } else {
-            return css`
-                color: ${Colour.text};
-            `;
         }
+
+        return css`
+            color: ${Colour.text};
+        `;
     }}
 `;
 
@@ -401,23 +436,27 @@ export const ErrorList = styled(TextList.Ul)<StyleProps>`
 
 export const StyledToggleIcon = styled(ToggleIcon)<StyleProps>`
     ${(props) => {
-        if (props.$disabled) {
-            if (props.$selected) {
+        if (props.$selected) {
+            if (props.$disabled)
                 return css`
                     color: ${Colour["icon-selected-disabled"]};
                 `;
-            } else {
-                return css`
-                    color: ${Colour["icon-disabled-subtle"]};
-                `;
-            }
-        }
 
-        if (props.$selected) {
+            if (props.$error)
+                return css`
+                    color: ${Colour["icon-error-strong"]};
+                `;
+
             return css`
                 color: ${Colour["icon-selected"]};
             `;
         }
+
+        if (props.$disabled)
+            return css`
+                color: ${Colour["icon-disabled-subtle"]};
+            `;
+
         return css`
             color: ${Colour["icon-subtle"]};
         `;

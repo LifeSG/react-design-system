@@ -162,6 +162,7 @@ export const Toggle = ({
                 disabled={disabled}
                 $selected={selected}
                 $disabled={disabled}
+                $error={error}
             />
         );
     };
@@ -270,6 +271,7 @@ export const Toggle = ({
                         <TextContainer
                             $selected={selected}
                             $disabled={disabled}
+                            $error={error}
                         >
                             <Label
                                 htmlFor={`${generatedId}-input`}
