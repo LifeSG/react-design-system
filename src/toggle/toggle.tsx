@@ -260,7 +260,9 @@ export const Toggle = ({
                     className={clsx(
                         styles.children,
                         !collapsible && styles.childrenIsFinalItem,
-                        disabled && styles.colorTextDisabled
+                        disabled
+                            ? styles.colorTextDisabled
+                            : styles.colorTextDefault
                     )}
                 >
                     <Markup baseTextSize="body-md">
@@ -279,7 +281,9 @@ export const Toggle = ({
                 <button
                     className={clsx(
                         styles.expandButton,
-                        disabled && styles.disabledColorCursor,
+                        disabled
+                            ? styles.disabledColorCursor
+                            : styles.colorTextPrimary,
                         collapsedWithoutErrors &&
                             styles.expandButtonPaddingTopRequired
                     )}
@@ -429,7 +433,9 @@ export const Toggle = ({
                 <div
                     className={clsx(
                         styles.errorContainer,
-                        disabled && styles.disabledColorCursor
+                        disabled
+                            ? styles.disabledColorCursor
+                            : styles.colorTextDefault
                     )}
                     onClick={handleExpandCollapseClick}
                     id={`${generatedId}-error-alert`}

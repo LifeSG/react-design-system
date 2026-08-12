@@ -63,12 +63,16 @@ export const colorTextDefault = css`
     color: ${Colour.text};
 `;
 
-export const colorTextDisabled = css`
-    color: ${Colour["text-disabled"]};
+export const colorTextPrimary = css`
+    color: ${Colour["text-primary"]};
 `;
 
 export const colorTextError = css`
     color: ${Colour["text-error"]};
+`;
+
+export const colorTextDisabled = css`
+    color: ${Colour["text-disabled"]};
 `;
 
 // =============================================================================
@@ -247,7 +251,6 @@ export const disabledColorCursor = css`
 `;
 
 export const expandButton = css`
-    color: ${Colour["text-primary"]};
     ${Font["body-baseline-semibold"]}
     display: flex;
     align-items: center;
@@ -271,7 +274,6 @@ export const expandButtonPaddingTopRequired = css`
 
 export const errorContainer = css`
     width: 100%;
-    color: ${Colour["text-error"]};
     border: none;
     background: ${Colour.bg};
     cursor: pointer;
@@ -283,7 +285,6 @@ export const children = css`
     padding-top: 0.6875rem;
     padding-bottom: 0.5rem;
     background-color: ${Colour.bg};
-    color: ${Colour.text};
 `;
 
 export const childrenIsFinalItem = css`
