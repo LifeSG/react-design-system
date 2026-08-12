@@ -197,8 +197,7 @@ describe("Fullscreen Image Carousel", () => {
         it("should use src as fallback thumbnail when image item has no thumbnailSrc", async () => {
             const OriginalImage = global.Image;
             // Simulate image load completing in jsdom (onload never fires natively)
-            // eslint-disable-next-line @typescript-eslint/no-explicit-any
-            (global as any).Image = class {
+            (global.Image as unknown as Partial<typeof Image>) = class {
                 public width = 100;
                 public height = 100;
                 public onload: (() => void) | null = null;
