@@ -12,8 +12,8 @@ export interface DataTableProps {
     rows?: RowProps[] | undefined;
     className?: string | undefined;
     /**
-     * Controlled set of row IDs that are currently selected.
-     *
+     * The ids of selected items. If undefined, the Select All checkbox remains
+     * enabled when rows are non-empty.
      * @remarks Must be provided alongside `enableMultiSelect` for selection to work. Pass an
      * empty array (not `undefined`) to enable the select-all checkbox while having no rows
      * selected.
