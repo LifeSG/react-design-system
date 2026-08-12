@@ -158,6 +158,7 @@ const TextareaComponent = (
         renderCustomCounter,
         errorMessage,
         "data-error-testid": errorTestId,
+        error,
         ...otherProps
     }: TextareaProps,
     ref: TextareaRef
@@ -219,7 +220,7 @@ const TextareaComponent = (
                 prefix={prefix}
                 transformValue={transformValue}
                 maxLength={maxLength}
-                error={!!errorMessage || otherProps.error}
+                error={!!errorMessage || error}
                 {...otherProps}
             />
             {renderBottomLabels()}

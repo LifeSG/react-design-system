@@ -83,4 +83,5 @@ export const elementError = css`
 export const labelContainer = css`
     display: flex;
     justify-content: flex-end;
+    gap: ${Spacing["spacing-12"]};
 `;

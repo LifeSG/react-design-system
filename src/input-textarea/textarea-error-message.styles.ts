@@ -1,12 +1,10 @@
 import { css } from "@linaria/core";
 
-import { Colour, Font, Spacing } from "../theme";
+import { Colour, Font } from "../theme";
 
 export const container = css`
     display: flex;
     flex: 1;
-    gap: ${Spacing["spacing-4"]};
-    margin-right: ${Spacing["spacing-12"]};
 `;
 
 export const icon = css`
