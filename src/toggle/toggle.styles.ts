@@ -12,6 +12,70 @@ export const tokens = {
 } as const;
 
 // =============================================================================
+// BASIC STYLING
+// =============================================================================
+
+export const borderDefault = css`
+    border: solid 1px ${Colour.border};
+`;
+
+export const borderError = css`
+    border: solid 1px ${Colour["border-error"]};
+`;
+
+export const borderNone = css`
+    border: solid 1px transparent;
+`;
+
+export const borderSelected = css`
+    border: solid 1px ${Colour["border-selected"]};
+`;
+
+export const borderDisabled = css`
+    border: solid 1px ${Colour["border-disabled"]};
+`;
+
+export const borderSelectedDisabled = css`
+    border: solid 1px ${Colour["border-selected-disabled"]};
+`;
+
+export const bgDefault = css`
+    background: ${Colour.bg};
+`;
+
+export const bgSelected = css`
+    background: ${Colour["bg-selected"]};
+`;
+
+export const bgError = css`
+    background: ${Colour["bg-error"]};
+`;
+
+export const bgDisabled = css`
+    background: ${Colour["bg-disabled"]};
+`;
+
+export const bgSelectedDisabled = css`
+    background: ${Colour["bg-selected-disabled"]};
+`;
+
+export const colorTextDefault = css`
+    color: ${Colour.text};
+`;
+
+export const colorTextPrimary = css`
+    color: ${Colour["text-primary"]};
+`;
+
+export const colorTextError = css`
+    color: ${Colour["text-error"]};
+`;
+
+export const colorTextDisabled = css`
+    color: ${Colour["text-disabled"]};
+`;
+
+// =============================================================================
 // STYLING
 // =============================================================================
 
@@ -27,7 +91,6 @@ export const textContainer = css`
     overflow-wrap: anywhere;
     width: 100%;
     overflow: hidden;
-    color: ${Colour.text};
 `;
 
 export const toggleTextContainerSelected = css`
@@ -43,66 +106,36 @@ export const container = css`
     display: inline-flex;
     min-width: 10.375rem;
     border-radius: ${Radius["sm"]};
-    border-width: 1px;
-    border-style: solid;
     overflow: hidden;
     flex-direction: column;
     height: fit-content;
-    background: ${Colour.bg};
 
     &:focus-within {
         outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: 0;
     }
+
+    &.${borderError}, &.${bgError} {
+        &:focus-within {
+            outline: 2px solid ${Colour["border-error-focus"]};
+        }
+    }
 `;
 
-export const noIndicatorContainer = css`
+export const containerNoIndicator = css`
     justify-content: center;
 `;
 
-export const useContentWidthContainer = css`
+export const containerUseContentWidth = css`
     min-width: unset;
 `;
 
-export const colorBorderError = css`
-    border-color: ${Colour["border-error"]};
-`;
-
-export const toggleContainerNoBorderDisabledSelected = css`
-    border: none;
-    background: ${Colour["bg-selected-disabled"]};
-`;
-
-export const toggleContainerNoBorderDisabled = css`
-    border: none;
-`;
-
-export const toggleContainerNoBorderSelected = css`
-    border: none;
-    background: ${Colour["bg-selected"]};
-`;
-
-export const toggleContainerNoBorder = css`
-    border: none;
-`;
-
-export const toggleContainerError = css`
-    border-color: ${Colour["border-error"]};
-`;
-
-export const toggleContainerDisabledSelected = css`
-    border-color: ${Colour["border-selected-disabled"]};
-    background: ${Colour["bg-selected-disabled"]};
-`;
-
-export const toggleContainerDisabled = css`
-    border-color: ${Colour["border-disabled"]};
-    background: ${Colour["bg-disabled"]};
-`;
-
-export const toggleContainerSelected = css`
-    border-color: ${Colour["border-selected"]};
-    background: ${Colour["bg-selected"]};
+export const toggleContainerHoverError = css`
+    &:has(.${headerContainer}:hover) {
+        @media (pointer: fine) {
+            background: ${Colour["bg-error-hover"]};
+        }
+    }
 `;
 
 export const toggleContainerHoverSelected = css`
@@ -119,10 +152,6 @@ export const toggleContainerHoverSelected = css`
             }
         }
     }
-`;
-
-export const toggleContainer = css`
-    border-color: ${Colour.border};
 `;
 
 export const toggleContainerHoverDefault = css`
@@ -146,10 +175,6 @@ export const input = css`
     appearance: none;
     background: transparent;
     border: none;
-`;
-
-export const toggleInputDisabled = css`
-    cursor: not-allowed;
 `;
 
 export const inputContainer = css`
@@ -226,7 +251,6 @@ export const disabledColorCursor = css`
 `;
 
 export const expandButton = css`
-    color: ${Colour["text-primary"]};
     ${Font["body-baseline-semibold"]}
     display: flex;
     align-items: center;
@@ -250,7 +274,6 @@ export const expandButtonPaddingTopRequired = css`
 
 export const errorContainer = css`
     width: 100%;
-    color: ${Colour["text-error"]};
     border: none;
     background: ${Colour.bg};
     cursor: pointer;
@@ -262,19 +285,10 @@ export const children = css`
     padding-top: 0.6875rem;
     padding-bottom: 0.5rem;
     background-color: ${Colour.bg};
-    color: ${Colour.text};
 `;
 
 export const childrenIsFinalItem = css`
     padding-bottom: 0.6875rem;
-`;
-
-export const colorTextDisabled = css`
-    color: ${Colour["text-disabled"]};
-`;
-
-export const colorTextError = css`
-    color: ${Colour["text-error"]};
 `;
 
 export const alertContainer = css`

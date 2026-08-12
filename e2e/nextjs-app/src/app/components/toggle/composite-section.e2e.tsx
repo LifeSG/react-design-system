@@ -125,6 +125,20 @@ export default function Story() {
                 <Toggle
                     indicator
                     error
+                    disabled
+                    compositeSection={{
+                        collapsible: true,
+                        errors: ["Error in the composite section"],
+                        children: (
+                            <p>This is a composite section with errors.</p>
+                        ),
+                    }}
+                >
+                    Composite section with errors (disabled)
+                </Toggle>
+                <Toggle
+                    indicator
+                    error
                     checked
                     compositeSection={{
                         collapsible: true,

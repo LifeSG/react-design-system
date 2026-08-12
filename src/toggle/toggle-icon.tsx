@@ -14,6 +14,7 @@ export interface ToggleIconProps {
     type: ToggleIconType;
     active?: boolean | undefined;
     disabled?: boolean | undefined;
+    error?: boolean | undefined;
     className?: string | undefined;
 }
 
@@ -22,20 +23,25 @@ export const ToggleIcon = ({
     active = false,
     disabled,
     className,
+    error,
 }: ToggleIconProps) => {
     let component: JSX.Element | null;
 
     const getWrapperStateClass = () => {
-        if (active && disabled) {
-            return styles.wrapperActiveDisabled;
+        if (active) {
+            if (disabled) {
+                return styles.wrapperActiveDisabled;
+            }
+
+            if (error) {
+                return styles.wrapperError;
+            }
+
+            return styles.wrapperActive;
         }
 
         if (disabled) {
             return styles.wrapperDisabled;
-        }
-
-        if (active) {
-            return styles.wrapperActive;
         }
 
         return undefined;
