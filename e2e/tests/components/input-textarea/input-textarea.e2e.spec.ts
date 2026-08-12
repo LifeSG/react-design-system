@@ -1,4 +1,4 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
+import { test as base, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -13,6 +13,8 @@ class StoryPage extends AbstractStoryPage {
         disabledTextarea: Locator;
         readonlyTextarea: Locator;
         errorTextarea: Locator;
+        errorMessageTextarea: Locator;
+        errorMessageCounterTextarea: Locator;
         textbox: (field: Locator) => Locator;
     };
 
@@ -28,6 +30,10 @@ class StoryPage extends AbstractStoryPage {
             disabledTextarea: page.getByTestId("textarea-disabled"),
             readonlyTextarea: page.getByTestId("textarea-readonly"),
             errorTextarea: page.getByTestId("textarea-error"),
+            errorMessageTextarea: page.getByTestId("textarea-error-message"),
+            errorMessageCounterTextarea: page.getByTestId(
+                "textarea-error-message-counter"
+            ),
             textbox: (field: Locator) => field.getByRole("textbox"),
         };
     }
@@ -247,6 +253,38 @@ test.describe("InputTextarea", () => {
         });
 
         test("Custom counter", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-error-message");
+        });
+
+        test("Standalone errorMessage", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-error-message-mobile", {
+                size: "mobile",
+            });
+        });
+
+        test("Standalone errorMessage (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-error-message", { mode: "dark" });
+        });
+
+        test("Standalone errorMessage (dark mode)", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
