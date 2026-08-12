@@ -199,14 +199,10 @@ describe("Fullscreen Image Carousel", () => {
             // Simulate image load completing in jsdom (onload never fires natively)
             // eslint-disable-next-line @typescript-eslint/no-explicit-any
             (global as any).Image = class {
-                // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-                width = 100;
-                // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-                height = 100;
-                // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-                onload: (() => void) | null = null;
-                // eslint-disable-next-line @typescript-eslint/explicit-member-accessibility
-                set src(_: string) {
+                public width = 100;
+                public height = 100;
+                public onload: (() => void) | null = null;
+                public set src(_: string) {
                     Promise.resolve().then(() => this.onload?.());
                 }
             };
