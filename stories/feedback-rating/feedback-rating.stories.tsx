@@ -1,7 +1,7 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { FeedbackRating } from "src/feedback-rating";
-import { Modal } from "src/modal";
+import { ModalV2 } from "src/modal-v2";
 
 import { ModalBoxDiv } from "./doc-elements";
 
@@ -22,14 +22,21 @@ export const Default: StoryObj<Component> = {
         const closeModal = () => setShow(false);
         return (
             <>
-                <Modal show={show} onOverlayClick={closeModal}>
-                    <Modal.Box onClose={closeModal}>
-                        <ModalBoxDiv>
-                            You have rated: {rating} star
-                            {rating === 1 ? "" : "s"}
-                        </ModalBoxDiv>
-                    </Modal.Box>
-                </Modal>
+                <ModalV2
+                    show={show}
+                    onOverlayClick={closeModal}
+                    onClose={closeModal}
+                >
+                    <ModalV2.Card>
+                        <ModalV2.CloseButton />
+                        <ModalV2.Content>
+                            <ModalBoxDiv>
+                                You have rated: {rating} star
+                                {rating === 1 ? "" : "s"}
+                            </ModalBoxDiv>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
+                </ModalV2>
                 <FeedbackRating
                     rating={rating}
                     onRatingChange={setRating}
