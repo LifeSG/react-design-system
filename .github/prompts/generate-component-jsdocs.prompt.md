@@ -75,12 +75,6 @@ Follow `JSDOC_CONVENTIONS.md` for scope, skip rules, tag usage, and writing
 style. The conventions file is the single source of truth for **what** to write;
 this prompt only governs **how** to approach the task.
 
-In addition to the standard JSDoc, update the `@keywords` tag in the `// @catalog`
-JSDoc block for the component. Choose 3–5 terms (up to 10) that reflect the
-component's real purpose as understood from its source — synonyms, use cases,
-visual pattern, or related concepts. Do not guess; base keywords on what you
-read in the source files.
-
 Do not create new type files.
 
 ---

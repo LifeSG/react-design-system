@@ -610,7 +610,7 @@ export const Component = (
  * Use to present a collection of images or custom content in an overlay with
  * navigation controls, zoom support, and an optional thumbnail strip.
  * The top info bar is rendered only when at least one item provides some file metadata.
- * @keywords carousel, gallery, image, lightbox, media, overlay, thumbnail, zoom
+ * @keywords carousel, gallery, image, lightbox, media, overlay
  */
 export const FullscreenImageCarousel = forwardRef<
     FullscreenImageCarouselRef,

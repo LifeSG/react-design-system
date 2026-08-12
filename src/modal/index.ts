@@ -12,7 +12,7 @@ import { ModalBox as Box } from "./modal-box";
  * - `Modal.Box` — a styled content box with an optional close button.
  *
  * @deprecated Use `ModalV2` instead, which provides a more composable API, improved scroll behaviour, and proper accessibility.
- * @keywords dialog, focus, fullscreen, overlay, popup, slide
+ * @keywords dialog, overlay, popup
  */
 export const Modal = Object.assign(Base, {
     /**

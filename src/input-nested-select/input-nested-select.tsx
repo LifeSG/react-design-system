@@ -36,7 +36,7 @@ interface SelectedItemType<V1, V2, V3> {
  * hierarchical option tree. The dropdown renders as an expandable tree.
  * Parent nodes collapse or expand their children, and only one leaf or category
  * value can be selected at a time.
- * @keywords combobox, dropdown, expandable, hierarchical, single, tree
+ * @keywords combobox, dropdown, hierarchical, tree
  */
 export const InputNestedSelect = <V1, V2, V3>({
     placeholder = "Select",

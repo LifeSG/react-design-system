@@ -20,7 +20,7 @@ import type { ToggleProps } from "./types";
  *
  * Use `Toggle` to present a labeled option that the user can select or
  * deselect.
- * @keywords checkbox, choice, option, radio, select
+ * @keywords checkbox, choice, option, radio
  */
 export const Toggle = ({
     type = "checkbox",

@@ -76,7 +76,7 @@ TableEl.displayName = "Table.Table";
  * - `Table.Row` — a `<tr>` row within the body
  * - `Table.Cell` — a `<td>` data cell
  * - `Table.HeaderCell` — a `<th>` column header cell
- * @keywords data, grid, rows, scrollable, tabular
+ * @keywords data, grid, rows, tabular
  */
 export const Table = Object.assign(
     ({ children, ...props }: TableTableProps) => (

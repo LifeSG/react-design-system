@@ -30,7 +30,7 @@ import {
  *
  * @remarks All text variants accept an `as` prop to
  * override the rendered element for semantic flexibility.
- * @keywords body, heading, link, text, type scale
+ * @keywords text, type scale
  */
 export const Typography = {
     /** Renders the largest heading (`h1`). */

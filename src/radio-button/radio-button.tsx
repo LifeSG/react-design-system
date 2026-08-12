@@ -10,7 +10,7 @@ import type { RadioButtonProps } from "./types";
  * A single radio button input.
  *
  * Use `RadioButton` as an input within a radio group.
- * @keywords choice, group, option, select, single select
+ * @keywords choice, option, select
  */
 export const RadioButton = ({
     className,

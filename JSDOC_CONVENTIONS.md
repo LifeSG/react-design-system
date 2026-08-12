@@ -77,7 +77,19 @@ other than its exact name. Apply the following criteria when choosing keywords:
 Aim for **3–5 terms** per component, up to **10 at most**. Avoid repeating the
 component name itself as a keyword — the name is already indexed separately.
 Prefer concrete, specific terms over overly generic ones like `component` or
-`element`.
+`element`. Prefer **`design tokens`** over `css variables` when referring to the
+design-token system.
+
+**Do not include:**
+
+-   **Secondary features** — keywords should reflect the main purpose, not
+    additional capabilities (e.g. `DashedBorder` → not `upload`).
+-   **Interaction model** — how the user interacts with it, not what it is
+    (e.g. `FileUpload` → not `drag-and-drop`, `dropzone`).
+-   **Layout details** — positional or structural rendering unless that is the
+    component's primary purpose (e.g. `Filter` → not `modal`, `sidebar`).
+-   **States and variants** — specific visual states or prop-driven variants
+    (e.g. `Alert` → not `severity`; `Checkbox` → not `indeterminate`).
 
 ### Sub-component entries
 

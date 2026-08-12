@@ -13,7 +13,7 @@ const LottieLoadingDotsSpinner = lazy(async () => ({
 // @catalog
 /**
  * An animated loading indicator combining dots with a spinning motion.
- * @keywords animation, dots, indicator, pending, progress, spinner
+ * @keywords animation, indicator, progress, spinner
  */
 export const LoadingDotsSpinner = ({
     className,

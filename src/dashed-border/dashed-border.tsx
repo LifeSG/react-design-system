@@ -104,6 +104,6 @@ const Component = (
  *
  * Use when you need a dashed visual boundary around content — for example, drop zones,
  * placeholder regions, or empty-state containers.
- * @keywords boundary, dropzone, outline, placeholder, region, upload
+ * @keywords boundary, outline, placeholder, region
  */
 export const DashedBorder = forwardRef(Component);

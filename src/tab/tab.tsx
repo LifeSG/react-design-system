@@ -110,7 +110,7 @@ TabBase.displayName = "Tab";
  *
  * Use `Tab` to organise content into labelled panels where only one panel is
  * visible at a time. Compose with `Tab.Item` to define each panel.
- * @keywords navigation, panel, switch, tabbed, tabs
+ * @keywords navigation, panel, tabbed, tabs
  */
 export const Tab = Object.assign(TabBase, {
     /** Renders an individual content panel within a `Tab`. */

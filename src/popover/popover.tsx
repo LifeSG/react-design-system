@@ -15,7 +15,7 @@ import type { PopoverProps } from "./types";
  * on desktop and modal on mobile.
  *
  * Use with `PopoverTrigger`, which manages visibility state and positioning.
- * @keywords floating, info, overlay, tooltip, trigger
+ * @keywords info, overlay, tooltip
  */
 export const Popover = ({
     children,

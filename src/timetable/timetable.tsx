@@ -541,6 +541,6 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
  *
  * Use `TimeTable` to display one day's schedule for multiple resources side by
  * side.
- * @keywords availability, daily, grid, resources, schedule
+ * @keywords availability, grid, schedule
  */
 export const TimeTable = forwardRef<TimeTableRef, TimeTableProps>(Component);

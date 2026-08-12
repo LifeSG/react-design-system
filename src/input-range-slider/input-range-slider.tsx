@@ -19,7 +19,7 @@ import type { InputRangeSliderProps } from "./types";
  *
  * Use `InputRangeSlider` when the selection does not need to be precise;
  * the user picks a value or a range by dragging thumb controls along a track.
- * @keywords drag, dual, numeric, range, thumb, track
+ * @keywords handle, range, slider
  */
 export const InputRangeSlider = ({
     id,

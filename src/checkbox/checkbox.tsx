@@ -13,7 +13,7 @@ import type { CheckboxProps } from "./types";
 // @catalog
 /**
  * A styled checkbox input with indeterminate state support.
- * @keywords form, indeterminate, input, multi-select, selection, tick, toggle
+ * @keywords form, input, selection
  */
 export const Checkbox = ({
     className,

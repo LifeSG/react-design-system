@@ -389,6 +389,6 @@ const Component = <T,>(
  * Use `Navbar` to render the primary navigation header. It displays brand
  * logos, navigation items, and action buttons in a desktop bar, and
  * automatically collapses items into a slide-in drawer for mobile viewports.
- * @keywords brand, drawer, hamburger, header, mobile, navigation, responsive
+ * @keywords brand, header, navigation
  */
 export const Navbar = forwardRef(Component);

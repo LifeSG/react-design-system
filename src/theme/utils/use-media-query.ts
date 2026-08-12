@@ -121,7 +121,7 @@ const getMaxWidthBreakpointToken = (breakpoint: MaxWidthBreakpointName) => {
  * Returns `true` when the viewport width is at or above the named breakpoint.
  *
  * @param breakpoint Named breakpoint to compare against.
- * @keywords breakpoint, hook, media query, min-width, responsive
+ * @keywords breakpoint, hook, media query, responsive
  */
 export const useMinWidthMediaQuery = (breakpoint: BreakpointName) =>
     useMediaQuery({
@@ -133,7 +133,7 @@ export const useMinWidthMediaQuery = (breakpoint: BreakpointName) =>
  * Returns `true` when the viewport width is at or below the named breakpoint.
  *
  * @param breakpoint Named breakpoint to compare against.
- * @keywords breakpoint, hook, max-width, media query, responsive
+ * @keywords breakpoint, hook, media query, responsive
  */
 export const useMaxWidthMediaQuery = (breakpoint: MaxWidthBreakpointName) =>
     useMediaQuery({
@@ -206,7 +206,7 @@ const getCurrentMatch = (queryString: string, defaultMatch: boolean) => {
  * @returns The resolved pixel value, falling back to default LifeSG breakpoint
  * values when the theme element is not yet mounted, or `""` for unrecognised
  * tokens.
- * @keywords breakpoint, css variables, hook, pixel, resolve
+ * @keywords breakpoint, design tokens, hook
  */
 export const useResolvedBreakpointToken = (
     breakpointToken: WidthBreakpointCSSVariableString | undefined
@@ -263,7 +263,7 @@ const useMatchMediaQuery = (
  * @returns `true` when the query matches. When `window.matchMedia` is
  * unavailable (SSR), defaults to `true` for min-width-only queries and
  * `false` for max-width-only.
- * @keywords breakpoint, feature, hook, media query, responsive
+ * @keywords breakpoint, hook, media query, responsive
  */
 export const useMediaQuery = (options: MediaQueryOptions): boolean => {
     const { minWidth, maxWidth, clauses = [] } = options;
