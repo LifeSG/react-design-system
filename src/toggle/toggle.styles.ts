@@ -24,7 +24,7 @@ export const borderError = css`
 `;
 
 export const borderNone = css`
-    border: none;
+    border: solid 1px transparent;
 `;
 
 export const borderSelected = css`
