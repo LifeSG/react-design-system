@@ -102,6 +102,7 @@ export default defineConfig([
             "**/playwright-report/**",
             "**/storybook-static/**",
             "playwright.config.ts",
+            "tests/coverage/**",
 
             // nextjs app
             "**/.next/**",

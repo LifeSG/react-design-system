@@ -14,7 +14,6 @@ export default function Story() {
 
         document.adoptedStyleSheets.push(sheet);
 
-         
         setLoaded(true);
     }, []);
 
