@@ -221,7 +221,7 @@ export const Toggle = ({
                 type={toggleIconType}
                 active={selected}
                 disabled={disabled}
-                error={!disabled && selected && error}
+                error={error}
             />
         );
     };
