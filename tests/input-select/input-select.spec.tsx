@@ -34,9 +34,7 @@ describe("InputSelect", () => {
 
         await user.click(screen.getByTestId(FIELD_TESTID));
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-        });
+        expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
         expect(screen.queryByText("Option 1")).toBeVisible();
         expect(screen.queryByText("Option 2")).toBeVisible();
@@ -50,17 +48,13 @@ describe("InputSelect", () => {
 
         await user.click(screen.getByTestId(FIELD_TESTID));
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-        });
+        expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
         await user.click(screen.getByTestId(FIELD_TESTID));
 
-        await waitFor(() => {
-            expect(
-                screen.queryByTestId(DROPDOWN_TESTID)
-            ).not.toBeInTheDocument();
-        });
+        await waitForElementToBeRemoved(() =>
+            screen.queryByTestId(DROPDOWN_TESTID)
+        );
     });
 
     it("should render loading spinner when options are loading", async () => {
@@ -77,9 +71,7 @@ describe("InputSelect", () => {
 
         await user.click(screen.getByTestId(FIELD_TESTID));
 
-        await waitFor(() => {
-            expect(screen.getByTestId("list-loading")).toBeVisible();
-        });
+        expect(await screen.findByTestId("list-loading")).toBeVisible();
 
         expect(screen.getByText("Loading...")).toBeVisible();
         expect(screen.getByTestId("component-loading-spinner")).toBeVisible();
@@ -99,17 +91,13 @@ describe("InputSelect", () => {
 
         await user.click(screen.getByTestId(FIELD_TESTID));
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-        });
+        expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
         await user.click(screen.getByText("Option 1"));
 
-        await waitFor(() => {
-            expect(
-                screen.queryByTestId(DROPDOWN_TESTID)
-            ).not.toBeInTheDocument();
-        });
+        await waitForElementToBeRemoved(() =>
+            screen.queryByTestId(DROPDOWN_TESTID)
+        );
 
         expect(mockOnSelectOption).toHaveBeenCalledWith("Option 1", "Option 1");
     });
@@ -138,9 +126,7 @@ describe("InputSelect", () => {
 
         await user.click(screen.getByTestId(FIELD_TESTID));
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-        });
+        expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
         expect(mockOnShowOptions).toHaveBeenCalledTimes(1);
         expect(mockOnHideOptions).toHaveBeenCalledTimes(0);
@@ -249,7 +235,7 @@ describe("InputSelect", () => {
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
+            await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(() =>
                 expect(
                     screen.queryByRole("option", { name: "Option 1" })
@@ -287,7 +273,7 @@ describe("InputSelect", () => {
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
+            await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(() =>
                 expect(
                     screen.queryByRole("option", { name: "Option 1" })
@@ -323,7 +309,7 @@ describe("InputSelect", () => {
                 await user.click(screen.getByTestId(FIELD_TESTID));
             });
 
-            await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
+            await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(() =>
                 expect(
                     screen.queryByRole("option", { name: "Option 1" })
@@ -373,7 +359,7 @@ describe("InputSelect", () => {
 
             await user.keyboard("{Tab} ");
 
-            await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
+            await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(() => {
                 expect(
                     screen.getByLabelText("Enter text to search")
@@ -420,9 +406,7 @@ describe("InputSelect", () => {
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => {
-                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-            });
+            expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
             await waitFor(() => {
                 expect(
                     screen.getByLabelText("Enter text to search")
@@ -454,9 +438,7 @@ describe("InputSelect", () => {
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => {
-                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-            });
+            expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
             await waitFor(() => {
                 expect(
                     screen.getByLabelText("Enter text to search")
@@ -490,9 +472,7 @@ describe("InputSelect", () => {
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => {
-                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-            });
+            expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
             await waitFor(() => {
                 expect(
                     screen.getByLabelText("Enter text to search")
@@ -523,9 +503,7 @@ describe("InputSelect", () => {
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => {
-                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-            });
+            expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
             await waitFor(() => {
                 expect(
                     screen.getByLabelText("Enter text to search")

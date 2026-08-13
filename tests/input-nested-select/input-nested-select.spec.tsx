@@ -65,9 +65,7 @@ describe("InputNestedSelect", () => {
             await user.click(screen.getByTestId(FIELD_TESTID));
         });
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-        });
+        expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
         expect(screen.queryByText("Parent 1 item")).toBeVisible();
         expect(screen.queryByText("Parent 1.1 item")).toBeVisible();
@@ -85,17 +83,13 @@ describe("InputNestedSelect", () => {
             await user.click(screen.getByTestId(FIELD_TESTID));
         });
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-        });
+        expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
         await user.click(screen.getByTestId(FIELD_TESTID));
 
-        await waitFor(() => {
-            expect(
-                screen.queryByTestId(DROPDOWN_TESTID)
-            ).not.toBeInTheDocument();
-        });
+        await waitForElementToBeRemoved(() =>
+            screen.queryByTestId(DROPDOWN_TESTID)
+        );
     });
 
     it("should render loading spinner when options are loading", async () => {
@@ -112,9 +106,7 @@ describe("InputNestedSelect", () => {
 
         await user.click(screen.getByTestId(FIELD_TESTID));
 
-        await waitFor(() => {
-            expect(screen.getByTestId("list-loading")).toBeVisible();
-        });
+        expect(await screen.findByTestId("list-loading")).toBeVisible();
 
         expect(screen.getByText("Loading...")).toBeVisible();
         expect(screen.getByTestId("component-loading-spinner")).toBeVisible();
@@ -136,17 +128,13 @@ describe("InputNestedSelect", () => {
             await user.click(screen.getByTestId(FIELD_TESTID));
         });
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-        });
+        expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
         await user.click(screen.getByText("Child 1.1.1 item"));
 
-        await waitFor(() => {
-            expect(
-                screen.queryByTestId(DROPDOWN_TESTID)
-            ).not.toBeInTheDocument();
-        });
+        await waitForElementToBeRemoved(() =>
+            screen.queryByTestId(DROPDOWN_TESTID)
+        );
 
         expect(mockOnSelectOption).toHaveBeenCalledWith(
             ["1", "10", "100"],
@@ -171,17 +159,13 @@ describe("InputNestedSelect", () => {
             await user.click(screen.getByTestId(FIELD_TESTID));
         });
 
-        await waitFor(() => {
-            expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-        });
+        expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
         await user.click(screen.getByText("Parent 1.1 item"));
 
-        await waitFor(() => {
-            expect(
-                screen.queryByTestId(DROPDOWN_TESTID)
-            ).not.toBeInTheDocument();
-        });
+        await waitForElementToBeRemoved(() =>
+            screen.queryByTestId(DROPDOWN_TESTID)
+        );
 
         expect(mockOnSelectOption).toHaveBeenCalledWith(["1", "10"], "1.1");
     });
@@ -203,7 +187,7 @@ describe("InputNestedSelect", () => {
                 await user.click(screen.getByTestId(FIELD_TESTID));
             });
 
-            await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
+            await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(() =>
                 expect(
                     screen.queryByRole("treeitem", { name: "Parent 1 item" })
@@ -243,7 +227,7 @@ describe("InputNestedSelect", () => {
                 await user.click(screen.getByTestId(FIELD_TESTID));
             });
 
-            await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
+            await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(() =>
                 expect(
                     screen.queryByRole("treeitem", { name: "Parent 1 item" })
@@ -279,7 +263,7 @@ describe("InputNestedSelect", () => {
                 await user.click(screen.getByTestId(FIELD_TESTID));
             });
 
-            await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
+            await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(() =>
                 expect(
                     screen.queryByRole("treeitem", { name: "Parent 1 item" })
@@ -331,7 +315,7 @@ describe("InputNestedSelect", () => {
 
             await user.keyboard("{Tab} ");
 
-            await waitFor(() => screen.getByTestId(DROPDOWN_TESTID));
+            await screen.findByTestId(DROPDOWN_TESTID);
             await waitFor(() => {
                 expect(
                     screen.getByLabelText("Enter text to search")
@@ -380,9 +364,7 @@ describe("InputNestedSelect", () => {
                 await user.click(screen.getByTestId(FIELD_TESTID));
             });
 
-            await waitFor(() => {
-                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-            });
+            expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
             await waitFor(() => {
                 expect(
                     screen.getByLabelText("Enter text to search")
@@ -412,9 +394,7 @@ describe("InputNestedSelect", () => {
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => {
-                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-            });
+            expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
             await waitFor(() => {
                 expect(
                     screen.getByLabelText("Enter text to search")
@@ -448,9 +428,7 @@ describe("InputNestedSelect", () => {
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => {
-                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-            });
+            expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
             expect(mockOnShowOptions).toHaveBeenCalledTimes(1);
         });
@@ -479,11 +457,9 @@ describe("InputNestedSelect", () => {
 
             await user.click(screen.getByText("Child 1.1.1 item"));
 
-            await waitFor(() => {
-                expect(
-                    screen.queryByTestId(DROPDOWN_TESTID)
-                ).not.toBeInTheDocument();
-            });
+            await waitForElementToBeRemoved(() =>
+                screen.queryByTestId(DROPDOWN_TESTID)
+            );
 
             expect(mockOnHideOptions).toHaveBeenCalledTimes(1);
         });
@@ -502,19 +478,15 @@ describe("InputNestedSelect", () => {
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => {
-                expect(screen.queryByTestId(DROPDOWN_TESTID)).toBeVisible();
-            });
+            expect(await screen.findByTestId(DROPDOWN_TESTID)).toBeVisible();
 
             expect(mockOnHideOptions).toHaveBeenCalledTimes(0);
 
             await user.click(screen.getByTestId(FIELD_TESTID));
 
-            await waitFor(() => {
-                expect(
-                    screen.queryByTestId(DROPDOWN_TESTID)
-                ).not.toBeInTheDocument();
-            });
+            await waitForElementToBeRemoved(() =>
+                screen.queryByTestId(DROPDOWN_TESTID)
+            );
 
             expect(mockOnHideOptions).toHaveBeenCalledTimes(1);
         });
