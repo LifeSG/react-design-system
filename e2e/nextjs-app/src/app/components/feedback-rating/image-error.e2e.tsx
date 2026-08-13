@@ -1,6 +1,6 @@
 "use client";
-import { useState } from "react";
 import { FeedbackRating } from "@lifesg/react-design-system/feedback-rating";
+import { useState } from "react";
 
 export default function Story() {
     const [rating, setRating] = useState(0);

@@ -5,6 +5,7 @@ import {
     ThemeProvider,
     useDesignToken,
 } from "@lifesg/react-design-system/theme";
+import type React from "react";
 
 const Component = (props: React.HTMLAttributes<HTMLDivElement>) => {
     const colourValue = useDesignToken(Colour["bg-primary"]);

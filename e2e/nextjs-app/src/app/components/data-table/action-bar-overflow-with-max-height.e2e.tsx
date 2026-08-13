@@ -2,6 +2,7 @@
 
 import { DataTable } from "@lifesg/react-design-system/data-table";
 import { useMemo, useState } from "react";
+
 import { buildRows, headers } from "./common";
 import styles from "./data-table.module.css";
 

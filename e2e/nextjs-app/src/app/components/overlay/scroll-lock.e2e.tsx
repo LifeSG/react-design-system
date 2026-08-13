@@ -2,6 +2,7 @@
 
 import { Overlay } from "@lifesg/react-design-system/overlay";
 import { useState } from "react";
+
 import styles from "./overlay.module.css";
 
 export default function Story() {

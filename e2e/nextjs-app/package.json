@@ -6,10 +6,6 @@
         "dev": "next dev --webpack",
         "build": "next build --webpack",
         "start": "next start",
-        "lint": "eslint",
-        "lint:src": "eslint 'src/**/*.{ts,tsx,js,jsx}' --max-warnings 0",
-        "lint:src:fix": "eslint 'src/**/*.{ts,tsx,js,jsx}' --fix --max-warnings 0",
-        "lint:staged:fix": "eslint --fix",
         "use-published": "npm i @lifesg/react-design-system@latest && rm -rf .next"
     },
     "dependencies": {
@@ -25,8 +21,6 @@
         "@types/node": "^20",
         "@types/react": "^19.2.14",
         "@types/react-dom": "^19.2.3",
-        "eslint": "^9",
-        "eslint-config-next": "16.1.6",
         "postcss-import": "^16.1.0",
         "postcss-mixins": "^12.1.2",
         "typescript": "^5"

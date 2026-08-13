@@ -1,7 +1,7 @@
 "use client";
 
-import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 import { Button } from "@lifesg/react-design-system/button";
+import { PlaceholderIcon } from "@lifesg/react-icons/placeholder";
 
 export default function Story() {
     return (

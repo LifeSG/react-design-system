@@ -14,7 +14,6 @@ export default function Story() {
 
         document.adoptedStyleSheets.push(sheet);
 
-        // eslint-disable-next-line react-hooks/set-state-in-effect
         setLoaded(true);
     }, []);
 

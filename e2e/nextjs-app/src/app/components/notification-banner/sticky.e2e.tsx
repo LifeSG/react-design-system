@@ -1,5 +1,6 @@
 "use client";
 import { NotificationBanner } from "@lifesg/react-design-system/notification-banner";
+
 import styles from "./notification-banner.module.css";
 
 export default function Story() {

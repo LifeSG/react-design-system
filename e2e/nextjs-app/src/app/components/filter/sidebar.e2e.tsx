@@ -1,6 +1,6 @@
 "use client";
-import { Filter } from "@lifesg/react-design-system/filter";
 import { Typography } from "@lifesg/react-design-system";
+import { Filter } from "@lifesg/react-design-system/filter";
 
 export default function Story() {
     return (

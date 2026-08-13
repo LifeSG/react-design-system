@@ -1,6 +1,5 @@
-import type { ReactNode } from "react";
-
 import { Typography } from "@lifesg/react-design-system/typography";
+import type { ReactNode } from "react";
 
 interface StoryContentProps {
     children: ReactNode;

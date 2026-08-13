@@ -1,6 +1,7 @@
 "use client";
 
 import { Form } from "@lifesg/react-design-system/form";
+
 import { OPTIONS } from "./input-range-select.shared";
 
 const SELECTED_OPTIONS = {

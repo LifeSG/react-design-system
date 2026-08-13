@@ -2,8 +2,9 @@
 
 import { Button } from "@lifesg/react-design-system/button";
 import { InputMultiSelect } from "@lifesg/react-design-system/input-multi-select";
-import { OPTIONS } from "./mock";
+
 import styles from "./input-multi-select.module.css";
+import { OPTIONS } from "./mock";
 
 export default function Story() {
     return (

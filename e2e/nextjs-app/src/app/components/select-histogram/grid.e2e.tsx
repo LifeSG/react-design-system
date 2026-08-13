@@ -1,6 +1,7 @@
 "use client";
 import { Form } from "@lifesg/react-design-system/form";
 import { Layout } from "@lifesg/react-design-system/layout";
+
 import { MOCK_BINS } from "./select-histogram.shared";
 
 export default function Story() {

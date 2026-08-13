@@ -1,6 +1,7 @@
 "use client";
 import { useApplyStyle } from "@lifesg/react-design-system/theme";
 import { useRef } from "react";
+
 import styles from "./use-apply-style.module.css";
 
 export default function Story() {

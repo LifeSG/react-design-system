@@ -1,7 +1,8 @@
 "use client";
 
-import { OPTIONS } from "./mock";
 import { Form } from "@lifesg/react-design-system";
+
+import { OPTIONS } from "./mock";
 
 export default function Story() {
     return (

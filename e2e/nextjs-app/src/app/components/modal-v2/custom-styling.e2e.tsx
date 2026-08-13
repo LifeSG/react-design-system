@@ -2,6 +2,7 @@
 
 import { Button, ModalV2, Typography } from "@lifesg/react-design-system";
 import { useLayoutEffect, useState } from "react";
+
 import styles from "./modal-v2.module.css";
 
 export default function Story() {
@@ -9,7 +10,6 @@ export default function Story() {
 
     useLayoutEffect(() => {
         if (elementRef) {
-            // eslint-disable-next-line react-hooks/immutability
             elementRef.style.cssText =
                 "background-color: red; border-radius: 8px; padding: 68px;";
         }

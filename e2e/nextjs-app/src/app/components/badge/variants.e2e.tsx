@@ -2,6 +2,7 @@
 
 import { Badge } from "@lifesg/react-design-system/badge";
 import clsx from "clsx";
+
 import styles from "./badge.module.css";
 
 export default function Story() {

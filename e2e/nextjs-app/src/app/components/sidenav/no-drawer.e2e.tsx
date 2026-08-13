@@ -1,7 +1,7 @@
 "use client";
 
-import { Person2Icon, Square2x2Icon } from "@lifesg/react-icons";
 import { Sidenav } from "@lifesg/react-design-system/sidenav";
+import { Person2Icon, Square2x2Icon } from "@lifesg/react-icons";
 
 export default function Story() {
     return (

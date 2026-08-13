@@ -1,6 +1,7 @@
 "use client";
 
 import { InputRangeSelect } from "@lifesg/react-design-system/input-range-select";
+
 import { OPTIONS } from "./input-range-select.shared";
 
 export default function Story() {

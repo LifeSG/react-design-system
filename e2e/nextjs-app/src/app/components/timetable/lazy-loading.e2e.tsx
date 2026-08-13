@@ -2,6 +2,7 @@
 import type { TimeTableRowData } from "@lifesg/react-design-system/timetable";
 import { TimeTable } from "@lifesg/react-design-system/timetable";
 import { useState } from "react";
+
 import styles from "./timetable.module.css";
 
 const buildRows = (count: number): TimeTableRowData[] => {

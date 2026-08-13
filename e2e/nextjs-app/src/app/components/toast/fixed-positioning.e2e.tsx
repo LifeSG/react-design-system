@@ -1,6 +1,7 @@
 "use client";
 
 import { Toast } from "@lifesg/react-design-system/toast";
+
 import styles from "./toast.module.css";
 
 export default function Story() {

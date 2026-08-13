@@ -3,6 +3,7 @@ import {
     Schedule,
     type ScheduleEntityProps,
 } from "@lifesg/react-design-system/schedule";
+
 import styles from "./schedule.module.css";
 
 const DATE = "2026-06-01";

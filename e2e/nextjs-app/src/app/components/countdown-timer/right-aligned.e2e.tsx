@@ -1,6 +1,7 @@
 "use client";
 import { CountdownTimer } from "@lifesg/react-design-system/countdown-timer";
 import { useState } from "react";
+
 import styles from "./countdown-timer.module.css";
 
 export default function Story() {

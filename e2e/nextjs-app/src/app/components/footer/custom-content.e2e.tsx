@@ -1,5 +1,6 @@
 "use client";
 import { Footer } from "@lifesg/react-design-system/footer";
+
 import styles from "./footer.module.css";
 
 export default function Story() {

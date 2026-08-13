@@ -1,8 +1,9 @@
 "use client";
 
-import { Modal } from "@lifesg/react-design-system/modal";
 import { Typography } from "@lifesg/react-design-system";
+import { Modal } from "@lifesg/react-design-system/modal";
 import { useLayoutEffect, useState } from "react";
+
 import styles from "./modal.module.css";
 
 export default function Story() {
@@ -10,7 +11,6 @@ export default function Story() {
 
     useLayoutEffect(() => {
         if (elementRef) {
-            // eslint-disable-next-line react-hooks/immutability
             elementRef.style.cssText =
                 "background-color: red; border-radius: 8px; padding: 68px;";
         }

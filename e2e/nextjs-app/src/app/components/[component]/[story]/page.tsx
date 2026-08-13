@@ -1,9 +1,10 @@
 import dynamic from "next/dynamic";
 import { after } from "next/server";
+
 import {
     applyE2EDateMock,
-    initializeNativeDate,
     type E2EDateMockGlobal,
+    initializeNativeDate,
 } from "@/utils/date";
 
 /**

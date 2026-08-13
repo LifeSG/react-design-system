@@ -1,6 +1,7 @@
 "use client";
 
 import { Overlay } from "@lifesg/react-design-system/overlay";
+
 import styles from "./overlay.module.css";
 
 export default function Story() {

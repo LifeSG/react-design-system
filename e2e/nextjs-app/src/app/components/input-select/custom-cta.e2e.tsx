@@ -1,7 +1,8 @@
 "use client";
 
-import { Form } from "@lifesg/react-design-system/form";
 import { Button } from "@lifesg/react-design-system";
+import { Form } from "@lifesg/react-design-system/form";
+
 import styles from "./input-select.module.css";
 
 const OPTIONS = [

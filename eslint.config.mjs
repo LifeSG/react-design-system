@@ -16,9 +16,11 @@ const sourceFileGlobs = ["**/*.{js,jsx,mjs,cjs,ts,tsx}"];
 const reactSourceFileGlobs = ["**/*.{js,jsx,ts,tsx}"];
 const tsFileGlobs = ["**/*.{ts,tsx}"];
 const testFileGlobs = [
-    "**/*.spec.{js,jsx,ts,tsx}",
-    "**/*.test.{js,jsx,ts,tsx}",
+    "tests/**/*.spec.{js,jsx,ts,tsx}",
+    "tests/**/*.test.{js,jsx,ts,tsx}",
 ];
+const nextjsAppFileGlobs = ["e2e/nextjs-app/**/*.{ts,tsx,js,jsx}"];
+const nextjsAppTsFileGlobs = ["e2e/nextjs-app/**/*.{ts,tsx}"];
 
 const baseEcmaFeatures = {
     modules: true,
@@ -29,6 +31,7 @@ const baseLanguageOptions = {
     globals: {
         ...globals.node,
         ...globals.browser,
+        JSX: "readonly",
     },
     parser: tsParser,
     ecmaVersion: 11,
@@ -96,10 +99,19 @@ export default defineConfig([
             "**/dist/**",
             "**/scripts/**",
             "**/.storybook/**",
-            "**/e2e/**",
             "**/playwright-report/**",
             "**/storybook-static/**",
             "playwright.config.ts",
+            "tests/coverage/**",
+
+            // nextjs app
+            "**/.next/**",
+            "**/out/**",
+            "**/build/**",
+
+            // e2e playwright tests are not linted
+            "e2e/tests/**",
+            "e2e/screenshot-manifest-reporter.ts",
         ],
     },
     js.configs.recommended,
@@ -153,6 +165,7 @@ export default defineConfig([
     },
     {
         files: tsFileGlobs,
+        ignores: nextjsAppTsFileGlobs,
         languageOptions: {
             parser: tsParser,
             parserOptions: {
@@ -192,6 +205,45 @@ export default defineConfig([
             globals: {
                 ...globals.jest,
             },
+        },
+    },
+
+    // NextJS app specific rules
+    {
+        files: nextjsAppFileGlobs,
+        plugins: {
+            local: localRules,
+        },
+        rules: {
+            "local/import-path-preferences": "error",
+            "no-restricted-syntax": [
+                "error",
+                {
+                    selector: "JSXAttribute[name.name='style']",
+                    message:
+                        "Inline styles are not allowed in e2e/nextjs-app. Use CSS modules instead.",
+                },
+            ],
+        },
+    },
+    {
+        files: nextjsAppTsFileGlobs,
+        languageOptions: {
+            parser: tsParser,
+            parserOptions: {
+                project: "./e2e/nextjs-app/tsconfig.json",
+            },
+            globals: {
+                React: "readonly",
+                JSX: "readonly",
+            },
+        },
+        plugins: {
+            "@typescript-eslint": pluginTypescriptEslint,
+        },
+        rules: {
+            ...sharedTsRules,
+            "react/prop-types": "off",
         },
     },
 ]);

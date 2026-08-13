@@ -1,5 +1,6 @@
 "use client";
 import { TimeTable } from "@lifesg/react-design-system/timetable";
+
 import styles from "./timetable.module.css";
 
 export default function Story() {

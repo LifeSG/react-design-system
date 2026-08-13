@@ -1,6 +1,8 @@
 "use client";
 
 import { Layout } from "@lifesg/react-design-system/layout";
+import type React from "react";
+
 import styles from "./media-query-specificity.module.css";
 
 function DemoBlock({

@@ -1,8 +1,8 @@
 "use client";
 
 import { Colour } from "@lifesg/react-design-system";
-import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-view";
 import type { TimeSlot } from "@lifesg/react-design-system/time-slot-bar";
+import { TimeSlotWeekView } from "@lifesg/react-design-system/time-slot-week-view";
 
 const SLOTS: { [date: string]: TimeSlot[] } = {
     "2026-04-07": [

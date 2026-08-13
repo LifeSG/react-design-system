@@ -1,8 +1,6 @@
 "use client";
-import {
-    TimeTable,
-    TimeTableRowCellData,
-} from "@lifesg/react-design-system/timetable";
+import type { TimeTableRowCellData } from "@lifesg/react-design-system/timetable";
+import { TimeTable } from "@lifesg/react-design-system/timetable";
 
 const rowCells: TimeTableRowCellData[] = [
     {

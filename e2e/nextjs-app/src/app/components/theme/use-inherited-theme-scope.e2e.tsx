@@ -5,6 +5,7 @@ import {
     useApplyStyle,
     useInheritedThemeScope,
 } from "@lifesg/react-design-system/theme";
+import type React from "react";
 import { useEffect, useEffectEvent, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 
