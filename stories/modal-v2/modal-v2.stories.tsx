@@ -7,7 +7,7 @@ import { ModalV2 } from "src/modal-v2";
 import { slotSpacerTokens } from "src/modal-v2/slots/slot-styles";
 import { Typography } from "src/typography";
 
-import { HeaderPlayground, SlotPlayground } from "./doc-elements";
+import { SlotPlayground } from "./doc-elements";
 
 type Component = typeof ModalV2;
 
@@ -147,6 +147,63 @@ export const Footer: StoryObj<Component> = {
                                 </Button>
                             }
                         />
+                    </ModalV2.Card>
+                </ModalV2>
+            </>
+        );
+    },
+};
+
+export const Header: StoryObj<Component> = {
+    render: () => {
+        const [showLeft, setShowLeft] = useState(false);
+        const [showRight, setShowRight] = useState(false);
+        return (
+            <>
+                <div style={{ display: "flex", gap: "0.75rem" }}>
+                    <Button onClick={() => setShowLeft(true)}>
+                        Close button left
+                    </Button>
+                    <Button onClick={() => setShowRight(true)}>
+                        Close button right
+                    </Button>
+                </div>
+                <ModalV2
+                    show={showLeft}
+                    onOverlayClick={() => setShowLeft(false)}
+                    onClose={() => setShowLeft(false)}
+                >
+                    <ModalV2.Card>
+                        <ModalV2.Header
+                            title="Modal title"
+                            closeButtonPosition="left"
+                        />
+                        <ModalV2.Content>
+                            <Typography.BodyBL>
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Totam debitis explicabo rerum
+                                velit quod recusandae.
+                            </Typography.BodyBL>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
+                </ModalV2>
+                <ModalV2
+                    show={showRight}
+                    onOverlayClick={() => setShowRight(false)}
+                    onClose={() => setShowRight(false)}
+                >
+                    <ModalV2.Card>
+                        <ModalV2.Header
+                            title="Modal title"
+                            closeButtonPosition="right"
+                        />
+                        <ModalV2.Content>
+                            <Typography.BodyBL>
+                                Lorem ipsum dolor sit amet consectetur
+                                adipisicing elit. Totam debitis explicabo rerum
+                                velit quod recusandae.
+                            </Typography.BodyBL>
+                        </ModalV2.Content>
                     </ModalV2.Card>
                 </ModalV2>
             </>
@@ -338,16 +395,5 @@ export const ScrollHandling: StoryObj<Component> = {
                 </ModalV2>
             </>
         );
-    },
-};
-
-export const Header: StoryObj<Component> = {
-    render: () => <HeaderPlayground />,
-    parameters: {
-        docs: {
-            canvas: {
-                sourceState: "none",
-            },
-        },
     },
 };
