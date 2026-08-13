@@ -206,3 +206,8 @@ export const headerCloseButton = css`
         width: 2rem;
     }
 `;
+
+export const headerSpacer = css`
+    width: 2rem;
+    flex-shrink: 0;
+`;
