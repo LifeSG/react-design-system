@@ -3,8 +3,6 @@ import { useState } from "react";
 import { FeedbackRating } from "src/feedback-rating";
 import { ModalV2 } from "src/modal-v2";
 
-import { ModalBoxDiv } from "./doc-elements";
-
 type Component = typeof FeedbackRating;
 
 const meta: Meta<Component> = {
@@ -30,10 +28,8 @@ export const Default: StoryObj<Component> = {
                     <ModalV2.Card>
                         <ModalV2.CloseButton />
                         <ModalV2.Content>
-                            <ModalBoxDiv>
-                                You have rated: {rating} star
-                                {rating === 1 ? "" : "s"}
-                            </ModalBoxDiv>
+                            You have rated: {rating} star
+                            {rating === 1 ? "" : "s"}
                         </ModalV2.Content>
                     </ModalV2.Card>
                 </ModalV2>
