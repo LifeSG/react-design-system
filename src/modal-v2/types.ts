@@ -41,16 +41,15 @@ export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
      */
     "data-testid"?: string | undefined;
     /**
-     * Heading text rendered in the header. Centered when `closeButtonPosition`
-     * is `"left"`; left-aligned when `"right"`. Omit for a close-button-only
-     * header.
+     * Heading text rendered in the header. Always centered regardless of
+     * `closeButtonPosition`. Omit for a close-button-only header.
      */
     title?: string | undefined;
     /**
      * Which side of the header the close button is placed on. The title
      * alignment adjusts automatically.
      *
-     * @default "left"
+     * @default "right"
      */
     closeButtonPosition?: "left" | "right" | undefined;
 }

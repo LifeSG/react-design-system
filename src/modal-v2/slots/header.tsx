@@ -10,7 +10,7 @@ import * as styles from "./slot-styles";
 export const Header = ({
     "data-testid": testId = "modal-header",
     title,
-    closeButtonPosition = "left",
+    closeButtonPosition = "right",
     className,
     ...otherProps
 }: ModalHeaderProps) => {
@@ -20,8 +20,8 @@ export const Header = ({
         <div
             data-testid={testId}
             data-close-button-position={closeButtonPosition}
-            {...otherProps}
             className={clsx(styles.headerContainer, className)}
+            {...otherProps}
         >
             <ClickableIcon
                 onClick={onClose}
