@@ -13,8 +13,6 @@ class StoryPage extends AbstractStoryPage {
         disabledTextarea: Locator;
         readonlyTextarea: Locator;
         errorTextarea: Locator;
-        errorMessageTextarea: Locator;
-        errorMessageCounterTextarea: Locator;
         textbox: (field: Locator) => Locator;
     };
 
@@ -30,10 +28,6 @@ class StoryPage extends AbstractStoryPage {
             disabledTextarea: page.getByTestId("textarea-disabled"),
             readonlyTextarea: page.getByTestId("textarea-readonly"),
             errorTextarea: page.getByTestId("textarea-error"),
-            errorMessageTextarea: page.getByTestId("textarea-error-message"),
-            errorMessageCounterTextarea: page.getByTestId(
-                "textarea-error-message-counter"
-            ),
             textbox: (field: Locator) => field.getByRole("textbox"),
         };
     }
