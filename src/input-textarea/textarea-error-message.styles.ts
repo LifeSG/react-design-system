@@ -1,10 +1,13 @@
 import { css } from "@linaria/core";
 
-import { Colour, Font } from "../theme";
+import { Colour, Font, Spacing } from "../theme";
 
 export const container = css`
+    ${Font["body-sm-semibold"]}
     display: flex;
     flex: 1;
+    align-items: center;
+    gap: ${Spacing["spacing-4"]};
 `;
 
 export const icon = css`

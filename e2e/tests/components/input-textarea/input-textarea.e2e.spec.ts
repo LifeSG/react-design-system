@@ -269,7 +269,7 @@ test.describe("InputTextarea", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("standalone-error-message-mobile", {
+            await story.init("standalone-error-message", {
                 size: "mobile",
             });
         });
