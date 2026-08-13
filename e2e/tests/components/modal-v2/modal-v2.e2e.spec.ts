@@ -247,10 +247,10 @@ test.describe("ModalV2", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("header-icon-position");
+            await story.init("header-default");
         });
 
-        test("Header icon position", async ({ story }) => {
+        test("Header default", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
@@ -259,10 +259,10 @@ test.describe("ModalV2", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("header-with-heading");
+            await story.init("header-close-button-only");
         });
 
-        test("Header with heading title", async ({ story }) => {
+        test("Header close button only", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
@@ -271,10 +271,10 @@ test.describe("ModalV2", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("header-icon-right-with-heading");
+            await story.init("header-close-button-left");
         });
 
-        test("Header icon right with heading", async ({ story }) => {
+        test("Header close button left", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });
