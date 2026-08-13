@@ -58,6 +58,7 @@ export const InactivityTimer = ({
         if (prevBucket !== currBucket) {
             setLiveReminderText(buildReminderSentence(secondsLeft));
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [secondsLeft, reminderInterval]);
 
     if (!liveReminderText || !shouldEnable) return null;

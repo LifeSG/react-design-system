@@ -4,7 +4,7 @@ import {
 } from "@dnd-kit/core";
 
 export class MouseSensor extends LibMouseSensor {
-    static activators = [
+    public static readonly activators = [
         {
             eventName: "onMouseDown" as const,
             handler: ({ nativeEvent: event }: React.MouseEvent) => {
@@ -15,7 +15,7 @@ export class MouseSensor extends LibMouseSensor {
 }
 
 export class KeyboardSensor extends LibKeyboardSensor {
-    static activators = [
+    public static readonly activators = [
         {
             eventName: "onKeyDown" as const,
             handler: ({ nativeEvent: event }: React.KeyboardEvent<Element>) => {

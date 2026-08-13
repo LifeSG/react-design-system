@@ -1,4 +1,5 @@
 const createSubItems = (length: number, depth: number, prefix = "") =>
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     Array.from({ length }, (_, index): any => {
         const currentIndex = index + 1;
         const label = prefix ? `${prefix}.${currentIndex}` : `${currentIndex}`;

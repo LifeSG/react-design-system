@@ -1,7 +1,6 @@
 "use client";
 
 import { Form } from "@lifesg/react-design-system/form";
-import { InputSelect } from "@lifesg/react-design-system";
 
 const OPTIONS = [
     { value: "A", label: "Option A" },

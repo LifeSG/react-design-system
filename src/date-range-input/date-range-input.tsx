@@ -201,6 +201,7 @@ export const DateRangeInput = ({
             start: DateInputHelper.sanitizeInput(value),
             end: DateInputHelper.sanitizeInput(valueEnd),
         });
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value, valueEnd]);
 
     useEffect(() => {
@@ -209,6 +210,7 @@ export const DateRangeInput = ({
         } else if (currentFocus === "end" && selectedEnd) {
             setInitialCalendarDate(selectedEnd);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [currentFocus]);
 
     // =============================================================================

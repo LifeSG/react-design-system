@@ -7,13 +7,13 @@ import { DataTable } from "src/data-table";
 // TEST SETUP
 // =============================================================================
 globalThis.IntersectionObserver = class IntersectionObserver {
-    constructor() {}
-    disconnect() {}
-    observe() {}
-    takeRecords() {
+    public constructor() {}
+    public disconnect() {}
+    public observe() {}
+    public takeRecords() {
         return [];
     }
-    unobserve() {}
+    public unobserve() {}
 } as unknown as typeof IntersectionObserver;
 
 // =============================================================================

@@ -12,7 +12,7 @@ const eslintConfig = defineConfig([
             local: localRules,
         },
         rules: {
-            "local/import-path-preferences": "warn",
+            "local/import-path-preferences": "error",
             "no-restricted-syntax": [
                 "error",
                 {

@@ -197,11 +197,11 @@ describe("Fullscreen Image Carousel", () => {
         it("should use src as fallback thumbnail when image item has no thumbnailSrc", async () => {
             const OriginalImage = global.Image;
             // Simulate image load completing in jsdom (onload never fires natively)
-            (global as any).Image = class {
-                width = 100;
-                height = 100;
-                onload: (() => void) | null = null;
-                set src(_: string) {
+            (global.Image as unknown as Partial<typeof Image>) = class {
+                public width = 100;
+                public height = 100;
+                public onload: (() => void) | null = null;
+                public set src(_: string) {
                     Promise.resolve().then(() => this.onload?.());
                 }
             };

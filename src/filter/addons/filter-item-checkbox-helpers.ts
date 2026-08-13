@@ -26,10 +26,13 @@ export const flattenNestedOptions = <T = FilterItemCheckboxOptionProps>(
     nestedOptions.forEach((option, index) => {
         const value: string = valueExtractor
             ? valueExtractor(option)
-            : (option as any).value;
+            : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (option as any).value;
         const label: string = labelExtractor
             ? labelExtractor(option)
-            : (option as any).label;
+            : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (option as any).label;
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const options: any[] = (option as any).options;
         const keyPath = [...parentKeyPath, value];
         const hasChildren = !!(options && options.length > 0);
@@ -129,9 +132,11 @@ export const hasNestedOptions = <T = FilterItemCheckboxOptionProps>(
     optionsExtractor?: (item: T) => T[]
 ): boolean => {
     return options.some((option: T) => {
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         const nestedOptions: any[] = optionsExtractor
             ? optionsExtractor(option)
-            : (option as any).options;
+            : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (option as any).options;
         return nestedOptions && nestedOptions.length > 0;
     });
 };

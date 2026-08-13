@@ -47,6 +47,7 @@ export const useEventListener = <K extends keyof WindowEventMap>(
                 element?.removeEventListener(eventName, eventListener, options);
             };
         },
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [eventName, target] // Re-run if eventName or element changes
     );
 };

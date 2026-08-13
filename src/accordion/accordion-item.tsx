@@ -71,6 +71,7 @@ function Component(
                     },
                 }
             ),
+        // eslint-disable-next-line react-hooks/exhaustive-deps
         [expanded]
     );
 
@@ -81,6 +82,7 @@ function Component(
         setHasFirstLoad(true);
 
         return () => onItemDeregister?.(internalId);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -88,6 +90,7 @@ function Component(
             internalId,
             collapsible ? expandedControlled ?? expandAll : true
         );
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [expandAll, expandedControlled, collapsible]);
 
     // =========================================================================

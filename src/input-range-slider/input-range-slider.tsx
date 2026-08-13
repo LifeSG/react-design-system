@@ -68,6 +68,7 @@ export const InputRangeSlider = ({
         if (value !== selection) {
             setSelection(initialiseSelection());
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     // =========================================================================

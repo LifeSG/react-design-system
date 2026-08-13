@@ -99,6 +99,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
     // Initial scroll on mount and when dependencies change
     useEffect(() => {
         resetScroll();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialScrollTime, cellWidth, startTime, endTime]);
 
     // =============================================================================

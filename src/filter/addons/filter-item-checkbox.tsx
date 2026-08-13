@@ -53,6 +53,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
 
     // Check if options have nested structure
     const isNested = useMemo(
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
         () => hasNestedOptions(options, (item) => (item as any).options),
         [options]
     );
@@ -66,7 +67,9 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
             flattenNestedOptions(
                 options,
                 [],
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 valueExtractor || ((item) => (item as any).value),
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 labelExtractor || ((item) => (item as any).label)
             ),
         [options, valueExtractor, labelExtractor]
@@ -220,13 +223,15 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
     const getLabel = (item: T): React.ReactNode => {
         return labelExtractor
             ? labelExtractor(item)
-            : (item as any).label ?? item?.toString();
+            : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (item as any).label ?? item?.toString();
     };
 
     const getValue = (item: T): string => {
         return valueExtractor
             ? valueExtractor(item)
-            : (item as any).value ?? item?.toString();
+            : // eslint-disable-next-line @typescript-eslint/no-explicit-any
+              (item as any).value ?? item?.toString();
     };
 
     const setVisibleItemsWhenMinimised = () => {
@@ -278,6 +283,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         if (selectedOptions !== selected) {
             setSelected(selectedOptions || []);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOptions]);
 
     useEffect(() => {
@@ -286,6 +292,7 @@ export const FilterItemCheckbox = <T = FilterItemCheckboxOptionProps,>({
         } else {
             setVisibleItemsWhenMinimised();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [options]);
 
     useResizeDetector({

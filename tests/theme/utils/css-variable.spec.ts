@@ -100,6 +100,7 @@ describe("parseCSSVariableValue", () => {
     it("returns empty string when window is undefined", () => {
         const windowSpy = jest
             .spyOn(globalThis, "window", "get")
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             .mockReturnValue(undefined as any);
         const consoleWarnSpy = jest.spyOn(console, "warn").mockImplementation();
 

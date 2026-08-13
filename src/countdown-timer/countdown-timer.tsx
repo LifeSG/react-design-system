@@ -101,11 +101,13 @@ export const CountdownTimer = ({
             performOnTickHandler();
             performOnNotifyHandler();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [remainingSeconds]);
 
     useEffect(() => {
         const y = getOffsetY();
         setOffsetY(y);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMobile, offset?.top, mobileOffset?.top]);
 
     useEffect(() => {
@@ -119,6 +121,7 @@ export const CountdownTimer = ({
                 window.removeEventListener("resize", handleResize);
             };
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [wrapperRef.current]);
 
     // Announcements

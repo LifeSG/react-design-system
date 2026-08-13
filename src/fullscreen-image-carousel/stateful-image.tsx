@@ -63,6 +63,7 @@ export const StatefulImage = ({
             setLoading(false);
             setError(e);
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [src]);
 
     const renderContent = () => {

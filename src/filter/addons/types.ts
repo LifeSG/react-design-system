@@ -7,6 +7,7 @@ import type { FilterItemProps } from "../types";
  * select/deselect all behavior.
  */
 export interface FilterItemCheckboxOptionProps {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     value: any;
     label: string;
     /** Nested child options. Providing children makes this item a parent node. */

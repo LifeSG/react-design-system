@@ -104,6 +104,7 @@ describe("useApplyStyle Hooks", () => {
 
     it("does not crash when ref is null", () => {
         const BrokenComponent = () => {
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             useApplyStyle(null as any, { background: "red" });
             return null;
         };

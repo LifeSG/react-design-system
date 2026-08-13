@@ -96,6 +96,7 @@ export const PredictiveTextInput = <T, V>({
         }
     }, []);
 
+    // eslint-disable-next-line react-hooks/exhaustive-deps
     const fetchOptionsDebounced = useCallback(
         debounce((input: string) => {
             handleFetchOptions(input);
@@ -138,6 +139,7 @@ export const PredictiveTextInput = <T, V>({
         if (selectedOption && input !== getDisplayValue(selectedOption)) {
             setIsOptionSelected(false);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [input, selectedOption]);
 
     useEffect(() => {
@@ -145,6 +147,7 @@ export const PredictiveTextInput = <T, V>({
         setSearchedInput(selectedOption ? getDisplayValue(selectedOption) : "");
         setPrevOptionSelected(selectedOption);
         setIsOptionSelected(!!selectedOption);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selectedOption]);
 
     useEffect(() => {
@@ -172,6 +175,7 @@ export const PredictiveTextInput = <T, V>({
                 );
             }
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [options, input, isError, isLoading]);
 
     // =============================================================================

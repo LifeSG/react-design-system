@@ -28,6 +28,7 @@ export const TextareaCounter = ({
     // =============================================================================
     useEffect(() => {
         setCounterLabel(getCounterLabel(`${value || ""}`));
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value, maxLength]);
 
     // =============================================================================

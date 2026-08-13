@@ -96,6 +96,7 @@ export const Alert = ({
     const setCollapsedState = useCallback(() => {
         setShowHiddenContent(!maxCollapsedHeight);
         setRenderShowMore(isContentOutsideCollapsibleZone());
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [maxCollapsedHeight, contentHeight]);
 
     function isContentOutsideCollapsibleZone() {

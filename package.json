@@ -38,8 +38,8 @@
         "generate:catalog": "tsx scripts/generate-component-catalog.ts",
         "codemod": "ENV=dev tsx codemods/run-codemod.ts",
         "lint": "npm run lint:js && npm run lint:css",
-        "lint:js": "eslint '**/*.{ts,tsx,js,jsx}' && npm --prefix e2e/nextjs-app run lint:src",
-        "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix && npm --prefix e2e/nextjs-app run lint:src:fix",
+        "lint:js": "eslint '**/*.{ts,tsx,js,jsx}' --max-warnings 0 && npm --prefix e2e/nextjs-app run lint:src",
+        "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix --max-warnings 0 && npm --prefix e2e/nextjs-app run lint:src:fix",
         "lint:css": "stylelint '**/*.css'",
         "lint:css:fix": "stylelint '**/*.css' --fix",
         "test:eslint-rules": "node tests/eslint-rules/run-eslint-rule-tests.mjs"
@@ -183,10 +183,10 @@
     },
     "lint-staged": {
         "*.{tsx,ts}": [
-            "eslint --fix"
+            "eslint --fix --max-warnings 0"
         ],
         "e2e/nextjs-app/src/**/*.{ts,tsx,js,jsx}": [
-            "npm --prefix e2e/nextjs-app run lint:staged:fix --"
+            "npm --prefix e2e/nextjs-app run lint:staged:fix -- max-warnings 0"
         ],
         "*.{css,module.css}": [
             "stylelint --fix"

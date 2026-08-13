@@ -102,6 +102,7 @@ const Component = (
         performOnCalendarDateChange(viewCalendarDate);
         // more accurate than calendarDate since it accounts for selection state
         // in month/year views
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [viewCalendarDate]);
 
     // =============================================================================

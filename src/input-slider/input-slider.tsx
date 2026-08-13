@@ -29,6 +29,7 @@ export const InputSlider = ({
         if (value !== selection[0]) {
             setSelection(initialiseSelection());
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [value]);
 
     // =========================================================================

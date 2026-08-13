@@ -69,6 +69,7 @@ const OverlayComponent = ({
                 applyBodyStyleClass("remove");
             }
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     useEffect(() => {
@@ -104,6 +105,7 @@ const OverlayComponent = ({
 
             return () => clearTimeout(timerId);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [show]);
 
     // Track mousedown origin to distinguish clicks from text selection drags
@@ -118,6 +120,7 @@ const OverlayComponent = ({
                 true
             );
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [show]);
 
     // =============================================================================

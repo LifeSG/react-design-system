@@ -149,6 +149,7 @@ const Component = (props: TimeTableProps, ref: React.Ref<TimeTableRef>) => {
     // Initial scroll on mount and when dependencies change
     useEffect(() => {
         resetScroll();
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [initialScrollTime, intervalWidth, timetableMinTime, timetableMaxTime]);
 
     // =============================================================================

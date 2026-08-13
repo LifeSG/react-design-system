@@ -129,6 +129,7 @@ export const SortIndicators: StoryObj<Component> = {
                     ? a.colA.localeCompare(b.colA)
                     : b.colA.localeCompare(a.colA);
             });
+            // eslint-disable-next-line react-hooks/exhaustive-deps
         }, [sortState]);
         const handleHeaderClick = (fieldKey: string) => {
             if (fieldKey === "colA") {

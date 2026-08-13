@@ -12,6 +12,7 @@ export const getSlots = () => {
     weekdays.push(weekdays[weekdays.length - 1].add(1, "day"));
     for (const key in slotsData) {
         if (i < weekdays.length)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             slots[weekdays[i].format("YYYY-MM-DD")] = (slotsData as any)[key];
         i++;
     }
@@ -24,6 +25,7 @@ export const getSlotsMin = () => {
     let i = 0;
     for (const key in slotsDataMin) {
         if (i < weekdays.length)
+            // eslint-disable-next-line @typescript-eslint/no-explicit-any
             slots[weekdays[i].format("YYYY-MM-DD")] = (slotsDataMin as any)[
                 key
             ];

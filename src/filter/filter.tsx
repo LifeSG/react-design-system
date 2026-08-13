@@ -44,6 +44,7 @@ export const Filter = ({
         if (!isMobile) {
             onDismiss?.();
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [isMobile]);
 
     return (

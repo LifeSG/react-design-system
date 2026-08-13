@@ -96,6 +96,7 @@ export const Toggle = ({
         if (selected) {
             setExpanded(initialExpanded ?? true);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [selected]);
 
     // =============================================================================

@@ -34,6 +34,7 @@ const AccordionBase = ({
         if (hasFirstLoad) {
             onExpandCollapseChange?.(expandAll);
         }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [expandAll, hasFirstLoad]);
 
     useEffect(() => {

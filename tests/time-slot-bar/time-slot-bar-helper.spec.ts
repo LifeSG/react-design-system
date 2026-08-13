@@ -103,6 +103,7 @@ describe("TimeSlotBarHelper", () => {
 
         it("should return original time for invalid type", () => {
             expect(
+                // eslint-disable-next-line @typescript-eslint/no-explicit-any
                 TimeSlotBarHelper.adjustTimeForMarker("09:15", "invalid" as any)
             ).toBe("09:15");
         });
