@@ -1,0 +1,97 @@
+name: PR Checks
+
+on:
+  pull_request:
+    types: [opened, synchronize, reopened]
+
+concurrency:
+  group: ${{ github.workflow }}-${{ github.head_ref || github.run_id }}
+  cancel-in-progress: true
+
+jobs:
+  prepare-deps:
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Install dependencies
+        run: npm ci
+      - name: Upload dependencies artifact
+        uses: actions/upload-artifact@v7
+        with:
+          name: node-modules
+          path: node_modules/
+          retention-days: 1
+
+  lint:
+    needs: prepare-deps
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Download dependencies artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: node-modules
+          path: node_modules/
+      - name: Lint JS and CSS
+        run: npm run lint
+      - name: Validate custom ESLint rules
+        run: npm run test:eslint-rules
+
+  unit-tests:
+    needs: prepare-deps
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Download dependencies artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: node-modules
+          path: node_modules/
+      - name: Run unit tests
+        run: npm test
+
+  build-lib:
+    needs: prepare-deps
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Download dependencies artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: node-modules
+          path: node_modules/
+      - name: Build library
+        run: npm run build-lib
+
+  build-storybook:
+    needs: prepare-deps
+    timeout-minutes: 5
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v6
+        with:
+          node-version: 22
+      - name: Download dependencies artifact
+        uses: actions/download-artifact@v8
+        with:
+          name: node-modules
+          path: node_modules/
+      - name: Build Storybook
+        run: npm run build-storybook
