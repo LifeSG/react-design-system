@@ -19,11 +19,13 @@ jobs:
           node-version: 22
       - name: Install dependencies
         run: npm ci
+      - name: Pack dependencies
+        run: tar -czf node-modules.tgz node_modules
       - name: Upload dependencies artifact
         uses: actions/upload-artifact@v7
         with:
-          name: node-modules
-          path: node_modules/
+          name: node-modules-tar
+          path: node-modules.tgz
           retention-days: 1
 
   lint:
@@ -38,8 +40,10 @@ jobs:
       - name: Download dependencies artifact
         uses: actions/download-artifact@v8
         with:
-          name: node-modules
+          name: node-modules-tar
           path: .
+      - name: Restore dependencies
+        run: tar -xzf node-modules.tgz
       - name: Lint JS and CSS
         run: npm run lint
       - name: Validate custom ESLint rules
@@ -57,8 +61,10 @@ jobs:
       - name: Download dependencies artifact
         uses: actions/download-artifact@v8
         with:
-          name: node-modules
+          name: node-modules-tar
           path: .
+      - name: Restore dependencies
+        run: tar -xzf node-modules.tgz
       - name: Run unit tests
         run: npm test
 
@@ -74,8 +80,10 @@ jobs:
       - name: Download dependencies artifact
         uses: actions/download-artifact@v8
         with:
-          name: node-modules
+          name: node-modules-tar
           path: .
+      - name: Restore dependencies
+        run: tar -xzf node-modules.tgz
       - name: Build library
         run: npm run build-lib
 
@@ -91,7 +99,9 @@ jobs:
       - name: Download dependencies artifact
         uses: actions/download-artifact@v8
         with:
-          name: node-modules
+          name: node-modules-tar
           path: .
+      - name: Restore dependencies
+        run: tar -xzf node-modules.tgz
       - name: Build Storybook
         run: npm run build-storybook
