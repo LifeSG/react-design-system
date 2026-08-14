@@ -149,6 +149,7 @@ export const TextareaBase = React.forwardRef(TextareaBaseComponent);
 const TextareaComponent = (
     {
         value,
+        id,
         disabled,
         rows = 5,
         onChange,
@@ -186,6 +187,17 @@ const TextareaComponent = (
         if (onChange) onChange(event);
     };
 
+    const errorMessageId = id ? `${id}-error-message` : undefined;
+    const isAriaInvalid =
+        !!errorMessage ||
+        !!error ||
+        otherProps["aria-invalid"] === true ||
+        otherProps["aria-invalid"] === "true";
+    const mergedAriaDescribedBy =
+        [otherProps["aria-describedby"], errorMessage && errorMessageId]
+            .filter(Boolean)
+            .join(" ") || undefined;
+
     // -------------------------------------------------------------------------
     // RENDER FUNCTIONS
     // -------------------------------------------------------------------------
@@ -197,6 +209,7 @@ const TextareaComponent = (
                     <FormErrorMessage
                         className={styles.errorMessage}
                         data-testid={errorTestId}
+                        id={errorMessageId}
                     >
                         {errorMessage}
                     </FormErrorMessage>
@@ -225,6 +238,9 @@ const TextareaComponent = (
                 maxLength={maxLength}
                 error={!!errorMessage || error}
                 {...otherProps}
+                id={id}
+                aria-invalid={isAriaInvalid ? true : undefined}
+                aria-describedby={mergedAriaDescribedBy}
             />
             {renderBottomLabels()}
         </div>
