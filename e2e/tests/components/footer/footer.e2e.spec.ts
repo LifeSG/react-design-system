@@ -9,6 +9,11 @@ class StoryPage extends AbstractStoryPage {
     constructor(page: Page) {
         super(page);
     }
+
+    public override async init(...args: Parameters<AbstractStoryPage["init"]>) {
+        await super.init(...args);
+        await this.waitForImageLoad();
+    }
 }
 
 const test = base.extend<{ story: StoryPage }>({
