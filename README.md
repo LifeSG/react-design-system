@@ -105,6 +105,7 @@ Run this command to build and package the library:
 npm run build-lib
 ```
 
+
 The tarball file is generated at `dist/lifesg-react-design-system-<version>.tgz`
 
 In your project directory, you can install the tarball file directly:
