@@ -14,7 +14,7 @@ import { useApplyStyle } from "../theme";
 import { useEvent } from "../util";
 import { ModalContext } from "./modal-context";
 import * as styles from "./modal-v2.styles";
-import { Card, CloseButton, Content, Footer } from "./slots";
+import { Card, CloseButton, Content, Footer, Header } from "./slots";
 import type { ModalV2Props } from "./types";
 
 const Base = ({
@@ -142,6 +142,7 @@ const Base = ({
  * - `ModalV2.CloseButton` — renders an accessible close button that invokes the modal's `onClose` callback.
  * - `ModalV2.Content` — container for the body content of the modal card.
  * - `ModalV2.Footer` — footer area for primary and secondary action buttons.
+ * - `ModalV2.Header` — header bar with a close button and optional title. Use instead of `CloseButton` when a heading is needed.
  */
 export const ModalV2 = Object.assign(Base, {
     /** Wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout. */
@@ -152,4 +153,6 @@ export const ModalV2 = Object.assign(Base, {
     Content,
     /** Footer area for primary and secondary action buttons. */
     Footer,
+    /** Header bar with a close button and optional title. Use instead of `CloseButton` when a heading is needed. */
+    Header,
 });

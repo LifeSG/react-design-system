@@ -8,6 +8,7 @@ import type { ModalCardProps } from "../types";
 import { CloseButton } from "./close-button";
 import { Content } from "./content";
 import { Footer } from "./footer";
+import { Header } from "./header";
 import * as styles from "./slot-styles";
 
 function CardInner(
@@ -51,8 +52,9 @@ function CardInner(
     const CloseButtonSlot = findComponentOfType(CloseButton);
     const ContentSlot = findComponentOfType(Content);
     const FooterSlot = findComponentOfType(Footer);
+    const HeaderSlot = findComponentOfType(Header);
 
-    const hasCloseButton = !!CloseButtonSlot;
+    const hasHeader = !!CloseButtonSlot || !!HeaderSlot;
 
     return (
         <div
@@ -64,13 +66,13 @@ function CardInner(
             className={clsx(styles.modalCard, className)}
         >
             <div
-                data-has-close-button={hasCloseButton ? "true" : "false"}
+                data-has-close-button={!!hasHeader}
                 className={clsx(styles.slotSpacer)}
             >
                 {ContentSlot}
                 {FooterSlot}
             </div>
-            {hasCloseButton && CloseButtonSlot}
+            {hasHeader && (HeaderSlot || CloseButtonSlot)}
         </div>
     );
 }

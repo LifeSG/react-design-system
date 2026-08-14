@@ -58,6 +58,9 @@ export const SlotPlayground = () => {
     const openModal = () => setShow(true);
     const closeModal = () => setShow(false);
 
+    const [header, setHeader] = useState(false);
+    const toggleHeader = () => setHeader(!header);
+
     const [closeButton, setCloseButton] = useState(true);
     const toggleCloseButton = () => setCloseButton(!closeButton);
 
@@ -70,6 +73,9 @@ export const SlotPlayground = () => {
     return (
         <>
             <Options>
+                <Option checked={header} onToggle={toggleHeader}>
+                    Header
+                </Option>
                 <Option checked={closeButton} onToggle={toggleCloseButton}>
                     CloseButton
                 </Option>
@@ -89,7 +95,8 @@ export const SlotPlayground = () => {
                 onClose={closeModal}
             >
                 <ModalV2.Card>
-                    {closeButton && <ModalV2.CloseButton />}
+                    {header && <ModalV2.Header title="Modal title" />}
+                    {closeButton && !header && <ModalV2.CloseButton />}
                     {content && (
                         <ModalV2.Content>
                             <Typography.BodyBL>
