@@ -57,5 +57,18 @@ export const navItemsWithSubmenu: NavItemProps<undefined>[] = [
         id: "lifesg-app",
         children: "LifeSG app",
         href: "https://www.life.gov.sg",
+        subMenu: [
+            {
+                id: "app-item-1",
+                children: "About the app",
+                href: "https://www.life.gov.sg",
+            },
+            {
+                id: "app-item-2",
+                children:
+                    "Lorem ipsum dolor sit amet consectetur adipiscing elit",
+                href: "https://www.life.gov.sg",
+            },
+        ],
     },
 ];

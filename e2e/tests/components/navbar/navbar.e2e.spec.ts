@@ -13,6 +13,7 @@ class StoryPage extends AbstractStoryPage {
         internal: {
             mobileMenuButton: Locator;
             servicesTrigger: Locator;
+            appTrigger: Locator;
             servicesMobileTrigger: Locator;
             closeButton: Locator;
             drawer: Locator;
@@ -37,6 +38,7 @@ class StoryPage extends AbstractStoryPage {
             internal: {
                 mobileMenuButton: page.getByTestId("button__mobile-menu"),
                 servicesTrigger: page.getByRole("button", { name: "Services" }),
+                appTrigger: page.getByRole("button", { name: "LifeSG app" }),
                 servicesMobileTrigger: page.getByTestId(
                     "link__mobile-2-expand-collapse-button"
                 ),
@@ -224,14 +226,21 @@ test.describe("Navbar", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("Submenu", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("submenu");
         });
 
-        test("Submenu", async ({ story }) => {
+        test("Open", async ({ story }) => {
             await story.locators.internal.servicesTrigger.click();
-            await compareScreenshot(story, "open", {
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+        });
+
+        test("Open last item", async ({ story }) => {
+            await story.locators.internal.appTrigger.click();
+            await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
         });
@@ -456,6 +465,7 @@ test.describe("Navbar", () => {
                 });
 
                 await test.step("Tab through submenu items (opened on focus)", async () => {
+                    await story.page.keyboard.press("Tab");
                     await story.page.keyboard.press("Tab");
                     await expect(
                         story.locators.internal.submenuLink(
