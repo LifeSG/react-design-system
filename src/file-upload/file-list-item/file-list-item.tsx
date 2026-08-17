@@ -4,30 +4,30 @@ import { BinIcon } from "@lifesg/react-icons/bin";
 import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
 import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
-import {
-    memo,
-    useCallback,
-    useContext,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { memo, useContext, useRef } from "react";
 
 import { Button } from "../../button";
 import type { FormLabelProps } from "../../form/form-label/types";
 import { ProgressBar } from "../../shared/progress-bar";
 import { Typography } from "../../typography";
-import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
 import { FileUploadHelper } from "../helper";
+import type { FileItemProps } from "../types";
 import type { ItemFocusType } from "./file-list-item.styles";
 import * as styles from "./file-list-item.styles";
 import { FileListItemThumbnail } from "./file-list-item-thumbnail";
-import type { FileListItemProps } from "./types";
+import { useTruncatedName } from "./use-truncated-name";
 
-interface Props extends FileListItemProps {
+interface Props {
+    fileItem: FileItemProps;
+    wrapperWidth: number;
+    editable?: boolean | undefined;
+    sortable?: boolean | undefined;
+    disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     descriptionLabel?: FormLabelProps | undefined;
+    onDelete: () => void;
+    onEditClick?: (() => void) | undefined;
 }
 
 const Component = ({
@@ -54,13 +54,18 @@ const Component = ({
         thumbnailImageDataUrl,
         truncateText = true,
     } = fileItem;
-    const [formattedName, setFormattedName] = useState<string>();
     const { activeId } = useContext(FileUploadContext);
 
     // Sortable mechanism
     const { attributes, listeners, setNodeRef, transform, transition } =
         useSortable({ id });
     const detailSectionRef = useRef<HTMLDivElement>(null);
+    const formattedName = useTruncatedName(
+        name,
+        wrapperWidth,
+        truncateText,
+        detailSectionRef
+    );
     const style = {
         transform: CSS.Translate.toString(transform),
         transition,
@@ -81,36 +86,6 @@ const Component = ({
             ? "self"
             : "others"
         : "none";
-
-    // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
-    const getTruncatedText = useCallback(
-        (value: string) => {
-            if (!truncateText) return value;
-
-            const widthOfElement =
-                detailSectionRef && detailSectionRef.current
-                    ? detailSectionRef.current.getBoundingClientRect().width
-                    : 0;
-
-            return StringHelper.truncateOneLine(
-                value,
-                widthOfElement,
-                widthOfElement / 2,
-                widthOfElement / 2 / 8, // Arbitrary
-                16 // Font size
-            );
-        },
-        [truncateText]
-    );
-
-    // =========================================================================
-    // EFFECTS
-    // =========================================================================
-    useEffect(() => {
-        setFormattedName(getTruncatedText(name));
-    }, [wrapperWidth, getTruncatedText, name]);
 
     // =========================================================================
     // EVENT HANDLERS

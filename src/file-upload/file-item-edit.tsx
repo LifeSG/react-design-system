@@ -1,13 +1,13 @@
 import clsx from "clsx";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Button } from "../button";
 import { Form } from "../form";
 import type { FormLabelProps } from "../form/form-label/types";
 import { Typography } from "../typography";
-import { StringHelper } from "../util";
 import * as styles from "./file-item-edit.styles";
 import { FileListItemThumbnail } from "./file-list-item/file-list-item-thumbnail";
+import { useTruncatedName } from "./file-list-item/use-truncated-name";
 import { FileUploadHelper } from "./helper";
 import type { FileItemProps } from "./types";
 
@@ -44,42 +44,20 @@ export const FileItemEdit = ({
         thumbnailImageDataUrl,
     } = fileItem;
 
-    const [formattedName, setFormattedName] = useState<string>();
     const [currentDescription, setCurrentDescription] = useState<string>("");
 
     const textareaRef = useRef<HTMLTextAreaElement>(null);
     const nameSectionRef = useRef<HTMLDivElement>(null);
-
-    // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
-    const getTruncatedText = useCallback(
-        (value: string) => {
-            if (!truncateText) return value;
-
-            const widthOfElement =
-                nameSectionRef && nameSectionRef.current
-                    ? nameSectionRef.current.getBoundingClientRect().width
-                    : 0;
-
-            return StringHelper.truncateOneLine(
-                value,
-                widthOfElement,
-                widthOfElement / 2,
-                widthOfElement / 2 / 8, // Arbitrary
-                16 // Font size
-            );
-        },
-        [truncateText]
+    const formattedName = useTruncatedName(
+        name,
+        wrapperWidth,
+        truncateText,
+        nameSectionRef
     );
 
     // =========================================================================
     // EFFECTS
     // =========================================================================
-    useEffect(() => {
-        setFormattedName(getTruncatedText(name));
-    }, [wrapperWidth, getTruncatedText, name]);
-
     useEffect(() => {
         setCurrentDescription(fileItem.description || "");
     }, [fileItem]);
