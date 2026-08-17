@@ -1,9 +1,9 @@
 import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
+import { FormErrorMessage } from "../form/form-label";
 import * as styles from "./textarea.styles";
 import { TextareaCounter } from "./textarea-counter";
-import { TextareaErrorMessage } from "./textarea-error-message";
 import type { TextareaProps, TextareaRef } from "./types";
 
 // =============================================================================
@@ -194,9 +194,12 @@ const TextareaComponent = (
         return (
             <div className={styles.labelContainer}>
                 {errorMessage && (
-                    <TextareaErrorMessage data-testid={errorTestId}>
+                    <FormErrorMessage
+                        className={styles.errorMessage}
+                        data-testid={errorTestId}
+                    >
                         {errorMessage}
-                    </TextareaErrorMessage>
+                    </FormErrorMessage>
                 )}
                 {maxLength && (
                     <TextareaCounter

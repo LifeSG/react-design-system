@@ -85,3 +85,9 @@ export const labelContainer = css`
     justify-content: flex-end;
     gap: ${Spacing["spacing-12"]};
 `;
+
+export const errorMessage = css`
+    flex: 1;
+    margin-top: 0;
+    align-items: flex-start;
+`;
