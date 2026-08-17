@@ -493,6 +493,12 @@ test.describe("Navbar", () => {
                 });
 
                 await test.step("Tab to download action button", async () => {
+                    // Move through the remaining nav items to reach the download button
+                    await story.page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
+                    await story.page.keyboard.press("Tab");
+
+                    // The download button is the last focusable element in the navbar
                     await story.page.keyboard.press("Tab");
 
                     await expect(
