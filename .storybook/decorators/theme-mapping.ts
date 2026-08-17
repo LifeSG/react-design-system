@@ -15,6 +15,7 @@ export const THEME_TYPE_TO_KEY_MAPPING: Record<ThemeType, string> = {
     smgs: "SMGS",
     spf: "SPF",
     supportgowhere: "SupportGoWhere",
+    "tote-board": "Tote Board",
 };
 
 export type ThemeMapKey =

@@ -74,6 +74,9 @@ export const logoSize: Partial<Record<ThemeType, string>> = {
     supportgowhere: css`
         width: 10rem;
     `,
+    "tote-board": css`
+        width: 10rem;
+    `,
 };
 
 export const linkSectionWrapper = css`
