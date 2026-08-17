@@ -292,6 +292,7 @@ export const NavbarItems = <T,>({
                         <ChevronUpIcon
                             className={clsx(
                                 styles.chevronIcon,
+                                styles.chevronIconDesktop,
                                 selected && styles.chevronIconSelected,
                                 isDesktopExpanded && styles.subMenuExpanded
                             )}

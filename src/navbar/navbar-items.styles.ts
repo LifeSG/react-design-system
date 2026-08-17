@@ -120,7 +120,6 @@ export const linkButton = css`
 
 export const linkLabel = css`
     flex: 1;
-    margin-top: 0.25rem;
 
     overflow: hidden;
     display: -webkit-box;
@@ -182,7 +181,6 @@ export const chevronIcon = css`
 export const chevronIconDesktop = css`
     height: 1.125rem;
     width: 1.125rem;
-    margin-top: 2px;
 `;
 
 export const subMenuExpanded = css`

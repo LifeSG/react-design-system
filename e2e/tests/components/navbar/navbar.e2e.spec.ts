@@ -466,7 +466,6 @@ test.describe("Navbar", () => {
 
                 await test.step("Tab through submenu items (opened on focus)", async () => {
                     await story.page.keyboard.press("Tab");
-                    await story.page.keyboard.press("Tab");
                     await expect(
                         story.locators.internal.submenuLink(
                             "Birth registration"
@@ -494,7 +493,6 @@ test.describe("Navbar", () => {
 
                 await test.step("Tab to download action button", async () => {
                     // Move through the remaining nav items to reach the download button
-                    await story.page.keyboard.press("Tab");
                     await story.page.keyboard.press("Tab");
                     await story.page.keyboard.press("Tab");
 
