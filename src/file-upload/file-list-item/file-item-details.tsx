@@ -30,52 +30,32 @@ export const FileItemDetails = ({
 }: Props) => {
     if (mode === "error") {
         return (
-            <>
-                <div ref={detailSectionRef} className={styles.nameSection}>
-                    <Typography.BodyMD
-                        weight={description ? "semibold" : "regular"}
-                    >
-                        {formattedName}
-                    </Typography.BodyMD>
-                    {description && (
-                        <>
-                            <Typography.BodyMD
-                                className={styles.itemDescriptionLabel}
-                            >
-                                {descriptionLabel?.children ??
-                                    "Photo description"}
-                            </Typography.BodyMD>
-                            <Typography.BodyMD
-                                className={styles.itemDescriptionText}
-                            >
-                                {description}
-                            </Typography.BodyMD>
-                        </>
-                    )}
-                    {errorMessage && (
-                        <Typography.BodySM
-                            className={styles.desktopErrorMessage}
-                            weight="semibold"
-                        >
-                            <ExclamationCircleFillIcon
-                                className={styles.errorIcon}
-                                aria-hidden
-                            />
-                            {errorMessage}
-                        </Typography.BodySM>
-                    )}
-                </div>
-                <div
-                    className={styles.fileSizeSection}
-                    data-mobile-visibility={isLoading ? "hidden" : "expand"}
+            <div ref={detailSectionRef} className={styles.nameSection}>
+                <Typography.BodyMD
+                    weight={description ? "semibold" : "regular"}
                 >
-                    <Typography.BodyMD className={styles.fileSizeText}>
-                        {fileSize}
-                    </Typography.BodyMD>
-                </div>
+                    {formattedName}
+                </Typography.BodyMD>
+                {description && (
+                    <>
+                        <Typography.BodyMD
+                            className={styles.itemDescriptionLabel}
+                        >
+                            {descriptionLabel?.children ?? "Photo description"}
+                        </Typography.BodyMD>
+                        <Typography.BodyMD
+                            className={styles.itemDescriptionText}
+                        >
+                            {description}
+                        </Typography.BodyMD>
+                    </>
+                )}
+                <Typography.BodyMD className={styles.descriptionFileSizeText}>
+                    {fileSize}
+                </Typography.BodyMD>
                 {errorMessage && (
                     <Typography.BodySM
-                        className={styles.mobileErrorMessage}
+                        className={styles.errorMessage}
                         weight="semibold"
                     >
                         <ExclamationCircleFillIcon
@@ -85,7 +65,7 @@ export const FileItemDetails = ({
                         {errorMessage}
                     </Typography.BodySM>
                 )}
-            </>
+            </div>
         );
     }
 
