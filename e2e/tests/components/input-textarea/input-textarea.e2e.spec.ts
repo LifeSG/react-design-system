@@ -253,32 +253,18 @@ test.describe("InputTextarea", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
-            await story.init("standalone-error-message");
+            await story.init("standalone-error-message", { size: "mobile" });
         });
 
         test("Standalone errorMessage", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("standalone-error-message", {
-                size: "mobile",
-            });
-        });
-
-        test("Standalone errorMessage (mobile)", async ({ story }) => {
-            await compareScreenshot(story, "mount");
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("standalone-error-message", { mode: "dark" });
-        });
 
         test("Standalone errorMessage (dark mode)", async ({ story }) => {
+            await story.init("standalone-error-message", {
+                size: "mobile",
+                mode: "dark",
+            });
             await compareScreenshot(story, "mount");
         });
     });

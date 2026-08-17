@@ -6,7 +6,7 @@ export const container = css`
     ${Font["body-sm-semibold"]}
     display: flex;
     flex: 1;
-    align-items: center;
+    align-items: flex-start;
     gap: ${Spacing["spacing-4"]};
 `;
 
