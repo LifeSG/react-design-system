@@ -6,7 +6,6 @@ import { memo, useContext, useEffect, useMemo, useRef, useState } from "react";
 import { Form } from "../../form";
 import { Typography } from "../../typography";
 import { FileUploadContext } from "../context";
-import * as editStyles from "../file-item-edit.styles";
 import { FileUploadHelper } from "../helper";
 import { FileItemActions } from "./file-item-actions";
 import { FileItemDetails } from "./file-item-details";
@@ -173,27 +172,27 @@ const Component = (props: FileListItemProps) => {
     // =========================================================================
     if (mode === "edit") {
         return (
-            <li data-testid={`${id}-edit-display`} className={editStyles.item}>
-                <div className={editStyles.contentSection}>
+            <li data-testid={`${id}-edit-display`} className={styles.editItem}>
+                <div className={styles.editContentSection}>
                     {shouldShowThumbnail && (
                         <FileListItemThumbnail
                             thumbnailImageDataUrl={thumbnailImageDataUrl}
                             fileType={fileItem.type}
                         />
                     )}
-                    <div className={editStyles.detailsSection}>
+                    <div className={styles.editDetailsSection}>
                         <div
                             ref={detailSectionRef}
-                            className={editStyles.nameSection}
+                            className={styles.editNameSection}
                         >
                             <Typography.BodyMD
-                                className={editStyles.fileNameText}
+                                className={styles.editFileNameText}
                                 weight="semibold"
                             >
                                 {formattedName}
                             </Typography.BodyMD>
                             <Typography.BodyMD
-                                className={editStyles.fileSizeText}
+                                className={styles.editFileSizeText}
                             >
                                 {fileSize}
                             </Typography.BodyMD>

@@ -4,7 +4,6 @@ import clsx from "clsx";
 
 import { Button } from "../../button";
 import { ProgressBar } from "../../shared/progress-bar";
-import * as editStyles from "../file-item-edit.styles";
 import * as styles from "./file-list-item.styles";
 
 // =============================================================================
@@ -76,9 +75,9 @@ export const FileItemActions = (props: FileItemActionsProps) => {
         return (
             <div
                 className={clsx(
-                    editStyles.actionButtonsSection,
+                    styles.actionButtonsSection,
                     props.hasThumbnail &&
-                        editStyles.actionButtonsSectionWithThumbnail
+                        styles.actionButtonsSectionWithThumbnail
                 )}
             >
                 <Button
@@ -87,7 +86,7 @@ export const FileItemActions = (props: FileItemActionsProps) => {
                     sizeType="small"
                     disabled={props.disableSave}
                     onClick={props.onSave}
-                    className={editStyles.actionButton}
+                    className={styles.actionButton}
                 >
                     Save
                 </Button>
@@ -97,7 +96,7 @@ export const FileItemActions = (props: FileItemActionsProps) => {
                     styleType="secondary"
                     data-testid={`${id}-cancel-button`}
                     onClick={props.onCancel}
-                    className={editStyles.actionButton}
+                    className={styles.actionButton}
                 >
                     Cancel
                 </Button>
