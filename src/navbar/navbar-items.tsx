@@ -201,8 +201,7 @@ export const NavbarItems = <T,>({
                         data-testid={`${testId}-expand-collapse-button`}
                         className={clsx(
                             styles.expandCollapseButton,
-                            isMobileExpanded &&
-                                styles.expandCollapseButtonExpanded
+                            isMobileExpanded && styles.subMenuExpanded
                         )}
                         focusHighlight={false}
                         focusOutline="browser"
@@ -290,33 +289,13 @@ export const NavbarItems = <T,>({
                     >
                         <div className={styles.linkLabel}>{children}</div>
                         {renderIndicator()}
-                        {
-                            <div>
-                                <ClickableIcon
-                                    data-testid={`${testId}-expand-collapse-button`}
-                                    className={clsx(
-                                        styles.expandCollapseButton,
-                                        isDesktopExpanded &&
-                                            styles.expandCollapseButtonExpanded
-                                    )}
-                                    focusHighlight={false}
-                                    focusOutline="browser"
-                                    aria-label={
-                                        isDesktopExpanded
-                                            ? "Collapse"
-                                            : "Expand"
-                                    }
-                                >
-                                    <ChevronUpIcon
-                                        className={clsx(
-                                            styles.chevronIcon,
-                                            selected &&
-                                                styles.chevronIconSelected
-                                        )}
-                                    />
-                                </ClickableIcon>
-                            </div>
-                        }
+                        <ChevronUpIcon
+                            className={clsx(
+                                styles.chevronIcon,
+                                selected && styles.chevronIconSelected,
+                                isDesktopExpanded && styles.subMenuExpanded
+                            )}
+                        />
                     </button>
                 </DesktopMenu>
             );
