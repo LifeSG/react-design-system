@@ -3,39 +3,19 @@ import type { FileItemProps } from "../types";
 
 export type FileItemMode = "display" | "edit" | "error";
 
-interface BaseProps {
+export interface FileListItemProps {
     fileItem: FileItemProps;
     wrapperWidth: number;
+    editable?: boolean | undefined;
+    sortable?: boolean | undefined;
     disabled?: boolean | undefined;
     readOnly?: boolean | undefined;
     descriptionLabel?: FormLabelProps | undefined;
-}
-
-interface DisplayModeProps extends BaseProps {
-    mode: "display";
-    /** If specified, the edit buttons will be rendered */
-    editable?: boolean | undefined;
-    /** If specified, drag handles will be rendered */
-    sortable?: boolean | undefined;
-    onDelete: () => void;
-    onEditClick?: (() => void) | undefined;
-}
-
-interface EditModeProps extends BaseProps {
-    mode: "edit";
     fileDescriptionMaxLength?: number | undefined;
     descriptionRequired?: boolean | undefined;
-    onSave: (description: string) => void;
-    onCancel: () => void;
-    onBlur: (value: string) => void;
-}
-
-interface ErrorModeProps extends BaseProps {
-    mode: "error";
     onDelete: () => void;
+    onSave?: ((description: string) => void) | undefined;
+    onCancel?: (() => void) | undefined;
+    onBlur?: ((value: string) => void) | undefined;
+    onModeChange?: ((mode: FileItemMode) => void) | undefined;
 }
-
-export type FileListItemProps =
-    | DisplayModeProps
-    | EditModeProps
-    | ErrorModeProps;

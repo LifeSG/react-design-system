@@ -29,6 +29,7 @@ import { VisuallyHidden } from "../../shared/accessibility";
 import { FileUploadContext } from "../context";
 import { MouseSensor } from "../custom-sensors";
 import { FileListItem } from "../file-list-item";
+import type { FileItemMode } from "../file-list-item/types";
 import { FileUploadHelper } from "../helper";
 import type { FileItemProps } from "../types";
 import * as styles from "./file-list.styles";
@@ -36,9 +37,6 @@ import * as styles from "./file-list.styles";
 // =============================================================================
 // INTERFACES
 // =============================================================================
-type RenderMode = "edit" | "display" | "error";
-
-type FileItemRenderModes = Record<string, RenderMode>;
 type FileEditedDescriptions = Record<string, string>;
 
 type RenderItem = FileItemProps | FileItemProps[];
@@ -93,7 +91,7 @@ function Component(
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const [renderModes, setRenderModes] = useState<FileItemRenderModes>({});
+    const [editingIds, setEditingIds] = useState<Set<string>>(new Set());
     const { setActiveId } = useContext(FileUploadContext);
 
     // Progress announcement state (for aria-live) - announces start and completion only
@@ -139,37 +137,9 @@ function Component(
         delete descriptionsValueRef.current[itemId];
     };
 
-    const shallowCompareRenderModes = (
-        prev: FileItemRenderModes,
-        next: FileItemRenderModes
-    ) => {
-        const prevKeys = Object.keys(prev);
-        const nextKeys = Object.keys(next);
-        if (prevKeys.length !== nextKeys.length) {
-            return false;
-        }
-        for (const k of nextKeys) {
-            if (prev[k] !== next[k]) {
-                return false;
-            }
-        }
-        return true;
-    };
-
     // =========================================================================
     // EFFECTS
     // =========================================================================
-    useEffect(() => {
-        const nextModes = getItemsRenderMode(fileItems);
-        const prevModes = renderModes;
-        // We perform shallowCompare to avoid infinite re-render loop
-        if (shallowCompareRenderModes(prevModes, nextModes)) {
-            return;
-        }
-        setRenderModes(nextModes);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [fileItems, editableFileItems, readOnly]);
-
     // Progress announcements only at start and completion
     useEffect(() => {
         if (!fileItems || fileItems.length === 0) {
@@ -241,8 +211,12 @@ function Component(
     // EVENT HANDLERS
     // =========================================================================
     const handleSaveEdit = (item: FileItemProps) => (description: string) => {
-        updateRenderModes(item.id, "display");
         removeDescription(item.id);
+        setEditingIds((prev) => {
+            const next = new Set(prev);
+            next.delete(item.id);
+            return next;
+        });
 
         const updatedItem = { ...item, description };
         onItemUpdate(updatedItem);
@@ -253,23 +227,34 @@ function Component(
     };
 
     const handleCancel = (item: FileItemProps) => () => {
-        if (!item.description || item.description.length === 0) {
-            // New addition
-            onItemDelete(item);
-        } else {
-            updateRenderModes(item.id, "display");
-        }
         removeDescription(item.id);
-    };
+        setEditingIds((prev) => {
+            const next = new Set(prev);
+            next.delete(item.id);
+            return next;
+        });
 
-    const handleInitiateEdit = (item: FileItemProps) => () => {
-        updateRenderModes(item.id, "edit");
+        if (!item.description || item.description.length === 0) {
+            onItemDelete(item);
+        }
     };
 
     const handleDelete = (item: FileItemProps) => () => {
         onItemDelete(item);
         if (wrapperRef.current) {
             wrapperRef.current.focus();
+        }
+    };
+
+    const handleModeChange = (item: FileItemProps) => (mode: FileItemMode) => {
+        if (mode === "edit") {
+            setEditingIds((prev) => new Set(prev).add(item.id));
+        } else {
+            setEditingIds((prev) => {
+                const next = new Set(prev);
+                next.delete(item.id);
+                return next;
+            });
         }
     };
 
@@ -313,62 +298,28 @@ function Component(
         );
     };
 
-    const shouldRenderEditMode = (item: FileItemProps) => {
+    const isEditGroupItem = (item: FileItemProps) => {
         return (
             !item.errorMessage &&
             !readOnly &&
-            !(typeof item.progress === "number" && item.progress < 1) &&
             checkEditable(item) &&
-            !item.description
+            !item.description &&
+            (item.progress ?? 1) >= 1
         );
-    };
-
-    const getItemsRenderMode = (
-        fileItems: FileItemProps[] | undefined
-    ): FileItemRenderModes => {
-        if (!fileItems || fileItems.length === 0) return {};
-
-        const newRenderModes: FileItemRenderModes = {};
-
-        for (const item of fileItems) {
-            if (item.errorMessage) {
-                newRenderModes[item.id] = "error";
-            } else if (!renderModes[item.id]) {
-                newRenderModes[item.id] = shouldRenderEditMode(item)
-                    ? "edit"
-                    : "display";
-            } else {
-                newRenderModes[item.id] = renderModes[item.id];
-            }
-        }
-
-        return newRenderModes;
-    };
-
-    const updateRenderModes = (itemId: string, mode: RenderMode) => {
-        setRenderModes((prevRenderModes) => {
-            return {
-                ...prevRenderModes,
-                [itemId]: mode,
-            };
-        });
     };
 
     /**
      * Due to a UI requirement, we will render the items
      * with edit modes as a group
      */
-    const getArrangedItems = (
-        fileItems: FileItemProps[] | undefined,
-        renderModes: FileItemRenderModes
-    ) => {
-        if (!fileItems || fileItems.length === 0) return [];
+    const getArrangedItems = (fileItems: FileItemProps[]) => {
+        if (fileItems.length === 0) return [];
 
         const arrangedItems: RenderItem[] = [];
 
         for (const fileItem of fileItems) {
-            if (renderModes[fileItem.id] === "edit") {
-                const previousElement = arrangedItems[arrangedItems.length - 1];
+            if (isEditGroupItem(fileItem)) {
+                const previousElement = arrangedItems.at(-1);
                 if (Array.isArray(previousElement)) {
                     previousElement.push(fileItem);
                 } else {
@@ -383,7 +334,10 @@ function Component(
     };
 
     const areAllItemsInDisplayViews = () => {
-        return Object.values(renderModes).every((mode) => mode === "display");
+        if (editingIds.size > 0) return false;
+        return !fileItems.some(
+            (item) => !!item.errorMessage || isEditGroupItem(item)
+        );
     };
 
     const shouldEnableSort = () => {
@@ -453,15 +407,17 @@ function Component(
             return (
                 <FileListItem
                     key={item.id}
-                    mode="edit"
                     fileItem={updatedFileItem}
                     wrapperWidth={wrapperWidth}
+                    editable={checkEditable(item)}
                     fileDescriptionMaxLength={fileDescriptionMaxLength}
                     descriptionRequired={descriptionRequired}
                     descriptionLabel={descriptionLabel}
+                    onDelete={handleDelete(item)}
                     onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}
                     onBlur={handleBlurEdit(item)}
+                    onModeChange={handleModeChange(item)}
                 />
             );
         });
@@ -477,7 +433,7 @@ function Component(
     };
 
     const renderItems = () => {
-        const arrangedItems = getArrangedItems(fileItems, renderModes);
+        const arrangedItems = getArrangedItems(fileItems);
 
         if (arrangedItems.length === 0) return null;
 
@@ -485,23 +441,9 @@ function Component(
             if (Array.isArray(item)) {
                 return renderItemsInEditMode(item, index);
             } else {
-                const itemMode =
-                    renderModes[item.id] === "error" ? "error" : "display";
-                return itemMode === "error" ? (
+                return (
                     <FileListItem
                         key={item.id}
-                        mode="error"
-                        fileItem={item}
-                        wrapperWidth={wrapperWidth}
-                        disabled={disabled}
-                        readOnly={readOnly}
-                        descriptionLabel={descriptionLabel}
-                        onDelete={handleDelete(item)}
-                    />
-                ) : (
-                    <FileListItem
-                        key={item.id}
-                        mode="display"
                         fileItem={item}
                         editable={checkEditable(item)}
                         wrapperWidth={wrapperWidth}
@@ -509,8 +451,13 @@ function Component(
                         disabled={disabled}
                         readOnly={readOnly}
                         descriptionLabel={descriptionLabel}
+                        fileDescriptionMaxLength={fileDescriptionMaxLength}
+                        descriptionRequired={descriptionRequired}
                         onDelete={handleDelete(item)}
-                        onEditClick={handleInitiateEdit(item)}
+                        onSave={handleSaveEdit(item)}
+                        onCancel={handleCancel(item)}
+                        onBlur={handleBlurEdit(item)}
+                        onModeChange={handleModeChange(item)}
                     />
                 );
             }
