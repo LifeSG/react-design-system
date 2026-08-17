@@ -28,7 +28,6 @@ import type { FormLabelProps } from "../../form/form-label/types";
 import { VisuallyHidden } from "../../shared/accessibility";
 import { FileUploadContext } from "../context";
 import { MouseSensor } from "../custom-sensors";
-import { FileItemEdit } from "../file-item-edit";
 import { FileListItem } from "../file-list-item";
 import { FileUploadHelper } from "../helper";
 import type { FileItemProps } from "../types";
@@ -452,8 +451,9 @@ function Component(
             }
 
             return (
-                <FileItemEdit
+                <FileListItem
                     key={item.id}
+                    mode="edit"
                     fileItem={updatedFileItem}
                     wrapperWidth={wrapperWidth}
                     fileDescriptionMaxLength={fileDescriptionMaxLength}
@@ -485,9 +485,23 @@ function Component(
             if (Array.isArray(item)) {
                 return renderItemsInEditMode(item, index);
             } else {
-                return (
+                const itemMode =
+                    renderModes[item.id] === "error" ? "error" : "display";
+                return itemMode === "error" ? (
                     <FileListItem
                         key={item.id}
+                        mode="error"
+                        fileItem={item}
+                        wrapperWidth={wrapperWidth}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        descriptionLabel={descriptionLabel}
+                        onDelete={handleDelete(item)}
+                    />
+                ) : (
+                    <FileListItem
+                        key={item.id}
+                        mode="display"
                         fileItem={item}
                         editable={checkEditable(item)}
                         wrapperWidth={wrapperWidth}
