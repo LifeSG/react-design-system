@@ -11,19 +11,25 @@ import { FileItemActions } from "./file-item-actions";
 import { FileItemDetails } from "./file-item-details";
 import * as styles from "./file-list-item.styles";
 import { FileListItemThumbnail } from "./file-list-item-thumbnail";
-import type { FileListItemProps } from "./types";
+import type { FileItemMode, FileListItemProps } from "./types";
 import { useTruncatedName } from "./use-truncated-name";
 
-const Component = (props: FileListItemProps) => {
-    const {
-        mode,
-        fileItem,
-        wrapperWidth,
-        disabled,
-        readOnly,
-        descriptionLabel,
-    } = props;
-
+const Component = ({
+    fileItem,
+    wrapperWidth,
+    editable,
+    sortable,
+    disabled,
+    readOnly,
+    descriptionLabel,
+    fileDescriptionMaxLength,
+    descriptionRequired = true,
+    onDelete,
+    onSave,
+    onCancel,
+    onBlur,
+    onModeChange,
+}: FileListItemProps) => {
     const {
         id,
         name,
@@ -47,13 +53,24 @@ const Component = (props: FileListItemProps) => {
         detailSectionRef
     );
 
-    // Sortable mechanism (display/error only)
+    const computeMode = (): FileItemMode => {
+        if (errorMessage) return "error";
+        if (editable && !readOnly && !description && progress >= 1)
+            return "edit";
+        return "display";
+    };
+
+    const [currentMode, setCurrentMode] = useState<FileItemMode>(computeMode);
+
+    // Sortable mechanism
     const { attributes, listeners, setNodeRef, transform, transition } =
-        useSortable({ id, disabled: mode === "edit" });
+        useSortable({ id, disabled: currentMode === "edit" });
 
     // Edit mode state
     const textareaRef = useRef<HTMLTextAreaElement>(null);
-    const [currentDescription, setCurrentDescription] = useState("");
+    const [currentDescription, setCurrentDescription] = useState(
+        fileItem.description || ""
+    );
 
     // =========================================================================
     // DERIVED STATE
@@ -64,12 +81,8 @@ const Component = (props: FileListItemProps) => {
         !!thumbnailImageDataUrl ||
         fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
 
-    const sortable =
-        mode === "display" && "sortable" in props && props.sortable;
-    const editable =
-        mode === "display" && "editable" in props && props.editable;
-    const hasInlineActions = mode === "display" && !!description && !!editable;
-
+    const hasInlineActions =
+        currentMode === "display" && !!description && !!editable;
     const shouldEnableSort = !!sortable && !readOnly;
     const isDisabled = disabled || !!activeId;
 
@@ -108,24 +121,33 @@ const Component = (props: FileListItemProps) => {
     // EFFECTS
     // =========================================================================
     useEffect(() => {
-        if (mode === "edit") {
+        if (errorMessage && currentMode !== "error") {
+            setCurrentMode("error");
+            onModeChange?.("error");
+        } else if (!errorMessage && currentMode === "error") {
+            const nextMode = computeMode();
+            setCurrentMode(nextMode);
+            onModeChange?.(nextMode);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [errorMessage]);
+
+    useEffect(() => {
+        if (currentMode === "edit") {
             setCurrentDescription(fileItem.description || "");
         }
-    }, [mode, fileItem, fileItem.description]);
+    }, [currentMode, fileItem.description]);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
     const handleDelete = () => {
-        if (mode === "display" || mode === "error") {
-            props.onDelete();
-        }
+        onDelete();
     };
 
     const handleEdit = () => {
-        if (mode === "display" && props.onEditClick) {
-            props.onEditClick();
-        }
+        setCurrentMode("edit");
+        onModeChange?.("edit");
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -134,17 +156,18 @@ const Component = (props: FileListItemProps) => {
         }
     };
 
-    // Edit mode handlers
     const handleSave = () => {
-        if (mode === "edit" && textareaRef.current) {
-            props.onSave(textareaRef.current.value.trim());
+        if (textareaRef.current) {
+            setCurrentMode("display");
+            onModeChange?.("display");
+            onSave?.(textareaRef.current.value.trim());
         }
     };
 
     const handleCancel = () => {
-        if (mode === "edit") {
-            props.onCancel();
-        }
+        setCurrentMode("display");
+        onModeChange?.("display");
+        onCancel?.();
     };
 
     const handleTextareaChange = (
@@ -156,21 +179,18 @@ const Component = (props: FileListItemProps) => {
     const handleTextareaBlur = (
         event: React.FocusEvent<HTMLTextAreaElement>
     ) => {
-        if (mode === "edit") {
-            props.onBlur(event.target.value);
-        }
+        onBlur?.(event.target.value);
     };
 
     const shouldDisableSave = () => {
-        if (mode !== "edit") return false;
-        if (!props.descriptionRequired) return false;
+        if (!descriptionRequired) return false;
         return currentDescription.trim().length === 0;
     };
 
     // =========================================================================
     // RENDER: EDIT MODE
     // =========================================================================
-    if (mode === "edit") {
+    if (currentMode === "edit") {
         return (
             <li data-testid={`${id}-edit-display`} className={styles.editItem}>
                 <div className={styles.editContentSection}>
@@ -202,7 +222,7 @@ const Component = (props: FileListItemProps) => {
                             id={`${id}-description-textarea`}
                             data-testid={`${id}-textarea`}
                             value={currentDescription}
-                            maxLength={props.fileDescriptionMaxLength}
+                            maxLength={fileDescriptionMaxLength}
                             onChange={handleTextareaChange}
                             onBlur={handleTextareaBlur}
                             rows={3}
@@ -294,9 +314,9 @@ const Component = (props: FileListItemProps) => {
                     className={styles.contentSection}
                     data-has-thumbnail={shouldShowThumbnail}
                 >
-                    {mode === "display" && thumbnail}
+                    {currentMode === "display" && thumbnail}
                     <FileItemDetails
-                        mode={mode}
+                        mode={currentMode}
                         formattedName={formattedName}
                         description={description}
                         fileSize={fileSize}
@@ -308,7 +328,7 @@ const Component = (props: FileListItemProps) => {
                         {renderInlineActions()}
                     </FileItemDetails>
                 </div>
-                {!readOnly && !hasInlineActions && mode === "error" && (
+                {!readOnly && !hasInlineActions && currentMode === "error" && (
                     <FileItemActions
                         mode="error"
                         id={id}
@@ -317,20 +337,22 @@ const Component = (props: FileListItemProps) => {
                         onDelete={handleDelete}
                     />
                 )}
-                {!readOnly && !hasInlineActions && mode === "display" && (
-                    <FileItemActions
-                        mode="display"
-                        id={id}
-                        name={name}
-                        editable={!!editable}
-                        isLoading={isLoading}
-                        progress={progress}
-                        disabled={isDisabled}
-                        onDelete={handleDelete}
-                        onEdit={handleEdit}
-                        onKeyDown={handleKeyDown}
-                    />
-                )}
+                {!readOnly &&
+                    !hasInlineActions &&
+                    currentMode === "display" && (
+                        <FileItemActions
+                            mode="display"
+                            id={id}
+                            name={name}
+                            editable={!!editable}
+                            isLoading={isLoading}
+                            progress={progress}
+                            disabled={isDisabled}
+                            onDelete={handleDelete}
+                            onEdit={handleEdit}
+                            onKeyDown={handleKeyDown}
+                        />
+                    )}
             </div>
         </li>
     );
