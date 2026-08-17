@@ -227,33 +227,6 @@ export const extendedNameSection = css`
     }
 `;
 
-export const fileSizeSection = css`
-    display: flex;
-    width: 5rem;
-    margin-left: ${Spacing["spacing-8"]};
-    justify-content: flex-end;
-
-    &[data-mobile-visibility="hidden"] {
-        ${MediaQuery.MaxWidth.md} {
-            display: none;
-            visibility: hidden;
-        }
-    }
-
-    &[data-mobile-visibility="expand"] {
-        ${MediaQuery.MaxWidth.md} {
-            width: 100%;
-            margin-left: 0;
-            margin-top: ${Spacing["spacing-8"]};
-            justify-content: flex-start;
-        }
-    }
-`;
-
-export const fileSizeText = css`
-    color: ${Colour["text-subtler"]};
-`;
-
 export const descriptionFileSizeText = css`
     color: ${Colour["text-subtler"]};
     margin-top: ${Spacing["spacing-16"]};
@@ -278,29 +251,11 @@ export const errorIcon = css`
     color: ${Colour["icon-error-strong"]};
 `;
 
-export const desktopErrorMessage = css`
+export const errorMessage = css`
     color: ${Colour["text-error"]};
     margin-top: ${Spacing["spacing-4"]};
     display: flex;
     gap: ${Spacing["spacing-4"]};
-
-    ${MediaQuery.MaxWidth.md} {
-        display: none;
-        visibility: hidden;
-    }
-`;
-
-export const mobileErrorMessage = css`
-    color: ${Colour["text-error"]};
-    display: none;
-    visibility: hidden;
-
-    ${MediaQuery.MaxWidth.md} {
-        display: flex;
-        gap: ${Spacing["spacing-4"]};
-        visibility: visible;
-        margin-top: ${Spacing["spacing-8"]};
-    }
 `;
 
 export const actionContainer = css`
