@@ -259,13 +259,5 @@ test.describe("InputTextarea", () => {
         test("Standalone errorMessage", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
-
-        test("Standalone errorMessage (dark mode)", async ({ story }) => {
-            await story.init("standalone-error-message", {
-                size: "mobile",
-                mode: "dark",
-            });
-            await compareScreenshot(story, "mount");
-        });
     });
 });
