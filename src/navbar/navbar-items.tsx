@@ -201,8 +201,7 @@ export const NavbarItems = <T,>({
                         data-testid={`${testId}-expand-collapse-button`}
                         className={clsx(
                             styles.expandCollapseButton,
-                            isMobileExpanded &&
-                                styles.expandCollapseButtonExpanded
+                            isMobileExpanded && styles.subMenuExpanded
                         )}
                         focusHighlight={false}
                         focusOutline="browser"
@@ -239,7 +238,7 @@ export const NavbarItems = <T,>({
             </a>
         );
 
-        const renderLinkWithSubmenu = () => {
+        const renderLinkWithSubmenu = (isLastItem: boolean) => {
             const subMenuId = `navbar-submenu-${instanceId}-${item.id}`;
 
             if (mobile) {
@@ -267,7 +266,7 @@ export const NavbarItems = <T,>({
 
             return (
                 <DesktopMenu
-                    position="bottom"
+                    position={isLastItem ? "bottom-end" : "bottom"}
                     customOffset={0}
                     menuContent={renderDesktopSubMenu(subMenu!, subMenuId)}
                     triggerOnFocus
@@ -290,6 +289,14 @@ export const NavbarItems = <T,>({
                     >
                         <div className={styles.linkLabel}>{children}</div>
                         {renderIndicator()}
+                        <ChevronUpIcon
+                            className={clsx(
+                                styles.chevronIcon,
+                                styles.chevronIconDesktop,
+                                selected && styles.chevronIconSelected,
+                                isDesktopExpanded && styles.subMenuExpanded
+                            )}
+                        />
                     </button>
                 </DesktopMenu>
             );
@@ -303,7 +310,9 @@ export const NavbarItems = <T,>({
                     hideNavBranding && styles.linkItemHiddenBranding
                 )}
             >
-                {hasSubMenu ? renderLinkWithSubmenu() : renderLink()}
+                {hasSubMenu
+                    ? renderLinkWithSubmenu(index === items.length - 1)
+                    : renderLink()}
             </li>
         );
     };

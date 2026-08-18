@@ -69,6 +69,7 @@ export const link = css`
     text-align: center;
     color: ${ComponentToken.Navbar["link-colour-text"]};
     height: 100%;
+    gap: 0.5rem;
 
     &:active,
     &:hover,
@@ -81,7 +82,6 @@ export const link = css`
         width: 100%;
         padding: 0.5rem 1rem;
         text-align: left;
-        align-items: flex-start;
     }
 `;
 
@@ -115,11 +115,11 @@ export const linkButton = css`
     box-shadow: none;
     font: inherit;
     color: inherit;
+    gap: 8px;
 `;
 
 export const linkLabel = css`
     flex: 1;
-    margin-top: 0.25rem;
 
     overflow: hidden;
     display: -webkit-box;
@@ -155,31 +155,35 @@ export const linkIndicatorSelected = css`
 `;
 
 export const linkIconContainer = css`
-    padding-left: 0.5rem;
     margin-right: -0.5rem;
 `;
 
 export const expandCollapseButton = css`
     padding: 0.5rem;
-    transform: rotate(180deg);
-    transition: transform 300ms ease-in-out;
     margin: auto 0.25rem auto 0;
-`;
-
-export const expandCollapseButtonExpanded = css`
-    transform: rotate(0deg);
 `;
 
 export const chevronIcon = css`
     height: 1.25rem;
     width: 1.25rem;
     color: ${Colour.icon};
+    transition: transform 300ms ease-in-out;
+    transform: rotate(180deg);
 
     .${link}:active &,
     .${link}:hover &,
     .${link}:focus & {
         color: ${Colour["icon-hover"]};
     }
+`;
+
+export const chevronIconDesktop = css`
+    height: 1.125rem;
+    width: 1.125rem;
+`;
+
+export const subMenuExpanded = css`
+    transform: rotate(0deg);
 `;
 
 export const chevronIconSelected = css`
