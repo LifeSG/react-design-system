@@ -259,6 +259,8 @@ test.describe("Navbar", () => {
 
             test("Drawer", async ({ story }) => {
                 await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
                 await compareScreenshot(story, "open", {
                     fullscreen: true,
                 });
@@ -277,6 +279,8 @@ test.describe("Navbar", () => {
 
             test("Drawer (dark mode)", async ({ story }) => {
                 await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
                 await compareScreenshot(story, "open", {
                     fullscreen: true,
                 });

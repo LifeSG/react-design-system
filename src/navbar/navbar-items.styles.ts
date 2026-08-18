@@ -69,6 +69,7 @@ export const link = css`
     text-align: center;
     color: ${ComponentToken.Navbar["link-colour-text"]};
     height: 100%;
+    gap: 0.5rem;
 
     &:active,
     &:hover,
@@ -81,7 +82,6 @@ export const link = css`
         width: 100%;
         padding: 0.5rem 1rem;
         text-align: left;
-        align-items: flex-start;
     }
 `;
 
@@ -155,7 +155,6 @@ export const linkIndicatorSelected = css`
 `;
 
 export const linkIconContainer = css`
-    padding-left: 0.5rem;
     margin-right: -0.5rem;
 `;
 
