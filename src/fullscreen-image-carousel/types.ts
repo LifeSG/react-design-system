@@ -1,4 +1,4 @@
-import type { ModalProps } from "../modal";
+import type { ModalV2Props } from "../modal-v2";
 import type { Insets } from "../shared/types";
 
 // @storybookSkipProps
@@ -25,7 +25,7 @@ export interface FullscreenImageCarouselRef {
  */
 export interface FullscreenImageCarouselProps
     extends Pick<
-        ModalProps,
+        ModalV2Props,
         "show" | "rootComponentId" | "animationFrom" | "zIndex"
     > {
     /** The list of items to display. Each item is either an image or a custom content item. */

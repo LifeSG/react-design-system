@@ -3,6 +3,7 @@ import type { ModalAnimationDirection } from "../modal-v2/types";
 // @storybookSection Modal
 /**
  * Props for the `Modal` component.
+ * @deprecated Use `ModalV2` instead, which provides improved scroll behaviour and accessibility.
  */
 export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
@@ -56,6 +57,7 @@ export interface ModalProps extends React.HTMLAttributes<HTMLDivElement> {
 // @storybookSection Modal.Box
 /**
  * Props for the `Modal.Box` sub-component.
+ * @deprecated Use `ModalV2.Card` instead.
  */
 export interface ModalBoxProps extends React.HTMLAttributes<HTMLDivElement> {
     children: React.ReactNode;

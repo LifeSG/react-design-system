@@ -2,7 +2,7 @@ import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
 import { Form } from "src/form";
-import { Modal } from "src/modal";
+import { ModalV2 } from "src/modal-v2";
 import { Popover, PopoverTrigger } from "src/popover";
 import { GridDecorator } from "stories/storybook-common";
 
@@ -143,19 +143,34 @@ export const UsageInOverlay: StoryObj<Component> = {
                 >
                     Show modal
                 </Button.Default>
-                <Modal show={show} onOverlayClick={() => setShow(false)}>
-                    <PopoverTrigger popoverContent="I'm a tooltip!">
-                        <Button.Default>Toggle tooltip</Button.Default>
-                    </PopoverTrigger>
-                </Modal>
-                <Modal
+                <ModalV2
+                    show={show}
+                    onOverlayClick={() => setShow(false)}
+                    onClose={() => setShow(false)}
+                >
+                    <ModalV2.Card>
+                        <ModalV2.Content>
+                            <PopoverTrigger popoverContent="I'm a tooltip!">
+                                <Button.Default>Toggle tooltip</Button.Default>
+                            </PopoverTrigger>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
+                </ModalV2>
+                <ModalV2
                     show={showNested}
                     onOverlayClick={() => setShowNested(false)}
+                    onClose={() => setShowNested(false)}
                 >
-                    <PopoverTrigger popoverContent="I'm a nested tooltip!">
-                        <Button.Default>Toggle nested tooltip</Button.Default>
-                    </PopoverTrigger>
-                </Modal>
+                    <ModalV2.Card>
+                        <ModalV2.Content>
+                            <PopoverTrigger popoverContent="I'm a nested tooltip!">
+                                <Button.Default>
+                                    Toggle nested tooltip
+                                </Button.Default>
+                            </PopoverTrigger>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
+                </ModalV2>
             </>
         );
     },

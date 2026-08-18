@@ -10,11 +10,15 @@ import { ModalBox as Box } from "./modal-box";
  *
  * Sub-components:
  * - `Modal.Box` — a styled content box with an optional close button.
+ *
+ * @deprecated Use `ModalV2` instead, which provides a more composable API, improved scroll behaviour, and proper accessibility.
  */
 export const Modal = Object.assign(Base, {
     /**
      * A styled content container for use inside `Modal`. Renders an optional
      * close button and stops click events from propagating to the overlay.
+     *
+     * @deprecated Use `ModalV2.Card` instead.
      */
     Box,
 });
