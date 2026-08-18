@@ -52,6 +52,6 @@ const Component = (
  *
  * Use `ImageButton` for selectable image-based choices such as theme pickers or avatar
  * selectors, where each option is represented visually.
- * @keywords avatar, picker, thumbnail, tile, visual
+ * @keywords thumbnail, selection
  */
 export const ImageButton = React.forwardRef(Component);

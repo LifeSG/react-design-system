@@ -13,7 +13,7 @@ import type { CountryValue, PhoneNumberInputProps } from "./types";
  * Use `PhoneNumberInput` when collecting an internationalised phone number.
  * The country code can be selected from a searchable dropdown or locked to a
  * fixed value via `fixedCountry`.
- * @keywords country code, international, number, telephone
+ * @keywords country code, contact, number, telephone
  */
 export const PhoneNumberInput = ({
     id,

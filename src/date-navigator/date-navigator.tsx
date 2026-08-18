@@ -19,7 +19,6 @@ import type { DateNavigatorProps } from "./types";
  *
  * Use when users need to browse content organised by day or week — such as schedules,
  * calendars, or time-based feeds.
- * @keywords navigation, pagination, schedule, week
  */
 export const DateNavigator = ({
     selectedDate,

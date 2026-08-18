@@ -9,7 +9,7 @@ import type { CardProps } from "./types";
 // @catalog
 /**
  * A themed container surface for grouping related content.
- * @keywords container, panel, surface, tile
+ * @keywords container, panel
  */
 export const Card = ({
     children,

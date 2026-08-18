@@ -87,7 +87,7 @@ LargeSingpassButtonComponent.displayName = "SingpassButton.Large";
  * following the brand [guidelines](https://docs.developer.singpass.gov.sg/docs/products/login/singpass-button-guidelines-for-developers-and-designers).
  *
  * Use `SingpassButton` to let users log in with their Singpass account.
- * @keywords authentication, login, national digital identity, singapore, sso
+ * @keywords authentication, login
  */
 export const SingpassButton = Object.assign(BaseSingpassButton, {
     /** @deprecated Use the `sizeType` prop instead: `<SingpassButton>` or `<SingpassButton sizeType="default">` */

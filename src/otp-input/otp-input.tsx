@@ -356,6 +356,6 @@ const Component = (
  *
  * Use `OtpInput` when users must enter the one-time password (OTP)
  * for multi-factored authentication methods.
- * @keywords 2FA, authentication, code, MFA, one-time, verification
+ * @keywords 2FA, authentication, code, MFA, one-time password, verification
  */
 export const OtpInput = forwardRef(Component);

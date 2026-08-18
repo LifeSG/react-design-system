@@ -19,7 +19,7 @@ const lineStyleMap: Record<DividerLineStyleType, string> = {
  *
  * Use `Divider` to draw a clear boundary between distinct groups of content on
  * a page or within a layout.
- * @keywords horizontal rule, hr, line, rule, separator
+ * @keywords horizontal rule, hr, line, separator
  */
 export const Divider = ({
     thickness = 1,

@@ -74,7 +74,7 @@ other than its exact name. Apply the following criteria when choosing keywords:
 -   **Related components** — names of things users might confuse it with
     (e.g. `Toast` → `snackbar`, `notification`).
 
-Aim for **3–5 terms** per component, up to **10 at most**. Avoid repeating the
+Aim for **1–3 terms** per component, up to **5 at most**. Avoid repeating the
 component name itself as a keyword — the name is already indexed separately.
 Prefer concrete, specific terms over overly generic ones like `component` or
 `element`. Prefer **`design tokens`** over `css variables` when referring to the

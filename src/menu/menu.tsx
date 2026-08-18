@@ -54,7 +54,7 @@ export const MenuTrigger = ({
  * - `Menu.Item` — a non-anchor interactive list item with a primary label and optional sub-label.
  * - `Menu.Link` — an anchor (`<a>`) list item styled as a menu entry.
  * - `Menu.Section` — a grouping container for `Menu.Item` and `Menu.Link` entries.
- * @keywords actions, context, dropdown, navigation, popover
+ * @keywords context, dropdown, navigation, submenu
  */
 export const Menu = Object.assign(MenuTrigger, {
     /** Renders the floating panel that contains menu sections. */
