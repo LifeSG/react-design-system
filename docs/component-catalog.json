@@ -94,7 +94,7 @@
             "name": "Checkbox",
             "importPath": "@lifesg/react-design-system/checkbox",
             "description": "A styled checkbox input with indeterminate state support.",
-            "keywords": ["form", "input", "selection"]
+            "keywords": ["field", "form", "input", "selection"]
         },
         {
             "name": "Colour",
@@ -130,7 +130,7 @@
             "name": "DateInput",
             "importPath": "@lifesg/react-design-system/date-input",
             "description": "A single-date input field with an attached calendar dropdown.  Use this to enter or pick a single date.",
-            "keywords": ["calendar", "datepicker", "form", "input"]
+            "keywords": ["calendar", "datepicker", "field", "form", "input"]
         },
         {
             "name": "DateNavigator",
@@ -146,6 +146,9 @@
                 "calendar",
                 "datepicker",
                 "end date",
+                "field",
+                "form",
+                "input",
                 "range",
                 "start date"
             ]
@@ -179,7 +182,7 @@
             "name": "ESignature",
             "importPath": "@lifesg/react-design-system/e-signature",
             "description": "A field that lets users draw and save a signature.  Use in forms that require a handwritten signature.",
-            "keywords": ["form", "input", "sign", "signature"]
+            "keywords": ["field", "form", "input", "sign", "signature"]
         },
         {
             "name": "FeedbackRating",
@@ -258,6 +261,9 @@
                 "bins",
                 "chart",
                 "distribution",
+                "field",
+                "form",
+                "input",
                 "range",
                 "visualization"
             ]
@@ -278,7 +284,7 @@
             "name": "InputGroup",
             "importPath": "@lifesg/react-design-system/input-group",
             "description": "A single-line text input optionally paired with a static label, a custom element, or a dropdown list selector.  Use `InputGroup` when the input needs contextual decoration such as a unit label, a country-code dropdown, or a fully custom slot.",
-            "keywords": ["prefix", "suffix"]
+            "keywords": ["field", "form", "input", "prefix", "suffix"]
         },
         {
             "name": "InputMultiSelect",
@@ -287,6 +293,9 @@
             "keywords": [
                 "combobox",
                 "dropdown",
+                "field",
+                "form",
+                "input",
                 "multi-value",
                 "multiple",
                 "select"
@@ -299,7 +308,10 @@
             "keywords": [
                 "combobox",
                 "dropdown",
+                "field",
+                "form",
                 "hierarchical",
+                "input",
                 "multi-value",
                 "multiple",
                 "tree"
@@ -309,31 +321,54 @@
             "name": "InputNestedSelect",
             "importPath": "@lifesg/react-design-system/input-nested-select",
             "description": "A single-select input that presents options in a hierarchy, up to three levels deep.  Use `InputNestedSelect` when users need to choose a value from a hierarchical option tree. The dropdown renders as an expandable tree. Parent nodes collapse or expand their children, and only one leaf or category value can be selected at a time.",
-            "keywords": ["combobox", "dropdown", "hierarchical", "tree"]
+            "keywords": [
+                "combobox",
+                "dropdown",
+                "field",
+                "form",
+                "hierarchical",
+                "input",
+                "tree"
+            ]
         },
         {
             "name": "InputRangeSelect",
             "importPath": "@lifesg/react-design-system/input-range-select",
             "description": "A paired combobox input for selecting a start and end value from dropdown lists.  Use `InputRangeSelect` when a consumer must choose a range by picking two values — one for \"from\" and one for \"to\" — each from their own option list.",
-            "keywords": ["combobox", "dropdown", "pair", "range"]
+            "keywords": [
+                "combobox",
+                "dropdown",
+                "field",
+                "form",
+                "input",
+                "pair",
+                "range"
+            ]
         },
         {
             "name": "InputRangeSlider",
             "importPath": "@lifesg/react-design-system/input-range-slider",
             "description": "A draggable track slider for selecting one or more numeric values within a bounded range.  Use `InputRangeSlider` when the selection does not need to be precise; the user picks a value or a range by dragging thumb controls along a track.",
-            "keywords": ["range", "slider"]
+            "keywords": ["field", "form", "input", "range", "slider"]
         },
         {
             "name": "InputSelect",
             "importPath": "@lifesg/react-design-system/input-select",
             "description": "A single-selection dropdown input.  Use `InputSelect` when the user must pick exactly one item from a list.",
-            "keywords": ["combobox", "dropdown", "picker"]
+            "keywords": [
+                "combobox",
+                "dropdown",
+                "field",
+                "form",
+                "input",
+                "picker"
+            ]
         },
         {
             "name": "InputSlider",
             "importPath": "@lifesg/react-design-system/input-slider",
             "description": "A single-thumb slider for selecting one numeric value within a range.  Use `InputSlider` when a user needs to pick a single point on a continuous scale without a precise value. For selecting a range between two values, use `InputRangeSlider` instead.",
-            "keywords": ["range", "slider"]
+            "keywords": ["field", "form", "input", "range", "slider"]
         },
         {
             "name": "LanguageSwitcher",
@@ -401,7 +436,15 @@
             "name": "MaskedInput",
             "importPath": "@lifesg/react-design-system/masked-input",
             "description": "A text input that masks sensitive values and allows toggling visibility.  Use `MaskedInput` when collecting or displaying sensitive data such as identity numbers or passwords.",
-            "keywords": ["mask", "password", "secure", "sensitive"]
+            "keywords": [
+                "field",
+                "form",
+                "input",
+                "mask",
+                "password",
+                "secure",
+                "sensitive"
+            ]
         },
         {
             "name": "Masthead",
@@ -465,6 +508,9 @@
                 "2FA",
                 "authentication",
                 "code",
+                "field",
+                "form",
+                "input",
                 "MFA",
                 "one-time password",
                 "verification"
@@ -474,7 +520,15 @@
             "name": "OtpVerification",
             "importPath": "@lifesg/react-design-system/otp-verification",
             "description": "A multi-step form component that guides users through OTP-based verification.  Use `OtpVerification` when you need to verify a user's identity through email address or phone number.",
-            "keywords": ["2FA", "authentication", "MFA", "verification"]
+            "keywords": [
+                "2FA",
+                "authentication",
+                "field",
+                "form",
+                "input",
+                "MFA",
+                "verification"
+            ]
         },
         {
             "name": "Overlay",
@@ -492,7 +546,15 @@
             "name": "PhoneNumberInput",
             "importPath": "@lifesg/react-design-system/phone-number-input",
             "description": "A phone number field composed of a country code selector and a number input.  Use `PhoneNumberInput` when collecting an internationalised phone number. The country code can be selected from a searchable dropdown or locked to a fixed value via `fixedCountry`.",
-            "keywords": ["contact", "country code", "number", "telephone"]
+            "keywords": [
+                "contact",
+                "country code",
+                "field",
+                "form",
+                "input",
+                "number",
+                "telephone"
+            ]
         },
         {
             "name": "Pill",
@@ -513,6 +575,9 @@
             "keywords": [
                 "autocomplete",
                 "combobox",
+                "field",
+                "form",
+                "input",
                 "search",
                 "suggestions",
                 "typeahead"
@@ -528,7 +593,7 @@
             "name": "RadioButton",
             "importPath": "@lifesg/react-design-system/radio-button",
             "description": "A single radio button input.  Use `RadioButton` as an input within a radio group.",
-            "keywords": ["choice", "option", "select"]
+            "keywords": ["choice", "field", "form", "input", "option", "select"]
         },
         {
             "name": "Radius",
@@ -550,6 +615,9 @@
                 "bins",
                 "chart",
                 "distribution",
+                "field",
+                "form",
+                "input",
                 "range",
                 "visualization"
             ]
@@ -606,7 +674,14 @@
             "name": "Textarea",
             "importPath": "@lifesg/react-design-system/input-textarea",
             "description": "A multi-line text input with an optional character counter and prefix.",
-            "keywords": ["multiline", "text area", "text field"]
+            "keywords": [
+                "field",
+                "form",
+                "input",
+                "multiline",
+                "text area",
+                "text field"
+            ]
         },
         {
             "name": "TextList",
@@ -636,13 +711,28 @@
             "name": "Timepicker",
             "importPath": "@lifesg/react-design-system/timepicker",
             "description": "A form input for selecting a time value through a dropdown interface.  Use `Timepicker` when a user needs to choose a specific time.",
-            "keywords": ["clock", "picker", "time selection"]
+            "keywords": [
+                "clock",
+                "field",
+                "form",
+                "input",
+                "picker",
+                "time selection"
+            ]
         },
         {
             "name": "TimeRangePicker",
             "importPath": "@lifesg/react-design-system/time-range-picker",
             "description": "A two-field time picker for selecting a start and end time.  Use `TimeRangePicker` when users need to define a time range.",
-            "keywords": ["duration", "end time", "interval", "start time"]
+            "keywords": [
+                "duration",
+                "end time",
+                "field",
+                "form",
+                "input",
+                "interval",
+                "start time"
+            ]
         },
         {
             "name": "TimeSlotBar",
@@ -684,7 +774,15 @@
             "name": "Toggle",
             "importPath": "@lifesg/react-design-system/toggle",
             "description": "A selectable control for checkbox and radio interaction patterns.  Use `Toggle` to present a labeled option that the user can select or deselect.",
-            "keywords": ["checkbox", "choice", "option", "radio"]
+            "keywords": [
+                "checkbox",
+                "choice",
+                "field",
+                "form",
+                "input",
+                "option",
+                "radio"
+            ]
         },
         {
             "name": "Typography",
@@ -702,7 +800,15 @@
             "name": "UnitNumberInput",
             "importPath": "@lifesg/react-design-system/unit-number",
             "description": "A two-field input for entering Singapore-style unit numbers in `floor-unit` format.  Use `UnitNumberInput` when you need a structured unit number entry that splits floor and unit into separate fields.",
-            "keywords": ["address", "floor", "singapore", "unit"]
+            "keywords": [
+                "address",
+                "field",
+                "floor",
+                "form",
+                "input",
+                "singapore",
+                "unit"
+            ]
         },
         {
             "name": "useApplyStyle",

@@ -24,7 +24,7 @@ import type { InputMultiSelectProps } from "./types";
  *
  * Use `InputMultiSelect` when users need to pick one or more items from a
  * predefined list.
- * @keywords combobox, dropdown, multi-value, multiple, select
+ * @keywords combobox, dropdown, field, form, input, multi-value, multiple, select
  */
 export const InputMultiSelect = <T, V>({
     selectedOptions,
