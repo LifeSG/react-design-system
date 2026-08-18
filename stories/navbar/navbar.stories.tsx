@@ -369,6 +369,12 @@ export const SubMenu: StoryObj<Component> = {
                                     children: "About the app",
                                     href: "https://www.life.gov.sg",
                                 },
+                                {
+                                    id: "app-item-2",
+                                    children:
+                                        "Lorem ipsum dolor sit amet consectetur adipiscing elit",
+                                    href: "https://www.life.gov.sg",
+                                },
                             ],
                         },
                     ],
