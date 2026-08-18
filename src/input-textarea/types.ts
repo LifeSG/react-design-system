@@ -9,6 +9,13 @@ export interface TextareaProps
     error?: boolean | undefined;
     "data-testid"?: string | undefined;
     /**
+     * Inline error text rendered below the textarea.
+     * Also sets the input into an error state.
+     */
+    errorMessage?: string | React.ReactNode | undefined;
+    /** Test id for the error message element. */
+    "data-error-testid"?: string | undefined;
+    /**
      * Transforms user input on every change event.
      */
     transformValue?: ((value: string) => string) | undefined;

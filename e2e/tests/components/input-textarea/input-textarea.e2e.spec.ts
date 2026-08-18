@@ -1,4 +1,4 @@
-import { test as base, expect, Locator, Page } from "@playwright/test";
+import { test as base, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
@@ -247,6 +247,16 @@ test.describe("InputTextarea", () => {
         });
 
         test("Custom counter", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-error-message", { size: "mobile" });
+        });
+
+        test("Standalone errorMessage", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
