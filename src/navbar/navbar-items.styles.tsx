@@ -12,6 +12,7 @@ import { TypographyWeight } from "../typography";
 // =============================================================================
 interface StyleProps {
     $selected: boolean;
+    $expanded?: boolean;
 }
 
 interface WrapperStyleProps {
@@ -163,7 +164,7 @@ export const LinkIconContainer = styled.div`
 
 export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
     padding: 0.5rem;
-    transform: rotate(${(props) => (props.$selected ? 0 : 180)}deg);
+    transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
     margin: auto 0.25rem auto 0;
 `;
@@ -187,7 +188,7 @@ export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
 `;
 
 export const ChevronIconDesktop = styled(ChevronIcon)<StyleProps>`
-    transform: rotate(${(props) => (props.$selected ? 0 : 180)}deg);
+    transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
 
     height: 1.125rem;

@@ -188,10 +188,11 @@ export const NavbarItems = <T,>({
                 <LinkIconContainer>
                     <ExpandCollapseButton
                         data-testid={`${testId}-expand-collapse-button`}
-                        $selected={isMobileExpanded}
+                        $selected={selected}
+                        $expanded={isExpanded}
                         focusHighlight={false}
                         focusOutline="browser"
-                        aria-label={isMobileExpanded ? "Collapse" : "Expand"}
+                        aria-label={isExpanded ? "Collapse" : "Expand"}
                     >
                         <ChevronIcon $selected={selected} />
                     </ExpandCollapseButton>
@@ -269,7 +270,10 @@ export const NavbarItems = <T,>({
                     >
                         <LinkLabel>{children}</LinkLabel>
                         {renderIndicator()}
-                        <ChevronIconDesktop $selected={selected} />
+                        <ChevronIconDesktop
+                            $selected={selected}
+                            $expanded={isExpanded}
+                        />
                     </LinkButton>
                 </DesktopMenu>
             );
