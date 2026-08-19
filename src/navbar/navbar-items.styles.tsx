@@ -12,6 +12,7 @@ import { TypographyWeight } from "../typography";
 // =============================================================================
 interface StyleProps {
     $selected: boolean;
+    $expanded?: boolean;
 }
 
 interface WrapperStyleProps {
@@ -78,6 +79,7 @@ const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
     text-align: center;
     color: ${ThemeNavbar["navbar-link-colour-text"]};
     height: 100%;
+    gap: 0.5rem;
 
     &:active,
     &:hover,
@@ -93,7 +95,6 @@ const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
         width: 100%;
         padding: 0.5rem 1rem;
         text-align: left;
-        align-items: flex-start;
     }
 `;
 export const Link = styled.a<{ $selected: boolean; weight: TypographyWeight }>`
@@ -118,7 +119,6 @@ export const LinkButton = styled.button<{
 
 export const LinkLabel = styled.div`
     flex: 1;
-    margin-top: 0.25rem;
 
     overflow: hidden;
     display: -webkit-box;
@@ -159,13 +159,12 @@ export const LinkIndicator = styled.div<StyleProps>`
 `;
 
 export const LinkIconContainer = styled.div`
-    padding-left: 0.5rem;
     margin-right: -0.5rem;
 `;
 
 export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
     padding: 0.5rem;
-    transform: rotate(${(props) => (props.$selected ? 0 : 180)}deg);
+    transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
     margin: auto 0.25rem auto 0;
 `;
@@ -186,4 +185,12 @@ export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
                 ? Colour["icon-selected-hover"]
                 : Colour["icon-hover"]};
     }
+`;
+
+export const ChevronIconDesktop = styled(ChevronIcon)<StyleProps>`
+    transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
+    transition: transform 300ms ease-in-out;
+
+    height: 1.125rem;
+    width: 1.125rem;
 `;

@@ -6,6 +6,7 @@ import { Menu as MobileMenu } from "./menu";
 import { useId } from "../util";
 import {
     ChevronIcon,
+    ChevronIconDesktop,
     ExpandCollapseButton,
     Link,
     LinkButton,
@@ -187,10 +188,11 @@ export const NavbarItems = <T,>({
                 <LinkIconContainer>
                     <ExpandCollapseButton
                         data-testid={`${testId}-expand-collapse-button`}
-                        $selected={isMobileExpanded}
+                        $selected={selected}
+                        $expanded={isExpanded}
                         focusHighlight={false}
                         focusOutline="browser"
-                        aria-label={isMobileExpanded ? "Collapse" : "Expand"}
+                        aria-label={isExpanded ? "Collapse" : "Expand"}
                     >
                         <ChevronIcon $selected={selected} />
                     </ExpandCollapseButton>
@@ -214,7 +216,7 @@ export const NavbarItems = <T,>({
             </Link>
         );
 
-        const renderLinkWithSubmenu = () => {
+        const renderLinkWithSubmenu = (isLastItem: boolean) => {
             const subMenuId = `navbar-submenu-${instanceId}-${item.id}`;
 
             if (mobile) {
@@ -244,7 +246,7 @@ export const NavbarItems = <T,>({
 
             return (
                 <DesktopMenu
-                    position="bottom"
+                    position={isLastItem ? "bottom-end" : "bottom"}
                     customOffset={0}
                     menuContent={renderDesktopSubMenu(subMenu!, subMenuId)}
                     triggerOnFocus
@@ -268,6 +270,10 @@ export const NavbarItems = <T,>({
                     >
                         <LinkLabel>{children}</LinkLabel>
                         {renderIndicator()}
+                        <ChevronIconDesktop
+                            $selected={selected}
+                            $expanded={isExpanded}
+                        />
                     </LinkButton>
                 </DesktopMenu>
             );
@@ -275,7 +281,9 @@ export const NavbarItems = <T,>({
 
         return (
             <LinkItem key={index} $hiddenBranding={hideNavBranding}>
-                {hasSubMenu ? renderLinkWithSubmenu() : renderLink()}
+                {hasSubMenu
+                    ? renderLinkWithSubmenu(index === items.length - 1)
+                    : renderLink()}
             </LinkItem>
         );
     };
