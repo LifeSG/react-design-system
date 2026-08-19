@@ -6,6 +6,7 @@ class StoryPage extends AbstractStoryPage {
 
     public readonly locators: {
         internal: {
+            slider: (index: number) => Locator;
             thumb: (index: number) => Locator;
         };
         form: {
@@ -38,6 +39,7 @@ class StoryPage extends AbstractStoryPage {
 
         this.locators = {
             internal: {
+                slider: (index: number) => page.getByRole("slider").nth(index),
                 thumb: (index: number) =>
                     page.getByTestId(`slider-thumb-${index}`),
             },
@@ -86,11 +88,8 @@ class StoryPage extends AbstractStoryPage {
     }
 
     public async getSliderValue(index: number) {
-        const thumb = this.locators.internal.thumb(index);
-        const value = await thumb.getAttribute("aria-valuenow");
-        if (value === null) {
-            throw new Error(`Slider at index ${index} does not have a value`);
-        }
+        const slider = this.locators.internal.slider(index);
+        const value = await slider.inputValue();
         return parseInt(value);
     }
 

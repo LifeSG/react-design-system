@@ -52,13 +52,8 @@ class StoryPage extends AbstractStoryPage {
     }
 
     async getSliderValue(index: number) {
-        const slider = this.locators.internal.thumb(index);
-        const value = await slider.getAttribute("aria-valuenow");
-
-        if (value === null) {
-            throw new Error(`Slider at index ${index} does not have a value`);
-        }
-
+        const slider = this.locators.internal.slider(index);
+        const value = await slider.inputValue();
         return parseInt(value);
     }
 

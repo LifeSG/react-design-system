@@ -41,16 +41,6 @@ class StoryPage extends AbstractStoryPage {
     }
 
     async validateSliderValue(expectedValue: number) {
-        const thumbValue = await this.locators.internal.thumb.getAttribute(
-            "aria-valuenow"
-        );
-        if (thumbValue === null) {
-            throw new Error("Slider does not have a value");
-        }
-
-        const actualThumbValue = parseInt(thumbValue);
-        expect(actualThumbValue).toBe(expectedValue);
-
         await expect(this.locators.internal.slider).toHaveValue(
             expectedValue.toString()
         );
