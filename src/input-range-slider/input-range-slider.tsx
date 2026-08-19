@@ -6,7 +6,7 @@ import { useEffect, useRef, useState } from "react";
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { Colour } from "../theme";
 import { Typography } from "../typography";
-import { useId } from "../util";
+import { useId, useIsomorphicLayoutEffect } from "../util";
 import * as styles from "./input-range-slider.styles";
 import { Thumb, Track } from "./slider-components";
 import type { InputRangeSliderProps } from "./types";
@@ -54,6 +54,7 @@ export const InputRangeSlider = ({
     const [focusedThumbIndex, setFocusedThumbIndex] = useState<number | null>(
         null
     );
+    const [upperBound, setUpperBound] = useState(0);
     const sliderRef = useRef<HTMLDivElement>(null);
     const internalId = useId();
     const trackColors = getTrackColors();
@@ -64,6 +65,28 @@ export const InputRangeSlider = ({
     // =========================================================================
     // EFFECTS
     // =========================================================================
+    useIsomorphicLayoutEffect(() => {
+        const slider = sliderRef.current;
+        if (!slider) return;
+
+        const measure = () => {
+            const sliderWidth = slider.clientWidth;
+            const thumbEl = slider.querySelector(
+                `.${styles.sliderThumb}`
+            ) as HTMLElement | null;
+            const thumbWidth = thumbEl
+                ? thumbEl.getBoundingClientRect().width
+                : 0;
+            setUpperBound(sliderWidth - thumbWidth);
+        };
+
+        measure();
+        const observer = new ResizeObserver(measure);
+        observer.observe(slider);
+
+        return () => observer.disconnect();
+    }, []);
+
     useEffect(() => {
         if (value !== selection) {
             setSelection(initialiseSelection());
@@ -304,12 +327,9 @@ export const InputRangeSlider = ({
         return ((val - min) / (max - min)) * 100;
     }
 
-    // Replicate ReactSlider's offset: ratio * (sliderWidth - thumbWidth).
-    // In CSS calc, this is equivalent to calc(p% - p/100 * thumbWidth).
-    const THUMB_WIDTH_REM = 0.875;
     function toOffset(percent: number) {
         if (percent === 0) return "0px";
-        return `calc(${percent}% - ${percent * (THUMB_WIDTH_REM / 100)}rem)`;
+        return `${(percent / 100) * upperBound}px`;
     }
 
     function getValueFromClientX(clientX: number) {
