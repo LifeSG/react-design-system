@@ -393,42 +393,30 @@ function Component(
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderItemsInEditMode = (
-        fileItems: FileItemProps[],
-        keyToUse: number
-    ) => {
-        const itemsToRender = fileItems.map((item) => {
-            const updatedFileItem = { ...item };
-            if (descriptionsValueRef.current[item.id] !== undefined) {
-                updatedFileItem.description =
-                    descriptionsValueRef.current[item.id];
-            }
-
-            return (
-                <FileListItem
-                    key={item.id}
-                    fileItem={updatedFileItem}
-                    wrapperWidth={wrapperWidth}
-                    editable={checkEditable(item)}
-                    fileDescriptionMaxLength={fileDescriptionMaxLength}
-                    descriptionRequired={descriptionRequired}
-                    descriptionLabel={descriptionLabel}
-                    onDelete={handleDelete(item)}
-                    onSave={handleSaveEdit(item)}
-                    onCancel={handleCancel(item)}
-                    onBlur={handleBlurEdit(item)}
-                    onModeChange={handleModeChange(item)}
-                />
-            );
-        });
+    const renderItem = (item: FileItemProps, includeSortable: boolean) => {
+        const updatedFileItem = { ...item };
+        if (descriptionsValueRef.current[item.id] !== undefined) {
+            updatedFileItem.description = descriptionsValueRef.current[item.id];
+        }
 
         return (
-            <li
-                key={`editable-${keyToUse}`}
-                className={styles.editableItemsContainer}
-            >
-                <ul>{itemsToRender}</ul>
-            </li>
+            <FileListItem
+                key={item.id}
+                fileItem={updatedFileItem}
+                editable={checkEditable(item)}
+                wrapperWidth={wrapperWidth}
+                sortable={includeSortable ? shouldEnableSort() : undefined}
+                disabled={disabled}
+                readOnly={readOnly}
+                descriptionLabel={descriptionLabel}
+                fileDescriptionMaxLength={fileDescriptionMaxLength}
+                descriptionRequired={descriptionRequired}
+                onDelete={handleDelete(item)}
+                onSave={handleSaveEdit(item)}
+                onCancel={handleCancel(item)}
+                onBlur={handleBlurEdit(item)}
+                onModeChange={handleModeChange(item)}
+            />
         );
     };
 
@@ -439,27 +427,16 @@ function Component(
 
         return arrangedItems.map((item, index) => {
             if (Array.isArray(item)) {
-                return renderItemsInEditMode(item, index);
-            } else {
                 return (
-                    <FileListItem
-                        key={item.id}
-                        fileItem={item}
-                        editable={checkEditable(item)}
-                        wrapperWidth={wrapperWidth}
-                        sortable={shouldEnableSort()}
-                        disabled={disabled}
-                        readOnly={readOnly}
-                        descriptionLabel={descriptionLabel}
-                        fileDescriptionMaxLength={fileDescriptionMaxLength}
-                        descriptionRequired={descriptionRequired}
-                        onDelete={handleDelete(item)}
-                        onSave={handleSaveEdit(item)}
-                        onCancel={handleCancel(item)}
-                        onBlur={handleBlurEdit(item)}
-                        onModeChange={handleModeChange(item)}
-                    />
+                    <li
+                        key={`editable-${index}`}
+                        className={styles.editableItemsContainer}
+                    >
+                        <ul>{item.map((i) => renderItem(i, false))}</ul>
+                    </li>
                 );
+            } else {
+                return renderItem(item, true);
             }
         });
     };
