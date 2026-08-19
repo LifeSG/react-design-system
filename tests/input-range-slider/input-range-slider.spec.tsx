@@ -52,7 +52,7 @@ describe("InputRangeSlider", () => {
         render(<InputRangeSlider onChange={mockChange} numOfThumbs={2} />);
 
         const thumb = screen.getByTestId("slider-track-0").parentElement!;
-        fireEvent.mouseDown(thumb);
+        fireEvent.pointerDown(thumb);
 
         expect(mockChange).toHaveBeenCalledWith([0, 1]);
     });

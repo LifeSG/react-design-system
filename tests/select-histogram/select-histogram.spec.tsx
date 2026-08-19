@@ -90,15 +90,8 @@ describe("SelectHistogram", () => {
         expectRangeLabel(1, 2);
         expect(screen.getByTestId(FIELD_TESTID)).toBeInTheDocument();
         expect(screen.queryAllByRole("slider")).toHaveLength(2);
-        expect(screen.queryByTestId("slider-thumb-0")).toHaveAttribute(
-            "aria-valuenow",
-            "1"
-        );
-
-        expect(screen.queryByTestId("slider-thumb-1")).toHaveAttribute(
-            "aria-valuenow",
-            "2"
-        );
+        expect(screen.queryByTestId("slider-input-0")).toHaveValue("1");
+        expect(screen.queryByTestId("slider-input-1")).toHaveValue("2");
     });
 
     it("should handle change", async () => {
@@ -122,9 +115,9 @@ describe("SelectHistogram", () => {
 
         const thumb = screen.getByTestId("slider-track-0");
 
-        fireEvent.mouseDown(thumb.parentElement!);
+        fireEvent.pointerDown(thumb.parentElement!);
         expect(mockChange).toHaveBeenCalledWith([1, 2]);
-        fireEvent.mouseUp(document);
+        fireEvent.pointerUp(document);
     });
 
     it("should toggle dropdown list when selector is clicked", async () => {

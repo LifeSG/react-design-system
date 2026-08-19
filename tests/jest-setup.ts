@@ -2,6 +2,11 @@ import { jest } from "@jest/globals";
 import type * as ThemeHooks from "src/theme/theme-provider/hooks";
 import type { ThemeContextValue } from "src/theme/theme-provider/types";
 
+// Polyfill PointerEvent for jsdom (extends MouseEvent to get button, clientX, etc.)
+if (typeof globalThis.PointerEvent === "undefined") {
+    (globalThis as any).PointerEvent = MouseEvent;
+}
+
 const getFallbackThemeContext = (): ThemeContextValue => ({
     theme: "lifesg",
     mode: "light",

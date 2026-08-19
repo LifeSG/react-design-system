@@ -1,8 +1,7 @@
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import clsx from "clsx";
 import type React from "react";
-import { useEffect, useState } from "react";
-import ReactSlider from "react-slider";
+import { useEffect, useRef, useState } from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { Colour } from "../theme";
@@ -55,6 +54,7 @@ export const InputRangeSlider = ({
     const [focusedThumbIndex, setFocusedThumbIndex] = useState<number | null>(
         null
     );
+    const sliderRef = useRef<HTMLDivElement>(null);
     const internalId = useId();
     const trackColors = getTrackColors();
     const indicatorTextId = `${internalId}-indicator`;
@@ -74,45 +74,6 @@ export const InputRangeSlider = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleChange = (value: number | readonly number[], index: number) => {
-        if (readOnly || disabled) {
-            return;
-        }
-
-        if (typeof value === "number") {
-            const nextValue = [value];
-            setSelection(nextValue);
-            onChange?.(nextValue);
-            return;
-        }
-
-        if (index > -1 && selection[index] === value[index]) {
-            // skip unnecessary update when dragging the start thumb across the end thumb
-            return;
-        }
-
-        const nextValue = [...value];
-        setSelection(nextValue);
-        onChange?.(nextValue);
-    };
-
-    const handleChangeEnd = (value: number | readonly number[]) => {
-        if (readOnly || disabled) {
-            return;
-        }
-
-        if (typeof value === "number") {
-            const val = [value];
-            setSelection(val);
-            onChangeEnd?.(val);
-            return;
-        }
-
-        const newSelection = [...value];
-        setSelection(newSelection);
-        onChangeEnd?.(newSelection);
-    };
-
     const handleThumbKeyDown = (
         event: React.KeyboardEvent<HTMLDivElement>,
         index: number
@@ -338,6 +299,110 @@ export const InputRangeSlider = ({
         return Math.min(maxAllowed, Math.max(minAllowed, nextValue));
     }
 
+    function getPercent(val: number) {
+        if (max === min) return 0;
+        return ((val - min) / (max - min)) * 100;
+    }
+
+    // Replicate ReactSlider's offset: ratio * (sliderWidth - thumbWidth).
+    // In CSS calc, this is equivalent to calc(p% - p/100 * thumbWidth).
+    const THUMB_WIDTH_REM = 0.875;
+    function toOffset(percent: number) {
+        if (percent === 0) return "0px";
+        return `calc(${percent}% - ${percent * (THUMB_WIDTH_REM / 100)}rem)`;
+    }
+
+    function getValueFromClientX(clientX: number) {
+        const slider = sliderRef.current;
+        if (!slider) return min;
+
+        const rect = slider.getBoundingClientRect();
+        if (rect.width === 0) return min;
+
+        const fraction = Math.max(
+            0,
+            Math.min(1, (clientX - rect.left) / rect.width)
+        );
+        const rawValue = min + fraction * (max - min);
+        const snapped = Math.round((rawValue - min) / step) * step + min;
+        return Math.max(min, Math.min(max, snapped));
+    }
+
+    function findNearestThumbIndex(val: number) {
+        let nearestIndex = 0;
+        let nearestDist = Math.abs(selection[0] - val);
+        for (let i = 1; i < selection.length; i++) {
+            const dist = Math.abs(selection[i] - val);
+            if (dist < nearestDist) {
+                nearestDist = dist;
+                nearestIndex = i;
+            }
+        }
+        return nearestIndex;
+    }
+
+    function startDrag(
+        event: React.PointerEvent<HTMLDivElement>,
+        thumbIndex: number
+    ) {
+        if (disabled || readOnly) return;
+        if (event.button !== 0) return;
+
+        event.preventDefault();
+        event.stopPropagation();
+        (event.currentTarget as HTMLElement).focus();
+
+        const dragValues = [...selection];
+
+        const onMove = (e: PointerEvent) => {
+            const rawValue = getValueFromClientX(e.clientX);
+            const clamped = clampValueForThumb(
+                rawValue,
+                thumbIndex,
+                dragValues
+            );
+
+            if (clamped === dragValues[thumbIndex]) return;
+
+            dragValues[thumbIndex] = clamped;
+            const nextValues = [...dragValues];
+
+            setSelection(nextValues);
+            onChange?.(nextValues);
+        };
+
+        const onEnd = () => {
+            document.removeEventListener("pointermove", onMove);
+            document.removeEventListener("pointerup", onEnd);
+            document.removeEventListener("pointercancel", onEnd);
+
+            const finalValues = [...dragValues];
+            setSelection(finalValues);
+            onChangeEnd?.(finalValues);
+        };
+
+        document.addEventListener("pointermove", onMove);
+        document.addEventListener("pointerup", onEnd);
+        document.addEventListener("pointercancel", onEnd);
+    }
+
+    function handleTrackPointerDown(event: React.PointerEvent<HTMLDivElement>) {
+        if (disabled || readOnly) return;
+        if (event.button !== 0) return;
+
+        event.preventDefault();
+        const clickedValue = getValueFromClientX(event.clientX);
+        const index = findNearestThumbIndex(clickedValue);
+        const clamped = clampValueForThumb(clickedValue, index, selection);
+
+        const nextValues = [...selection];
+        nextValues[index] = clamped;
+
+        setSelection(nextValues);
+        onChange?.(nextValues);
+        onChangeEnd?.(nextValues);
+    }
+
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -451,43 +516,52 @@ export const InputRangeSlider = ({
             })}
 
             {/* Native range inputs provide the accessible interaction model.
-                The visible react-slider is presentation-only. */}
-            <ReactSlider
-                step={step}
-                min={min}
-                max={max}
-                value={selection}
-                disabled={disabled || readOnly}
-                onChange={handleChange}
-                onAfterChange={handleChangeEnd}
-                minDistance={minRange}
-                aria-hidden
+                The visible slider is presentation-only. */}
+            <div
+                ref={sliderRef}
                 className={styles.slider}
-                renderThumb={(thumbProps, state) => {
-                    return (
-                        <Thumb
-                            data-testid={`slider-thumb-${state.index}`}
-                            {...thumbProps}
-                            key={thumbProps.key}
-                            tabIndex={-1}
-                            aria-hidden
-                            focused={focusedThumbIndex === state.index}
-                            disabled={disabled}
-                            readOnly={readOnly}
-                        />
-                    );
-                }}
-                renderTrack={(trackProps, state) => {
+                aria-hidden="true"
+                onPointerDown={handleTrackPointerDown}
+            >
+                {Array.from({ length: selection.length + 1 }, (_, i) => {
+                    const leftPercent =
+                        i === 0 ? 0 : getPercent(selection[i - 1]);
+                    const rightPercent =
+                        i === selection.length
+                            ? 0
+                            : 100 - getPercent(selection[i]);
                     return (
                         <Track
-                            data-testid={`slider-track-${state.index}`}
-                            {...trackProps}
-                            key={trackProps.key}
-                            color={trackColors[state.index]}
+                            key={`track-${i}`}
+                            data-testid={`slider-track-${i}`}
+                            color={trackColors[i]}
+                            style={{
+                                [styles.tokens.track.left]:
+                                    toOffset(leftPercent),
+                                [styles.tokens.track.right]:
+                                    toOffset(rightPercent),
+                            }}
                         />
                     );
-                }}
-            />
+                })}
+                {selection.map((thumbValue, index) => (
+                    <Thumb
+                        key={`thumb-${index}`}
+                        data-testid={`slider-thumb-${index}`}
+                        tabIndex={-1}
+                        aria-hidden="true"
+                        focused={focusedThumbIndex === index}
+                        disabled={disabled}
+                        readOnly={readOnly}
+                        style={{
+                            [styles.tokens.thumb.left]: toOffset(
+                                getPercent(thumbValue)
+                            ),
+                        }}
+                        onPointerDown={(e) => startDrag(e, index)}
+                    />
+                ))}
+            </div>
 
             {showSliderLabels && (
                 <div className={styles.labelContainer}>

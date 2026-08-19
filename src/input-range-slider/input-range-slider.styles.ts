@@ -6,6 +6,11 @@ export const tokens = {
     track: {
         backgroundColor:
             "--fds-internal-inputRangeSlider-track-backgroundColor",
+        left: "--fds-internal-inputRangeSlider-track-left",
+        right: "--fds-internal-inputRangeSlider-track-right",
+    },
+    thumb: {
+        left: "--fds-internal-inputRangeSlider-thumb-left",
     },
 };
 
@@ -31,6 +36,7 @@ export const labelText = css`
 export const slider = css`
     height: 0.875rem;
     position: relative;
+    touch-action: none;
 `;
 
 export const knob = css`
@@ -78,8 +84,12 @@ export const knobInteractive = css`
 export const sliderThumb = css`
     height: 0.875rem;
     width: 0.875rem;
-    position: relative;
+    position: absolute;
+    z-index: 1;
     outline: none;
+
+    ${tokens.thumb.left}: initial;
+    left: var(${tokens.thumb.left}, 0px);
 
     &:focus .${knob}::after, &[data-focused="true"] .${knob}::after {
         outline-offset: -1px;
@@ -89,10 +99,16 @@ export const sliderThumb = css`
 `;
 
 export const sliderTrack = css`
+    position: absolute;
     height: 0.25rem;
     top: 50%;
     transform: translateY(-50%);
     border-radius: ${Radius["full"]};
+
+    ${tokens.track.left}: initial;
+    ${tokens.track.right}: initial;
+    left: var(${tokens.track.left}, 0px);
+    right: var(${tokens.track.right}, 0px);
 
     ${tokens.track.backgroundColor}: initial;
     background: var(
