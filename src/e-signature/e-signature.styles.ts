@@ -88,9 +88,7 @@ export const modalCard = css`
 
     ${MediaQuery.MaxWidth.sm} {
         &[data-mobile-landscape][data-mobile-landscape] {
-            max-width: none;
             height: 100vh;
-            margin: 0;
             border-radius: 0;
             padding: 0;
             box-shadow: none;
@@ -252,8 +250,6 @@ export const modalButtons = css`
     && {
         flex-direction: row-reverse;
         margin: ${Spacing["spacing-16"]} 0 0;
-        margin-right: 0;
-        margin-left: 0;
         justify-content: space-between;
         column-gap: 0;
     }
