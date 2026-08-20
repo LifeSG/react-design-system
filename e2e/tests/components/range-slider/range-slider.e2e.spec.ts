@@ -1,5 +1,6 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import { dragSlider, getSliderDelta, getSliderValue } from "../slider-utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "range-slider";
@@ -52,31 +53,19 @@ class StoryPage extends AbstractStoryPage {
     }
 
     async getSliderValue(index: number) {
-        const slider = this.locators.internal.slider(index);
-        const value = await slider.inputValue();
-        return parseInt(value);
+        return getSliderValue(this.locators.internal.slider(index));
     }
 
     async getSliderDelta(locator: Locator, range: number) {
-        const slider = await locator.boundingBox();
-        const step = slider?.width ? slider.width / range : 0;
-        return step;
+        return getSliderDelta(locator, range);
     }
 
     async dragSlider(index: number, deltaX: number) {
-        const slider = this.locators.internal.thumb(index);
-        const boundingBox = await slider.boundingBox();
-
-        if (!boundingBox) {
-            throw new Error(
-                `Slider at index ${index} does not have a bounding box`
-            );
-        }
-
-        await slider.hover();
-        await this.page.mouse.down();
-        await this.page.mouse.move(boundingBox.x + deltaX, boundingBox.y);
-        await this.page.mouse.up();
+        return dragSlider(
+            this.page,
+            this.locators.internal.thumb(index),
+            deltaX
+        );
     }
 }
 
