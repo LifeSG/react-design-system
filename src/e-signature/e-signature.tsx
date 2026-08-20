@@ -182,25 +182,11 @@ export const ESignature = (props: EsignatureProps) => {
                                 </Suspense>
                             </div>
                         </div>
-                    </ModalV2.Content>
-                    <ModalV2.Footer
-                        className={styles.modalButtons}
-                        data-mobile-landscape={isMobileLandscape}
-                        primaryButton={
+                        <div
+                            className={styles.modalButtons}
+                            data-mobile-landscape={isMobileLandscape}
+                        >
                             <Button
-                                data-mobile-landscape={isMobileLandscape}
-                                sizeType={
-                                    isMobileLandscape ? "small" : "default"
-                                }
-                                type="button"
-                                onClick={handleClickSave}
-                            >
-                                Save
-                            </Button>
-                        }
-                        secondaryButton={
-                            <Button
-                                data-mobile-landscape={isMobileLandscape}
                                 sizeType={
                                     isMobileLandscape ? "small" : "default"
                                 }
@@ -215,8 +201,17 @@ export const ESignature = (props: EsignatureProps) => {
                             >
                                 Clear
                             </Button>
-                        }
-                    />
+                            <Button
+                                sizeType={
+                                    isMobileLandscape ? "small" : "default"
+                                }
+                                type="button"
+                                onClick={handleClickSave}
+                            >
+                                Save
+                            </Button>
+                        </div>
+                    </ModalV2.Content>
                 </ModalV2.Card>
             </ModalV2>
         );
