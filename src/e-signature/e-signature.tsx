@@ -188,7 +188,6 @@ export const ESignature = (props: EsignatureProps) => {
                         data-mobile-landscape={isMobileLandscape}
                         primaryButton={
                             <Button
-                                className={styles.modalActionButton}
                                 data-mobile-landscape={isMobileLandscape}
                                 sizeType={
                                     isMobileLandscape ? "small" : "default"
@@ -201,7 +200,6 @@ export const ESignature = (props: EsignatureProps) => {
                         }
                         secondaryButton={
                             <Button
-                                className={styles.modalActionButton}
                                 data-mobile-landscape={isMobileLandscape}
                                 sizeType={
                                     isMobileLandscape ? "small" : "default"
