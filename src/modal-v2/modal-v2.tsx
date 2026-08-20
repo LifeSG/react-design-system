@@ -138,14 +138,14 @@ const Base = ({
  * content slots.
  *
  * Sub-components:
- * - `ModalV2.Card` — wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout.
+ * - `ModalV2.Card` — wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout. Supports a `fullscreen` prop that makes the card fill the viewport.
  * - `ModalV2.CloseButton` — renders an accessible close button that invokes the modal's `onClose` callback.
  * - `ModalV2.Content` — container for the body content of the modal card.
  * - `ModalV2.Footer` — footer area for primary and secondary action buttons.
  * - `ModalV2.Header` — header bar with a close button and optional title. Use instead of `CloseButton` when a heading is needed.
  */
 export const ModalV2 = Object.assign(Base, {
-    /** Wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout. */
+    /** Wraps modal content and arranges `Content`, `Footer`, and `CloseButton` slots in the correct layout. Supports a `fullscreen` prop. */
     Card,
     /** Renders an accessible close button that invokes the modal's `onClose` callback. */
     CloseButton,
