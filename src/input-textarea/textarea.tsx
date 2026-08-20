@@ -2,6 +2,8 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
 import { FormErrorMessage } from "../form/form-label";
+import { concatIds } from "../shared/accessibility";
+import { useId } from "../util";
 import * as styles from "./textarea.styles";
 import { TextareaCounter } from "./textarea-counter";
 import type { TextareaProps, TextareaRef } from "./types";
@@ -170,6 +172,7 @@ const TextareaComponent = (
     const [stateValue, setStateValue] = useState<
         string | number | readonly string[] | undefined
     >(value);
+    const defaultErrorMessageID = useId();
 
     // -------------------------------------------------------------------------
     // EFFECTS
@@ -187,16 +190,13 @@ const TextareaComponent = (
         if (onChange) onChange(event);
     };
 
-    const errorMessageId = id ? `${id}-error-message` : undefined;
+    const errorMessageId = id ? `${id}-error-message` : defaultErrorMessageID;
     const isAriaInvalid =
-        !!errorMessage ||
-        !!error ||
-        otherProps["aria-invalid"] === true ||
-        otherProps["aria-invalid"] === "true";
-    const mergedAriaDescribedBy =
-        [otherProps["aria-describedby"], errorMessage && errorMessageId]
-            .filter(Boolean)
-            .join(" ") || undefined;
+        otherProps["aria-invalid"] ?? (!!errorMessage || !!error);
+    const mergedAriaDescribedBy = concatIds(
+        otherProps["aria-describedby"],
+        errorMessage ? errorMessageId : undefined
+    );
 
     // -------------------------------------------------------------------------
     // RENDER FUNCTIONS
