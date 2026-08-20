@@ -72,6 +72,16 @@ export const modalCard = css`
     ${MediaQuery.MaxWidth.xxs} {
         max-width: calc(100% - ${Breakpoint["xxs-margin"]} * 2);
     }
+
+    &&[data-fullscreen] {
+        max-width: none;
+        width: 100%;
+        height: 100vh;
+        margin: 0;
+        border-radius: 0;
+        padding: 0;
+        box-shadow: none;
+    }
 `;
 
 export const closeButtonContainer = css`
