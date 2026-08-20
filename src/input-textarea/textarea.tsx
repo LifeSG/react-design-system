@@ -2,6 +2,8 @@ import clsx from "clsx";
 import React, { useEffect, useState } from "react";
 
 import { FormErrorMessage } from "../form/form-label";
+import { concatIds } from "../shared/accessibility";
+import { useId } from "../util";
 import * as styles from "./textarea.styles";
 import { TextareaCounter } from "./textarea-counter";
 import type { TextareaProps, TextareaRef } from "./types";
@@ -149,6 +151,7 @@ export const TextareaBase = React.forwardRef(TextareaBaseComponent);
 const TextareaComponent = (
     {
         value,
+        id,
         disabled,
         rows = 5,
         onChange,
@@ -169,6 +172,7 @@ const TextareaComponent = (
     const [stateValue, setStateValue] = useState<
         string | number | readonly string[] | undefined
     >(value);
+    const defaultErrorMessageID = useId();
 
     // -------------------------------------------------------------------------
     // EFFECTS
@@ -186,6 +190,14 @@ const TextareaComponent = (
         if (onChange) onChange(event);
     };
 
+    const errorMessageId = id ? `${id}-error-message` : defaultErrorMessageID;
+    const ariaInvalid =
+        otherProps["aria-invalid"] ?? (!!errorMessage || !!error);
+    const ariaDescribedBy = concatIds(
+        otherProps["aria-describedby"],
+        errorMessage ? errorMessageId : undefined
+    );
+
     // -------------------------------------------------------------------------
     // RENDER FUNCTIONS
     // -------------------------------------------------------------------------
@@ -197,6 +209,7 @@ const TextareaComponent = (
                     <FormErrorMessage
                         className={styles.errorMessage}
                         data-testid={errorTestId}
+                        id={errorMessageId}
                     >
                         {errorMessage}
                     </FormErrorMessage>
@@ -225,6 +238,9 @@ const TextareaComponent = (
                 maxLength={maxLength}
                 error={!!errorMessage || error}
                 {...otherProps}
+                id={id}
+                aria-invalid={ariaInvalid}
+                aria-describedby={ariaDescribedBy}
             />
             {renderBottomLabels()}
         </div>
