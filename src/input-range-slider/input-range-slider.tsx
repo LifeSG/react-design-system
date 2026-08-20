@@ -1,14 +1,14 @@
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import clsx from "clsx";
 import type React from "react";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useState } from "react";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { Colour } from "../theme";
 import { Typography } from "../typography";
-import { useId, useIsomorphicLayoutEffect } from "../util";
+import { useId } from "../util";
 import * as styles from "./input-range-slider.styles";
-import { Thumb, Track } from "./slider-components";
+import { Slider } from "./slider-components";
 import type { InputRangeSliderProps } from "./types";
 
 // @catalog
@@ -54,8 +54,6 @@ export const InputRangeSlider = ({
     const [focusedThumbIndex, setFocusedThumbIndex] = useState<number | null>(
         null
     );
-    const [upperBound, setUpperBound] = useState(0);
-    const sliderRef = useRef<HTMLDivElement>(null);
     const internalId = useId();
     const trackColors = getTrackColors();
     const indicatorTextId = `${internalId}-indicator`;
@@ -65,28 +63,6 @@ export const InputRangeSlider = ({
     // =========================================================================
     // EFFECTS
     // =========================================================================
-    useIsomorphicLayoutEffect(() => {
-        const slider = sliderRef.current;
-        if (!slider) return;
-
-        const measure = () => {
-            const sliderWidth = slider.clientWidth;
-            const thumbEl = slider.querySelector(
-                `.${styles.sliderThumb}`
-            ) as HTMLElement | null;
-            const thumbWidth = thumbEl
-                ? thumbEl.getBoundingClientRect().width
-                : 0;
-            setUpperBound(sliderWidth - thumbWidth);
-        };
-
-        measure();
-        const observer = new ResizeObserver(measure);
-        observer.observe(slider);
-
-        return () => observer.disconnect();
-    }, []);
-
     useEffect(() => {
         if (value !== selection) {
             setSelection(initialiseSelection());
@@ -322,107 +298,6 @@ export const InputRangeSlider = ({
         return Math.min(maxAllowed, Math.max(minAllowed, nextValue));
     }
 
-    function getPercent(val: number) {
-        if (max === min) return 0;
-        return ((val - min) / (max - min)) * 100;
-    }
-
-    function toOffset(percent: number) {
-        if (percent === 0) return "0px";
-        return `${(percent / 100) * upperBound}px`;
-    }
-
-    function getValueFromClientX(clientX: number) {
-        const slider = sliderRef.current;
-        if (!slider) return min;
-
-        const rect = slider.getBoundingClientRect();
-        if (rect.width === 0) return min;
-
-        const fraction = Math.max(
-            0,
-            Math.min(1, (clientX - rect.left) / rect.width)
-        );
-        const rawValue = min + fraction * (max - min);
-        const snapped = Math.round((rawValue - min) / step) * step + min;
-        return Math.max(min, Math.min(max, snapped));
-    }
-
-    function findNearestThumbIndex(val: number) {
-        let nearestIndex = 0;
-        let nearestDist = Math.abs(selection[0] - val);
-        for (let i = 1; i < selection.length; i++) {
-            const dist = Math.abs(selection[i] - val);
-            if (dist < nearestDist) {
-                nearestDist = dist;
-                nearestIndex = i;
-            }
-        }
-        return nearestIndex;
-    }
-
-    function startDrag(
-        event: React.PointerEvent<HTMLDivElement>,
-        thumbIndex: number
-    ) {
-        if (disabled || readOnly) return;
-        if (event.button !== 0) return;
-
-        event.preventDefault();
-        event.stopPropagation();
-        (event.currentTarget as HTMLElement).focus();
-
-        const dragValues = [...selection];
-
-        const onMove = (e: PointerEvent) => {
-            const rawValue = getValueFromClientX(e.clientX);
-            const clamped = clampValueForThumb(
-                rawValue,
-                thumbIndex,
-                dragValues
-            );
-
-            if (clamped === dragValues[thumbIndex]) return;
-
-            dragValues[thumbIndex] = clamped;
-            const nextValues = [...dragValues];
-
-            setSelection(nextValues);
-            onChange?.(nextValues);
-        };
-
-        const onEnd = () => {
-            document.removeEventListener("pointermove", onMove);
-            document.removeEventListener("pointerup", onEnd);
-            document.removeEventListener("pointercancel", onEnd);
-
-            const finalValues = [...dragValues];
-            setSelection(finalValues);
-            onChangeEnd?.(finalValues);
-        };
-
-        document.addEventListener("pointermove", onMove);
-        document.addEventListener("pointerup", onEnd);
-        document.addEventListener("pointercancel", onEnd);
-    }
-
-    function handleTrackPointerDown(event: React.PointerEvent<HTMLDivElement>) {
-        if (disabled || readOnly) return;
-        if (event.button !== 0) return;
-
-        event.preventDefault();
-        const clickedValue = getValueFromClientX(event.clientX);
-        const index = findNearestThumbIndex(clickedValue);
-        const clamped = clampValueForThumb(clickedValue, index, selection);
-
-        const nextValues = [...selection];
-        nextValues[index] = clamped;
-
-        setSelection(nextValues);
-        onChange?.(nextValues);
-        onChangeEnd?.(nextValues);
-    }
-
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
@@ -537,51 +412,20 @@ export const InputRangeSlider = ({
 
             {/* Native range inputs provide the accessible interaction model.
                 The visible slider is presentation-only. */}
-            <div
-                ref={sliderRef}
-                className={styles.slider}
-                aria-hidden="true"
-                onPointerDown={handleTrackPointerDown}
-            >
-                {Array.from({ length: selection.length + 1 }, (_, i) => {
-                    const leftPercent =
-                        i === 0 ? 0 : getPercent(selection[i - 1]);
-                    const rightPercent =
-                        i === selection.length
-                            ? 0
-                            : 100 - getPercent(selection[i]);
-                    return (
-                        <Track
-                            key={`track-${i}`}
-                            data-testid={`slider-track-${i}`}
-                            color={trackColors[i]}
-                            style={{
-                                [styles.tokens.track.left]:
-                                    toOffset(leftPercent),
-                                [styles.tokens.track.right]:
-                                    toOffset(rightPercent),
-                            }}
-                        />
-                    );
-                })}
-                {selection.map((thumbValue, index) => (
-                    <Thumb
-                        key={`thumb-${index}`}
-                        data-testid={`slider-thumb-${index}`}
-                        tabIndex={-1}
-                        aria-hidden="true"
-                        focused={focusedThumbIndex === index}
-                        disabled={disabled}
-                        readOnly={readOnly}
-                        style={{
-                            [styles.tokens.thumb.left]: toOffset(
-                                getPercent(thumbValue)
-                            ),
-                        }}
-                        onPointerDown={(e) => startDrag(e, index)}
-                    />
-                ))}
-            </div>
+            <Slider
+                selection={selection}
+                min={min}
+                max={max}
+                step={step}
+                minRange={minRange}
+                disabled={disabled}
+                readOnly={readOnly}
+                trackColors={trackColors}
+                focusedThumbIndex={focusedThumbIndex}
+                onChange={onChange}
+                onChangeEnd={onChangeEnd}
+                onSelectionChange={setSelection}
+            />
 
             {showSliderLabels && (
                 <div className={styles.labelContainer}>
