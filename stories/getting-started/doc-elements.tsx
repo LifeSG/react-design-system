@@ -18,6 +18,7 @@ const THEME_TO_DISPLAY_NAME_MAPPING: Record<ThemeType, string> = {
     spf: "SPF",
     supportgowhere: "SupportGoWhere",
     smgs: "SMGS",
+    "tote-board": "Tote Board",
 };
 
 const THEME_TO_FONT_MAPPING: Record<ThemeType, string> = {
@@ -35,6 +36,7 @@ const THEME_TO_FONT_MAPPING: Record<ThemeType, string> = {
     spf: "public-sans",
     supportgowhere: "libre-franklin",
     smgs: "plus-jakarta-sans",
+    "tote-board": "inter",
 };
 
 const ThemePicker = ({

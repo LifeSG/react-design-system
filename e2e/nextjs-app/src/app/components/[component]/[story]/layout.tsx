@@ -13,6 +13,7 @@ import "@lifesg/react-design-system/theme/styles/sgw-digital-lobby.css";
 import "@lifesg/react-design-system/theme/styles/smgs.css";
 import "@lifesg/react-design-system/theme/styles/spf.css";
 import "@lifesg/react-design-system/theme/styles/supportgowhere.css";
+import "@lifesg/react-design-system/theme/styles/tote-board.css";
 
 import {
     THEME_TYPES,

@@ -28,6 +28,7 @@ export const THEME_TYPES = [
     "smgs",
     "spf",
     "supportgowhere",
+    "tote-board",
 ] as const;
 
 /** Union of all supported theme names. */
