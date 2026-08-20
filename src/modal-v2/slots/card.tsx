@@ -62,6 +62,7 @@ function CardInner(
             ref={mergeRefs(ref, elementRef)}
             id={id}
             data-testid={testId}
+            data-fullscreen={fullscreen || undefined}
             {...otherProps}
             onClick={handleOnClick}
             className={clsx(
