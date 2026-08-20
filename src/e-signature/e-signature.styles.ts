@@ -111,8 +111,6 @@ export const modalCard = css`
         min-height: 0;
 
         ${slotSpacerTokens.contentLastChildMarginBottom}: 0;
-        ${slotSpacerTokens.footerNotFirstChildMarginTop}: 0;
-        ${slotSpacerTokens.footerLastChildMarginBottom}: 0;
     }
 `;
 
@@ -247,21 +245,17 @@ export const signatureLine = css`
 `;
 
 export const modalButtons = css`
-    && {
-        flex-direction: row-reverse;
-        margin: ${Spacing["spacing-16"]} 0 0;
-        justify-content: space-between;
-        column-gap: 0;
-    }
+    display: flex;
+    justify-content: space-between;
+    margin-top: ${Spacing["spacing-16"]};
 
-    && > button {
-        flex: none;
+    & > button {
         width: 8.5rem;
     }
 
     ${MediaQuery.MaxWidth.sm} {
         &[data-mobile-landscape] {
-            flex-direction: column;
+            flex-direction: column-reverse;
             margin: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]}
                 ${Spacing["spacing-48"]};
             gap: ${Spacing["spacing-16"]};
@@ -273,6 +267,7 @@ export const modalButtons = css`
     }
 
     &[data-mobile-landscape="true"] {
+        flex-direction: row;
         margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
     }
 `;
