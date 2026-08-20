@@ -1,0 +1,18 @@
+export type ItemFocusType = "self" | "others" | "none";
+export declare const item: import("@linaria/core").LinariaClassName;
+export declare const dragHandleIcon: import("@linaria/core").LinariaClassName;
+export declare const box: import("@linaria/core").LinariaClassName;
+export declare const contentSection: import("@linaria/core").LinariaClassName;
+export declare const nameSection: import("@linaria/core").LinariaClassName;
+export declare const extendedNameSection: import("@linaria/core").LinariaClassName;
+export declare const fileSizeSection: import("@linaria/core").LinariaClassName;
+export declare const fileSizeText: import("@linaria/core").LinariaClassName;
+export declare const descriptionFileSizeText: import("@linaria/core").LinariaClassName;
+export declare const itemDescriptionLabel: import("@linaria/core").LinariaClassName;
+export declare const itemDescriptionText: import("@linaria/core").LinariaClassName;
+export declare const errorIcon: import("@linaria/core").LinariaClassName;
+export declare const desktopErrorMessage: import("@linaria/core").LinariaClassName;
+export declare const mobileErrorMessage: import("@linaria/core").LinariaClassName;
+export declare const actionContainer: import("@linaria/core").LinariaClassName;
+export declare const inlineActionContainer: import("@linaria/core").LinariaClassName;
+export declare const iconButton: import("@linaria/core").LinariaClassName;

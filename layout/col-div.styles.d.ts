@@ -1,0 +1,24 @@
+export declare const tokens: {
+    xxsStart: string;
+    xxsSpan: string;
+    xxsEnd: string;
+    xsStart: string;
+    xsSpan: string;
+    xsEnd: string;
+    smStart: string;
+    smSpan: string;
+    smEnd: string;
+    mdStart: string;
+    mdSpan: string;
+    mdEnd: string;
+    lgStart: string;
+    lgSpan: string;
+    lgEnd: string;
+    xlStart: string;
+    xlSpan: string;
+    xlEnd: string;
+    xxlStart: string;
+    xxlSpan: string;
+    xxlEnd: string;
+};
+export declare const colDiv: import("@linaria/core").LinariaClassName;

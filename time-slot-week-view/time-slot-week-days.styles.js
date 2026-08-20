@@ -1,0 +1,2 @@
+import"./time-slot-week-days.styles_1h21vyw.css";const e={timeSlotText:{color:"--fds-internal-timeSlotWeekDays-timeSlotText-color"}},t="h1u5a4vg",o="hi684jn",i="d4p8eye",l="dl9xaeu",s="w1jgoij2",y="c1fvren",c="tiecbfv",m="t1nixg7y",n="t17yohj6";export{y as columnWeekCell,i as dayLabel,l as dayLabelDisabled,t as headerCellWeek,o as headerRow,m as timeSlotComponent,c as timeSlotText,n as timeSlotWrapper,e as tokens,s as wrapper};
+//# sourceMappingURL=time-slot-week-days.styles.js.map

@@ -1,0 +1,2 @@
+import"./breadcrumb.styles_1nl4aua.css";const r={fade:{backgroundColor:"--fds-internal-breadcrumb-fade-backgroundColor"}},a="wcpniaz",o="c10gatr7",c="fbyhxo7",d="f1xa0lk7",b="f1oxmxuo",e="ikhkv84",m="co9wmrd",n="spyv6ve",f="c1mfqdvn",s="pm022dc";export{m as caret,o as content,f as currentLabel,c as fade,d as fadeLeft,b as fadeRight,e as item,s as previousLink,n as slash,r as tokens,a as wrapper};
+//# sourceMappingURL=breadcrumb.styles.js.map

@@ -1,0 +1,16 @@
+export declare const item: import("@linaria/core").LinariaClassName;
+export declare const box: import("@linaria/core").LinariaClassName;
+export declare const boxError: import("@linaria/core").LinariaClassName;
+export declare const contentSection: import("@linaria/core").LinariaClassName;
+export declare const contentSectionHasThumbnail: import("@linaria/core").LinariaClassName;
+export declare const nameSection: import("@linaria/core").LinariaClassName;
+export declare const extendedNameSection: import("@linaria/core").LinariaClassName;
+export declare const fileSizeSection: import("@linaria/core").LinariaClassName;
+export declare const itemNameText: import("@linaria/core").LinariaClassName;
+export declare const errorIcon: import("@linaria/core").LinariaClassName;
+export declare const desktopErrorMessage: import("@linaria/core").LinariaClassName;
+export declare const mobileErrorMessage: import("@linaria/core").LinariaClassName;
+export declare const actionContainer: import("@linaria/core").LinariaClassName;
+export declare const iconButton: import("@linaria/core").LinariaClassName;
+export declare const thumbnailContainer: import("@linaria/core").LinariaClassName;
+export declare const thumbnail: import("@linaria/core").LinariaClassName;
