@@ -1,0 +1,2 @@
+import{jsxs as n,jsx as i}from"react/jsx-runtime";import{OuterRing as e,InnerRing1 as o,InnerRing2 as r,InnerRing3 as s,InnerRing4 as t}from"./component-loading-spinner.style.js";const a=({color:a,className:c,size:d})=>n(e,{className:c,$size:d,$color:a,"data-testid":"component-loading-spinner",children:[i(o,{id:"inner1"}),i(r,{id:"inner2"}),i(s,{id:"inner3"}),i(t,{id:"inner4"})]});export{a as ComponentLoadingSpinner};
+//# sourceMappingURL=component-loading-spinner.js.map
