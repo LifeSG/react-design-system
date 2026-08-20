@@ -191,9 +191,9 @@ const TextareaComponent = (
     };
 
     const errorMessageId = id ? `${id}-error-message` : defaultErrorMessageID;
-    const isAriaInvalid =
+    const ariaInvalid =
         otherProps["aria-invalid"] ?? (!!errorMessage || !!error);
-    const mergedAriaDescribedBy = concatIds(
+    const ariaDescribedBy = concatIds(
         otherProps["aria-describedby"],
         errorMessage ? errorMessageId : undefined
     );
@@ -239,8 +239,8 @@ const TextareaComponent = (
                 error={!!errorMessage || error}
                 {...otherProps}
                 id={id}
-                aria-invalid={isAriaInvalid ? true : undefined}
-                aria-describedby={mergedAriaDescribedBy}
+                aria-invalid={ariaInvalid}
+                aria-describedby={ariaDescribedBy}
             />
             {renderBottomLabels()}
         </div>
