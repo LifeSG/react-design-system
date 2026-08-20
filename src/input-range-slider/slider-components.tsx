@@ -108,7 +108,8 @@ export const Slider = ({
     onSelectionChange,
 }: SliderProps) => {
     const sliderRef = useRef<HTMLDivElement>(null);
-    const [upperBound, setUpperBound] = useState(0);
+    // the maximum offset of the thumb from the start of the slider
+    const [maxThumbOffset, setMaxThumbOffset] = useState(0);
 
     useIsomorphicLayoutEffect(() => {
         const slider = sliderRef.current;
@@ -122,7 +123,7 @@ export const Slider = ({
             const thumbWidth = thumbEl
                 ? thumbEl.getBoundingClientRect().width
                 : 0;
-            setUpperBound(sliderWidth - thumbWidth);
+            setMaxThumbOffset(sliderWidth - thumbWidth);
         };
 
         measure();
@@ -139,7 +140,7 @@ export const Slider = ({
 
     function toOffset(percent: number) {
         if (percent === 0) return "0px";
-        return `${(percent / 100) * upperBound}px`;
+        return `${(percent / 100) * maxThumbOffset}px`;
     }
 
     function getValueFromClientX(clientX: number) {
@@ -159,11 +160,11 @@ export const Slider = ({
     }
 
     function clampValue(nextValue: number, index: number, values: number[]) {
-        let lo = min;
-        let hi = max;
-        if (index > 0) lo = values[index - 1] + minRange;
-        if (index < values.length - 1) hi = values[index + 1] - minRange;
-        return Math.max(lo, Math.min(hi, nextValue));
+        let low = min;
+        let high = max;
+        if (index > 0) low = values[index - 1] + minRange;
+        if (index < values.length - 1) high = values[index + 1] - minRange;
+        return Math.max(low, Math.min(high, nextValue));
     }
 
     function findNearestThumbIndex(val: number) {
@@ -220,6 +221,8 @@ export const Slider = ({
         document.addEventListener("pointercancel", onEnd);
     }
 
+    // handler for clicking on a position on the track (not the thumb)
+    // the nearest thumb to the pointer will get moved to that position
     function handleTrackPointerDown(event: React.PointerEvent<HTMLDivElement>) {
         if (disabled || readOnly) return;
         if (event.button !== 0) return;
@@ -231,6 +234,52 @@ export const Slider = ({
 
         const nextValues = [...selection];
         nextValues[index] = clamped;
+
+        onSelectionChange(nextValues);
+        onChange?.(nextValues);
+        onChangeEnd?.(nextValues);
+    }
+
+    function handleThumbKeyDown(
+        event: React.KeyboardEvent<HTMLDivElement>,
+        thumbIndex: number
+    ) {
+        if (disabled || readOnly) return;
+
+        const currentValue = selection[thumbIndex];
+        let newValue: number;
+
+        switch (event.key) {
+            case "ArrowLeft":
+            case "ArrowDown":
+                newValue = currentValue - step;
+                break;
+            case "ArrowRight":
+            case "ArrowUp":
+                newValue = currentValue + step;
+                break;
+            case "Home":
+                newValue = min;
+                break;
+            case "End":
+                newValue = max;
+                break;
+            case "PageDown":
+                newValue = currentValue - step * 10;
+                break;
+            case "PageUp":
+                newValue = currentValue + step * 10;
+                break;
+            default:
+                return;
+        }
+
+        event.preventDefault();
+        const clamped = clampValue(newValue, thumbIndex, selection);
+        if (clamped === currentValue) return;
+
+        const nextValues = [...selection];
+        nextValues[thumbIndex] = clamped;
 
         onSelectionChange(nextValues);
         onChange?.(nextValues);
@@ -275,6 +324,7 @@ export const Slider = ({
                         ),
                     }}
                     onPointerDown={(e) => startDrag(e, index)}
+                    onKeyDown={(e) => handleThumbKeyDown(e, index)}
                 />
             ))}
         </div>
