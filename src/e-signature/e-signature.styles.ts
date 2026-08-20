@@ -277,12 +277,6 @@ export const modalButtons = css`
     }
 `;
 
-export const modalActionButton = css`
-    &[data-mobile-landscape="true"] {
-        height: 2.5rem;
-    }
-`;
-
 export const signatureCanvasContainer = css`
     width: 100%;
     height: 100%;
