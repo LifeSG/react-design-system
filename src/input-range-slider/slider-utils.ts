@@ -8,17 +8,26 @@ export function toOffset(percent: number, maxThumbOffset: number) {
     return `${(percent / 100) * maxThumbOffset}px`;
 }
 
-export function getValueFromClientX(
-    clientX: number,
-    sliderEl: HTMLDivElement | null,
-    min: number,
-    max: number,
-    step: number
-) {
+type GetValueFromClientXParams = {
+    clientX: number;
+    sliderEl: HTMLDivElement | null;
+    min: number;
+    max: number;
+    step: number;
+};
+
+export function getValueFromClientX({
+    clientX,
+    sliderEl,
+    min,
+    max,
+    step,
+}: GetValueFromClientXParams) {
     if (!sliderEl) return min;
 
     const rect = sliderEl.getBoundingClientRect();
     if (rect.width === 0) return min;
+    if (step <= 0) return Math.max(min, Math.min(max, min));
 
     const fraction = Math.max(
         0,
@@ -41,10 +50,13 @@ export function clampValue(
     let high = max;
     if (index > 0) low = values[index - 1] + minRange;
     if (index < values.length - 1) high = values[index + 1] - minRange;
+    if (low > high) high = low;
     return Math.max(low, Math.min(high, nextValue));
 }
 
 export function findNearestThumbIndex(val: number, selection: number[]) {
+    if (selection.length === 0) return 0;
+
     let nearestIndex = 0;
     let nearestDist = Math.abs(selection[0] - val);
     for (let i = 1; i < selection.length; i++) {

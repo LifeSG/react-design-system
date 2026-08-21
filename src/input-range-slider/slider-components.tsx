@@ -155,13 +155,13 @@ export const Slider = ({
         const dragValues = [...selection];
 
         const onMove = (e: PointerEvent) => {
-            const rawValue = getValueFromClientX(
-                e.clientX,
-                sliderRef.current,
+            const rawValue = getValueFromClientX({
+                clientX: e.clientX,
+                sliderEl: sliderRef.current,
                 min,
                 max,
-                step
-            );
+                step,
+            });
             const clamped = clampValue(
                 rawValue,
                 thumbIndex,
@@ -201,13 +201,13 @@ export const Slider = ({
         if (event.button !== 0) return;
 
         event.preventDefault();
-        const clickedValue = getValueFromClientX(
-            event.clientX,
-            sliderRef.current,
+        const clickedValue = getValueFromClientX({
+            clientX: event.clientX,
+            sliderEl: sliderRef.current,
             min,
             max,
-            step
-        );
+            step,
+        });
         const index = findNearestThumbIndex(clickedValue, selection);
         const clamped = clampValue(
             clickedValue,
