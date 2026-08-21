@@ -18,6 +18,7 @@ function CardInner(
         children,
         className,
         elementRef,
+        fullscreen,
         ...otherProps
     }: ModalCardProps,
     ref: React.ForwardedRef<HTMLDivElement>
@@ -61,6 +62,7 @@ function CardInner(
             ref={mergeRefs(ref, elementRef)}
             id={id}
             data-testid={testId}
+            data-fullscreen={fullscreen || undefined}
             {...otherProps}
             onClick={handleOnClick}
             className={clsx(styles.modalCard, className)}

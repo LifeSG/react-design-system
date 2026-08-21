@@ -3,7 +3,7 @@ import { lazy, Suspense, useEffect, useRef, useState } from "react";
 
 import { Button } from "../button";
 import { DashedBorder } from "../dashed-border";
-import { Modal } from "../modal";
+import { ModalV2 } from "../modal-v2";
 import { ProgressBar } from "../shared/progress-bar";
 import {
     Border,
@@ -141,26 +141,26 @@ export const ESignature = (props: EsignatureProps) => {
 
     const renderModal = () => {
         return (
-            <Modal
-                className={styles.scrollableModal}
+            <ModalV2
                 data-testid="signature-modal"
                 show={showModal}
+                onClose={() => setShowModal(false)}
             >
-                <div
-                    className={styles.growContainer}
+                <ModalV2.Card
+                    className={styles.modalCard}
                     data-mobile-landscape={isMobileLandscape}
+                    fullscreen={isMobile || isMobileLandscape}
                 >
-                    <Modal.Box
-                        className={styles.modalBox}
+                    <ModalV2.Header
+                        title="Signature"
+                        closeButtonPosition="right"
+                        className={styles.modalHeader}
                         data-mobile-landscape={isMobileLandscape}
-                        onClose={() => setShowModal(false)}
+                    />
+                    <ModalV2.Content
+                        className={styles.modalContent}
+                        data-mobile-landscape={isMobileLandscape}
                     >
-                        <h2
-                            className={styles.modalTitle}
-                            data-mobile-landscape={isMobileLandscape}
-                        >
-                            Signature
-                        </h2>
                         <div
                             className={styles.eSignatureContainer}
                             data-mobile-landscape={isMobileLandscape}
@@ -188,8 +188,6 @@ export const ESignature = (props: EsignatureProps) => {
                             data-mobile-landscape={isMobileLandscape}
                         >
                             <Button
-                                className={styles.modalActionButton}
-                                data-mobile-landscape={isMobileLandscape}
                                 sizeType={
                                     isMobileLandscape ? "small" : "default"
                                 }
@@ -205,8 +203,6 @@ export const ESignature = (props: EsignatureProps) => {
                                 Clear
                             </Button>
                             <Button
-                                className={styles.modalActionButton}
-                                data-mobile-landscape={isMobileLandscape}
                                 sizeType={
                                     isMobileLandscape ? "small" : "default"
                                 }
@@ -216,9 +212,9 @@ export const ESignature = (props: EsignatureProps) => {
                                 Save
                             </Button>
                         </div>
-                    </Modal.Box>
-                </div>
-            </Modal>
+                    </ModalV2.Content>
+                </ModalV2.Card>
+            </ModalV2>
         );
     };
 
