@@ -258,7 +258,6 @@
             "importPath": "@lifesg/react-design-system/histogram-slider",
             "description": "A histogram with an overlaid two-thumb range slider for numeric filtering.  Use `HistogramSlider` to let users narrow a dataset by selecting a numeric range while seeing how values are distributed across bins.",
             "keywords": [
-                "bins",
                 "chart",
                 "distribution",
                 "field",
@@ -278,7 +277,7 @@
             "name": "Input",
             "importPath": "@lifesg/react-design-system/input",
             "description": "A single-line text input field.  Use `Input` for free-form text entry. It supports controlled and uncontrolled usage.",
-            "keywords": ["field", "form", "input"]
+            "keywords": ["field", "form", "input", "text field"]
         },
         {
             "name": "InputGroup",
@@ -508,9 +507,6 @@
                 "2FA",
                 "authentication",
                 "code",
-                "field",
-                "form",
-                "input",
                 "MFA",
                 "one-time password",
                 "verification"
@@ -674,14 +670,7 @@
             "name": "Textarea",
             "importPath": "@lifesg/react-design-system/input-textarea",
             "description": "A multi-line text input with an optional character counter and prefix.",
-            "keywords": [
-                "field",
-                "form",
-                "input",
-                "multiline",
-                "text area",
-                "text field"
-            ]
+            "keywords": ["field", "form", "input", "multiline", "text field"]
         },
         {
             "name": "TextList",
