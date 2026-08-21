@@ -20,6 +20,7 @@ import type { FooterLinkProps, FooterProps } from "./types";
  * Use `Footer` at the bottom of a page to surface navigation links grouped
  * into columns, a theme-appropriate logo, download-app or resource add-ons,
  * and disclaimer links with auto-generated copyright text.
+ * @keywords branding, copyright, disclaimer, legal, logo, navigation
  */
 export const Footer = <T,>({
     children,

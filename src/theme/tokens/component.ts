@@ -43,6 +43,7 @@ const Footer = {
 // @catalog
 /**
  * Component-scoped design tokens grouped by component.
+ * @keywords design tokens
  */
 export const ComponentToken = {
     Animation,

@@ -14,6 +14,7 @@ export * from "./types";
  * Sub-components:
  * - `UneditableSection.Item` — a standalone labeled read-only field with optional masking.
  * - `UneditableSection.ItemSection` — a standalone grid list for composing items.
+ * @keywords field values, form summary, read-only, review
  */
 export const UneditableSection = Object.assign(UneditableSectionBase, {
     /**

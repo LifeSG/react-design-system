@@ -9,6 +9,7 @@ import type { InputSliderProps } from "./types";
  *
  * Use `InputSlider` when a user needs to pick a single point on a continuous
  * scale without a precise value. For selecting a range between two values, use `InputRangeSlider` instead.
+ * @keywords field, form, input, range, slider
  */
 export const InputSlider = ({
     value,

@@ -435,6 +435,7 @@ const Component = (
  * A navigation control for moving through paged content.
  *
  * Use `Pagination` to let users navigate between pages of a data set.
+ * @keywords navigation, pager, pages
  */
 export const Pagination = React.forwardRef(Component);
 

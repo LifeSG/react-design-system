@@ -11,6 +11,7 @@ import type { LinkListProps } from "./types";
  *
  * Use `LinkList` to display a set of navigable links with titles and optional
  * descriptions.
+ * @keywords links, navigation
  */
 export const LinkList = <T,>(props: LinkListProps<T>): JSX.Element => {
     if (!props.loadMode || props.loadMode === "eager") {

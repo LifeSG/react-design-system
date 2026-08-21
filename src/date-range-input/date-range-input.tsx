@@ -47,6 +47,7 @@ const INITIAL_STATE: DateRangeInputState = {
 /**
  * A paired date input with an attached calendar dropdown that lets users
  * select a contiguous date range.
+ * @keywords calendar, datepicker, end date, field, form, input, range, start date
  */
 export const DateRangeInput = ({
     minDate,

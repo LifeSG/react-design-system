@@ -61,6 +61,7 @@ export const FontSpec = {
 // @catalog
 /**
  * Pre-composed font declaration strings for all size & weight combinations.
+ * @keywords design tokens, typography
  */
 export const Font = {
     "heading-xxl-light": generateFont("heading-xxl", "light"),

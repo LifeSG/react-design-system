@@ -14,6 +14,7 @@ import type { ProgressIndicatorProps } from "./types";
  *
  * Use `ProgressIndicator` when you need to communicate progress through an
  * ordered sequence of steps.
+ * @keywords multi-step, step, stepper, wizard, workflow
  */
 export const ProgressIndicator = <T,>({
     steps,

@@ -87,6 +87,7 @@ function normaliseCssValue(key: string, value: string | number): string {
  * @param styles The styles to apply, in the same format as the React `style`
  * prop, or CSS variables. Values will be normalised to strings and numeric
  * values will have "px" appended for properties that typically require units.
+ * @keywords csp, css variables, hook, inline styles
  */
 export function useApplyStyle<TElement extends HTMLElement>(
     ref: RefObject<TElement | null>,

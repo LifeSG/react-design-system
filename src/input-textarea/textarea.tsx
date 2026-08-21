@@ -250,5 +250,6 @@ const TextareaComponent = (
 // @catalog
 /**
  * A multi-line text input with an optional character counter and prefix.
+ * @keywords field, form, input, multiline, text field
  */
 export const Textarea = React.forwardRef(TextareaComponent);

@@ -1,6 +1,7 @@
 // @catalog
 /**
  * Border radius tokens.
+ * @keywords border radius, design tokens, shape
  */
 export const Radius = {
     none: "var(--fds-radius-none)",

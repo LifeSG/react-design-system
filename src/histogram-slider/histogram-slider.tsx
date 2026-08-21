@@ -18,6 +18,7 @@ const ANNOUNCEMENT_DEBOUNCE_MS = 500;
  *
  * Use `HistogramSlider` to let users narrow a dataset by selecting a numeric
  * range while seeing how values are distributed across bins.
+ * @keywords chart, distribution, field, form, input, range, visualization
  */
 export const HistogramSlider = ({
     bins = [],

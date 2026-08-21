@@ -21,6 +21,7 @@ import type { DateInputProps } from "./types";
  * A single-date input field with an attached calendar dropdown.
  *
  * Use this to enter or pick a single date.
+ * @keywords calendar, datepicker, field, form, input
  */
 export const DateInput = ({
     minDate,

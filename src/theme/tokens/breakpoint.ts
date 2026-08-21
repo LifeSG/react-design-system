@@ -1,6 +1,7 @@
 // @catalog
 /**
  * Responsive breakpoint tokens for each named breakpoint.
+ * @keywords design tokens, responsive, screen size
  */
 export const Breakpoint = {
     "xxs-min": "var(--fds-breakpoint-xxs-min)",

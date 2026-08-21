@@ -20,6 +20,7 @@ const DATE_FORMAT = "YYYY-MM-DD";
  * Use `TimeSlotBarWeek` for detailed time-of-day scheduling where each cell
  * represents a configurable time interval. For a simpler day-level overview
  * without a time axis, use `TimeSlotWeekView` instead.
+ * @keywords availability, calendar, scheduling, weekly
  */
 export const TimeSlotBarWeek = ({
     disabledDates,

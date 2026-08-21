@@ -47,6 +47,7 @@ const TYPE_CLASS_MAP = {
  * interrupting the user's workflow. Supports five severity tones, an optional
  * icon, a call-to-action link, and a collapsible content area for lengthy
  * messages.
+ * @keywords banner, feedback, message, notification, status, warning
  */
 export const Alert = ({
     type,

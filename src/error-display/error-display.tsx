@@ -22,6 +22,7 @@ import type {
  *
  * Use `ErrorDisplay` to communicate HTTP error codes, session lifecycle states,
  * maintenance windows, and other system-level statuses to users.
+ * @keywords 404, empty state, error, HTTP, maintenance, illustration
  */
 export const ErrorDisplay = ({
     type,

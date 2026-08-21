@@ -88,6 +88,7 @@ const SidenavBase = ({
  *
  * Use `Sidenav` to present a persistent icon-based navigation rail with
  * optional menu drawers.
+ * @keywords navigation, navigation rail, sidebar
  */
 export const Sidenav = Object.assign(SidenavBase, {
     /** Renders a group of navigation items, optionally separated by a divider. */

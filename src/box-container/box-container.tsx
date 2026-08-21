@@ -19,6 +19,7 @@ import type { BoxContainerProps } from "./types";
  * Use `BoxContainer` when you need to visually separate a block of content
  * under a heading and optionally allow users to collapse it. The header supports
  * a call-to-action slot and a visual status indicator.
+ * @keywords collapsible, expandable, panel, section
  */
 export const BoxContainer = ({
     children,

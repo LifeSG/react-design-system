@@ -14,6 +14,7 @@ import { VerificationSection } from "./verification-section";
  *
  * Use `OtpVerification` when you need to verify a user's identity through
  * email address or phone number.
+ * @keywords 2FA, authentication, field, form, input, MFA, verification
  */
 export const OtpVerification = (props: OtpVerificationProps) => {
     // =============================================================================
