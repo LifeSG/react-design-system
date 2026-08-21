@@ -6,10 +6,7 @@ interface StoryContentProps {
     testId: string;
 }
 
-export const StoryContent = ({
-    children,
-    testId,
-}: StoryContentProps): JSX.Element => {
+export const StoryContent = ({ children, testId }: StoryContentProps) => {
     return (
         <Typography.BodyBL data-testid={testId}>{children}</Typography.BodyBL>
     );

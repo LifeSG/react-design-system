@@ -2,14 +2,13 @@ import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import clsx from "clsx";
 import type React from "react";
 import { useEffect, useState } from "react";
-import ReactSlider from "react-slider";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { Colour } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import * as styles from "./input-range-slider.styles";
-import { Thumb, Track } from "./slider-components";
+import { Slider } from "./slider-components";
 import type { InputRangeSliderProps } from "./types";
 
 // @catalog
@@ -74,45 +73,6 @@ export const InputRangeSlider = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleChange = (value: number | readonly number[], index: number) => {
-        if (readOnly || disabled) {
-            return;
-        }
-
-        if (typeof value === "number") {
-            const nextValue = [value];
-            setSelection(nextValue);
-            onChange?.(nextValue);
-            return;
-        }
-
-        if (index > -1 && selection[index] === value[index]) {
-            // skip unnecessary update when dragging the start thumb across the end thumb
-            return;
-        }
-
-        const nextValue = [...value];
-        setSelection(nextValue);
-        onChange?.(nextValue);
-    };
-
-    const handleChangeEnd = (value: number | readonly number[]) => {
-        if (readOnly || disabled) {
-            return;
-        }
-
-        if (typeof value === "number") {
-            const val = [value];
-            setSelection(val);
-            onChangeEnd?.(val);
-            return;
-        }
-
-        const newSelection = [...value];
-        setSelection(newSelection);
-        onChangeEnd?.(newSelection);
-    };
-
     const handleThumbKeyDown = (
         event: React.KeyboardEvent<HTMLDivElement>,
         index: number
@@ -451,42 +411,20 @@ export const InputRangeSlider = ({
             })}
 
             {/* Native range inputs provide the accessible interaction model.
-                The visible react-slider is presentation-only. */}
-            <ReactSlider
-                step={step}
+                The visible slider is presentation-only. */}
+            <Slider
+                selection={selection}
                 min={min}
                 max={max}
-                value={selection}
-                disabled={disabled || readOnly}
-                onChange={handleChange}
-                onAfterChange={handleChangeEnd}
-                minDistance={minRange}
-                aria-hidden
-                className={styles.slider}
-                renderThumb={(thumbProps, state) => {
-                    return (
-                        <Thumb
-                            data-testid={`slider-thumb-${state.index}`}
-                            {...thumbProps}
-                            key={thumbProps.key}
-                            tabIndex={-1}
-                            aria-hidden
-                            focused={focusedThumbIndex === state.index}
-                            disabled={disabled}
-                            readOnly={readOnly}
-                        />
-                    );
-                }}
-                renderTrack={(trackProps, state) => {
-                    return (
-                        <Track
-                            data-testid={`slider-track-${state.index}`}
-                            {...trackProps}
-                            key={trackProps.key}
-                            color={trackColors[state.index]}
-                        />
-                    );
-                }}
+                step={step}
+                minRange={minRange}
+                disabled={disabled}
+                readOnly={readOnly}
+                trackColors={trackColors}
+                focusedThumbIndex={focusedThumbIndex}
+                onChange={onChange}
+                onChangeEnd={onChangeEnd}
+                onSelectionChange={setSelection}
             />
 
             {showSliderLabels && (
