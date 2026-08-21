@@ -5,6 +5,13 @@ import { forwardRef, useRef, useState } from "react";
 import { useApplyStyle } from "../theme";
 import { mergeRefs, useIsomorphicLayoutEffect } from "../util";
 import * as styles from "./input-range-slider.styles";
+import {
+    clampValue,
+    findNearestThumbIndex,
+    getPercent,
+    getValueFromClientX,
+    toOffset,
+} from "./slider-utils";
 
 interface ThumbProps extends React.HTMLAttributes<HTMLDivElement> {
     focused: boolean | undefined;
@@ -84,12 +91,12 @@ interface SliderProps {
     max: number;
     step: number;
     minRange: number;
-    disabled: boolean | undefined;
-    readOnly: boolean | undefined;
+    disabled?: boolean | undefined;
+    readOnly?: boolean | undefined;
     trackColors: (string | undefined)[];
     focusedThumbIndex: number | null;
-    onChange: ((value: number[]) => void) | undefined;
-    onChangeEnd: ((value: number[]) => void) | undefined;
+    onChange?: ((value: number[]) => void) | undefined;
+    onChangeEnd?: ((value: number[]) => void) | undefined;
     onSelectionChange: (value: number[]) => void;
 }
 
@@ -108,6 +115,7 @@ export const Slider = ({
     onSelectionChange,
 }: SliderProps) => {
     const sliderRef = useRef<HTMLDivElement>(null);
+    const isInteractive = !disabled && !readOnly;
     // the maximum offset of the thumb from the start of the slider
     const [maxThumbOffset, setMaxThumbOffset] = useState(0);
 
@@ -133,58 +141,11 @@ export const Slider = ({
         return () => observer.disconnect();
     }, []);
 
-    function getPercent(val: number) {
-        if (max === min) return 0;
-        return ((val - min) / (max - min)) * 100;
-    }
-
-    function toOffset(percent: number) {
-        if (percent === 0) return "0px";
-        return `${(percent / 100) * maxThumbOffset}px`;
-    }
-
-    function getValueFromClientX(clientX: number) {
-        const slider = sliderRef.current;
-        if (!slider) return min;
-
-        const rect = slider.getBoundingClientRect();
-        if (rect.width === 0) return min;
-
-        const fraction = Math.max(
-            0,
-            Math.min(1, (clientX - rect.left) / rect.width)
-        );
-        const rawValue = min + fraction * (max - min);
-        const snapped = Math.round((rawValue - min) / step) * step + min;
-        return Math.max(min, Math.min(max, snapped));
-    }
-
-    function clampValue(nextValue: number, index: number, values: number[]) {
-        let low = min;
-        let high = max;
-        if (index > 0) low = values[index - 1] + minRange;
-        if (index < values.length - 1) high = values[index + 1] - minRange;
-        return Math.max(low, Math.min(high, nextValue));
-    }
-
-    function findNearestThumbIndex(val: number) {
-        let nearestIndex = 0;
-        let nearestDist = Math.abs(selection[0] - val);
-        for (let i = 1; i < selection.length; i++) {
-            const dist = Math.abs(selection[i] - val);
-            if (dist < nearestDist) {
-                nearestDist = dist;
-                nearestIndex = i;
-            }
-        }
-        return nearestIndex;
-    }
-
-    function startDrag(
+    function handleThumbPointerDown(
         event: React.PointerEvent<HTMLDivElement>,
         thumbIndex: number
     ) {
-        if (disabled || readOnly) return;
+        if (!isInteractive) return;
         if (event.button !== 0) return;
 
         event.preventDefault();
@@ -194,8 +155,21 @@ export const Slider = ({
         const dragValues = [...selection];
 
         const onMove = (e: PointerEvent) => {
-            const rawValue = getValueFromClientX(e.clientX);
-            const clamped = clampValue(rawValue, thumbIndex, dragValues);
+            const rawValue = getValueFromClientX(
+                e.clientX,
+                sliderRef.current,
+                min,
+                max,
+                step
+            );
+            const clamped = clampValue(
+                rawValue,
+                thumbIndex,
+                dragValues,
+                min,
+                max,
+                minRange
+            );
 
             if (clamped === dragValues[thumbIndex]) return;
 
@@ -221,16 +195,28 @@ export const Slider = ({
         document.addEventListener("pointercancel", onEnd);
     }
 
-    // handler for clicking on a position on the track (not the thumb)
     // the nearest thumb to the pointer will get moved to that position
     function handleTrackPointerDown(event: React.PointerEvent<HTMLDivElement>) {
-        if (disabled || readOnly) return;
+        if (!isInteractive) return;
         if (event.button !== 0) return;
 
         event.preventDefault();
-        const clickedValue = getValueFromClientX(event.clientX);
-        const index = findNearestThumbIndex(clickedValue);
-        const clamped = clampValue(clickedValue, index, selection);
+        const clickedValue = getValueFromClientX(
+            event.clientX,
+            sliderRef.current,
+            min,
+            max,
+            step
+        );
+        const index = findNearestThumbIndex(clickedValue, selection);
+        const clamped = clampValue(
+            clickedValue,
+            index,
+            selection,
+            min,
+            max,
+            minRange
+        );
 
         const nextValues = [...selection];
         nextValues[index] = clamped;
@@ -244,8 +230,9 @@ export const Slider = ({
         event: React.KeyboardEvent<HTMLDivElement>,
         thumbIndex: number
     ) {
-        if (disabled || readOnly) return;
+        if (!isInteractive) return;
 
+        const PAGE_STEP_MULTIPLIER = 10;
         const currentValue = selection[thumbIndex];
         let newValue: number;
 
@@ -265,17 +252,24 @@ export const Slider = ({
                 newValue = max;
                 break;
             case "PageDown":
-                newValue = currentValue - step * 10;
+                newValue = currentValue - step * PAGE_STEP_MULTIPLIER;
                 break;
             case "PageUp":
-                newValue = currentValue + step * 10;
+                newValue = currentValue + step * PAGE_STEP_MULTIPLIER;
                 break;
             default:
                 return;
         }
 
         event.preventDefault();
-        const clamped = clampValue(newValue, thumbIndex, selection);
+        const clamped = clampValue(
+            newValue,
+            thumbIndex,
+            selection,
+            min,
+            max,
+            minRange
+        );
         if (clamped === currentValue) return;
 
         const nextValues = [...selection];
@@ -294,17 +288,26 @@ export const Slider = ({
             onPointerDown={handleTrackPointerDown}
         >
             {Array.from({ length: selection.length + 1 }, (_, i) => {
-                const leftPercent = i === 0 ? 0 : getPercent(selection[i - 1]);
+                const leftPercent =
+                    i === 0 ? 0 : getPercent(selection[i - 1], min, max);
                 const rightPercent =
-                    i === selection.length ? 0 : 100 - getPercent(selection[i]);
+                    i === selection.length
+                        ? 0
+                        : 100 - getPercent(selection[i], min, max);
                 return (
                     <Track
                         key={`track-${i}`}
                         data-testid={`slider-track-${i}`}
                         color={trackColors[i]}
                         style={{
-                            [styles.tokens.track.left]: toOffset(leftPercent),
-                            [styles.tokens.track.right]: toOffset(rightPercent),
+                            [styles.tokens.track.left]: toOffset(
+                                leftPercent,
+                                maxThumbOffset
+                            ),
+                            [styles.tokens.track.right]: toOffset(
+                                rightPercent,
+                                maxThumbOffset
+                            ),
                         }}
                     />
                 );
@@ -320,10 +323,11 @@ export const Slider = ({
                     readOnly={readOnly}
                     style={{
                         [styles.tokens.thumb.left]: toOffset(
-                            getPercent(thumbValue)
+                            getPercent(thumbValue, min, max),
+                            maxThumbOffset
                         ),
                     }}
-                    onPointerDown={(e) => startDrag(e, index)}
+                    onPointerDown={(e) => handleThumbPointerDown(e, index)}
                     onKeyDown={(e) => handleThumbKeyDown(e, index)}
                 />
             ))}

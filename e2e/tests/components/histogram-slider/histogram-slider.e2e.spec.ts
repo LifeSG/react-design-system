@@ -1,6 +1,11 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
-import { dragSlider, getSliderDelta, getSliderValue } from "../slider-utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    dragSlider,
+    getSliderDelta,
+    getSliderValue,
+} from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "histogram-slider";
@@ -66,10 +71,6 @@ class StoryPage extends AbstractStoryPage {
 
     async getSliderValue(index: number) {
         return getSliderValue(this.locators.internal.slider(index));
-    }
-
-    async getSliderDelta(locator: Locator, range: number) {
-        return getSliderDelta(locator, range);
     }
 
     async dragSlider(index: number, deltaX: number) {
@@ -288,10 +289,7 @@ test.describe("HistogramSlider", () => {
         });
 
         test("Drag min thumb updates selection", async ({ story }) => {
-            const step = await story.getSliderDelta(
-                story.locators.interaction,
-                5
-            );
+            const step = await getSliderDelta(story.locators.interaction, 5);
             expect(await story.getSliderValue(0)).toEqual(2);
 
             await test.step("Drag min thumb left by one step", async () => {
@@ -308,10 +306,7 @@ test.describe("HistogramSlider", () => {
         });
 
         test("Drag max thumb updates selection", async ({ story }) => {
-            const step = await story.getSliderDelta(
-                story.locators.interaction,
-                5
-            );
+            const step = await getSliderDelta(story.locators.interaction, 5);
             expect(await story.getSliderValue(1)).toEqual(4);
 
             await test.step("Drag max thumb right by one step", async () => {
@@ -328,10 +323,7 @@ test.describe("HistogramSlider", () => {
         });
 
         test("Bars update highlight after drag", async ({ story }) => {
-            const step = await story.getSliderDelta(
-                story.locators.interaction,
-                5
-            );
+            const step = await getSliderDelta(story.locators.interaction, 5);
 
             await test.step("Initial bar state with value [2, 4]", async () => {
                 await compareScreenshot(story, "bars-interaction-initial", {

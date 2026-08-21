@@ -1,6 +1,11 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
-import { dragSlider, getSliderDelta, getSliderValue } from "../slider-utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    dragSlider,
+    getSliderDelta,
+    getSliderValue,
+} from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "range-slider";
@@ -54,10 +59,6 @@ class StoryPage extends AbstractStoryPage {
 
     async getSliderValue(index: number) {
         return getSliderValue(this.locators.internal.slider(index));
-    }
-
-    async getSliderDelta(locator: Locator, range: number) {
-        return getSliderDelta(locator, range);
     }
 
     async dragSlider(index: number, deltaX: number) {
@@ -228,10 +229,7 @@ test.describe("RangeSlider", () => {
         });
 
         test("Min slider", async ({ story }) => {
-            const step = await story.getSliderDelta(
-                story.locators.interaction,
-                10
-            );
+            const step = await getSliderDelta(story.locators.interaction, 10);
             expect(await story.getSliderValue(0)).toEqual(0);
 
             await test.step("Drag the slider to the right for 1 step", async () => {
@@ -260,10 +258,7 @@ test.describe("RangeSlider", () => {
         });
 
         test("Max slider", async ({ story }) => {
-            const step = await story.getSliderDelta(
-                story.locators.interaction,
-                10
-            );
+            const step = await getSliderDelta(story.locators.interaction, 10);
             expect(await story.getSliderValue(1)).toEqual(10);
 
             await test.step("Drag the slider to the left for 1 step", async () => {

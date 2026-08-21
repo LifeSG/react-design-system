@@ -1,6 +1,11 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
-import { dragSlider, getSliderDelta, getSliderValue } from "../slider-utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    dragSlider,
+    getSliderDelta,
+    getSliderValue,
+} from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "select-histogram";
@@ -90,10 +95,6 @@ class StoryPage extends AbstractStoryPage {
 
     public async getSliderValue(index: number) {
         return getSliderValue(this.locators.internal.slider(index));
-    }
-
-    public async getSliderDelta(locator: Locator, range: number) {
-        return getSliderDelta(locator, range);
     }
 
     public async dragSlider(index: number, deltaX: number) {
@@ -498,7 +499,7 @@ test.describe("SelectHistogram", () => {
             });
 
             test("Drag min thumb updates selection", async ({ story }) => {
-                const step = await story.getSliderDelta(
+                const step = await getSliderDelta(
                     story.locators.interactionDropdown,
                     5
                 );
@@ -521,7 +522,7 @@ test.describe("SelectHistogram", () => {
             });
 
             test("Drag max thumb updates selection", async ({ story }) => {
-                const step = await story.getSliderDelta(
+                const step = await getSliderDelta(
                     story.locators.interactionDropdown,
                     5
                 );
