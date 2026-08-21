@@ -152,7 +152,7 @@ describe("FileUpload", () => {
             expect(
                 rendered.queryByTestId("some-edit-display")
             ).not.toBeInTheDocument();
-            expect(screen.getAllByText("Woops!")).toHaveLength(2); // render 2 elements. For mobile and desktop
+            expect(screen.getByText("Woops!")).toBeInTheDocument();
             expect(
                 rendered.getByTestId("some-error-delete-button")
             ).toBeInTheDocument();

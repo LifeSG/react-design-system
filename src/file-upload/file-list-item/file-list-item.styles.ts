@@ -10,6 +10,102 @@ import {
     Spacing,
 } from "../../theme";
 
+// =============================================================================
+// EDIT MODE STYLES
+// =============================================================================
+
+export const editItem = css`
+    display: flex;
+    flex-direction: column;
+    padding: ${Spacing["spacing-32"]};
+    background: ${Colour["bg-primary-subtlest"]};
+    border: ${Border["width-010"]} ${Border.solid} ${Colour.border};
+    border-radius: ${Radius["sm"]};
+
+    &:not(:last-child) {
+        margin-bottom: ${Spacing["spacing-16"]};
+    }
+`;
+
+export const editContentSection = css`
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: ${Spacing["spacing-16"]};
+    width: 100%;
+`;
+
+export const editDetailsSection = css`
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+`;
+
+export const editNameSection = css`
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    margin-bottom: ${Spacing["spacing-16"]};
+
+    ${MediaQuery.MaxWidth.md} {
+        flex-direction: column;
+        justify-content: flex-start;
+    }
+`;
+
+export const editFileNameText = css`
+    display: flex;
+    flex: 1;
+    margin-right: ${Spacing["spacing-16"]};
+
+    ${MediaQuery.MaxWidth.md} {
+        margin-right: 0;
+        margin-bottom: ${Spacing["spacing-8"]};
+    }
+`;
+
+export const editFileSizeText = css`
+    color: ${Colour["text-subtler"]};
+`;
+
+export const actionButtonsSection = css`
+    display: flex;
+    justify-content: flex-end;
+
+    ${MediaQuery.MaxWidth.md} {
+        flex-direction: column;
+    }
+`;
+
+export const actionButtonsSectionWithThumbnail = css`
+    margin-left: calc(
+        96px + ${Spacing["spacing-32"]}
+    ); // thumbnail width + right margin
+
+    ${MediaQuery.MaxWidth.md} {
+        margin-left: 0;
+    }
+`;
+
+export const actionButton = css`
+    width: 7.5rem;
+
+    &:not(:last-of-type) {
+        margin-right: ${Spacing["spacing-16"]};
+    }
+
+    ${MediaQuery.MaxWidth.md} {
+        width: 100%;
+
+        &:not(:last-of-type) {
+            margin-bottom: ${Spacing["spacing-16"]};
+        }
+    }
+`;
+
+// =============================================================================
+// DISPLAY / ERROR MODE STYLES
+// =============================================================================
+
 export type ItemFocusType = "self" | "others" | "none";
 
 export const item = css`
@@ -131,33 +227,6 @@ export const extendedNameSection = css`
     }
 `;
 
-export const fileSizeSection = css`
-    display: flex;
-    width: 5rem;
-    margin-left: ${Spacing["spacing-8"]};
-    justify-content: flex-end;
-
-    &[data-mobile-visibility="hidden"] {
-        ${MediaQuery.MaxWidth.md} {
-            display: none;
-            visibility: hidden;
-        }
-    }
-
-    &[data-mobile-visibility="expand"] {
-        ${MediaQuery.MaxWidth.md} {
-            width: 100%;
-            margin-left: 0;
-            margin-top: ${Spacing["spacing-8"]};
-            justify-content: flex-start;
-        }
-    }
-`;
-
-export const fileSizeText = css`
-    color: ${Colour["text-subtler"]};
-`;
-
 export const descriptionFileSizeText = css`
     color: ${Colour["text-subtler"]};
     margin-top: ${Spacing["spacing-16"]};
@@ -182,29 +251,11 @@ export const errorIcon = css`
     color: ${Colour["icon-error-strong"]};
 `;
 
-export const desktopErrorMessage = css`
+export const errorMessage = css`
     color: ${Colour["text-error"]};
     margin-top: ${Spacing["spacing-4"]};
     display: flex;
     gap: ${Spacing["spacing-4"]};
-
-    ${MediaQuery.MaxWidth.md} {
-        display: none;
-        visibility: hidden;
-    }
-`;
-
-export const mobileErrorMessage = css`
-    color: ${Colour["text-error"]};
-    display: none;
-    visibility: hidden;
-
-    ${MediaQuery.MaxWidth.md} {
-        display: flex;
-        gap: ${Spacing["spacing-4"]};
-        visibility: visible;
-        margin-top: ${Spacing["spacing-8"]};
-    }
 `;
 
 export const actionContainer = css`
