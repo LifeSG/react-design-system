@@ -1,5 +1,5 @@
 import type { ButtonProps } from "../button";
-import type { TypographyLinkProps } from "../typography";
+import type { TypographyLinkProps, TypographyWeight } from "../typography";
 
 // =============================================================================
 // NAV ITEM TYPES
@@ -30,9 +30,16 @@ export type NavItemProps<T> = NavItemLinkProps<T> | NavItemComponentProps;
  *
  * `T` is the type of the arbitrary `options` payload.
  */
-export interface NavItemCommonProps<T> extends TypographyLinkProps {
+export interface NavItemCommonProps<T>
+    extends Omit<TypographyLinkProps, "underlineStyle" | "weight"> {
     id: string;
     "data-testid"?: string | undefined;
+    /**
+     * Font weight of the link text.
+     *
+     * @default "regular"
+     */
+    $weight?: TypographyWeight | undefined;
     /**
      * Arbitrary data passed through to callback arguments such as `onItemClick`.
      */
