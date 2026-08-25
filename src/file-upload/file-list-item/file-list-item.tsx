@@ -138,10 +138,6 @@ const Component = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleDelete = () => {
-        onDelete();
-    };
-
     const handleEdit = () => {
         setCurrentMode("edit");
     };
@@ -180,10 +176,8 @@ const Component = ({
         onBlur?.(event.target.value);
     };
 
-    const shouldDisableSave = () => {
-        if (!descriptionRequired) return false;
-        return currentDescription.trim().length === 0;
-    };
+    const disableSave =
+        descriptionRequired && currentDescription.trim().length === 0;
 
     // =========================================================================
     // RENDER: EDIT MODE
@@ -239,7 +233,7 @@ const Component = ({
                     id={id}
                     name={name}
                     hasThumbnail={shouldShowThumbnail}
-                    disableSave={shouldDisableSave()}
+                    disableSave={disableSave}
                     onSave={handleSave}
                     onCancel={handleCancel}
                 />
@@ -292,7 +286,9 @@ const Component = ({
             >
                 <div
                     className={styles.contentSection}
-                    data-has-thumbnail={shouldShowThumbnail}
+                    data-has-thumbnail={
+                        currentMode === "display" && shouldShowThumbnail
+                    }
                 >
                     {currentMode === "display" && thumbnail}
                     <FileItemDetails
@@ -315,25 +311,24 @@ const Component = ({
                                 isLoading={isLoading}
                                 progress={progress}
                                 disabled={isDisabled}
-                                onDelete={handleDelete}
+                                onDelete={onDelete}
                                 onEdit={handleEdit}
                                 onKeyDown={handleKeyDown}
                             />
                         )}
                     </FileItemDetails>
                 </div>
-                {!readOnly && !hasInlineActions && currentMode === "error" && (
-                    <FileItemActions
-                        mode="error"
-                        id={id}
-                        name={name}
-                        errorMessage={errorMessage}
-                        onDelete={handleDelete}
-                    />
-                )}
                 {!readOnly &&
                     !hasInlineActions &&
-                    currentMode === "display" && (
+                    (currentMode === "error" ? (
+                        <FileItemActions
+                            mode="error"
+                            id={id}
+                            name={name}
+                            errorMessage={errorMessage}
+                            onDelete={onDelete}
+                        />
+                    ) : (
                         <FileItemActions
                             mode="display"
                             id={id}
@@ -342,11 +337,11 @@ const Component = ({
                             isLoading={isLoading}
                             progress={progress}
                             disabled={isDisabled}
-                            onDelete={handleDelete}
+                            onDelete={onDelete}
                             onEdit={handleEdit}
                             onKeyDown={handleKeyDown}
                         />
-                    )}
+                    ))}
             </div>
         </li>
     );
