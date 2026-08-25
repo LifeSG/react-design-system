@@ -1,10 +1,10 @@
 import clsx from "clsx";
 import type React from "react";
-import { forwardRef, useRef } from "react";
+import { forwardRef, useRef, useState } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
 import { useApplyStyle } from "../theme";
-import { mergeRefs } from "../util";
+import { mergeRefs, useIsomorphicLayoutEffect } from "../util";
 import * as styles from "./input-range-slider.styles";
 import {
     clampValue,
@@ -114,14 +114,22 @@ export const Slider = ({
     onChange,
     onChangeEnd,
 }: SliderProps) => {
-    const { width: sliderWidth = 0, ref: sliderRef } =
-        useResizeDetector<HTMLDivElement>();
+    const sliderRef = useRef<HTMLDivElement>(null);
     const thumbRef = useRef<HTMLDivElement>(null);
     const isInteractive = !disabled && !readOnly;
 
-    // the actual draggable slider region width, compensating for the thumb rest areas at the start and end
-    const thumbWidth = thumbRef.current?.getBoundingClientRect().width ?? 0;
-    const innerSliderWidth = sliderWidth - thumbWidth;
+    const [innerSliderWidth, setInnerSliderWidth] = useState(0);
+
+    const measure = () => {
+        setInnerSliderWidth(
+            (sliderRef.current?.clientWidth ?? 0) -
+                (thumbRef.current?.getBoundingClientRect().width ?? 0)
+        );
+    };
+
+    // Measure synchronously on mount so the first paint has correct thumb positions
+    useIsomorphicLayoutEffect(measure, []);
+    useResizeDetector({ targetRef: sliderRef, onResize: measure });
 
     // the nearest thumb to the pointer will get moved to that position
     function handleTrackPointerDown(event: React.PointerEvent<HTMLDivElement>) {
@@ -131,7 +139,7 @@ export const Slider = ({
         event.preventDefault();
         const clickedValue = getValueFromClientX({
             clientX: event.clientX,
-            sliderEl: sliderRef.current ?? null,
+            sliderEl: sliderRef.current,
             min,
             max,
             step,
@@ -169,7 +177,7 @@ export const Slider = ({
         const onMove = (e: PointerEvent) => {
             const rawValue = getValueFromClientX({
                 clientX: e.clientX,
-                sliderEl: sliderRef.current ?? null,
+                sliderEl: sliderRef.current,
                 min,
                 max,
                 step,
