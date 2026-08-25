@@ -150,7 +150,13 @@ export const NavbarItems = <T,>({
     );
 
     const renderLinkItem = (item: NavItemLinkProps<T>, index: number) => {
-        const { children, options, subMenu, $weight, ...otherItemAttrs } = item;
+        const {
+            children,
+            options,
+            subMenu,
+            $weight: _$weight,
+            ...otherItemAttrs
+        } = item;
 
         const hasSubMenu = !!subMenu?.length;
 
