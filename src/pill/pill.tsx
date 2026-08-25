@@ -31,6 +31,7 @@ const WRAPPER_CLASS: Record<PillType, Record<PillColorType, string>> = {
  *
  * Use `Pill` to surface short, read-only information — such as a tag or status
  * badge — inline with other content.
+ * @keywords badge, label, status
  */
 export const Pill = ({
     type,

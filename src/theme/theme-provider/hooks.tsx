@@ -19,6 +19,7 @@ type InheritedThemeScope = {
  *
  * @returns The active `ThemeContextValue`. When called outside a provider,
  * returns defaults: `theme: "lifesg"`, `mode: "light"`, `themeElement: null`.
+ * @keywords context, hook, theme context
  */
 export const useTheme = (): ThemeContextValue => {
     const context = useContext(ThemeContext);
@@ -44,6 +45,7 @@ export const useTheme = (): ThemeContextValue => {
  * skip the attribute injection.
  * @returns `themeProps` (spread onto the root element) and `themeStyle` (inline
  * CSS variables to apply).
+ * @keywords design tokens, hook, portal, theming
  */
 export const useInheritedThemeScope = (
     enabled: boolean

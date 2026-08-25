@@ -29,6 +29,7 @@ const ESignatureCanvas = lazy(async () => ({
  * A field that lets users draw and save a signature.
  *
  * Use in forms that require a handwritten signature.
+ * @keywords field, form, input, sign, signature
  */
 export const ESignature = (props: EsignatureProps) => {
     // =============================================================================

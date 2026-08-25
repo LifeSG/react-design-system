@@ -1,6 +1,7 @@
 // @catalog
 /**
  * Spacing tokens consisting of component spacing and layout spacing.
+ * @keywords design tokens, gap, layout, margin
  */
 export const Spacing = {
     "spacing-0": "var(--fds-spacing-0)",

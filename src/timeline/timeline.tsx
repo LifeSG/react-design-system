@@ -16,6 +16,7 @@ import type { TimelineItemProps, TimelineProps, Variant } from "./types";
  *
  * Use `Timeline` to communicate multi-step progress such as application stages
  * or process flows.
+ * @keywords history, process, progress, stages, steps
  */
 export const Timeline = ({
     items,

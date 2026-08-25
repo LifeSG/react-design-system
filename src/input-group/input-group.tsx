@@ -167,5 +167,6 @@ const Component = <T, V>(
  *
  * Use `InputGroup` when the input needs contextual decoration such as a unit label,
  * a country-code dropdown, or a fully custom slot.
+ * @keywords field, form, input, prefix, suffix
  */
 export const InputGroup = React.forwardRef(Component);

@@ -328,5 +328,6 @@ const Component = (
  *
  * Use `MaskedInput` when collecting or displaying sensitive data such as
  * identity numbers or passwords.
+ * @keywords field, form, input, mask, password, secure, sensitive
  */
 export const MaskedInput = React.forwardRef(Component);

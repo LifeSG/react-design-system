@@ -8,6 +8,7 @@ import type { AnimationProps } from "../types";
 // @catalog
 /**
  * A loading spinner that automatically adapts to the current theme.
+ * @keywords indicator, loading, spinner
  */
 export const ThemedLoadingSpinner = (props: AnimationProps) => {
     const fdsThemeContext = useContext(ThemeContext);

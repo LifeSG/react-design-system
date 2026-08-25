@@ -13,6 +13,7 @@ import type { FileDownloadProps, FileItemDownloadProps } from "./types";
  *
  * Use `FileDownload` to present one or more files that users can download individually.
  * Each file item renders as a card with file metadata and a download trigger.
+ * @keywords attachment, document, download, file
  */
 export const FileDownload = ({
     id,

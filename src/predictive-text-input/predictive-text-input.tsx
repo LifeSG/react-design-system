@@ -17,6 +17,7 @@ import type { PredictiveTextInputProps } from "./types";
  *
  * Use `PredictiveTextInput` for search-as-you-type or autocomplete scenarios
  * where options are loaded asynchronously based on the current input.
+ * @keywords autocomplete, combobox, field, form, input, search, suggestions, typeahead
  */
 export const PredictiveTextInput = <T, V>({
     className,

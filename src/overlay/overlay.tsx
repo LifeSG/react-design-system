@@ -344,6 +344,7 @@ const OverlayComponent = ({
  * Use `Overlay` as the backdrop for modal dialogs, drawers, and similar
  * blocking UI patterns. It manages body scroll-lock automatically and stacks
  * correctly when multiple overlays are open at once.
+ * @keywords backdrop, dim, modal
  */
 export const Overlay = (props: OverlayProps) => {
     return (

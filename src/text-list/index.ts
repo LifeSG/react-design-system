@@ -11,6 +11,7 @@ import { UnorderedList } from "./unordered-list";
  * Sub-components:
  * - `TextList.Ol` — a numbered list with configurable counter style and direction.
  * - `TextList.Ul` — a bulleted list supporting predefined marker types or a custom icon.
+ * @keywords bullet, list, numbered, ordered, unordered
  */
 export const TextList = {
     /**

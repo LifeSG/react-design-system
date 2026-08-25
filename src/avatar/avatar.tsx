@@ -11,6 +11,7 @@ import type { AvatarProps } from "./types";
  * Use when you need a compact visual identity marker in lists, headers, or
  * cards. Accepts a string (rendered as an initial) or a JSX element such as an
  * image or icon.
+ * @keywords icon, identity, image, initial, profile, user
  */
 export const Avatar = ({
     children,

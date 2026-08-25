@@ -19,6 +19,7 @@ const DATE_FORMAT = "YYYY-MM-DD";
  * Use `TimeSlotWeekView` for a day-level overview of slot availability across
  * a week. For detailed time-of-day scheduling with a time axis, use
  * `TimeSlotBarWeek` instead.
+ * @keywords availability, calendar, scheduling, weekly
  */
 export const TimeSlotWeekView = ({
     disabledDates,

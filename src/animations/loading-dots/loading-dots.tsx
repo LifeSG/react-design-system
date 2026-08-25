@@ -12,6 +12,7 @@ const LottieLoadingDots = lazy(async () => ({
 // @catalog
 /**
  * An animated loading indicator with bouncing dots.
+ * @keywords animation, indicator, progress
  */
 export const LoadingDots = ({ className, ...otherProps }: AnimationProps) => {
     return (

@@ -22,6 +22,7 @@ import { useTimer } from "./use-timer";
  *
  * Use when a time-limited interaction — such as a session timeout or a timed
  * form — needs a persistent visual reminder.
+ * @keywords deadline, expiry, session, timeout, timer
  */
 export const CountdownTimer = ({
     className,

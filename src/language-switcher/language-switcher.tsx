@@ -11,6 +11,7 @@ import type { LanguageSwitcherCode, LanguageSwitcherProps } from "./types";
  *
  * Use `LanguageSwitcher` to surface supported languages as either
  * a compact dropdown or a set of inline links.
+ * @keywords i18n, internationalisation, locale, translate
  */
 export const LanguageSwitcher = ({
     variant = "dropdown",

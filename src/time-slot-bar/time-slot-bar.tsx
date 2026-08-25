@@ -494,6 +494,7 @@ const Component = (props: TimeSlotBarProps, ref: React.Ref<TimeSlotBarRef>) => {
  *
  * Use `TimeSlotBar` to display availability, bookings, or schedule occupancy
  * as coloured cells on a shared time axis.
+ * @keywords availability, booking, occupancy, reservation, schedule
  */
 export const TimeSlotBar = forwardRef<TimeSlotBarRef, TimeSlotBarProps>(
     Component

@@ -167,6 +167,7 @@ const AccordionBase = ({
  *
  * Sub-components:
  * - `Accordion.Item` — a single collapsible panel with an imperative ref handle.
+ * @keywords collapsible, disclosure, expandable, panel
  */
 export const Accordion = Object.assign(AccordionBase, {
     /**

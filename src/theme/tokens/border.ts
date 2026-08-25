@@ -18,6 +18,7 @@ export const BorderStyle = {
 // @catalog
 /**
  * Border tokens consisting of border width and border style.
+ * @keywords design tokens, stroke, width
  */
 export const Border = {
     ...BorderThickness,

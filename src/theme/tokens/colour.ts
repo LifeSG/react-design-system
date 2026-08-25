@@ -249,6 +249,7 @@ export const SemanticColours = {
 // @catalog
 /**
  * Combined colour token set.
+ * @keywords design tokens, palette, theming
  */
 export const Colour = {
     Primitive: PrimitiveColours,
