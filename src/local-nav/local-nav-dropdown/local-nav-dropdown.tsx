@@ -417,7 +417,7 @@ const Component = (
  * This component adopts a fundamentally different interaction model from
  * `LocalNavMenu`: it collapses into a single trigger button and uses a menu
  * overlay, making it suited for mobile while `LocalNavMenu` suits desktop.
- * @keywords anchor, in-page, navigation, sections
+ * @keywords in-page navigation, sections
  */
 export const LocalNavDropdown = React.forwardRef(Component);
 

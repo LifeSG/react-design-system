@@ -417,13 +417,13 @@
             "name": "LocalNavDropdown",
             "importPath": "@lifesg/react-design-system/local-nav",
             "description": "A collapsible dropdown used for in-page navigation on mobile viewports.  Use `LocalNavDropdown` when the page has multiple named sections and screen width is insufficient for a persistent sidebar.",
-            "keywords": ["anchor", "in-page", "navigation", "sections"]
+            "keywords": ["in-page navigation", "sections"]
         },
         {
             "name": "LocalNavMenu",
             "importPath": "@lifesg/react-design-system/local-nav",
             "description": "A sidebar navigation list that highlights the currently selected section.  Use `LocalNavMenu` for desktop in-page navigation where the list is always visible.",
-            "keywords": ["in-page", "navigation", "sections"]
+            "keywords": ["in-page navigation", "sections"]
         },
         {
             "name": "Markup",
