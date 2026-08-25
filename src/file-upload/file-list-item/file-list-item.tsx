@@ -271,24 +271,6 @@ const Component = ({
         />
     ) : null;
 
-    const renderInlineActions = () =>
-        !readOnly &&
-        hasInlineActions && (
-            <FileItemActions
-                mode="display"
-                inline
-                id={id}
-                name={name}
-                editable={!!editable}
-                isLoading={isLoading}
-                progress={progress}
-                disabled={isDisabled}
-                onDelete={handleDelete}
-                onEdit={handleEdit}
-                onKeyDown={handleKeyDown}
-            />
-        );
-
     return (
         <li
             id={id}
@@ -325,7 +307,21 @@ const Component = ({
                         descriptionLabel={descriptionLabel}
                         detailSectionRef={detailSectionRef}
                     >
-                        {renderInlineActions()}
+                        {!readOnly && hasInlineActions && (
+                            <FileItemActions
+                                mode="display"
+                                inline
+                                id={id}
+                                name={name}
+                                editable={!!editable}
+                                isLoading={isLoading}
+                                progress={progress}
+                                disabled={isDisabled}
+                                onDelete={handleDelete}
+                                onEdit={handleEdit}
+                                onKeyDown={handleKeyDown}
+                            />
+                        )}
                     </FileItemDetails>
                 </div>
                 {!readOnly && !hasInlineActions && currentMode === "error" && (
