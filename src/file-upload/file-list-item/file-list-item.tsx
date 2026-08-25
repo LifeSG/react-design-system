@@ -151,6 +151,10 @@ const Component = ({
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
+        /**
+         * Circumvent issue of keydown action activating the sort mechanism
+         * rather than the actual action
+         */
         if (sortable) {
             event.stopPropagation();
         }
