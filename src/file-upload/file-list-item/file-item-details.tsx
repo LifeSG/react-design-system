@@ -6,7 +6,7 @@ import * as styles from "./file-item-details.styles";
 import type { FileItemMode } from "./types";
 
 interface Props {
-    mode: FileItemMode;
+    mode: Exclude<FileItemMode, "edit">;
     formattedName: string | undefined;
     description: string | undefined;
     fileSize: string;
@@ -55,26 +55,6 @@ export const FileItemDetails = ({
         );
     }
 
-    if (mode === "display" && description) {
-        return (
-            <div ref={detailSectionRef} className={styles.extendedNameSection}>
-                <Typography.BodyMD weight="semibold">
-                    {formattedName}
-                </Typography.BodyMD>
-                <Typography.BodyMD className={styles.itemDescriptionLabel}>
-                    {descriptionLabel?.children ?? "Photo description"}
-                </Typography.BodyMD>
-                <Typography.BodyMD className={styles.itemDescriptionText}>
-                    {description}
-                </Typography.BodyMD>
-                <Typography.BodyMD className={styles.descriptionFileSizeText}>
-                    {fileSize}
-                </Typography.BodyMD>
-                {children}
-            </div>
-        );
-    }
-
     return (
         <div ref={detailSectionRef} className={styles.nameSection}>
             <Typography.BodyMD weight={description ? "semibold" : "regular"}>
@@ -95,6 +75,7 @@ export const FileItemDetails = ({
                     {fileSize}
                 </Typography.BodyMD>
             )}
+            {children}
         </div>
     );
 };
