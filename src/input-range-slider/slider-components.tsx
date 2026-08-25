@@ -1,9 +1,10 @@
 import clsx from "clsx";
 import type React from "react";
-import { forwardRef, useRef, useState } from "react";
+import { forwardRef, useRef } from "react";
+import { useResizeDetector } from "react-resize-detector";
 
 import { useApplyStyle } from "../theme";
-import { mergeRefs, useIsomorphicLayoutEffect } from "../util";
+import { mergeRefs } from "../util";
 import * as styles from "./input-range-slider.styles";
 import {
     clampValue,
@@ -19,6 +20,7 @@ interface ThumbProps extends React.HTMLAttributes<HTMLDivElement> {
     readOnly: boolean | undefined;
 }
 
+const PAGE_STEP_MULTIPLIER = 10;
 const InnerThumb = (
     {
         focused,
@@ -97,7 +99,6 @@ interface SliderProps {
     focusedThumbIndex: number | null;
     onChange?: ((value: number[]) => void) | undefined;
     onChangeEnd?: ((value: number[]) => void) | undefined;
-    onSelectionChange: (value: number[]) => void;
 }
 
 export const Slider = ({
@@ -112,34 +113,45 @@ export const Slider = ({
     focusedThumbIndex,
     onChange,
     onChangeEnd,
-    onSelectionChange,
 }: SliderProps) => {
-    const sliderRef = useRef<HTMLDivElement>(null);
+    const { width: sliderWidth = 0, ref: sliderRef } =
+        useResizeDetector<HTMLDivElement>();
+    const thumbRef = useRef<HTMLDivElement>(null);
     const isInteractive = !disabled && !readOnly;
-    // the maximum offset of the thumb from the start of the slider
-    const [maxThumbOffset, setMaxThumbOffset] = useState(0);
 
-    useIsomorphicLayoutEffect(() => {
-        const slider = sliderRef.current;
-        if (!slider) return;
+    // the actual draggable slider region width, compensating for the thumb rest areas at the start and end
+    const thumbWidth = thumbRef.current?.getBoundingClientRect().width ?? 0;
+    const innerSliderWidth = sliderWidth - thumbWidth;
 
-        const measure = () => {
-            const sliderWidth = slider.clientWidth;
-            const thumbEl = slider.querySelector(
-                `.${styles.sliderThumb}`
-            ) as HTMLElement | null;
-            const thumbWidth = thumbEl
-                ? thumbEl.getBoundingClientRect().width
-                : 0;
-            setMaxThumbOffset(sliderWidth - thumbWidth);
-        };
+    // the nearest thumb to the pointer will get moved to that position
+    function handleTrackPointerDown(event: React.PointerEvent<HTMLDivElement>) {
+        if (!isInteractive) return;
+        if (event.button !== 0) return;
 
-        measure();
-        const observer = new ResizeObserver(measure);
-        observer.observe(slider);
+        event.preventDefault();
+        const clickedValue = getValueFromClientX({
+            clientX: event.clientX,
+            sliderEl: sliderRef.current ?? null,
+            min,
+            max,
+            step,
+        });
+        const index = findNearestThumbIndex(clickedValue, selection);
+        const clamped = clampValue(
+            clickedValue,
+            index,
+            selection,
+            min,
+            max,
+            minRange
+        );
 
-        return () => observer.disconnect();
-    }, []);
+        const nextValues = [...selection];
+        nextValues[index] = clamped;
+
+        onChange?.(nextValues);
+        onChangeEnd?.(nextValues);
+    }
 
     function handleThumbPointerDown(
         event: React.PointerEvent<HTMLDivElement>,
@@ -157,7 +169,7 @@ export const Slider = ({
         const onMove = (e: PointerEvent) => {
             const rawValue = getValueFromClientX({
                 clientX: e.clientX,
-                sliderEl: sliderRef.current,
+                sliderEl: sliderRef.current ?? null,
                 min,
                 max,
                 step,
@@ -176,7 +188,6 @@ export const Slider = ({
             dragValues[thumbIndex] = clamped;
             const nextValues = [...dragValues];
 
-            onSelectionChange(nextValues);
             onChange?.(nextValues);
         };
 
@@ -186,7 +197,6 @@ export const Slider = ({
             document.removeEventListener("pointercancel", onEnd);
 
             const finalValues = [...dragValues];
-            onSelectionChange(finalValues);
             onChangeEnd?.(finalValues);
         };
 
@@ -195,44 +205,12 @@ export const Slider = ({
         document.addEventListener("pointercancel", onEnd);
     }
 
-    // the nearest thumb to the pointer will get moved to that position
-    function handleTrackPointerDown(event: React.PointerEvent<HTMLDivElement>) {
-        if (!isInteractive) return;
-        if (event.button !== 0) return;
-
-        event.preventDefault();
-        const clickedValue = getValueFromClientX({
-            clientX: event.clientX,
-            sliderEl: sliderRef.current,
-            min,
-            max,
-            step,
-        });
-        const index = findNearestThumbIndex(clickedValue, selection);
-        const clamped = clampValue(
-            clickedValue,
-            index,
-            selection,
-            min,
-            max,
-            minRange
-        );
-
-        const nextValues = [...selection];
-        nextValues[index] = clamped;
-
-        onSelectionChange(nextValues);
-        onChange?.(nextValues);
-        onChangeEnd?.(nextValues);
-    }
-
     function handleThumbKeyDown(
         event: React.KeyboardEvent<HTMLDivElement>,
         thumbIndex: number
     ) {
         if (!isInteractive) return;
 
-        const PAGE_STEP_MULTIPLIER = 10;
         const currentValue = selection[thumbIndex];
         let newValue: number;
 
@@ -275,7 +253,6 @@ export const Slider = ({
         const nextValues = [...selection];
         nextValues[thumbIndex] = clamped;
 
-        onSelectionChange(nextValues);
         onChange?.(nextValues);
         onChangeEnd?.(nextValues);
     }
@@ -302,11 +279,11 @@ export const Slider = ({
                         style={{
                             [styles.tokens.track.left]: toOffset(
                                 leftPercent,
-                                maxThumbOffset
+                                innerSliderWidth
                             ),
                             [styles.tokens.track.right]: toOffset(
                                 rightPercent,
-                                maxThumbOffset
+                                innerSliderWidth
                             ),
                         }}
                     />
@@ -315,6 +292,7 @@ export const Slider = ({
             {selection.map((thumbValue, index) => (
                 <Thumb
                     key={`thumb-${index}`}
+                    ref={index === 0 ? thumbRef : undefined}
                     data-testid={`slider-thumb-${index}`}
                     tabIndex={-1}
                     aria-hidden="true"
@@ -324,7 +302,7 @@ export const Slider = ({
                     style={{
                         [styles.tokens.thumb.left]: toOffset(
                             getPercent(thumbValue, min, max),
-                            maxThumbOffset
+                            innerSliderWidth
                         ),
                     }}
                     onPointerDown={(e) => handleThumbPointerDown(e, index)}

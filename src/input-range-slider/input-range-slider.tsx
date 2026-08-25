@@ -424,7 +424,6 @@ export const InputRangeSlider = ({
                 focusedThumbIndex={focusedThumbIndex}
                 onChange={onChange}
                 onChangeEnd={onChangeEnd}
-                onSelectionChange={setSelection}
             />
 
             {showSliderLabels && (
