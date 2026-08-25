@@ -423,7 +423,7 @@
             "name": "LocalNavMenu",
             "importPath": "@lifesg/react-design-system/local-nav",
             "description": "A sidebar navigation list that highlights the currently selected section.  Use `LocalNavMenu` for desktop in-page navigation where the list is always visible.",
-            "keywords": ["anchor", "in-page", "navigation", "sections"]
+            "keywords": ["in-page", "navigation", "sections"]
         },
         {
             "name": "Markup",
@@ -789,21 +789,13 @@
             "name": "UnitNumberInput",
             "importPath": "@lifesg/react-design-system/unit-number",
             "description": "A two-field input for entering Singapore-style unit numbers in `floor-unit` format.  Use `UnitNumberInput` when you need a structured unit number entry that splits floor and unit into separate fields.",
-            "keywords": [
-                "address",
-                "field",
-                "floor",
-                "form",
-                "input",
-                "singapore",
-                "unit"
-            ]
+            "keywords": ["address", "field", "floor", "form", "input", "unit"]
         },
         {
             "name": "useApplyStyle",
             "importPath": "@lifesg/react-design-system/theme",
             "description": "Hook to apply styles to a HTML DOM element. Use when you need to apply inline styles but cannot use the inline React `style` prop due to strict CSP rules.",
-            "keywords": ["csp", "css variables", "hook", "inline styles"]
+            "keywords": ["css variables", "hook", "inline styles"]
         },
         {
             "name": "useDesignToken",
