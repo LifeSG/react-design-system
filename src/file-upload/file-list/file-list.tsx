@@ -29,7 +29,6 @@ import { VisuallyHidden } from "../../shared/accessibility";
 import { FileUploadContext } from "../context";
 import { MouseSensor } from "../custom-sensors";
 import { FileListItem } from "../file-list-item";
-import type { FileItemMode } from "../file-list-item/types";
 import { FileUploadHelper } from "../helper";
 import type { FileItemProps } from "../types";
 import * as styles from "./file-list.styles";
@@ -89,7 +88,6 @@ function Component(
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const [editingIds, setEditingIds] = useState<Set<string>>(new Set());
     const { setActiveId } = useContext(FileUploadContext);
 
     // Progress announcement state (for aria-live) - announces start and completion only
@@ -210,12 +208,6 @@ function Component(
     // =========================================================================
     const handleSaveEdit = (item: FileItemProps) => (description: string) => {
         removeDescription(item.id);
-        setEditingIds((prev) => {
-            const next = new Set(prev);
-            next.delete(item.id);
-            return next;
-        });
-
         const updatedItem = { ...item, description };
         onItemUpdate(updatedItem);
     };
@@ -226,12 +218,6 @@ function Component(
 
     const handleCancel = (item: FileItemProps) => () => {
         removeDescription(item.id);
-        setEditingIds((prev) => {
-            const next = new Set(prev);
-            next.delete(item.id);
-            return next;
-        });
-
         if (!item.description || item.description.length === 0) {
             onItemDelete(item);
         }
@@ -241,18 +227,6 @@ function Component(
         onItemDelete(item);
         if (wrapperRef.current) {
             wrapperRef.current.focus();
-        }
-    };
-
-    const handleModeChange = (item: FileItemProps) => (mode: FileItemMode) => {
-        if (mode === "edit") {
-            setEditingIds((prev) => new Set(prev).add(item.id));
-        } else {
-            setEditingIds((prev) => {
-                const next = new Set(prev);
-                next.delete(item.id);
-                return next;
-            });
         }
     };
 
@@ -296,9 +270,9 @@ function Component(
         );
     };
 
-    const isEditGroupItem = (item: FileItemProps) => {
+    const isInNonDisplayState = (item: FileItemProps) => {
+        if (item.errorMessage) return true;
         return (
-            !item.errorMessage &&
             !readOnly &&
             checkEditable(item) &&
             !item.description &&
@@ -306,15 +280,8 @@ function Component(
         );
     };
 
-    /**
-     * Due to a UI requirement, we will render the items
-     * with edit modes as a group
-     */
     const areAllItemsInDisplayViews = () => {
-        if (editingIds.size > 0) return false;
-        return !fileItems.some(
-            (item) => !!item.errorMessage || isEditGroupItem(item)
-        );
+        return !fileItems.some(isInNonDisplayState);
     };
 
     const shouldEnableSort = () => {
@@ -396,7 +363,6 @@ function Component(
                     onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}
                     onBlur={handleBlurEdit(item)}
-                    onModeChange={handleModeChange(item)}
                 />
             );
         });

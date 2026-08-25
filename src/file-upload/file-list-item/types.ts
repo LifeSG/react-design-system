@@ -17,5 +17,4 @@ export interface FileListItemProps {
     onSave?: ((description: string) => void) | undefined;
     onCancel?: (() => void) | undefined;
     onBlur?: ((value: string) => void) | undefined;
-    onModeChange?: ((mode: FileItemMode) => void) | undefined;
 }

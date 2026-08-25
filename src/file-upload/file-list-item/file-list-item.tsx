@@ -28,7 +28,6 @@ const Component = ({
     onSave,
     onCancel,
     onBlur,
-    onModeChange,
 }: FileListItemProps) => {
     const {
         id,
@@ -123,11 +122,9 @@ const Component = ({
     useEffect(() => {
         if (errorMessage && currentMode !== "error") {
             setCurrentMode("error");
-            onModeChange?.("error");
         } else if (!errorMessage && currentMode === "error") {
             const nextMode = computeMode();
             setCurrentMode(nextMode);
-            onModeChange?.(nextMode);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [errorMessage]);
@@ -147,7 +144,6 @@ const Component = ({
 
     const handleEdit = () => {
         setCurrentMode("edit");
-        onModeChange?.("edit");
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -163,14 +159,12 @@ const Component = ({
     const handleSave = () => {
         if (textareaRef.current) {
             setCurrentMode("display");
-            onModeChange?.("display");
             onSave?.(textareaRef.current.value.trim());
         }
     };
 
     const handleCancel = () => {
         setCurrentMode("display");
-        onModeChange?.("display");
         onCancel?.();
     };
 
