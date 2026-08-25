@@ -4,7 +4,7 @@ import clsx from "clsx";
 
 import { Button } from "../../button";
 import { ProgressBar } from "../../shared/progress-bar";
-import * as styles from "./file-list-item.styles";
+import * as styles from "./file-item-actions.styles";
 
 // =============================================================================
 // TYPES

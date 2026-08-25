@@ -2,7 +2,7 @@ import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circl
 
 import type { FormLabelProps } from "../../form/form-label/types";
 import { Typography } from "../../typography";
-import * as styles from "./file-list-item.styles";
+import * as styles from "./file-item-details.styles";
 import type { FileItemMode } from "./types";
 
 interface Props {
