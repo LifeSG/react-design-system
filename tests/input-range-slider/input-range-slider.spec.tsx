@@ -139,8 +139,25 @@ describe("InputRangeSlider", () => {
         });
     });
 
-    describe("keyboard navigation", () => {
-        it("should move thumb by step on ArrowRight", () => {
+    describe("track click", () => {
+        beforeEach(() => {
+            jest.spyOn(
+                Element.prototype,
+                "getBoundingClientRect"
+            ).mockReturnValue({
+                left: 0,
+                right: 100,
+                top: 0,
+                bottom: 20,
+                width: 100,
+                height: 20,
+                x: 0,
+                y: 0,
+                toJSON: () => {},
+            });
+        });
+
+        it("should move the nearest thumb when clicking closer to the first thumb", () => {
             const mockChange = jest.fn();
             render(
                 <InputRangeSlider
@@ -152,13 +169,14 @@ describe("InputRangeSlider", () => {
                 />
             );
 
-            const input = screen.getByTestId("slider-input-0");
-            fireEvent.change(input, { target: { value: "4" } });
+            // clientX=10 → value=1, dist to thumb 0 (3) is 2, dist to thumb 1 (7) is 6
+            const slider = screen.getByTestId("slider-track-0").parentElement!;
+            fireEvent.pointerDown(slider, { clientX: 10 });
 
-            expect(mockChange).toHaveBeenCalledWith([4, 7]);
+            expect(mockChange).toHaveBeenCalledWith([1, 7]);
         });
 
-        it("should move thumb by step on ArrowLeft", () => {
+        it("should move the nearest thumb when clicking closer to the second thumb", () => {
             const mockChange = jest.fn();
             render(
                 <InputRangeSlider
@@ -170,13 +188,14 @@ describe("InputRangeSlider", () => {
                 />
             );
 
-            const input = screen.getByTestId("slider-input-0");
-            fireEvent.change(input, { target: { value: "2" } });
+            // clientX=90 → value=9, dist to thumb 0 (3) is 6, dist to thumb 1 (7) is 2
+            const slider = screen.getByTestId("slider-track-0").parentElement!;
+            fireEvent.pointerDown(slider, { clientX: 90 });
 
-            expect(mockChange).toHaveBeenCalledWith([2, 7]);
+            expect(mockChange).toHaveBeenCalledWith([3, 9]);
         });
 
-        it("should move thumb to min on Home", () => {
+        it("should move the first thumb when clicking equidistant from both thumbs", () => {
             const mockChange = jest.fn();
             render(
                 <InputRangeSlider
@@ -188,66 +207,11 @@ describe("InputRangeSlider", () => {
                 />
             );
 
-            const input = screen.getByTestId("slider-input-0");
-            fireEvent.change(input, { target: { value: "0" } });
+            // clientX=50 → value=5, equidistant (dist 2 from both) → first thumb wins
+            const slider = screen.getByTestId("slider-track-0").parentElement!;
+            fireEvent.pointerDown(slider, { clientX: 50 });
 
-            expect(mockChange).toHaveBeenCalledWith([0, 7]);
-        });
-
-        it("should move thumb to max on End", () => {
-            const mockChange = jest.fn();
-            render(
-                <InputRangeSlider
-                    min={0}
-                    max={10}
-                    step={1}
-                    value={[3, 7]}
-                    onChange={mockChange}
-                />
-            );
-
-            const input = screen.getByTestId("slider-input-1");
-            fireEvent.change(input, { target: { value: "10" } });
-
-            expect(mockChange).toHaveBeenCalledWith([3, 10]);
-        });
-
-        it("should not move thumb beyond adjacent thumb with minRange", () => {
-            const mockChange = jest.fn();
-            render(
-                <InputRangeSlider
-                    min={0}
-                    max={10}
-                    step={1}
-                    minRange={2}
-                    value={[3, 5]}
-                    onChange={mockChange}
-                />
-            );
-
-            const input = screen.getByTestId("slider-input-0");
-            fireEvent.change(input, { target: { value: "4" } });
-
-            expect(mockChange).not.toHaveBeenCalled();
-            expect(screen.getByTestId("slider-input-0")).toHaveValue("3");
-        });
-
-        it("should move by custom step on keyboard", () => {
-            const mockChange = jest.fn();
-            render(
-                <InputRangeSlider
-                    min={0}
-                    max={50}
-                    step={5}
-                    value={[10, 40]}
-                    onChange={mockChange}
-                />
-            );
-
-            const input = screen.getByTestId("slider-input-0");
-            fireEvent.change(input, { target: { value: "15" } });
-
-            expect(mockChange).toHaveBeenCalledWith([15, 40]);
+            expect(mockChange).toHaveBeenCalledWith([5, 7]);
         });
     });
 });

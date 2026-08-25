@@ -328,6 +328,16 @@ test.describe("RangeSlider", () => {
                 await story.page.keyboard.press("Home");
                 expect(await story.getSliderValue(0)).toEqual(0);
             });
+
+            await test.step("PageUp increases thumb value by large step", async () => {
+                await story.page.keyboard.press("PageUp");
+                expect(await story.getSliderValue(0)).toEqual(7);
+            });
+
+            await test.step("PageDown decreases thumb value by large step", async () => {
+                await story.page.keyboard.press("PageDown");
+                expect(await story.getSliderValue(0)).toEqual(0);
+            });
         });
 
         test("Max slider", async ({ story }) => {
@@ -354,6 +364,60 @@ test.describe("RangeSlider", () => {
                 await story.page.keyboard.press("End");
                 expect(await story.getSliderValue(1)).toEqual(10);
             });
+
+            await test.step("PageDown decreases thumb value by large step", async () => {
+                await story.page.keyboard.press("PageDown");
+                expect(await story.getSliderValue(1)).toEqual(3);
+            });
+
+            await test.step("PageUp increases thumb value by large step", async () => {
+                await story.page.keyboard.press("PageUp");
+                expect(await story.getSliderValue(1)).toEqual(10);
+            });
+        });
+    });
+
+    test.describe("Track click", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("interaction");
+        });
+
+        test("clicking nearer to the left thumb moves the left thumb", async ({
+            story,
+        }) => {
+            expect(await story.getSliderValue(0)).toEqual(0);
+            expect(await story.getSliderValue(1)).toEqual(10);
+
+            // 25% of slider width → value 3 (nearest to thumb 0 at 0, dist 3 vs dist 7)
+            const box = await story.locators.internal
+                .track(1)
+                .evaluate((el) => el.parentElement!.getBoundingClientRect());
+            await story.page.mouse.click(
+                box.left + box.width * 0.25,
+                box.top + box.height / 2
+            );
+
+            expect(await story.getSliderValue(0)).toEqual(3);
+            expect(await story.getSliderValue(1)).toEqual(10);
+        });
+
+        test("clicking nearer to the right thumb moves the right thumb", async ({
+            story,
+        }) => {
+            expect(await story.getSliderValue(0)).toEqual(0);
+            expect(await story.getSliderValue(1)).toEqual(10);
+
+            // 75% of slider width → value 8 (nearest to thumb 1 at 10, dist 2 vs dist 8)
+            const box = await story.locators.internal
+                .track(1)
+                .evaluate((el) => el.parentElement!.getBoundingClientRect());
+            await story.page.mouse.click(
+                box.left + box.width * 0.75,
+                box.top + box.height / 2
+            );
+
+            expect(await story.getSliderValue(0)).toEqual(0);
+            expect(await story.getSliderValue(1)).toEqual(8);
         });
     });
 
