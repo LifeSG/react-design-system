@@ -36,20 +36,6 @@ export const FileItemDetails = ({
                 >
                     {formattedName}
                 </Typography.BodyMD>
-                {description && (
-                    <>
-                        <Typography.BodyMD
-                            className={styles.itemDescriptionLabel}
-                        >
-                            {descriptionLabel?.children ?? "Photo description"}
-                        </Typography.BodyMD>
-                        <Typography.BodyMD
-                            className={styles.itemDescriptionText}
-                        >
-                            {description}
-                        </Typography.BodyMD>
-                    </>
-                )}
                 <Typography.BodyMD className={styles.descriptionFileSizeText}>
                     {fileSize}
                 </Typography.BodyMD>
