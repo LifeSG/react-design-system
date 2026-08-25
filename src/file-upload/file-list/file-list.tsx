@@ -39,8 +39,6 @@ import * as styles from "./file-list.styles";
 // =============================================================================
 type FileEditedDescriptions = Record<string, string>;
 
-type RenderItem = FileItemProps | FileItemProps[];
-
 interface Props {
     fileItems: FileItemProps[] | undefined;
     editableFileItems: boolean;
@@ -312,27 +310,6 @@ function Component(
      * Due to a UI requirement, we will render the items
      * with edit modes as a group
      */
-    const getArrangedItems = (fileItems: FileItemProps[]) => {
-        if (fileItems.length === 0) return [];
-
-        const arrangedItems: RenderItem[] = [];
-
-        for (const fileItem of fileItems) {
-            if (isEditGroupItem(fileItem)) {
-                const previousElement = arrangedItems.at(-1);
-                if (Array.isArray(previousElement)) {
-                    previousElement.push(fileItem);
-                } else {
-                    arrangedItems.push([fileItem]);
-                }
-            } else {
-                arrangedItems.push(fileItem);
-            }
-        }
-
-        return arrangedItems;
-    };
-
     const areAllItemsInDisplayViews = () => {
         if (editingIds.size > 0) return false;
         return !fileItems.some(
@@ -393,51 +370,35 @@ function Component(
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
-    const renderItem = (item: FileItemProps, includeSortable: boolean) => {
-        const updatedFileItem = { ...item };
-        if (descriptionsValueRef.current[item.id] !== undefined) {
-            updatedFileItem.description = descriptionsValueRef.current[item.id];
-        }
-
-        return (
-            <FileListItem
-                key={item.id}
-                fileItem={updatedFileItem}
-                editable={checkEditable(item)}
-                wrapperWidth={wrapperWidth}
-                sortable={includeSortable ? shouldEnableSort() : undefined}
-                disabled={disabled}
-                readOnly={readOnly}
-                descriptionLabel={descriptionLabel}
-                fileDescriptionMaxLength={fileDescriptionMaxLength}
-                descriptionRequired={descriptionRequired}
-                onDelete={handleDelete(item)}
-                onSave={handleSaveEdit(item)}
-                onCancel={handleCancel(item)}
-                onBlur={handleBlurEdit(item)}
-                onModeChange={handleModeChange(item)}
-            />
-        );
-    };
-
     const renderItems = () => {
-        const arrangedItems = getArrangedItems(fileItems);
+        if (fileItems.length === 0) return null;
 
-        if (arrangedItems.length === 0) return null;
-
-        return arrangedItems.map((item, index) => {
-            if (Array.isArray(item)) {
-                return (
-                    <li
-                        key={`editable-${index}`}
-                        className={styles.editableItemsContainer}
-                    >
-                        <ul>{item.map((i) => renderItem(i, false))}</ul>
-                    </li>
-                );
-            } else {
-                return renderItem(item, true);
+        return fileItems.map((item) => {
+            const updatedFileItem = { ...item };
+            if (descriptionsValueRef.current[item.id] !== undefined) {
+                updatedFileItem.description =
+                    descriptionsValueRef.current[item.id];
             }
+
+            return (
+                <FileListItem
+                    key={item.id}
+                    fileItem={updatedFileItem}
+                    editable={checkEditable(item)}
+                    wrapperWidth={wrapperWidth}
+                    sortable={shouldEnableSort()}
+                    disabled={disabled}
+                    readOnly={readOnly}
+                    descriptionLabel={descriptionLabel}
+                    fileDescriptionMaxLength={fileDescriptionMaxLength}
+                    descriptionRequired={descriptionRequired}
+                    onDelete={handleDelete(item)}
+                    onSave={handleSaveEdit(item)}
+                    onCancel={handleCancel(item)}
+                    onBlur={handleBlurEdit(item)}
+                    onModeChange={handleModeChange(item)}
+                />
+            );
         });
     };
 
