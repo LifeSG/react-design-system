@@ -1,3 +1,5 @@
+export const PAGE_STEP_MULTIPLIER = 10;
+
 export function getPercent(val: number, min: number, max: number) {
     if (max === min) return 0;
     return ((val - min) / (max - min)) * 100;

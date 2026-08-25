@@ -9,6 +9,7 @@ import { Typography } from "../typography";
 import { useId } from "../util";
 import * as styles from "./input-range-slider.styles";
 import { Slider } from "./slider-components";
+import { PAGE_STEP_MULTIPLIER } from "./slider-utils";
 import type { InputRangeSliderProps } from "./types";
 
 // @catalog
@@ -79,6 +80,24 @@ export const InputRangeSlider = ({
     ) => {
         if (disabled || readOnly) {
             return;
+        }
+
+        // Browser native range input only steps by 1 for PageUp/Down; apply large step manually
+        if (event.key === "PageUp" || event.key === "PageDown") {
+            event.preventDefault();
+            const delta =
+                (event.key === "PageUp" ? 1 : -1) * step * PAGE_STEP_MULTIPLIER;
+            const nextSelection = [...selection];
+            nextSelection[index] = clampValueForThumb(
+                selection[index] + delta,
+                index,
+                selection
+            );
+            if (nextSelection[index] !== selection[index]) {
+                setSelection(nextSelection);
+                onChange?.(nextSelection);
+                onChangeEnd?.(nextSelection);
+            }
         }
 
         const message = getBlockedMovementMessage(event.key, index);

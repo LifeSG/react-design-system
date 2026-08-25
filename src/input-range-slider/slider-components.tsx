@@ -11,6 +11,7 @@ import {
     findNearestThumbIndex,
     getPercent,
     getValueFromClientX,
+    PAGE_STEP_MULTIPLIER,
     toOffset,
 } from "./slider-utils";
 
@@ -20,7 +21,6 @@ interface ThumbProps extends React.HTMLAttributes<HTMLDivElement> {
     readOnly: boolean | undefined;
 }
 
-const PAGE_STEP_MULTIPLIER = 10;
 const InnerThumb = (
     {
         focused,

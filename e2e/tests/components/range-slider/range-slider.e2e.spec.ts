@@ -329,12 +329,12 @@ test.describe("RangeSlider", () => {
                 expect(await story.getSliderValue(0)).toEqual(0);
             });
 
-            await test.step("PageUp increases thumb value by one step", async () => {
+            await test.step("PageUp increases thumb value by large step", async () => {
                 await story.page.keyboard.press("PageUp");
-                expect(await story.getSliderValue(0)).toEqual(1);
+                expect(await story.getSliderValue(0)).toEqual(7);
             });
 
-            await test.step("PageDown decreases thumb value by one step", async () => {
+            await test.step("PageDown decreases thumb value by large step", async () => {
                 await story.page.keyboard.press("PageDown");
                 expect(await story.getSliderValue(0)).toEqual(0);
             });
@@ -365,12 +365,12 @@ test.describe("RangeSlider", () => {
                 expect(await story.getSliderValue(1)).toEqual(10);
             });
 
-            await test.step("PageDown decreases thumb value by one step", async () => {
+            await test.step("PageDown decreases thumb value by large step", async () => {
                 await story.page.keyboard.press("PageDown");
-                expect(await story.getSliderValue(1)).toEqual(9);
+                expect(await story.getSliderValue(1)).toEqual(3);
             });
 
-            await test.step("PageUp increases thumb value by one step", async () => {
+            await test.step("PageUp increases thumb value by large step", async () => {
                 await story.page.keyboard.press("PageUp");
                 expect(await story.getSliderValue(1)).toEqual(10);
             });
