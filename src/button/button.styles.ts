@@ -153,7 +153,7 @@ export const mainStyleDisabled = css`
 // -------------------------------------------------------------------------
 export const mainSizeDefault = css`
     min-height: 3rem;
-    ${Font["heading-xs-semibold"]}
+    ${Font["body-baseline-semibold"]}
 `;
 
 export const mainSizeDefaultIconOnly = css`
@@ -174,7 +174,9 @@ export const mainSizeSmallIconOnly = css`
 
 export const mainSizeLarge = css`
     min-height: 4rem;
-    ${Font["heading-md-semibold"]}
+
+    ${Font["heading-md-semibold"]};
+    font-family: ${Font.Spec["font-family-body"]};
 `;
 
 export const mainSizeLargeIconOnly = css`
