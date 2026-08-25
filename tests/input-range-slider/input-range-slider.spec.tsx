@@ -106,21 +106,20 @@ describe("InputRangeSlider", () => {
             expect(screen.queryByTestId("slider-input-1")).toHaveValue("5");
         });
 
-        it("should move by step via native input change", () => {
+        it("should move by step via input change", () => {
             const mockChange = jest.fn();
             render(
                 <InputRangeSlider
+                    onChange={mockChange}
                     min={0}
                     max={50}
                     step={5}
                     value={[10, 40]}
-                    onChange={mockChange}
                 />
             );
 
-            const input = screen.getByTestId("slider-input-0");
-            fireEvent.change(input, { target: { value: "15" } });
-
+            const thumb = screen.getByTestId("slider-thumb-0");
+            fireEvent.keyDown(thumb, { key: "ArrowUp", code: "ArrowUp" });
             expect(mockChange).toHaveBeenCalledWith([15, 40]);
         });
 
@@ -136,6 +135,46 @@ describe("InputRangeSlider", () => {
 
             expect(screen.queryByTestId("slider-input-0")).toHaveValue("0.3");
             expect(screen.queryByTestId("slider-input-1")).toHaveValue("0.7");
+        });
+    });
+
+    describe("minRange", () => {
+        it("should clamp relative to the next thumb with minRange", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={100}
+                    step={1}
+                    minRange={5}
+                    numOfThumbs={3}
+                    value={[35, 45, 60]}
+                />
+            );
+
+            const thumb = screen.getByTestId("slider-thumb-0");
+            fireEvent.keyDown(thumb, { key: "PageUp", code: "PageUp" });
+            expect(mockChange).toHaveBeenCalledWith([40, 45, 60]);
+        });
+
+        it("should clamp relative to the previous thumb with minRange", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={100}
+                    step={1}
+                    minRange={5}
+                    numOfThumbs={3}
+                    value={[10, 45, 55]}
+                />
+            );
+
+            const thumb = screen.getByTestId("slider-thumb-2");
+            fireEvent.keyDown(thumb, { key: "PageDown", code: "PageDown" });
+            expect(mockChange).toHaveBeenCalledWith([10, 45, 50]);
         });
     });
 
@@ -212,6 +251,210 @@ describe("InputRangeSlider", () => {
             fireEvent.pointerDown(slider, { clientX: 50 });
 
             expect(mockChange).toHaveBeenCalledWith([5, 7]);
+        });
+    });
+
+    describe("thumb keydown", () => {
+        it("should increment by 1 for ArrowUp", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[0, 50]}
+                />
+            );
+
+            const thumb = screen.getByTestId("slider-thumb-0");
+            fireEvent.keyDown(thumb, { key: "ArrowUp", code: "ArrowUp" });
+            expect(mockChange).toHaveBeenCalledWith([1, 50]);
+        });
+
+        it("should decrement by 1 for ArrowDown", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[0, 50]}
+                />
+            );
+
+            const thumb = screen.getByTestId("slider-thumb-1");
+            fireEvent.keyDown(thumb, { key: "ArrowDown", code: "ArrowDown" });
+            expect(mockChange).toHaveBeenCalledWith([0, 49]);
+        });
+
+        it("should increment by 10 for PageUp", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[0, 50]}
+                />
+            );
+
+            const thumb = screen.getByTestId("slider-thumb-0");
+            fireEvent.keyDown(thumb, { key: "PageUp", code: "PageUp" });
+            expect(mockChange).toHaveBeenCalledWith([10, 50]);
+        });
+
+        it("should increment by 10 for PageUp, clamping to the maximum", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[0, 45]}
+                />
+            );
+
+            const thumb = screen.getByTestId("slider-thumb-1");
+            fireEvent.keyDown(thumb, { key: "PageUp", code: "PageUp" });
+            expect(mockChange).toHaveBeenCalledWith([0, 50]);
+        });
+
+        it("should decrement by 10 for PageDown", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[0, 50]}
+                />
+            );
+
+            const thumb = screen.getByTestId("slider-thumb-1");
+            fireEvent.keyDown(thumb, { key: "PageDown", code: "PageDown" });
+            expect(mockChange).toHaveBeenCalledWith([0, 40]);
+        });
+
+        it("should decrement by 10 for PageDown, clamping to the minimum", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[5, 50]}
+                />
+            );
+
+            const thumb = screen.getByTestId("slider-thumb-0");
+            fireEvent.keyDown(thumb, { key: "PageDown", code: "PageDown" });
+            expect(mockChange).toHaveBeenCalledWith([0, 50]);
+        });
+    });
+
+    describe("slider native change event", () => {
+        it("should update the value", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[0, 50]}
+                />
+            );
+
+            const slider = screen.getByTestId("slider-input-0");
+            fireEvent.change(slider, { target: { value: "10" } });
+            expect(mockChange).toHaveBeenCalledWith([10, 50]);
+        });
+
+        it("should update the value, clamping to the minimum", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[10, 50]}
+                />
+            );
+
+            const slider = screen.getByTestId("slider-input-0");
+            fireEvent.change(slider, { target: { value: "-10" } });
+            expect(mockChange).toHaveBeenCalledWith([0, 50]);
+        });
+
+        it("should update the value, clamping to the maximum", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[0, 40]}
+                />
+            );
+
+            const slider = screen.getByTestId("slider-input-1");
+            fireEvent.change(slider, { target: { value: "60" } });
+            expect(mockChange).toHaveBeenCalledWith([0, 50]);
+        });
+    });
+
+    describe("slider keydown", () => {
+        it("should increment by 10 for PageUp", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[0, 50]}
+                />
+            );
+
+            const slider = screen.getByTestId("slider-input-0");
+            fireEvent.keyDown(slider, { key: "PageUp", code: "PageUp" });
+            expect(mockChange).toHaveBeenCalledWith([10, 50]);
+        });
+
+        it("should decrement by 10 for PageDown", () => {
+            const mockChange = jest.fn();
+            render(
+                <InputRangeSlider
+                    onChange={mockChange}
+                    min={0}
+                    max={50}
+                    step={1}
+                    numOfThumbs={2}
+                    value={[0, 50]}
+                />
+            );
+
+            const slider = screen.getByTestId("slider-input-1");
+            fireEvent.keyDown(slider, { key: "PageDown", code: "PageDown" });
+            expect(mockChange).toHaveBeenCalledWith([0, 40]);
         });
     });
 });
