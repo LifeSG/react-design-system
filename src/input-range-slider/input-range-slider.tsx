@@ -74,6 +74,33 @@ export const InputRangeSlider = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
+    const handleChange = (value: number | readonly number[]) => {
+        if (readOnly || disabled) {
+            return;
+        }
+
+        const nextValue = typeof value === "number" ? [value] : [...value];
+        setSelection(nextValue);
+        onChange?.(nextValue);
+    };
+
+    const handleChangeEnd = (value: number | readonly number[]) => {
+        if (readOnly || disabled) {
+            return;
+        }
+
+        if (typeof value === "number") {
+            const val = [value];
+            setSelection(val);
+            onChangeEnd?.(val);
+            return;
+        }
+
+        const newSelection = [...value];
+        setSelection(newSelection);
+        onChangeEnd?.(newSelection);
+    };
+
     const handleThumbKeyDown = (
         event: React.KeyboardEvent<HTMLDivElement>,
         index: number
@@ -441,8 +468,8 @@ export const InputRangeSlider = ({
                 readOnly={readOnly}
                 trackColors={trackColors}
                 focusedThumbIndex={focusedThumbIndex}
-                onChange={onChange}
-                onChangeEnd={onChangeEnd}
+                onChange={handleChange}
+                onChangeEnd={handleChangeEnd}
             />
 
             {showSliderLabels && (
