@@ -17,6 +17,7 @@ class StoryPage extends AbstractStoryPage {
         nonCollapsibleAccordion: Locator;
         smallAccordion: Locator;
         mobileTitleAccordion: Locator;
+        jsxTitleAccordion: Locator;
         nonCollapsibleItemContent: Locator;
     };
 
@@ -41,6 +42,7 @@ class StoryPage extends AbstractStoryPage {
             ),
             smallAccordion: page.getByTestId("accordion-small"),
             mobileTitleAccordion: page.getByTestId("accordion-mobile-title"),
+            jsxTitleAccordion: page.getByTestId("accordion-jsx-title"),
             nonCollapsibleItemContent: page.getByTestId(
                 "non-collapsible-item-content"
             ),
@@ -163,6 +165,24 @@ test.describe("Accordion", () => {
         });
 
         test("showTitleInMobile=true", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("jsx-title");
+        });
+
+        test("JSX element title", async ({ story }) => {
+            const titleHeading = story.locators.jsxTitleAccordion.getByRole(
+                "heading",
+                { level: 2 }
+            );
+
+            await expect(titleHeading).toBeVisible();
+            await expect(titleHeading.locator("strong")).toHaveText("JSX");
+
             await compareScreenshot(story, "mount");
         });
     });
