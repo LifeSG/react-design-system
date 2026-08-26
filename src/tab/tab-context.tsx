@@ -9,6 +9,10 @@ interface TabContextProps {
     currentActiveIndex: number;
     tabLinks: TabLinkProps[];
     setCurrentActiveIndex: Dispatch<SetStateAction<number>>;
+    setTabLinks: (links: TabLinkProps[]) => void;
+    controlledMode: boolean;
+    onTabClick?: ((title: string, index: number) => void) | undefined;
+    isContextProvided: boolean;
 }
 
 export const noop = () => {
@@ -22,4 +26,7 @@ export const TabContext = React.createContext<TabContextProps>({
     currentActiveIndex: 0,
     tabLinks: [],
     setCurrentActiveIndex: noop,
+    setTabLinks: noop,
+    controlledMode: false,
+    isContextProvided: false,
 });
