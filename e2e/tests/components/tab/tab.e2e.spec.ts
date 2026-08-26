@@ -123,3 +123,227 @@ test.describe("Tab", () => {
         });
     });
 });
+
+test.describe("Tab.Context (standalone)", () => {
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-default");
+        });
+
+        test("Default", async ({ story }) => {
+            await expect(story.layout).toMatchAriaSnapshot(`
+                - tablist:
+                    - tab "Section A" [selected]
+                    - tab "Section B"
+                    - tab "Section C"
+                - tabpanel "Section A": Contents of A
+            `);
+
+            await compareScreenshot(story, "mount");
+        });
+
+        test("Keyboard navigation", async ({ story }) => {
+            await story.locators.firstTab.focus();
+            await story.page.keyboard.press("ArrowRight");
+            await story.page.keyboard.press("ArrowRight");
+
+            await expect(story.locators.thirdTab).toBeFocused();
+
+            await story.page.keyboard.press("ArrowLeft");
+
+            await expect(story.locators.secondTab).toBeFocused();
+
+            await story.page.keyboard.press("Space");
+
+            await expect(story.locators.secondTab).toMatchAriaSnapshot(
+                '- tab "Section B" [selected]'
+            );
+        });
+
+        test("Keyboard navigation wraps around", async ({ story }) => {
+            await story.locators.thirdTab.focus();
+            await story.page.keyboard.press("ArrowRight");
+
+            await expect(story.locators.firstTab).toBeFocused();
+
+            await story.locators.firstTab.focus();
+            await story.page.keyboard.press("ArrowLeft");
+
+            await expect(story.locators.thirdTab).toBeFocused();
+        });
+
+        test("Click switches active panel", async ({ story }) => {
+            await story.locators.secondTab.click();
+
+            await expect(story.layout).toMatchAriaSnapshot(`
+                - tablist:
+                    - tab "Section A"
+                    - tab "Section B" [selected]
+                    - tab "Section C"
+                - tabpanel "Section B": Contents of B
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-default", { mode: "dark" });
+        });
+
+        test("Default dark mode", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-initial-active");
+        });
+
+        test("initialActive", async ({ story }) => {
+            await expect(story.layout).toMatchAriaSnapshot(`
+                - tablist:
+                    - tab "Section A"
+                    - tab "Section B" [selected]
+                    - tab "Section C"
+                - tabpanel "Section B": Contents of B
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-controlled");
+        });
+
+        test("Controlled mode", async ({ story }) => {
+            await story.locators.secondTab.click();
+
+            await expect(story.layout).toMatchAriaSnapshot(`
+                - tablist:
+                    - tab "Section A"
+                    - tab "Section B" [selected]
+                    - tab "Section C"
+                - tabpanel "Section B": Contents of B
+            `);
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-title-addon");
+        });
+
+        test("Title addon", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-panel-outside");
+        });
+
+        test("Panel outside tab list", async ({ story }) => {
+            await expect(story.layout).toMatchAriaSnapshot(`
+                - tablist:
+                    - tab "Section A" [selected]
+                    - tab "Section B"
+                    - tab "Section C"
+                - tabpanel "Section A": Contents of A
+            `);
+
+            await story.locators.secondTab.click();
+
+            await expect(story.layout).toMatchAriaSnapshot(`
+                - tablist:
+                    - tab "Section A"
+                    - tab "Section B" [selected]
+                    - tab "Section C"
+                - tabpanel "Section B": Contents of B
+            `);
+        });
+    });
+
+    test.describe("Tab.Panel", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("standalone-default");
+            });
+
+            test("Renders only the active panel", async ({ story }) => {
+                // panel A visible, B and C absent from DOM
+                await expect(
+                    story.page.getByTestId("tab-content-a")
+                ).toBeVisible();
+                await expect(
+                    story.page.getByTestId("tab-content-b")
+                ).not.toBeAttached();
+                await expect(
+                    story.page.getByTestId("tab-content-c")
+                ).not.toBeAttached();
+
+                await story.locators.secondTab.click();
+
+                await expect(
+                    story.page.getByTestId("tab-content-b")
+                ).toBeVisible();
+                await expect(
+                    story.page.getByTestId("tab-content-a")
+                ).not.toBeAttached();
+            });
+        });
+    });
+
+    test.describe("Tab.TabList alignment", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("standalone-center-aligned");
+            });
+
+            test("Center aligned", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("standalone-right-aligned");
+            });
+
+            test("Right aligned", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-full-width-indicator");
+        });
+
+        test("fullWidthIndicatorLine", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-fade-color", { size: "mobile" });
+        });
+
+        test("Fade color mobile", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-custom-tab-width");
+        });
+
+        test("Custom tab width", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+});
