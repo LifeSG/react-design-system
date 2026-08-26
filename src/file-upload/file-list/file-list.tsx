@@ -29,6 +29,7 @@ import { VisuallyHidden } from "../../shared/accessibility";
 import { FileUploadContext } from "../context";
 import { MouseSensor } from "../custom-sensors";
 import { FileListItem } from "../file-list-item";
+import type { FileItemMode } from "../file-list-item/types";
 import { FileUploadHelper } from "../helper";
 import type { FileItemProps } from "../types";
 import * as styles from "./file-list.styles";
@@ -89,6 +90,7 @@ function Component(
     // CONST, STATE, REFS
     // =========================================================================
     const { setActiveId } = useContext(FileUploadContext);
+    const [editingCount, setEditingCount] = useState(0);
 
     // Progress announcement state (for aria-live) - announces start and completion only
     const [progressAnnouncement, setProgressAnnouncement] = useState("");
@@ -223,6 +225,12 @@ function Component(
         }
     };
 
+    const handleModeChange = (mode: FileItemMode) => {
+        setEditingCount((prev) =>
+            mode === "edit" ? prev + 1 : Math.max(0, prev - 1)
+        );
+    };
+
     const handleDelete = (item: FileItemProps) => () => {
         onItemDelete(item);
         if (wrapperRef.current) {
@@ -281,6 +289,7 @@ function Component(
     };
 
     const areAllItemsInDisplayViews = () => {
+        if (editingCount > 0) return false;
         return !fileItems.some(isInNonDisplayState);
     };
 
@@ -363,6 +372,7 @@ function Component(
                     onSave={handleSaveEdit(item)}
                     onCancel={handleCancel(item)}
                     onBlur={handleBlurEdit(item)}
+                    onModeChange={handleModeChange}
                 />
             );
         });
@@ -401,24 +411,20 @@ function Component(
         );
     };
 
-    if (disabled || readOnly || !shouldEnableSort()) {
-        return renderItemsWithWrapper();
-    } else {
-        return (
-            <DndContext
-                sensors={sensors}
-                onDragEnd={handleDragEnd}
-                onDragStart={handleDragStart}
+    return (
+        <DndContext
+            sensors={sensors}
+            onDragEnd={handleDragEnd}
+            onDragStart={handleDragStart}
+        >
+            <SortableContext
+                items={fileItems}
+                strategy={verticalListSortingStrategy}
             >
-                <SortableContext
-                    items={fileItems}
-                    strategy={verticalListSortingStrategy}
-                >
-                    {renderItemsWithWrapper()}
-                </SortableContext>
-            </DndContext>
-        );
-    }
+                {renderItemsWithWrapper()}
+            </SortableContext>
+        </DndContext>
+    );
 }
 
 export const FileList = forwardRef<FileListRef, Props>(Component);

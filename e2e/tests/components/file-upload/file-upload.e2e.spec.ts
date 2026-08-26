@@ -328,7 +328,19 @@ test.describe("FileUpload", () => {
                     story.locators.internal.editDisplay("editable-image")
                 ).toBeVisible();
 
+                const dragHandle = story.locators.fileUpload.locator(
+                    '[data-testid$="-drag-handle"]'
+                );
+                await expect(dragHandle).toHaveCount(0);
+
                 await compareScreenshot(story, "mount");
+            });
+
+            await test.step("Sort disabled while an item is in edit mode", async () => {
+                const dragHandle = story.locators.fileUpload.locator(
+                    '[data-testid$="-drag-handle"]'
+                );
+                await expect(dragHandle).toHaveCount(0);
             });
 
             await test.step("Save description", async () => {
@@ -350,10 +362,20 @@ test.describe("FileUpload", () => {
                 });
             });
 
+            await test.step("Sort enabled after all items in display mode", async () => {
+                const dragHandle = story.locators.fileUpload.locator(
+                    '[data-testid$="-drag-handle"]'
+                );
+                await expect(dragHandle.first()).toBeVisible();
+            });
+
             await test.step("Cancel edit keeps saved description", async () => {
                 await story.locators.internal
                     .editButton("editable-image")
                     .click();
+                await expect(
+                    story.locators.internal.textarea("editable-image")
+                ).toBeVisible();
                 await story.locators.internal
                     .textarea("editable-image")
                     .fill("Temporary change");
@@ -366,6 +388,13 @@ test.describe("FileUpload", () => {
                         "A person walking beside a tree"
                     )
                 ).toBeVisible();
+            });
+
+            await test.step("Sort restored after cancel", async () => {
+                const dragHandle = story.locators.fileUpload.locator(
+                    '[data-testid$="-drag-handle"]'
+                );
+                await expect(dragHandle.first()).toBeVisible();
             });
         });
     });

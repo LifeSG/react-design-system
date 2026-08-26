@@ -28,6 +28,7 @@ const Component = ({
     onSave,
     onCancel,
     onBlur,
+    onModeChange,
 }: FileListItemProps) => {
     const {
         id,
@@ -140,6 +141,7 @@ const Component = ({
     // =========================================================================
     const handleEdit = () => {
         setCurrentMode("edit");
+        onModeChange?.("edit");
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -155,12 +157,14 @@ const Component = ({
     const handleSave = () => {
         if (textareaRef.current) {
             setCurrentMode("display");
+            onModeChange?.("display");
             onSave?.(textareaRef.current.value.trim());
         }
     };
 
     const handleCancel = () => {
         setCurrentMode("display");
+        onModeChange?.("display");
         onCancel?.();
     };
 
