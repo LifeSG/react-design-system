@@ -2,6 +2,7 @@ import clsx from "clsx";
 import type { ReactElement } from "react";
 import { Children, cloneElement, useEffect, useMemo, useState } from "react";
 
+import { useId } from "../util";
 import * as styles from "./tab.styles";
 import type { TabLinkProps } from "./tab-context";
 import { noop, TabContext } from "./tab-context";
@@ -34,6 +35,8 @@ const TabBase = ({
         currentActiveIndex || initialActive
     );
 
+    const instanceId = useId();
+
     const tabLinks = useMemo(() => {
         const validChildren = Children.toArray(children).filter(
             Boolean
@@ -50,6 +53,7 @@ const TabBase = ({
 
     const tabContextValue = useMemo(
         () => ({
+            instanceId,
             tabLinks,
             currentActiveIndex: currentActive,
             setCurrentActiveIndex: setCurrentActive,
@@ -58,7 +62,7 @@ const TabBase = ({
             onTabClick,
             isContextProvided: true,
         }),
-        [currentActive, currentActiveIndex, onTabClick, tabLinks]
+        [currentActive, currentActiveIndex, instanceId, onTabClick, tabLinks]
     );
 
     // =========================================================================

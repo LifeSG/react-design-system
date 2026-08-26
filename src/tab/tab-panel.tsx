@@ -8,7 +8,8 @@ import type { TabPanelProps } from "./types";
 // =============================================================================
 // Inactive panels are unmounted — inner state is not preserved across tab switches
 export const TabPanel = ({ index, children, ...otherProps }: TabPanelProps) => {
-    const { currentActiveIndex, isContextProvided } = useContext(TabContext);
+    const { currentActiveIndex, isContextProvided, instanceId } =
+        useContext(TabContext);
 
     useEffect(() => {
         if (process.env.NODE_ENV !== "production" && !isContextProvided) {
@@ -17,7 +18,12 @@ export const TabPanel = ({ index, children, ...otherProps }: TabPanelProps) => {
     }, [isContextProvided]);
 
     return currentActiveIndex === index ? (
-        <div role="tabpanel" tabIndex={0} {...otherProps}>
+        <div
+            role="tabpanel"
+            aria-labelledby={`${instanceId}-tab-${index}`}
+            tabIndex={0}
+            {...otherProps}
+        >
             {children}
         </div>
     ) : null;

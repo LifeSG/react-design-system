@@ -1,5 +1,6 @@
 import { useEffect, useMemo, useState } from "react";
 
+import { useId } from "../util";
 import type { TabLinkProps } from "./tab-context";
 import { noop, TabContext } from "./tab-context";
 import type { TabContextProviderProps } from "./types";
@@ -20,9 +21,11 @@ export const TabContextProvider = ({
         currentActiveIndex ?? initialActive
     );
     const [tabLinks, setTabLinks] = useState<TabLinkProps[]>([]);
+    const instanceId = useId();
 
     const tabContextValue = useMemo(
         () => ({
+            instanceId,
             tabLinks,
             currentActiveIndex: currentActive,
             setCurrentActiveIndex: setCurrentActive,
@@ -31,7 +34,7 @@ export const TabContextProvider = ({
             onTabClick,
             isContextProvided: true,
         }),
-        [currentActive, currentActiveIndex, onTabClick, tabLinks]
+        [currentActive, currentActiveIndex, instanceId, onTabClick, tabLinks]
     );
 
     // =========================================================================
