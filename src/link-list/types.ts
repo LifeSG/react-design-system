@@ -12,11 +12,11 @@ export type LinkListStyle = "default" | "small";
  * Props for a single item in a `LinkList`.
  */
 export interface LinkListItemProps<T>
-    extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
+    extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "title"> {
     /** Primary label displayed as the link text. */
-    title: string;
+    title: string | JSX.Element;
     /** Secondary text shown below the title. */
-    description?: string | undefined;
+    description?: string | JSX.Element | undefined;
     /**
      * Additional content rendered below the description.
      * Accepts a JSX element for rich secondary content.

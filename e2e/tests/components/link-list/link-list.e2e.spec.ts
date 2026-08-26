@@ -172,6 +172,24 @@ test.describe("LinkList", () => {
         });
     });
 
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("jsx-content");
+        });
+
+        test("JSX title and description", async ({ story }) => {
+            const jsxTitleLink = story.locators.link("JSX title item");
+            await expect(jsxTitleLink.locator("strong")).toHaveText("title");
+
+            const jsxDescLink = story.locators.link(
+                "Item with JSX description"
+            );
+            await expect(jsxDescLink.locator("strong")).toHaveText("rich");
+
+            await compareScreenshot(story, "mount");
+        });
+    });
+
     test.describe("Lazy load", () => {
         modes.forEach((mode) => {
             test.describe(() => {
