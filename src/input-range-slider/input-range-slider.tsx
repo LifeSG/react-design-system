@@ -74,31 +74,22 @@ export const InputRangeSlider = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleChange = (value: number | readonly number[]) => {
+    const handleChange = (value: number[]) => {
         if (readOnly || disabled) {
             return;
         }
 
-        const nextValue = typeof value === "number" ? [value] : [...value];
-        setSelection(nextValue);
-        onChange?.(nextValue);
+        setSelection(value);
+        onChange?.(value);
     };
 
-    const handleChangeEnd = (value: number | readonly number[]) => {
+    const handleChangeEnd = (value: number[]) => {
         if (readOnly || disabled) {
             return;
         }
 
-        if (typeof value === "number") {
-            const val = [value];
-            setSelection(val);
-            onChangeEnd?.(val);
-            return;
-        }
-
-        const newSelection = [...value];
-        setSelection(newSelection);
-        onChangeEnd?.(newSelection);
+        setSelection(value);
+        onChangeEnd?.(value);
     };
 
     const handleThumbKeyDown = (
