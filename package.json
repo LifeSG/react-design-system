@@ -14,7 +14,8 @@
         }
     },
     "bin": {
-        "lifesg-react-design-system": "./codemods/run-codemod.js"
+        "lifesg-react-design-system": "./codemods/run-codemod.js",
+        "flagship-skills": "./scripts/init-skills.js"
     },
     "scripts": {
         "build": "npm run rollup",
