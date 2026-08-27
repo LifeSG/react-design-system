@@ -47,7 +47,7 @@ describe("InputSlider", () => {
         render(<InputSlider onChange={mockChange} />);
 
         const slider = screen.getByTestId("slider-track-0").parentElement!;
-        fireEvent.mouseDown(slider);
+        fireEvent.pointerDown(slider);
 
         expect(mockChange).toHaveBeenCalledWith(0);
     });

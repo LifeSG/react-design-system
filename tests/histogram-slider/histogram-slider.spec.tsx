@@ -28,14 +28,8 @@ describe("HistogramSlider", () => {
         render(<HistogramSlider bins={MOCK_BIN_DATA} interval={1} />);
 
         expect(screen.queryAllByRole("slider")).toHaveLength(2);
-        expect(screen.queryByTestId("slider-thumb-0")).toHaveAttribute(
-            "aria-valuenow",
-            "1"
-        );
-        expect(screen.queryByTestId("slider-thumb-1")).toHaveAttribute(
-            "aria-valuenow",
-            "2"
-        );
+        expect(screen.queryByTestId("slider-input-0")).toHaveValue("1");
+        expect(screen.queryByTestId("slider-input-1")).toHaveValue("2");
     });
 
     it("should render component with value", () => {
@@ -43,14 +37,8 @@ describe("HistogramSlider", () => {
             <HistogramSlider bins={MOCK_BIN_DATA} interval={1} value={[2, 3]} />
         );
 
-        expect(screen.queryByTestId("slider-thumb-0")).toHaveAttribute(
-            "aria-valuenow",
-            "2"
-        );
-        expect(screen.queryByTestId("slider-thumb-1")).toHaveAttribute(
-            "aria-valuenow",
-            "3"
-        );
+        expect(screen.queryByTestId("slider-input-0")).toHaveValue("2");
+        expect(screen.queryByTestId("slider-input-1")).toHaveValue("3");
     });
 
     it("should forward className to the root element", () => {
@@ -79,7 +67,7 @@ describe("HistogramSlider", () => {
         );
 
         const thumb = screen.getByTestId("slider-track-0").parentElement!;
-        fireEvent.mouseDown(thumb);
+        fireEvent.pointerDown(thumb);
 
         expect(mockChange).toHaveBeenCalledWith([1, 2]);
     });

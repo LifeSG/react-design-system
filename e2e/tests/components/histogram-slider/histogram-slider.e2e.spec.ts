@@ -1,5 +1,11 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import {
+    AbstractStoryPage,
+    compareScreenshot,
+    dragSlider,
+    getSliderDelta,
+    getSliderValue,
+} from "../../utils";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "histogram-slider";
@@ -64,31 +70,15 @@ class StoryPage extends AbstractStoryPage {
     }
 
     async getSliderValue(index: number) {
-        const thumb = this.locators.internal.thumb(index);
-        const value = await thumb.getAttribute("aria-valuenow");
-        if (value === null) {
-            throw new Error(`Slider at index ${index} does not have a value`);
-        }
-        return parseInt(value);
-    }
-
-    async getSliderDelta(locator: Locator, range: number) {
-        const slider = await locator.boundingBox();
-        return slider?.width ? slider.width / range : 0;
+        return getSliderValue(this.locators.internal.slider(index));
     }
 
     async dragSlider(index: number, deltaX: number) {
-        const thumb = this.locators.internal.thumb(index);
-        const boundingBox = await thumb.boundingBox();
-        if (!boundingBox) {
-            throw new Error(
-                `Slider at index ${index} does not have a bounding box`
-            );
-        }
-        await thumb.hover();
-        await this.page.mouse.down();
-        await this.page.mouse.move(boundingBox.x + deltaX, boundingBox.y);
-        await this.page.mouse.up();
+        return dragSlider(
+            this.page,
+            this.locators.internal.thumb(index),
+            deltaX
+        );
     }
 
     async hasRangeDescription(locator: Locator) {
@@ -299,10 +289,7 @@ test.describe("HistogramSlider", () => {
         });
 
         test("Drag min thumb updates selection", async ({ story }) => {
-            const step = await story.getSliderDelta(
-                story.locators.interaction,
-                5
-            );
+            const step = await getSliderDelta(story.locators.interaction, 5);
             expect(await story.getSliderValue(0)).toEqual(2);
 
             await test.step("Drag min thumb left by one step", async () => {
@@ -319,10 +306,7 @@ test.describe("HistogramSlider", () => {
         });
 
         test("Drag max thumb updates selection", async ({ story }) => {
-            const step = await story.getSliderDelta(
-                story.locators.interaction,
-                5
-            );
+            const step = await getSliderDelta(story.locators.interaction, 5);
             expect(await story.getSliderValue(1)).toEqual(4);
 
             await test.step("Drag max thumb right by one step", async () => {
@@ -339,10 +323,7 @@ test.describe("HistogramSlider", () => {
         });
 
         test("Bars update highlight after drag", async ({ story }) => {
-            const step = await story.getSliderDelta(
-                story.locators.interaction,
-                5
-            );
+            const step = await getSliderDelta(story.locators.interaction, 5);
 
             await test.step("Initial bar state with value [2, 4]", async () => {
                 await compareScreenshot(story, "bars-interaction-initial", {

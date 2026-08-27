@@ -2,14 +2,14 @@ import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import clsx from "clsx";
 import type React from "react";
 import { useEffect, useState } from "react";
-import ReactSlider from "react-slider";
 
 import { concatIds, VisuallyHidden } from "../shared/accessibility";
 import { Colour } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import * as styles from "./input-range-slider.styles";
-import { Thumb, Track } from "./slider-components";
+import { Slider } from "./slider-components";
+import { PAGE_STEP_MULTIPLIER } from "./slider-utils";
 import type { InputRangeSliderProps } from "./types";
 
 // @catalog
@@ -75,43 +75,22 @@ export const InputRangeSlider = ({
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleChange = (value: number | readonly number[], index: number) => {
+    const handleChange = (value: number[]) => {
         if (readOnly || disabled) {
             return;
         }
 
-        if (typeof value === "number") {
-            const nextValue = [value];
-            setSelection(nextValue);
-            onChange?.(nextValue);
-            return;
-        }
-
-        if (index > -1 && selection[index] === value[index]) {
-            // skip unnecessary update when dragging the start thumb across the end thumb
-            return;
-        }
-
-        const nextValue = [...value];
-        setSelection(nextValue);
-        onChange?.(nextValue);
+        setSelection(value);
+        onChange?.(value);
     };
 
-    const handleChangeEnd = (value: number | readonly number[]) => {
+    const handleChangeEnd = (value: number[]) => {
         if (readOnly || disabled) {
             return;
         }
 
-        if (typeof value === "number") {
-            const val = [value];
-            setSelection(val);
-            onChangeEnd?.(val);
-            return;
-        }
-
-        const newSelection = [...value];
-        setSelection(newSelection);
-        onChangeEnd?.(newSelection);
+        setSelection(value);
+        onChangeEnd?.(value);
     };
 
     const handleThumbKeyDown = (
@@ -120,6 +99,24 @@ export const InputRangeSlider = ({
     ) => {
         if (disabled || readOnly) {
             return;
+        }
+
+        // Browser native range input only steps by 1 for PageUp/Down; apply large step manually
+        if (event.key === "PageUp" || event.key === "PageDown") {
+            event.preventDefault();
+            const delta =
+                (event.key === "PageUp" ? 1 : -1) * step * PAGE_STEP_MULTIPLIER;
+            const nextSelection = [...selection];
+            nextSelection[index] = clampValueForThumb(
+                selection[index] + delta,
+                index,
+                selection
+            );
+            if (nextSelection[index] !== selection[index]) {
+                setSelection(nextSelection);
+                onChange?.(nextSelection);
+                onChangeEnd?.(nextSelection);
+            }
         }
 
         const message = getBlockedMovementMessage(event.key, index);
@@ -452,42 +449,19 @@ export const InputRangeSlider = ({
             })}
 
             {/* Native range inputs provide the accessible interaction model.
-                The visible react-slider is presentation-only. */}
-            <ReactSlider
-                step={step}
+                The visible slider is presentation-only. */}
+            <Slider
+                selection={selection}
                 min={min}
                 max={max}
-                value={selection}
-                disabled={disabled || readOnly}
+                step={step}
+                minRange={minRange}
+                disabled={disabled}
+                readOnly={readOnly}
+                trackColors={trackColors}
+                focusedThumbIndex={focusedThumbIndex}
                 onChange={handleChange}
-                onAfterChange={handleChangeEnd}
-                minDistance={minRange}
-                aria-hidden
-                className={styles.slider}
-                renderThumb={(thumbProps, state) => {
-                    return (
-                        <Thumb
-                            data-testid={`slider-thumb-${state.index}`}
-                            {...thumbProps}
-                            key={thumbProps.key}
-                            tabIndex={-1}
-                            aria-hidden
-                            focused={focusedThumbIndex === state.index}
-                            disabled={disabled}
-                            readOnly={readOnly}
-                        />
-                    );
-                }}
-                renderTrack={(trackProps, state) => {
-                    return (
-                        <Track
-                            data-testid={`slider-track-${state.index}`}
-                            {...trackProps}
-                            key={trackProps.key}
-                            color={trackColors[state.index]}
-                        />
-                    );
-                }}
+                onChangeEnd={handleChangeEnd}
             />
 
             {showSliderLabels && (
