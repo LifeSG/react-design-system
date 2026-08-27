@@ -713,4 +713,68 @@ test.describe("InputMultiSelect", () => {
             });
         });
     });
+
+    test.describe("Disabled options", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("disabled-options");
+        });
+
+        test("Disabled items are not selectable", async ({ story }) => {
+            const select = story.page.getByTestId(
+                "multi-select-disabled-options-base"
+            );
+            await story.openDropdown(select);
+
+            await expect(story.locators.component.dropdownList)
+                .toMatchAriaSnapshot(`
+                - listbox:
+                  - option "Option A"
+                  - option "Option B" [disabled]
+                  - option "Option C" [disabled]
+                  - option "Option D"
+            `);
+
+            // Clicking a disabled item should not select it
+            await story.getOption("Option B").click();
+            await expect(story.getOption("Option B")).not.toHaveAttribute(
+                "aria-selected",
+                "true"
+            );
+
+            // Clicking an enabled item should select it
+            await story.getOption("Option A").click();
+            await expect(story.getOption("Option A")).toHaveAttribute(
+                "aria-selected",
+                "true"
+            );
+        });
+
+        test("Select all only selects enabled items", async ({ story }) => {
+            const select = story.page.getByTestId(
+                "multi-select-disabled-options-base"
+            );
+            await story.openDropdown(select);
+
+            await story.page
+                .getByRole("button", { name: "Select all" })
+                .click();
+
+            await expect(story.getOption("Option A")).toHaveAttribute(
+                "aria-selected",
+                "true"
+            );
+            await expect(story.getOption("Option D")).toHaveAttribute(
+                "aria-selected",
+                "true"
+            );
+            await expect(story.getOption("Option B")).not.toHaveAttribute(
+                "aria-selected",
+                "true"
+            );
+            await expect(story.getOption("Option C")).not.toHaveAttribute(
+                "aria-selected",
+                "true"
+            );
+        });
+    });
 });

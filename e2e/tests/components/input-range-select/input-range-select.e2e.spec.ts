@@ -554,4 +554,96 @@ test.describe("InputRangeSelect", () => {
                 `);
         });
     });
+
+    test.describe("Disabled options", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("disabled-options");
+        });
+
+        test("Disabled items are not selectable in from dropdown", async ({
+            story,
+        }) => {
+            const select = story.page.getByTestId(
+                "input-range-select-disabled-options-base"
+            );
+            await story.openDropdown(story.getFromButton(select));
+
+            // Verify disabled items have aria-disabled
+            await expect(story.getOption("Option B")).toHaveAttribute(
+                "aria-disabled",
+                "true"
+            );
+
+            // Enabled items should not be aria-disabled
+            await expect(story.getOption("Option A")).toHaveAttribute(
+                "aria-disabled",
+                "false"
+            );
+
+            // Clicking a disabled item should not close the dropdown or select it
+            await story.getOption("Option B").click();
+            await expect(
+                story.locators.internal.dropdownContainer
+            ).toBeVisible();
+
+            // Clicking an enabled item should work and auto-open "to" dropdown
+            await story.getOption("Option A").click();
+            await expect(
+                story.locators.internal.dropdownContainer
+            ).toBeVisible();
+            await expect(story.getFromButton(select)).toContainText("Option A");
+        });
+
+        test("Disabled items are not selectable in to dropdown", async ({
+            story,
+        }) => {
+            const select = story.page.getByTestId(
+                "input-range-select-disabled-options-base"
+            );
+            await story.openDropdown(story.getFromButton(select));
+
+            // Select from value first
+            await story.getOption("Option A").click();
+
+            // Now in "to" dropdown - verify disabled items
+            await expect(story.getOption("Option L")).toHaveAttribute(
+                "aria-disabled",
+                "true"
+            );
+            await expect(story.getOption("Option K")).toHaveAttribute(
+                "aria-disabled",
+                "false"
+            );
+
+            // Clicking a disabled item should not close the dropdown
+            await story.getOption("Option L").click();
+            await expect(
+                story.locators.internal.dropdownContainer
+            ).toBeVisible();
+
+            // Clicking an enabled item should complete the selection
+            await story.getOption("Option K").click();
+            await expect(
+                story.locators.internal.dropdownContainer
+            ).not.toBeVisible();
+            await expect(story.getToButton(select)).toContainText("Option K");
+        });
+
+        test("Keyboard navigation skips disabled items", async ({ story }) => {
+            const select = story.page.getByTestId(
+                "input-range-select-disabled-options-base"
+            );
+            await story.openDropdown(story.getFromButton(select));
+
+            // First focused item should be Option A (first enabled)
+            const activeOption = story.locators.internal.dropdownList.locator(
+                '[role="option"][tabindex="0"]'
+            );
+            await expect(activeOption).toContainText("Option A");
+
+            // ArrowDown should skip B (disabled), land on C
+            await story.page.keyboard.press("ArrowDown");
+            await expect(activeOption).toContainText("Option C");
+        });
+    });
 });

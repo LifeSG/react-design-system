@@ -447,4 +447,69 @@ test.describe("InputSelect", () => {
             await story.closeDropdown();
         });
     });
+
+    test.describe("Disabled options", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("disabled-options");
+        });
+
+        test("Disabled items are not selectable", async ({ story }) => {
+            const select = story.page.getByTestId(
+                "input-select-disabled-options-base"
+            );
+            await story.openDropdown(select);
+
+            // Verify disabled items have aria-disabled
+            await expect(story.getOption("Option B")).toHaveAttribute(
+                "aria-disabled",
+                "true"
+            );
+            await expect(story.getOption("Option C")).toHaveAttribute(
+                "aria-disabled",
+                "true"
+            );
+
+            // Enabled items should not be aria-disabled
+            await expect(story.getOption("Option A")).toHaveAttribute(
+                "aria-disabled",
+                "false"
+            );
+            await expect(story.getOption("Option D")).toHaveAttribute(
+                "aria-disabled",
+                "false"
+            );
+
+            // Clicking a disabled item should not close the dropdown or select it
+            await story.getOption("Option B").click();
+            await expect(
+                story.locators.internal.dropdownContainer
+            ).toBeVisible();
+            await expect(select).not.toContainText("Option B");
+
+            // Clicking an enabled item should work
+            await story.getOption("Option D").click();
+            await expect(
+                story.locators.internal.dropdownContainer
+            ).not.toBeVisible();
+            await expect(select).toContainText("Option D");
+        });
+
+        test("Keyboard navigation skips disabled items", async ({ story }) => {
+            const select = story.page.getByTestId(
+                "input-select-disabled-options-base"
+            );
+            await story.openDropdown(select);
+
+            // First focused item should be Option A
+            await expect(story.getActiveOption()).toContainText("Option A");
+
+            // ArrowDown should skip B and C, land on D
+            await story.page.keyboard.press("ArrowDown");
+            await expect(story.getActiveOption()).toContainText("Option D");
+
+            // ArrowUp should skip C and B, land back on A
+            await story.page.keyboard.press("ArrowUp");
+            await expect(story.getActiveOption()).toContainText("Option A");
+        });
+    });
 });
