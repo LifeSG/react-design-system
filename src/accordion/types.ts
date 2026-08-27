@@ -1,6 +1,12 @@
 export interface AccordionProps {
     children: JSX.Element | JSX.Element[];
-    title?: string | undefined;
+    /** Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true. */
+    title?: string | JSX.Element | undefined;
+    /**
+     * Renders the "Show all" / "Hide all" toggle button.
+     *
+     * @default true
+     */
     enableExpandAll?: boolean | undefined;
     initialDisplay?: "collapse-all" | "expand-all" | undefined;
     showTitleInMobile?: boolean | undefined;
