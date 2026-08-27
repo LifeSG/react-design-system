@@ -3,7 +3,7 @@
 export interface AccordionProps {
     children: JSX.Element | JSX.Element[];
     /** Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true. */
-    title?: string | undefined;
+    title?: string | JSX.Element | undefined;
     /**
      * Renders the "Show all" / "Hide all" toggle button.
      *

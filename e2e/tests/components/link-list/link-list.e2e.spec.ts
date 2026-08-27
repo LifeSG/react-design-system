@@ -81,6 +81,16 @@ test.describe("LinkList", () => {
         });
     });
 
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-content");
+        });
+
+        test("Custom content", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
     test.describe("Eager load", () => {
         test.describe(() => {
             modes.forEach((mode) => {

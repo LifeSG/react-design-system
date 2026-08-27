@@ -17,6 +17,7 @@ class StoryPage extends AbstractStoryPage {
         nonCollapsibleAccordion: Locator;
         smallAccordion: Locator;
         mobileTitleAccordion: Locator;
+        customTitleAccordion: Locator;
         nonCollapsibleItemContent: Locator;
     };
 
@@ -41,6 +42,7 @@ class StoryPage extends AbstractStoryPage {
             ),
             smallAccordion: page.getByTestId("accordion-small"),
             mobileTitleAccordion: page.getByTestId("accordion-mobile-title"),
+            customTitleAccordion: page.getByTestId("accordion-custom-title"),
             nonCollapsibleItemContent: page.getByTestId(
                 "non-collapsible-item-content"
             ),
@@ -163,6 +165,16 @@ test.describe("Accordion", () => {
         });
 
         test("showTitleInMobile=true", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-title");
+        });
+
+        test("Custom element title", async ({ story }) => {
             await compareScreenshot(story, "mount");
         });
     });
