@@ -1,9 +1,9 @@
 export type LinkListStyle = "default" | "small";
 
 export interface LinkListItemProps<T>
-    extends React.AnchorHTMLAttributes<HTMLAnchorElement> {
-    title: string;
-    description?: string | undefined;
+    extends Omit<React.AnchorHTMLAttributes<HTMLAnchorElement>, "title"> {
+    title: string | JSX.Element;
+    description?: string | JSX.Element | undefined;
     secondaryDescription?: JSX.Element | undefined;
     "data-testid"?: string | undefined;
     options?: T | undefined; // Used to pass custom props
