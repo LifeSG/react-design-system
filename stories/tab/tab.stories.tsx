@@ -86,7 +86,7 @@ export const LongerLabels: StoryObj<Component> = {
 };
 
 export const ControlledMode: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [currentIndex, setCurrentIndex] = useState(0);
 
         const handleTabClick = (_: string, order: number) => {
@@ -190,7 +190,7 @@ export const DifferentFadeColor: StoryObj<Component> = {
 };
 
 export const StandaloneTabList: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         return (
             <Tab.Context>
                 <Tab.TabList>
@@ -214,7 +214,7 @@ export const StandaloneTabList: StoryObj<Component> = {
 };
 
 export const StandaloneTabListControlled: StoryObj<Component> = {
-    render: () => {
+    render: (_args) => {
         const [active, setActive] = useState(0);
 
         return (

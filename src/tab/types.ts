@@ -93,7 +93,7 @@ export interface TitleAddonProps {
 /**
  * Props for the `Tab.Context` component.
  */
-export interface TabContextProviderProps {
+export interface TabContextProps {
     children: React.ReactNode;
     /**
      * Zero-based index of the tab panel displayed on first render.

@@ -2,8 +2,8 @@ import { useEffect, useMemo, useState } from "react";
 
 import { useId } from "../util";
 import type { TabLinkProps } from "./tab-context";
-import { noop, TabContext } from "./tab-context";
-import type { TabContextProviderProps } from "./types";
+import { TabContext } from "./tab-context";
+import type { TabContextProps } from "./types";
 
 // =============================================================================
 // COMPONENT
@@ -13,7 +13,7 @@ export const TabContextProvider = ({
     currentActive: currentActiveIndex,
     initialActive = 0,
     onTabClick,
-}: TabContextProviderProps) => {
+}: TabContextProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
@@ -57,6 +57,3 @@ export const TabContextProvider = ({
 };
 
 TabContextProvider.displayName = "Tab.Context";
-
-// re-export noop so Tab.TabList can use it as setTabLinks default
-export { noop };

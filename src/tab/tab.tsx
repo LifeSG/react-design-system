@@ -126,9 +126,6 @@ TabBase.displayName = "Tab";
  * For cases where the tab bar and panels need to be positioned independently,
  * use the standalone composition: `Tab.Context`, `Tab.TabList`,
  * `Tab.TabListItem`, and `Tab.Panel`.
- *
- * Note: `Tab.Panel` unmounts inactive panels — inner component state is not
- * preserved across tab switches.
  * @keywords navigation, panel, tabbed, tabs
  */
 export const Tab = Object.assign(TabBase, {

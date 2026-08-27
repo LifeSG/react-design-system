@@ -1,20 +1,12 @@
 import type { ReactElement } from "react";
-import {
-    Children,
-    useContext,
-    useEffect,
-    useLayoutEffect,
-    useMemo,
-} from "react";
+import { Children, useContext, useEffect, useMemo } from "react";
 
+import { useIsomorphicLayoutEffect } from "../util";
 import type { TabLinkProps } from "./tab-context";
 import { TabContext } from "./tab-context";
 import { TabLinkChain } from "./tab-link-chain";
 import type { TabListItemProps, TabListProps } from "./types";
 
-// =============================================================================
-// COMPONENT
-// =============================================================================
 export const TabList = ({
     children,
     fullWidthIndicatorLine,
@@ -26,12 +18,6 @@ export const TabList = ({
     // =========================================================================
     const { setTabLinks, controlledMode, onTabClick, isContextProvided } =
         useContext(TabContext);
-
-    useEffect(() => {
-        if (process.env.NODE_ENV !== "production" && !isContextProvided) {
-            console.error("Tab.TabList must be rendered inside Tab.Context.");
-        }
-    }, [isContextProvided]);
 
     const tabLinks = useMemo(() => {
         return (
@@ -48,9 +34,15 @@ export const TabList = ({
     // =========================================================================
     // EFFECTS
     // =========================================================================
-    useLayoutEffect(() => {
+    useIsomorphicLayoutEffect(() => {
         setTabLinks(tabLinks);
     }, [setTabLinks, tabLinks]);
+
+    useEffect(() => {
+        if (process.env.NODE_ENV !== "production" && !isContextProvided) {
+            console.error("Tab.TabList must be rendered inside Tab.Context.");
+        }
+    }, [isContextProvided]);
 
     // =========================================================================
     // RENDER FUNCTIONS
