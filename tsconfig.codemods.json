@@ -1,0 +1,5 @@
+{
+    "extends": "./tsconfig.json",
+    "include": ["codemods/**/*"],
+    "exclude": ["**/__mocks__/**"]
+}

@@ -66,24 +66,7 @@ const plugins = [
     ...basePlugins,
     typescript({
         useTsconfigDeclarationDir: true,
-        tsconfig: "tsconfig.json",
-        tsconfigOverride: {
-            // Scope to src only so that rootDir is inferred as src/, not project root,
-            // which happened after tsconfig.json includes scripts/**/*.ts
-            exclude: [
-                "tests",
-                "scripts",
-                "**/stories/**",
-                "**/__mocks__/**",
-                "**/custom-types/css.d.ts",
-                "**/custom-types/jpg.d.ts",
-                "**/custom-types/mdx.d.ts",
-                "**/custom-types/svg.d.ts",
-                "codemods",
-                "scripts",
-                "tools",
-            ],
-        },
+        tsconfig: "tsconfig.build.json",
     }),
     terser(), // Helps remove comments, whitespace or logging codes
     generatePackageJson({
@@ -284,18 +267,7 @@ const codemodBuildConfig = {
         ...basePlugins,
         typescript({
             useTsconfigDeclarationDir: true,
-            tsconfig: "tsconfig.json",
-            tsconfigOverride: {
-                include: ["codemods/**/*"],
-                exclude: [
-                    "tests",
-                    "**/stories/**",
-                    "**/__mocks__/**",
-                    "**/custom-types/**",
-                    "src/**",
-                    "scripts",
-                ],
-            },
+            tsconfig: "tsconfig.codemods.json",
         }),
         copy({
             targets: [{ src: "codemods/**/*", dest: "dist/codemods" }],
