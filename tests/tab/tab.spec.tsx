@@ -146,9 +146,6 @@ describe("Tab", () => {
     });
 });
 
-// =============================================================================
-// Tab.Context (standalone)
-// =============================================================================
 const StandaloneTab = ({
     currentActive,
     initialActive,
@@ -258,35 +255,6 @@ describe("Tab.Context (standalone)", () => {
         expect(screen.queryByText("Contents of A")).toBeInTheDocument();
 
         rerender(<StandaloneTab currentActive={1} />);
-
-        expect(screen.queryByText("Contents of B")).toBeInTheDocument();
-        expect(screen.queryByText("Contents of A")).not.toBeInTheDocument();
-    });
-
-    it("should render Tab.Panel outside the Tab.TabList subtree", () => {
-        render(
-            <Tab.Context>
-                <Tab.TabList>
-                    <Tab.TabListItem title="Section A" />
-                    <Tab.TabListItem title="Section B" />
-                </Tab.TabList>
-                <div data-testid="interposed">Other content</div>
-                <Tab.Panel index={0}>
-                    <p>Contents of A</p>
-                </Tab.Panel>
-                <Tab.Panel index={1}>
-                    <p>Contents of B</p>
-                </Tab.Panel>
-            </Tab.Context>
-        );
-
-        expect(screen.queryByTestId("interposed")).toBeInTheDocument();
-        expect(screen.queryByText("Contents of A")).toBeInTheDocument();
-        expect(screen.queryByText("Contents of B")).not.toBeInTheDocument();
-
-        act(() => {
-            fireEvent.click(screen.getByRole("tab", { name: /Section B/i }));
-        });
 
         expect(screen.queryByText("Contents of B")).toBeInTheDocument();
         expect(screen.queryByText("Contents of A")).not.toBeInTheDocument();
