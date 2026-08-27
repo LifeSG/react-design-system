@@ -70,8 +70,8 @@ export const LinkItem = styled.li<ItemStyleProps>`
     }
 `;
 
-const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
-    ${(props) => Font[`body-md-${props.weight}`]}
+const linkCss = css<{ $selected: boolean; $weight: TypographyWeight }>`
+    ${(props) => Font[`body-md-${props.$weight}`]}
 
     display: flex;
     position: relative;
@@ -97,13 +97,13 @@ const linkCss = css<{ $selected: boolean; weight: TypographyWeight }>`
         text-align: left;
     }
 `;
-export const Link = styled.a<{ $selected: boolean; weight: TypographyWeight }>`
+export const Link = styled.a<{ $selected: boolean; $weight: TypographyWeight }>`
     ${linkCss}
 `;
 
 export const LinkButton = styled.button<{
     $selected: boolean;
-    weight: TypographyWeight;
+    $weight: TypographyWeight;
 }>`
     ${linkCss}
     background: none;

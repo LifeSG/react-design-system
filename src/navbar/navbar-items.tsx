@@ -203,9 +203,8 @@ export const NavbarItems = <T,>({
             <Link
                 tabIndex={0}
                 data-testid={testId}
-                weight={textWeight}
+                $weight={textWeight}
                 $selected={selected}
-                underlineStyle="none"
                 {...otherItemAttrs}
                 aria-current={isRouteSelected ? "page" : undefined}
                 onClick={handleLinkClick(item, index)}
@@ -224,9 +223,8 @@ export const NavbarItems = <T,>({
                     <>
                         <Link
                             data-testid={testId}
-                            weight={textWeight}
+                            $weight={textWeight}
                             $selected={selected}
-                            underlineStyle="none"
                             {...otherItemAttrs}
                             aria-current={isRouteSelected ? "page" : undefined}
                             aria-haspopup="menu"
@@ -262,7 +260,7 @@ export const NavbarItems = <T,>({
                         type="button"
                         tabIndex={0}
                         data-testid={testId}
-                        weight={textWeight}
+                        $weight={textWeight}
                         $selected={selected}
                         aria-haspopup="menu"
                         aria-expanded={isExpanded}
