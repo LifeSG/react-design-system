@@ -82,6 +82,37 @@ export const Select: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+export const DisabledOptions: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.Select
+                    label="Some options are disabled"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    isOptionDisabled={(item) =>
+                        item.value === "B" || item.value === "D"
+                    }
+                />
+                <Form.Select
+                    label="Selected option is disabled (Option B is selected but disabled)"
+                    options={OPTIONS_DATA}
+                    selectedOption={OPTIONS_DATA[1]}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    isOptionDisabled={(item) =>
+                        item.value === "B" || item.value === "D"
+                    }
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
 export const WithCustomListItemDisplay: StoryObj<Component> = {
     render: (_args) => {
         return (

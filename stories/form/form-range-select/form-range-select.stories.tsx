@@ -121,6 +121,36 @@ export const Default: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+export const DisabledOptions: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.RangeSelect
+                    label="Some options are disabled"
+                    options={RANGE_OPTIONS}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    isOptionDisabled={(item) => item.value === "B"}
+                />
+                <Form.RangeSelect
+                    label="Selected option is disabled (Option B is selected but disabled)"
+                    options={RANGE_OPTIONS}
+                    selectedOptions={{
+                        from: { value: "B", label: "Option B" },
+                        to: { value: "K", label: "Option K" },
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    isOptionDisabled={(item) => item.value === "B"}
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
 export const WithCustomListDisplay: StoryObj<Component> = {
     render: (_args) => {
         return (
