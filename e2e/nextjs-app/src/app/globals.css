@@ -19,6 +19,10 @@
     display: none;
 }
 
+.highlight-text {
+    background-color: lightgreen;
+}
+
 @media (prefers-color-scheme: dark) {
     .story-background {
         background-color: #000000;
