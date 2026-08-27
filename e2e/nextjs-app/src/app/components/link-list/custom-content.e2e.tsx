@@ -1,6 +1,8 @@
 "use client";
 import { LinkList } from "@lifesg/react-design-system/link-list";
 
+import styles from "./link-list.module.css";
+
 export default function Story() {
     return (
         <LinkList
@@ -8,12 +10,8 @@ export default function Story() {
             items={[
                 {
                     title: (
-                        <span>
-                            Custom{" "}
-                            <span className="highlight-text">
-                                &nbsp;content
-                            </span>{" "}
-                            title
+                        <span className={styles["custom-element"]}>
+                            Custom title
                         </span>
                     ),
                     description: "I am a plain description with JSX title",
@@ -22,12 +20,8 @@ export default function Story() {
                 {
                     title: "Plain title with JSX description",
                     description: (
-                        <span>
-                            Description with{" "}
-                            <span className="highlight-text">
-                                &nbsp;highlighted
-                            </span>{" "}
-                            content
+                        <span className={styles["custom-element"]}>
+                            Custom description
                         </span>
                     ),
                     href: "#",
