@@ -1,4 +1,5 @@
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
+import { useState } from "react";
 import { Accordion } from "src/accordion";
 import { Typography } from "src/typography";
 
@@ -193,6 +194,58 @@ export const Accessibility: StoryObj<Component> = {
                         Lorem ipsum dolor sit amet, consectetur adipiscing elit.
                     </Typography.BodyBL>
                 </Accordion.Item>
+            </Accordion>
+        );
+    },
+};
+
+export const ControlMode: StoryObj<Component> = {
+    render: (_args) => {
+        const items = [
+            {
+                title: "This is the first item",
+                detail: (
+                    <Typography.BodyBL>
+                        Lorem ipsum dolor sit amet
+                    </Typography.BodyBL>
+                ),
+            },
+            {
+                title: "This is the second item",
+                detail: (
+                    <Typography.BodyBL>
+                        Lorem ipsum dolor sit amet
+                    </Typography.BodyBL>
+                ),
+            },
+            {
+                title: "This is the third item",
+                detail: (
+                    <Typography.BodyBL>
+                        Lorem ipsum dolor sit amet
+                    </Typography.BodyBL>
+                ),
+            },
+        ];
+        const [expandedStates, setExpandedStates] = useState(() =>
+            items.map((_, index) => index === 0)
+        );
+        return (
+            <Accordion enableExpandAll={false} initialDisplay="collapse-all">
+                {items.map((item, index) => (
+                    <Accordion.Item
+                        key={`${item.title}-${index}`}
+                        title={item.title}
+                        expanded={expandedStates[index]}
+                        onExpandChange={(val) =>
+                            setExpandedStates((prev) =>
+                                prev.map((v, i) => (i === index ? val : v))
+                            )
+                        }
+                    >
+                        {item.detail}
+                    </Accordion.Item>
+                ))}
             </Accordion>
         );
     },

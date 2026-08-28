@@ -67,6 +67,13 @@ export interface AccordionItemProps {
      * @default true
      */
     collapsible?: boolean | undefined;
+    /**
+     * Called when the user toggles this item or the parent "Show all" / "Hide all"
+     * button fires. When provided, the item enters **controlled mode** — the caller
+     * must update the `expanded` prop in response. Without this prop, the item
+     * manages its own state internally (uncontrolled mode).
+     */
+    onExpandChange?: ((expanded: boolean) => void) | undefined;
 }
 
 // @storybookSection Accordion.Item
