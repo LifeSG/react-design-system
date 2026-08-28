@@ -581,7 +581,7 @@ test.describe("InputRangeSelect", () => {
             );
 
             // Clicking a disabled item should not close the dropdown or select it
-            await story.getOption("Option B").click();
+            await story.getOption("Option B").click({ force: true });
             await expect(
                 story.locators.internal.dropdownContainer
             ).toBeVisible();
@@ -616,7 +616,7 @@ test.describe("InputRangeSelect", () => {
             );
 
             // Clicking a disabled item should not close the dropdown
-            await story.getOption("Option L").click();
+            await story.getOption("Option L").click({ force: true });
             await expect(
                 story.locators.internal.dropdownContainer
             ).toBeVisible();

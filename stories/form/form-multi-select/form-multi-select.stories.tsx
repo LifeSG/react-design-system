@@ -90,35 +90,6 @@ export const Default: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
-export const DisabledOptions: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <>
-                <Form.MultiSelect
-                    label="Some options are disabled"
-                    options={OPTIONS_DATA}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                    isOptionDisabled={(item) =>
-                        item.value === "B" || item.value === "D"
-                    }
-                />
-                <Form.MultiSelect
-                    label="Selected options are disabled (B and C are selected but B is disabled)"
-                    options={OPTIONS_DATA}
-                    selectedOptions={[OPTIONS_DATA[1], OPTIONS_DATA[2]]}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.label}
-                    isOptionDisabled={(item) =>
-                        item.value === "B" || item.value === "D"
-                    }
-                />
-            </>
-        );
-    },
-    decorators: [StoryDecorator({ maxWidth: true })],
-};
-
 // NOTE: SB freezes with nested JSX, workaround is to declare outside of the CSF
 const _WithSearch = (
     <>

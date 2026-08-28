@@ -43,7 +43,6 @@ export const InputMultiSelect = <T, V>({
     searchPlaceholder,
     valueExtractor,
     listExtractor,
-    isOptionDisabled,
     onSelectOptions,
     onShowOptions,
     onHideOptions,
@@ -263,7 +262,6 @@ export const InputMultiSelect = <T, V>({
                 onDismiss={handleListDismiss}
                 valueExtractor={valueExtractor}
                 listExtractor={listExtractor}
-                isOptionDisabled={isOptionDisabled}
                 enableSearch={enableSearch}
                 searchFunction={searchFunction}
                 searchPlaceholder={searchPlaceholder}

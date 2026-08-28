@@ -480,7 +480,7 @@ test.describe("InputSelect", () => {
             );
 
             // Clicking a disabled item should not close the dropdown or select it
-            await story.getOption("Option B").click();
+            await story.getOption("Option B").click({ force: true });
             await expect(
                 story.locators.internal.dropdownContainer
             ).toBeVisible();
