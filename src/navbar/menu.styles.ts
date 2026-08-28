@@ -28,7 +28,7 @@ export const link = css`
 
     /* use border, as padding still shows an extra line after the ellipsis */
     border: ${Border["solid"]} transparent;
-    border-width: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
+    border-width: 10px ${Spacing["spacing-16"]} 10px ${Spacing["spacing-24"]};
     border-radius: ${Radius["md"]};
 
     ${lineClampCss(2)}
