@@ -148,6 +148,129 @@ const TAB_ITEM_DATA: ApiTableSectionProps[] = [
     },
 ];
 
+const TAB_CONTEXT_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                mandatory: true,
+                description: "",
+                propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "initialActive",
+                description:
+                    "Zero-based index of the tab panel displayed on first render. Ignored when currentActive is provided",
+                propTypes: ["number"],
+                defaultValue: "0",
+            },
+            {
+                name: "currentActive",
+                description:
+                    "Zero-based index of the currently active tab panel. When provided, the component operates in controlled mode",
+                propTypes: ["number"],
+            },
+            {
+                name: "onTabClick",
+                description: "Called when the user clicks a tab link",
+                propTypes: ["(title: string, index: number) => void"],
+            },
+        ],
+    },
+];
+
+const TAB_TAB_LIST_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "children",
+                mandatory: true,
+                description: "",
+                propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "fullWidthIndicatorLine",
+                description:
+                    "Extends all tab indicator lines to the full width of the tab bar instead of matching only the tab link width",
+                propTypes: ["boolean"],
+                defaultValue: "false",
+            },
+            {
+                name: "fadeColor",
+                description:
+                    "Background color(s) used for the fade overlays at the edges of the scrollable tab link bar",
+                propTypes: ["string[]", "FadeColorSet"],
+            },
+        ],
+    },
+];
+
+const TAB_TAB_LIST_ITEM_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "title",
+                mandatory: true,
+                description:
+                    "Text label rendered in the tab link bar for this item",
+                propTypes: ["string"],
+            },
+            {
+                name: "titleAddon",
+                description:
+                    "Optional addon element rendered alongside the tab title in the link bar",
+                propTypes: ["TitleAddonProps"],
+            },
+            {
+                name: "width",
+                description:
+                    "Explicit width for this tab link in the tab bar. Accepts any valid CSS width value",
+                propTypes: ["string"],
+            },
+        ],
+    },
+];
+
+const TAB_PANEL_DATA: ApiTableSectionProps[] = [
+    {
+        attributes: [
+            {
+                name: "index",
+                mandatory: true,
+                description:
+                    "Zero-based index identifying which active tab this panel corresponds to",
+                propTypes: ["number"],
+            },
+            {
+                name: "children",
+                mandatory: true,
+                description: "",
+                propTypes: ["React.ReactNode"],
+            },
+            {
+                name: "className",
+                description: "Class selector for the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "id",
+                description: "The unique id of the component",
+                propTypes: ["string"],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the component",
+                propTypes: ["string"],
+            },
+        ],
+    },
+];
+
 const PROPS_TABLE_DATA: TabAttribute[] = [
     {
         title: "Tab",
@@ -156,6 +279,22 @@ const PROPS_TABLE_DATA: TabAttribute[] = [
     {
         title: "Tab.Item",
         component: <ApiTable sections={TAB_ITEM_DATA} />,
+    },
+    {
+        title: "Tab.Context",
+        component: <ApiTable sections={TAB_CONTEXT_DATA} />,
+    },
+    {
+        title: "Tab.TabList",
+        component: <ApiTable sections={TAB_TAB_LIST_DATA} />,
+    },
+    {
+        title: "Tab.TabListItem",
+        component: <ApiTable sections={TAB_TAB_LIST_ITEM_DATA} />,
+    },
+    {
+        title: "Tab.Panel",
+        component: <ApiTable sections={TAB_PANEL_DATA} />,
     },
 ];
 
