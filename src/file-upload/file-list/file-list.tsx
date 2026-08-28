@@ -279,12 +279,13 @@ function Component(
     };
 
     const isInNonDisplayState = (item: FileItemProps) => {
-        if (item.errorMessage) return true;
+        if (item.errorMessage || readOnly) return true;
+
+        const isUploaded = (item.progress ?? 1) >= 1;
+        const isDescriptionRequiredAndEmpty =
+            descriptionRequired && !item.description;
         return (
-            !readOnly &&
-            checkEditable(item) &&
-            !item.description &&
-            (item.progress ?? 1) >= 1
+            isUploaded && checkEditable(item) && !isDescriptionRequiredAndEmpty
         );
     };
 
