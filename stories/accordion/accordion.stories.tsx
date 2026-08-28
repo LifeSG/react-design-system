@@ -174,32 +174,7 @@ export const NoExpandCollapseAll: StoryObj<Component> = {
     },
 };
 
-export const Accessibility: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <Accordion title="Heading" headingLevel={3}>
-                <Accordion.Item title="Title as string">
-                    <Typography.BodyBL>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </Typography.BodyBL>
-                </Accordion.Item>
-                <Accordion.Item
-                    title={
-                        <Typography.HeadingXS inline weight="semibold">
-                            Title as JSX element
-                        </Typography.HeadingXS>
-                    }
-                >
-                    <Typography.BodyBL>
-                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                    </Typography.BodyBL>
-                </Accordion.Item>
-            </Accordion>
-        );
-    },
-};
-
-export const ControlMode: StoryObj<Component> = {
+export const ControlledMode: StoryObj<Component> = {
     render: (_args) => {
         const items = [
             {
@@ -231,7 +206,7 @@ export const ControlMode: StoryObj<Component> = {
             items.map((_, index) => index === 0)
         );
         return (
-            <Accordion enableExpandAll={false} initialDisplay="collapse-all">
+            <Accordion initialDisplay="collapse-all">
                 {items.map((item, index) => (
                     <Accordion.Item
                         key={`${item.title}-${index}`}
@@ -246,6 +221,31 @@ export const ControlMode: StoryObj<Component> = {
                         {item.detail}
                     </Accordion.Item>
                 ))}
+            </Accordion>
+        );
+    },
+};
+
+export const Accessibility: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Accordion title="Heading" headingLevel={3}>
+                <Accordion.Item title="Title as string">
+                    <Typography.BodyBL>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </Typography.BodyBL>
+                </Accordion.Item>
+                <Accordion.Item
+                    title={
+                        <Typography.HeadingXS inline weight="semibold">
+                            Title as JSX element
+                        </Typography.HeadingXS>
+                    }
+                >
+                    <Typography.BodyBL>
+                        Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                    </Typography.BodyBL>
+                </Accordion.Item>
             </Accordion>
         );
     },

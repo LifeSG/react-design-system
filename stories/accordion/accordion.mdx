@@ -41,13 +41,13 @@ If you do not require a expand/collapse all button in the `Accordion`, use `enab
 
 <Canvas of={AccordionStories.NoExpandCollapseAll} />
 
-## Control Mode
+## Controlled mode
 
-Pass `expanded` and `onExpandChange` together to put an `Accordion.Item` in controlled mode.
-The item will call `onExpandChange` on user interaction and when the parent "Show all" / "Hide all"
-button fires — the caller is responsible for updating `expanded` in response.
+Pass `expanded` and `onExpandChange` to an `Accordion.Item` to fully control its
+expanded state. The caller is responsible for updating the state when
+`onExpandChange` is invoked.
 
-<Canvas of={AccordionStories.ControlMode} />
+<Canvas of={AccordionStories.ControlledMode} />
 
 ## Accessibility
 
