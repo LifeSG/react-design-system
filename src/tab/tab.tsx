@@ -2,16 +2,18 @@ import clsx from "clsx";
 import type { ReactElement } from "react";
 import { Children, cloneElement, useEffect, useMemo, useState } from "react";
 
+import { useId } from "../util";
 import * as styles from "./tab.styles";
 import type { TabLinkProps } from "./tab-context";
-import { TabContext } from "./tab-context";
+import { noop, TabContext } from "./tab-context";
+import { TabContextProvider } from "./tab-context-provider";
 import { TabItem } from "./tab-item";
 import { TabLinkChain } from "./tab-link-chain";
+import { TabList } from "./tab-list";
+import { TabListItem } from "./tab-list-item";
+import { TabPanel } from "./tab-panel";
 import type { TabItemProps, TabProps } from "./types";
 
-// =============================================================================
-// COMPONENT
-// =============================================================================
 const TabBase = ({
     children,
     currentActive: currentActiveIndex,
@@ -30,6 +32,8 @@ const TabBase = ({
         currentActiveIndex || initialActive
     );
 
+    const instanceId = useId();
+
     const tabLinks = useMemo(() => {
         const validChildren = Children.toArray(children).filter(
             Boolean
@@ -46,11 +50,16 @@ const TabBase = ({
 
     const tabContextValue = useMemo(
         () => ({
+            instanceId,
             tabLinks,
             currentActiveIndex: currentActive,
             setCurrentActiveIndex: setCurrentActive,
+            setTabLinks: noop,
+            controlledMode: typeof currentActiveIndex === "number",
+            onTabClick,
+            isContextProvided: true,
         }),
-        [currentActive, tabLinks]
+        [currentActive, currentActiveIndex, instanceId, onTabClick, tabLinks]
     );
 
     // =========================================================================
@@ -110,9 +119,21 @@ TabBase.displayName = "Tab";
  *
  * Use `Tab` to organise content into labelled panels where only one panel is
  * visible at a time. Compose with `Tab.Item` to define each panel.
+ *
+ * For cases where the tab bar and panels need to be positioned independently,
+ * use the standalone composition: `Tab.Context`, `Tab.TabList`,
+ * `Tab.TabListItem`, and `Tab.Panel`.
  * @keywords navigation, panel, tabbed, tabs
  */
 export const Tab = Object.assign(TabBase, {
-    /** Renders an individual content panel within a `Tab`. */
+    /** Renders an individual content panel within a `Tab`. Inactive items are unmounted — inner state is not preserved across tab switches. */
     Item: TabItem,
+    /** Context provider for the standalone TabList + Panel composition. */
+    Context: TabContextProvider,
+    /** Renders the tab link bar within a `Tab.Context`. */
+    TabList,
+    /** Declares a tab entry inside a `Tab.TabList`. */
+    TabListItem,
+    /** Renders a content panel within a `Tab.Context`. Inactive panels are unmounted — inner state is not preserved across tab switches. */
+    Panel: TabPanel,
 });

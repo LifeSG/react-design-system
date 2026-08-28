@@ -25,7 +25,7 @@ export const TabLinkChain = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const { setCurrentActiveIndex, currentActiveIndex, tabLinks } =
+    const { setCurrentActiveIndex, currentActiveIndex, tabLinks, instanceId } =
         useContext(TabContext);
 
     const isTablet = useMaxWidthMediaQuery("lg");
@@ -157,6 +157,7 @@ export const TabLinkChain = ({
                                     </div>
                                     <button
                                         role="tab"
+                                        id={`${instanceId}-tab-${index}`}
                                         type="button"
                                         aria-selected={isActive}
                                         tabIndex={isActive ? 0 : -1}

@@ -123,3 +123,27 @@ test.describe("Tab", () => {
         });
     });
 });
+
+test.describe("Tab.Context (standalone)", () => {
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("standalone-default");
+        });
+
+        test("Default", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+
+        test("Panel outside tab list", async ({ story }) => {
+            await story.locators.secondTab.click();
+
+            await expect(story.layout).toMatchAriaSnapshot(`
+                - tablist:
+                    - tab "Section A"
+                    - tab "Section B" [selected]
+                    - tab "Section C"
+                - tabpanel "Section B": Contents of B
+            `);
+        });
+    });
+});

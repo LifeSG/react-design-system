@@ -651,7 +651,7 @@
         {
             "name": "Tab",
             "importPath": "@lifesg/react-design-system/tab",
-            "description": "A tabbed-panel layout that switches visible content by selecting a tab link.  Use `Tab` to organise content into labelled panels where only one panel is visible at a time. Compose with `Tab.Item` to define each panel.",
+            "description": "A tabbed-panel layout that switches visible content by selecting a tab link.  Use `Tab` to organise content into labelled panels where only one panel is visible at a time. Compose with `Tab.Item` to define each panel.  For cases where the tab bar and panels need to be positioned independently, use the standalone composition: `Tab.Context`, `Tab.TabList`, `Tab.TabListItem`, and `Tab.Panel`.",
             "keywords": ["navigation", "panel", "tabbed", "tabs"]
         },
         {

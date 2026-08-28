@@ -6,9 +6,14 @@ import type { TabItemProps } from "./types";
 export type TabLinkProps = Pick<TabItemProps, "title" | "width" | "titleAddon">;
 
 interface TabContextProps {
+    instanceId: string;
     currentActiveIndex: number;
     tabLinks: TabLinkProps[];
     setCurrentActiveIndex: Dispatch<SetStateAction<number>>;
+    setTabLinks: (links: TabLinkProps[]) => void;
+    controlledMode: boolean;
+    onTabClick?: ((title: string, index: number) => void) | undefined;
+    isContextProvided: boolean;
 }
 
 export const noop = () => {
@@ -19,7 +24,11 @@ export const noop = () => {
 // CONTEXT
 // =============================================================================
 export const TabContext = React.createContext<TabContextProps>({
+    instanceId: "",
     currentActiveIndex: 0,
     tabLinks: [],
     setCurrentActiveIndex: noop,
+    setTabLinks: noop,
+    controlledMode: false,
+    isContextProvided: false,
 });

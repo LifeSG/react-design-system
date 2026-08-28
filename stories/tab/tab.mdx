@@ -72,6 +72,17 @@ You can also specify different fade colours for each side:
 
 <Canvas of={TabStories.DifferentFadeColor} />
 
+## Standalone usage
+
+If you need more control over the layout, the tab list and panels are available
+as standalone components that can be composed independently.
+
+<Canvas of={TabStories.StandaloneTabList} />
+
+You can also manage the active tab yourself by passing the `currentActive` prop.
+
+<Canvas of={TabStories.StandaloneTabListControlled} />
+
 ## Component API
 
 <AutoArgTypesTabs of={TabStories} />

@@ -16,13 +16,18 @@ export const TabItem = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const { currentActiveIndex } = useContext(TabContext);
+    const { currentActiveIndex, instanceId } = useContext(TabContext);
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
     return currentActiveIndex === index ? (
-        <div role="tabpanel" tabIndex={0} {...otherProps}>
+        <div
+            role="tabpanel"
+            aria-labelledby={`${instanceId}-tab-${index}`}
+            tabIndex={0}
+            {...otherProps}
+        >
             {children}
         </div>
     ) : null;
