@@ -56,16 +56,8 @@ const Component = ({
     const computeMode = (): FileItemMode => {
         if (errorMessage) return "error";
 
-        const isDescriptionRequiredAndEmpty =
-            descriptionRequired && !description;
         const isUploaded = (progress ?? 1) >= 1;
-        if (
-            isUploaded &&
-            !readOnly &&
-            editable &&
-            isDescriptionRequiredAndEmpty
-        )
-            return "edit";
+        if (isUploaded && !readOnly && editable && !description) return "edit";
 
         return "display";
     };
