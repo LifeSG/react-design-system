@@ -1,6 +1,11 @@
 import type { CSSProperties } from "react";
 
-import type { ResolvedThemeMode, ThemeMode, ThemeType } from "../types";
+import type {
+    FontVariant,
+    ResolvedThemeMode,
+    ThemeMode,
+    ThemeType,
+} from "../types";
 
 /** Value exposed by the `ThemeProvider` context. */
 export interface ThemeContextValue {
@@ -31,4 +36,10 @@ export interface ThemeProviderProps {
      * @default "lifesg"
      */
     theme?: ThemeType | undefined;
+    /**
+     * Optional font variant to apply to the themed subtree.
+     *
+     * @default "wise-public"
+     */
+    fontVariant?: FontVariant | undefined;
 }

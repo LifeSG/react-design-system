@@ -1,0 +1,203 @@
+@import url("./presets/default.css");
+
+[data-fds-theme="vica"] {
+    /* 
+    ============================================================================
+    PRIMITIVE COLOURS
+    ============================================================================
+    */
+    --fds-colour-brand-10: #061727;
+    --fds-colour-brand-20: #0A2944;
+    --fds-colour-brand-30: #0E3B62;
+    --fds-colour-brand-40: #135186;
+    --fds-colour-brand-50: #196BB0;
+    --fds-colour-brand-60: #5094CF;
+    --fds-colour-brand-70: #83B4DD;
+    --fds-colour-brand-80: #AECEE9;
+    --fds-colour-brand-90: #D0E2F2;
+    --fds-colour-brand-95: #E6F0F8;
+    --fds-colour-brand-100: #F7FAFD;
+    --fds-colour-primary-10: #061727;
+    --fds-colour-primary-20: #0A2944;
+    --fds-colour-primary-30: #0E3B62;
+    --fds-colour-primary-40: #135186;
+    --fds-colour-primary-50: #196BB0;
+    --fds-colour-primary-60: #5094CF;
+    --fds-colour-primary-70: #83B4DD;
+    --fds-colour-primary-80: #AECEE9;
+    --fds-colour-primary-90: #D0E2F2;
+    --fds-colour-primary-95: #E6F0F8;
+    --fds-colour-primary-100: #F7FAFD;
+    --fds-colour-secondary-10: #0E1723;
+    --fds-colour-secondary-20: #18293D;
+    --fds-colour-secondary-30: #233A57;
+    --fds-colour-secondary-40: #305078;
+    --fds-colour-secondary-50: #4B6A8F;
+    --fds-colour-secondary-60: #7B91A9;
+    --fds-colour-secondary-70: #A1B1C3;
+    --fds-colour-secondary-80: #C1CBD7;
+    --fds-colour-secondary-90: #DBE1E8;
+    --fds-colour-secondary-95: #EBEFF2;
+    --fds-colour-secondary-100: #F7F8FA;
+    --fds-colour-neutral-10: #161616;
+    --fds-colour-neutral-20: #282828;
+    --fds-colour-neutral-30: #393939;
+    --fds-colour-neutral-40: #4E4E4E;
+    --fds-colour-neutral-50: #686868;
+    --fds-colour-neutral-60: #8E8E8E;
+    --fds-colour-neutral-70: #AFAFB0;
+    --fds-colour-neutral-80: #C7CACA;
+    --fds-colour-neutral-90: #DDE1E2;
+    --fds-colour-neutral-95: #EDEFEF;
+    --fds-colour-neutral-100: #F9F9F9;
+    --fds-colour-success-10: #061A0C;
+    --fds-colour-success-20: #0A2E15;
+    --fds-colour-success-30: #0F421E;
+    --fds-colour-success-40: #145B29;
+    --fds-colour-success-50: #1B7735;
+    --fds-colour-success-60: #2AA34D;
+    --fds-colour-success-70: #6DC085;
+    --fds-colour-success-80: #9FD6AF;
+    --fds-colour-success-90: #C9E8D2;
+    --fds-colour-success-95: #E2F3E7;
+    --fds-colour-success-100: #F2FAF4;
+    --fds-colour-warning-10: #1C1603;
+    --fds-colour-warning-20: #312705;
+    --fds-colour-warning-30: #453007;
+    --fds-colour-warning-40: #5F4D0B;
+    --fds-colour-warning-50: #7E650E;
+    --fds-colour-warning-60: #AC8B13;
+    --fds-colour-warning-70: #D3AA18;
+    --fds-colour-warning-80: #F2C424;
+    --fds-colour-warning-90: #F8DF87;
+    --fds-colour-warning-95: #FBEEBF;
+    --fds-colour-warning-100: #FEF9EA;
+    --fds-colour-error-10: #330505;
+    --fds-colour-error-20: #550808;
+    --fds-colour-error-30: #750C0C;
+    --fds-colour-error-40: #9E130F;
+    --fds-colour-error-50: #CB2213;
+    --fds-colour-error-60: #DE6C6C;
+    --fds-colour-error-70: #E89B9B;
+    --fds-colour-error-80: #EFBEBE;
+    --fds-colour-error-90: #F5D9D9;
+    --fds-colour-error-95: #F9ECEC;
+    --fds-colour-error-100: #FCF7F7;
+    --fds-colour-info-10: #031537;
+    --fds-colour-info-20: #06245F;
+    --fds-colour-info-30: #083385;
+    --fds-colour-info-40: #0B46B5;
+    --fds-colour-info-50: #0B46B5;
+    --fds-colour-info-60: #A088BD;
+    --fds-colour-info-70: #C7B9D8;
+    --fds-colour-info-80: #D7CEE4;
+    --fds-colour-info-90: #E5DEED;
+    --fds-colour-info-95: #F1EDF5;
+    --fds-colour-info-100: #FAF8FB;
+    --fds-colour-white: #FFFFFF;
+    --fds-colour-black: #121212;
+    --fds-colour-primary-inverse: #FEAB10;
+
+    @mixin semantic-colours-light-default;
+
+    /*
+    ========================================================================
+    SHADOW
+    ========================================================================
+    */
+
+    @mixin shadow-default;
+
+    /*
+    ========================================================================
+    COMPONENT TOKENS
+    ========================================================================
+    */
+
+    @mixin component-tokens-default;
+}
+
+[data-fds-theme="vica"][data-fds-theme-mode="dark"] {
+    @mixin semantic-colours-dark-default;
+}
+
+[data-fds-theme="vica"][data-fds-font="wise-public"] {
+    @mixin font-public-sans;
+    --fds-font-heading-size-xxl: 3.25rem;
+    --fds-font-heading-size-xl: 2.5rem;
+    --fds-font-heading-size-lg: 2rem;
+    --fds-font-heading-size-md: 1.75rem;
+    --fds-font-heading-size-sm: 1.5rem;
+    --fds-font-heading-size-xs: 1.125rem;
+    --fds-font-heading-lh-xxl: 4.25rem;
+    --fds-font-heading-lh-xl: 3.25rem;
+    --fds-font-heading-lh-lg: 3rem;
+    --fds-font-heading-lh-md: 2.25rem;
+    --fds-font-heading-lh-sm: 2rem;
+    --fds-font-heading-lh-xs: 1.5rem;
+    --fds-font-heading-ls-xxl: -0.098rem;
+    --fds-font-heading-ls-xl: -0.05rem;
+    --fds-font-heading-ls-lg: -0.04rem;
+    --fds-font-heading-ls-md: -0.016rem;
+    --fds-font-heading-ls-sm: 0rem;
+    --fds-font-heading-ls-xs: 0rem;
+    --fds-font-weight-light: 300;
+    --fds-font-weight-regular: 400;
+    --fds-font-weight-semibold: 600;
+    --fds-font-weight-bold: 700;
+    --fds-font-body-size-baseline: 1.125rem;
+    --fds-font-body-size-md: 1rem;
+    --fds-font-body-size-sm: 0.875rem;
+    --fds-font-body-size-xs: 0.75rem;
+    --fds-font-body-lh-baseline: 1.75rem;
+    --fds-font-body-lh-md: 1.5rem;
+    --fds-font-body-lh-sm: 1.25rem;
+    --fds-font-body-lh-xs: 1rem;
+    --fds-font-body-ls-baseline: 0rem;
+    --fds-font-body-ls-md: 0rem;
+    --fds-font-body-ls-sm: 0rem;
+    --fds-font-body-ls-xs: 0.008rem;
+    --fds-font-form-label-size: 1rem;
+    --fds-font-form-description-size: 0.875rem;
+    --fds-font-form-label-lh: 1.5rem;
+    --fds-font-form-description-lh: 1.25rem;
+    --fds-font-form-label-ls: 0rem;
+    --fds-font-form-description-ls: 0rem;
+}
+
+[data-fds-theme="vica"][data-fds-font="wise-admin"] {
+    @mixin font-public-sans;
+    --fds-font-heading-size-xxl: 2rem;
+    --fds-font-heading-size-xl: 1.75rem;
+    --fds-font-heading-size-lg: 1.5rem;
+    --fds-font-heading-size-md: 1.125rem;
+    --fds-font-heading-size-sm: 1rem;
+    --fds-font-heading-size-xs: 0.875rem;
+    --fds-font-heading-lh-xxl: 2.625rem;
+    --fds-font-heading-lh-xl: 2.25rem;
+    --fds-font-heading-lh-lg: 2rem;
+    --fds-font-heading-lh-md: 1.5rem;
+    --fds-font-heading-lh-sm: 1.2rem;
+    --fds-font-weight-light: 300;
+    --fds-font-weight-regular: 400;
+    --fds-font-weight-semibold: 600;
+    --fds-font-weight-bold: 700;
+    --fds-font-body-size-baseline: 1rem;
+    --fds-font-body-size-md: 0.875rem;
+    --fds-font-body-size-sm: 0.75rem;
+    --fds-font-body-size-xs: 0.625rem;
+    --fds-font-body-lh-baseline: 1.5rem;
+    --fds-font-body-lh-md: 1.25rem;
+    --fds-font-body-lh-sm: 1rem;
+    --fds-font-body-lh-xs: 0.875rem;
+    --fds-font-body-ls-baseline: 0rem;
+    --fds-font-body-ls-md: 0rem;
+    --fds-font-body-ls-sm: 0.008rem;
+    --fds-font-body-ls-xs: 0.0013rem;
+    --fds-font-form-label-size: 0.875rem;
+    --fds-font-form-description-size: 0.75rem;
+    --fds-font-form-label-lh: 1.25rem;
+    --fds-font-form-description-lh: 1rem;
+    --fds-font-form-label-ls: 0rem;
+    --fds-font-form-description-ls: 0.008rem;
+}

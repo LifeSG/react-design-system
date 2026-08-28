@@ -251,7 +251,7 @@
     FONT
     ============================================================================
     */
-    --fds-font-variant: no-common-ligatures;
+    @mixin font-public-sans;
     --fds-font-heading-size-xxl: 3.75rem;
     --fds-font-heading-size-xl: 3rem;
     --fds-font-heading-size-lg: 2.5rem;
@@ -274,8 +274,6 @@
     --fds-font-weight-regular: 400;
     --fds-font-weight-semibold: 600;
     --fds-font-weight-bold: 700;
-    --fds-font-family-heading: "Public Sans";
-    --fds-font-family-body: "Public Sans";
     --fds-font-body-size-baseline: 1.2rem;
     --fds-font-body-size-md: 1.125rem;
     --fds-font-body-size-sm: 1rem;

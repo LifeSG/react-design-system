@@ -29,10 +29,16 @@ export const THEME_TYPES = [
     "spf",
     "supportgowhere",
     "tote-board",
+    "wise",
+    "vica",
+    "websg",
 ] as const;
 
 /** Union of all supported theme names. */
 export type ThemeType = (typeof THEME_TYPES)[number];
+
+/** Available font variant presets. */
+export type FontVariant = "wise-public" | "wise-admin";
 /**
  * Colour mode accepted by `ThemeProvider`.
  * — `"auto"` follows OS preference.

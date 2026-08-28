@@ -1,0 +1,5 @@
+@define-mixin font-public-sans {
+    --fds-font-family-heading: "Public Sans";
+    --fds-font-family-body: "Public Sans";
+    --fds-font-variant: no-common-ligatures;
+}
