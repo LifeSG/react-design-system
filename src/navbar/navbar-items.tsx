@@ -66,13 +66,26 @@ export const NavbarItems = <T,>({
         setSelectedIndex(-1);
     };
 
-    const checkSelected = (item: NavItemLinkProps<T>): boolean => {
-        if (item.id === selectedId) return true;
-        if (item.subMenu?.length) {
-            return !!item.subMenu.find((s) => s.id === selectedId);
-        }
-        return false;
-    };
+    const hasSelectedSubMenuItem = (item: NavItemLinkProps<T>): boolean =>
+        !!item.subMenu?.some((subItem) => subItem.id === selectedId);
+
+    const checkSelected = (item: NavItemLinkProps<T>): boolean =>
+        item.id === selectedId || hasSelectedSubMenuItem(item);
+
+    const selectedSubMenuIndex = mobile
+        ? items.findIndex(
+              (item) =>
+                  item.itemType !== "component" &&
+                  hasSelectedSubMenuItem(item as NavItemLinkProps<T>)
+          )
+        : -1;
+
+    useEffect(() => {
+        if (selectedSubMenuIndex < 0) return;
+
+        setSelectedIndex(selectedSubMenuIndex);
+        setShowSubMenu(true);
+    }, [selectedSubMenuIndex]);
 
     useEffect(() => {
         const handleClickOutside = (event: MouseEvent) => {
@@ -138,7 +151,11 @@ export const NavbarItems = <T,>({
     );
 
     const renderMobileSubMenu = (subMenu: NavItemCommonProps<T>[]) => (
-        <MobileMenu items={subMenu} onItemClick={handleMobileSubLinkClick} />
+        <MobileMenu
+            items={subMenu}
+            selectedId={selectedId}
+            onItemClick={handleMobileSubLinkClick}
+        />
     );
 
     const renderLinkItem = (item: NavItemLinkProps<T>, index: number) => {

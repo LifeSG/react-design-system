@@ -4,13 +4,18 @@ import { NavItemCommonProps } from "./types";
 
 interface Props<T> {
     items: NavItemCommonProps<T>[];
+    selectedId?: string | undefined;
     onItemClick: (
         event: React.MouseEvent<HTMLAnchorElement>,
         item: NavItemCommonProps<T>
     ) => void;
 }
 
-export const Menu = <T,>({ items, onItemClick }: Props<T>): JSX.Element => {
+export const Menu = <T,>({
+    items,
+    selectedId,
+    onItemClick,
+}: Props<T>): JSX.Element => {
     const handleLinkClick = (item: NavItemCommonProps<T>) => {
         return (event: React.MouseEvent<HTMLAnchorElement>) => {
             event.stopPropagation(); // in mobile, this prevents the drawer from intercepting event
@@ -23,8 +28,9 @@ export const Menu = <T,>({ items, onItemClick }: Props<T>): JSX.Element => {
     return (
         <MobileWrapper>
             {items.map((item, index) => {
-                const { children, options, ...otherItemAttrs } = item;
+                const { children, options, weight, ...otherItemAttrs } = item;
                 const testId = `menu__mobile-${index + 1}`;
+                const selected = item.id === selectedId;
 
                 return (
                     <MenuItem key={index}>
@@ -32,6 +38,8 @@ export const Menu = <T,>({ items, onItemClick }: Props<T>): JSX.Element => {
                             data-testid={testId}
                             {...otherItemAttrs}
                             {...options}
+                            weight={selected ? "bold" : weight}
+                            aria-current={selected ? "page" : undefined}
                             onClick={handleLinkClick(item)}
                             underlineStyle="none"
                         >
