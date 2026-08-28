@@ -133,6 +133,18 @@ const Component = ({
     // =========================================================================
     // EFFECTS
     // =========================================================================
+    const currentModeRef = useRef(currentMode);
+    currentModeRef.current = currentMode;
+
+    useEffect(() => {
+        return () => {
+            if (currentModeRef.current === "edit") {
+                onModeChange?.("display");
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
     useEffect(() => {
         if (errorMessage && currentMode !== "error") {
             setCurrentMode("error");
