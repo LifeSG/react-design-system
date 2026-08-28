@@ -38,6 +38,10 @@ class StoryPage extends AbstractStoryPage {
             minWidth: Locator;
             customWidth: Locator;
         };
+        disabledOptions: {
+            default: Locator;
+            selected: Locator;
+        };
         cta: Locator;
         virtualization: Locator;
     };
@@ -78,6 +82,12 @@ class StoryPage extends AbstractStoryPage {
             dropdownWidth: {
                 minWidth: page.getByTestId("input-select-min-width"),
                 customWidth: page.getByTestId("input-select-custom-width"),
+            },
+            disabledOptions: {
+                default: page.getByTestId("input-select-disabled-options-base"),
+                selected: page.getByTestId(
+                    "input-select-disabled-options-selected-base"
+                ),
             },
             cta: page.getByTestId("input-select-cta-base"),
             virtualization: page.getByTestId("input-select-virtualization"),
@@ -454,23 +464,13 @@ test.describe("InputSelect", () => {
         });
 
         test("Disabled options", async ({ story }) => {
-            // with disabled options (unselected)
-            const select = story.page.getByTestId(
-                "input-select-disabled-options-base"
-            );
-
-            await story.openDropdown(select);
+            await story.openDropdown(story.locators.disabledOptions.default);
             await compareScreenshot(story, "open-unselected", {
                 fullscreen: true,
             });
             await story.closeDropdown();
 
-            // with disabled options (selected)
-            const selectedSelect = story.page.getByTestId(
-                "input-select-disabled-options-selected-base"
-            );
-
-            await story.openDropdown(selectedSelect);
+            await story.openDropdown(story.locators.disabledOptions.selected);
             await compareScreenshot(story, "open-selected", {
                 fullscreen: true,
             });

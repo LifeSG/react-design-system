@@ -113,60 +113,6 @@ export const DisabledOptions: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
-export const WithCustomListItemDisplay: StoryObj<Component> = {
-    render: (_args) => {
-        return (
-            <Form.Select
-                label="This has a custom list item display"
-                options={[
-                    {
-                        value: "A",
-                        url: "https://picsum.photos/seed/A/300/100",
-                    },
-                    {
-                        value: "B",
-                        url: "https://picsum.photos/seed/B/500/200",
-                    },
-                    {
-                        value: "C",
-                        url: "https://picsum.photos/seed/C/300/300",
-                    },
-                    {
-                        value: "D",
-                        url: "https://picsum.photos/seed/D/600/150",
-                    },
-                ]}
-                renderCustomSelectedOption={(option) => {
-                    return (
-                        <ImageWrapper>
-                            <Image src={option.url} alt={option.value} />
-                        </ImageWrapper>
-                    );
-                }}
-                renderListItem={(item, args) => {
-                    if (args.selected) {
-                        return (
-                            <ImageWrapperSelected>
-                                <ImageWrapper>
-                                    <Image src={item.url} alt={item.value} />
-                                </ImageWrapper>
-                                <Checkmark />
-                            </ImageWrapperSelected>
-                        );
-                    } else {
-                        return (
-                            <ImageWrapper>
-                                <Image src={item.url} alt={item.value} />
-                            </ImageWrapper>
-                        );
-                    }
-                }}
-            />
-        );
-    },
-    decorators: [StoryDecorator({ maxWidth: true })],
-};
-
 const CUSTOM_IMAGE_OPTIONS = [
     { value: "A", url: "https://picsum.photos/seed/A/300/100" },
     { value: "B", url: "https://picsum.photos/seed/B/500/200" },
@@ -174,58 +120,48 @@ const CUSTOM_IMAGE_OPTIONS = [
     { value: "D", url: "https://picsum.photos/seed/D/600/150" },
 ];
 
-const customListRenderProps = {
-    valueExtractor: (item: { value: string; url: string }) => item.value,
-    listExtractor: (item: { value: string; url: string }) => item.url,
-    displayValueExtractor: (item: { value: string; url: string }) => item.url,
-    isOptionDisabled: (item: { value: string; url: string }) =>
-        item.value === "B" || item.value === "C",
-    renderCustomSelectedOption: (option: { value: string; url: string }) => (
-        <ImageWrapper>
-            <Image src={option.url} alt={option.value} />
-        </ImageWrapper>
-    ),
-    renderListItem: (
-        item: { value: string; url: string },
-        args: { selected: boolean; disabled: boolean }
-    ) => {
-        const content = (
-            <ImageWrapper>
-                <Image src={item.url} alt={item.value} />
-            </ImageWrapper>
-        );
-
-        if (args.selected) {
-            return (
-                <ImageWrapperSelected
-                    style={{ opacity: args.disabled ? 0.4 : 1 }}
-                >
-                    {content}
-                    <Checkmark />
-                </ImageWrapperSelected>
-            );
-        }
-
-        return (
-            <div style={{ opacity: args.disabled ? 0.4 : 1 }}>{content}</div>
-        );
-    },
-};
-
-export const CustomListWithDisabledOptions: StoryObj<Component> = {
+export const WithCustomListItemDisplay: StoryObj<Component> = {
     render: (_args) => {
         return (
             <>
                 <Form.Select
-                    label="Custom list with disabled options"
+                    label="This has a custom list item display with disabled option (Option B is disabled)"
                     options={CUSTOM_IMAGE_OPTIONS}
-                    {...customListRenderProps}
-                />
-                <Form.Select
-                    label="Selected option is disabled (Option B is selected but disabled)"
-                    options={CUSTOM_IMAGE_OPTIONS}
-                    selectedOption={CUSTOM_IMAGE_OPTIONS[1]}
-                    {...customListRenderProps}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.url}
+                    displayValueExtractor={(item) => item.url}
+                    isOptionDisabled={(item) => item.value === "B"}
+                    renderCustomSelectedOption={(option) => (
+                        <ImageWrapper>
+                            <Image src={option.url} alt={option.value} />
+                        </ImageWrapper>
+                    )}
+                    renderListItem={(item, args) => {
+                        const content = (
+                            <ImageWrapper>
+                                <Image src={item.url} alt={item.value} />
+                            </ImageWrapper>
+                        );
+
+                        if (args.selected) {
+                            return (
+                                <ImageWrapperSelected
+                                    style={{
+                                        opacity: args.disabled ? 0.4 : 1,
+                                    }}
+                                >
+                                    {content}
+                                    <Checkmark />
+                                </ImageWrapperSelected>
+                            );
+                        }
+
+                        return (
+                            <div style={{ opacity: args.disabled ? 0.4 : 1 }}>
+                                {content}
+                            </div>
+                        );
+                    }}
                 />
             </>
         );

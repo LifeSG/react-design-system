@@ -5,6 +5,9 @@ class StoryPage extends AbstractStoryPage {
     protected readonly component = "input-group";
 
     public readonly locators: {
+        internal: {
+            dropdownContainer: Locator;
+        };
         formListDefault: Locator;
         formListRight: Locator;
         formListDisabled: Locator;
@@ -14,6 +17,8 @@ class StoryPage extends AbstractStoryPage {
         formListDisabledInput: Locator;
         formListReadonlyInput: Locator;
         formListErrorInput: Locator;
+        disabledOptions: Locator;
+        disabledOptionsSelected: Locator;
         textbox: (field: Locator) => Locator;
         combobox: (field: Locator) => Locator;
     };
@@ -22,6 +27,9 @@ class StoryPage extends AbstractStoryPage {
         super(page);
 
         this.locators = {
+            internal: {
+                dropdownContainer: page.getByTestId("dropdown-container"),
+            },
             formListDefault: page.getByTestId("form-input-group-list-default"),
             formListRight: page.getByTestId("form-input-group-list-right"),
             formListDisabled: page.getByTestId(
@@ -42,6 +50,12 @@ class StoryPage extends AbstractStoryPage {
             ),
             formListErrorInput: page.getByTestId(
                 "form-input-group-list-error-base"
+            ),
+            disabledOptions: page.getByTestId(
+                "form-input-group-list-disabled-options-base"
+            ),
+            disabledOptionsSelected: page.getByTestId(
+                "form-input-group-list-disabled-options-selected-base"
             ),
             textbox: (field: Locator) => field.getByRole("textbox"),
             combobox: (field: Locator) => field.getByRole("combobox"),
@@ -313,16 +327,11 @@ test.describe("Input Group List", () => {
         });
 
         test("Disabled options", async ({ story }) => {
-            const select = story.page.getByTestId(
-                "form-input-group-list-disabled-options-base"
-            );
-            const selectedSelect = story.page.getByTestId(
-                "form-input-group-list-disabled-options-selected-base"
-            );
-
-            await select.getByTestId("selector").click();
+            await story.locators.disabledOptions
+                .getByTestId("selector")
+                .click();
             await expect(
-                story.page.getByTestId("dropdown-container")
+                story.locators.internal.dropdownContainer
             ).toBeVisible();
             await compareScreenshot(story, "open-unselected", {
                 fullscreen: true,
@@ -330,12 +339,14 @@ test.describe("Input Group List", () => {
 
             await story.page.mouse.click(0, 0);
             await expect(
-                story.page.getByTestId("dropdown-container")
+                story.locators.internal.dropdownContainer
             ).not.toBeVisible();
 
-            await selectedSelect.getByTestId("selector").click();
+            await story.locators.disabledOptionsSelected
+                .getByTestId("selector")
+                .click();
             await expect(
-                story.page.getByTestId("dropdown-container")
+                story.locators.internal.dropdownContainer
             ).toBeVisible();
             await compareScreenshot(story, "open-selected", {
                 fullscreen: true,

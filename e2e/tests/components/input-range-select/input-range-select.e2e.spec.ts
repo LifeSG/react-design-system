@@ -16,6 +16,10 @@ class StoryPage extends AbstractStoryPage {
             readonly: Locator;
             error: Locator;
         };
+        disabledOptions: {
+            default: Locator;
+            selected: Locator;
+        };
         search: Locator;
         grid: Locator;
     };
@@ -34,6 +38,14 @@ class StoryPage extends AbstractStoryPage {
                 disabled: page.getByTestId("input-range-select-disabled-base"),
                 readonly: page.getByTestId("input-range-select-readonly-base"),
                 error: page.getByTestId("input-range-select-error-base"),
+            },
+            disabledOptions: {
+                default: page.getByTestId(
+                    "input-range-select-disabled-options-base"
+                ),
+                selected: page.getByTestId(
+                    "input-range-select-disabled-options-selected-base"
+                ),
             },
             search: page.getByTestId("input-range-select-search-base"),
             grid: page.getByTestId("input-range-select-grid-layout"),
@@ -561,14 +573,9 @@ test.describe("InputRangeSelect", () => {
         });
 
         test("Disabled options", async ({ story }) => {
-            const select = story.page.getByTestId(
-                "input-range-select-disabled-options-base"
+            await story.openDropdown(
+                story.getFromButton(story.locators.disabledOptions.default)
             );
-            const selectedSelect = story.page.getByTestId(
-                "input-range-select-disabled-options-selected-base"
-            );
-
-            await story.openDropdown(story.getFromButton(select));
             await compareScreenshot(story, "open-unselected", {
                 fullscreen: true,
             });
@@ -578,7 +585,9 @@ test.describe("InputRangeSelect", () => {
                 story.locators.internal.dropdownContainer
             ).not.toBeVisible();
 
-            await story.openDropdown(story.getFromButton(selectedSelect));
+            await story.openDropdown(
+                story.getFromButton(story.locators.disabledOptions.selected)
+            );
             await compareScreenshot(story, "open-selected", {
                 fullscreen: true,
             });
