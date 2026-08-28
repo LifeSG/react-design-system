@@ -187,3 +187,55 @@ export const DifferentFadeColor: StoryObj<Component> = {
         );
     },
 };
+
+export const StandaloneTabList: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Tab.Context>
+                <Tab.TabList>
+                    <Tab.TabListItem title="Section A" />
+                    <Tab.TabListItem title="Section B" />
+                    <Tab.TabListItem title="Section C" />
+                </Tab.TabList>
+                {/* panels can be placed anywhere inside Tab.Context */}
+                <Tab.Panel index={0}>
+                    <ContentA />
+                </Tab.Panel>
+                <Tab.Panel index={1}>
+                    <ContentB />
+                </Tab.Panel>
+                <Tab.Panel index={2}>
+                    <ContentC />
+                </Tab.Panel>
+            </Tab.Context>
+        );
+    },
+};
+
+export const StandaloneTabListControlled: StoryObj<Component> = {
+    render: () => {
+        const [active, setActive] = useState(0);
+
+        return (
+            <Tab.Context
+                currentActive={active}
+                onTabClick={(_, index) => setActive(index)}
+            >
+                <Tab.TabList>
+                    <Tab.TabListItem title="Section A" />
+                    <Tab.TabListItem title="Section B" />
+                    <Tab.TabListItem title="Section C" />
+                </Tab.TabList>
+                <Tab.Panel index={0}>
+                    <ContentA />
+                </Tab.Panel>
+                <Tab.Panel index={1}>
+                    <ContentB />
+                </Tab.Panel>
+                <Tab.Panel index={2}>
+                    <ContentC />
+                </Tab.Panel>
+            </Tab.Context>
+        );
+    },
+};
