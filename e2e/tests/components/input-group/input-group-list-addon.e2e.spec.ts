@@ -306,4 +306,40 @@ test.describe("Input Group List", () => {
             await compareScreenshot(story, "mount");
         });
     });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("disabled-options");
+        });
+
+        test("Disabled options", async ({ story }) => {
+            const select = story.page.getByTestId(
+                "form-input-group-list-disabled-options-base"
+            );
+            const selectedSelect = story.page.getByTestId(
+                "form-input-group-list-disabled-options-selected-base"
+            );
+
+            await select.getByTestId("selector").click();
+            await expect(
+                story.page.getByTestId("dropdown-container")
+            ).toBeVisible();
+            await compareScreenshot(story, "open-unselected", {
+                fullscreen: true,
+            });
+
+            await story.page.mouse.click(0, 0);
+            await expect(
+                story.page.getByTestId("dropdown-container")
+            ).not.toBeVisible();
+
+            await selectedSelect.getByTestId("selector").click();
+            await expect(
+                story.page.getByTestId("dropdown-container")
+            ).toBeVisible();
+            await compareScreenshot(story, "open-selected", {
+                fullscreen: true,
+            });
+        });
+    });
 });

@@ -247,9 +247,15 @@ const DropdownListInner = <T, V>(
         startIndex: number,
         direction: 1 | -1
     ): number => {
-        let index = startIndex + direction;
+        const nextIndex = startIndex + direction;
+        if (!isOptionDisabled) {
+            return nextIndex >= 0 && nextIndex < displayListItems.length
+                ? nextIndex
+                : -1;
+        }
+        let index = nextIndex;
         while (index >= 0 && index < displayListItems.length) {
-            if (!isOptionDisabled?.(displayListItems[index])) {
+            if (!isOptionDisabled(displayListItems[index])) {
                 return index;
             }
             index += direction;
@@ -303,7 +309,7 @@ const DropdownListInner = <T, V>(
     };
 
     const handleListItemClick = (item: T, upcomingIndex: number) => {
-        if (isOptionDisabled?.(item)) return;
+        if (isOptionDisabled && isOptionDisabled(item)) return;
         if (hasSelectedMax && !checkListItemSelected(item)) return;
         setFocusedIndex(upcomingIndex);
         onSelectItem?.(item, getValue(item));
@@ -394,9 +400,9 @@ const DropdownListInner = <T, V>(
             return;
         }
 
-        if (disableItemFocus || !listItems) return;
+        if (disableItemFocus || !displayListItems.length) return;
 
-        const index = listItems.findIndex((item) =>
+        const index = displayListItems.findIndex((item) =>
             checkListItemSelected(item)
         );
 
@@ -414,9 +420,9 @@ const DropdownListInner = <T, V>(
             setFocusedIndex(index);
             setTimeout(() => listItemRefs.current[index]?.focus(), 200);
         } else {
-            const firstEnabled = listItems.findIndex(
-                (item) => !isOptionDisabled?.(item)
-            );
+            const firstEnabled = isOptionDisabled
+                ? displayListItems.findIndex((item) => !isOptionDisabled(item))
+                : 0;
             const startIndex = firstEnabled !== -1 ? firstEnabled : 0;
             virtuosoRef.current?.scrollToIndex({ index: startIndex });
             setFocusedIndex(startIndex);
@@ -425,8 +431,8 @@ const DropdownListInner = <T, V>(
     }, [
         checkListItemSelected,
         disableItemFocus,
+        displayListItems,
         focusedIndex,
-        listItems,
         mounted,
         setFocusedIndex,
         isOptionDisabled,
@@ -507,7 +513,8 @@ const DropdownListInner = <T, V>(
             const selected = checkListItemSelected(item);
             const active = index === focusedIndex;
             const disabled =
-                (!selected && hasSelectedMax) || !!isOptionDisabled?.(item);
+                (!selected && hasSelectedMax) ||
+                (!!isOptionDisabled && isOptionDisabled(item));
             return (
                 <li
                     aria-selected={selected}

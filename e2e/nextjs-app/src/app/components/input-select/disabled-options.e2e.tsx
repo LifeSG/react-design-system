@@ -23,6 +23,18 @@ export default function Story() {
                     item.value === "B" || item.value === "C"
                 }
             />
+            <Form.Select
+                data-testid="input-select-disabled-options-selected"
+                label="Disabled option (selected)"
+                options={OPTIONS}
+                selectedOption={OPTIONS[1]}
+                valueExtractor={(item) => item.value}
+                listExtractor={(item) => item.label}
+                displayValueExtractor={(item) => item.label}
+                isOptionDisabled={(item) =>
+                    item.value === "B" || item.value === "C"
+                }
+            />
         </div>
     );
 }

@@ -243,6 +243,44 @@ export const ListAddon: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+export const DisabledOptions: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.InputGroup
+                    label="Some options are disabled"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            ...listAddonOptions,
+                            isOptionDisabled: (option: Option) =>
+                                option.value === "US" || option.value === "JP",
+                        },
+                    }}
+                />
+                <Form.InputGroup
+                    label="Selected option is disabled"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            ...listAddonOptions,
+                            selectedOption: {
+                                value: "US",
+                                display: "United States",
+                            },
+                            isOptionDisabled: (option: Option) =>
+                                option.value === "US" || option.value === "JP",
+                        },
+                    }}
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
 export const AllowClear: StoryObj<Component> = {
     render: () => {
         const [value, setValue] = useState("1");

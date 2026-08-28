@@ -167,6 +167,72 @@ export const WithCustomListItemDisplay: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+const CUSTOM_IMAGE_OPTIONS = [
+    { value: "A", url: "https://picsum.photos/seed/A/300/100" },
+    { value: "B", url: "https://picsum.photos/seed/B/500/200" },
+    { value: "C", url: "https://picsum.photos/seed/C/300/300" },
+    { value: "D", url: "https://picsum.photos/seed/D/600/150" },
+];
+
+const customListRenderProps = {
+    valueExtractor: (item: { value: string; url: string }) => item.value,
+    listExtractor: (item: { value: string; url: string }) => item.url,
+    displayValueExtractor: (item: { value: string; url: string }) => item.url,
+    isOptionDisabled: (item: { value: string; url: string }) =>
+        item.value === "B" || item.value === "C",
+    renderCustomSelectedOption: (option: { value: string; url: string }) => (
+        <ImageWrapper>
+            <Image src={option.url} alt={option.value} />
+        </ImageWrapper>
+    ),
+    renderListItem: (
+        item: { value: string; url: string },
+        args: { selected: boolean; disabled: boolean }
+    ) => {
+        const content = (
+            <ImageWrapper>
+                <Image src={item.url} alt={item.value} />
+            </ImageWrapper>
+        );
+
+        if (args.selected) {
+            return (
+                <ImageWrapperSelected
+                    style={{ opacity: args.disabled ? 0.4 : 1 }}
+                >
+                    {content}
+                    <Checkmark />
+                </ImageWrapperSelected>
+            );
+        }
+
+        return (
+            <div style={{ opacity: args.disabled ? 0.4 : 1 }}>{content}</div>
+        );
+    },
+};
+
+export const CustomListWithDisabledOptions: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.Select
+                    label="Custom list with disabled options"
+                    options={CUSTOM_IMAGE_OPTIONS}
+                    {...customListRenderProps}
+                />
+                <Form.Select
+                    label="Selected option is disabled (Option B is selected but disabled)"
+                    options={CUSTOM_IMAGE_OPTIONS}
+                    selectedOption={CUSTOM_IMAGE_OPTIONS[1]}
+                    {...customListRenderProps}
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
 // NOTE: SB freezes with nested JSX, workaround is to declare outside of the CSF
 const _WithSearch = (
     <>
