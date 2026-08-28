@@ -118,7 +118,7 @@ test.describe("Example", () => {
 ### Structure of the story file
 
 -   Keep the story markup as simple as possible
--   Reuse `story-row-container` and/or `story-column-container` classes from `global.css` for layout if needed
+-   If only rendering a single component, don't wrap it in a container div, just render the component directly
 -   No additional padding is need as the main container of the story already applies spacing to create some spacing from the edges of the viewport
 
 ```tsx
@@ -126,11 +126,26 @@ test.describe("Example", () => {
 import { Example } from "@lifesg/react-design-system/example";
 
 export default function Story() {
+    return <Example data-testid="image-button-default">Default</Example>;
+}
+```
+
+-   Create a `<component>.module.css` to style the story if needed, and import it into the story file. Do not use inline styles or add global CSS classes for styling a specific story.
+-   You can reuse classes from `global.css` for common layout needs, such as:
+    -   `.story-row-container` to arrange elements in a row
+    -   `.story-column-container` to arrange elements in a column
+    -   `.story-background` to set a background if the page will be used in dark mode testing
+
+```tsx
+"use client";
+import { Example } from "@lifesg/react-design-system/example";
+import styles from "./example.module.css";
+
+export default function Story() {
     return (
         <div className="story-row-container">
-            <Example data-testid="image-button-default">
-                Default
-            </ImageButton>
+            <Example data-testid="image-button-default">Default</Example>
+            <div className={styles.spacer} />
         </div>
     );
 }
