@@ -105,7 +105,7 @@ test.describe("Example", () => {
             await compareScreenshot(story, "mount");
             await compareScreenshot(story, "mount", { fullscreen: true });
             await compareScreenshot(story, "mount", {
-                locator: story.page.locator.example,
+                locator: story.locators.example,
             });
         });
     });
