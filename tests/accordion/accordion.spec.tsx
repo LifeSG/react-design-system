@@ -5,6 +5,7 @@ import {
     screen,
     waitFor,
 } from "@testing-library/react";
+import { useState } from "react";
 import { Accordion } from "src/accordion";
 import { Typography } from "src/typography";
 
@@ -401,6 +402,212 @@ describe("Accordion", () => {
             expect(
                 screen.queryByTestId("item1-expand-collapse-icon")
             ).not.toBeInTheDocument();
+        });
+    });
+
+    describe("Accordion.Item controlled mode (onExpandChange)", () => {
+        it("should call onExpandChange with the toggled value when item is clicked", () => {
+            const onExpandChange = jest.fn();
+
+            function TestComponent() {
+                const [isExpanded, setIsExpanded] = useState(false);
+                return (
+                    <Accordion>
+                        <Accordion.Item
+                            data-testid="item1"
+                            title="Item title"
+                            expanded={isExpanded}
+                            onExpandChange={(val) => {
+                                onExpandChange(val);
+                                setIsExpanded(val);
+                            }}
+                        >
+                            <Typography.BodyBL>
+                                {DEFAULT_TEXT_CONTENT}
+                            </Typography.BodyBL>
+                        </Accordion.Item>
+                    </Accordion>
+                );
+            }
+
+            render(<TestComponent />);
+
+            act(() => {
+                fireEvent.click(
+                    screen.getByTestId("item1-expand-collapse-button")
+                );
+            });
+
+            expect(onExpandChange).toHaveBeenCalledWith(true);
+
+            act(() => {
+                fireEvent.click(
+                    screen.getByTestId("item1-expand-collapse-button")
+                );
+            });
+
+            expect(onExpandChange).toHaveBeenCalledWith(false);
+        });
+
+        it("should not expand the item without the caller updating the expanded prop", async () => {
+            const onExpandChange = jest.fn();
+
+            render(
+                <Accordion>
+                    <Accordion.Item
+                        data-testid="item1"
+                        title="Item title"
+                        expanded={false}
+                        onExpandChange={onExpandChange}
+                    >
+                        <Typography.BodyBL>
+                            {DEFAULT_TEXT_CONTENT}
+                        </Typography.BodyBL>
+                    </Accordion.Item>
+                </Accordion>
+            );
+
+            const expandableContainer = screen.getByTestId(
+                "item1-expandable-container"
+            );
+            await expectItemCollapsed(expandableContainer);
+
+            act(() => {
+                fireEvent.click(
+                    screen.getByTestId("item1-expand-collapse-button")
+                );
+            });
+
+            await expectItemCollapsed(expandableContainer);
+        });
+
+        it("should keep all items expanded when all are manually opened", async () => {
+            // Regression: expandAll auto-detection must not reset controlled items
+            function TestComponent() {
+                const [states, setStates] = useState([true, false, false]);
+                return (
+                    <Accordion
+                        enableExpandAll={false}
+                        initialDisplay="collapse-all"
+                    >
+                        {states.map((isExpanded, index) => (
+                            <Accordion.Item
+                                key={index}
+                                data-testid={`item${index + 1}`}
+                                title={`Item ${index + 1}`}
+                                expanded={isExpanded}
+                                onExpandChange={(val) =>
+                                    setStates((prev) =>
+                                        prev.map((v, i) =>
+                                            i === index ? val : v
+                                        )
+                                    )
+                                }
+                            >
+                                <Typography.BodyBL>
+                                    {DEFAULT_TEXT_CONTENT}
+                                </Typography.BodyBL>
+                            </Accordion.Item>
+                        ))}
+                    </Accordion>
+                );
+            }
+
+            render(<TestComponent />);
+
+            await expectItemExpanded(
+                screen.getByTestId("item1-expandable-container")
+            );
+            await expectItemCollapsed(
+                screen.getByTestId("item2-expandable-container")
+            );
+            await expectItemCollapsed(
+                screen.getByTestId("item3-expandable-container")
+            );
+
+            act(() => {
+                fireEvent.click(
+                    screen.getByTestId("item2-expand-collapse-button")
+                );
+            });
+            act(() => {
+                fireEvent.click(
+                    screen.getByTestId("item3-expand-collapse-button")
+                );
+            });
+
+            await expectItemExpanded(
+                screen.getByTestId("item1-expandable-container")
+            );
+            await expectItemExpanded(
+                screen.getByTestId("item2-expandable-container")
+            );
+            await expectItemExpanded(
+                screen.getByTestId("item3-expandable-container")
+            );
+        });
+
+        it("should call onExpandChange when Show all / Hide all is clicked", () => {
+            const onExpandChange1 = jest.fn();
+            const onExpandChange2 = jest.fn();
+
+            function TestComponent() {
+                const [states, setStates] = useState([false, false]);
+                return (
+                    <Accordion initialDisplay="collapse-all">
+                        <Accordion.Item
+                            data-testid="item1"
+                            title="Item 1"
+                            expanded={states[0]}
+                            onExpandChange={(val) => {
+                                onExpandChange1(val);
+                                setStates((prev) => [val, prev[1]]);
+                            }}
+                        >
+                            <Typography.BodyBL>
+                                {DEFAULT_TEXT_CONTENT}
+                            </Typography.BodyBL>
+                        </Accordion.Item>
+                        <Accordion.Item
+                            data-testid="item2"
+                            title="Item 2"
+                            expanded={states[1]}
+                            onExpandChange={(val) => {
+                                onExpandChange2(val);
+                                setStates((prev) => [prev[0], val]);
+                            }}
+                        >
+                            <Typography.BodyBL>
+                                {DEFAULT_TEXT_CONTENT}
+                            </Typography.BodyBL>
+                        </Accordion.Item>
+                    </Accordion>
+                );
+            }
+
+            render(<TestComponent />);
+
+            act(() => {
+                fireEvent.click(
+                    screen.getByRole("button", {
+                        name: ACCORDION_EXPAND_ALL_BUTTON_LABEL,
+                    })
+                );
+            });
+
+            expect(onExpandChange1).toHaveBeenCalledWith(true);
+            expect(onExpandChange2).toHaveBeenCalledWith(true);
+
+            act(() => {
+                fireEvent.click(
+                    screen.getByRole("button", {
+                        name: ACCORDION_HIDE_ALL_BUTTON_LABEL,
+                    })
+                );
+            });
+
+            expect(onExpandChange1).toHaveBeenCalledWith(false);
+            expect(onExpandChange2).toHaveBeenCalledWith(false);
         });
     });
 
