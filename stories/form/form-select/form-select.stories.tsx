@@ -14,9 +14,8 @@ import {
 import {
     Checkmark,
     CustomCTAContainer,
-    Image,
-    ImageWrapper,
-    ImageWrapperSelected,
+    CustomImage,
+    CustomOption,
 } from "./doc-elements";
 
 type Component = typeof Form.Select;
@@ -125,41 +124,30 @@ export const WithCustomListItemDisplay: StoryObj<Component> = {
         return (
             <>
                 <Form.Select
-                    label="This has a custom list item display with disabled option (Option B is disabled)"
+                    label="This has a custom list item display"
                     options={CUSTOM_IMAGE_OPTIONS}
-                    valueExtractor={(item) => item.value}
-                    listExtractor={(item) => item.url}
-                    displayValueExtractor={(item) => item.url}
                     isOptionDisabled={(item) => item.value === "B"}
                     renderCustomSelectedOption={(option) => (
-                        <ImageWrapper>
-                            <Image src={option.url} alt={option.value} />
-                        </ImageWrapper>
+                        <CustomImage
+                            imageSrc={option.url}
+                            imageAlt={option.value}
+                        />
                     )}
                     renderListItem={(item, args) => {
-                        const content = (
-                            <ImageWrapper>
-                                <Image src={item.url} alt={item.value} />
-                            </ImageWrapper>
-                        );
-
-                        if (args.selected) {
-                            return (
-                                <ImageWrapperSelected
-                                    style={{
-                                        opacity: args.disabled ? 0.4 : 1,
-                                    }}
-                                >
-                                    {content}
-                                    <Checkmark />
-                                </ImageWrapperSelected>
-                            );
-                        }
+                        const { selected, disabled } = args;
 
                         return (
-                            <div style={{ opacity: args.disabled ? 0.4 : 1 }}>
-                                {content}
-                            </div>
+                            <CustomOption
+                                style={{
+                                    opacity: disabled ? 0.4 : 1,
+                                }}
+                            >
+                                <CustomImage
+                                    imageSrc={item.url}
+                                    imageAlt={item.value}
+                                />
+                                {selected && <Checkmark />}
+                            </CustomOption>
                         );
                     }}
                 />
