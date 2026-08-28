@@ -7,7 +7,6 @@ export interface TabItemComponentProps extends TabItemProps {
     index?: number | undefined; // injected
 }
 
-// Inactive panels are unmounted — inner state is not preserved across tab switches
 export const TabItem = ({
     index,
     children,

@@ -3,10 +3,6 @@ import { useContext, useEffect } from "react";
 import { TabContext } from "./tab-context";
 import type { TabPanelProps } from "./types";
 
-// =============================================================================
-// COMPONENT
-// =============================================================================
-// Inactive panels are unmounted — inner state is not preserved across tab switches
 export const TabPanel = ({ index, children, ...otherProps }: TabPanelProps) => {
     const { currentActiveIndex, isContextProvided, instanceId } =
         useContext(TabContext);

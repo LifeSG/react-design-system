@@ -14,9 +14,6 @@ import { TabListItem } from "./tab-list-item";
 import { TabPanel } from "./tab-panel";
 import type { TabItemProps, TabProps } from "./types";
 
-// =============================================================================
-// COMPONENT
-// =============================================================================
 const TabBase = ({
     children,
     currentActive: currentActiveIndex,
@@ -129,7 +126,7 @@ TabBase.displayName = "Tab";
  * @keywords navigation, panel, tabbed, tabs
  */
 export const Tab = Object.assign(TabBase, {
-    /** Renders an individual content panel within a `Tab`. */
+    /** Renders an individual content panel within a `Tab`. Inactive items are unmounted — inner state is not preserved across tab switches. */
     Item: TabItem,
     /** Context provider for the standalone TabList + Panel composition. */
     Context: TabContextProvider,
@@ -137,6 +134,6 @@ export const Tab = Object.assign(TabBase, {
     TabList,
     /** Declares a tab entry inside a `Tab.TabList`. */
     TabListItem,
-    /** Renders a content panel within a `Tab.Context`. */
+    /** Renders a content panel within a `Tab.Context`. Inactive panels are unmounted — inner state is not preserved across tab switches. */
     Panel: TabPanel,
 });
