@@ -1,7 +1,16 @@
 ---
-name: "test-component-functional"
-description: "Creates functional test specs for the specified component"
+name: test-component-functional
+description: >-
+    Creates functional test specs (Playwright E2E tests) for a specified
+    design system component. Suggests test scenarios, then iteratively
+    builds stories and test files one at a time. Use when writing
+    functional tests for a component.
+argument-hint: >-
+    Provide the component name or path to the component folder
+    (e.g. "button", "src/input-select").
 ---
+
+# Functional Test Spec Creation
 
 You are tasked with writing functional test specs for a design system component.
 
@@ -34,8 +43,6 @@ First, suggest a list of possible test specs for the component, e.g.
 -   "Keyboard navigation"
 
 Next, prompt the user to provide a description of a test spec, and based on the input, create the functional test for the component using the existing Playwright setup.
-
-Do this one at a time until the user indicates they are done.
 
 ### Structure of the test file
 
