@@ -127,6 +127,9 @@ const Component = ({
         return { itemState, dragHandleState, boxState };
     }, [activeId, id, isDisabled, shouldEnableSort, errorMessage]);
 
+    const disableSave =
+        descriptionRequired && currentDescription.trim().length === 0;
+
     // =========================================================================
     // EFFECTS
     // =========================================================================
@@ -189,9 +192,6 @@ const Component = ({
     ) => {
         onBlur?.(event.target.value);
     };
-
-    const disableSave =
-        descriptionRequired && currentDescription.trim().length === 0;
 
     // =========================================================================
     // RENDER: EDIT MODE
