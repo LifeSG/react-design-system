@@ -166,6 +166,8 @@ export const contentSection = css`
     }
 
     &[data-has-thumbnail="true"] {
+        align-items: center;
+
         ${MediaQuery.MaxWidth.md} {
             flex-direction: row;
             align-items: center;
