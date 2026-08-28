@@ -519,6 +519,9 @@ export default function FormPage() {
                                 selectedOption={CATEGORY_OPTIONS.find(
                                     (o) => o.value === category
                                 )}
+                                listExtractor={(o) => o.label}
+                                displayValueExtractor={(o) => o.label}
+                                valueExtractor={(o) => o.value}
                                 onSelectOption={(opt) => {
                                     setCategory(opt.value);
                                     if (errors.category)

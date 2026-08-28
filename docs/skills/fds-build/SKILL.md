@@ -1,5 +1,5 @@
 ---
-name: "cc-flagship-ds"
+name: "fds-build"
 description: "Use when building with @lifesg/react-design-system v3. Covers composition rules, correct import patterns, styled-components token usage, and component discovery. Apply whenever the user's package.json has @lifesg/react-design-system ^3.x (or no version). If package.json shows ^4.x, load SKILL-v4.md instead."
 metadata:
     version: "3.x"
@@ -37,7 +37,7 @@ pnpm add @lifesg/react-design-system @lifesg/react-icons styled-components @floa
 
 Peer deps: `react` + `react-dom` (^17, ^18, or ^19).
 
-**If the project is new or missing setup** — read `./resources/v3/patterns/setup.md` for the full CSS/ThemeProvider/Vite walkthrough before writing any component code.
+**If the project is new or missing setup** — read `./resources/v3/setup/setup.md` for the full CSS/ThemeProvider/Vite walkthrough before writing any component code.
 
 ---
 
@@ -164,7 +164,7 @@ This skill is self-contained — all resource files live under `./resources/` re
 
 | Task                                                                  | What to read                                                           |
 | --------------------------------------------------------------------- | ---------------------------------------------------------------------- |
-| New project / missing setup                                           | `./resources/v3/patterns/setup.md`                                     |
+| New project / missing setup                                           | `./resources/v3/setup/setup.md`                                        |
 | Find the right component                                              | `./catalogue.md` — search "Also known as" column by keyword            |
 | Use a component                                                       | `./resources/v3/components/{name}.md` — contains props AND usage rules |
 | Grid system, breakpoints, column widths                               | `./resources/v3/components/layout.md`                                  |
@@ -182,9 +182,9 @@ This skill is self-contained — all resource files live under `./resources/` re
 
 ## Gotchas
 
-| Symptom                             | Fix                                                                                |
-| ----------------------------------- | ---------------------------------------------------------------------------------- |
-| Components throw errors             | Add `StyleSheetManager` + `ThemeProvider` wrapping app root                        |
-| styled-components DOM prop warnings | `StyleSheetManager` is missing or not wrapping `ThemeProvider`                     |
-| No styles / wrong fonts             | Read `./resources/v3/patterns/setup.md` — CSS imports likely missing or mismatched |
-| Token in inline `style={{}}`        | Tokens are functions — move to a `styled` template literal                         |
+| Symptom                             | Fix                                                                             |
+| ----------------------------------- | ------------------------------------------------------------------------------- |
+| Components throw errors             | Add `StyleSheetManager` + `ThemeProvider` wrapping app root                     |
+| styled-components DOM prop warnings | `StyleSheetManager` is missing or not wrapping `ThemeProvider`                  |
+| No styles / wrong fonts             | Read `./resources/v3/setup/setup.md` — CSS imports likely missing or mismatched |
+| Token in inline `style={{}}`        | Tokens are functions — move to a `styled` template literal                      |

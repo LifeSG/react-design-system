@@ -6,7 +6,7 @@ const path = require("path");
 const CWD = process.cwd();
 
 // Source: skills bundled with this package
-const SKILLS_SRC = path.resolve(__dirname, "../docs/skills/cc-flagship-ds");
+const SKILLS_SRC = path.resolve(__dirname, "../docs/skills/fds-build");
 
 // IDE detection: marker folder → destination path
 const IDE_TARGETS = {
@@ -28,7 +28,7 @@ const IDE_TARGETS = {
     },
     Generic: {
         marker: null, // fallback
-        dest: ".agents/skills/cc-flagship-ds",
+        dest: ".agents/skills/fds-build",
     },
 };
 
