@@ -104,7 +104,7 @@ export const SidenavItem = ({
         stickIfOpen: false,
     });
     const hover = useHover(context, {
-        handleClose: safePolygon(),
+        handleClose: children ? safePolygon() : null,
     });
     const focus = useFocus(context, { visibleOnly: false });
     const dismiss = useDismiss(context, { enabled: !!children });
