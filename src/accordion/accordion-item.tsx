@@ -122,8 +122,10 @@ function Component(
 
     // Controlled mode: forward expandAll button changes to the caller
     useEffect(() => {
-        if (isControlled && hasFirstLoad) {
-            onExpandChange?.(collapsible ? expandAll : true);
+        if (!isControlled || !hasFirstLoad) return;
+        const next = collapsible ? expandAll : true;
+        if (next !== expandedControlled) {
+            onExpandChange?.(next);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [expandAll]);
