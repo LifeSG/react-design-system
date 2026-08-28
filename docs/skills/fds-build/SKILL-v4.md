@@ -1,5 +1,5 @@
 ---
-name: "flagship-v4"
+name: "fds-build-v4"
 description: "Use when building with @lifesg/react-design-system v4 (alpha). Covers composition rules, correct import patterns, token usage, and component discovery. Apply whenever the user's package.json has @lifesg/react-design-system ^4.x."
 metadata:
     version: "4.0.0-alpha"
@@ -27,7 +27,7 @@ Do not install `styled-components` — v4 uses CSS Modules for custom styles.
 
 Peer deps: `react` + `react-dom` (^17, ^18, or ^19).
 
-**If the project is new or missing setup** — read `./resources/v4/patterns/setup.md` for the full CSS/ThemeProvider/Vite walkthrough before writing any component code.
+**If the project is new or missing setup** — read `./resources/v4/setup/setup.md` for the full CSS/ThemeProvider/Vite walkthrough before writing any component code.
 
 ---
 
@@ -144,7 +144,7 @@ This skill is self-contained — all resource files live under `./resources/` re
 
 | Task                                                                  | What to read                                                                                        |
 | --------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
-| New project / missing setup                                           | `./resources/v4/patterns/setup.md`                                                                  |
+| New project / missing setup                                           | `./resources/v4/setup/setup.md`                                                                     |
 | Find the right component                                              | `./catalogue.md` — search "Also known as" column by keyword                                         |
 | Use a component                                                       | Check `./resources/v4/components/{name}/` first; fall back to `./resources/v3/components/{name}.md` |
 | Grid system, breakpoints, column widths                               | `./resources/v3/components/layout.md`                                                               |
@@ -165,9 +165,9 @@ This skill is self-contained — all resource files live under `./resources/` re
 | Symptom                                                                    | Fix                                                                                                                                                                                      |
 | -------------------------------------------------------------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | Components throw errors                                                    | Add `ThemeProvider` from `@lifesg/react-design-system/theme`                                                                                                                             |
-| No styles / wrong fonts                                                    | Read `./resources/v4/patterns/setup.md` — CSS imports are likely missing or mismatched                                                                                                   |
+| No styles / wrong fonts                                                    | Read `./resources/v4/setup/setup.md` — CSS imports are likely missing or mismatched                                                                                                      |
 | Font falls back to serif (Times)                                           | `body { font-family }` not set — add `font-family: var(--fds-font-family-body)` to `index.css`                                                                                           |
-| Navbar links have underline / user-agent margins on headings or paragraphs | CSS reset missing — v3 CDN `main.css` included a full reset; v4 npm CSS does not. Add the reset block from `./resources/v4/patterns/setup.md` Step 2 to `index.css`                      |
+| Navbar links have underline / user-agent margins on headings or paragraphs | CSS reset missing — v3 CDN `main.css` included a full reset; v4 npm CSS does not. Add the reset block from `./resources/v4/setup/setup.md` Step 2 to `index.css`                         |
 | Footer doesn't stick to bottom on short pages                              | v4 `ThemeProvider` renders a wrapper `<div>` as the only child of `#root`, breaking the flex column. Add `#root > div { display: flex; flex-direction: column; flex: 1 }` to `index.css` |
 | Responsive breakpoint rules don't fire                                     | Using `:where(body.fds-breakpoint-*)` — replace with `:global(body.fds-breakpoint-*)` so CSS Modules doesn't scope the class                                                             |
 | Theme CSS not loading                                                      | Vite resolves `node_modules` CSS automatically; other tools need CSS resolver config                                                                                                     |
