@@ -24,7 +24,8 @@
         "prepare": "(test -d ./.git && npx husky install) || true",
         "storybook": "storybook dev -p 6006",
         "build-storybook": "storybook build",
-        "codemod": "ENV=dev npx tsx codemods/run-codemod.ts"
+        "codemod": "ENV=dev npx tsx codemods/run-codemod.ts",
+        "lint": "eslint '**/*.{ts,tsx,js,jsx}'"
     },
     "repository": {
         "type": "git",
