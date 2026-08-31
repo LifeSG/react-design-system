@@ -333,6 +333,25 @@ test.describe("Navbar", () => {
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
+                await story.init("submenu-selected", { size: "mobile" });
+            });
+
+            test("Submenu (selected item)", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
+                await expect(
+                    story.locators.internal.menuMobileItem(2)
+                ).toBeVisible();
+
+                await compareScreenshot(story, "submenu-item-selected", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
                 await story.init("submenu", {
                     size: "mobile",
                     mode: "dark",
