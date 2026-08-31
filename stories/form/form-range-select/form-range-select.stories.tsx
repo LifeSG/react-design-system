@@ -7,12 +7,8 @@ import {
     StackDecorator,
     StoryDecorator,
 } from "stories/storybook-common";
-import {
-    Checkmark,
-    Image,
-    ImageWrapper,
-    ImageWrapperSelected,
-} from "./doc-elements";
+
+import { Checkmark, CustomImage, CustomOption } from "./doc-elements";
 
 type Component = typeof Form.RangeSelect;
 type StandaloneComponent = typeof InputRangeSelect;
@@ -120,6 +116,36 @@ export const Default: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+export const DisabledOptions: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.RangeSelect
+                    label="Some options are disabled"
+                    options={RANGE_OPTIONS}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    isOptionDisabled={(item) => item.value === "B"}
+                />
+                <Form.RangeSelect
+                    label="Selected option is disabled (Option B is selected but disabled)"
+                    options={RANGE_OPTIONS}
+                    selectedOptions={{
+                        from: { value: "B", label: "Option B" },
+                        to: { value: "K", label: "Option K" },
+                    }}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    isOptionDisabled={(item) => item.value === "B"}
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
 export const WithCustomListDisplay: StoryObj<Component> = {
     render: (_args) => {
         return (
@@ -148,33 +174,29 @@ export const WithCustomListDisplay: StoryObj<Component> = {
                             },
                         ],
                     }}
-                    renderCustomSelectedOption={(option) => {
-                        return (
-                            <ImageWrapper>
-                                <Image src={option.url} alt={option.value} />
-                            </ImageWrapper>
-                        );
-                    }}
+                    isOptionDisabled={(item) => item.value === "B"}
+                    renderCustomSelectedOption={(option) => (
+                        <CustomImage
+                            imageSrc={option.url}
+                            imageAlt={option.value}
+                        />
+                    )}
                     renderListItem={(item, args) => {
-                        if (args.selected) {
-                            return (
-                                <ImageWrapperSelected>
-                                    <ImageWrapper>
-                                        <Image
-                                            src={item.url}
-                                            alt={item.value}
-                                        />
-                                    </ImageWrapper>
-                                    <Checkmark />
-                                </ImageWrapperSelected>
-                            );
-                        } else {
-                            return (
-                                <ImageWrapper>
-                                    <Image src={item.url} alt={item.value} />
-                                </ImageWrapper>
-                            );
-                        }
+                        const { selected, disabled } = args;
+
+                        return (
+                            <CustomOption
+                                style={{
+                                    opacity: disabled ? 0.4 : 1,
+                                }}
+                            >
+                                <CustomImage
+                                    imageSrc={item.url}
+                                    imageAlt={item.value}
+                                />
+                                {selected && <Checkmark />}
+                            </CustomOption>
+                        );
                     }}
                 />
             </>

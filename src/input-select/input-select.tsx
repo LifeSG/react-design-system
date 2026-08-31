@@ -34,6 +34,7 @@ export const InputSelect = <T, V>({
     valueExtractor,
     valueToStringFunction,
     listExtractor,
+    isOptionDisabled,
     displayValueExtractor,
     onSelectOption,
     onShowOptions,
@@ -250,6 +251,7 @@ export const InputSelect = <T, V>({
                 onDismiss={handleListDismiss}
                 valueExtractor={valueExtractor}
                 listExtractor={listExtractor}
+                isOptionDisabled={isOptionDisabled}
                 enableSearch={enableSearch}
                 searchPlaceholder={searchPlaceholder}
                 searchFunction={searchFunction}
