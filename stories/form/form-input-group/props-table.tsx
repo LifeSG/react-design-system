@@ -151,6 +151,12 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["(searchValue: string) => T[]"],
             },
             {
+                name: "isOptionDisabled",
+                description:
+                    "Function to determine if an option should be disabled",
+                propTypes: ["(option: T) => boolean"],
+            },
+            {
                 name: "onSelectOption",
                 description: "Called when an option is selected",
                 propTypes: ["(option: T, extractedValue: T | V) => void"],
