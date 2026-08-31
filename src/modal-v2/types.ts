@@ -19,8 +19,7 @@ export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
     elementRef?: React.Ref<HTMLDivElement> | undefined;
     /**
      * When `true`, the card expands to fill the viewport with no border-radius,
-     * padding, or box-shadow. Controlled by the consumer so the trigger
-     * condition (e.g. mobile breakpoint, landscape orientation) stays flexible.
+     * padding, or box-shadow.
      */
     fullscreen?: boolean | undefined;
 }

@@ -121,6 +121,37 @@ export const AnimationFrom: StoryObj<Component> = {
     },
 };
 
+export const Fullscreen: StoryObj<Component> = {
+    render: (_args) => {
+        const [show, setShow] = useState(false);
+        const openModal = () => setShow(true);
+        const closeModal = () => setShow(false);
+        return (
+            <>
+                <Button onClick={openModal}>Click to open</Button>
+                <ModalV2
+                    show={show}
+                    onOverlayClick={closeModal}
+                    onClose={closeModal}
+                >
+                    <ModalV2.Card fullscreen>
+                        <ModalV2.Header
+                            title="Fullscreen modal"
+                            closeButtonPosition="right"
+                        />
+                        <ModalV2.Content>
+                            <Typography.BodyBL>
+                                This card fills the entire viewport with no
+                                border-radius, padding, or box-shadow.
+                            </Typography.BodyBL>
+                        </ModalV2.Content>
+                    </ModalV2.Card>
+                </ModalV2>
+            </>
+        );
+    },
+};
+
 export const Footer: StoryObj<Component> = {
     render: () => {
         const [show, setShow] = useState(false);
@@ -363,37 +394,6 @@ export const StackedModals: StoryObj<Component> = {
                     </ModalV2.Card>
                 </ModalV2>
             </div>
-        );
-    },
-};
-
-export const Fullscreen: StoryObj<Component> = {
-    render: () => {
-        const [show, setShow] = useState(false);
-        const openModal = () => setShow(true);
-        const closeModal = () => setShow(false);
-        return (
-            <>
-                <Button onClick={openModal}>Click to open</Button>
-                <ModalV2
-                    show={show}
-                    onOverlayClick={closeModal}
-                    onClose={closeModal}
-                >
-                    <ModalV2.Card fullscreen>
-                        <ModalV2.Header
-                            title="Fullscreen modal"
-                            closeButtonPosition="right"
-                        />
-                        <ModalV2.Content>
-                            <Typography.BodyBL>
-                                This card fills the entire viewport with no
-                                border-radius, padding, or box-shadow.
-                            </Typography.BodyBL>
-                        </ModalV2.Content>
-                    </ModalV2.Card>
-                </ModalV2>
-            </>
         );
     },
 };
