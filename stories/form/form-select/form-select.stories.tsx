@@ -12,9 +12,8 @@ import {
 import {
     Checkmark,
     CustomCTAContainer,
-    Image,
-    ImageWrapper,
-    ImageWrapperSelected,
+    CustomImage,
+    CustomOption,
 } from "./doc-elements";
 
 type Component = typeof Form.Select;
@@ -80,55 +79,77 @@ export const Select: StoryObj<Component> = {
     decorators: [StoryDecorator({ maxWidth: true })],
 };
 
+export const DisabledOptions: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <>
+                <Form.Select
+                    label="Some options are disabled"
+                    options={OPTIONS_DATA}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    isOptionDisabled={(item) =>
+                        item.value === "B" || item.value === "D"
+                    }
+                />
+                <Form.Select
+                    label="Selected option is disabled (Option B is selected but disabled)"
+                    options={OPTIONS_DATA}
+                    selectedOption={OPTIONS_DATA[1]}
+                    valueExtractor={(item) => item.value}
+                    listExtractor={(item) => item.label}
+                    displayValueExtractor={(item) => item.label}
+                    isOptionDisabled={(item) =>
+                        item.value === "B" || item.value === "D"
+                    }
+                />
+            </>
+        );
+    },
+    decorators: [StoryDecorator({ maxWidth: true })],
+};
+
+const CUSTOM_IMAGE_OPTIONS = [
+    { value: "A", url: "https://picsum.photos/seed/A/300/100" },
+    { value: "B", url: "https://picsum.photos/seed/B/500/200" },
+    { value: "C", url: "https://picsum.photos/seed/C/300/300" },
+    { value: "D", url: "https://picsum.photos/seed/D/600/150" },
+];
+
 export const WithCustomListItemDisplay: StoryObj<Component> = {
     render: (_args) => {
         return (
-            <Form.Select
-                label="This has a custom list item display"
-                options={[
-                    {
-                        value: "A",
-                        url: "https://picsum.photos/seed/A/300/100",
-                    },
-                    {
-                        value: "B",
-                        url: "https://picsum.photos/seed/B/500/200",
-                    },
-                    {
-                        value: "C",
-                        url: "https://picsum.photos/seed/C/300/300",
-                    },
-                    {
-                        value: "D",
-                        url: "https://picsum.photos/seed/D/600/150",
-                    },
-                ]}
-                renderCustomSelectedOption={(option) => {
-                    return (
-                        <ImageWrapper>
-                            <Image src={option.url} alt={option.value} />
-                        </ImageWrapper>
-                    );
-                }}
-                renderListItem={(item, args) => {
-                    if (args.selected) {
+            <>
+                <Form.Select
+                    label="This has a custom list item display"
+                    options={CUSTOM_IMAGE_OPTIONS}
+                    isOptionDisabled={(item) => item.value === "B"}
+                    renderCustomSelectedOption={(option) => (
+                        <CustomImage
+                            imageSrc={option.url}
+                            imageAlt={option.value}
+                        />
+                    )}
+                    renderListItem={(item, args) => {
+                        const { selected, disabled } = args;
+
                         return (
-                            <ImageWrapperSelected>
-                                <ImageWrapper>
-                                    <Image src={item.url} alt={item.value} />
-                                </ImageWrapper>
-                                <Checkmark />
-                            </ImageWrapperSelected>
+                            <CustomOption
+                                style={{
+                                    opacity: disabled ? 0.4 : 1,
+                                }}
+                            >
+                                <CustomImage
+                                    imageSrc={item.url}
+                                    imageAlt={item.value}
+                                />
+                                {selected && <Checkmark />}
+                            </CustomOption>
                         );
-                    } else {
-                        return (
-                            <ImageWrapper>
-                                <Image src={item.url} alt={item.value} />
-                            </ImageWrapper>
-                        );
-                    }
-                }}
-            />
+                    }}
+                />
+            </>
         );
     },
     decorators: [StoryDecorator({ maxWidth: true })],

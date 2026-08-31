@@ -8,6 +8,7 @@ export type DropdownVariantType = "small" | "default";
 
 export interface ListItemRenderArgs {
     selected: boolean;
+    disabled: boolean;
 }
 
 export interface ListItemDisplayProps {
@@ -30,7 +31,9 @@ export interface DropdownDisplayProps<T, V> {
     valueExtractor?: ((item: T) => V) | undefined;
     /** Function to derive options display value from an item */
     listExtractor?: ((item: T) => string | ListItemDisplayProps) | undefined;
-    /** Function to render custom component */
+    /** Returns `true` if the given option should be shown but not selectable. */
+    isOptionDisabled?: ((item: T) => boolean) | undefined;
+    /** Renders a fully custom element for each list item. */
     renderListItem?:
         | ((item: T, args: ListItemRenderArgs) => JSX.Element)
         | undefined;
