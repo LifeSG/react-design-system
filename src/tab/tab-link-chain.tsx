@@ -33,7 +33,7 @@ export const TabLinkChain = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const { setCurrentActiveIndex, currentActiveIndex, tabLinks } =
+    const { setCurrentActiveIndex, currentActiveIndex, tabLinks, instanceId } =
         useContext(TabContext);
 
     const theme = useContext(ThemeContext);
@@ -145,6 +145,7 @@ export const TabLinkChain = ({
                                     </Label>
                                     <BoldLabel
                                         role="tab"
+                                        id={`${instanceId}-tab-${index}`}
                                         type="button"
                                         aria-selected={isActive}
                                         tabIndex={isActive ? 0 : -1}
