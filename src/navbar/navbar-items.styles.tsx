@@ -78,7 +78,7 @@ const linkCss = css<{ $selected: boolean; $weight: TypographyWeight }>`
     text-align: center;
     color: ${ThemeNavbar["navbar-link-colour-text"]};
     height: 100%;
-    gap: 0.5rem;
+    gap: ${Spacing["spacing-16"]};
 
     &:active,
     &:hover,

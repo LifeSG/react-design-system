@@ -44,11 +44,10 @@ export const NavbarItems = <T,>({
     // =============================================================================
     // CONST, STATE, REFS
     // =============================================================================
-    const [selectedIndex, setSelectedIndex] = useState<number>(-1);
-    const [showSubMenu, setShowSubMenu] = useState<boolean>(false);
-    const [openSubMenuIndex, setOpenSubMenuIndex] = useState<number | null>(
-        null
-    );
+    const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
+    const [expandedSubMenuIndex, setExpandedSubMenuIndex] = useState<
+        number | null
+    >(null);
     const listRef = useRef<HTMLUListElement>(null);
     const instanceId = useId();
 
@@ -56,14 +55,8 @@ export const NavbarItems = <T,>({
     // HELPERS
     // =============================================================================
     const resetAll = () => {
-        setShowSubMenu(false);
-        setSelectedIndex(-1);
-        setOpenSubMenuIndex(null);
-    };
-
-    const closeMobileSubMenu = () => {
-        setShowSubMenu(false);
-        setSelectedIndex(-1);
+        setSelectedIndex(null);
+        setExpandedSubMenuIndex(null);
     };
 
     const hasSelectedSubMenuItem = (item: NavItemLinkProps<T>): boolean =>
@@ -72,22 +65,29 @@ export const NavbarItems = <T,>({
     const checkSelected = (item: NavItemLinkProps<T>): boolean =>
         item.id === selectedId || hasSelectedSubMenuItem(item);
 
-    const selectedSubMenuIndex = mobile
+    const foundSubMenuParentIndex = mobile
         ? items.findIndex(
               (item) =>
                   item.itemType !== "component" &&
                   hasSelectedSubMenuItem(item as NavItemLinkProps<T>)
           )
         : -1;
+    const selectedSubMenuParentIndex =
+        foundSubMenuParentIndex < 0 ? null : foundSubMenuParentIndex;
+
+    // =========================================================================
+    // EFFECTS
+    // =========================================================================
 
     useEffect(() => {
-        if (selectedSubMenuIndex < 0) return;
+        if (selectedSubMenuParentIndex === null) return;
 
-        setSelectedIndex(selectedSubMenuIndex);
-        setShowSubMenu(true);
-    }, [selectedSubMenuIndex]);
+        setExpandedSubMenuIndex(selectedSubMenuParentIndex);
+    }, [selectedSubMenuParentIndex]);
 
     useEffect(() => {
+        if (mobile) return;
+
         const handleClickOutside = (event: MouseEvent) => {
             if (
                 listRef.current &&
@@ -100,7 +100,7 @@ export const NavbarItems = <T,>({
         return () => {
             document.removeEventListener("click", handleClickOutside, true);
         };
-    }, []);
+    }, [mobile]);
 
     // =============================================================================
     // EVENT HANDLERS
@@ -111,9 +111,9 @@ export const NavbarItems = <T,>({
 
             // mobile expands inline when link has submenu
             if (mobile && item.subMenu?.length) {
-                const nextExpanded = !(selectedIndex === index && showSubMenu);
-                setSelectedIndex(index);
-                setShowSubMenu(nextExpanded);
+                setExpandedSubMenuIndex((prev) =>
+                    prev === index ? null : index
+                );
             }
 
             onItemClick(event, item);
@@ -126,7 +126,6 @@ export const NavbarItems = <T,>({
     ) => {
         event.stopPropagation();
         onItemClick(event, item);
-        closeMobileSubMenu();
     };
 
     // =============================================================================
@@ -167,18 +166,16 @@ export const NavbarItems = <T,>({
 
         // desktop popover open state
         const isDesktopExpanded =
-            !mobile && hasSubMenu && openSubMenuIndex === index;
+            !mobile && hasSubMenu && expandedSubMenuIndex === index;
 
         // mobile inline expanded state
         const isMobileExpanded =
-            mobile && hasSubMenu && selectedIndex === index && showSubMenu;
+            mobile && hasSubMenu && expandedSubMenuIndex === index;
 
         const isExpanded = isDesktopExpanded || isMobileExpanded;
 
         const selected =
-            openSubMenuIndex !== null
-                ? openSubMenuIndex === index
-                : isRouteSelected;
+            selectedIndex !== null ? selectedIndex === index : isRouteSelected;
 
         const showIndicator = !hideLinkIndicator && selected;
 
@@ -266,9 +263,15 @@ export const NavbarItems = <T,>({
                     menuContent={renderDesktopSubMenu(subMenu!, subMenuId)}
                     triggerOnFocus
                     isModal={false}
-                    onPopoverAppear={() => setOpenSubMenuIndex(index)}
+                    onPopoverAppear={() => {
+                        setSelectedIndex(index);
+                        setExpandedSubMenuIndex(index);
+                    }}
                     onPopoverDismiss={() => {
-                        setOpenSubMenuIndex((prev) =>
+                        setSelectedIndex((prev) =>
+                            prev === index ? null : prev
+                        );
+                        setExpandedSubMenuIndex((prev) =>
                             prev === index ? null : prev
                         );
                     }}
