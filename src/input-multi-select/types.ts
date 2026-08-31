@@ -22,7 +22,7 @@ export interface InputMultiSelectProps<T, V>
     extends React.HTMLAttributes<HTMLElement>,
         InputSelectOptionsProps<T>,
         InputSelectSharedProps<T>,
-        DropdownDisplayProps<T, V>,
+        Omit<DropdownDisplayProps<T, V>, "isOptionDisabled">,
         DropdownSearchProps<T> {
     readOnly?: boolean | undefined;
     /**

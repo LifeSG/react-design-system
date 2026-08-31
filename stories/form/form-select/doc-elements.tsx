@@ -5,8 +5,11 @@ import type { ComponentPropsWithoutRef } from "react";
 import { Colour } from "src/theme";
 
 type DivProps = ComponentPropsWithoutRef<"div">;
-type ImgProps = ComponentPropsWithoutRef<"img">;
 type TickProps = ComponentPropsWithoutRef<typeof TickIcon>;
+type CustomImageProps = DivProps & {
+    imageSrc: string;
+    imageAlt: string;
+};
 
 const imageWrapper = css`
     display: flex;
@@ -16,28 +19,35 @@ const imageWrapper = css`
     align-items: center;
 `;
 
-export const ImageWrapper = ({ className, ...props }: DivProps) => (
-    <div {...props} className={clsx(imageWrapper, className)} />
-);
-
 const image = css`
     height: 40px;
     width: 184px;
 `;
 
-export const Image = ({ className, alt, ...props }: ImgProps) => (
-    <img {...props} alt={alt ?? ""} className={clsx(image, className)} />
+export const CustomImage = ({
+    className,
+    imageSrc,
+    imageAlt,
+    ...props
+}: CustomImageProps) => (
+    <div {...props} className={clsx(imageWrapper, className)}>
+        <img
+            src={imageSrc}
+            alt={imageAlt ?? ""}
+            className={clsx(image, className)}
+        />
+    </div>
 );
 
-const imageWrapperSelected = css`
+const imageOption = css`
     display: flex;
     align-items: center;
     width: 100%;
     justify-content: space-between;
 `;
 
-export const ImageWrapperSelected = ({ className, ...props }: DivProps) => (
-    <div {...props} className={clsx(imageWrapperSelected, className)} />
+export const CustomOption = ({ className, ...props }: DivProps) => (
+    <div {...props} className={clsx(imageOption, className)} />
 );
 
 const checkmark = css`

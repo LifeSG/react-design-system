@@ -29,6 +29,7 @@ export type DropdownVariantType = "small" | "default";
 /** Runtime context passed to a custom `renderListItem` callback. */
 export interface ListItemRenderArgs {
     selected: boolean;
+    disabled: boolean;
 }
 
 /** Display model for a list item with an optional secondary label. */
@@ -54,6 +55,8 @@ export interface DropdownDisplayProps<T, V> {
     valueExtractor?: ((item: T) => V) | undefined;
     /** Extracts the display text for a list item. */
     listExtractor?: ((item: T) => string | ListItemDisplayProps) | undefined;
+    /** Returns `true` if the given option should be shown but not selectable. */
+    isOptionDisabled?: ((item: T) => boolean) | undefined;
     /** Renders a fully custom element for each list item. */
     renderListItem?:
         | ((item: T, args: ListItemRenderArgs) => JSX.Element)

@@ -43,6 +43,7 @@ export const Component = <T, V>(
         /* display props */
         valueExtractor,
         listExtractor,
+        isOptionDisabled,
         /* search props */
         enableSearch,
         hideNoResultsDisplay,
@@ -231,6 +232,7 @@ export const Component = <T, V>(
                 onDismiss={handleListDismiss}
                 valueExtractor={valueExtractor}
                 listExtractor={listExtractor}
+                isOptionDisabled={isOptionDisabled}
                 enableSearch={enableSearch}
                 hideNoResultsDisplay={hideNoResultsDisplay}
                 noResultsDescription={noResultsDescription}

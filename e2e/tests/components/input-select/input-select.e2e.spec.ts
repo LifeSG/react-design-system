@@ -38,6 +38,10 @@ class StoryPage extends AbstractStoryPage {
             minWidth: Locator;
             customWidth: Locator;
         };
+        disabledOptions: {
+            default: Locator;
+            selected: Locator;
+        };
         cta: Locator;
         virtualization: Locator;
     };
@@ -78,6 +82,12 @@ class StoryPage extends AbstractStoryPage {
             dropdownWidth: {
                 minWidth: page.getByTestId("input-select-min-width"),
                 customWidth: page.getByTestId("input-select-custom-width"),
+            },
+            disabledOptions: {
+                default: page.getByTestId("input-select-disabled-options-base"),
+                selected: page.getByTestId(
+                    "input-select-disabled-options-selected-base"
+                ),
             },
             cta: page.getByTestId("input-select-cta-base"),
             virtualization: page.getByTestId("input-select-virtualization"),
@@ -445,6 +455,25 @@ test.describe("InputSelect", () => {
                 fullscreen: true,
             });
             await story.closeDropdown();
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("disabled-options");
+        });
+
+        test("Disabled options", async ({ story }) => {
+            await story.openDropdown(story.locators.disabledOptions.default);
+            await compareScreenshot(story, "open-unselected", {
+                fullscreen: true,
+            });
+            await story.closeDropdown();
+
+            await story.openDropdown(story.locators.disabledOptions.selected);
+            await compareScreenshot(story, "open-selected", {
+                fullscreen: true,
+            });
         });
     });
 });

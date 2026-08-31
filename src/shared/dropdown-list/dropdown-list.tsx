@@ -71,6 +71,7 @@ const DropdownListInner = <T, V>(
         /* DropdownDisplayProps */
         valueExtractor,
         listExtractor,
+        isOptionDisabled,
         renderListItem,
         renderCustomCallToAction,
         /* DropdownSearchProps */
@@ -242,27 +243,49 @@ const DropdownListInner = <T, V>(
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
+    const findNextEnabledIndex = (
+        startIndex: number,
+        direction: 1 | -1
+    ): number => {
+        const nextIndex = startIndex + direction;
+        if (!isOptionDisabled) {
+            return nextIndex >= 0 && nextIndex < displayListItems.length
+                ? nextIndex
+                : -1;
+        }
+        let index = nextIndex;
+        while (index >= 0 && index < displayListItems.length) {
+            if (!isOptionDisabled(displayListItems[index])) {
+                return index;
+            }
+            index += direction;
+        }
+        return -1;
+    };
+
     const handleKeyboardPress = (event: KeyboardEvent) => {
         switch (event.code) {
-            case "ArrowDown":
+            case "ArrowDown": {
                 event.preventDefault();
-                if (focusedIndex < displayListItems.length - 1) {
-                    const upcomingIndex = focusedIndex + 1;
-                    listItemRefs.current[upcomingIndex]?.focus();
-                    setFocusedIndex(upcomingIndex);
+                const nextIndex = findNextEnabledIndex(focusedIndex, 1);
+                if (nextIndex !== -1) {
+                    listItemRefs.current[nextIndex]?.focus();
+                    setFocusedIndex(nextIndex);
                 }
                 break;
-            case "ArrowUp":
+            }
+            case "ArrowUp": {
                 event.preventDefault();
-                if (focusedIndex > 0) {
-                    const upcomingIndex = focusedIndex - 1;
-                    listItemRefs.current[upcomingIndex]?.focus();
-                    setFocusedIndex(upcomingIndex);
-                } else if (focusedIndex === 0 && searchInputRef.current) {
+                const prevIndex = findNextEnabledIndex(focusedIndex, -1);
+                if (prevIndex !== -1) {
+                    listItemRefs.current[prevIndex]?.focus();
+                    setFocusedIndex(prevIndex);
+                } else if (searchInputRef.current) {
                     searchInputRef.current.focus();
                     setFocusedIndex(-1);
                 }
                 break;
+            }
             case "Space":
             case "Enter":
                 if (
@@ -286,6 +309,7 @@ const DropdownListInner = <T, V>(
     };
 
     const handleListItemClick = (item: T, upcomingIndex: number) => {
+        if (isOptionDisabled && isOptionDisabled(item)) return;
         if (hasSelectedMax && !checkListItemSelected(item)) return;
         setFocusedIndex(upcomingIndex);
         onSelectItem?.(item, getValue(item));
@@ -376,9 +400,9 @@ const DropdownListInner = <T, V>(
             return;
         }
 
-        if (disableItemFocus || !listItems) return;
+        if (disableItemFocus || !displayListItems.length) return;
 
-        const index = listItems.findIndex((item) =>
+        const index = displayListItems.findIndex((item) =>
             checkListItemSelected(item)
         );
 
@@ -396,17 +420,22 @@ const DropdownListInner = <T, V>(
             setFocusedIndex(index);
             setTimeout(() => listItemRefs.current[index]?.focus(), 200);
         } else {
-            virtuosoRef.current?.scrollToIndex({ index: 0 });
-            setFocusedIndex(0);
-            setTimeout(() => listItemRefs.current[0]?.focus(), 200);
+            const firstEnabled = isOptionDisabled
+                ? displayListItems.findIndex((item) => !isOptionDisabled(item))
+                : 0;
+            const startIndex = firstEnabled !== -1 ? firstEnabled : 0;
+            virtuosoRef.current?.scrollToIndex({ index: startIndex });
+            setFocusedIndex(startIndex);
+            setTimeout(() => listItemRefs.current[startIndex]?.focus(), 200);
         }
     }, [
         checkListItemSelected,
         disableItemFocus,
+        displayListItems,
         focusedIndex,
-        listItems,
         mounted,
         setFocusedIndex,
+        isOptionDisabled,
     ]);
 
     // =========================================================================
@@ -458,7 +487,11 @@ const DropdownListInner = <T, V>(
         );
     };
 
-    const renderDropdownLabel = (item: T, selected: boolean) => {
+    const renderDropdownLabel = (
+        item: T,
+        selected: boolean,
+        disabled: boolean
+    ) => {
         const { title, secondaryLabel } = getOptionLabel(item);
 
         return (
@@ -467,7 +500,7 @@ const DropdownListInner = <T, V>(
                 label={title}
                 maxLines={itemMaxLines}
                 selected={selected}
-                disabled={!selected && hasSelectedMax}
+                disabled={disabled}
                 sublabel={secondaryLabel}
                 truncationType={itemTruncationType}
                 variant={variant}
@@ -479,7 +512,9 @@ const DropdownListInner = <T, V>(
         if (!onRetry || itemsLoadState === "success") {
             const selected = checkListItemSelected(item);
             const active = index === focusedIndex;
-            const disabled = !selected && hasSelectedMax;
+            const disabled =
+                (!selected && hasSelectedMax) ||
+                (!!isOptionDisabled && isOptionDisabled(item));
             return (
                 <li
                     aria-selected={selected}
@@ -506,11 +541,11 @@ const DropdownListInner = <T, V>(
                     )}
                 >
                     {renderListItem ? (
-                        renderListItem(item, { selected })
+                        renderListItem(item, { selected, disabled })
                     ) : (
                         <>
                             {renderListItemIcon(selected)}
-                            {renderDropdownLabel(item, selected)}
+                            {renderDropdownLabel(item, selected, disabled)}
                         </>
                     )}
                 </li>

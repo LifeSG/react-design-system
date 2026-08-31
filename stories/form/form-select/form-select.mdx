@@ -16,9 +16,17 @@ import { Form } from "@lifesg/react-design-system/form";
 
 <Canvas of={FormSelectStories.Select} />
 
+## With disabled options
+
+You can disable specific options in the dropdown list using the `isOptionDisabled` prop.
+
+<Canvas of={FormSelectStories.DisabledOptions} />
+
 ## With custom list item display
 
-You are able to customise the display of the dropdown list items as well as the selected option.
+You are able to customise the display of the dropdown list items as well as the
+selected option. When using `renderListItem`, some states are passed via the
+render arguments so you can style items accordingly.
 
 <Canvas of={FormSelectStories.WithCustomListItemDisplay} />
 

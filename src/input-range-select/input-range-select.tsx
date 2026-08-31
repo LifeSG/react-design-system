@@ -44,6 +44,7 @@ export const InputRangeSelect = <T, V>({
     valueExtractor,
     valueToStringFunction,
     listExtractor,
+    isOptionDisabled,
     displayValueExtractor,
     onSelectOption,
     onShowOptions,
@@ -385,6 +386,7 @@ export const InputRangeSelect = <T, V>({
                 onDismiss={handleDismiss}
                 valueExtractor={valueExtractor}
                 listExtractor={listExtractor}
+                isOptionDisabled={isOptionDisabled}
                 selectedItems={currentSelectedItems}
                 itemsLoadState={optionsLoadState[focusedInput as RangeType]}
                 itemTruncationType={optionTruncationType}

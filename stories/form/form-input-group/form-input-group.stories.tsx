@@ -237,6 +237,18 @@ export const ListAddon: StoryObj<Component> = {
                         position: "right",
                     }}
                 />
+                <Form.InputGroup
+                    label="Some options are disabled"
+                    placeholder="Enter something"
+                    addon={{
+                        type: "list",
+                        attributes: {
+                            ...listAddonOptions,
+                            isOptionDisabled: (option: Option) =>
+                                option.value === "US" || option.value === "JP",
+                        },
+                    }}
+                />
             </>
         );
     },

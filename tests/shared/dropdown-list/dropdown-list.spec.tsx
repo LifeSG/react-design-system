@@ -243,6 +243,118 @@ describe("DropdownList", () => {
         });
     });
 
+    describe("Disabled Options", () => {
+        interface Option {
+            value: string;
+            label: string;
+        }
+
+        const OBJECT_ITEMS: Option[] = [
+            { value: "A", label: "Option A" },
+            { value: "B", label: "Option B" },
+            { value: "C", label: "Option C" },
+            { value: "D", label: "Option D" },
+        ];
+
+        const renderWithDisabled = (
+            props: Partial<React.ComponentProps<typeof DropdownList>> = {}
+        ) =>
+            renderList({
+                listItems: OBJECT_ITEMS,
+                valueExtractor: (item) => (item as Option).value,
+                listExtractor: (item) => (item as Option).label,
+                isOptionDisabled: (item) =>
+                    (item as Option).value === "B" ||
+                    (item as Option).value === "C",
+                ...props,
+            });
+
+        it("should set aria-disabled on disabled items", () => {
+            renderWithDisabled();
+
+            expect(
+                screen.getByRole("option", { name: "Option A" })
+            ).toHaveAttribute("aria-disabled", "false");
+            expect(
+                screen.getByRole("option", { name: "Option B" })
+            ).toHaveAttribute("aria-disabled", "true");
+            expect(
+                screen.getByRole("option", { name: "Option C" })
+            ).toHaveAttribute("aria-disabled", "true");
+            expect(
+                screen.getByRole("option", { name: "Option D" })
+            ).toHaveAttribute("aria-disabled", "false");
+        });
+
+        it("should not call onSelectItem when a disabled item is clicked", async () => {
+            const user = userEvent.setup();
+            const onSelectItem = jest.fn();
+            renderWithDisabled({ onSelectItem });
+
+            await user.click(screen.getByRole("option", { name: "Option B" }));
+
+            expect(onSelectItem).not.toHaveBeenCalled();
+        });
+
+        it("should call onSelectItem when an enabled item is clicked", async () => {
+            const user = userEvent.setup();
+            const onSelectItem = jest.fn();
+            renderWithDisabled({ onSelectItem });
+
+            await user.click(screen.getByRole("option", { name: "Option A" }));
+
+            expect(onSelectItem).toHaveBeenCalledWith(OBJECT_ITEMS[0], "A");
+        });
+
+        it("should skip disabled items on ArrowDown", async () => {
+            const user = userEvent.setup();
+            renderWithDisabled();
+
+            const options = screen.getAllByRole("option");
+            await waitFor(() => expect(options[0]).toHaveFocus());
+
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+            });
+
+            // Should skip Option B (index 1) and Option C (index 2), land on Option D (index 3)
+            expect(options[3]).toHaveFocus();
+        });
+
+        it("should skip disabled items on ArrowUp", async () => {
+            const user = userEvent.setup();
+            renderWithDisabled();
+
+            const options = screen.getAllByRole("option");
+            await waitFor(() => expect(options[0]).toHaveFocus());
+
+            // Move to Option D first
+            await act(async () => {
+                await user.keyboard("{ArrowDown}");
+            });
+            expect(options[3]).toHaveFocus();
+
+            // ArrowUp should skip C and B, land on A
+            await act(async () => {
+                await user.keyboard("{ArrowUp}");
+            });
+            expect(options[0]).toHaveFocus();
+        });
+
+        it("should focus first enabled item on initial render", async () => {
+            renderList({
+                listItems: OBJECT_ITEMS,
+                valueExtractor: (item) => (item as Option).value,
+                listExtractor: (item) => (item as Option).label,
+                isOptionDisabled: (item) => (item as Option).value === "A",
+            });
+
+            const options = screen.getAllByRole("option");
+            // Should skip disabled Option A, focus Option B
+            await waitFor(() => expect(options[1]).toHaveFocus());
+        });
+    });
+
     describe("Load States", () => {
         it("should show loading spinner when itemsLoadState is loading", () => {
             renderList({ itemsLoadState: "loading", onRetry: jest.fn() });
