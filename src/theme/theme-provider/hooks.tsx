@@ -9,6 +9,7 @@ type InheritedThemeScope = {
     themeProps: {
         "data-fds-theme"?: string;
         "data-fds-theme-mode"?: string;
+        "data-fds-theme-font"?: string;
     };
     themeStyle: CSSProperties;
 };
@@ -64,6 +65,8 @@ export const useInheritedThemeScope = (
             themeProps: {
                 "data-fds-theme": themeContext?.theme,
                 "data-fds-theme-mode": themeContext?.mode,
+                "data-fds-theme-font":
+                    themeContext?.themeElement?.dataset.fdsThemeFont,
             },
             themeStyle: getInheritedInlineCssVariables(
                 themeContext?.themeElement ?? null

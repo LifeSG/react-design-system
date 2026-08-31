@@ -12,10 +12,10 @@
 @import url("src/theme/styles/smgs.css");
 @import url("src/theme/styles/spf.css");
 @import url("src/theme/styles/supportgowhere.css");
-@import url("src/theme/styles/wise.css");
+@import url("src/theme/styles/tote-board.css");
 @import url("src/theme/styles/vica.css");
 @import url("src/theme/styles/websg.css");
-@import url("src/theme/styles/tote-board.css");
+@import url("src/theme/styles/wise.css");
 
 .docblock-argstable-body tr[title] span {
     font-size: 0.875rem;

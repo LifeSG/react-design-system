@@ -65,6 +65,28 @@ const wrapper = css`
 `;
 ```
 
+### Switching font variant
+
+For themes that support multiple font variants (e.g. WISE product themes), the
+stylesheet also declares font tokens scoped to a `data-fds-theme-font`
+attribute.
+
+```css
+[data-fds-theme="wise"][data-fds-theme-font="wise-public"] {
+    --fds-font-family-heading: "Public Sans";
+    --fds-font-heading-size-xxl: 3.25rem;
+    /* ... */
+}
+```
+
+Pass the `fontVariant` prop to `ThemeProvider` to activate it.
+
+```tsx
+<ThemeProvider theme="wise" fontVariant="wise-public">
+    <App />
+</ThemeProvider>
+```
+
 ## General usage
 
 ### With CSS-in-JS

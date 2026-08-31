@@ -38,8 +38,7 @@ export interface ThemeProviderProps {
     theme?: ThemeType | undefined;
     /**
      * Optional font variant to apply to the themed subtree.
-     *
-     * @default "wise-public"
+     * Currently only applicable to WISE product themes (wise, vica, websg).
      */
     fontVariant?: FontVariant | undefined;
 }
