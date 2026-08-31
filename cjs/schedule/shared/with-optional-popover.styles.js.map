@@ -1,0 +1,1 @@
+{"version":3,"file":"with-optional-popover.styles.js","sources":["../../../../src/schedule/shared/with-optional-popover.styles.ts"],"sourcesContent":["import { css } from \"@linaria/core\";\n\nexport const popoverTrigger = css`\n    width: 100%;\n    display: flex;\n    flex-direction: column;\n`;\n"],"names":[],"mappings":"wHAE2B"}
