@@ -37,15 +37,19 @@ export const slotSpacerTokens = {
 // =============================================================================
 // STYLING
 // =============================================================================
-export const modalCard = css`
-    width: 40rem;
-    margin: ${Spacing["spacing-64"]} auto;
+/** Shared by both the windowed (`modalCard`) and `fullscreenModalCard` variants. */
+export const cardBase = css`
     background: ${Colour.bg};
-    box-shadow: ${Shadow["xs-strong"]};
-    border-radius: ${Radius["lg"]};
 
     display: flex;
     flex-direction: column-reverse;
+`;
+
+export const modalCard = css`
+    width: 40rem;
+    margin: ${Spacing["spacing-64"]} auto;
+    box-shadow: ${Shadow["xs-strong"]};
+    border-radius: ${Radius["lg"]};
 
     max-width: calc(100% - ${Breakpoint["xxl-margin"]} * 2);
 
@@ -72,16 +76,11 @@ export const modalCard = css`
     ${MediaQuery.MaxWidth.xxs} {
         max-width: calc(100% - ${Breakpoint["xxs-margin"]} * 2);
     }
+`;
 
-    &&[data-fullscreen] {
-        max-width: none;
-        width: 100%;
-        height: 100vh;
-        margin: 0;
-        border-radius: 0;
-        padding: 0;
-        box-shadow: none;
-    }
+export const fullscreenModalCard = css`
+    width: 100%;
+    height: 100vh;
 `;
 
 export const closeButtonContainer = css`
@@ -187,6 +186,14 @@ export const slotSpacer = css`
             ${Spacing["spacing-64"]}
         );
     }
+`;
+
+export const fullscreenSlotSpacer = css`
+    flex-grow: 1;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
 `;
 
 export const headerContainer = css`

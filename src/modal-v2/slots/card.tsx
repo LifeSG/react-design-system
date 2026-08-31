@@ -62,14 +62,20 @@ function CardInner(
             ref={mergeRefs(ref, elementRef)}
             id={id}
             data-testid={testId}
-            data-fullscreen={fullscreen || undefined}
             {...otherProps}
             onClick={handleOnClick}
-            className={clsx(styles.modalCard, className)}
+            className={clsx(
+                styles.cardBase,
+                fullscreen ? styles.fullscreenModalCard : styles.modalCard,
+                className
+            )}
         >
             <div
                 data-has-close-button={!!hasHeader}
-                className={clsx(styles.slotSpacer)}
+                className={clsx(
+                    styles.slotSpacer,
+                    fullscreen && styles.fullscreenSlotSpacer
+                )}
             >
                 {ContentSlot}
                 {FooterSlot}

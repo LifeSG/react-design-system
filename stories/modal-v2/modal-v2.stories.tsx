@@ -145,6 +145,12 @@ export const Fullscreen: StoryObj<Component> = {
                                 border-radius, padding, or box-shadow.
                             </Typography.BodyBL>
                         </ModalV2.Content>
+                        <ModalV2.Footer
+                            primaryButton={<Button>Log out</Button>}
+                            secondaryButton={
+                                <Button styleType="secondary">Continue</Button>
+                            }
+                        />
                     </ModalV2.Card>
                 </ModalV2>
             </>
