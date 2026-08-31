@@ -10,6 +10,8 @@ module.exports = {
     testEnvironment: "jsdom",
     testMatch: ["<rootDir>/tests/**/*.spec.[jt]s?(x)"],
     moduleNameMapper: {
+        "@govtechsg/sgds-web-component/components/(.*)":
+            "<rootDir>/src/__mocks__/fileMock.js",
         "react-player": "<rootDir>/src/__mocks__/fileMock.js",
         "\\.(jpg|jpeg|png|gif|eot|otf|webp|svg|ttf|woff|woff2|mp4|webm|wav|mp3|m4a|aac|oga)$":
             "<rootDir>/src/__mocks__/fileMock.js",
