@@ -68,7 +68,7 @@ export const link = css`
     text-align: center;
     color: ${ComponentToken.Navbar["link-colour-text"]};
     height: 100%;
-    gap: 0.5rem;
+    gap: ${Spacing["spacing-16"]};
 
     &:active,
     &:hover,
