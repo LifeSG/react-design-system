@@ -58,6 +58,7 @@
     },
     "homepage": "https://github.com/LifeSG/react-design-system#readme",
     "dependencies": {
+        "@govtechsg/sgds-web-component": "3.26.0",
         "@react-aria/live-announcer": "^3.4.4",
         "@react-spring/web": "^10.0.1",
         "clsx": "^2.1.1",
@@ -76,7 +77,6 @@
         "@dnd-kit/utilities": "^3.2.2",
         "@eslint/js": "^9.39.1",
         "@floating-ui/react": "^0.26.23",
-        "@govtechsg/sgds-web-component": "^3.0.6",
         "@inquirer/prompts": "^7.0.0",
         "@lifesg/react-icons": "^1.12.0",
         "@linaria/core": "^7.0.0",
