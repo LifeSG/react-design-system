@@ -14,7 +14,7 @@
     --fds-font-heading-size-xs: 1.125rem;
     --fds-font-heading-lh-xxl: 4.25rem;
     --fds-font-heading-lh-xl: 3.25rem;
-    --fds-font-heading-lh-lg: 3rem;
+    --fds-font-heading-lh-lg: 2.625rem;
     --fds-font-heading-lh-md: 2.25rem;
     --fds-font-heading-lh-sm: 2rem;
     --fds-font-heading-lh-xs: 1.5rem;
@@ -62,7 +62,14 @@
     --fds-font-heading-lh-xl: 2.25rem;
     --fds-font-heading-lh-lg: 2rem;
     --fds-font-heading-lh-md: 1.5rem;
-    --fds-font-heading-lh-sm: 1.2rem;
+    --fds-font-heading-lh-sm: 1.25rem;
+    --fds-font-heading-lh-xs: 1.125rem;
+    --fds-font-heading-ls-xxl: -0.04rem;
+    --fds-font-heading-ls-xl: -0.035rem;
+    --fds-font-heading-ls-lg: -0.015rem;
+    --fds-font-heading-ls-md: -0.011rem;
+    --fds-font-heading-ls-sm: 0rem;
+    --fds-font-heading-ls-xs: 0rem;
     --fds-font-body-size-baseline: 1rem;
     --fds-font-body-size-md: 0.875rem;
     --fds-font-body-size-sm: 0.75rem;
@@ -74,7 +81,7 @@
     --fds-font-body-ls-baseline: 0rem;
     --fds-font-body-ls-md: 0rem;
     --fds-font-body-ls-sm: 0.008rem;
-    --fds-font-body-ls-xs: 0.0013rem;
+    --fds-font-body-ls-xs: 0.0125rem;
     --fds-font-form-label-size: 0.875rem;
     --fds-font-form-description-size: 0.75rem;
     --fds-font-form-label-lh: 1.25rem;
