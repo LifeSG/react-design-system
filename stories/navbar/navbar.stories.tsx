@@ -358,7 +358,7 @@ export const SubMenu: StoryObj<Component> = {
                                     href: "https://www.life.gov.sg",
                                 },
                                 {
-                                    id: "guides-item-2",
+                                    id: "guides-item-3",
                                     children: "Lorem ipsum",
                                     href: "https://www.life.gov.sg",
                                 },
