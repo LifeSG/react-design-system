@@ -4,7 +4,9 @@ import {
     compareScreenshot,
     waitForAnimationEnd,
 } from "../../utils";
-import { THEME_TYPES } from "../../../../src/theme/types";
+import { THEME_TYPES, type ThemeType } from "../../../../src/theme/types";
+
+const WISE_PRODUCT_THEMES = new Set<ThemeType>(["vica", "websg", "wise"]);
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "navbar";
@@ -90,9 +92,13 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Navbar", () => {
     for (const theme of THEME_TYPES) {
+        const fontVariant = WISE_PRODUCT_THEMES.has(theme)
+            ? "wise-public"
+            : undefined;
+
         test.describe("Default", () => {
             test.beforeEach(async ({ story }) => {
-                await story.init("default", { theme: theme });
+                await story.init("default", { theme: theme, fontVariant });
             });
 
             test(`${theme} theme`, async ({ story }) => {
@@ -106,6 +112,7 @@ test.describe("Navbar", () => {
                 await story.init("default", {
                     mode: "dark",
                     theme: theme,
+                    fontVariant,
                 });
             });
 

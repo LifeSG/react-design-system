@@ -14,8 +14,12 @@ import "@lifesg/react-design-system/theme/styles/smgs.css";
 import "@lifesg/react-design-system/theme/styles/spf.css";
 import "@lifesg/react-design-system/theme/styles/supportgowhere.css";
 import "@lifesg/react-design-system/theme/styles/tote-board.css";
+import "@lifesg/react-design-system/theme/styles/vica.css";
+import "@lifesg/react-design-system/theme/styles/websg.css";
+import "@lifesg/react-design-system/theme/styles/wise.css";
 
 import {
+    type FontVariant,
     THEME_TYPES,
     ThemeProvider,
     type ThemeType,
@@ -25,6 +29,8 @@ import type React from "react";
 
 import styles from "./layout.module.css";
 
+const FONT_VARIANTS = ["wise-public", "wise-admin"] as const;
+
 export default function Layout({
     children,
 }: Readonly<{
@@ -32,14 +38,21 @@ export default function Layout({
 }>) {
     const searchParams = useSearchParams();
     const themeParam = searchParams?.get("theme");
+    const fontVariantParam = searchParams?.get("fontVariant");
 
     const theme: ThemeType | undefined =
         themeParam && THEME_TYPES.includes(themeParam as ThemeType)
             ? (themeParam as ThemeType)
             : undefined;
 
+    const fontVariant: FontVariant | undefined =
+        fontVariantParam &&
+        FONT_VARIANTS.includes(fontVariantParam as FontVariant)
+            ? (fontVariantParam as FontVariant)
+            : undefined;
+
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme} fontVariant={fontVariant}>
             <div data-testid="story-layout" className={styles["story-layout"]}>
                 {children}
             </div>

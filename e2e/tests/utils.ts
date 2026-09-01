@@ -25,6 +25,7 @@ export abstract class AbstractStoryPage {
             mode?: "light" | "dark" | "auto";
             mockedTimestamp?: string;
             theme?: string;
+            fontVariant?: string;
         }
     ) {
         await this.page.setViewportSize(viewport[options?.size ?? "desktop"]);
@@ -58,6 +59,9 @@ export abstract class AbstractStoryPage {
         }
         if (options?.theme) {
             query.set("theme", options.theme);
+        }
+        if (options?.fontVariant) {
+            query.set("fontVariant", options.fontVariant);
         }
 
         const queryString = query.toString();

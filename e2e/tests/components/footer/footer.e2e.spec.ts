@@ -1,7 +1,9 @@
 import { test as base, expect, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
-import { THEME_TYPES } from "../../../../src/theme/types";
+import { THEME_TYPES, type ThemeType } from "../../../../src/theme/types";
 import { fixedTimestamp } from "../../consts";
+
+const WISE_PRODUCT_THEMES = new Set<ThemeType>(["vica", "websg", "wise"]);
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "footer";
@@ -20,11 +22,16 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Footer", () => {
     for (const theme of THEME_TYPES) {
+        const fontVariant = WISE_PRODUCT_THEMES.has(theme)
+            ? "wise-public"
+            : undefined;
+
         test.describe("Default", () => {
             test.beforeEach(async ({ story }) => {
                 await story.init("default-layout", {
                     mockedTimestamp: fixedTimestamp,
                     theme: theme,
+                    fontVariant,
                 });
             });
 
@@ -39,6 +46,7 @@ test.describe("Footer", () => {
                     mode: "dark",
                     mockedTimestamp: fixedTimestamp,
                     theme: theme,
+                    fontVariant,
                 });
             });
 
