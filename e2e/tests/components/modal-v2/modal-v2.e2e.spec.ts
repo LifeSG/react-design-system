@@ -235,6 +235,18 @@ test.describe("ModalV2", () => {
 
     test.describe(() => {
         test.beforeEach(async ({ story }) => {
+            await story.init("fullscreen");
+        });
+
+        test("Fullscreen", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
             await story.init("custom-styling");
         });
 

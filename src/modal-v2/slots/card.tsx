@@ -18,6 +18,7 @@ function CardInner(
         children,
         className,
         elementRef,
+        fullscreen,
         ...otherProps
     }: ModalCardProps,
     ref: React.ForwardedRef<HTMLDivElement>
@@ -63,11 +64,18 @@ function CardInner(
             data-testid={testId}
             {...otherProps}
             onClick={handleOnClick}
-            className={clsx(styles.modalCard, className)}
+            className={clsx(
+                styles.cardBase,
+                fullscreen ? styles.fullscreenModalCard : styles.modalCard,
+                className
+            )}
         >
             <div
                 data-has-close-button={!!hasHeader}
-                className={clsx(styles.slotSpacer)}
+                className={clsx(
+                    styles.slotSpacer,
+                    fullscreen && styles.fullscreenSlotSpacer
+                )}
             >
                 {ContentSlot}
                 {FooterSlot}

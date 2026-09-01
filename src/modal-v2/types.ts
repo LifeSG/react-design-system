@@ -17,6 +17,11 @@ export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
      * Ref to the modal card DOM element. When used within `Modal`, the default `ref` is not available and you can specify this instead.
      */
     elementRef?: React.Ref<HTMLDivElement> | undefined;
+    /**
+     * When `true`, the card expands to fill the viewport with no border-radius,
+     * padding, or box-shadow.
+     */
+    fullscreen?: boolean | undefined;
 }
 
 // @storybookSection ModalV2.CloseButton
