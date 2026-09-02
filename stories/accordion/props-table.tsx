@@ -133,6 +133,12 @@ const ACCORDION_ITEM_DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
                 defaultValue: "true",
             },
+            {
+                name: "onExpandChange",
+                description:
+                    "Callback fired when the expanded state changes. When provided, the component operates in controlled mode.",
+                propTypes: ["(expanded: boolean) => void"],
+            },
         ],
     },
 ];

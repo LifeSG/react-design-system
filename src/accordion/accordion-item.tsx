@@ -35,6 +35,7 @@ function Component(
         className,
         id,
         expanded: expandedControlled,
+        onExpandChange,
         "data-testid": testId = "accordion-item",
     }: AccordionItemProps,
     ref: React.Ref<AccordionItemHandle>
@@ -53,10 +54,14 @@ function Component(
     const [hasFirstLoad, setHasFirstLoad] = useState<boolean>(false);
     const internalId = useId();
     const contentId = `${internalId}-content`;
-    const resizeDetector = useResizeDetector();
-    const expanded =
-        itemState[internalId] ??
-        (collapsible ? expandedControlled ?? expandAll : true); // the initial value
+    const { height, ref: resizeDetectorRef } = useResizeDetector();
+    const isControlled = onExpandChange !== undefined;
+    const expanded = isControlled
+        ? collapsible
+            ? expandedControlled ?? false
+            : true
+        : itemState[internalId] ??
+          (collapsible ? expandedControlled ?? expandAll : true);
 
     useImperativeHandle(
         ref,
@@ -65,10 +70,18 @@ function Component(
                 elementRef.current!,
                 {
                     expand(): void {
-                        onItemStateChange(internalId, true);
+                        if (isControlled) {
+                            onExpandChange?.(true);
+                        } else {
+                            onItemStateChange(internalId, true);
+                        }
                     },
                     collapse(): void {
-                        onItemStateChange(internalId, false);
+                        if (isControlled) {
+                            onExpandChange?.(false);
+                        } else {
+                            onItemStateChange(internalId, false);
+                        }
                     },
                     isExpanded() {
                         return expanded;
@@ -87,12 +100,34 @@ function Component(
         return () => onItemDeregister?.(internalId);
     }, []);
 
+    // Controlled mode: keep parent itemState in sync so "Show all"/"Hide all" label stays accurate
     useEffect(() => {
-        onItemStateChange(
-            internalId,
-            collapsible ? expandedControlled ?? expandAll : true
-        );
+        if (isControlled) {
+            onItemStateChange(
+                internalId,
+                collapsible ? expandedControlled ?? false : true
+            );
+        }
+    }, [expandedControlled, collapsible]);
+
+    // Uncontrolled mode: sync state when expandAll button or the hint prop changes
+    useEffect(() => {
+        if (!isControlled) {
+            onItemStateChange(
+                internalId,
+                collapsible ? expandedControlled ?? expandAll : true
+            );
+        }
     }, [expandAll, expandedControlled, collapsible]);
+
+    // Controlled mode: forward expandAll button changes to the caller
+    useEffect(() => {
+        if (!isControlled || !hasFirstLoad) return;
+        const next = collapsible ? expandAll : true;
+        if (next !== expandedControlled) {
+            onExpandChange?.(next);
+        }
+    }, [expandAll]);
 
     // =========================================================================
     // EVENT HANDLERS
@@ -100,7 +135,11 @@ function Component(
 
     const handleExpandCollapseClick = (event: React.MouseEvent) => {
         event.preventDefault();
-        onItemStateChange(internalId, !expanded);
+        if (isControlled) {
+            onExpandChange?.(!expanded);
+        } else {
+            onItemStateChange(internalId, !expanded);
+        }
     };
 
     // =========================================================================
@@ -108,7 +147,7 @@ function Component(
     // =========================================================================
     // React spring animation configuration
     const resizeHeight = {
-        height: expanded ? resizeDetector.height : 0,
+        height: expanded ? height : 0,
     };
     const expandableStyles = useSpring(resizeHeight);
 
@@ -121,7 +160,7 @@ function Component(
                 inert={inertValue(!expanded)}
             >
                 <ContentContainer
-                    ref={resizeDetector.ref}
+                    ref={resizeDetectorRef}
                     data-testid="content-container"
                 >
                     {children}
