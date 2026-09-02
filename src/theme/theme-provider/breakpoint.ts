@@ -57,7 +57,10 @@ const BREAKPOINT_CLASS_PREFIX = "fds-breakpoint-";
 
 function applyBreakpointClasses(sourceElement: HTMLElement) {
     const body = document.body;
-    const width = window.innerWidth;
+
+    const width = window.visualViewport
+        ? window.visualViewport.width * window.visualViewport.scale
+        : window.innerWidth;
 
     [...body.classList].forEach((cls) => {
         if (cls.startsWith(BREAKPOINT_CLASS_PREFIX)) {
