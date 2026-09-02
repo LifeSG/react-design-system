@@ -1,5 +1,5 @@
 import type { Ref } from "react";
-import { forwardRef, useEffect, useMemo, useState } from "react";
+import { forwardRef, useContext, useEffect, useMemo, useState } from "react";
 
 import { mergeRefs, useIsomorphicLayoutEffect } from "../../util";
 import type { ResolvedThemeMode } from "../types";
@@ -27,14 +27,20 @@ const InnerThemeProvider = (
         null
     );
 
+    const themeContext = useContext(ThemeContext);
+    const isNestedThemeProvider = !!themeContext;
+
     // Re-subscribe when the source node or token set changes:
     // - `themeElement`: scoped breakpoint tokens may live on this element
     // - `theme` / `themeMode`: breakpoint token values can differ across theme/mode
     useIsomorphicLayoutEffect(() => {
+        // Only set up the breakpoint listener once in the root theme provider
+        if (isNestedThemeProvider) return;
+
         const sourceElement = themeElement ?? document.documentElement;
         const cleanup = setupBreakpointListener(sourceElement);
         return cleanup;
-    }, [themeElement, theme, computedMode]);
+    }, [themeElement, theme, computedMode, isNestedThemeProvider]);
 
     useEffect(() => {
         if (isModeControlled) {
