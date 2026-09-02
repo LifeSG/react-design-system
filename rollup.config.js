@@ -62,8 +62,36 @@ const basePlugins = [
     json(), // converts JSON files to ES6 modules
 ];
 
+// Wraps the external function set by excludeDependenciesFromBundle to force-bundle
+// SGDS CSS theme imports (processed by libStylePlugin) while keeping JS external.
+function bundleSgdsCss() {
+    return {
+        name: "bundle-sgds-css",
+        options(opts) {
+            const originalExternal = opts.external;
+            if (typeof originalExternal === "function") {
+                return {
+                    ...opts,
+                    external(id, parentId, isResolved) {
+                        if (
+                            id.startsWith(
+                                "@govtechsg/sgds-web-component/themes/"
+                            )
+                        ) {
+                            return false;
+                        }
+                        return originalExternal(id, parentId, isResolved);
+                    },
+                };
+            }
+            return opts;
+        },
+    };
+}
+
 const plugins = [
     ...basePlugins,
+    bundleSgdsCss(),
     typescript({
         useTsconfigDeclarationDir: true,
         tsconfig: "tsconfig.build.json",
@@ -71,6 +99,7 @@ const plugins = [
     terser(), // Helps remove comments, whitespace or logging codes
     generatePackageJson({
         outputFolder: "dist",
+        additionalDependencies: ["@govtechsg/sgds-web-component"],
         baseContents: (pkg) => ({
             name: pkg.name,
             version: pkg.version,

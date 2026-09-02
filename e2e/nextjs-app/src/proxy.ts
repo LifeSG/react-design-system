@@ -16,9 +16,7 @@ export function proxy(request: NextRequest) {
 
     const cspHeader = `
         default-src 'self';
-        script-src 'self' 'nonce-${nonce}' ${
-        isDev ? "'unsafe-eval'" : ""
-    } https://cdn.jsdelivr.net/npm/@govtechsg/sgds-web-component@3/components/Masthead/index.umd.js;
+        script-src 'self' 'nonce-${nonce}' ${isDev ? "'unsafe-eval'" : ""};
         ${styleSrcDirective}
         img-src 'self' https://*.life.gov.sg https://fastly.picsum.photos 
             https://mylegacy.life.gov.sg https://*.booking.gov.sg blob: data:;
