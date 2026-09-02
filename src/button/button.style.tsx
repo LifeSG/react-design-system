@@ -139,7 +139,8 @@ export const Main = styled.button<MainStyleProps>`
             case "large":
                 return css`
                     height: 4rem;
-                    ${Font["heading-md-semibold"]}
+                    ${Font["heading-md-semibold"]};
+                    font-family: ${Font.Spec["body-font-family"]};
 
                     ${MediaQuery.MaxWidth.xxs} {
                         height: auto;
@@ -149,7 +150,7 @@ export const Main = styled.button<MainStyleProps>`
             default:
                 return css`
                     height: 3rem;
-                    ${Font["heading-xs-semibold"]}
+                    ${Font["body-baseline-semibold"]}
 
                     ${MediaQuery.MaxWidth.xxs} {
                         height: auto;
