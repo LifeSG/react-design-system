@@ -19,6 +19,7 @@ export const THEME_TYPE_TO_KEY_MAPPING: Record<ThemeType, string> = {
     vica: "VICA",
     websg: "WebSG",
     wise: "WISE",
+    wogaa: "WOGAA",
 };
 
 export type ThemeMapKey =

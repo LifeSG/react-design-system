@@ -6,7 +6,12 @@ import {
 } from "../../utils";
 import { THEME_TYPES, type ThemeType } from "../../../../src/theme/types";
 
-const WISE_PRODUCT_THEMES = new Set<ThemeType>(["vica", "websg", "wise"]);
+const WISE_PRODUCT_THEMES = new Set<ThemeType>([
+    "vica",
+    "websg",
+    "wise",
+    "wogaa",
+]);
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "navbar";

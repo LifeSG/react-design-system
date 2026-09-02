@@ -56,9 +56,10 @@ const InnerThemeProvider = (
         () => ({
             theme,
             mode: computedMode,
+            fontVariant,
             themeElement,
         }),
-        [theme, computedMode, themeElement]
+        [theme, computedMode, fontVariant, themeElement]
     );
 
     return (

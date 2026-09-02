@@ -11,6 +11,7 @@ if (typeof globalThis.PointerEvent === "undefined") {
 const getFallbackThemeContext = (): ThemeContextValue => ({
     theme: "lifesg",
     mode: "light",
+    fontVariant: undefined,
     themeElement:
         typeof document === "undefined" ? null : document.documentElement,
 });

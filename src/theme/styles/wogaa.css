@@ -1,7 +1,7 @@
 @import url("./presets/default.css");
 
-[data-fds-theme="vica"] {
-    /* 
+[data-fds-theme="wogaa"] {
+    /*
     ============================================================================
     PRIMITIVE COLOURS
     ============================================================================
@@ -17,28 +17,28 @@
     --fds-colour-brand-90: #D0E2F2;
     --fds-colour-brand-95: #E6F0F8;
     --fds-colour-brand-100: #F7FAFD;
-    --fds-colour-primary-10: #061727;
-    --fds-colour-primary-20: #0A2944;
-    --fds-colour-primary-30: #0E3B62;
-    --fds-colour-primary-40: #135186;
-    --fds-colour-primary-50: #196BB0;
-    --fds-colour-primary-60: #5094CF;
-    --fds-colour-primary-70: #83B4DD;
-    --fds-colour-primary-80: #AECEE9;
-    --fds-colour-primary-90: #D0E2F2;
-    --fds-colour-primary-95: #E6F0F8;
-    --fds-colour-primary-100: #F7FAFD;
-    --fds-colour-secondary-10: #0E1723;
-    --fds-colour-secondary-20: #18293D;
-    --fds-colour-secondary-30: #233A57;
-    --fds-colour-secondary-40: #305078;
-    --fds-colour-secondary-50: #4B6A8F;
-    --fds-colour-secondary-60: #7B91A9;
-    --fds-colour-secondary-70: #A1B1C3;
-    --fds-colour-secondary-80: #C1CBD7;
-    --fds-colour-secondary-90: #DBE1E8;
-    --fds-colour-secondary-95: #EBEFF2;
-    --fds-colour-secondary-100: #F7F8FA;
+    --fds-colour-primary-10: #001430;
+    --fds-colour-primary-20: #022654;
+    --fds-colour-primary-30: #053676;
+    --fds-colour-primary-40: #0A4AA2;
+    --fds-colour-primary-50: #1263D6;
+    --fds-colour-primary-60: #4390ED;
+    --fds-colour-primary-70: #7DB2F3;
+    --fds-colour-primary-80: #ABCDF7;
+    --fds-colour-primary-90: #CFE2FA;
+    --fds-colour-primary-95: #E4EFFD;
+    --fds-colour-primary-100: #F6FAFF;
+    --fds-colour-secondary-10: #1C112C;
+    --fds-colour-secondary-20: #311E4D;
+    --fds-colour-secondary-30: #462B6E;
+    --fds-colour-secondary-40: #613A97;
+    --fds-colour-secondary-50: #7B54B3;
+    --fds-colour-secondary-60: #9E82C7;
+    --fds-colour-secondary-70: #BAA6D8;
+    --fds-colour-secondary-80: #D1C4E5;
+    --fds-colour-secondary-90: #E4DCEF;
+    --fds-colour-secondary-95: #F1ECF7;
+    --fds-colour-secondary-100: #F9F7FB;
     --fds-colour-neutral-10: #161616;
     --fds-colour-neutral-20: #282828;
     --fds-colour-neutral-30: #393939;
@@ -63,7 +63,7 @@
     --fds-colour-success-100: #F2FAF4;
     --fds-colour-warning-10: #1C1603;
     --fds-colour-warning-20: #312705;
-    --fds-colour-warning-30: #453007;
+    --fds-colour-warning-30: #453708;
     --fds-colour-warning-40: #5F4D0B;
     --fds-colour-warning-50: #7E650E;
     --fds-colour-warning-60: #AC8B13;
@@ -132,14 +132,14 @@
     );
 }
 
-[data-fds-theme="vica"][data-fds-theme-mode="dark"] {
+[data-fds-theme="wogaa"][data-fds-theme-mode="dark"] {
     @mixin semantic-colours-dark-default;
 }
 
-[data-fds-theme="vica"][data-fds-theme-font="wise-public"] {
+[data-fds-theme="wogaa"][data-fds-theme-font="wise-public"] {
     @mixin font-wise-public;
 }
 
-[data-fds-theme="vica"][data-fds-theme-font="wise-admin"] {
+[data-fds-theme="wogaa"][data-fds-theme-font="wise-admin"] {
     @mixin font-wise-admin;
 }

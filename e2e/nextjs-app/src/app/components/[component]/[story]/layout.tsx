@@ -17,10 +17,11 @@ import "@lifesg/react-design-system/theme/styles/tote-board.css";
 import "@lifesg/react-design-system/theme/styles/vica.css";
 import "@lifesg/react-design-system/theme/styles/websg.css";
 import "@lifesg/react-design-system/theme/styles/wise.css";
+import "@lifesg/react-design-system/theme/styles/wogaa.css";
 
 import {
-    type FontVariant,
     THEME_TYPES,
+    type ThemeFontVariant,
     ThemeProvider,
     type ThemeType,
 } from "@lifesg/react-design-system/theme";
@@ -29,7 +30,7 @@ import type React from "react";
 
 import styles from "./layout.module.css";
 
-const FONT_VARIANTS = ["wise-public", "wise-admin"] as const;
+const FONT_VARIANTS: ThemeFontVariant[] = ["wise-public", "wise-admin"];
 
 export default function Layout({
     children,
@@ -45,10 +46,10 @@ export default function Layout({
             ? (themeParam as ThemeType)
             : undefined;
 
-    const fontVariant: FontVariant | undefined =
+    const fontVariant: ThemeFontVariant | undefined =
         fontVariantParam &&
-        FONT_VARIANTS.includes(fontVariantParam as FontVariant)
-            ? (fontVariantParam as FontVariant)
+        FONT_VARIANTS.includes(fontVariantParam as ThemeFontVariant)
+            ? (fontVariantParam as ThemeFontVariant)
             : undefined;
 
     return (
