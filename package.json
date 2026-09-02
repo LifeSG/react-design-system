@@ -43,7 +43,8 @@
         "lint:js:fix": "eslint '**/*.{ts,tsx,js,jsx}' --fix --max-warnings 0",
         "lint:css": "stylelint '**/*.css'",
         "lint:css:fix": "stylelint '**/*.css' --fix",
-        "test:eslint-rules": "node tests/eslint-rules/run-eslint-rule-tests.mjs"
+        "test:eslint-rules": "node tests/eslint-rules/run-eslint-rule-tests.mjs",
+        "generate:skill-props": "tsx scripts/generate-skill-props.ts"
     },
     "repository": {
         "type": "git",
