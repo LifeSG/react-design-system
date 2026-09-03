@@ -4,6 +4,7 @@ import { ThemeProvider, useTheme } from "src/theme";
 import * as breakpoint from "src/theme/theme-provider/breakpoint";
 import * as systemMode from "src/theme/theme-provider/system-colour-mode";
 
+import { createMatchMediaMock } from "../_common";
 import { setupThemeVariables } from "./setup";
 
 const TestComponent = () => {
@@ -16,16 +17,6 @@ const TestComponent = () => {
         </div>
     );
 };
-
-function setWindowWidth(width: number) {
-    Object.defineProperty(globalThis, "innerWidth", {
-        writable: true,
-        configurable: true,
-        value: width,
-    });
-
-    globalThis.dispatchEvent(new Event("resize"));
-}
 
 describe("ThemeProvider", () => {
     beforeEach(() => {
@@ -184,6 +175,16 @@ describe("ThemeProvider", () => {
     });
 
     describe("BREAKPOINT", () => {
+        let matchMediaMock: ReturnType<typeof createMatchMediaMock>;
+
+        beforeEach(() => {
+            matchMediaMock = createMatchMediaMock();
+        });
+
+        afterEach(() => {
+            matchMediaMock.restore();
+        });
+
         it("does not crash when breakpoint listener setup returns undefined", () => {
             jest.spyOn(
                 breakpoint,
@@ -200,7 +201,7 @@ describe("ThemeProvider", () => {
         });
 
         it("applies correct breakpoint classes on initial load", () => {
-            setWindowWidth(500); // md range (481–768)
+            matchMediaMock.setViewportWidth(500); // md range (481–768)
 
             render(
                 <ThemeProvider>
@@ -216,7 +217,7 @@ describe("ThemeProvider", () => {
         });
 
         it("updates breakpoint classes on resize", () => {
-            setWindowWidth(500); // md range (481–768)
+            matchMediaMock.setViewportWidth(500); // md range (481–768)
 
             render(
                 <ThemeProvider>
@@ -229,7 +230,7 @@ describe("ThemeProvider", () => {
             expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
 
             // Resize to lg range (769–1200)
-            setWindowWidth(900);
+            matchMediaMock.setViewportWidth(900);
 
             expect(body.classList.contains("fds-breakpoint-lg")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-lg-min")).toBe(true);
@@ -256,7 +257,7 @@ describe("ThemeProvider", () => {
         });
 
         it("applies only min and base class for xxl", () => {
-            setWindowWidth(1600); // xxl (1441+)
+            matchMediaMock.setViewportWidth(1600); // xxl (1441+)
 
             render(
                 <ThemeProvider>
@@ -276,7 +277,7 @@ describe("ThemeProvider", () => {
         });
 
         it("persist breakpoint when still within range", () => {
-            setWindowWidth(500); // md range (481–768)
+            matchMediaMock.setViewportWidth(500); // md range (481–768)
 
             render(
                 <ThemeProvider>
@@ -290,7 +291,7 @@ describe("ThemeProvider", () => {
             expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
 
-            setWindowWidth(600); // md range (481–768)
+            matchMediaMock.setViewportWidth(600); // md range (481–768)
 
             expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-md-min")).toBe(true);
@@ -298,7 +299,7 @@ describe("ThemeProvider", () => {
         });
 
         it("respects custom breakpoint overrides", () => {
-            setWindowWidth(1000);
+            matchMediaMock.setViewportWidth(1000);
 
             render(
                 <ThemeProvider
@@ -317,7 +318,7 @@ describe("ThemeProvider", () => {
             expect(body.classList.contains("fds-breakpoint-md")).toBe(true);
             expect(body.classList.contains("fds-breakpoint-md-max")).toBe(true);
 
-            setWindowWidth(1001);
+            matchMediaMock.setViewportWidth(1001);
             expect(body.classList.contains("fds-breakpoint-md")).toBe(false);
             expect(body.classList.contains("fds-breakpoint-md-max")).toBe(
                 false
@@ -329,7 +330,7 @@ describe("ThemeProvider", () => {
         it("does not remove non-breakpoint classes", () => {
             document.body.classList.add("random-class");
 
-            setWindowWidth(500);
+            matchMediaMock.setViewportWidth(500);
 
             render(
                 <ThemeProvider>
