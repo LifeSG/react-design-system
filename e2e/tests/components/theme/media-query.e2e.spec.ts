@@ -119,6 +119,21 @@ test.describe("Theme media query", () => {
                 "false"
             );
         });
+
+        test.describe(() => {
+            test.use({ isMobile: true });
+
+            test("content overflow behaviour", async ({ story }) => {
+                await story.init("media-query-content-overflow");
+                await story.page.setViewportSize({ width: 400, height: 720 });
+
+                await expect(story.layout).toContainText("isSm: true");
+                await expect(story.layout).toContainText("isMd: false");
+                await expect(story.layout).toContainText(
+                    "breakpoint: fds-breakpoint-sm"
+                );
+            });
+        });
     });
 
     test.describe("Specificity", () => {

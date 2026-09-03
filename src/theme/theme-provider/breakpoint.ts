@@ -1,6 +1,6 @@
 import { Breakpoint } from "../tokens/breakpoint";
 import type { CSSVariableString } from "../types";
-import { parseCSSVariableValue, parsePxOrRemValue } from "../utils";
+import { parseCSSVariableValue } from "../utils";
 
 function getBreakpointRanges(sourceElement: HTMLElement) {
     const getBreakpointValue = (token: CSSVariableString) => {
@@ -57,7 +57,6 @@ const BREAKPOINT_CLASS_PREFIX = "fds-breakpoint-";
 
 function applyBreakpointClasses(sourceElement: HTMLElement) {
     const body = document.body;
-    const width = window.innerWidth;
 
     [...body.classList].forEach((cls) => {
         if (cls.startsWith(BREAKPOINT_CLASS_PREFIX)) {
@@ -68,16 +67,15 @@ function applyBreakpointClasses(sourceElement: HTMLElement) {
     const BREAKPOINT_RANGES = getBreakpointRanges(sourceElement);
 
     BREAKPOINT_RANGES.forEach((range) => {
-        const minValue = parsePxOrRemValue(range.min);
-        const maxValue =
+        const isMinMatched = window.matchMedia(
+            `(min-width: ${range.min})`
+        ).matches;
+        const isMaxMatched =
             range.max === Infinity
-                ? Infinity
-                : parsePxOrRemValue(range.max as string);
-
-        const isMinMatched = width >= minValue;
-        const isMaxMatched = maxValue === Infinity ? false : width <= maxValue;
+                ? false
+                : window.matchMedia(`(max-width: ${range.max})`).matches;
         const isWithinRange =
-            isMinMatched && (maxValue === Infinity || isMaxMatched);
+            isMinMatched && (range.max === Infinity || isMaxMatched);
 
         if (isWithinRange) {
             body.classList.add(`${BREAKPOINT_CLASS_PREFIX}${range.key}`);
@@ -94,7 +92,7 @@ function applyBreakpointClasses(sourceElement: HTMLElement) {
 }
 
 export function setupBreakpointListener(sourceElement: HTMLElement) {
-    if (!globalThis.window) return;
+    if (!globalThis.window || !globalThis.window.matchMedia) return;
 
     const handleBreakpointChange = () => {
         applyBreakpointClasses(sourceElement);

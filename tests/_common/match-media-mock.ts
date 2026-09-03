@@ -26,6 +26,7 @@ export type MatchMediaMockController = {
         mediaQueryLists: Map<string, MockMediaQueryList>;
     };
     restore: () => void;
+    setViewportWidth: (width: number) => void;
 };
 
 export const createMatchMediaMock = ({
@@ -38,6 +39,7 @@ export const createMatchMediaMock = ({
     let mediaQueryLists = new Map<string, MockMediaQueryList>();
     let matchMedia: jest.MockedFunction<(query: string) => MockMediaQueryList> =
         jest.fn<(query: string) => MockMediaQueryList>();
+    let viewportWidth: number | undefined;
 
     const mock: MatchMediaMockController["mock"] = (
         options: CreateMatchMediaMockOptions = {}
@@ -49,6 +51,10 @@ export const createMatchMediaMock = ({
             const existingMediaQueryList = mediaQueryLists.get(query);
 
             if (existingMediaQueryList) {
+                existingMediaQueryList.matches = resolveMediaQueryMatches(
+                    query,
+                    initialMatches
+                );
                 return existingMediaQueryList;
             }
 
@@ -71,7 +77,7 @@ export const createMatchMediaMock = ({
                     mediaQueryList.matches = matches;
                     changeListener?.({ matches } as MediaQueryListEvent);
                 },
-                matches: initialMatches,
+                matches: resolveMediaQueryMatches(query, initialMatches),
                 media: query,
                 removeEventListener: jest.fn(
                     (
@@ -102,7 +108,34 @@ export const createMatchMediaMock = ({
         return { matchMedia, mediaQueryLists };
     };
 
+    const resolveMediaQueryMatches = (
+        query: string,
+        initialMatches: boolean
+    ): boolean => {
+        if (viewportWidth === undefined) {
+            return initialMatches;
+        }
+
+        const minMatch = query.match(/min-width:\s*(\d+)/);
+        const maxMatch = query.match(/max-width:\s*(\d+)/);
+
+        if (minMatch && maxMatch) {
+            return (
+                viewportWidth >= parseInt(minMatch[1], 10) &&
+                viewportWidth <= parseInt(maxMatch[1], 10)
+            );
+        } else if (minMatch) {
+            return viewportWidth >= parseInt(minMatch[1], 10);
+        } else if (maxMatch) {
+            return viewportWidth <= parseInt(maxMatch[1], 10);
+        }
+
+        return false;
+    };
+
     const restore = () => {
+        viewportWidth = undefined;
+
         if (originalMatchMediaDescriptor) {
             Object.defineProperty(
                 globalThis.window,
@@ -113,6 +146,11 @@ export const createMatchMediaMock = ({
         }
 
         delete (globalThis.window as Partial<Window>).matchMedia;
+    };
+
+    const setViewportWidth = (width: number) => {
+        viewportWidth = width;
+        globalThis.window.dispatchEvent(new Event("resize"));
     };
 
     mock({ initialMatches });
@@ -126,5 +164,6 @@ export const createMatchMediaMock = ({
         },
         mock,
         restore,
+        setViewportWidth,
     };
 };
