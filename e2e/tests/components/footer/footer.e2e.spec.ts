@@ -27,7 +27,7 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Footer", () => {
     for (const theme of THEME_TYPES) {
-        const fontVariant = WISE_PRODUCT_THEMES.has(theme)
+        const fontPreset = WISE_PRODUCT_THEMES.has(theme)
             ? "wise-public"
             : undefined;
 
@@ -36,7 +36,7 @@ test.describe("Footer", () => {
                 await story.init("default-layout", {
                     mockedTimestamp: fixedTimestamp,
                     theme: theme,
-                    fontVariant,
+                    fontPreset,
                 });
             });
 
@@ -51,7 +51,7 @@ test.describe("Footer", () => {
                     mode: "dark",
                     mockedTimestamp: fixedTimestamp,
                     theme: theme,
-                    fontVariant,
+                    fontPreset,
                 });
             });
 

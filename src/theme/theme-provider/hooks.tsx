@@ -29,7 +29,7 @@ export const useTheme = (): ThemeContextValue => {
         return {
             theme: "lifesg",
             mode: "light",
-            fontVariant: undefined,
+            fontPreset: undefined,
             themeElement: null,
         };
     }
@@ -66,7 +66,7 @@ export const useInheritedThemeScope = (
             themeProps: {
                 "data-fds-theme": themeContext?.theme,
                 "data-fds-theme-mode": themeContext?.mode,
-                "data-fds-theme-font": themeContext?.fontVariant,
+                "data-fds-theme-font": themeContext?.fontPreset,
             },
             themeStyle: getInheritedInlineCssVariables(
                 themeContext?.themeElement ?? null
@@ -74,7 +74,7 @@ export const useInheritedThemeScope = (
         };
     }, [
         enabled,
-        themeContext?.fontVariant,
+        themeContext?.fontPreset,
         themeContext?.mode,
         themeContext?.theme,
         themeContext?.themeElement,

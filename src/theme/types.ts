@@ -38,8 +38,8 @@ export const THEME_TYPES = [
 /** Union of all supported theme names. */
 export type ThemeType = (typeof THEME_TYPES)[number];
 
-/** Available font variant presets. */
-export type ThemeFontVariant = "wise-public" | "wise-admin";
+/** Available font presets for WISE product themes (wise, vica, websg, wogaa). */
+export type ThemeFontPreset = "wise-public" | "wise-admin";
 /**
  * Colour mode accepted by `ThemeProvider`.
  * — `"auto"` follows OS preference.

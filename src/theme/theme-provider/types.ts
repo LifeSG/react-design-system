@@ -2,7 +2,7 @@ import type { CSSProperties } from "react";
 
 import type {
     ResolvedThemeMode,
-    ThemeFontVariant,
+    ThemeFontPreset,
     ThemeMode,
     ThemeType,
 } from "../types";
@@ -13,8 +13,8 @@ export interface ThemeContextValue {
     theme: ThemeType;
     /** Resolved colour mode. */
     mode: ResolvedThemeMode;
-    /** Active font variant, if set. */
-    fontVariant: ThemeFontVariant | undefined;
+    /** Active font preset, if set. */
+    fontPreset: ThemeFontPreset | undefined;
     /**
      * Element that hosts the current theme scope. Useful for scoped theming.
      */
@@ -39,8 +39,8 @@ export interface ThemeProviderProps {
      */
     theme?: ThemeType | undefined;
     /**
-     * Optional font variant to apply to the themed subtree.
-     * Currently only applicable to WISE product themes (wise, vica, websg).
+     * Optional font preset to apply to the themed subtree.
+     * Applicable to WISE product themes (wise, vica, websg, wogaa).
      */
-    fontVariant?: ThemeFontVariant | undefined;
+    fontPreset?: ThemeFontPreset | undefined;
 }

@@ -21,7 +21,7 @@ import "@lifesg/react-design-system/theme/styles/wogaa.css";
 
 import {
     THEME_TYPES,
-    type ThemeFontVariant,
+    type ThemeFontPreset,
     ThemeProvider,
     type ThemeType,
 } from "@lifesg/react-design-system/theme";
@@ -30,7 +30,7 @@ import type React from "react";
 
 import styles from "./layout.module.css";
 
-const FONT_VARIANTS: ThemeFontVariant[] = ["wise-public", "wise-admin"];
+const FONT_PRESETS: ThemeFontPreset[] = ["wise-public", "wise-admin"];
 
 export default function Layout({
     children,
@@ -39,21 +39,21 @@ export default function Layout({
 }>) {
     const searchParams = useSearchParams();
     const themeParam = searchParams?.get("theme");
-    const fontVariantParam = searchParams?.get("fontVariant");
+    const fontPresetParam = searchParams?.get("fontPreset");
 
     const theme: ThemeType | undefined =
         themeParam && THEME_TYPES.includes(themeParam as ThemeType)
             ? (themeParam as ThemeType)
             : undefined;
 
-    const fontVariant: ThemeFontVariant | undefined =
-        fontVariantParam &&
-        FONT_VARIANTS.includes(fontVariantParam as ThemeFontVariant)
-            ? (fontVariantParam as ThemeFontVariant)
+    const fontPreset: ThemeFontPreset | undefined =
+        fontPresetParam &&
+        FONT_PRESETS.includes(fontPresetParam as ThemeFontPreset)
+            ? (fontPresetParam as ThemeFontPreset)
             : undefined;
 
     return (
-        <ThemeProvider theme={theme} fontVariant={fontVariant}>
+        <ThemeProvider theme={theme} fontPreset={fontPreset}>
             <div data-testid="story-layout" className={styles["story-layout"]}>
                 {children}
             </div>

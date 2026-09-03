@@ -97,13 +97,13 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Navbar", () => {
     for (const theme of THEME_TYPES) {
-        const fontVariant = WISE_PRODUCT_THEMES.has(theme)
+        const fontPreset = WISE_PRODUCT_THEMES.has(theme)
             ? "wise-public"
             : undefined;
 
         test.describe("Default", () => {
             test.beforeEach(async ({ story }) => {
-                await story.init("default", { theme: theme, fontVariant });
+                await story.init("default", { theme: theme, fontPreset });
             });
 
             test(`${theme} theme`, async ({ story }) => {
@@ -117,7 +117,7 @@ test.describe("Navbar", () => {
                 await story.init("default", {
                     mode: "dark",
                     theme: theme,
-                    fontVariant,
+                    fontPreset,
                 });
             });
 
