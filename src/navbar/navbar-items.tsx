@@ -80,10 +80,10 @@ export const NavbarItems = <T,>({
     // =========================================================================
 
     useEffect(() => {
-        if (initialExpandedItemIndex === null) return;
+        if (!mobile) return;
 
         setSelectedIndex(initialExpandedItemIndex);
-    }, [initialExpandedItemIndex]);
+    }, [mobile, initialExpandedItemIndex]);
 
     useEffect(() => {
         if (mobile) return;
@@ -110,8 +110,10 @@ export const NavbarItems = <T,>({
             event.stopPropagation();
 
             // mobile expands inline when link has submenu
-            if (mobile && item.subMenu?.length) {
-                setSelectedIndex((prev) => (prev === index ? null : index));
+            if (mobile) {
+                setSelectedIndex((prev) =>
+                    item.subMenu?.length && prev !== index ? index : null
+                );
             }
 
             onItemClick(event, item);
