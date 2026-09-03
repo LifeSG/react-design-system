@@ -347,6 +347,23 @@ test.describe("Navbar", () => {
                 await compareScreenshot(story, "submenu-item-selected", {
                     fullscreen: true,
                 });
+
+                await test.step("Select the item without a submenu", async () => {
+                    await story.locators.internal.mobileNavLink(1).click();
+
+                    await expect(
+                        story.locators.internal.mobileNav
+                    ).toBeHidden();
+                });
+
+                await test.step("Submenu is collapsed when the drawer is reopened", async () => {
+                    await story.openMobileDrawer();
+                    await story.page.mouse.move(0, 0);
+
+                    await compareScreenshot(story, "submenu-collapsed", {
+                        fullscreen: true,
+                    });
+                });
             });
         });
 
