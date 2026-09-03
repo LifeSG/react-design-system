@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Colour, ComponentToken, Font, MediaQuery } from "../theme";
+import { Colour, ComponentToken, Font, MediaQuery, Spacing } from "../theme";
 
 // =============================================================================
 // WRAPPER
@@ -43,7 +43,6 @@ export const linkItem = css`
 
     ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
-        padding: 0.125rem 0;
         width: 100%;
         margin-left: 0rem;
     }
@@ -69,7 +68,7 @@ export const link = css`
     text-align: center;
     color: ${ComponentToken.Navbar["link-colour-text"]};
     height: 100%;
-    gap: 0.5rem;
+    gap: ${Spacing["spacing-16"]};
 
     &:active,
     &:hover,
@@ -80,7 +79,7 @@ export const link = css`
 
     ${MediaQuery.MaxWidth.lg} {
         width: 100%;
-        padding: 0.5rem 1rem;
+        padding: 10px ${Spacing["spacing-24"]};
         text-align: left;
     }
 `;
@@ -160,7 +159,7 @@ export const linkIconContainer = css`
 
 export const expandCollapseButton = css`
     padding: 0.5rem;
-    margin: auto 0.25rem auto 0;
+    margin: auto 0;
 `;
 
 export const chevronIcon = css`

@@ -345,6 +345,42 @@ test.describe("Navbar", () => {
 
         test.describe(() => {
             test.beforeEach(async ({ story }) => {
+                await story.init("submenu-selected", { size: "mobile" });
+            });
+
+            test("Submenu (selected item)", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.page.mouse.move(0, 0);
+
+                await expect(
+                    story.locators.internal.menuMobileItem(2)
+                ).toBeVisible();
+
+                await compareScreenshot(story, "submenu-item-selected", {
+                    fullscreen: true,
+                });
+
+                await test.step("Select the item without a submenu", async () => {
+                    await story.locators.internal.mobileNavLink(1).click();
+
+                    await expect(
+                        story.locators.internal.mobileNav
+                    ).toBeHidden();
+                });
+
+                await test.step("Submenu is collapsed when the drawer is reopened", async () => {
+                    await story.openMobileDrawer();
+                    await story.page.mouse.move(0, 0);
+
+                    await compareScreenshot(story, "submenu-collapsed", {
+                        fullscreen: true,
+                    });
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
                 await story.init("submenu", {
                     size: "mobile",
                     mode: "dark",
