@@ -1,6 +1,11 @@
 import type { CSSProperties } from "react";
 
-import type { ResolvedThemeMode, ThemeMode, ThemeType } from "../types";
+import type {
+    ResolvedThemeMode,
+    ThemeFontPreset,
+    ThemeMode,
+    ThemeType,
+} from "../types";
 
 /** Value exposed by the `ThemeProvider` context. */
 export interface ThemeContextValue {
@@ -8,6 +13,8 @@ export interface ThemeContextValue {
     theme: ThemeType;
     /** Resolved colour mode. */
     mode: ResolvedThemeMode;
+    /** Active font preset, if set. */
+    fontPreset: ThemeFontPreset | undefined;
     /**
      * Element that hosts the current theme scope. Useful for scoped theming.
      */
@@ -31,4 +38,9 @@ export interface ThemeProviderProps {
      * @default "lifesg"
      */
     theme?: ThemeType | undefined;
+    /**
+     * Optional font preset to apply to the themed subtree.
+     * Applicable to WISE product themes (wise, vica, websg, wogaa).
+     */
+    fontPreset?: ThemeFontPreset | undefined;
 }

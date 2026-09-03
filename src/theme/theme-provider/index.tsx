@@ -15,6 +15,7 @@ const InnerThemeProvider = (
         mode = "auto",
         className,
         style,
+        fontPreset,
     }: ThemeProviderProps,
     ref: Ref<HTMLDivElement>
 ) => {
@@ -55,9 +56,10 @@ const InnerThemeProvider = (
         () => ({
             theme,
             mode: computedMode,
+            fontPreset,
             themeElement,
         }),
-        [theme, computedMode, themeElement]
+        [theme, computedMode, fontPreset, themeElement]
     );
 
     return (
@@ -65,6 +67,7 @@ const InnerThemeProvider = (
             <div
                 ref={mergeRefs(ref, setThemeElement)}
                 data-fds-theme={theme}
+                data-fds-theme-font={fontPreset}
                 data-fds-theme-mode={computedMode}
                 className={className}
                 style={style}

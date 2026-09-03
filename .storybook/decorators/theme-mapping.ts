@@ -16,6 +16,10 @@ export const THEME_TYPE_TO_KEY_MAPPING: Record<ThemeType, string> = {
     spf: "SPF",
     supportgowhere: "SupportGoWhere",
     "tote-board": "Tote Board",
+    vica: "VICA",
+    websg: "WebSG",
+    wise: "WISE",
+    wogaa: "WOGAA",
 };
 
 export type ThemeMapKey =

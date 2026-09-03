@@ -19,6 +19,10 @@ const THEME_TO_DISPLAY_NAME_MAPPING: Record<ThemeType, string> = {
     supportgowhere: "SupportGoWhere",
     smgs: "SMGS",
     "tote-board": "Tote Board",
+    vica: "VICA",
+    websg: "WebSG",
+    wise: "WISE",
+    wogaa: "WOGAA",
 };
 
 const THEME_TO_FONT_MAPPING: Record<ThemeType, string> = {
@@ -37,6 +41,10 @@ const THEME_TO_FONT_MAPPING: Record<ThemeType, string> = {
     supportgowhere: "libre-franklin",
     smgs: "plus-jakarta-sans",
     "tote-board": "inter",
+    vica: "public-sans",
+    websg: "public-sans",
+    wise: "public-sans",
+    wogaa: "public-sans",
 };
 
 const ThemePicker = ({
