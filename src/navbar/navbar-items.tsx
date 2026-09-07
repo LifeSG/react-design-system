@@ -45,45 +45,37 @@ export const NavbarItems = <T,>({
     // CONST, STATE, REFS
     // =============================================================================
     const [selectedIndex, setSelectedIndex] = useState<number | null>(null);
-    const [expandedSubMenuIndex, setExpandedSubMenuIndex] = useState<
-        number | null
-    >(null);
     const listRef = useRef<HTMLUListElement>(null);
     const instanceId = useId();
 
     // =============================================================================
     // HELPERS
     // =============================================================================
-    const resetAll = () => {
-        setSelectedIndex(null);
-        setExpandedSubMenuIndex(null);
-    };
-
     const hasSelectedSubMenuItem = (item: NavItemLinkProps<T>): boolean =>
         !!item.subMenu?.some((subItem) => subItem.id === selectedId);
 
     const checkSelected = (item: NavItemLinkProps<T>): boolean =>
         item.id === selectedId || hasSelectedSubMenuItem(item);
 
-    const foundSubMenuParentIndex = mobile
+    const itemIndexWithSelectedSubItem = mobile
         ? items.findIndex(
               (item) =>
                   item.itemType !== "component" &&
                   hasSelectedSubMenuItem(item as NavItemLinkProps<T>)
           )
         : -1;
-    const selectedSubMenuParentIndex =
-        foundSubMenuParentIndex < 0 ? null : foundSubMenuParentIndex;
+    const initialExpandedItemIndex =
+        itemIndexWithSelectedSubItem < 0 ? null : itemIndexWithSelectedSubItem;
 
     // =========================================================================
     // EFFECTS
     // =========================================================================
 
     useEffect(() => {
-        if (selectedSubMenuParentIndex === null) return;
+        if (!mobile) return;
 
-        setExpandedSubMenuIndex(selectedSubMenuParentIndex);
-    }, [selectedSubMenuParentIndex]);
+        setSelectedIndex(initialExpandedItemIndex);
+    }, [mobile, initialExpandedItemIndex]);
 
     useEffect(() => {
         if (mobile) return;
@@ -93,7 +85,7 @@ export const NavbarItems = <T,>({
                 listRef.current &&
                 !listRef.current.contains(event.target as Node)
             ) {
-                resetAll();
+                setSelectedIndex(null);
             }
         };
         document.addEventListener("click", handleClickOutside, true);
@@ -110,9 +102,9 @@ export const NavbarItems = <T,>({
             event.stopPropagation();
 
             // mobile expands inline when link has submenu
-            if (mobile && item.subMenu?.length) {
-                setExpandedSubMenuIndex((prev) =>
-                    prev === index ? null : index
+            if (mobile) {
+                setSelectedIndex((prev) =>
+                    item.subMenu?.length && prev !== index ? index : null
                 );
             }
 
@@ -166,16 +158,18 @@ export const NavbarItems = <T,>({
 
         // desktop popover open state
         const isDesktopExpanded =
-            !mobile && hasSubMenu && expandedSubMenuIndex === index;
+            !mobile && hasSubMenu && selectedIndex === index;
 
         // mobile inline expanded state
         const isMobileExpanded =
-            mobile && hasSubMenu && expandedSubMenuIndex === index;
+            mobile && hasSubMenu && selectedIndex === index;
 
         const isExpanded = isDesktopExpanded || isMobileExpanded;
 
         const selected =
-            selectedIndex !== null ? selectedIndex === index : isRouteSelected;
+            !mobile && selectedIndex !== null
+                ? selectedIndex === index
+                : isRouteSelected;
 
         const showIndicator = !hideLinkIndicator && selected;
 
@@ -265,13 +259,9 @@ export const NavbarItems = <T,>({
                     isModal={false}
                     onPopoverAppear={() => {
                         setSelectedIndex(index);
-                        setExpandedSubMenuIndex(index);
                     }}
                     onPopoverDismiss={() => {
                         setSelectedIndex((prev) =>
-                            prev === index ? null : prev
-                        );
-                        setExpandedSubMenuIndex((prev) =>
                             prev === index ? null : prev
                         );
                     }}
