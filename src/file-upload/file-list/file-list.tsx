@@ -280,15 +280,11 @@ function Component(
 
     const isInNonDisplayState = (item: FileItemProps) => {
         if (item.errorMessage) return true;
-
-        const isUploaded = (item.progress ?? 1) >= 1;
-        const isDescriptionRequiredAndEmpty =
-            descriptionRequired && !item.description;
         return (
             !readOnly &&
-            isUploaded &&
             checkEditable(item) &&
-            isDescriptionRequiredAndEmpty
+            !item.description &&
+            (item.progress ?? 1) >= 1
         );
     };
 

@@ -2,7 +2,7 @@
 
 import type { FileItemProps } from "@lifesg/react-design-system/file-upload";
 import { FileUpload } from "@lifesg/react-design-system/file-upload";
-import { useState } from "react";
+import { useRef, useState } from "react";
 
 const THUMBNAIL_URL = "/sample.jpg";
 
@@ -33,24 +33,34 @@ const INITIAL_ITEMS: FileItemProps[] = [
 ];
 
 export default function Story() {
+    const nextId = useRef(0);
     const [fileItems, setFileItems] = useState<FileItemProps[]>(INITIAL_ITEMS);
 
-    const handleEdit = (updatedItem: FileItemProps) => {
-        setFileItems((prevItems) => {
-            return prevItems.map((item) => {
-                if (item.id === updatedItem.id) {
-                    return updatedItem;
-                }
-
-                return item;
-            });
+    const handleChange = (files: File[]) => {
+        const newItems = files.map((file) => {
+            nextId.current += 1;
+            return {
+                id: `upload-file-${nextId.current}`,
+                name: file.name,
+                size: file.size,
+                type: file.type,
+            };
         });
+        setFileItems((prev) => prev.concat(newItems));
+    };
+
+    const handleEdit = (updatedItem: FileItemProps) => {
+        setFileItems((prevItems) =>
+            prevItems.map((item) =>
+                item.id === updatedItem.id ? updatedItem : item
+            )
+        );
     };
 
     const handleDelete = (deletedItem: FileItemProps) => {
-        setFileItems((prevItems) => {
-            return prevItems.filter((item) => item.id !== deletedItem.id);
-        });
+        setFileItems((prevItems) =>
+            prevItems.filter((item) => item.id !== deletedItem.id)
+        );
     };
 
     return (
@@ -62,6 +72,7 @@ export default function Story() {
             editableFileItems
             sortable
             fileDescriptionMaxLength={200}
+            onChange={handleChange}
             onEdit={handleEdit}
             onDelete={handleDelete}
             onSort={setFileItems}

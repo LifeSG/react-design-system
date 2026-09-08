@@ -397,6 +397,73 @@ test.describe("FileUpload", () => {
                 await expect(dragHandle.first()).toBeVisible();
             });
         });
+
+        test("Sort disabled while any item is in edit mode after upload", async ({
+            story,
+        }) => {
+            const dragHandle = story.locators.fileUpload.locator(
+                '[data-testid$="-drag-handle"]'
+            );
+
+            await test.step("Save initial edit-mode item", async () => {
+                await story.locators.internal
+                    .textarea("editable-image")
+                    .fill("Initial description");
+                await story.locators.internal
+                    .saveButton("editable-image")
+                    .click();
+
+                await expect(dragHandle.first()).toBeVisible();
+            });
+
+            await test.step("Upload an image — sort disabled", async () => {
+                const fileChooserPromise =
+                    story.page.waitForEvent("filechooser");
+                await story.locators.internal.uploadButton.click();
+                const fileChooser = await fileChooserPromise;
+                await fileChooser.setFiles(SAMPLE_UPLOAD_FILE_PATH);
+
+                await expect(
+                    story.getFileName(SAMPLE_UPLOAD_FILE_NAME)
+                ).toBeVisible();
+                await expect(dragHandle).toHaveCount(0);
+            });
+
+            await test.step("Upload a non-image — sort still disabled", async () => {
+                const dataTransfer = await story.createDataTransfer({
+                    name: "document.pdf",
+                    type: "application/pdf",
+                    content: "pdf content",
+                });
+
+                await story.locators.internal.dropzone.dispatchEvent(
+                    "dragenter",
+                    { dataTransfer }
+                );
+                await story.locators.internal.dropzone.dispatchEvent(
+                    "dragover",
+                    { dataTransfer }
+                );
+                await story.locators.internal.dropzone.dispatchEvent("drop", {
+                    dataTransfer,
+                });
+
+                await expect(story.getFileName("document.pdf")).toBeVisible();
+                await dataTransfer.dispose();
+                await expect(dragHandle).toHaveCount(0);
+            });
+
+            await test.step("Save uploaded image — sort re-enabled", async () => {
+                await story.locators.internal
+                    .textarea("upload-file-1")
+                    .fill("A description");
+                await story.locators.internal
+                    .saveButton("upload-file-1")
+                    .click();
+
+                await expect(dragHandle.first()).toBeVisible();
+            });
+        });
     });
 
     test.describe(() => {
