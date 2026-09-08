@@ -1,7 +1,7 @@
 import { ChevronUpIcon } from "@lifesg/react-icons/chevron-up";
 import styled, { css } from "styled-components";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { Font, MediaQuery } from "../theme";
+import { Font, MediaQuery, Spacing } from "../theme";
 import { Colour } from "../theme";
 import { ThemeNavbar } from "../theme/components/theme-helper";
 import { TypographyWeight } from "../typography";
@@ -64,7 +64,6 @@ export const LinkItem = styled.li<ItemStyleProps>`
 
     ${MediaQuery.MaxWidth.lg} {
         flex-direction: column;
-        padding: 0.125rem 0;
         width: 100%;
         margin-left: 0rem;
     }
@@ -79,7 +78,7 @@ const linkCss = css<{ $selected: boolean; $weight: TypographyWeight }>`
     text-align: center;
     color: ${ThemeNavbar["navbar-link-colour-text"]};
     height: 100%;
-    gap: 0.5rem;
+    gap: ${Spacing["spacing-16"]};
 
     &:active,
     &:hover,
@@ -93,7 +92,7 @@ const linkCss = css<{ $selected: boolean; $weight: TypographyWeight }>`
 
     ${MediaQuery.MaxWidth.lg} {
         width: 100%;
-        padding: 0.5rem 1rem;
+        padding: 10px ${Spacing["spacing-24"]};
         text-align: left;
     }
 `;
@@ -166,7 +165,7 @@ export const ExpandCollapseButton = styled(ClickableIcon)<StyleProps>`
     padding: 0.5rem;
     transform: rotate(${(props) => (props.$expanded ? 0 : 180)}deg);
     transition: transform 300ms ease-in-out;
-    margin: auto 0.25rem auto 0;
+    margin: auto 0;
 `;
 
 export const ChevronIcon = styled(ChevronUpIcon)<StyleProps>`
