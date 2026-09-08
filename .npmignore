@@ -1,6 +1,7 @@
 **/*
 !dist/**
 !skills/**
+!scripts/init-skills.js
 !CHANGELOG.md
 !package-lock.json
 !package.json

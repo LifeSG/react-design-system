@@ -33,46 +33,6 @@ import { Pill } from "@lifesg/react-design-system/pill";
 </Pill>;
 ```
 
-## Props
-
-| Prop        | Type            | Default | Description                          |
-| ----------- | --------------- | ------- | ------------------------------------ |
-| `type` \*   | `PillType`      | —       | Visual style variant for the pill.   |
-| `colorType` | `PillColorType` | "black" | Color theme applied to the pill.     |
-| `icon`      | `JSX.Element`   | —       | Icon rendered before the label text. |
-
-## Props
-
-| Prop        | Type            | Default | Description                          |
-| ----------- | --------------- | ------- | ------------------------------------ |
-| `type` \*   | `PillType`      | —       | Visual style variant for the pill.   |
-| `colorType` | `PillColorType` | "black" | Color theme applied to the pill.     |
-| `icon`      | `JSX.Element`   | —       | Icon rendered before the label text. |
-
-## Props — `PillProps`
-
-| Prop        | Type            | Default | Description                          |
-| ----------- | --------------- | ------- | ------------------------------------ |
-| `type` \*   | `PillType`      | —       | Visual style variant for the pill.   |
-| `colorType` | `PillColorType` | "black" | Color theme applied to the pill.     |
-| `icon`      | `JSX.Element`   | —       | Icon rendered before the label text. |
-
-## Props — `PillProps`
-
-| Prop        | Type            | Default | Description                          |
-| ----------- | --------------- | ------- | ------------------------------------ |
-| `type` \*   | `PillType`      | —       | Visual style variant for the pill.   |
-| `colorType` | `PillColorType` | "black" | Color theme applied to the pill.     |
-| `icon`      | `JSX.Element`   | —       | Icon rendered before the label text. |
-
-## Props — `PillProps`
-
-| Prop        | Type            | Default | Description                          |
-| ----------- | --------------- | ------- | ------------------------------------ |
-| `type` \*   | `PillType`      | —       | Visual style variant for the pill.   |
-| `colorType` | `PillColorType` | "black" | Color theme applied to the pill.     |
-| `icon`      | `JSX.Element`   | —       | Icon rendered before the label text. |
-
 ## Props — `PillProps`
 
 | Prop        | Type            | Default | Description                          |
