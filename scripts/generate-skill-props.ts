@@ -19,11 +19,12 @@ import * as path from "node:path";
 
 import {
     InterfaceDeclaration,
-    Node,
     Project,
     TypeAliasDeclaration,
     type SourceFile,
 } from "ts-morph";
+
+import { PropExtractor, type PropEntry } from "../tools/shared/prop-extractor";
 
 // =============================================================================
 // Constants
@@ -37,23 +38,6 @@ const SKILLS_RESOURCES_DIR = path.join(
     "fds-build",
     "resources"
 );
-
-// Props that come from React/HTML base types — noise for skill docs
-const SKIP_PROP_NAMES = new Set([
-    "data-testid",
-    "data-error-testid",
-    "ref",
-    "key",
-]);
-
-// Declaration source paths that indicate a prop is from a React/HTML base type
-function isFromReactOrHtmlBase(declFilePath: string): boolean {
-    return (
-        declFilePath.includes("node_modules/typescript") ||
-        declFilePath.includes("node_modules/@types/react") ||
-        declFilePath.includes("node_modules/@types/react-dom")
-    );
-}
 
 // =============================================================================
 // Source path resolution
@@ -82,98 +66,6 @@ function resolveSourceTypesPath(
         path.join(SRC_DIR, `${importFolder}s`, "types.ts"),
     ];
     return candidates.find(fs.existsSync) ?? candidates[0];
-}
-
-// =============================================================================
-// Type extraction
-// =============================================================================
-
-/** Clean up a type string for display in the markdown table. */
-function formatType(raw: string): string {
-    return (
-        raw
-            // Remove trailing | undefined (optional marker)
-            .replace(/\s*\|\s*undefined/g, "")
-            // Collapse excessive whitespace
-            .replace(/\s+/g, " ")
-            .trim()
-    );
-}
-
-type PropEntry = {
-    name: string;
-    type: string;
-    required: boolean;
-    defaultVal: string;
-    description: string;
-};
-
-/**
- * Collect all props for an interface or type alias using ts-morph's
- * fully-resolved type system. Handles Omit<>, intersections, extends chains,
- * and union members in one pass — no manual recursion needed.
- */
-function collectProps(
-    node: InterfaceDeclaration | TypeAliasDeclaration
-): PropEntry[] {
-    const result: PropEntry[] = [];
-
-    for (const sym of node.getType().getProperties()) {
-        const name = sym.getName();
-        if (SKIP_PROP_NAMES.has(name)) continue;
-        if (name.startsWith("__")) continue;
-
-        // Find the best declaration for type text and JSDoc
-        const decls = sym.getDeclarations();
-        const propDecl =
-            decls.find(Node.isPropertySignature) ??
-            decls.find(Node.isMethodSignature) ??
-            decls[0];
-
-        if (!propDecl) continue;
-
-        // Skip props that originate from React/@types — they're HTML noise
-        const declPath = propDecl.getSourceFile().getFilePath();
-        if (isFromReactOrHtmlBase(declPath)) continue;
-
-        // Get a clean type string
-        let type = "unknown";
-        if (Node.isPropertySignature(propDecl)) {
-            const typeNode = propDecl.getTypeNode();
-            type = formatType(
-                typeNode
-                    ? typeNode.getText()
-                    : propDecl.getType().getText(propDecl)
-            );
-        } else {
-            type = formatType(sym.getTypeAtLocation(node).getText());
-        }
-
-        const required = Node.isPropertySignature(propDecl)
-            ? !propDecl.hasQuestionToken()
-            : false;
-
-        let description = "";
-        let defaultVal = "";
-
-        if (Node.isPropertySignature(propDecl)) {
-            for (const jsDoc of propDecl.getJsDocs()) {
-                const comment = jsDoc.getCommentText();
-                if (comment && !description) {
-                    description = comment.replace(/\n\s*/g, " ").trim();
-                }
-                for (const tag of jsDoc.getTags()) {
-                    if (tag.getTagName() === "default") {
-                        defaultVal = (tag.getCommentText() ?? "").trim();
-                    }
-                }
-            }
-        }
-
-        result.push({ name, type, required, defaultVal, description });
-    }
-
-    return result;
 }
 
 // =============================================================================
@@ -220,19 +112,37 @@ function buildPropsContent(
 // Resource file processing
 // =============================================================================
 
+function stripPropsSection(content: string): string {
+    const lines = content.split("\n");
+    const out: string[] = [];
+    let inProps = false;
+    for (const line of lines) {
+        if (/^## Props(\b|$)/.test(line)) {
+            inProps = true;
+            continue;
+        }
+        if (inProps && /^## /.test(line)) {
+            inProps = false;
+        }
+        if (!inProps) out.push(line);
+    }
+    return out.join("\n").replace(/\n{3,}/g, "\n\n");
+}
+
 function insertPropsSection(content: string, propsBlock: string): string {
+    const stripped = stripPropsSection(content);
     const marker = "\n\n" + propsBlock;
 
-    if (content.includes("\n## Rules")) {
-        return content.replace("\n## Rules", marker + "\n\n## Rules");
+    if (stripped.includes("\n## Rules")) {
+        return stripped.replace("\n## Rules", marker + "\n\n## Rules");
     }
-    if (content.includes("\n## Anti-patterns")) {
-        return content.replace(
+    if (stripped.includes("\n## Anti-patterns")) {
+        return stripped.replace(
             "\n## Anti-patterns",
             marker + "\n\n## Anti-patterns"
         );
     }
-    return content.trimEnd() + marker + "\n";
+    return stripped.trimEnd() + marker + "\n";
 }
 
 function processResourceFile(
@@ -299,9 +209,11 @@ function processResourceFile(
         return { skipped: true, reason: "no documented exported interfaces" };
     }
 
+    const propExtractor = new PropExtractor();
+
     // Build interface sections
     const ifaceSections = publicNodes.map((node) => {
-        const props = collectProps(node);
+        const props = propExtractor.collectProps(node);
         const title =
             publicNodes.length > 1
                 ? `## Props — \`${node.getName()}\``

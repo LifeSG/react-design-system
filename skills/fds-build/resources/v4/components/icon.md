@@ -164,4 +164,4 @@ Icons come in two variants: outline (default) and filled (`-fill` suffix).
 -   Never guess an icon name — verify it exists in the list above before importing.
 -   `-fill` variants are the solid/filled version; the base name is outline.
 -   Fallback: if no suitable icon exists in `@lifesg/react-icons`, use `@mui/icons-material` as a secondary source.
--   For `IconButton`, always set `aria-label` — the icon alone is not accessible.
+-   For icon-only buttons (`<Button icon={<Icon />} />`), always set `aria-label` — the icon alone is not accessible.

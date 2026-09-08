@@ -43,7 +43,7 @@ v4 uses **CSS Modules** — no `styled-components`.
 -   Design tokens are plain CSS variable strings (`var(--fds-spacing-32)`, `var(--fds-colour-text)`, etc.)
 -   Responsive styles use the breakpoint class selector: `:where(body.fds-breakpoint-lg-min) &`
 -   `ThemeProvider` adds breakpoint classes to `document.body` at runtime (e.g. `fds-breakpoint-lg-min`)
--   Pass `className={styles.x}` to `Layout.ColDiv`, `Button.Default`, and other DS components that accept it
+-   Pass `className={styles.x}` to `Layout.ColDiv`, `Button`, and other DS components that accept it
 
 ---
 
@@ -208,7 +208,7 @@ export default function FormNav({
     return (
         <div ref={navRef} className={styles.nav}>
             <div className={styles.primaryGroup}>
-                <Button.Default
+                <Button
                     styleType="default"
                     onClick={onNext}
                     loading={isSubmitting}
@@ -216,19 +216,19 @@ export default function FormNav({
                     className={styles.nextButton}
                 >
                     {nextLabel}
-                </Button.Default>
+                </Button>
                 {actions && (
                     <div className={styles.actionsGroup}>{actions}</div>
                 )}
             </div>
             {onBack && (
-                <Button.Default
+                <Button
                     styleType="secondary"
                     onClick={onBack}
                     className={styles.backButton}
                 >
                     Back
-                </Button.Default>
+                </Button>
             )}
         </div>
     );

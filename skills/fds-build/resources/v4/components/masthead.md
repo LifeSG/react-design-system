@@ -8,36 +8,6 @@ Import: `import { Masthead } from "@lifesg/react-design-system/masthead"`
 | --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
 | `stretch` | `boolean` | false   | Allows the masthead to span the full width of its container rather than constraining to the default layout width. |
 
-## Props
-
-| Prop      | Type      | Default | Description                                                                                                       |
-| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
-| `stretch` | `boolean` | false   | Allows the masthead to span the full width of its container rather than constraining to the default layout width. |
-
-## Props
-
-| Prop      | Type      | Default | Description                                                                                                       |
-| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
-| `stretch` | `boolean` | false   | Allows the masthead to span the full width of its container rather than constraining to the default layout width. |
-
-## Props
-
-| Prop      | Type      | Default | Description                                                                                                       |
-| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
-| `stretch` | `boolean` | false   | Allows the masthead to span the full width of its container rather than constraining to the default layout width. |
-
-## Props
-
-| Prop      | Type      | Default | Description                                                                                                       |
-| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
-| `stretch` | `boolean` | false   | Allows the masthead to span the full width of its container rather than constraining to the default layout width. |
-
-## Props
-
-| Prop      | Type      | Default | Description                                                                                                       |
-| --------- | --------- | ------- | ----------------------------------------------------------------------------------------------------------------- |
-| `stretch` | `boolean` | false   | Allows the masthead to span the full width of its container rather than constraining to the default layout width. |
-
 ## Rules
 
 -   No mandatory props.

@@ -74,7 +74,7 @@ const ControlledExample = () => (
 | Prop                     | Type                             | Default      | Description                                                                                                                                                                                                                                               |
 | ------------------------ | -------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | `children` \*            | `JSX.Element \| JSX.Element[]`   | —            | —                                                                                                                                                                                                                                                         |
-| `title`                  | `string`                         | —            | Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true.                                                                                                                                               |
+| `title`                  | `string \| JSX.Element`          | —            | Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true.                                                                                                                                               |
 | `enableExpandAll`        | `boolean`                        | true         | Renders the "Show all" / "Hide all" toggle button.                                                                                                                                                                                                        |
 | `initialDisplay`         | `"collapse-all" \| "expand-all"` | "expand-all" | Controls whether all items start expanded or collapsed.                                                                                                                                                                                                   |
 | `showTitleInMobile`      | `boolean`                        | false        | When `true`, the `title` remains visible on mobile viewports.                                                                                                                                                                                             |
@@ -85,209 +85,16 @@ const ControlledExample = () => (
 
 ## Props — `AccordionItemProps`
 
-| Prop          | Type                           | Default | Description                                                                                                                                                                                               |
-| ------------- | ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title` \*    | `string \| JSX.Element`        | —       | —                                                                                                                                                                                                         |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                                                                                                                                         |
-| `expanded`    | `boolean`                      | —       | Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent "Show all" / "Hide all" button manage the state. Pass an explicit boolean to take individual control of this item. |
-| `id`          | `string`                       | —       | —                                                                                                                                                                                                         |
-| `className`   | `string`                       | —       | —                                                                                                                                                                                                         |
-| `type`        | `AccordionItemType`            | —       | Visual size variant for the accordion item.                                                                                                                                                               |
-| `collapsible` | `boolean`                      | true    | When `false`, the item header is non-interactive and the content panel is always visible.                                                                                                                 |
-
-## Props — `AccordionItemApi`
-
-| Prop            | Type            | Default | Description |
-| --------------- | --------------- | ------- | ----------- |
-| `expand` \*     | `() => void`    | —       | —           |
-| `collapse` \*   | `() => void`    | —       | —           |
-| `isExpanded` \* | `() => boolean` | —       | —           |
-
-## Props — `AccordionProps`
-
-| Prop                     | Type                             | Default      | Description                                                                                                                                                                                                                                               |
-| ------------------------ | -------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`   | —            | —                                                                                                                                                                                                                                                         |
-| `title`                  | `string`                         | —            | Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true.                                                                                                                                               |
-| `enableExpandAll`        | `boolean`                        | true         | Renders the "Show all" / "Hide all" toggle button.                                                                                                                                                                                                        |
-| `initialDisplay`         | `"collapse-all" \| "expand-all"` | "expand-all" | Controls whether all items start expanded or collapsed.                                                                                                                                                                                                   |
-| `showTitleInMobile`      | `boolean`                        | false        | When `true`, the `title` remains visible on mobile viewports.                                                                                                                                                                                             |
-| `id`                     | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `className`              | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `headingLevel`           | `number`                         | 2            | The ARIA heading level for the accordion and item titles. Specify a custom value to reflect the component's hierarchy within a page. When a title is provided, the title level = n and the item title level = n + 1. Otherwise, the item title level = n. |
-| `onExpandCollapseChange` | `((expanded: boolean) => void)`  | —            | Called after the expand/collapse state changes.                                                                                                                                                                                                           |
-
-## Props — `AccordionItemProps`
-
-| Prop          | Type                           | Default | Description                                                                                                                                                                                               |
-| ------------- | ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title` \*    | `string \| JSX.Element`        | —       | —                                                                                                                                                                                                         |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                                                                                                                                         |
-| `expanded`    | `boolean`                      | —       | Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent "Show all" / "Hide all" button manage the state. Pass an explicit boolean to take individual control of this item. |
-| `id`          | `string`                       | —       | —                                                                                                                                                                                                         |
-| `className`   | `string`                       | —       | —                                                                                                                                                                                                         |
-| `type`        | `AccordionItemType`            | —       | Visual size variant for the accordion item.                                                                                                                                                               |
-| `collapsible` | `boolean`                      | true    | When `false`, the item header is non-interactive and the content panel is always visible.                                                                                                                 |
-
-## Props — `AccordionItemApi`
-
-| Prop            | Type            | Default | Description |
-| --------------- | --------------- | ------- | ----------- |
-| `expand` \*     | `() => void`    | —       | —           |
-| `collapse` \*   | `() => void`    | —       | —           |
-| `isExpanded` \* | `() => boolean` | —       | —           |
-
-## Props — `AccordionProps`
-
-| Prop                     | Type                             | Default      | Description                                                                                                                                                                                                                                               |
-| ------------------------ | -------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`   | —            | —                                                                                                                                                                                                                                                         |
-| `title`                  | `string`                         | —            | Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true.                                                                                                                                               |
-| `enableExpandAll`        | `boolean`                        | true         | Renders the "Show all" / "Hide all" toggle button.                                                                                                                                                                                                        |
-| `initialDisplay`         | `"collapse-all" \| "expand-all"` | "expand-all" | Controls whether all items start expanded or collapsed.                                                                                                                                                                                                   |
-| `showTitleInMobile`      | `boolean`                        | false        | When `true`, the `title` remains visible on mobile viewports.                                                                                                                                                                                             |
-| `id`                     | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `className`              | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `headingLevel`           | `number`                         | 2            | The ARIA heading level for the accordion and item titles. Specify a custom value to reflect the component's hierarchy within a page. When a title is provided, the title level = n and the item title level = n + 1. Otherwise, the item title level = n. |
-| `onExpandCollapseChange` | `((expanded: boolean) => void)`  | —            | Called after the expand/collapse state changes.                                                                                                                                                                                                           |
-
-## Props — `AccordionItemProps`
-
-| Prop          | Type                           | Default | Description                                                                                                                                                                                               |
-| ------------- | ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title` \*    | `string \| JSX.Element`        | —       | —                                                                                                                                                                                                         |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                                                                                                                                         |
-| `expanded`    | `boolean`                      | —       | Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent "Show all" / "Hide all" button manage the state. Pass an explicit boolean to take individual control of this item. |
-| `id`          | `string`                       | —       | —                                                                                                                                                                                                         |
-| `className`   | `string`                       | —       | —                                                                                                                                                                                                         |
-| `type`        | `AccordionItemType`            | —       | Visual size variant for the accordion item.                                                                                                                                                               |
-| `collapsible` | `boolean`                      | true    | When `false`, the item header is non-interactive and the content panel is always visible.                                                                                                                 |
-
-## Props — `AccordionItemApi`
-
-| Prop            | Type            | Default | Description |
-| --------------- | --------------- | ------- | ----------- |
-| `expand` \*     | `() => void`    | —       | —           |
-| `collapse` \*   | `() => void`    | —       | —           |
-| `isExpanded` \* | `() => boolean` | —       | —           |
-
-## Props — `AccordionItemHandle`
-
-| Prop            | Type            | Default | Description |
-| --------------- | --------------- | ------- | ----------- |
-| `expand` \*     | `() => void`    | —       | —           |
-| `collapse` \*   | `() => void`    | —       | —           |
-| `isExpanded` \* | `() => boolean` | —       | —           |
-
-## Props — `AccordionProps`
-
-| Prop                     | Type                             | Default      | Description                                                                                                                                                                                                                                               |
-| ------------------------ | -------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`   | —            | —                                                                                                                                                                                                                                                         |
-| `title`                  | `string`                         | —            | Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true.                                                                                                                                               |
-| `enableExpandAll`        | `boolean`                        | true         | Renders the "Show all" / "Hide all" toggle button.                                                                                                                                                                                                        |
-| `initialDisplay`         | `"collapse-all" \| "expand-all"` | "expand-all" | Controls whether all items start expanded or collapsed.                                                                                                                                                                                                   |
-| `showTitleInMobile`      | `boolean`                        | false        | When `true`, the `title` remains visible on mobile viewports.                                                                                                                                                                                             |
-| `id`                     | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `className`              | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `headingLevel`           | `number`                         | 2            | The ARIA heading level for the accordion and item titles. Specify a custom value to reflect the component's hierarchy within a page. When a title is provided, the title level = n and the item title level = n + 1. Otherwise, the item title level = n. |
-| `onExpandCollapseChange` | `((expanded: boolean) => void)`  | —            | Called after the expand/collapse state changes.                                                                                                                                                                                                           |
-
-## Props — `AccordionItemProps`
-
-| Prop          | Type                           | Default | Description                                                                                                                                                                                               |
-| ------------- | ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title` \*    | `string \| JSX.Element`        | —       | —                                                                                                                                                                                                         |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                                                                                                                                         |
-| `expanded`    | `boolean`                      | —       | Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent "Show all" / "Hide all" button manage the state. Pass an explicit boolean to take individual control of this item. |
-| `id`          | `string`                       | —       | —                                                                                                                                                                                                         |
-| `className`   | `string`                       | —       | —                                                                                                                                                                                                         |
-| `type`        | `AccordionItemType`            | —       | Visual size variant for the accordion item.                                                                                                                                                               |
-| `collapsible` | `boolean`                      | true    | When `false`, the item header is non-interactive and the content panel is always visible.                                                                                                                 |
-
-## Props — `AccordionItemApi`
-
-| Prop            | Type            | Default | Description |
-| --------------- | --------------- | ------- | ----------- |
-| `expand` \*     | `() => void`    | —       | —           |
-| `collapse` \*   | `() => void`    | —       | —           |
-| `isExpanded` \* | `() => boolean` | —       | —           |
-
-## Props — `AccordionItemHandle`
-
-| Prop            | Type            | Default | Description |
-| --------------- | --------------- | ------- | ----------- |
-| `expand` \*     | `() => void`    | —       | —           |
-| `collapse` \*   | `() => void`    | —       | —           |
-| `isExpanded` \* | `() => boolean` | —       | —           |
-
-## Props — `AccordionProps`
-
-| Prop                     | Type                             | Default      | Description                                                                                                                                                                                                                                               |
-| ------------------------ | -------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`   | —            | —                                                                                                                                                                                                                                                         |
-| `title`                  | `string`                         | —            | Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true.                                                                                                                                               |
-| `enableExpandAll`        | `boolean`                        | true         | Renders the "Show all" / "Hide all" toggle button.                                                                                                                                                                                                        |
-| `initialDisplay`         | `"collapse-all" \| "expand-all"` | "expand-all" | Controls whether all items start expanded or collapsed.                                                                                                                                                                                                   |
-| `showTitleInMobile`      | `boolean`                        | false        | When `true`, the `title` remains visible on mobile viewports.                                                                                                                                                                                             |
-| `id`                     | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `className`              | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `headingLevel`           | `number`                         | 2            | The ARIA heading level for the accordion and item titles. Specify a custom value to reflect the component's hierarchy within a page. When a title is provided, the title level = n and the item title level = n + 1. Otherwise, the item title level = n. |
-| `onExpandCollapseChange` | `((expanded: boolean) => void)`  | —            | Called after the expand/collapse state changes.                                                                                                                                                                                                           |
-
-## Props — `AccordionItemProps`
-
-| Prop          | Type                           | Default | Description                                                                                                                                                                                               |
-| ------------- | ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title` \*    | `string \| JSX.Element`        | —       | —                                                                                                                                                                                                         |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                                                                                                                                         |
-| `expanded`    | `boolean`                      | —       | Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent "Show all" / "Hide all" button manage the state. Pass an explicit boolean to take individual control of this item. |
-| `id`          | `string`                       | —       | —                                                                                                                                                                                                         |
-| `className`   | `string`                       | —       | —                                                                                                                                                                                                         |
-| `type`        | `AccordionItemType`            | —       | Visual size variant for the accordion item.                                                                                                                                                               |
-| `collapsible` | `boolean`                      | true    | When `false`, the item header is non-interactive and the content panel is always visible.                                                                                                                 |
-
-## Props — `AccordionItemApi`
-
-| Prop            | Type            | Default | Description |
-| --------------- | --------------- | ------- | ----------- |
-| `expand` \*     | `() => void`    | —       | —           |
-| `collapse` \*   | `() => void`    | —       | —           |
-| `isExpanded` \* | `() => boolean` | —       | —           |
-
-## Props — `AccordionItemHandle`
-
-| Prop            | Type            | Default | Description |
-| --------------- | --------------- | ------- | ----------- |
-| `expand` \*     | `() => void`    | —       | —           |
-| `collapse` \*   | `() => void`    | —       | —           |
-| `isExpanded` \* | `() => boolean` | —       | —           |
-
-## Props — `AccordionProps`
-
-| Prop                     | Type                             | Default      | Description                                                                                                                                                                                                                                               |
-| ------------------------ | -------------------------------- | ------------ | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`   | —            | —                                                                                                                                                                                                                                                         |
-| `title`                  | `string`                         | —            | Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true.                                                                                                                                               |
-| `enableExpandAll`        | `boolean`                        | true         | Renders the "Show all" / "Hide all" toggle button.                                                                                                                                                                                                        |
-| `initialDisplay`         | `"collapse-all" \| "expand-all"` | "expand-all" | Controls whether all items start expanded or collapsed.                                                                                                                                                                                                   |
-| `showTitleInMobile`      | `boolean`                        | false        | When `true`, the `title` remains visible on mobile viewports.                                                                                                                                                                                             |
-| `id`                     | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `className`              | `string`                         | —            | —                                                                                                                                                                                                                                                         |
-| `headingLevel`           | `number`                         | 2            | The ARIA heading level for the accordion and item titles. Specify a custom value to reflect the component's hierarchy within a page. When a title is provided, the title level = n and the item title level = n + 1. Otherwise, the item title level = n. |
-| `onExpandCollapseChange` | `((expanded: boolean) => void)`  | —            | Called after the expand/collapse state changes.                                                                                                                                                                                                           |
-
-## Props — `AccordionItemProps`
-
-| Prop          | Type                           | Default | Description                                                                                                                                                                                               |
-| ------------- | ------------------------------ | ------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `title` \*    | `string \| JSX.Element`        | —       | —                                                                                                                                                                                                         |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                                                                                                                                         |
-| `expanded`    | `boolean`                      | —       | Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent "Show all" / "Hide all" button manage the state. Pass an explicit boolean to take individual control of this item. |
-| `id`          | `string`                       | —       | —                                                                                                                                                                                                         |
-| `className`   | `string`                       | —       | —                                                                                                                                                                                                         |
-| `type`        | `AccordionItemType`            | —       | Visual size variant for the accordion item.                                                                                                                                                               |
-| `collapsible` | `boolean`                      | true    | When `false`, the item header is non-interactive and the content panel is always visible.                                                                                                                 |
+| Prop             | Type                            | Default | Description                                                                                                                                                                                                                                                                               |
+| ---------------- | ------------------------------- | ------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `title` \*       | `string \| JSX.Element`         | —       | —                                                                                                                                                                                                                                                                                         |
+| `children` \*    | `JSX.Element \| JSX.Element[]`  | —       | —                                                                                                                                                                                                                                                                                         |
+| `expanded`       | `boolean`                       | —       | Controls the expanded state of this item. Omit (or pass `undefined`) to let the parent "Show all" / "Hide all" button manage the state. Pass an explicit boolean to take individual control of this item.                                                                                 |
+| `id`             | `string`                        | —       | —                                                                                                                                                                                                                                                                                         |
+| `className`      | `string`                        | —       | —                                                                                                                                                                                                                                                                                         |
+| `type`           | `AccordionItemType`             | —       | Visual size variant for the accordion item.                                                                                                                                                                                                                                               |
+| `collapsible`    | `boolean`                       | true    | When `false`, the item header is non-interactive and the content panel is always visible.                                                                                                                                                                                                 |
+| `onExpandChange` | `((expanded: boolean) => void)` | —       | Called when the user toggles this item or the parent "Show all" / "Hide all" button fires. When provided, the item enters **controlled mode** — the caller must update the `expanded` prop in response. Without this prop, the item manages its own state internally (uncontrolled mode). |
 
 ## Props — `AccordionItemApi`
 

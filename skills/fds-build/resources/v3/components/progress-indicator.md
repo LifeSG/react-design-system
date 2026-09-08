@@ -34,56 +34,6 @@ const steps = [
 | `className`        | `string`                | —       | —                                                                                                        |
 | `id`               | `string`                | —       | —                                                                                                        |
 
-## Props
-
-| Prop               | Type                    | Default | Description                                                                                              |
-| ------------------ | ----------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
-| `steps` \*         | `T[]`                   | —       | Ordered list of step items to render as progress bars and labels.                                        |
-| `currentIndex` \*  | `number`                | —       | Zero-based index of the current active step. All steps at or before this index are visually highlighted. |
-| `displayExtractor` | `((item: T) => string)` | —       | Derives the display label for a step item.                                                               |
-| `className`        | `string`                | —       | —                                                                                                        |
-| `id`               | `string`                | —       | —                                                                                                        |
-
-## Props
-
-| Prop               | Type                    | Default | Description                                                                                              |
-| ------------------ | ----------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
-| `steps` \*         | `T[]`                   | —       | Ordered list of step items to render as progress bars and labels.                                        |
-| `currentIndex` \*  | `number`                | —       | Zero-based index of the current active step. All steps at or before this index are visually highlighted. |
-| `displayExtractor` | `((item: T) => string)` | —       | Derives the display label for a step item.                                                               |
-| `className`        | `string`                | —       | —                                                                                                        |
-| `id`               | `string`                | —       | —                                                                                                        |
-
-## Props
-
-| Prop               | Type                    | Default | Description                                                                                              |
-| ------------------ | ----------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
-| `steps` \*         | `T[]`                   | —       | Ordered list of step items to render as progress bars and labels.                                        |
-| `currentIndex` \*  | `number`                | —       | Zero-based index of the current active step. All steps at or before this index are visually highlighted. |
-| `displayExtractor` | `((item: T) => string)` | —       | Derives the display label for a step item.                                                               |
-| `className`        | `string`                | —       | —                                                                                                        |
-| `id`               | `string`                | —       | —                                                                                                        |
-
-## Props
-
-| Prop               | Type                    | Default | Description                                                                                              |
-| ------------------ | ----------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
-| `steps` \*         | `T[]`                   | —       | Ordered list of step items to render as progress bars and labels.                                        |
-| `currentIndex` \*  | `number`                | —       | Zero-based index of the current active step. All steps at or before this index are visually highlighted. |
-| `displayExtractor` | `((item: T) => string)` | —       | Derives the display label for a step item.                                                               |
-| `className`        | `string`                | —       | —                                                                                                        |
-| `id`               | `string`                | —       | —                                                                                                        |
-
-## Props
-
-| Prop               | Type                    | Default | Description                                                                                              |
-| ------------------ | ----------------------- | ------- | -------------------------------------------------------------------------------------------------------- |
-| `steps` \*         | `T[]`                   | —       | Ordered list of step items to render as progress bars and labels.                                        |
-| `currentIndex` \*  | `number`                | —       | Zero-based index of the current active step. All steps at or before this index are visually highlighted. |
-| `displayExtractor` | `((item: T) => string)` | —       | Derives the display label for a step item.                                                               |
-| `className`        | `string`                | —       | —                                                                                                        |
-| `id`               | `string`                | —       | —                                                                                                        |
-
 ## Rules
 
 -   `currentIndex` is zero-based — the first step is `0`.
