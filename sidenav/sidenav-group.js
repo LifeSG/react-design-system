@@ -1,0 +1,2 @@
+import{__rest as r}from"../_virtual/_tslib.js";import{jsxs as s,jsx as a}from"react/jsx-runtime";import e from"clsx";import{divider as t,container as i}from"./sidenav-group.styles.js";const l=l=>{var{separator:m,children:o,className:c}=l,d=r(l,["separator","children","className"]);return s("ul",Object.assign({},d,{className:e(i,c),children:[o,m&&a("li",{"data-testid":"divider",className:t})]}))};export{l as SidenavGroup};
+//# sourceMappingURL=sidenav-group.js.map

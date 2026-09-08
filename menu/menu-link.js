@@ -1,0 +1,2 @@
+import{__rest as e}from"../_virtual/_tslib.js";import{jsx as t}from"react/jsx-runtime";import i from"clsx";import{Typography as r}from"../typography/index.js";import{menuLinkDiv as s,link as a}from"./menu-link.styles.js";const n=n=>{var{children:l,className:m,"data-testid":o="menu-link"}=n,d=e(n,["children","className","data-testid"]);return t("li",{className:s,children:t(r.LinkMD,Object.assign({"data-testid":o,underlineStyle:"none",className:i(a,m)},d,{children:l}))})};n.displayName="Menu.Link";export{n as MenuLink};
+//# sourceMappingURL=menu-link.js.map

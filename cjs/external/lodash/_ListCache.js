@@ -1,0 +1,2 @@
+"use strict";var e=require("./_listCacheClear.js"),t=require("./_listCacheDelete.js"),r=require("./_listCacheGet.js"),s=require("./_listCacheHas.js"),a=require("./_listCacheSet.js"),i=e._listCacheClear,l=t._listCacheDelete,c=r._listCacheGet,h=s._listCacheHas,o=a._listCacheSet;function C(e){var t=-1,r=null==e?0:e.length;for(this.clear();++t<r;){var s=e[t];this.set(s[0],s[1])}}C.prototype.clear=i,C.prototype.delete=l,C.prototype.get=c,C.prototype.has=h,C.prototype.set=o;var p=C;exports._ListCache=p;
+//# sourceMappingURL=_ListCache.js.map

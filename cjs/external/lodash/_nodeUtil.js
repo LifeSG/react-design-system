@@ -1,0 +1,2 @@
+"use strict";var e,r,o,t,i,s,u,l=require("../../_virtual/_nodeUtil.js"),_=require("./_freeGlobal.js");l.__module.exports,e=l.__module,r=l.__module.exports,o=_._freeGlobal,t=r&&!r.nodeType&&r,i=t&&e&&!e.nodeType&&e,s=i&&i.exports===t&&o.process,u=function(){try{var e=i&&i.require&&i.require("util").types;return e||s&&s.binding&&s.binding("util")}catch(e){}}(),e.exports=u;var n=l.__module.exports;exports._nodeUtilExports=n;
+//# sourceMappingURL=_nodeUtil.js.map

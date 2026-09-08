@@ -1,0 +1,2 @@
+import{__rest as t}from"../../_virtual/_tslib.js";import{jsxs as a}from"react/jsx-runtime";import r from"clsx";import{footerContainer as o}from"./slot-styles.js";const s=s=>{var{"data-testid":e="modal-footer",primaryButton:i,secondaryButton:m,className:d}=s,l=t(s,["data-testid","primaryButton","secondaryButton","className"]);return a("div",Object.assign({"data-testid":e},l,{className:r(o,d),children:[i,m]}))};s.displayName="ModalV2.Footer";export{s as Footer};
+//# sourceMappingURL=footer.js.map

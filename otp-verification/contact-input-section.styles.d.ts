@@ -1,0 +1,14 @@
+export declare const contactSectionWrapper: import("@linaria/core").LinariaClassName;
+export declare const contactInputSectionWrapper: import("@linaria/core").LinariaClassName;
+export declare const contactInputWrapper: import("@linaria/core").LinariaClassName;
+export declare const contactInputWrapperError: import("@linaria/core").LinariaClassName;
+export declare const contactInputWrapperDisabled: import("@linaria/core").LinariaClassName;
+export declare const contactInputWrapperReadonly: import("@linaria/core").LinariaClassName;
+export declare const verifiedIconWrapper: import("@linaria/core").LinariaClassName;
+export declare const contactButton: import("@linaria/core").LinariaClassName;
+export declare const emailContactInput: import("@linaria/core").LinariaClassName;
+export declare const emailContactInputDisabled: import("@linaria/core").LinariaClassName;
+export declare const emailContactInputReadonly: import("@linaria/core").LinariaClassName;
+export declare const phoneContactInput: import("@linaria/core").LinariaClassName;
+export declare const phoneContactInputDisabled: import("@linaria/core").LinariaClassName;
+export declare const phoneContactInputReadonly: import("@linaria/core").LinariaClassName;

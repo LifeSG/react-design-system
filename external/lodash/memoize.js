@@ -1,0 +1,2 @@
+import{_ as e}from"./_MapCache.js";var a=e;function r(e,t){if("function"!=typeof e||null!=t&&"function"!=typeof t)throw new TypeError("Expected a function");var n=function(){var a=arguments,r=t?t.apply(this,a):a[0],c=n.cache;if(c.has(r))return c.get(r);var o=e.apply(this,a);return n.cache=c.set(r,o)||c,o};return n.cache=new(r.Cache||a),n}r.Cache=a;var t=r;export{t as m};
+//# sourceMappingURL=memoize.js.map

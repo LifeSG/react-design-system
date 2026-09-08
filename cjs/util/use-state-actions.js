@@ -1,0 +1,2 @@
+"use strict";var e=require("react");const t=(e,t,s)=>{const r=[];r.push(`[${e}]`),r.push(t,s),console.log(...r)};exports.useStateActions=({initialState:s,reducers:r,name:a,debug:c})=>{const[o,u]=e.useReducer(((e,t)=>r[t.type]?r[t.type](e,t.payload):e),s);return[o,Object.fromEntries(Object.keys(r).map((e=>[e,s=>{c&&t(a,e,s),u({type:e,payload:s})}])))]};
+//# sourceMappingURL=use-state-actions.js.map

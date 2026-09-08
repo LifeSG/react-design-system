@@ -1,3 +1,0 @@
-.custom-ordered-list li::before {
-    content: counters(list, ".") ".";
-}

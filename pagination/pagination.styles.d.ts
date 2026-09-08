@@ -1,0 +1,14 @@
+export declare const paginationWrapper: import("@linaria/core").LinariaClassName;
+export declare const paginationList: import("@linaria/core").LinariaClassName;
+export declare const paginationMenu: import("@linaria/core").LinariaClassName;
+export declare const iconButton: import("@linaria/core").LinariaClassName;
+export declare const iconButtonNavigation: import("@linaria/core").LinariaClassName;
+export declare const pageItem: import("@linaria/core").LinariaClassName;
+export declare const pageItemSelected: import("@linaria/core").LinariaClassName;
+export declare const ellipsisContainer: import("@linaria/core").LinariaClassName;
+export declare const paginationMobileInput: import("@linaria/core").LinariaClassName;
+export declare const label: import("@linaria/core").LinariaClassName;
+export declare const labelDivider: import("@linaria/core").LinariaClassName;
+export declare const inputView: import("@linaria/core").LinariaClassName;
+export declare const hover: import("@linaria/core").LinariaClassName;
+export declare const inputSelectWrapper: import("@linaria/core").LinariaClassName;

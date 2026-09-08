@@ -1,0 +1,2 @@
+import{__module as r}from"../../_virtual/_nodeUtil.js";import{_ as e}from"./_freeGlobal.js";var o,t,i,s,p,n,a;r.exports,o=r,t=r.exports,i=e,s=t&&!t.nodeType&&t,p=s&&o&&!o.nodeType&&o,n=p&&p.exports===s&&i.process,a=function(){try{var r=p&&p.require&&p.require("util").types;return r||n&&n.binding&&n.binding("util")}catch(r){}}(),o.exports=a;var u=r.exports;export{u as _};
+//# sourceMappingURL=_nodeUtil.js.map

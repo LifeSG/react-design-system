@@ -1,0 +1,5 @@
+@layer fds{.nflnesd{list-style-type:none;padding:0;margin-top:0;}
+.tun9y1j{margin:0;}
+.n1ocymwf{display:block;position:relative;margin:0;padding:0;cursor:pointer;}.n1ocymwf::before{content:"";position:absolute;left:0;width:4px;height:100%;top:0;background-color:var(--fds-colour-bg-primary-subtler);-webkit-transition:all 250ms linear;transition:all 250ms linear;}.n1ocymwf:hover,.n1ocymwf:focus-within{background-color:var(--fds-colour-bg-hover-subtle);}
+.naf0oif::before{background-color:var(--fds-colour-bg-primary);}
+.n8uzvfa{display:block;padding:var(--fds-spacing-16);padding-left:var(--fds-spacing-20);}.n8uzvfa:focus-visible{outline:2px solid var(--fds-colour-focus-ring);outline-offset:2px;border-radius:var(--fds-radius-sm);}}

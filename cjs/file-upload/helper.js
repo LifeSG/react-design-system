@@ -1,0 +1,2 @@
+"use strict";class e{static formatFileSizeDisplay(e){if(!e||0===e)return"0 KB";const i=Math.floor(Math.log(e)/Math.log(1024));return`${Number(e/Math.pow(1024,i)).toFixed(0)} ${["B","KB","MB","GB","TB","PB","EB","ZB","YB"][i]}`}static isSupportedImageType(e){return["image/avif","image/gif","image/jpeg","image/png","image/svg+xml","image/webp"].includes(e)}}e.PDF_MIME_TYPE="application/pdf",e.PDF_ICON_URL="https://assets.life.gov.sg/react-design-system/img/upload/pdf.svg",exports.FileUploadHelper=e;
+//# sourceMappingURL=helper.js.map

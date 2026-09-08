@@ -1,0 +1,2 @@
+"use strict";var e=require("react/jsx-runtime"),t=require("react");function r(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}const n=r(t).default.createContext({focusedIndex:-1,setFocusedIndex:()=>{}});exports.DropdownListState=({children:r})=>{const[o,s]=t.useState(-1);return e.jsx(n.Provider,{value:{focusedIndex:o,setFocusedIndex:s},children:r})},exports.DropdownListStateContext=n;
+//# sourceMappingURL=dropdown-list-state.js.map

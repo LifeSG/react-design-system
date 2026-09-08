@@ -1,0 +1,2 @@
+"use strict";var e=require("../../_virtual/isBuffer.js"),r=require("./_root.js"),o=require("./stubFalse.js");e.__module.exports,function(e,s){var u=r._root,t=o.stubFalse_1,_=s&&!s.nodeType&&s,i=_&&e&&!e.nodeType&&e,f=i&&i.exports===_?u.Buffer:void 0,p=(f?f.isBuffer:void 0)||t;e.exports=p}(e.__module,e.__module.exports);var s=e.__module.exports;exports.isBufferExports=s;
+//# sourceMappingURL=isBuffer.js.map

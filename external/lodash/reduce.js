@@ -1,0 +1,2 @@
+import{getDefaultExportFromCjs as r}from"../../_virtual/_commonjsHelpers.js";import{_ as a}from"./_arrayReduce.js";import{_ as s}from"./_baseEach.js";import{_ as e}from"./_baseIteratee.js";import{_ as o}from"./_baseReduce.js";import{i as m}from"./isArray.js";var t=a,i=s,_=e,f=o,p=m;var j=r((function(r,a,s){var e=p(r)?t:f,o=arguments.length<3;return e(r,_(a),s,o,i)}));export{j as default};
+//# sourceMappingURL=reduce.js.map

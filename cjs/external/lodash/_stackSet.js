@@ -1,0 +1,2 @@
+"use strict";var e=require("./_ListCache.js"),s=require("./_Map.js"),t=require("./_MapCache.js"),a=e._ListCache,i=s._Map,_=t._MapCache;var r=function(e,s){var t=this.__data__;if(t instanceof a){var r=t.__data__;if(!i||r.length<199)return r.push([e,s]),this.size=++t.size,this;t=this.__data__=new _(r)}return t.set(e,s),this.size=t.size,this};exports._stackSet=r;
+//# sourceMappingURL=_stackSet.js.map

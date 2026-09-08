@@ -1,0 +1,2 @@
+"use strict";var e=require("./_baseTrim.js"),r=require("./isObject.js"),t=require("./isSymbol.js"),i=e._baseTrim,s=r.isObject_1,u=t.isSymbol_1,a=/^[-+]0x[0-9a-f]+$/i,f=/^0b[01]+$/i,n=/^0o[0-7]+$/i,o=parseInt;var b=function(e){if("number"==typeof e)return e;if(u(e))return NaN;if(s(e)){var r="function"==typeof e.valueOf?e.valueOf():e;e=s(r)?r+"":r}if("string"!=typeof e)return 0===e?e:+e;e=i(e);var t=f.test(e);return t||n.test(e)?o(e.slice(2),t?2:8):a.test(e)?NaN:+e};exports.toNumber_1=b;
+//# sourceMappingURL=toNumber.js.map

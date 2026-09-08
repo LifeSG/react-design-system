@@ -1,0 +1,2 @@
+import{__rest as r}from"../_virtual/_tslib.js";import{jsx as t}from"react/jsx-runtime";import s from"clsx";import e from"react";import{gridUl as m,columnWidthStretch as o}from"./uneditable-section.styles.js";const a=(e,a)=>{var{stretch:c,className:i}=e,l=r(e,["stretch","className"]);return t("ul",Object.assign({ref:a,className:s(m,c&&o,i)},l))},c=e.forwardRef(a);export{a as Component,c as UneditableItemSection};
+//# sourceMappingURL=item-section.js.map

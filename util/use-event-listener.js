@@ -1,0 +1,2 @@
+import{useRef as e,useEffect as t}from"react";const n=(n,r,o="window",c)=>{const d=e();t((()=>{d.current=r}),[r]),t((()=>{let e;switch(o){case"window":e=window;break;case"document":e=document;break;default:e=o}if(!e||!e.addEventListener)return;const t=e=>{var t;return null===(t=d.current)||void 0===t?void 0:t.call(d,e)};return e.addEventListener(n,t,c),()=>{null==e||e.removeEventListener(n,t,c)}}),[n,o])};export{n as useEventListener};
+//# sourceMappingURL=use-event-listener.js.map

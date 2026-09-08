@@ -1,0 +1,2 @@
+import{_ as t}from"./_listCacheClear.js";import{_ as e}from"./_listCacheDelete.js";import{_ as r}from"./_listCacheGet.js";import{_ as o}from"./_listCacheHas.js";import{_ as s}from"./_listCacheSet.js";var a=t,p=e,i=r,l=o,_=s;function m(t){var e=-1,r=null==t?0:t.length;for(this.clear();++e<r;){var o=t[e];this.set(o[0],o[1])}}m.prototype.clear=a,m.prototype.delete=p,m.prototype.get=i,m.prototype.has=l,m.prototype.set=_;var h=m;export{h as _};
+//# sourceMappingURL=_ListCache.js.map
