@@ -96,6 +96,25 @@ const SPFDisclaimerLinks: InternalDisclaimerLinks = {
     },
 };
 
+const SportSGOrangeWhereDisclaimerLinks: InternalDisclaimerLinks = {
+    privacy: {
+        href: "https://www.sportsingapore.gov.sg/privacy/",
+        target: "_blank",
+        rel: "noopener",
+    },
+    termsOfUse: {
+        href: "https://www.sportsingapore.gov.sg/terms-of-use/",
+        target: "_blank",
+        rel: "noopener",
+    },
+    reportVulnerability: {
+        href: "https://www.tech.gov.sg/report_vulnerability",
+        target: "_blank",
+        rel: "noopener",
+        external: true,
+    },
+};
+
 const SupportGoWhereDisclaimerLinks: InternalDisclaimerLinks = {
     privacy: {
         href: "https://supportgowhere.life.gov.sg/privacy-statement.pdf",
@@ -125,6 +144,8 @@ export const getDefaultDisclaimerLinks = (resourceScheme?: ThemeType) => {
             return MyLegacyDisclaimerLinks;
         case "spf":
             return SPFDisclaimerLinks;
+        case "sportsg-orange":
+            return SportSGOrangeWhereDisclaimerLinks;
         case "supportgowhere":
             return SupportGoWhereDisclaimerLinks;
         default:

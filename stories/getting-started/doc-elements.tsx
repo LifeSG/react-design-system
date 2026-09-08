@@ -15,9 +15,10 @@ const THEME_TO_DISPLAY_NAME_MAPPING: Record<ThemeType, string> = {
     pa: "PA",
     rbs: "RBS",
     "sgw-digital-lobby": "SGW Digital Lobby",
-    spf: "SPF",
-    supportgowhere: "SupportGoWhere",
     smgs: "SMGS",
+    spf: "SPF",
+    "sportsg-orange": "SportSG Orange",
+    supportgowhere: "SupportGoWhere",
     "tote-board": "Tote Board",
     vica: "VICA",
     websg: "WebSG",
@@ -25,26 +26,27 @@ const THEME_TO_DISPLAY_NAME_MAPPING: Record<ThemeType, string> = {
     wogaa: "WOGAA",
 };
 
-const THEME_TO_FONT_MAPPING: Record<ThemeType, string> = {
-    "a11y-playground": "atkinson-hyperlegible-next",
-    bookingsg: "plus-jakarta-sans",
-    careercompass: "plus-jakarta-sans",
-    ccube: "open-sans",
-    imda: "montserrat",
-    lifesg: "open-sans",
-    mylegacy: "open-sans",
-    oneservice: "open-sans",
-    pa: "lato",
-    rbs: "open-sans",
-    "sgw-digital-lobby": "libre-franklin",
-    spf: "public-sans",
-    supportgowhere: "libre-franklin",
-    smgs: "plus-jakarta-sans",
-    "tote-board": "inter",
-    vica: "public-sans",
-    websg: "public-sans",
-    wise: "public-sans",
-    wogaa: "public-sans",
+const THEME_TO_FONT_MAPPING: Record<ThemeType, string[]> = {
+    "a11y-playground": ["atkinson-hyperlegible-next"],
+    bookingsg: ["plus-jakarta-sans"],
+    careercompass: ["plus-jakarta-sans"],
+    ccube: ["open-sans"],
+    imda: ["montserrat"],
+    lifesg: ["open-sans"],
+    mylegacy: ["open-sans"],
+    oneservice: ["open-sans"],
+    pa: ["lato"],
+    rbs: ["open-sans"],
+    "sgw-digital-lobby": ["libre-franklin"],
+    smgs: ["plus-jakarta-sans"],
+    spf: ["public-sans"],
+    "sportsg-orange": ["apfel-grotezk", "hanken-grotesk"],
+    supportgowhere: ["libre-franklin"],
+    "tote-board": ["inter"],
+    vica: ["public-sans"],
+    websg: ["public-sans"],
+    wise: ["public-sans"],
+    wogaa: ["public-sans"],
 };
 
 const ThemePicker = ({
@@ -76,6 +78,19 @@ const ThemePicker = ({
 
 export const Installation = () => {
     const [theme, setTheme] = useState<ThemeType>("lifesg");
+    const fonts = THEME_TO_FONT_MAPPING[theme];
+    const fontLinkTags = fonts
+        .map(
+            (font) =>
+                `<link\n    rel="stylesheet"\n    type="text/css"\n    href="https://assets.life.gov.sg/react-design-system/v3/css/${font}.css"\n/>`
+        )
+        .join("\n");
+    const fontImportRules = fonts
+        .map(
+            (font) =>
+                `@import url("https://assets.life.gov.sg/react-design-system/v3/css/${font}.css");`
+        )
+        .join("\n");
     return (
         <div>
             <Markdown>
@@ -105,18 +120,14 @@ Add this into the \`head\` of your html file:
     type="text/css"
     href="https://assets.life.gov.sg/react-design-system/v4/css/main.css"
 />
-<link
-    rel="stylesheet"
-    type="text/css"
-    href="https://assets.life.gov.sg/react-design-system/v3/css/${THEME_TO_FONT_MAPPING[theme]}.css"
-/>
+${fontLinkTags}
 \`\`\`
 
 Or if you are importing to an existing css file:
 
 \`\`\`css
 @import url("https://assets.life.gov.sg/react-design-system/v4/css/main.css");
-@import url("https://assets.life.gov.sg/react-design-system/v3/css/${THEME_TO_FONT_MAPPING[theme]}.css");
+${fontImportRules}
 \`\`\`
 
 ### 4. Load the theme stylesheet

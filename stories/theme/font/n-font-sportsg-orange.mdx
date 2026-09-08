@@ -1,0 +1,27 @@
+import { Meta } from "@storybook/addon-docs/blocks";
+import { DocInfo } from "stories/storybook-common";
+import { FontDisplay } from "../doc-elements";
+import { ThemeProvider } from "src/theme";
+
+<Meta title="Foundations/Font/SportSG Orange" />
+
+# SportSG Orange font
+
+This is the font set used when the theme is `"sportsg-orange"`.
+
+This stylesheet should be loaded in your app.
+
+```
+https://assets.life.gov.sg/react-design-system/v3/css/hanken-grotesk.css
+https://assets.life.gov.sg/react-design-system/v3/css/apfel-grotezk.css
+```
+
+<DocInfo>
+    [Common
+    ligatures](https://developer.mozilla.org/en-US/docs/Web/CSS/font-variant-ligatures)
+    are **disabled** for this font
+</DocInfo>
+
+<ThemeProvider theme="sportsg-orange" fontPreset="sportsg-orange-gms">
+    <FontDisplay theme="sportsg-orange" />
+</ThemeProvider>

@@ -27,6 +27,7 @@ export const THEME_TYPES = [
     "sgw-digital-lobby",
     "smgs",
     "spf",
+    "sportsg-orange",
     "supportgowhere",
     "tote-board",
     "vica",
@@ -38,8 +39,14 @@ export const THEME_TYPES = [
 /** Union of all supported theme names. */
 export type ThemeType = (typeof THEME_TYPES)[number];
 
-/** Available font presets for WISE product themes (wise, vica, websg, wogaa). */
-export type ThemeFontPreset = "wise-public" | "wise-admin";
+/**
+ * Available font presets for WISE product themes (wise, vica, websg, wogaa).
+ * Available font presets for SportSG product themes (sportsg-orange).
+ *  */
+export type ThemeFontPreset =
+    | "wise-public"
+    | "wise-admin"
+    | "sportsg-orange-gms";
 /**
  * Colour mode accepted by `ThemeProvider`.
  * — `"auto"` follows OS preference.

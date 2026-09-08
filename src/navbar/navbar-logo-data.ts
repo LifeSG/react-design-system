@@ -45,6 +45,14 @@ const SPF_RESOURCE_LOGO: NavbarResourcesProps = {
     },
 };
 
+const SPORTSG_ORANGE_RESOURCES_LOGO: NavbarResourcesProps = {
+    primary: {
+        brandName: "SportSG",
+        logoSrc:
+            "https://assets.life.gov.sg/react-design-system/img/logo/sportsg-logo.svg",
+    },
+};
+
 const SUPPORTGOWHERE_RESOURCE_LOGO: NavbarResourcesProps = {
     primary: {
         brandName: "SupportGoWhere",
@@ -78,6 +86,8 @@ export const getDefaultResourceLogo = (resourceScheme?: ThemeType) => {
             return IMDA_RESOURCE_LOGO;
         case "tote-board":
             return TOTEBOARD_RESOURCES_LOGO;
+        case "sportsg-orange":
+            return SPORTSG_ORANGE_RESOURCES_LOGO;
         default:
             return DEFAULT_RESOURCES_LOGO;
     }
