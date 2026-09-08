@@ -41,9 +41,9 @@ Render placeholder blocks matching the shape of real content. Use a CSS `pulse` 
 ### Button loading (inline async)
 
 ```tsx
-<Button.Default type="submit" loading={isSubmitting} disabled={isSubmitting}>
+<Button type="submit" loading={isSubmitting} disabled={isSubmitting}>
     {isSubmitting ? "Submitting..." : "Submit"}
-</Button.Default>
+</Button>
 ```
 
 Always combine `loading` + `disabled` during async to prevent double-submission.
@@ -70,13 +70,13 @@ import { Spacing } from "@lifesg/react-design-system/theme";
     <Typography.BodyBL>
         Get started by creating your first item
     </Typography.BodyBL>
-    <Button.Default
+    <Button
         icon={<PlusIcon />}
         style={{ marginTop: Spacing["spacing-24"] }}
         onClick={handleCreate}
     >
         Create item
-    </Button.Default>
+    </Button>
 </Card>;
 ```
 
@@ -91,13 +91,13 @@ import { Spacing } from "@lifesg/react-design-system/theme";
 >
     <Typography.HeadingSM>No results found</Typography.HeadingSM>
     <Typography.BodyBL>Try adjusting your search or filters</Typography.BodyBL>
-    <Button.Default
+    <Button
         styleType="secondary"
         style={{ marginTop: Spacing["spacing-24"] }}
         onClick={handleClearFilters}
     >
         Clear filters
-    </Button.Default>
+    </Button>
 </Card>
 ```
 
@@ -164,12 +164,12 @@ import { Spacing } from "@lifesg/react-design-system/theme";
     <Typography.BodyBL>
         The page you're looking for doesn't exist or has been moved
     </Typography.BodyBL>
-    <Button.Default
+    <Button
         style={{ marginTop: Spacing["spacing-24"] }}
         onClick={() => navigate("/")}
     >
         Go to home
-    </Button.Default>
+    </Button>
 </Card>;
 ```
 
@@ -186,13 +186,13 @@ import { Spacing } from "@lifesg/react-design-system/theme";
     <Typography.BodyBL>
         You don't have permission to view this page
     </Typography.BodyBL>
-    <Button.Default
+    <Button
         styleType="secondary"
         style={{ marginTop: Spacing["spacing-24"] }}
         onClick={() => navigate("/")}
     >
         Go to home
-    </Button.Default>
+    </Button>
 </Card>
 ```
 
@@ -246,12 +246,12 @@ import { Spacing } from "@lifesg/react-design-system/theme";
             marginTop: Spacing["spacing-32"],
         }}
     >
-        <Button.Default onClick={() => navigate("/applications")}>
+        <Button onClick={() => navigate("/applications")}>
             View applications
-        </Button.Default>
-        <Button.Default styleType="secondary" onClick={() => navigate("/")}>
+        </Button>
+        <Button styleType="secondary" onClick={() => navigate("/")}>
             Go to home
-        </Button.Default>
+        </Button>
     </div>
 </Card>;
 ```

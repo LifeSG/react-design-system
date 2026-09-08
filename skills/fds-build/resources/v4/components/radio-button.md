@@ -43,51 +43,6 @@ import { RadioButton } from "@lifesg/react-design-system/radio-button";
 </div>;
 ```
 
-## Props
-
-| Prop                    | Type              | Default   | Description                                                                                                             |
-| ----------------------- | ----------------- | --------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `checked`               | `boolean`         | —         | The selected state of the component                                                                                     |
-| `disabled`              | `boolean`         | —         | —                                                                                                                       |
-| `displaySize`           | `RadioButtonSize` | "default" | Visual size of the radio button icon.                                                                                   |
-| `focusableWhenDisabled` | `boolean`         | —         | When `true` and `disabled` is also `true`, the radio button remains keyboard-focusable. `onChange` is still suppressed. |
-
-## Props
-
-| Prop                    | Type              | Default   | Description                                                                                                             |
-| ----------------------- | ----------------- | --------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `checked`               | `boolean`         | —         | The selected state of the component                                                                                     |
-| `disabled`              | `boolean`         | —         | —                                                                                                                       |
-| `displaySize`           | `RadioButtonSize` | "default" | Visual size of the radio button icon.                                                                                   |
-| `focusableWhenDisabled` | `boolean`         | —         | When `true` and `disabled` is also `true`, the radio button remains keyboard-focusable. `onChange` is still suppressed. |
-
-## Props — `RadioButtonProps`
-
-| Prop                    | Type              | Default   | Description                                                                                                             |
-| ----------------------- | ----------------- | --------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `checked`               | `boolean`         | —         | The selected state of the component                                                                                     |
-| `disabled`              | `boolean`         | —         | —                                                                                                                       |
-| `displaySize`           | `RadioButtonSize` | "default" | Visual size of the radio button icon.                                                                                   |
-| `focusableWhenDisabled` | `boolean`         | —         | When `true` and `disabled` is also `true`, the radio button remains keyboard-focusable. `onChange` is still suppressed. |
-
-## Props — `RadioButtonProps`
-
-| Prop                    | Type              | Default   | Description                                                                                                             |
-| ----------------------- | ----------------- | --------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `checked`               | `boolean`         | —         | The selected state of the component                                                                                     |
-| `disabled`              | `boolean`         | —         | —                                                                                                                       |
-| `displaySize`           | `RadioButtonSize` | "default" | Visual size of the radio button icon.                                                                                   |
-| `focusableWhenDisabled` | `boolean`         | —         | When `true` and `disabled` is also `true`, the radio button remains keyboard-focusable. `onChange` is still suppressed. |
-
-## Props — `RadioButtonProps`
-
-| Prop                    | Type              | Default   | Description                                                                                                             |
-| ----------------------- | ----------------- | --------- | ----------------------------------------------------------------------------------------------------------------------- |
-| `checked`               | `boolean`         | —         | The selected state of the component                                                                                     |
-| `disabled`              | `boolean`         | —         | —                                                                                                                       |
-| `displaySize`           | `RadioButtonSize` | "default" | Visual size of the radio button icon.                                                                                   |
-| `focusableWhenDisabled` | `boolean`         | —         | When `true` and `disabled` is also `true`, the radio button remains keyboard-focusable. `onChange` is still suppressed. |
-
 ## Props — `RadioButtonProps`
 
 | Prop                    | Type              | Default   | Description                                                                                                             |

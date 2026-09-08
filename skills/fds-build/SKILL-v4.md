@@ -31,6 +31,22 @@ Peer deps: `react` + `react-dom` (^17, ^18, or ^19).
 
 ---
 
+## Migrating from v3
+
+If the codebase has v3 patterns, do not carry them into v4:
+
+| v3 pattern                                                              | v4 replacement                                                                                      |
+| ----------------------------------------------------------------------- | --------------------------------------------------------------------------------------------------- |
+| `import { Color } from "@lifesg/react-design-system/color"`             | `import { Colour } from "@lifesg/react-design-system/theme"` or `var(--fds-colour-*)` CSS variables |
+| `import { TextStyleUtils } from "@lifesg/react-design-system/text"`     | `var(--fds-font-*)` CSS variables                                                                   |
+| `import { FontSize } from "@lifesg/react-design-system/spec/text-spec"` | `var(--fds-font-size-*)` CSS variables                                                              |
+| `styled-components` theme (`${(p) => p.theme.color...}`)                | CSS Modules with `var(--fds-colour-*)`                                                              |
+| `StyleSheetManager` / `ThemeProvider` from `styled-components`          | `ThemeProvider` from `@lifesg/react-design-system/theme`                                            |
+
+v3 design tokens (`Color`, `FontSize`, `TextStyleUtils`, etc.) are **not exported** from v4 — using them will cause import errors. Use CSS variables or the `Colour` / `Spacing` / `Typography` helpers from `@lifesg/react-design-system/theme` instead.
+
+---
+
 ## ThemeProvider (required)
 
 Every app must wrap all components in `ThemeProvider`. Without it, components throw errors.

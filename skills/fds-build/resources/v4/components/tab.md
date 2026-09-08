@@ -55,160 +55,39 @@ All direct children of `Tab` must be `Tab.Item`. `Tab.Item` renders both the tab
 | `content` \* | `JSX.Element`       | —       | The element rendered as the addon.                |
 | `position`   | `"left" \| "right"` | "right" | Which side of the tab title the addon appears on. |
 
-## Props — `TabProps`
+## Props — `TabContextProps`
 
-| Prop                     | Type                                       | Default | Description                                                                                                                                                                                                                            |
-| ------------------------ | ------------------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`             | —       | —                                                                                                                                                                                                                                      |
-| `initialActive`          | `number`                                   | 0       | Zero-based index of the tab panel displayed on first render. Ignored when `currentActive` is provided.                                                                                                                                 |
-| `currentActive`          | `number`                                   | —       | Zero-based index of the currently active tab panel. When provided, the component operates in controlled mode — the caller is responsible for updating this value in response to `onTabClick` to reflect tab changes.                   |
-| `className`              | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `id`                     | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `onTabClick`             | `((title: string, index: number) => void)` | —       | Called when the user clicks a tab link.                                                                                                                                                                                                |
-| `fullWidthIndicatorLine` | `boolean`                                  | false   | Extends all tab indicator lines to the full width of the tab bar instead of matching only the tab link width.                                                                                                                          |
-| `fadeColor`              | `string[] \| FadeColorSet`                 | —       | Background color(s) used for the fade overlays at the edges of the scrollable tab link bar. Pass a `string[]` to apply the same gradient stop colors on both edges, or a `FadeColorSet` to specify left and right edges independently. |
+| Prop            | Type                                       | Default | Description                                                                                                                                                                                                          |
+| --------------- | ------------------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children` \*   | `React.ReactNode`                          | —       | —                                                                                                                                                                                                                    |
+| `initialActive` | `number`                                   | 0       | Zero-based index of the tab panel displayed on first render. Ignored when `currentActive` is provided.                                                                                                               |
+| `currentActive` | `number`                                   | —       | Zero-based index of the currently active tab panel. When provided, the component operates in controlled mode — the caller is responsible for updating this value in response to `onTabClick` to reflect tab changes. |
+| `onTabClick`    | `((title: string, index: number) => void)` | —       | Called when the user clicks a tab link.                                                                                                                                                                              |
 
-## Props — `TabItemProps`
+## Props — `TabListProps`
 
-| Prop          | Type                           | Default | Description                                                                         |
-| ------------- | ------------------------------ | ------- | ----------------------------------------------------------------------------------- |
-| `title` \*    | `string`                       | —       | Text label rendered in the tab link bar for this panel.                             |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                   |
-| `titleAddon`  | `TitleAddonProps`              | —       | Optional addon element rendered alongside the tab title in the link bar.            |
-| `className`   | `string`                       | —       | —                                                                                   |
-| `id`          | `string`                       | —       | —                                                                                   |
-| `width`       | `string`                       | —       | Explicit width for this tab link in the tab bar. Accepts any valid CSS width value. |
+| Prop                     | Type                       | Default | Description                                                                                                                                                                                                                            |
+| ------------------------ | -------------------------- | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| `children` \*            | `React.ReactNode`          | —       | —                                                                                                                                                                                                                                      |
+| `fullWidthIndicatorLine` | `boolean`                  | false   | Extends all tab indicator lines to the full width of the tab bar instead of matching only the tab link width.                                                                                                                          |
+| `fadeColor`              | `string[] \| FadeColorSet` | —       | Background color(s) used for the fade overlays at the edges of the scrollable tab link bar. Pass a `string[]` to apply the same gradient stop colors on both edges, or a `FadeColorSet` to specify left and right edges independently. |
 
-## Props — `TitleAddonProps`
+## Props — `TabListItemProps`
 
-| Prop         | Type                | Default | Description                                       |
-| ------------ | ------------------- | ------- | ------------------------------------------------- |
-| `content` \* | `JSX.Element`       | —       | The element rendered as the addon.                |
-| `position`   | `"left" \| "right"` | "right" | Which side of the tab title the addon appears on. |
+| Prop         | Type              | Default | Description                                                                         |
+| ------------ | ----------------- | ------- | ----------------------------------------------------------------------------------- |
+| `title` \*   | `string`          | —       | Text label rendered in the tab link bar for this item.                              |
+| `titleAddon` | `TitleAddonProps` | —       | Optional addon element rendered alongside the tab title in the link bar.            |
+| `width`      | `string`          | —       | Explicit width for this tab link in the tab bar. Accepts any valid CSS width value. |
 
-## Props — `TabProps`
+## Props — `TabPanelProps`
 
-| Prop                     | Type                                       | Default | Description                                                                                                                                                                                                                            |
-| ------------------------ | ------------------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`             | —       | —                                                                                                                                                                                                                                      |
-| `initialActive`          | `number`                                   | 0       | Zero-based index of the tab panel displayed on first render. Ignored when `currentActive` is provided.                                                                                                                                 |
-| `currentActive`          | `number`                                   | —       | Zero-based index of the currently active tab panel. When provided, the component operates in controlled mode — the caller is responsible for updating this value in response to `onTabClick` to reflect tab changes.                   |
-| `className`              | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `id`                     | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `onTabClick`             | `((title: string, index: number) => void)` | —       | Called when the user clicks a tab link.                                                                                                                                                                                                |
-| `fullWidthIndicatorLine` | `boolean`                                  | false   | Extends all tab indicator lines to the full width of the tab bar instead of matching only the tab link width.                                                                                                                          |
-| `fadeColor`              | `string[] \| FadeColorSet`                 | —       | Background color(s) used for the fade overlays at the edges of the scrollable tab link bar. Pass a `string[]` to apply the same gradient stop colors on both edges, or a `FadeColorSet` to specify left and right edges independently. |
-
-## Props — `TabItemProps`
-
-| Prop          | Type                           | Default | Description                                                                         |
-| ------------- | ------------------------------ | ------- | ----------------------------------------------------------------------------------- |
-| `title` \*    | `string`                       | —       | Text label rendered in the tab link bar for this panel.                             |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                   |
-| `titleAddon`  | `TitleAddonProps`              | —       | Optional addon element rendered alongside the tab title in the link bar.            |
-| `className`   | `string`                       | —       | —                                                                                   |
-| `id`          | `string`                       | —       | —                                                                                   |
-| `width`       | `string`                       | —       | Explicit width for this tab link in the tab bar. Accepts any valid CSS width value. |
-
-## Props — `TitleAddonProps`
-
-| Prop         | Type                | Default | Description                                       |
-| ------------ | ------------------- | ------- | ------------------------------------------------- |
-| `content` \* | `JSX.Element`       | —       | The element rendered as the addon.                |
-| `position`   | `"left" \| "right"` | "right" | Which side of the tab title the addon appears on. |
-
-## Props — `TabProps`
-
-| Prop                     | Type                                       | Default | Description                                                                                                                                                                                                                            |
-| ------------------------ | ------------------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`             | —       | —                                                                                                                                                                                                                                      |
-| `initialActive`          | `number`                                   | 0       | Zero-based index of the tab panel displayed on first render. Ignored when `currentActive` is provided.                                                                                                                                 |
-| `currentActive`          | `number`                                   | —       | Zero-based index of the currently active tab panel. When provided, the component operates in controlled mode — the caller is responsible for updating this value in response to `onTabClick` to reflect tab changes.                   |
-| `className`              | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `id`                     | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `onTabClick`             | `((title: string, index: number) => void)` | —       | Called when the user clicks a tab link.                                                                                                                                                                                                |
-| `fullWidthIndicatorLine` | `boolean`                                  | false   | Extends all tab indicator lines to the full width of the tab bar instead of matching only the tab link width.                                                                                                                          |
-| `fadeColor`              | `string[] \| FadeColorSet`                 | —       | Background color(s) used for the fade overlays at the edges of the scrollable tab link bar. Pass a `string[]` to apply the same gradient stop colors on both edges, or a `FadeColorSet` to specify left and right edges independently. |
-
-## Props — `TabItemProps`
-
-| Prop          | Type                           | Default | Description                                                                         |
-| ------------- | ------------------------------ | ------- | ----------------------------------------------------------------------------------- |
-| `title` \*    | `string`                       | —       | Text label rendered in the tab link bar for this panel.                             |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                   |
-| `titleAddon`  | `TitleAddonProps`              | —       | Optional addon element rendered alongside the tab title in the link bar.            |
-| `className`   | `string`                       | —       | —                                                                                   |
-| `id`          | `string`                       | —       | —                                                                                   |
-| `width`       | `string`                       | —       | Explicit width for this tab link in the tab bar. Accepts any valid CSS width value. |
-
-## Props — `TitleAddonProps`
-
-| Prop         | Type                | Default | Description                                       |
-| ------------ | ------------------- | ------- | ------------------------------------------------- |
-| `content` \* | `JSX.Element`       | —       | The element rendered as the addon.                |
-| `position`   | `"left" \| "right"` | "right" | Which side of the tab title the addon appears on. |
-
-## Props — `TabProps`
-
-| Prop                     | Type                                       | Default | Description                                                                                                                                                                                                                            |
-| ------------------------ | ------------------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`             | —       | —                                                                                                                                                                                                                                      |
-| `initialActive`          | `number`                                   | 0       | Zero-based index of the tab panel displayed on first render. Ignored when `currentActive` is provided.                                                                                                                                 |
-| `currentActive`          | `number`                                   | —       | Zero-based index of the currently active tab panel. When provided, the component operates in controlled mode — the caller is responsible for updating this value in response to `onTabClick` to reflect tab changes.                   |
-| `className`              | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `id`                     | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `onTabClick`             | `((title: string, index: number) => void)` | —       | Called when the user clicks a tab link.                                                                                                                                                                                                |
-| `fullWidthIndicatorLine` | `boolean`                                  | false   | Extends all tab indicator lines to the full width of the tab bar instead of matching only the tab link width.                                                                                                                          |
-| `fadeColor`              | `string[] \| FadeColorSet`                 | —       | Background color(s) used for the fade overlays at the edges of the scrollable tab link bar. Pass a `string[]` to apply the same gradient stop colors on both edges, or a `FadeColorSet` to specify left and right edges independently. |
-
-## Props — `TabItemProps`
-
-| Prop          | Type                           | Default | Description                                                                         |
-| ------------- | ------------------------------ | ------- | ----------------------------------------------------------------------------------- |
-| `title` \*    | `string`                       | —       | Text label rendered in the tab link bar for this panel.                             |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                   |
-| `titleAddon`  | `TitleAddonProps`              | —       | Optional addon element rendered alongside the tab title in the link bar.            |
-| `className`   | `string`                       | —       | —                                                                                   |
-| `id`          | `string`                       | —       | —                                                                                   |
-| `width`       | `string`                       | —       | Explicit width for this tab link in the tab bar. Accepts any valid CSS width value. |
-
-## Props — `TitleAddonProps`
-
-| Prop         | Type                | Default | Description                                       |
-| ------------ | ------------------- | ------- | ------------------------------------------------- |
-| `content` \* | `JSX.Element`       | —       | The element rendered as the addon.                |
-| `position`   | `"left" \| "right"` | "right" | Which side of the tab title the addon appears on. |
-
-## Props — `TabProps`
-
-| Prop                     | Type                                       | Default | Description                                                                                                                                                                                                                            |
-| ------------------------ | ------------------------------------------ | ------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `children` \*            | `JSX.Element \| JSX.Element[]`             | —       | —                                                                                                                                                                                                                                      |
-| `initialActive`          | `number`                                   | 0       | Zero-based index of the tab panel displayed on first render. Ignored when `currentActive` is provided.                                                                                                                                 |
-| `currentActive`          | `number`                                   | —       | Zero-based index of the currently active tab panel. When provided, the component operates in controlled mode — the caller is responsible for updating this value in response to `onTabClick` to reflect tab changes.                   |
-| `className`              | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `id`                     | `string`                                   | —       | —                                                                                                                                                                                                                                      |
-| `onTabClick`             | `((title: string, index: number) => void)` | —       | Called when the user clicks a tab link.                                                                                                                                                                                                |
-| `fullWidthIndicatorLine` | `boolean`                                  | false   | Extends all tab indicator lines to the full width of the tab bar instead of matching only the tab link width.                                                                                                                          |
-| `fadeColor`              | `string[] \| FadeColorSet`                 | —       | Background color(s) used for the fade overlays at the edges of the scrollable tab link bar. Pass a `string[]` to apply the same gradient stop colors on both edges, or a `FadeColorSet` to specify left and right edges independently. |
-
-## Props — `TabItemProps`
-
-| Prop          | Type                           | Default | Description                                                                         |
-| ------------- | ------------------------------ | ------- | ----------------------------------------------------------------------------------- |
-| `title` \*    | `string`                       | —       | Text label rendered in the tab link bar for this panel.                             |
-| `children` \* | `JSX.Element \| JSX.Element[]` | —       | —                                                                                   |
-| `titleAddon`  | `TitleAddonProps`              | —       | Optional addon element rendered alongside the tab title in the link bar.            |
-| `className`   | `string`                       | —       | —                                                                                   |
-| `id`          | `string`                       | —       | —                                                                                   |
-| `width`       | `string`                       | —       | Explicit width for this tab link in the tab bar. Accepts any valid CSS width value. |
-
-## Props — `TitleAddonProps`
-
-| Prop         | Type                | Default | Description                                       |
-| ------------ | ------------------- | ------- | ------------------------------------------------- |
-| `content` \* | `JSX.Element`       | —       | The element rendered as the addon.                |
-| `position`   | `"left" \| "right"` | "right" | Which side of the tab title the addon appears on. |
+| Prop          | Type              | Default | Description                                                              |
+| ------------- | ----------------- | ------- | ------------------------------------------------------------------------ |
+| `index` \*    | `number`          | —       | Zero-based index identifying which active tab this panel corresponds to. |
+| `children` \* | `React.ReactNode` | —       | —                                                                        |
+| `className`   | `string`          | —       | —                                                                        |
+| `id`          | `string`          | —       | —                                                                        |
 
 ## Rules
 

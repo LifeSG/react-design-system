@@ -4,18 +4,13 @@ Import: `import { Button } from "@lifesg/react-design-system/button"`
 
 ## When to use
 
-```
-┌─ "Which button component?"
-│
-├─ Icon only (no text)?
-│  └─ IconButton — aria-label required
-│
-├─ Text + icon together?
-│  └─ ButtonWithIcon — icon left (default) or right for directional actions
-│
-└─ Text only?
-   └─ Button
-```
+`Button` handles all button variants in v4 — there are no separate `IconButton` or `ButtonWithIcon` components:
+
+| Need                | Usage                                                            |
+| ------------------- | ---------------------------------------------------------------- |
+| Text only           | `<Button>Label</Button>`                                         |
+| Text + icon         | `<Button icon={<Icon />}>Label</Button>` — icon defaults to left |
+| Icon only (no text) | `<Button icon={<Icon />} aria-label="..." />` — renders square   |
 
 ## Size variants
 
@@ -47,66 +42,6 @@ import { Button } from "@lifesg/react-design-system/button";
     Save changes
 </Button>;
 ```
-
-## Props
-
-| Prop                    | Type                 | Default   | Description                                                                                                                                                                                                                                       |
-| ----------------------- | -------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styleType`             | `ButtonStyleType`    | "default" | Visual style variant of the button.                                                                                                                                                                                                               |
-| `sizeType`              | `ButtonSizeType`     | "default" | Controls the button's size.                                                                                                                                                                                                                       |
-| `danger`                | `boolean`            | false     | Applies a red color scheme for destructive actions.                                                                                                                                                                                               |
-| `loading`               | `boolean`            | false     | Displays a loading spinner and sets `aria-busy` on the button. The spinner replaces the icon (if present); children continue to render.                                                                                                           |
-| `focusableWhenDisabled` | `boolean`            | false     | Keeps the button keyboard-focusable when disabled. When true, the HTML `disabled` attribute is not set, but `aria-disabled` remains true and the click handler is suppressed.                                                                     |
-| `icon`                  | `JSX.Element`        | —         | Icon element rendered inside the button. The icon receives `aria-hidden` automatically. When provided without children, the button renders in icon-only mode (square layout) — provide `aria-label` on the button for accessibility in that case. |
-| `iconPosition`          | `ButtonIconPosition` | "left"    | Position of the icon relative to the button label.                                                                                                                                                                                                |
-
-## Props
-
-| Prop                    | Type                 | Default   | Description                                                                                                                                                                                                                                       |
-| ----------------------- | -------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styleType`             | `ButtonStyleType`    | "default" | Visual style variant of the button.                                                                                                                                                                                                               |
-| `sizeType`              | `ButtonSizeType`     | "default" | Controls the button's size.                                                                                                                                                                                                                       |
-| `danger`                | `boolean`            | false     | Applies a red color scheme for destructive actions.                                                                                                                                                                                               |
-| `loading`               | `boolean`            | false     | Displays a loading spinner and sets `aria-busy` on the button. The spinner replaces the icon (if present); children continue to render.                                                                                                           |
-| `focusableWhenDisabled` | `boolean`            | false     | Keeps the button keyboard-focusable when disabled. When true, the HTML `disabled` attribute is not set, but `aria-disabled` remains true and the click handler is suppressed.                                                                     |
-| `icon`                  | `JSX.Element`        | —         | Icon element rendered inside the button. The icon receives `aria-hidden` automatically. When provided without children, the button renders in icon-only mode (square layout) — provide `aria-label` on the button for accessibility in that case. |
-| `iconPosition`          | `ButtonIconPosition` | "left"    | Position of the icon relative to the button label.                                                                                                                                                                                                |
-
-## Props
-
-| Prop                    | Type                 | Default   | Description                                                                                                                                                                                                                                       |
-| ----------------------- | -------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styleType`             | `ButtonStyleType`    | "default" | Visual style variant of the button.                                                                                                                                                                                                               |
-| `sizeType`              | `ButtonSizeType`     | "default" | Controls the button's size.                                                                                                                                                                                                                       |
-| `danger`                | `boolean`            | false     | Applies a red color scheme for destructive actions.                                                                                                                                                                                               |
-| `loading`               | `boolean`            | false     | Displays a loading spinner and sets `aria-busy` on the button. The spinner replaces the icon (if present); children continue to render.                                                                                                           |
-| `focusableWhenDisabled` | `boolean`            | false     | Keeps the button keyboard-focusable when disabled. When true, the HTML `disabled` attribute is not set, but `aria-disabled` remains true and the click handler is suppressed.                                                                     |
-| `icon`                  | `JSX.Element`        | —         | Icon element rendered inside the button. The icon receives `aria-hidden` automatically. When provided without children, the button renders in icon-only mode (square layout) — provide `aria-label` on the button for accessibility in that case. |
-| `iconPosition`          | `ButtonIconPosition` | "left"    | Position of the icon relative to the button label.                                                                                                                                                                                                |
-
-## Props
-
-| Prop                    | Type                 | Default   | Description                                                                                                                                                                                                                                       |
-| ----------------------- | -------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styleType`             | `ButtonStyleType`    | "default" | Visual style variant of the button.                                                                                                                                                                                                               |
-| `sizeType`              | `ButtonSizeType`     | "default" | Controls the button's size.                                                                                                                                                                                                                       |
-| `danger`                | `boolean`            | false     | Applies a red color scheme for destructive actions.                                                                                                                                                                                               |
-| `loading`               | `boolean`            | false     | Displays a loading spinner and sets `aria-busy` on the button. The spinner replaces the icon (if present); children continue to render.                                                                                                           |
-| `focusableWhenDisabled` | `boolean`            | false     | Keeps the button keyboard-focusable when disabled. When true, the HTML `disabled` attribute is not set, but `aria-disabled` remains true and the click handler is suppressed.                                                                     |
-| `icon`                  | `JSX.Element`        | —         | Icon element rendered inside the button. The icon receives `aria-hidden` automatically. When provided without children, the button renders in icon-only mode (square layout) — provide `aria-label` on the button for accessibility in that case. |
-| `iconPosition`          | `ButtonIconPosition` | "left"    | Position of the icon relative to the button label.                                                                                                                                                                                                |
-
-## Props
-
-| Prop                    | Type                 | Default   | Description                                                                                                                                                                                                                                       |
-| ----------------------- | -------------------- | --------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `styleType`             | `ButtonStyleType`    | "default" | Visual style variant of the button.                                                                                                                                                                                                               |
-| `sizeType`              | `ButtonSizeType`     | "default" | Controls the button's size.                                                                                                                                                                                                                       |
-| `danger`                | `boolean`            | false     | Applies a red color scheme for destructive actions.                                                                                                                                                                                               |
-| `loading`               | `boolean`            | false     | Displays a loading spinner and sets `aria-busy` on the button. The spinner replaces the icon (if present); children continue to render.                                                                                                           |
-| `focusableWhenDisabled` | `boolean`            | false     | Keeps the button keyboard-focusable when disabled. When true, the HTML `disabled` attribute is not set, but `aria-disabled` remains true and the click handler is suppressed.                                                                     |
-| `icon`                  | `JSX.Element`        | —         | Icon element rendered inside the button. The icon receives `aria-hidden` automatically. When provided without children, the button renders in icon-only mode (square layout) — provide `aria-label` on the button for accessibility in that case. |
-| `iconPosition`          | `ButtonIconPosition` | "left"    | Position of the icon relative to the button label.                                                                                                                                                                                                |
 
 ## Props
 

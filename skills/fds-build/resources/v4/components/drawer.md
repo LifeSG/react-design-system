@@ -17,7 +17,7 @@ Do not use for:
 import { useState } from "react";
 import { Drawer } from "@lifesg/react-design-system/drawer";
 import { Button } from "@lifesg/react-design-system/button";
-import { Text } from "@lifesg/react-design-system/text";
+import { Typography } from "@lifesg/react-design-system/typography";
 
 const FilterDrawer = () => {
     const [show, setShow] = useState(false);
@@ -26,9 +26,7 @@ const FilterDrawer = () => {
 
     return (
         <>
-            <Button.Default onClick={() => setShow(true)}>
-                Open filters
-            </Button.Default>
+            <Button onClick={() => setShow(true)}>Open filters</Button>
 
             <Drawer
                 show={show}
@@ -37,81 +35,21 @@ const FilterDrawer = () => {
                 onOverlayClick={handleClose}
             >
                 <div style={{ padding: "1.5rem" }}>
-                    <Text.H4 style={{ marginBottom: "0.75rem" }}>
+                    <Typography.HeadingMD style={{ marginBottom: "0.75rem" }}>
                         Category
-                    </Text.H4>
-                    <Text.Body style={{ marginBottom: "2rem" }}>
+                    </Typography.HeadingMD>
+                    <Typography.BodyBL style={{ marginBottom: "2rem" }}>
                         Filter content goes here.
-                    </Text.Body>
-                    <Button.Default styleType="secondary" onClick={handleClose}>
+                    </Typography.BodyBL>
+                    <Button styleType="secondary" onClick={handleClose}>
                         Close
-                    </Button.Default>
+                    </Button>
                 </div>
             </Drawer>
         </>
     );
 };
 ```
-
-## Props
-
-| Prop             | Type              | Default | Description                                                                               |
-| ---------------- | ----------------- | ------- | ----------------------------------------------------------------------------------------- |
-| `children`       | `React.ReactNode` | —       | —                                                                                         |
-| `className`      | `string`          | —       | —                                                                                         |
-| `id`             | `string`          | —       | —                                                                                         |
-| `heading`        | `string`          | —       | Text rendered as the drawer title and used as the accessible label for the dialog.        |
-| `show`           | `boolean`         | —       | Controls whether the drawer is visible.                                                   |
-| `onClose`        | `(() => void)`    | —       | Called when the user requests to close the drawer via the close button or the Escape key. |
-| `onOverlayClick` | `(() => void)`    | —       | Called when the user clicks the background overlay.                                       |
-
-## Props
-
-| Prop             | Type              | Default | Description                                                                               |
-| ---------------- | ----------------- | ------- | ----------------------------------------------------------------------------------------- |
-| `children`       | `React.ReactNode` | —       | —                                                                                         |
-| `className`      | `string`          | —       | —                                                                                         |
-| `id`             | `string`          | —       | —                                                                                         |
-| `heading`        | `string`          | —       | Text rendered as the drawer title and used as the accessible label for the dialog.        |
-| `show`           | `boolean`         | —       | Controls whether the drawer is visible.                                                   |
-| `onClose`        | `(() => void)`    | —       | Called when the user requests to close the drawer via the close button or the Escape key. |
-| `onOverlayClick` | `(() => void)`    | —       | Called when the user clicks the background overlay.                                       |
-
-## Props
-
-| Prop             | Type              | Default | Description                                                                               |
-| ---------------- | ----------------- | ------- | ----------------------------------------------------------------------------------------- |
-| `children`       | `React.ReactNode` | —       | —                                                                                         |
-| `className`      | `string`          | —       | —                                                                                         |
-| `id`             | `string`          | —       | —                                                                                         |
-| `heading`        | `string`          | —       | Text rendered as the drawer title and used as the accessible label for the dialog.        |
-| `show`           | `boolean`         | —       | Controls whether the drawer is visible.                                                   |
-| `onClose`        | `(() => void)`    | —       | Called when the user requests to close the drawer via the close button or the Escape key. |
-| `onOverlayClick` | `(() => void)`    | —       | Called when the user clicks the background overlay.                                       |
-
-## Props
-
-| Prop             | Type              | Default | Description                                                                               |
-| ---------------- | ----------------- | ------- | ----------------------------------------------------------------------------------------- |
-| `children`       | `React.ReactNode` | —       | —                                                                                         |
-| `className`      | `string`          | —       | —                                                                                         |
-| `id`             | `string`          | —       | —                                                                                         |
-| `heading`        | `string`          | —       | Text rendered as the drawer title and used as the accessible label for the dialog.        |
-| `show`           | `boolean`         | —       | Controls whether the drawer is visible.                                                   |
-| `onClose`        | `(() => void)`    | —       | Called when the user requests to close the drawer via the close button or the Escape key. |
-| `onOverlayClick` | `(() => void)`    | —       | Called when the user clicks the background overlay.                                       |
-
-## Props
-
-| Prop             | Type              | Default | Description                                                                               |
-| ---------------- | ----------------- | ------- | ----------------------------------------------------------------------------------------- |
-| `children`       | `React.ReactNode` | —       | —                                                                                         |
-| `className`      | `string`          | —       | —                                                                                         |
-| `id`             | `string`          | —       | —                                                                                         |
-| `heading`        | `string`          | —       | Text rendered as the drawer title and used as the accessible label for the dialog.        |
-| `show`           | `boolean`         | —       | Controls whether the drawer is visible.                                                   |
-| `onClose`        | `(() => void)`    | —       | Called when the user requests to close the drawer via the close button or the Escape key. |
-| `onOverlayClick` | `(() => void)`    | —       | Called when the user clicks the background overlay.                                       |
 
 ## Props
 
@@ -135,5 +73,5 @@ const FilterDrawer = () => {
 
 ## Anti-patterns
 
--   Do not use the Drawer for full forms — use a dedicated page or Modal instead.
+-   Do not use the Drawer for full forms — use a dedicated page or ModalV2 instead.
 -   Do not omit `onClose` — users must have a way to dismiss the panel.

@@ -57,7 +57,7 @@ On mobile the filter sidebar should be hidden behind a modal — `Filter` handle
 | Results        | `Card` list/grid **or** `DataTable`       | Yes      |
 | Result count   | `Typography.BodyMD` — "X result(s) found" | Yes      |
 | Footer         | `Footer`                                  | Yes      |
-| Search bar     | `Form.Input` + `Button.Default`           | No\*     |
+| Search bar     | `Form.Input` + `Button`                   | No\*     |
 | Filter sidebar | `Filter` (~278px wide)                    | No\*     |
 | Pagination     | `Pagination showFirstAndLastNav`          | No       |
 
@@ -279,14 +279,13 @@ export default function ListingPage() {
                                         }))
                                     }
                                 />
-                                <Button.Default
-                                    styleType="default"
+                                <Button
                                     onClick={() =>
                                         setState((s) => ({ ...s, page: 1 }))
                                     }
                                 >
                                     Search
-                                </Button.Default>
+                                </Button>
                             </div>
 
                             {/* Loading */}

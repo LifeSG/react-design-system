@@ -43,56 +43,6 @@ import { Tag } from "@lifesg/react-design-system/tag";
 </Tag>;
 ```
 
-## Props
-
-| Prop           | Type                | Default | Description                                                                                                                                          |
-| -------------- | ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` \*      | `TagType`           | —       | Visual style variant.                                                                                                                                |
-| `colorType`    | `TagColorType`      | "black" | Color theme applied to the tag.                                                                                                                      |
-| `icon`         | `JSX.Element`       | —       | Optional icon rendered alongside the label. The position is controlled by `iconPosition`.                                                            |
-| `iconPosition` | `"left" \| "right"` | "left"  | Position of the icon relative to the label text.                                                                                                     |
-| `interactive`  | `boolean`           | false   | When `true`, renders the tag as a `<button>` element to support click and keyboard interactions. When `false`, renders as a non-interactive `<div>`. |
-
-## Props
-
-| Prop           | Type                | Default | Description                                                                                                                                          |
-| -------------- | ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` \*      | `TagType`           | —       | Visual style variant.                                                                                                                                |
-| `colorType`    | `TagColorType`      | "black" | Color theme applied to the tag.                                                                                                                      |
-| `icon`         | `JSX.Element`       | —       | Optional icon rendered alongside the label. The position is controlled by `iconPosition`.                                                            |
-| `iconPosition` | `"left" \| "right"` | "left"  | Position of the icon relative to the label text.                                                                                                     |
-| `interactive`  | `boolean`           | false   | When `true`, renders the tag as a `<button>` element to support click and keyboard interactions. When `false`, renders as a non-interactive `<div>`. |
-
-## Props — `TagProps`
-
-| Prop           | Type                | Default | Description                                                                                                                                          |
-| -------------- | ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` \*      | `TagType`           | —       | Visual style variant.                                                                                                                                |
-| `colorType`    | `TagColorType`      | "black" | Color theme applied to the tag.                                                                                                                      |
-| `icon`         | `JSX.Element`       | —       | Optional icon rendered alongside the label. The position is controlled by `iconPosition`.                                                            |
-| `iconPosition` | `"left" \| "right"` | "left"  | Position of the icon relative to the label text.                                                                                                     |
-| `interactive`  | `boolean`           | false   | When `true`, renders the tag as a `<button>` element to support click and keyboard interactions. When `false`, renders as a non-interactive `<div>`. |
-
-## Props — `TagProps`
-
-| Prop           | Type                | Default | Description                                                                                                                                          |
-| -------------- | ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` \*      | `TagType`           | —       | Visual style variant.                                                                                                                                |
-| `colorType`    | `TagColorType`      | "black" | Color theme applied to the tag.                                                                                                                      |
-| `icon`         | `JSX.Element`       | —       | Optional icon rendered alongside the label. The position is controlled by `iconPosition`.                                                            |
-| `iconPosition` | `"left" \| "right"` | "left"  | Position of the icon relative to the label text.                                                                                                     |
-| `interactive`  | `boolean`           | false   | When `true`, renders the tag as a `<button>` element to support click and keyboard interactions. When `false`, renders as a non-interactive `<div>`. |
-
-## Props — `TagProps`
-
-| Prop           | Type                | Default | Description                                                                                                                                          |
-| -------------- | ------------------- | ------- | ---------------------------------------------------------------------------------------------------------------------------------------------------- |
-| `type` \*      | `TagType`           | —       | Visual style variant.                                                                                                                                |
-| `colorType`    | `TagColorType`      | "black" | Color theme applied to the tag.                                                                                                                      |
-| `icon`         | `JSX.Element`       | —       | Optional icon rendered alongside the label. The position is controlled by `iconPosition`.                                                            |
-| `iconPosition` | `"left" \| "right"` | "left"  | Position of the icon relative to the label text.                                                                                                     |
-| `interactive`  | `boolean`           | false   | When `true`, renders the tag as a `<button>` element to support click and keyboard interactions. When `false`, renders as a non-interactive `<div>`. |
-
 ## Props — `TagProps`
 
 | Prop           | Type                | Default | Description                                                                                                                                          |
