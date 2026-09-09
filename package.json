@@ -152,7 +152,7 @@
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-exclude-dependencies-from-bundle": "^1.1.24",
         "rollup-plugin-generate-package-json": "^3.2.0",
-        "rollup-plugin-lib-style": "^2.4.7",
+        "rollup-plugin-lib-style": "2.4.7",
         "rollup-plugin-typescript2": "^0.37.0",
         "storybook": "^10.2.10",
         "style-loader": "^4.0.0",
@@ -177,6 +177,9 @@
         "react-resize-detector": {
             "react": "$react",
             "react-dom": "$react-dom"
+        },
+        "rollup-plugin-lib-style": {
+            "postcss": "$postcss"
         }
     },
     "lint-staged": {
