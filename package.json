@@ -136,7 +136,7 @@
         "lottie-colorify": "^0.8.0",
         "lottie-react": "^2.3.1",
         "patch-package": "^8.0.0",
-        "postcss": "^8.4.38",
+        "postcss": "^8.5.28",
         "postcss-import": "^16.1.0",
         "postcss-loader": "^8.2.1",
         "postcss-mixins": "^12.1.2",
@@ -152,7 +152,7 @@
         "rollup-plugin-copy": "^3.5.0",
         "rollup-plugin-exclude-dependencies-from-bundle": "^1.1.24",
         "rollup-plugin-generate-package-json": "^3.2.0",
-        "rollup-plugin-lib-style": "^2.4.7",
+        "rollup-plugin-lib-style": "2.4.7",
         "rollup-plugin-typescript2": "^0.37.0",
         "storybook": "^10.2.10",
         "style-loader": "^4.0.0",
@@ -177,6 +177,9 @@
         "react-resize-detector": {
             "react": "$react",
             "react-dom": "$react-dom"
+        },
+        "rollup-plugin-lib-style": {
+            "postcss": "$postcss"
         }
     },
     "lint-staged": {
