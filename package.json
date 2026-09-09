@@ -136,7 +136,7 @@
         "lottie-colorify": "^0.8.0",
         "lottie-react": "^2.3.1",
         "patch-package": "^8.0.0",
-        "postcss": "^8.4.38",
+        "postcss": "^8.5.28",
         "postcss-import": "^16.1.0",
         "postcss-loader": "^8.2.1",
         "postcss-mixins": "^12.1.2",
