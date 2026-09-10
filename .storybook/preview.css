@@ -1,3 +1,28 @@
+/* 
+================================================================================
+Theme configuration
+================================================================================
+*/
+
+@import url("https://assets.life.gov.sg/react-design-system/v4/css/main.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/apfel-grotezk.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/atkinson-hyperlegible-next.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/hanken-grotesk.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/inter.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/lato.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/libre-franklin.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/montserrat.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/plus-jakarta-sans.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/poppins.css");
+@import url("https://assets.life.gov.sg/react-design-system/v3/css/public-sans.css");
+
+/* 
+================================================================================
+Theme stylesheet imports
+================================================================================
+*/
+
 @import url("src/theme/styles/a11y-playground.css");
 @import url("src/theme/styles/bookingsg.css");
 @import url("src/theme/styles/careercompass.css");
@@ -18,6 +43,41 @@
 @import url("src/theme/styles/websg.css");
 @import url("src/theme/styles/wise.css");
 @import url("src/theme/styles/wogaa.css");
+
+/* 
+================================================================================
+Custom Storybook preview styles.
+================================================================================
+*/
+
+/* 
+-----------------------------------------------------------------------------
+Dark mode handling
+-----------------------------------------------------------------------------
+*/
+
+/* class applied by `@storybook-community/storybook-dark-mode` addon */
+.storybook-dark-mode {
+    background-color: black;
+}
+
+.storybook-dark-mode .docs-story {
+    background-color: black;
+}
+
+.storybook-light-mode {
+    background-color: white;
+}
+
+.storybook-light-mode .docs-story {
+    background-color: white;
+}
+
+/* 
+-----------------------------------------------------------------------------
+Docs table overrides
+-----------------------------------------------------------------------------
+*/
 
 .docblock-argstable-body tr[title] span {
     font-size: 0.875rem;
