@@ -40,6 +40,18 @@ The title and description support styling for commonly used markup such as `<str
 
 <Canvas of={FileDownloadStories.TextStyling} />
 
+## Thumbnail fallbacks
+
+An item renders `thumbnailImageDataUrl` when it has one, whatever its `mimeType`. A PDF is the one type that gets a preview it did not supply: with no `thumbnailImageDataUrl` it falls back to a PDF badge. Any other type without a thumbnail shows no preview area.
+
+<Canvas of={FileDownloadStories.ThumbnailFallbacks} />
+
+## Custom card action
+
+`onClick` makes the card itself activatable, separately from the download button's `onDownload`.
+
+<Canvas of={FileDownloadStories.CustomCardAction} />
+
 ## Component API
 
 <AutoArgTypesTabs of={FileDownloadStories} />

@@ -21,6 +21,7 @@ export const FileDownload = ({
     title,
     description,
     onDownload,
+    onClick,
     "data-testid": testId,
     className,
     styleType = "bordered",
@@ -102,6 +103,7 @@ export const FileDownload = ({
                             key={item.id}
                             fileItem={item}
                             onDownload={handleDownloadItem}
+                            onClick={onClick}
                         />
                     ))}
             </ul>

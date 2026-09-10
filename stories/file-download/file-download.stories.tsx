@@ -212,6 +212,100 @@ export const TextStyling: StoryObj<Component> = {
     },
 };
 
+export const ThumbnailFallbacks: StoryObj<Component> = {
+    render: (_args) => {
+        const [fileItems] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "pdf-without-thumbnail.pdf",
+                mimeType: "application/pdf",
+                size: 150000,
+                filePath: "",
+            },
+            {
+                id: "2",
+                name: "pdf-with-thumbnail.pdf",
+                mimeType: "application/pdf",
+                size: 150000,
+                filePath: "",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/pdfpage/200/300",
+            },
+            {
+                id: "3",
+                name: "image-with-thumbnail.jpeg",
+                mimeType: "image/jpeg",
+                size: 6000,
+                filePath: "",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/picsum/200/300",
+            },
+            {
+                id: "4",
+                name: "image-without-thumbnail.png",
+                mimeType: "image/png",
+                size: 82000,
+                filePath: "",
+            },
+            {
+                id: "5",
+                name: "document-with-thumbnail.doc",
+                mimeType: "application/msword",
+                size: 24000,
+                filePath: "",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/docpage/200/300",
+            },
+            {
+                id: "6",
+                name: "document-without-thumbnail.doc",
+                mimeType: "application/msword",
+                size: 24000,
+                filePath: "",
+            },
+        ]);
+
+        return (
+            <FileDownload
+                fileItems={fileItems}
+                onDownload={handleDemoDownload}
+                title="Thumbnail fallbacks"
+                description="A supplied thumbnail is always rendered, whatever the file type. PDF files fall back to the PDF badge. Anything else without a thumbnail shows no preview."
+            />
+        );
+    },
+};
+
+export const CustomCardAction: StoryObj<Component> = {
+    render: (_args) => {
+        const [fileItems] = useState<FileItemDownloadProps[]>([
+            {
+                id: "1",
+                name: "lorem.pdf",
+                mimeType: "application/pdf",
+                size: 150000,
+                filePath:
+                    "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
+                ariaLabel: "Preview lorem.pdf",
+            },
+        ]);
+
+        return (
+            <>
+                <FileDownload
+                    fileItems={fileItems}
+                    onDownload={handleDemoDownload}
+                    onClick={(file) =>
+                        alert(`Custom onClick action for ${file.name}.`)
+                    }
+                    title="Custom card action"
+                    description="Activating the card calls onClick. Activating the download button calls onDownload."
+                />
+            </>
+        );
+    },
+};
+
 // The following code is meant for simulation purposes and is not intended for production
 
 const handleDemoDownload = async (file: FileItemDownloadProps) => {
