@@ -1,7 +1,8 @@
-import { test as base, expect, Page } from "@playwright/test";
-import { AbstractStoryPage, compareScreenshot } from "../../utils";
+import { test as base, Page } from "@playwright/test";
+import { getDefaultFontPresetForTheme } from "../../../../src/theme/theme-provider/preset";
 import { THEME_TYPES, type ThemeType } from "../../../../src/theme/types";
 import { fixedTimestamp } from "../../consts";
+import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
 const WISE_PRODUCT_THEMES = new Set<ThemeType>([
     "vica",
@@ -27,9 +28,7 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Footer", () => {
     for (const theme of THEME_TYPES) {
-        const fontPreset = WISE_PRODUCT_THEMES.has(theme)
-            ? "wise-public"
-            : undefined;
+        const fontPreset = getDefaultFontPresetForTheme(theme);
 
         test.describe("Default", () => {
             test.beforeEach(async ({ story }) => {

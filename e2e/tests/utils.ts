@@ -5,6 +5,7 @@ import {
     PageAssertionsToHaveScreenshotOptions,
     test,
 } from "@playwright/test";
+import { ThemeFontPreset, ThemeType } from "../../src/theme/types";
 import { viewport } from "./consts";
 
 export abstract class AbstractStoryPage {
