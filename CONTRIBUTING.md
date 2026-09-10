@@ -12,6 +12,9 @@ Do also adhere to the guidelines mentioned below.
     -   <a href="#writing-functional-tests">Writing functional tests</a>
     -   <a href="#linting">Linting</a>
     -   <a href="#pull-request">Creating pull requests</a>
+-   <a href="#introducing-theme">Introducing a new theme</a>
+    -   <a href="#theme-overview">Overview</a>
+    -   <a href="#theme-steps">Steps</a>
 -   <a href="#repo-owner">As a repository owner</a>
     -   <a href="#versioning">Version Management</a>
     -   <a href="#documenting-change">Documenting change</a>
@@ -217,6 +220,124 @@ Linting is also wired into `lint-staged` so committed files are auto-checked.
 Once you have committed and pushed your code, you are to create a pull request to have it approved to be in the `master` branch.
 
 Add a meaningful title to your pull request and follow the template provided.
+
+---
+
+<a id="introducing-theme"></a>
+<br />
+
+## Introducing a new theme
+
+<a id="theme-overview"></a>
+<br />
+
+### **Overview**
+
+Each theme is a standalone CSS file that provides:
+
+-   **Primitive colours** — the raw colour palette
+-   **Semantic colours** — purpose-driven tokens that reference primitive colours
+-   **Font** — font family, scale, and other typography settings
+-   **Component tokens** — overrides for specific components (Button, Navbar, Footer, Animation)
+-   Other tokens such as radius and shadow
+
+Themes reuse shared presets via CSS mixins where possible, only defining values inline when they need to differ from the defaults. If inline values will be reused across themes, pull them out into new mixins.
+
+<a id="theme-steps"></a>
+<br />
+
+### **Steps**
+
+#### **1. Create the theme CSS file**
+
+Add a new file at `src/theme/styles/<theme-name>.css`. Use an existing theme as a starting point — `ccube.css` is a good reference for a standard theme, and `wise.css` for font presets.
+
+The file structure is:
+
+```css
+@import url("./presets/default.css");
+
+[data-fds-theme="<theme-name>"] {
+    /* ... */
+}
+
+[data-fds-theme="<theme-name>"][data-fds-theme-mode="dark"] {
+    /* ... */
+}
+```
+
+> **Tip:** If the theme's tokens follow the defaults, use the shared mixins. Only define values inline when they need to differ.
+
+#### **2. Register the theme name**
+
+Add the new theme name (in alphabetical order) to the `THEME_TYPES` array in `src/theme/types.ts`.
+
+#### **3. (Optional) Add a font preset**
+
+If the theme supports multiple fonts, create a font preset CSS file at `src/theme/styles/presets/fonts/<preset-name>.css`:
+
+The file structure is:
+
+```css
+@define-mixin font-<preset-name> {
+    --fds-font-family-heading: "<Font Name>";
+    --fds-font-family-body: "<Font Name>";
+    --fds-font-variant: normal;
+    /* ... */
+}
+```
+
+Then in the theme CSS file, import the font preset and apply it via the font preset selector:
+
+```css
+@import url("./presets/fonts/<preset-name>.css");
+
+[data-fds-theme="<theme-name>"][data-fds-theme-font="<preset-name>"] {
+    @mixin font-<preset-name>;
+}
+```
+
+Add the preset name (in alphabetical order) to the `THEME_FONT_PRESETS` array in `src/theme/types.ts`.
+
+#### **4. (If applicable) Provide asset files**
+
+Static assets such as font files, logo images, and other media are hosted on S3 at `https://assets.life.gov.sg/react-design-system/`. These files are not stored in the repository itself. Provide any new asset files to the repository maintainers for upload.
+
+**Fonts:** If the theme uses a font that is not already hosted, provide the font files in `woff2` format. The maintainers will also create a CSS stylesheet with the `@font-face` declarations (e.g. `https://assets.life.gov.sg/react-design-system/v3/css/<font-name>.css`).
+
+Provide a variable font, and subset fonts where possible to minimise file size.
+
+**Logos:** If the theme needs custom logos for the Navbar or Footer (see step 5), provide the logo image files (SVG preferred).
+
+#### **5. (If applicable) Update theme-specific components**
+
+Some components have theme-specific customisation. If applicable, update the following:
+
+-   **Navbar** logo — `src/navbar/navbar-logo-data.ts`
+-   **Footer** logo and copyright text — `src/footer/footer-helper.ts`
+-   **Footer** disclaimer links — `src/footer/footer-disclaimer-links-data.tsx`
+
+#### **6. Load theme in Storybook and E2E tests**
+
+**Storybook**
+
+-   Import the new theme stylesheet (and new font stylesheet if applicable)
+-   Register the new theme in the theme switcher
+-   Document the colour tokens in `stories/theme/colour` and font tokens in `stories/theme/font` (if applicable)
+
+**E2E NextJS app**
+
+-   Import the new theme stylesheet (and new font stylesheet if applicable)
+-   Generate the baseline screenshots for the Navbar and Footer
+-   Update the screenshot for the theme colours in light and dark mode
+
+#### **7. Verify**
+
+Run Storybook, and:
+
+-   Preview the tokens under `Foundations > Colours` and `Foundations > Font`
+-   Switch to the new theme to verify the visual output
+-   Check both light and dark mode
 
 ---
 
