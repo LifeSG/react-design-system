@@ -58,18 +58,18 @@ export const logoImage = css`
 `;
 
 export const logoSize: Partial<Record<ThemeType, string>> = {
-    lifesg: css`
+    bookingsg: css`
         width: 4rem;
     `,
-    bookingsg: css`
+    ccube: css`
+        width: 10rem;
+    `,
+    lifesg: css`
         width: 4rem;
     `,
     mylegacy: css`
         width: 10rem;
         max-height: 2rem;
-    `,
-    ccube: css`
-        width: 10rem;
     `,
     supportgowhere: css`
         width: 10rem;

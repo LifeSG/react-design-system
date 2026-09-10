@@ -1,0 +1,127 @@
+@import url("./presets/default.css");
+@import url("./presets/fonts/sportsg-orange.css");
+
+[data-fds-theme="sportsg-orange"] {
+    /*
+    ============================================================================
+    PRIMITIVE COLOURS
+    ============================================================================
+    */
+    --fds-colour-brand-10: #34030D;
+    --fds-colour-brand-20: #550616;
+    --fds-colour-brand-30: #75081E;
+    --fds-colour-brand-40: #9F0A28;
+    --fds-colour-brand-50: #C32B44;
+    --fds-colour-brand-60: #D87071;
+    --fds-colour-brand-70: #E59D96;
+    --fds-colour-brand-80: #EEBFBA;
+    --fds-colour-brand-90: #F4DAD6;
+    --fds-colour-brand-95: #F9EBE8;
+    --fds-colour-brand-100: #FDF7F6;
+    --fds-colour-primary-10: #2F0A00;
+    --fds-colour-primary-20: #501100;
+    --fds-colour-primary-30: #701800;
+    --fds-colour-primary-40: #992000;
+    --fds-colour-primary-50: #C72A00;
+    --fds-colour-primary-60: #FA6938;
+    --fds-colour-primary-70: #FE9450;
+    --fds-colour-primary-80: #FDBD7E;
+    --fds-colour-primary-90: #FED9AE;
+    --fds-colour-primary-95: #FEECD7;
+    --fds-colour-primary-100: #FFF9F2;
+    --fds-colour-secondary-10: #13132E;
+    --fds-colour-secondary-20: #212251;
+    --fds-colour-secondary-30: #303174;
+    --fds-colour-secondary-40: #42449F;
+    --fds-colour-secondary-50: #5659D3;
+    --fds-colour-secondary-60: #8082F7;
+    --fds-colour-secondary-70: #A5A7FF;
+    --fds-colour-secondary-80: #C5C4FF;
+    --fds-colour-secondary-90: #E0DCFF;
+    --fds-colour-secondary-95: #F1ECFF;
+    --fds-colour-secondary-100: #FAF7FF;
+    --fds-colour-neutral-10: #1C1414;
+    --fds-colour-neutral-20: #2E2626;
+    --fds-colour-neutral-30: #3F3737;
+    --fds-colour-neutral-40: #554D4D;
+    --fds-colour-neutral-50: #6D6666;
+    --fds-colour-neutral-60: #928E8E;
+    --fds-colour-neutral-70: #B2AEAE;
+    --fds-colour-neutral-80: #CBC9C9;
+    --fds-colour-neutral-90: #E1E0E0;
+    --fds-colour-neutral-95: #EEEEEE;
+    --fds-colour-neutral-100: #F9F9F9;
+    --fds-colour-success-10: #001B11;
+    --fds-colour-success-20: #002F1D;
+    --fds-colour-success-30: #00422A;
+    --fds-colour-success-40: #005B3A;
+    --fds-colour-success-50: #02774D;
+    --fds-colour-success-60: #0BA36F;
+    --fds-colour-success-70: #2CC691;
+    --fds-colour-success-80: #65DFB1;
+    --fds-colour-success-90: #93F3CA;
+    --fds-colour-success-95: #B1FFDB;
+    --fds-colour-success-100: #E5FFF3;
+    --fds-colour-warning-10: #251200;
+    --fds-colour-warning-20: #411F00;
+    --fds-colour-warning-30: #5C2C00;
+    --fds-colour-warning-40: #7D3E00;
+    --fds-colour-warning-50: #9F5500;
+    --fds-colour-warning-60: #DB7C00;
+    --fds-colour-warning-70: #FF9500;
+    --fds-colour-warning-80: #FFBC76;
+    --fds-colour-warning-90: #FFDAAE;
+    --fds-colour-warning-95: #FFEDD0;
+    --fds-colour-warning-100: #FFF8E8;
+    --fds-colour-error-10: #370000;
+    --fds-colour-error-20: #590000;
+    --fds-colour-error-30: #790000;
+    --fds-colour-error-40: #A30000;
+    --fds-colour-error-50: #D30000;
+    --fds-colour-error-60: #FF503F;
+    --fds-colour-error-70: #FF7E6F;
+    --fds-colour-error-80: #FFB8AE;
+    --fds-colour-error-90: #FFD7D0;
+    --fds-colour-error-95: #FFE9E5;
+    --fds-colour-error-100: #FFF6F5;
+    --fds-colour-info-10: #00172E;
+    --fds-colour-info-20: #00284F;
+    --fds-colour-info-30: #003970;
+    --fds-colour-info-40: #004E9A;
+    --fds-colour-info-50: #0D67C5;
+    --fds-colour-info-60: #428DFB;
+    --fds-colour-info-70: #7DB1FF;
+    --fds-colour-info-80: #AACCFF;
+    --fds-colour-info-90: #CCE1FF;
+    --fds-colour-info-95: #E6F0FF;
+    --fds-colour-info-100: #F7FAFF;
+    --fds-colour-white: #FFFFFF;
+    --fds-colour-black: #0D0C0C;
+    --fds-colour-primary-inverse: #FEAB10;
+
+    @mixin semantic-colours-light-default;
+
+    /*
+    ========================================================================
+    SHADOW
+    ========================================================================
+    */
+
+    @mixin shadow-default;
+
+    /*
+    ========================================================================
+    COMPONENT TOKENS
+    ========================================================================
+    */
+
+    @mixin component-tokens-default;
+}
+
+[data-fds-theme="sportsg-orange"][data-fds-theme-mode="dark"] {
+    @mixin semantic-colours-dark-default;
+}
+
+[data-fds-theme="sportsg-orange"][data-fds-theme-font="sportsg-orange-gms"] {
+    @mixin font-sportsg-orange-gms;
+}

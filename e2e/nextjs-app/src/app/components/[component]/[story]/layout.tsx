@@ -12,6 +12,7 @@ import "@lifesg/react-design-system/theme/styles/rbs.css";
 import "@lifesg/react-design-system/theme/styles/sgw-digital-lobby.css";
 import "@lifesg/react-design-system/theme/styles/smgs.css";
 import "@lifesg/react-design-system/theme/styles/spf.css";
+import "@lifesg/react-design-system/theme/styles/sportsg-orange.css";
 import "@lifesg/react-design-system/theme/styles/supportgowhere.css";
 import "@lifesg/react-design-system/theme/styles/tote-board.css";
 import "@lifesg/react-design-system/theme/styles/vica.css";

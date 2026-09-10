@@ -14,6 +14,7 @@ export const THEME_TYPE_TO_KEY_MAPPING: Record<ThemeType, string> = {
     "sgw-digital-lobby": "SGW Digital Lobby",
     smgs: "SMGS",
     spf: "SPF",
+    "sportsg-orange": "SportSG Orange",
     supportgowhere: "SupportGoWhere",
     "tote-board": "Tote Board",
     vica: "VICA",
