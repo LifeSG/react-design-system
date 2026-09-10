@@ -8,13 +8,16 @@ import E2EDateSeedBootstrap from "./e2e-date-seed-bootstrap";
 
 const CDN_STYLE_ASSETS = [
     "/cdn/react-design-system/v4/css/main.css",
+    "/cdn/react-design-system/v3/css/apfel-grotezk.css",
     "/cdn/react-design-system/v3/css/atkinson-hyperlegible-next.css",
-    "/cdn/react-design-system/v3/css/plus-jakarta-sans.css",
-    "/cdn/react-design-system/v3/css/open-sans.css",
+    "/cdn/react-design-system/v3/css/hanken-grotesk.css",
     "/cdn/react-design-system/v3/css/inter.css",
-    "/cdn/react-design-system/v3/css/montserrat.css",
     "/cdn/react-design-system/v3/css/lato.css",
     "/cdn/react-design-system/v3/css/libre-franklin.css",
+    "/cdn/react-design-system/v3/css/montserrat.css",
+    "/cdn/react-design-system/v3/css/open-sans.css",
+    "/cdn/react-design-system/v3/css/plus-jakarta-sans.css",
+    "/cdn/react-design-system/v3/css/poppins.css",
     "/cdn/react-design-system/v3/css/public-sans.css",
 ];
 
