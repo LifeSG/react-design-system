@@ -47,7 +47,7 @@ export type ThemeType = (typeof THEME_TYPES)[number];
 export const THEME_FONT_PRESETS = [
     "wise-public",
     "wise-admin",
-    "sportsg-orange-gms",
+    "sportsg-gms",
 ] as const;
 
 /** Union of all supported font presets. */
