@@ -9,6 +9,7 @@ import { BinIcon } from "@lifesg/react-icons/bin";
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import clsx from "clsx";
 import {
+    cloneElement,
     forwardRef,
     useCallback,
     useEffect,
@@ -29,10 +30,11 @@ import { useStateCallback } from "../shared/hooks";
 import { ImagePlaceholder } from "../shared/image-placeholder";
 import { formatUnitValue, useApplyStyle } from "../theme";
 import { Typography } from "../typography";
-import { useEventListener } from "../util";
+import { mergeRefs, useEventListener } from "../util";
 import * as styles from "./fullscreen-image-carousel.styles";
 import { StatefulImage } from "./stateful-image";
 import type {
+    FullscreenImageCarouselCustomAction,
     FullscreenImageCarouselCustomItemProps,
     FullscreenImageCarouselItemProps,
     FullscreenImageCarouselProps,
@@ -53,9 +55,11 @@ export const Component = (
         hideNavigation = false,
         hideCounter = false,
         hideMagnifier = false,
+        customActions,
         onDelete,
         onClose,
         insets,
+        topBarRef,
         show,
         ...otherProps
     }: FullscreenImageCarouselProps,
@@ -78,11 +82,23 @@ export const Component = (
     const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
     const imageRef = useRef<HTMLDivElement>(null);
     const topActionButtonsRef = useRef<HTMLDivElement>(null);
+    const [, forceInsetUpdate] = useState(0);
+    const mergedTopBarRef = useMemo(() => {
+        const base = mergeRefs(topActionButtonsRef, topBarRef);
+        if (!topBarRef) return base;
+        return (el: HTMLDivElement | null) => {
+            const cleanup = base(el);
+            if (el !== null) forceInsetUpdate((n) => n + 1);
+            return cleanup;
+        };
+    }, [topBarRef]);
     const prevArrowButtonRef = useRef<HTMLButtonElement>(null);
     const nextArrowButtonRef = useRef<HTMLButtonElement>(null);
     const thumbnailContainerRef = useRef<HTMLDivElement>(null);
     const diff = startX && endX ? startX - endX : 0;
     const currentItem = items[currentSlide];
+    const resolvedCustomActions =
+        currentItem?.customActions ?? customActions ?? [];
     const hasAnyItemLabel = items.some(
         (item) => isCustomItem(item) && !!item.itemLabel?.trim()
     );
@@ -219,6 +235,14 @@ export const Component = (
     const handleDelete = () => {
         if (currentItem && onDelete) {
             onDelete(currentItem, currentSlide);
+        }
+    };
+
+    const handleCustomAction = (
+        action: FullscreenImageCarouselCustomAction
+    ) => {
+        if (currentItem) {
+            action.onClick(currentItem, currentSlide);
         }
     };
 
@@ -481,6 +505,74 @@ export const Component = (
         );
     };
 
+    const renderTopActions = () => {
+        return (
+            <div
+                className={styles.topActionButtons}
+                ref={mergedTopBarRef}
+                data-has-file-info={hasFileInfo}
+            >
+                {hasFileInfo && renderFileInfo()}
+
+                {resolvedCustomActions.map((action, index) => (
+                    <ClickableIcon
+                        key={index}
+                        className={styles.iconButton}
+                        aria-label={action.ariaLabel}
+                        data-testid={action["data-testid"]}
+                        onClick={() => handleCustomAction(action)}
+                    >
+                        {cloneElement(action.icon, { "aria-hidden": true })}
+                    </ClickableIcon>
+                ))}
+
+                {!hideMagnifier && !isCustomItem(currentItem) && (
+                    <ClickableIcon
+                        className={styles.iconButton}
+                        aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
+                        onClick={handleMagnifier}
+                    >
+                        {zoom === 1 ? (
+                            <MagnifierPlusIcon aria-hidden />
+                        ) : (
+                            <MagnifierMinusIcon aria-hidden />
+                        )}
+                    </ClickableIcon>
+                )}
+
+                {onDelete && (
+                    <ClickableIcon
+                        className={clsx(
+                            styles.iconButton,
+                            styles.iconButtonError
+                        )}
+                        aria-label={`Delete ${
+                            (isCustomItem(currentItem) &&
+                                currentItem.itemLabel?.trim()) ||
+                            "image"
+                        }`}
+                        data-testid="delete-btn"
+                        onClick={handleDelete}
+                    >
+                        <BinIcon aria-hidden />
+                    </ClickableIcon>
+                )}
+
+                <ClickableIcon
+                    className={styles.iconButton}
+                    aria-label={
+                        hasAnyItemLabel
+                            ? "Close carousel"
+                            : "Close image carousel"
+                    }
+                    onClick={onClose}
+                >
+                    <CrossIcon aria-hidden />
+                </ClickableIcon>
+            </div>
+        );
+    };
+
     return (
         <ModalV2
             {...otherProps}
@@ -548,56 +640,7 @@ export const Component = (
 
                     {!hideThumbnail && renderThumbnails()}
                 </div>
-                <div
-                    className={styles.topActionButtons}
-                    ref={topActionButtonsRef}
-                    data-has-file-info={hasFileInfo}
-                >
-                    {hasFileInfo && renderFileInfo()}
-                    {!hideMagnifier && !isCustomItem(currentItem) && (
-                        <ClickableIcon
-                            className={styles.iconButton}
-                            aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
-                            onClick={handleMagnifier}
-                        >
-                            {zoom === 1 ? (
-                                <MagnifierPlusIcon aria-hidden />
-                            ) : (
-                                <MagnifierMinusIcon aria-hidden />
-                            )}
-                        </ClickableIcon>
-                    )}
-
-                    {onDelete && (
-                        <ClickableIcon
-                            className={clsx(
-                                styles.iconButton,
-                                styles.iconButtonError
-                            )}
-                            aria-label={`Delete ${
-                                (isCustomItem(currentItem) &&
-                                    currentItem.itemLabel?.trim()) ||
-                                "image"
-                            }`}
-                            data-testid="delete-btn"
-                            onClick={handleDelete}
-                        >
-                            <BinIcon aria-hidden />
-                        </ClickableIcon>
-                    )}
-
-                    <ClickableIcon
-                        className={styles.iconButton}
-                        aria-label={
-                            hasAnyItemLabel
-                                ? "Close carousel"
-                                : "Close image carousel"
-                        }
-                        onClick={onClose}
-                    >
-                        <CrossIcon aria-hidden />
-                    </ClickableIcon>
-                </div>
+                {renderTopActions()}
             </div>
         </ModalV2>
     );

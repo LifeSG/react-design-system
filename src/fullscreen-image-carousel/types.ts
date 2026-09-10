@@ -21,6 +21,26 @@ export interface FullscreenImageCarouselRef {
 }
 
 /**
+ * A consumer-supplied icon button rendered in the carousel's top bar.
+ */
+export interface FullscreenImageCarouselCustomAction {
+    /** Icon element rendered inside the button. */
+    icon: JSX.Element;
+    /**
+     * Accessible name for the button.
+     */
+    ariaLabel: string;
+    /**
+     * Called when the action is activated.
+     *
+     * @param item The item that was active when the action fired.
+     * @param index Zero-based index of that item in the `items` array.
+     */
+    onClick: (item: FullscreenImageCarouselItemProps, index: number) => void;
+    "data-testid"?: string | undefined;
+}
+
+/**
  * Props for the `FullscreenImageCarousel`component.
  */
 export interface FullscreenImageCarouselProps
@@ -62,6 +82,13 @@ export interface FullscreenImageCarouselProps
      */
     hideMagnifier?: boolean | undefined;
     /**
+     * Additional icon buttons rendered in the top bar, positioned before the
+     * magnifier. Applies to every item.
+     *
+     * An item's own `customActions` replaces this list for that item.
+     */
+    customActions?: FullscreenImageCarouselCustomAction[] | undefined;
+    /**
      * Called when the delete button is activated for the current item.
      *
      * @param item The item that was deleted.
@@ -77,6 +104,10 @@ export interface FullscreenImageCarouselProps
      * of the viewport and avoid overlap with device UI elements.
      */
     insets?: Insets | undefined;
+    /**
+     * Ref to the top bar element, which holds the file info and the action buttons.
+     */
+    topBarRef?: React.Ref<HTMLDivElement> | undefined;
 }
 
 // @storybookSkipProps
@@ -90,6 +121,13 @@ interface FullscreenImageCarouselBaseItemProps {
      * info bar (e.g. "2.4 MB").
      */
     fileSize?: string | undefined;
+    /**
+     * Replaces the component-level `customActions` while this item is active.
+     *
+     * Leave `undefined` to inherit the component-level list. Pass `[]` to
+     * render no custom actions for this item.
+     */
+    customActions?: FullscreenImageCarouselCustomAction[] | undefined;
 }
 
 /**

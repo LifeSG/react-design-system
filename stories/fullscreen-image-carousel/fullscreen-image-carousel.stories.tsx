@@ -1,3 +1,4 @@
+import { DownloadIcon } from "@lifesg/react-icons/download";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useState } from "react";
 import { Button } from "src/button";
@@ -229,6 +230,50 @@ export const WithCustomContent: StoryObj<Component> = {
                     show={show}
                     onDelete={() => undefined}
                     onClose={() => setShow(false)}
+                />
+            </>
+        );
+    },
+};
+
+export const WithCustomActions: StoryObj<Component> = {
+    render: (_args) => {
+        const [show, setShow] = useState(false);
+
+        return (
+            <>
+                <Button onClick={() => setShow(true)}>Open carousel</Button>
+                <FullscreenImageCarousel
+                    show={show}
+                    onClose={() => setShow(false)}
+                    customActions={[
+                        {
+                            icon: <DownloadIcon />,
+                            ariaLabel: "Download image",
+                            onClick: (item, index) =>
+                                alert(
+                                    `Custom onClick action for item ${
+                                        index + 1
+                                    }: ${item.fileName ?? ""}.`
+                                ),
+                        },
+                    ]}
+                    items={[
+                        {
+                            src: "https://picsum.photos/id/157/1600/900",
+                            alt: "First image",
+                            fileName: "image-1.jpg",
+                            fileSize: "1.2 MB",
+                        },
+                        {
+                            src: "https://picsum.photos/id/163/900/300",
+                            alt: "Second image",
+                            fileName: "image-2.jpg",
+                            fileSize: "2.5 MB",
+                            // Overrides the component-level list for this slide
+                            customActions: [],
+                        },
+                    ]}
                 />
             </>
         );
