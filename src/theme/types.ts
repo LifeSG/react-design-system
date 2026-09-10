@@ -40,13 +40,19 @@ export const THEME_TYPES = [
 export type ThemeType = (typeof THEME_TYPES)[number];
 
 /**
- * Available font presets for WISE product themes (wise, vica, websg, wogaa).
- * Available font presets for SportSG product themes (sportsg-orange).
+ * All available theme presets.
+ * For WISE product themes: wise, vica, websg, wogaa
+ * For SportSG product themes: sportsg-orange
  *  */
-export type ThemeFontPreset =
-    | "wise-public"
-    | "wise-admin"
-    | "sportsg-orange-gms";
+export const THEME_FONT_PRESETS = [
+    "wise-public",
+    "wise-admin",
+    "sportsg-orange-gms",
+] as const;
+
+/** Union of all supported font presets. */
+export type ThemeFontPreset = (typeof THEME_FONT_PRESETS)[number];
+
 /**
  * Colour mode accepted by `ThemeProvider`.
  * — `"auto"` follows OS preference.

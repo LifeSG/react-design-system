@@ -20,18 +20,19 @@ import "@lifesg/react-design-system/theme/styles/websg.css";
 import "@lifesg/react-design-system/theme/styles/wise.css";
 import "@lifesg/react-design-system/theme/styles/wogaa.css";
 
+import type {
+    ThemeFontPreset,
+    ThemeType,
+} from "@lifesg/react-design-system/theme";
 import {
+    THEME_FONT_PRESETS,
     THEME_TYPES,
-    type ThemeFontPreset,
     ThemeProvider,
-    type ThemeType,
 } from "@lifesg/react-design-system/theme";
 import { useSearchParams } from "next/navigation";
 import type React from "react";
 
 import styles from "./layout.module.css";
-
-const FONT_PRESETS: ThemeFontPreset[] = ["wise-public", "wise-admin"];
 
 export default function Layout({
     children,
@@ -39,18 +40,15 @@ export default function Layout({
     children: React.ReactNode;
 }>) {
     const searchParams = useSearchParams();
-    const themeParam = searchParams?.get("theme");
-    const fontPresetParam = searchParams?.get("fontPreset");
+    const themeParam = searchParams?.get("theme") as ThemeType;
+    const fontPresetParam = searchParams?.get("fontPreset") as ThemeFontPreset;
 
     const theme: ThemeType | undefined =
-        themeParam && THEME_TYPES.includes(themeParam as ThemeType)
-            ? (themeParam as ThemeType)
-            : undefined;
+        themeParam && THEME_TYPES.includes(themeParam) ? themeParam : undefined;
 
     const fontPreset: ThemeFontPreset | undefined =
-        fontPresetParam &&
-        FONT_PRESETS.includes(fontPresetParam as ThemeFontPreset)
-            ? (fontPresetParam as ThemeFontPreset)
+        fontPresetParam && THEME_FONT_PRESETS.includes(fontPresetParam)
+            ? fontPresetParam
             : undefined;
 
     return (
