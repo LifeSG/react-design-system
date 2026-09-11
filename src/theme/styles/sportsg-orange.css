@@ -1,5 +1,5 @@
 @import url("./presets/default.css");
-@import url("./presets/fonts/sportsg-orange.css");
+@import url("./presets/fonts/sportsg-gms.css");
 
 [data-fds-theme="sportsg-orange"] {
     /*
@@ -122,6 +122,6 @@
     @mixin semantic-colours-dark-default;
 }
 
-[data-fds-theme="sportsg-orange"][data-fds-theme-font="sportsg-orange-gms"] {
-    @mixin font-sportsg-orange-gms;
+[data-fds-theme="sportsg-orange"][data-fds-theme-font="sportsg-gms"] {
+    @mixin font-sportsg-gms;
 }

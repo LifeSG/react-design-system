@@ -1,10 +1,11 @@
-import { expect, test as base, Locator, Page } from "@playwright/test";
+import { test as base, expect, Locator, Page } from "@playwright/test";
+import { getDefaultFontPresetForTheme } from "../../../../src/theme/theme-provider/preset";
+import { THEME_TYPES, type ThemeType } from "../../../../src/theme/types";
 import {
     AbstractStoryPage,
     compareScreenshot,
     waitForAnimationEnd,
 } from "../../utils";
-import { THEME_TYPES, type ThemeType } from "../../../../src/theme/types";
 
 const WISE_PRODUCT_THEMES = new Set<ThemeType>([
     "vica",
@@ -97,9 +98,7 @@ const test = base.extend<{ story: StoryPage }>({
 
 test.describe("Navbar", () => {
     for (const theme of THEME_TYPES) {
-        const fontPreset = WISE_PRODUCT_THEMES.has(theme)
-            ? "wise-public"
-            : undefined;
+        const fontPreset = getDefaultFontPresetForTheme(theme);
 
         test.describe("Default", () => {
             test.beforeEach(async ({ story }) => {

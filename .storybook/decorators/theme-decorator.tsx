@@ -3,7 +3,8 @@
 import { useDarkMode } from "@storybook-community/storybook-dark-mode";
 import { DecoratorHelpers } from "@storybook/addon-themes";
 import type { DecoratorFunction, Renderer } from "storybook/internal/types";
-import { ThemeProvider, ThemeType } from "../../src/theme";
+import { ThemeProvider } from "../../src/theme";
+import { getDefaultFontPresetForTheme } from "../../src/theme/theme-provider/preset";
 import { THEME_KEY_TO_TYPE_MAPPING, type ThemeMapKey } from "./theme-mapping";
 
 const { initializeThemeState, pluckThemeFromContext } = DecoratorHelpers;
@@ -24,12 +25,14 @@ export const withThemeFromJSXProvider = <
 
         const selected: ThemeMapKey =
             themeOverride || selectedTheme || initialTheme;
+        const selectedThemeType = THEME_KEY_TO_TYPE_MAPPING[selected];
         const mode = isDark ? "dark" : "light";
 
         return (
             <ThemeProvider
-                theme={THEME_KEY_TO_TYPE_MAPPING[selected] as ThemeType}
+                theme={selectedThemeType}
                 mode={mode}
+                fontPreset={getDefaultFontPresetForTheme(selectedThemeType)}
             >
                 {storyFn()}
             </ThemeProvider>

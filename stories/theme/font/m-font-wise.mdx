@@ -1,7 +1,6 @@
 import { Meta } from "@storybook/addon-docs/blocks";
 import { DocInfo } from "stories/storybook-common";
 import { FontDisplay } from "../doc-elements";
-import { ThemeProvider } from "src/theme";
 
 <Meta title="Foundations/Font/WISE" />
 
@@ -23,12 +22,8 @@ https://assets.life.gov.sg/react-design-system/v3/css/public-sans.css
 
 ## Public
 
-<ThemeProvider theme="wise" fontPreset="wise-public">
-    <FontDisplay theme="wise" />
-</ThemeProvider>
+<FontDisplay theme="wise" fontPreset="wise-public" />
 
 ## Admin
 
-<ThemeProvider theme="wise" fontPreset="wise-admin">
-    <FontDisplay theme="wise" />
-</ThemeProvider>
+<FontDisplay theme="wise" fontPreset="wise" />

@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 import clsx from "clsx";
-import type { ThemeType } from "src/theme";
+import type { ThemeFontPreset, ThemeType } from "src/theme";
 import { Font, FontSpec, ThemeProvider, useDesignToken } from "src/theme";
 
 type FontToken = Exclude<keyof typeof Font, "Spec">;
@@ -179,11 +179,12 @@ const FontCollection = ({
 
 interface FontDisplayProps {
     theme: ThemeType;
+    fontPreset: ThemeFontPreset;
 }
 
-export const FontDisplay = ({ theme }: FontDisplayProps) => {
+export const FontDisplay = ({ theme, fontPreset }: FontDisplayProps) => {
     return (
-        <ThemeProvider theme={theme}>
+        <ThemeProvider theme={theme} fontPreset={fontPreset}>
             <div className={display}>
                 <div className={clsx(row, headerRow)}>
                     <div>Token</div>
