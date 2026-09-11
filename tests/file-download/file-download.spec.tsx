@@ -289,11 +289,11 @@ describe("FileDownload", () => {
             ).toBeInTheDocument();
         });
 
-        it("should prefer the item's ariaLabel for the hidden card button", () => {
+        it("should prefer the item's clickLabel for the hidden card button", () => {
             render(
                 <FileDownload
                     fileItems={[
-                        { ...MOCK_FILE_ITEM, ariaLabel: "View sample.pdf" },
+                        { ...MOCK_FILE_ITEM, clickLabel: "View sample.pdf" },
                     ]}
                     onDownload={jest.fn()}
                     onClick={jest.fn()}

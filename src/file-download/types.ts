@@ -31,11 +31,11 @@ export interface FileItemDownloadProps {
      */
     ready?: boolean | undefined;
     /**
-     * Accessible name for the card, used when `FileDownload` is given an `onClick`.
+     * Name for the card, used when `FileDownload` is given an `onClick`.
      *
      * @default the file name
      */
-    ariaLabel?: string | undefined;
+    clickLabel?: string | undefined;
 }
 
 /** Visual style variant controlling whether the component renders with a dashed border. */
@@ -78,8 +78,7 @@ export interface FileDownloadProps {
     onDownload: (file: FileItemDownloadProps) => void | Promise<void>;
     /**
      * Called when a file card itself is activated, as opposed to its download button.
-     * When omitted, activating the card triggers `onDownload` instead, which is
-     * the existing behaviour.
+     * When omitted, activating the card triggers `onDownload` instead.
      *
      * @param file The file item whose card was activated.
      */

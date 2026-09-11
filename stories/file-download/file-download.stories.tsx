@@ -286,22 +286,20 @@ export const CustomCardAction: StoryObj<Component> = {
                 size: 150000,
                 filePath:
                     "https://www.w3.org/WAI/ER/tests/xhtml/testfiles/resources/pdf/dummy.pdf",
-                ariaLabel: "Preview lorem.pdf",
+                clickLabel: "Preview lorem.pdf",
             },
         ]);
 
         return (
-            <>
-                <FileDownload
-                    fileItems={fileItems}
-                    onDownload={handleDemoDownload}
-                    onClick={(file) =>
-                        alert(`Custom onClick action for ${file.name}.`)
-                    }
-                    title="Custom card action"
-                    description="Activating the card calls onClick. Activating the download button calls onDownload."
-                />
-            </>
+            <FileDownload
+                fileItems={fileItems}
+                onDownload={handleDemoDownload}
+                onClick={(file) =>
+                    alert(`Custom onClick action for ${file.name}.`)
+                }
+                title="Custom card action"
+                description="Activating the card calls onClick. Activating the download button calls onDownload."
+            />
         );
     },
 };

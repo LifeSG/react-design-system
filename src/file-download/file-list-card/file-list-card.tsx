@@ -25,7 +25,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
         thumbnailImageDataUrl,
         truncateText = true,
         ready = true,
-        ariaLabel,
+        clickLabel,
     } = fileItem;
 
     // Local variables
@@ -210,7 +210,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
                     type="button"
                     className={styles.cardButton}
                     data-testid={`${id}-card-button`}
-                    aria-label={ariaLabel ?? name}
+                    aria-label={clickLabel ?? name}
                     disabled={!ready}
                     onClick={handleCardButtonClick}
                 />
@@ -242,8 +242,8 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
                 className={clsx(styles.box, isError && styles.boxError)}
                 onClick={handleCardClick}
             >
-                {renderCardButton()}
                 {renderContents()}
+                {renderCardButton()}
                 {renderActions()}
             </div>
         </li>

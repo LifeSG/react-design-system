@@ -21,7 +21,7 @@ export interface FullscreenImageCarouselRef {
 }
 
 /**
- * A consumer-supplied icon button rendered in the carousel's top bar.
+ * Custom button to be rendered in the carousel's top bar.
  */
 export interface FullscreenImageCarouselCustomAction {
     /** Icon element rendered inside the button. */
@@ -83,7 +83,7 @@ export interface FullscreenImageCarouselProps
     hideMagnifier?: boolean | undefined;
     /**
      * Additional icon buttons rendered in the top bar, positioned before the
-     * magnifier. Applies to every item.
+     * default buttons. Applies to every item.
      *
      * An item's own `customActions` replaces this list for that item.
      */

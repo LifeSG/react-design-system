@@ -21,7 +21,7 @@ export default function Story() {
                     fileSize: "2.5 MB",
                     customActions: [
                         {
-                            icon: <PrinterIcon aria-hidden />,
+                            icon: <PrinterIcon />,
                             ariaLabel: "Print image",
                             onClick: () => undefined,
                         },
@@ -32,12 +32,12 @@ export default function Story() {
             onClose={() => undefined}
             customActions={[
                 {
-                    icon: <DownloadIcon aria-hidden />,
+                    icon: <DownloadIcon />,
                     ariaLabel: "Download image",
                     onClick: () => undefined,
                 },
                 {
-                    icon: <ShareIcon aria-hidden />,
+                    icon: <ShareIcon />,
                     ariaLabel: "Share image",
                     onClick: () => undefined,
                 },

@@ -7,7 +7,7 @@ import { generateFileItems, THUMBNAIL_BLUE } from "./common";
 const FILE_ITEMS = generateFileItems([
     {
         thumbnailImageDataUrl: THUMBNAIL_BLUE,
-        ariaLabel: "View document.pdf",
+        clickLabel: "View document.pdf",
     },
 ]);
 

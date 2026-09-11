@@ -2,7 +2,7 @@ type FileItemOverride = {
     ready?: boolean;
     errorMessage?: string;
     thumbnailImageDataUrl?: string;
-    ariaLabel?: string;
+    clickLabel?: string;
 };
 
 const BASE_FILE_ITEMS = [

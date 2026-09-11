@@ -44,7 +44,7 @@ Slides can render arbitrary content via `renderContent`. If the content is not a
 
 ## Custom actions
 
-`customActions` adds your own icon buttons to the top bar, between the file info and the magnifier. An item can carry its own `customActions`, which **replaces** the component-level list for that slide rather than adding to it — pass an empty array to show no custom actions on a particular slide.
+Custom actions can be specified on a component-level or on a per-item basis.
 
 <Canvas of={FullscreenImageCarouselStories.WithCustomActions} />
 
