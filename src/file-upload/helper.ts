@@ -2,12 +2,12 @@
  * How a file's thumbnail slot should be rendered.
  *
  * - `image` — a thumbnail was supplied; render it at `src`
- * - `pdf-icon` — a PDF. `src` carries its thumbnail when it has one; with no `src`, render the PDF badge borderless
+ * - `pdf-icon` — a PDF with no thumbnail; render the PDF badge borderless
  * - `none` — nothing to show; render no thumbnail slot at all
  */
 export type FileThumbnailDisplay =
     | { type: "image"; src: string }
-    | { type: "pdf-icon"; src?: string | undefined }
+    | { type: "pdf-icon" }
     | { type: "none" };
 
 export class FileUploadHelper {
@@ -61,19 +61,12 @@ export class FileUploadHelper {
         mimeType: string | undefined,
         thumbnailImageDataUrl: string | undefined
     ): FileThumbnailDisplay {
-        /*
-         * An empty string is not a usable src. Normalising it away here keeps
-         * the PDF branch falling back to the badge instead of handing the
-         * caller an empty <img>.
-         */
-        const src = thumbnailImageDataUrl ? thumbnailImageDataUrl : undefined;
-
-        if (mimeType === FileUploadHelper.PDF_MIME_TYPE) {
-            return { type: "pdf-icon", src };
+        if (thumbnailImageDataUrl) {
+            return { type: "image", src: thumbnailImageDataUrl };
         }
 
-        if (src) {
-            return { type: "image", src };
+        if (mimeType === FileUploadHelper.PDF_MIME_TYPE) {
+            return { type: "pdf-icon" };
         }
 
         return { type: "none" };

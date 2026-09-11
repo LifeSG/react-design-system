@@ -141,13 +141,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
             return null;
         }
 
-        /*
-         * Borderless styling belongs to the badge SVG, not to PDFs in general —
-         * a PDF that supplied a real thumbnail keeps the border every other
-         * image gets.
-         */
-        const isPdfBadge =
-            thumbnailDisplay.type === "pdf-icon" && !thumbnailDisplay.src;
+        const isPdfBadge = thumbnailDisplay.type === "pdf-icon";
 
         return (
             <div
@@ -160,7 +154,11 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
                         isPdfBadge && styles.thumbnailPdf
                     )}
                     data-testid={`${id}-thumbnail-image`}
-                    src={thumbnailDisplay.src ?? FileUploadHelper.PDF_ICON_URL}
+                    src={
+                        isPdfBadge
+                            ? FileUploadHelper.PDF_ICON_URL
+                            : thumbnailDisplay.src
+                    }
                 />
             </div>
         );
@@ -230,7 +228,7 @@ const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
                     aria-label={`download ${name}`}
                     loading={isLoading || !ready}
                     icon={<DownloadIcon />}
-                    onClick={onClick ? handleDownloadButtonClick : undefined}
+                    onClick={handleDownloadButtonClick}
                 />
             </div>
         );

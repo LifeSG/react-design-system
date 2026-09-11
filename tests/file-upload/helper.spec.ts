@@ -9,13 +9,13 @@ describe("FileUploadHelper.resolveThumbnailDisplay", () => {
         ).toEqual({ type: "image", src: THUMBNAIL });
     });
 
-    it("should carry the thumbnail as the src when a pdf has one", () => {
+    it("should return the image display for a pdf that has a thumbnail", () => {
         expect(
             FileUploadHelper.resolveThumbnailDisplay(
                 "application/pdf",
                 THUMBNAIL
             )
-        ).toEqual({ type: "pdf-icon", src: THUMBNAIL });
+        ).toEqual({ type: "image", src: THUMBNAIL });
     });
 
     it("should return the pdf icon display for a pdf without a thumbnail", () => {
@@ -68,6 +68,6 @@ describe("FileUploadHelper.resolveThumbnailDisplay", () => {
         // An empty src renders a broken <img> instead of falling back to the badge
         expect(
             FileUploadHelper.resolveThumbnailDisplay("application/pdf", "")
-        ).toEqual({ type: "pdf-icon", src: undefined });
+        ).toEqual({ type: "pdf-icon" });
     });
 });
