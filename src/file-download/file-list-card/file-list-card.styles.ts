@@ -18,15 +18,9 @@ export const item = css`
     }
 `;
 
-export const cardButton = css`
-    appearance: none;
-    padding: 0;
-    background: none;
-    border: none;
-`;
+export const cardButton = css``;
 
 export const box = css`
-    position: relative;
     display: flex;
     align-items: center;
 
@@ -46,11 +40,9 @@ export const box = css`
         background: ${Colour["bg-hover"]};
     }
 
-    @supports selector(:has(*)) {
-        &:has(.${cardButton}:focus-visible) {
-            outline: 2px solid ${Colour["focus-ring"]};
-            outline-offset: -2px;
-        }
+    &:has(.${cardButton}:focus-visible) {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: -2px;
     }
 `;
 
@@ -62,10 +54,8 @@ export const boxError = css`
         background: ${Colour["bg-error"]};
     }
 
-    @supports selector(:has(*)) {
-        &:has(.${cardButton}:focus-visible) {
-            outline-color: ${Colour["border-error-focus"]};
-        }
+    &:has(.${cardButton}:focus-visible) {
+        outline-color: ${Colour["border-error-focus"]};
     }
 `;
 
