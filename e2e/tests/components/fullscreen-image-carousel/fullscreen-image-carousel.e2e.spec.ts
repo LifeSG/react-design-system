@@ -13,6 +13,7 @@ class StoryPage extends AbstractStoryPage {
         thumbnailContainer: Locator;
         counter: Locator;
         fileInfoName: Locator;
+        customAction: (name: string) => Locator;
     };
 
     constructor(page: Page) {
@@ -27,6 +28,13 @@ class StoryPage extends AbstractStoryPage {
             thumbnailContainer: page.getByTestId("thumbnail-container"),
             counter: page.getByTestId("carousel-counter"),
             fileInfoName: page.getByTestId("file-info-name"),
+            /*
+             * By accessible name rather than test id: ariaLabel is required on
+             * a custom action precisely because the icon is aria-hidden, so
+             * addressing the button the way a screen reader would also pins
+             * that the label reaches the DOM.
+             */
+            customAction: (name: string) => page.getByRole("button", { name }),
         };
     }
 }
@@ -37,6 +45,36 @@ const test = base.extend<{ story: StoryPage }>({
         await use(story);
     },
 });
+
+/*
+ * story.waitForImageLoad() is NOT sufficient on its own for this component, and
+ * the first mobile baseline generated for the custom-actions story is the proof:
+ * a 13KB PNG with a blank slide and blank thumbnails, where the same story on
+ * desktop is 480KB.
+ *
+ * StatefulImage renders <LoadingDots /> — not an <img> — until its preloader
+ * resolves (src/fullscreen-image-carousel/stateful-image.tsx:78). So while the
+ * photos are in flight there are NO img elements, waitForImageLoad's `every`
+ * runs over an empty NodeList and returns true, and the wait passes instantly.
+ * toHaveScreenshot's default animations: "disabled" then freezes the dot loader
+ * to a frame that is effectively empty, and two consecutive frames match at
+ * once — so the loading state is captured as a stable, reproducible baseline
+ * rather than a flake a re-run would expose.
+ *
+ * Waiting for every slide and thumbnail to actually HAVE an img is therefore
+ * the real load signal; waitForImageLoad afterwards adds the decode check.
+ * toHaveCount retries, and the containers themselves render synchronously.
+ */
+const waitForCarouselImages = async (story: StoryPage) => {
+    const slides = story.page.getByTestId("slide-item");
+    const thumbnails = story.locators.thumbnailItems;
+
+    await expect(slides.locator("img")).toHaveCount(await slides.count());
+    await expect(thumbnails.locator("img")).toHaveCount(
+        await thumbnails.count()
+    );
+    await story.waitForImageLoad();
+};
 
 test.describe("FullscreenImageCarousel", () => {
     test.describe(() => {
@@ -203,6 +241,97 @@ test.describe("FullscreenImageCarousel", () => {
         });
 
         test("Long file name", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    /*
+     * The customActions-absent case is covered by every test above this one:
+     * none of them pass customActions, and all of their baselines are unchanged
+     * by the feature. There is deliberately no separate "absent" test here — it
+     * would assert nothing that those baselines do not already assert.
+     */
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-actions");
+            await story.page.waitForLoadState("networkidle");
+            await waitForCarouselImages(story);
+        });
+
+        test("Custom actions", async ({ story }) => {
+            await test.step("Component-level actions on the first slide", async () => {
+                await expect(
+                    story.locators.customAction("Download image")
+                ).toBeVisible();
+                await expect(
+                    story.locators.customAction("Share image")
+                ).toBeVisible();
+
+                await compareScreenshot(story, "mount", {
+                    fullscreen: true,
+                });
+            });
+
+            /*
+             * The assertions carry as much of this step as the baseline does.
+             * Three buttons here would mean the item's list was merged into the
+             * component-level one; download and share still showing would mean
+             * the item's list was ignored outright. Both are invisible on slide
+             * 1, so this is the only place either regression surfaces.
+             */
+            await test.step("The item's own actions replace them on the second slide", async () => {
+                await story.locators.forwardBtn.click();
+                await expect(story.locators.fileInfoName).toHaveText(
+                    "image-2.jpg"
+                );
+                await waitForCarouselImages(story);
+
+                await expect(
+                    story.locators.customAction("Print image")
+                ).toBeVisible();
+                await expect(
+                    story.locators.customAction("Download image")
+                ).toBeHidden();
+                await expect(
+                    story.locators.customAction("Share image")
+                ).toBeHidden();
+
+                await compareScreenshot(story, "item-override", {
+                    fullscreen: true,
+                });
+            });
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-actions", { mode: "dark" });
+            await story.page.waitForLoadState("networkidle");
+            await waitForCarouselImages(story);
+        });
+
+        test("Custom actions (dark mode)", async ({ story }) => {
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
+            });
+        });
+    });
+
+    /*
+     * Mobile is where the top bar is tightest — the custom actions sit between
+     * the file info and the magnifier — so it is the viewport where a second
+     * action can crowd, wrap, or push the magnifier off the edge.
+     */
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-actions", { size: "mobile" });
+            await story.page.waitForLoadState("networkidle");
+            await waitForCarouselImages(story);
+        });
+
+        test("Custom actions (mobile)", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 fullscreen: true,
             });

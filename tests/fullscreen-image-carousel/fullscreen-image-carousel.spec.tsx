@@ -1,4 +1,5 @@
 import { fireEvent, render, screen, waitFor } from "@testing-library/react";
+import { createRef } from "react";
 import { FullscreenImageCarousel } from "src/fullscreen-image-carousel";
 
 // =============================================================================
@@ -285,6 +286,254 @@ describe("Fullscreen Image Carousel", () => {
             );
 
             expect(screen.getByLabelText("Delete image")).toBeInTheDocument();
+        });
+    });
+
+    describe("topBarRef", () => {
+        it("should resolve to the element containing the top bar buttons", () => {
+            const topBarRef = createRef<HTMLDivElement>();
+
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES}
+                    show={true}
+                    topBarRef={topBarRef}
+                    onClose={jest.fn()}
+                />
+            );
+
+            expect(topBarRef.current).toBeInstanceOf(HTMLDivElement);
+            expect(
+                topBarRef.current?.contains(
+                    screen.getByLabelText("Close image carousel")
+                )
+            ).toBe(true);
+        });
+
+        it("should include the file info bar within the referenced element", () => {
+            const topBarRef = createRef<HTMLDivElement>();
+
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES_WITH_FILE_INFO}
+                    show={true}
+                    topBarRef={topBarRef}
+                />
+            );
+
+            expect(
+                topBarRef.current?.contains(screen.getByTestId("file-info-bar"))
+            ).toBe(true);
+        });
+
+        it("should still apply inset styling to the top bar when topBarRef is passed", () => {
+            const topBarRef = createRef<HTMLDivElement>();
+
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES}
+                    show={true}
+                    topBarRef={topBarRef}
+                    insets={{ top: 24 }}
+                />
+            );
+
+            // Pins that the inset CSS var is written even though div.topActionButtons
+            // mounts in a later commit cycle (Overlay's createPortal defers it
+            // until rootElement is set). Without forceInsetUpdate in the merged
+            // ref callback, useApplyStyle would run with ref.current === null.
+            expect(
+                topBarRef.current?.style.getPropertyValue(
+                    "--fds-internal-fullscreenImageCarousel-topActionButtons-insetTop"
+                )
+            ).toBe("24px");
+        });
+
+        it("should support a callback ref", () => {
+            const received: (HTMLDivElement | null)[] = [];
+
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES}
+                    show={true}
+                    topBarRef={(el) => received.push(el)}
+                />
+            );
+
+            expect(received.some((el) => el instanceof HTMLDivElement)).toBe(
+                true
+            );
+        });
+    });
+
+    describe("customActions", () => {
+        const DownloadStub = () => <svg data-testid="download-icon" />;
+
+        it("should render a custom action with its accessible name", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES}
+                    show={true}
+                    customActions={[
+                        {
+                            icon: <DownloadStub />,
+                            ariaLabel: "Download image",
+                            onClick: jest.fn(),
+                            "data-testid": "download-btn",
+                        },
+                    ]}
+                />
+            );
+
+            expect(screen.getByLabelText("Download image")).toBeInTheDocument();
+            expect(screen.getByTestId("download-btn")).toBeInTheDocument();
+        });
+
+        it("should render no custom actions by default", () => {
+            render(<FullscreenImageCarousel items={IMAGES} show={true} />);
+
+            // Zoom in and Close are the only buttons besides navigation
+            expect(screen.getByLabelText("Zoom in")).toBeInTheDocument();
+            expect(
+                screen.queryByLabelText("Download image")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should call onClick with the current item and index", () => {
+            const onClick = jest.fn();
+
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES}
+                    show={true}
+                    customActions={[
+                        {
+                            icon: <DownloadStub />,
+                            ariaLabel: "Download image",
+                            onClick,
+                            "data-testid": "download-btn",
+                        },
+                    ]}
+                />
+            );
+
+            fireEvent.click(screen.getByTestId("forward-btn"));
+            fireEvent.click(screen.getByTestId("download-btn"));
+
+            expect(onClick).toHaveBeenCalledWith(IMAGES[1], 1);
+        });
+
+        it("should render custom actions before the magnifier", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={IMAGES}
+                    show={true}
+                    customActions={[
+                        {
+                            icon: <DownloadStub />,
+                            ariaLabel: "Download image",
+                            onClick: jest.fn(),
+                            "data-testid": "download-btn",
+                        },
+                    ]}
+                />
+            );
+
+            const download = screen.getByTestId("download-btn");
+            const magnifier = screen.getByLabelText("Zoom in");
+
+            expect(
+                download.compareDocumentPosition(magnifier) &
+                    Node.DOCUMENT_POSITION_FOLLOWING
+            ).toBeTruthy();
+        });
+
+        it("should let an item's customActions replace the component-level list", () => {
+            const componentAction = jest.fn();
+            const itemAction = jest.fn();
+
+            render(
+                <FullscreenImageCarousel
+                    items={[
+                        IMAGES[0],
+                        {
+                            ...IMAGES[1],
+                            customActions: [
+                                {
+                                    icon: <DownloadStub />,
+                                    ariaLabel: "Share image",
+                                    onClick: itemAction,
+                                    "data-testid": "share-btn",
+                                },
+                            ],
+                        },
+                    ]}
+                    show={true}
+                    customActions={[
+                        {
+                            icon: <DownloadStub />,
+                            ariaLabel: "Download image",
+                            onClick: componentAction,
+                            "data-testid": "download-btn",
+                        },
+                    ]}
+                />
+            );
+
+            expect(screen.getByTestId("download-btn")).toBeInTheDocument();
+
+            fireEvent.click(screen.getByTestId("forward-btn"));
+
+            expect(screen.getByTestId("share-btn")).toBeInTheDocument();
+            expect(
+                screen.queryByTestId("download-btn")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should suppress custom actions for an item with an empty array", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={[IMAGES[0], { ...IMAGES[1], customActions: [] }]}
+                    show={true}
+                    customActions={[
+                        {
+                            icon: <DownloadStub />,
+                            ariaLabel: "Download image",
+                            onClick: jest.fn(),
+                            "data-testid": "download-btn",
+                        },
+                    ]}
+                />
+            );
+
+            expect(screen.getByTestId("download-btn")).toBeInTheDocument();
+
+            fireEvent.click(screen.getByTestId("forward-btn"));
+
+            expect(
+                screen.queryByTestId("download-btn")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should render custom actions for a custom item", () => {
+            render(
+                <FullscreenImageCarousel
+                    items={MIXED_ITEMS}
+                    show={true}
+                    initialActiveItemIndex={1}
+                    customActions={[
+                        {
+                            icon: <DownloadStub />,
+                            ariaLabel: "Download PDF",
+                            onClick: jest.fn(),
+                            "data-testid": "download-btn",
+                        },
+                    ]}
+                />
+            );
+
+            expect(screen.getByTestId("download-btn")).toBeInTheDocument();
+            expect(screen.queryByLabelText("Zoom in")).not.toBeInTheDocument();
         });
     });
 
