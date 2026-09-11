@@ -152,7 +152,7 @@ describe("FileUpload", () => {
             expect(
                 rendered.queryByTestId("some-edit-display")
             ).not.toBeInTheDocument();
-            expect(screen.getAllByText("Woops!")).toHaveLength(2); // render 2 elements. For mobile and desktop
+            expect(screen.getByText("Woops!")).toBeInTheDocument();
             expect(
                 rendered.getByTestId("some-error-delete-button")
             ).toBeInTheDocument();
@@ -473,6 +473,60 @@ describe("FileUpload", () => {
             expect(
                 rendered.queryByTestId("some-drag-handle")
             ).not.toBeInTheDocument();
+        });
+
+        it("should re-enable sorting when an item in edit mode is removed from fileItems", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "first-image.png",
+                    type: "image/png",
+                    size: 3000,
+                    description: "existing",
+                },
+                {
+                    id: "img-2",
+                    name: "second-image.png",
+                    type: "image/png",
+                    size: 4000,
+                    description: "also existing",
+                },
+                {
+                    id: "img-3",
+                    name: "third-image.png",
+                    type: "image/png",
+                    size: 5000,
+                    description: "third",
+                },
+            ];
+
+            const { rerender, getByTestId, queryByTestId } = render(
+                <FileUpload fileItems={fileItems} editableFileItems sortable />
+            );
+
+            // All items should have drag handles (all in display mode)
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-2-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-3-drag-handle")).toBeInTheDocument();
+
+            // Click edit on the first item — drag handles should disappear
+            fireEvent.click(getByTestId("img-1-edit-button"));
+            expect(queryByTestId("img-1-drag-handle")).not.toBeInTheDocument();
+            expect(queryByTestId("img-2-drag-handle")).not.toBeInTheDocument();
+            expect(queryByTestId("img-3-drag-handle")).not.toBeInTheDocument();
+
+            // Remove the editing item (simulating external deletion)
+            // Remaining 2 items are in display mode — sort should re-enable
+            rerender(
+                <FileUpload
+                    fileItems={[fileItems[1], fileItems[2]]}
+                    editableFileItems
+                    sortable
+                />
+            );
+
+            expect(getByTestId("img-2-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-3-drag-handle")).toBeInTheDocument();
         });
     });
 

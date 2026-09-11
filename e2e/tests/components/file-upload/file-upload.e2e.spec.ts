@@ -328,7 +328,19 @@ test.describe("FileUpload", () => {
                     story.locators.internal.editDisplay("editable-image")
                 ).toBeVisible();
 
+                const dragHandle = story.locators.fileUpload.locator(
+                    '[data-testid$="-drag-handle"]'
+                );
+                await expect(dragHandle).toHaveCount(0);
+
                 await compareScreenshot(story, "mount");
+            });
+
+            await test.step("Sort disabled while an item is in edit mode", async () => {
+                const dragHandle = story.locators.fileUpload.locator(
+                    '[data-testid$="-drag-handle"]'
+                );
+                await expect(dragHandle).toHaveCount(0);
             });
 
             await test.step("Save description", async () => {
@@ -350,10 +362,20 @@ test.describe("FileUpload", () => {
                 });
             });
 
+            await test.step("Sort enabled after all items in display mode", async () => {
+                const dragHandle = story.locators.fileUpload.locator(
+                    '[data-testid$="-drag-handle"]'
+                );
+                await expect(dragHandle.first()).toBeVisible();
+            });
+
             await test.step("Cancel edit keeps saved description", async () => {
                 await story.locators.internal
                     .editButton("editable-image")
                     .click();
+                await expect(
+                    story.locators.internal.textarea("editable-image")
+                ).toBeVisible();
                 await story.locators.internal
                     .textarea("editable-image")
                     .fill("Temporary change");
@@ -366,6 +388,80 @@ test.describe("FileUpload", () => {
                         "A person walking beside a tree"
                     )
                 ).toBeVisible();
+            });
+
+            await test.step("Sort restored after cancel", async () => {
+                const dragHandle = story.locators.fileUpload.locator(
+                    '[data-testid$="-drag-handle"]'
+                );
+                await expect(dragHandle.first()).toBeVisible();
+            });
+        });
+
+        test("Sort disabled while any item is in edit mode after upload", async ({
+            story,
+        }) => {
+            const dragHandle = story.locators.fileUpload.locator(
+                '[data-testid$="-drag-handle"]'
+            );
+
+            await test.step("Save initial edit-mode item", async () => {
+                await story.locators.internal
+                    .textarea("editable-image")
+                    .fill("Initial description");
+                await story.locators.internal
+                    .saveButton("editable-image")
+                    .click();
+
+                await expect(dragHandle.first()).toBeVisible();
+            });
+
+            await test.step("Upload an image — sort disabled", async () => {
+                const fileChooserPromise =
+                    story.page.waitForEvent("filechooser");
+                await story.locators.internal.uploadButton.click();
+                const fileChooser = await fileChooserPromise;
+                await fileChooser.setFiles(SAMPLE_UPLOAD_FILE_PATH);
+
+                await expect(
+                    story.getFileName(SAMPLE_UPLOAD_FILE_NAME)
+                ).toBeVisible();
+                await expect(dragHandle).toHaveCount(0);
+            });
+
+            await test.step("Upload a non-image — sort still disabled", async () => {
+                const dataTransfer = await story.createDataTransfer({
+                    name: "document.pdf",
+                    type: "application/pdf",
+                    content: "pdf content",
+                });
+
+                await story.locators.internal.dropzone.dispatchEvent(
+                    "dragenter",
+                    { dataTransfer }
+                );
+                await story.locators.internal.dropzone.dispatchEvent(
+                    "dragover",
+                    { dataTransfer }
+                );
+                await story.locators.internal.dropzone.dispatchEvent("drop", {
+                    dataTransfer,
+                });
+
+                await expect(story.getFileName("document.pdf")).toBeVisible();
+                await dataTransfer.dispose();
+                await expect(dragHandle).toHaveCount(0);
+            });
+
+            await test.step("Save uploaded image — sort re-enabled", async () => {
+                await story.locators.internal
+                    .textarea("upload-file-1")
+                    .fill("A description");
+                await story.locators.internal
+                    .saveButton("upload-file-1")
+                    .click();
+
+                await expect(dragHandle.first()).toBeVisible();
             });
         });
     });
@@ -467,7 +563,7 @@ test.describe("FileUpload", () => {
             await story.init("long-description", { size: "mobile" });
         });
 
-        test("Long description text", async ({ story }) => {
+        test("Long description text - mobile", async ({ story }) => {
             await compareScreenshot(story, "mount", {
                 locator: story.locators.fileUpload,
             });

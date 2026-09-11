@@ -1,49 +1,35 @@
 import { useSortable } from "@dnd-kit/sortable";
 import { CSS } from "@dnd-kit/utilities";
-import { BinIcon } from "@lifesg/react-icons/bin";
 import { DragHandleIcon as DSDragHandleIcon } from "@lifesg/react-icons/drag-handle";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
-import { PencilIcon } from "@lifesg/react-icons/pencil";
-import {
-    memo,
-    useCallback,
-    useContext,
-    useEffect,
-    useRef,
-    useState,
-} from "react";
+import { memo, useContext, useEffect, useMemo, useRef, useState } from "react";
 
-import { Button } from "../../button";
-import type { FormLabelProps } from "../../form/form-label/types";
-import { ProgressBar } from "../../shared/progress-bar";
+import { Form } from "../../form";
 import { Typography } from "../../typography";
-import { StringHelper } from "../../util";
 import { FileUploadContext } from "../context";
 import { FileUploadHelper } from "../helper";
-import type { ItemFocusType } from "./file-list-item.styles";
+import { FileItemActions } from "./file-item-actions";
+import { FileItemDetails } from "./file-item-details";
 import * as styles from "./file-list-item.styles";
 import { FileListItemThumbnail } from "./file-list-item-thumbnail";
-import type { FileListItemProps } from "./types";
-
-interface Props extends FileListItemProps {
-    readOnly?: boolean | undefined;
-    descriptionLabel?: FormLabelProps | undefined;
-}
+import type { FileItemMode, FileListItemProps } from "./types";
+import { useTruncatedName } from "./use-truncated-name";
 
 const Component = ({
     fileItem,
+    wrapperWidth,
     editable,
     sortable,
-    wrapperWidth,
     disabled,
     readOnly,
     descriptionLabel,
+    fileDescriptionMaxLength,
+    descriptionRequired = true,
     onDelete,
-    onEditClick,
-}: Props) => {
-    // =========================================================================
-    // CONST, STATE, REFS
-    // =========================================================================
+    onSave,
+    onCancel,
+    onBlur,
+    onModeChange,
+}: FileListItemProps) => {
     const {
         id,
         name,
@@ -54,75 +40,125 @@ const Component = ({
         thumbnailImageDataUrl,
         truncateText = true,
     } = fileItem;
-    const [formattedName, setFormattedName] = useState<string>();
+
+    // =========================================================================
+    // CONST, STATE, REFS
+    // =========================================================================
     const { activeId } = useContext(FileUploadContext);
+    const detailSectionRef = useRef<HTMLDivElement>(null);
+    const formattedName = useTruncatedName(
+        name,
+        wrapperWidth,
+        truncateText,
+        detailSectionRef
+    );
+
+    const computeMode = (): FileItemMode => {
+        if (errorMessage) return "error";
+
+        const isUploaded = (progress ?? 1) >= 1;
+        if (isUploaded && !readOnly && editable && !description) return "edit";
+
+        return "display";
+    };
+
+    const [currentMode, setCurrentMode] = useState<FileItemMode>(computeMode);
 
     // Sortable mechanism
     const { attributes, listeners, setNodeRef, transform, transition } =
-        useSortable({ id });
-    const detailSectionRef = useRef<HTMLDivElement>(null);
-    const style = {
-        transform: CSS.Translate.toString(transform),
-        transition,
-    };
+        useSortable({ id, disabled: currentMode === "edit" });
 
-    const sortableProps = {
-        style,
-        ...attributes,
-        ...listeners,
-    };
+    // Edit mode state
+    const textareaRef = useRef<HTMLTextAreaElement>(null);
+    const [currentDescription, setCurrentDescription] = useState(
+        fileItem.description || ""
+    );
 
-    // Local variables
+    // =========================================================================
+    // DERIVED STATE
+    // =========================================================================
     const isLoading = progress < 1;
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
-    const hasInlineActions = !!description && !!editable;
-    const focusType: ItemFocusType = activeId
-        ? activeId === id
-            ? "self"
-            : "others"
-        : "none";
+    const shouldShowThumbnail =
+        !!thumbnailImageDataUrl ||
+        fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
 
-    // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
-    const getTruncatedText = useCallback(
-        (value: string) => {
-            if (!truncateText) return value;
+    const hasInlineActions =
+        currentMode === "display" && !!description && !!editable;
+    const shouldEnableSort = !!sortable && !readOnly;
+    const isDisabled = disabled || !!activeId;
 
-            const widthOfElement =
-                detailSectionRef && detailSectionRef.current
-                    ? detailSectionRef.current.getBoundingClientRect().width
-                    : 0;
+    const visualStates = useMemo(() => {
+        const focusType = activeId
+            ? activeId === id
+                ? "self"
+                : "others"
+            : "none";
 
-            return StringHelper.truncateOneLine(
-                value,
-                widthOfElement,
-                widthOfElement / 2,
-                widthOfElement / 2 / 8, // Arbitrary
-                16 // Font size
-            );
-        },
-        [truncateText]
-    );
+        const itemState = (() => {
+            if (isDisabled && focusType === "none") return "disabled";
+            if (shouldEnableSort && focusType === "self")
+                return "sortable-active";
+            if (shouldEnableSort) return "sortable";
+            return undefined;
+        })();
+
+        const dragHandleState = (() => {
+            if (focusType === "self") return "active";
+            if (isDisabled) return "disabled";
+            return undefined;
+        })();
+
+        const boxState = (() => {
+            if (focusType === "self") return "focused";
+            if (isDisabled) return "disabled";
+            if (errorMessage) return "error";
+            return undefined;
+        })();
+
+        return { itemState, dragHandleState, boxState };
+    }, [activeId, id, isDisabled, shouldEnableSort, errorMessage]);
+
+    const disableSave =
+        descriptionRequired && currentDescription.trim().length === 0;
 
     // =========================================================================
     // EFFECTS
     // =========================================================================
+    const currentModeRef = useRef(currentMode);
+    currentModeRef.current = currentMode;
+
     useEffect(() => {
-        setFormattedName(getTruncatedText(name));
-    }, [wrapperWidth, getTruncatedText, name]);
+        return () => {
+            if (currentModeRef.current === "edit") {
+                onModeChange?.("display");
+            }
+        };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
+
+    useEffect(() => {
+        if (errorMessage && currentMode !== "error") {
+            setCurrentMode("error");
+        } else if (!errorMessage && currentMode === "error") {
+            const nextMode = computeMode();
+            setCurrentMode(nextMode);
+        }
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [errorMessage]);
+
+    useEffect(() => {
+        if (currentMode === "edit") {
+            setCurrentDescription(fileItem.description || "");
+        }
+    }, [currentMode, fileItem.description]);
 
     // =========================================================================
     // EVENT HANDLERS
     // =========================================================================
-    const handleDelete = () => {
-        onDelete();
-    };
-
     const handleEdit = () => {
-        if (onEditClick) {
-            onEditClick();
-        }
+        setCurrentMode("edit");
+        onModeChange?.("edit");
     };
 
     const handleKeyDown = (event: React.KeyboardEvent<HTMLButtonElement>) => {
@@ -135,330 +171,195 @@ const Component = ({
         }
     };
 
-    const shouldDisable = () => disabled || !!activeId;
-
-    const shouldEnableSort = () => !!sortable && !readOnly;
-
-    const getItemState = () => {
-        if (shouldDisable() && focusType === "none") {
-            return "disabled";
+    const handleSave = () => {
+        if (textareaRef.current) {
+            setCurrentMode("display");
+            onModeChange?.("display");
+            onSave?.(textareaRef.current.value.trim());
         }
-
-        if (shouldEnableSort() && focusType === "self") {
-            return "sortable-active";
-        }
-
-        if (shouldEnableSort()) {
-            return "sortable";
-        }
-
-        return undefined;
     };
 
-    const getDragHandleState = () => {
-        if (focusType === "self") {
-            return "active";
-        }
-
-        if (shouldDisable()) {
-            return "disabled";
-        }
-
-        return undefined;
+    const handleCancel = () => {
+        setCurrentMode("display");
+        onModeChange?.("display");
+        onCancel?.();
     };
 
-    const getBoxState = () => {
-        if (focusType === "self") {
-            return "focused";
-        }
-
-        if (shouldDisable()) {
-            return "disabled";
-        }
-
-        if (errorMessage) {
-            return "error";
-        }
-
-        return undefined;
+    const handleTextareaChange = (
+        event: React.ChangeEvent<HTMLTextAreaElement>
+    ) => {
+        setCurrentDescription(event.target.value);
     };
 
-    const getActionContainerLayout = () => {
-        if (!errorMessage && isLoading) {
-            return "loading";
-        }
-
-        if (!errorMessage && editable) {
-            return "editable";
-        }
-
-        return undefined;
+    const handleTextareaBlur = (
+        event: React.FocusEvent<HTMLTextAreaElement>
+    ) => {
+        onBlur?.(event.target.value);
     };
 
     // =========================================================================
-    // RENDER FUNCTIONS
+    // RENDER: EDIT MODE
     // =========================================================================
-    const renderNameDescription = () => (
-        <>
-            <Typography.BodyMD weight={description ? "semibold" : "regular"}>
-                {formattedName}
-            </Typography.BodyMD>
-            {description && (
-                <>
-                    <Typography.BodyMD className={styles.itemDescriptionLabel}>
-                        {descriptionLabel?.children ?? "Photo description"}
-                    </Typography.BodyMD>
-                    <Typography.BodyMD className={styles.itemDescriptionText}>
-                        {description}
-                    </Typography.BodyMD>
-                </>
-            )}
-        </>
-    );
-
-    const renderErrorState = () => (
-        <>
-            <div ref={detailSectionRef} className={styles.nameSection}>
-                {renderNameDescription()}
-                {errorMessage && (
-                    <Typography.BodySM
-                        className={styles.desktopErrorMessage}
-                        weight="semibold"
-                    >
-                        <ExclamationCircleFillIcon
-                            className={styles.errorIcon}
-                            aria-hidden
-                        />
-                        {errorMessage}
-                    </Typography.BodySM>
-                )}
-            </div>
-            <div
-                className={styles.fileSizeSection}
-                data-mobile-visibility={isLoading ? "hidden" : "expand"}
-            >
-                <Typography.BodyMD className={styles.fileSizeText}>
-                    {fileSize}
-                </Typography.BodyMD>
-            </div>
-            {errorMessage && (
-                <Typography.BodySM
-                    className={styles.mobileErrorMessage}
-                    weight="semibold"
-                >
-                    <ExclamationCircleFillIcon
-                        className={styles.errorIcon}
-                        aria-hidden
-                    />
-                    {errorMessage}
-                </Typography.BodySM>
-            )}
-        </>
-    );
-
-    const renderInlineActions = () => (
-        <div className={styles.inlineActionContainer}>
-            <Button
-                key="edit"
-                data-testid={`${id}-edit-button`}
-                data-no-dnd="true"
-                type="button"
-                styleType="light"
-                sizeType="small"
-                aria-label={`edit ${name}`}
-                disabled={shouldDisable()}
-                onClick={handleEdit}
-                onKeyDown={handleKeyDown}
-                icon={<PencilIcon aria-hidden />}
-                className={styles.iconButton}
-            />
-            <Button
-                key="delete"
-                data-testid={`${id}-delete-button`}
-                data-no-dnd="true"
-                type="button"
-                styleType="light"
-                sizeType="small"
-                aria-label={`delete ${name}`}
-                disabled={shouldDisable()}
-                onClick={handleDelete}
-                onKeyDown={handleKeyDown}
-                icon={<BinIcon aria-hidden />}
-                className={styles.iconButton}
-            />
-        </div>
-    );
-
-    const renderDescriptionContent = () => (
-        <div ref={detailSectionRef} className={styles.extendedNameSection}>
-            <Typography.BodyMD weight="semibold">
-                {formattedName}
-            </Typography.BodyMD>
-            <Typography.BodyMD className={styles.itemDescriptionLabel}>
-                {descriptionLabel?.children ?? "Photo description"}
-            </Typography.BodyMD>
-            <Typography.BodyMD className={styles.itemDescriptionText}>
-                {description}
-            </Typography.BodyMD>
-            <Typography.BodyMD className={styles.descriptionFileSizeText}>
-                {fileSize}
-            </Typography.BodyMD>
-            {!readOnly && hasInlineActions && renderInlineActions()}
-        </div>
-    );
-
-    const renderFileContent = (thumbnailImageDataUrl?: string) => {
-        const shouldShowThumbnail =
-            !!thumbnailImageDataUrl ||
-            fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
-
-        const thumbnail = shouldShowThumbnail ? (
-            <FileListItemThumbnail
-                thumbnailImageDataUrl={thumbnailImageDataUrl || ""}
-                fileType={fileItem.type}
-                data-testid={`${id}-thumbnail`}
-            />
-        ) : null;
-
-        if (hasInlineActions) {
-            return (
-                <>
-                    {thumbnail}
-                    {renderDescriptionContent()}
-                </>
-            );
-        }
-
+    if (currentMode === "edit") {
         return (
-            <>
-                {thumbnail}
-                <div ref={detailSectionRef} className={styles.nameSection}>
-                    {renderNameDescription()}
-                    {!isLoading && (
-                        <Typography.BodyMD
-                            className={styles.descriptionFileSizeText}
+            <li data-testid={`${id}-edit-display`} className={styles.editItem}>
+                <div className={styles.editContentSection}>
+                    {shouldShowThumbnail && (
+                        <FileListItemThumbnail
+                            thumbnailImageDataUrl={thumbnailImageDataUrl}
+                            fileType={fileItem.type}
+                        />
+                    )}
+                    <div className={styles.editDetailsSection}>
+                        <div
+                            ref={detailSectionRef}
+                            className={styles.editNameSection}
                         >
-                            {fileSize}
-                        </Typography.BodyMD>
-                    )}
-                </div>
-            </>
-        );
-    };
-
-    const renderContents = () => {
-        const shouldShowThumbnail =
-            !!thumbnailImageDataUrl ||
-            fileItem.type === FileUploadHelper.PDF_MIME_TYPE;
-
-        const content = errorMessage
-            ? renderErrorState()
-            : renderFileContent(thumbnailImageDataUrl);
-
-        return (
-            <div
-                className={styles.contentSection}
-                data-has-thumbnail={shouldShowThumbnail}
-            >
-                {content}
-            </div>
-        );
-    };
-
-    const renderActions = () => {
-        let content: JSX.Element;
-
-        if (errorMessage) {
-            content = (
-                <Button
-                    data-testid={`${id}-error-delete-button`}
-                    data-no-dnd="true"
-                    type="button"
-                    styleType="light"
-                    sizeType="small"
-                    aria-label={`delete ${name}, error: ${errorMessage}`}
-                    onClick={handleDelete}
-                    className={styles.iconButton}
-                    icon={<BinIcon aria-hidden />}
-                />
-            );
-        } else if (isLoading) {
-            content = (
-                <ProgressBar
-                    progress={progress}
-                    data-testid={`${id}-progress-bar`}
-                />
-            );
-        } else {
-            content = (
-                <>
-                    {editable && (
-                        <Button
-                            key="edit"
-                            data-testid={`${id}-edit-button`}
-                            data-no-dnd="true"
-                            type="button"
-                            styleType="light"
-                            sizeType="small"
-                            aria-label={`edit ${name}`}
-                            disabled={shouldDisable()}
-                            onClick={handleEdit}
-                            onKeyDown={handleKeyDown}
-                            icon={<PencilIcon aria-hidden />}
-                            className={styles.iconButton}
+                            <Typography.BodyMD
+                                className={styles.editFileNameText}
+                                weight="semibold"
+                            >
+                                {formattedName}
+                            </Typography.BodyMD>
+                            <Typography.BodyMD
+                                className={styles.editFileSizeText}
+                            >
+                                {fileSize}
+                            </Typography.BodyMD>
+                        </div>
+                        <Form.Textarea
+                            ref={textareaRef}
+                            id={`${id}-description-textarea`}
+                            data-testid={`${id}-textarea`}
+                            value={currentDescription}
+                            maxLength={fileDescriptionMaxLength}
+                            onChange={handleTextareaChange}
+                            onBlur={handleTextareaBlur}
+                            rows={3}
+                            label={
+                                descriptionLabel ?? {
+                                    children: "Photo description",
+                                    subtitle:
+                                        "Describe this photo to users who may not be able to see the image.",
+                                }
+                            }
                         />
-                    )}
-                    <Button
-                        key="delete"
-                        data-testid={`${id}-delete-button`}
-                        data-no-dnd="true"
-                        type="button"
-                        styleType="light"
-                        sizeType="small"
-                        aria-label={`delete ${name}`}
-                        disabled={shouldDisable()}
-                        onClick={handleDelete}
-                        onKeyDown={handleKeyDown}
-                        icon={<BinIcon aria-hidden />}
-                        className={styles.iconButton}
-                    />
-                </>
-            );
-        }
-
-        return (
-            <div
-                className={styles.actionContainer}
-                data-mobile-layout={getActionContainerLayout()}
-            >
-                {content}
-            </div>
+                    </div>
+                </div>
+                <FileItemActions
+                    mode="edit"
+                    id={id}
+                    name={name}
+                    hasThumbnail={shouldShowThumbnail}
+                    disableSave={disableSave}
+                    onSave={handleSave}
+                    onCancel={handleCancel}
+                />
+            </li>
         );
+    }
+
+    // =========================================================================
+    // RENDER: DISPLAY / ERROR MODE
+    // =========================================================================
+    const sortableStyle = {
+        transform: CSS.Translate.toString(transform),
+        transition,
     };
+
+    const sortableProps = {
+        style: sortableStyle,
+        ...attributes,
+        ...listeners,
+    };
+
+    const thumbnail = shouldShowThumbnail ? (
+        <FileListItemThumbnail
+            thumbnailImageDataUrl={thumbnailImageDataUrl || ""}
+            fileType={fileItem.type}
+            data-testid={`${id}-thumbnail`}
+        />
+    ) : null;
 
     return (
         <li
             id={id}
             ref={setNodeRef}
             className={styles.item}
-            data-item-state={getItemState()}
+            data-item-state={visualStates.itemState}
             data-testid={`${id}-item`}
-            {...(shouldEnableSort() ? sortableProps : {})}
+            {...(shouldEnableSort ? sortableProps : {})}
         >
-            {shouldEnableSort() && (
+            {shouldEnableSort && (
                 <DSDragHandleIcon
                     data-testid={`${id}-drag-handle`}
                     className={styles.dragHandleIcon}
-                    data-drag-handle-state={getDragHandleState()}
+                    data-drag-handle-state={visualStates.dragHandleState}
                 />
             )}
             <div
                 className={styles.box}
-                data-box-state={getBoxState()}
+                data-box-state={visualStates.boxState}
                 data-stack-mobile={!errorMessage && (isLoading || editable)}
             >
-                {renderContents()}
-                {!readOnly && !hasInlineActions && renderActions()}
+                <div
+                    className={styles.contentSection}
+                    data-has-thumbnail={
+                        currentMode === "display" && shouldShowThumbnail
+                    }
+                >
+                    {currentMode === "display" && thumbnail}
+                    <FileItemDetails
+                        mode={currentMode}
+                        formattedName={formattedName}
+                        description={description}
+                        fileSize={fileSize}
+                        errorMessage={errorMessage}
+                        isLoading={isLoading}
+                        descriptionLabel={descriptionLabel}
+                        detailSectionRef={detailSectionRef}
+                    >
+                        {!readOnly && hasInlineActions && (
+                            <FileItemActions
+                                mode="display"
+                                inline
+                                id={id}
+                                name={name}
+                                editable={!!editable}
+                                isLoading={isLoading}
+                                progress={progress}
+                                disabled={isDisabled}
+                                onDelete={onDelete}
+                                onEdit={handleEdit}
+                                onKeyDown={handleKeyDown}
+                            />
+                        )}
+                    </FileItemDetails>
+                </div>
+                {!readOnly &&
+                    !hasInlineActions &&
+                    (currentMode === "error" ? (
+                        <FileItemActions
+                            mode="error"
+                            id={id}
+                            name={name}
+                            errorMessage={errorMessage}
+                            onDelete={onDelete}
+                        />
+                    ) : (
+                        <FileItemActions
+                            mode="display"
+                            id={id}
+                            name={name}
+                            editable={!!editable}
+                            isLoading={isLoading}
+                            progress={progress}
+                            disabled={isDisabled}
+                            onDelete={onDelete}
+                            onEdit={handleEdit}
+                            onKeyDown={handleKeyDown}
+                        />
+                    ))}
             </div>
         </li>
     );
