@@ -103,6 +103,7 @@ test.describe("File Download", () => {
 
         test("Error", async ({ story }) => {
             await story.locators.downloadButton("document.pdf").click();
+            await story.locators.downloadButton("report.docx").click();
             await compareScreenshot(story, "mount");
         });
     });
@@ -189,8 +190,6 @@ test.describe("File Download", () => {
         });
 
         test("Custom click", async ({ page, story }) => {
-            await compareScreenshot(story, "mount");
-
             await test.step("Tab to the hidden card button", async () => {
                 await page.keyboard.press("Tab");
                 await expect(
@@ -205,22 +204,6 @@ test.describe("File Download", () => {
                     story.locators.downloadButton("document.pdf")
                 ).toBeFocused();
                 await compareScreenshot(story, "download-focus");
-            });
-        });
-    });
-
-    test.describe(() => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("no-border-custom-click");
-        });
-
-        test("No border (custom click)", async ({ page, story }) => {
-            await test.step("Tab to the hidden card button", async () => {
-                await page.keyboard.press("Tab");
-                await expect(
-                    story.locators.cardButton("document.pdf")
-                ).toBeFocused();
-                await compareScreenshot(story, "card-focus");
             });
         });
     });

@@ -1,4 +1,4 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { act, fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { FileDownload } from "src/file-download";
 
@@ -148,6 +148,76 @@ describe("FileDownload", () => {
         });
     });
 
+    describe("onDownload", () => {
+        it("should not render the hidden card button", () => {
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    onDownload={jest.fn()}
+                />
+            );
+
+            expect(
+                screen.queryByTestId("file-1-card-button")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should call onDownload exactly once from the download button", async () => {
+            const onDownload = jest.fn();
+
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    onDownload={onDownload}
+                />
+            );
+
+            await act(async () => {
+                fireEvent.click(screen.getByTestId("file-1-download-button"));
+            });
+
+            expect(onDownload).toHaveBeenCalledTimes(1);
+        });
+
+        it("should keep the download click from reaching ancestor listeners", async () => {
+            const ancestorHandler = jest.fn();
+            const onDownload = jest.fn();
+
+            render(
+                <div onClick={ancestorHandler}>
+                    <FileDownload
+                        fileItems={[MOCK_FILE_ITEM]}
+                        onDownload={onDownload}
+                    />
+                </div>
+            );
+
+            await act(async () => {
+                fireEvent.click(screen.getByTestId("file-1-download-button"));
+            });
+
+            expect(onDownload).toHaveBeenCalledTimes(1);
+            expect(ancestorHandler).not.toHaveBeenCalled();
+        });
+
+        it("should fall back to onDownload when the card itself is activated", async () => {
+            const onDownload = jest.fn();
+
+            render(
+                <FileDownload
+                    fileItems={[MOCK_FILE_ITEM]}
+                    onDownload={onDownload}
+                />
+            );
+
+            await act(async () => {
+                fireEvent.click(screen.getByText("sample.pdf"));
+            });
+
+            expect(onDownload).toHaveBeenCalledWith(MOCK_FILE_ITEM);
+        });
+    });
+
     describe("onClick", () => {
         it("should call onClick with the file item when the hidden card button is activated", () => {
             const onClick = jest.fn();
@@ -167,7 +237,7 @@ describe("FileDownload", () => {
             expect(onDownload).not.toHaveBeenCalled();
         });
 
-        it("should call onDownload exactly once when the download button is activated", () => {
+        it("should call onDownload exactly once when the download button is activated", async () => {
             const onClick = jest.fn();
             const onDownload = jest.fn();
 
@@ -179,73 +249,16 @@ describe("FileDownload", () => {
                 />
             );
 
-            fireEvent.click(screen.getByTestId("file-1-download-button"));
+            await act(async () => {
+                fireEvent.click(screen.getByTestId("file-1-download-button"));
+            });
 
             expect(onDownload).toHaveBeenCalledTimes(1);
             expect(onClick).not.toHaveBeenCalled();
         });
 
-        it("should call onDownload exactly once from the download button when onClick is absent", () => {
-            const onDownload = jest.fn();
-
+        it("should render the hidden card button", () => {
             render(
-                <FileDownload
-                    fileItems={[MOCK_FILE_ITEM]}
-                    onDownload={onDownload}
-                />
-            );
-
-            fireEvent.click(screen.getByTestId("file-1-download-button"));
-
-            expect(onDownload).toHaveBeenCalledTimes(1);
-        });
-
-        it("should bubble the download click to ancestor listeners when onClick is absent", () => {
-            const ancestorHandler = jest.fn();
-            const onDownload = jest.fn();
-
-            render(
-                <div onClick={ancestorHandler}>
-                    <FileDownload
-                        fileItems={[MOCK_FILE_ITEM]}
-                        onDownload={onDownload}
-                    />
-                </div>
-            );
-
-            fireEvent.click(screen.getByTestId("file-1-download-button"));
-
-            expect(ancestorHandler).toHaveBeenCalledTimes(1);
-        });
-
-        it("should fall back to onDownload when the card is activated and onClick is absent", () => {
-            const onDownload = jest.fn();
-
-            render(
-                <FileDownload
-                    fileItems={[MOCK_FILE_ITEM]}
-                    onDownload={onDownload}
-                />
-            );
-
-            fireEvent.click(screen.getByText("sample.pdf"));
-
-            expect(onDownload).toHaveBeenCalledWith(MOCK_FILE_ITEM);
-        });
-
-        it("should render the hidden card button only when onClick is provided", () => {
-            const { rerender } = render(
-                <FileDownload
-                    fileItems={[MOCK_FILE_ITEM]}
-                    onDownload={jest.fn()}
-                />
-            );
-
-            expect(
-                screen.queryByTestId("file-1-card-button")
-            ).not.toBeInTheDocument();
-
-            rerender(
                 <FileDownload
                     fileItems={[MOCK_FILE_ITEM]}
                     onDownload={jest.fn()}

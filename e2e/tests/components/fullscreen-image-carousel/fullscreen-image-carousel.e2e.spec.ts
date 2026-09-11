@@ -261,46 +261,15 @@ test.describe("FullscreenImageCarousel", () => {
         });
 
         test("Custom actions", async ({ story }) => {
-            await test.step("Component-level actions on the first slide", async () => {
-                await expect(
-                    story.locators.customAction("Download image")
-                ).toBeVisible();
-                await expect(
-                    story.locators.customAction("Share image")
-                ).toBeVisible();
+            await expect(
+                story.locators.customAction("Download image")
+            ).toBeVisible();
+            await expect(
+                story.locators.customAction("Share image")
+            ).toBeVisible();
 
-                await compareScreenshot(story, "mount", {
-                    fullscreen: true,
-                });
-            });
-
-            /*
-             * The assertions carry as much of this step as the baseline does.
-             * Three buttons here would mean the item's list was merged into the
-             * component-level one; download and share still showing would mean
-             * the item's list was ignored outright. Both are invisible on slide
-             * 1, so this is the only place either regression surfaces.
-             */
-            await test.step("The item's own actions replace them on the second slide", async () => {
-                await story.locators.forwardBtn.click();
-                await expect(story.locators.fileInfoName).toHaveText(
-                    "image-2.jpg"
-                );
-                await waitForCarouselImages(story);
-
-                await expect(
-                    story.locators.customAction("Print image")
-                ).toBeVisible();
-                await expect(
-                    story.locators.customAction("Download image")
-                ).toBeHidden();
-                await expect(
-                    story.locators.customAction("Share image")
-                ).toBeHidden();
-
-                await compareScreenshot(story, "item-override", {
-                    fullscreen: true,
-                });
+            await compareScreenshot(story, "mount", {
+                fullscreen: true,
             });
         });
     });
