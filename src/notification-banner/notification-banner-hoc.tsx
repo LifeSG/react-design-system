@@ -9,6 +9,26 @@ import type {
     NotificationContentAttributes,
 } from "./types";
 
+const SAFE_URL_SCHEMES = /^(https?:|mailto:|tel:)/i;
+
+function sanitizeAttributes(
+    attrs: Record<string, unknown>
+): Record<string, unknown> {
+    const sanitized: Record<string, unknown> = {};
+
+    for (const [key, value] of Object.entries(attrs)) {
+        if (/^on[A-Z]/i.test(key)) continue;
+
+        if (key === "href" && typeof value === "string") {
+            if (!SAFE_URL_SCHEMES.test(value)) continue;
+        }
+
+        sanitized[key] = value;
+    }
+
+    return sanitized;
+}
+
 /**
  * Higher-order component that wraps `NotificationBanner` and renders its
  * content from a structured data array.
@@ -26,8 +46,12 @@ export const withNotificationBanner = (
             if (data.length > 0) {
                 return data.map((attribute, index) => {
                     if (attribute.type === "text") {
-                        const otherAttributes =
-                            attribute.otherAttributes as ContentTextAttributes;
+                        const otherAttributes = sanitizeAttributes(
+                            (attribute.otherAttributes ?? {}) as Record<
+                                string,
+                                unknown
+                            >
+                        ) as ContentTextAttributes;
 
                         const sanitizedContent = DOMPurify.sanitize(
                             attribute.content
@@ -42,8 +66,12 @@ export const withNotificationBanner = (
                             />
                         );
                     } else {
-                        const otherAttributes =
-                            attribute.otherAttributes as ContentLinkAttributes;
+                        const otherAttributes = sanitizeAttributes(
+                            (attribute.otherAttributes ?? {}) as Record<
+                                string,
+                                unknown
+                            >
+                        ) as ContentLinkAttributes;
                         return (
                             <NotificationBanner.Link
                                 key={index}
