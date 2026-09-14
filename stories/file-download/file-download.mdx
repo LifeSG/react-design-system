@@ -40,6 +40,18 @@ The title and description support styling for commonly used markup such as `<str
 
 <Canvas of={FileDownloadStories.TextStyling} />
 
+## Thumbnail fallbacks
+
+An item renders a thumbnail when the `thumbnailImageDataUrl` prop is provided, regardless of `mimeType`. When not provided, the component falls back to a PDF icon for PDF files.
+
+<Canvas of={FileDownloadStories.ThumbnailFallbacks} />
+
+## Custom card action
+
+By default, clicking on a card also triggers a download. Specify `onClick` to let it trigger a separate action.
+
+<Canvas of={FileDownloadStories.CustomCardAction} />
+
 ## Component API
 
 <AutoArgTypesTabs of={FileDownloadStories} />

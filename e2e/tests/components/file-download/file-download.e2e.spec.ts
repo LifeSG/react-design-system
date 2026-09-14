@@ -1,4 +1,4 @@
-import { test as base, Locator, Page } from "@playwright/test";
+import { expect, test as base, Locator, Page } from "@playwright/test";
 
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
 
@@ -9,6 +9,7 @@ class StoryPage extends AbstractStoryPage {
         fileDownload: Locator;
         fileItem: (id: string) => Locator;
         downloadButton: (fileName: string) => Locator;
+        cardButton: (fileName: string) => Locator;
     };
 
     constructor(page: Page) {
@@ -21,6 +22,8 @@ class StoryPage extends AbstractStoryPage {
                 page.getByRole("button", {
                     name: `download ${fileName}`,
                 }),
+            cardButton: (fileName: string) =>
+                page.getByRole("button", { name: `View ${fileName}` }),
         };
     }
 }
@@ -100,6 +103,7 @@ test.describe("File Download", () => {
 
         test("Error", async ({ story }) => {
             await story.locators.downloadButton("document.pdf").click();
+            await story.locators.downloadButton("report.docx").click();
             await compareScreenshot(story, "mount");
         });
     });
@@ -157,6 +161,50 @@ test.describe("File Download", () => {
 
         test("Long file names (mobile)", async ({ story }) => {
             await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("thumbnail-fallbacks");
+        });
+
+        test("Thumbnail fallbacks", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("thumbnail-fallbacks", { size: "mobile" });
+        });
+
+        test("Thumbnail fallbacks (mobile)", async ({ story }) => {
+            await compareScreenshot(story, "mount");
+        });
+    });
+
+    test.describe(() => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("custom-click");
+        });
+
+        test("Custom click", async ({ page, story }) => {
+            await test.step("Tab to the hidden card button", async () => {
+                await page.keyboard.press("Tab");
+                await expect(
+                    story.locators.cardButton("document.pdf")
+                ).toBeFocused();
+                await compareScreenshot(story, "card-focus");
+            });
+
+            await test.step("Tab to the download button", async () => {
+                await page.keyboard.press("Tab");
+                await expect(
+                    story.locators.downloadButton("document.pdf")
+                ).toBeFocused();
+                await compareScreenshot(story, "download-focus");
+            });
         });
     });
 });

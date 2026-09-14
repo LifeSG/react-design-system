@@ -201,7 +201,15 @@ const plugins = [
     copy({
         targets: [
             {
-                src: "docs/*",
+                /*
+                 * Name the artefact rather than globbing `docs/*`. `.npmignore`
+                 * is `**\/*` plus `!dist/**`, so anything landing in dist is
+                 * published — and `docs/` also holds local, gitignored working
+                 * documents (specs, plans). Globbing swept those into the
+                 * package on any publish from a developer's tree. Add new
+                 * entries here deliberately.
+                 */
+                src: "docs/component-catalog.json",
                 dest: "dist/docs",
             },
             {

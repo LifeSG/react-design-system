@@ -18,7 +18,15 @@ export const item = css`
     }
 `;
 
+export const cardButton = css`
+    appearance: none;
+    padding: 0;
+    background: none;
+    border: none;
+`;
+
 export const box = css`
+    position: relative;
     display: flex;
     align-items: center;
 
@@ -37,6 +45,13 @@ export const box = css`
     &:hover {
         background: ${Colour["bg-hover"]};
     }
+
+    @supports selector(:has(*)) {
+        &:has(.${cardButton}:focus-visible) {
+            outline: 2px solid ${Colour["focus-ring"]};
+            outline-offset: -2px;
+        }
+    }
 `;
 
 export const boxError = css`
@@ -45,6 +60,12 @@ export const boxError = css`
 
     &:hover {
         background: ${Colour["bg-error"]};
+    }
+
+    @supports selector(:has(*)) {
+        &:has(.${cardButton}:focus-visible) {
+            outline-color: ${Colour["border-error-focus"]};
+        }
     }
 `;
 
@@ -205,4 +226,8 @@ export const thumbnail = css`
         width: 64px;
         height: 64px;
     }
+`;
+
+export const thumbnailPdf = css`
+    border: none;
 `;
