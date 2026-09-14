@@ -81,17 +81,22 @@ export const Component = (
     const thumbnailRefs = useRef<(HTMLDivElement | null)[]>([]);
     const zoomRefs = useRef<(ReactZoomPanPinchContentRef | null)[]>([]);
     const imageRef = useRef<HTMLDivElement>(null);
-    const topActionButtonsRef = useRef<HTMLDivElement>(null);
-    const [, forceInsetUpdate] = useState(0);
-    const mergedTopBarRef = useMemo(() => {
-        const base = mergeRefs(topActionButtonsRef, topBarRef);
-        if (!topBarRef) return base;
-        return (el: HTMLDivElement | null) => {
-            const cleanup = base(el);
-            if (el !== null) forceInsetUpdate((n) => n + 1);
-            return cleanup;
-        };
-    }, [topBarRef]);
+    /*
+     * The top bar's element is held in state rather than a ref so that its mount
+     * causes a render. Overlay keeps its portal target in state and mounts these
+     * children, so the layout effect below would otherwise run while a ref was
+     * still null and never write the inset custom properties.
+     */
+    const [topActionButtons, setTopActionButtons] =
+        useState<HTMLDivElement | null>(null);
+    const topActionButtonsRef = useMemo(
+        () => ({ current: topActionButtons }),
+        [topActionButtons]
+    );
+    const mergedTopBarRef = useMemo(
+        () => mergeRefs(setTopActionButtons, topBarRef),
+        [topBarRef]
+    );
     const prevArrowButtonRef = useRef<HTMLButtonElement>(null);
     const nextArrowButtonRef = useRef<HTMLButtonElement>(null);
     const thumbnailContainerRef = useRef<HTMLDivElement>(null);
