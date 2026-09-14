@@ -29,9 +29,3 @@ junit.xml
 /playwright/.cache/
 /playwright/.auth/
 .screenshot-manifest*.txt
-
-# superpowers
-.superpowers/
-docs/superpowers/
-docs/manual-test-cases/
-docs/enhancement-proposals/
