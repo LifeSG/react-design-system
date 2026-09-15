@@ -1,5 +1,5 @@
 import { checkbox, confirm, input, select } from "@inquirer/prompts";
-import { execSync } from "child_process";
+import { execFileSync } from "child_process";
 import * as fs from "fs";
 import * as path from "path";
 
@@ -54,14 +54,23 @@ function runCodemods(selection: UserSelection): void {
 
     selectedCodemods.forEach((codemod) => {
         const codemodPath = path.join(codemodsDir, codemod, "index.ts");
-        let command = `npx --yes jscodeshift --parser=tsx -t ${codemodPath} ${targetPath}`;
-
         console.log(
             `Running codemod: ${codemod} on target path: ${targetPath}`
         );
 
         try {
-            execSync(command, { stdio: "inherit" });
+            execFileSync(
+                "npx",
+                [
+                    "--yes",
+                    "jscodeshift",
+                    "--parser=tsx",
+                    "-t",
+                    codemodPath,
+                    targetPath,
+                ],
+                { stdio: "inherit" }
+            );
             console.log(
                 `Codemod ${codemod} executed successfully on ${targetPath}`
             );
