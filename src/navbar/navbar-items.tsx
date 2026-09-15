@@ -9,6 +9,7 @@ import type { TypographyWeight } from "../typography";
 import { useId } from "../util";
 import { Menu as MobileMenu } from "./menu";
 import * as styles from "./navbar-items.styles";
+import { getSubMenuGridMaxWidth, SubMenuGrid } from "./submenu-grid";
 import type {
     NavItemCommonProps,
     NavItemLinkProps,
@@ -133,19 +134,30 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderDesktopSubMenu = (
         subMenu: NavItemCommonProps<T>[],
-        subMenuId: string
+        subMenuId: string,
+        columns?: number,
+        rows?: number
     ) => (
-        <DesktopMenu.Content id={subMenuId}>
-            <DesktopMenu.Section showDivider={false}>
-                {subMenu.map((item, subIndex) => (
-                    <DesktopMenu.Link
-                        key={`${item.id}-${subIndex}`}
-                        href={item.href}
-                    >
-                        {item.children}
-                    </DesktopMenu.Link>
-                ))}
-            </DesktopMenu.Section>
+        <DesktopMenu.Content
+            id={subMenuId}
+            maxWidth={
+                columns && rows ? getSubMenuGridMaxWidth(columns) : undefined
+            }
+        >
+            {columns && rows ? (
+                <SubMenuGrid items={subMenu} columns={columns} rows={rows} />
+            ) : (
+                <DesktopMenu.Section showDivider={false}>
+                    {subMenu.map((item, subIndex) => (
+                        <DesktopMenu.Link
+                            key={`${item.id}-${subIndex}`}
+                            href={item.href}
+                        >
+                            {item.children}
+                        </DesktopMenu.Link>
+                    ))}
+                </DesktopMenu.Section>
+            )}
         </DesktopMenu.Content>
     );
 
@@ -276,7 +288,12 @@ export const NavbarItems = <T,>({
                 <DesktopMenu
                     position={isLastItem ? "bottom-end" : "bottom"}
                     customOffset={0}
-                    menuContent={renderDesktopSubMenu(subMenu!, subMenuId)}
+                    menuContent={renderDesktopSubMenu(
+                        subMenu!,
+                        subMenuId,
+                        item.subMenuColumns,
+                        item.subMenuRows
+                    )}
                     triggerOnFocus
                     isModal={false}
                     onPopoverAppear={() => {
