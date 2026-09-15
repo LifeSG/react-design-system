@@ -23,6 +23,7 @@ export const MenuContent = ({
     "data-testid": testId = "menu-content",
     overflow,
     maxHeight,
+    maxWidth,
     ...otherProps
 }: MenuContentProps): JSX.Element => {
     // =============================================================================
@@ -33,6 +34,8 @@ export const MenuContent = ({
     useApplyStyle(panelRef, {
         [styles.tokens.panel.maxHeight]:
             maxHeight !== undefined ? `${maxHeight}px` : null,
+        [styles.tokens.panel.maxWidth]:
+            maxWidth !== undefined ? `${maxWidth}px` : null,
         [styles.tokens.panel.overflow]: overflow || null,
     });
     // =============================================================================

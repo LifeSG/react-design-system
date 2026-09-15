@@ -45,6 +45,12 @@ export interface MenuContentProps
         | ReactElement<typeof MenuSection>
         | ReactElement<typeof MenuSection>[];
     "data-testid"?: string | undefined;
+    /**
+     * Maximum width of the panel in pixels.
+     *
+     * @default 384 (24rem)
+     */
+    maxWidth?: number | undefined;
 }
 
 // @storybookSkipProps
