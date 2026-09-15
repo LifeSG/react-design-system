@@ -79,6 +79,18 @@ const DATA: ApiTableSectionProps[] = [
                 propTypes: ["boolean"],
             },
             {
+                name: "customActions",
+                description: (
+                    <>
+                        Additional icon buttons rendered in the top bar, before
+                        the default buttons. An item&apos;s own{" "}
+                        <code>customActions</code> replaces this list for that
+                        item
+                    </>
+                ),
+                propTypes: ["FullscreenImageCarouselCustomAction[]"],
+            },
+            {
                 name: "onDelete",
                 description:
                     "Called when the current image delete button is clicked. When provided, the delete button will be shown. If called, do not reorder the items array while a delete is in flight.",
@@ -106,6 +118,12 @@ const DATA: ApiTableSectionProps[] = [
                     "{ top?: number, bottom?: number, right?: number, right?: number }",
                 ],
             },
+            {
+                name: "topBarRef",
+                description:
+                    "Ref to the top bar element, which holds the file info and the action buttons",
+                propTypes: ["React.Ref<HTMLDivElement>"],
+            },
         ],
     },
     {
@@ -132,6 +150,18 @@ const DATA: ApiTableSectionProps[] = [
                 description:
                     'The pre-formatted file size string to display in the file info bar at the top (e.g. "2.4 MB")',
                 propTypes: ["string"],
+            },
+            {
+                name: "customActions",
+                description: (
+                    <>
+                        Replaces the component-level <code>customActions</code>{" "}
+                        while this item is active. Leave <code>undefined</code>{" "}
+                        to inherit the component-level list; pass{" "}
+                        <code>[]</code> to render none
+                    </>
+                ),
+                propTypes: ["FullscreenImageCarouselCustomAction[]"],
             },
         ],
     },
@@ -206,6 +236,36 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Custom render prop for the full slide area",
                 mandatory: true,
                 propTypes: ["() => React.ReactNode"],
+            },
+        ],
+    },
+    {
+        name: "FullscreenImageCarouselCustomAction",
+        attributes: [
+            {
+                name: "icon",
+                description: "The icon element rendered inside the button",
+                mandatory: true,
+                propTypes: ["JSX.Element"],
+            },
+            {
+                name: "ariaLabel",
+                description: "The accessible name for the button",
+                mandatory: true,
+                propTypes: ["string"],
+            },
+            {
+                name: "onClick",
+                description: "Called when the action is activated",
+                mandatory: true,
+                propTypes: [
+                    "(item: FullscreenImageCarouselItemProps, index: number) => void",
+                ],
+            },
+            {
+                name: "data-testid",
+                description: "The test identifier for the button",
+                propTypes: ["string"],
             },
         ],
     },

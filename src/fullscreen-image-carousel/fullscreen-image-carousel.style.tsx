@@ -125,6 +125,8 @@ export const DeleteButton = styled(IconButton)`
 
 export const MagnifierButton = styled(IconButton)``;
 
+export const CustomActionButton = styled(IconButton)``;
+
 export const ArrowButton = styled(IconButton)<ArrowButtonStyleProps>`
     z-index: 4;
     position: absolute;
