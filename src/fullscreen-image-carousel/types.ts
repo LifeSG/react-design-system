@@ -8,6 +8,17 @@ export interface FullscreenImageCarouselRef {
     goToNextItem: () => void;
 }
 
+/** Custom button rendered in the carousel's top bar */
+export interface FullscreenImageCarouselCustomAction {
+    /** Icon element rendered inside the button */
+    icon: JSX.Element;
+    /** Accessible name for the button */
+    ariaLabel: string;
+    /** Called when the action is activated */
+    onClick: (item: FullscreenImageCarouselItemProps, index: number) => void;
+    "data-testid"?: string | undefined;
+}
+
 export interface FullscreenImageCarouselProps
     extends Pick<
         ModalProps,
@@ -20,16 +31,22 @@ export interface FullscreenImageCarouselProps
     hideNavigation?: boolean | undefined;
     hideCounter?: boolean | undefined;
     hideMagnifier?: boolean | undefined;
+    /** Additional icon buttons rendered in the top bar, before the default buttons. An item's own `customActions` replaces this list for that item */
+    customActions?: FullscreenImageCarouselCustomAction[] | undefined;
     onDelete?:
         | ((item: FullscreenImageCarouselItemProps, index: number) => void)
         | undefined;
     onClose?: (() => void) | undefined;
     insets?: Insets | undefined;
+    /** Ref to the top bar element, which holds the file info and the action buttons */
+    topBarRef?: React.Ref<HTMLDivElement> | undefined;
 }
 
 interface FullscreenImageCarouselBaseItemProps {
     fileName?: string | undefined;
     fileSize?: string | undefined;
+    /** Replaces the component-level `customActions` while this item is active. Leave `undefined` to inherit the component-level list; pass `[]` to render none */
+    customActions?: FullscreenImageCarouselCustomAction[] | undefined;
 }
 
 export interface FullscreenImageCarouselImageItemProps

@@ -48,6 +48,12 @@ const DATA: ApiTableSectionProps[] = [
                     "(file: FileItemDownloadProps) => void | Promise<void>",
                 ],
             },
+            {
+                name: "onClick",
+                description:
+                    "Called when a file card itself is activated, as opposed to its download button. When omitted, activating the card triggers onDownload instead",
+                propTypes: ["(file: FileItemDownloadProps) => void"],
+            },
         ],
     },
     {
@@ -104,6 +110,12 @@ const DATA: ApiTableSectionProps[] = [
                 description: "Indicates if the file is ready for download",
                 propTypes: ["boolean"],
                 defaultValue: `true`,
+            },
+            {
+                name: "clickLabel",
+                description:
+                    "Name for the card, used when `FileDownload` is given an `onClick`",
+                propTypes: ["string"],
             },
         ],
     },

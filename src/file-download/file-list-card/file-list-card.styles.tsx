@@ -33,6 +33,13 @@ export const Item = styled.li`
     }
 `;
 
+export const CardButton = styled.button`
+    appearance: none;
+    padding: 0;
+    background: none;
+    border: none;
+`;
+
 export const Box = styled.div<BoxStyleProps>`
     display: flex;
     align-items: center;
@@ -53,6 +60,11 @@ export const Box = styled.div<BoxStyleProps>`
         background: ${Colour["bg-hover"]};
     }
 
+    &:has(${CardButton}:focus-visible) {
+        outline: 2px solid ${Colour["focus-ring"]};
+        outline-offset: -2px;
+    }
+
     ${(props) => {
         if (props.$error) {
             return css`
@@ -61,6 +73,10 @@ export const Box = styled.div<BoxStyleProps>`
 
                 &:hover {
                     background: ${Colour["bg-error"]};
+                }
+
+                &:has(${CardButton}:focus-visible) {
+                    outline-color: ${Colour["border-error-focus"]};
                 }
             `;
         }
@@ -235,4 +251,8 @@ export const Thumbnail = styled(ImageWithFallback)`
         width: 64px;
         height: 64px;
     }
+`;
+
+export const PdfThumbnail = styled(Thumbnail)`
+    border: none;
 `;

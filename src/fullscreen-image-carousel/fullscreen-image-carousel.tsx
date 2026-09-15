@@ -8,6 +8,7 @@ import {
 import { BinIcon } from "@lifesg/react-icons/bin";
 import { announce, clearAnnouncer } from "@react-aria/live-announcer";
 import {
+    cloneElement,
     forwardRef,
     useCallback,
     useEffect,
@@ -31,6 +32,7 @@ import {
     CarouselModalContent,
     Chip,
     CloseButton,
+    CustomActionButton,
     DeleteButton,
     FileInfoFileName,
     FileInfoFileSize,
@@ -52,6 +54,7 @@ import {
     TopActionButtons,
 } from "./fullscreen-image-carousel.style";
 import {
+    FullscreenImageCarouselCustomAction,
     FullscreenImageCarouselCustomItemProps,
     FullscreenImageCarouselItemProps,
     FullscreenImageCarouselProps,
@@ -72,9 +75,11 @@ export const Component = (
         hideNavigation = false,
         hideCounter = false,
         hideMagnifier = false,
+        customActions,
         onDelete,
         onClose,
         insets,
+        topBarRef,
         show,
         ...otherProps
     }: FullscreenImageCarouselProps,
@@ -98,6 +103,8 @@ export const Component = (
     const imageRef = useRef<HTMLDivElement>(null);
     const diff = startX && endX ? startX - endX : 0;
     const currentItem = items[currentSlide];
+    const resolvedCustomActions =
+        currentItem?.customActions ?? customActions ?? [];
     const hasAnyItemLabel = items.some(
         (item) => isCustomItem(item) && !!item.itemLabel?.trim()
     );
@@ -198,6 +205,14 @@ export const Component = (
     const handleDelete = () => {
         if (currentItem && onDelete) {
             onDelete(currentItem, currentSlide);
+        }
+    };
+
+    const handleCustomAction = (
+        action: FullscreenImageCarouselCustomAction
+    ) => {
+        if (currentItem) {
+            action.onClick(currentItem, currentSlide);
         }
     };
 
@@ -427,6 +442,69 @@ export const Component = (
         );
     };
 
+    const renderTopActions = () => {
+        return (
+            <TopActionButtons
+                ref={topBarRef}
+                $hasFileInfo={hasFileInfo}
+                $insetTop={insets?.top}
+                $insetLeft={insets?.left}
+                $insetRight={insets?.right}
+            >
+                {hasFileInfo && renderFileInfo()}
+
+                {resolvedCustomActions.map((action, index) => (
+                    <CustomActionButton
+                        key={index}
+                        aria-label={action.ariaLabel}
+                        data-testid={action["data-testid"]}
+                        onClick={() => handleCustomAction(action)}
+                    >
+                        {cloneElement(action.icon, { "aria-hidden": true })}
+                    </CustomActionButton>
+                ))}
+
+                {!hideMagnifier && !isCustomItem(currentItem) && (
+                    <MagnifierButton
+                        aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
+                        onClick={handleMagnifier}
+                    >
+                        {zoom === 1 ? (
+                            <MagnifierPlusIcon aria-hidden />
+                        ) : (
+                            <MagnifierMinusIcon aria-hidden />
+                        )}
+                    </MagnifierButton>
+                )}
+
+                {onDelete && (
+                    <DeleteButton
+                        aria-label={`Delete ${
+                            (isCustomItem(currentItem) &&
+                                currentItem.itemLabel?.trim()) ||
+                            "image"
+                        }`}
+                        data-testid="delete-btn"
+                        onClick={handleDelete}
+                    >
+                        <BinIcon aria-hidden />
+                    </DeleteButton>
+                )}
+
+                <CloseButton
+                    aria-label={
+                        hasAnyItemLabel
+                            ? "Close carousel"
+                            : "Close image carousel"
+                    }
+                    onClick={onClose}
+                >
+                    <CrossIcon aria-hidden />
+                </CloseButton>
+            </TopActionButtons>
+        );
+    };
+
     return (
         <ModalV2
             {...otherProps}
@@ -483,51 +561,7 @@ export const Component = (
 
                     {!hideThumbnail && renderThumbnails()}
                 </ImageGalleryContainer>
-                <TopActionButtons
-                    $hasFileInfo={hasFileInfo}
-                    $insetTop={insets?.top}
-                    $insetLeft={insets?.left}
-                    $insetRight={insets?.right}
-                >
-                    {hasFileInfo && renderFileInfo()}
-                    {!hideMagnifier && !isCustomItem(currentItem) && (
-                        <MagnifierButton
-                            aria-label={zoom === 1 ? "Zoom in" : "Zoom out"}
-                            onClick={handleMagnifier}
-                        >
-                            {zoom === 1 ? (
-                                <MagnifierPlusIcon aria-hidden />
-                            ) : (
-                                <MagnifierMinusIcon aria-hidden />
-                            )}
-                        </MagnifierButton>
-                    )}
-
-                    {onDelete && (
-                        <DeleteButton
-                            aria-label={`Delete ${
-                                (isCustomItem(currentItem) &&
-                                    currentItem.itemLabel?.trim()) ||
-                                "image"
-                            }`}
-                            data-testid="delete-btn"
-                            onClick={handleDelete}
-                        >
-                            <BinIcon aria-hidden />
-                        </DeleteButton>
-                    )}
-
-                    <CloseButton
-                        aria-label={
-                            hasAnyItemLabel
-                                ? "Close carousel"
-                                : "Close image carousel"
-                        }
-                        onClick={onClose}
-                    >
-                        <CrossIcon aria-hidden />
-                    </CloseButton>
-                </TopActionButtons>
+                {renderTopActions()}
             </CarouselModalContent>
         </ModalV2>
     );
