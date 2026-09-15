@@ -16,6 +16,8 @@ export interface FileItemDownloadProps {
     truncateText?: boolean | undefined;
     /** Indicate if file is ready for download, defaults to true */
     ready?: boolean | undefined;
+    /** Name for the card, used when `FileDownload` is given an `onClick`. */
+    clickLabel?: string | undefined;
 }
 
 export type FileDownloadStyle = "bordered" | "no-border";
@@ -32,4 +34,9 @@ export interface FileDownloadProps {
     id?: string | undefined;
     /** Called when file item is clicked  */
     onDownload: (file: FileItemDownloadProps) => void | Promise<void>;
+    /**
+     * Called when a file card itself is activated, as opposed to its download button.
+     * When omitted, activating the card triggers `onDownload` instead.
+     */
+    onClick?: ((file: FileItemDownloadProps) => void) | undefined;
 }

@@ -3,11 +3,13 @@ import { memo, useContext, useEffect, useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
 import { ThemeContext } from "styled-components";
 import { FileUploadHelper } from "../../file-upload/helper";
+import { VisuallyHidden } from "../../shared/accessibility";
 import { Breakpoint } from "../../theme";
 import { StringHelper } from "../../util";
 import {
     ActionContainer,
     Box,
+    CardButton,
     ContentSection,
     DesktopErrorMessage,
     ErrorIcon,
@@ -18,30 +20,38 @@ import {
     ItemNameText,
     MobileErrorMessage,
     NameSection,
+    PdfThumbnail,
     Spinner,
     Thumbnail,
     ThumbnailContainer,
 } from "./file-list-card.styles";
 import { FileListItemProps } from "./types";
 
-const Component = ({ fileItem, onDownload }: FileListItemProps) => {
+const Component = ({ fileItem, onDownload, onClick }: FileListItemProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
     const {
         id,
         name,
+        mimeType,
         size,
         errorMessage,
         thumbnailImageDataUrl,
         truncateText = true,
         ready = true,
+        clickLabel,
     } = fileItem;
 
     // Local variables
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isError, setIsError] = useState<boolean>(false);
     const fileSize = FileUploadHelper.formatFileSizeDisplay(size);
+    const thumbnailDisplay = FileUploadHelper.resolveThumbnailDisplay(
+        mimeType,
+        thumbnailImageDataUrl
+    );
+    const hasThumbnail = thumbnailDisplay.type !== "none";
     const theme = useContext(ThemeContext);
     const mobileBreakpoint = Breakpoint["sm-max"]({ theme });
     const isMobile = useMediaQuery({ maxWidth: mobileBreakpoint });
@@ -79,6 +89,36 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         }
     };
 
+    const handleCardClick = () => {
+        if (!ready) {
+            return;
+        }
+
+        if (onClick) {
+            onClick(fileItem);
+            return;
+        }
+
+        handleDownload();
+    };
+
+    const handleCardButtonClick = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        // The button sits inside Box, which also handles clicks. Without this,
+        // both handlers fire and the action runs twice.
+        event.stopPropagation();
+        handleCardClick();
+    };
+
+    const handleDownloadButtonClick = (
+        event: React.MouseEvent<HTMLButtonElement>
+    ) => {
+        // Same reason as above: stop the click from also reaching Box.
+        event.stopPropagation();
+        handleDownload();
+    };
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
@@ -108,28 +148,29 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         </>
     );
 
-    const renderWithThumbnail = (thumbnailSrc: string) => (
-        <>
-            <ThumbnailContainer data-testid={`${id}-thumbnail`}>
-                <Thumbnail
-                    data-testid={`${id}-thumbnail-image`}
-                    src={thumbnailSrc}
-                />
-            </ThumbnailContainer>
-            <ExtendedNameSection>
-                <NameSection>{renderNameDescription()}</NameSection>
-                <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
-                {isError && (
-                    <MobileErrorMessage>
-                        <ErrorIcon aria-hidden />
-                        {errorMessage ? errorMessage : "Something went wrong"}
-                    </MobileErrorMessage>
-                )}
-            </ExtendedNameSection>
-        </>
-    );
+    const renderThumbnail = () => {
+        if (thumbnailDisplay.type === "none") {
+            return null;
+        }
 
-    const renderDefault = () => (
+        return (
+            <ThumbnailContainer data-testid={`${id}-thumbnail`}>
+                {thumbnailDisplay.type === "pdf-icon" ? (
+                    <PdfThumbnail
+                        data-testid={`${id}-thumbnail-image`}
+                        src={FileUploadHelper.PDF_ICON_URL}
+                    />
+                ) : (
+                    <Thumbnail
+                        data-testid={`${id}-thumbnail-image`}
+                        src={thumbnailDisplay.src}
+                    />
+                )}
+            </ThumbnailContainer>
+        );
+    };
+
+    const renderNameSizeError = () => (
         <>
             <NameSection>{renderNameDescription()}</NameSection>
             <FileSizeSection>{fileSize ? fileSize : "-"}</FileSizeSection>
@@ -142,19 +183,34 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
         </>
     );
 
-    const renderContents = () => {
-        let content: JSX.Element;
+    const renderContents = () => (
+        <ContentSection $hasThumbnail={hasThumbnail}>
+            {renderThumbnail()}
+            {hasThumbnail ? (
+                <ExtendedNameSection>
+                    {renderNameSizeError()}
+                </ExtendedNameSection>
+            ) : (
+                renderNameSizeError()
+            )}
+        </ContentSection>
+    );
 
-        if (thumbnailImageDataUrl) {
-            content = renderWithThumbnail(thumbnailImageDataUrl);
-        } else {
-            content = renderDefault();
+    const renderCardButton = () => {
+        if (!onClick) {
+            return null;
         }
 
         return (
-            <ContentSection $hasThumbnail={!!thumbnailImageDataUrl}>
-                {content}
-            </ContentSection>
+            <VisuallyHidden>
+                <CardButton
+                    type="button"
+                    data-testid={`${id}-card-button`}
+                    aria-label={clickLabel ?? name}
+                    disabled={!ready}
+                    onClick={handleCardButtonClick}
+                />
+            </VisuallyHidden>
         );
     };
 
@@ -167,6 +223,7 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
                     styleType="light"
                     sizeType="small"
                     aria-label={`download ${name}`}
+                    onClick={handleDownloadButtonClick}
                 >
                     {isLoading || !ready ? (
                         <Spinner size={16} aria-hidden />
@@ -180,8 +237,9 @@ const Component = ({ fileItem, onDownload }: FileListItemProps) => {
 
     return (
         <Item data-testid={id}>
-            <Box onClick={handleDownload} $error={isError}>
+            <Box onClick={handleCardClick} $error={isError}>
                 {renderContents()}
+                {renderCardButton()}
                 {renderActions()}
             </Box>
         </Item>
