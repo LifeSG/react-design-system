@@ -13,6 +13,7 @@ export const tokens = {
     panel: {
         availableWidth: "--fds-internal-menu-panel-availableWidth",
         maxHeight: "--fds-internal-menu-panel-maxHeight",
+        maxWidth: "--fds-internal-menu-panel-maxWidth",
         overflow: "--fds-internal-menu-panel-overflow",
         xSpacing: "--fds-internal-menu-panel-xSpacing",
     },
@@ -43,7 +44,10 @@ export const panel = css`
     }
 
     min-width: min(15rem, var(${tokens.panel.availableWidth}));
-    max-width: min(24rem, var(${tokens.panel.availableWidth}));
+    max-width: min(
+        var(${tokens.panel.maxWidth}, 24rem),
+        var(${tokens.panel.availableWidth})
+    );
     max-height: var(${tokens.panel.maxHeight});
     overflow-y: var(${tokens.panel.overflow});
 
