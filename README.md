@@ -97,11 +97,19 @@ To see the full suite of components available, visit our [Storybook documentatio
 
 Give your AI coding assistant accurate knowledge of FDS components, import patterns, and rules — works with Claude Code, Cursor, GitHub Copilot, Codex, and other agents.
 
+**If you are starting fresh** — pull directly from GitHub:
+
 ```bash
-npx flagship-skills
+npx skills add lifesg/react-design-system
 ```
 
-Run this after installing `@lifesg/react-design-system` — it registers the skill from your locally installed version so the agent always matches the version you have. The skill covers component selection, correct import paths, theming setup, layout patterns, and common mistakes to avoid. Re-run after upgrading the package.
+**If `@lifesg/react-design-system` is already installed in your project** — use the bin command, which registers the skill from your locally installed version:
+
+```bash
+npx lifesg-react-design-system skills
+```
+
+The skill covers component selection, correct import paths, theming setup, layout patterns, and common mistakes to avoid. Re-run after upgrading the package.
 
 ## Migrations
 
