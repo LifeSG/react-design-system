@@ -388,6 +388,279 @@ export const SubMenu: StoryObj<Component> = {
     },
 };
 
+export const SubMenuGrid: StoryObj<Component> = {
+    render: (_args) => {
+        const [selected, setSelected] = useState("lifesg1");
+        return (
+            <Navbar
+                items={{
+                    desktop: [
+                        {
+                            id: "home",
+                            children: "Home",
+                        },
+                        {
+                            id: "guides",
+                            children: "Guides",
+                            subMenuRows: 6,
+                            subMenuColumns: 2,
+                            subMenu: [
+                                {
+                                    id: "guides-item-1",
+                                    children:
+                                        "Veryverylonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglonglongtext",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-2",
+                                    children: "Lorem ipsum dolor sit amet",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-3",
+                                    children: "Lorem ipsum",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-4",
+                                    children:
+                                        "Sed do eiusmod tempor incididunt ut labore et dolore",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-5",
+                                    children:
+                                        "Ut enim ad minim veniam quis nostrud",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-6",
+                                    children:
+                                        "Duis aute irure dolor in reprehenderit",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-7",
+                                    children:
+                                        "Excepteur sint occaecat cupidatat non proident",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-8",
+                                    children:
+                                        "Sunt in culpa qui officia deserunt mollit",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-9",
+                                    children:
+                                        "Sed ut perspiciatis unde omnis iste natus",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-10",
+                                    children:
+                                        "Nemo enim ipsam voluptatem quia voluptas",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-11",
+                                    children:
+                                        "Neque porro quisquam est qui dolorem",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-12",
+                                    children:
+                                        "Ut enim ad minima veniam quis nostrum",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-13",
+                                    children:
+                                        "Quis autem vel eum iure reprehenderit",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-14",
+                                    children:
+                                        "At vero eos et accusamus et iusto odio",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-15",
+                                    children:
+                                        "Dignissimos ducimus qui blanditiis praesentium",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-16",
+                                    children:
+                                        "Temporibus autem quibusdam et aut officiis",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-17",
+                                    children:
+                                        "Itaque earum rerum hic tenetur a sapiente",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-18",
+                                    children:
+                                        "Nam libero tempore cum soluta nobis est",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-19",
+                                    children:
+                                        "Omnis dolor repellendus temporibus autem",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-20",
+                                    children:
+                                        "Debitis aut rerum necessitatibus saepe",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-21",
+                                    children:
+                                        "Et harum quidem rerum facilis est et expedita",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-22",
+                                    children:
+                                        "Distinctio nam libero tempore cum soluta",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-23",
+                                    children:
+                                        "Eligendi optio cumque nihil impedit quo",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-24",
+                                    children:
+                                        "Minus id quod maxime placeat facere possimus",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-25",
+                                    children:
+                                        "Omnis voluptas assumenda est omnis dolor",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-26",
+                                    children:
+                                        "Repellendus temporibus autem quibusdam et aut",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-27",
+                                    children:
+                                        "Officiis debitis aut rerum necessitatibus",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-28",
+                                    children:
+                                        "Saepe eveniet ut et voluptates repudiandae",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-29",
+                                    children:
+                                        "Sint et molestiae non recusandae itaque",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-30",
+                                    children:
+                                        "Earum rerum hic tenetur a sapiente delectus",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-31",
+                                    children:
+                                        "Ut aut reiciendis voluptatibus maiores alias",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-32",
+                                    children:
+                                        "Consequatur aut perferendis doloribus asperiores",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-33",
+                                    children:
+                                        "Repeat lorem ipsum dolor sit amet",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-34",
+                                    children:
+                                        "Consectetur adipiscing elit pellentesque",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "guides-item-35",
+                                    children:
+                                        "Habitant morbi tristique senectus et netus",
+                                    href: "https://www.life.gov.sg",
+                                },
+                            ],
+                        },
+                        {
+                            id: "lifesg-app",
+                            children: "LifeSG app",
+                            subMenuRows: 2,
+                            subMenuColumns: 3,
+                            subMenu: [
+                                {
+                                    id: "app-item-1",
+                                    children: "About the app",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "app-item-2",
+                                    children: "Features & benefits",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "app-item-3",
+                                    children: "User guides",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "app-item-4",
+                                    children: "Frequently asked questions",
+                                    href: "https://www.life.gov.sg",
+                                },
+                                {
+                                    id: "app-item-5",
+                                    children: "Contact support",
+                                    href: "https://www.life.gov.sg",
+                                },
+                            ],
+                        },
+                    ],
+                }}
+                actionButtons={{ desktop: actionButtons }}
+                selectedId={selected}
+                fixed={false}
+                onItemClick={(item) => {
+                    setSelected((item as NavItemLinkProps<undefined>).id);
+                }}
+            />
+        );
+    },
+};
+
 export const SecondaryBranding: StoryObj<Component> = {
     render: (_args) => {
         return (
