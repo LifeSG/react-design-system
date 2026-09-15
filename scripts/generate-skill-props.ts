@@ -112,7 +112,7 @@ function buildPropsContent(
 // Resource file processing
 // =============================================================================
 
-function stripPropsSection(content: string): string {
+export function stripPropsSection(content: string): string {
     const lines = content.split("\n");
     const out: string[] = [];
     let inProps = false;
@@ -129,7 +129,10 @@ function stripPropsSection(content: string): string {
     return out.join("\n").replace(/\n{3,}/g, "\n\n");
 }
 
-function insertPropsSection(content: string, propsBlock: string): string {
+export function insertPropsSection(
+    content: string,
+    propsBlock: string
+): string {
     const stripped = stripPropsSection(content);
     const marker = "\n\n" + propsBlock;
 
@@ -278,4 +281,6 @@ function main() {
     console.log(`\nDone. Updated: ${updated}, Skipped: ${skipped}`);
 }
 
-main();
+if (require.main === module) {
+    main();
+}
