@@ -61,7 +61,7 @@ export const Box = styled.div<BoxStyleProps>`
     }
 
     &:has(${CardButton}:focus-visible) {
-        outline: ${Border["width-020"]} solid ${Colour["focus-ring"]};
+        outline: 2px solid ${Colour["focus-ring"]};
         outline-offset: -2px;
     }
 
