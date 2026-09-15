@@ -1,0 +1,57 @@
+export interface AccordionProps {
+    children: JSX.Element | JSX.Element[];
+    /** Section heading rendered above the item list. Visually hidden on mobile unless `showTitleInMobile` is true. */
+    title?: string | JSX.Element | undefined;
+    /**
+     * Renders the "Show all" / "Hide all" toggle button.
+     *
+     * @default true
+     */
+    enableExpandAll?: boolean | undefined;
+    initialDisplay?: "collapse-all" | "expand-all" | undefined;
+    showTitleInMobile?: boolean | undefined;
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
+    className?: string | undefined;
+    headingLevel?: number | undefined;
+    onExpandCollapseChange?: ((expanded: boolean) => void) | undefined;
+}
+export type AccordionItemType = "default" | "small";
+export interface AccordionItemProps {
+    title: string | JSX.Element;
+    children: JSX.Element | JSX.Element[];
+    /**
+     * Omit or set this to undefined to allow 'Hide All'/'Show All' in parent to take precedence
+     * for cases where we want the default expand behaviour
+     */
+    expanded?: boolean | undefined;
+    id?: string | undefined;
+    "data-testid"?: string | undefined;
+    className?: string | undefined;
+    type?: AccordionItemType | undefined;
+    collapsible?: boolean | undefined;
+    /**
+     * Called when the user toggles this item or the parent "Show all" / "Hide all"
+     * button fires. When provided, the item enters **controlled mode** — the caller
+     * must update the `expanded` prop in response. Without this prop, the item
+     * manages its own state internally (uncontrolled mode).
+     */
+    onExpandChange?: ((expanded: boolean) => void) | undefined;
+}
+export interface AccordionItemApi {
+    expand: () => void;
+    collapse: () => void;
+    isExpanded: () => boolean;
+}
+export type AccordionItemHandle = HTMLDivElement & AccordionItemApi;
+/**
+ * Transient props are denoted with $
+ * See more https://styled-components.com/docs/api#transient-props
+ */
+export interface TitleStyleProps {
+    $showInMobile?: boolean | undefined;
+}
+export interface TitleWrapperStyleProps {
+    $showTitleInMobile: boolean;
+    $hasExpandAll: boolean;
+}

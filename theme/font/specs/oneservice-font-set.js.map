@@ -1,0 +1,1 @@
+{"version":3,"file":"oneservice-font-set.js","sources":["../../../../src/theme/font/specs/oneservice-font-set.ts"],"sourcesContent":["import { FontSet } from \"../types\";\nimport { getFontSet } from \"../utils\";\n\nexport const OneServiceFontSet: FontSet = getFontSet();\n"],"names":["OneServiceFontSet","getFontSet"],"mappings":"yCAGO,MAAMA,EAA6BC"}

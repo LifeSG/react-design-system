@@ -1,0 +1,46 @@
+export declare const textComponentMap: {
+    D1: string;
+    D2: string;
+    D3: string;
+    D4: string;
+    H1: string;
+    H2: string;
+    H3: string;
+    H4: string;
+    H5: string;
+    H6: string;
+    DBody: string;
+    Body: string;
+    BodySmall: string;
+    XSmall: string;
+    "Hyperlink.Default": string;
+    "Hyperlink.Small": string;
+};
+export declare const textStyleFontMap: {
+    D1: string;
+    D2: string;
+    D3: string;
+    D4: string;
+    H1: string;
+    H2: string;
+    H3: string;
+    H4: string;
+    H5: string;
+    H6: string;
+    DBody: string;
+    Body: string;
+    BodySmall: string;
+    XSmall: string;
+};
+export declare const weightMap: {
+    regular: string;
+    semibold: string;
+    bold: string;
+    light: string;
+    black: string;
+    400: string;
+    600: string;
+    700: string;
+    300: string;
+    900: string;
+};

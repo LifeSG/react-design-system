@@ -1,0 +1,2 @@
+"use strict";var i=require("../_virtual/_tslib.js"),t=require("react/jsx-runtime"),s=require("./tooltip.js"),e=require("./tooltip.styles.js");exports.withTooltip=(o,r)=>l=>{const{tooltipVisible:p,position:n}=l,j=i.__rest(l,["tooltipVisible","position"]);return t.jsxs(e.HOCWrapper,{children:[t.jsx(o,Object.assign({},j)),t.jsx(s.Tooltip,{visible:p,position:n,children:r.content})]})};
+//# sourceMappingURL=tooltip-hoc.js.map

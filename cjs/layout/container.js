@@ -1,0 +1,2 @@
+"use strict";var t=require("../_virtual/_tslib.js"),e=require("react/jsx-runtime"),r=require("react"),i=require("./container.styles.js");function s(t){return t&&"object"==typeof t&&"default"in t?t:{default:t}}const n=s(r).default.forwardRef(((r,s)=>{const{children:n,"data-testid":a="container",type:c="flex",stretch:d=!1}=r,u=t.__rest(r,["children","data-testid","type","stretch"]);return e.jsx(i.StyledContainer,Object.assign({ref:s,"data-testid":a,$type:c,$stretch:d},u,{children:n}))}));exports.Container=n;
+//# sourceMappingURL=container.js.map

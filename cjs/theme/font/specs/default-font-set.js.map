@@ -1,0 +1,1 @@
+{"version":3,"file":"default-font-set.js","sources":["../../../../../src/theme/font/specs/default-font-set.ts"],"sourcesContent":["import { FontSet } from \"../types\";\nimport { getFontSet } from \"../utils\";\n\nexport const DefaultFontSet: FontSet = getFontSet();\n"],"names":["DefaultFontSet","getFontSet"],"mappings":"aAGO,MAAMA,yBAA0BC"}

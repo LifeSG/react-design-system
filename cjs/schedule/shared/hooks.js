@@ -1,0 +1,2 @@
+"use strict";var e=require("react"),t=require("./utils.js");exports.useInitialScroll=function(r,n,u){const l=e.useRef(null);return e.useEffect((()=>{if(!r&&l.current&&n){const e=u||n,r=t.calculateScrollPosition(n,e);null!==r&&l.current&&(l.current.scrollTop=r)}}),[n,r,u]),l},exports.useTimelineOffset=function(r,n){const[u,l]=e.useState(null);return e.useEffect((()=>{function e(){l(t.getTimelineOffset(r,n))}e();const u=setInterval(e,9e5);return()=>clearInterval(u)}),[r,n]),u};
+//# sourceMappingURL=hooks.js.map

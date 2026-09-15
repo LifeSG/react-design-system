@@ -1,0 +1,2 @@
+import{jsx as t,Fragment as o}from"react/jsx-runtime";import{flatten as i,getColors as e}from"../../external/lottie-colorify/lib/index.js";import{i as r}from"../../external/lottie-react/build/index.umd.js";import a from"./data.json.js";const l=({color:l=e(a)[0]})=>{const n={animationData:i(l,a),loop:!0,autoplay:!0,style:{height:"200px",width:"200px"}},{View:m}=r.useLottie(n);return t(o,{children:m})};export{l as LottieLoadingDotsSpinner};
+//# sourceMappingURL=lottie-animation.js.map
