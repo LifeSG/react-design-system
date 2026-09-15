@@ -1,0 +1,10 @@
+export declare const wrapper: import("@linaria/core").LinariaClassName;
+export declare const mobileWrapper: import("@linaria/core").LinariaClassName;
+export declare const drawerWrapper: import("@linaria/core").LinariaClassName;
+export declare const buttonItem: import("@linaria/core").LinariaClassName;
+export declare const buttonItemMobile: import("@linaria/core").LinariaClassName;
+export declare const actionButton: import("@linaria/core").LinariaClassName;
+export declare const downloadAppWrapper: import("@linaria/core").LinariaClassName;
+export declare const downloadAppTitle: import("@linaria/core").LinariaClassName;
+export declare const downloadAppImageLinkWrapper: import("@linaria/core").LinariaClassName;
+export declare const downloadAppImageLink: import("@linaria/core").LinariaClassName;

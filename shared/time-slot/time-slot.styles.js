@@ -1,0 +1,2 @@
+import"./time-slot.styles_18s0to7.css";const o={slot:{bgColor:"--fds-internal-timeSlot-slot-bgColor",bgColor2:"--fds-internal-timeSlot-slot-bgColor2",hoverBgColor:"--fds-internal-timeSlot-slot-hoverBgColor",hoverBgColor2:"--fds-internal-timeSlot-slot-hoverBgColor2",cursor:"--fds-internal-timeSlot-slot-cursor"}},t="tsti7hb",l="tmgdrss",r="t31kbad";export{t as timeSlot,r as timeSlotHalfFillBottom,l as timeSlotHalfFillTop,o as tokens};
+//# sourceMappingURL=time-slot.styles.js.map

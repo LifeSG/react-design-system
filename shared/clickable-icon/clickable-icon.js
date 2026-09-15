@@ -1,0 +1,2 @@
+import{__rest as t}from"../../_virtual/_tslib.js";import{jsx as r}from"react/jsx-runtime";import e from"clsx";import o from"react";import{main as i,outlineNone as s,highlight as c}from"./clickable-icon.styles.js";const l=o.forwardRef(((o,l)=>{var{children:n,className:m,focusHighlight:a=!0,focusOutline:f="none",type:u="button"}=o,p=t(o,["children","className","focusHighlight","focusOutline","type"]);return r("button",Object.assign({ref:l,className:e(i,"none"===f&&s,a&&c,m),type:u},p,{children:n}))}));export{l as ClickableIcon};
+//# sourceMappingURL=clickable-icon.js.map

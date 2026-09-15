@@ -1,0 +1,12 @@
+@layer fds{.c1l63f33{background-color:var(--fds-colour-bg);border-top:var(--fds-border-width-010) var(--fds-border-style-solid) var(--fds-colour-border);}
+.c4kcze2{padding-bottom:var(--fds-spacing-16);}
+.e1cbnvn7{background:transparent;border:none;border-radius:var(--fds-radius-sm);outline:none;text-align:left;-webkit-user-select:text;-moz-user-select:text;-ms-user-select:text;user-select:text;width:100%;display:-webkit-box;display:-webkit-flex;display:-ms-flexbox;display:flex;-webkit-flex-direction:row;-ms-flex-direction:row;flex-direction:row;-webkit-align-items:center;-webkit-box-align:center;-ms-flex-align:center;align-items:center;-webkit-box-pack:justify;-ms-flex-pack:space-between;-webkit-justify-content:space-between;justify-content:space-between;gap:var(--fds-spacing-48);padding:var(--fds-spacing-16) 0;}.e1cbnvn7:focus-visible{outline:2px solid var(--fds-colour-focus-ring);outline-offset:0;}
+.e7t4rdi{padding-bottom:var(--fds-spacing-8);}
+.e1vcwm5y{cursor:pointer;}
+.t145i3ve{-webkit-flex:1;-ms-flex:1;flex:1;-webkit-transition:all var(--fds-motion-duration-250) var(--fds-motion-timing-ease-standard);transition:all var(--fds-motion-duration-250) var(--fds-motion-timing-ease-standard);color:var(--fds-colour-text);font-family:var(--fds-font-family-heading);font-variant:var(--fds-font-variant);font-size:var(--fds-font-heading-size-sm);font-weight:var(--fds-font-weight-bold);line-height:var(--fds-font-heading-lh-sm);letter-spacing:var(--fds-font-heading-ls-sm);}
+.t1a4gj3{font-family:var(--fds-font-family-heading);font-variant:var(--fds-font-variant);font-size:var(--fds-font-heading-size-xs);font-weight:var(--fds-font-weight-bold);line-height:var(--fds-font-heading-lh-xs);letter-spacing:var(--fds-font-heading-ls-xs);}
+.ixofgdc{-webkit-transform:rotate(180deg);-moz-transform:rotate(180deg);-ms-transform:rotate(180deg);transform:rotate(180deg);-webkit-transition:-webkit-transform var(--fds-motion-duration-250)var(--fds-motion-timing-ease-default);transition:transform var(--fds-motion-duration-250)var(--fds-motion-timing-ease-default);}
+.i1ifv2g7{-webkit-transform:rotate(0deg);-moz-transform:rotate(0deg);-ms-transform:rotate(0deg);transform:rotate(0deg);}
+.c15k7llx{height:1.25rem;width:1.25rem;color:var(--fds-colour-icon-primary);}
+.ecqtwmd{overflow:hidden;}
+.caja2xa{display:inline-block;padding-right:var(--fds-spacing-64);}:where(body.fds-breakpoint-lg-max) .caja2xa{padding-right:0;}}

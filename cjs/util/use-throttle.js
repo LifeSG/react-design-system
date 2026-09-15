@@ -1,0 +1,2 @@
+"use strict";var e=require("react");exports.useThrottle=function(r,u){const t=e.useRef(r),n=e.useRef(0),c=e.useRef(null);return e.useEffect((()=>{t.current=r}),[r]),e.useEffect((()=>()=>{null!==c.current&&clearTimeout(c.current)}),[]),e.useCallback(((...e)=>{const r=Date.now(),l=r-n.current;null!==c.current&&(clearTimeout(c.current),c.current=null),l>=u?(n.current=r,t.current(...e)):c.current=setTimeout((()=>{n.current=Date.now(),c.current=null,t.current(...e)}),u-l)}),[u])};
+//# sourceMappingURL=use-throttle.js.map

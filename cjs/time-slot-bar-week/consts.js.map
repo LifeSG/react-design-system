@@ -1,0 +1,1 @@
+{"version":3,"file":"consts.js","sources":["../../../src/time-slot-bar-week/consts.ts"],"sourcesContent":["export const SLOT_HEIGHT = 12; // px\nexport const SLOT_GAP = 4; // px\nexport const ROW_HEIGHT = SLOT_HEIGHT + SLOT_GAP;\n"],"names":["SLOT_HEIGHT"],"mappings":"gCAE0BA,oBADF,sBADG"}

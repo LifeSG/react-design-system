@@ -1,0 +1,12 @@
+export declare const container: import("@linaria/core").LinariaClassName;
+export declare const containerExpanded: import("@linaria/core").LinariaClassName;
+export declare const expandCollapseButton: import("@linaria/core").LinariaClassName;
+export declare const expandCollapseButtonExpanded: import("@linaria/core").LinariaClassName;
+export declare const expandCollapseButtonCollapsible: import("@linaria/core").LinariaClassName;
+export declare const title: import("@linaria/core").LinariaClassName;
+export declare const titleSmall: import("@linaria/core").LinariaClassName;
+export declare const iconContainer: import("@linaria/core").LinariaClassName;
+export declare const iconContainerExpanded: import("@linaria/core").LinariaClassName;
+export declare const chevronIcon: import("@linaria/core").LinariaClassName;
+export declare const expandable: import("@linaria/core").LinariaClassName;
+export declare const contentContainer: import("@linaria/core").LinariaClassName;

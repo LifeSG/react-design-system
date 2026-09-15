@@ -1,0 +1,1 @@
+{"version":3,"file":"lottie-animation.styles.js","sources":["../../../../src/animations/loading-spinner/lottie-animation.styles.ts"],"sourcesContent":["import { css } from \"@linaria/core\";\n\nexport const view = css`\n    height: 200px;\n    width: 200px;\n`;\n"],"names":[],"mappings":"oHAEiB"}

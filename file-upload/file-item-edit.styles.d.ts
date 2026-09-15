@@ -1,0 +1,9 @@
+export declare const item: import("@linaria/core").LinariaClassName;
+export declare const contentSection: import("@linaria/core").LinariaClassName;
+export declare const detailsSection: import("@linaria/core").LinariaClassName;
+export declare const nameSection: import("@linaria/core").LinariaClassName;
+export declare const fileNameText: import("@linaria/core").LinariaClassName;
+export declare const fileSizeText: import("@linaria/core").LinariaClassName;
+export declare const actionButtonsSection: import("@linaria/core").LinariaClassName;
+export declare const actionButtonsSectionWithThumbnail: import("@linaria/core").LinariaClassName;
+export declare const actionButton: import("@linaria/core").LinariaClassName;
