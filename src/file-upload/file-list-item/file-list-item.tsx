@@ -57,8 +57,7 @@ const Component = ({
         if (errorMessage) return "error";
 
         const isUploaded = (progress ?? 1) >= 1;
-        if (isUploaded && editable && descriptionRequired && !description)
-            return "edit";
+        if (isUploaded && editable && !description) return "edit";
 
         return "display";
     };
@@ -132,7 +131,7 @@ const Component = ({
     onModeChangeRef.current = onModeChange;
 
     useEffect(() => {
-        if (currentMode === "edit") {
+        if (currentMode === "edit" && descriptionRequired) {
             onModeChange?.("edit");
         }
         return () => {
@@ -151,7 +150,7 @@ const Component = ({
             setCurrentMode("error");
         } else if (!errorMessage && currentMode === "error") {
             const nextMode = computeMode();
-            if (nextMode === "edit") {
+            if (nextMode === "edit" && descriptionRequired) {
                 onModeChange?.("edit");
             }
             setCurrentMode(nextMode);

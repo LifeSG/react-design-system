@@ -529,6 +529,154 @@ describe("FileUpload", () => {
             expect(getByTestId("img-3-drag-handle")).toBeInTheDocument();
         });
 
+        it("should re-enable sorting after save", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "first-image.png",
+                    type: "image/png",
+                    size: 3000,
+                    description: "existing",
+                },
+                {
+                    id: "img-2",
+                    name: "second-image.png",
+                    type: "image/png",
+                    size: 4000,
+                    description: "also existing",
+                },
+            ];
+
+            const onEdit = jest.fn();
+
+            const { rerender, getByTestId, queryByTestId } = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    sortable
+                    onEdit={onEdit}
+                />
+            );
+
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+
+            fireEvent.click(getByTestId("img-1-edit-button"));
+            expect(queryByTestId("img-1-drag-handle")).not.toBeInTheDocument();
+
+            const textarea = getByTestId("img-1-textarea-base");
+            fireEvent.change(textarea, {
+                target: { value: "updated description" },
+            });
+            fireEvent.click(getByTestId("img-1-save-button"));
+
+            rerender(
+                <FileUpload
+                    fileItems={fileItems.map((item) =>
+                        item.id === "img-1"
+                            ? { ...item, description: "updated description" }
+                            : item
+                    )}
+                    editableFileItems
+                    sortable
+                    onEdit={onEdit}
+                />
+            );
+
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-2-drag-handle")).toBeInTheDocument();
+        });
+
+        it("should re-enable sorting after cancel", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "first-image.png",
+                    type: "image/png",
+                    size: 3000,
+                    description: "existing",
+                },
+                {
+                    id: "img-2",
+                    name: "second-image.png",
+                    type: "image/png",
+                    size: 4000,
+                    description: "also existing",
+                },
+            ];
+
+            const { getByTestId, queryByTestId } = render(
+                <FileUpload fileItems={fileItems} editableFileItems sortable />
+            );
+
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+
+            fireEvent.click(getByTestId("img-1-edit-button"));
+            expect(queryByTestId("img-1-drag-handle")).not.toBeInTheDocument();
+
+            fireEvent.click(getByTestId("img-1-cancel-button"));
+
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-2-drag-handle")).toBeInTheDocument();
+        });
+
+        it("should not render drag handles if there are items with errors", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "ok-file",
+                    name: "ok.pdf",
+                    type: "application/pdf",
+                    size: 1024,
+                },
+                {
+                    id: "error-file",
+                    name: "bad.pdf",
+                    type: "application/pdf",
+                    size: 2048,
+                    errorMessage: "Upload failed",
+                },
+            ];
+
+            const { queryByTestId } = render(
+                <FileUpload fileItems={fileItems} sortable />
+            );
+
+            expect(
+                queryByTestId("ok-file-drag-handle")
+            ).not.toBeInTheDocument();
+            expect(
+                queryByTestId("error-file-drag-handle")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should not disable sort for auto-edit items when descriptionRequired is false", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "photo.jpg",
+                    type: "image/jpeg",
+                    size: 3000,
+                },
+                {
+                    id: "doc-1",
+                    name: "file.pdf",
+                    type: "application/pdf",
+                    size: 2000,
+                },
+            ];
+
+            const { getByTestId } = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    sortable
+                    descriptionRequired={false}
+                />
+            );
+
+            expect(getByTestId("img-1-edit-display")).toBeInTheDocument();
+            expect(getByTestId("doc-1-drag-handle")).toBeInTheDocument();
+        });
+
         it("should disable sort when a new editable image is added", () => {
             const initialItems: FileItemProps[] = [
                 {
@@ -689,9 +837,7 @@ describe("FileUpload", () => {
         });
 
         it("should enable the save button when descriptionRequired is false even with empty description", () => {
-            const fileItems: FileItemProps[] = [
-                MOCK_IMAGE_ITEM_WITH_DESCRIPTION,
-            ];
+            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
 
             const rendered = render(
                 <FileUpload
@@ -700,8 +846,6 @@ describe("FileUpload", () => {
                     descriptionRequired={false}
                 />
             );
-
-            fireEvent.click(rendered.getByTestId("some-edit-button"));
 
             expect(rendered.getByTestId("some-save-button")).not.toBeDisabled();
         });

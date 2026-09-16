@@ -11,7 +11,6 @@ const INITIAL_ITEMS: FileItemProps[] = [
         size: 5120,
         type: "image/jpeg",
         thumbnailImageDataUrl: "/sample.jpg",
-        description: "Existing description",
     },
 ];
 

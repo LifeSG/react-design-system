@@ -415,19 +415,10 @@ test.describe("FileUpload", () => {
         });
 
         test("Editable with optional description", async ({ story }) => {
-            await test.step("Click edit and clear description", async () => {
-                await story.locators.internal
-                    .editButton("editable-image")
-                    .click();
-                await story.locators.internal
-                    .textarea("editable-image")
-                    .clear();
-            });
-
-            await test.step("Save with empty description", async () => {
-                await story.locators.internal
-                    .saveButton("editable-image")
-                    .click();
+            await test.step("Save without description", async () => {
+                const saveButton =
+                    story.locators.internal.saveButton("editable-image");
+                await saveButton.click();
             });
 
             await test.step("File item is saved without description", async () => {

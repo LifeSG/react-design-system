@@ -180,6 +180,16 @@ export const EditableFileItems: StoryObj<Component> = {
                 thumbnailImageDataUrl:
                     "https://picsum.photos/seed/picsum/200/300",
             },
+            {
+                id: "2",
+                name: "img-2.jpg",
+                type: "image/jpeg",
+                size: 5000,
+                description:
+                    "Sorting is enabled when all items are in display mode.",
+                thumbnailImageDataUrl:
+                    "https://picsum.photos/seed/picsum/200/300",
+            },
         ]);
         const handleChange = (files: File[]) => {
             const newFileItems = files.map((file) => {
@@ -214,16 +224,21 @@ export const EditableFileItems: StoryObj<Component> = {
                 });
             });
         };
+        const handleSort = (sortedItems: FileItemProps[]) => {
+            setFileItems(sortedItems);
+        };
         return (
             <FileUpload
                 fileItems={fileItems}
                 onChange={handleChange}
                 onDelete={handleDelete}
                 onEdit={handleEdit}
+                onSort={handleSort}
                 title="Editable file items"
                 description="Drag an image file and a textarea will be shown for you to enter a description"
                 fileDescriptionMaxLength={200}
                 editableFileItems
+                sortable
                 maxFiles={6}
                 warning={
                     <>
