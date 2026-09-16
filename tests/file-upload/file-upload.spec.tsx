@@ -528,6 +528,63 @@ describe("FileUpload", () => {
             expect(getByTestId("img-2-drag-handle")).toBeInTheDocument();
             expect(getByTestId("img-3-drag-handle")).toBeInTheDocument();
         });
+
+        it("should disable sort when a new editable image is added", () => {
+            const initialItems: FileItemProps[] = [
+                {
+                    id: "existing-1",
+                    name: "first.jpg",
+                    type: "image/jpeg",
+                    size: 1024,
+                    description: "has description",
+                },
+                {
+                    id: "existing-2",
+                    name: "document.pdf",
+                    type: "application/pdf",
+                    size: 2048,
+                },
+            ];
+
+            const { rerender, getByTestId, queryByTestId } = render(
+                <FileUpload
+                    fileItems={initialItems}
+                    editableFileItems
+                    sortable
+                />
+            );
+
+            expect(getByTestId("existing-1-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("existing-2-drag-handle")).toBeInTheDocument();
+
+            const updatedItems: FileItemProps[] = [
+                ...initialItems,
+                {
+                    id: "new-image",
+                    name: "uploaded.png",
+                    type: "image/png",
+                    size: 3072,
+                },
+            ];
+
+            rerender(
+                <FileUpload
+                    fileItems={updatedItems}
+                    editableFileItems
+                    sortable
+                />
+            );
+
+            expect(
+                queryByTestId("existing-1-drag-handle")
+            ).not.toBeInTheDocument();
+            expect(
+                queryByTestId("existing-2-drag-handle")
+            ).not.toBeInTheDocument();
+            expect(
+                queryByTestId("new-image-drag-handle")
+            ).not.toBeInTheDocument();
+        });
     });
 
     describe("Readonly", () => {
@@ -632,7 +689,9 @@ describe("FileUpload", () => {
         });
 
         it("should enable the save button when descriptionRequired is false even with empty description", () => {
-            const fileItems: FileItemProps[] = MOCK_FILE_ITEMS;
+            const fileItems: FileItemProps[] = [
+                MOCK_IMAGE_ITEM_WITH_DESCRIPTION,
+            ];
 
             const rendered = render(
                 <FileUpload
@@ -641,6 +700,8 @@ describe("FileUpload", () => {
                     descriptionRequired={false}
                 />
             );
+
+            fireEvent.click(rendered.getByTestId("some-edit-button"));
 
             expect(rendered.getByTestId("some-save-button")).not.toBeDisabled();
         });
