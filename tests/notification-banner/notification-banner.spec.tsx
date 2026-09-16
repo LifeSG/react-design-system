@@ -46,6 +46,57 @@ describe("NotificationBanner", () => {
         ).not.toBeInTheDocument();
     });
 
+    it("should strip javascript: href from link otherAttributes", () => {
+        const HOCElement = withNotificationBanner([
+            {
+                type: "link",
+                content: "malicious link",
+                otherAttributes: {
+                    href: "javascript:alert(document.cookie)",
+                },
+            },
+        ]);
+        render(<HOCElement data-testid="notification-banner" />);
+
+        const anchor = document.querySelector("a");
+        expect(anchor).toBeInTheDocument();
+        expect(anchor).not.toHaveAttribute("href");
+    });
+
+    it("should strip data: href from link otherAttributes", () => {
+        const HOCElement = withNotificationBanner([
+            {
+                type: "link",
+                content: "data link",
+                otherAttributes: {
+                    href: "data:text/html,<script>alert(1)</script>",
+                },
+            },
+        ]);
+        render(<HOCElement data-testid="notification-banner" />);
+
+        const anchor = document.querySelector("a");
+        expect(anchor).toBeInTheDocument();
+        expect(anchor).not.toHaveAttribute("href");
+    });
+
+    it("should preserve safe href schemes in link otherAttributes", () => {
+        const HOCElement = withNotificationBanner([
+            {
+                type: "link",
+                content: "safe link",
+                otherAttributes: {
+                    href: "https://www.example.com",
+                },
+            },
+        ]);
+        render(<HOCElement data-testid="notification-banner" />);
+
+        const anchor = document.querySelector("a");
+        expect(anchor).toBeInTheDocument();
+        expect(anchor).toHaveAttribute("href", "https://www.example.com");
+    });
+
     it("should sanitise the content", () => {
         const HOCElement = withNotificationBanner([
             {
