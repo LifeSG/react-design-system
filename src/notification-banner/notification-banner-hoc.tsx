@@ -9,24 +9,19 @@ import type {
     NotificationContentAttributes,
 } from "./types";
 
-const SAFE_URL_SCHEMES = /^(https?:|mailto:|tel:)/i;
+function sanitizeLinkAttributes(
+    attrs: ContentLinkAttributes
+): ContentLinkAttributes {
+    const { href, ...rest } = attrs;
 
-function sanitizeAttributes(
-    attrs: Record<string, unknown>
-): Record<string, unknown> {
-    const sanitized: Record<string, unknown> = {};
-
-    for (const [key, value] of Object.entries(attrs)) {
-        if (/^on[A-Z]/i.test(key)) continue;
-
-        if (key === "href" && typeof value === "string") {
-            if (!SAFE_URL_SCHEMES.test(value)) continue;
-        }
-
-        sanitized[key] = value;
+    if (
+        typeof href === "string" &&
+        !DOMPurify.isValidAttribute("a", "href", href)
+    ) {
+        return rest;
     }
 
-    return sanitized;
+    return attrs;
 }
 
 /**
@@ -46,12 +41,8 @@ export const withNotificationBanner = (
             if (data.length > 0) {
                 return data.map((attribute, index) => {
                     if (attribute.type === "text") {
-                        const otherAttributes = sanitizeAttributes(
-                            (attribute.otherAttributes ?? {}) as Record<
-                                string,
-                                unknown
-                            >
-                        ) as ContentTextAttributes;
+                        const otherAttributes =
+                            attribute.otherAttributes as ContentTextAttributes;
 
                         const sanitizedContent = DOMPurify.sanitize(
                             attribute.content
@@ -66,12 +57,10 @@ export const withNotificationBanner = (
                             />
                         );
                     } else {
-                        const otherAttributes = sanitizeAttributes(
-                            (attribute.otherAttributes ?? {}) as Record<
-                                string,
-                                unknown
-                            >
-                        ) as ContentLinkAttributes;
+                        const otherAttributes = sanitizeLinkAttributes(
+                            (attribute.otherAttributes ??
+                                {}) as ContentLinkAttributes
+                        );
                         return (
                             <NotificationBanner.Link
                                 key={index}

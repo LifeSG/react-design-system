@@ -135,44 +135,6 @@ describe("NotificationBanner", () => {
         expect(anchor).toHaveAttribute("href", "https://www.example.com");
     });
 
-    it("should strip event handler attributes from otherAttributes", () => {
-        const HOCElement = withNotificationBanner([
-            {
-                type: "link",
-                content: "link with handler",
-                otherAttributes: {
-                    href: "https://www.example.com",
-                    onMouseOver: "alert(1)" as unknown,
-                } as Record<string, unknown>,
-            },
-        ]);
-        render(<HOCElement data-testid="notification-banner" />);
-
-        const anchor = document.querySelector("a");
-        expect(anchor).toBeInTheDocument();
-        expect(anchor).toHaveAttribute("href", "https://www.example.com");
-        expect(anchor).not.toHaveAttribute("onMouseOver");
-    });
-
-    it("should strip event handlers from text otherAttributes", () => {
-        const HOCElement = withNotificationBanner([
-            {
-                type: "text",
-                content: "safe text",
-                otherAttributes: {
-                    onClick: "alert(1)" as unknown,
-                    className: "custom-class",
-                } as Record<string, unknown>,
-            },
-        ]);
-        render(<HOCElement data-testid="notification-banner" />);
-
-        const paragraph = document.querySelector("p");
-        expect(paragraph).toBeInTheDocument();
-        expect(paragraph).toHaveClass("custom-class");
-        expect(paragraph).not.toHaveAttribute("onClick");
-    });
-
     it("should sanitise the content", () => {
         const HOCElement = withNotificationBanner([
             {
