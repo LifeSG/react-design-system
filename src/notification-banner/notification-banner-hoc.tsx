@@ -15,7 +15,7 @@ function sanitizeLinkAttributes(
     const { href, ...rest } = attrs;
 
     if (
-        typeof href === "string" &&
+        typeof href !== "string" ||
         !DOMPurify.isValidAttribute("a", "href", href)
     ) {
         return rest;
