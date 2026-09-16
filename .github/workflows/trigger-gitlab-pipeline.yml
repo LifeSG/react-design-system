@@ -20,7 +20,7 @@ jobs:
         run: |
           BRANCH_NAME="$REF_NAME"
 
-          COMMIT_MSG=$(printf '%s' "$HEAD_COMMIT_MSG" | head -n 1)
+          COMMIT_MSG=$(printf '%s\n' "$HEAD_COMMIT_MSG" | awk 'NR>1{exit};1')
 
           PIPELINE_PROJECT_URL="github.com/$GITHUB_REPOSITORY.git"
 
