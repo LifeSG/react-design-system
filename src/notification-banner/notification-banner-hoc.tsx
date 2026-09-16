@@ -9,6 +9,21 @@ import type {
     NotificationContentAttributes,
 } from "./types";
 
+function sanitizeLinkAttributes(
+    attrs: ContentLinkAttributes
+): ContentLinkAttributes {
+    const { href, ...rest } = attrs;
+
+    if (
+        typeof href !== "string" ||
+        !DOMPurify.isValidAttribute("a", "href", href)
+    ) {
+        return rest;
+    }
+
+    return attrs;
+}
+
 /**
  * Higher-order component that wraps `NotificationBanner` and renders its
  * content from a structured data array.
@@ -42,8 +57,10 @@ export const withNotificationBanner = (
                             />
                         );
                     } else {
-                        const otherAttributes =
-                            attribute.otherAttributes as ContentLinkAttributes;
+                        const otherAttributes = sanitizeLinkAttributes(
+                            (attribute.otherAttributes ??
+                                {}) as ContentLinkAttributes
+                        );
                         return (
                             <NotificationBanner.Link
                                 key={index}
