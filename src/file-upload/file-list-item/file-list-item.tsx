@@ -57,7 +57,8 @@ const Component = ({
         if (errorMessage) return "error";
 
         const isUploaded = (progress ?? 1) >= 1;
-        if (isUploaded && !readOnly && editable && !description) return "edit";
+        if (isUploaded && editable && descriptionRequired && !description)
+            return "edit";
 
         return "display";
     };
@@ -127,11 +128,16 @@ const Component = ({
     // =========================================================================
     const currentModeRef = useRef(currentMode);
     currentModeRef.current = currentMode;
+    const onModeChangeRef = useRef(onModeChange);
+    onModeChangeRef.current = onModeChange;
 
     useEffect(() => {
+        if (currentMode === "edit") {
+            onModeChange?.("edit");
+        }
         return () => {
             if (currentModeRef.current === "edit") {
-                onModeChange?.("display");
+                onModeChangeRef.current?.("display");
             }
         };
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -139,9 +145,15 @@ const Component = ({
 
     useEffect(() => {
         if (errorMessage && currentMode !== "error") {
+            if (currentMode === "edit") {
+                onModeChange?.("display");
+            }
             setCurrentMode("error");
         } else if (!errorMessage && currentMode === "error") {
             const nextMode = computeMode();
+            if (nextMode === "edit") {
+                onModeChange?.("edit");
+            }
             setCurrentMode(nextMode);
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps

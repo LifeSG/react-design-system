@@ -278,19 +278,9 @@ function Component(
         );
     };
 
-    const isInNonDisplayState = (item: FileItemProps) => {
-        if (item.errorMessage) return true;
-        return (
-            !readOnly &&
-            checkEditable(item) &&
-            !item.description &&
-            (item.progress ?? 1) >= 1
-        );
-    };
-
     const areAllItemsInDisplayViews = () => {
         if (editingCount > 0) return false;
-        return !fileItems.some(isInNonDisplayState);
+        return !fileItems.some((item) => !!item.errorMessage);
     };
 
     const shouldEnableSort = () => {
@@ -298,6 +288,7 @@ function Component(
             fileItems &&
             fileItems.length > 1 &&
             sortable &&
+            !readOnly &&
             areAllItemsInDisplayViews()
         );
     };
