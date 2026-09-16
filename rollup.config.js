@@ -80,7 +80,6 @@ const plugins = [
     terser(), // Helps remove comments, whitespace or logging codes
     generatePackageJson({
         outputFolder: "dist",
-        additionalDependencies: ["@govtechsg/sgds-web-component"],
         baseContents: (pkg) => ({
             name: pkg.name,
             version: pkg.version,
