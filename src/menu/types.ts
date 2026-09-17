@@ -48,7 +48,7 @@ export interface MenuContentProps
     /**
      * Maximum width of the panel in pixels.
      *
-     * @default 384 (24rem)
+     * @default 24rem (384px at the default 16px root font size)
      */
     maxWidth?: number | undefined;
 }
