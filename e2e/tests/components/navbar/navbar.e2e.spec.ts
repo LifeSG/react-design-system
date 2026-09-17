@@ -63,7 +63,8 @@ class StoryPage extends AbstractStoryPage {
                     page.getByTestId(`menu__mobile-${index}`),
                 mobileNavLink: (index: number) =>
                     page.getByTestId(`link__mobile-${index}`),
-                submenuLink: (name: string) => page.getByRole("link", { name }),
+                submenuLink: (name: string) =>
+                    page.getByRole("link", { name, exact: true }),
                 downloadButton: page.getByTestId("action-button__download"),
                 mobileNav: page.getByRole("navigation", {
                     name: "Mobile navigation menu",
@@ -291,6 +292,27 @@ test.describe("Navbar", () => {
                     fullscreen: true,
                 });
             });
+        });
+
+        test("Keyboard users can Tab through grid items in order", async ({
+            story,
+        }) => {
+            await story.locators.internal.guidesTrigger.click();
+
+            await story.page.keyboard.press("Tab");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 1")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("Tab");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 2")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("Tab");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 3")
+            ).toBeFocused();
         });
     });
 
