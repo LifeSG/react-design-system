@@ -2,6 +2,7 @@ import "@testing-library/jest-dom";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Menu } from "src/menu";
+import { tokens as menuContentTokens } from "src/menu/menu-content.styles";
 
 describe("Menu", () => {
     describe("Menu.Content", () => {
@@ -14,6 +15,32 @@ describe("Menu", () => {
 
             expect(screen.getByTestId("menu-content")).toBeInTheDocument();
             expect(screen.getByText("hello")).toBeInTheDocument();
+        });
+
+        it("should set the maxWidth CSS variable on the panel when provided", () => {
+            render(
+                <Menu.Content data-testid="menu-content" maxWidth={640}>
+                    <div>hello</div>
+                </Menu.Content>
+            );
+
+            const panel = screen.getByTestId("menu-content");
+            expect(
+                panel.style.getPropertyValue(menuContentTokens.panel.maxWidth)
+            ).toBe("640px");
+        });
+
+        it("should not set the maxWidth CSS variable when not provided", () => {
+            render(
+                <Menu.Content data-testid="menu-content">
+                    <div>hello</div>
+                </Menu.Content>
+            );
+
+            const panel = screen.getByTestId("menu-content");
+            expect(
+                panel.style.getPropertyValue(menuContentTokens.panel.maxWidth)
+            ).toBe("");
         });
 
         it("should move focus forward with ArrowDown", () => {
