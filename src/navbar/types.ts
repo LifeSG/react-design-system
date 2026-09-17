@@ -18,11 +18,15 @@ export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
      *
      * Has no effect on the mobile drawer, which always renders `subMenu` as
      * an expandable vertical list.
+     *
+     * @minimum 1
      */
     subMenuColumns?: number | undefined;
     /**
      * Number of grid rows of `subMenu` visible on desktop before the panel
      * becomes vertically scrollable. See `subMenuColumns`.
+     *
+     * @minimum 1
      */
     subMenuRows?: number | undefined;
 }

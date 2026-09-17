@@ -41,11 +41,14 @@ export const SubMenuGrid = <T,>({
     items,
     columns,
     rows,
-}: Props<T>): JSX.Element => {
+}: Props<T>): JSX.Element | null => {
     // =========================================================================
     // CONST, STATE, REF
     // =========================================================================
     const wrapperRef = useRef<HTMLDivElement>(null);
+    // ResizeObserver target: the actual grid <ul>, not wrapperRef — wrapperRef
+    // is `display: contents` and never reports a real size to observe.
+    const gridRef = useRef<HTMLElement | null>(null);
 
     // =========================================================================
     // HELPER FUNCTIONS
@@ -54,6 +57,7 @@ export const SubMenuGrid = <T,>({
         const grid = wrapperRef.current
             ?.firstElementChild as HTMLElement | null;
         if (!grid) return;
+        gridRef.current = grid;
 
         grid.style.setProperty(styles.tokens.grid.columns, String(columns));
 
@@ -68,7 +72,7 @@ export const SubMenuGrid = <T,>({
             | undefined;
         if (!boundaryItem) return;
 
-        const rowGap = parseFloat(getComputedStyle(grid).rowGap || "0");
+        const rowGap = parseFloat(getComputedStyle(grid).rowGap) || 0;
         const visibleHeight = boundaryItem.offsetTop - rowGap / 2;
 
         grid.style.setProperty(
@@ -83,20 +87,23 @@ export const SubMenuGrid = <T,>({
     useIsomorphicLayoutEffect(() => {
         applyGridLayout();
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [items.length, columns, rows]);
+    }, [items, columns, rows]);
 
     useResizeDetector({
         handleWidth: true,
         handleHeight: false,
         skipOnMount: true,
         refreshMode: "throttle",
-        targetRef: wrapperRef,
+        targetRef: gridRef,
         onResize: applyGridLayout,
     });
 
     // =========================================================================
     // RENDER FUNCTIONS
     // =========================================================================
+    // guards against callers bypassing navbar-items.tsx's own columns/rows check
+    if (columns < 1 || rows < 1) return null;
+
     return (
         <div ref={wrapperRef} className={styles.measureWrapper}>
             <DesktopMenu.Section showDivider={false} className={styles.grid}>
