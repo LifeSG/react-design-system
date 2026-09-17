@@ -1,4 +1,4 @@
-import { render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Navbar } from "src/navbar";
 import * as subMenuGridStyles from "src/navbar/submenu-grid.styles";
@@ -228,6 +228,23 @@ describe("Navbar", () => {
             expect(
                 document.body.getElementsByClassName(subMenuGridStyles.grid)
             ).toHaveLength(0);
+        });
+
+        it("should move focus between grid items with ArrowDown", async () => {
+            const user = userEvent.setup();
+            render(<Navbar items={{ desktop: MOCK_GRID_ITEMS() }} />);
+
+            await user.click(screen.getByTestId("link__1"));
+
+            const panel = screen.getByTestId("menu-content");
+            const first = screen.getByRole("link", { name: "Sub item 1" });
+            const second = screen.getByRole("link", { name: "Sub item 2" });
+
+            first.focus();
+            expect(first).toHaveFocus();
+
+            fireEvent.keyDown(panel, { key: "ArrowDown" });
+            expect(second).toHaveFocus();
         });
     });
 });
