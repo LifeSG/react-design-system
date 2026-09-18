@@ -152,7 +152,7 @@ describe("FileUpload", () => {
             expect(
                 rendered.queryByTestId("some-edit-display")
             ).not.toBeInTheDocument();
-            expect(screen.getAllByText("Woops!")).toHaveLength(2); // render 2 elements. For mobile and desktop
+            expect(screen.getByText("Woops!")).toBeInTheDocument();
             expect(
                 rendered.getByTestId("some-error-delete-button")
             ).toBeInTheDocument();
@@ -472,6 +472,265 @@ describe("FileUpload", () => {
             ).not.toBeInTheDocument();
             expect(
                 rendered.queryByTestId("some-drag-handle")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should re-enable sorting when an item in edit mode is removed from fileItems", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "first-image.png",
+                    type: "image/png",
+                    size: 3000,
+                    description: "existing",
+                },
+                {
+                    id: "img-2",
+                    name: "second-image.png",
+                    type: "image/png",
+                    size: 4000,
+                    description: "also existing",
+                },
+                {
+                    id: "img-3",
+                    name: "third-image.png",
+                    type: "image/png",
+                    size: 5000,
+                    description: "third",
+                },
+            ];
+
+            const { rerender, getByTestId, queryByTestId } = render(
+                <FileUpload fileItems={fileItems} editableFileItems sortable />
+            );
+
+            // All items should have drag handles (all in display mode)
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-2-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-3-drag-handle")).toBeInTheDocument();
+
+            // Click edit on the first item — drag handles should disappear
+            fireEvent.click(getByTestId("img-1-edit-button"));
+            expect(queryByTestId("img-1-drag-handle")).not.toBeInTheDocument();
+            expect(queryByTestId("img-2-drag-handle")).not.toBeInTheDocument();
+            expect(queryByTestId("img-3-drag-handle")).not.toBeInTheDocument();
+
+            // Remove the editing item (simulating external deletion)
+            // Remaining 2 items are in display mode — sort should re-enable
+            rerender(
+                <FileUpload
+                    fileItems={[fileItems[1], fileItems[2]]}
+                    editableFileItems
+                    sortable
+                />
+            );
+
+            expect(getByTestId("img-2-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-3-drag-handle")).toBeInTheDocument();
+        });
+
+        it("should re-enable sorting after save", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "first-image.png",
+                    type: "image/png",
+                    size: 3000,
+                    description: "existing",
+                },
+                {
+                    id: "img-2",
+                    name: "second-image.png",
+                    type: "image/png",
+                    size: 4000,
+                    description: "also existing",
+                },
+            ];
+
+            const onEdit = jest.fn();
+
+            const { rerender, getByTestId, queryByTestId } = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    sortable
+                    onEdit={onEdit}
+                />
+            );
+
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+
+            fireEvent.click(getByTestId("img-1-edit-button"));
+            expect(queryByTestId("img-1-drag-handle")).not.toBeInTheDocument();
+
+            const textarea = getByTestId("img-1-textarea-base");
+            fireEvent.change(textarea, {
+                target: { value: "updated description" },
+            });
+            fireEvent.click(getByTestId("img-1-save-button"));
+
+            rerender(
+                <FileUpload
+                    fileItems={fileItems.map((item) =>
+                        item.id === "img-1"
+                            ? { ...item, description: "updated description" }
+                            : item
+                    )}
+                    editableFileItems
+                    sortable
+                    onEdit={onEdit}
+                />
+            );
+
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-2-drag-handle")).toBeInTheDocument();
+        });
+
+        it("should re-enable sorting after cancel", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "first-image.png",
+                    type: "image/png",
+                    size: 3000,
+                    description: "existing",
+                },
+                {
+                    id: "img-2",
+                    name: "second-image.png",
+                    type: "image/png",
+                    size: 4000,
+                    description: "also existing",
+                },
+            ];
+
+            const { getByTestId, queryByTestId } = render(
+                <FileUpload fileItems={fileItems} editableFileItems sortable />
+            );
+
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+
+            fireEvent.click(getByTestId("img-1-edit-button"));
+            expect(queryByTestId("img-1-drag-handle")).not.toBeInTheDocument();
+
+            fireEvent.click(getByTestId("img-1-cancel-button"));
+
+            expect(getByTestId("img-1-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("img-2-drag-handle")).toBeInTheDocument();
+        });
+
+        it("should not render drag handles if there are items with errors", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "ok-file",
+                    name: "ok.pdf",
+                    type: "application/pdf",
+                    size: 1024,
+                },
+                {
+                    id: "error-file",
+                    name: "bad.pdf",
+                    type: "application/pdf",
+                    size: 2048,
+                    errorMessage: "Upload failed",
+                },
+            ];
+
+            const { queryByTestId } = render(
+                <FileUpload fileItems={fileItems} sortable />
+            );
+
+            expect(
+                queryByTestId("ok-file-drag-handle")
+            ).not.toBeInTheDocument();
+            expect(
+                queryByTestId("error-file-drag-handle")
+            ).not.toBeInTheDocument();
+        });
+
+        it("should disable sort when item is in edit mode even with descriptionRequired false", () => {
+            const fileItems: FileItemProps[] = [
+                {
+                    id: "img-1",
+                    name: "photo.jpg",
+                    type: "image/jpeg",
+                    size: 3000,
+                },
+                {
+                    id: "doc-1",
+                    name: "file.pdf",
+                    type: "application/pdf",
+                    size: 2000,
+                },
+            ];
+
+            const { getByTestId, queryByTestId } = render(
+                <FileUpload
+                    fileItems={fileItems}
+                    editableFileItems
+                    sortable
+                    descriptionRequired={false}
+                />
+            );
+
+            expect(getByTestId("img-1-edit-display")).toBeInTheDocument();
+            expect(queryByTestId("doc-1-drag-handle")).not.toBeInTheDocument();
+        });
+
+        it("should disable sort when a new editable image is added", () => {
+            const initialItems: FileItemProps[] = [
+                {
+                    id: "existing-1",
+                    name: "first.jpg",
+                    type: "image/jpeg",
+                    size: 1024,
+                    description: "has description",
+                },
+                {
+                    id: "existing-2",
+                    name: "document.pdf",
+                    type: "application/pdf",
+                    size: 2048,
+                },
+            ];
+
+            const { rerender, getByTestId, queryByTestId } = render(
+                <FileUpload
+                    fileItems={initialItems}
+                    editableFileItems
+                    sortable
+                />
+            );
+
+            expect(getByTestId("existing-1-drag-handle")).toBeInTheDocument();
+            expect(getByTestId("existing-2-drag-handle")).toBeInTheDocument();
+
+            const updatedItems: FileItemProps[] = [
+                ...initialItems,
+                {
+                    id: "new-image",
+                    name: "uploaded.png",
+                    type: "image/png",
+                    size: 3072,
+                },
+            ];
+
+            rerender(
+                <FileUpload
+                    fileItems={updatedItems}
+                    editableFileItems
+                    sortable
+                />
+            );
+
+            expect(
+                queryByTestId("existing-1-drag-handle")
+            ).not.toBeInTheDocument();
+            expect(
+                queryByTestId("existing-2-drag-handle")
+            ).not.toBeInTheDocument();
+            expect(
+                queryByTestId("new-image-drag-handle")
             ).not.toBeInTheDocument();
         });
     });

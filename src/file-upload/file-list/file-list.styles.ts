@@ -10,13 +10,3 @@ export const listWrapper = css`
 export const listWrapperReadOnly = css`
     margin-bottom: 0;
 `;
-
-export const editableItemsContainer = css`
-    &:not(:last-child) {
-        margin-bottom: ${Spacing["spacing-16"]};
-    }
-
-    ul {
-        list-style-type: none;
-    }
-`;
