@@ -314,6 +314,30 @@ test.describe("Navbar", () => {
                 story.locators.internal.submenuLink("Guides item 3")
             ).toBeFocused();
         });
+
+        test("Arrow keys navigate between grid items", async ({ story }) => {
+            await story.locators.internal.guidesTrigger.click();
+
+            await story.locators.internal.submenuLink("Guides item 1").focus();
+            await expect(
+                story.locators.internal.submenuLink("Guides item 1")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("ArrowDown");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 2")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("ArrowDown");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 3")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("ArrowUp");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 2")
+            ).toBeFocused();
+        });
     });
 
     test.describe("Mobile", () => {

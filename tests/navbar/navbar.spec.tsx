@@ -1,7 +1,7 @@
 import { fireEvent, render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import * as menuSectionStyles from "src/menu/menu-section.styles";
 import { Navbar } from "src/navbar";
-import * as subMenuGridStyles from "src/navbar/submenu-grid.styles";
 
 describe("Navbar", () => {
     describe("Basic functions", () => {
@@ -199,7 +199,7 @@ describe("Navbar", () => {
             await user.click(screen.getByTestId("link__1"));
 
             expect(
-                document.body.getElementsByClassName(subMenuGridStyles.grid)
+                document.body.getElementsByClassName(menuSectionStyles.grid)
             ).toHaveLength(1);
         });
 
@@ -226,7 +226,7 @@ describe("Navbar", () => {
                 expect(screen.getByText(label)).toBeInTheDocument();
             }
             expect(
-                document.body.getElementsByClassName(subMenuGridStyles.grid)
+                document.body.getElementsByClassName(menuSectionStyles.grid)
             ).toHaveLength(0);
         });
 
@@ -245,6 +245,9 @@ describe("Navbar", () => {
 
             fireEvent.keyDown(panel, { key: "ArrowDown" });
             expect(second).toHaveFocus();
+
+            fireEvent.keyDown(panel, { key: "ArrowUp" });
+            expect(first).toHaveFocus();
         });
     });
 });
