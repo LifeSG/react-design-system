@@ -131,7 +131,7 @@ const Component = ({
     onModeChangeRef.current = onModeChange;
 
     useEffect(() => {
-        if (currentMode === "edit" && descriptionRequired) {
+        if (currentMode === "edit") {
             onModeChange?.("edit");
         }
         return () => {
@@ -150,7 +150,7 @@ const Component = ({
             setCurrentMode("error");
         } else if (!errorMessage && currentMode === "error") {
             const nextMode = computeMode();
-            if (nextMode === "edit" && descriptionRequired) {
+            if (nextMode === "edit") {
                 onModeChange?.("edit");
             }
             setCurrentMode(nextMode);

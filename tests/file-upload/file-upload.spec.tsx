@@ -648,7 +648,7 @@ describe("FileUpload", () => {
             ).not.toBeInTheDocument();
         });
 
-        it("should not disable sort for auto-edit items when descriptionRequired is false", () => {
+        it("should disable sort when item is in edit mode even with descriptionRequired false", () => {
             const fileItems: FileItemProps[] = [
                 {
                     id: "img-1",
@@ -664,7 +664,7 @@ describe("FileUpload", () => {
                 },
             ];
 
-            const { getByTestId } = render(
+            const { getByTestId, queryByTestId } = render(
                 <FileUpload
                     fileItems={fileItems}
                     editableFileItems
@@ -674,7 +674,7 @@ describe("FileUpload", () => {
             );
 
             expect(getByTestId("img-1-edit-display")).toBeInTheDocument();
-            expect(getByTestId("doc-1-drag-handle")).toBeInTheDocument();
+            expect(queryByTestId("doc-1-drag-handle")).not.toBeInTheDocument();
         });
 
         it("should disable sort when a new editable image is added", () => {
