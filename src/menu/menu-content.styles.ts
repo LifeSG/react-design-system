@@ -26,6 +26,7 @@ export const panel = css`
     box-shadow: ${Shadow["md-subtle"]};
 
     ${tokens.panel.maxHeight}: initial;
+    ${tokens.panel.maxWidth}: initial;
     ${tokens.panel.overflow}: initial;
     ${tokens.panel.xSpacing}: 0px;
     ${tokens.panel.availableWidth}: calc(100vw - var(${tokens.panel

@@ -26,6 +26,8 @@ export const MenuSection = ({
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
+    const childCount = Children.count(children);
+
     const applyGridLayout = useCallback(() => {
         if (!columns || !rows) return;
         const grid = ulRef.current;
@@ -34,14 +36,17 @@ export const MenuSection = ({
         grid.style.setProperty(styles.gridTokens.columns, String(columns));
 
         const visibleCount = rows * columns;
-        if (Children.count(children) <= visibleCount) {
+        if (childCount <= visibleCount) {
             grid.style.removeProperty(styles.gridTokens.maxHeight);
             return;
         }
 
-        const boundaryItem = grid.children[visibleCount] as
-            | HTMLElement
-            | undefined;
+        // Filter to <li> only: the label element (if present) is also a direct
+        // child of the <ul> but must not be counted as a grid item.
+        const listItems = Array.from(grid.children).filter(
+            (el) => el.tagName === "LI"
+        ) as HTMLElement[];
+        const boundaryItem = listItems[visibleCount];
         if (!boundaryItem) return;
 
         const rowGap = parseFloat(getComputedStyle(grid).rowGap) || 0;
@@ -51,7 +56,7 @@ export const MenuSection = ({
             styles.gridTokens.maxHeight,
             `${visibleHeight}px`
         );
-    }, [columns, rows, children]);
+    }, [columns, rows, childCount]);
 
     // =========================================================================
     // EFFECTS
@@ -80,7 +85,7 @@ export const MenuSection = ({
             className={clsx(
                 styles.section,
                 showDivider && styles.sectionWithDivider,
-                columns && columns >= 1 && styles.grid,
+                columns && columns >= 1 && rows && rows >= 1 && styles.grid,
                 className
             )}
             {...otherProps}
