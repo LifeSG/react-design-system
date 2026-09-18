@@ -15,6 +15,7 @@ import type {
     NavItemProps,
 } from "./types";
 
+// 367px max content width (Figma) + 8px padding on each side
 const SUBMENU_GRID_COLUMN_WIDTH_PX = 383;
 const SUBMENU_GRID_COLUMN_GAP_PX = 8;
 
