@@ -15,6 +15,10 @@ import type {
     NavItemProps,
 } from "./types";
 
+// 367px max content width (Figma) + 8px padding on each side
+const SUBMENU_GRID_COLUMN_WIDTH_PX = 383;
+const SUBMENU_GRID_COLUMN_GAP_PX = 8;
+
 const getLinkWeightClass = (weight: TypographyWeight) => {
     switch (weight) {
         case "bold":
@@ -26,6 +30,10 @@ const getLinkWeightClass = (weight: TypographyWeight) => {
             return styles.linkWeightRegular;
     }
 };
+
+const getSubMenuGridMaxWidth = (columns: number) =>
+    columns * SUBMENU_GRID_COLUMN_WIDTH_PX +
+    (columns - 1) * SUBMENU_GRID_COLUMN_GAP_PX;
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -133,10 +141,20 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderDesktopSubMenu = (
         subMenu: NavItemCommonProps<T>[],
-        subMenuId: string
+        subMenuId: string,
+        columns?: number,
+        rows?: number
     ) => (
-        <DesktopMenu.Content id={subMenuId}>
-            <DesktopMenu.Section showDivider={false}>
+        <DesktopMenu.Content
+            id={subMenuId}
+            maxWidth={
+                columns && rows ? getSubMenuGridMaxWidth(columns) : undefined
+            }
+        >
+            <DesktopMenu.Section
+                showDivider={false}
+                {...(columns && rows ? { columns, rows } : {})}
+            >
                 {subMenu.map((item, subIndex) => (
                     <DesktopMenu.Link
                         key={`${item.id}-${subIndex}`}
@@ -158,7 +176,14 @@ export const NavbarItems = <T,>({
     );
 
     const renderLinkItem = (item: NavItemLinkProps<T>, index: number) => {
-        const { children, options, subMenu, ...otherItemAttrs } = item;
+        const {
+            children,
+            options,
+            subMenu,
+            subMenuColumns: _subMenuColumns,
+            subMenuRows: _subMenuRows,
+            ...otherItemAttrs
+        } = item;
 
         const hasSubMenu = !!subMenu?.length;
 
@@ -276,7 +301,12 @@ export const NavbarItems = <T,>({
                 <DesktopMenu
                     position={isLastItem ? "bottom-end" : "bottom"}
                     customOffset={0}
-                    menuContent={renderDesktopSubMenu(subMenu!, subMenuId)}
+                    menuContent={renderDesktopSubMenu(
+                        subMenu!,
+                        subMenuId,
+                        item.subMenuColumns,
+                        item.subMenuRows
+                    )}
                     triggerOnFocus
                     isModal={false}
                     onPopoverAppear={() => {

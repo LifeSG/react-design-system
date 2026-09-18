@@ -8,6 +8,22 @@ if (typeof globalThis.PointerEvent === "undefined") {
     (globalThis as any).PointerEvent = MouseEvent;
 }
 
+// Polyfill ResizeObserver for jsdom (used by react-resize-detector, e.g. SubMenuGrid)
+if (typeof globalThis.ResizeObserver === "undefined") {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any -- globalThis lacks ResizeObserver type in jsdom
+    (globalThis as any).ResizeObserver = class {
+        public observe() {
+            // noop for jsdom
+        }
+        public unobserve() {
+            // noop for jsdom
+        }
+        public disconnect() {
+            // noop for jsdom
+        }
+    };
+}
+
 const getFallbackThemeContext = (): ThemeContextValue => ({
     theme: "lifesg",
     mode: "light",

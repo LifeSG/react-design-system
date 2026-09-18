@@ -45,6 +45,12 @@ export interface MenuContentProps
         | ReactElement<typeof MenuSection>
         | ReactElement<typeof MenuSection>[];
     "data-testid"?: string | undefined;
+    /**
+     * Maximum width of the panel in pixels.
+     *
+     * @default 24rem (384px at the default 16px root font size)
+     */
+    maxWidth?: number | undefined;
 }
 
 // @storybookSkipProps
@@ -65,6 +71,17 @@ export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
      * @default true
      */
     showDivider?: boolean | undefined;
+    /**
+     * Number of columns in the multi-column grid layout.
+     * When provided alongside rows, renders items in a CSS grid.
+     * Ignored at <=lg breakpoints where a single-column list is always used.
+     */
+    columns?: number;
+    /**
+     * Maximum number of rows to display before enabling vertical scroll.
+     * Requires columns to be set.
+     */
+    rows?: number;
     /**
      * Accessible group label rendered above the section items.
      */

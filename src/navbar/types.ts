@@ -11,6 +11,24 @@ import type { TypographyLinkProps } from "../typography";
 export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
     itemType?: "link";
     subMenu?: NavItemCommonProps<T>[] | undefined;
+    /**
+     * Number of columns to lay `subMenu` out in on desktop, as a grid instead
+     * of a single vertical list. Must be set together with `subMenuRows` —
+     * if either is omitted, `subMenu` renders as a standard vertical list.
+     *
+     * Has no effect on the mobile drawer, which always renders `subMenu` as
+     * an expandable vertical list.
+     *
+     * @minimum 1
+     */
+    subMenuColumns?: number | undefined;
+    /**
+     * Number of grid rows of `subMenu` visible on desktop before the panel
+     * becomes vertically scrollable. See `subMenuColumns`.
+     *
+     * @minimum 1
+     */
+    subMenuRows?: number | undefined;
 }
 /**
  * Props for a custom component slot navigation item.

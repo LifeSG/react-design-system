@@ -22,6 +22,7 @@ class StoryPage extends AbstractStoryPage {
             mobileMenuButton: Locator;
             servicesTrigger: Locator;
             appTrigger: Locator;
+            guidesTrigger: Locator;
             servicesMobileTrigger: Locator;
             closeButton: Locator;
             drawer: Locator;
@@ -47,6 +48,7 @@ class StoryPage extends AbstractStoryPage {
                 mobileMenuButton: page.getByTestId("button__mobile-menu"),
                 servicesTrigger: page.getByRole("button", { name: "Services" }),
                 appTrigger: page.getByRole("button", { name: "LifeSG app" }),
+                guidesTrigger: page.getByRole("button", { name: "Guides" }),
                 servicesMobileTrigger: page.getByTestId(
                     "link__mobile-2-expand-collapse-button"
                 ),
@@ -61,7 +63,8 @@ class StoryPage extends AbstractStoryPage {
                     page.getByTestId(`menu__mobile-${index}`),
                 mobileNavLink: (index: number) =>
                     page.getByTestId(`link__mobile-${index}`),
-                submenuLink: (name: string) => page.getByRole("link", { name }),
+                submenuLink: (name: string) =>
+                    page.getByRole("link", { name, exact: true }),
                 downloadButton: page.getByTestId("action-button__download"),
                 mobileNav: page.getByRole("navigation", {
                     name: "Mobile navigation menu",
@@ -254,6 +257,86 @@ test.describe("Navbar", () => {
             await compareScreenshot(story, "state", {
                 fullscreen: true,
             });
+        });
+    });
+
+    test.describe("Submenu Grid", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("submenu-grid");
+        });
+
+        test("Open", async ({ story }) => {
+            await story.locators.internal.guidesTrigger.click();
+            await compareScreenshot(story, "state", {
+                fullscreen: true,
+            });
+        });
+
+        test("Scroll reveals items beyond the visible grid rows", async ({
+            story,
+        }) => {
+            await story.locators.internal.guidesTrigger.click();
+
+            const overflowItem =
+                story.locators.internal.submenuLink("Guides item 12");
+
+            await test.step("Overflow item starts outside the visible grid area", async () => {
+                await expect(overflowItem).not.toBeInViewport();
+            });
+
+            await test.step("Scrolling brings the overflow item into view", async () => {
+                await overflowItem.scrollIntoViewIfNeeded();
+                await expect(overflowItem).toBeInViewport();
+
+                await compareScreenshot(story, "scrolled", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test("Keyboard users can Tab through grid items in order", async ({
+            story,
+        }) => {
+            await story.locators.internal.guidesTrigger.click();
+
+            await story.page.keyboard.press("Tab");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 1")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("Tab");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 2")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("Tab");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 3")
+            ).toBeFocused();
+        });
+
+        test("Arrow keys navigate between grid items", async ({ story }) => {
+            await story.locators.internal.guidesTrigger.click();
+
+            await story.locators.internal.submenuLink("Guides item 1").focus();
+            await expect(
+                story.locators.internal.submenuLink("Guides item 1")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("ArrowDown");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 2")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("ArrowDown");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 3")
+            ).toBeFocused();
+
+            await story.page.keyboard.press("ArrowUp");
+            await expect(
+                story.locators.internal.submenuLink("Guides item 2")
+            ).toBeFocused();
         });
     });
 
