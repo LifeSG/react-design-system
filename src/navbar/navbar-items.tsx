@@ -9,12 +9,14 @@ import type { TypographyWeight } from "../typography";
 import { useId } from "../util";
 import { Menu as MobileMenu } from "./menu";
 import * as styles from "./navbar-items.styles";
-import { getSubMenuGridMaxWidth, SubMenuGrid } from "./submenu-grid";
 import type {
     NavItemCommonProps,
     NavItemLinkProps,
     NavItemProps,
 } from "./types";
+
+const SUBMENU_GRID_COLUMN_WIDTH_PX = 383;
+const SUBMENU_GRID_COLUMN_GAP_PX = 8;
 
 const getLinkWeightClass = (weight: TypographyWeight) => {
     switch (weight) {
@@ -27,6 +29,10 @@ const getLinkWeightClass = (weight: TypographyWeight) => {
             return styles.linkWeightRegular;
     }
 };
+
+const getSubMenuGridMaxWidth = (columns: number) =>
+    columns * SUBMENU_GRID_COLUMN_WIDTH_PX +
+    (columns - 1) * SUBMENU_GRID_COLUMN_GAP_PX;
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -144,20 +150,19 @@ export const NavbarItems = <T,>({
                 columns && rows ? getSubMenuGridMaxWidth(columns) : undefined
             }
         >
-            {columns && rows ? (
-                <SubMenuGrid items={subMenu} columns={columns} rows={rows} />
-            ) : (
-                <DesktopMenu.Section showDivider={false}>
-                    {subMenu.map((item, subIndex) => (
-                        <DesktopMenu.Link
-                            key={`${item.id}-${subIndex}`}
-                            href={item.href}
-                        >
-                            {item.children}
-                        </DesktopMenu.Link>
-                    ))}
-                </DesktopMenu.Section>
-            )}
+            <DesktopMenu.Section
+                showDivider={false}
+                {...(columns && rows ? { columns, rows } : {})}
+            >
+                {subMenu.map((item, subIndex) => (
+                    <DesktopMenu.Link
+                        key={`${item.id}-${subIndex}`}
+                        href={item.href}
+                    >
+                        {item.children}
+                    </DesktopMenu.Link>
+                ))}
+            </DesktopMenu.Section>
         </DesktopMenu.Content>
     );
 
