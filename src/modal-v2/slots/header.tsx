@@ -33,7 +33,7 @@ export const Header = ({
             >
                 <CrossIcon aria-hidden />
             </ClickableIcon>
-            {title && <span className={styles.headerTitle}>{title}</span>}
+            {title && <div className={styles.headerTitle}>{title}</div>}
             {title && <div className={styles.headerSpacer} aria-hidden />}
         </div>
     );
