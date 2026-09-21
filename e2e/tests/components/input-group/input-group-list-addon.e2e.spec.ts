@@ -321,34 +321,31 @@ test.describe("Input Group List", () => {
         });
     });
 
-    test.describe(() => {
+    test.describe("Disabled options", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("disabled-options");
         });
 
-        test("Disabled options", async ({ story }) => {
+        test("Non-selected", async ({ story }) => {
             await story.locators.disabledOptions
                 .getByTestId("selector")
                 .click();
             await expect(
                 story.locators.internal.dropdownContainer
             ).toBeVisible();
-            await compareScreenshot(story, "open-unselected", {
+            await compareScreenshot(story, "open", {
                 fullscreen: true,
             });
+        });
 
-            await story.page.mouse.click(0, 0);
-            await expect(
-                story.locators.internal.dropdownContainer
-            ).not.toBeVisible();
-
+        test("Selected", async ({ story }) => {
             await story.locators.disabledOptionsSelected
                 .getByTestId("selector")
                 .click();
             await expect(
                 story.locators.internal.dropdownContainer
             ).toBeVisible();
-            await compareScreenshot(story, "open-selected", {
+            await compareScreenshot(story, "open", {
                 fullscreen: true,
             });
         });
