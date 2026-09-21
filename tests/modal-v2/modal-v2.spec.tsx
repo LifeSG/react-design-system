@@ -90,6 +90,23 @@ describe("ModalV2", () => {
         expect(mockOverlayClick).not.toHaveBeenCalled();
     });
 
+    it("should render the Header title and trigger onClose from its close button", () => {
+        const mockClose = jest.fn();
+        render(
+            <ModalV2 show onClose={mockClose}>
+                <ModalV2.Card>
+                    <ModalV2.Header title="Signature" />
+                </ModalV2.Card>
+            </ModalV2>
+        );
+
+        expect(screen.getByTestId("modal-header")).toBeInTheDocument();
+        expect(screen.getByText("Signature")).toBeInTheDocument();
+
+        fireEvent.click(screen.getByTestId("close-button"));
+        expect(mockClose).toHaveBeenCalled();
+    });
+
     describe("scroll restoration for iOS devices", () => {
         beforeEach(() => {
             Object.defineProperty(window, "scrollTo", {
