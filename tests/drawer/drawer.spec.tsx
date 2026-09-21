@@ -73,4 +73,55 @@ describe("Drawer", () => {
 
         expect(onClose).toHaveBeenCalled();
     });
+
+    it("should render customCallToAction content when provided", async () => {
+        render(
+            <Drawer
+                heading="Test"
+                show
+                customCallToAction={<button>Confirm</button>}
+            >
+                <div>content</div>
+            </Drawer>
+        );
+
+        await waitFor(() => {
+            expect(
+                screen.getByRole("button", { name: "Confirm" })
+            ).toBeVisible();
+        });
+    });
+
+    it("should not render a call-to-action when customCallToAction is not provided", async () => {
+        render(
+            <Drawer heading="Test" show>
+                <div>content</div>
+            </Drawer>
+        );
+
+        await waitFor(() => {
+            expect(screen.getByLabelText("Close drawer")).toBeVisible();
+        });
+        expect(
+            screen.queryByRole("button", { name: "Confirm" })
+        ).not.toBeInTheDocument();
+    });
+
+    it("should keep the dialog labelled by its heading when a call-to-action is present", async () => {
+        render(
+            <Drawer
+                heading="Accessible title"
+                show
+                customCallToAction={<button>Confirm</button>}
+            >
+                <div>content</div>
+            </Drawer>
+        );
+
+        await waitFor(() => {
+            expect(
+                screen.getByRole("dialog", { name: "Accessible title" })
+            ).toBeInTheDocument();
+        });
+    });
 });

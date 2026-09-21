@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 
 import { Overlay } from "../overlay";
 import { ClickableIcon } from "../shared/clickable-icon";
+import { useMaxWidthMediaQuery } from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import * as styles from "./drawer.styles";
@@ -31,6 +32,7 @@ export const Drawer = ({
     show,
     onClose,
     onOverlayClick,
+    customCallToAction,
     className,
     ...otherProps
 }: DrawerProps) => {
@@ -40,6 +42,9 @@ export const Drawer = ({
     const [showOverlay, setShowOverlay] = useState(show);
     const id = useId();
     const initialFocusRef = useRef<HTMLHeadingElement>(null);
+    // stack the call-to-action below the heading once the drawer spans the full
+    // viewport width and can no longer fit both on one line
+    const stackCallToAction = useMaxWidthMediaQuery("sm");
 
     // =========================================================================
     // FLOATING UI CONFIG
@@ -113,27 +118,47 @@ export const Drawer = ({
                         {...getFloatingProps()}
                         {...otherProps}
                     >
-                        <div className={styles.header}>
-                            <Typography.HeadingMD
-                                as="h2"
-                                className={styles.heading}
-                                id={id}
-                                ref={initialFocusRef}
-                                tabIndex={-1}
-                                weight="bold"
-                            >
-                                {heading}
-                            </Typography.HeadingMD>
+                        <div
+                            className={clsx(
+                                styles.header,
+                                customCallToAction &&
+                                    styles.headerWithCallToAction,
+                                stackCallToAction && styles.headerStacked
+                            )}
+                        >
+                            <div className={styles.titleRow}>
+                                <ClickableIcon
+                                    aria-label="Close drawer"
+                                    onClick={onClose}
+                                    focusHighlight={false}
+                                    className={styles.closeButton}
+                                >
+                                    <CrossIcon aria-hidden />
+                                </ClickableIcon>
+                                <Typography.HeadingMD
+                                    as="h2"
+                                    className={styles.heading}
+                                    id={id}
+                                    ref={initialFocusRef}
+                                    tabIndex={-1}
+                                    weight="bold"
+                                >
+                                    {heading}
+                                </Typography.HeadingMD>
+                            </div>
+                            {customCallToAction ? (
+                                <div
+                                    className={clsx(
+                                        styles.callToAction,
+                                        stackCallToAction &&
+                                            styles.callToActionStacked
+                                    )}
+                                >
+                                    {customCallToAction}
+                                </div>
+                            ) : null}
                         </div>
                         <div className={styles.content}>{children}</div>
-                        <ClickableIcon
-                            aria-label="Close drawer"
-                            onClick={onClose}
-                            focusHighlight={false}
-                            className={styles.closeButton}
-                        >
-                            <CrossIcon aria-hidden />
-                        </ClickableIcon>
                     </div>
                 </FloatingFocusManager>
             ) : undefined}

@@ -23,4 +23,8 @@ export interface DrawerProps {
     onClose?: (() => void) | undefined;
     /** Called when the user clicks the background overlay. */
     onOverlayClick?: (() => void) | undefined;
+    /**
+     * Optional element rendered in the header alongside the title, e.g. a link or button.
+     */
+    customCallToAction?: JSX.Element | undefined;
 }
