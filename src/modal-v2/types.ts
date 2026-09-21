@@ -22,6 +22,12 @@ export interface ModalCardProps extends React.HTMLAttributes<HTMLDivElement> {
      * padding, or box-shadow.
      */
     fullscreen?: boolean | undefined;
+    /**
+     * When `true`, the slot area stretches to absorb any leftover height of a
+     * size-constrained card. Use this when the card is given an explicit height
+     * and its content should fill it. Implied by `fullscreen`.
+     */
+    fillHeight?: boolean | undefined;
 }
 
 // @storybookSection ModalV2.CloseButton
@@ -40,16 +46,18 @@ export interface ModalCloseButtonProps
 /**
  * Props for the `ModalV2.Header` slot.
  */
-export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
+export interface ModalHeaderProps
+    extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
     /**
      * @default "modal-header"
      */
     "data-testid"?: string | undefined;
     /**
-     * Heading text rendered in the header. Always centered regardless of
+     * Heading rendered in the header. Accepts a plain string, or a node when
+     * you need to control the typography. Always centered regardless of
      * `closeButtonPosition`. Omit for a close-button-only header.
      */
-    title?: string | undefined;
+    title?: React.ReactNode | undefined;
     /**
      * Which side of the header the close button is placed on. The title
      * alignment adjusts automatically.
