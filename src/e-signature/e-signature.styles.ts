@@ -1,15 +1,7 @@
 import { css } from "@linaria/core";
 
-import { slotSpacerTokens } from "../modal-v2/slots/slot-styles";
-import {
-    Border,
-    Colour,
-    Font,
-    MediaQuery,
-    Radius,
-    Shadow,
-    Spacing,
-} from "../theme";
+import { headerTokens, slotSpacerTokens } from "../modal-v2/slots/slot-styles";
+import { Border, Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
 
 // -----------------------------------------------------------------------------
 // MAIN FIELD
@@ -76,38 +68,20 @@ export const instructions = css`
 // -----------------------------------------------------------------------------
 
 export const modalCard = css`
-    && {
-        width: 100%;
-        height: 29rem;
-        max-width: 672px;
-        max-height: none;
-        margin: 0 auto;
-        padding: ${Spacing["spacing-16"]};
-        box-shadow: ${Shadow["lg-strong"]};
-    }
+    width: 100%;
+    height: 29rem;
+    max-width: 672px;
+    max-height: none;
+    margin: 0 auto;
+    padding: ${Spacing["spacing-16"]};
+    box-shadow: ${Shadow["lg-strong"]};
 
-    & > [data-has-close-button] {
-        flex: 1;
-        display: flex;
-        flex-direction: column;
-        min-height: 0;
-
-        ${slotSpacerTokens.contentLastChildMarginBottom}: 0;
-    }
+    ${slotSpacerTokens.contentLastChildMarginBottom}: 0;
 `;
 
 export const modalHeader = css`
-    && {
-        padding: 0 0 ${Spacing["spacing-16"]};
-        position: relative;
-    }
-
-    & > span {
-        ${Font["body-baseline-semibold"]}
-        flex: unset;
-        width: 100%;
-        text-align: center;
-    }
+    ${headerTokens.padding}: 0 0 ${Spacing["spacing-16"]};
+    position: relative;
 
     & > button {
         position: absolute;
@@ -121,11 +95,8 @@ export const modalHeader = css`
 
     ${MediaQuery.MaxWidth.sm} {
         &[data-mobile-landscape] {
-            padding: ${Spacing["spacing-12"]} ${Spacing["spacing-20"]};
-        }
-
-        &[data-mobile-landscape] > span {
-            ${Font["body-md-semibold"]}
+            ${headerTokens.padding}: ${Spacing["spacing-12"]}
+                ${Spacing["spacing-20"]};
         }
 
         &[data-mobile-landscape] > button {
@@ -135,23 +106,18 @@ export const modalHeader = css`
     }
 
     &[data-mobile-landscape="true"] {
-        padding: ${Spacing["spacing-12"]} ${Spacing["spacing-20"]};
+        ${headerTokens.padding}: ${Spacing["spacing-12"]}
+            ${Spacing["spacing-20"]};
+    }
 
-        & > span {
-            ${Font["body-md-semibold"]}
-        }
-
-        & > button {
-            top: ${Spacing["spacing-8"]};
-            right: ${Spacing["spacing-20"]};
-        }
+    &[data-mobile-landscape="true"] > button {
+        top: ${Spacing["spacing-8"]};
+        right: ${Spacing["spacing-20"]};
     }
 `;
 
 export const modalContent = css`
-    && {
-        margin: 0;
-    }
+    margin: 0;
     display: flex;
     flex-direction: column;
     min-height: 0;
