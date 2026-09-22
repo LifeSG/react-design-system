@@ -1,6 +1,7 @@
 import { css } from "@linaria/core";
 
-import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme/tokens";
+import { scrollbarCss } from "../shared/styles";
+import { Border, Colour, MediaQuery, Spacing } from "../theme/tokens";
 
 export const gridTokens = {
     rows: "--fds-menu-section-grid-rows",
@@ -35,25 +36,11 @@ export const grid = css`
     grid-auto-flow: column;
     grid-auto-columns: ${GRID_COLUMN_WIDTH_PX}px;
     column-gap: ${Spacing["spacing-8"]};
-    row-gap: ${Spacing["spacing-4"]};
 
     max-width: var(${gridTokens.maxWidth});
     overflow-x: auto;
 
-    &::-webkit-scrollbar {
-        height: 14px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: ${Colour["bg-inverse-subtlest"]};
-        border: 5px solid transparent;
-        border-radius: ${Radius["full"]};
-        background-clip: padding-box;
-    }
+    ${scrollbarCss("horizontal")}
 
     ${MediaQuery.MaxWidth.lg} {
         grid-template-rows: none;

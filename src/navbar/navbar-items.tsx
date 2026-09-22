@@ -166,7 +166,7 @@ export const NavbarItems = <T,>({
             children,
             options,
             subMenu,
-            subMenuGridLayout: _subMenuGridLayout,
+            subMenuGridLayout,
             ...otherItemAttrs
         } = item;
 
@@ -289,7 +289,7 @@ export const NavbarItems = <T,>({
                     menuContent={renderDesktopSubMenu(
                         subMenu!,
                         subMenuId,
-                        item.subMenuGridLayout
+                        subMenuGridLayout
                     )}
                     triggerOnFocus
                     isModal={false}

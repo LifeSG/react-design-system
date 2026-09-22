@@ -1,3 +1,26 @@
+import { Colour, Radius } from "../../theme/tokens";
+
+/**
+ * Generates CSS for a styled scrollbar. Pass "vertical" for panels that scroll
+ * vertically and "horizontal" for containers that scroll horizontally.
+ */
+export const scrollbarCss = (axis: "vertical" | "horizontal") => `
+    &::-webkit-scrollbar {
+        ${axis === "vertical" ? "width" : "height"}: 14px;
+    }
+
+    &::-webkit-scrollbar-track {
+        background: transparent;
+    }
+
+    &::-webkit-scrollbar-thumb {
+        background: ${Colour["bg-inverse-subtlest"]};
+        border: 5px solid transparent;
+        border-radius: ${Radius["full"]};
+        background-clip: padding-box;
+    }
+`;
+
 /**
  * Generates CSS for limiting text to a specified number of lines after which it
  * is truncated with an ellipsis.

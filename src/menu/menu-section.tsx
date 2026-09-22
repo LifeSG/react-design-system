@@ -63,8 +63,6 @@ export const MenuSection = ({
             grid.getBoundingClientRect().left -
             columnGap / 2;
 
-        console.log(boundaryItem, columnGap, visibleWidth);
-
         grid.style.setProperty(styles.gridTokens.maxWidth, `${visibleWidth}px`);
     }, [gridLayout, childCount]);
 
@@ -87,6 +85,41 @@ export const MenuSection = ({
     // =============================================================================
     // RENDER FUNCTIONS
     // =============================================================================
+    const labelElement = label ? (
+        <Typography.BodyXS
+            className={styles.label}
+            weight="semibold"
+            id={internalId}
+        >
+            {label}
+        </Typography.BodyXS>
+    ) : null;
+
+    // When gridLayout + label: render label outside the <ul> so it is never
+    // a grid item. The <ul> is the CSS grid container and must only hold <li>s.
+    if (gridLayout && label) {
+        return (
+            <div
+                className={clsx(
+                    styles.section,
+                    showDivider && styles.sectionWithDivider,
+                    className
+                )}
+            >
+                {labelElement}
+                <ul
+                    ref={ulRef}
+                    data-testid={testId}
+                    aria-labelledby={internalId}
+                    className={styles.grid}
+                    {...otherProps}
+                >
+                    {children}
+                </ul>
+            </div>
+        );
+    }
+
     return (
         <ul
             ref={ulRef}
@@ -100,15 +133,7 @@ export const MenuSection = ({
             )}
             {...otherProps}
         >
-            {label && (
-                <Typography.BodyXS
-                    className={styles.label}
-                    weight="semibold"
-                    id={internalId}
-                >
-                    {label}
-                </Typography.BodyXS>
-            )}
+            {labelElement}
             {children}
         </ul>
     );
