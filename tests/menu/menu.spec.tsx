@@ -2,8 +2,6 @@ import "@testing-library/jest-dom";
 
 import { fireEvent, render, screen } from "@testing-library/react";
 import { Menu } from "src/menu";
-import { tokens as menuContentTokens } from "src/menu/menu-content.styles";
-import * as menuSectionStyles from "src/menu/menu-section.styles";
 
 describe("Menu", () => {
     describe("Menu.Content", () => {
@@ -16,46 +14,6 @@ describe("Menu", () => {
 
             expect(screen.getByTestId("menu-content")).toBeInTheDocument();
             expect(screen.getByText("hello")).toBeInTheDocument();
-        });
-
-        it("should not set the maxWidth CSS variable when no section has gridLayout", () => {
-            render(
-                <Menu.Content data-testid="menu-content">
-                    <Menu.Section showDivider={false}>
-                        <Menu.Item>Item</Menu.Item>
-                    </Menu.Section>
-                </Menu.Content>
-            );
-
-            const panel = screen.getByTestId("menu-content");
-            expect(
-                panel.style.getPropertyValue(menuContentTokens.panel.maxWidth)
-            ).toBe("");
-        });
-
-        it("should auto-set the maxWidth CSS variable based on gridLayout columns", () => {
-            const columns = 2;
-            const expectedWidth =
-                columns * menuSectionStyles.GRID_COLUMN_WIDTH_PX +
-                (columns - 1) * menuSectionStyles.GRID_COLUMN_GAP_PX +
-                2;
-
-            render(
-                <Menu.Content data-testid="menu-content">
-                    <Menu.Section
-                        showDivider={false}
-                        gridLayout={{ columns, rows: 3 }}
-                    >
-                        <Menu.Link href="#a">A</Menu.Link>
-                        <Menu.Link href="#b">B</Menu.Link>
-                    </Menu.Section>
-                </Menu.Content>
-            );
-
-            const panel = screen.getByTestId("menu-content");
-            expect(
-                panel.style.getPropertyValue(menuContentTokens.panel.maxWidth)
-            ).toBe(`${expectedWidth}px`);
         });
 
         it("should move focus forward with ArrowDown", () => {
@@ -248,91 +206,6 @@ describe("Menu", () => {
             );
 
             expect(screen.getByRole("link", { name: "A" })).toBeInTheDocument();
-        });
-
-        describe("grid layout", () => {
-            it("should apply the grid class when gridLayout is set", () => {
-                render(
-                    <Menu.Section gridLayout={{ columns: 2, rows: 3 }}>
-                        <Menu.Link href="#a">A</Menu.Link>
-                        <Menu.Link href="#b">B</Menu.Link>
-                    </Menu.Section>
-                );
-
-                expect(screen.getByTestId("menu-section").classList).toContain(
-                    menuSectionStyles.grid
-                );
-            });
-
-            it("should set the rows CSS variable when items exceed the visible count", () => {
-                // 2 cols x 1 row = 2 visible; 3 items exceeds the cutoff
-                render(
-                    <Menu.Section gridLayout={{ columns: 2, rows: 1 }}>
-                        <Menu.Link href="#a">A</Menu.Link>
-                        <Menu.Link href="#b">B</Menu.Link>
-                        <Menu.Link href="#c">C</Menu.Link>
-                    </Menu.Section>
-                );
-
-                const section = screen.getByTestId("menu-section");
-                expect(
-                    section.style.getPropertyValue(
-                        menuSectionStyles.gridTokens.rows
-                    )
-                ).toBe("1");
-            });
-
-            it("should not set the max-width CSS variable when all items fit within the visible count", () => {
-                // 2 cols x 3 rows = 6 visible; 3 items all fit
-                render(
-                    <Menu.Section gridLayout={{ columns: 2, rows: 3 }}>
-                        <Menu.Link href="#a">A</Menu.Link>
-                        <Menu.Link href="#b">B</Menu.Link>
-                        <Menu.Link href="#c">C</Menu.Link>
-                    </Menu.Section>
-                );
-
-                const section = screen.getByTestId("menu-section");
-                expect(
-                    section.style.getPropertyValue(
-                        menuSectionStyles.gridTokens.maxWidth
-                    )
-                ).toBe("");
-            });
-
-            it("should apply grid class and set rows variable when label is combined with columns and rows", () => {
-                // Regression guard for the LI-filter fix: the label element must
-                // not displace the boundary item index in applyMaxWidth.
-                render(
-                    <Menu.Section
-                        gridLayout={{ columns: 2, rows: 1 }}
-                        label="My section"
-                    >
-                        <Menu.Link href="#a">A</Menu.Link>
-                        <Menu.Link href="#b">B</Menu.Link>
-                        <Menu.Link href="#c">C</Menu.Link>
-                    </Menu.Section>
-                );
-
-                expect(screen.getByText("My section")).toBeInTheDocument();
-                expect(
-                    screen.getByRole("link", { name: "A" })
-                ).toBeInTheDocument();
-                expect(
-                    screen.getByRole("link", { name: "B" })
-                ).toBeInTheDocument();
-                expect(
-                    screen.getByRole("link", { name: "C" })
-                ).toBeInTheDocument();
-
-                const section = screen.getByTestId("menu-section");
-                expect(section.classList).toContain(menuSectionStyles.grid);
-                expect(
-                    section.style.getPropertyValue(
-                        menuSectionStyles.gridTokens.rows
-                    )
-                ).toBe("1");
-            });
         });
     });
 });

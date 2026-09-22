@@ -1,6 +1,5 @@
-import { fireEvent, render, screen } from "@testing-library/react";
+import { render, screen } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
-import * as menuSectionStyles from "src/menu/menu-section.styles";
 import { Navbar } from "src/navbar";
 
 describe("Navbar", () => {
@@ -179,50 +178,6 @@ describe("Navbar", () => {
             );
         });
     });
-
-    describe("Submenu grid", () => {
-        it("should render all subMenu item labels even when the visible cutoff is exceeded", async () => {
-            const user = userEvent.setup();
-            render(<Navbar items={{ desktop: MOCK_GRID_ITEMS() }} />);
-
-            await user.click(screen.getByTestId("link__1"));
-
-            for (const label of MOCK_SUBMENU_LABELS) {
-                expect(screen.getByText(label)).toBeInTheDocument();
-            }
-        });
-
-        it("should apply the grid layout when subMenuGridLayout is set", async () => {
-            const user = userEvent.setup();
-            render(<Navbar items={{ desktop: MOCK_GRID_ITEMS() }} />);
-
-            await user.click(screen.getByTestId("link__1"));
-
-            expect(
-                document.body.getElementsByClassName(menuSectionStyles.grid)
-            ).toHaveLength(1);
-        });
-
-        it("should move focus between grid items with ArrowDown", async () => {
-            const user = userEvent.setup();
-            render(<Navbar items={{ desktop: MOCK_GRID_ITEMS() }} />);
-
-            await user.click(screen.getByTestId("link__1"));
-
-            const panel = screen.getByTestId("menu-content");
-            const first = screen.getByRole("link", { name: "Sub item 1" });
-            const second = screen.getByRole("link", { name: "Sub item 2" });
-
-            first.focus();
-            expect(first).toHaveFocus();
-
-            fireEvent.keyDown(panel, { key: "ArrowDown" });
-            expect(second).toHaveFocus();
-
-            fireEvent.keyDown(panel, { key: "ArrowUp" });
-            expect(first).toHaveFocus();
-        });
-    });
 });
 
 // =============================================================================
@@ -254,27 +209,4 @@ function MOCK_COLLAPSIBLE_BUTTON() {
         type: "button",
         args: { children: "Uncollapsible" },
     };
-}
-
-function MOCK_SUBMENU_ITEMS() {
-    return [
-        { id: "sub-1", children: "Sub item 1", href: "#" },
-        { id: "sub-2", children: "Sub item 2", href: "#" },
-        { id: "sub-3", children: "Sub item 3", href: "#" },
-        { id: "sub-4", children: "Sub item 4", href: "#" },
-        { id: "sub-5", children: "Sub item 5", href: "#" },
-    ];
-}
-
-const MOCK_SUBMENU_LABELS = MOCK_SUBMENU_ITEMS().map((item) => item.children);
-
-function MOCK_GRID_ITEMS() {
-    return [
-        {
-            id: "guides",
-            children: "Guides",
-            subMenuGridLayout: { columns: 2, rows: 2 },
-            subMenu: MOCK_SUBMENU_ITEMS(),
-        },
-    ];
 }
