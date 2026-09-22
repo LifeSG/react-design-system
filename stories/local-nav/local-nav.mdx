@@ -27,6 +27,12 @@ You are able to customise the display of the nav items.
 
 <Canvas of={LocalNavStories.MenuWithCustomTitle} />
 
+Use `titleAddon` to render elements alongside an item's title. It has `left`
+and `right` slots — both can be used together, and the `right` slot is flushed
+to the far right of the item.
+
+<Canvas of={LocalNavStories.MenuWithTitleAddon} />
+
 ## Dropdown
 
 The `LocalNavDropdown` displays navigation items in a dropdown. It becomes
@@ -39,6 +45,11 @@ sticky when it reaches the top of the screen.
 You are able to customise the display of the nav items in the dropdown.
 
 <Canvas of={LocalNavStories.DropdownWithCustomTitle} />
+
+`titleAddon` works in the dropdown too — open it to see the addon beside each
+item title.
+
+<Canvas of={LocalNavStories.DropdownWithTitleAddon} />
 
 ## Combined usage
 

@@ -283,7 +283,7 @@ const Component = (
         renderItem,
         index,
     }: LocalNavDropdownItemComponentProps) => {
-        const { id, title } = item;
+        const { id, title, titleAddon } = item;
 
         if (renderItem) {
             return (
@@ -324,15 +324,42 @@ const Component = (
                     listItemRefs.current[index] = el as HTMLLIElement;
                 }}
             >
-                {isSelected && <TickIcon className={styles.tickIcon} />}
-                <div
-                    className={clsx(
-                        styles.navItemLabel,
-                        isSelected && styles.navItemLabelSelected
-                    )}
-                >
-                    {title}
-                </div>
+                {isSelected && (
+                    <span className={styles.leftAddon}>
+                        <TickIcon className={styles.tickIcon} />
+                    </span>
+                )}
+                {titleAddon ? (
+                    <span className={styles.titleContainer}>
+                        {titleAddon.left && (
+                            <span className={styles.leftAddon}>
+                                {titleAddon.left}
+                            </span>
+                        )}
+                        <div
+                            className={clsx(
+                                styles.navItemLabel,
+                                isSelected && styles.navItemLabelSelected
+                            )}
+                        >
+                            {title}
+                        </div>
+                        {titleAddon.right && (
+                            <span className={styles.rightAddon}>
+                                {titleAddon.right}
+                            </span>
+                        )}
+                    </span>
+                ) : (
+                    <div
+                        className={clsx(
+                            styles.navItemLabel,
+                            isSelected && styles.navItemLabelSelected
+                        )}
+                    >
+                        {title}
+                    </div>
+                )}
             </li>
         );
     };

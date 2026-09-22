@@ -99,6 +99,28 @@ export const navItemList = css`
     max-height: var(${tokens.navItemList.viewportHeight});
 `;
 
+export const titleContainer = css`
+    display: flex;
+    align-items: center;
+    gap: ${Spacing["spacing-8"]};
+    flex: 1;
+`;
+
+/* Keeps the left addon aligned with the first line when the title wraps. */
+export const leftAddon = css`
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: ${Font.Spec["body-lh-baseline"]};
+`;
+
+/* Flushed right; stays vertically centred against the (possibly wrapped) title. */
+export const rightAddon = css`
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+`;
+
 export const navItemLabel = css`
     ${Font["body-baseline-regular"]}
     color: ${Colour["text"]};
