@@ -58,7 +58,12 @@ export const MenuSection = ({
         if (!boundaryItem) return;
 
         const columnGap = parseFloat(getComputedStyle(grid).columnGap) || 0;
-        const visibleWidth = boundaryItem.offsetLeft - columnGap / 2;
+        const visibleWidth =
+            boundaryItem.getBoundingClientRect().left -
+            grid.getBoundingClientRect().left -
+            columnGap / 2;
+
+        console.log(boundaryItem, columnGap, visibleWidth);
 
         grid.style.setProperty(styles.gridTokens.maxWidth, `${visibleWidth}px`);
     }, [gridLayout, childCount]);

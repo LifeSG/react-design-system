@@ -7,6 +7,11 @@ export const gridTokens = {
     maxWidth: "--fds-menu-section-grid-maxWidth",
 } as const;
 
+// 367px max content width (Figma) + 8px padding on each side; matches grid-auto-columns below
+export const GRID_COLUMN_WIDTH_PX = 383;
+// matches Spacing["spacing-8"]
+export const GRID_COLUMN_GAP_PX = 8;
+
 export const section = css`
     padding: ${Spacing["spacing-8"]} 0;
     margin: 0;
@@ -28,7 +33,7 @@ export const grid = css`
     display: grid;
     grid-template-rows: repeat(var(${gridTokens.rows}), auto);
     grid-auto-flow: column;
-    grid-auto-columns: 383px;
+    grid-auto-columns: ${GRID_COLUMN_WIDTH_PX}px;
     column-gap: ${Spacing["spacing-8"]};
     row-gap: ${Spacing["spacing-4"]};
 

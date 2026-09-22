@@ -18,23 +18,12 @@ describe("Menu", () => {
             expect(screen.getByText("hello")).toBeInTheDocument();
         });
 
-        it("should set the maxWidth CSS variable on the panel when provided", () => {
-            render(
-                <Menu.Content data-testid="menu-content" maxWidth={640}>
-                    <div>hello</div>
-                </Menu.Content>
-            );
-
-            const panel = screen.getByTestId("menu-content");
-            expect(
-                panel.style.getPropertyValue(menuContentTokens.panel.maxWidth)
-            ).toBe("640px");
-        });
-
-        it("should not set the maxWidth CSS variable when not provided", () => {
+        it("should not set the maxWidth CSS variable when no section has gridLayout", () => {
             render(
                 <Menu.Content data-testid="menu-content">
-                    <div>hello</div>
+                    <Menu.Section showDivider={false}>
+                        <Menu.Item>Item</Menu.Item>
+                    </Menu.Section>
                 </Menu.Content>
             );
 
@@ -42,6 +31,31 @@ describe("Menu", () => {
             expect(
                 panel.style.getPropertyValue(menuContentTokens.panel.maxWidth)
             ).toBe("");
+        });
+
+        it("should auto-set the maxWidth CSS variable based on gridLayout columns", () => {
+            const columns = 2;
+            const expectedWidth =
+                columns * menuSectionStyles.GRID_COLUMN_WIDTH_PX +
+                (columns - 1) * menuSectionStyles.GRID_COLUMN_GAP_PX +
+                2;
+
+            render(
+                <Menu.Content data-testid="menu-content">
+                    <Menu.Section
+                        showDivider={false}
+                        gridLayout={{ columns, rows: 3 }}
+                    >
+                        <Menu.Link href="#a">A</Menu.Link>
+                        <Menu.Link href="#b">B</Menu.Link>
+                    </Menu.Section>
+                </Menu.Content>
+            );
+
+            const panel = screen.getByTestId("menu-content");
+            expect(
+                panel.style.getPropertyValue(menuContentTokens.panel.maxWidth)
+            ).toBe(`${expectedWidth}px`);
         });
 
         it("should move focus forward with ArrowDown", () => {

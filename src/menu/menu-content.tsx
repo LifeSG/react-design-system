@@ -1,10 +1,17 @@
 import clsx from "clsx";
 import type React from "react";
-import { useRef } from "react";
+import {
+    Children,
+    isValidElement,
+    type ReactElement,
+    useMemo,
+    useRef,
+} from "react";
 
 import { useApplyStyle } from "../theme";
 import * as styles from "./menu-content.styles";
-import type { MenuContentProps } from "./types";
+import * as sectionStyles from "./menu-section.styles";
+import type { MenuContentProps, MenuSectionProps } from "./types";
 
 // =============================================================================
 // HELPERS
@@ -23,7 +30,6 @@ export const MenuContent = ({
     "data-testid": testId = "menu-content",
     overflow,
     maxHeight,
-    maxWidth,
     ...otherProps
 }: MenuContentProps): JSX.Element => {
     // =============================================================================
@@ -31,11 +37,26 @@ export const MenuContent = ({
     // =============================================================================
     const panelRef = useRef<HTMLDivElement>(null);
 
+    const gridMaxWidth = useMemo(() => {
+        const gridSection = Children.toArray(children).find(
+            (child): child is ReactElement<MenuSectionProps> =>
+                isValidElement(child) &&
+                !!(child.props as MenuSectionProps).gridLayout
+        );
+        const columns = gridSection?.props.gridLayout?.columns;
+        if (!columns) return undefined;
+        return (
+            columns * sectionStyles.GRID_COLUMN_WIDTH_PX +
+            (columns - 1) * sectionStyles.GRID_COLUMN_GAP_PX +
+            2 // border
+        );
+    }, [children]);
+
     useApplyStyle(panelRef, {
         [styles.tokens.panel.maxHeight]:
             maxHeight !== undefined ? `${maxHeight}px` : null,
         [styles.tokens.panel.maxWidth]:
-            maxWidth !== undefined ? `${maxWidth}px` : null,
+            gridMaxWidth !== undefined ? `${gridMaxWidth}px` : null,
         [styles.tokens.panel.overflow]: overflow || null,
     });
     // =============================================================================

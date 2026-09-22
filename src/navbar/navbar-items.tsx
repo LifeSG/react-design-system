@@ -15,10 +15,6 @@ import type {
     NavItemProps,
 } from "./types";
 
-// 367px max content width (Figma) + 8px padding on each side
-const SUBMENU_GRID_COLUMN_WIDTH_PX = 383;
-const SUBMENU_GRID_COLUMN_GAP_PX = 8;
-
 const getLinkWeightClass = (weight: TypographyWeight) => {
     switch (weight) {
         case "bold":
@@ -30,11 +26,6 @@ const getLinkWeightClass = (weight: TypographyWeight) => {
             return styles.linkWeightRegular;
     }
 };
-
-const getSubMenuGridMaxWidth = (columns: number) =>
-    columns * SUBMENU_GRID_COLUMN_WIDTH_PX +
-    (columns - 1) * SUBMENU_GRID_COLUMN_GAP_PX +
-    2; //border
 
 interface Props<T> {
     items: NavItemProps<T>[];
@@ -145,14 +136,7 @@ export const NavbarItems = <T,>({
         subMenuId: string,
         gridLayout?: { columns: number; rows: number }
     ) => (
-        <DesktopMenu.Content
-            id={subMenuId}
-            maxWidth={
-                gridLayout
-                    ? getSubMenuGridMaxWidth(gridLayout.columns)
-                    : undefined
-            }
-        >
+        <DesktopMenu.Content id={subMenuId}>
             <DesktopMenu.Section
                 showDivider={false}
                 {...(gridLayout ? { gridLayout } : {})}

@@ -12,7 +12,6 @@ import type {
 } from "../popover";
 import type { MenuItem } from "./menu-item";
 import type { MenuLink } from "./menu-link";
-import type { MenuSection } from "./menu-section";
 
 // @storybookSection Menu
 /**
@@ -41,16 +40,8 @@ export interface MenuContentProps
     extends HTMLAttributes<HTMLDivElement>,
         PopoverRenderProps {
     /** One or more `Menu.Section` elements that make up the panel body. */
-    children:
-        | ReactElement<typeof MenuSection>
-        | ReactElement<typeof MenuSection>[];
+    children: ReactElement<MenuSectionProps> | ReactElement<MenuSectionProps>[];
     "data-testid"?: string | undefined;
-    /**
-     * Maximum width of the panel in pixels.
-     *
-     * @default 24rem (384px at the default 16px root font size)
-     */
-    maxWidth?: number | undefined;
 }
 
 // @storybookSkipProps
