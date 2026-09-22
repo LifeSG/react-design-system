@@ -31,6 +31,24 @@ import { Menu } from "@lifesg/react-design-system/menu";
 
 <Canvas of={MenuStories.MenuContent} />
 
+## Multiple sections with mixed layouts
+
+Sections with different layouts can be combined in a single `Menu.Content`. In this example a regular list section sits alongside a grid section.
+
+<Canvas of={MenuStories.MultipleSections} />
+
+## Grid layout
+
+`Menu.Section` can display links in a multi-column grid by setting the `gridLayout` prop.
+
+<Canvas of={MenuStories.GridLayout} />
+
+## Grid layout with label
+
+A section label can be combined with `gridLayout`. The label spans the full width above the grid columns.
+
+<Canvas of={MenuStories.GridLayoutWithLabel} />
+
 ## Resize and flip
 
 As the menu extends [PopoverTrigger](/docs/overlays-popover--docs), resize and

@@ -55,6 +55,75 @@ export const MenuContent: StoryObj<Component> = {
     },
 };
 
+export const MultipleSections: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Menu.Content>
+                <Menu.Section showDivider={false} label="Quick links">
+                    <Menu.Link href="https://www.google.com">Link A</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link B</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link C</Menu.Link>
+                </Menu.Section>
+                <Menu.Section
+                    label="All services"
+                    gridLayout={{ columns: 2, rows: 3 }}
+                >
+                    <Menu.Link href="https://www.google.com">Link 1</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 2</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 3</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 4</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 5</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 6</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 7</Menu.Link>
+                </Menu.Section>
+            </Menu.Content>
+        );
+    },
+};
+
+export const GridLayout: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Menu.Content>
+                <Menu.Section
+                    showDivider={false}
+                    gridLayout={{ columns: 2, rows: 3 }}
+                >
+                    <Menu.Link href="https://www.google.com">Link 1</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 2</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 3</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 4</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 5</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 6</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 7</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 8</Menu.Link>
+                </Menu.Section>
+            </Menu.Content>
+        );
+    },
+};
+
+export const GridLayoutWithLabel: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Menu.Content>
+                <Menu.Section
+                    label="Category"
+                    gridLayout={{ columns: 2, rows: 2 }}
+                >
+                    <Menu.Link href="https://www.google.com">Link 1</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 2</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 3</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 4</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 5</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 6</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 7</Menu.Link>
+                </Menu.Section>
+            </Menu.Content>
+        );
+    },
+};
+
 export const ResizeAndFlip: StoryObj<Component> = {
     args: {
         menuContent: menuContent,
