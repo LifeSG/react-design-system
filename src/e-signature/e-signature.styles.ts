@@ -1,11 +1,6 @@
 import { css } from "@linaria/core";
 
-import * as modalStyles from "../modal/modal.styles";
-import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
-
-// =============================================================================
-// STYLING
-// =============================================================================
+import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme";
 
 // -----------------------------------------------------------------------------
 // MAIN FIELD
@@ -71,56 +66,21 @@ export const instructions = css`
 // SIGNATURE MODAL
 // -----------------------------------------------------------------------------
 
-export const scrollableModal = css`
-    /* increase specificity as the styles are overwritten */
-    && {
-        height: 100%;
-        overflow-y: auto;
-    }
-`;
-
-export const growContainer = css`
-    width: 100%;
-    margin: auto;
-    padding: ${Spacing["layout-xxl"]} ${Spacing["layout-sm"]};
-
-    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
-        padding: 0;
-        width: 100%;
-        height: 100%;
-    }
-`;
-
-export const modalBox = css`
-    width: 100%;
-    height: 29rem;
+export const modalCard = css`
     max-width: 672px;
-    max-height: none;
-    margin: 0 auto;
-    padding: ${Spacing["spacing-16"]};
-
-    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
-        display: flex;
-        flex-direction: column;
-        max-width: none;
-        height: 100%;
-        border-radius: 0;
-        padding: 0;
-
-        ${modalStyles.tokens.closeButton.topInset}: ${Spacing["spacing-8"]};
-        ${modalStyles.tokens.closeButton.rightInset}: ${Spacing["spacing-20"]};
-    }
 `;
 
-export const modalTitle = css`
-    ${Font["body-baseline-semibold"]}
-    color: ${Colour["text"]};
-    margin-bottom: ${Spacing["spacing-16"]};
-    text-align: center;
+export const modalHeader = css``;
+
+export const modalContent = css`
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+
+    margin: ${Spacing["spacing-16"]};
 
     ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
-        ${Font["body-md-semibold"]}
-        margin: ${Spacing["spacing-12"]} 0;
+        margin: 0;
     }
 `;
 
@@ -131,12 +91,17 @@ export const eSignatureContainer = css`
     overflow: hidden;
 
     ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
+        width: unset;
+        height: unset;
         border-radius: 0;
         flex: 1;
     }
 
     &[data-mobile-landscape="true"] {
         background: ${Colour["bg-strong"]};
+
+        display: flex;
+        flex-direction: column;
     }
 `;
 
@@ -157,6 +122,7 @@ export const eSignatureDrawable = css`
     }
 
     &[data-mobile-landscape="true"] {
+        flex: 1;
         width: auto;
         height: 100%;
     }
@@ -195,17 +161,16 @@ export const modalButtons = css`
         flex-direction: row;
         margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
     }
-`;
 
-export const modalActionButton = css`
-    width: 8.5rem;
-
-    ${MediaQuery.MaxWidth.sm} {
-        width: 100%;
+    & > button,
+    &[data-mobile-landscape="true"] > button {
+        width: 8.5rem;
     }
 
-    &[data-mobile-landscape="true"] {
-        height: 2.5rem;
+    ${MediaQuery.MaxWidth.sm} {
+        & > button {
+            width: 100%;
+        }
     }
 `;
 

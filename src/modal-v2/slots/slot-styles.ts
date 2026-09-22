@@ -80,7 +80,7 @@ export const modalCard = css`
 
 export const fullscreenModalCard = css`
     width: 100%;
-    height: 100vh;
+    min-height: 100vh;
 `;
 
 export const closeButtonContainer = css`
