@@ -28,16 +28,16 @@ export const MenuSection = ({
     // =========================================================================
     const childCount = Children.count(children);
 
-    const columnStyles = useMemo(
+    const gridRowStyles = useMemo(
         () =>
             gridLayout
-                ? { [styles.gridTokens.columns]: String(gridLayout.columns) }
+                ? { [styles.gridTokens.rows]: String(gridLayout.rows) }
                 : undefined,
         [gridLayout]
     );
-    useApplyStyle(ulRef, columnStyles);
+    useApplyStyle(ulRef, gridRowStyles);
 
-    const applyMaxHeight = useCallback(() => {
+    const applyMaxWidth = useCallback(() => {
         if (!gridLayout) return;
         const grid = ulRef.current;
         if (!grid) return;
@@ -45,7 +45,7 @@ export const MenuSection = ({
         const { columns, rows } = gridLayout;
         const visibleCount = rows * columns;
         if (childCount <= visibleCount) {
-            grid.style.removeProperty(styles.gridTokens.maxHeight);
+            grid.style.removeProperty(styles.gridTokens.maxWidth);
             return;
         }
 
@@ -57,21 +57,18 @@ export const MenuSection = ({
         const boundaryItem = listItems[visibleCount];
         if (!boundaryItem) return;
 
-        const rowGap = parseFloat(getComputedStyle(grid).rowGap) || 0;
-        const visibleHeight = boundaryItem.offsetTop - rowGap / 2;
+        const columnGap = parseFloat(getComputedStyle(grid).columnGap) || 0;
+        const visibleWidth = boundaryItem.offsetLeft - columnGap / 2;
 
-        grid.style.setProperty(
-            styles.gridTokens.maxHeight,
-            `${visibleHeight}px`
-        );
+        grid.style.setProperty(styles.gridTokens.maxWidth, `${visibleWidth}px`);
     }, [gridLayout, childCount]);
 
     // =========================================================================
     // EFFECTS
     // =========================================================================
     useIsomorphicLayoutEffect(() => {
-        applyMaxHeight();
-    }, [applyMaxHeight]);
+        applyMaxWidth();
+    }, [applyMaxWidth]);
 
     useResizeDetector({
         handleWidth: true,
@@ -79,7 +76,7 @@ export const MenuSection = ({
         skipOnMount: true,
         refreshMode: "throttle",
         targetRef: ulRef,
-        onResize: applyMaxHeight,
+        onResize: applyMaxWidth,
     });
 
     // =============================================================================

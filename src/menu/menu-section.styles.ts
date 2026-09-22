@@ -3,8 +3,8 @@ import { css } from "@linaria/core";
 import { Border, Colour, MediaQuery, Radius, Spacing } from "../theme/tokens";
 
 export const gridTokens = {
-    columns: "--fds-menu-section-grid-columns",
-    maxHeight: "--fds-menu-section-grid-maxHeight",
+    rows: "--fds-menu-section-grid-rows",
+    maxWidth: "--fds-menu-section-grid-maxWidth",
 } as const;
 
 export const section = css`
@@ -22,19 +22,21 @@ export const label = css`
 `;
 
 export const grid = css`
-    ${gridTokens.columns}: initial;
-    ${gridTokens.maxHeight}: initial;
+    ${gridTokens.rows}: initial;
+    ${gridTokens.maxWidth}: initial;
 
     display: grid;
-    grid-template-columns: repeat(var(${gridTokens.columns}), minmax(0, 1fr));
+    grid-template-rows: repeat(var(${gridTokens.rows}), auto);
+    grid-auto-flow: column;
+    grid-auto-columns: 383px;
     column-gap: ${Spacing["spacing-8"]};
     row-gap: ${Spacing["spacing-4"]};
 
-    max-height: var(${gridTokens.maxHeight});
-    overflow-y: auto;
+    max-width: var(${gridTokens.maxWidth});
+    overflow-x: auto;
 
     &::-webkit-scrollbar {
-        width: 14px;
+        height: 14px;
     }
 
     &::-webkit-scrollbar-track {
@@ -49,7 +51,8 @@ export const grid = css`
     }
 
     ${MediaQuery.MaxWidth.lg} {
-        grid-template-columns: 1fr;
-        max-height: none;
+        grid-template-rows: none;
+        grid-auto-flow: row;
+        max-width: none;
     }
 `;

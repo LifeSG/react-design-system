@@ -33,7 +33,8 @@ const getLinkWeightClass = (weight: TypographyWeight) => {
 
 const getSubMenuGridMaxWidth = (columns: number) =>
     columns * SUBMENU_GRID_COLUMN_WIDTH_PX +
-    (columns - 1) * SUBMENU_GRID_COLUMN_GAP_PX;
+    (columns - 1) * SUBMENU_GRID_COLUMN_GAP_PX +
+    2; //border
 
 interface Props<T> {
     items: NavItemProps<T>[];

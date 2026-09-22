@@ -250,7 +250,7 @@ describe("Menu", () => {
                 );
             });
 
-            it("should set the columns CSS variable when items exceed the visible count", () => {
+            it("should set the rows CSS variable when items exceed the visible count", () => {
                 // 2 cols x 1 row = 2 visible; 3 items exceeds the cutoff
                 render(
                     <Menu.Section gridLayout={{ columns: 2, rows: 1 }}>
@@ -263,12 +263,12 @@ describe("Menu", () => {
                 const section = screen.getByTestId("menu-section");
                 expect(
                     section.style.getPropertyValue(
-                        menuSectionStyles.gridTokens.columns
+                        menuSectionStyles.gridTokens.rows
                     )
-                ).toBe("2");
+                ).toBe("1");
             });
 
-            it("should not set the max-height CSS variable when all items fit within the visible count", () => {
+            it("should not set the max-width CSS variable when all items fit within the visible count", () => {
                 // 2 cols x 3 rows = 6 visible; 3 items all fit
                 render(
                     <Menu.Section gridLayout={{ columns: 2, rows: 3 }}>
@@ -281,14 +281,14 @@ describe("Menu", () => {
                 const section = screen.getByTestId("menu-section");
                 expect(
                     section.style.getPropertyValue(
-                        menuSectionStyles.gridTokens.maxHeight
+                        menuSectionStyles.gridTokens.maxWidth
                     )
                 ).toBe("");
             });
 
-            it("should apply grid class and set columns variable when label is combined with columns and rows", () => {
+            it("should apply grid class and set rows variable when label is combined with columns and rows", () => {
                 // Regression guard for the LI-filter fix: the label element must
-                // not displace the boundary item index in applyGridLayout.
+                // not displace the boundary item index in applyMaxWidth.
                 render(
                     <Menu.Section
                         gridLayout={{ columns: 2, rows: 1 }}
@@ -315,9 +315,9 @@ describe("Menu", () => {
                 expect(section.classList).toContain(menuSectionStyles.grid);
                 expect(
                     section.style.getPropertyValue(
-                        menuSectionStyles.gridTokens.columns
+                        menuSectionStyles.gridTokens.rows
                     )
-                ).toBe("2");
+                ).toBe("1");
             });
         });
     });
