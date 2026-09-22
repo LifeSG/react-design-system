@@ -237,9 +237,9 @@ describe("Menu", () => {
         });
 
         describe("grid layout", () => {
-            it("should apply the grid class when both columns and rows are set", () => {
+            it("should apply the grid class when gridLayout is set", () => {
                 render(
-                    <Menu.Section columns={2} rows={3}>
+                    <Menu.Section gridLayout={{ columns: 2, rows: 3 }}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
                     </Menu.Section>
@@ -250,34 +250,10 @@ describe("Menu", () => {
                 );
             });
 
-            it("should not apply the grid class when only columns is set", () => {
-                render(
-                    <Menu.Section columns={2}>
-                        <Menu.Link href="#a">A</Menu.Link>
-                    </Menu.Section>
-                );
-
-                expect(
-                    screen.getByTestId("menu-section").classList
-                ).not.toContain(menuSectionStyles.grid);
-            });
-
-            it("should not apply the grid class when only rows is set", () => {
-                render(
-                    <Menu.Section rows={3}>
-                        <Menu.Link href="#a">A</Menu.Link>
-                    </Menu.Section>
-                );
-
-                expect(
-                    screen.getByTestId("menu-section").classList
-                ).not.toContain(menuSectionStyles.grid);
-            });
-
             it("should set the columns CSS variable when items exceed the visible count", () => {
                 // 2 cols x 1 row = 2 visible; 3 items exceeds the cutoff
                 render(
-                    <Menu.Section columns={2} rows={1}>
+                    <Menu.Section gridLayout={{ columns: 2, rows: 1 }}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
                         <Menu.Link href="#c">C</Menu.Link>
@@ -295,7 +271,7 @@ describe("Menu", () => {
             it("should not set the max-height CSS variable when all items fit within the visible count", () => {
                 // 2 cols x 3 rows = 6 visible; 3 items all fit
                 render(
-                    <Menu.Section columns={2} rows={3}>
+                    <Menu.Section gridLayout={{ columns: 2, rows: 3 }}>
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
                         <Menu.Link href="#c">C</Menu.Link>
@@ -314,7 +290,10 @@ describe("Menu", () => {
                 // Regression guard for the LI-filter fix: the label element must
                 // not displace the boundary item index in applyGridLayout.
                 render(
-                    <Menu.Section columns={2} rows={1} label="My section">
+                    <Menu.Section
+                        gridLayout={{ columns: 2, rows: 1 }}
+                        label="My section"
+                    >
                         <Menu.Link href="#a">A</Menu.Link>
                         <Menu.Link href="#b">B</Menu.Link>
                         <Menu.Link href="#c">C</Menu.Link>

@@ -142,18 +142,19 @@ export const NavbarItems = <T,>({
     const renderDesktopSubMenu = (
         subMenu: NavItemCommonProps<T>[],
         subMenuId: string,
-        columns?: number,
-        rows?: number
+        gridLayout?: { columns: number; rows: number }
     ) => (
         <DesktopMenu.Content
             id={subMenuId}
             maxWidth={
-                columns && rows ? getSubMenuGridMaxWidth(columns) : undefined
+                gridLayout
+                    ? getSubMenuGridMaxWidth(gridLayout.columns)
+                    : undefined
             }
         >
             <DesktopMenu.Section
                 showDivider={false}
-                {...(columns && rows ? { columns, rows } : {})}
+                {...(gridLayout ? { gridLayout } : {})}
             >
                 {subMenu.map((item, subIndex) => (
                     <DesktopMenu.Link
@@ -180,8 +181,7 @@ export const NavbarItems = <T,>({
             children,
             options,
             subMenu,
-            subMenuColumns: _subMenuColumns,
-            subMenuRows: _subMenuRows,
+            subMenuGridLayout: _subMenuGridLayout,
             ...otherItemAttrs
         } = item;
 
@@ -304,8 +304,7 @@ export const NavbarItems = <T,>({
                     menuContent={renderDesktopSubMenu(
                         subMenu!,
                         subMenuId,
-                        item.subMenuColumns,
-                        item.subMenuRows
+                        item.subMenuGridLayout
                     )}
                     triggerOnFocus
                     isModal={false}

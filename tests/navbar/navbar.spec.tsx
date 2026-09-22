@@ -192,7 +192,7 @@ describe("Navbar", () => {
             }
         });
 
-        it("should apply the grid layout when subMenuColumns and subMenuRows are both set", async () => {
+        it("should apply the grid layout when subMenuGridLayout is set", async () => {
             const user = userEvent.setup();
             render(<Navbar items={{ desktop: MOCK_GRID_ITEMS() }} />);
 
@@ -201,33 +201,6 @@ describe("Navbar", () => {
             expect(
                 document.body.getElementsByClassName(menuSectionStyles.grid)
             ).toHaveLength(1);
-        });
-
-        it("should fall back to the vertical list when only one of subMenuColumns/subMenuRows is set", async () => {
-            const user = userEvent.setup();
-            render(
-                <Navbar
-                    items={{
-                        desktop: [
-                            {
-                                id: "guides",
-                                children: "Guides",
-                                subMenuColumns: 2,
-                                subMenu: MOCK_SUBMENU_ITEMS(),
-                            },
-                        ],
-                    }}
-                />
-            );
-
-            await user.click(screen.getByTestId("link__1"));
-
-            for (const label of MOCK_SUBMENU_LABELS) {
-                expect(screen.getByText(label)).toBeInTheDocument();
-            }
-            expect(
-                document.body.getElementsByClassName(menuSectionStyles.grid)
-            ).toHaveLength(0);
         });
 
         it("should move focus between grid items with ArrowDown", async () => {
@@ -300,8 +273,7 @@ function MOCK_GRID_ITEMS() {
         {
             id: "guides",
             children: "Guides",
-            subMenuColumns: 2,
-            subMenuRows: 2,
+            subMenuGridLayout: { columns: 2, rows: 2 },
             subMenu: MOCK_SUBMENU_ITEMS(),
         },
     ];

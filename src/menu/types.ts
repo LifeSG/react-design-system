@@ -72,16 +72,15 @@ export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
      */
     showDivider?: boolean | undefined;
     /**
-     * Number of columns in the multi-column grid layout.
-     * When provided alongside rows, renders items in a CSS grid.
+     * Renders items in a CSS grid layout on desktop.
+     * `columns` sets the number of grid columns; `rows` sets the maximum
+     * number of rows visible before the panel becomes scrollable.
      * Ignored at <=lg breakpoints where a single-column list is always used.
+     *
+     * @minimum columns 1
+     * @minimum rows 1
      */
-    columns?: number;
-    /**
-     * Maximum number of rows to display before enabling vertical scroll.
-     * Requires columns to be set.
-     */
-    rows?: number;
+    gridLayout?: { columns: number; rows: number } | undefined;
     /**
      * Accessible group label rendered above the section items.
      */

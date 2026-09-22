@@ -1,7 +1,8 @@
 import clsx from "clsx";
-import { Children, useCallback, useRef } from "react";
+import { Children, useCallback, useMemo, useRef } from "react";
 import { useResizeDetector } from "react-resize-detector";
 
+import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
 import { useId, useIsomorphicLayoutEffect } from "../util";
 import * as styles from "./menu-section.styles";
@@ -12,8 +13,7 @@ export const MenuSection = ({
     label,
     showDivider = true,
     className,
-    columns,
-    rows,
+    gridLayout,
     "data-testid": testId = "menu-section",
     ...otherProps
 }: MenuSectionProps): JSX.Element => {
@@ -28,13 +28,21 @@ export const MenuSection = ({
     // =========================================================================
     const childCount = Children.count(children);
 
-    const applyGridLayout = useCallback(() => {
-        if (!columns || !rows) return;
+    const columnStyles = useMemo(
+        () =>
+            gridLayout
+                ? { [styles.gridTokens.columns]: String(gridLayout.columns) }
+                : undefined,
+        [gridLayout]
+    );
+    useApplyStyle(ulRef, columnStyles);
+
+    const applyMaxHeight = useCallback(() => {
+        if (!gridLayout) return;
         const grid = ulRef.current;
         if (!grid) return;
 
-        grid.style.setProperty(styles.gridTokens.columns, String(columns));
-
+        const { columns, rows } = gridLayout;
         const visibleCount = rows * columns;
         if (childCount <= visibleCount) {
             grid.style.removeProperty(styles.gridTokens.maxHeight);
@@ -56,14 +64,14 @@ export const MenuSection = ({
             styles.gridTokens.maxHeight,
             `${visibleHeight}px`
         );
-    }, [columns, rows, childCount]);
+    }, [gridLayout, childCount]);
 
     // =========================================================================
     // EFFECTS
     // =========================================================================
     useIsomorphicLayoutEffect(() => {
-        applyGridLayout();
-    }, [applyGridLayout]);
+        applyMaxHeight();
+    }, [applyMaxHeight]);
 
     useResizeDetector({
         handleWidth: true,
@@ -71,7 +79,7 @@ export const MenuSection = ({
         skipOnMount: true,
         refreshMode: "throttle",
         targetRef: ulRef,
-        onResize: applyGridLayout,
+        onResize: applyMaxHeight,
     });
 
     // =============================================================================
@@ -85,7 +93,7 @@ export const MenuSection = ({
             className={clsx(
                 styles.section,
                 showDivider && styles.sectionWithDivider,
-                columns && columns >= 1 && rows && rows >= 1 && styles.grid,
+                gridLayout && styles.grid,
                 className
             )}
             {...otherProps}
