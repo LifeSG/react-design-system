@@ -38,17 +38,22 @@ export const MenuContent = ({
     const panelRef = useRef<HTMLDivElement>(null);
 
     const gridMaxWidth = useMemo(() => {
-        const gridSection = Children.toArray(children).find(
-            (child): child is ReactElement<MenuSectionProps> =>
-                isValidElement(child) &&
-                !!(child.props as MenuSectionProps).gridLayout
-        );
-        const columns = gridSection?.props.gridLayout?.columns;
-        if (!columns) return undefined;
+        const maxColumns = Children.toArray(children)
+            .filter(
+                (child): child is ReactElement<MenuSectionProps> =>
+                    isValidElement(child) &&
+                    !!(child.props as MenuSectionProps).gridLayout
+            )
+            .reduce(
+                (max, child) =>
+                    Math.max(max, child.props.gridLayout?.columns ?? 0),
+                0
+            );
+        if (!maxColumns) return undefined;
         return (
-            columns * sectionStyles.GRID_COLUMN_WIDTH_PX +
-            (columns - 1) * sectionStyles.GRID_COLUMN_GAP_PX +
-            2 // border
+            maxColumns * sectionStyles.GRID_COLUMN_WIDTH_PX +
+            (maxColumns - 1) * sectionStyles.GRID_COLUMN_GAP_PX +
+            2 // 1px border × 2 sides
         );
     }, [children]);
 

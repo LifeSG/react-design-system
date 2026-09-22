@@ -82,8 +82,7 @@ export const navItemsWithSubmenuGrid: NavItemProps<undefined>[] = [
     {
         id: "guides",
         children: "Guides",
-        subMenuColumns: 3,
-        subMenuRows: 3,
+        subMenuGridLayout: { columns: 3, rows: 3 },
         subMenu: Array.from({ length: 12 }, (_, index) => ({
             id: `guides-item-${index + 1}`,
             children: `Guides item ${index + 1}`,

@@ -27,30 +27,29 @@ export const MenuSection = ({
     // HELPER FUNCTIONS
     // =========================================================================
     const childCount = Children.count(children);
+    const gridColumns = gridLayout?.columns;
+    const gridRows = gridLayout?.rows;
 
     const gridRowStyles = useMemo(
         () =>
-            gridLayout
-                ? { [styles.gridTokens.rows]: String(gridLayout.rows) }
+            gridRows !== undefined
+                ? { [styles.gridTokens.rows]: String(gridRows) }
                 : undefined,
-        [gridLayout]
+        [gridRows]
     );
     useApplyStyle(ulRef, gridRowStyles);
 
     const applyMaxWidth = useCallback(() => {
-        if (!gridLayout) return;
+        if (gridColumns === undefined || gridRows === undefined) return;
         const grid = ulRef.current;
         if (!grid) return;
 
-        const { columns, rows } = gridLayout;
-        const visibleCount = rows * columns;
+        const visibleCount = gridRows * gridColumns;
         if (childCount <= visibleCount) {
             grid.style.removeProperty(styles.gridTokens.maxWidth);
             return;
         }
 
-        // Filter to <li> only: the label element (if present) is also a direct
-        // child of the <ul> but must not be counted as a grid item.
         const listItems = Array.from(grid.children).filter(
             (el) => el.tagName === "LI"
         ) as HTMLElement[];
@@ -64,7 +63,7 @@ export const MenuSection = ({
             columnGap / 2;
 
         grid.style.setProperty(styles.gridTokens.maxWidth, `${visibleWidth}px`);
-    }, [gridLayout, childCount]);
+    }, [gridColumns, gridRows, childCount]);
 
     // =========================================================================
     // EFFECTS
