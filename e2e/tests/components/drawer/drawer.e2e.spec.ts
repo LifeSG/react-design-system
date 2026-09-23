@@ -90,9 +90,9 @@ test.describe("Drawer", () => {
 
             await expect(story.locators.drawer).toMatchAriaSnapshot(`
                 - dialog "Drawer heading":
+                    - button "Close drawer"
                     - heading "Drawer heading" [level=2]
                     - paragraph: Drawer content
-                    - button "Close drawer"
             `);
         });
     });
@@ -116,6 +116,36 @@ test.describe("Drawer", () => {
         test("Default (dark mode)", async ({ story }) => {
             await story.open();
             await compareScreenshot(story, "open-dark", { fullscreen: true });
+        });
+    });
+
+    test.describe("Custom call to action", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("custom-call-to-action");
+            });
+
+            // Wide drawer: CTA sits inline to the right of the (truncated) heading.
+            test("Wide", async ({ story }) => {
+                await story.open();
+                await compareScreenshot(story, "cta-open", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("custom-call-to-action", { size: "mobile" });
+            });
+
+            // Narrow drawer: CTA wraps below the heading, buttons flushed left.
+            test("Narrow (stacked)", async ({ story }) => {
+                await story.open();
+                await compareScreenshot(story, "cta-open-mobile", {
+                    fullscreen: true,
+                });
+            });
         });
     });
 

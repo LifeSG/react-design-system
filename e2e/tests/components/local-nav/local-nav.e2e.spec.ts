@@ -86,6 +86,17 @@ test.describe("Local nav", () => {
             await compareScreenshot(story, "hover");
         });
     });
+    test.describe("Menu with title addon", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("menu-title-addon");
+        });
+
+        // Left addon + selected tick align to the first line of a wrapped
+        // title; right addon stays vertically centred and flushed right.
+        test("Default", async ({ story }) => {
+            await compareScreenshot(story, "addon-mount");
+        });
+    });
     test.describe("Dropdown", () => {
         test.beforeEach(async ({ story }) => {
             await story.init("dropdown");
@@ -146,6 +157,18 @@ test.describe("Local nav", () => {
                     fullscreen: true,
                 });
             });
+        });
+    });
+    test.describe("Dropdown with title addon", () => {
+        test.beforeEach(async ({ story }) => {
+            await story.init("dropdown-title-addon");
+        });
+
+        // Left addon + selected tick align to the first line of a wrapped
+        // title; right addon stays vertically centred and flushed right.
+        test("Default", async ({ story }) => {
+            await story.locators.dropdownLabel.click();
+            await compareScreenshot(story, "addon-open", { fullscreen: true });
         });
     });
     test.describe(() => {
