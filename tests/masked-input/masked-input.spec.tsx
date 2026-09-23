@@ -69,6 +69,18 @@ describe("MaskedInput", () => {
             expect(screen.queryByText("Error")).not.toBeInTheDocument();
             expect(screen.queryByText("Try again?")).not.toBeInTheDocument();
         });
+
+        it("should not render the toggle icon when disableMask is true", () => {
+            render(
+                <MaskedInput value="S1234567D" maskRange={[2, 5]} disableMask />
+            );
+
+            expect(screen.getByDisplayValue("S1234567D")).toBeInTheDocument();
+            expect(screen.queryByTestId("icon-masked")).not.toBeInTheDocument();
+            expect(
+                screen.queryByTestId("icon-unmasked")
+            ).not.toBeInTheDocument();
+        });
     });
 
     describe("Event callbacks", () => {

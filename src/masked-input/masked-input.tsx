@@ -195,7 +195,7 @@ const Component = (
     // RENDER FUNCTIONS
     // =============================================================================
     const renderIcon = () => {
-        if (isEmptyReadOnlyState) {
+        if (isEmptyReadOnlyState || disableMask) {
             return <></>;
         }
 
