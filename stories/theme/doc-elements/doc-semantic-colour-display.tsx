@@ -23,6 +23,7 @@ const SEMANTIC_SECTIONS: SemanticSection[] = [
                 "text-subtlest",
                 "text-primary",
                 "text-primary-strong",
+                "text-primary-stronger",
                 "text-primary-strongest",
                 "text-brand",
                 "text-secondary",
@@ -130,6 +131,8 @@ const SEMANTIC_SECTIONS: SemanticSection[] = [
                 "bg-secondary-subtle",
                 "bg-secondary-subtler",
                 "bg-secondary-subtlest",
+                "bg-brand-subtler",
+                "bg-brand-subtlest",
                 "bg-available",
             ],
             [
