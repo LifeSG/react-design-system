@@ -9,5 +9,8 @@ export const Radius = {
     sm: "var(--fds-radius-sm)",
     md: "var(--fds-radius-md)",
     lg: "var(--fds-radius-lg)",
+    xl: "var(--fds-radius-xl)",
+    xxl: "var(--fds-radius-xxl)",
+    xxxl: "var(--fds-radius-xxxl)",
     full: "var(--fds-radius-full)",
 } as const;

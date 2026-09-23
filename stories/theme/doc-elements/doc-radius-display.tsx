@@ -21,6 +21,9 @@ export const RadiusDisplay = ({ theme }: RadiusDisplayProps) => {
                 <RadiusCollection token="sm" />
                 <RadiusCollection token="md" />
                 <RadiusCollection token="lg" />
+                <RadiusCollection token="xl" />
+                <RadiusCollection token="xxl" />
+                <RadiusCollection token="xxxl" />
                 <RadiusCollection token="full" />
             </div>
         </ThemeProvider>
@@ -72,7 +75,7 @@ const row = css`
     grid-column: 1 / -1;
     grid-template-columns: subgrid;
     justify-items: flex-start;
-    align-items: flex-start;
+    align-items: center;
     gap: 0 3rem;
     margin-bottom: 2rem;
 `;
@@ -85,7 +88,7 @@ const headerRow = css`
 `;
 
 const radiusExample = css`
-    height: 48px;
-    width: 128px;
+    height: 96px;
+    width: 96px;
     background: tomato;
 `;
