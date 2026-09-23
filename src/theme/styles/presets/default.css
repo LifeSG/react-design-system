@@ -101,5 +101,8 @@
     --fds-radius-sm: 4px;
     --fds-radius-md: 8px;
     --fds-radius-lg: 12px;
+    --fds-radius-xl: 16px;
+    --fds-radius-xxl: 24px;
+    --fds-radius-xxxl: 32px;
     --fds-radius-full: 9999px;
 }

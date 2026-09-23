@@ -21,6 +21,9 @@ export const RadiusDisplay = ({ theme }: RadiusDisplayProps) => {
                 <RadiusCollection token="sm" />
                 <RadiusCollection token="md" />
                 <RadiusCollection token="lg" />
+                <RadiusCollection token="xl" />
+                <RadiusCollection token="xxl" />
+                <RadiusCollection token="xxxl" />
                 <RadiusCollection token="full" />
             </div>
         </ThemeProvider>
