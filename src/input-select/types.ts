@@ -19,7 +19,7 @@ export interface InputSelectOptionsProps<T> {
      * Values: "loading" | "fail" | "success"
      */
     optionsLoadState?: ItemsLoadStateType | undefined;
-    /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
+    /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Specify "none" to display the text in full. Values: "middle" | "end" | "none" */
     optionTruncationType?: TruncateType | undefined;
 
     onShowOptions?: (() => void) | undefined;
