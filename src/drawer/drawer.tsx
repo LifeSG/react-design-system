@@ -8,10 +8,15 @@ import {
 import { CrossIcon } from "@lifesg/react-icons/cross";
 import clsx from "clsx";
 import { useEffect, useRef, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
 
 import { Overlay } from "../overlay";
 import { ClickableIcon } from "../shared/clickable-icon";
-import { useMaxWidthMediaQuery } from "../theme";
+import {
+    Breakpoint,
+    parsePxOrRemValue,
+    useResolvedBreakpointToken,
+} from "../theme";
 import { Typography } from "../typography";
 import { useId } from "../util";
 import * as styles from "./drawer.styles";
@@ -40,11 +45,36 @@ export const Drawer = ({
     // CONST, STATE, REFS
     // =========================================================================
     const [showOverlay, setShowOverlay] = useState(show);
+    // vertical centre of the heading, used to align the (last-in-DOM,
+    // absolutely positioned) close button with it
+    const [closeButtonTop, setCloseButtonTop] = useState<number>();
     const id = useId();
     const initialFocusRef = useRef<HTMLHeadingElement>(null);
-    // stack the call-to-action below the heading once the drawer spans the full
-    // viewport width and can no longer fit both on one line
-    const stackCallToAction = useMaxWidthMediaQuery("sm");
+    // Observe the header (whose size tracks the drawer's actual width, which
+    // consumers may override) to drive layout in one pass: the width decides
+    // call-to-action stacking, and each resize re-centres the close button on
+    // the heading. offsetTop/offsetHeight are relative to the drawer (the
+    // positioned ancestor), so they share the close button's coordinate space.
+    const { width: headerWidth, ref: headerRef } =
+        useResizeDetector<HTMLDivElement>({
+            refreshMode: "throttle",
+            refreshRate: 300,
+            onResize: () => {
+                const headingEl = initialFocusRef.current;
+                if (headingEl) {
+                    setCloseButtonTop(
+                        headingEl.offsetTop + headingEl.offsetHeight / 2
+                    );
+                }
+            },
+        });
+    // stack the call-to-action below the heading once the drawer is too narrow
+    // to fit both on one line
+    const stackWidth = parsePxOrRemValue(
+        useResolvedBreakpointToken(Breakpoint["sm-max"])
+    );
+    const stackCallToAction =
+        headerWidth !== undefined && headerWidth <= stackWidth;
 
     // =========================================================================
     // FLOATING UI CONFIG
@@ -119,33 +149,22 @@ export const Drawer = ({
                         {...otherProps}
                     >
                         <div
+                            ref={headerRef}
                             className={clsx(
                                 styles.header,
-                                customCallToAction &&
-                                    styles.headerWithCallToAction,
                                 stackCallToAction && styles.headerStacked
                             )}
                         >
-                            <div className={styles.titleRow}>
-                                <ClickableIcon
-                                    aria-label="Close drawer"
-                                    onClick={onClose}
-                                    focusHighlight={false}
-                                    className={styles.closeButton}
-                                >
-                                    <CrossIcon aria-hidden />
-                                </ClickableIcon>
-                                <Typography.HeadingMD
-                                    as="h2"
-                                    className={styles.heading}
-                                    id={id}
-                                    ref={initialFocusRef}
-                                    tabIndex={-1}
-                                    weight="bold"
-                                >
-                                    {heading}
-                                </Typography.HeadingMD>
-                            </div>
+                            <Typography.HeadingMD
+                                as="h2"
+                                className={styles.heading}
+                                id={id}
+                                ref={initialFocusRef}
+                                tabIndex={-1}
+                                weight="bold"
+                            >
+                                {heading}
+                            </Typography.HeadingMD>
                             {customCallToAction ? (
                                 <div
                                     className={clsx(
@@ -159,6 +178,25 @@ export const Drawer = ({
                             ) : null}
                         </div>
                         <div className={styles.content}>{children}</div>
+                        {/* Rendered last so assistive tech reaches the heading
+                            and content before the close button; centred against
+                            the header via its measured height. */}
+                        <ClickableIcon
+                            aria-label="Close drawer"
+                            onClick={onClose}
+                            focusHighlight={false}
+                            className={styles.closeButton}
+                            style={
+                                closeButtonTop !== undefined
+                                    ? {
+                                          top: closeButtonTop,
+                                          transform: "translateY(-50%)",
+                                      }
+                                    : undefined
+                            }
+                        >
+                            <CrossIcon aria-hidden />
+                        </ClickableIcon>
                     </div>
                 </FloatingFocusManager>
             ) : undefined}

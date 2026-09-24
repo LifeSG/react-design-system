@@ -1,6 +1,5 @@
 import { test as base, expect, Locator, Page } from "@playwright/test";
 import { AbstractStoryPage, compareScreenshot } from "../../utils";
-import { viewport } from "../../consts";
 
 class StoryPage extends AbstractStoryPage {
     protected readonly component = "drawer";
@@ -90,9 +89,9 @@ test.describe("Drawer", () => {
 
             await expect(story.locators.drawer).toMatchAriaSnapshot(`
                 - dialog "Drawer heading":
-                    - button "Close drawer"
                     - heading "Drawer heading" [level=2]
                     - paragraph: Drawer content
+                    - button "Close drawer"
             `);
         });
     });

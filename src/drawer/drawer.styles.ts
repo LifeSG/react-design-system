@@ -67,59 +67,44 @@ export const header = css`
     align-items: center;
     gap: ${Spacing["spacing-16"]};
     padding: ${Spacing["spacing-32"]} ${Spacing["spacing-16"]}
-        ${Spacing["spacing-16"]} ${Spacing["spacing-16"]};
+        ${Spacing["spacing-16"]}
+        calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-32"]});
     background-color: ${Colour["bg"]};
     border-bottom: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 
     ${MediaQuery.MaxWidth.lg} {
         gap: ${Spacing["spacing-8"]};
         padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
-            ${Spacing["spacing-16"]} ${Spacing["spacing-16"]};
+            ${Spacing["spacing-16"]}
+            calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-24"]});
     }
 `;
 
-/**
- * When a call-to-action is present the header content is taller than a lone
- * heading, so the top padding is reduced to match the bottom — keeping the
- * heading and buttons evenly spaced within the header.
- */
-export const headerWithCallToAction = css`
-    padding-top: ${Spacing["spacing-16"]};
-`;
-
+// Stack the call-to-action below the heading when the drawer is too narrow
+// to fit both on one line.
 export const headerStacked = css`
     flex-direction: column;
     align-items: stretch;
     gap: ${Spacing["spacing-16"]};
 `;
 
-export const titleRow = css`
-    display: flex;
-    align-items: center;
-    gap: ${Spacing["spacing-16"]};
-    min-width: 0;
-
-    ${MediaQuery.MaxWidth.lg} {
-        gap: ${Spacing["spacing-8"]};
-    }
-`;
-
 export const callToAction = css`
     display: flex;
-    gap: ${Spacing["spacing-16"]};
-    flex-shrink: 0;
     margin-left: auto;
 `;
 
+// When stacked, flush left so the buttons line up with the heading (the
+// header's left padding already clears the close icon).
 export const callToActionStacked = css`
-    /* indent to line up with the heading (past the close icon + its gap) */
-    margin-left: calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-8"]});
+    margin-left: 0;
 `;
 
 export const closeButton = css`
-    flex-shrink: 0;
     color: ${Colour["icon"]};
     padding: 0;
+    position: absolute;
+    top: ${Spacing["spacing-32"]};
+    left: ${Spacing["spacing-16"]};
     &:active,
     &:focus {
         color: ${Colour["icon-hover"]};
@@ -132,8 +117,6 @@ export const closeButton = css`
 `;
 
 export const heading = css`
-    flex: 1;
-    min-width: 0;
     text-overflow: ellipsis;
     overflow: hidden;
     white-space: nowrap;
