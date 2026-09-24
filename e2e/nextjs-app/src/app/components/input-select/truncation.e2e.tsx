@@ -25,6 +25,26 @@ export default function Story() {
                 selectedOption={LONG_OPTIONS[0]}
                 optionTruncationType="end"
             />
+
+            <Form.Select
+                data-testid="input-select-truncation-none"
+                label="Truncation none"
+                options={LONG_OPTIONS}
+                selectedOption={LONG_OPTIONS[0]}
+                optionTruncationType="none"
+            />
+
+            <Form.Select
+                data-testid="input-select-truncation-none-sublabel"
+                label="Truncation none with secondary label"
+                options={LONG_OPTIONS}
+                selectedOption={LONG_OPTIONS[0]}
+                optionTruncationType="none"
+                listExtractor={(item) => ({
+                    title: item,
+                    secondaryLabel: item,
+                })}
+            />
         </div>
     );
 }
