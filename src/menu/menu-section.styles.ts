@@ -6,7 +6,7 @@ export const gridTokens = {
     rows: "--fds-menu-section-grid-rows",
 } as const;
 
-// 367px max content width (Figma) + 8px padding on each side; matches grid-auto-columns below
+// 367px max content width (Figma) + 8px padding per side; used to cap the panel maxWidth in MenuContent
 export const GRID_COLUMN_WIDTH_PX = 383;
 // matches Spacing["spacing-8"]
 export const GRID_COLUMN_GAP_PX = 8;

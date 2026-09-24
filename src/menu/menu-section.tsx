@@ -24,7 +24,7 @@ export const MenuSection = ({
     const gridRows = useMemo(
         () =>
             columns !== undefined
-                ? Math.ceil(Children.count(children) / columns)
+                ? Math.ceil(Children.count(children) / Math.max(1, columns))
                 : undefined,
         [columns, children]
     );

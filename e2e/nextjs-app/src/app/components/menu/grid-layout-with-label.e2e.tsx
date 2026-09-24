@@ -5,18 +5,18 @@ import { Menu } from "@lifesg/react-design-system/menu";
 export default function Story() {
     return (
         <div className="story-column-container">
-            <Menu.Content>
+            <Menu.Content data-testid="menu-content">
                 <Menu.Section
+                    showDivider={false}
+                    columns={2}
                     label="Category"
-                    gridLayout={{ columns: 3, rows: 2 }}
+                    data-testid="menu-section"
                 >
-                    <Menu.Link href="#link-1">Link 1</Menu.Link>
-                    <Menu.Link href="#link-2">Link 2</Menu.Link>
-                    <Menu.Link href="#link-3">Link 3</Menu.Link>
-                    <Menu.Link href="#link-4">Link 4</Menu.Link>
-                    <Menu.Link href="#link-5">Link 5</Menu.Link>
-                    <Menu.Link href="#link-6">Link 6</Menu.Link>
-                    <Menu.Link href="#link-7">Link 7</Menu.Link>
+                    {Array.from({ length: 6 }, (_, i) => (
+                        <Menu.Link key={i} href={`#link-${i + 1}`}>
+                            Link {i + 1}
+                        </Menu.Link>
+                    ))}
                 </Menu.Section>
             </Menu.Content>
         </div>

@@ -24,6 +24,7 @@ class StoryPage extends AbstractStoryPage {
             appTrigger: Locator;
             guidesTrigger: Locator;
             servicesMobileTrigger: Locator;
+            guidesMobileTrigger: Locator;
             closeButton: Locator;
             drawer: Locator;
             drawerBrand: Locator;
@@ -50,6 +51,9 @@ class StoryPage extends AbstractStoryPage {
                 appTrigger: page.getByRole("button", { name: "LifeSG app" }),
                 guidesTrigger: page.getByRole("button", { name: "Guides" }),
                 servicesMobileTrigger: page.getByTestId(
+                    "link__mobile-2-expand-collapse-button"
+                ),
+                guidesMobileTrigger: page.getByTestId(
                     "link__mobile-2-expand-collapse-button"
                 ),
                 closeButton: page.getByRole("button", {

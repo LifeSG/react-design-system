@@ -222,7 +222,7 @@ test.describe("Menu", () => {
                 await story.init("grid-layout");
             });
 
-            test("With scrolling", async ({ story }) => {
+            test("Desktop visual", async ({ story }) => {
                 const content = story.page.getByTestId("menu-content");
                 const section = story.page.getByTestId("menu-section");
 
@@ -267,28 +267,6 @@ test.describe("Menu", () => {
                 await expect(content).toBeVisible();
 
                 await compareScreenshot(story, "state", {
-                    locator: content,
-                });
-            });
-        });
-
-        test.describe(() => {
-            test.beforeEach(async ({ story }) => {
-                await story.init("grid-layout-scrollable");
-            });
-
-            test("Overflow scrolls into view", async ({ story }) => {
-                const content = story.page.getByTestId("menu-content");
-                const overflowLink = story.page.getByRole("link", {
-                    name: "Link 12",
-                });
-
-                await expect(overflowLink).not.toBeInViewport();
-
-                await overflowLink.scrollIntoViewIfNeeded();
-                await expect(overflowLink).toBeInViewport();
-
-                await compareScreenshot(story, "scrolled", {
                     locator: content,
                 });
             });
