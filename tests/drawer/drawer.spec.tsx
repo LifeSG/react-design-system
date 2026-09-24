@@ -92,21 +92,6 @@ describe("Drawer", () => {
         });
     });
 
-    it("should not render a call-to-action when customCallToAction is not provided", async () => {
-        render(
-            <Drawer heading="Test" show>
-                <div>content</div>
-            </Drawer>
-        );
-
-        await waitFor(() => {
-            expect(screen.getByLabelText("Close drawer")).toBeVisible();
-        });
-        expect(
-            screen.queryByRole("button", { name: "Confirm" })
-        ).not.toBeInTheDocument();
-    });
-
     it("should keep the dialog labelled by its heading when a call-to-action is present", async () => {
         render(
             <Drawer

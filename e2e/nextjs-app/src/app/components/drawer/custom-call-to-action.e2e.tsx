@@ -20,7 +20,7 @@ export default function Story() {
                 onClose={() => setShow(false)}
                 onOverlayClick={() => setShow(false)}
                 customCallToAction={
-                    <>
+                    <div className={styles["cta"]}>
                         <Button onClick={() => setShow(false)}>
                             Save changes
                         </Button>
@@ -30,7 +30,7 @@ export default function Story() {
                         >
                             Cancel
                         </Button>
-                    </>
+                    </div>
                 }
             >
                 <div className={styles["content"]}>

@@ -46,50 +46,6 @@ export const Default: StoryObj<Component> = {
     },
 };
 
-export const WithCustomCallToAction: StoryObj<Component> = {
-    render: () => {
-        const [show, setShow] = useState(false);
-        const openDrawer = () => setShow(true);
-        const closeDrawer = () => setShow(false);
-        return (
-            <>
-                <Button.Default onClick={openDrawer}>
-                    Open drawer
-                </Button.Default>
-                <Drawer
-                    show={show}
-                    onClose={closeDrawer}
-                    onOverlayClick={closeDrawer}
-                    heading="Header text"
-                    customCallToAction={
-                        <>
-                            <Button.Default onClick={closeDrawer}>
-                                Confirm
-                            </Button.Default>
-                            <Button.Default
-                                styleType="light"
-                                onClick={closeDrawer}
-                            >
-                                Cancel
-                            </Button.Default>
-                        </>
-                    }
-                >
-                    <div style={{ padding: "1rem" }}>
-                        <Typography.BodyBL>
-                            The call-to-action buttons sit beside the heading
-                            when the drawer is wide, and wrap onto a new line
-                            below the heading when the drawer is narrow. Resize
-                            the window to see the layout respond to the drawer
-                            width.
-                        </Typography.BodyBL>
-                    </div>
-                </Drawer>
-            </>
-        );
-    },
-};
-
 export const HandlingContentOverflow: StoryObj<Component> = {
     render: () => {
         const [show, setShow] = useState(false);
@@ -122,6 +78,50 @@ export const HandlingContentOverflow: StoryObj<Component> = {
                         </Typography.BodyBL>
                         <Typography.BodyBL>
                             This line marks the end of content.
+                        </Typography.BodyBL>
+                    </div>
+                </Drawer>
+            </>
+        );
+    },
+};
+
+export const WithCustomCallToAction: StoryObj<Component> = {
+    render: () => {
+        const [show, setShow] = useState(false);
+        const openDrawer = () => setShow(true);
+        const closeDrawer = () => setShow(false);
+        return (
+            <>
+                <Button.Default onClick={openDrawer}>
+                    Open drawer
+                </Button.Default>
+                <Drawer
+                    show={show}
+                    onClose={closeDrawer}
+                    onOverlayClick={closeDrawer}
+                    heading="Header text"
+                    customCallToAction={
+                        <div style={{ display: "flex", gap: "1rem" }}>
+                            <Button.Default onClick={closeDrawer}>
+                                Confirm
+                            </Button.Default>
+                            <Button.Default
+                                styleType="light"
+                                onClick={closeDrawer}
+                            >
+                                Cancel
+                            </Button.Default>
+                        </div>
+                    }
+                >
+                    <div style={{ padding: "1rem" }}>
+                        <Typography.BodyBL>
+                            The call-to-action buttons sit beside the heading
+                            when the drawer is wide, and wrap onto a new line
+                            below the heading when the drawer is narrow. Resize
+                            the window to see the layout respond to the drawer
+                            width.
                         </Typography.BodyBL>
                     </div>
                 </Drawer>

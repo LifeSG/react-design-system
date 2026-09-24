@@ -1,13 +1,12 @@
 import { DocIcon } from "@lifesg/react-icons/doc";
-import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { PencilIcon } from "@lifesg/react-icons/pencil";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
-import { Colour, ThemeProvider, useMaxWidthMediaQuery } from "src";
+import { ThemeProvider, useMaxWidthMediaQuery } from "src";
 import type { LocalNavItemProps } from "src/local-nav";
 import { LocalNavDropdown, LocalNavMenu } from "src/local-nav";
 
-import { Content, Page, TopContent } from "./doc-elements";
+import { Content, ErrorIndicator, Page, TopContent } from "./doc-elements";
 
 type MenuComponent = typeof LocalNavMenu;
 type DropdownComponent = typeof LocalNavDropdown;
@@ -87,18 +86,6 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
         );
     },
 };
-
-// A red status pill flushed to the right of an item, e.g. to flag errors.
-const ErrorIndicator = () => (
-    <ExclamationCircleFillIcon
-        aria-label="Has errors"
-        style={{
-            color: Colour["icon-error"],
-            width: "1.25rem",
-            height: "1.25rem",
-        }}
-    />
-);
 
 // One item per combination: left + right, left only, right only.
 const ADDON_ITEMS: LocalNavItemProps[] = [

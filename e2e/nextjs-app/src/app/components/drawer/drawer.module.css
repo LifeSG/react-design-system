@@ -2,6 +2,12 @@
     padding: 1rem;
 }
 
+.cta {
+    display: flex;
+    gap: 1rem;
+    white-space: nowrap;
+}
+
 .item-margin-bottom {
     margin-bottom: 1rem;
 }
