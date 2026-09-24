@@ -265,6 +265,16 @@ export const LabelTruncation: StoryObj<Component> = {
                     })}
                     variant="small"
                 />
+                <Form.Select
+                    label="This has no truncation"
+                    optionTruncationType="none"
+                    options={options}
+                    listExtractor={(item) => ({
+                        title: item,
+                        secondaryLabel: item,
+                    })}
+                    variant="small"
+                />
             </>
         );
     },
