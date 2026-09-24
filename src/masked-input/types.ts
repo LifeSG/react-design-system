@@ -74,8 +74,7 @@ export interface MaskedInputProps extends InputProps, MaskAttributeProps {
      */
     iconInactiveColor?: string | undefined;
     /**
-     * When `true`, masking is permanently disabled and the raw value is
-     * always shown. The toggle icon is not rendered.
+     * When `true`, the value is permanently unmasked.
      *
      * @default false
      */
