@@ -29,6 +29,8 @@ class StoryPage extends AbstractStoryPage {
         truncation: {
             middle: Locator;
             end: Locator;
+            none: Locator;
+            noneWithSublabel: Locator;
         };
         variants: {
             default: Locator;
@@ -74,6 +76,10 @@ class StoryPage extends AbstractStoryPage {
             truncation: {
                 middle: page.getByTestId("input-select-truncation-middle"),
                 end: page.getByTestId("input-select-truncation-end"),
+                none: page.getByTestId("input-select-truncation-none"),
+                noneWithSublabel: page.getByTestId(
+                    "input-select-truncation-none-sublabel"
+                ),
             },
             variants: {
                 default: page.getByTestId("input-select-small-default"),
@@ -324,6 +330,22 @@ test.describe("InputSelect", () => {
 
             await story.openDropdown(story.locators.truncation.end);
             await compareScreenshot(story, "open-end", {
+                fullscreen: true,
+            });
+
+            await story.page.mouse.click(0, 0);
+
+            await story.openDropdown(story.locators.truncation.none);
+            await compareScreenshot(story, "open-none", {
+                fullscreen: true,
+            });
+
+            await story.page.mouse.click(0, 0);
+
+            await story.openDropdown(
+                story.locators.truncation.noneWithSublabel
+            );
+            await compareScreenshot(story, "open-none-sublabel", {
                 fullscreen: true,
             });
         });
