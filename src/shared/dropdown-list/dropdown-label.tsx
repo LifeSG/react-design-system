@@ -6,7 +6,11 @@ import { Font } from "../../theme";
 import { useApplyStyle } from "../../theme/utils/use-apply-styles";
 import { StringHelper } from "../../util/string-helper";
 import * as styles from "./dropdown-label.styles";
-import type { DropdownVariantType, LabelDisplayType } from "./types";
+import type {
+    DropdownVariantType,
+    LabelDisplayType,
+    TruncateType,
+} from "./types";
 
 interface DropdownLabelProps {
     bold?: boolean | undefined;
@@ -17,7 +21,7 @@ interface DropdownLabelProps {
     selected?: boolean | undefined;
     disabled?: boolean | undefined;
     sublabel?: string | undefined;
-    truncationType?: "middle" | "end" | undefined;
+    truncationType?: TruncateType | undefined;
     variant?: DropdownVariantType | undefined;
 }
 
@@ -40,15 +44,21 @@ export const DropdownLabel = ({
     const fontFamily = Font.Spec["font-family-body"];
     const { ref, width } = useResizeDetector();
 
+    const noTruncation = truncationType === "none";
+
     const primaryTextRef = useRef<HTMLDivElement>(null);
     const secondaryTextRef = useRef<HTMLDivElement>(null);
 
     useApplyStyle(primaryTextRef, {
-        [styles.tokens.primaryText.maxLines]: String(maxLines),
+        [styles.tokens.primaryText.maxLines]: noTruncation
+            ? null
+            : String(maxLines),
     });
 
     useApplyStyle(secondaryTextRef, {
-        [styles.tokens.secondaryText.maxLines]: String(maxLines),
+        [styles.tokens.secondaryText.maxLines]: noTruncation
+            ? null
+            : String(maxLines),
     });
 
     // =========================================================================
@@ -56,7 +66,7 @@ export const DropdownLabel = ({
     // =========================================================================
     const hasExceededContainer = useCallback(
         (displayText: string) => {
-            if (displayType !== "inline" || !width) {
+            if (noTruncation || displayType !== "inline" || !width) {
                 return false;
             }
 
@@ -72,7 +82,7 @@ export const DropdownLabel = ({
             // arbitary offset is applied
             return textWidth > width - 50;
         },
-        [width, displayType, fontSize, fontFamily]
+        [noTruncation, width, displayType, fontSize, fontFamily]
     );
 
     // =========================================================================

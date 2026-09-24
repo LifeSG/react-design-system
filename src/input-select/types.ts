@@ -28,6 +28,7 @@ export interface InputSelectOptionsProps<T> {
     optionsLoadState?: ItemsLoadStateType | undefined;
     /**
      * Controls how long option labels are truncated when they overflow.
+     * Specify `"none"` to display option labels in full.
      *
      * @default "end"
      */

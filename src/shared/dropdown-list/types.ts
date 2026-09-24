@@ -6,8 +6,9 @@
  *
  * - `"middle"` trims the centre of the text.
  * - `"end"` trims from the right.
+ * - `"none"` disables truncation, the text wraps and is displayed in full.
  */
-export type TruncateType = "middle" | "end";
+export type TruncateType = "middle" | "end" | "none";
 /**
  * Async load state for dropdown items.
  *
@@ -94,7 +95,10 @@ export interface DropdownConfigProps {
     itemsLoadState?: ItemsLoadStateType | undefined;
     /** How overflowing item text is truncated. */
     itemTruncationType?: TruncateType | undefined;
-    /** Maximum visible lines before the label is truncated (applies to `"end"` truncation). */
+    /**
+     * Maximum visible lines before the label is truncated (applies to `"end"`
+     * truncation). Ignored when `itemTruncationType` is `"none"`.
+     */
     itemMaxLines?: number | undefined;
     /** Visual size variant for the dropdown items. */
     variant?: DropdownVariantType | undefined;

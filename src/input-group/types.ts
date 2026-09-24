@@ -70,7 +70,10 @@ export interface ListAddon<T, V>
     onSelectOption?: ((option: T, extractedValue: T | V) => void) | undefined;
     /** Indicates the async load state of the options list. */
     optionsLoadState?: ItemsLoadStateType | undefined;
-    /** Controls how long option labels are truncated when they overflow. */
+    /**
+     * Controls how long option labels are truncated when they overflow.
+     * Specify `"none"` to display option labels in full.
+     */
     optionTruncationType?: TruncateType | undefined;
     /** Called when the user activates the retry action while `optionsLoadState` is `"fail"`. */
     onRetry?: (() => void) | undefined;
