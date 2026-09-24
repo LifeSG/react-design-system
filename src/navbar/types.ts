@@ -12,17 +12,14 @@ export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
     itemType?: "link";
     subMenu?: NavItemCommonProps<T>[] | undefined;
     /**
-     * Renders `subMenu` as a multi-column grid on desktop instead of a single
-     * vertical list. `columns` sets the number of grid columns; `rows` sets
-     * the maximum rows visible before the panel becomes scrollable.
+     * Renders `subMenu` as a multi-column layout on desktop. Items flow
+     * vertically (top-to-bottom) within each column before wrapping to the
+     * next. Has no effect on the mobile drawer, which always renders `subMenu`
+     * as an expandable vertical list.
      *
-     * Has no effect on the mobile drawer, which always renders `subMenu` as
-     * an expandable vertical list.
-     *
-     * @minimum columns 1
-     * @minimum rows 1
+     * @minimum 1
      */
-    subMenuGridLayout?: { columns: number; rows: number } | undefined;
+    subMenuColumns?: number | undefined;
 }
 /**
  * Props for a custom component slot navigation item.

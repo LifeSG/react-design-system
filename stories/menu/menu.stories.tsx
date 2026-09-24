@@ -64,10 +64,7 @@ export const MultipleSections: StoryObj<Component> = {
                     <Menu.Link href="https://www.google.com">Link B</Menu.Link>
                     <Menu.Link href="https://www.google.com">Link C</Menu.Link>
                 </Menu.Section>
-                <Menu.Section
-                    label="All services"
-                    gridLayout={{ columns: 2, rows: 3 }}
-                >
+                <Menu.Section label="All services" columns={2}>
                     <Menu.Link href="https://www.google.com">Link 1</Menu.Link>
                     <Menu.Link href="https://www.google.com">Link 2</Menu.Link>
                     <Menu.Link href="https://www.google.com">Link 3</Menu.Link>
@@ -85,10 +82,7 @@ export const GridLayout: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Menu.Content>
-                <Menu.Section
-                    showDivider={false}
-                    gridLayout={{ columns: 2, rows: 3 }}
-                >
+                <Menu.Section showDivider={false} columns={2}>
                     <Menu.Link href="https://www.google.com">Link 1</Menu.Link>
                     <Menu.Link href="https://www.google.com">Link 2</Menu.Link>
                     <Menu.Link href="https://www.google.com">Link 3</Menu.Link>
@@ -107,10 +101,7 @@ export const GridLayoutWithLabel: StoryObj<Component> = {
     render: (_args) => {
         return (
             <Menu.Content>
-                <Menu.Section
-                    label="Category"
-                    gridLayout={{ columns: 2, rows: 2 }}
-                >
+                <Menu.Section label="Category" columns={2}>
                     <Menu.Link href="https://www.google.com">Link 1</Menu.Link>
                     <Menu.Link href="https://www.google.com">Link 2</Menu.Link>
                     <Menu.Link href="https://www.google.com">Link 3</Menu.Link>

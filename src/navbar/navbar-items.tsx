@@ -134,13 +134,10 @@ export const NavbarItems = <T,>({
     const renderDesktopSubMenu = (
         subMenu: NavItemCommonProps<T>[],
         subMenuId: string,
-        gridLayout?: { columns: number; rows: number }
+        columns?: number
     ) => (
         <DesktopMenu.Content id={subMenuId}>
-            <DesktopMenu.Section
-                showDivider={false}
-                {...(gridLayout ? { gridLayout } : {})}
-            >
+            <DesktopMenu.Section showDivider={false} columns={columns}>
                 {subMenu.map((item, subIndex) => (
                     <DesktopMenu.Link
                         key={`${item.id}-${subIndex}`}
@@ -166,7 +163,7 @@ export const NavbarItems = <T,>({
             children,
             options,
             subMenu,
-            subMenuGridLayout,
+            subMenuColumns,
             ...otherItemAttrs
         } = item;
 
@@ -289,8 +286,9 @@ export const NavbarItems = <T,>({
                     menuContent={renderDesktopSubMenu(
                         subMenu!,
                         subMenuId,
-                        subMenuGridLayout
+                        subMenuColumns
                     )}
+                    enableResize
                     triggerOnFocus
                     isModal={false}
                     onPopoverAppear={() => {

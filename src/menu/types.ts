@@ -63,15 +63,13 @@ export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
      */
     showDivider?: boolean | undefined;
     /**
-     * Renders items in a CSS grid layout on desktop.
-     * `columns` sets the number of grid columns; `rows` sets the maximum
-     * number of rows visible before the panel becomes scrollable.
-     * Ignored at <=lg breakpoints where a single-column list is always used.
+     * Renders `subMenu` as a multi-column layout on desktop.
+     * Items flow vertically (top-to-bottom per column).
+     * Has no effect on the mobile drawer.
      *
-     * @minimum columns 1
-     * @minimum rows 1
+     * @minimum 1
      */
-    gridLayout?: { columns: number; rows: number } | undefined;
+    columns?: number | undefined;
     /**
      * Accessible group label rendered above the section items.
      */

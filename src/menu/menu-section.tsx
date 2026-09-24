@@ -1,10 +1,9 @@
 import clsx from "clsx";
-import { Children, useCallback, useMemo, useRef } from "react";
-import { useResizeDetector } from "react-resize-detector";
+import { Children, useMemo, useRef } from "react";
 
 import { useApplyStyle } from "../theme";
 import { Typography } from "../typography";
-import { useId, useIsomorphicLayoutEffect } from "../util";
+import { useId } from "../util";
 import * as styles from "./menu-section.styles";
 import type { MenuSectionProps } from "./types";
 
@@ -13,7 +12,7 @@ export const MenuSection = ({
     label,
     showDivider = true,
     className,
-    gridLayout,
+    columns,
     "data-testid": testId = "menu-section",
     ...otherProps
 }: MenuSectionProps): JSX.Element => {
@@ -26,60 +25,20 @@ export const MenuSection = ({
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
-    const childCount = Children.count(children);
-    const gridColumns = gridLayout?.columns;
-    const gridRows = gridLayout?.rows;
-
-    const gridRowStyles = useMemo(
+    const gridRows = useMemo(
         () =>
-            gridRows !== undefined
-                ? { [styles.gridTokens.rows]: String(gridRows) }
+            columns !== undefined
+                ? Math.ceil(Children.count(children) / columns)
                 : undefined,
-        [gridRows]
+        [columns, children]
     );
-    useApplyStyle(ulRef, gridRowStyles);
 
-    const applyMaxWidth = useCallback(() => {
-        if (gridColumns === undefined || gridRows === undefined) return;
-        const grid = ulRef.current;
-        if (!grid) return;
-
-        const visibleCount = gridRows * gridColumns;
-        if (childCount <= visibleCount) {
-            grid.style.removeProperty(styles.gridTokens.maxWidth);
-            return;
-        }
-
-        const listItems = Array.from(grid.children).filter(
-            (el) => el.tagName === "LI"
-        ) as HTMLElement[];
-        const boundaryItem = listItems[visibleCount];
-        if (!boundaryItem) return;
-
-        const columnGap = parseFloat(getComputedStyle(grid).columnGap) || 0;
-        const visibleWidth =
-            boundaryItem.getBoundingClientRect().left -
-            grid.getBoundingClientRect().left -
-            columnGap / 2;
-
-        grid.style.setProperty(styles.gridTokens.maxWidth, `${visibleWidth}px`);
-    }, [gridColumns, gridRows, childCount]);
-
-    // =========================================================================
-    // EFFECTS
-    // =========================================================================
-    useIsomorphicLayoutEffect(() => {
-        applyMaxWidth();
-    }, [applyMaxWidth]);
-
-    useResizeDetector({
-        handleWidth: true,
-        handleHeight: false,
-        skipOnMount: true,
-        refreshMode: "throttle",
-        targetRef: ulRef,
-        onResize: applyMaxWidth,
-    });
+    useApplyStyle(
+        ulRef,
+        gridRows !== undefined
+            ? { [styles.gridTokens.rows]: String(gridRows) }
+            : undefined
+    );
 
     // =============================================================================
     // RENDER FUNCTIONS
@@ -94,9 +53,9 @@ export const MenuSection = ({
         </Typography.BodyXS>
     ) : null;
 
-    // When gridLayout + label: render label outside the <ul> so it is never
-    // a grid item. The <ul> is the CSS grid container and must only hold <li>s.
-    if (gridLayout && label) {
+    // When columns + label: render label outside the <ul> so it is never
+    // a grid item and always spans full width above the columns.
+    if (columns && label) {
         return (
             <div
                 className={clsx(
@@ -110,7 +69,7 @@ export const MenuSection = ({
                     ref={ulRef}
                     data-testid={testId}
                     aria-labelledby={internalId}
-                    className={styles.grid}
+                    className={styles.columns}
                     {...otherProps}
                 >
                     {children}
@@ -127,7 +86,7 @@ export const MenuSection = ({
             className={clsx(
                 styles.section,
                 showDivider && styles.sectionWithDivider,
-                gridLayout && styles.grid,
+                columns && styles.columns,
                 className
             )}
             {...otherProps}

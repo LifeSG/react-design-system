@@ -402,7 +402,7 @@ export const SubMenuGrid: StoryObj<Component> = {
                         {
                             id: "guides",
                             children: "Guides",
-                            subMenuGridLayout: { columns: 2, rows: 6 },
+                            subMenuColumns: 2,
                             subMenu: [
                                 {
                                     id: "guides-item-1",
@@ -617,7 +617,7 @@ export const SubMenuGrid: StoryObj<Component> = {
                         {
                             id: "lifesg-app",
                             children: "LifeSG app",
-                            subMenuGridLayout: { columns: 3, rows: 2 },
+                            subMenuColumns: 3,
                             subMenu: [
                                 {
                                     id: "app-item-1",

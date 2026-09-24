@@ -1,11 +1,9 @@
 import { css } from "@linaria/core";
 
-import { scrollbarCss } from "../shared/styles";
 import { Border, Colour, MediaQuery, Spacing } from "../theme/tokens";
 
 export const gridTokens = {
     rows: "--fds-menu-section-grid-rows",
-    maxWidth: "--fds-menu-section-grid-maxWidth",
 } as const;
 
 // 367px max content width (Figma) + 8px padding on each side; matches grid-auto-columns below
@@ -27,24 +25,17 @@ export const label = css`
     color: ${Colour["text-subtler"]};
 `;
 
-export const grid = css`
+export const columns = css`
     ${gridTokens.rows}: initial;
-    ${gridTokens.maxWidth}: initial;
 
     display: grid;
     grid-template-rows: repeat(var(${gridTokens.rows}), auto);
     grid-auto-flow: column;
-    grid-auto-columns: ${GRID_COLUMN_WIDTH_PX}px;
+    grid-auto-columns: minmax(0, 1fr);
     column-gap: ${Spacing["spacing-8"]};
-
-    max-width: var(${gridTokens.maxWidth});
-    overflow-x: auto;
-
-    ${scrollbarCss("horizontal")}
 
     ${MediaQuery.MaxWidth.lg} {
         grid-template-rows: none;
         grid-auto-flow: row;
-        max-width: none;
     }
 `;

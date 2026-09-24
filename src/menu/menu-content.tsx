@@ -42,13 +42,9 @@ export const MenuContent = ({
             .filter(
                 (child): child is ReactElement<MenuSectionProps> =>
                     isValidElement(child) &&
-                    !!(child.props as MenuSectionProps).gridLayout
+                    !!(child.props as MenuSectionProps).columns
             )
-            .reduce(
-                (max, child) =>
-                    Math.max(max, child.props.gridLayout?.columns ?? 0),
-                0
-            );
+            .reduce((max, child) => Math.max(max, child.props.columns ?? 0), 0);
         if (!maxColumns) return undefined;
         return (
             maxColumns * sectionStyles.GRID_COLUMN_WIDTH_PX +
