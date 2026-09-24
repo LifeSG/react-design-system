@@ -63,7 +63,7 @@ export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
      */
     showDivider?: boolean | undefined;
     /**
-     * Renders section children in a CSS grid with the given number of columns
+     * Renders section children in a grid with the given number of columns
      * on desktop. Items flow vertically (top-to-bottom) within each column
      * before wrapping to the next. Has no effect on mobile viewports, which
      * always render as a single column.
