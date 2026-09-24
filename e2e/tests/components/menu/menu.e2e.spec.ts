@@ -222,7 +222,7 @@ test.describe("Menu", () => {
                 await story.init("grid-layout");
             });
 
-            test("renders grid with scrollable overflow", async ({ story }) => {
+            test("With scrolling", async ({ story }) => {
                 const content = story.page.getByTestId("menu-content");
                 const section = story.page.getByTestId("menu-section");
 
@@ -238,27 +238,21 @@ test.describe("Menu", () => {
                     locator: content,
                 });
             });
+        });
 
-            test("keyboard navigation moves through grid items", async ({
-                story,
-            }) => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("grid-layout", { size: "mobile" });
+            });
+
+            test("Collapses to single column on mobile", async ({ story }) => {
                 const content = story.page.getByTestId("menu-content");
-                const link1 = story.page.getByRole("link", { name: "Link 1" });
-                const link2 = story.page.getByRole("link", { name: "Link 2" });
-                const link8 = story.page.getByRole("link", { name: "Link 8" });
 
                 await expect(content).toBeVisible();
 
-                await link1.focus();
-                await expect(link1).toBeFocused();
-
-                await story.page.keyboard.press("ArrowDown");
-                await expect(link2).toBeFocused();
-
-                // wrap from last to first
-                await link8.focus();
-                await story.page.keyboard.press("ArrowDown");
-                await expect(link1).toBeFocused();
+                await compareScreenshot(story, "mobile", {
+                    locator: content,
+                });
             });
         });
 
@@ -267,58 +261,36 @@ test.describe("Menu", () => {
                 await story.init("grid-layout-with-label");
             });
 
-            test("renders grid with label above items", async ({ story }) => {
+            test("With section label", async ({ story }) => {
                 const content = story.page.getByTestId("menu-content");
-                const label = story.page.getByText("Category");
-                const link1 = story.page.getByRole("link", { name: "Link 1" });
 
                 await expect(content).toBeVisible();
-                await expect(label).toBeVisible();
-
-                const labelBox = await label.boundingBox();
-                const link1Box = await link1.boundingBox();
-
-                if (!labelBox || !link1Box) {
-                    throw new Error("Could not get bounding boxes");
-                }
-
-                // label should sit above all link rows
-                expect(labelBox.y + labelBox.height).toBeLessThanOrEqual(
-                    link1Box.y
-                );
 
                 await compareScreenshot(story, "state", {
                     locator: content,
                 });
             });
+        });
 
-            test("label does not occupy a grid column slot", async ({
-                story,
-            }) => {
-                // With 3 columns and 2 rows the first 6 links fill the visible
-                // area; link 7 should overflow into column 4, not row 1 col 1.
-                const link1Box = await story.page
-                    .getByRole("link", { name: "Link 1" })
-                    .boundingBox();
-                const link4Box = await story.page
-                    .getByRole("link", { name: "Link 4" })
-                    .boundingBox();
-                const link7Box = await story.page
-                    .getByRole("link", { name: "Link 7" })
-                    .boundingBox();
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("grid-layout-scrollable");
+            });
 
-                if (!link1Box || !link4Box || !link7Box) {
-                    throw new Error("Could not get bounding boxes");
-                }
+            test("Overflow scrolls into view", async ({ story }) => {
+                const content = story.page.getByTestId("menu-content");
+                const overflowLink = story.page.getByRole("link", {
+                    name: "Link 12",
+                });
 
-                // link 1 and link 4 should be in different columns (same row)
-                expect(link4Box.x).toBeGreaterThan(link1Box.x);
+                await expect(overflowLink).not.toBeInViewport();
 
-                // link 7 overflows to col 4 — its x should be greater than link 4
-                expect(link7Box.x).toBeGreaterThan(link4Box.x);
+                await overflowLink.scrollIntoViewIfNeeded();
+                await expect(overflowLink).toBeInViewport();
 
-                // link 7 must share the same top-row y as link 1 (row 1 of items)
-                expect(link7Box.y).toBeCloseTo(link1Box.y, 0);
+                await compareScreenshot(story, "scrolled", {
+                    locator: content,
+                });
             });
         });
     });

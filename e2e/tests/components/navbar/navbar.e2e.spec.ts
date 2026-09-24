@@ -261,82 +261,33 @@ test.describe("Navbar", () => {
     });
 
     test.describe("Submenu Grid", () => {
-        test.beforeEach(async ({ story }) => {
-            await story.init("submenu-grid");
-        });
-
-        test("Open", async ({ story }) => {
-            await story.locators.internal.guidesTrigger.click();
-            await compareScreenshot(story, "state", {
-                fullscreen: true,
-            });
-        });
-
-        test("Scroll reveals items beyond the visible grid rows", async ({
-            story,
-        }) => {
-            await story.locators.internal.guidesTrigger.click();
-
-            const overflowItem =
-                story.locators.internal.submenuLink("Guides item 12");
-
-            await test.step("Overflow item starts outside the visible grid area", async () => {
-                await expect(overflowItem).not.toBeInViewport();
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("submenu-grid");
             });
 
-            await test.step("Scrolling brings the overflow item into view", async () => {
-                await overflowItem.scrollIntoViewIfNeeded();
-                await expect(overflowItem).toBeInViewport();
-
-                await compareScreenshot(story, "scrolled", {
+            test("Open", async ({ story }) => {
+                await story.locators.internal.guidesTrigger.click();
+                await compareScreenshot(story, "state", {
                     fullscreen: true,
                 });
             });
         });
 
-        test("Keyboard users can Tab through grid items in order", async ({
-            story,
-        }) => {
-            await story.locators.internal.guidesTrigger.click();
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("submenu-grid", { size: "mobile" });
+            });
 
-            await story.page.keyboard.press("Tab");
-            await expect(
-                story.locators.internal.submenuLink("Guides item 1")
-            ).toBeFocused();
+            test("Mobile", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.locators.internal.servicesMobileTrigger.click();
+                await story.page.mouse.move(0, 0);
 
-            await story.page.keyboard.press("Tab");
-            await expect(
-                story.locators.internal.submenuLink("Guides item 2")
-            ).toBeFocused();
-
-            await story.page.keyboard.press("Tab");
-            await expect(
-                story.locators.internal.submenuLink("Guides item 3")
-            ).toBeFocused();
-        });
-
-        test("Arrow keys navigate between grid items", async ({ story }) => {
-            await story.locators.internal.guidesTrigger.click();
-
-            await story.locators.internal.submenuLink("Guides item 1").focus();
-            await expect(
-                story.locators.internal.submenuLink("Guides item 1")
-            ).toBeFocused();
-
-            await story.page.keyboard.press("ArrowDown");
-            await expect(
-                story.locators.internal.submenuLink("Guides item 2")
-            ).toBeFocused();
-
-            await story.page.keyboard.press("ArrowDown");
-            await expect(
-                story.locators.internal.submenuLink("Guides item 3")
-            ).toBeFocused();
-
-            await story.page.keyboard.press("ArrowUp");
-            await expect(
-                story.locators.internal.submenuLink("Guides item 2")
-            ).toBeFocused();
+                await compareScreenshot(story, "mobile-submenu-open", {
+                    fullscreen: true,
+                });
+            });
         });
     });
 

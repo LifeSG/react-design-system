@@ -21,10 +21,6 @@ export const MenuSection = ({
     // =============================================================================
     const internalId = useId();
     const ulRef = useRef<HTMLUListElement>(null);
-
-    // =========================================================================
-    // HELPER FUNCTIONS
-    // =========================================================================
     const gridRows = useMemo(
         () =>
             columns !== undefined
@@ -33,6 +29,9 @@ export const MenuSection = ({
         [columns, children]
     );
 
+    // =========================================================================
+    // EFFECTS
+    // =========================================================================
     useApplyStyle(
         ulRef,
         gridRows !== undefined

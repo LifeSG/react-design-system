@@ -45,9 +45,15 @@ Sections with different layouts can be combined in a single `Menu.Content`. In t
 
 ## Grid layout with label
 
-A section label can be combined with `gridLayout`. The label spans the full width above the grid columns.
+A section label can be combined with `columns`. The label spans the full width above the grid columns.
 
 <Canvas of={MenuStories.GridLayoutWithLabel} />
+
+## Grid layout with overflow scroll
+
+When the panel height is constrained (e.g. via `maxHeight`), items that overflow are accessible by scrolling.
+
+<Canvas of={MenuStories.GridLayoutScrollable} />
 
 ## Resize and flip
 

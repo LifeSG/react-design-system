@@ -1,6 +1,7 @@
 import "@testing-library/jest-dom";
 
 import { fireEvent, render, screen } from "@testing-library/react";
+import userEvent from "@testing-library/user-event";
 import { Menu } from "src/menu";
 
 describe("Menu", () => {
@@ -183,6 +184,31 @@ describe("Menu", () => {
 
             expect(event).toBe(true);
             expect(a).toHaveFocus();
+        });
+
+        it("should move focus through grid items in DOM order with Tab", async () => {
+            const { getByRole } = render(
+                <Menu.Content data-testid="menu-content">
+                    <Menu.Section showDivider={false} columns={2}>
+                        <Menu.Link href="#1">Item 1</Menu.Link>
+                        <Menu.Link href="#2">Item 2</Menu.Link>
+                        <Menu.Link href="#3">Item 3</Menu.Link>
+                    </Menu.Section>
+                </Menu.Content>
+            );
+
+            const item1 = getByRole("link", { name: "Item 1" });
+            const item2 = getByRole("link", { name: "Item 2" });
+            const item3 = getByRole("link", { name: "Item 3" });
+
+            item1.focus();
+            expect(item1).toHaveFocus();
+
+            await userEvent.tab();
+            expect(item2).toHaveFocus();
+
+            await userEvent.tab();
+            expect(item3).toHaveFocus();
         });
     });
 

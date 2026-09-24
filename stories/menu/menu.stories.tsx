@@ -115,6 +115,22 @@ export const GridLayoutWithLabel: StoryObj<Component> = {
     },
 };
 
+export const GridLayoutScrollable: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Menu.Content maxHeight={200} overflow="auto">
+                <Menu.Section showDivider={false} columns={2}>
+                    {Array.from({ length: 12 }, (_, i) => (
+                        <Menu.Link key={i} href="https://www.google.com">
+                            Link {i + 1}
+                        </Menu.Link>
+                    ))}
+                </Menu.Section>
+            </Menu.Content>
+        );
+    },
+};
+
 export const ResizeAndFlip: StoryObj<Component> = {
     args: {
         menuContent: menuContent,
