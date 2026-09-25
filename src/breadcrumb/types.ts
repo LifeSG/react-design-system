@@ -1,20 +1,10 @@
+import type { FadeColorSet } from "../shared/fade-wrapper";
+
+export type { FadeColorSet };
+
 export type FadePosition = "left" | "right" | "both";
 
 export type SeparatorStyle = "chevron" | "slash";
-
-/**
- * Gradient color values for the fade overlays in the breadcrumb scroll container.
- */
-export interface FadeColorSet {
-    /**
-     * Gradient color stops for the left fade overlay.
-     */
-    left?: string[] | undefined;
-    /**
-     * Gradient color stops for the right fade overlay.
-     */
-    right?: string[] | undefined;
-}
 
 /** Props for the `Breadcrumb` component */
 export interface BreadcrumbProps {
