@@ -5,7 +5,7 @@ import { Colour, Spacing } from "../theme/tokens";
 export const menuItemDiv = css`
     display: flex;
     flex-direction: column;
-    padding: ${Spacing["spacing-8"]} ${Spacing["spacing-16"]};
+    padding: ${Spacing["spacing-12"]} ${Spacing["spacing-16"]};
 `;
 
 export const text = css`

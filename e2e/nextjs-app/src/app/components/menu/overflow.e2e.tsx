@@ -5,7 +5,7 @@ import { Menu } from "@lifesg/react-design-system/menu";
 export default function Story() {
     return (
         <div className="story-column-container">
-            <Menu.Content maxHeight={160} overflow="auto">
+            <Menu.Content maxHeight={181} overflow="auto">
                 <Menu.Section showDivider={false} label="Overflow list">
                     <Menu.Link href="#item-1">Overflow item 1</Menu.Link>
                     <Menu.Link href="#item-2">Overflow item 2</Menu.Link>

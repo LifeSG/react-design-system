@@ -12,7 +12,6 @@ import type {
 } from "../popover";
 import type { MenuItem } from "./menu-item";
 import type { MenuLink } from "./menu-link";
-import type { MenuSection } from "./menu-section";
 
 // @storybookSection Menu
 /**
@@ -41,9 +40,7 @@ export interface MenuContentProps
     extends HTMLAttributes<HTMLDivElement>,
         PopoverRenderProps {
     /** One or more `Menu.Section` elements that make up the panel body. */
-    children:
-        | ReactElement<typeof MenuSection>
-        | ReactElement<typeof MenuSection>[];
+    children: ReactElement<MenuSectionProps> | ReactElement<MenuSectionProps>[];
     "data-testid"?: string | undefined;
 }
 
@@ -65,6 +62,15 @@ export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
      * @default true
      */
     showDivider?: boolean | undefined;
+    /**
+     * Renders section children in a grid with the given number of columns
+     * on desktop. Items flow vertically (top-to-bottom) within each column
+     * before wrapping to the next. Has no effect on mobile viewports, which
+     * always render as a single column.
+     *
+     * @minimum 1
+     */
+    columns?: number | undefined;
     /**
      * Accessible group label rendered above the section items.
      */

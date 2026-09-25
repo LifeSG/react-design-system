@@ -11,6 +11,15 @@ import type { TypographyLinkProps } from "../typography";
 export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
     itemType?: "link";
     subMenu?: NavItemCommonProps<T>[] | undefined;
+    /**
+     * Renders `subMenu` as a multi-column layout on desktop. Items flow
+     * vertically (top-to-bottom) within each column before wrapping to the
+     * next. Has no effect on the mobile drawer, which always renders `subMenu`
+     * as an expandable vertical list.
+     *
+     * @minimum 1
+     */
+    subMenuColumns?: number | undefined;
 }
 /**
  * Props for a custom component slot navigation item.

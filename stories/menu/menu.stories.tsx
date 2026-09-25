@@ -55,6 +55,41 @@ export const MenuContent: StoryObj<Component> = {
     },
 };
 
+export const GridLayout: StoryObj<Component> = {
+    render: (_args) => {
+        return (
+            <Menu.Content maxHeight={200} overflow="auto">
+                <Menu.Section
+                    label="2 column layout"
+                    showDivider={false}
+                    columns={2}
+                >
+                    <Menu.Link href="https://www.google.com">Link 1</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 2</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 3</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 4</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 5</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 6</Menu.Link>
+                    <Menu.Item>Item 1</Menu.Item>
+                    <Menu.Item>Item 2</Menu.Item>
+                </Menu.Section>
+                <Menu.Section label="3 column layout" columns={3}>
+                    <Menu.Link href="https://www.google.com">Link 1</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 2</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 3</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 4</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 5</Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 6</Menu.Link>
+                    <Menu.Link href="https://www.google.com">
+                        Link 7 (longer)
+                    </Menu.Link>
+                    <Menu.Link href="https://www.google.com">Link 8</Menu.Link>
+                </Menu.Section>
+            </Menu.Content>
+        );
+    },
+};
+
 export const ResizeAndFlip: StoryObj<Component> = {
     args: {
         menuContent: menuContent,

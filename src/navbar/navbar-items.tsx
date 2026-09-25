@@ -133,10 +133,11 @@ export const NavbarItems = <T,>({
     // =============================================================================
     const renderDesktopSubMenu = (
         subMenu: NavItemCommonProps<T>[],
-        subMenuId: string
+        subMenuId: string,
+        columns?: number
     ) => (
         <DesktopMenu.Content id={subMenuId}>
-            <DesktopMenu.Section showDivider={false}>
+            <DesktopMenu.Section showDivider={false} columns={columns}>
                 {subMenu.map((item, subIndex) => (
                     <DesktopMenu.Link
                         key={`${item.id}-${subIndex}`}
@@ -158,7 +159,13 @@ export const NavbarItems = <T,>({
     );
 
     const renderLinkItem = (item: NavItemLinkProps<T>, index: number) => {
-        const { children, options, subMenu, ...otherItemAttrs } = item;
+        const {
+            children,
+            options,
+            subMenu,
+            subMenuColumns,
+            ...otherItemAttrs
+        } = item;
 
         const hasSubMenu = !!subMenu?.length;
 
@@ -276,7 +283,12 @@ export const NavbarItems = <T,>({
                 <DesktopMenu
                     position={isLastItem ? "bottom-end" : "bottom"}
                     customOffset={0}
-                    menuContent={renderDesktopSubMenu(subMenu!, subMenuId)}
+                    menuContent={renderDesktopSubMenu(
+                        subMenu!,
+                        subMenuId,
+                        subMenuColumns
+                    )}
+                    enableResize
                     triggerOnFocus
                     isModal={false}
                     onPopoverAppear={() => {

@@ -22,7 +22,9 @@ class StoryPage extends AbstractStoryPage {
             mobileMenuButton: Locator;
             servicesTrigger: Locator;
             appTrigger: Locator;
+            guidesTrigger: Locator;
             servicesMobileTrigger: Locator;
+            guidesMobileTrigger: Locator;
             closeButton: Locator;
             drawer: Locator;
             drawerBrand: Locator;
@@ -47,7 +49,11 @@ class StoryPage extends AbstractStoryPage {
                 mobileMenuButton: page.getByTestId("button__mobile-menu"),
                 servicesTrigger: page.getByRole("button", { name: "Services" }),
                 appTrigger: page.getByRole("button", { name: "LifeSG app" }),
+                guidesTrigger: page.getByRole("button", { name: "Guides" }),
                 servicesMobileTrigger: page.getByTestId(
+                    "link__mobile-2-expand-collapse-button"
+                ),
+                guidesMobileTrigger: page.getByTestId(
                     "link__mobile-2-expand-collapse-button"
                 ),
                 closeButton: page.getByRole("button", {
@@ -61,7 +67,8 @@ class StoryPage extends AbstractStoryPage {
                     page.getByTestId(`menu__mobile-${index}`),
                 mobileNavLink: (index: number) =>
                     page.getByTestId(`link__mobile-${index}`),
-                submenuLink: (name: string) => page.getByRole("link", { name }),
+                submenuLink: (name: string) =>
+                    page.getByRole("link", { name, exact: true }),
                 downloadButton: page.getByTestId("action-button__download"),
                 mobileNav: page.getByRole("navigation", {
                     name: "Mobile navigation menu",
@@ -253,6 +260,37 @@ test.describe("Navbar", () => {
             await story.locators.internal.appTrigger.click();
             await compareScreenshot(story, "state", {
                 fullscreen: true,
+            });
+        });
+    });
+
+    test.describe("Submenu Grid", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("submenu-grid");
+            });
+
+            test("Open", async ({ story }) => {
+                await story.locators.internal.guidesTrigger.click();
+                await compareScreenshot(story, "state", {
+                    fullscreen: true,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("submenu-grid", { size: "mobile" });
+            });
+
+            test("Mobile", async ({ story }) => {
+                await story.openMobileDrawer();
+                await story.locators.internal.servicesMobileTrigger.click();
+                await story.page.mouse.move(0, 0);
+
+                await compareScreenshot(story, "mobile-submenu-open", {
+                    fullscreen: true,
+                });
             });
         });
     });

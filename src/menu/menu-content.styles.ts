@@ -1,5 +1,6 @@
 import { css } from "@linaria/core";
 
+import { scrollbarCss } from "../shared/styles";
 import {
     Border,
     Breakpoint,
@@ -13,6 +14,7 @@ export const tokens = {
     panel: {
         availableWidth: "--fds-internal-menu-panel-availableWidth",
         maxHeight: "--fds-internal-menu-panel-maxHeight",
+        maxWidth: "--fds-internal-menu-panel-maxWidth",
         overflow: "--fds-internal-menu-panel-overflow",
         xSpacing: "--fds-internal-menu-panel-xSpacing",
     },
@@ -25,6 +27,7 @@ export const panel = css`
     box-shadow: ${Shadow["md-subtle"]};
 
     ${tokens.panel.maxHeight}: initial;
+    ${tokens.panel.maxWidth}: initial;
     ${tokens.panel.overflow}: initial;
     ${tokens.panel.xSpacing}: 0px;
     ${tokens.panel.availableWidth}: calc(100vw - var(${tokens.panel
@@ -43,7 +46,10 @@ export const panel = css`
     }
 
     min-width: min(15rem, var(${tokens.panel.availableWidth}));
-    max-width: min(24rem, var(${tokens.panel.availableWidth}));
+    max-width: min(
+        var(${tokens.panel.maxWidth}, 24rem),
+        var(${tokens.panel.availableWidth})
+    );
     max-height: var(${tokens.panel.maxHeight});
     overflow-y: var(${tokens.panel.overflow});
 
@@ -51,18 +57,5 @@ export const panel = css`
         outline: none;
     }
 
-    &::-webkit-scrollbar {
-        width: 14px;
-    }
-
-    &::-webkit-scrollbar-track {
-        background: transparent;
-    }
-
-    &::-webkit-scrollbar-thumb {
-        background: ${Colour["bg-inverse-subtlest"]};
-        border: 5px solid transparent;
-        border-radius: ${Radius["full"]};
-        background-clip: padding-box;
-    }
+    ${scrollbarCss("vertical")}
 `;

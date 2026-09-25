@@ -72,3 +72,21 @@ export const navItemsWithSubmenu: NavItemProps<undefined>[] = [
         ],
     },
 ];
+
+export const navItemsWithSubmenuGrid: NavItemProps<undefined>[] = [
+    {
+        id: "home",
+        children: "Home",
+        href: "https://www.life.gov.sg",
+    },
+    {
+        id: "guides",
+        children: "Guides",
+        subMenuColumns: 3,
+        subMenu: Array.from({ length: 12 }, (_, index) => ({
+            id: `guides-item-${index + 1}`,
+            children: `Guides item ${index + 1}`,
+            href: "https://www.life.gov.sg",
+        })),
+    },
+];

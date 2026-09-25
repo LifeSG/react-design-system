@@ -94,8 +94,8 @@ test.describe("Menu", () => {
                   - listitem:
                     - paragraph: Jane Doe
                     - paragraph: jane.doe@example.gov.sg
+                - paragraph: Actions
                 - list "Actions":
-                  - paragraph: Actions
                   - listitem: Settings
                   - listitem:
                     - link "First link":
@@ -106,8 +106,8 @@ test.describe("Menu", () => {
                   - listitem:
                     - link "Third link":
                       - /url: "#third-link"
+                - paragraph: Resources
                 - list "Resources":
-                  - paragraph: Resources
                   - listitem:
                     - link "This is a long menu link title that should clamp across lines when the menu has limited width":
                       - /url: "#long-link"
@@ -214,5 +214,62 @@ test.describe("Menu", () => {
                 });
             });
         }
+    });
+
+    test.describe("Grid layout", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("grid-layout");
+            });
+
+            test("Desktop visual", async ({ story }) => {
+                const content = story.page.getByTestId("menu-content");
+                const section = story.page.getByTestId("menu-section");
+
+                await expect(content).toBeVisible();
+                await expect(
+                    section.getByRole("link", { name: "Link 1" })
+                ).toBeVisible();
+                await expect(
+                    section.getByRole("link", { name: "Link 8" })
+                ).toBeVisible();
+
+                await compareScreenshot(story, "state", {
+                    locator: content,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("grid-layout", { size: "mobile" });
+            });
+
+            test("Collapses to single column on mobile", async ({ story }) => {
+                const content = story.page.getByTestId("menu-content");
+
+                await expect(content).toBeVisible();
+
+                await compareScreenshot(story, "mobile", {
+                    locator: content,
+                });
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("grid-layout-with-label");
+            });
+
+            test("With section label", async ({ story }) => {
+                const content = story.page.getByTestId("menu-content");
+
+                await expect(content).toBeVisible();
+
+                await compareScreenshot(story, "state", {
+                    locator: content,
+                });
+            });
+        });
     });
 });

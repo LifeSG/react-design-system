@@ -1,10 +1,17 @@
 import clsx from "clsx";
 import type React from "react";
-import { useRef } from "react";
+import {
+    Children,
+    isValidElement,
+    type ReactElement,
+    useMemo,
+    useRef,
+} from "react";
 
 import { useApplyStyle } from "../theme";
 import * as styles from "./menu-content.styles";
-import type { MenuContentProps } from "./types";
+import * as sectionStyles from "./menu-section.styles";
+import type { MenuContentProps, MenuSectionProps } from "./types";
 
 // =============================================================================
 // HELPERS
@@ -30,9 +37,27 @@ export const MenuContent = ({
     // =============================================================================
     const panelRef = useRef<HTMLDivElement>(null);
 
+    const gridMaxWidth = useMemo(() => {
+        const maxColumns = Children.toArray(children)
+            .filter(
+                (child): child is ReactElement<MenuSectionProps> =>
+                    isValidElement(child) &&
+                    !!(child.props as MenuSectionProps).columns
+            )
+            .reduce((max, child) => Math.max(max, child.props.columns ?? 0), 0);
+        if (!maxColumns) return undefined;
+        return (
+            maxColumns * sectionStyles.GRID_COLUMN_WIDTH_PX +
+            (maxColumns - 1) * sectionStyles.GRID_COLUMN_GAP_PX +
+            2 // 1px border × 2 sides
+        );
+    }, [children]);
+
     useApplyStyle(panelRef, {
         [styles.tokens.panel.maxHeight]:
             maxHeight !== undefined ? `${maxHeight}px` : null,
+        [styles.tokens.panel.maxWidth]:
+            gridMaxWidth !== undefined ? `${gridMaxWidth}px` : null,
         [styles.tokens.panel.overflow]: overflow || null,
     });
     // =============================================================================
