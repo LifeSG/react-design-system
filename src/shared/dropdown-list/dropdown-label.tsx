@@ -3,7 +3,7 @@ import { useResizeDetector } from "react-resize-detector";
 import { ThemeContext } from "styled-components";
 import { Font } from "../../theme";
 import { StringHelper } from "../../util/string-helper";
-import { DropdownVariantType, LabelDisplayType } from "./types";
+import { DropdownVariantType, LabelDisplayType, TruncateType } from "./types";
 import {
     Label,
     MatchedText,
@@ -22,7 +22,7 @@ interface DropdownLabelProps {
     selected?: boolean | undefined;
     disabled?: boolean | undefined;
     sublabel?: string | undefined;
-    truncationType?: "middle" | "end" | undefined;
+    truncationType?: TruncateType | undefined;
     variant?: DropdownVariantType | undefined;
 }
 
@@ -47,12 +47,14 @@ export const DropdownLabel = ({
     const fontFamily = Font.Spec["font-family"]({ theme });
     const { ref, width } = useResizeDetector();
 
+    const noTruncation = truncationType === "none";
+
     // =========================================================================
     // HELPER FUNCTIONS
     // =========================================================================
     const hasExceededContainer = useCallback(
         (displayText: string) => {
-            if (displayType !== "inline" || !width) {
+            if (noTruncation || displayType !== "inline" || !width) {
                 return false;
             }
 
@@ -68,7 +70,7 @@ export const DropdownLabel = ({
             // arbitary offset is applied
             return textWidth > width * maxLines - 50;
         },
-        [width, displayType, fontSize, fontFamily, maxLines]
+        [noTruncation, width, displayType, fontSize, fontFamily, maxLines]
     );
 
     // =========================================================================
