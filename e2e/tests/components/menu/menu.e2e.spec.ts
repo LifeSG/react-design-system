@@ -94,8 +94,8 @@ test.describe("Menu", () => {
                   - listitem:
                     - paragraph: Jane Doe
                     - paragraph: jane.doe@example.gov.sg
+                - paragraph: Actions
                 - list "Actions":
-                  - paragraph: Actions
                   - listitem: Settings
                   - listitem:
                     - link "First link":
@@ -106,8 +106,8 @@ test.describe("Menu", () => {
                   - listitem:
                     - link "Third link":
                       - /url: "#third-link"
+                - paragraph: Resources
                 - list "Resources":
-                  - paragraph: Resources
                   - listitem:
                     - link "This is a long menu link title that should clamp across lines when the menu has limited width":
                       - /url: "#long-link"
