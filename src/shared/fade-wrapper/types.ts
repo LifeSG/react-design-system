@@ -23,4 +23,5 @@ export interface FadeWrapperProps {
 
 export interface FadeWrapperRef {
     resize: () => void;
+    scrollToEnd: () => void;
 }

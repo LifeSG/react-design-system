@@ -2,11 +2,7 @@ import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import clsx from "clsx";
 import { useRef } from "react";
 
-import {
-    FadeWrapper,
-    type FadeWrapperRef,
-    type ResizeCallbackParams,
-} from "../shared/fade-wrapper";
+import { FadeWrapper, type FadeWrapperRef } from "../shared/fade-wrapper";
 import { parsePxOrRemValue, useResolvedBreakpointToken } from "../theme";
 import { Breakpoint } from "../theme/tokens";
 import { Typography } from "../typography";
@@ -44,27 +40,22 @@ export const Breadcrumb = ({
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
-    const handleResize = useEvent(
-        ({ content, wrapper }: ResizeCallbackParams) => {
-            if (
-                content &&
-                wrapper &&
-                links &&
-                links.length > 1 &&
-                window.innerWidth <= tabletBreakpoint
-            ) {
-                content.scrollLeft =
-                    content.scrollWidth - wrapper.offsetWidth;
-            }
+    const handleResize = useEvent(() => {
+        if (
+            links &&
+            links.length > 1 &&
+            window.innerWidth <= tabletBreakpoint
+        ) {
+            fadeWrapperRef.current?.scrollToEnd();
         }
-    );
+    });
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
     useIsomorphicLayoutEffect(() => {
-        fadeWrapperRef.current?.resize();
-    }, [tabletBreakpoint]);
+        handleResize();
+    }, [handleResize, tabletBreakpoint]);
 
     // =========================================================================
     // RENDER
