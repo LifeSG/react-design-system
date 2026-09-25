@@ -2,6 +2,7 @@ import { act, render, screen, waitFor, within } from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
 import { Pagination } from "src/pagination";
 import { useMaxWidthMediaQuery } from "src/theme";
+import { useIsMounted } from "src/util";
 
 jest.mock("react-resize-detector");
 jest.mock("src/theme", () => {
@@ -11,6 +12,15 @@ jest.mock("src/theme", () => {
         __esModule: true,
         ...originalModule,
         useMaxWidthMediaQuery: jest.fn(),
+    };
+});
+jest.mock("src/util", () => {
+    const originalModule = jest.requireActual("src/util");
+
+    return {
+        __esModule: true,
+        ...originalModule,
+        useIsMounted: jest.fn(),
     };
 });
 
@@ -27,6 +37,7 @@ describe("Pagination", () => {
     beforeEach(() => {
         jest.clearAllMocks();
         jest.mocked(useMaxWidthMediaQuery).mockReturnValue(false);
+        jest.mocked(useIsMounted).mockReturnValue(true);
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
@@ -503,6 +514,45 @@ describe("Pagination", () => {
             expect(within(dropdown).getByText("2 per page")).toBeVisible();
         });
 
+        it("should keep the selected page size when the options array identity changes", async () => {
+            const initialOptions = [
+                { value: 10, label: "10 per page" },
+                { value: 20, label: "20 per page" },
+            ];
+            const updatedOptions = [
+                { value: 10, label: "10 per page (updated)" },
+                { value: 20, label: "20 per page (updated)" },
+            ];
+
+            const { rerender } = render(
+                <Pagination
+                    totalItems={30}
+                    activePage={1}
+                    pageSize={20}
+                    showPageSizeChanger
+                    pageSizeOptions={initialOptions}
+                />
+            );
+
+            expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
+                "20 per page"
+            );
+
+            rerender(
+                <Pagination
+                    totalItems={30}
+                    activePage={1}
+                    pageSize={20}
+                    showPageSizeChanger
+                    pageSizeOptions={updatedOptions}
+                />
+            );
+
+            expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
+                "20 per page (updated)"
+            );
+        });
+
         describe("onPageSizeChange", () => {
             it("should return active page and new page size if current page is within the new range", async () => {
                 const user = userEvent.setup();
@@ -577,6 +627,44 @@ describe("Pagination", () => {
             ).toBeInTheDocument();
         });
 
+        it("should render the full variant on mobile", async () => {
+            render(
+                <Pagination
+                    totalItems={30}
+                    activePage={2}
+                    showPageSizeChanger
+                    variant="full"
+                />
+            );
+
+            expect(
+                screen.getByRole("button", { name: "page 1 of 3" })
+            ).toBeInTheDocument();
+            expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
+            expect(
+                screen.queryByRole("textbox", { name: "Page 2 of 3" })
+            ).not.toBeInTheDocument();
+        });
+
+        it("should not render the page size changer before mount on default mobile", async () => {
+            jest.mocked(useIsMounted).mockReturnValue(false);
+
+            render(
+                <Pagination
+                    totalItems={30}
+                    activePage={2}
+                    showPageSizeChanger
+                />
+            );
+
+            expect(
+                screen.getByRole("button", { name: "page 1 of 3" })
+            ).toBeInTheDocument();
+            expect(
+                screen.queryByTestId(SELECTOR_TESTID)
+            ).not.toBeInTheDocument();
+        });
+
         it("should enable the previous and next buttons on the middle page", async () => {
             render(<Pagination totalItems={30} activePage={2} />);
 
@@ -619,6 +707,29 @@ describe("Pagination", () => {
                 />
             );
 
+            expect(
+                screen.queryByTestId(SELECTOR_TESTID)
+            ).not.toBeInTheDocument();
+        });
+
+        it("should render the compact variant on desktop", async () => {
+            jest.mocked(useMaxWidthMediaQuery).mockReturnValue(false);
+
+            render(
+                <Pagination
+                    totalItems={30}
+                    activePage={2}
+                    showPageSizeChanger
+                    variant="compact"
+                />
+            );
+
+            expect(
+                screen.getByRole("textbox", { name: "Page 2 of 3" })
+            ).toBeInTheDocument();
+            expect(
+                screen.queryByRole("button", { name: "page 1 of 3" })
+            ).not.toBeInTheDocument();
             expect(
                 screen.queryByTestId(SELECTOR_TESTID)
             ).not.toBeInTheDocument();
