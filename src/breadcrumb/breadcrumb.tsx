@@ -1,18 +1,18 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
 import clsx from "clsx";
-import { useRef, useState } from "react";
-import { useResizeDetector } from "react-resize-detector";
+import { useRef } from "react";
 
 import {
-    parsePxOrRemValue,
-    useApplyStyle,
-    useResolvedBreakpointToken,
-} from "../theme";
+    FadeWrapper,
+    type FadeWrapperRef,
+    type ResizeCallbackParams,
+} from "../shared/fade-wrapper";
+import { parsePxOrRemValue, useResolvedBreakpointToken } from "../theme";
 import { Breakpoint } from "../theme/tokens";
 import { Typography } from "../typography";
-import { useEvent, useEventListener, useIsomorphicLayoutEffect } from "../util";
+import { useEvent, useIsomorphicLayoutEffect } from "../util";
 import * as styles from "./breadcrumb.styles";
-import type { BreadcrumbProps, FadeColorSet } from "./types";
+import type { BreadcrumbProps } from "./types";
 
 // @catalog
 /**
@@ -35,113 +35,36 @@ export const Breadcrumb = ({
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
-    const [showFade, setShowFade] = useState<boolean>(false);
-    const [showFadeLeft, setShowFadeLeft] = useState<boolean>(false);
-    const [showFadeRight, setShowFadeRight] = useState<boolean>(false);
-    const shouldShowFadeLeft =
-        fadePosition === "left" || fadePosition === "both";
-    const shouldShowFadeRight =
-        fadePosition === "right" || fadePosition === "both";
-
-    const wrapperRef = useRef<HTMLDivElement>(null);
-    const contentRef = useRef<HTMLUListElement>(null);
-    const fadeLeftRef = useRef<HTMLDivElement>(null);
-    const fadeRightRef = useRef<HTMLDivElement>(null);
-
-    // =============================================================================
-    // EVENT HANDLERS
-    // =============================================================================
+    const fadeWrapperRef = useRef<FadeWrapperRef>(null);
 
     const tabletBreakpoint = parsePxOrRemValue(
         useResolvedBreakpointToken(Breakpoint["lg-max"])
     );
 
     // =============================================================================
-    // FADE COLOR CALCULATION
+    // EVENT HANDLERS
     // =============================================================================
-    let fadeColorSet: FadeColorSet;
-
-    if (Array.isArray(fadeColor) && fadeColor.length > 0) {
-        fadeColorSet = {
-            left: fadeColor,
-            right: fadeColor,
-        };
-    } else if (fadeColor) {
-        fadeColorSet = fadeColor as FadeColorSet;
-    } else {
-        fadeColorSet = {
-            left: undefined,
-            right: undefined,
-        };
-    }
-
-    // =============================================================================
-    // CSS VARIABLES
-    // =============================================================================
-    useApplyStyle(fadeLeftRef, {
-        [styles.tokens.fade.backgroundColor]: fadeColorSet?.left?.join(", "),
-    });
-
-    useApplyStyle(fadeRightRef, {
-        [styles.tokens.fade.backgroundColor]: fadeColorSet?.right?.join(", "),
-    });
-
-    const onResize = useEvent(() => {
-        const content = contentRef.current;
-        const wrapper = wrapperRef.current;
-
-        if (
-            content &&
-            wrapper &&
-            links &&
-            links.length > 1 &&
-            window.innerWidth <= tabletBreakpoint
-        ) {
-            content.scrollLeft = content.scrollWidth - wrapper.offsetWidth;
-        }
-    });
-
-    const handleShowFadeToggle = useEvent(() => {
-        const nextShowFade = window.innerWidth <= tabletBreakpoint;
-        setShowFade(nextShowFade);
-
-        const content = contentRef.current;
-        const wrapper = wrapperRef.current;
-        if (content && wrapper && nextShowFade) {
-            if (content.scrollWidth > wrapper.offsetWidth) {
-                // set 1px margin of error to handle sub-pixel differences
-                setShowFadeLeft(content.scrollLeft >= 1);
-                setShowFadeRight(
-                    content.scrollWidth - content.scrollLeft - 1 >
-                        wrapper.offsetWidth
-                );
-                return;
+    const handleResize = useEvent(
+        ({ content, wrapper }: ResizeCallbackParams) => {
+            if (
+                content &&
+                wrapper &&
+                links &&
+                links.length > 1 &&
+                window.innerWidth <= tabletBreakpoint
+            ) {
+                content.scrollLeft =
+                    content.scrollWidth - wrapper.offsetWidth;
             }
         }
-
-        setShowFadeLeft(false);
-        setShowFadeRight(false);
-    });
+    );
 
     // =============================================================================
     // EFFECTS
     // =============================================================================
-    useEventListener("resize", handleShowFadeToggle);
-    useEventListener("scroll", handleShowFadeToggle, contentRef.current);
-
     useIsomorphicLayoutEffect(() => {
-        onResize();
-        handleShowFadeToggle();
-    }, [onResize, handleShowFadeToggle, tabletBreakpoint]);
-
-    // To scroll left when wrapper resizes
-    useResizeDetector({
-        onResize,
-        targetRef: wrapperRef,
-        refreshMode: "debounce",
-        refreshRate: 50,
-        skipOnMount: true,
-    });
+        fadeWrapperRef.current?.resize();
+    }, [tabletBreakpoint]);
 
     // =========================================================================
     // RENDER
@@ -205,38 +128,19 @@ export const Breadcrumb = ({
         });
     };
 
-    const renderFade = () => {
-        return (
-            <>
-                {showFadeLeft && shouldShowFadeLeft && (
-                    <div
-                        ref={fadeLeftRef}
-                        className={clsx(styles.fade, styles.fadeLeft)}
-                    />
-                )}
-                {showFadeRight && shouldShowFadeRight && (
-                    <div
-                        ref={fadeRightRef}
-                        className={clsx(styles.fade, styles.fadeRight)}
-                    />
-                )}
-            </>
-        );
-    };
-
     return (
-        <div
-            ref={wrapperRef}
+        <FadeWrapper
+            ref={fadeWrapperRef}
             id={id || "breadcrumb"}
             className={clsx(styles.wrapper, className)}
+            fadeColor={fadeColor}
+            fadePosition={fadePosition}
+            onResize={handleResize}
             {...otherProps}
         >
             <nav aria-label="Breadcrumb">
-                <ul ref={contentRef} className={styles.content}>
-                    {renderLinks()}
-                </ul>
+                <ul className={styles.content}>{renderLinks()}</ul>
             </nav>
-            {showFade && renderFade()}
-        </div>
+        </FadeWrapper>
     );
 };

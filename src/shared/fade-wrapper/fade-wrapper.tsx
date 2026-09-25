@@ -137,11 +137,6 @@ const Component = (
                 wrapper: wrapperRef.current!,
             });
         }
-
-        // TODO: Will move this out to Breadcrumb when it uses this component
-        // if (content && wrapper && window.innerWidth <= MediaWidths.tablet) {
-        //     content.scrollLeft = content.scrollWidth - wrapper.offsetWidth;
-        // }
     }
 
     // =========================================================================
