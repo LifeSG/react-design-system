@@ -125,8 +125,7 @@ const plugins = [
                     default: "./index.js", // For any unknown JS environment, fallback to ESM build
                 },
                 "./theme/styles/*.css": {
-                    import: "./theme/styles/*.css",
-                    require: "./theme/styles/*.css",
+                    default: "./theme/styles/*.css",
                 },
                 ...subExports,
             },
