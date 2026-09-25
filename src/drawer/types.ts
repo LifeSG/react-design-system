@@ -23,4 +23,11 @@ export interface DrawerProps {
     onClose?: (() => void) | undefined;
     /** Called when the user clicks the background overlay. */
     onOverlayClick?: (() => void) | undefined;
+    /**
+     * Optional element rendered in the header, e.g. a link or button.
+     *
+     * Sits beside the title on wider drawers, and wraps onto its own line
+     * below the title once the drawer is narrow.
+     */
+    customCallToAction?: React.ReactNode | undefined;
 }

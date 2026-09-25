@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { Colour, Radius, Spacing } from "../../theme";
+import { Colour, Font, Radius, Spacing } from "../../theme";
 
 export const nav = css`
     list-style-type: none;
@@ -10,6 +10,28 @@ export const nav = css`
 
 export const textLabel = css`
     margin: 0;
+`;
+
+export const titleContainer = css`
+    display: flex;
+    align-items: center;
+    gap: ${Spacing["spacing-8"]};
+    width: 100%;
+`;
+
+/* Keeps the left addon aligned with the first line when the title wraps. */
+export const leftAddon = css`
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: ${Font.Spec["body-lh-baseline"]};
+`;
+
+/* Flushed right; stays vertically centred against the (possibly wrapped) title. */
+export const rightAddon = css`
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
 `;
 
 export const navItem = css`

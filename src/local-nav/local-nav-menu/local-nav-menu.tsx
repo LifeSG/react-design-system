@@ -51,19 +51,37 @@ const Component = (
         renderItem,
         index,
     }: LocalNavMenuItemComponentProps) => {
-        const { id, title } = item;
+        const { id, title, titleAddon } = item;
 
         const renderTitle = () => {
             if (renderItem) {
                 return renderItem(item, { selected: isSelected });
             }
-            return (
+            const label = (
                 <Typography.BodyBL
                     className={styles.textLabel}
                     weight={isSelected ? "semibold" : "regular"}
                 >
                     {title}
                 </Typography.BodyBL>
+            );
+            if (!titleAddon) {
+                return label;
+            }
+            return (
+                <span className={styles.titleContainer}>
+                    {titleAddon.left && (
+                        <span className={styles.leftAddon}>
+                            {titleAddon.left}
+                        </span>
+                    )}
+                    {label}
+                    {titleAddon.right && (
+                        <span className={styles.rightAddon}>
+                            {titleAddon.right}
+                        </span>
+                    )}
+                </span>
             );
         };
 

@@ -1,6 +1,18 @@
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
 import { css } from "@linaria/core";
-import { MediaQuery } from "src/theme";
+import { Colour, MediaQuery } from "src/theme";
 import { Typography } from "src/typography";
+
+export const ErrorIndicator = () => (
+    <ExclamationCircleFillIcon
+        aria-label="Has errors"
+        style={{
+            color: Colour["icon-error"],
+            width: "1.25rem",
+            height: "1.25rem",
+        }}
+    />
+);
 
 export const Page = ({ children }: React.ComponentProps<"div">) => (
     <div className={page}>{children}</div>

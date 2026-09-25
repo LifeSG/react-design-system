@@ -80,6 +80,25 @@ export const header = css`
     }
 `;
 
+// Stack the call-to-action below the heading when the drawer is too narrow
+// to fit both on one line.
+export const headerStacked = css`
+    flex-direction: column;
+    align-items: stretch;
+    gap: ${Spacing["spacing-16"]};
+`;
+
+export const callToAction = css`
+    display: flex;
+    margin-left: auto;
+`;
+
+// When stacked, flush left so the buttons line up with the heading (the
+// header's left padding already clears the close icon).
+export const callToActionStacked = css`
+    margin-left: 0;
+`;
+
 export const closeButton = css`
     color: ${Colour["icon"]};
     padding: 0;

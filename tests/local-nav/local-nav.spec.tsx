@@ -79,6 +79,49 @@ describe("LocalNav", () => {
             expect(screen.getByText("Custom: Section 1")).toBeInTheDocument();
         });
 
+        it("should render both left and right titleAddon slots alongside the item title", () => {
+            const mockOnSelect = jest.fn();
+            const items: LocalNavItemProps[] = [
+                {
+                    title: "Section 1",
+                    titleAddon: {
+                        left: <span>left-addon</span>,
+                        right: <span>right-addon</span>,
+                    },
+                },
+                { title: "Section 2" },
+            ];
+
+            render(
+                <LocalNavMenu items={items} onNavItemSelect={mockOnSelect} />
+            );
+
+            expect(screen.getByText("left-addon")).toBeInTheDocument();
+            expect(screen.getByText("right-addon")).toBeInTheDocument();
+            expect(screen.getByText("Section 1")).toBeInTheDocument();
+        });
+
+        it("should not render the titleAddon when renderItem is provided", () => {
+            const mockOnSelect = jest.fn();
+            const items: LocalNavItemProps[] = [
+                {
+                    title: "Section 1",
+                    titleAddon: { right: <span>addon</span> },
+                },
+            ];
+
+            render(
+                <LocalNavMenu
+                    items={items}
+                    onNavItemSelect={mockOnSelect}
+                    renderItem={(item) => <span>Custom: {item.title}</span>}
+                />
+            );
+
+            expect(screen.queryByText("addon")).not.toBeInTheDocument();
+            expect(screen.getByText("Custom: Section 1")).toBeInTheDocument();
+        });
+
         it("should handle keyboard navigation and selection", async () => {
             const user = userEvent.setup();
             const mockOnSelect = jest.fn();
@@ -265,6 +308,37 @@ describe("LocalNav", () => {
             await user.click(screen.getByText("Select section"));
 
             expect(screen.getByText("Custom: Section 1")).toBeInTheDocument();
+        });
+
+        it("should render both left and right titleAddon slots on a dropdown item", async () => {
+            const user = userEvent.setup();
+            const mockOnSelect = jest.fn();
+            const items: LocalNavItemProps[] = [
+                {
+                    title: "Section 1",
+                    titleAddon: {
+                        left: <span>left-addon</span>,
+                        right: <span>right-addon</span>,
+                    },
+                },
+                { title: "Section 2" },
+            ];
+
+            render(
+                <LocalNavDropdown
+                    items={items}
+                    defaultLabel="Select section"
+                    onNavItemSelect={mockOnSelect}
+                />
+            );
+
+            await user.click(screen.getByText("Select section"));
+
+            expect(screen.getByText("left-addon")).toBeInTheDocument();
+            expect(screen.getByText("right-addon")).toBeInTheDocument();
+            expect(
+                screen.getByRole("menuitem", { name: /Section 1/ })
+            ).toBeInTheDocument();
         });
 
         it("should handle keyboard navigation and selection", async () => {
