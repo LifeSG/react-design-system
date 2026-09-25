@@ -1,11 +1,7 @@
 import { css } from "@linaria/core";
 
-import * as modalStyles from "../modal/modal.styles";
-import { Border, Colour, Font, MediaQuery, Radius, Spacing } from "../theme";
-
-// =============================================================================
-// STYLING
-// =============================================================================
+import { headerTokens, slotSpacerTokens } from "../modal-v2/slots/slot-styles";
+import { Border, Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
 
 // -----------------------------------------------------------------------------
 // MAIN FIELD
@@ -71,56 +67,69 @@ export const instructions = css`
 // SIGNATURE MODAL
 // -----------------------------------------------------------------------------
 
-export const scrollableModal = css`
-    /* increase specificity as the styles are overwritten */
-    && {
-        height: 100%;
-        overflow-y: auto;
-    }
-`;
-
-export const growContainer = css`
-    width: 100%;
-    margin: auto;
-    padding: ${Spacing["layout-xxl"]} ${Spacing["layout-sm"]};
-
-    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
-        padding: 0;
-        width: 100%;
-        height: 100%;
-    }
-`;
-
-export const modalBox = css`
+export const modalCard = css`
     width: 100%;
     height: 29rem;
     max-width: 672px;
     max-height: none;
     margin: 0 auto;
     padding: ${Spacing["spacing-16"]};
+    box-shadow: ${Shadow["lg-strong"]};
 
-    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
-        display: flex;
-        flex-direction: column;
-        max-width: none;
-        height: 100%;
-        border-radius: 0;
-        padding: 0;
+    ${slotSpacerTokens.contentLastChildMarginBottom}: 0;
+`;
 
-        ${modalStyles.tokens.closeButton.topInset}: ${Spacing["spacing-8"]};
-        ${modalStyles.tokens.closeButton.rightInset}: ${Spacing["spacing-20"]};
+export const modalHeader = css`
+    ${headerTokens.padding}: 0 0 ${Spacing["spacing-16"]};
+    position: relative;
+
+    & > button {
+        position: absolute;
+        top: 0;
+        right: 0;
+    }
+
+    & > div[aria-hidden] {
+        display: none;
+    }
+
+    ${MediaQuery.MaxWidth.sm} {
+        &[data-mobile-landscape] {
+            ${headerTokens.padding}: ${Spacing["spacing-12"]}
+                ${Spacing["spacing-20"]};
+        }
+
+        &[data-mobile-landscape] > button {
+            top: ${Spacing["spacing-8"]};
+            right: ${Spacing["spacing-20"]};
+        }
+    }
+
+    &[data-mobile-landscape="true"] {
+        ${headerTokens.padding}: ${Spacing["spacing-12"]}
+            ${Spacing["spacing-20"]};
+    }
+
+    &[data-mobile-landscape="true"] > button {
+        top: ${Spacing["spacing-8"]};
+        right: ${Spacing["spacing-20"]};
     }
 `;
 
-export const modalTitle = css`
-    ${Font["body-baseline-semibold"]}
-    color: ${Colour["text"]};
-    margin-bottom: ${Spacing["spacing-16"]};
-    text-align: center;
+export const modalContent = css`
+    margin: 0;
+    display: flex;
+    flex-direction: column;
+    min-height: 0;
 
-    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
-        ${Font["body-md-semibold"]}
-        margin: ${Spacing["spacing-12"]} 0;
+    ${MediaQuery.MaxWidth.sm} {
+        &[data-mobile-landscape] {
+            flex: 1;
+        }
+    }
+
+    &[data-mobile-landscape="true"] {
+        flex: 1;
     }
 `;
 
@@ -130,12 +139,16 @@ export const eSignatureContainer = css`
     border-radius: ${Radius["lg"]};
     overflow: hidden;
 
-    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
-        border-radius: 0;
-        flex: 1;
+    ${MediaQuery.MaxWidth.sm} {
+        &[data-mobile-landscape] {
+            border-radius: 0;
+            flex: 1;
+        }
     }
 
     &[data-mobile-landscape="true"] {
+        height: auto;
+        flex: 1;
         background: ${Colour["bg-strong"]};
     }
 `;
@@ -184,28 +197,26 @@ export const modalButtons = css`
     justify-content: space-between;
     margin-top: ${Spacing["spacing-16"]};
 
+    & > button {
+        width: 8.5rem;
+    }
+
     ${MediaQuery.MaxWidth.sm} {
-        flex-direction: column-reverse;
-        margin: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]}
-            ${Spacing["spacing-48"]};
-        gap: ${Spacing["spacing-16"]};
+        &[data-mobile-landscape] {
+            flex-direction: column-reverse;
+            margin: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]}
+                ${Spacing["spacing-48"]};
+            gap: ${Spacing["spacing-16"]};
+        }
+
+        &[data-mobile-landscape] > button {
+            width: 100%;
+        }
     }
 
     &[data-mobile-landscape="true"] {
         flex-direction: row;
         margin: ${Spacing["spacing-16"]} ${Spacing["spacing-20"]};
-    }
-`;
-
-export const modalActionButton = css`
-    width: 8.5rem;
-
-    ${MediaQuery.MaxWidth.sm} {
-        width: 100%;
-    }
-
-    &[data-mobile-landscape="true"] {
-        height: 2.5rem;
     }
 `;
 
