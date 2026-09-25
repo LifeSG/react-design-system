@@ -9,7 +9,7 @@ export default function Story() {
                 <Menu.Section
                     showDivider={false}
                     columns={2}
-                    label="Category"
+                    label="A very long section label that should wrap across multiple lines when the container is not wide enough to display it all on a single line without wrapping"
                     data-testid="menu-section"
                 >
                     {Array.from({ length: 6 }, (_, i) => (

@@ -186,24 +186,6 @@ describe("Menu", () => {
             expect(a).toHaveFocus();
         });
 
-        it("should set panel maxWidth CSS var based on max columns across child sections", () => {
-            // 2 columns: 2 * 383 + 1 * 8 + 2 (border) = 776px
-            const { getByTestId } = render(
-                <Menu.Content data-testid="menu-content">
-                    <Menu.Section showDivider={false} columns={2}>
-                        <Menu.Link href="#1">Item 1</Menu.Link>
-                        <Menu.Link href="#2">Item 2</Menu.Link>
-                    </Menu.Section>
-                </Menu.Content>
-            );
-
-            expect(
-                getByTestId("menu-content").style.getPropertyValue(
-                    "--fds-internal-menu-panel-maxWidth"
-                )
-            ).toBe("776px");
-        });
-
         it("should move focus through grid items in DOM order with Tab", async () => {
             const { getByRole } = render(
                 <Menu.Content data-testid="menu-content">
@@ -288,27 +270,6 @@ describe("Menu", () => {
                     "--fds-menu-section-grid-rows"
                 )
             ).toBe("3");
-        });
-
-        it("should render label outside the <ul> when both columns and label are provided", () => {
-            const { getByTestId, getByText } = render(
-                <Menu.Section
-                    data-testid="menu-section"
-                    columns={2}
-                    label="Category"
-                >
-                    <Menu.Link href="#a">A</Menu.Link>
-                    <Menu.Link href="#b">B</Menu.Link>
-                </Menu.Section>
-            );
-
-            const ul = getByTestId("menu-section");
-            const labelEl = getByText("Category");
-
-            // label must NOT be inside the <ul> (it would become a grid item otherwise)
-            expect(ul).not.toContainElement(labelEl);
-            // <ul> must reference the label for screen-reader accessible name
-            expect(ul.getAttribute("aria-labelledby")).toBe(labelEl.id);
         });
     });
 

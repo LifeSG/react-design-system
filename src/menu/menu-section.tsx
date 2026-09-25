@@ -52,47 +52,25 @@ export const MenuSection = ({
         </Typography.BodyXS>
     ) : null;
 
-    // When columns + label: render label outside the <ul> so it is never
-    // a grid item and always spans full width above the columns.
-    if (columns && label) {
-        return (
-            <div
-                className={clsx(
-                    styles.section,
-                    showDivider && styles.sectionWithDivider,
-                    className
-                )}
-            >
-                {labelElement}
-                <ul
-                    ref={ulRef}
-                    data-testid={testId}
-                    aria-labelledby={internalId}
-                    className={styles.columns}
-                    {...otherProps}
-                >
-                    {children}
-                </ul>
-            </div>
-        );
-    }
-
     return (
-        <ul
-            ref={ulRef}
-            data-testid={testId}
-            aria-labelledby={internalId}
+        <div
             className={clsx(
                 styles.section,
                 showDivider && styles.sectionWithDivider,
-                columns && styles.columns,
                 className
             )}
-            {...otherProps}
         >
             {labelElement}
-            {children}
-        </ul>
+            <ul
+                ref={ulRef}
+                data-testid={testId}
+                aria-labelledby={internalId}
+                className={clsx(columns && styles.columns)}
+                {...otherProps}
+            >
+                {children}
+            </ul>
+        </div>
     );
 };
 
