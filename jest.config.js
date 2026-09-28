@@ -6,6 +6,8 @@ module.exports = {
     testEnvironment: "jsdom",
     testMatch: ["<rootDir>/tests/**/*.spec.[jt]s?(x)"],
     moduleNameMapper: {
+        "^@testing-library/dom$":
+            "<rootDir>/node_modules/@testing-library/react/node_modules/@testing-library/dom",
         "@govtechsg/sgds-web-component/components/(.*)":
             "<rootDir>/src/__mocks__/fileMock.js",
         "react-player": "<rootDir>/src/__mocks__/fileMock.js",
