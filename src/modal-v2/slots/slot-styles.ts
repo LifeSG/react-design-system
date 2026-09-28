@@ -34,10 +34,6 @@ export const slotSpacerTokens = {
         "--fds-internal-modalV2-slotSpacer-footerLastChildMarginBottom",
 } as const;
 
-export const headerTokens = {
-    padding: "--fds-internal-modalV2-header-padding",
-} as const;
-
 // =============================================================================
 // STYLING
 // =============================================================================
@@ -232,7 +228,7 @@ export const headerContainer = css`
     :where(&) {
         display: flex;
         align-items: center;
-        padding: var(${headerTokens.padding}, ${Spacing["spacing-16"]});
+        padding: ${Spacing["spacing-16"]};
     }
 
     :where(&[data-close-button-position="right"]) {
