@@ -46,18 +46,16 @@ export interface ModalCloseButtonProps
 /**
  * Props for the `ModalV2.Header` slot.
  */
-export interface ModalHeaderProps
-    extends Omit<React.HTMLAttributes<HTMLDivElement>, "title"> {
+export interface ModalHeaderProps extends React.HTMLAttributes<HTMLDivElement> {
     /**
      * @default "modal-header"
      */
     "data-testid"?: string | undefined;
     /**
-     * Heading rendered in the header. Accepts a plain string, or a node when
-     * you need to control the typography. Always centered regardless of
+     * Heading text rendered in the header. Always centered regardless of
      * `closeButtonPosition`. Omit for a close-button-only header.
      */
-    title?: React.ReactNode | undefined;
+    title?: string | undefined;
     /**
      * Which side of the header the close button is placed on. The title
      * alignment adjusts automatically.

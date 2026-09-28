@@ -154,20 +154,8 @@ export const ESignature = (props: EsignatureProps) => {
                     fillHeight
                 >
                     <ModalV2.Header
-                        title={
-                            isMobile || isMobileLandscape ? (
-                                <Typography.BodyMD weight="semibold">
-                                    Signature
-                                </Typography.BodyMD>
-                            ) : (
-                                <Typography.BodyBL weight="semibold">
-                                    Signature
-                                </Typography.BodyBL>
-                            )
-                        }
+                        title="Signature"
                         closeButtonPosition="right"
-                        className={styles.modalHeader}
-                        data-mobile-landscape={isMobileLandscape}
                     />
                     <ModalV2.Content
                         className={styles.modalContent}
