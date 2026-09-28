@@ -17,7 +17,7 @@ export const Link = styled(Typography.LinkMD)`
     margin: 0 ${Spacing["spacing-8"]};
 
     border: ${Border["solid"]} transparent;
-    border-width: ${Spacing["spacing-8"]} ${Spacing["spacing-8"]};
+    border-width: ${Spacing["spacing-12"]} ${Spacing["spacing-8"]};
 
     border-radius: ${Radius["md"]};
 
