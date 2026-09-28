@@ -363,6 +363,28 @@ test.describe("Pagination", () => {
         });
     });
 
+    test.describe("Variants", () => {
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("variants");
+            });
+
+            test("Desktop", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+
+        test.describe(() => {
+            test.beforeEach(async ({ story }) => {
+                await story.init("variants", { size: "mobile" });
+            });
+
+            test("Mobile", async ({ story }) => {
+                await compareScreenshot(story, "mount");
+            });
+        });
+    });
+
     test.describe("showFirstAndLastNav=true", () => {
         test.describe(() => {
             test.beforeEach(async ({ story }) => {

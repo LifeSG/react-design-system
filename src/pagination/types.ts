@@ -6,6 +6,13 @@ export interface PaginationProps {
     "data-testid"?: string | undefined;
     className?: string | undefined;
     /**
+     * Controls whether the pagination follows the responsive layout
+     * or always renders the full or compact layout.
+     *
+     * @default "default"
+     */
+    variant?: "default" | "full" | "compact" | undefined;
+    /**
      * Number of items displayed per page.
      *
      * @default 10
@@ -34,7 +41,7 @@ export interface PaginationProps {
      */
     showFirstAndLastNav?: boolean | undefined;
     /**
-     * When `true`, renders a dropdown on desktop viewports to change the `pageSize`.
+     * When `true`, renders a dropdown in the full layout to change the `pageSize`.
      *
      * @default false
      */
