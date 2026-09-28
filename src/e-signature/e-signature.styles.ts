@@ -1,6 +1,6 @@
 import { css } from "@linaria/core";
 
-import { headerTokens, slotSpacerTokens } from "../modal-v2/slots/slot-styles";
+import { slotSpacerTokens } from "../modal-v2/slots/slot-styles";
 import { Border, Colour, MediaQuery, Radius, Shadow, Spacing } from "../theme";
 
 // -----------------------------------------------------------------------------
@@ -73,62 +73,19 @@ export const modalCard = css`
     max-width: 672px;
     max-height: none;
     margin: 0 auto;
-    padding: ${Spacing["spacing-16"]};
     box-shadow: ${Shadow["lg-strong"]};
 
     ${slotSpacerTokens.contentLastChildMarginBottom}: 0;
 `;
 
-export const modalHeader = css`
-    ${headerTokens.padding}: 0 0 ${Spacing["spacing-16"]};
-    position: relative;
-
-    & > button {
-        position: absolute;
-        top: 0;
-        right: 0;
-    }
-
-    & > div[aria-hidden] {
-        display: none;
-    }
-
-    ${MediaQuery.MaxWidth.sm} {
-        &[data-mobile-landscape] {
-            ${headerTokens.padding}: ${Spacing["spacing-12"]}
-                ${Spacing["spacing-20"]};
-        }
-
-        &[data-mobile-landscape] > button {
-            top: ${Spacing["spacing-8"]};
-            right: ${Spacing["spacing-20"]};
-        }
-    }
-
-    &[data-mobile-landscape="true"] {
-        ${headerTokens.padding}: ${Spacing["spacing-12"]}
-            ${Spacing["spacing-20"]};
-    }
-
-    &[data-mobile-landscape="true"] > button {
-        top: ${Spacing["spacing-8"]};
-        right: ${Spacing["spacing-20"]};
-    }
-`;
-
 export const modalContent = css`
-    margin: 0;
+    margin: 0 ${Spacing["spacing-16"]} ${Spacing["spacing-16"]};
     display: flex;
     flex-direction: column;
     min-height: 0;
 
-    ${MediaQuery.MaxWidth.sm} {
-        &[data-mobile-landscape] {
-            flex: 1;
-        }
-    }
-
-    &[data-mobile-landscape="true"] {
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
+        margin: 0;
         flex: 1;
     }
 `;
@@ -139,16 +96,13 @@ export const eSignatureContainer = css`
     border-radius: ${Radius["lg"]};
     overflow: hidden;
 
-    ${MediaQuery.MaxWidth.sm} {
-        &[data-mobile-landscape] {
-            border-radius: 0;
-            flex: 1;
-        }
+    ${MediaQuery.MaxWidth.sm}, &[data-mobile-landscape="true"] {
+        border-radius: 0;
+        flex: 1;
     }
 
     &[data-mobile-landscape="true"] {
         height: auto;
-        flex: 1;
         background: ${Colour["bg-strong"]};
     }
 `;
@@ -202,14 +156,12 @@ export const modalButtons = css`
     }
 
     ${MediaQuery.MaxWidth.sm} {
-        &[data-mobile-landscape] {
-            flex-direction: column-reverse;
-            margin: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]}
-                ${Spacing["spacing-48"]};
-            gap: ${Spacing["spacing-16"]};
-        }
+        flex-direction: column-reverse;
+        margin: ${Spacing["spacing-16"]} ${Spacing["spacing-24"]}
+            ${Spacing["spacing-48"]};
+        gap: ${Spacing["spacing-16"]};
 
-        &[data-mobile-landscape] > button {
+        & > button {
             width: 100%;
         }
     }
