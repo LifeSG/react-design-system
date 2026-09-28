@@ -646,6 +646,27 @@ describe("Pagination", () => {
             ).not.toBeInTheDocument();
         });
 
+        it("should render the full variant before mount on mobile", async () => {
+            jest.mocked(useIsMounted).mockReturnValue(false);
+
+            render(
+                <Pagination
+                    totalItems={30}
+                    activePage={2}
+                    showPageSizeChanger
+                    variant="full"
+                />
+            );
+
+            expect(
+                screen.getByRole("button", { name: "page 1 of 3" })
+            ).toBeInTheDocument();
+            expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
+            expect(
+                screen.queryByRole("textbox", { name: "Page 2 of 3" })
+            ).not.toBeInTheDocument();
+        });
+
         it("should not render the page size changer before mount on default mobile", async () => {
             jest.mocked(useIsMounted).mockReturnValue(false);
 

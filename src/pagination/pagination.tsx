@@ -48,13 +48,13 @@ const Component = (
 
     const isMounted = useIsMounted();
     const isMobile = useMaxWidthMediaQuery("sm");
+    const isDefaultResponsiveVariant = variant === "default";
     const useInputLayout =
         variant === "compact" ||
-        (variant === "default" && isMounted && isMobile);
+        (isDefaultResponsiveVariant && isMounted && isMobile);
     const usesPageSizeChanger =
         showPageSizeChanger &&
-        !useInputLayout &&
-        (variant !== "default" || !isMobile || isMounted);
+        (variant === "full" || (isDefaultResponsiveVariant && !isMobile));
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
