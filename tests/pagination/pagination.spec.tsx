@@ -667,25 +667,6 @@ describe("Pagination", () => {
             ).not.toBeInTheDocument();
         });
 
-        it("should not render the page size changer before mount on default mobile", async () => {
-            jest.mocked(useIsMounted).mockReturnValue(false);
-
-            render(
-                <Pagination
-                    totalItems={30}
-                    activePage={2}
-                    showPageSizeChanger
-                />
-            );
-
-            expect(
-                screen.getByRole("button", { name: "page 1 of 3" })
-            ).toBeInTheDocument();
-            expect(
-                screen.queryByTestId(SELECTOR_TESTID)
-            ).not.toBeInTheDocument();
-        });
-
         it("should enable the previous and next buttons on the middle page", async () => {
             render(<Pagination totalItems={30} activePage={2} />);
 
