@@ -535,7 +535,7 @@ describe("Pagination", () => {
             );
 
             expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
-                "20 per page"
+                /^20 per page$/
             );
 
             rerender(
@@ -549,7 +549,7 @@ describe("Pagination", () => {
             );
 
             expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
-                "20 per page (updated)"
+                /^20 per page \(updated\)$/
             );
         });
 
