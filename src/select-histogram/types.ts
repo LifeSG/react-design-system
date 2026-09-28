@@ -21,7 +21,7 @@ export interface SelectHistogramProps
     error?: boolean | undefined;
     id?: string | undefined;
     histogramSlider: SelectHistogramSliderProps;
-    /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
+    /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Specify "none" to display the text in full. Values: "middle" | "end" | "none" */
     optionTruncationType?: TruncateType | undefined;
     placeholder?: string | undefined;
     rangeLabelPrefix?: string | undefined;

@@ -1,7 +1,7 @@
 // =============================================================================
 // SHARED PROPS
 // =============================================================================
-export type TruncateType = "middle" | "end";
+export type TruncateType = "middle" | "end" | "none";
 export type ItemsLoadStateType = "loading" | "fail" | "success";
 export type LabelDisplayType = "inline" | "next-line";
 export type DropdownVariantType = "small" | "default";
@@ -71,7 +71,7 @@ export interface DropdownConfigProps {
      * Values: "loading" | "fail" | "success"
      */
     itemsLoadState?: ItemsLoadStateType | undefined;
-    /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Values: "middle" | "end" */
+    /** Specifies the truncation type. Truncated text will be replaced with ellipsis. Specify "none" to display the text in full. Values: "middle" | "end" | "none" */
     itemTruncationType?: TruncateType | undefined;
     /** Specifies the maximum number of lines visible before the label is truncated for "end" type */
     itemMaxLines?: number | undefined;

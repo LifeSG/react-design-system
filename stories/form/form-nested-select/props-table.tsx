@@ -83,7 +83,7 @@ const DATA: ApiTableSectionProps[] = [
                 name: "optionTruncationType",
                 description:
                     "Specifies the trunction type of the options display. Truncated text will be replaced with ellipsis",
-                propTypes: [`"end"`, `"middle"`],
+                propTypes: [`"end"`, `"middle"`, `"none"`],
                 defaultValue: `"end"`,
             },
             {
