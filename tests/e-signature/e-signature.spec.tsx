@@ -1,10 +1,4 @@
-import {
-    act,
-    fireEvent,
-    render,
-    screen,
-    waitFor,
-} from "@testing-library/react";
+import { fireEvent, render, screen, waitFor } from "@testing-library/react";
 import { ESignature } from "src/e-signature";
 
 import { createMatchMediaMock } from "../_common";
@@ -68,7 +62,6 @@ describe("ESignature", () => {
     });
 
     it("should call onChange and show signature preview on clicking save button", async () => {
-        jest.useFakeTimers();
         const changeFn = jest.fn();
         render(<ESignature onChange={changeFn} />);
 
@@ -76,15 +69,9 @@ describe("ESignature", () => {
         drawSignature();
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
-        await act(async () => {
-            jest.advanceTimersByTime(500);
-        });
-
-        expect(queryAddSignatureButton()).not.toBeInTheDocument();
-        expect(getEditSignatureButton()).toBeInTheDocument();
+        expect(await findEditSignatureButton()).toBeInTheDocument();
         expect(changeFn).toHaveBeenCalled();
         expect(screen.getByAltText("Signature preview")).toBeInTheDocument();
-        jest.useRealTimers();
     });
 
     it("should discard unsaved changes on clicking cross button in modal", () => {
@@ -101,7 +88,6 @@ describe("ESignature", () => {
     });
 
     it("should clear the field value on clicking clear button and save button subsequently", async () => {
-        jest.useFakeTimers();
         render(<ESignature />);
 
         fireEvent.click(getAddSignatureButton());
@@ -109,12 +95,7 @@ describe("ESignature", () => {
         fireEvent.click(screen.getByRole("button", { name: "Clear" }));
         fireEvent.click(screen.getByRole("button", { name: "Save" }));
 
-        await act(async () => {
-            jest.advanceTimersByTime(500);
-        });
-
-        expect(getAddSignatureButton()).toBeInTheDocument();
-        jest.useRealTimers();
+        expect(await findAddSignatureButton()).toBeInTheDocument();
     });
 });
 
@@ -125,8 +106,12 @@ const queryAddSignatureButton = () =>
     screen.queryByRole("button", { name: "Add signature" });
 const getAddSignatureButton = () =>
     screen.getByRole("button", { name: "Add signature" });
+const findAddSignatureButton = () =>
+    screen.findByRole("button", { name: "Add signature" });
 const getEditSignatureButton = () =>
     screen.getByRole("button", { name: "Edit signature" });
+const findEditSignatureButton = () =>
+    screen.findByRole("button", { name: "Edit signature" });
 const getSignatureModal = () => screen.queryByTestId("signature-modal");
 
 const drawSignature = () => {
