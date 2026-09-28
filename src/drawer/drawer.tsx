@@ -6,10 +6,14 @@ import {
     useTransitionStatus,
 } from "@floating-ui/react";
 import { CrossIcon } from "@lifesg/react-icons/cross";
-import { useEffect, useRef, useState } from "react";
+import { useContext, useEffect, useRef, useState } from "react";
+import { useResizeDetector } from "react-resize-detector";
+import { ThemeContext } from "styled-components";
 import { Overlay } from "../overlay";
+import { Breakpoint } from "../theme";
 import { useId } from "../util";
 import {
+    CallToAction,
     CloseButton,
     Container,
     Content,
@@ -24,14 +28,42 @@ export const Drawer = ({
     show,
     onClose,
     onOverlayClick,
+    customCallToAction,
     ...otherProps
 }: DrawerProps) => {
     // =========================================================================
     // CONST, STATE, REFS
     // =========================================================================
     const [showOverlay, setShowOverlay] = useState(show);
+    // Vertical centre of the heading, used to align the (last-in-DOM,
+    // absolutely positioned) close button with it. A custom call-to-action can
+    // make the header taller than the heading, so a fixed offset would leave
+    // the close button misaligned.
+    const [closeButtonTop, setCloseButtonTop] = useState<number>();
     const id = useId();
+    const theme = useContext(ThemeContext);
+    const stackWidth = Breakpoint["sm-max"]({ theme });
     const initialFocusRef = useRef<HTMLHeadingElement>(null);
+    // Observe the header (whose size tracks the drawer's actual width, which
+    // consumers may override) to drive layout in one pass: the width decides
+    // call-to-action stacking, and each resize re-centres the close button on
+    // the heading. offsetTop/offsetHeight are relative to the drawer (the
+    // positioned ancestor), so they share the close button's coordinate space.
+    const { width: headerWidth, ref: headerRef } =
+        useResizeDetector<HTMLDivElement>({
+            refreshMode: "throttle",
+            refreshRate: 300,
+            onResize: () => {
+                const headingEl = initialFocusRef.current;
+                if (headingEl) {
+                    setCloseButtonTop(
+                        headingEl.offsetTop + headingEl.offsetHeight / 2
+                    );
+                }
+            },
+        });
+    const stackCallToAction =
+        headerWidth !== undefined && headerWidth <= stackWidth;
 
     // =========================================================================
     // FLOATING UI CONFIG
@@ -110,7 +142,10 @@ export const Drawer = ({
                         {...getFloatingProps()}
                         {...otherProps}
                     >
-                        <Header>
+                        <Header
+                            ref={headerRef}
+                            $stacked={!!customCallToAction && stackCallToAction}
+                        >
                             <Heading
                                 id={id}
                                 ref={initialFocusRef}
@@ -120,12 +155,28 @@ export const Drawer = ({
                             >
                                 {heading}
                             </Heading>
+                            {customCallToAction ? (
+                                <CallToAction $stacked={stackCallToAction}>
+                                    {customCallToAction}
+                                </CallToAction>
+                            ) : null}
                         </Header>
                         <Content>{children}</Content>
+                        {/* Rendered last so assistive tech reaches the heading
+                            and content before the close button; centred against
+                            the heading via its measured position. */}
                         <CloseButton
                             aria-label="Close drawer"
                             onClick={onClose}
                             focusHighlight={false}
+                            style={
+                                closeButtonTop !== undefined
+                                    ? {
+                                          top: closeButtonTop,
+                                          transform: "translateY(-50%)",
+                                      }
+                                    : undefined
+                            }
                         >
                             <CrossIcon aria-hidden />
                         </CloseButton>

@@ -1,3 +1,5 @@
+import { DocIcon } from "@lifesg/react-icons/doc";
+import { PencilIcon } from "@lifesg/react-icons/pencil";
 import type { Meta, StoryObj } from "@storybook/react-webpack5";
 import { useRef, useState } from "react";
 import { useMediaQuery } from "react-responsive";
@@ -8,7 +10,7 @@ import {
 } from "src/local-nav";
 import { Breakpoint } from "src/theme";
 import { useTheme } from "styled-components";
-import { Content, Page, TopContent } from "./doc-elements";
+import { Content, ErrorIndicator, Page, TopContent } from "./doc-elements";
 
 type MenuComponent = typeof LocalNavMenu;
 type DropdownComponent = typeof LocalNavDropdown;
@@ -84,6 +86,30 @@ export const MenuWithCustomTitle: StoryObj<MenuComponent> = {
                         )}
                     </div>
                 )}
+            />
+        );
+    },
+};
+
+// One item per combination: left + right, left only, right only.
+const ADDON_ITEMS: LocalNavItemProps[] = [
+    {
+        title: "Title 1",
+        titleAddon: { left: <DocIcon />, right: <ErrorIndicator /> },
+    },
+    { title: "Title 2", titleAddon: { left: <PencilIcon /> } },
+    { title: "Title 3", titleAddon: { right: <ErrorIndicator /> } },
+];
+
+export const MenuWithTitleAddon: StoryObj<MenuComponent> = {
+    render: (_args) => {
+        const [selectedIndex, setSelectedIndex] = useState(-1);
+
+        return (
+            <LocalNavMenu
+                items={ADDON_ITEMS}
+                selectedItemIndex={selectedIndex}
+                onNavItemSelect={(e, item, index) => setSelectedIndex(index)}
             />
         );
     },
@@ -190,6 +216,53 @@ export const DropdownWithCustomTitle: StoryObj<DropdownComponent> = {
                             )}
                         </div>
                     )}
+                />
+                <div style={{ padding: "1rem" }} ref={contentRef}>
+                    <Content />
+                </div>
+            </div>
+        );
+    },
+    parameters: {
+        layout: "fullscreen",
+        docs: { story: { inline: false, iframeHeight: 500 } },
+    },
+};
+
+export const DropdownWithTitleAddon: StoryObj<DropdownComponent> = {
+    render: (_args) => {
+        const [selectedIndex, setSelectedIndex] = useState(-1);
+        const contentRef = useRef<HTMLDivElement>(null);
+
+        const handleNavItemClick = (
+            e: React.MouseEvent<HTMLElement> | React.KeyboardEvent<HTMLElement>,
+            item: LocalNavItemProps,
+            index: number
+        ) => {
+            setSelectedIndex(index);
+
+            const section = ADDON_ITEMS[index];
+            if (section) {
+                const element = contentRef.current?.children[index];
+                if (element) {
+                    const top =
+                        element.getBoundingClientRect().top +
+                        window.scrollY -
+                        200;
+                    window.scrollTo({ top, behavior: "smooth" });
+                }
+            }
+        };
+
+        return (
+            <div style={{ height: "200vh", padding: "2rem" }}>
+                <TopContent />
+                <LocalNavDropdown
+                    defaultLabel="Initial"
+                    items={ADDON_ITEMS}
+                    stickyOffset={0}
+                    selectedItemIndex={selectedIndex}
+                    onNavItemSelect={handleNavItemClick}
                 />
                 <div style={{ padding: "1rem" }} ref={contentRef}>
                     <Content />

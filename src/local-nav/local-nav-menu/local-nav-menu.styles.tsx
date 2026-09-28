@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { Colour, Radius, Spacing } from "../../theme";
+import { Colour, Font, Radius, Spacing } from "../../theme";
 import { Typography } from "../../typography";
 
 // =============================================================================
@@ -22,6 +22,28 @@ export const Nav = styled.ul`
 
 export const TextLabel = styled(Typography.BodyBL)<NavItemStyleProps>`
     margin: 0;
+`;
+
+export const TitleContainer = styled.span`
+    display: flex;
+    align-items: center;
+    gap: ${Spacing["spacing-8"]};
+    width: 100%;
+`;
+
+/* Keeps the left addon aligned with the first line when the title wraps. */
+export const LeftAddon = styled.span`
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: ${Font.Spec["body-lh-baseline"]};
+`;
+
+/* Flushed right; stays vertically centred against the (possibly wrapped) title. */
+export const RightAddon = styled.span`
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
 `;
 
 export const NavItem = styled.li<NavItemStyleProps>`

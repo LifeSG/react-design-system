@@ -122,6 +122,28 @@ export const NavItemLabel = styled.div<NavItemStyleProps>`
         props.$isSelected ? Colour["text-selected"] : Colour["text"]};
 `;
 
+export const TitleContainer = styled.span`
+    display: flex;
+    align-items: center;
+    gap: ${Spacing["spacing-8"]};
+    flex: 1;
+`;
+
+/* Keeps the left addon aligned with the first line when the title wraps. */
+export const LeftAddon = styled.span`
+    display: inline-flex;
+    align-items: center;
+    align-self: flex-start;
+    min-height: ${Font.Spec["body-lh-baseline"]};
+`;
+
+/* Flushed right; stays vertically centred against the (possibly wrapped) title. */
+export const RightAddon = styled.span`
+    display: inline-flex;
+    align-items: center;
+    margin-left: auto;
+`;
+
 export const StyledTickIcon = styled(TickIcon)`
     color: ${Colour["icon-selected"]};
     margin: 0 ${Spacing["spacing-8"]};
