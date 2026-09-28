@@ -7,7 +7,6 @@ import {
 import { PopoverRenderProps, PopoverV2TriggerProps } from "../popover-v2";
 import { MenuItem } from "./menu-item";
 import { MenuLink } from "./menu-link";
-import { MenuSection } from "./menu-section";
 
 export interface MenuProps
     extends Omit<PopoverV2TriggerProps, "popoverContent"> {
@@ -17,9 +16,7 @@ export interface MenuProps
 export interface MenuContentProps
     extends HTMLAttributes<HTMLDivElement>,
         PopoverRenderProps {
-    children:
-        | ReactElement<typeof MenuSection>
-        | ReactElement<typeof MenuSection>[];
+    children: ReactElement<MenuSectionProps> | ReactElement<MenuSectionProps>[];
     "data-testid"?: string | undefined;
 }
 
@@ -30,6 +27,7 @@ type MenuSectionItem =
 export interface MenuSectionProps extends HTMLAttributes<HTMLUListElement> {
     children: MenuSectionItem | MenuSectionItem[];
     showDivider?: boolean | undefined;
+    columns?: number | undefined;
     label?: string | undefined;
     "data-testid"?: string | undefined;
 }
