@@ -1,6 +1,10 @@
-import React from "react";
+import React, { Children, useMemo } from "react";
 import { MenuPanel } from "./menu-content.styles";
-import { MenuContentProps } from "./types";
+import {
+    GRID_COLUMN_GAP_PX,
+    GRID_COLUMN_WIDTH_PX,
+} from "./menu-section.styles";
+import { MenuContentProps, MenuSectionProps } from "./types";
 
 // =============================================================================
 // HELPERS
@@ -20,6 +24,28 @@ export const MenuContent = ({
     maxHeight,
     ...otherProps
 }: MenuContentProps): JSX.Element => {
+    // =============================================================================
+    // CONST, STATE, REF
+    // =============================================================================
+    // caps the panel width so it fits the widest Menu.Section's grid columns, falling back to the default 24rem
+    const gridMaxWidth = useMemo(() => {
+        const maxColumns = Children.toArray(children)
+            .filter(
+                (child): child is React.ReactElement<MenuSectionProps> =>
+                    React.isValidElement(child) &&
+                    !!(child.props as MenuSectionProps).columns
+            )
+            .reduce((max, child) => Math.max(max, child.props.columns ?? 0), 0);
+
+        if (!maxColumns) return undefined;
+
+        return (
+            maxColumns * GRID_COLUMN_WIDTH_PX +
+            (maxColumns - 1) * GRID_COLUMN_GAP_PX +
+            2 // 1px border × 2 sides
+        );
+    }, [children]);
+
     // =============================================================================
     // EVENT HANDLERS
     // =============================================================================
@@ -56,6 +82,7 @@ export const MenuContent = ({
         <MenuPanel
             $overflow={overflow}
             $maxHeight={maxHeight}
+            $maxWidth={gridMaxWidth}
             data-testid={testId}
             tabIndex={-1}
             onKeyDown={handleKeyDown}
