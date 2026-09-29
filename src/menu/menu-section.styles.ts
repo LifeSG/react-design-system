@@ -25,6 +25,10 @@ export const label = css`
     color: ${Colour["text-subtler"]};
 `;
 
+export const list = css`
+    list-style: none;
+`;
+
 export const listColumns = css`
     ${gridTokens.rows}: initial;
 
@@ -38,8 +42,4 @@ export const listColumns = css`
         grid-template-rows: none;
         grid-auto-flow: row;
     }
-`;
-
-export const list = css`
-    list-style: none;
 `;
