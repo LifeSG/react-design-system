@@ -32,7 +32,7 @@ Read `@lifesg/react-design-system` version from the consumer's `package.json` be
 ## Install
 
 ```bash
-pnpm add @lifesg/react-design-system @lifesg/react-icons styled-components @floating-ui/react @mui/icons-material @emotion/is-prop-valid
+npm install @lifesg/react-design-system @lifesg/react-icons styled-components @floating-ui/react @emotion/is-prop-valid
 ```
 
 Peer deps: `react` + `react-dom` (^17, ^18, or ^19).
@@ -43,27 +43,18 @@ Peer deps: `react` + `react-dom` (^17, ^18, or ^19).
 
 ## ThemeProvider (required)
 
-Every app must wrap all components in `StyleSheetManager` (outer) + `ThemeProvider` (inner). Missing either causes errors or DOM warnings.
+Every app must wrap all components in `ThemeProvider`. Without it, components throw errors.
 
 ```tsx
-import { ThemeProvider, StyleSheetManager } from "styled-components";
-import isPropValid from "@emotion/is-prop-valid";
+import { ThemeProvider } from "styled-components";
 import { LifeSGTheme } from "@lifesg/react-design-system/theme";
 
 export default function App() {
-    return (
-        <StyleSheetManager shouldForwardProp={isPropValid}>
-            <ThemeProvider theme={LifeSGTheme}>{/* your app */}</ThemeProvider>
-        </StyleSheetManager>
-    );
+    return <ThemeProvider theme={LifeSGTheme}>{/* your app */}</ThemeProvider>;
 }
 ```
 
-`StyleSheetManager` with `isPropValid` stops styled-components forwarding DS-specific props (e.g. `weight`) to DOM elements.
-
 Theme is an **imported object** — not a string. Available themes: `LifeSGTheme` · `BookingSGTheme` · `CCubeTheme` · `MyLegacyTheme` · `OneServiceTheme` · `PATheme` · `SupportGoWhereTheme` · `SGWDigitalLobbyTheme` · `IMDATheme` · `SPFTheme` · `SMGSTheme` · `A11yPlaygroundTheme`
-
-For auto dark/light mode: swap `ThemeProvider` for `DSThemeProvider` (same import path). Force fixed mode: `LifeSGTheme.light` or `LifeSGTheme.dark`.
 
 ---
 
@@ -113,7 +104,7 @@ Never hardcode `px` values — always use `Spacing` tokens.
 ## Icons
 
 1. `@lifesg/react-icons` first — read `./resources/v3/components/icon.md` to discover available icon names.
-2. `@mui/icons-material` as fallback only.
+2. `material-symbols` as fallback only.
 3. Never guess icon names — verify the import exists before using.
 
 ---
@@ -180,12 +171,11 @@ This skill is self-contained — all resource files live under `./resources/` re
 
 ## Gotchas
 
-| Symptom                             | Fix                                                                             |
-| ----------------------------------- | ------------------------------------------------------------------------------- |
-| Components throw errors             | Add `StyleSheetManager` + `ThemeProvider` wrapping app root                     |
-| styled-components DOM prop warnings | `StyleSheetManager` is missing or not wrapping `ThemeProvider`                  |
-| No styles / wrong fonts             | Read `./resources/v3/setup/setup.md` — CSS imports likely missing or mismatched |
-| Token in inline `style={{}}`        | Tokens are functions — move to a `styled` template literal                      |
+| Symptom                      | Fix                                                                             |
+| ---------------------------- | ------------------------------------------------------------------------------- |
+| Components throw errors      | Add `ThemeProvider` wrapping app root                                           |
+| No styles / wrong fonts      | Read `./resources/v3/setup/setup.md` — CSS imports likely missing or mismatched |
+| Token in inline `style={{}}` | Tokens are functions — move to a `styled` template literal                      |
 
 ---
 

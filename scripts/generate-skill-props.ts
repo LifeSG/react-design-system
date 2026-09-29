@@ -249,6 +249,7 @@ function main() {
 
     let updated = 0;
     let skipped = 0;
+    const updatedPaths: string[] = [];
 
     for (const dir of resourceDirs) {
         if (!fs.existsSync(dir)) continue;
@@ -273,9 +274,23 @@ function main() {
                 }
             } else {
                 updated++;
+                updatedPaths.push(filePath);
                 console.log(`  props [${version}] ${file}`);
             }
         }
+    }
+
+    if (updatedPaths.length > 0) {
+        const { execSync } = require("child_process");
+        execSync(
+            `npx prettier --write ${updatedPaths
+                .map((p) => `"${p}"`)
+                .join(" ")}`,
+            {
+                stdio: "inherit",
+                cwd: ROOT_DIR,
+            }
+        );
     }
 
     console.log(`\nDone. Updated: ${updated}, Skipped: ${skipped}`);

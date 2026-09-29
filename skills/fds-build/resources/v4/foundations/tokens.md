@@ -38,8 +38,6 @@ No `styled.d.ts` augmentation required. No `useTheme()` hook needed.
 | Hardcoding `var(--fds-*)` directly                                | FDS internal variable names may change                   | Use `Colour[...]` / `Spacing[...]` tokens   |
 | Hardcoding hex values                                             | Breaks theming                                           | Always use a Colour token                   |
 | Creating a local token proxy file                                 | Plain strings do not respond to theme changes at runtime | Use `Colour[...]` / `Spacing[...]` directly |
-| Using `SpacingValues`                                             | This export does not exist                               | Use `Spacing`                               |
-| Using `Theme` (named export)                                      | This export does not exist                               | Use a named preset: `LifeSGTheme`, etc.     |
 
 ---
 
@@ -394,12 +392,31 @@ In v4 there is no `MediaQuery` helper for CSS-in-JS. Use standard CSS media quer
 }
 ```
 
-`Breakpoint` can still be imported for JS conditional logic:
+For JS conditional logic, use the v4 media query hooks instead of `window.innerWidth`:
 
 ```tsx
-import { Breakpoint } from "@lifesg/react-design-system/theme";
+import {
+    Breakpoint,
+    useMaxWidthMediaQuery,
+    useMinWidthMediaQuery,
+    useMediaQuery,
+    useResolvedBreakpointToken,
+    parsePxOrRemValue,
+} from "@lifesg/react-design-system/theme";
 
-const isDesktop = window.innerWidth > Breakpoint["lg-min"];
+const ExampleComponent = () => {
+    // Simple max/min width checks
+    const isMobile = useMaxWidthMediaQuery("sm");
+    const isDesktop = useMinWidthMediaQuery("lg");
+
+    // Custom query
+    const isTablet = useMediaQuery({ maxWidth: Breakpoint["lg-max"] });
+
+    // When the actual pixel value is required (e.g. for a third-party library)
+    const tablet = parsePxOrRemValue(
+        useResolvedBreakpointToken(Breakpoint["lg-max"])
+    );
+};
 ```
 
 ### Breakpoint tiers
@@ -441,7 +458,7 @@ import { Shadow } from "@lifesg/react-design-system/theme";
 
 ## Border Tokens
 
-`Border` is a flat object of CSS variable strings. Import from `@lifesg/react-design-system/theme`.
+`Border` is a flat object of CSS variable strings.
 
 ```tsx
 import { Border } from "@lifesg/react-design-system/theme";
@@ -460,6 +477,21 @@ import { Border } from "@lifesg/react-design-system/theme";
 ```
 
 There is no `Border.Util` in v4 — compose border properties manually using the tokens above.
+
+For dashed border styling, use the `DashedBorder` component instead:
+
+```tsx
+import { DashedBorder } from "@lifesg/react-design-system/dashed-border";
+import { Border, Colour, Radius } from "@lifesg/react-design-system/theme";
+
+<DashedBorder
+    radius={Radius["sm"]}
+    thickness={Border["width-040"]}
+    colour={Colour["border"]}
+>
+    {/* children */}
+</DashedBorder>;
+```
 
 ### Token reference
 

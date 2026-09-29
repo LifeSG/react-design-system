@@ -25,7 +25,7 @@ This file covers v4-specific setup and rules. For components not yet documented 
 ## Install
 
 ```bash
-pnpm add @lifesg/react-design-system @lifesg/react-icons @floating-ui/react @mui/icons-material
+npm install @lifesg/react-design-system @lifesg/react-icons @floating-ui/react
 ```
 
 Do not install `styled-components` — v4 uses CSS Modules for custom styles.
@@ -142,7 +142,7 @@ import { Colour, Spacing } from "@lifesg/react-design-system/theme";
 ## Icons
 
 1. `@lifesg/react-icons` first — read `./resources/v3/components/icon.md` to discover available icon names.
-2. `@mui/icons-material` as fallback only.
+2. `material-symbols` as fallback only.
 3. Never guess icon names — verify the import exists before using.
 
 ---
@@ -168,12 +168,12 @@ This skill is self-contained — all resource files live under `./resources/` re
 | New project / missing setup                                           | `./resources/v4/setup/setup.md`                                                                     |
 | Find the right component                                              | `./catalogue.md` — search "Also known as" column by keyword                                         |
 | Use a component                                                       | Check `./resources/v4/components/{name}/` first; fall back to `./resources/v3/components/{name}.md` |
-| Grid system, breakpoints, column widths                               | `./resources/v3/components/layout.md`                                                               |
+| Grid system, breakpoints, column widths                               | `./resources/v4/components/layout.md`                                                               |
 | Build a form page (single or multi-step)                              | Check `./resources/v4/templates/form.md`; fall back to `./resources/v3/templates/form.md`           |
 | Build a listing / search results page                                 | `./resources/v4/templates/listing.md`                                                               |
-| Handle loading / error / empty states                                 | `./resources/v3/patterns/states.md`                                                                 |
-| Token question (Colour, Spacing, Radius, Typography)                  | `./resources/v3/foundations/tokens.md`                                                              |
-| Spacing rhythm, visual hierarchy, card rules, settings page structure | `./resources/v3/foundations/layout-composition-patterns.md`                                         |
+| Handle loading / error / empty states                                 | `./resources/v4/patterns/states.md`                                                                 |
+| Token question (Colour, Spacing, Radius, Typography)                  | `./resources/v4/foundations/tokens.md`                                                              |
+| Spacing rhythm, visual hierarchy, card rules, settings page structure | `./resources/v4/foundations/layout-composition-patterns.md`                                         |
 
 **Reading strategy:** read `catalogue.md` once for discovery, then fetch only the specific component `{name}.md` files you need. Do not pre-load all component files.
 
