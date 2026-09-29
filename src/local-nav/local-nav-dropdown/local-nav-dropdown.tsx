@@ -5,13 +5,16 @@ import { LocalNavDropdownItemComponentProps } from "../internal-types";
 import { LocalNavDropdownProps, LocalNavItemProps } from "../types";
 import {
     Backdrop,
+    LeftAddon,
     NavItem,
     NavItemLabel,
     NavItemList,
     NavSelect,
     NavSelectIcon,
     NavWrapper,
+    RightAddon,
     StyledTickIcon,
+    TitleContainer,
 } from "./local-nav-dropdown.styles";
 
 const Component = (
@@ -275,7 +278,7 @@ const Component = (
         renderItem,
         index,
     }: LocalNavDropdownItemComponentProps) => {
-        const { id, title } = item;
+        const { id, title, titleAddon } = item;
 
         if (renderItem) {
             return (
@@ -313,8 +316,28 @@ const Component = (
                     listItemRefs.current[index] = el as HTMLLIElement;
                 }}
             >
-                {isSelected && <StyledTickIcon />}
-                <NavItemLabel $isSelected={isSelected}>{title}</NavItemLabel>
+                {isSelected && (
+                    <LeftAddon>
+                        <StyledTickIcon />
+                    </LeftAddon>
+                )}
+                {titleAddon ? (
+                    <TitleContainer>
+                        {titleAddon.left && (
+                            <LeftAddon>{titleAddon.left}</LeftAddon>
+                        )}
+                        <NavItemLabel $isSelected={isSelected}>
+                            {title}
+                        </NavItemLabel>
+                        {titleAddon.right && (
+                            <RightAddon>{titleAddon.right}</RightAddon>
+                        )}
+                    </TitleContainer>
+                ) : (
+                    <NavItemLabel $isSelected={isSelected}>
+                        {title}
+                    </NavItemLabel>
+                )}
             </NavItem>
         );
     };

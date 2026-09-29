@@ -2,10 +2,13 @@ import React from "react";
 import { LocalNavMenuItemComponentProps } from "../internal-types";
 import { LocalNavMenuProps } from "../types";
 import {
+    LeftAddon,
     Nav,
     NavItem,
     NavItemContent,
+    RightAddon,
     TextLabel,
+    TitleContainer,
 } from "./local-nav-menu.styles";
 
 /**
@@ -59,16 +62,30 @@ const Component = (
         renderItem,
         index,
     }: LocalNavMenuItemComponentProps) => {
-        const { id, title } = item;
+        const { id, title, titleAddon } = item;
 
         const renderTitle = () => {
             if (renderItem) {
                 return renderItem(item, { selected: isSelected });
             }
-            return (
+            const label = (
                 <TextLabel weight={isSelected ? "semibold" : "regular"}>
                     {title}
                 </TextLabel>
+            );
+            if (!titleAddon) {
+                return label;
+            }
+            return (
+                <TitleContainer>
+                    {titleAddon.left && (
+                        <LeftAddon>{titleAddon.left}</LeftAddon>
+                    )}
+                    {label}
+                    {titleAddon.right && (
+                        <RightAddon>{titleAddon.right}</RightAddon>
+                    )}
+                </TitleContainer>
             );
         };
 

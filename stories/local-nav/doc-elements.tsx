@@ -1,6 +1,15 @@
-import { MediaQuery } from "src/theme";
+import { ExclamationCircleFillIcon } from "@lifesg/react-icons/exclamation-circle-fill";
+import { Colour, MediaQuery } from "src/theme";
 import { Typography } from "src/typography";
 import styled from "styled-components";
+
+const StyledErrorIcon = styled(ExclamationCircleFillIcon)`
+    color: ${Colour["icon-error"]};
+    width: 1.25rem;
+    height: 1.25rem;
+`;
+
+export const ErrorIndicator = () => <StyledErrorIcon aria-label="Has errors" />;
 
 export const Page = styled.div`
     height: 200vh;
