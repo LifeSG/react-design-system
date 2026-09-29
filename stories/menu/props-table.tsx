@@ -170,6 +170,12 @@ const MENU_SECTION_DATA: ApiTableSectionProps[] = [
                 defaultValue: "true",
             },
             {
+                name: "columns",
+                description:
+                    "Specifies the number of columns to display menu items in a grid layout",
+                propTypes: ["number"],
+            },
+            {
                 name: "label",
                 description: "Optional label for this section",
                 propTypes: ["string"],

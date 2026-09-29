@@ -8,6 +8,7 @@ export const MenuSection = ({
     label,
     showDivider = true,
     columns,
+    className,
     "data-testid": testId = "menu-section",
     ...otherProps
 }: MenuSectionProps): JSX.Element => {
@@ -28,7 +29,7 @@ export const MenuSection = ({
     // RENDER FUNCTIONS
     // =============================================================================
     return (
-        <SectionWrapper $showDivider={showDivider}>
+        <SectionWrapper $showDivider={showDivider} className={className}>
             {label && (
                 <Label weight="semibold" id={internalId}>
                     {label}
