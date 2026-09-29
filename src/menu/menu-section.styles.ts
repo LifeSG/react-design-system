@@ -14,8 +14,8 @@ export const GRID_COLUMN_GAP_PX = 8;
 export const section = css`
     padding: ${Spacing["spacing-8"]} 0;
     margin: 0;
-    list-style: none;
 `;
+
 export const sectionWithDivider = css`
     border-top: ${Border["width-010"]} ${Border["solid"]} ${Colour["border"]};
 `;
@@ -25,7 +25,11 @@ export const label = css`
     color: ${Colour["text-subtler"]};
 `;
 
-export const columns = css`
+export const list = css`
+    list-style: none;
+`;
+
+export const listColumns = css`
     ${gridTokens.rows}: initial;
 
     display: grid;

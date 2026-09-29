@@ -65,7 +65,7 @@ export const MenuSection = ({
                 ref={ulRef}
                 data-testid={testId}
                 aria-labelledby={internalId}
-                className={clsx(columns && styles.columns)}
+                className={clsx(styles.list, columns && styles.listColumns)}
                 {...otherProps}
             >
                 {children}
