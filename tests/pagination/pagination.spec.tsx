@@ -1,6 +1,18 @@
-import { act, render, screen, waitFor, within } from "@testing-library/react";
+import {
+    act,
+    fireEvent,
+    render,
+    screen,
+    waitFor,
+    within,
+} from "@testing-library/react";
 import userEvent from "@testing-library/user-event";
+import { useMediaQuery } from "react-responsive";
 import { Pagination } from "src/pagination";
+
+jest.mock("react-responsive", () => ({
+    useMediaQuery: jest.fn(() => false),
+}));
 
 const SELECTOR_TESTID = "selector";
 const DROPDOWN_TESTID = "dropdown-list";
@@ -12,6 +24,7 @@ const PREV_PAGES_LABEL = "Previous 5 pages";
 describe("Pagination", () => {
     beforeEach(() => {
         jest.clearAllMocks();
+        (useMediaQuery as jest.Mock).mockReturnValue(false);
 
         global.ResizeObserver = jest.fn().mockImplementation(() => ({
             observe: jest.fn(),
@@ -267,6 +280,28 @@ describe("Pagination", () => {
             ).toBeEnabled();
         });
 
+        it("should jump to the first and last pages when the nav buttons are clicked", async () => {
+            const user = userEvent.setup();
+            const mockOnPageChange = jest.fn();
+
+            render(
+                <Pagination
+                    totalItems={100}
+                    activePage={5}
+                    showFirstAndLastNav
+                    onPageChange={mockOnPageChange}
+                />
+            );
+
+            await user.click(
+                screen.getByRole("button", { name: "First page" })
+            );
+            await user.click(screen.getByRole("button", { name: "Last page" }));
+
+            expect(mockOnPageChange).toHaveBeenNthCalledWith(1, 1);
+            expect(mockOnPageChange).toHaveBeenNthCalledWith(2, 10);
+        });
+
         it("should disable the first page button on the first page", async () => {
             render(
                 <Pagination
@@ -299,6 +334,32 @@ describe("Pagination", () => {
             expect(
                 screen.getByRole("button", { name: "Last page" })
             ).toBeDisabled();
+        });
+    });
+
+    describe("ellipsis navigation", () => {
+        it("should show the previous pages tooltip on hover", async () => {
+            const user = userEvent.setup();
+
+            render(<Pagination totalItems={100} activePage={7} />);
+
+            await user.hover(
+                screen.getByRole("button", { name: PREV_PAGES_LABEL })
+            );
+
+            expect(screen.getByText(PREV_PAGES_LABEL)).toBeVisible();
+        });
+
+        it("should show the next pages tooltip on hover", async () => {
+            const user = userEvent.setup();
+
+            render(<Pagination totalItems={100} activePage={4} />);
+
+            await user.hover(
+                screen.getByRole("button", { name: NEXT_PAGES_LABEL })
+            );
+
+            expect(screen.getByText(NEXT_PAGES_LABEL)).toBeVisible();
         });
     });
 
@@ -369,6 +430,150 @@ describe("Pagination", () => {
 
             expect(within(dropdown).getByText("1 per page")).toBeVisible();
             expect(within(dropdown).getByText("2 per page")).toBeVisible();
+        });
+
+        it("should keep the selected page size when the options array identity changes", async () => {
+            const initialOptions = [
+                { value: 10, label: "10 per page" },
+                { value: 20, label: "20 per page" },
+            ];
+            const updatedOptions = [
+                { value: 10, label: "10 per page (updated)" },
+                { value: 20, label: "20 per page (updated)" },
+            ];
+
+            const { rerender } = render(
+                <Pagination
+                    totalItems={30}
+                    activePage={1}
+                    pageSize={20}
+                    showPageSizeChanger
+                    pageSizeOptions={initialOptions}
+                />
+            );
+
+            expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
+                /^20 per page$/
+            );
+
+            rerender(
+                <Pagination
+                    totalItems={30}
+                    activePage={1}
+                    pageSize={20}
+                    showPageSizeChanger
+                    pageSizeOptions={updatedOptions}
+                />
+            );
+
+            expect(screen.getByTestId(SELECTOR_TESTID)).toHaveTextContent(
+                /^20 per page \(updated\)$/
+            );
+        });
+
+        describe("variant", () => {
+            it("should render the default variant on mobile", async () => {
+                (useMediaQuery as jest.Mock).mockReturnValue(true);
+
+                render(
+                    <Pagination
+                        totalItems={30}
+                        activePage={2}
+                        showPageSizeChanger
+                    />
+                );
+
+                expect(
+                    screen.getByRole("textbox", { name: "Page 2 of 3" })
+                ).toBeInTheDocument();
+                expect(
+                    screen.queryByTestId(SELECTOR_TESTID)
+                ).not.toBeInTheDocument();
+            });
+
+            it("should render the full variant on mobile", async () => {
+                (useMediaQuery as jest.Mock).mockReturnValue(true);
+
+                render(
+                    <Pagination
+                        totalItems={30}
+                        activePage={2}
+                        showPageSizeChanger
+                        variant="full"
+                    />
+                );
+
+                expect(
+                    screen.getByRole("button", { name: "page 1 of 3" })
+                ).toBeInTheDocument();
+                expect(screen.getByTestId(SELECTOR_TESTID)).toBeInTheDocument();
+                expect(
+                    screen.queryByRole("textbox", { name: "Page 2 of 3" })
+                ).not.toBeInTheDocument();
+            });
+
+            it("should render the compact variant on desktop", async () => {
+                (useMediaQuery as jest.Mock).mockReturnValue(false);
+
+                render(
+                    <Pagination
+                        totalItems={30}
+                        activePage={2}
+                        showPageSizeChanger
+                        variant="compact"
+                    />
+                );
+
+                expect(
+                    screen.getByRole("textbox", { name: "Page 2 of 3" })
+                ).toBeInTheDocument();
+                expect(
+                    screen.queryByTestId(SELECTOR_TESTID)
+                ).not.toBeInTheDocument();
+            });
+        });
+
+        describe("mobile input", () => {
+            it("should sanitize input and submit the current page", async () => {
+                const mockOnPageChange = jest.fn();
+                (useMediaQuery as jest.Mock).mockReturnValue(true);
+
+                render(
+                    <Pagination
+                        totalItems={30}
+                        activePage={2}
+                        onPageChange={mockOnPageChange}
+                    />
+                );
+
+                const input = screen.getByRole("textbox", {
+                    name: "Page 2 of 3",
+                });
+                const form = input.closest("form");
+
+                if (!form) {
+                    throw new Error("Expected pagination form");
+                }
+
+                fireEvent.change(input, {
+                    target: { value: "" },
+                });
+                expect(input).toHaveValue("");
+
+                fireEvent.change(input, {
+                    target: { value: "12a" },
+                });
+                expect(input).toHaveValue("12");
+
+                fireEvent.change(input, {
+                    target: { value: "99" },
+                });
+                expect(input).toHaveValue("3");
+
+                fireEvent.submit(form);
+
+                expect(mockOnPageChange).toHaveBeenCalledWith(3);
+            });
         });
 
         describe("onPageSizeChange", () => {
