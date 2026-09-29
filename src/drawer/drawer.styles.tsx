@@ -100,24 +100,21 @@ export const Header = styled.div<HeaderStyleProps>`
     background-color: ${Colour.bg};
     border-bottom: ${Border["width-010"]} ${Border.solid} ${Colour.border};
 
-    ${MediaQuery.MaxWidth.lg} {
-        gap: ${Spacing["spacing-8"]};
-        padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
-            ${Spacing["spacing-16"]}
-            calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-24"]});
-    }
-
     ${(props) =>
         props.$stacked &&
         css`
             /* Stack the call-to-action below the heading when the drawer is too
                narrow to fit both on one line. */
-            && {
-                flex-direction: column;
-                align-items: stretch;
-                gap: ${Spacing["spacing-16"]};
-            }
+            flex-direction: column;
+            align-items: stretch;
+            gap: ${Spacing["spacing-16"]};
         `}
+
+    ${MediaQuery.MaxWidth.lg} {
+        padding: ${Spacing["spacing-32"]} ${Spacing["spacing-20"]}
+            ${Spacing["spacing-16"]}
+            calc(${Font.Spec["heading-lh-md"]} + ${Spacing["spacing-24"]});
+    }
 `;
 
 export const CallToAction = styled.div<CallToActionStyleProps>`
