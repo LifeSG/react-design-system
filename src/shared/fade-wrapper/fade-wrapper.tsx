@@ -56,6 +56,14 @@ const Component = (
             resize() {
                 handleResize();
             },
+            scrollToEnd() {
+                const content = contentRef.current;
+                const wrapper = wrapperRef.current;
+                if (content && wrapper) {
+                    content.scrollLeft =
+                        content.scrollWidth - wrapper.offsetWidth;
+                }
+            },
         };
     });
 
