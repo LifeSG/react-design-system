@@ -15,6 +15,7 @@ import {
 interface MenuPanelStylesProps {
     $overflow?: PopoverOverflowType | undefined;
     $maxHeight?: number | undefined;
+    $maxWidth?: number | undefined;
 }
 
 // =============================================================================
@@ -42,7 +43,10 @@ export const MenuPanel = styled.div<MenuPanelStylesProps>`
     }
 
     min-width: min(15rem, var(--available-width));
-    max-width: min(24rem, var(--available-width));
+    max-width: min(
+        ${({ $maxWidth }) => ($maxWidth ? `${$maxWidth}px` : "24rem")},
+        var(--available-width)
+    );
 
     ${({ $maxHeight }) =>
         $maxHeight !== undefined &&

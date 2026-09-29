@@ -8,6 +8,7 @@ import { TypographyLinkProps } from "../typography";
 export interface NavItemLinkProps<T> extends NavItemCommonProps<T> {
     itemType?: "link";
     subMenu?: NavItemCommonProps<T>[] | undefined;
+    subMenuColumns?: number | undefined;
 }
 export interface NavItemComponentProps {
     itemType: "component";

@@ -178,6 +178,12 @@ const DATA: ApiTableSectionProps[] = [
                     "The navigation items for the mobile viewport. Uses desktop's if not specified",
                 propTypes: ["NavItemCommonProps<T>[]"],
             },
+            {
+                name: "subMenuColumns",
+                description:
+                    "Specifies the number of columns to display sub-menu items in a grid layout",
+                propTypes: ["number"],
+            },
         ],
     },
     {
