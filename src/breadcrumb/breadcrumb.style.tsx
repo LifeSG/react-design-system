@@ -1,17 +1,13 @@
 import { ChevronRightIcon } from "@lifesg/react-icons/chevron-right";
-import styled, { css } from "styled-components";
+import styled from "styled-components";
 import { Colour, Font, MediaQuery, Spacing } from "../theme";
 import { Typography } from "../typography/typography";
+import { FadeWrapper } from "../shared/fade-wrapper";
 
 // =============================================================================
 // STYLE TYPES, transient props are denoted with $
 // See more https://styled-components.com/docs/api#transient-props
 // =============================================================================
-interface FadeProps {
-    $backgroundColor?: string[];
-    $position?: "left" | "right";
-}
-
 interface ItemStyleProps {
     $styleProps?: string;
 }
@@ -19,9 +15,7 @@ interface ItemStyleProps {
 // =============================================================================
 // STYLE COMPONENTS
 // =============================================================================
-export const Wrapper = styled.div`
-    position: relative;
-    width: 100%;
+export const Wrapper = styled(FadeWrapper)`
     z-index: 1;
     margin: ${Spacing["spacing-32"]} 0;
 
@@ -32,6 +26,13 @@ export const Wrapper = styled.div`
     ${MediaQuery.MaxWidth.lg} {
         margin: ${Spacing["spacing-16"]} 0;
     }
+
+    [data-id="left-fade"],
+    [data-id="right-fade"] {
+        height: calc(1lh + ${Spacing["spacing-4"]});
+        top: 50%;
+        transform: translateY(-50%);
+    }
 `;
 
 export const Content = styled.ul`
@@ -41,58 +42,9 @@ export const Content = styled.ul`
     white-space: nowrap;
     margin-left: -${Spacing["spacing-8"]};
     font-size: ${Font.Spec["body-size-md"]};
-    overflow-x: scroll;
-    overflow-y: hidden;
-    scrollbar-width: none; /* Firefox */
-    -ms-overflow-style: none; /* IE 10+ */
-    &::-webkit-scrollbar {
-        display: none; /* Chrome/Safari/Webkit */
-    }
-
     ${MediaQuery.MaxWidth.lg} {
         flex-wrap: nowrap;
     }
-`;
-
-export const Fade = styled.div<FadeProps>`
-    width: ${Spacing["spacing-64"]};
-    height: calc(1lh + ${Spacing["spacing-4"]});
-    position: absolute;
-    top: 50%;
-    transform: translateY(-50%);
-    pointer-events: none;
-
-    ${(props) => {
-        let positionStyle: string;
-        const transparentColor = "rgba(255,255,255,0.001)";
-        const fadeColor = Colour.bg(props);
-
-        if (props.$position === "left") {
-            positionStyle = `
-				left: -8px;
-				background-image: linear-gradient(
-					to right, 
-					${props.$backgroundColor || fadeColor}, 
-					${transparentColor}
-				);
-			`;
-        } else {
-            positionStyle = `
-				right: 8px;
-				background-image: linear-gradient(
-					to left,
-					${props.$backgroundColor || fadeColor},
-					${transparentColor}
-				);
-			`;
-        }
-
-        return css`
-            ${MediaQuery.MaxWidth.lg} {
-                ${positionStyle}
-            }
-        `;
-    }};
 `;
 
 export const Item = styled.li<ItemStyleProps>`

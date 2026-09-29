@@ -1,11 +1,7 @@
-export type FadePosition = "left" | "right" | "both";
+import { FadeColorSet, FadePosition } from "../shared/fade-wrapper";
 
+export type { FadeColorSet, FadePosition };
 export type SeparatorStyle = "chevron" | "slash";
-
-export interface FadeColorSet {
-    left?: string[] | undefined;
-    right?: string[] | undefined;
-}
 
 export interface BreadcrumbProps {
     links: React.AnchorHTMLAttributes<HTMLAnchorElement>[];
