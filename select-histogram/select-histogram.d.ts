@@ -1,0 +1,2 @@
+import { SelectHistogramProps } from "./types";
+export declare const SelectHistogram: ({ alignment, className, disabled, dropdownZIndex, error, histogramSlider, id, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, "aria-invalid": ariaInvalid, onBlur, onChange, onChangeEnd, optionTruncationType, placeholder, rangeLabelPrefix, rangeLabelSuffix, readOnly, renderRangeLabel, value, dropdownRootNode, ...otherProps }: SelectHistogramProps) => JSX.Element;

@@ -1,0 +1,2 @@
+import{jsx as r}from"react/jsx-runtime";import t from"react";import{useDropdownRender as e}from"../dropdown-wrapper/element-with-dropdown.js";import{CalendarWrapper as o}from"./calendar-dropdown.style.js";import{InternalCalendar as n}from"./internal-calendar.js";const a=t.forwardRef(((t,a)=>{const{elementWidth:d,setFloatingRef:s,getFloatingProps:i,styles:m}=e();return r(o,Object.assign({$width:d,"data-testid":"calendar-dropdown",ref:s,style:m},i(),{children:r(n,Object.assign({ref:a},t))}))}));export{a as CalendarDropdown};
+//# sourceMappingURL=calendar-dropdown.js.map

@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});exports.default=function(e,r){if(e&&r){var t=Array.isArray(r)?r:r.split(","),a=e.name||"",o=(e.type||"").toLowerCase(),s=o.replace(/\/.*$/,"");return t.some((function(e){var r=e.trim().toLowerCase();return"."===r.charAt(0)?a.toLowerCase().endsWith(r):r.endsWith("/*")?s===r.replace(/\/.*$/,""):o===r}))}return!0};
+//# sourceMappingURL=index.js.map

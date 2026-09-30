@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),t=require("react/jsx-runtime"),r=require("react"),s=require("./uneditable-section.styles.js");function i(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}const n=(r,i)=>{var{stretch:n}=r,u=e.__rest(r,["stretch"]);return t.jsx(s.GridUl,Object.assign({ref:i,$stretch:n},u))},u=i(r).default.forwardRef(n);exports.Component=n,exports.UneditableItemSection=u;
+//# sourceMappingURL=item-section.js.map

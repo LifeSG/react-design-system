@@ -1,0 +1,2 @@
+"use strict";var e=require("../../_virtual/_tslib.js"),t=require("react/jsx-runtime"),i=require("react"),r=require("./clickable-icon.style.js");function u(e){return e&&"object"==typeof e&&"default"in e?e:{default:e}}const n=u(i).default.forwardRef(((i,u)=>{var{children:n,focusHighlight:c=!0,focusOutline:l="none",type:s="button"}=i,o=e.__rest(i,["children","focusHighlight","focusOutline","type"]);return t.jsx(r.Main,Object.assign({ref:u,$outline:l,$highlight:c,type:s},o,{children:n}))}));exports.ClickableIcon=n;
+//# sourceMappingURL=clickable-icon.js.map

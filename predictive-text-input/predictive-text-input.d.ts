@@ -1,0 +1,2 @@
+import { PredictiveTextInputProps } from "./types";
+export declare const PredictiveTextInput: <T, V>({ className, "data-testid": testId, selectedOption, minimumCharacters, fetchOptions, placeholder, readOnly, disabled, error, valueExtractor, listExtractor, displayValueExtractor, onSelectOption, alignment, dropdownZIndex, dropdownRootNode, dropdownWidth, "aria-describedby": ariaDescribedBy, ...otherProps }: PredictiveTextInputProps<T, V>) => JSX.Element;
