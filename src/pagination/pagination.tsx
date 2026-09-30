@@ -29,6 +29,13 @@ import {
 } from "./pagination.styles";
 import { PageSizeItemProps, PaginationProps } from "./types";
 
+const getPageSizeOption = (
+    pageSizeOptions: PageSizeItemProps[],
+    value: number
+) =>
+    pageSizeOptions.find((option) => option.value === value) ??
+    pageSizeOptions[0];
+
 const Component = (
     {
         id,
@@ -40,6 +47,7 @@ const Component = (
         pageSizeOptions = DEFAULT_OPTIONS,
         showFirstAndLastNav,
         showPageSizeChanger = false,
+        variant = "default",
         onPageChange,
         onPageSizeChange,
     }: PaginationProps,
@@ -55,20 +63,17 @@ const Component = (
     const isMobile = useMediaQuery({
         maxWidth: mobileBreakpoint,
     });
+    const resolvedVariant =
+        variant === "default" ? (isMobile ? "compact" : "full") : variant;
+    const usesPageSizeChanger =
+        showPageSizeChanger && resolvedVariant === "full";
+
     const [hoverRightButton, setHoverRightButton] = useState(false);
     const [hoverLeftButton, setHoverLeftButton] = useState(false);
     const [inputText, setInputText] = useState<string>("");
 
-    const [selectedOption, setSelectedOption] = useState<
-        PageSizeItemProps | undefined
-    >(pageSizeOptions[0]);
-    const [pageSizeLocal, setPageSize] = useState<number>(
-        !isMobile && showPageSizeChanger
-            ? selectedOption
-                ? selectedOption.value
-                : pageSize
-            : pageSize
-    );
+    const [pageSizeLocal, setPageSize] = useState<number>(pageSize);
+    const selectedOption = getPageSizeOption(pageSizeOptions, pageSizeLocal);
 
     const boundaryRange = 1;
     const siblingRange = 1;
@@ -107,9 +112,6 @@ const Component = (
 
     useEffect(() => {
         setPageSize(pageSize);
-        setSelectedOption(
-            pageSizeOptions.find((option) => option.value === pageSize)
-        );
     }, [pageSize]);
 
     // =============================================================================
@@ -187,7 +189,6 @@ const Component = (
     };
 
     const handleListItemClick = (item: PageSizeItemProps) => {
-        setSelectedOption(item);
         const pagesize = item.value;
         const totalPage = Math.ceil(totalItems / pagesize);
 
@@ -369,7 +370,9 @@ const Component = (
                     >
                         <ChevronLeftIcon aria-hidden />
                     </NavigationButton>
-                    {isMobile ? renderMobile() : renderPaginationItems()}
+                    {resolvedVariant === "compact"
+                        ? renderMobile()
+                        : renderPaginationItems()}
                     <NavigationButton
                         onClick={nextPaginationItem}
                         disabled={isLastPage}
@@ -394,7 +397,7 @@ const Component = (
                     )}
                 </PaginationMenu>
             </PaginationList>
-            {showPageSizeChanger && !isMobile && (
+            {usesPageSizeChanger && (
                 <InputSelectWrapper>
                     <VisuallyHidden id={`${paginationId}-page-size`}>
                         Items per page

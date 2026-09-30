@@ -26,6 +26,13 @@ const DATA: ApiTableSectionProps[] = [
                 defaultValue: "10",
             },
             {
+                name: "variant",
+                description:
+                    "Controls whether the pagination follows the responsive layout or always renders the full or compact layout.",
+                propTypes: ['"compact" | "default" | "full"'],
+                defaultValue: '"default"',
+            },
+            {
                 name: "totalItems",
                 description: "The total number of items",
                 propTypes: ["number"],
@@ -57,8 +64,8 @@ const DATA: ApiTableSectionProps[] = [
                 description: (
                     <>
                         Specifies if the page size changer dropdown is visible
-                        in the desktop viewport. The current selected option
-                        takes precedence over <code>pageSize</code>
+                        in the full layout. The current selected option takes
+                        precedence over <code>pageSize</code>
                     </>
                 ),
                 propTypes: ["boolean"],

@@ -8,6 +8,7 @@ export interface PaginationProps {
     pageSizeOptions?: PageSizeItemProps[] | undefined;
     showFirstAndLastNav?: boolean | undefined;
     showPageSizeChanger?: boolean | undefined;
+    variant?: "default" | "full" | "compact" | undefined;
     onPageChange?: ((page: number) => void) | undefined;
     onPageSizeChange?: ((page: number, pageSize: number) => void) | undefined;
 }
