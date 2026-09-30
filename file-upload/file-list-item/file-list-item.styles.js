@@ -1,0 +1,2 @@
+import"./file-list-item.styles_x3a500.css";const e="e18pxk0j",l="eqb8x5u",i="eddx9rr",t="e1dhzflv",s="ek38w4a",d="elwke9e",f="i14h64yt",o="d1wv8fjl",x="bivlkvo",k="c1jm950n";export{x as box,k as contentSection,o as dragHandleIcon,l as editContentSection,i as editDetailsSection,s as editFileNameText,d as editFileSizeText,e as editItem,t as editNameSection,f as item};
+//# sourceMappingURL=file-list-item.styles.js.map

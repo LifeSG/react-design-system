@@ -1,0 +1,1 @@
+{"version":3,"file":"row-bar.styles.js","sources":["../../../src/timetable/timetable-row/row-bar.styles.ts"],"sourcesContent":["import { css } from \"@linaria/core\";\n\nexport const rowCellContainer = css`\n    display: flex;\n    width: 100%;\n`;\n"],"names":["rowCellContainer"],"mappings":"4EAEO,MAAMA,EAAgB"}

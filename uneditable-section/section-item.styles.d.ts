@@ -1,0 +1,9 @@
+export declare const container: import("@linaria/core").LinariaClassName;
+export declare const iconContainer: import("@linaria/core").LinariaClassName;
+export declare const clickable: import("@linaria/core").LinariaClassName;
+export declare const loadingLabel: import("@linaria/core").LinariaClassName;
+export declare const spinner: import("@linaria/core").LinariaClassName;
+export declare const errorIcon: import("@linaria/core").LinariaClassName;
+export declare const errorLabel: import("@linaria/core").LinariaClassName;
+export declare const tryAgainLabel: import("@linaria/core").LinariaClassName;
+export declare const alert: import("@linaria/core").LinariaClassName;

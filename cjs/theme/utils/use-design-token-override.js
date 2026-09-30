@@ -1,0 +1,2 @@
+"use strict";var e=require("react"),t=require("../theme-provider/hooks.js"),r=require("./css-variable.js");exports.useDesignTokenOverride=({token:s,mode:a="light"})=>{const{theme:i,themeElement:o}=t.useTheme(),[d,n]=e.useState();return e.useEffect((()=>{if(!o)return;const e=document.createElement("div");e.dataset.fdsTheme=i,e.dataset.fdsThemeMode=a,e.style.display="none",o.appendChild(e);const t=r.parseCSSVariableValue(s,e);n(t||void 0),e.remove()}),[i,o,s,a]),d};
+//# sourceMappingURL=use-design-token-override.js.map

@@ -1,0 +1,2 @@
+"use strict";Object.defineProperty(exports,"__esModule",{value:!0});var e=require("../../_virtual/_commonjsHelpers.js"),r=require("./debounce.js"),i=require("./isObject.js"),t=r.debounce_1,n=i.isObject_1;var a=function(e,r,i){var a=!0,o=!0;if("function"!=typeof e)throw new TypeError("Expected a function");return n(i)&&(a="leading"in i?!!i.leading:a,o="trailing"in i?!!i.trailing:o),t(e,r,{leading:a,maxWait:r,trailing:o})},o=e.getDefaultExportFromCjs(a);exports.default=o;
+//# sourceMappingURL=throttle.js.map

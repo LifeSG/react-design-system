@@ -1,0 +1,2 @@
+"use strict";exports.createSvgBackgroundImage=({colour:e,enabled:n,radius:t,thickness:s})=>`url("data:image/svg+xml,${encodeURIComponent(`\n    <svg width='100%' height='100%' xmlns='http://www.w3.org/2000/svg'>\n        <rect\n            width='100%' height='100%' fill='none'\n            rx='${t}'\n            ry='${t}'\n            stroke='${n?e:"none"}'\n            stroke-width='${n?s:0}'\n            stroke-dasharray='4, 8' stroke-dashoffset='0' stroke-linecap='square'\n        />\n    </svg>`)}")`;
+//# sourceMappingURL=dashed-border.utils.js.map

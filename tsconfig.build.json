@@ -1,9 +1,0 @@
-{
-    "extends": "./tsconfig.json",
-    "include": [
-        "src/**/*",
-        "custom-types/react-augment.d.ts",
-        "custom-types/png.d.ts"
-    ],
-    "exclude": ["**/__mocks__/**"]
-}

@@ -1,0 +1,9 @@
+export declare const icon: import("@linaria/core").LinariaClassName;
+export declare const uncheckedIcon: import("@linaria/core").LinariaClassName;
+export declare const selectedIcon: import("@linaria/core").LinariaClassName;
+export declare const iconDisabled: import("@linaria/core").LinariaClassName;
+export declare const container: import("@linaria/core").LinariaClassName;
+export declare const containerSmall: import("@linaria/core").LinariaClassName;
+export declare const input: import("@linaria/core").LinariaClassName;
+export declare const inputActive: import("@linaria/core").LinariaClassName;
+export declare const inputDisabledVisual: import("@linaria/core").LinariaClassName;

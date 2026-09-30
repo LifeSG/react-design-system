@@ -1,0 +1,2 @@
+import type { ContactInputSectionProps } from "./internal-types";
+export declare const ContactInputSection: ({ id, "data-testid": dataTestId, disabled, readOnly, inputId, type, sendOtpPlaceholder, emailValue, onEmailChange, phoneNumberValue, onPhoneNumberChange, fixedCountry, isLoading, isVerified, countdown, onSendOtp, onStateReset, sendOtpError, "aria-labelledby": ariaLabelledBy, "aria-describedby": ariaDescribedBy, }: ContactInputSectionProps) => import("react/jsx-runtime").JSX.Element;

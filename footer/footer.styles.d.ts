@@ -1,0 +1,16 @@
+import type { ThemeType } from "../theme/types";
+export declare const baseFooter: import("@linaria/core").LinariaClassName;
+export declare const footerLink: import("@linaria/core").LinariaClassName;
+export declare const fullWidthDivider: import("@linaria/core").LinariaClassName;
+export declare const topSection: import("@linaria/core").LinariaClassName;
+export declare const logoSection: import("@linaria/core").LinariaClassName;
+export declare const logoImage: import("@linaria/core").LinariaClassName;
+export declare const logoSize: Partial<Record<ThemeType, string>>;
+export declare const linkSectionWrapper: import("@linaria/core").LinariaClassName;
+export declare const linkSection: import("@linaria/core").LinariaClassName;
+export declare const addonSection: import("@linaria/core").LinariaClassName;
+export declare const bottomSection: import("@linaria/core").LinariaClassName;
+export declare const bottomSectionContent: import("@linaria/core").LinariaClassName;
+export declare const copyrightSection: import("@linaria/core").LinariaClassName;
+export declare const copyrightText: import("@linaria/core").LinariaClassName;
+export declare const disclaimerTextLink: import("@linaria/core").LinariaClassName;

@@ -1,0 +1,2 @@
+"use strict";require("./time-slot-week-days.styles_1h21vyw.css");exports.columnWeekCell="c1fvren",exports.dayLabel="d4p8eye",exports.dayLabelDisabled="dl9xaeu",exports.headerCellWeek="h1u5a4vg",exports.headerRow="hi684jn",exports.timeSlotComponent="t1nixg7y",exports.timeSlotText="tiecbfv",exports.timeSlotWrapper="t17yohj6",exports.tokens={timeSlotText:{color:"--fds-internal-timeSlotWeekDays-timeSlotText-color"}},exports.wrapper="w1jgoij2";
+//# sourceMappingURL=time-slot-week-days.styles.js.map

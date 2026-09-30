@@ -1,0 +1,2 @@
+import"./row-cell.styles_y1dl5j.css";const l={block:{mainColor:"--fds-internal-timetable-rowCellBlock-mainColor",altColor:"--fds-internal-timetable-rowCellBlock-altColor",width:"--fds-internal-timetable-rowCellBlock-width"}},t="brs2fuo",o="b1tkj60f",e="w3l6hrm",r="g1ly7zml",i="byp749t",b="bhkclis",a="bbb5nib";export{i as block,t as blockContainer,o as blockContainerOnTheHour,a as blockDescription,b as blockTitle,r as gap,l as tokens,e as wrapper};
+//# sourceMappingURL=row-cell.styles.js.map
