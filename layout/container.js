@@ -1,0 +1,2 @@
+import{__rest as t}from"../_virtual/_tslib.js";import{jsx as r}from"react/jsx-runtime";import e from"react";import{StyledContainer as i}from"./container.styles.js";const s=e.forwardRef(((e,s)=>{const{children:o,"data-testid":a="container",type:c="flex",stretch:n=!1}=e,d=t(e,["children","data-testid","type","stretch"]);return r(i,Object.assign({ref:s,"data-testid":a,$type:c,$stretch:n},d,{children:o}))}));export{s as Container};
+//# sourceMappingURL=container.js.map

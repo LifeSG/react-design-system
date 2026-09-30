@@ -1,0 +1,2 @@
+"use strict";var t=require("../../_virtual/_tslib.js"),r=require("react/jsx-runtime"),e=require("./slot-styles.js");const s=s=>{var{"data-testid":a="modal-footer",primaryButton:o,secondaryButton:i}=s,n=t.__rest(s,["data-testid","primaryButton","secondaryButton"]);return r.jsxs(e.FooterContainer,Object.assign({"data-testid":a},n,{children:[o,i]}))};s.displayName="ModalV2.Footer",exports.Footer=s;
+//# sourceMappingURL=footer.js.map

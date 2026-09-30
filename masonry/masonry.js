@@ -1,0 +1,2 @@
+import{__rest as r}from"../_virtual/_tslib.js";import{jsx as e}from"react/jsx-runtime";import t from"react";import{TileContainer as i,GridContainer as n}from"./masonry.style.js";const o={Grid:t.forwardRef(((t,i)=>{const{children:o}=t,c=r(t,["children"]);return e(n,Object.assign({ref:i},c,{children:o}))})),Tile:t.forwardRef(((t,n)=>{const{children:o}=t,c=r(t,["children"]);return e(i,Object.assign({ref:n},c,{children:o}))}))};export{o as Masonry};
+//# sourceMappingURL=masonry.js.map

@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),r=require("react/jsx-runtime"),t=require("./text-list.styles.js");const i=i=>{var{size:s,counterType:o,counterSeparator:a,bottomMargin:n,children:c}=i,u=e.__rest(i,["size","counterType","counterSeparator","bottomMargin","children"]);return r.jsx(t.StyledOrderedList,Object.assign({$size:s,$counterType:o,$counterSeparator:a,$bottomMargin:n},u,{children:c}))};i.displayName="TextList.Ol",exports.OrderedList=i;
+//# sourceMappingURL=ordered-list.js.map

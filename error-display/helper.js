@@ -1,0 +1,2 @@
+import{Breakpoint as t}from"../theme/index.js";var e;!function(e){e.imgAttributeHelper=(e,i)=>{const{base:m,md:h,lg:x,width:r,height:p}=e;return{srcSet:`${m} 400w, ${h} 800w, ${x} 1200w`,src:x,sizes:`(max-width: ${t["sm-max"]({theme:i})}px) 400px, (max-width: ${t["lg-max"]({theme:i})}px) 800px, 1200px`,width:r,height:p}}}(e||(e={}));export{e as ErrorDisplayHelper};
+//# sourceMappingURL=helper.js.map

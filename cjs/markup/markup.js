@@ -1,0 +1,2 @@
+"use strict";var e=require("../_virtual/_tslib.js"),r=require("react/jsx-runtime"),t=require("react"),s=require("./markup.style.js");const i=t.forwardRef(((t,i)=>{const{baseTextColor:a,baseTextSize:n,inline:o}=t,u=e.__rest(t,["baseTextColor","baseTextSize","inline"]);return r.jsx(s.Container,Object.assign({ref:i,as:o?"span":"div",$textSize:n,$textColor:a},u))}));exports.Markup=i;
+//# sourceMappingURL=markup.js.map

@@ -1,0 +1,2 @@
+"use strict";var e=require("./_baseMatches.js"),r=require("./_baseMatchesProperty.js"),t=require("./identity.js"),s=require("./isArray.js"),a=require("./property.js"),i=e._baseMatches,o=r._baseMatchesProperty,u=t.identity_1,y=s.isArray_1,p=a.property_1;var c=function(e){return"function"==typeof e?e:null==e?u:"object"==typeof e?y(e)?o(e[0],e[1]):i(e):p(e)};exports._baseIteratee=c;
+//# sourceMappingURL=_baseIteratee.js.map
