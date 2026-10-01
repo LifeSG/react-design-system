@@ -93,6 +93,24 @@ import { Button } from "@lifesg/react-design-system";
 
 To see the full suite of components available, visit our [Storybook documentation](https://designsystem.life.gov.sg/react/index.html?path=/docs/getting-started-installation--docs).
 
+## AI agent skill
+
+Give your AI coding assistant accurate knowledge of FDS components, import patterns, and rules — works with Claude Code, Cursor, GitHub Copilot, Codex, and other agents.
+
+**If you are starting fresh** — pull directly from GitHub:
+
+```bash
+npx skills add lifesg/react-design-system
+```
+
+**If `@lifesg/react-design-system` is already installed in your project** — use the bin command, which registers the skill from your locally installed version:
+
+```bash
+npx lifesg-react-design-system skills
+```
+
+The skill covers component selection, correct import paths, theming setup, layout patterns, and common mistakes to avoid. Re-run after upgrading the package.
+
 ## Migrations
 
 If you are migrating from an older version of the Design System, you may refer to our [migration guides](https://github.com/LifeSG/react-design-system/wiki).
