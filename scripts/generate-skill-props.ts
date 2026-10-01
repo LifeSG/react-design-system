@@ -243,9 +243,7 @@ function main() {
         skipAddingFilesFromTsConfig: true,
     });
 
-    const resourceDirs = ["v3", "v4"].map((v) =>
-        path.join(SKILLS_RESOURCES_DIR, v, "components")
-    );
+    const resourceDirs = [path.join(SKILLS_RESOURCES_DIR, "components")];
 
     let updated = 0;
     let skipped = 0;
@@ -253,7 +251,6 @@ function main() {
 
     for (const dir of resourceDirs) {
         if (!fs.existsSync(dir)) continue;
-        const version = path.basename(path.dirname(dir));
 
         for (const file of fs.readdirSync(dir).sort()) {
             if (!file.endsWith(".md")) continue;
@@ -267,15 +264,13 @@ function main() {
                 skipped++;
                 if (process.env.VERBOSE) {
                     console.log(
-                        `  skip  [${version}] ${file}${
-                            reason ? ` (${reason})` : ""
-                        }`
+                        `  skip  ${file}${reason ? ` (${reason})` : ""}`
                     );
                 }
             } else {
                 updated++;
                 updatedPaths.push(filePath);
-                console.log(`  props [${version}] ${file}`);
+                console.log(`  props ${file}`);
             }
         }
     }

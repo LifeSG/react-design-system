@@ -32,12 +32,11 @@ No `styled.d.ts` augmentation required. No `useTheme()` hook needed.
 
 ## Anti-patterns
 
-| Anti-pattern                                                      | Why it fails                                             | Correct alternative                         |
-| ----------------------------------------------------------------- | -------------------------------------------------------- | ------------------------------------------- |
-| Using `Colour[...]` inside a `styled-components` template literal | `styled-components` is not installed in v4               | Use in `style={{}}` or CSS Modules          |
-| Hardcoding `var(--fds-*)` directly                                | FDS internal variable names may change                   | Use `Colour[...]` / `Spacing[...]` tokens   |
-| Hardcoding hex values                                             | Breaks theming                                           | Always use a Colour token                   |
-| Creating a local token proxy file                                 | Plain strings do not respond to theme changes at runtime | Use `Colour[...]` / `Spacing[...]` directly |
+| Anti-pattern                                                      | Why it fails                               | Correct alternative                       |
+| ----------------------------------------------------------------- | ------------------------------------------ | ----------------------------------------- |
+| Using `Colour[...]` inside a `styled-components` template literal | `styled-components` is not installed in v4 | Use in `style={{}}` or CSS Modules        |
+| Hardcoding `var(--fds-*)` directly                                | FDS internal variable names may change     | Use `Colour[...]` / `Spacing[...]` tokens |
+| Hardcoding hex values                                             | Breaks theming                             | Always use a Colour token                 |
 
 ---
 

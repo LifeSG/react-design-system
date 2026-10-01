@@ -1,4 +1,4 @@
-# Listing Template
+# Listing Template (v4)
 
 Pages whose primary goal is finding, scanning, or filtering a collection of records.
 
@@ -15,195 +15,109 @@ Do not use for:
 
 ---
 
-## Page shell
+## Styling approach
 
-`Navbar` → `<main><PageWrapper><Layout.Container type="grid">` → `<Footer />`. Content lives in a single full-width `ColDiv xsCols={8} lgCols={12}`. For the two-column filter variant, a `TwoColumn` flex div (gap: `spacing-32`) wraps `FilterSidebar` (width: 278px, flex-shrink: 0) and `ResultsArea` (flex: 1) inside that ColDiv.
+v4 uses **CSS Modules** — no `styled-components`.
+
+-   Design tokens are plain CSS variable strings (`var(--fds-spacing-32)`, `var(--fds-colour-text)`, etc.)
+-   Responsive styles use the breakpoint class selector: `:where(body.fds-breakpoint-lg-min) &`
+-   `ThemeProvider` adds breakpoint classes to `document.body` at runtime
+
+---
+
+## Page anatomy
 
 ```
 Navbar
 main
-  PageWrapper (padding: spacing-32 0; lg: spacing-48)
+  pageWrapper (padding: spacing-32 0; lg: spacing-48)
   └── Layout.Container type="grid"
         └── Layout.ColDiv xsCols={8} lgCols={12}
-              SearchRow (optional)
-              TwoColumn
-                ├── FilterSidebar (278px) — omit for search-only variant
+              searchRow (optional)
+              twoColumn
+                ├── filterSidebar (278px) — omit for search-only variant
                 │     Filter
-                └── ResultsArea (flex-1)
-                      ResultCountRow
+                └── resultsArea (flex-1)
+                      resultCountRow
                       ErrorDisplay type="no-item-found"  ← empty state
                       Card list / DataTable
-                      Pagination (centred)
+                      paginationWrapper (centred)
 Footer
 ```
 
 On mobile the filter sidebar should be hidden behind a modal — `Filter` handles this automatically when `toggleFilterAtBreakpoint` is set.
 
-Use the **Complete template** below as the starting point — it wires all of these together in a single runnable file.
-
 ---
 
 ## Required components
 
-| Slot           | Component                                       | Required |
-| -------------- | ----------------------------------------------- | -------- |
-| Navigation     | `Navbar` (masthead enabled)                     | Yes      |
-| Results        | `Card` list/grid **or** `DataTable`             | Yes      |
-| Result count   | `Typography.BodyMD` — "X result(s) found"       | Yes      |
-| Footer         | `Footer`                                        | Yes      |
-| Hero banner    | Custom styled section                           | No       |
-| Search bar     | `Form.Input` + `Form.Select` + `Button.Default` | No\*     |
-| Breadcrumb     | `Breadcrumb`                                    | No       |
-| Alert          | `Alert type="info"`                             | No       |
-| View toggle    | `Tab`                                           | No       |
-| Filter sidebar | `Filter` (~278px wide)                          | No\*     |
-| Pagination     | `Pagination showFirstAndLastNav`                | No       |
+| Slot           | Component                                 | Required |
+| -------------- | ----------------------------------------- | -------- |
+| Navigation     | `Navbar` (masthead enabled)               | Yes      |
+| Results        | `Card` list/grid **or** `DataTable`       | Yes      |
+| Result count   | `Typography.BodyMD` — "X result(s) found" | Yes      |
+| Footer         | `Footer`                                  | Yes      |
+| Search bar     | `Form.Input` + `Button`                   | No\*     |
+| Filter sidebar | `Filter` (~278px wide)                    | No\*     |
+| Pagination     | `Pagination showFirstAndLastNav`          | No       |
 
 \* Search bar and filter sidebar are individually optional but **at least one must be present**.
 
 ---
 
-## State shape
+## CSS (ListingPage.module.css)
 
-```tsx
-interface ListingState {
-    keyword: string;
-    filters: Record<string, string[]>; // category -> selected option values
-    sortBy: string;
-    page: number;
+```css
+.pageWrapper {
+    padding: var(--fds-spacing-32) 0;
+
+    :global(body.fds-breakpoint-lg-min) & {
+        padding: var(--fds-spacing-48) 0;
+    }
 }
 
-const [state, setState] = useState<ListingState>({
-    keyword: "",
-    filters: {},
-    sortBy: "relevance",
-    page: 1,
-});
+.twoColumn {
+    display: flex;
+    gap: var(--fds-spacing-32);
+    align-items: flex-start;
+}
 
-// FIXME: replace MOCK_ITEMS with real fetch, e.g.:
-// apiClient.get<Item[]>("/api/v1/items").then(({ data }) => setAllRows(data));
-const [allRows, setAllRows] = useState<Item[]>(MOCK_ITEMS);
+.filterSidebar {
+    width: 278px;
+    flex-shrink: 0;
+}
 
-useEffect(() => {
-    // FIXME: replace with actual API client and URL to fetch data
-    // Example: apiClient.get<Item[]>("/api/v1/items").then(({ data }) => setAllRows(data));
-    setAllRows(MOCK_ITEMS);
-}, []);
+.resultsArea {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: var(--fds-spacing-16);
+}
+
+.searchRow {
+    display: flex;
+    gap: var(--fds-spacing-16);
+    align-items: flex-end;
+    margin-bottom: var(--fds-spacing-24);
+}
+
+.resultCountRow {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.cardBody {
+    padding: var(--fds-spacing-24);
+}
+
+.paginationWrapper {
+    display: flex;
+    justify-content: center;
+    margin-top: var(--fds-spacing-24);
+}
 ```
-
--   Changing `keyword`, `filters`, or `sortBy` **must reset `page` to `1`** — never keep the user on a page that may no longer exist after a filter change.
--   Derive filtered/sorted/paginated results with a single `useMemo` — don't split filtering and sorting into separate effects that can race.
--   Fetch-based listings: debounce `keyword` changes (~300ms) before refetching; filter/sort changes refetch immediately.
-
-```tsx
-const results = useMemo(() => {
-    let rows = allRows.filter(
-        (r) =>
-            matchesKeyword(r, state.keyword) && matchesFilters(r, state.filters)
-    );
-    rows = sortRows(rows, state.sortBy);
-    return rows;
-}, [allRows, state.keyword, state.filters, state.sortBy]);
-
-const pageCount = Math.ceil(results.length / PAGE_SIZE);
-const pageRows = results.slice(
-    (state.page - 1) * PAGE_SIZE,
-    state.page * PAGE_SIZE
-);
-```
-
----
-
-## Layout options
-
-### Hero with search + side filters (most feature-complete)
-
-```
-Navbar
-HeroBanner
-  └── Title + subtitle + Tab (search criteria tabs)
-      SearchBar (Form.Input / Form.Select + Button.Default)
-Layout.Section > Layout.Container
-  ├── BreadcrumbRow (Breadcrumb left · optional CTA right)
-  ├── Alert (optional)
-  └── TwoColumn
-        ├── FilterSidebar (~278px)
-        │     Form.Input (keyword)
-        │     Sort by (RadioButton group)
-        │     Filter.Checkbox sections
-        └── ResultsArea (flex-1)
-              ResultCountRow (count left · Tab view toggle right)
-              Card list or grid
-              Pagination
-Footer
-```
-
-### Hero with search only
-
-Remove `FilterSidebar` and `TwoColumn`. `ResultsArea` goes full width.
-
-### Hero with side filters only
-
-Remove `SearchBar` from hero. Add `Form.Input` for keyword above `Filter` in sidebar. Results shown on load.
-
-### Compact (no hero) — search + side filters
-
-Remove `HeroBanner`. Add `Typography.HeadingLG as="h1"` + description + `SearchBar` directly in `Layout.Container` above breadcrumb row.
-
-### Compact — side filters only
-
-No hero, no search bar. Title + description in container. Filters in sidebar. Results shown on load.
-
-### Compact — search only, description column
-
-No hero. Full-width `SearchBar` above two-column region. Left column = description text; right column = results full width. No filter sidebar.
-
-### No description, search + side filters
-
-No hero. Full-width `SearchBar` above breadcrumb row. Filter sidebar + results as normal.
-
----
-
-## Filter sidebar
-
-```tsx
-<Filter onClear={handleClear}>
-    <Filter.Item title="Sort by" collapsible={false}>
-        {SORT_OPTIONS.map((opt) => (
-            <RadioButton
-                key={opt.value}
-                checked={state.sortBy === opt.value}
-                onChange={() =>
-                    setState((s) => ({ ...s, page: 1, sortBy: opt.value }))
-                }
-            >
-                {opt.label}
-            </RadioButton>
-        ))}
-    </Filter.Item>
-    <Filter.Checkbox
-        title="Category"
-        options={categoryOptions}
-        selected={state.filters.category ?? []}
-        onChange={(values) =>
-            setState((s) => ({
-                ...s,
-                page: 1,
-                filters: { ...s.filters, category: values },
-            }))
-        }
-    />
-</Filter>
-```
-
-`onClear` resets `filters` to `{}` and `page` to `1`. It does not reset `keyword` unless the design explicitly requires it.
-
----
-
-## Cards vs DataTable
-
--   **Cards** — citizen-facing listing screens
--   **DataTable** — internal/admin screens with 4+ structured columns where columnar comparison is the primary goal
 
 ---
 
@@ -215,16 +129,17 @@ No hero. Full-width `SearchBar` above breadcrumb row. Filter sidebar + results a
 -   `showFirstAndLastNav` must be set on `Pagination`
 -   Filter sidebar width is fixed at ~278px; results area is `flex: 1`
 -   Inline action buttons (edit, delete) do not belong on listing cards — those go on the detail screen
+-   Changing `keyword`, `filters`, or `sortBy` must reset `page` to `1`
 
 ---
 
 ## Complete template
 
-A single-file listing page with search, side filters, pagination, loading/error/empty states, and API stub wired in. Remove `FilterSidebar` / `TwoColumn` for search-only variant.
+A single-file listing page with search, side filters, pagination, loading/error/empty states, and API stub wired in. Remove `filterSidebar` / `twoColumn` for search-only variant.
 
 ```tsx
+// ListingPage.tsx
 import { useState, useEffect, useMemo } from "react";
-import styled from "styled-components";
 import { Navbar } from "@lifesg/react-design-system/navbar";
 import { Footer } from "@lifesg/react-design-system/footer";
 import { Layout } from "@lifesg/react-design-system/layout";
@@ -237,7 +152,7 @@ import { ErrorDisplay } from "@lifesg/react-design-system/error-display";
 import { Alert } from "@lifesg/react-design-system/alert";
 import { Button } from "@lifesg/react-design-system/button";
 import { Form } from "@lifesg/react-design-system/form";
-import { Spacing, MediaQuery } from "@lifesg/react-design-system/theme";
+import styles from "./ListingPage.module.css";
 
 // ─── Types ────────────────────────────────────────────────────────────────────
 
@@ -271,57 +186,6 @@ const CATEGORY_OPTIONS = [
 
 // FIXME: replace with real seed data or remove once API is wired up
 const MOCK_ITEMS: Item[] = [];
-
-// ─── Styled components ────────────────────────────────────────────────────────
-
-const PageWrapper = styled.div`
-    padding: ${Spacing["spacing-32"]} 0;
-    ${MediaQuery.MinWidth.lg} {
-        padding: ${Spacing["spacing-48"]} 0;
-    }
-`;
-
-const TwoColumn = styled.div`
-    display: flex;
-    gap: ${Spacing["spacing-32"]};
-    align-items: flex-start;
-`;
-
-const FilterSidebar = styled.div`
-    width: 278px;
-    flex-shrink: 0;
-`;
-
-const ResultsArea = styled.div`
-    flex: 1;
-    min-width: 0;
-    display: flex;
-    flex-direction: column;
-    gap: ${Spacing["spacing-16"]};
-`;
-
-const SearchRow = styled.div`
-    display: flex;
-    gap: ${Spacing["spacing-16"]};
-    align-items: flex-end;
-    margin-bottom: ${Spacing["spacing-24"]};
-`;
-
-const ResultCountRow = styled.div`
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-`;
-
-const CardBody = styled.div`
-    padding: ${Spacing["spacing-24"]};
-`;
-
-const PaginationWrapper = styled.div`
-    display: flex;
-    justify-content: center;
-    margin-top: ${Spacing["spacing-24"]};
-`;
 
 // ─── Helpers ──────────────────────────────────────────────────────────────────
 
@@ -396,18 +260,13 @@ export default function ListingPage() {
 
     return (
         <>
-            <Navbar
-                resources={{
-                    primary: { brandName: "MyService", logoSrc: "/logo.svg" },
-                }}
-                items={{ desktop: [] }}
-            />
-            <main>
-                <PageWrapper>
+            <Navbar masthead items={{ desktop: [] }} />
+            <main style={{ flex: 1 }}>
+                <div className={styles.pageWrapper}>
                     <Layout.Container type="grid">
                         <Layout.ColDiv xsCols={8} lgCols={12}>
                             {/* Search bar */}
-                            <SearchRow>
+                            <div className={styles.searchRow}>
                                 <Form.Input
                                     label="Search"
                                     placeholder="Search by keyword"
@@ -420,15 +279,14 @@ export default function ListingPage() {
                                         }))
                                     }
                                 />
-                                <Button.Default
-                                    styleType="default"
+                                <Button
                                     onClick={() =>
                                         setState((s) => ({ ...s, page: 1 }))
                                     }
                                 >
                                     Search
-                                </Button.Default>
-                            </SearchRow>
+                                </Button>
+                            </div>
 
                             {/* Loading */}
                             {isLoading && (
@@ -452,9 +310,9 @@ export default function ListingPage() {
 
                             {/* Results */}
                             {!isLoading && !fetchError && (
-                                <TwoColumn>
+                                <div className={styles.twoColumn}>
                                     {/* Filter sidebar — omit for search-only variant */}
-                                    <FilterSidebar>
+                                    <div className={styles.filterSidebar}>
                                         <Filter onClear={handleClear}>
                                             <Filter.Item
                                                 title="Sort by"
@@ -497,18 +355,18 @@ export default function ListingPage() {
                                                 }
                                             />
                                         </Filter>
-                                    </FilterSidebar>
+                                    </div>
 
-                                    <ResultsArea>
+                                    <div className={styles.resultsArea}>
                                         {/* Result count */}
-                                        <ResultCountRow>
+                                        <div className={styles.resultCountRow}>
                                             <Typography.BodyMD>
                                                 {results.length} result
                                                 {results.length !== 1
                                                     ? "s"
                                                     : ""} found
                                             </Typography.BodyMD>
-                                        </ResultCountRow>
+                                        </div>
 
                                         {/* Empty state */}
                                         {results.length === 0 && (
@@ -526,20 +384,26 @@ export default function ListingPage() {
                                         {/* Card list */}
                                         {pageRows.map((item) => (
                                             <Card key={item.id}>
-                                                <CardBody>
+                                                <div
+                                                    className={styles.cardBody}
+                                                >
                                                     <Typography.HeadingSM>
                                                         {item.title}
                                                     </Typography.HeadingSM>
                                                     <Typography.BodyMD>
                                                         {item.description}
                                                     </Typography.BodyMD>
-                                                </CardBody>
+                                                </div>
                                             </Card>
                                         ))}
 
                                         {/* Pagination */}
                                         {pageCount > 1 && (
-                                            <PaginationWrapper>
+                                            <div
+                                                className={
+                                                    styles.paginationWrapper
+                                                }
+                                            >
                                                 <Pagination
                                                     totalItems={results.length}
                                                     pageSize={PAGE_SIZE}
@@ -552,14 +416,14 @@ export default function ListingPage() {
                                                     }
                                                     showFirstAndLastNav
                                                 />
-                                            </PaginationWrapper>
+                                            </div>
                                         )}
-                                    </ResultsArea>
-                                </TwoColumn>
+                                    </div>
+                                </div>
                             )}
                         </Layout.ColDiv>
                     </Layout.Container>
-                </PageWrapper>
+                </div>
             </main>
             <Footer />
         </>

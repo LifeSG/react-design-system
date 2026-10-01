@@ -214,8 +214,10 @@ import { Spacing } from "@lifesg/react-design-system/theme";
 ### Toast notification
 
 ```tsx
-Toast.success("Changes saved successfully"); // auto-dismisses
-Toast.error("Failed to save changes");
+import { Toast } from "@lifesg/react-design-system/toast";
+
+<Toast type="success">Changes saved successfully</Toast>
+<Toast type="error">Failed to save changes</Toast>
 ```
 
 Use `Toast` for non-critical feedback. Use `Alert` for errors requiring action.

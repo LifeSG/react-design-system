@@ -18,9 +18,9 @@ Single or multi-step form page built with `@lifesg/react-design-system` v4.
 │  <main>                                                  │
 │  └─ pageWrapper (padding: spacing-32 0; lg: spacing-64) │
 │     └─ Layout.Container type="grid"                     │
-│        ├─ Layout.ColDiv xsCols={12} lgCols={12}         │
+│        ├─ Layout.ColDiv xxsCols={[1, -1]}               │
 │        │  └─ ProgressIndicator  (multi-step only)       │
-│        └─ Layout.ColDiv xsCols={12} lgCols={9} xlCols={8}│
+│        └─ Layout.ColDiv xxsCols={12} lgCols={8}         │
 │           │  flex column · gap: spacing-32               │
 │           ├─ pageHeadingBlock (flex column · gap: 16)   │
 │           │  ├─ h1                                       │
@@ -36,132 +36,18 @@ Single or multi-step form page built with `@lifesg/react-design-system` v4.
 
 ---
 
-## Styling approach
-
-v4 uses **CSS Modules** — no `styled-components`.
-
--   Design tokens are plain CSS variable strings (`var(--fds-spacing-32)`, `var(--fds-colour-text)`, etc.)
--   Responsive styles use the breakpoint class selector: `:where(body.fds-breakpoint-lg-min) &`
--   `ThemeProvider` adds breakpoint classes to `document.body` at runtime (e.g. `fds-breakpoint-lg-min`)
--   Pass `className={styles.x}` to `Layout.ColDiv`, `Button`, and other DS components that accept it
-
----
-
 ## Rules
 
 |                          | Wrong                | Correct                                                                                                                                                                                  |
 | ------------------------ | -------------------- | ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| Column width             | `lgCols={12}`        | `lgCols={9} xlCols={8}`                                                                                                                                                                  |
+| Column width             | `lgCols={12}`        | `xxsCols={12} lgCols={8}`                                                                                                                                                                |
 | Progress indicator       | Inside 8-col div     | Separate `lgCols={12}` ColDiv; `currentIndex` is zero-based                                                                                                                              |
 | Page heading             | Static string        | Defaults to `{STEPS[step]}`; override per step as needed                                                                                                                                 |
 | Field spacing            | `gap` on wrapper div | Rely on component built-in `margin-bottom: 32`; add `margin-bottom: var(--fds-spacing-32)` via CSS Module class for components without it (BoxContainer, Toggle, FileUpload, ESignature) |
 | Constrained-width inputs | `width` on element   | `max-width` — works alongside internal `width: 100%`                                                                                                                                     |
 | Review step              | Omitting             | Required as last step — one `BoxContainer` per preceding step                                                                                                                            |
 
----
-
-## CSS setup (index.css)
-
-```css
-@import url("https://assets.life.gov.sg/react-design-system/v3/css/open-sans.css");
-@import "@lifesg/react-design-system/theme/styles/default.css";
-@import "@lifesg/react-design-system/theme/styles/lifesg.css";
-
-html {
-    -moz-text-size-adjust: none;
-    -webkit-text-size-adjust: none;
-    text-size-adjust: none;
-    box-sizing: border-box;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: inherit;
-    padding: 0;
-    margin: 0;
-}
-
-body {
-    -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
-    font-family: var(--fds-font-family-body, "Open Sans", sans-serif);
-}
-
-a {
-    cursor: pointer;
-    text-decoration: none;
-}
-
-button,
-select,
-input[type="button"],
-input[type="submit"],
-input[type="reset"],
-::file-selector-button {
-    color: inherit;
-}
-
-#root {
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-}
-
-#root > div {
-    display: flex;
-    flex-direction: column;
-    flex: 1;
-}
-```
-
-> `default.css` defines all `--fds-*` tokens. `lifesg.css` overrides brand/primary colours. Font CDN path is still v3 — fonts are shared across versions.
-
----
-
-## App setup
-
-```tsx
-// App.tsx
-import { ThemeProvider } from "@lifesg/react-design-system/theme";
-import { Navbar } from "@lifesg/react-design-system/navbar";
-import { Footer } from "@lifesg/react-design-system/footer";
-import { Layout } from "@lifesg/react-design-system/layout";
-import FormPage from "./FormPage";
-import styles from "./App.module.css";
-
-function App() {
-    return (
-        <ThemeProvider theme="lifesg" mode="light">
-            <Navbar
-                masthead
-                items={{
-                    desktop: [{ id: "home", children: "Home", href: "/" }],
-                }}
-            />
-            <main style={{ flex: 1 }}>
-                <div className={styles.pageWrapper}>
-                    <Layout.Container type="grid">
-                        <FormPage />
-                    </Layout.Container>
-                </div>
-            </main>
-            <Footer />
-        </ThemeProvider>
-    );
-}
-```
-
-```css
-/* App.module.css */
-.pageWrapper {
-    padding: var(--fds-spacing-32) 0;
-
-    :global(body.fds-breakpoint-lg-min) & {
-        padding: var(--fds-spacing-64) 0;
-    }
-}
-```
+> **Setup:** If the project is not yet set up, read `../setup/setup.md` first before writing any code here.
 
 ---
 
@@ -541,5 +427,3 @@ export default function FormPage() {
 
 -   Single-step: omit `ProgressIndicator` and pass no `onBack` to `FormNav`
 -   Pass `actions` to `FormNav` for secondary actions like Save draft
--   `ThemeProvider` accepts `theme` (string from `THEME_TYPES`) and `mode` (`"light" | "dark" | "auto"`)
--   CSS variables (`--fds-*`) are scoped to the `ThemeProvider` div — they are not global
