@@ -6,7 +6,7 @@ Import: `import { ModalV2 } from "@lifesg/react-design-system/modal-v2"`
 
 Use for focused interactions that interrupt the user's flow — confirmations, detail views, or short multi-field forms that do not warrant a new page.
 
-> **v4 note:** `Modal` is deprecated. Use `ModalV2` — it provides improved scroll behaviour, proper focus management via `@floating-ui/react`, and a composable slot-based API.
+> **Note:** `Modal` is deprecated. Use `ModalV2` — it provides improved scroll behaviour, proper focus management via `@floating-ui/react`, and a composable slot-based API.
 
 ## Sub-components
 

@@ -1,7 +1,5 @@
 # Form.Timepicker
 
-> v4 — CSS Modules replace styled-components. See SKILL-v4.md for setup.
-
 Import: `import { Form } from "@lifesg/react-design-system/form"`
 
 > **Casing:** the export is `Form.Timepicker` (lowercase `p`), not `Form.TimePicker`.

@@ -1,6 +1,6 @@
 # App Setup — Flagship v4
 
-Full project setup for `@lifesg/react-design-system` v4. Work through all five steps before writing any component code.
+Full project setup for `@lifesg/react-design-system` v4. Work through all steps before writing any component code.
 
 ---
 

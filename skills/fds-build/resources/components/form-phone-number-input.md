@@ -1,7 +1,5 @@
 # Form.PhoneNumberInput
 
-> v4 — CSS Modules replace styled-components. See SKILL-v4.md for setup.
-
 Import: `import { Form } from "@lifesg/react-design-system/form"`
 
 Type import: `import type { PhoneNumberInputValue } from "@lifesg/react-design-system/phone-number-input"`
