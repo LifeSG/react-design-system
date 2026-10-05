@@ -16,7 +16,7 @@ export const ModalCard = styled.div`
     width: 40rem;
     margin: ${Spacing["spacing-64"]} auto;
     background: ${Colour.bg};
-    box-shadow: ${Shadow["xs-strong"]};
+    box-shadow: ${Shadow["lg-strong"]};
     border-radius: ${Radius["lg"]};
 
     display: flex;
