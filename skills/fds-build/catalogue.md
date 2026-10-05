@@ -1,16 +1,14 @@
 # Flagship Component Catalogue
 
-One-liner per component. Read `./resources/v3/components/{key}.md` for full props and usage rules before writing code.
+One-liner per component. Read `./resources/components/{key}.md` for full props and usage rules before writing code.
 
 ---
 
 ## Buttons & Actions
 
-| Component        | Key                | Also known as                                     | Pairs with               | Description                                                                                                                                 | Key props                              |
-| ---------------- | ------------------ | ------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------------------------------------------------------- | -------------------------------------- |
-| `Button`         | `button`           | CTA, action button, submit button, primary button | `Form`, `Modal`, `Alert` | Text button. Variants: `Button.Default` (standard), `Button.Small`, `Button.Large`. Style types: default/secondary/light/link + danger flag | `styleType` (req), `loading`, `danger` |
-| `IconButton`     | `icon-button`      | icon action, icon-only button                     | `Navbar`                 | Icon-only button — `aria-label` always required. **v3 only — not available in v4**                                                          | `icon` (req), `aria-label` (req)       |
-| `ButtonWithIcon` | `button-with-icon` | labeled icon button, button with icon             | `Form`, `Modal`          | Text + icon button. Icon position: left (default) or right. **v3 only — not available in v4**                                               | `icon` (req), `iconPosition`           |
+| Component | Key      | Also known as                                     | Pairs with               | Description                                                                                | Key props                                      |
+| --------- | -------- | ------------------------------------------------- | ------------------------ | ------------------------------------------------------------------------------------------ | ---------------------------------------------- |
+| `Button`  | `button` | CTA, action button, submit button, primary button | `Form`, `Modal`, `Alert` | Button with optional text or icon. Style types: default/secondary/light/link + danger flag | `styleType` (req), `loading`, `danger`, `icon` |
 
 ---
 
@@ -31,6 +29,7 @@ All `Form.*` components import from `@lifesg/react-design-system/form`. `label` 
 | `Form.OtpVerification`     | `form-otp-verification`      | OTP, one-time password, verification code, 2FA                     | —                      | Full OTP send-and-verify flow                        | `label` (req), `length`, `onComplete`                          |
 | `Form.ESignature`          | `form-e-signature`           | signature pad, e-signature, digital signature, sign                | —                      | Signature capture canvas — returns base64            | `label` (req), `onResult`                                      |
 | `Input`                    | `input`                      | standalone input, bare input                                       | —                      | Text input without label — use `Form.Input` in forms | `value`, `onChange`                                            |
+| `OtpInput`                 | `otp-input`                  | OTP field, one-time password, verification code, 2FA               | —                      | Individual OTP digit inputs with countdown           | `numOfInput` (req), `cooldownDuration`, `onChange`             |
 
 ---
 
@@ -76,7 +75,7 @@ All `Form.*` components import from `@lifesg/react-design-system/form`. `label` 
 | `Timeline`     | `timeline`      | step list, event history, process steps, progress list     | `Typography`                     | Vertical sequence of events or steps                                             | `items` (req)                                        |
 | `LinkList`     | `link-list`     | related links, link group, resource list                   | `Card`                           | Styled list of links with descriptions and show-more toggle                      | `items` (req — `{title, href, description}[]`)       |
 | `Typography`   | `typography`    | text, heading, body text, paragraph, label, caption        | `Colour` tokens                  | Text components — `HeadingXXL`→`HeadingXS`, `BodyBL`→`BodyXS`, `LinkBL`→`LinkXS` | `weight`, `as` (override element)                    |
-| `Badge`        | `badge`         | count badge, notification dot, number badge, unread count  | `Navbar`, `IconButton`           | Numeric badge overlaid on another element                                        | `value` (req)                                        |
+| `Badge`        | `badge`         | count badge, notification dot, number badge, unread count  | `Navbar`, `Button (icon)`        | Numeric badge overlaid on another element                                        | `value` (req)                                        |
 | `Avatar`       | `avatar`        | user avatar, profile picture, initials, profile icon       | `Navbar`                         | User representation — image or initials fallback                                 | `name` or `imageUrl`                                 |
 
 ---
@@ -104,19 +103,18 @@ All `Form.*` components import from `@lifesg/react-design-system/form`. `label` 
 | `Sidenav`    | `sidenav`    | sidebar navigation, side menu, left nav            | `Layout`                      | Vertical sidebar navigation — 4-level nesting                 | `items` (req), `selectedId`                                                                     |
 | `Tab`        | `tab`        | tabs, tabbed navigation, tab strip, tab bar        | `Filter`, `DataTable`         | Tabbed content switching                                      | `items` (req), `activeTabKey`, `onClickTab`                                                     |
 | `LocalNav`   | `local-nav`  | in-page nav, anchor links, section nav, jump links | `Layout`                      | In-page section navigation                                    | `items` (req — `{id, label}[]`)                                                                 |
-| `Menu`       | `menu`       | dropdown menu, context menu, action menu           | `Button`, `IconButton`        | Dropdown menu attached to a trigger                           | `items` (req), `trigger` (req)                                                                  |
+| `Menu`       | `menu`       | dropdown menu, context menu, action menu           | `Button`                      | Dropdown menu attached to a trigger                           | `items` (req), `trigger` (req)                                                                  |
 | `Pagination` | `pagination` | page controls, paging, page numbers                | `DataTable`, `Filter`, `Card` | Page navigation controls — always set `showFirstAndLastNav`   | `totalItems` (req), `pageSize` (req), `activePage`, `onPageChange`, `showFirstAndLastNav` (req) |
 
 ---
 
 ## Overlays
 
-| Component | Key       | Also known as                                 | Pairs with             | Description                                                                                                  | Key props                                            |
-| --------- | --------- | --------------------------------------------- | ---------------------- | ------------------------------------------------------------------------------------------------------------ | ---------------------------------------------------- |
-| `Modal`   | `modal`   | dialog, popup, lightbox, confirmation dialog  | `Button`, `Form`       | Full overlay dialog — blocks background interaction                                                          | `show` (req); nest `Modal.Box` with `onClose` inside |
-| `Drawer`  | `drawer`  | side sheet, slide-in panel, tray, side drawer | `Filter`, `Sidenav`    | Slide-in panel from screen edge                                                                              | `show` (req), `onClose`                              |
-| `Popover` | `popover` | anchored popup, floating panel, overlay panel | `IconButton`, `Button` | Anchored floating content panel                                                                              | `trigger` (req), `content` (req)                     |
-| `Tooltip` | `tooltip` | hover tip, info tip, hint                     | `Form`                 | Short hover/focus tooltip — no interactive content. **v3 only — use `Popover` with `trigger="hover"` in v4** | `content` (req)                                      |
+| Component | Key       | Also known as                                 | Pairs with          | Description                                         | Key props                                            |
+| --------- | --------- | --------------------------------------------- | ------------------- | --------------------------------------------------- | ---------------------------------------------------- |
+| `Modal`   | `modal`   | dialog, popup, lightbox, confirmation dialog  | `Button`, `Form`    | Full overlay dialog — blocks background interaction | `show` (req); nest `Modal.Box` with `onClose` inside |
+| `Drawer`  | `drawer`  | side sheet, slide-in panel, tray, side drawer | `Filter`, `Sidenav` | Slide-in panel from screen edge                     | `show` (req), `onClose`                              |
+| `Popover` | `popover` | anchored popup, floating panel, overlay panel | `Button`            | Anchored floating content panel                     | `trigger` (req), `content` (req)                     |
 
 ---
 
@@ -171,12 +169,13 @@ All `Form.*` components import from `@lifesg/react-design-system/form`. `label` 
 | `Divider`         | `divider`          | horizontal rule, separator, hr, line                                        | `Card`, `Accordion`  | Visual separator between sections                                                                                                                    | _(none required)_                                              |
 | `ImageButton`     | `image-button`     | image CTA, image card button, clickable image                               | `Layout`             | Image with text overlay as a button                                                                                                                  | `imageUrl` (req), `label`, `onClick`                           |
 | `Table`           | `table`            | basic table, html table, simple table, read-only table                      | `Typography`         | Styled HTML table wrapper — `Table.Container` + `Table` + `Table.Head/Body/Row/HeaderCell/Cell`. No sorting or selection — use `DataTable` for those | `children`                                                     |
+| `DashedBorder`    | `dashed-border`    | dashed outline, drop zone border, placeholder region                        | `FileUpload`         | Container with dashed SVG border — for drop zones, placeholder regions, or empty-state containers                                                    | `children`                                                     |
 
 ---
 
 ## Icons
 
-| Component   | Key         | Also known as                                                          | Pairs with                       | Description                                                                                                                                                                                             | Key props                           |
-| ----------- | ----------- | ---------------------------------------------------------------------- | -------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
-| Icons       | `icon`      | icon, svg icon, react icon, arrow icon, tick icon, MUI                 | `Button`, `Navbar`, `IconButton` | Icons from `@lifesg/react-icons` — separate package. Each icon is its own named export: `import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right"`. Never guess names — read the resource file. | `aria-label` (for standalone icons) |
-| `Animation` | `animation` | loading spinner, spinner, loading indicator, animate, transition, dots | —                                | Loading and transition animations — `LoadingSpinner`, `LoadingDots`, `LoadingDotsSpinner`. Import from `@lifesg/react-design-system/animations`                                                         | _(none required)_                   |
+| Component   | Key         | Also known as                                                          | Pairs with         | Description                                                                                                                                                                                             | Key props                           |
+| ----------- | ----------- | ---------------------------------------------------------------------- | ------------------ | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ----------------------------------- |
+| Icons       | `icon`      | icon, svg icon, react icon, arrow icon, tick icon, MUI                 | `Button`, `Navbar` | Icons from `@lifesg/react-icons` — separate package. Each icon is its own named export: `import { ArrowRightIcon } from "@lifesg/react-icons/arrow-right"`. Never guess names — read the resource file. | `aria-label` (for standalone icons) |
+| `Animation` | `animation` | loading spinner, spinner, loading indicator, animate, transition, dots | —                  | Loading and transition animations — `LoadingSpinner`, `LoadingDots`, `LoadingDotsSpinner`. Import from `@lifesg/react-design-system/animations`                                                         | _(none required)_                   |
