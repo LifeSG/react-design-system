@@ -48,7 +48,7 @@ export const cardBase = css`
 export const modalCard = css`
     width: 40rem;
     margin: ${Spacing["spacing-64"]} auto;
-    box-shadow: ${Shadow["xs-strong"]};
+    box-shadow: ${Shadow["lg-strong"]};
     border-radius: ${Radius["lg"]};
 
     max-width: calc(100% - ${Breakpoint["xxl-margin"]} * 2);
